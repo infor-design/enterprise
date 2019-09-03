@@ -133,6 +133,7 @@ describe('Textarea size tests', () => {
 
   it('Should support check sizes', async () => {
     await browser.driver.manage().window().setSize(1200, 800);
+    await browser.driver.sleep(config.sleepShort);
 
     const smEl = await element(by.id('sm-textarea-example'));
 

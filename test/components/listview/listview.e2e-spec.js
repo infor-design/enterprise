@@ -497,9 +497,8 @@ describe('Listview remove-clear tests', () => {
 describe('Listview example-header-totals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-header-totals');
-    const listviewButtonToggleEl = await element(by.css('.listview-header button'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewButtonToggleEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview-footer'))), config.waitsFor);
   });
 
   if (!utils.isIE()) {

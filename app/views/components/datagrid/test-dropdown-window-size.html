@@ -48,7 +48,7 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: '0'});
 
     var dropDownFormatter = function (row, cell, value, col) {
-      for (let index = 0, len = actionOptions.length; index < len; index++) {
+      for (var index = 0, len = actionOptions.length; index < len; index++) {
         var item = actionOptions[ index ];
         if (value === item.value) {
           return item.label;

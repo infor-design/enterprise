@@ -12,7 +12,9 @@
   <div class="twelve columns">
     <h1 class="fieldset-title">Locale - Unicode Languages</h1>
 
-    <div id="output" class="output">
+    <div id="output" class="card">
+      <div class="row top-padding">
+      </div>
     </div>
 
     <script>
@@ -20,7 +22,7 @@
         var output = $('#output');
         var number = 1234567890
         var append = function (value) {
-          output.append('<span>' + value + '</span><br>');
+          output.append('<div class="row"><div class="twelve columns">' + value + '</div></div>');
         };
 
         append('1234567890 = ' + Locale.toLocaleString(number, 'ar-SA'));

@@ -148,6 +148,13 @@ Optional: We use [`nvm`](https://github.com/creationix/nvm) in development so th
 
 See the `scripts` object in [package.json](../package.json) for a full list of commands.
 
+#### Debugging the Demo Server
+
+- Add a break point in the demo app code
+- Run `node --inspect app/server.js --verbose` to start the app in debug mode
+- Open chrome and navigate to `chrome://inspect` and press run target
+- Open the page in question and the debugger should popup up
+
 #### Editor Plugins
 
 This project uses `eslint` and `editorconfig`. You may want to add linting plugins to your editor to help comply with our coding standards:

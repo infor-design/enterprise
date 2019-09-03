@@ -65,6 +65,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
+ * @param {string}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights.
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
@@ -154,6 +155,7 @@ const DATAGRID_DEFAULTS = {
   headerMenuBeforeOpen: null, // Call back for the header level before open menu event
   uniqueId: null, // Unique ID for local storage reference and variable names
   rowHeight: 'normal', // (short, medium or normal)
+  fixedRowHeight: null,
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   onBeforeSelect: null,
@@ -1657,7 +1659,8 @@ Datagrid.prototype = {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
           // Wierd Hack - Sync to "sync" up the filter row
-          $(`#${$(this).attr('id')}`).val($(this).val());
+          const ddElem = $(this);
+          $(`#${ddElem.attr('id')}`).val(ddElem.val());
           self.applyFilter(null, 'selected');
         });
 
@@ -2386,6 +2389,11 @@ Datagrid.prototype = {
             dropdownApi.setCode(conditions[i].value);
           }
         } else if (conditions[i].value instanceof Array && !conditions[i].selectedOptions) {
+          const options = input[0].querySelectorAll('option');
+          input.val('');
+          for (let k = 0; k < options.length; k++) {
+            options[k].selected = false;
+          }
           for (let j = 0; j < conditions[i].value.length; j++) {
             input.find(`option[value="${conditions[i].value[j]}"]`).prop('selected', true);
           }
@@ -3563,7 +3571,7 @@ Datagrid.prototype = {
     d = d ? d.depth : 0;
     depth = d;
 
-    // Setup if this row will be hidden or not
+    // Determine if the tree rows should be hidden or not
     if (self.settings.treeDepth && self.settings.treeDepth.length) {
       for (let i = 0; i < self.settings.treeDepth.length; i++) {
         const treeDepthItem = self.settings.treeDepth[i];
@@ -3647,6 +3655,16 @@ Datagrid.prototype = {
       rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
     }
 
+    // Run a function that dynamically gets the rowHeight
+    let dynamicRowHeight = '';
+    if (this.settings.fixedRowHeight && typeof this.settings.fixedRowHeight === 'function') {
+      dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight(this.recordCount, ariaRowindex, actualIndex, rowData)}"px" `;
+    }
+
+    if (this.settings.fixedRowHeight && typeof this.settings.fixedRowHeight === 'number') {
+      dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight}px" `;
+    }
+
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
       ` data-index="${actualIndex}"${
         actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
@@ -3664,7 +3682,7 @@ Datagrid.prototype = {
       }${isSummaryRow ? ' datagrid-summary-row' : ''
       }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
       }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
-      }">`;
+      }"${dynamicRowHeight}>`;
 
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
@@ -3813,7 +3831,7 @@ Datagrid.prototype = {
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
-            isSelected ? ' aria-selected= "true"' : ''
+            isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
@@ -3887,8 +3905,8 @@ Datagrid.prototype = {
           lineage
         );
 
+        containerHtml.left += childRowHtml.left;
         containerHtml.center += childRowHtml.center;
-        containerHtml.left += childRowHtml.center;
         containerHtml.right += childRowHtml.right;
       }
     }
@@ -6741,7 +6759,9 @@ Datagrid.prototype = {
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked').attr('aria-checked', 'true');
+      .addClass('is-checked').attr('aria-checked', 'true')
+      .attr('aria-selected', 'true')
+      .attr('aria-label', 'Selected');
 
     if (data) {
       data._selected = true;
@@ -7382,7 +7402,10 @@ Datagrid.prototype = {
       if (self.columnIdxById('selectionCheckbox') !== -1) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked no-animate').attr('aria-checked', 'false');
+          .removeClass('is-checked no-animate')
+          .attr('aria-checked', 'false')
+          .removeAttr('aria-selected')
+          .removeAttr('aria-label');
       }
 
       if (s.treeGrid) {
@@ -9827,8 +9850,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
-    let rowElement = this.settings.treeGrid ?
-      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
+    let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     const isExpanded = expandButton.hasClass('is-expanded');
@@ -9845,8 +9867,7 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.settings.treeGrid ?
-        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
+      rowElement = self.rowNodes(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       const children = rowElement.nextUntil(`[aria-level="${level}"]`);
       const parentRowIdx = self.settings.treeGrid && self.settings.source && self.settings.paging ?
@@ -9879,16 +9900,14 @@ Datagrid.prototype = {
             const node = $(this);
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
-            if (nodeLevel === (lev + 1)) {
-              if (!node.hasClass('is-filtered')) {
-                node.removeClass('is-hidden');
-              }
+            if (!node.hasClass('is-filtered')) {
+              node.removeClass('is-hidden');
+            }
 
-              if (node.is('.datagrid-tree-parent')) {
-                const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
-                if (nodeIsExpanded) {
-                  setChildren(node, nodeLevel, !nodeIsExpanded);
-                }
+            if (node.is('.datagrid-tree-parent')) {
+              const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+              if (nodeIsExpanded) {
+                setChildren(node, nodeLevel, !nodeIsExpanded);
               }
             }
           });

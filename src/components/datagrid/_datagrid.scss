@@ -1671,10 +1671,9 @@ $datagrid-short-row-height: 25px;
     &:focus,
     &.is-focused {
       box-shadow: $datagrid-cell-focus-box-shadow;
-
-      .datagrid-cell-wrapper {
-        border: 1px solid $theme-color-brand-primary-base;
-      }
+      outline: 1px solid $theme-color-brand-primary-base;
+      outline-offset: -1px;
+      transform: scale(1);
     }
 
     // Make all content fit in singleline
@@ -2891,13 +2890,17 @@ td .btn-actions {
 }
 
 // Grid Checkboxes
+.datagrid-checkbox-wrapper {
+  margin-top: -14px;
+  top: -50%;
+}
+
 .datagrid-checkbox {
   cursor: pointer;
   display: inline-block;
   font-size: $theme-size-font-sm;
   left: -7px;
   position: relative;
-  top: -14px;
 
   &::before {
     @include checkbox-unchecked-before-style;
@@ -3073,6 +3076,13 @@ td .btn-actions {
     color: transparent;
   }
 
+  &[disabled] {
+    .icon.plus-minus::before,
+    .icon.plus-minus::after {
+      background-color: $button-color-tertiary-disabled-font;
+    }
+  }
+
   .plus-minus {
     left: -6px;
     position: relative;
@@ -3092,7 +3102,7 @@ td .btn-actions {
     width: 14px;
   }
 
-  &:hover {
+  &:hover:not([disabled]) {
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       background-color: $button-color-tertiary-hover-font;

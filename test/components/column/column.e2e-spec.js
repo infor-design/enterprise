@@ -24,6 +24,8 @@ describe('Custom Tooltips page tests', () => {
 
   beforeEach(async () => {
     await utils.setPage('/components/column/test-custom-tooltips.html');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-6'))), config.waitsFor);
   });
 
   it('Should display custom tooltip when hovering to all column nodes default method', async () => {
@@ -64,6 +66,7 @@ describe('Custom Tooltips page tests', () => {
   });
 
   it('Should not display tooltip when hovering to specific column node', async () => {
+    await browser.driver.sleep(config.sleep);
     await browser.actions()
       .mouseMove(await element(by.css('.bar.series-2')))
       .perform();

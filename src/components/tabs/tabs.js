@@ -457,7 +457,7 @@ Tabs.prototype = {
       }
       this.animatedBar.insertBefore(this.tablist);
     } else if (this.animatedBar && this.animatedBar.length) {
-      this.animatedBar.off().remove();
+      this.animatedBar.off().removeData().remove();
       this.animatedBar = undefined;
     }
 
@@ -480,7 +480,7 @@ Tabs.prototype = {
       // Append in the right place based on configuration
       auxilaryButtonLocation.after(this.moreButton);
     } else if (this.moreButton.length) {
-      this.moreButton.off().remove();
+      this.moreButton.off().removeData().remove();
       this.moreButton = $();
     }
 
@@ -505,11 +505,11 @@ Tabs.prototype = {
           this.tablist.prepend(appMenuTrigger);
         }
       } else if (this.isVerticalTabs() && appMenuTrigger.length) {
-        appMenuTrigger.off().remove();
+        appMenuTrigger.off().removeData().remove();
       }
     } else if (appMenuTrigger.length) {
       if (this.isVerticalTabs()) {
-        appMenuTrigger.off().remove();
+        appMenuTrigger.off().removeData().remove();
       } else {
         this.tablist.prepend(appMenuTrigger);
       }
@@ -528,7 +528,7 @@ Tabs.prototype = {
         this.element.addClass('has-add-button');
       }
     } else if (this.addTabButton && this.addTabButton.length) {
-      this.addTabButton.remove();
+      this.addTabButton.off().removeData().remove();
       this.addTabButton = undefined;
       this.element.removeClass('has-add-button');
     }
@@ -547,7 +547,7 @@ Tabs.prototype = {
     // Set animation bar if tabs under modal
     const modal = self.element.closest('.modal');
     if (modal.length) {
-      modal.on('afteropen', () => {
+      modal.on('afteropen.tabs', () => {
         if (self.hasAnimatedBar()) {
           self.focusBar();
         }
@@ -2356,8 +2356,8 @@ Tabs.prototype = {
     insertIntoTabset(this, atIndex);
 
     // Add each new part to their respective collections.
-    this.panels = this.panels.add(tabContentMarkup);
-    this.anchors = this.anchors.add(anchorMarkup);
+    this.panels = $(this.panels.add(tabContentMarkup));
+    this.anchors = $(this.anchors.add(anchorMarkup));
 
     // Link the two items via data()
     anchorMarkup.data('panel-link', tabContentMarkup);
@@ -2431,14 +2431,14 @@ Tabs.prototype = {
     if (targetLi.hasClass('is-selected')) {
       wasSelected = true;
     } else {
-      prevLi = this.tablist.children('li').not(notATab).filter('.is-selected');
+      prevLi = $(this.tablist.children('li').not(notATab).filter('.is-selected'));
     }
 
     // Remove these from the collections
     if (hasTargetPanel) {
-      this.panels = this.panels.not(targetPanel);
+      this.panels = $(this.panels.not(targetPanel));
     }
-    this.anchors = this.anchors.not(targetAnchor);
+    this.anchors = $(this.anchors.not(targetAnchor));
 
     // Destroy Anchor tooltips, if applicable
     if (this.settings.moduleTabsTooltips) {
@@ -2465,19 +2465,20 @@ Tabs.prototype = {
     const trigger = parentMenu.data('trigger');
 
     // Kill associated events
-    targetLi.off('click.tabs');
-    targetAnchor.off('click.tabs focus.tabs keydown.tabs');
+    targetLi.find('.icon').off().removeData().remove();
+    targetLi.off();
+    targetAnchor.off();
 
     // Remove Markup
-    targetLi.remove();
+    targetLi.removeData().remove();
     if (hasTargetPanel) {
-      targetPanel.remove();
+      targetPanel.removeData().remove();
     }
 
     const menuItem = targetAnchor.data('moremenu-link');
     if (menuItem) {
-      menuItem.parent().off().remove();
-      $.removeData(targetAnchor[0], 'moremenu-link');
+      menuItem.parent().off().removeData().remove();
+      targetAnchor.removeData();
     }
 
     function isLastDropdownTabItem(menu) {
@@ -2590,7 +2591,7 @@ Tabs.prototype = {
       this.container.append(markup);
     }
 
-    this.panels = this.panels.add(markup);
+    this.panels = $(this.panels.add(markup));
 
     return markup;
   },
@@ -3072,7 +3073,7 @@ Tabs.prototype = {
     const self = this;
     if (self.popupmenu) {
       self.popupmenu.destroy();
-      $('#tab-container-popupmenu').off('focus.popupmenu').remove();
+      $('#tab-container-popupmenu').off('focus.popupmenu').removeData().remove();
       $(document).off('keydown.popupmenu');
     }
 
@@ -3129,7 +3130,7 @@ Tabs.prototype = {
 
       // Link tab to its corresponding "More Tabs" menu option
       $item.data('moremenu-link', popupA);
-      popupA.find('.icon-more').remove();
+      popupA.find('.icon-more').removeData().remove();
 
       // Link "More Tabs" menu option to its corresponding Tab.
       // Remove onclick methods from the popup <li> because they are called
@@ -3232,7 +3233,7 @@ Tabs.prototype = {
     function handleDestroy() {
       menu.off();
       self.hideFocusState();
-      $('#tab-container-popupmenu').remove();
+      $('#tab-container-popupmenu').removeData().remove();
     }
 
     function handleDismissibleIconClick(e) {
@@ -3943,11 +3944,11 @@ Tabs.prototype = {
       this.tablistContainer.off('mousewheel.tabs');
     }
 
-    this.focusState.remove();
+    this.focusState.removeData().remove();
     this.focusState = undefined;
 
     if (this.hasAnimatedBar()) {
-      this.animatedBar.remove();
+      this.animatedBar.removeData().remove();
       this.animatedBar = undefined;
     }
     $('.tab-panel input').off('error.tabs valid.tabs');

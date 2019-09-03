@@ -1,25 +1,16 @@
-<style>
-  .output {
-    background-color: white;
-    display: block;
-    height: 80%;
-    line-height: 15px;
-    width: 100%;
-  }
-</style>
-
 <div class="row">
   <div class="twelve columns">
     <h1 class="fieldset-title">Locale - Number Groupsize</h1>
-
-    <div id="output" class="output">
+    <div id="output" class="card">
+      <div class="row top-padding">
+      </div>
     </div>
 
     <script>
       $('body').on('initialized', function() {
         var output = $('#output');
         var append = function (value) {
-          output.append('<span>' + value + '</span><br>');
+          output.append('<div class="row"><div class="twelve columns">' + value + '</div></div>');
         };
 
         Locale.getLocale('nl-NL').done(function () {
