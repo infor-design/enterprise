@@ -109,7 +109,7 @@ const formatters = {
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
-  Time(row, cell, value, col) {
+  Time(row, cell, value, col, isReturnValue) {
     let formatted = ((value === null || value === undefined) ? '' : value);
     const localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat.short : null);
     const localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
@@ -146,7 +146,7 @@ const formatters = {
     // Remove extra space in begining
     formatted = formatted.replace(/^\s/, '');
 
-    if (!col.editor) {
+    if (!col.editor || isReturnValue === true) {
       return formatted;
     }
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'clock', classes: ['icon-clock'] })}`;
