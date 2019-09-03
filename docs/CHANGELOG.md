@@ -40,6 +40,7 @@
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
+- `[Tabs]` Fixed a memory leak caused by removing a tab. ([#2686](https://github.com/infor-design/enterprise/issues/2686))
 - `[Toast]` Fixed memory leak issues after destroy. ([#2634](https://github.com/infor-design/enterprise/issues/2634))
 - `[Uplift Theme]` Various improvements to the Dark/Contrast variants, with a focus on passing WCAG ([#2541](https://github.com/infor-design/enterprise/issues/2541)) ([#2588](https://github.com/infor-design/enterprise/issues/2588))
 
