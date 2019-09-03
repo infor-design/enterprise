@@ -31,6 +31,7 @@
 - `[Datagrid]` Added a more descriptive aria-label to checkboxes if the required descriptors exist. ([#2031](https://github.com/infor-design/enterprise-ng/issues/2031))
 - `[Datagrid]` Added an announcement of the selection state of a row. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
+- `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
 - `[Icons]` Fixed an issue with partially invisible empty messages in uplift theme. ([#2474](https://github.com/infor-design/enterprise/issues/2474))
