@@ -33,6 +33,7 @@
 - `[Datagrid]` Fixed filtering on time columns when time is a string. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Datagrid]` Fixed icon layout issues on the filter row in medium rowHeight mode. ([#2709](https://github.com/infor-design/enterprise/issues/2709))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
+- `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Flex Toolbar]` Fixed a lifecycle problem that was preventing Menu Buttons with a `removeOnDestroy` setting from opening. ([#2664](https://github.com/infor-design/enterprise/issues/2664))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))

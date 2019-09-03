@@ -2081,8 +2081,12 @@ Editor.prototype = {
       } else if (/ul|ol/.test(parentTag)) {
         normalizeList(parentEl);
       } else {
-        const lists = [].slice.call(parentEl.parentNode.querySelectorAll('ul, ol'));
-        lists.forEach(list => normalizeList(list));
+        const setEl = () => ($(parentEl).closest('.editor').length ? parentEl.parentNode : null);
+        const elem = parentEl.classList.contains('editor') ? parentEl : setEl();
+        if (elem) {
+          const lists = [].slice.call(elem.querySelectorAll('ul, ol'));
+          lists.forEach(list => normalizeList(list));
+        }
       }
     };
 
