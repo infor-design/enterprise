@@ -32,6 +32,7 @@
     &[data-element='h3'],
     &[data-element='h4'] {
       margin-right: $theme-number-spacing-base;
+      min-width: 32px;
 
       .icon {
         margin-left: unset;

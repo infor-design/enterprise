@@ -1,7 +1,7 @@
 .card,
 .widget {
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px $cardlist-box-shadow-color;
 }
 
 .card-header,

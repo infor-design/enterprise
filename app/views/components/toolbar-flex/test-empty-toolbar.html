@@ -1,0 +1,43 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div id="test-toolbar" class="flex-toolbar"></div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button id="btn-load" class="btn-secondary">
+      <span>Load Toolbar Buttons</span>
+    </button>
+  </div>
+</div>
+
+<script id="test-script">
+  const buttons = [
+    {
+      audible: true,
+      cssClass: 'btn-icon',
+      disabled: true,
+      id: 'btn-trash',
+      icon: 'trash',
+      text: 'trash'
+    },
+    {
+
+    }
+  ];
+
+  function generateButtonHTML(settings) {
+    var id = settings.id ? ' id="'+ settings.id + '"' : '';
+    var isDisabled = settings.disabled ? ' disabled' : '';
+    var isAudible = settings.audible ? ' class="audible"' : '';
+
+    return '<button'+ id +' class="'+ settings.cssClass +'"'+ isDisabled +'>' +
+      '<span'+ isAudible +'>'+ settings.text +'</span>' +
+      '</button>';
+  }
+
+
+</script>

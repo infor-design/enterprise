@@ -65,10 +65,10 @@ describe('Pager API (Standalone)', () => {
   it('Should hide first button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showFirstButton: false });
 
-    expect(document.body.querySelector('.pager-first a')).not.toExist();
-    expect(document.body.querySelector('.pager-prev a')).toBeVisible();
-    expect(document.body.querySelector('.pager-next a')).toBeVisible();
-    expect(document.body.querySelector('.pager-last a')).toBeVisible();
+    expect(document.body.querySelector('.pager-first .btn-icon')).not.toExist();
+    expect(document.body.querySelector('.pager-prev .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-next .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-last .btn-icon')).toBeVisible();
 
     pagerObj.updated({ showFirstButton: true });
   });
@@ -76,10 +76,10 @@ describe('Pager API (Standalone)', () => {
   it('Should disable first button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableFirstButton: false });
 
-    expect(document.body.querySelector('.pager-first a[disabled]')).toBeTruthy();
-    expect(document.body.querySelector('.pager-prev a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-next a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-last a[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeTruthy();
+    expect(document.body.querySelector('.pager-prev .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-next .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeFalsy();
 
     pagerObj.updated({ enableFirstButton: true });
   });
@@ -87,46 +87,46 @@ describe('Pager API (Standalone)', () => {
   it('Should hide previous button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPreviousButton: false });
 
-    expect(document.body.querySelector('.pager-first a')).toBeVisible();
-    expect(document.body.querySelector('.pager-prev a')).not.toExist();
-    expect(document.body.querySelector('.pager-next a')).toBeVisible();
-    expect(document.body.querySelector('.pager-last a')).toBeVisible();
+    expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-prev .btn-icon')).not.toExist();
+    expect(document.body.querySelector('.pager-next .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-last .btn-icon')).toBeVisible();
   });
 
   it('Should disable previous button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enablePreviousButton: false });
 
-    expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-prev a[disabled]')).toBeTruthy();
-    expect(document.body.querySelector('.pager-next a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-last a[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-prev .btn-icon[disabled]')).toBeTruthy();
+    expect(document.body.querySelector('.pager-next .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeFalsy();
   });
 
   it('Should hide next button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showNextButton: false });
 
-    expect(document.body.querySelector('.pager-first a')).toBeVisible();
-    expect(document.body.querySelector('.pager-prev a')).toBeVisible();
-    expect(document.body.querySelector('.pager-next a')).not.toExist();
-    expect(document.body.querySelector('.pager-last a')).toBeVisible();
+    expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-prev .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-next .btn-icon')).not.toExist();
+    expect(document.body.querySelector('.pager-last .btn-icon')).toBeVisible();
   });
 
   it('Should disable next button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableNextButton: false });
 
-    expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-prev a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-next a[disabled]')).toBeTruthy();
-    expect(document.body.querySelector('.pager-last a[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-prev .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-next .btn-icon[disabled]')).toBeTruthy();
+    expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeFalsy();
   });
 
   it('Should hide last button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showLastButton: false });
 
-    expect(document.body.querySelector('.pager-first a')).toBeVisible();
-    expect(document.body.querySelector('.pager-prev a')).toBeVisible();
-    expect(document.body.querySelector('.pager-next a')).toBeVisible();
-    expect(document.body.querySelector('.pager-last a')).not.toExist();
+    expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-prev .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-next .btn-icon')).toBeVisible();
+    expect(document.body.querySelector('.pager-last .btn-icon')).not.toExist();
 
     pagerObj.updated({ showLastButton: true });
   });
@@ -134,10 +134,10 @@ describe('Pager API (Standalone)', () => {
   it('Should disable last button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableLastButton: false });
 
-    expect(document.body.querySelector('.pager-first a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-prev a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-next a[disabled]')).toBeFalsy();
-    expect(document.body.querySelector('.pager-last a[disabled]')).toBeTruthy();
+    expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-prev .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-next .btn-icon[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeTruthy();
 
     pagerObj.updated({ enableLastButton: true });
   });
@@ -151,10 +151,10 @@ describe('Pager API (Standalone)', () => {
       lastPageTooltip: lastContent
     });
 
-    const firstBtnTooltipAPI = $(document.body.querySelector('.pager-first a')).data('tooltip');
-    const previousBtnTooltipAPI = $(document.body.querySelector('.pager-prev a')).data('tooltip');
-    const nextBtnTooltipAPI = $(document.body.querySelector('.pager-next a')).data('tooltip');
-    const lastBtnTooltipAPI = $(document.body.querySelector('.pager-last a')).data('tooltip');
+    const firstBtnTooltipAPI = $(document.body.querySelector('.pager-first .btn-icon')).data('tooltip');
+    const previousBtnTooltipAPI = $(document.body.querySelector('.pager-prev .btn-icon')).data('tooltip');
+    const nextBtnTooltipAPI = $(document.body.querySelector('.pager-next .btn-icon')).data('tooltip');
+    const lastBtnTooltipAPI = $(document.body.querySelector('.pager-last .btn-icon')).data('tooltip');
 
     expect(firstBtnTooltipAPI.settings.content).toEqual(firstContent);
     expect(previousBtnTooltipAPI.settings.content).toEqual(previousContent);

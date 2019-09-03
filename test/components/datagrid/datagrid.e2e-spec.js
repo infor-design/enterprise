@@ -172,9 +172,9 @@ describe('Datagrid Editable Tests', () => {
 
   it('Should render row statuses across page', async () => {
     await element(by.id('toggle-row-status')).click();
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(350);
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('#datagrid .rowstatus-row-error')).count()).toEqual(1);
@@ -512,7 +512,7 @@ describe('Datagrid grouping with paging tests', () => {
 
   it('Should handle selection', async () => {
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next a'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next .btn-icon'))), config.waitsFor);
 
     const cell = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)';
     const row = '#datagrid .datagrid-body tbody tr:nth-child(2)';
@@ -527,7 +527,7 @@ describe('Datagrid grouping with paging tests', () => {
     await element(by.css('.pager-next')).click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev a'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev .btn-icon'))), config.waitsFor);
 
     await element(by.css(cell)).click();
 
@@ -839,7 +839,7 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
-    await element(by.css('.pager-last a')).click();
+    await element(by.css('.pager-last .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('990');
@@ -850,8 +850,8 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
-    await element(by.css('.pager-last a')).click();
-    await element(by.css('.pager-first a')).click();
+    await element(by.css('.pager-last .btn-icon')).click();
+    await element(by.css('.pager-first .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
@@ -862,13 +862,13 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('10');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('19');
 
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
@@ -912,9 +912,9 @@ describe('Datagrid paging tests', () => {
 
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
 
-      await element(by.css('.pager-next a')).click();
+      await element(by.css('.pager-next .btn-icon')).click();
       await browser.driver.sleep(config.sleep);
-      await element(by.css('.pager-prev a')).click();
+      await element(by.css('.pager-prev .btn-icon')).click();
       await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeTruthy();
@@ -2051,12 +2051,12 @@ describe('Datagrid paging clientside single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
@@ -2083,13 +2083,13 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
 
     await browser.driver.sleep(config.sleep);
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
     await browser.driver.sleep(config.sleep);
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -2115,12 +2115,12 @@ describe('Datagrid paging indeterminate single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -2187,7 +2187,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 
   it('Should be able to select and have selections clear when paging on 2nd page', async () => {
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -2248,12 +2248,12 @@ describe('Datagrid paging serverside single select tests', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
 
-    await element(by.css('.pager-next a')).click();
+    await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    await element(by.css('.pager-prev a')).click();
+    await element(by.css('.pager-prev .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
@@ -2280,7 +2280,7 @@ describe('Datagrid save user settings', () => {
 
   if (!utils.isCI() && !utils.isBS()) {
     it('Should save active page on reload', async () => {
-      await element(by.css('li.pager-next a')).click();
+      await element(by.css('li.pager-next .btn-icon')).click();
       await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
@@ -2586,7 +2586,7 @@ describe('Datagrid Tree Paging Tests', () => {
   });
 
   it('Should expand/collapse on second page click', async () => {
-    await element(by.css('li.pager-next a')).click();
+    await element(by.css('li.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('tr[aria-rowindex="26"]')).count()).toEqual(1);
@@ -2772,7 +2772,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
     expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
-    await element(by.css('li.pager-next a')).click();
+    await element(by.css('li.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
@@ -2807,7 +2807,7 @@ describe('Datagrid paging with empty dataset', () => {
 
     expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(10);
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 Results)');
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);

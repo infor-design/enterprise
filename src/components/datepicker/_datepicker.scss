@@ -84,7 +84,7 @@
 
   &[readonly] {
     + .icon {
-      color: $trigger-icon-fill-color;
+      color: $datepicker-readonly-icon-color;
       cursor: default;
     }
   }

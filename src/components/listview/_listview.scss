@@ -131,7 +131,7 @@
     }
 
     &:focus {
-      border-color: $theme-color-brand-primary-base !important;
+      border-color: $theme-color-brand-primary-lighter !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
