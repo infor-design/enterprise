@@ -3076,6 +3076,13 @@ td .btn-actions {
     color: transparent;
   }
 
+  &[disabled] {
+    .icon.plus-minus::before,
+    .icon.plus-minus::after {
+      background-color: $button-color-tertiary-disabled-font;
+    }
+  }
+
   .plus-minus {
     left: -6px;
     position: relative;
@@ -3095,7 +3102,7 @@ td .btn-actions {
     width: 14px;
   }
 
-  &:hover {
+  &:hover:not([disabled]) {
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       background-color: $button-color-tertiary-hover-font;
