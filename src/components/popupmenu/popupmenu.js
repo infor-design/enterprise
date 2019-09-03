@@ -1546,6 +1546,12 @@ PopupMenu.prototype = {
    */
   open(e, ajaxReturn, useDelay) {
     const self = this;
+
+    // If no top-level menu is present, don't open at all and act like a button.
+    if (!this.menu || !this.menu.length) {
+      return;
+    }
+
     /**
      * Fires before open.
      *
