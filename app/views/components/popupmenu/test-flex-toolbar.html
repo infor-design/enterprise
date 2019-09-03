@@ -1,0 +1,150 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="test-toolbar" class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Products</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button id="btn-new-document" class="btn-menu" data-init="false">
+          <span class="audible">New Document</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-new-document"></use>
+          </svg>
+          <svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul id="btn-new-document-menu" class="popupmenu"></ul>
+
+        <button id="btn-open" class="btn-icon" disabled>
+          <span class="audible">Open Document</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-open-folder"></use>
+          </svg>
+        </button>
+
+        <button id="btn-delete" class="btn-icon" disabled>
+          <span class="audible">Delete</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+        </button>
+
+        <button id="btn-filter" class="btn-icon">
+          <span class="audible">Filter</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar-section more">
+        <button id="btn-more" class="btn-actions" data-options='{ "attachToBody": true }'>
+          <span class="audible">More Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action 1</a></li>
+          <li><a href="#">Action 2</a></li>
+          <li><a href="#">Action 3</a></li>
+          <li><a href="#">Action 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button id="btn-trigger-updated-toolbar" class="btn-secondary">
+      <span>Trigger `updated()` on Toolbar</span>
+    </button>
+
+    <button id="btn-trigger-updated-menubutton" class="btn-secondary">
+      <span>Trigger `updated()` on Menu Button Only</span>
+    </button>
+
+    <button id="btn-destroy-invoke-menubutton" class="btn-secondary">
+      <span>Destroy Menu Button</span>
+    </button>
+  </div>
+</div>
+
+<script id="test-script" type="text/javascript">
+  var DESTROY_TEXT = 'Destroy Menu Button';
+  var INVOKE_TEXT = 'Invoke Menu Button';
+
+  var MENU_RESPONSE_HTML = '' +
+    '<li><a href="#">Item One</a></li>' +
+    '<li><a href="#">Item Two</a></li>' +
+    '<li class="submenu">' +
+      '<a href="#">Item Three</a>' +
+      '<ul class="popupmenu"></ul>' +
+    '</li>' +
+    '<li><a href="#">Item Four</a></li>' +
+  '';
+
+  var SUBMENU_RESPONSE_HTML = '' +
+    '<li><a href="#">Sub-item One</a></li>' +
+    '<li><a href="#">Sub-item Two</a></li>' +
+    '<li><a href="#">Sub-item Three</a></li>' +
+    '<li><a href="#">Sub-item Four</a></li>' +
+  '';
+
+
+
+  function popupmenuTestBeforeOpen(response, options) {
+    if (options.contextElement) {
+      setTimeout(function() {
+        response(SUBMENU_RESPONSE_HTML);
+      }, 100);
+      return;
+    }
+
+    setTimeout(function() {
+      response(MENU_RESPONSE_HTML);
+    }, 100);
+  }
+
+  function invokeMenuButton() {
+    $('#btn-new-document').popupmenu({
+      attachToBody: true,
+      beforeOpen: popupmenuTestBeforeOpen,
+      menu: 'btn-new-document-menu',
+      removeOnDestroy: true
+    });
+  }
+
+  invokeMenuButton();
+
+  $('body').on('initialized', function() {
+    var toolbarAPI = $('#test-toolbar').data('toolbarFlex');
+    var popupmenuAPI = $('#btn-new-document').data('popupmenu');
+
+    $('#btn-trigger-updated-toolbar').on('click.test', function() {
+      toolbarAPI.updated();
+    });
+
+    $('#btn-trigger-updated-menubutton').on('click.test', function() {
+      popupmenuAPI.updated();
+    });
+
+    $('#btn-destroy-invoke-menubutton').on('click.test', function() {
+      if (popupmenuAPI && typeof popupmenuAPI.destroy === 'function') {
+        popupmenuAPI.destroy();
+        popupmenuAPI = null;
+        toolbarAPI.updated();
+        $(this).find('span').text(INVOKE_TEXT);
+      } else {
+        $('<ul id="btn-new-document-menu" class="popupmenu"></ul>').insertAfter('#btn-new-document');
+        invokeMenuButton();
+        toolbarAPI.updated();
+        popupmenuAPI = $('#btn-new-document').data('popupmenu');
+        $(this).find('span').text(DESTROY_TEXT);
+      }
+    });
+  });
+</script>

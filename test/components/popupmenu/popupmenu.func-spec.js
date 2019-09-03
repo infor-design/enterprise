@@ -265,7 +265,7 @@ describe('Popupmenu renderItem() API', () => {
     };
     const markup = popupmenuObj.renderItem(data);
 
-    expect(markup).toBe('<li id="my-new-popup-item" class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
+    expect(markup).toBe('<li class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
   });
 
   it('Should build HTML for a single Popupmenu Item that\'s disabled', () => {
@@ -366,6 +366,56 @@ describe('Popupmenu renderItem() API', () => {
   });
 });
 
+describe('Popupmenu (settings)', () => {
+  beforeEach(() => {
+    popupmenuButtonEl = null;
+    svgEl = null;
+    popupmenuObj = null;
+    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
+    document.body.insertAdjacentHTML('afterbegin', svg);
+    popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
+    svgEl = document.body.querySelector('.svg-icons');
+  });
+
+  afterEach(() => {
+    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+    svgEl.parentNode.removeChild(svgEl);
+  });
+
+  it('should place the menu underneath the `body` element with `attachToBody` set', () => {
+    popupmenuObj = new PopupMenu(popupmenuButtonEl, {
+      attachToBody: true
+    });
+    const popupmenuWrapperEl = document.body.querySelector('body > .popupmenu-wrapper');
+
+    expect(popupmenuWrapperEl).toBeDefined();
+
+    // Menu markup should move back to immediately after the button when destroyed.
+    popupmenuObj.destroy();
+    const popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu');
+
+    expect(popupmenuEl).toBeDefined();
+  });
+
+  it('should remove the menu `<ul>` from the DOM when destroyed with `removeOnDestroy` set', () => {
+    popupmenuObj = new PopupMenu(popupmenuButtonEl, {
+      removeOnDestroy: true
+    });
+    let popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu-wrapper > .popupmenu');
+
+    // When invoked, references should exist
+    expect(popupmenuEl).toBeDefined();
+    expect(popupmenuObj.menu).toBeDefined();
+
+    popupmenuObj.destroy();
+    popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu');
+
+    // When destroyed with the setting, references should be gone
+    expect(popupmenuEl).toBe(null);
+    expect(popupmenuObj.menu).not.toBeDefined();
+  });
+});
+
 describe('Popupmenu toData() API', () => {
   describe('Main Examples', () => {
     beforeEach(() => {
@@ -395,6 +445,42 @@ describe('Popupmenu toData() API', () => {
       expect(data.menu[0].text).toBe('Menu Option #1');
       expect(data.menu[0].disabled).toBeFalsy();
       expect(data.menu[0].visible).toBeTruthy();
+    });
+  });
+
+  describe('Empty examples', () => {
+    const emptyMenuHTML = `
+      <button id="popupmenu-trigger" class="btn-menu">
+        <span>Normal Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use xlink:href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu"></ul>`;
+
+    beforeEach(() => {
+      popupmenuButtonEl = null;
+      svgEl = null;
+      popupmenuObj = null;
+      document.body.insertAdjacentHTML('afterbegin', emptyMenuHTML);
+      document.body.insertAdjacentHTML('afterbegin', svg);
+      popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
+      svgEl = document.body.querySelector('.svg-icons');
+      popupmenuObj = new PopupMenu(popupmenuButtonEl);
+    });
+
+    afterEach(() => {
+      popupmenuObj.destroy();
+      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+      svgEl.parentNode.removeChild(svgEl);
+    });
+
+    it('Should gracefully handle empty menus', () => {
+      const data = popupmenuObj.toData();
+
+      expect(data).toBeDefined();
+      expect(data.menuId).toBeDefined(); // auto-generated
+      expect(data.menu.length).toBe(0);
     });
   });
 

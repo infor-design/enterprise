@@ -151,38 +151,40 @@ PopupMenu.prototype = {
     let duplicateMenu;
     let triggerId;
 
-    switch (typeof this.settings.menu) {
-      case 'string': // ID Selector
-        id = this.settings.menu;
-        this.menu = $(`#${this.settings.menu}`);
+    if (!this.menu || !this.menu.length) {
+      switch (typeof this.settings.menu) {
+        case 'string': // ID Selector
+          id = this.settings.menu;
+          this.menu = $(`#${this.settings.menu}`);
 
-        // duplicate menu if shared by multiple triggers
-        if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
-          this.menu.data('trigger', this.element);
-          triggerId = this.menu.data('trigger')[0].id;
-          duplicateMenu = this.menu.clone();
-          duplicateMenu.detach().appendTo('body');
+          // duplicate menu if shared by multiple triggers
+          if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+            this.menu.data('trigger', this.element);
+            triggerId = this.menu.data('trigger')[0].id;
+            duplicateMenu = this.menu.clone();
+            duplicateMenu.detach().appendTo('body');
 
-          // add data-id attr to menus
-          duplicateMenu.attr('data-trigger', triggerId);
-          this.menu.attr('data-trigger', triggerId);
-        }
-        break;
-      case 'object': // jQuery Object
-        if (this.settings.menu === null) {
-          this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
-        } else {
-          this.menu = $(this.settings.menu);
-        }
+            // add data-id attr to menus
+            duplicateMenu.attr('data-trigger', triggerId);
+            this.menu.attr('data-trigger', triggerId);
+          }
+          break;
+        case 'object': // jQuery Object
+          if (this.settings.menu === null) {
+            this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
+          } else {
+            this.menu = $(this.settings.menu);
+          }
 
-        id = this.menu.attr('id');
-        if (!id || id === '') {
-          this.menu.attr('id', `popupmenu-${this.id}`);
           id = this.menu.attr('id');
-        }
-        break;
-      default:
-        break;
+          if (!id || id === '') {
+            this.menu.attr('id', `popupmenu-${this.id}`);
+            id = this.menu.attr('id');
+          }
+          break;
+        default:
+          break;
+      }
     }
 
     // If markup already exists for the wrapper, use that instead of rebuilding.
@@ -420,7 +422,7 @@ PopupMenu.prototype = {
       </svg>`;
     }
 
-    return stringUtils.stripWhitespace(`<li${id} class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
+    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
       <a${id} href="#">${icon}<span>${settings.text}</span>
         ${ddicon}
       </a>
@@ -455,9 +457,9 @@ PopupMenu.prototype = {
       settings.contextElement = settings.contextElement.children('ul');
     }
 
-    const menuId = `${settings.contextElement.attr('id')}`;
-    if (menuId) {
-      data.menuId = menuId;
+    const idAttr = settings.contextElement.attr('id');
+    if (idAttr && idAttr.length) {
+      data.menuId = `${idAttr}`;
     }
 
     const hasIcons = settings.contextElement.hasClass('has-icons');
@@ -704,13 +706,17 @@ PopupMenu.prototype = {
       itemIcon.remove();
     }
 
-    // TODO: Submenus
-    // Build so the submenu data structure is used to rerun this method against each submenu item.
+    // Refresh a menu item's submenu, if applicable.
     if (data.submenu) {
-      const submenuItems = item.querySelector('.popupmenu').children;
-      for (let i = 0; i < data.submenu.length; i++) {
-        data.submenu[i].isSubmenuItem = true;
-        this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
+      item.classList.add('submenu');
+      const submenuContainer = item.querySelector('.popupmenu');
+      if (submenuContainer) {
+        // Simply update the menu item's children
+        const submenuItems = submenuContainer.children;
+        for (let j = 0; j < data.submenu.length; j++) {
+          data.submenu[j].isSubmenuItem = true;
+          this.refreshMenuItem(submenuItems.item(j), data.submenu[j], callback);
+        }
       }
     }
 
@@ -1540,6 +1546,12 @@ PopupMenu.prototype = {
    */
   open(e, ajaxReturn, useDelay) {
     const self = this;
+
+    // If no top-level menu is present, don't open at all and act like a button.
+    if (!this.menu || !this.menu.length) {
+      return;
+    }
+
     /**
      * Fires before open.
      *
@@ -2051,7 +2063,9 @@ PopupMenu.prototype = {
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
 
-    this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    if (this.menu && this.menu.length) {
+      this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    }
 
     $('iframe').each(function () {
       const frame = $(this);
@@ -2187,6 +2201,13 @@ PopupMenu.prototype = {
     const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
 
+    function unwrapPopup(menu) {
+      const thisWrapper = menu.parent();
+      if (thisWrapper.is('.popupmenu-wrapper, .wrapper')) {
+        menu.unwrap();
+      }
+    }
+
     if (this.ajaxContent) {
       this.ajaxContent.off().remove();
     }
@@ -2202,24 +2223,21 @@ PopupMenu.prototype = {
 
     this.menu.off('dragstart.popupmenu');
 
-    // TODO: Fix when we have time - shouldn't be referencing other controls here
+    // Remove the wrapper, if applicable
+    if (!this.preExistingWrapper) {
+      this.menu.unwrap();
+    }
+
+    // Place the menu back where it came from while cleaning up.
+    // Get an accurate target to place the menu back where it came from
     let insertTarget = this.element;
     const searchfield = this.element.parent().children('.searchfield');
-
     if (searchfield.length) {
       insertTarget = searchfield.first();
     }
-    if (this.settings.attachToBody && insertTarget) {
-      this.menu.unwrap();
+    this.menu.insertAfter(insertTarget);
 
-      if (this.settings.removeOnDestroy) {
-        this.menu.off().remove();
-      }
-    }
-    if (this.menu && insertTarget && !this.settings.attachToBody) {
-      this.menu.insertAfter(insertTarget);
-    }
-
+    // Cleanup menu items
     this.menu.find('.submenu').children('a').each((i, item) => {
       const spantext = $(item).find('span').text();
       const text = spantext || $(item).text();
@@ -2228,25 +2246,19 @@ PopupMenu.prototype = {
     });
     this.menu.find('.submenu').removeClass('submenu');
 
-    function unwrapPopup(menu) {
-      const thisWrapper = menu.parent();
-      if (thisWrapper.is('.popupmenu-wrapper, .wrapper')) {
-        menu.unwrap();
-      }
-    }
-
-    // Unwrap submenus
+    // Unwrap submenus, if applicable
     this.menu.find('.popupmenu').each(function () {
       unwrapPopup($(this));
     });
 
+    // Finish cleaning up after the wrapper
     if (self.wrapperPlace) {
       self.wrapperPlace.destroy();
       delete self.wrapperPlace;
     }
     wrapper.off().remove();
 
-    if (this.menu[0]) {
+    if (this.menu && this.menu.length && this.menu.data('trigger')) {
       $.removeData(this.menu[0], 'trigger');
     }
 
@@ -2278,7 +2290,14 @@ PopupMenu.prototype = {
   destroy() {
     this.close();
     this.teardown();
+
+    // In some cases, the menu needs to be completely removed on `destroy`.
     this.menu.trigger('destroy');
+    if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
+      this.menu.off().remove();
+      delete this.menu;
+    }
+
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

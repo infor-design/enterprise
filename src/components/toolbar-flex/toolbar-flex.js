@@ -46,6 +46,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   init() {
+    this.uniqueId = utils.uniqueId(this.element);
     this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
       const itemComponentSettings = {};

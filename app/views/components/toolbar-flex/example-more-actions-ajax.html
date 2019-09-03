@@ -84,7 +84,7 @@
     '<li><a href="#">Menu Button Option #2</a></li>' +
     '<li class="submenu">' +
     '<a href="#">Menu Button Option #3</a>' +
-    '<ul class="popupmenu" id="menu-button-submenu"></ul>' +
+    '<ul class="popupmenu" id="flex-toolbar-menu-button-submenu"></ul>' +
     '</li>' +
     '<li><a href="#">Menu Button Option #4</a></li>' +
     '';
@@ -96,40 +96,48 @@
     '<li><a href="#">Sub-item Four</a></li>' +
     '';
 
-  // Populate the menu with some fake content for the sake of testing the AJAX call.
-  function popupmenuBeforeOpen(response, options) {
-    if (options.contextElement) {
-      if (options.contextElement[0].parentElement.parentElement.id === 'menu-button') {
-        options.isSubmenu = false;
-        return menuButtonPopupmenuBeforeOpen(response, options);
-      } else if (options.contextElement[0].id === 'menu-button-submenu') {
-        return menuButtonPopupmenuBeforeOpen(response, options);
-      }
-      return response( $(SUB_LEVEL_POPUPMENU_CONTENT) );
-    }
-    return response( $(TOP_LEVEL_POPUPMENU_CONTENT) );
-  }
-
-  // Populate the menu with some fake content for the sake of testing the AJAX call.
-  function menuButtonPopupmenuBeforeOpen(response, options) {
-    if (options.isSubmenu) {
-      return response( $(SUBMENU_MENU_BUTTON_RESPONSE_HTML) );
-    }
-    return response( $(TOP_LEVEL_MENU_BUTTON_POPUPMENU_CONTENT) );
-  }
-
   $('body').on('initialized', function() {
+    var toolbarApi = $('#flex-toolbar').data('toolbar-flex');
+
+    // Populate the Toolbar's Menu Button with some fake content
+    // for the sake of testing its AJAX call.
+    function menuButtonPopupmenuBeforeOpen(response, options) {
+      if (options.isSubmenu) {
+        return response( $(SUBMENU_MENU_BUTTON_RESPONSE_HTML) );
+      }
+      return response( $(TOP_LEVEL_MENU_BUTTON_POPUPMENU_CONTENT) );
+    }
+
+    // Populate the More Actions menu.
+    // If a link to a "menu button" overflow item is activated, the AJAX call for the
+    // menu button is accessed instead.
+    function popupmenuBeforeOpen(response, options) {
+      const toolbarUniqueId = toolbarApi.uniqueId;
+      const toolbarMenuLink = toolbarUniqueId + '-menu-button';
+      const toolbarSubMenuLink = toolbarUniqueId + '-menu-button-submenu';
+
+      if (options.contextElement) {
+        if (options.contextElement[0].parentElement.parentElement.querySelector('a').id === toolbarMenuLink) {
+          options.isSubmenu = false;
+          return menuButtonPopupmenuBeforeOpen(response, options);
+        } else if (options.contextElement[0].id === toolbarSubMenuLink) {
+          return menuButtonPopupmenuBeforeOpen(response, options);
+        }
+        return response( $(SUB_LEVEL_POPUPMENU_CONTENT) );
+      }
+      return response( $(TOP_LEVEL_POPUPMENU_CONTENT) );
+    }
+
     $('#menu-button').popupmenu({
       beforeOpen: menuButtonPopupmenuBeforeOpen,
       menu: 'menu-button-popupmenu'
     });
 
-    var toolbarApi = $('#flex-toolbar').data('toolbar-flex');
-
     toolbarApi.settings.beforeMoreMenuOpen = popupmenuBeforeOpen;
     toolbarApi.updated();
   });
 
+  // Show a Toast whenever a Toolbar Item or a valid Action Menu item is selected.
   $('.flex-toolbar').on('selected.test', function(e, item, secondArg) {
     var text = $(item.element).text().trim();
     var selectedItem;
