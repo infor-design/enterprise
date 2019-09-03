@@ -36,9 +36,6 @@ $datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
 $listview-border-color: $theme-color-palette-slate-20;
 $panel-border-color: $theme-color-palette-slate-20;
 
-// TODO: remove this when fixed in tokens (infor-design/design-system#393)
-$input-placeholder-color: $theme-color-palette-slate-60;
-
 // Core Uplift Controls
 @import '../core/controls-uplift';
 
