@@ -759,7 +759,7 @@ describe('Datepicker Umalqura Tests', () => {
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
-    expect([9, 10]).toContain(value.length);
+    expect([8, 9, 10]).toContain(value.length);
     await utils.checkForErrors();
   });
 });
