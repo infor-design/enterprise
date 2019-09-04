@@ -9,10 +9,9 @@
   }
 
   [class*='btn'] {
-    font-size: unset;
-    height: 20px;
-    min-height: 0;
-    top: 1px;
+    font-size: normal;
+    margin-top: 4px;
+    min-height: 24px;
 
     &:first-child {
       margin-left: $theme-number-spacing-base;
@@ -21,7 +20,7 @@
     &[data-element='foreColor'] .icon,
     &[data-element='foreColor'] .icon {
       margin-right: 4px;
-      margin-top: unset;
+      margin-top: auto;
     }
 
     &[data-element='u'] .icon {
@@ -35,7 +34,7 @@
       min-width: 32px;
 
       .icon {
-        margin-left: unset;
+        margin-left: auto;
         width: 30px;
       }
     }
@@ -55,7 +54,7 @@
     }
 
     .html-icon {
-      margin-left: unset;
+      margin-left: auto;
       width: 60px;
     }
   }
@@ -63,34 +62,6 @@
 
 .editor-container .icon-dirty {
   top: 61px;
-}
-
-// IE can't use `unset`
-.ie {
-  .toolbar.formatter-toolbar,
-  .flex-toolbar.formatter-toolbar {
-    [class*='btn'] {
-      font-size: normal;
-
-      &[data-element='foreColor'],
-      &[data-element='foreColor'] {
-        .icon {
-          margin-top: 0;
-        }
-      }
-
-      &[data-element='h3'],
-      &[data-element='h4'] {
-        .icon {
-          margin-left: 0;
-        }
-      }
-
-      .html-icon {
-        margin-left: 0;
-      }
-    }
-  }
 }
 
 // IE/Edge have different icon alignments
