@@ -8,7 +8,7 @@
 .widget-header {
   border-bottom: none;
   height: 34px;
-  line-height: unset;
+  line-height: normal;
 
   .card-title,
   .widget-title {
@@ -29,7 +29,7 @@
 .card-header,
 .widget-header {
   margin: 8px 2px 8px 20px;
-  padding: unset;
+  padding: 0;
 
   &:not(.has-toolbar) {
     > .btn-actions {

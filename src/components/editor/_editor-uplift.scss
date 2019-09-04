@@ -40,6 +40,20 @@
       }
     }
 
+    &[data-action='insertunorderedlist'] {
+      .icon {
+        left: 8px;
+        position: relative;
+      }
+    }
+
+    &[data-action='visual'] {
+      .visual-icon {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
     .html-icon {
       margin-left: unset;
       width: 60px;
@@ -49,6 +63,34 @@
 
 .editor-container .icon-dirty {
   top: 61px;
+}
+
+// IE can't use `unset`
+.ie {
+  .toolbar.formatter-toolbar,
+  .flex-toolbar.formatter-toolbar {
+    [class*='btn'] {
+      font-size: normal;
+
+      &[data-element='foreColor'],
+      &[data-element='foreColor'] {
+        .icon {
+          margin-top: 0;
+        }
+      }
+
+      &[data-element='h3'],
+      &[data-element='h4'] {
+        .icon {
+          margin-left: 0;
+        }
+      }
+
+      .html-icon {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 // IE/Edge have different icon alignments
