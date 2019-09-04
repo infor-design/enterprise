@@ -751,7 +751,7 @@ describe('Datagrid List Styles Tests', () => {
   }
 });
 
-fdescribe('Datagrid mixed selection tests', () => { //eslint-disable-line
+describe('Datagrid mixed selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-mixed-selection?layout=nofrills');
 
@@ -876,7 +876,7 @@ describe('Datagrid multiselect tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
