@@ -2226,7 +2226,7 @@ PopupMenu.prototype = {
     this.menu.off('dragstart.popupmenu');
 
     // Remove the wrapper, if applicable
-    if (!this.preExistingWrapper) {
+    if (!this.preExistingWrapper && this.menu.parent().is('.popupmenu-wrapper')) {
       this.menu.unwrap();
     }
 
