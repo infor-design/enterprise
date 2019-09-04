@@ -751,9 +751,9 @@ describe('Datagrid List Styles Tests', () => {
   }
 });
 
-describe('Datagrid mixed selection tests', () => {
+fdescribe('Datagrid mixed selection tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-mixed-selection');
+    await utils.setPage('/components/datagrid/example-mixed-selection?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)'));
     await browser.driver
@@ -780,6 +780,15 @@ describe('Datagrid mixed selection tests', () => {
     expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-rowactivated');
     expect(await element(by.css('#datagrid-header .datagrid-body:nth-child(1) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-mixed-selection')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid multiselect tests', () => {
@@ -867,7 +876,7 @@ describe('Datagrid multiselect tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
