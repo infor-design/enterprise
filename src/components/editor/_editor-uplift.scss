@@ -9,10 +9,9 @@
   }
 
   [class*='btn'] {
-    font-size: unset;
-    height: 20px;
-    min-height: 0;
-    top: 1px;
+    font-size: normal;
+    margin-top: 4px;
+    min-height: 24px;
 
     &:first-child {
       margin-left: $theme-number-spacing-base;
@@ -21,7 +20,7 @@
     &[data-element='foreColor'] .icon,
     &[data-element='foreColor'] .icon {
       margin-right: 4px;
-      margin-top: unset;
+      margin-top: auto;
     }
 
     &[data-element='u'] .icon {
@@ -35,13 +34,27 @@
       min-width: 32px;
 
       .icon {
-        margin-left: unset;
+        margin-left: auto;
         width: 30px;
       }
     }
 
+    &[data-action='insertunorderedlist'] {
+      .icon {
+        left: 8px;
+        position: relative;
+      }
+    }
+
+    &[data-action='visual'] {
+      .visual-icon {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
     .html-icon {
-      margin-left: unset;
+      margin-left: auto;
       width: 60px;
     }
   }
