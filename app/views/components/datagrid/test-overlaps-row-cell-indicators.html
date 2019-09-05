@@ -14,6 +14,9 @@
         <button type="button" id="add-row-bottom" class="btn">
           <span>Add Row (bottom)</span>
         </button>
+        <button type="button" id="dirty-rows" class="btn">
+          <span>Dirty Rows</span>
+        </button>
       </div>
     </div>
 
@@ -134,9 +137,14 @@
         $('#add-row-top').on('click', function () {
           gridApi.addRow({ productName: '', productId: '0' });
         });
-        
+
         $('#add-row-bottom').on('click', function () {
           gridApi.addRow({ productName: '', productId: '0' }, 'bottom');
+        });
+
+        $('#dirty-rows').on('click', function () {
+          var dirtyRows = gridApi.dirtyRows();
+          console.log('Number of Dirty Rows: ' + dirtyRows.length);
         });
     });
   });
