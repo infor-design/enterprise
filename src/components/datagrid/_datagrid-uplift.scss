@@ -33,12 +33,31 @@
   padding: 1px 0 0 5px;
 }
 
-// Adjust Row Links
-.datagrid td .hyperlink {
-  margin-top: -2px;
-}
+// Main Grid
+.datagrid {
+  td {
+    // Adjust Row Links
+    .hyperlink {
+      margin-top: -2px;
+    }
+  }
 
-// Adjust Tags
-.datagrid.short-rowheight tbody tr td span {
-  line-height: 22px;
+  // Short Row Height
+  &.short-rowheight {
+    tbody {
+      tr {
+        td {
+          // Adjust Tags
+          span {
+            line-height: 22px;
+          }
+
+          // Adjust Row Buttons
+          .row-btn {
+            min-height: 25px;
+          }
+        }
+      }
+    }
+  }
 }
