@@ -201,7 +201,7 @@ describe('Datagrid Editable Tests', () => {
   });
 });
 
-fdescribe('Datagrid Empty Message Tests', () => { //eslint-disable-line
+describe('Datagrid Empty Message Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-empty-message?layout=nofrills');
 
