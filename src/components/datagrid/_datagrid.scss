@@ -2368,6 +2368,8 @@ $datagrid-short-row-height: 25px;
       flex-direction: column;
       height: inherit;
       justify-content: center;
+      margin-top: initial;
+      top: initial;
 
       .datagrid-checkbox {
         height: 16px;
