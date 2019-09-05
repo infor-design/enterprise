@@ -102,8 +102,15 @@ Icon.prototype = {
       return this;
     }
 
-    const xlinkHref = useTag.attr('xlink:href');
-    this.settings.use = xlinkHref.replace('#icon-', '');
+    // Store the icon's name under the `use` setting.
+    // Strip out all extraneous items including the `base` URL.
+    let xlinkHref = useTag.attr('xlink:href');
+    const baseUrl = base.url;
+    if (base.element.length && baseUrl.length) {
+      xlinkHref = xlinkHref.replace(baseUrl, '');
+    }
+    xlinkHref = xlinkHref.replace('#icon-', '');
+    this.settings.use = xlinkHref;
 
     return this;
   },
