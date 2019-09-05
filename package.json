@@ -67,8 +67,7 @@
     "release:rc": "release-it --preRelease=rc --no-github.release",
     "release:final": "release-it",
     "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci",
-    "node-version-check": "npx check-node-version --node 10.16",
-    "//postinstall": "npm run node-version-check"
+    "node-version-check": "npx check-node-version --node 10.16"
   },
   "dependencies": {
     "d3": "^4.13.0",
