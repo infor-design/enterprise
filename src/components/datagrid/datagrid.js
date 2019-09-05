@@ -4205,6 +4205,15 @@ Datagrid.prototype = {
   cacheColumnWidths() {
     for (let i = 0; i < this.settings.columns.length; i++) {
       const col = this.settings.columns[i];
+
+      // Check for duplicate ID's and adjust them.
+      const colsById = this.columnById(col.id);
+      if (colsById.length > 1) {
+        for (let k = 1; k < colsById.length; k++) {
+          colsById[k].id = `${colsById[k].id}-${k}`;
+        }
+      }
+
       this.calculateColumnWidth(col, i);
     }
   },

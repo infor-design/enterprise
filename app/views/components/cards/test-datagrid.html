@@ -48,7 +48,7 @@
       data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
-      //Define Columns for the Grid.
+      // Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Formatters.Hyperlink, href:'javascript:void(0);'});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
@@ -58,25 +58,13 @@
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
 
-
-      //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         rowHeight: 'short',
         isList: true
-      }).data('datagrid');
-
-      //TODO Test: You can focus on hidden columns
-      //grid.setSortColumn('activity');
-
-     // grid.setSortColumn('productId');
-
-      //setColumnWidth(id, width, reset: optional)
-      grid.setColumnWidth('productId', '15%', true);
-      grid.setColumnWidth('status', 150, true);
-      grid.setColumnWidth('productName', '20%', true);
-      grid.setColumnWidth('activity', '15%', true);
+      });
     });
  });
 </script>
