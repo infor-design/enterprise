@@ -1505,7 +1505,7 @@ Toolbar.prototype = {
       // this flag is set in `updated()` if the setting `noSearchfieldReinvoke` is set
       // to `true` before an update is performed. The Searchfield will stay in-tact for
       // one update cycle, or until the setting is reset to `true`.
-      if (!this.settings.noSearchfieldReinvoke || !this.keepSearchfield) {
+      if (!this.settings.noSearchfieldReinvoke && !this.keepSearchfield) {
         const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
         if (searchFields.data('searchfield')) {
           searchFields.data('searchfield').destroy();
