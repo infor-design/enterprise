@@ -11,7 +11,7 @@ Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/do
     ```bash
     Content-Security-Policy:
     default-src 'self';
-    img-src 'self' https://randomuser.me http://placehold.it;object-src 'none';
+    img-src 'self' https://externalsite1.com http://externalsite1.com;object-src 'none';
     script-src 'strict-dynamic' 'nonce-04111658';
     style-src * data: http://* 'unsafe-inline'
     ```

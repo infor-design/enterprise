@@ -1611,9 +1611,8 @@ describe('Datagrid contextmenu tests', () => {
 
   if (!utils.isCI() && !utils.isBS()) {
     it('Should show context menu', async () => {
-      const td = await element(by.css('#readonly-datagrid tr:first-child td:first-child')).getLocation();
       await browser.actions()
-        .mouseMove(td)
+        .mouseMove(await element(by.css('#readonly-datagrid tr:first-child td:first-child')))
         .click(protractor.Button.RIGHT)
         .perform();
 
