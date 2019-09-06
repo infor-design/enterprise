@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
+import { breakpoints } from '../../utils/breakpoints';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../../../src/components/locale/locale';
@@ -9,6 +10,9 @@ import '../button/button.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'modal';
+
+// Possible values for the `fullsize` setting
+const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 
 /**
 * Responsive and Accessible Modal Control
@@ -29,6 +33,7 @@ const COMPONENT_NAME = 'modal';
 * @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
+* @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
 const MODAL_DEFAULTS = {
@@ -44,7 +49,8 @@ const MODAL_DEFAULTS = {
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
-  maxWidth: null
+  maxWidth: null,
+  fullsize: MODAL_FULLSIZE_SETTINGS[0],
 };
 
 function Modal(element, settings) {
@@ -110,6 +116,15 @@ Modal.prototype = {
     });
 
     return max === dialog[0].style.zIndex;
+  },
+
+  /**
+   * @returns {boolean} whether or not this Modal instance should currently display in
+   * full size mode (uses the settings, but determined at runtime)
+   */
+  get currentlyNeedsFullsize() {
+    return (this.settings.fullsize === 'always' ||
+      (this.settings.fullsize === 'responsive' && breakpoints.isBelow('phone-to-tablet')));
   },
 
   /**
@@ -670,10 +685,14 @@ Modal.prototype = {
 
     setTimeout(() => {
       this.resize();
-      this.element.addClass('is-visible').attr('role', (this.settings.isAlert ? 'alertdialog' : 'dialog'));
+      this.element.attr('role', (this.settings.isAlert ? 'alertdialog' : 'dialog'));
       this.root.removeAttr('aria-hidden');
       this.overlay.attr('aria-hidden', 'true');
       this.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
+
+      setTimeout(() => {
+        this.element.addClass('is-visible');
+      }, 10);
     }, 1);
 
     // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a
@@ -785,15 +804,30 @@ Modal.prototype = {
   },
 
   resize() {
-    // 90% -(180 :extra elements-height)
-    let calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
-    const calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
+    let calcHeight;
+    let calcWidth;
+    const currentlyNeedsFullsize = this.currentlyNeedsFullsize;
+
+    // Set the height of the inner frame to fit and accommodate headers/button rows.
+    // If `fullsize` is not false, stretch the calculated size accordingly
+    if (currentlyNeedsFullsize) {
+      this.element[0].classList.add('display-fullsize');
+    } else {
+      this.element[0].classList.remove('display-fullsize');
+      calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
+      calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
+    }
 
     const wrapper = this.element.find('.modal-body-wrapper');
 
     if (wrapper.length) {
-      wrapper[0].style.maxHeight = `${calcHeight}px`;
-      wrapper[0].style.maxWidth = `${calcWidth}px`;
+      if (currentlyNeedsFullsize) {
+        wrapper[0].style.maxHeight = '';
+        wrapper[0].style.maxWidth = '';
+      } else {
+        wrapper[0].style.maxHeight = `${calcHeight}px`;
+        wrapper[0].style.maxWidth = `${calcWidth}px`;
+      }
     }
 
     if (this.element.hasClass('lookup-modal')) {
@@ -801,9 +835,18 @@ Modal.prototype = {
       const hasPager = this.element.find('.pager-toolbar');
       const container = table.closest('.datagrid-container');
 
-      calcHeight = calcHeight - (container.prev().is('.toolbar') ? 130 : 67) - (container.next().is('.pager-toolbar') ? 35 : 0);
-      table[0].style.maxHeight = `${calcHeight + (hasPager.length ? -15 : 0)}px`;
-      table[0].style.maxWidth = `${calcWidth}px`;
+      calcHeight = calcHeight -
+        (container.prev().is('.toolbar') ? 130 : 67) -
+        (container.next().is('.pager-toolbar') ? 35 : 0) +
+        (hasPager.length ? -15 : 0);
+
+      if (currentlyNeedsFullsize) {
+        table[0].style.maxHeight = '';
+        table[0].style.maxWidth = '';
+      } else {
+        table[0].style.maxHeight = `${calcHeight}px`;
+        table[0].style.maxWidth = `${calcWidth}px`;
+      }
     }
 
     const toolbars = this.element.find('.toolbar');
