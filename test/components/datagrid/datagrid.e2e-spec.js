@@ -2625,6 +2625,33 @@ describe('Datagrid Tree and Frozen Column tests', () => {
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(12);
   });
 
+  it('Should expand last tree nodes', async () => {
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(20);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(26);
+
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(6);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(40);
+  });
+
+  it('Should expand last tree nodes and restore hidden', async () => {
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(18) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(14);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(32);
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(20);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(26);
+
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(14);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(32);
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
