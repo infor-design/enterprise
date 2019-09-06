@@ -33,7 +33,7 @@
 - `[Datagrid]` Fixed filtering on time columns when time is a string. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Datagrid]` Fixed icon layout issues on the filter row in medium rowHeight mode. ([#2709](https://github.com/infor-design/enterprise/issues/2709))
 - `[Datagrid]` Fixed an issue where short row height was misaligning in Uplift theme. ([#2717](https://github.com/infor-design/enterprise/issues/2717))
-- `[Datagrid]` Fixed an issue where new row and dirty cell were not working. ([#2729](https://github.com/infor-design/enterprise/issues/2729))
+- `[Datagrid]` Fixed an issue where new row and dirty cell were not working when combined. ([#2729](https://github.com/infor-design/enterprise/issues/2729))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
