@@ -80,7 +80,7 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
       setTimeout(() => {
         expect($.removeData).toHaveBeenCalled();
         done();
-      }, 500);
-    }, 500);
+      }, 600);
+    }, 600);
   });
 });

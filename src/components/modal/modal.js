@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../../../src/components/locale/locale';
@@ -162,9 +163,13 @@ Modal.prototype = {
     }
 
     if (this.settings.trigger === 'immediate') {
-      setTimeout(() => {
-        self.open();
-      }, 1);
+      const triggerImmediateTimer = new RenderLoopItem({
+        duration: 1,
+        timeoutCallback() {
+          self.open();
+        }
+      });
+      renderLoop.register(triggerImmediateTimer);
     }
 
     self.isCancelled = false;
@@ -173,9 +178,14 @@ Modal.prototype = {
     if (this.settings.content) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
       this.appendContent();
-      setTimeout(() => {
-        self.open();
-      }, 1);
+
+      const renderFromContentTimer = new RenderLoopItem({
+        duration: 1,
+        timeoutCallback() {
+          self.open();
+        }
+      });
+      renderLoop.register(renderFromContentTimer);
       return;
     }
 
@@ -683,17 +693,26 @@ Modal.prototype = {
     this.root[0].style.display = '';
     this.element[0].style.display = '';
 
-    setTimeout(() => {
-      this.resize();
-      this.element.attr('role', (this.settings.isAlert ? 'alertdialog' : 'dialog'));
-      this.root.removeAttr('aria-hidden');
-      this.overlay.attr('aria-hidden', 'true');
-      this.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
-
-      setTimeout(() => {
-        this.element.addClass('is-visible');
-      }, 10);
-    }, 1);
+    // Stagger the rest of the Modal "show" process in several renderLoop ticks
+    const self = this;
+    const resizeTimer = new RenderLoopItem({
+      duration: 1,
+      timeoutCallback() {
+        self.resize();
+        self.element.attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
+        self.root.removeAttr('aria-hidden');
+        self.overlay.attr('aria-hidden', 'true');
+        self.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
+      }
+    });
+    const displayTimer = new RenderLoopItem({
+      duration: 2,
+      timeoutCallback() {
+        self.element.addClass('is-visible');
+      }
+    });
+    renderLoop.register(resizeTimer);
+    renderLoop.register(displayTimer);
 
     // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a
     // chance to be established
@@ -728,9 +747,9 @@ Modal.prototype = {
       this.element.find(':focusable').first().focus();
     });
 
-    function focusElement(self) {
-      let focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
-      self.keepFocus();
+    function focusElement(thisElem) {
+      let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
+      thisElem.keepFocus();
 
       /**
       * Fires when the modal opens.
@@ -739,14 +758,14 @@ Modal.prototype = {
       * @property {object} event - The jquery event object
       * @property {object} ui - The dialog object
       */
-      self.element.trigger('open', [self]);
+      self.element.trigger('open', [thisElem]);
 
       if (focusElem.length === 0) {
-        focusElem = self.element.find('.btn-modal-primary');
+        focusElem = thisElem.element.find('.btn-modal-primary');
       }
 
       if (focusElem.length === 1 && focusElem.is('.btn-modal')) {
-        focusElem = self.element.find('.btn-modal-primary');
+        focusElem = thisElem.element.find('.btn-modal-primary');
       }
 
       if (focusElem.length === 1 && focusElem.is('button') && !focusElem.is(':disabled')) {
@@ -780,16 +799,24 @@ Modal.prototype = {
       this.resize();
     });
 
-    setTimeout(() => {
-      this.disableSubmit();
-    }, 10);
+    const disableSubmitTimer = new RenderLoopItem({
+      duration: 5,
+      timeoutCallback() {
+        self.disableSubmit();
+      }
+    });
+    renderLoop.register(disableSubmitTimer);
 
     const fields = this.element.find('[data-validate]');
     fields.removeClass('disable-validation');
 
-    setTimeout(() => {
-      focusElement(this);
-    }, 200);
+    const focusElementTimer = new RenderLoopItem({
+      duration: 20,
+      timeoutCallback() {
+        focusElement(self);
+      }
+    });
+    renderLoop.register(focusElementTimer);
 
     /**
     * Fires after the modal has opened.
@@ -798,9 +825,13 @@ Modal.prototype = {
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
-    setTimeout(() => {
-      this.element.trigger('afteropen');
-    }, 300);
+    const afterOpenTimer = new RenderLoopItem({
+      duration: 30,
+      timeoutCallback() {
+        self.element.trigger('afteropen');
+      }
+    });
+    renderLoop.register(afterOpenTimer);
   },
 
   resize() {
@@ -987,17 +1018,21 @@ Modal.prototype = {
     // remove the event that changed this page's skip-link functionality in the open event.
     $('.skip-link').off(`focus.${this.namespace}`);
 
-    setTimeout(() => {
-      self.overlay.remove();
-      self.root[0].style.display = 'none';
-      self.element.trigger('afterclose');
+    const afterCloseTimer = new RenderLoopItem({
+      duration: 20, // should match the length of time needed for the overlay to fade out
+      timeoutCallback() {
+        self.overlay.remove();
+        self.root[0].style.display = 'none';
+        self.element.trigger('afterclose');
 
-      if (self.settings.trigger === 'immediate' || destroy) {
-        if (!self.isCAP || (self.isCAP && !self.capAPI)) {
-          self.destroy();
+        if (self.settings.trigger === 'immediate' || destroy) {
+          if (!self.isCAP || (self.isCAP && !self.capAPI)) {
+            self.destroy();
+          }
         }
       }
-    }, 300); // should match the length of time needed for the overlay to fade out
+    });
+    renderLoop.register(afterCloseTimer);
 
     return false;
   },
@@ -1071,22 +1106,26 @@ Modal.prototype = {
         self.capAPI.destroy();
       }
 
-      setTimeout(() => {
-        let elem = null;
-        let modalApi = self.element ? self.element.data(COMPONENT_NAME) : null;
-        if (modalApi) {
-          elem = self.element[0];
-        } else {
-          modalApi = self.trigger ? self.trigger.data(COMPONENT_NAME) : null;
+      const destroyTimer = new RenderLoopItem({
+        duration: 21, // should match the length of time needed for the overlay to fade out
+        timeoutCallback() {
+          let elem = null;
+          let modalApi = self.element ? self.element.data(COMPONENT_NAME) : null;
           if (modalApi) {
-            elem = self.trigger[0];
+            elem = self.element[0];
+          } else {
+            modalApi = self.trigger ? self.trigger.data(COMPONENT_NAME) : null;
+            if (modalApi) {
+              elem = self.trigger[0];
+            }
+          }
+          if (elem && modalApi && modalApi.overlay) {
+            modalApi.overlay.remove();
+            $.removeData(elem, COMPONENT_NAME);
           }
         }
-        if (elem && modalApi && modalApi.overlay) {
-          modalApi.overlay.remove();
-          $.removeData(elem, COMPONENT_NAME);
-        }
-      }, 310); // should take the length of time needed for the overlay to fade out
+      });
+      renderLoop.register(destroyTimer);
     }
 
     if (!this.visible) {
