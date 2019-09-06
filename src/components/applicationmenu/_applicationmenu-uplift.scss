@@ -17,7 +17,7 @@
   }
 
   .btn-icon {
-    font-size: unset;
+    font-size: normal;
   }
 
   .application-menu-header {
@@ -60,7 +60,7 @@
 
   .accordion {
     margin: calc(#{$theme-number-spacing-base} * 1);
-    width: unset;
+    width: auto;
 
     .accordion-header {
       border-radius: 6px;
@@ -75,7 +75,7 @@
     }
 
     &.has-icons .accordion-pane .accordion-header.is-selected {
-      background-color: unset;
+      background-color: transparent;
     }
 
     &.has-icons .accordion-pane .accordion-header.is-selected > a {
