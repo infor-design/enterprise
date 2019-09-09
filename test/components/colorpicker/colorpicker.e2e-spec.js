@@ -230,7 +230,7 @@ describe('Colorpicker states tests', () => {
     expect(await element(by.css('#readonly-color[readonly]')).isDisplayed()).toBe(true);
   });
 
-  if (!utils.isCI()) {
+  if (!utils.isCI() && !utils.isBS()) {
     it('Should check for Dirty Tracking', async () => {
       await element(by.css('#dirty-color + .trigger .icon')).click();
       await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
