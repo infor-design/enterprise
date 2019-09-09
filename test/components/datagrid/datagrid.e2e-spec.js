@@ -1552,19 +1552,39 @@ describe('Datagrid Dirty and New Row Indicator', () => {
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(true);
   });
 
-  it('should not show a dirty indicator on new rows', async () => {
-    await element(by.id('add-row-top')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+  it('should not show a dirty indicator on row-status cell with new rows', async () => {
+    const cell = num => `#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(${num})`;
+    const pseudoScript = sel => `return window.getComputedStyle(document.querySelector('${sel}'), ':before').getPropertyValue('border-width');`;
 
-    const editCellSelector = '.has-editor.is-editing input';
-    const inputEl = await element(by.css(editCellSelector));
+    await element(by.id('add-row-top')).click();
+
+    await element(by.css(cell(1))).click();
+    let editCellSelector = '.has-editor.is-editing input';
+    let inputEl = await element(by.css(editCellSelector));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
     await element(by.css(editCellSelector)).sendKeys('121');
 
     expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('121');
     await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(false);
+    await element(by.css(cell(2))).click();
+    editCellSelector = '.has-editor.is-editing input';
+    inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('122');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('122');
+    await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css(`${cell(1)}.is-dirty-cell`)).isPresent()).toBe(true);
+    await browser.executeScript(pseudoScript(`${cell(1)}.is-dirty-cell`)).then((data) => {
+      expect(data).toEqual('0px');
+    });
+
+    expect(await element(by.css(`${cell(2)}.is-dirty-cell`)).isPresent()).toBe(true);
+    await browser.executeScript(pseudoScript(`${cell(2)}.is-dirty-cell`)).then((data) => {
+      expect(data).toEqual('4px');
+    });
   });
 });
 
