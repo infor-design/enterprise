@@ -1,0 +1,102 @@
+custom<div class="row top-padding">
+  <div class="twelve columns">
+    <h3>Export To Csv</h3>
+    <p>Shows how to expose the export to csv functionality with custom separator.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p><strong>Default Separator</strong></p><br/>
+    <ul>
+      <li>1) Add `sep=,` to first line</li>
+      <li>2) Change document seperator to char `,`</li>
+    </ul>
+    <br/>
+    <pre><code>exportToCsv('Filename-1', data);</code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-default">Default</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p><strong>Separator with Custom String</strong></p><br/>
+    <ul>
+      <li>1) Add `sep=;` to first line</li>
+      <li>2) Change document seperator to char `;`</li>
+    </ul>
+    <br/>
+    <pre><code>exportToCsv('Filename-2', data, 'sep=;');</code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-string">Custom String</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p><strong>Separator with Custom String Char Only</strong></p><br/>
+    <ul>
+      <li>1) Add `sep=;` to first line</li>
+      <li>2) Change document seperator to char `;`</li>
+    </ul>
+    <br/>
+    <pre><code>exportToCsv('Filename-3', data, ';');</code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-string-char-only">Custom String Char Only</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p><strong>Separator with Custom Object Type</strong></p><br/>
+    <ul>
+      <li>1) NOT add anything to first line</li>
+      <li>2) Change document seperator to char `;`</li>
+    </ul>
+    <pre style="white-space: pre-line;"><code>
+      var separator = { firstLine: false, char: ';' };
+      exportToCsv('Filename-4', data, separator);
+    </code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-object">Custom Object Type</button>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var data = '';
+    var url = '{{basepath}}api/tasks';
+
+    // Set Data
+    $.getJSON(url, function(res) {
+      res.splice(0, 0, {id: ' ID', escalated: 'Escalated', taskName: 'Task Name', desc: 'Description', comments: 'Comments'});
+      data = res;
+    });
+
+    // Default separator *****************************************
+    // 1) Add `sep=,` to first line
+    // 2) Change document seperator to char `,`
+    $('#export-default').on('click', function () {
+      Soho.excel.exportToCsv('Filename-1', data);
+    });
+
+    // Separator with custom string, this will *******************
+    // 1) Add `sep=;` to first line
+    // 2) Change document seperator to char `;`
+    $('#export-custom-string').on('click', function () {
+      Soho.excel.exportToCsv('Filename-2', data, 'sep=;');
+    });
+
+    // Separator with custom string Char only, this will *********
+    // 1) Add `sep=;` to first line
+    // 2) Change document seperator to char `;`
+    $('#export-custom-string-char-only').on('click', function () {
+      Soho.excel.exportToCsv('Filename-3', data, ';');
+    });
+
+    // Separator with custom Object type, this will **************
+    // 1) NOT add anything to first line
+    // 2) Change document seperator to char `;`
+    $('#export-custom-object').on('click', function () {
+      var separator = { firstLine: false, char: ';' };
+      Soho.excel.exportToCsv('Filename-4', data, separator);
+    });
+ });
+</script>
