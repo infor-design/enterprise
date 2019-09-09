@@ -258,7 +258,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 #### Replacing ALL Baseline images at once
 
-1. Copy the file from the actual directory to the baseline directory
+1. Copy the file from the actual directory to the baseline directory.
 1. Run the `npm run e2e:ci` again to tests.  Ensure that all the tests pass.
 1. Commit and push the files to your branch.
 
@@ -273,7 +273,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
     mv test/.tmp/actual/<name-of-test-file.png> test/baseline/<name-of-test-file.png>`
     ```
 
-1. Run tests again to confirm
+1. Run tests again to confirm.
 1. Now you can move the files you copied to your local machine to the baseline directory to override the old ones
 
     ```sh
