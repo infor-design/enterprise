@@ -233,11 +233,15 @@ describe('Colorpicker states tests', () => {
   it('Should check for Dirty Tracking', async () => {
     await element(by.css('#dirty-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-dirty'))), config.waitsFor);
 
     expect(await element(by.css('.icon-dirty')).isPresent()).toBe(true);
 
     await element(by.css('#dirty-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.icon-dirty'))), config.waitsFor);
 
     expect(await element(by.css('.icon-dirty')).isPresent()).toBe(false);
   });
