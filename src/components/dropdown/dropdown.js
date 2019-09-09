@@ -2337,8 +2337,6 @@ Dropdown.prototype = {
     this.toggleTooltip();
 
     this.element.trigger('change').triggerHandler('selected');
-
-    self.applyFilter(null, 'selected');
   },
 
   /**
