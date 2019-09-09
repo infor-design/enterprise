@@ -1,4 +1,4 @@
-<div class="row top-padding">
+custom<div class="row top-padding">
   <div class="twelve columns">
     <h3>Export To Csv</h3>
     <p>Shows how to expose the export to csv functionality with custom separator.</p>
@@ -7,46 +7,46 @@
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <p><strong>Default Separator</strong></p>
+    <p><strong>Default Separator</strong></p><br/>
     <ul>
       <li>1) Add `sep=,` to first line</li>
       <li>2) Change document seperator to char `,`</li>
     </ul>
-    <br>
-    <pre><code>exportToCsv('Filename-1', data);</code></pre><br>
+    <br/>
+    <pre><code>exportToCsv('Filename-1', data);</code></pre><br/>
     <button class="btn-secondary" type="button" id="export-default">Default</button>
   </div>
 </div>
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <p><strong>Separator with Cusrom String</strong></p>
+    <p><strong>Separator with Custom String</strong></p><br/>
     <ul>
       <li>1) Add `sep=;` to first line</li>
       <li>2) Change document seperator to char `;`</li>
     </ul>
-    <br>
-    <pre><code>exportToCsv('Filename-2', data, 'sep=;');</code></pre><br>
-    <button class="btn-secondary" type="button" id="export-cusrom-string">Cusrom String</button>
+    <br/>
+    <pre><code>exportToCsv('Filename-2', data, 'sep=;');</code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-string">Custom String</button>
   </div>
 </div>
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <p><strong>Separator with Cusrom String Char Only</strong></p>
+    <p><strong>Separator with Custom String Char Only</strong></p><br/>
     <ul>
       <li>1) Add `sep=;` to first line</li>
       <li>2) Change document seperator to char `;`</li>
     </ul>
-    <br>
-    <pre><code>exportToCsv('Filename-3', data, ';');</code></pre><br>
-    <button class="btn-secondary" type="button" id="export-cusrom-string-char-only">Cusrom String Char Only</button>
+    <br/>
+    <pre><code>exportToCsv('Filename-3', data, ';');</code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-string-char-only">Custom String Char Only</button>
   </div>
 </div>
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <p><strong>Separator with Cusrom Object Type</strong></p>
+    <p><strong>Separator with Custom Object Type</strong></p><br/>
     <ul>
       <li>1) NOT add anything to first line</li>
       <li>2) Change document seperator to char `;`</li>
@@ -54,8 +54,8 @@
     <pre style="white-space: pre-line;"><code>
       var separator = { firstLine: false, char: ';' };
       exportToCsv('Filename-4', data, separator);
-    </code></pre><br>
-    <button class="btn-secondary" type="button" id="export-cusrom-object">Cusrom Object Type</button>
+    </code></pre><br/>
+    <button class="btn-secondary" type="button" id="export-custom-object">Custom Object Type</button>
   </div>
 </div>
 
@@ -77,24 +77,24 @@
       Soho.excel.exportToCsv('Filename-1', data);
     });
 
-    // Separator with cusrom string, this will *******************
+    // Separator with custom string, this will *******************
     // 1) Add `sep=;` to first line
     // 2) Change document seperator to char `;`
-    $('#export-cusrom-string').on('click', function () {
+    $('#export-custom-string').on('click', function () {
       Soho.excel.exportToCsv('Filename-2', data, 'sep=;');
     });
 
-    // Separator with cusrom string Char only, this will *********
+    // Separator with custom string Char only, this will *********
     // 1) Add `sep=;` to first line
     // 2) Change document seperator to char `;`
-    $('#export-cusrom-string-char-only').on('click', function () {
+    $('#export-custom-string-char-only').on('click', function () {
       Soho.excel.exportToCsv('Filename-3', data, ';');
     });
 
-    // Separator with cusrom Object type, this will **************
+    // Separator with custom Object type, this will **************
     // 1) NOT add anything to first line
     // 2) Change document seperator to char `;`
-    $('#export-cusrom-object').on('click', function () {
+    $('#export-custom-object').on('click', function () {
       var separator = { firstLine: false, char: ';' };
       Soho.excel.exportToCsv('Filename-4', data, separator);
     });
