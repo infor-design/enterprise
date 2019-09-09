@@ -31,6 +31,10 @@ fdescribe('Icon Uplift (Vibrant)  tests', () => { //eslint-disable-line
     await browser.driver.sleep(config.sleep);
   });
 
+  it('Should render without error', async () => {
+    await utils.checkForErrors();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on uplift (vibrant)', async () => {
       const containerEl = await element(by.className('container'));
