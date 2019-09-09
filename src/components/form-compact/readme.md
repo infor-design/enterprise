@@ -73,7 +73,7 @@ Additionally, a master/detail format can be applied:
 <div id="maincontent" class="form-compact-container banner-detail" role="main">
   <section class="banner">
     <div class="thumbnail">
-      <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+      <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
     </div>
     <div class="summary-form">
       <div class="row">
