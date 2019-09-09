@@ -10,11 +10,23 @@
 
     &:not(.empty-icon) {
       padding-bottom: 20px;
-      padding-top: 25px;
     }
   }
 
   .empty-icon {
     padding: 25px 0;
+  }
+}
+
+.datagrid {
+  &.has-filterable-columns .empty-message {
+    top: calc(50% + 32px);
+  }
+
+  .empty-message {
+    position: absolute;
+    top: calc(50% + 20px);
+    transform: translate(0, -50%);
+    width: inherit;
   }
 }
