@@ -274,7 +274,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
     ```
 
 1. Run tests again to confirm.
-1. Now you can move the files you copied to your local machine to the baseline directory to override the old ones
+1. Now you can move the files you copied to your local machine to the baseline directory to override the old ones.
 
     ```sh
     mv /Users/<your_user_name>/<target_path>/<name_of_test_file.png> test/baseline/<name_of_test_file.png>
