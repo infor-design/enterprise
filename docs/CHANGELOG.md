@@ -2,9 +2,21 @@
 
 ## v4.22.0
 
+### v4.22.0 Deprecation
+
+
+
+### v4.22.0 Features
+
+- `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
+
 ### v4.22.0 Fixes
 
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
+
+### v4.22.0 Chores & Maintenance
+
+
 
 ## v4.21.0
 
@@ -38,12 +50,15 @@
 - `[Datagrid]` Added an announcement of the selection state of a row. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Datagrid]` Fixed filtering on time columns when time is a string. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Datagrid]` Fixed icon layout issues on the filter row in medium rowHeight mode. ([#2709](https://github.com/infor-design/enterprise/issues/2709))
+- `[Datagrid]` Fixed an issue where short row height was misaligning in Uplift theme. ([#2717](https://github.com/infor-design/enterprise/issues/2717))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
+- `[Empty Message]` Fixed padding and alignment issues, the icon is now centered better. ([#2424](https://github.com/infor-design/enterprise/issues/2733))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
 - `[Flex Toolbar]` Fixed a lifecycle problem that was preventing Menu Buttons with a `removeOnDestroy` setting from opening. ([#2664](https://github.com/infor-design/enterprise/issues/2664))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
 - `[Icons]` Fixed an issue with partially invisible empty messages in uplift theme. ([#2474](https://github.com/infor-design/enterprise/issues/2474))
+- `[Icons (Component)]` Fixed a bug where it was possible to store a full base-tag prefixed URL in the `use` setting, which shouldn't be possible. ([PR#2738](https://github.com/infor-design/enterprise/pull/2738))
 - `[Locale]` Fixed a bug where getCulturePath does not work if the sohoxi.js file name has a hash part. ([#2637](https://github.com/infor-design/enterprise/issues/2637))
 - `[Locale]` Fixed a bug found when using NG8 that the default us locale causes issues. It is now an official requirement that you set a locale for all components that require locale information. ([#2640](https://github.com/infor-design/enterprise/issues/2640))
 - `[Locale]` Fixed an occurrence where an nonstandard locale filename was not correctly processed. ([#2684](https://github.com/infor-design/enterprise/issues/2684))
@@ -54,6 +69,7 @@
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
 - `[Tabs]` Fixed a memory leak caused by removing a tab. ([#2686](https://github.com/infor-design/enterprise/issues/2686))
 - `[Toast]` Fixed memory leak issues after destroy. ([#2634](https://github.com/infor-design/enterprise/issues/2634))
+- `[Toolbar]` Fixed the conditions for when `noSearchfieldReinvoke` destroys an inner Searchfield that's been previously invoked. ([PR#2738](https://github.com/infor-design/enterprise/pull/2738))
 - `[Uplift Theme]` Various improvements to the Dark/Contrast variants, with a focus on passing WCAG ([#2541](https://github.com/infor-design/enterprise/issues/2541)) ([#2588](https://github.com/infor-design/enterprise/issues/2588))
 
 ### v4.21.0 Chores & Maintenance

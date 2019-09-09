@@ -20,6 +20,10 @@ Detailed instructions can be found in the [Developer Documentation](https://gith
 
 You can find our NPM package [here](https://www.npmjs.com/package/ids-enterprise).
 
+## Themes
+
+IDS Enterprise has currently 2 themes and 3 theme variations in each theme. For information on how to use the themes see the [personalize documentation page](https://design.infor.com/code/ids-enterprise/latest/personalize).
+
 ## Recent Changes
 
 Visit the [release notes](./changelog.html) for this release.

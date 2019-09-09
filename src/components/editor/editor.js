@@ -781,7 +781,7 @@ Editor.prototype = {
       justifyLeft: this.getIcon('JustifyLeft', 'left-text-align'),
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
-      clearFormatting: this.getIcon('clearFormatting', 'clear-formatting'),
+      clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
     };

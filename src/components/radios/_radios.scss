@@ -140,9 +140,9 @@
   }
 
   .radio {
-    left: unset;
-    position: unset;
-    width: unset;
+    left: auto;
+    position: static;
+    width: auto;
   }
 
   .inline .radio ~ .label-text,

@@ -264,9 +264,9 @@ span.checkbox > input:checked + label::after,
 
   input.checkbox,
   span.checkbox > input {
-    left: unset;
-    position: unset;
-    width: unset;
+    left: auto;
+    position: static;
+    width: auto;
   }
 
   label.inline .checkbox ~ .label-text,
