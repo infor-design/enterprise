@@ -9894,14 +9894,21 @@ Datagrid.prototype = {
             const node = $(this);
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
-            if (!node.hasClass('is-filtered')) {
-              node.removeClass('is-hidden');
-            }
+            // Handles that child rows get the right states
+            if (nodeLevel === (lev + 1)) {
+              if (!node.hasClass('is-filtered')) {
+                node.removeClass('is-hidden');
 
-            if (node.is('.datagrid-tree-parent')) {
-              const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
-              if (nodeIsExpanded) {
-                setChildren(node, nodeLevel, !nodeIsExpanded);
+                if (self.settings.frozenColumns) {
+                  const rowindex = node.attr('aria-rowindex');
+                  self.tableBody.find(`[aria-rowindex="${rowindex}"]`).removeClass('is-hidden');
+                }
+              }
+              if (node.is('.datagrid-tree-parent')) {
+                const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+                if (nodeIsExpanded) {
+                  setChildren(node, nodeLevel, !nodeIsExpanded);
+                }
               }
             }
           });
