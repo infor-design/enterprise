@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Icon Soho (Subtle) tests', () => { //eslint-disable-line
+describe('Icon Soho (Subtle) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -25,7 +25,7 @@ fdescribe('Icon Soho (Subtle) tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Icon Uplift (Vibrant)  tests', () => { //eslint-disable-line
+describe('Icon Uplift (Vibrant)  tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?theme=uplift&layout=nofrills');
     await browser.driver.sleep(config.sleep);
