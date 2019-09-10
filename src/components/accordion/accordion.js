@@ -224,7 +224,7 @@ Accordion.prototype = {
 
       if (!self.isExpanded(header)) {
         pane.data('ignore-animation-once', true);
-        self.collapse(header);
+        self.collapse(header, false);
       }
     });
 
@@ -835,10 +835,11 @@ Accordion.prototype = {
   /**
   * Collapse the given Panel on the Accordion.
   * @param {object} header The jquery header element.
+  * @param {boolean} closeChildren If true closeChildren elements that may be on the page. Skip for performance.
   * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
-  collapse(header) {
+  collapse(header, closeChildren = true) {
     if (!header || !header.length) {
       return;
     }
@@ -860,8 +861,12 @@ Accordion.prototype = {
       expander.children('.audible').text(Locale.translate('Expand'));
     }
 
-    pane.removeClass('is-expanded').closeChildren();
+    pane.removeClass('is-expanded');
     a.attr('aria-expanded', 'false');
+
+    if (closeChildren) {
+      pane.closeChildren();
+    }
 
     /**
     *  Fires when collapsed a pane is initiated.
