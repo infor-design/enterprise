@@ -10,6 +10,8 @@
 
 ### v4.22.0 Fixes
 
+- `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
+
 ### v4.22.0 Chores & Maintenance
 
 ## v4.21.0
