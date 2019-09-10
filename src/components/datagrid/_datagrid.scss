@@ -2101,7 +2101,7 @@ $datagrid-short-row-height: 25px;
         ~ .icon {
           left: auto;
           margin-left: -6px;
-          top: calc(50% - 15px);
+          top: calc(50% - 17px);
           width: 34px;
         }
 
@@ -2195,6 +2195,10 @@ $datagrid-short-row-height: 25px;
         .hyperlink {
           display: inline;
         }
+      }
+
+      &:not(.has-editor) .trigger + .icon {
+        display: none;
       }
 
       // Expandable Cells
@@ -2977,9 +2981,9 @@ td .btn-actions {
 
   .icon {
     color: $trigger-icon-fill-color;
-    display: none;
     left: 4px;
     top: 4px;
+    visibility: hidden;
 
     &.icon-search-list {
       left: -2px;
@@ -3031,7 +3035,7 @@ td .btn-actions {
     &:hover,
     &:focus {
       .icon {
-        display: inline-block;
+        visibility: visible;
       }
 
       .icon-close {

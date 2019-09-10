@@ -1,7 +1,7 @@
 git:
   quiet: true
 addons:
-  chrome: stable
+  chrome: beta
   artifacts:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
