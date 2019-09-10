@@ -1512,7 +1512,6 @@ $datagrid-short-row-height: 25px;
     }
 
     .datagrid-alert-text {
-      display: inline-block;
       line-height: 25px;
       padding-left: 10px;
       text-align: left;
@@ -2978,9 +2977,9 @@ td .btn-actions {
 
   .icon {
     color: $trigger-icon-fill-color;
+    display: none;
     left: 4px;
     top: 4px;
-    visibility: hidden;
 
     &.icon-search-list {
       left: -2px;
@@ -3032,7 +3031,7 @@ td .btn-actions {
     &:hover,
     &:focus {
       .icon {
-        visibility: visible;
+        display: inline-block;
       }
 
       .icon-close {
