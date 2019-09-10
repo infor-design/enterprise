@@ -4,8 +4,6 @@
 
 ### v4.22.0 Deprecation
 
-
-
 ### v4.22.0 Features
 
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
@@ -16,7 +14,7 @@
 
 ### v4.22.0 Chores & Maintenance
 
-
+(n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
 
 ## v4.21.0
 
