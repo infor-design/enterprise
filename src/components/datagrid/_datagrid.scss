@@ -734,7 +734,7 @@ $datagrid-short-row-height: 25px;
 
 .card,
 .widget {
-  .empty-message {
+  .datagrid-container .empty-message {
     left: 50%;
     margin-top: 15px;
     position: absolute;
