@@ -1552,19 +1552,39 @@ describe('Datagrid Dirty and New Row Indicator', () => {
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(true);
   });
 
-  it('should not show a dirty indicator on new rows', async () => {
-    await element(by.id('add-row-top')).click();
-    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+  it('should not show a dirty indicator on row-status cell with new rows', async () => {
+    const cell = num => `#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(${num})`;
+    const pseudoScript = sel => `return window.getComputedStyle(document.querySelector('${sel}'), ':before').getPropertyValue('border-width');`;
 
-    const editCellSelector = '.has-editor.is-editing input';
-    const inputEl = await element(by.css(editCellSelector));
+    await element(by.id('add-row-top')).click();
+
+    await element(by.css(cell(1))).click();
+    let editCellSelector = '.has-editor.is-editing input';
+    let inputEl = await element(by.css(editCellSelector));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
     await element(by.css(editCellSelector)).sendKeys('121');
 
     expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('121');
     await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1).is-dirty-cell')).isPresent()).toBe(false);
+    await element(by.css(cell(2))).click();
+    editCellSelector = '.has-editor.is-editing input';
+    inputEl = await element(by.css(editCellSelector));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await element(by.css(editCellSelector)).sendKeys('122');
+
+    expect(await element(by.css(editCellSelector)).getAttribute('value')).toEqual('122');
+    await element(by.css(editCellSelector)).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css(`${cell(1)}.is-dirty-cell`)).isPresent()).toBe(true);
+    await browser.executeScript(pseudoScript(`${cell(1)}.is-dirty-cell`)).then((data) => {
+      expect(data).toEqual('0px');
+    });
+
+    expect(await element(by.css(`${cell(2)}.is-dirty-cell`)).isPresent()).toBe(true);
+    await browser.executeScript(pseudoScript(`${cell(2)}.is-dirty-cell`)).then((data) => {
+      expect(data).toEqual('4px');
+    });
   });
 });
 
@@ -2632,6 +2652,33 @@ describe('Datagrid Tree and Frozen Column tests', () => {
 
     expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(34);
     expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(12);
+  });
+
+  it('Should expand last tree nodes', async () => {
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(20);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(26);
+
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(6);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(40);
+  });
+
+  it('Should expand last tree nodes and restore hidden', async () => {
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+    await element(by.css('#datagrid tbody tr:nth-child(18) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(14);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(32);
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(20);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(26);
+
+    await element(by.css('#datagrid tbody tr:nth-child(15) td:nth-child(1) button')).click();
+
+    expect(await element.all(by.css('tr.is-hidden')).count()).toEqual(14);
+    expect(await element.all(by.css('tr:not(.is-hidden)')).count()).toEqual(32);
   });
 
   if (utils.isChrome() && utils.isCI()) {

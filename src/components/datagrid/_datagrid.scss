@@ -734,7 +734,7 @@ $datagrid-short-row-height: 25px;
 
 .card,
 .widget {
-  .empty-message {
+  .datagrid-container .empty-message {
     left: 50%;
     margin-top: 15px;
     position: absolute;
@@ -1272,6 +1272,11 @@ $datagrid-short-row-height: 25px;
           &::before {
             left: -16px;
             top: -15px;
+          }
+
+          &.is-dirty-cell::before {
+            border-width: 0;
+            margin: 0;
           }
 
           .icon-rowstatus {
