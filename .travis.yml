@@ -1,7 +1,7 @@
 git:
   quiet: true
 addons:
-  chrome: beta
+  chrome: stable
   artifacts:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
@@ -21,6 +21,7 @@ install:
   - npm install -g grunt-cli
   - npm install
 before_script:
+  - bundle exec chromedriver-update 76.0.3809.132
   - export TZ=America/New_York
   - google-chrome --version
   - if [ $TEST_SUITE != lint ]; then npm run build; fi
