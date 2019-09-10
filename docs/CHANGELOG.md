@@ -59,7 +59,7 @@
 
 - `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
 
-(47 Issues Solved this release, Backlog Enterprise 324, Backlog Ng 76, 867 Functional Tests, 1022 e2e Test)
+(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 1056 e2e Test)
 
 ## v4.20.0
 
