@@ -318,14 +318,7 @@ ContextualActionPanel.prototype = {
       this.panel.attr('id', this.settings.modalSettings.id);
     }
 
-    /*
-    this.panel.modal({
-      buttons: this.settings.modalSettings.buttons,
-      centerTitle: this.settings.modalSettings.centerTitle,
-      useFlexToolbar: this.settings.modalSettings.useFlexToolbar,
-      trigger: (this.settings.modalSettings.trigger ? this.settings.modalSettings.trigger : 'click')
-    });
-    */
+    // Invoke the underlying Modal API
     this.panel.modal(this.settings.modalSettings);
 
     this.buttons = this.panel.find('.buttonset').children('button');
