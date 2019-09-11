@@ -13,12 +13,17 @@
   // Adjust some icons
   .datagrid-filter-wrapper {
     .dropdown + .icon {
-      top: 1px !important;
+      top: 5px !important;
     }
 
     .datepicker + .icon {
-      margin-left: -8px;
+      margin-left: -10px;
       top: -5px;
+    }
+
+    .timepicker + .icon {
+      right: -3px;
+      top: -4px;
     }
   }
 }
