@@ -10,7 +10,12 @@
 
 ### v4.22.0 Fixes
 
+- `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
+
 ### v4.22.0 Chores & Maintenance
+
+- `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
+- `[Demo App]` Changed the theme switch to call the page refresh. ([#2743](https://github.com/infor-design/enterprise/issues/2743))
 
 ## v4.21.0
 
