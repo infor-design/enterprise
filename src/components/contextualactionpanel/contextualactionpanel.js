@@ -57,18 +57,21 @@ function handleLegacyCAPSettings(settings) {
 
   CONTEXTUAL_MODAL_SETTINGS.forEach((setting) => {
     if ([null, undefined].indexOf(settings[setting]) === -1) {
+      let targetSettingName = setting;
+
       if (!settings.modalSettings) {
         settings.modalSettings = {};
       }
       if (conversionMap[setting]) {
         // Convert a differently-named setting to the correct name
-        settings.modalSettings[conversionMap[setting]] = settings[setting];
+        targetSettingName = conversionMap[setting];
+        settings.modalSettings[targetSettingName] = settings[setting];
       } else {
         // Simply append the actual setting
         settings.modalSettings[setting] = settings[setting];
       }
       delete settings[setting];
-      warnAboutDeprecation(`settings.modalSettings.${setting}`, `settings.${setting}`);
+      warnAboutDeprecation(`settings.modalSettings.${targetSettingName}`, `settings.${setting}`);
     }
   });
 
