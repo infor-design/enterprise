@@ -1,0 +1,157 @@
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+      <div class="title">
+        Empty Datagrid With Card
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <button class="btn" type="button" id="refresh-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+          <span>Load</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var gridApi
+      columns = [],
+      data = [];
+
+    var customFormatter = function (row, cell, value, col, item) {
+      return '<div class="custom-card">'+
+          '<h3 style="position: relative;top: 10px;">' + value + '</h3>'+
+          '<span>' + item.activity + '</span>';
+    };
+
+
+    // Define Columns for the Grid.
+    columns.push({
+      id: 'selectionCheckbox',
+      sortable: false,
+      resizable: false,
+      width: 50,
+      formatter: Soho.Formatters.SelectionCheckbox,
+      align: 'center'
+    });
+
+    columns.push({
+      id: 'productDesc',
+      filterType: 'text',
+      name: 'Product Desc',
+      sortable: false,
+      hideable: false,
+      field: 'productName',
+      formatter: Soho.Formatters.Template,
+      template: '<p class="datagrid-row-heading">{{productId}}</p><p class="datagrid-row-subheading">{{productName}}</p>'
+    });
+
+    columns.push({
+      id: 'activity',
+      name: 'Activity',
+      filterType: 'text',
+      field: 'activity'
+    });
+
+    columns.push({
+      id: 'activity',
+      name: 'Activity2',
+      filterType: 'text',
+      field: 'activity',
+      hidden: true
+    });
+
+    columns.push({
+      id: 'quantity',
+      name: 'Quantity',
+      filterType: 'text',
+      field: 'quantity',
+      filterConditions: ['equals', 'contains']
+    });
+
+    columns.push({
+      id: 'activity',
+      hidden: true,
+      name: 'Password',
+      field: 'activity',
+      formatter: Soho.Formatters.Password,
+      inputType: 'password'
+    });
+
+    columns.push({
+      id: 'price1',
+      name: 'Actual long Price',
+      filterType: 'decimal',
+      field: 'price',
+      formatter: Soho.Formatters.Decimal
+    });
+
+    columns.push({
+      id: 'price2', hidden: true, name: 'Actual long Price', align: 'right', field: 'price', formatter: Soho.Formatters.Decimal
+    });
+
+    columns.push({
+      id: 'price2', hidden: true, name: 'Price', field: 'price', formatter: Soho.Formatters.Integer
+    });
+
+    columns.push({
+      id: 'price4',
+      hidden: true,
+      name: 'Price - special formatted',
+      filterType: 'decimal',
+      field: 'price',
+      formatter: Soho.Formatters.Decimal,
+      numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 6 }
+    });
+
+    columns.push({
+      id: 'orderDate',
+      width: 300,
+      name: 'Order Date',
+      filterType: 'date',
+      field: 'orderDate',
+      formatter: Soho.Formatters.Date,
+      dateFormat: Soho.Locale.calendar().dateFormat.datetime // @todo
+    });
+
+    columns.push({
+      id: 'status',
+      name: 'Status',
+      filterType: 'select',
+      options: [{ value: "ok", label: "OKAY" }, { value: "OK", label: "BIG OKAY" }, { value: "error", label: "ERROR" }, { value: "success", label: "SUCCESS" }],
+      field: 'status',
+      formatter: Soho.Formatters.Dropdown
+    });
+
+    columns.push({
+      id: 'alert',
+      hidden: true,
+      name: 'Alert',
+      field: 'quantity',
+      formatter: Soho.Formatters.Alert,
+      ranges: [{ 'min': 0, 'max': 8, 'classes': 'info', 'text': ' ' }, { 'min': 9, 'max': 1000, 'classes': 'error', 'text': 'value' }]
+    });
+
+    // Init and get the api for the grid
+    $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+    });
+
+    $('#refresh-btn').on('click', function() {
+      $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+        $('#datagrid').data('datagrid').loadData(res)
+      });
+    });
+  });
+</script>
