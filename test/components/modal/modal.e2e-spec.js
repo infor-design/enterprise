@@ -183,8 +183,6 @@ describe('Modal example-validation tests', () => {
     });
 
     it('Should enable submit', async () => {
-      //expect(await element(by.id('submit')).isEnabled()).toBe(false);
-
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
