@@ -208,7 +208,8 @@ Following the process below will safely create baseline images the CI can use du
 Since we are now on xenial on travis we can debug and load the travis builds as if they are a VM. This will let us debug build problems and even update visual regression tests. Most of tihs information is on the [travis site](https://docs.travis-ci.com/user/running-build-in-debug-mode/#Things-to-do-once-you-are-inside-the-debug-VM) but some of the gotchas are noted here.
 
 1. Figure out the job ID by drilling into one of the jobs on the build, for example [234107789](https://travis-ci.com/infor-design/enterprise/jobs/234107789). The job ID is 234107789.
-2. Make a file such as `debug.sh` file in the current director with the following contents.
+1. Make a file such as `debug.sh` file in the current director with the following contents.
+
 ```sh
 curl -s -X POST -H "Content-Type: application/json" \
    -H "Accept: application/json" \
@@ -217,11 +218,12 @@ curl -s -X POST -H "Content-Type: application/json" \
    -d '{ "quiet": false }' \
    https://api.travis-ci.com/job/<build id>/debug
 ```
+
 1. You may need to run `chmod +x debug.sh` to excute.
 1. Run the command `debug.sh` and you should see a pending status.
 1. Go back to the build for example [234107789](https://travis-ci.com/infor-design/enterprise/jobs/234107789) and you should see it starting up. It will run the initial setup ending with a command you can use to connect to at the end of the log.
 1. Connect to the vm with the command noted for example `ssh GURDunMkqtCo3qmb891XRBTuJ@nyc1.tmate.io`.
-1. You may need to reset or add a new ssh key. See the [github ssh page](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more info. I used ` ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+1. You may need to reset or add a new ssh key. See the [github ssh page](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more info. I used `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
 1. Now you are connected! You can use this like a normal VM, debug, or create baselines as the following section but without the VM.
 1. You may want to start the server in the background by running a command like `nohup npm run start &`
 1. You may want to check the git branch your one is correct and not head so you can make commits.
