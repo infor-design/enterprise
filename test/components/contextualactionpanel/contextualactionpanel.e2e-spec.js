@@ -97,6 +97,7 @@ describe('Contextual Action Panel "always" fullsize tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('always should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(1200, 800);
       await element(by.id('trigger-1')).click();
       await browser.driver.sleep(config.sleep);
       const panelEl = await element(by.css('#panel-1'));
@@ -107,7 +108,7 @@ describe('Contextual Action Panel "always" fullsize tests', () => {
 
   it('should always show the CAP as a full screen sheet', async () => {
     await element(by.id('trigger-1')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
   });
@@ -124,8 +125,8 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('responsive should not visual regress', async () => {
-      await element(by.id('trigger-1')).click();
       await browser.driver.manage().window().setSize(766, 600);
+      await element(by.id('trigger-1')).click();
       await browser.driver.sleep(config.sleep);
       const panelEl = await element(by.css('#panel-1'));
 
