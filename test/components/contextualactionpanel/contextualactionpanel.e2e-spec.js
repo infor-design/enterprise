@@ -51,7 +51,7 @@ describe('CAP jquery context tests no-flex', () => {
   });
 });
 
-describe('ContextualActionPanel example-index tests', () => {
+describe('Contextual Action Panel example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-index?layout=nofrills');
   });
@@ -69,7 +69,7 @@ describe('ContextualActionPanel example-index tests', () => {
   }
 });
 
-describe('ContextualActionPanel example-workspace tests', () => {
+describe('Contextual Action Panel example-workspace tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-workspaces.html');
   });
@@ -83,5 +83,67 @@ describe('ContextualActionPanel example-workspace tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "always" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-always.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('always should not visual regress', async () => {
+      await element(by.id('trigger-1')).click();
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toBeLessThan(0.5);
+    });
+  }
+
+  it('should always show the CAP as a full screen sheet', async () => {
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "responsive" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-responsive.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('responsive should not visual regress', async () => {
+      await element(by.id('trigger-1')).click();
+      await browser.driver.manage().window().setSize(766, 600);
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toBeLessThan(0.5);
+    });
+  }
+
+  it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#panel-1')).getAttribute('class')).not.toContain('display-fullsize');
+
+    // Resize the page
+    await browser.driver.manage().window().setSize(766, 600);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
   });
 });
