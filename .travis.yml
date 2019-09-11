@@ -6,7 +6,7 @@ addons:
     paths:
       - $(ls test/.tmp/diff/*.png | tr "\n" ":")
 language: node_js
-dist: trusty
+dist: xenial
 # Leave node_js version blank to
 # use version in `.nvmrc`
 node_js:

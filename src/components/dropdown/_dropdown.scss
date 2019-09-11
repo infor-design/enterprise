@@ -433,8 +433,9 @@ div.multiselect {
     li::before {
       @include checkbox-unchecked-before-style;
 
-      margin-left: 10px;
-      margin-top: 8px;
+      left: 10px;
+      margin-left: initial;
+      margin-top: 7px;
     }
 
     li.is-disabled::before {
