@@ -163,7 +163,7 @@ describe('Multiselect example-index tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       const multiselectElList = await element(by.id('dropdown-list'));
       await browser.driver
