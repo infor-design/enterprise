@@ -2290,6 +2290,10 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   destroy() {
+    if (!this.menu) {
+      return;
+    }
+
     this.close();
     this.teardown();
 
