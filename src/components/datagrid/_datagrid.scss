@@ -1512,7 +1512,6 @@ $datagrid-short-row-height: 25px;
     }
 
     .datagrid-alert-text {
-      display: inline-block;
       line-height: 25px;
       padding-left: 10px;
       text-align: left;
@@ -2102,7 +2101,7 @@ $datagrid-short-row-height: 25px;
         ~ .icon {
           left: auto;
           margin-left: -6px;
-          top: calc(50% - 15px);
+          top: calc(50% - 17px);
           width: 34px;
         }
 
@@ -2196,6 +2195,10 @@ $datagrid-short-row-height: 25px;
         .hyperlink {
           display: inline;
         }
+      }
+
+      &:not(.has-editor) .trigger + .icon {
+        display: none;
       }
 
       // Expandable Cells
