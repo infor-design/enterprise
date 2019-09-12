@@ -1728,6 +1728,10 @@ $datagrid-short-row-height: 25px;
       height: 25px;
       position: relative;
       vertical-align: middle;
+
+      .chart-targeted-text {
+        color: $theme-color-palette-white;
+      }
     }
 
     .spinbox-wrapper {
