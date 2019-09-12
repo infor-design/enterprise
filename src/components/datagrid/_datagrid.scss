@@ -1920,7 +1920,7 @@ $datagrid-short-row-height: 25px;
         border: 1px solid $theme-color-brand-primary-base;
         left: 0;
         position: absolute;
-        text-overflow: initial;
+        text-overflow: clip;
         top: 0;
         width: 100%;
 
@@ -2376,8 +2376,8 @@ $datagrid-short-row-height: 25px;
       flex-direction: column;
       height: inherit;
       justify-content: center;
-      margin-top: initial;
-      top: initial;
+      margin-top: auto;
+      top: auto;
 
       .datagrid-checkbox {
         height: 16px;
