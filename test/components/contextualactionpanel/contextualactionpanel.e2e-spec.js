@@ -136,6 +136,7 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
   }
 
   it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
     await element(by.id('trigger-1')).click();
     await browser.driver.sleep(config.sleep);
 
@@ -147,5 +148,6 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });
