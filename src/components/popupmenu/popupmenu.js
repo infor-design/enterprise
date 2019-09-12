@@ -2090,7 +2090,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu.add(this.element).hasClass('is-open')) {
+    if (!this.menu || !this.menu.add(this.element).hasClass('is-open')) {
       return;
     }
 
@@ -2290,6 +2290,10 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   destroy() {
+    if (!this.menu) {
+      return;
+    }
+
     this.close();
     this.teardown();
 

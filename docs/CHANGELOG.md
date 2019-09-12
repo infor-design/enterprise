@@ -11,8 +11,11 @@
 ### v4.22.0 Fixes
 
 - `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
+- `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
 
 ### v4.22.0 Chores & Maintenance
+
+(n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
 
 ## v4.21.0
 
@@ -25,6 +28,7 @@
 - `[Datagrid]` Added the ability to use frozen columns with tree grid. ([#2102](https://github.com/infor-design/enterprise/issues/2102))
 - `[Datagrid]` Added support for a fixed row size, this can be used in some cases like frozen columns where rows may have a different size than the three row heights (normal, short, medium). ([#2101](https://github.com/infor-design/enterprise/issues/2101))
 - `[Datagrid]` Added filter row editor options to api setting. ([#2648](https://github.com/infor-design/enterprise/issues/2648))
+- `[Datagrid]` Fixed an issue that alert text is cut off when using the textEllipsis option. ([#2773](https://github.com/infor-design/enterprise/issues/2773))
 - `[Editor]` Added events to trigger on view change. ([#2430](https://github.com/infor-design/enterprise/issues/2430))
 - `[Homepage]` Added a parameter to the `resize` event that provides metadata about the Homepage's state, including a calculated container height. ([#2446](https://github.com/infor-design/enterprise/issues/2446))
 - `[Locale]` Added support for big numbers (18.6) to formatNumber and parseNumber. ([#1800](https://github.com/infor-design/enterprise/issues/1800))
@@ -32,6 +36,8 @@
 ### v4.21.0 Fixes
 
 - `[Application Menu]` Fixed an indentation issue with child elements in an accordion in the Angular application (enterprise-ng). ([#2616](https://github.com/infor-design/enterprise/issues/2616))
+- `[AppMenu/Accordion]` Improved performance on Angular by not calling siftFor on the app menu build. ([#2767](https://github.com/infor-design/enterprise/issues/2767))
+- `[AppMenu/Accordion]` Fixed a bug where the busy indicator would immediately close. ([#2767](https://github.com/infor-design/enterprise/issues/2767))
 - `[Button]` Fixed an issue where updated method was not teardown and re-init. ([#2304](https://github.com/infor-design/enterprise/issues/2304))
 - `[Circle Pager]` Fixed a bug where it was not showing on mobile view. ([#2589](https://github.com/infor-design/enterprise/issues/2589))
 - `[Contextual Action Panel]` Fixed an issue where if the title is longer, there will be an overflow causing a white space on the right on mobile view. ([#2605](https://github.com/infor-design/enterprise/issues/2605))
@@ -47,6 +53,7 @@
 - `[Datagrid]` Fixed filtering on time columns when time is a string. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
 - `[Datagrid]` Fixed icon layout issues on the filter row in medium rowHeight mode. ([#2709](https://github.com/infor-design/enterprise/issues/2709))
 - `[Datagrid]` Fixed an issue where short row height was misaligning in Uplift theme. ([#2717](https://github.com/infor-design/enterprise/issues/2717))
+- `[Datagrid]` Fixed an issue where new row and dirty cell were not working when combined. ([#2729](https://github.com/infor-design/enterprise/issues/2729))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
 - `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
 - `[Empty Message]` Fixed padding and alignment issues, the icon is now centered better. ([#2424](https://github.com/infor-design/enterprise/issues/2733))
@@ -72,7 +79,7 @@
 
 - `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
 
-(47 Issues Solved this release, Backlog Enterprise 324, Backlog Ng 76, 867 Functional Tests, 1022 e2e Test)
+(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 1056 e2e Test)
 
 ## v4.20.0
 

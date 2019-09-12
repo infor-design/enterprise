@@ -3,10 +3,14 @@
 
 .fileupload-wrapper {
   .container {
+    &.drop-area {
+      padding: 30px 30px 20px;
+    }
+
     .file-row,
     .progress-row {
       .status-icon {
-        margin-top: 9px;
+        margin-top: 12px;
 
         > .icon {
           top: -3px;
@@ -19,6 +23,18 @@
           }
         }
       }
+
+      .description {
+        margin-top: 2px;
+      }
+    }
+
+    .fileupload-adv-browse-lbl {
+      margin-bottom: 0;
+    }
+
+    .l-pull-right {
+      margin-top: 1px;
     }
   }
 }
