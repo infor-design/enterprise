@@ -677,7 +677,7 @@ describe('Datagrid API', () => {
     const end = new Date().getTime();
     const result = (end - start) / 1000; // seconds
 
-    expect(result).toBeLessThan(0.65);
+    expect(result).toBeLessThan(1);
     expect(table[0].querySelectorAll('tr').length).toEqual(2000);
     expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td>1</td><td>T100</td><td>#9000001-237</td><td>Compressor</td><td>Assemble Paint</td><td>1</td><td>true</td><td>210.99</td><td>0.1</td><td>OK</td><td>2018-08-07T06:00:00.000Z</td><td>Action</td></tr>');
   });
