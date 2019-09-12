@@ -58,7 +58,6 @@ describe('Contextual Action Panel example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      await browser.driver.manage().window().setSize(1200, 800);
       const actionButtonEl = await element(by.css('.btn-secondary'));
       await actionButtonEl.click();
 
