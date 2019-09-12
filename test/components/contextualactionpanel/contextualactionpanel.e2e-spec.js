@@ -58,6 +58,7 @@ describe('Contextual Action Panel example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(1200, 800);
       const actionButtonEl = await element(by.css('.btn-secondary'));
       await actionButtonEl.click();
 
@@ -74,7 +75,7 @@ describe('Contextual Action Panel example-workspace tests', () => {
     await utils.setPage('/components/contextualactionpanel/example-workspaces.html');
   });
 
-  it('Should not have errrors', async () => {
+  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
