@@ -720,7 +720,7 @@ Bar.prototype = {
       return;
     }
 
-    const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
+    const elems = this.element[0].querySelectorAll('.bar-chart .axis.y .tick text');
     const dataset = this.settings.dataset;
     for (let i = 0; i < dataset.length; i++) {
       const values = Object.keys(dataset[i]).map(e => dataset[i][e]);

@@ -10,6 +10,7 @@
 
 ### v4.22.0 Fixes
 
+- `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
 
 ### v4.22.0 Chores & Maintenance
