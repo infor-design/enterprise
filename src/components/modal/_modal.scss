@@ -224,6 +224,18 @@
   }
 }
 
+@media (max-width: $breakpoint-phone-to-tablet) {
+  .modal {
+    .form-responsive {
+      .field {
+        textarea {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 .overlay {
   @include css3(transition, all 0.2s);
 
