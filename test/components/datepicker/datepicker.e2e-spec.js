@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Datepicker example-index tests', () => { //eslint-disable-line
+describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
   });
@@ -99,7 +99,7 @@ fdescribe('Datepicker example-index tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker keyboard tests', () => { //eslint-disable-line
+describe('Datepicker keyboard tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index');
   });
@@ -304,7 +304,7 @@ fdescribe('Datepicker keyboard tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Anniversary tests', () => { //eslint-disable-line
+describe('Datepicker Anniversary tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-anniversary-format');
   });
@@ -370,7 +370,7 @@ fdescribe('Datepicker Anniversary tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker custom format tests', () => { //eslint-disable-line
+describe('Datepicker custom format tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-custom-format');
   });
@@ -428,7 +428,7 @@ fdescribe('Datepicker custom format tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker disabled date tests', () => { //eslint-disable-line
+describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates');
   });
@@ -456,7 +456,7 @@ fdescribe('Datepicker disabled date tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Legend Tests', () => { //eslint-disable-line
+describe('Datepicker Legend Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-legend');
   });
@@ -472,7 +472,7 @@ fdescribe('Datepicker Legend Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Disable Month Year Changer Tests', () => { //eslint-disable-line
+describe('Datepicker Disable Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-month-year-picker');
     const Date = () => {  //eslint-disable-line
@@ -490,7 +490,7 @@ fdescribe('Datepicker Disable Month Year Changer Tests', () => { //eslint-disabl
   });
 });
 
-fdescribe('Datepicker No Today Tests', () => { //eslint-disable-line
+describe('Datepicker No Today Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-today?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -519,7 +519,7 @@ fdescribe('Datepicker No Today Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Month Year Changer Tests', () => { //eslint-disable-line
+describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -605,7 +605,7 @@ fdescribe('Datepicker Month Year Changer Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disable-line
+describe('Datepicker Month Year Changer Year First Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
     const Date = () => {  //eslint-disable-line
@@ -685,7 +685,7 @@ fdescribe('Datepicker Month Year Changer Year First Tests', () => { //eslint-dis
   }
 });
 
-fdescribe('Datepicker Range Tests', () => { //eslint-disable-line
+describe('Datepicker Range Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-range');
   });
@@ -710,7 +710,7 @@ fdescribe('Datepicker Range Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Timeformat Tests', () => { //eslint-disable-line
+describe('Datepicker Timeformat Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-timeformat');
   });
@@ -764,7 +764,7 @@ fdescribe('Datepicker Timeformat Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Umalqura Tests', () => { //eslint-disable-line
+describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
     await browser.driver.sleep(config.sleep);
@@ -792,7 +792,7 @@ fdescribe('Datepicker Umalqura Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Month Year Picker Tests', () => { //eslint-disable-line
+describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -829,7 +829,7 @@ fdescribe('Datepicker Month Year Picker Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
+describe('Datepicker Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -863,7 +863,7 @@ fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Month Only Picker Tests', () => { //eslint-disable-line
+describe('Datepicker Month Only Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -894,7 +894,7 @@ fdescribe('Datepicker Month Only Picker Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
+describe('Datepicker Custom Validation Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-validation');
   });
@@ -952,7 +952,7 @@ fdescribe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
+describe('Datepicker 12hr Time Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
@@ -975,7 +975,7 @@ fdescribe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Umalqura EG Tests', () => { //eslint-disable-line
+describe('Datepicker Umalqura EG Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-eg-umalqura?locale=ar-SA');
   });
@@ -996,7 +996,7 @@ fdescribe('Datepicker Umalqura EG Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Gregorian SA Tests', () => { //eslint-disable-line
+describe('Datepicker Gregorian SA Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
@@ -1024,7 +1024,7 @@ fdescribe('Datepicker Gregorian SA Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Disabled Years Validation Tests', () => { //eslint-disable-line
+describe('Datepicker Disabled Years Validation Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-disabled-years-validated');
   });
@@ -1048,7 +1048,7 @@ fdescribe('Datepicker Disabled Years Validation Tests', () => { //eslint-disable
   });
 });
 
-fdescribe('Datepicker Invalid Date Tests', () => { //eslint-disable-line
+describe('Datepicker Invalid Date Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-invalid-dates');
   });
@@ -1074,7 +1074,7 @@ fdescribe('Datepicker Invalid Date Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Modal Test', () => { //eslint-disable-line
+describe('Datepicker Modal Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-modal');
   });
@@ -1101,7 +1101,7 @@ fdescribe('Datepicker Modal Test', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Month Format Tests', () => { //eslint-disable-line
+describe('Datepicker Month Format Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-month-formats');
   });
@@ -1113,7 +1113,7 @@ fdescribe('Datepicker Month Format Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker restrict month selection tests', () => { //eslint-disable-line
+describe('Datepicker restrict month selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-restrict-month-selection');
   });
@@ -1158,7 +1158,7 @@ fdescribe('Datepicker restrict month selection tests', () => { //eslint-disable-
   });
 });
 
-fdescribe('Datepicker set first day of week tests', () => { //eslint-disable-line
+describe('Datepicker set first day of week tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-first-day-of-week');
   });
@@ -1175,7 +1175,7 @@ fdescribe('Datepicker set first day of week tests', () => { //eslint-disable-lin
   });
 });
 
-fdescribe('Datepicker Set Value Tests', () => { //eslint-disable-line
+describe('Datepicker Set Value Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-value');
   });
@@ -1189,7 +1189,7 @@ fdescribe('Datepicker Set Value Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Time in Cs-Cz Format Tests', () => { //eslint-disable-line
+describe('Datepicker Time in Cs-Cz Format Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-with-time-cs-CZ');
   });
