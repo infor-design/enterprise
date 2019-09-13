@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => { //eslint-disable-line
+fdescribe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -55,7 +55,7 @@ describe('Calendar index tests', () => { //eslint-disable-line
   });
 });
 
-describe('Calendar ajax loading tests', () => { //eslint-disable-line
+fdescribe('Calendar ajax loading tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -99,7 +99,7 @@ describe('Calendar ajax loading tests', () => { //eslint-disable-line
   });
 });
 
-describe('Calendar specific month tests', () => {
+fdescribe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -205,7 +205,7 @@ describe('Calendar specific month tests', () => {
   });
 });
 
-describe('Calendar only calendar', () => {  //eslint-disable-line
+fdescribe('Calendar only calendar', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -237,7 +237,7 @@ describe('Calendar only calendar', () => {  //eslint-disable-line
   }
 });
 
-describe('Calendar specific locale', () => {
+fdescribe('Calendar specific locale', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -261,7 +261,7 @@ describe('Calendar specific locale', () => {
   }
 });
 
-describe('Calendar only monthview and legend', () => {
+fdescribe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.id('monthview-datepicker-field'));

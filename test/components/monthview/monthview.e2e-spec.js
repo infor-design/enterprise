@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('MonthView index tests', () => {
+fdescribe('MonthView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index?layout=nofrills');
   });
@@ -46,7 +46,7 @@ describe('MonthView index tests', () => {
   });
 });
 
-describe('Monthview keyboard tests', () => {
+fdescribe('Monthview keyboard tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index');
   });
@@ -192,7 +192,7 @@ describe('Monthview keyboard tests', () => {
   });
 });
 
-describe('MonthView disable day tests', () => {
+fdescribe('MonthView disable day tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-disable-weekends.html?layout=nofrills');
   });
@@ -217,7 +217,7 @@ describe('MonthView disable day tests', () => {
   }
 });
 
-describe('MonthView disable month selection tests', () => {
+fdescribe('MonthView disable month selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-restrict-month-selection.html');
   });

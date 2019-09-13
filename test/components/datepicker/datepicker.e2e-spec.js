@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Datepicker example-index tests', () => {
+fdescribe('Datepicker example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
   });
@@ -33,7 +33,7 @@ describe('Datepicker example-index tests', () => {
   it('Should set todays date from popup to field', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();
-    await element(by.css('#monthview-popup button.is-today')).click();
+    await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();
     testDate.setHours(0);
@@ -99,7 +99,7 @@ describe('Datepicker example-index tests', () => {
   }
 });
 
-describe('Datepicker keyboard tests', () => {
+fdescribe('Datepicker keyboard tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index');
   });
@@ -304,7 +304,7 @@ describe('Datepicker keyboard tests', () => {
   });
 });
 
-describe('Datepicker Anniversary tests', () => {
+fdescribe('Datepicker Anniversary tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-anniversary-format');
   });
@@ -370,7 +370,7 @@ describe('Datepicker Anniversary tests', () => {
   });
 });
 
-describe('Datepicker custom format tests', () => {
+fdescribe('Datepicker custom format tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-custom-format');
   });
@@ -428,7 +428,7 @@ describe('Datepicker custom format tests', () => {
   });
 });
 
-describe('Datepicker disabled date tests', () => {
+fdescribe('Datepicker disabled date tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates');
   });
@@ -456,7 +456,7 @@ describe('Datepicker disabled date tests', () => {
   });
 });
 
-describe('Datepicker Legend Tests', () => {
+fdescribe('Datepicker Legend Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-legend');
   });
@@ -472,7 +472,7 @@ describe('Datepicker Legend Tests', () => {
   });
 });
 
-describe('Datepicker Disable Month Year Changer Tests', () => {
+fdescribe('Datepicker Disable Month Year Changer Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-month-year-picker');
     const Date = () => {  //eslint-disable-line
@@ -490,7 +490,36 @@ describe('Datepicker Disable Month Year Changer Tests', () => {
   });
 });
 
-describe('Datepicker Month Year Changer Tests', () => {
+fdescribe('Datepicker No Today Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-no-today?layout=nofrills');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not have a today link year picker', async () => {
+    expect(await element(by.css('.hyperlint.today')).isPresent()).toEqual(false);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field-no-today')).sendKeys('11/14/2018');
+      await element(by.css('#date-field-no-today')).click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datepicker Month Year Changer Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -576,7 +605,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   }
 });
 
-describe('Datepicker Month Year Changer Year First Tests', () => {
+fdescribe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
     const Date = () => {  //eslint-disable-line
@@ -656,7 +685,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
   }
 });
 
-describe('Datepicker Range Tests', () => {
+fdescribe('Datepicker Range Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-range');
   });
@@ -681,7 +710,7 @@ describe('Datepicker Range Tests', () => {
   });
 });
 
-describe('Datepicker Timeformat Tests', () => {
+fdescribe('Datepicker Timeformat Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-timeformat');
   });
@@ -692,7 +721,7 @@ describe('Datepicker Timeformat Tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const testDate = new Date();
@@ -707,7 +736,7 @@ describe('Datepicker Timeformat Tests', () => {
     const datepickerEl = await element(by.id('dp2'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const testDate = new Date();
@@ -722,7 +751,7 @@ describe('Datepicker Timeformat Tests', () => {
     const datepickerEl = await element(by.id('dp3'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
     const value = await element(by.id('dp3')).getAttribute('value');
     const valueDate = new Date(value);
@@ -735,7 +764,7 @@ describe('Datepicker Timeformat Tests', () => {
   });
 });
 
-describe('Datepicker Umalqura Tests', () => {
+fdescribe('Datepicker Umalqura Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
     await browser.driver.sleep(config.sleep);
@@ -751,10 +780,9 @@ describe('Datepicker Umalqura Tests', () => {
 
     await browser.driver.sleep(config.sleepShort);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
@@ -764,7 +792,7 @@ describe('Datepicker Umalqura Tests', () => {
   });
 });
 
-describe('Datepicker Month Year Picker Tests', () => {
+fdescribe('Datepicker Month Year Picker Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -801,7 +829,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   }
 });
 
-describe('Datepicker Year Picker Tests', () => {
+fdescribe('Datepicker Year Picker Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -835,7 +863,7 @@ describe('Datepicker Year Picker Tests', () => {
   }
 });
 
-describe('Datepicker Month Only Picker Tests', () => {
+fdescribe('Datepicker Month Only Picker Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -866,7 +894,7 @@ describe('Datepicker Month Only Picker Tests', () => {
   }
 });
 
-describe('Datepicker Custom Validation Tests', () => {
+fdescribe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-validation');
   });
@@ -924,7 +952,7 @@ describe('Datepicker Custom Validation Tests', () => {
   });
 });
 
-describe('Datepicker 12hr Time Tests', () => {
+fdescribe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
@@ -934,7 +962,7 @@ describe('Datepicker 12hr Time Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleep);
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
@@ -947,7 +975,7 @@ describe('Datepicker 12hr Time Tests', () => {
   });
 });
 
-describe('Datepicker Umalqura EG Tests', () => {
+fdescribe('Datepicker Umalqura EG Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-eg-umalqura?locale=ar-SA');
   });
@@ -958,10 +986,9 @@ describe('Datepicker Umalqura EG Tests', () => {
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
     const result = await browser.executeScript('return Locale.calendar("ar-SA", "islamic-umalqura").conversions.fromGregorian(new Date())');
 
@@ -969,7 +996,7 @@ describe('Datepicker Umalqura EG Tests', () => {
   });
 });
 
-describe('Datepicker Gregorian SA Tests', () => {
+fdescribe('Datepicker Gregorian SA Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
@@ -980,10 +1007,9 @@ describe('Datepicker Gregorian SA Tests', () => {
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     await browser.driver.sleep(config.sleep);
@@ -998,7 +1024,7 @@ describe('Datepicker Gregorian SA Tests', () => {
   });
 });
 
-describe('Datepicker Disabled Years Validation Tests', () => {
+fdescribe('Datepicker Disabled Years Validation Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-disabled-years-validated');
   });
@@ -1022,7 +1048,7 @@ describe('Datepicker Disabled Years Validation Tests', () => {
   });
 });
 
-describe('Datepicker Invalid Date Tests', () => {
+fdescribe('Datepicker Invalid Date Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-invalid-dates');
   });
@@ -1048,7 +1074,7 @@ describe('Datepicker Invalid Date Tests', () => {
   });
 });
 
-describe('Datepicker Modal Test', () => {
+fdescribe('Datepicker Modal Test', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-modal');
   });
@@ -1075,7 +1101,7 @@ describe('Datepicker Modal Test', () => {
   });
 });
 
-describe('Datepicker Month Format Tests', () => {
+fdescribe('Datepicker Month Format Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-month-formats');
   });
@@ -1087,7 +1113,7 @@ describe('Datepicker Month Format Tests', () => {
   });
 });
 
-describe('Datepicker restrict month selection tests', () => {
+fdescribe('Datepicker restrict month selection tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-restrict-month-selection');
   });
@@ -1132,7 +1158,7 @@ describe('Datepicker restrict month selection tests', () => {
   });
 });
 
-describe('Datepicker set first day of week tests', () => {
+fdescribe('Datepicker set first day of week tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-first-day-of-week');
   });
@@ -1149,7 +1175,7 @@ describe('Datepicker set first day of week tests', () => {
   });
 });
 
-describe('Datepicker Set Value Tests', () => {
+fdescribe('Datepicker Set Value Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-value');
   });
@@ -1163,7 +1189,7 @@ describe('Datepicker Set Value Tests', () => {
   });
 });
 
-describe('Datepicker Time in Cs-Cz Format Tests', () => {
+fdescribe('Datepicker Time in Cs-Cz Format Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-with-time-cs-CZ');
   });

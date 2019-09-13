@@ -78,7 +78,7 @@
     font-size: $theme-size-font-lg;
     font-weight: $theme-number-font-weight-base;
     margin-left: -5px;
-    padding: 4px 7px 5px;
+    padding: 4px 0 5px;
 
     .year,
     .month {
@@ -94,6 +94,11 @@
       .icon {
         transform: rotateX(180deg);
       }
+    }
+
+    .icon-opened,
+    .icon-closed {
+      margin-left: 6px !important;
     }
   }
 
@@ -709,6 +714,7 @@
   .year {
     color: $datepicker-month-year-color;
     font-size: $theme-size-font-lg;
+    left: 8px;
     position: relative;
     top: 2px;
   }
