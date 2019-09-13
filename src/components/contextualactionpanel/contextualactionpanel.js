@@ -119,13 +119,12 @@ ContextualActionPanel.prototype = {
   * @returns {object} The Api for chaining.
   */
   setup() {
-    this.panel = this.element.next('.contextual-action-panel');
-
+    let existingPanel = this.element.next('.contextual-action-panel');
     const dataModal = this.element.data('modal');
     const setPanel = (id) => {
       const panelFromID = $(`#${id}`);
       if (panelFromID.length) {
-        this.panel = panelFromID;
+        existingPanel = panelFromID;
       }
     };
     if (typeof dataModal === 'string') {
@@ -136,13 +135,14 @@ ContextualActionPanel.prototype = {
 
     // Handle case with popup triggered from a menu
     if (this.element.closest('.popupmenu').length === 1) {
-      this.panel = this.element.closest('.popupmenu').next('.contextual-action-panel');
+      existingPanel = this.element.closest('.popupmenu').next('.contextual-action-panel');
     }
 
-    if (this.panel[0]) {
-      this.panel[0].style.display = 'none';
+    if (existingPanel[0]) {
+      existingPanel[0].style.display = 'none';
+      existingPanel.addClass('is-animating');
+      this.panel = existingPanel;
     }
-    this.panel.addClass('is-animating');
 
     return this;
   },
@@ -157,7 +157,7 @@ ContextualActionPanel.prototype = {
     const modalContent = this.settings.content;
 
     // Build the Content if it's not present
-    if (this.panel.length === 0) {
+    if (!this.panel || !this.panel.length) {
       if (modalContent instanceof jQuery) {
         if (modalContent.is('.contextual-action-panel')) {
           this.panel = modalContent;
