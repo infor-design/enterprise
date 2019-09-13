@@ -480,11 +480,11 @@ html[dir='rtl'] {
     background-color: $theme-color-palette-slate-80;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
-    left: initial;
+    left: unset;
     right: -$application-menu-width;
 
     &.is-open {
-      left: initial;
+      left: unset;
       right: 0;
     }
 
@@ -523,7 +523,7 @@ html[dir='rtl'] {
 
     + .page-container {
       left: 0;
-      right: initial;
+      right: unset;
     }
 
     .btn-menu {
