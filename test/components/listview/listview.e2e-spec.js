@@ -575,7 +575,7 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
 
 describe('Listview flex card empty tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/listview/test-empty-message-no-card?layout=nofrills');
+    await utils.setPage('/components/listview/test-empty-message-flex-container?layout=nofrills');
     const emptyMessage = await element(by.css('.empty-message'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(emptyMessage), config.waitsFor);
