@@ -344,7 +344,7 @@ html[dir='rtl'] {
       }
 
       .heading {
-        padding-left: initial;
+        padding-left: 0;
         padding-right: 20px;
       }
     }
@@ -355,7 +355,7 @@ html[dir='rtl'] {
 
         li {
           margin-left: 10px;
-          margin-right: inherit;
+          margin-right: 0;
 
           &:first-child {
             margin-top: 0;
@@ -406,13 +406,13 @@ html[dir='rtl'] {
   @include respond-to(tabletdown) {
     .step-process-container {
       .toolbar-custom .heading {
-        padding-left: initial;
+        padding-left: 0;
         padding-right: 60px;
       }
 
       .toolbar-collapsible {
         padding-left: 10px;
-        padding-right: initial;
+        padding-right: 0;
       }
     }
   }
