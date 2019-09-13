@@ -12,6 +12,7 @@
 
 - `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
+- `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
 
 ### v4.22.0 Chores & Maintenance
 
