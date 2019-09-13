@@ -434,7 +434,7 @@ div.multiselect {
       @include checkbox-unchecked-before-style;
 
       left: 10px;
-      margin-left: initial;
+      margin-left: 0;
       margin-top: 7px;
     }
 
