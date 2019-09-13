@@ -1,3 +1,4 @@
+import { triggerContextmenu } from '../../helpers/func-utils';
 import { Bullet } from '../../../src/components/bullet/bullet';
 
 const areaHTML = require('../../../app/views/components/bullet/example-index.html');
@@ -76,5 +77,15 @@ describe('Bullet Chart API', () => {
       expect(document.body.querySelector('.title').textContent).toEqual('Revenue (New)DKK$, in thousands');
       done();
     }, 300);
+  });
+
+  it('Should fire contextmenu event', () => {
+    const spyEvent = spyOnEvent(bulletEl, 'contextmenu');
+    $(bulletEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(600);
+    });
+    triggerContextmenu(document.body.querySelector('.range'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });
