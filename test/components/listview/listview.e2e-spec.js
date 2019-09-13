@@ -573,7 +573,7 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
   });
 });
 
-fdescribe('Listview flex card empty tests', () => { //eslint-disable-line
+describe('Listview flex card empty tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/test-empty-message-no-card?layout=nofrills');
     const emptyMessage = await element(by.css('.empty-message'));
