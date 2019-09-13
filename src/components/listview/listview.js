@@ -314,8 +314,15 @@ ListView.prototype = {
         totals
       });
 
+      if (this.element.parent().is('.scrollable-flex-content')) {
+        this.element.parent().find('.empty-message').remove();
+      }
+
       if (displayedDataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
+      } else if (self.emptyMessageContainer && this.element.parent().is('.scrollable-flex-content')) {
+        this.element.empty();
+        DOM.append(this.element.parent(), this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (self.emptyMessageContainer) {
         this.element.empty();
         DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
