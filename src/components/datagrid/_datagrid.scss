@@ -1450,6 +1450,7 @@ $datagrid-short-row-height: 25px;
 
     &.is-rowdisabled {
       opacity: 0.6;
+      pointer-events: none;
 
       td {
         &:hover {

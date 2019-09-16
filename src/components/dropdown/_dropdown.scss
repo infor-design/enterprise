@@ -210,7 +210,7 @@ div.multiselect {
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-shadow-initial-boxshadow, $focus-box-shadow;
+  box-shadow: $dropdown-box-shadow-top, $focus-box-shadow;
   font-size: $theme-size-font-base;
   max-height: 340px;
   min-height: 30px;

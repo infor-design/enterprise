@@ -72,7 +72,6 @@ module.exports = function () {
             'http://*.infor.com',
             'https://*.infor.com',
             'https://randomuser.me',
-            'http://placehold.it',
             'http://lorempixel.com',
             'https://imgplaceholder.com',
             'http://squizlabs.github.io'
