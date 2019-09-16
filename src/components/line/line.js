@@ -499,11 +499,13 @@ Line.prototype = {
           for (const key in mouseEnterData) {  //eslint-disable-line
             if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
               if (typeof mouseEnterData[key] !== 'object') {
-                content += `${'' +
-                    '<div class="swatch-row">' +
-                      '<span>'}${labels[key]}</span>` +
-                      `<b>${d.name}</b>` +
-                    '</div>';
+                if (labels[key]) {
+                  content += `${'' +
+                      '<div class="swatch-row">' +
+                        '<span>'}${labels[key]}</span>` +
+                        `<b>${d.name}</b>` +
+                      '</div>';
+                }
               } else {
                 const obj2 = mouseEnterData[key];
                 for (const key2 in obj2) {  //eslint-disable-line
