@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
 /**
- * IDS Enterprise Minify Process (Uglify-ES Wrapper)
+ * IDS Enterprise Minify Process (Terser Wrapper)
  */
 
 // -------------------------------------
 // Requirements
 // -------------------------------------
 const path = require('path');
-const UglifyJS = require('uglify-es');
+const Terser = require('terser');
 const commandLineArgs = require('yargs').argv;
 
 const logger = require('./logger');
-const config = require('./configs/uglify');
+const config = require('./configs/terser');
 const getFileContents = require('./build/get-file-contents');
 const writeFile = require('./build/write-file');
 
@@ -45,21 +45,21 @@ function openUncompressedFile(name, filePath) {
 }
 
 /**
- * Wraps the run of Uglify-ES and returns the result when resolved.
- * @returns {Promise} resovled once the Uglify process completes.
+ * Wraps the execution of Terser CLI and returns the result when resolved.
+ * @returns {Promise} resovled once the CLI process completes.
  */
 function minify() {
   const code = openUncompressedFile('Uncompressed JS Code', paths.input.js);
-  config.uglify.sourceMap.content = openUncompressedFile('Uncompressed JS SourceMap', paths.input.sourceMap);
+  config.terser.sourceMap.content = openUncompressedFile('Uncompressed JS SourceMap', paths.input.sourceMap);
 
   return new Promise((resolve, reject) => {
-    const result = UglifyJS.minify(code, config.uglify);
+    const result = Terser.minify(code, config.terser);
     if (result.error) {
-      reject(new Error(`Error running Uglify-ES: ${result.error}`));
+      reject(new Error(`Error running Terser: ${result.error}`));
       return;
     }
     if (commandLineArgs.verbose) {
-      logger('info', 'Finished UglifyJS process...');
+      logger('info', 'Finished Terser minification process...');
     }
     resolve(result);
   });

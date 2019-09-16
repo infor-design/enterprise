@@ -19,10 +19,10 @@ module.exports = {
   // Desired path of output sourcemap file
   outputSourceMapFileName: OUTPUT_SOURCEMAP,
 
-  // Uglify-ES Settings.
-  // See Uglify-ES docs for info:
+  // Terser Settings.
+  // See [Terser docs](https://github.com/terser/terser) for info:
   // NOTE: Some Sourcemap-related settings are automatically handled in `../minify.js`
-  uglify: {
+  terser: {
     sourceMap: {
       url: OUTPUT_URL
     }
