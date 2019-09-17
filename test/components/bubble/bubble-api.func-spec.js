@@ -1,3 +1,4 @@
+import { triggerContextmenu } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/bubble/example-index.html');
@@ -289,5 +290,16 @@ describe('Bubble Chart API', () => {
 
     expect(bubbleObj.getSelected()[0].data.value.x).toEqual(9);
     expect(bubbleObj.getSelected()[0].data.name).toEqual('January');
+  });
+
+  it('Should fire contextmenu event', () => {
+    const spyEvent = spyOnEvent(bubbleEl, 'contextmenu');
+    const result = { name: 'January', value: { x: 5, y: 3, z: 3 }, selected: true };
+    $(bubbleEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('[data-group-id="0"] .dot'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });

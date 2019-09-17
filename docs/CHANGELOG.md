@@ -6,6 +6,7 @@
 
 ### v4.22.0 Features
 
+- `[Charts]` Added support for context menu event with charts. ([#2699](https://github.com/infor-design/enterprise/issues/2699))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 
 ### v4.22.0 Fixes
