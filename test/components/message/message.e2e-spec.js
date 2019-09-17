@@ -46,10 +46,10 @@ describe('Message xss tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not be able to tab out of message modal', async () => {
+  it('Should show encoded text in the title', async () => {
     const buttonEl = await element(by.id('show-message'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
     await buttonEl.click();
 
     await browser.driver

@@ -94,10 +94,7 @@ describe('Searchfield go-button tests', () => {
   });
 
   it('fires a callback action when the Go Button is clicked', async () => {
-    const searchfieldInputEl = await element(by.id(searchfieldId));
-    await searchfieldInputEl.click();
-    await browser.driver.switchTo().activeElement().clear();
-    await searchfieldInputEl.sendKeys('Nice Button');
+    await element(by.id(searchfieldId)).sendKeys('Nice Button');
 
     const searchfieldGoButtonEl = await element(by.css(`#${searchfieldGoButtonId}`));
     await searchfieldGoButtonEl.click();
@@ -105,7 +102,7 @@ describe('Searchfield go-button tests', () => {
     const toastMessageSelector = '.toast-message';
     const toastMessageEl = await element(by.css(toastMessageSelector));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(toastMessageEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(toastMessageEl), config.waitsFor);
 
     expect(await element(by.css(toastMessageSelector)).getText())
       .toEqual('The searchfield\'s current value is "Nice Button".');
