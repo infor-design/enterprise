@@ -412,7 +412,7 @@ SearchField.prototype = {
       if (!this.goButton || !this.goButton.length) {
         this.goButton = $(`
           <button class="btn-secondary go-button">
-            <span>${this.settings.goButtonCopy || Locale.translate('Go')}</span>
+            <span>${this.settings.goButtonCopy || Locale.translate('Go', { showBrackets: false })}</span>
           </button>
         `);
       }
