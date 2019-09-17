@@ -5,9 +5,7 @@ const path = require('path');
 const handlebars = require('handlebars');
 const hbsRegistrar = require('handlebars-registrar');
 
-hbsRegistrar('toUpperCase', str => {
-  return str.toUowerCase();
-});
+hbsRegistrar('toUpperCase', str => str.toUowerCase());
 
 const hbsTemplate = `
 {{#each categories as |cat catKey|}}

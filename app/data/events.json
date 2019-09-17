@@ -328,5 +328,16 @@
     "ends": "2019-06-30T18:00:00.000",
     "type": "dto",
     "isAllDay": "false"
+  },
+  {
+    "id": "33",
+    "subject": "Out of Office",
+    "comments": "Out of office in afternoon",
+    "status": "Approved",
+    "icon": "icon-alert-solid",
+    "starts": "2019-09-13T12:00:00.000",
+    "ends": "2019-09-13T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
   }
 ]

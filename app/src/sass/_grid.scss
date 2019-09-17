@@ -56,9 +56,9 @@
 @include respond-to(phone) {
   .demo-typography .row > .one-fifth:first-child span {
     position: static;
-    right: initial;
+    right: auto;
     text-align: left;
-    top: initial;
+    top: auto;
   }
 
   .demo-typography {

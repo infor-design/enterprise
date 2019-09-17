@@ -709,17 +709,6 @@ label,
   }
 }
 
-.dropdown-wrapper .icon + .error-message,
-.lookup-wrapper .icon + .error-message {
-  margin-bottom: -10px;
-  margin-top: 4px;
-
-  .icon-error {
-    position: relative;
-    right: initial;
-  }
-}
-
 .column,
 .columns {
   input.has-actions:not(.datepicker),

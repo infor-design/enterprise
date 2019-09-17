@@ -28,7 +28,7 @@ $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
 $panel-bg-color: $theme-color-palette-slate-80;
 $panel-border-color: $theme-color-palette-slate-70;
-$drop-shadow-depth: rgba(0, 0, 0, 0.4);
+$drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
