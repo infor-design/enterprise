@@ -43,17 +43,15 @@
       buttons: [{
           id: 'id-cancel',
           text: 'Cancel',
-          click: function() {
-            console.log('You Cancelled');
-            $(this).data('modal').close();
+          click: function(e, modal) {
+            modal.close();
           },
           isLink: true,
           isDefault: true
         },{
           text: 'Remove',
-          click: function() {
-            console.log('Remove It');
-            $(this).data('modal').close();
+          click: function(e, modal) {
+            modal.close();
           }
         }]
     };
