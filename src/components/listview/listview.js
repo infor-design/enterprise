@@ -44,6 +44,7 @@ const COMPONENT_NAME = 'listview';
  * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
  * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
+ * @param {object} [settings.initializeContents=false] If true the initializer will be run on all internal contents.
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -67,7 +68,8 @@ const LISTVIEW_DEFAULTS = {
     showFirstButton: false,
     showLastButton: false
   },
-  searchTermMinSize: 1
+  searchTermMinSize: 1,
+  initializeContents: false
 };
 
 function ListView(element, settings) {
@@ -410,7 +412,9 @@ ListView.prototype = {
     });
 
     // Invoke all elements within the list view
-    this.element.find('ul').initialize();
+    if (self.settings.initializeContents) {
+      this.element.find('ul').initialize();
+    }
 
     /**
      * Fires after the listbox is fully rendered.

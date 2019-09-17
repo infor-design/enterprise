@@ -28,7 +28,7 @@ $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
 $panel-bg-color: $theme-color-palette-slate-80;
 $panel-border-color: $theme-color-palette-slate-70;
-$drop-shadow-depth: rgba(0, 0, 0, 0.4);
+$drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
@@ -558,7 +558,7 @@ $tree-hover-color: $theme-color-palette-white;
 $tree-hover-icon-color: $theme-color-palette-white;
 
 // Chart Progress Bar
-$chart-progressbar-bg-color: $theme-color-palette-slate-40;
+$chart-progressbar-bg-color: $theme-color-palette-slate-70;
 $chart-progressbar-bg-color-dark: $theme-color-palette-slate-20;
 $chart-progressbar-completed-fill: $theme-color-palette-emerald-80;
 $chart-progressbar-target-fill: $theme-color-palette-slate-60;

@@ -267,8 +267,8 @@
       top: 4px;
 
       .icon {
-        left: initial;
-        top: initial;
+        left: unset;
+        top: unset;
       }
     }
   }
@@ -810,7 +810,7 @@ html[dir='rtl'] {
 
     .icon.close {
       left: 12px !important;
-      right: initial !important;
+      right: unset !important;
     }
 
   }
