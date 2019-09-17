@@ -376,6 +376,8 @@ Personalize.prototype = {
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
       theme: incomingTheme || 'theme-soho-light'
     });
+
+    $('body').trigger('resize');
   },
 
   /**

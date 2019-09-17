@@ -1,0 +1,97 @@
+
+<div class="row">
+  <div class="four columns">
+    <div id="sparkline-chart-example-1" class="sparkline"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="sparkline-chart-example-2" class="sparkline"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="sparkline-chart-example-3" class="sparkline"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="sparkline-chart-example-4" class="sparkline"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="sparkline-chart-example-5" class="sparkline"></div>
+  </div>
+</div>
+
+<ul id="action-popupmenu" class="popupmenu">
+  <li><a href="#" class="action-1">Action One</a></li>
+  <li><a href="#" class="action-2">Action Two</a></li>
+  <li><a href="#" class="action-3">Action Three</a></li>
+</ul>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+
+    // Dataset
+    var sparkData1 = [{
+      data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
+      name: 'Inventory'
+    }];
+
+    var sparkData2 = [{
+      data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
+      name: 'Inventory'
+    }, {
+      data: [40, 30, 40, 16, 50, 17, 15, 39, 15, 18],
+      name: 'Demand'
+    }];
+
+    var sparkData3 = [{
+      data: [25, 20, 61, 28, 10, 30, 50, 35, 13, 27],
+      name: 'Inventory'
+    }];
+
+    var sparkData4 = [{
+      data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
+      name: 'Inventory'
+    }];
+
+    // Element
+    var elem1 = $('#sparkline-chart-example-1');
+    var elem2 = $('#sparkline-chart-example-2');
+    var elem3 = $('#sparkline-chart-example-3');
+    var elem4 = $('#sparkline-chart-example-4');
+    var elem5 = $('#sparkline-chart-example-5');
+
+    // Show Popupmenu
+    function showPopupmenu (e, bulletEl) {
+      bulletEl.popupmenu({ trigger: 'immediate', menu: 'action-popupmenu', eventObj: e })
+        .off('selected').on('selected', function (e, anchor) {
+          console.log('selected:', anchor[0]);
+        });
+    }
+
+    // Invoke
+    elem1.chart({ dataset: sparkData1, type: 'sparkline-dots-n-peak' });
+    elem2.chart({ dataset: sparkData2, type: 'sparkline-peak' });
+    elem3.chart({ dataset: sparkData3, type: 'sparkline-medianrange-n-peak' });
+    elem4.chart({ dataset: sparkData4, type: 'sparkline-minmax' });
+    elem5.chart({ dataset: sparkData1, type: 'sparkline' });
+
+    // Bind Contextmenu
+    elem1.add(elem2).add(elem3).add(elem4).add(elem5)
+      .on('contextmenu', function(e, el, d) {
+        if (el) {
+          console.log('Contextmenu:', { element: el, data: d });
+          showPopupmenu(e, $(this));
+        }
+      });
+
+  });
+</script>

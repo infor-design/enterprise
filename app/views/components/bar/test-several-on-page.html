@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Vertical Bar Chart Title 1</h2>
+      </div>
+      <div class="widget-content">
+        <div id="bar-example1" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Vertical Bar Chart Title 2</h2>
+      </div>
+      <div class="widget-content">
+        <div id="bar-example2" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+
+    var dataset1 = [{
+      data: [{
+        name: 'Category A',
+        value: 373,
+        url: 'test',
+        tooltip: 'Tooltip by Data <br> Component A <br> Information'
+      }, {
+        name: 'Category B',
+        value: 372
+      }, {
+        name: 'Category C',
+        value: 236.35
+      }],
+      name: ''
+    }];
+
+    var dataset2 = [{
+      data: [{
+        name: 'Category D',
+        value: 122,
+        url: 'test',
+        tooltip: 'Tooltip by Data <br> Component D <br> Information'
+      }, {
+        name: 'Category E',
+        value: 122
+      }, {
+        name: 'Category F',
+        value: 122
+      }],
+      name: ''
+    }];
+
+    $('#bar-example1').chart({type: 'bar', dataset: dataset1, animate: false});
+    $('#bar-example2').chart({type: 'bar', dataset: dataset2, animate: false});
+
+  });
+</script>

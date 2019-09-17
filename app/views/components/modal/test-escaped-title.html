@@ -1,51 +1,61 @@
 <div class="row">
-  <div class="twelve columns">
-    <button id="show-message" class="btn-secondary" type="button">Show Message</button>
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="show-modal">Show Modal</button><br/><br/>
+	</div>
+</div>
+
+
+		<!-- Modal Example -->
+<div id="modal-add-context" class="hidden">
+  <div class="form-responsive row no-bottom-margin">
+   <div class="twelve columns">
+			<div class="field">
+				<label for="subject">Problem</label>
+				<input type="text" id="subject" name="subject" />
+			</div>
+
+      <div class="field">
+        <label for="location" class="label">Location</label>
+        <select id="location" name="location" class="dropdown">
+          <option value="N">North</option>
+          <option value="S">South</option>
+          <option value="E">East</option>
+          <option value="W">West</option>
+        </select>
+      </div>
+
+			<div class="field">
+				<label for="notes-max">Notes (maxlength)</label>
+				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+			</div>
+		</div>
   </div>
 </div>
 
 <script>
-$('#show-message').on('click.test', function () {
+  $('#show-modal').on('click.test', function () {
     var opts = $(this).attr('data-message');
-
     opts = {
       title: '&lt;script&gt;alert(&quot;menuXSS&quot;)&lt;/script&gt;',
-      message: '<span class="longer-message">Are you sure you want to delete this page?</span>',
+      id: 'my-id',
+      content: $('#modal-add-context'),
       buttons: [{
           id: 'id-cancel',
           text: 'Cancel',
-          click: function() {
-            console.log('You Cancelled');
-            $(this).data('modal').close();
+          click: function(e, modal) {
+            modal.close();
           },
           isLink: true,
           isDefault: true
         },{
           text: 'Remove',
-          click: function() {
-            console.log('Remove It');
-            $(this).data('modal').close();
+          click: function(e, modal) {
+            modal.close();
           }
         }]
     };
 
-    $('body').message(opts)
-    .on('beforeopen', function () {
-      console.log('beforeOpen');
-      //return false;
-    })
-    .on('open', function () {
-      console.log('open');
-    })
-    .on('beforeclose', function () {
-      console.log('beforeclose');
-      //return false;
-    })
-    .on('close', function () {
-      console.log('close');
-    })
-    .on('afterclose', function () {
-      console.log('afterclose');
-    });
-});
+    $('body').modal(opts);
+  });
 </script>
