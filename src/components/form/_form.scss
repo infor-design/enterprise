@@ -4,7 +4,7 @@
 .form-responsive {
   input,
   textarea {
-    width: 100%;
+    width: 100% !important;
   }
 
   .colorpicker-container {
@@ -50,6 +50,9 @@
     white-space: nowrap;
   }
 
+  .row.no-bottom-margin {
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: $breakpoint-phone-to-tablet + 1) {

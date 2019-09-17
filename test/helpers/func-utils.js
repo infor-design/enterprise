@@ -27,6 +27,26 @@ function cleanup(item) {
   }
 }
 
+/**
+ * Trigger `contextmenu` on given element
+ * @param {HTMLElement} el Element to trigger `contextmenu`
+ * @returns {void}
+ */
+function triggerContextmenu(el) {
+  if (el instanceof HTMLElement || el instanceof SVGElement) {
+    if (window.CustomEvent) {
+      el.dispatchEvent(new CustomEvent('contextmenu'));
+    } else if (document.createEvent) {
+      const e = document.createEvent('HTMLEvents');
+      e.initEvent('contextmenu', true, false);
+      element.dispatchEvent(e);
+    } else { // Internet Explorer
+      el.fireEvent('oncontextmenu');
+    }
+  }
+}
+
 module.exports = {
-  cleanup
+  cleanup,
+  triggerContextmenu
 };

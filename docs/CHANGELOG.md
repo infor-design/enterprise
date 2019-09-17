@@ -8,17 +8,23 @@
 
 - `[Build]` Replaced UglifyES in the minification script with Terser ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Build]` Added the Locale culture files to the minification script. `.min.js` versions of each locale are now available in the `dist/` folder. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Charts]` Added support for context menu event with charts. ([#2699](https://github.com/infor-design/enterprise/issues/2699))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 
 ### v4.22.0 Fixes
 
 - `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
+- `[Datagrid]` Made the text all white on the targeted achievement formatter. ([#2730](https://github.com/infor-design/enterprise/issues/2730))
+- `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
+- `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
 - `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
+- `[Modal]` Fixed an issue where encoded html would not be recoded on the title. ([#246](https://github.com/infor-design/enterprise/issues/246))
 
 ### v4.22.0 Chores & Maintenance
 
-(n Issues Solved this release, Backlog Enterprise n, Backlog Ng n, n Functional Tests, n e2e Test)
+- `[Demo App]` Changed the theme switch to call the page refresh. ([#2743](https://github.com/infor-design/enterprise/issues/2743))
+- `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 
 ## v4.21.0
 

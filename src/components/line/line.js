@@ -86,6 +86,7 @@ Line.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this
       .build()
       .handleEvents();
@@ -148,6 +149,7 @@ Line.prototype = {
       dots.strokeWidth = 50;
     }
     $.extend(true, dots, this.settings.dots);
+    self.dots = dots;
 
     const isRTL = Locale.isRTL();
 
@@ -453,8 +455,11 @@ Line.prototype = {
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('class', 'line')
-        .on('click.chart', function () {
+        .on(`click.${self.namespace}`, function () {
           charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element);
+        })
+        .on(`contextmenu.${self.namespace}`, function () {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
         });
 
       // Add animation
@@ -494,11 +499,13 @@ Line.prototype = {
           for (const key in mouseEnterData) {  //eslint-disable-line
             if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
               if (typeof mouseEnterData[key] !== 'object') {
-                content += `${'' +
-                    '<div class="swatch-row">' +
-                      '<span>'}${labels[key]}</span>` +
-                      `<b>${d.name}</b>` +
-                    '</div>';
+                if (labels[key]) {
+                  content += `${'' +
+                      '<div class="swatch-row">' +
+                        '<span>'}${labels[key]}</span>` +
+                        `<b>${d.name}</b>` +
+                      '</div>';
+                }
               } else {
                 const obj2 = mouseEnterData[key];
                 for (const key2 in obj2) {  //eslint-disable-line
@@ -568,19 +575,22 @@ Line.prototype = {
             .style('stroke-width', dots.strokeWidth)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (self.settings.isBubble || self.settings.isScatterPlot ? '.7' : '1'))
-            .on('mouseenter.chart', function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
-            .on('mouseleave.chart', function () {
+            .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
               charts.hideTooltip();
               d3.select(this).attr('r', function (dg) {
                 return self.settings.isBubble ? zScale(dg.value.z) : dots.radius;
               });
             })
-            .on('click.chart', function (dh) {
+            .on(`click.${self.namespace}`, function (dh) {
               charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+            })
+            .on(`contextmenu.${self.namespace}`, function (di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
             });
         }
 
@@ -596,19 +606,22 @@ Line.prototype = {
             .attr('d', d3.symbol().size(dots.strokeWidth).type(function () { return d3.symbols[lineIdx]; }))
             .style('opacity', 0)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
-            .on('mouseenter.chart', function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
             })
-            .on('mouseleave.chart', function () {
+            .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
               charts.hideTooltip();
               d3.select(this).attr('r', function () {
                 return dots.radius;
               });
             })
-            .on('click.chart', function (dh) {
+            .on(`click.${self.namespace}`, function (dh) {
               charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+            })
+            .on(`contextmenu.${self.namespace}`, function (di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
             });
         }
         if (self.settings.isBubble) {
@@ -751,21 +764,21 @@ Line.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -843,9 +856,25 @@ Line.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.line-group .line').off(events(['click', 'contextmenu']));
+      this.element.find('.line-group .symbol')
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    if (this.dots && this.element) {
+      this.element.find(`.line-group .${this.dots.class}`)
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+      delete this.dots;
+    }
+
+    delete this.namespace;
     return this;
   },
 
@@ -854,11 +883,13 @@ Line.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('line-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('line-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

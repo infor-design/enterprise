@@ -59,7 +59,7 @@
 
       #calendar-view-changer + .dropdown-wrapper {
         float: right;
-        line-height: initial;
+        line-height: normal;
         position: relative;
         right: 15px;
         text-indent: 0;
@@ -143,7 +143,7 @@
       .icon {
         color: $font-color;
         height: 12px;
-        top: initial;
+        top: 0;
         vertical-align: top;
         width: 13px;
       }
@@ -467,14 +467,14 @@ html[dir='rtl'] {
     }
 
     .calendar-upcoming-status-text {
-      left: initial;
+      left: 0;
       right: 25px;
     }
 
     .calendar-upcoming-duration {
       float: left;
       left: 5px;
-      right: initial;
+      right: 0;
     }
   }
 }
