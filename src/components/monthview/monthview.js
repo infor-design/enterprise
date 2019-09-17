@@ -45,7 +45,8 @@ const COMPONENT_NAME_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   selectable: true,
-  onSelected: null
+  onSelected: null,
+  showToday: true
 };
 
 /**
@@ -97,6 +98,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
  * @param {boolean} [settings.selectable=false] If true the month days can be clicked to select
  * @param {boolean} [settings.onSelected=false] Call back that fires when a month day is clicked.
+ * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -272,10 +274,12 @@ MonthView.prototype = {
             <span class="hidden month"></span><span class="hidden year"></span>
             <input aria-label="${Locale.translate('Today', { locale: this.locale.name })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
           </span>
-          <a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>
+          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
         </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
       this.todayLink = this.header.find('.hyperlink.today');
+    } else if (this.settings.showToday) {
+      this.header.find('.btn-icon.prev').before(`<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>`);
     }
 
     this.showMonth(this.settings.month, this.settings.year);
@@ -1086,8 +1090,7 @@ MonthView.prototype = {
         // Set the height
         this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height() - 55); // 45 is the footer height
         // Rename some buttons
-        this.element.find('.is-today').hide();
-        this.element.find('.popup-footer').addClass('is-half');
+        this.element.find('.hyperlink.today').hide();
         this.element.find('.is-select').removeClass('is-select').addClass('is-select-month-pane');
         this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel'));
       }
@@ -1104,8 +1107,7 @@ MonthView.prototype = {
       if (!s.hideDays) {
         this.element.find('.btn-icon').removeAttr('disabled');
         this.element.find('td.is-selected').attr('tabindex', '0');
-        this.element.find('.is-today').show();
-        this.element.find('.popup-footer').removeClass('is-half');
+        this.element.find('.hyperlink.today').show();
         this.element.find('.is-select-month-pane').addClass('is-select').removeClass('is-select-month-pane');
         this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear'));
       }

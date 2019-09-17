@@ -4,11 +4,28 @@
 .monthview-header {
   .month,
   .year {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
 
   .btn-monthyear-pane {
     font-size: 2.4rem;
-    padding: 0 4px 1px 7px;
+    margin-left: -10px !important;
+    margin-top: -3px;
+    padding: 0;
+  }
+
+}
+
+.monthview-popup.popover .hyperlink.today {
+  font-size: 1.4rem;
+  right: 84px;
+  top: 17px;
+}
+
+.ie11 {
+  .monthview .btn-monthyear-pane .icon-opened,
+  .monthview .btn-monthyear-pane .icon-closed {
+    margin-left: 8px !important;
+    vertical-align: -8%;
   }
 }
