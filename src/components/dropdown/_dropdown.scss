@@ -792,12 +792,6 @@ div.dropdown-xs,
   }
 
   .dropdown-list {
-    &.multiple li {
-      &::before {
-        margin-left: -23px;
-      }
-    }
-
     &:not(.dropdown-short) {
       > .trigger {
         margin-left: -30px;
@@ -819,7 +813,6 @@ div.dropdown-xs,
     .dropdown-list {
       &.multiple li {
         &::before {
-          margin-left: 10px;
           margin-top: 7px;
         }
       }
@@ -864,13 +857,9 @@ div.dropdown-xs,
 
   .dropdown-list {
     &.multiple li {
-      &::before {
-        margin-left: -23px;
-      }
-
       &.is-selected::after {
         left: 15px;
-        top: 9px;
+        top: 8px;
       }
     }
 
