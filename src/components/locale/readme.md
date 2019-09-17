@@ -43,7 +43,7 @@ SohoConfig.culturesPath = 'myserver/path/cultures/';
 IDS ships with a minified set of Culture files.  To configure the Locale system to pull in these files instead of the uncompressed ones, you can use SohoConfig:
 
 ```javascript
-SohoConfig.minifiedCultures = true;
+SohoConfig.minifyCultures = true;
 ```
 
 ## Code Example - Using a different Language and Locale

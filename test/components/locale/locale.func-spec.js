@@ -66,10 +66,10 @@ describe('Locale API', () => {
   });
 
   it('Should be possible to require minified cultures', () => {
-    window.SohoConfig = { minifiedCultures: true };
+    window.SohoConfig = { minifyCultures: true };
 
-    expect(window.SohoConfig.minifiedCultures).toBeTruthy();
-    window.SohoConfig.minifiedCultures = null;
+    expect(window.SohoConfig.minifyCultures).toBeTruthy();
+    window.SohoConfig.minifyCultures = null;
   });
 
   it('Should be an object', () => {

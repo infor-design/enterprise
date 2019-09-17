@@ -160,5 +160,4 @@ function minifyJS() {
   });
 }
 
-debugger;
 module.exports = minifyJS();

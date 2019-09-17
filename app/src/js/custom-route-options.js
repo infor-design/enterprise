@@ -33,7 +33,7 @@ module.exports = function customRouteOptions(req, res) {
   // All routes will require a minified `sohoxi.js` and locale cultures,
   // if the query param was previously set.
   if (res.opts.minify) {
-    SohoConfig.minifiedCultures = true;
+    SohoConfig.minifyCultures = true;
   }
 
   // All patterns will use the "empty" layout

@@ -5,13 +5,13 @@ import { numberUtils } from '../../utils/number';
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
 let existingCulturePath = '';
-let minifiedCultures = false;
+let minifyCultures = false;
 if (typeof window.SohoConfig === 'object') {
   if (typeof window.SohoConfig.culturesPath === 'string') {
     existingCulturePath = window.SohoConfig.culturesPath;
   }
-  if (typeof window.SohoConfig.minifiedCultures === 'boolean') {
-    minifiedCultures = window.SohoConfig.minifiedCultures;
+  if (typeof window.SohoConfig.minifyCultures === 'boolean') {
+    minifyCultures = window.SohoConfig.minifyCultures;
   }
 }
 
@@ -83,7 +83,7 @@ const Locale = {  // eslint-disable-line
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
   defaultLocale: 'en-US',
-  minify: minifiedCultures,
+  minify: minifyCultures,
 
   /**
    * Sets the current lang tag in the Html element

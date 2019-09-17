@@ -1,4 +1,3 @@
-
 const INPUT_FILENAME = 'dist/js/sohoxi.js';
 const INPUT_SOURCEMAP = 'dist/js/sohoxi.js.map';
 const OUTPUT_FILENAME = 'dist/js/sohoxi.min.js';
