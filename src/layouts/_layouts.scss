@@ -381,7 +381,7 @@ body.no-scroll {
     .main,
     .sidebar {
       display: block;
-      vertical-align: initial;
+      vertical-align: baseline;
       width: 100%;
 
       &.scrollable,

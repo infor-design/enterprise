@@ -31,7 +31,7 @@
   }
 
   &.is-clickable {
-    pointer-events: initial;
+    pointer-events: auto;
   }
 
   &.top .arrow::after {

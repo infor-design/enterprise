@@ -524,13 +524,13 @@
       &.full {
         .prev {
           left: 5px;
-          right: initial;
+          right: 0;
           top: 5px;
         }
 
         .next {
           left: 36px;
-          right: initial;
+          right: 0;
           top: 5px;
         }
 
@@ -655,7 +655,7 @@
 
       thead th {
         padding-bottom: 5px;
-        text-transform: initial;
+        text-transform: none;
       }
     }
 
@@ -877,7 +877,7 @@ html[dir='rtl'] {
 
     &.is-fullsize {
       td .day-text {
-        left: initial;
+        left: unset;
         right: calc(100% - 25px);
       }
     }
@@ -910,13 +910,13 @@ html[dir='rtl'] {
   .is-fullsize {
     .monthview-header.full {
       .prev {
-        left: initial;
+        left: 0;
         right: 5px;
       }
 
       .next {
-        left: initial;
-        right: 40px;
+        left: 0;
+        right: 35px;
       }
 
       .monthview-datepicker {
