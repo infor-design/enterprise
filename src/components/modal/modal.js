@@ -122,9 +122,6 @@ Modal.prototype = {
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
     this.namespace = `${COMPONENT_NAME}-${this.id}`;
 
-    // Prevent Css on the title
-    this.settings.title = xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>');
-
     // Find the button or anchor with same dialog ID
     this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
     if (this.element.is('body')) {
@@ -181,7 +178,7 @@ Modal.prototype = {
 
     this.element = $(`${'<div class="modal">' +
         '<div class="modal-content" style="max-width: '}${this.settings.maxWidth ? this.settings.maxWidth : ''}px${'">' +
-          '<div class="modal-header"><h1 class="modal-title">'}${this.settings.title}</h1></div>` +
+          '<div class="modal-header"><h1 class="modal-title">'}</h1></div>` +
           '<div class="modal-body-wrapper">' +
             '<div class="modal-body"></div>' +
           '</div>' +
@@ -244,7 +241,8 @@ Modal.prototype = {
     }
 
     if (this.settings.title) {
-      this.element.find('.modal-title').text(this.settings.title);
+      // Prevent Css on the title
+      this.element.find('.modal-title')[0].innerHTML = xssUtils.stripTags(this.settings.title, '<div><span><a><small><img><svg><i><b><use><br><strong><em>');
     }
 
     if (!isAppended) {

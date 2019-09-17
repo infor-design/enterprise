@@ -1,0 +1,85 @@
+
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Column Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-bar-example" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul id="action-popupmenu" class="popupmenu">
+  <li><a href="#" class="action-1">Action One</a></li>
+  <li><a href="#" class="action-2">Action Two</a></li>
+  <li><a href="#" class="action-3">Action Three</a></li>
+</ul>
+
+<script>
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [{
+        name: 'Automotive',
+        shortName: 'Auto',
+        abbrName: 'A',
+        value: 7
+      }, {
+        name: 'Distribution',
+        shortName: 'Dist',
+        abbrName: 'D',
+        value: 10
+      }, {
+        name: 'Equipment',
+        shortName: 'Equip',
+        abbrName: 'E',
+        value: 14
+      }, {
+        name: 'Fashion',
+        shortName: 'Fash',
+        abbrName: 'F',
+        value: 10
+      }, {
+        name: 'Food & Beverage',
+        shortName: 'Food',
+        abbrName: 'F&B',
+        value: 14
+      }, {
+        name: 'Healthcare',
+        shortName: 'Health',
+        abbrName: 'H',
+        value: 8
+      }, {
+        name: 'Other',
+        shortName: 'Other',
+        abbrName: 'O',
+        value: 7
+      }]
+    }];
+
+    // Element
+    var elem = $('#column-bar-example');
+
+    // Show Popupmenu
+    function showPopupmenu (e) {
+      elem.popupmenu({ trigger: 'immediate', menu: 'action-popupmenu', eventObj: e })
+        .off('selected').on('selected', function (e, anchor) {
+          console.log('selected:', anchor[0]);
+        });
+    }
+
+    // Invoke
+    elem.chart({ type: 'column', dataset: dataset });
+
+    // Bind Contextmenu
+    elem.on('contextmenu', function(e, el, d) {
+      if (el) {
+        console.log('Contextmenu:', { element: el, data: d });
+        showPopupmenu(e);
+      }
+    });
+
+  });
+</script>
