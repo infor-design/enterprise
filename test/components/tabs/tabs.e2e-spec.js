@@ -159,6 +159,30 @@ describe('Tabs click example-counts tests', () => {
   });
 });
 
+describe('Tabs click example-counts uplift tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-counts?theme=uplift');
+    const tabsEl = await element(by.id('tabs-counts'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-counts in uplift', async () => {
+      const tabsEl = await element(by.id('tabs-counts'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts-uplift')).toEqual(0);
+    });
+  }
+});
+
 describe('Tabs keyboard example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-index');
