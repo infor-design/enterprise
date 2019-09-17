@@ -296,14 +296,14 @@ describe('Modal xss tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not be able to tab out of message modal', async () => {
+  it('Should show encoded data in the title', async () => {
     const buttonEl = await element(by.id('show-modal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
     await buttonEl.click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.modal'))), config.waitsFor);
 
     expect(await element(by.css('.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
   });

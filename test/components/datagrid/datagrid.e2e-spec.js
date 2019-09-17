@@ -879,6 +879,7 @@ describe('Datagrid multiselect tests', () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#remove-btn')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('2342203');
     expect(await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('2445204');
