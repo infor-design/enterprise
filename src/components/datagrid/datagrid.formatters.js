@@ -668,7 +668,6 @@ const formatters = {
     let text = `${perc}%`;
     const ranges = formatters.ClassRange(row, cell, perc, col);
     const target = col.target;
-    let isWhite = perc > 60;
 
     if (col.text) {
       text = col.text;
@@ -681,14 +680,13 @@ const formatters = {
       text = text.replace('<%percent%>', perc);
 
       col.showPercentText = true;
-      isWhite = perc > 75;
     }
 
     const barClass = (col.ranges && ranges.classes ? ranges.classes : 'primary');
     return `<div class="total bar chart-completion-target chart-targeted-achievement">
               <div class="target remaining bar" style="width: ${(target || 0)}%;"></div>
               <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
-              ${(col.showPercentText ? `<div class="chart-targeted-text l-center" ${(isWhite ? 'style="color: white"' : '')}>${text}</div>
+              ${(col.showPercentText ? `<div class="chart-targeted-text l-center">${text}</div>
             </div>` : `<div class="audible">${perc}%</div>`)}`;
   }
 

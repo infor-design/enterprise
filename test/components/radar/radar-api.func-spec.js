@@ -1,4 +1,4 @@
-import { cleanup } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Radar } from '../../../src/components/radar/radar';
 
 const radarHTML = require('../../../app/views/components/radar/example-index.html');
@@ -126,5 +126,16 @@ describe('Radar API', () => {
     radarObj.toggleSelected(options);
 
     expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(0);
+  });
+
+  it('Should fire contextmenu event', () => {
+    const spyEvent = spyOnEvent(radarEl, 'contextmenu');
+    const result = { name: 'Battery Life', value: 0.22 };
+    $(radarEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('.radar-invisible-circle'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });

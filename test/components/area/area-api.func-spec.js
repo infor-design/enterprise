@@ -1,3 +1,4 @@
+import { triggerContextmenu } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/area/example-index.html');
@@ -191,5 +192,16 @@ describe('Area Chart API', () => {
 
     expect(areaObj.getSelected()[0].data.value).toEqual(22);
     expect(areaObj.getSelected()[0].data.name).toEqual('Jan');
+  });
+
+  it('Should fire contextmenu event', () => {
+    const spyEvent = spyOnEvent(areaEl, 'contextmenu');
+    const result = { name: 'Jan', value: 12 };
+    $(areaEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('[data-group-id="0"] .dot'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });

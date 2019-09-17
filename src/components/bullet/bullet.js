@@ -46,6 +46,7 @@ Bullet.prototype = {
    * @returns {object} The bullet chart prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
 
     // Do initialization. Build or Events ect
@@ -163,11 +164,11 @@ Bullet.prototype = {
           return '';
         })
         .attr('height', barHeight)
-        .on('click', function () {
+        .on(`click.${self.namespace}`, function () {
           const bar = d3.select(this);
           self.element.trigger('selected', [bar, chartData.data[bar.attr('data-idx')]]);
         })
-        .on('mouseenter', function (d, mouseEnterIdx) {
+        .on(`mouseenter.${self.namespace}`, function (d, mouseEnterIdx) {
           const bar = d3.select(this);
           const data = chartData.data[bar.attr('data-idx')];
           const rect = this.getBoundingClientRect();
@@ -212,9 +213,12 @@ Bullet.prototype = {
             show();
           }
         })
-        .on('mouseleave', () => {
+        .on(`mouseleave.${self.namespace}`, () => {
           clearInterval(tooltipInterval);
           charts.hideTooltip();
+        })
+        .on(`contextmenu.${self.namespace}`, function (d) {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
         })
         .merge(range)
         .transition()
@@ -345,19 +349,23 @@ Bullet.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
+
+    $('html').on(`themechanged.${this.namespace}`, () => {
+      this.updated();
+    });
 
     return this;
   },
@@ -403,8 +411,18 @@ Bullet.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME} resize.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.range')
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -413,11 +431,13 @@ Bullet.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('bullet-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('bullet-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

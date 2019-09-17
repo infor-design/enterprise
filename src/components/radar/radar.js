@@ -105,6 +105,7 @@ Radar.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
 
     this
@@ -337,7 +338,7 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', settings.opacityArea)
-      .on('click', function (d, i) {
+      .on(`click.${self.namespace}`, function (d, i) {
         // Handle Click to select
         clearTimeout(tooltipInterval);
 
@@ -378,6 +379,9 @@ Radar.prototype = {
         self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
 
         charts.selected = !isSelected ? triggerData : [];
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Create the outlines
@@ -418,7 +422,7 @@ Radar.prototype = {
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', 'none')
       .style('pointer-events', 'all')
-      .on('mouseenter', function (d) {
+      .on(`mouseenter.${self.namespace}`, function (d) {
         if (!settings.showTooltips) {
           return;
         }
@@ -450,9 +454,12 @@ Radar.prototype = {
           charts.showTooltip(x, y, content, 'top');
         }, 300);
       })
-      .on('mouseleave', () => {
+      .on(`mouseleave.${self.namespace}`, () => {
         clearTimeout(tooltipInterval);
         charts.hideTooltip();
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Add tooltip object
@@ -491,21 +498,21 @@ Radar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -550,7 +557,7 @@ Radar.prototype = {
     });
 
     if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-      selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+      selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), arcIndex);
     }
   },
 
@@ -608,9 +615,19 @@ Radar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.chart-radar-area').off(events(['click', 'contextmenu']));
+      this.element.find('.radar-invisible-circle')
+        .off(events(['mouseenter', 'mouseleave', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -619,11 +636,13 @@ Radar.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('radar-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'radar');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('radar-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'radar');
+    }
   }
 };
 

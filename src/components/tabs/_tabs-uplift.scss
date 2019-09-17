@@ -5,4 +5,8 @@
   height: 7px;
 }
 
+.tab-container.horizontal.has-counts .tab a {
+  padding: 5px 11px 10px;
+}
+
 @import '../tabs-module/tabs-module-uplift';
