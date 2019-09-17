@@ -50,6 +50,8 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * all being established at once.
  * @param {boolean} [settings.moduleTabsTooltips=false] if true, will display a tooltip on
  * Module Tabs with cut-off text content.
+ * @param {boolean} [settings.multiTabsTooltips=false] if true, will display a tooltip on
+ * Multi Tabs with cut-off text content.
  * @param {function} [settings.source=null] If defined, will serve as a way of pulling
  * in external content to fill tabs.
  * @param {object} [settings.sourceArguments={}] If a source method is defined, this
@@ -71,6 +73,7 @@ const TABS_DEFAULTS = {
   hashChangeCallback: null,
   lazyLoad: true,
   moduleTabsTooltips: false,
+  multiTabsTooltips: false,
   source: null,
   sourceArguments: {},
   tabCounts: false,
@@ -105,6 +108,7 @@ Tabs.prototype = {
   setup() {
     // Used by the $(body).resize event to correctly identify the tabs container element
     this.tabsIndex = $('.tab-container').index(this.element);
+    this.settings.multiTabsTooltips = this.element.closest('.multitabs-container').length > 0;
     return this;
   },
 
@@ -282,7 +286,7 @@ Tabs.prototype = {
 
       // Make it possible for Module Tabs to display a tooltip containing their contents
       // if the contents are cut off by ellipsis.
-      if (self.settings.moduleTabsTooltips) {
+      if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips) {
         a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes').tooltip({
           content: `${a.text().trim()}`
         });
@@ -2366,7 +2370,7 @@ Tabs.prototype = {
 
     // Make it possible for Module Tabs to display a tooltip containing their contents
     // if the contents are cut off by ellipsis.
-    if (this.settings.moduleTabsTooltips) {
+    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
       anchorMarkup.on('beforeshow.toolbar', () => anchorMarkup.data('cutoffTitle') === 'yes').tooltip({
         content: `${anchorMarkup.text().trim()}`
       });
@@ -2441,7 +2445,7 @@ Tabs.prototype = {
     this.anchors = $(this.anchors.not(targetAnchor));
 
     // Destroy Anchor tooltips, if applicable
-    if (this.settings.moduleTabsTooltips) {
+    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
       targetAnchor.off('beforeshow.toolbar').data('tooltip').destroy();
     }
 
@@ -2784,7 +2788,7 @@ Tabs.prototype = {
 
     const tab = this.doGetTab(e, tabId);
     const hasCounts = this.settings.tabCounts;
-    const hasTooltip = this.settings.moduleTabsTooltips;
+    const hasTooltip = this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips;
     const anchor = tab.children('a');
     let count;
 
@@ -2994,8 +2998,7 @@ Tabs.prototype = {
     for (let i = 0; i < sizeableTabs.length; i++) {
       a = sizeableTabs.eq(i).children('a');
       a[0].style.width = '';
-
-      if (this.settings.moduleTabsTooltips === true) {
+      if (this.settings.moduleTabsTooltips === true || this.settings.multiTabsTooltips) {
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(sizeableTabs[i]).width, 10);
@@ -3912,7 +3915,7 @@ Tabs.prototype = {
       .removeAttr('aria-selected')
       .removeAttr('tabindex');
 
-    if (this.settings.moduleTabsTooltips) {
+    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
       this.anchors.each(function () {
         const api = $(this).data('tooltip');
         if (api && typeof api.destroy === 'function') {

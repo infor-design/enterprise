@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => { //eslint-disable-line
+describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.id('monthview-datepicker-field'));
@@ -55,7 +55,7 @@ describe('Calendar index tests', () => { //eslint-disable-line
   });
 });
 
-describe('Calendar ajax loading tests', () => { //eslint-disable-line
+describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.id('monthview-datepicker-field'));
