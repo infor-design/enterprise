@@ -1012,6 +1012,95 @@ describe('Datagrid paging tests', () => {
   }
 });
 
+describe('Datagrid paging client side tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-client-side');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(10)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to move to keyword search', async () => {
+    await element(by.id('gridfilter')).sendKeys('ressor 2');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
+  });
+
+  it('Should be able to move to last', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('990');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('999');
+  });
+
+  it('Should be able to move to first', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+
+    await element(by.css('.pager-last .btn-icon')).click();
+    await element(by.css('.pager-first .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to next/prev', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('10');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('19');
+
+    await element(by.css('.pager-prev .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+  });
+
+  it('Should be able to move to specific page', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.BACK_SPACE);
+    await element(by.css('.pager-count input')).sendKeys('5');
+    await element(by.css('.pager-count input')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('40');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('49');
+  });
+
+  it('Should sort correctly', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
+
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('999');
+    expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('990');
+  });
+});
+
 describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
