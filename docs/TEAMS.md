@@ -66,13 +66,13 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor GFC | Lawson App | Tiffany Kai King, Jon Cadag | `3.x` |
 | Infor HMS | | David Parisi | `3.x` |
 | Hansen 8 | An ASP Application interested in accessibility  | Ovidiu Petruescu | `^4.x` |
-| IES | | Timothy Kettering| `4.x` |
+| IES | | Timothy Kettering | `4.x` |
 | ILMS | | Muhammad Kamran Zahid | `4.x` |
 | IPA | Using D3 component example and some controls | Christopher Fried, Keith Knud | `4.x` |
 | IPM | Moving to IDS Enterprise for 11.0 CE Transformative release | Bob Archer | `4.x` |
 | Infinium SHCM | | Joe Bockskopf | `3.x` |
 | Infor BI Modeling | Doing a quick assessment on required changes for Xi, no dedicated Xi release plan yet. The application is part of the SOA Farm and based on BI Farm Architecture. The client is implemented as a Plugin for BI Dashboards. | Guido Buecker | `4.x` |
-| Infor Enroute 911 | Actively working on converting  | James Coonce | `^4.x` |
+| Infor Enroute 911 | Actively working on converting | James Coonce | `^4.x` |
 | Infor Mobility Framework | HTML5 , React | Oskar Eriksson |
 | Infor Supplier Exchange | Replacing Fat client Java Swing UI | John Sipher | `4.x` |
 | Krypton | Angular 6 App for Krypton admin | Rishni Perera | `4.x` |
