@@ -10,9 +10,9 @@ dist: xenial
 # Leave node_js version blank to
 # use version in `.nvmrc`
 node_js:
-# cache:
-#   directories:
-#    - node_modules
+cache:
+  directories:
+    - node_modules
 env:
   - TEST_SUITE=e2e
   - TEST_SUITE=functional
