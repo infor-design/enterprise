@@ -226,7 +226,7 @@ curl -s -X POST -H "Content-Type: application/json" \
 1. You may need to reset or add a new ssh key. See the [github ssh page](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more info. I used `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
 1. Now you are connected! You can use this like a normal VM, debug, or create baselines as the following section but without the VM.
 1. You may want to start the server in the background by running a command like `nohup npm run start &`
-1. You may want to check the git branch your one is correct and not head so you can make commits.
+1. You may want to check the git branch you're on is correct and is not HEAD, so you can make commits.
 1. You may want to run `PS1='\u:\W\$ '` to shorten the machine name on the command line.
 1. Then you can run the tests with `npm run e2e:ci:debug`.
 1. Disconnect to kill the build or cancel from the UI with the "Cancel Build" button.
