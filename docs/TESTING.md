@@ -78,7 +78,7 @@ See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis
 Run a specific E2E component locally (Only Chrome or Firefox)
 
 1. Run `npm start` to start the app
-1. Isolate your tests with "Fit" or "Fdescribe"
+1. Isolate your tests with "fit" or "fdescribe"
 1. In another terminal instance, run `npm run e2e:ci:debug`
 
 OR
@@ -214,9 +214,9 @@ Since we are now on xenial on travis we can debug and load the travis builds as 
 curl -s -X POST -H "Content-Type: application/json" \
    -H "Accept: application/json" \
    -H "Travis-API-Version: 3" \
-   -H "Authorization: token <job id>" \
+   -H "Authorization: token <token>" \
    -d '{ "quiet": false }' \
-   https://api.travis-ci.com/job/<build id>/debug
+   https://api.travis-ci.com/job/<build-id>/debug
 ```
 
 1. You may need to run `chmod +x debug.sh` to excute.
@@ -227,18 +227,33 @@ curl -s -X POST -H "Content-Type: application/json" \
 1. Now you are connected! You can use this like a normal VM, debug, or create baselines as the following section but without the VM.
 1. You may want to start the server in the background by running a command like `nohup npm run start &`
 1. You may want to check the git branch your one is correct and not head so you can make commits.
+1. You may want to run `PS1='\u:\W\$ '` to shorten the machine name on the command line.
 1. Then you can run the tests with `npm run e2e:ci:debug`.
 1. Disconnect to kill the build or cancel from the UI with the "Cancel Build" button.
 
-#### Setting up the Docker environment (Older Way)
+#### Setting up the Docker environment
 
 **NOTE:** assuming the technology stack doesn't change between versions, the series of steps outlined here may only need to be performed once.
 
 1. Push the branch you're working on to GitHub (we'll need it later).
-1. In your terminal, run `docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0` to download the Travis CI docker image to mimic the environment. And wait....
-1. Open the image and go in: `docker exec -it travis-debug bash -l`
-1. Set the timezone for some tests: `cp /usr/share/zoneinfo/America/New_York /etc/localtime`
-1. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm#install--update-script) using the latest version available (check their Github for more info)
+1. In your terminal, run `docker run --name travis-vm -dit travisci/ubuntu-systemd:16.04` to download the Travis CI docker image to mimic the environment. And wait....
+1. Open the image and go in: `docker exec -it travis-vm bash -l`
+1. Get the latest updates using `apt-get update`.
+1. Set the timezone for some tests
+
+    ```sh
+    apt-get install tzdata
+    dpkg-reconfigure tzdata
+    ```
+
+1. Install a few more needed tools.
+
+    ```sh
+    apt-get install nano git-core curl wget sudo python make
+    apt-get -f install
+    ```
+
+1. Install [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm#git-install) using the latest version available (check their Github for more info).
 1. Update/Install Node.js
 
     ```sh
@@ -256,6 +271,7 @@ curl -s -X POST -H "Content-Type: application/json" \
 
 1. Checkout the branch you pushed to Github earlier.
 1. Run the install commands: `npm install -g grunt-cli && npm install`
+1. Set these [environmental variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables).
 1. You may need to update the version of Chrome on the container:
 
     ```sh
