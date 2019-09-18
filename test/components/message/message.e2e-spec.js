@@ -53,7 +53,7 @@ describe('Message xss tests', () => {
     await buttonEl.click();
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.message.modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.message.modal'))), config.waitsFor);
 
     expect(await element(by.css('.message.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
   });

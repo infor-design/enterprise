@@ -281,6 +281,8 @@ describe('Validation Legacy Tooltip', () => {
 describe('Validation on Accordion', () => {
   beforeEach(async () => {
     await utils.setPage('/components/validation/test-on-accordion');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.alternate .accordion-header'))), config.waitsFor);
   });
 
   it('Should validate on an accordion', async () => {
@@ -291,7 +293,7 @@ describe('Validation on Accordion', () => {
 
     const nameEl = await element(by.id('last-name2'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(nameEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(nameEl), config.waitsFor);
 
     await nameEl.clear();
     await nameEl.sendKeys(protractor.Key.TAB);

@@ -299,7 +299,7 @@ describe('Modal xss tests', () => {
   it('Should show encoded data in the title', async () => {
     const buttonEl = await element(by.id('show-modal'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
     await buttonEl.click();
 
     await browser.driver
