@@ -286,3 +286,25 @@ describe('Modal Full Content Tests', () => {
     await element.all(by.css('.modal-buttonset button')).first().click();
   });
 });
+
+describe('Modal xss tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-escaped-title');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show encoded text in the title', async () => {
+    const buttonEl = await element(by.id('show-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.modal'))), config.waitsFor);
+
+    expect(await element(by.css('.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
+  });
+});
