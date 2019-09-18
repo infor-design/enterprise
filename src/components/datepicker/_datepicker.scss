@@ -94,6 +94,18 @@
 .monthview-popup.popover {
   max-width: inherit;
 
+  .hyperlink.today {
+    position: absolute;
+    right: 85px;
+    text-decoration: none;
+    top: 19px;
+
+    &::after {
+      left: 8px;
+      width: 100%;
+    }
+  }
+
   .tooltip-content {
     padding: 0;
   }
@@ -101,17 +113,12 @@
   .popup-footer {
     button {
       background-color: transparent;
-      width: 33.33%;
-
-      // Fixes cut off focus state on the middle button
-      &:nth-child(1) {
-        margin-right: -1px;
-      }
-    }
-
-    &.is-half button {
       width: 50%;
     }
+  }
+
+  .time-parts {
+    padding: 10px;
   }
 }
 
