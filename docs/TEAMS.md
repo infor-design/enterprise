@@ -7,14 +7,14 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor Homepages API | Typescript, Angular IDS | Fredrik Eriksson | `4.x` |
 | Infor Homepages Widgets | Every widget in homepages uses IDS | Fredrik Eriksson | `4.x` |
 | Infor Search Widgets | Every widget in homepages uses IDS | Fredrik Eriksson | `4.x` |
-| Infor Document Management | Angular IDS  | Anna-Maj Jannsson | `4.x` |
+| Infor Document Management | Angular IDS | Anna-Maj Jannsson | `4.x` |
 | Infor ION | New Version with Angular IDS, Rewrite | | `4.x` |
 | Infor ION Desk | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia | `4.x` | | Infor ERP LN - Customer Specific Utilities | | Flavio Marcato | `3.x` |
-| Infor ION Factory R&D | Context Apps for ION/Ming.le |  Ramesh Chinnapangu, Raghavendar Gangishetty | `4.x` |
+| Infor ION Factory R&D | Context Apps for ION/Ming.le | Ramesh Chinnapangu, Raghavendar Gangishetty | `4.x` |
 | Infor Data Lake - Data Management | Angular IDS in Rewrite | | `3.x` `4.x` |
 | Infor Data Lake - Sky Vault | Ana Laura Martinez | Wim Denayer | `4.x` |
 | Infor Mongoose | Uses IDS tokens, Wizard, Editor Ect  and Demo Services, Looking at Shared Repo | Paul Horne, Lee Flaherty | | `2.x` |
-| Infor CloudSuite Automotive | Angular Components |Rick Leedy | `4.x` |
+| Infor CloudSuite Automotive | Angular Components | Rick Leedy | `4.x` |
 | Infor CloudSuite Healthcare | Angular Components | | `4.x` |
 | Infor CloudSuite Human Capital Management (HCM) | Angular Components | | `4.x` |
 | Infor CloudSuite Public Sector | Angular Components | | `4.x` |
@@ -30,7 +30,7 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor CRM | IDS Components, Tokens | Jason Best  | `4.x` |
 | Infor Configure Price Quote (CPQ) | IDS Components | | `4.x` |
 | Infor Contract Lifecycle Management (CLM) | IDS Components | Michael Pendon | `^4.x` |
-| Infor Interaction Advisor | IDS Components  | Michael Pendon | `^4.x` |
+| Infor Interaction Advisor | IDS Components | Michael Pendon | `^4.x` |
 | Infor Omni-channel Compaign Management | JSF and template based HTML | Karthikeyan Alagarasamy | `^4.x` |
 | Infor Financials | Landmark Angular | Karthikeyan Alagarasamy | `^4.x` |
 | Infor Supply Management | Apache, Jboss | | `^4.x` |
@@ -38,8 +38,8 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor Global HR | Landmark Angular | | `^4.x` |
 | Infor Talent Management | Landmark Angular | | `^4.x` |
 | Infor Talent Science® | Landmark Angular | | `^4.x` |
-| Infor Workforce Management |  ids-identity and components| | `^4.x` |
-| Infor Learning Management | Angular | Content Creator for LMS( Learning Management System ) | | Vadim Liman | `3.x` |
+| Infor Workforce Management | ids-identity and components| | `^4.x` |
+| Infor Learning Management | Angular | Content Creator for LMS (Learning Management System) | | Vadim Liman | `3.x` |
 | Infor Enterprise Asset Management | Angular Widgets in Home Pages | | `^4.x` |
 | Infor BI | React app, extjs port, ids-enterprise, components | Andrej Hazucha, Ondrej Hruska | `^4.x` |
 | Infor Cloverleaf | Global Monitor | Carlos Prichardo | `4.x` |
@@ -79,16 +79,16 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | LBI | | Steve Stahl, Rommel Dollison | `3.x` |
 | LTM App Group | | Jerry Drinka, David Cooper | `3.x` |
 | Landmark Framework | (incl GHR and CSF) jQuery/HTML5, Angular Shared repo | Phillip Patton, Andrew Lipetzky | `4x` |
-| LN - Homepage Widgets | Angular Components in Home pages. | Rajiv Ghatage, Madhavi Dasika | `4.x` |
+| LN - Homepage Widgets | Angular Components in Home pages | Rajiv Ghatage, Madhavi Dasika | `4.x` |
 | MNT0386 - Cloud Enablement of SRS | | Leo Peng | `3.x` |
 | MSCM (Mobile Supply Chain Management) | | Ferdinand Brian Verdejol, Larry Amisola |
 | Masterpiece | | Tam Nav | `3.x` |
-| Mingle Registry / IFS | part of CE and OP| Ritesh Budarapu  | `4.x` |
+| Mingle Registry / IFS | part of CE and OP | Ritesh Budarapu  | `4.x` |
 | Mingle | Pulling SASS files into Mingle | Ravi Narayan | `4.x` |
 | MRM (Marketing Resource Management) | Angular Components | Saravana Kumar | `4.x` |
 | NGCC - Content Creator HCM - LMS | | Shakeeb Murtaza | `3.x` |
 | Infor PCM | Knockout App | Tim Dunham | `3.x` |
-| Infor PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna | `4.x` |Peddibhotla || PMServerAdmin | | Mike Campbell | `3.x` |
+| Infor PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna | `4.x` | Peddibhotla | | PMServerAdmin | | Mike Campbell | `3.x` |
 | Infor Pathway | Public Sector Product sold in Australia and New Zealand, Highlight Rated App, MVC | Mark Nolan, Jesser Susi | `4.x` |
 | Infor Cloudsuite - Self Portal | Using XI js and css directly, actively implementing | Hal Walters | `4.x` |
 | Infor Cloudsuite - Hanover, Faro | Cloudsuite apps | | `4.x` |
