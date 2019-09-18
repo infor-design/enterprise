@@ -10,9 +10,9 @@ dist: xenial
 # Leave node_js version blank to
 # use version in `.nvmrc`
 node_js:
-cache:
-  directories:
-#   - node_modules
+# cache:
+#   directories:
+#    - node_modules
 env:
   - TEST_SUITE=e2e
   - TEST_SUITE=functional
@@ -23,6 +23,7 @@ install:
 before_script:
   - export TZ=America/New_York
   - google-chrome --version
+  - rm -rf node_modules
   - if [ $TEST_SUITE != lint ]; then npm run build; fi
 script:
   # Run non-e2e tests
