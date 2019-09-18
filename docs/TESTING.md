@@ -271,7 +271,7 @@ curl -s -X POST -H "Content-Type: application/json" \
 
 1. Checkout the branch you pushed to Github earlier.
 1. Run the install commands: `npm install -g grunt-cli && npm install`
-1. Set these [environmental variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables).
+1. Set these [environment variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables).
 1. You may need to update the version of Chrome on the container:
 
     ```sh
