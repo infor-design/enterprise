@@ -62,7 +62,7 @@ describe('Contextual Action Panel example-index tests', () => {
       await actionButtonEl.click();
 
       const panelEl = await element(by.className('modal'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-index')).toEqual(0);
     });
