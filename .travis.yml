@@ -12,7 +12,7 @@ dist: xenial
 node_js:
 cache:
   directories:
-    - node_modules
+#   - node_modules
 env:
   - TEST_SUITE=e2e
   - TEST_SUITE=functional
