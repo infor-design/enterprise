@@ -102,7 +102,7 @@ describe('Editor dirty tracking tests', () => {
     await element(by.id('editor1')).sendKeys('Test');
 
     await browser.driver.wait(protractor.ExpectedConditions
-      .presenceOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
 
     expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
 
