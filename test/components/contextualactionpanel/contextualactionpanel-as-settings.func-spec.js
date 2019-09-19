@@ -150,11 +150,13 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
   it('can pass a `fullsize` setting to the underlying Modal component', () => {
     capAPI = new ContextualActionPanel(document.body, {
       modalSettings: {
-        fullsize: 'always'
+        fullsize: 'always',
+        breakpoint: 'phone'
       }
     });
     const modalSettings = capAPI.modalAPI.settings;
 
     expect(modalSettings.fullsize).toEqual('always');
+    expect(modalSettings.breakpoint).toEqual('phone');
   });
 });

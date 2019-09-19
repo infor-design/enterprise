@@ -12,6 +12,9 @@ import '../button/button.jquery';
 // The name of this component.
 const COMPONENT_NAME = 'modal';
 
+// Possible values for the `trigger` setting
+const MODAL_TRIGGER_SETTINGS = ['click', 'immediate'];
+
 // Possible values for the `fullsize` setting
 const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 
@@ -36,6 +39,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
+* @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -52,10 +56,32 @@ const MODAL_DEFAULTS = {
   showCloseBtn: false,
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
+  breakpoint: 'phone-to-tablet'
 };
+
+// Resets some string-based Modal settings to their defaults
+// if the provided values are not possible or valid.
+function handleModalDefaults(settings) {
+  if (settings.trigger && MODAL_TRIGGER_SETTINGS.indexOf(settings.trigger) === -1) {
+    settings.trigger = MODAL_DEFAULTS.trigger;
+  }
+
+  // Reset fullsize setting to default if it's not available
+  if (settings.fullsize && MODAL_FULLSIZE_SETTINGS.indexOf(settings.fullsize) === -1) {
+    settings.fullsize = MODAL_DEFAULTS.fullsize;
+  }
+
+  // Reset breakpoint setting to default if it's not a valid breakpoint.
+  if (settings.breakpoint && breakpoints.available.indexOf(settings.breakpoint) === -1) {
+    settings.breakpoint = MODAL_DEFAULTS.breakpoint;
+  }
+
+  return settings;
+}
 
 function Modal(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MODAL_DEFAULTS);
+  this.settings = handleModalDefaults(this.settings);
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -125,7 +151,7 @@ Modal.prototype = {
    */
   get currentlyNeedsFullsize() {
     return (this.settings.fullsize === 'always' ||
-      (this.settings.fullsize === 'responsive' && breakpoints.isBelow('phone-to-tablet')));
+      (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint)));
   },
 
   /**
@@ -1043,6 +1069,7 @@ Modal.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
+      this.settings = handleModalDefaults(this.settings);
     }
 
     if (this.settings.trigger === 'immediate') {

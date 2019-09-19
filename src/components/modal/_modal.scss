@@ -61,7 +61,7 @@
     }
 
     textarea {
-      width: 300px;
+      min-width: 300px;
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
@@ -220,18 +220,6 @@
 
     .modal-body-wrapper {
       flex-grow: 1;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-phone-to-tablet) {
-  .modal {
-    .form-responsive {
-      .field {
-        textarea {
-          width: 100%;
-        }
-      }
     }
   }
 }

@@ -1,5 +1,35 @@
 <div class="row top-padding">
   <div class="twelve columns">
+    <fieldset class="radio-group">
+      <legend>Breakpoints</legend>
+      <input type="radio" class="radio" name="breakpoint-options" id="phone" value="phone"/>
+      <label for="phone" class="radio-label">Phone (320px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="slim" value="slim"/>
+      <label for="slim" class="radio-label">Slim (400px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="phablet" value="phablet"/>
+      <label for="phablet" class="radio-label">Tablet (610px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="phone-to-tablet" value="phone-to-tablet" checked/>
+      <label for="phone-to-tablet" class="radio-label">Phone-to-Tablet (767px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="wide-tablet" value="wide-tablet"/>
+      <label for="wide-tablet" class="radio-label">Wide-Tablet (968px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="tablet-to-desktop" value="tablet-to-desktop"/>
+      <label for="tablet-to-desktop" class="radio-label">Tablet-to-Desktop (1280px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="desktop" value="desktop"/>
+      <label for="desktop" class="radio-label">Desktop (1024px)</label>
+      <br/>
+      <input type="radio" class="radio" name="breakpoint-options" id="desktop-to-extralarge" value="desktop-to-extralarge"/>
+      <label for="desktop-to-extralarge" class="radio-label">Desktop-to-ExtraLarge (1600px)</label>
+    </fieldset>
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
     <button id="show" class="btn-secondary" type="button">
       <span>Show Modal</span>
     </button>
@@ -48,10 +78,19 @@
 </div>
 
 <script id="test-script">
+  const opts = $('[name="breakpoint-options"]');
+
   $('#show').on('click', function () {
+    opts.disable();
+
     $('body').modal({
       content: $('#modal'),
-      fullsize: 'responsive'
+      fullsize: 'responsive',
+      breakpoint: opts.filter(':checked').val()
+    });
+
+    $('body').one('close.test', function() {
+      opts.enable();
     });
   });
 </script>
