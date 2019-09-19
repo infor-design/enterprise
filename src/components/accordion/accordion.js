@@ -1550,7 +1550,9 @@ Accordion.prototype = {
 
     // Handle tooltip to show
     const handleShow = (elem) => {
+      elem.style.width = 'auto';
       if (elem.offsetWidth > (elem.parentElement.offsetWidth - parseInt($(elem).parent().css('padding-left'), 10))) {
+        elem.style.width = '';
         tooltipTimer = setTimeout(() => {
           $(elem).tooltip({
             trigger: 'immediate',
@@ -1563,7 +1565,9 @@ Accordion.prototype = {
 
     // Handle tooltip to hide
     const handleHide = (elem) => {
+      elem.style.width = 'auto';
       if (elem.offsetWidth > (elem.parentElement.offsetWidth - parseInt($(elem).parent().css('padding-left'), 10))) {
+        elem.style.width = '';
         self.hideTooltip();
         clearTimeout(tooltipTimer);
       }
