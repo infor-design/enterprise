@@ -37,7 +37,7 @@ describe('CAP jquery context tests no-flex', () => {
 
   it('Should open popup on click no-flex', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
   });
@@ -80,7 +80,7 @@ describe('Contextual Action Panel example-workspace tests', () => {
 
   it('Should open popup on click', async () => {
     await element(by.id('workspace-cap')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
   });
@@ -137,14 +137,14 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
   it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await element(by.id('trigger-1')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
     expect(await element(by.css('#panel-1')).getAttribute('class')).not.toContain('display-fullsize');
 
     // Resize the page
     await browser.driver.manage().window().setSize(766, 600);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
