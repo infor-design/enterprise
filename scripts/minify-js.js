@@ -141,7 +141,7 @@ function minifyJS() {
 
         // The result at index '0' is the minified `sohoxi.js`,
         // which includes a sourcemap.
-        if (i === 0) {
+        if (result.outputSourceMapFile && result.map) {
           fileWrites.push(writeFile(result.outputSourceMapFile, result.map));
         }
       });
