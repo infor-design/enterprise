@@ -30,6 +30,12 @@ module.exports = function customRouteOptions(req, res) {
   const customOpts = new CustomOptions(req, res);
   const url = req.originalUrl;
 
+  // All routes will require a minified `sohoxi.js` and locale cultures,
+  // if the query param was previously set.
+  if (res.opts.minify) {
+    SohoConfig.minifyCultures = true;
+  }
+
   // All patterns will use the "empty" layout
   if (url.match(/patterns\//)) {
     if (url.includes('tree-detail') || url.includes('master-detail')) {
