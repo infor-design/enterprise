@@ -5,8 +5,14 @@ import { numberUtils } from '../../utils/number';
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
 let existingCulturePath = '';
-if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPath === 'string') {
-  existingCulturePath = window.SohoConfig.culturesPath;
+let minifyCultures = false;
+if (typeof window.SohoConfig === 'object') {
+  if (typeof window.SohoConfig.culturesPath === 'string') {
+    existingCulturePath = window.SohoConfig.culturesPath;
+  }
+  if (typeof window.SohoConfig.minifyCultures === 'boolean') {
+    minifyCultures = window.SohoConfig.minifyCultures;
+  }
 }
 
 /**
@@ -19,6 +25,7 @@ if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPa
 * @param {string} currentLocale  The Currently Set Locale
 * @param {object} cultures  Contains all currently-stored cultures.
 * @param {string} culturesPath  the web-server's path to culture files.
+* @param {boolean} minify if true, adds a `.min.js` suffix to the culture's filename.
 */
 const Locale = {  // eslint-disable-line
 
@@ -76,6 +83,7 @@ const Locale = {  // eslint-disable-line
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
   defaultLocale: 'en-US',
+  minify: minifyCultures,
 
   /**
    * Sets the current lang tag in the Html element
@@ -260,11 +268,12 @@ const Locale = {  // eslint-disable-line
    */
   appendLocaleScript(locale, isCurrent, parentLocale, filename) {
     const script = document.createElement('script');
+    const min = this.minify ? '.min' : '';
 
     if (!filename) {
-      script.src = `${this.getCulturesPath() + locale}.js`;
+      script.src = `${this.getCulturesPath() + locale}${min}.js`;
     } else {
-      script.src = `${this.getCulturesPath() + filename}.js`;
+      script.src = `${this.getCulturesPath() + filename}${min}.js`;
     }
 
     script.onload = () => {

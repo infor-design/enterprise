@@ -21,6 +21,7 @@ views/docs
 # Packages #
 ############
 node_modules/
+private/
 
 # Misc #
 ########

@@ -6482,7 +6482,7 @@ Datagrid.prototype = {
     this.renderRows();
     this.setSearchActivePage({ trigger: 'searched' });
 
-    if (!this.settings.paging) {
+    if (!(this.settings.paging && this.settings.source)) {
       this.highlightSearchRows(term);
     }
   },
