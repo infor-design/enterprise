@@ -8,10 +8,8 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Listbuilder example-index Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listbuilder/example-index');
-    const listbuilderEl = await element(by.css('li[data-value="opt-12"]'));
-    const lastLi = await element(by.id('example-listbuilder'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(listbuilderEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('li[data-value="opt-12"]'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -79,9 +77,8 @@ describe('Listbuilder example-index Tests', () => {
 describe('Listbuilder Update Dataset Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listbuilder/test-update-dataset');
-    const listbuilderEl = await element(by.id('example-listbuilder'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listbuilderEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('example-listbuilder'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
