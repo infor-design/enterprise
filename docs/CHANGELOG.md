@@ -9,11 +9,15 @@
 - `[Build]` Replaced UglifyES in the minification script with Terser ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Build]` Added the Locale culture files to the minification script. `.min.js` versions of each locale are now available in the `dist/` folder. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Charts]` Added support for context menu event with charts. ([#2699](https://github.com/infor-design/enterprise/issues/2699))
+- `[Contextual Action Panel]` Added support for passing in a full range of settings to the underlying Modal component API. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 - `[Locale]` Added support for fetching minified culture files. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Modal]` Added support for a "fullsize" sheet display at all times, or simply beneath the responsive breakpoint. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
 
 ### v4.22.0 Fixes
 
+- `[Application Menu]` Fixed an issue where footer toolbar area was overlapping to menu content. ([#2552](https://github.com/infor-design/enterprise/issues/2552))
+- `[Application Menu]` Fixed an issue where tooltip was showing white text on white background which makes text to be unreadable. ([#2811](https://github.com/infor-design/enterprise/issues/2811))
 - `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
 - `[Buttons]` Adjust the contrast of buttons (tertiary) on uplift theme. ([#396](https://github.com/infor-design/design-system/issues/396))
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))

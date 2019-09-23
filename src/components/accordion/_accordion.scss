@@ -524,6 +524,10 @@
 
     > span {
       display: inline-block; // to allow offsetWidth
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
     }
   }
 
@@ -1390,6 +1394,8 @@ html[dir='rtl'] {
 .tooltip {
   &.tooltip-accordion-style {
     background-color: $theme-color-palette-white;
+    color: $theme-color-palette-black;
+    -webkit-text-fill-color: $theme-color-palette-black;
 
     .arrow {
       display: none;
@@ -1400,6 +1406,7 @@ html[dir='rtl'] {
 
       p {
         color: $theme-color-palette-black;
+        -webkit-text-fill-color: $theme-color-palette-black;
       }
     }
   }
