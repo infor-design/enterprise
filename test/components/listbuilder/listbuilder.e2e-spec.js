@@ -8,9 +8,10 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Listbuilder example-index Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listbuilder/example-index');
-    const listbuilderEl = await element(by.id('example-listbuilder'));
+    const listbuilderEl = await element(by.css('li[data-value="opt-12"]'));
+    const lastLi = await element(by.id('example-listbuilder'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listbuilderEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(listbuilderEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -46,7 +47,7 @@ describe('Listbuilder example-index Tests', () => {
     await element(await by.css('button[data-action="edit"]')).click();
     const item = await element(by.css('li[role="option"]:nth-child(2) .edit-input'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(item), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(item), config.waitsFor);
     await item.sendKeys('test');
     await item.sendKeys(protractor.Key.ENTER);
 
