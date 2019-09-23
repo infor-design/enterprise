@@ -1,7 +1,7 @@
 import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
 import { cleanup } from '../../helpers/func-utils';
 
-const blockgridHTML = require('../../../app/views/components/blockgrid/example-index.html');
+let blockgridHTML = require('../../../app/views/components/blockgrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let blockgridEl;
@@ -29,6 +29,7 @@ describe('Blockgrid API', () => {
   beforeEach(() => {
     blockgridEl = null;
     blockgridObj = null;
+    blockgridHTML = blockgridHTML.replace(/{{basepath}}/g, '/');
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', blockgridHTML);
     blockgridEl = document.body.querySelector('.blockgrid');

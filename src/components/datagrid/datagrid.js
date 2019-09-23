@@ -745,7 +745,7 @@ Datagrid.prototype = {
 
     if (this.settings.source) {
       // Hide the entire pager bar if we're only showing one page, if applicable
-      if (this.pagerAPI.hidePagerBar(pagingInfo)) {
+      if (this.pagerAPI && this.pagerAPI.hidePagerBar(pagingInfo)) {
         this.element.removeClass('paginated');
       } else {
         this.element.addClass('paginated');
