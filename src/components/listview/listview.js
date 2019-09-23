@@ -1287,7 +1287,7 @@ ListView.prototype = {
     this.element.off('click.listview', 'li, tr, input[checkbox]');
     this.element.off('keydown.listview', 'li, tr, a');
     this.element.off('focus.listview', 'li, tbody tr');
-    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview updated.listview').empty();
+    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview updated.listview').empty();
 
     if (this.filteredDataset) {
       delete this.filteredDataset;
