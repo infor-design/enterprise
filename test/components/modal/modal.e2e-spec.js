@@ -63,7 +63,7 @@ describe('Modal init example-modal tests', () => {
     await browser.driver.sleep(config.sleep);
     await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
     await browser.driver
-      .wait(protractor.ExpectedConditions.stalenessOf(element(by.className('overlay'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-engaged'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
@@ -76,7 +76,7 @@ describe('Modal init example-modal tests', () => {
 
       await modalEl.sendKeys(protractor.Key.ENTER);
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.modal-wrapper'))), config.waitsFor);
 
       expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
       await browser.driver.actions().mouseMove(modalEl).click().perform();
@@ -126,11 +126,15 @@ describe('Modal example-close-btn tests', () => {
 
     const modalBtn = await element(by.id('add-context'));
     await modalBtn.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.modal-engaged'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
     const closeBtn = await element(by.css('button.btn-close'));
     await closeBtn.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.modal-engaged'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
@@ -179,8 +183,6 @@ describe('Modal example-validation tests', () => {
     });
 
     it('Should enable submit', async () => {
-      expect(await element(by.id('submit')).isEnabled()).toBe(false);
-
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -208,16 +210,19 @@ describe('Modal example-validation-editor tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.modal-wrapper'))), config.waitsFor);
   });
 
   it('Should enable submit after add text to all fields', async () => {
-    expect(await element(by.id('submit')).isEnabled()).toBe(false);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#submit'))), config.waitsFor);
 
     const dropdownEl = await element.all(by.css('.modal div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
     await dropdownEl.click();
+    await browser.driver.sleep(config.sleep);
+
     const dropdownSearchEl = await element(by.id('dropdown-search'));
     await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -227,9 +232,10 @@ describe('Modal example-validation-editor tests', () => {
     await element(by.id('context-name')).sendKeys('test@test.com');
     await element(by.id('context-desc')).sendKeys('test description');
     await element(by.css('.editor')).sendKeys('test description');
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
+    await browser.wait(protractor.ExpectedConditions.elementToBeClickable(element(by.css('#submit'))), config.waitsFor);
 
-    expect(await element(by.id('submit')).isEnabled()).toBe(true);
+    expect(await element(by.css('#submit')).isEnabled()).toBeTruthy();
   });
 });
 
