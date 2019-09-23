@@ -345,9 +345,17 @@ function ValidationRules() {
         this.message = Locale.translate('InvalidTime');
         const timepicker = field && field.data('timepicker');
         const timepickerSettings = timepicker ? field.data('timepicker').settings : {};
-        const pattern = timepickerSettings && timepickerSettings.timeFormat ?
+        let pattern = timepickerSettings && timepickerSettings.timeFormat ?
           timepickerSettings.timeFormat :
           Locale.calendar().timeFormat;
+
+        if (field.attr('data-options') && (timepickerSettings && !timepickerSettings.timeFormat)) {
+          const settings = JSON.parse(field.attr('data-options'));
+          if (settings.patternOptions && settings.patternOptions.format) {
+            pattern = settings.patternOptions.format;
+          }
+        }
+
         const is24Hour = (pattern.match('HH') || []).length > 0;
         const maxHours = is24Hour ? 24 : 12;
         const sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator);

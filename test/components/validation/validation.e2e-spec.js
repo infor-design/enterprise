@@ -497,6 +497,61 @@ describe('Validation input tests', () => {
   });
 });
 
+describe('Validation mask tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/mask/example-index');
+    await browser.driver.sleep(config.sleepShort);
+  });
+
+  it('Should be able to validate 12 hour time', async () => {
+    const timeField = await element(by.id('time-input'));
+
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('12:12 AM');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('99:99');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Invalid Time');
+  });
+
+  it('Should be able to validate 24 hour time', async () => {
+    const timeField = await element(by.id('time-input-24h'));
+
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('13:01');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('99:99');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Invalid Time');
+  });
+});
+
 describe('Validation resetForm tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/validation/test-resetform');
