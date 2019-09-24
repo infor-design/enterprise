@@ -4,20 +4,20 @@ const swaplistHTML = require('../../../app/views/components/swaplist/test-before
 const svg = require('../../../src/components/icons/svg.html');
 
 const dataset = [];
-dataset.push({id: 1, value: 'opt-1', text: 'Option AA'});
-dataset.push({id: '', value: 'opt-2', text: 'Option BB', zz: 'some other'});
-dataset.push({id: 3, value: 'opt-3', text: 'Option CC'});
-dataset.push({id: 4, value: 'opt-4', text: 'Option DD'});
-dataset.push({id: 5, value: 'opt-5', text: 'Option EE', disabled: true});
-dataset.push({id: 6, value: 'opt-6', text: 'Option FF'});
-dataset.push({value: 'opt-7', text: 'Option GG'});
-dataset.push({id: 8, value: 'opt-8', text: 'Option HH'});
-dataset.push({id: 9, value: 'opt-9', text: 'Option II'});
-dataset.push({id: 10, value: 'opt-10', text: 'Option JJ'});
-dataset.push({id: 11, value: 'opt-11', text: 'Option KK'});
-dataset.push({id: 12, value: 'opt-12', text: 'Option LL'});
-dataset.push({id: 13, value: 'opt-13', text: 'Option MM'});
-dataset.push({id: 14, value: 'opt-14', text: 'Option NN'});
+dataset.push({ id: 1, value: 'opt-1', text: 'Option AA' });
+dataset.push({ id: '', value: 'opt-2', text: 'Option BB' });
+dataset.push({ id: 3, value: 'opt-3', text: 'Option CC' });
+dataset.push({ id: 4, value: 'opt-4', text: 'Option DD' });
+dataset.push({ id: 5, value: 'opt-5', text: 'Option EE', disabled: true });
+dataset.push({ id: 6, value: 'opt-6', text: 'Option FF' });
+dataset.push({ value: 'opt-7', text: 'Option GG'});
+dataset.push({ id: 8, value: 'opt-8', text: 'Option HH' });
+dataset.push({ id: 9, value: 'opt-9', text: 'Option II' });
+dataset.push({ id: 10, value: 'opt-10', text: 'Option JJ' });
+dataset.push({ id: 11, value: 'opt-11', text: 'Option KK' });
+dataset.push({ id: 12, value: 'opt-12', text: 'Option LL' });
+dataset.push({ id: 13, value: 'opt-13', text: 'Option MM' });
+dataset.push({ id: 14, value: 'opt-14', text: 'Option NN' });
 
 let swaplistEl;
 let svgEl;
