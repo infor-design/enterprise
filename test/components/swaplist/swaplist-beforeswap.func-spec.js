@@ -10,7 +10,7 @@ dataset.push({ id: 3, value: 'opt-3', text: 'Option CC' });
 dataset.push({ id: 4, value: 'opt-4', text: 'Option DD' });
 dataset.push({ id: 5, value: 'opt-5', text: 'Option EE', disabled: true });
 dataset.push({ id: 6, value: 'opt-6', text: 'Option FF' });
-dataset.push({ value: 'opt-7', text: 'Option GG'});
+dataset.push({ value: 'opt-7', text: 'Option GG' });
 dataset.push({ id: 8, value: 'opt-8', text: 'Option HH' });
 dataset.push({ id: 9, value: 'opt-9', text: 'Option II' });
 dataset.push({ id: 10, value: 'opt-10', text: 'Option JJ' });
