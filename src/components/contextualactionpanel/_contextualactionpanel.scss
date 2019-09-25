@@ -24,6 +24,14 @@
     border-bottom: 1px solid $contextual-panel-border-color;
     height: 50px;
     padding: 0;
+
+    .flex-toolbar {
+      .toolbar-section {
+        &.title {
+          padding-left: 15px;
+        }
+      }
+    }
   }
 
   .flex-toolbar {
@@ -118,6 +126,17 @@ html[dir='rtl'] {
         > *:last-child {
           margin-left: 0;
           margin-right: auto;
+        }
+      }
+    }
+
+    .modal-header {
+      .flex-toolbar {
+        .toolbar-section {
+          &.title {
+            padding-left: 0;
+            padding-right: 15px;
+          }
         }
       }
     }

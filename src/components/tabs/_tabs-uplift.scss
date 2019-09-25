@@ -5,4 +5,13 @@
   height: 7px;
 }
 
+.tab-container.horizontal.has-counts .tab a {
+  padding: 5px 11px 10px;
+}
+
+.tab-container.horizontal > .tab-list-container .tab.is-disabled,
+.tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: $theme-color-brand-secondary-lighter !important;
+}
+
 @import '../tabs-module/tabs-module-uplift';

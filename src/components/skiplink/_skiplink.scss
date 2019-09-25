@@ -40,7 +40,7 @@
 // Right To Left Styles
 html[dir='rtl'] {
   .skip-link {
-    left: initial;
+    left: unset;
     margin-right: 20px;
     right: 0;
   }

@@ -63,6 +63,10 @@ ApplicationMenu.prototype = {
     this.hasTrigger = false;
     this.isAnimating = false;
 
+    if (this.element.find('.application-menu-footer').length) {
+      this.element.addClass('has-menu-footer');
+    }
+
     if (!this.hasTriggers()) {
       this.triggers = $();
     }
@@ -305,6 +309,24 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * Toggle scroll css class on ie11.
+   * @private
+   * @returns {void}
+   */
+  toggleScrollClass() {
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      const el = this.element[0];
+      if (el && el.classList.contains('has-menu-footer')) {
+        if (el.scrollHeight > el.clientHeight) {
+          el.classList.add('has-scrollbar');
+        } else {
+          el.classList.remove('has-scrollbar');
+        }
+      }
+    }
+  },
+
+  /**
    * Checks the window size against the defined breakpoint.
    * @private
    * @returns {boolean} whether or not the window size is larger than the
@@ -402,6 +424,7 @@ ApplicationMenu.prototype = {
         $('body').triggerHandler('resize');
       }
 
+      self.toggleScrollClass();
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
     }
@@ -651,7 +674,9 @@ ApplicationMenu.prototype = {
     $('body').off('resize.applicationmenu');
     $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu');
+    this.element.find('.expandable-area').off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
+
+    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu afterexpand.applicationmenu aftercollapse.applicationmenu');
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -721,6 +746,17 @@ ApplicationMenu.prototype = {
       self.updated();
     });
 
+    // Fix: ie11 scrollbar causing to not calculate right height
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      self.element.find('.expandable-area')
+        .on('beforeexpand.applicationmenu', () => {
+          self.element[0].classList.remove('has-scrollbar');
+        })
+        .on('aftercollapse.applicationmenu', () => {
+          self.toggleScrollClass();
+        });
+    }
+
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
     }).on('selected.applicationmenu', (e, header) => {
@@ -728,6 +764,8 @@ ApplicationMenu.prototype = {
       self.handleDismissOnClick(a);
     }).on('followlink.applicationmenu', (e, anchor) => {
       self.handleDismissOnClick(anchor);
+    }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
+      self.toggleScrollClass();
     });
 
     $(document).on('open-applicationmenu', () => {
@@ -742,6 +780,7 @@ ApplicationMenu.prototype = {
 
     $('body').on('resize.applicationmenu', () => {
       self.testWidth();
+      self.toggleScrollClass();
     });
 
     if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {

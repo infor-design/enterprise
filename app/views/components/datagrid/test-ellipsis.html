@@ -22,9 +22,9 @@
       data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
       data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
 
-      var statuses = [{id: '', value: '', label:'&nbsp;'},
-                      {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
-                      {id:'Error', value:'Error', label:'Error'}];
+      var statuses = [{id: '', value: '', label: '&nbsp;'},
+                      {id: 'Confirmed', value: 'Confirmed', label: 'Confirmed'},
+                      {id: 'Error', value: 'Error', label: 'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
@@ -60,8 +60,9 @@
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, textOverflow: 'ellipsis', filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value': 'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+      columns.push({ id: 'statusLong', name: 'Longer Status', field: 'status', formatter: Formatters.Alert, textOverflow: 'ellipsis', filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value': 'Confirmed', 'classes': 'success', text: 'A longer confirmed message'}, {'value':'Error', 'classes': 'error', text: 'A longer and more descriptive error message'}]});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

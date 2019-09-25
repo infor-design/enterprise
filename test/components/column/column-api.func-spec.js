@@ -1,3 +1,4 @@
+import { triggerContextmenu } from '../../helpers/func-utils';
 import { Column } from '../../../src/components/column/column';
 
 const areaHTML = require('../../../app/views/components/column/example-index.html');
@@ -46,6 +47,196 @@ const dataset = [{
     value: 7
   }]
 }];
+
+const groupedSettings = {
+  type: 'column-grouped',
+  dataset: [{
+    data: [{
+      name: 'Jan',
+      value: 12
+    }, {
+      name: 'Feb',
+      value: 11
+    }, {
+      name: 'Mar',
+      value: 14
+    }, {
+      name: 'Apr',
+      value: 10
+    }, {
+      name: 'May',
+      value: 14
+    }, {
+      name: 'Jun',
+      value: 8
+    }],
+    name: 'Component A'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 22
+    }, {
+      name: 'Feb',
+      value: 21
+    }, {
+      name: 'Mar',
+      value: 24
+    }, {
+      name: 'Apr',
+      value: 20
+    }, {
+      name: 'May',
+      value: 24
+    }, {
+      name: 'Jun',
+      value: 28
+    }],
+    name: 'Component B'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 32
+    }, {
+      name: 'Feb',
+      value: 31
+    }, {
+      name: 'Mar',
+      value: 34
+    }, {
+      name: 'Apr',
+      value: 30
+    }, {
+      name: 'May',
+      value: 34
+    }, {
+      name: 'Jun',
+      value: 38
+    }],
+    name: 'Component C'
+  }]
+};
+
+const stackedSettings = {
+  type: 'column-stacked',
+  dataset: [{
+    data: [{
+      name: 'Jan',
+      value: 12,
+    }, {
+      name: 'Feb',
+      value: 11
+    }, {
+      name: 'Mar',
+      value: 14
+    }, {
+      name: 'Apr',
+      value: 10
+    }, {
+      name: 'May',
+      value: 14
+    }, {
+      name: 'Jun',
+      value: 8
+    }, {
+      name: 'Jul',
+      value: 7
+    }, {
+      name: 'Aug',
+      value: 10
+    }, {
+      name: 'Sep',
+      value: 9
+    }, {
+      name: 'Oct',
+      value: 8
+    }, {
+      name: 'Nov',
+      value: 10
+    }, {
+      name: 'Dec',
+      value: 6
+    }],
+    name: '2018'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 22
+    }, {
+      name: 'Feb',
+      value: 21
+    }, {
+      name: 'Mar',
+      value: 24
+    }, {
+      name: 'Apr',
+      value: 20
+    }, {
+      name: 'May',
+      value: 24
+    }, {
+      name: 'Jun',
+      value: 28
+    }, {
+      name: 'Jul',
+      value: 27
+    }, {
+      name: 'Aug',
+      value: 20
+    }, {
+      name: 'Sep',
+      value: 29
+    }, {
+      name: 'Oct',
+      value: 28
+    }, {
+      name: 'Nov',
+      value: 20
+    }, {
+      name: 'Dec',
+      value: 26
+    }],
+    name: '2017'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 32
+    }, {
+      name: 'Feb',
+      value: 31
+    }, {
+      name: 'Mar',
+      value: 34
+    }, {
+      name: 'Apr',
+      value: 30
+    }, {
+      name: 'May',
+      value: 34
+    }, {
+      name: 'Jun',
+      value: 38
+    }, {
+      name: 'Jul',
+      value: 37
+    }, {
+      name: 'Aug',
+      value: 30
+    }, {
+      name: 'Sep',
+      value: 39
+    }, {
+      name: 'Oct',
+      value: 38
+    }, {
+      name: 'Nov',
+      value: 30
+    }, {
+      name: 'Dec',
+      value: 36
+    }],
+    name: '2016'
+  }]
+};
 
 describe('Column Chart API', () => {
   beforeEach((done) => {
@@ -121,5 +312,42 @@ describe('Column Chart API', () => {
     expect(columnObj.getSelected()[0].data.name).toEqual('Equipment');
 
     columnObj.toggleSelected(options);
+  });
+
+  it('Should fire contextmenu event with column', () => {
+    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
+    const result = { name: 'Automotive', shortName: 'Auto', abbrName: 'A', value: 7, tooltip: 'Custom Tooltip - {{value}}', selected: true };
+    $(columnEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('.bar'));
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('Should fire contextmenu event with column grouped', () => {
+    columnObj.destroy();
+    columnObj = new Column(columnEl, groupedSettings);
+    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
+    const result = { name: 'Jan', value: 12 };
+    $(columnEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('.bar'));
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('Should fire contextmenu event with column stacked', () => {
+    columnObj.destroy();
+    columnObj = new Column(columnEl, stackedSettings);
+    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
+    const result = { name: 'Jan', value: 12 };
+    $(columnEl).on('contextmenu', (e, el, d) => {
+      expect(d).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('.bar'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });

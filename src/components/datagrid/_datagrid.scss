@@ -734,7 +734,7 @@ $datagrid-short-row-height: 25px;
 
 .card,
 .widget {
-  .empty-message {
+  .datagrid-container .empty-message {
     left: 50%;
     margin-top: 15px;
     position: absolute;
@@ -1274,6 +1274,11 @@ $datagrid-short-row-height: 25px;
             top: -15px;
           }
 
+          &.is-dirty-cell::before {
+            border-width: 0;
+            margin: 0;
+          }
+
           .icon-rowstatus {
             left: -1px;
             top: 0;
@@ -1445,6 +1450,7 @@ $datagrid-short-row-height: 25px;
 
     &.is-rowdisabled {
       opacity: 0.6;
+      pointer-events: none;
 
       td {
         &:hover {
@@ -1507,7 +1513,6 @@ $datagrid-short-row-height: 25px;
     }
 
     .datagrid-alert-text {
-      display: inline-block;
       line-height: 25px;
       padding-left: 10px;
       text-align: left;
@@ -1723,6 +1728,10 @@ $datagrid-short-row-height: 25px;
       height: 25px;
       position: relative;
       vertical-align: middle;
+
+      .chart-targeted-text {
+        color: $theme-color-palette-white;
+      }
     }
 
     .spinbox-wrapper {
@@ -1916,7 +1925,7 @@ $datagrid-short-row-height: 25px;
         border: 1px solid $theme-color-brand-primary-base;
         left: 0;
         position: absolute;
-        text-overflow: initial;
+        text-overflow: clip;
         top: 0;
         width: 100%;
 
@@ -2097,7 +2106,7 @@ $datagrid-short-row-height: 25px;
         ~ .icon {
           left: auto;
           margin-left: -6px;
-          top: calc(50% - 15px);
+          top: calc(50% - 17px);
           width: 34px;
         }
 
@@ -2191,6 +2200,10 @@ $datagrid-short-row-height: 25px;
         .hyperlink {
           display: inline;
         }
+      }
+
+      &:not(.has-editor) .trigger + .icon {
+        display: none;
       }
 
       // Expandable Cells
@@ -2368,6 +2381,8 @@ $datagrid-short-row-height: 25px;
       flex-direction: column;
       height: inherit;
       justify-content: center;
+      margin-top: auto;
+      top: auto;
 
       .datagrid-checkbox {
         height: 16px;

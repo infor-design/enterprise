@@ -1,11 +1,15 @@
+import { triggerContextmenu } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
-const chartHTML = require('../../../app/views/components/scatterplot/example-index.html');
+const scatterplotHTML = require('../../../app/views/components/scatterplot/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let svgEl;
-let chartAPI;
-const scatterData = [{
+let scatterplotEl;
+let scatterplotObj;
+
+// let chartAPI;
+const dataset = [{
   data: [{
     name: 'January',
     value: {
@@ -172,37 +176,50 @@ const scatterData = [{
 describe('Scatter Plot API', () => {
   beforeEach(() => {
     svgEl = null;
-    chartAPI = null;
+    scatterplotEl = null;
+    scatterplotObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
-    document.body.insertAdjacentHTML('afterbegin', chartHTML);
-    const chartId = document.getElementById('scatterplot-example');
+    document.body.insertAdjacentHTML('afterbegin', scatterplotHTML);
+    scatterplotEl = document.body.querySelector('#scatterplot-example');
     svgEl = document.body.querySelector('.svg-icons');
 
-    chartAPI = new Line(chartId, { dataset: scatterData, isScatterPlot: true });
+    scatterplotObj = new Line(scatterplotEl, { type: 'scatterplot', dataset, isScatterPlot: true });
   });
 
   afterEach(() => {
-    chartAPI.destroy();
+    scatterplotObj.destroy();
     svgEl.parentNode.removeChild(svgEl);
+    scatterplotEl.parentNode.removeChild(scatterplotEl);
 
     const rowEl = document.body.querySelector('.row');
     rowEl.parentNode.removeChild(rowEl);
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(chartAPI).toEqual(jasmine.any(Object));
+    expect(scatterplotObj).toEqual(jasmine.any(Object));
   });
 
   it('Should render plots', () => {
-    expect($('.symbol').length).toEqual(26);
+    expect(document.body.querySelectorAll('.symbol').length).toEqual(26);
   });
 
   it('Should destroy chart', () => {
-    chartAPI.destroy();
+    scatterplotObj.destroy();
 
     const chartSymbols = document.body.querySelector('.symbol');
 
     expect(chartSymbols).toBeFalsy();
-    expect($('.symbol').length).toEqual(0);
+    expect(document.body.querySelectorAll('.symbol').length).toEqual(0);
+  });
+
+  it('Should fire contextmenu event', () => {
+    const spyEvent = spyOnEvent(scatterplotEl, 'contextmenu');
+    const result = { x: 5, y: 3 };
+    $(scatterplotEl).on('contextmenu', (e, el, d) => {
+      expect(d.value).toEqual(jasmine.objectContaining(result));
+    });
+    triggerContextmenu(document.body.querySelector('[data-group-id="0"] .symbol'));
+
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });

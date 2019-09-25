@@ -65,7 +65,7 @@ $('body').on('initialized', function () {
         name: 'Component C'
       }];
 
-  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset})
+  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset, animate: false})
   .on('selected', function (e, args) {
     console.log('args', args);
    });

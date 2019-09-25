@@ -16,6 +16,7 @@
 
 // Uplift Light Overrides
 $body-color-primary-background: $theme-color-palette-white;
+$drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);
 
 $application-menu-border-color: $theme-color-palette-slate-90;
 $accordion-inverse-bg-color: $theme-color-palette-slate-90;
@@ -35,6 +36,9 @@ $datagrid-list-header-active-color: $theme-color-palette-graphite-20;
 $datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
 $listview-border-color: $theme-color-palette-slate-20;
 $panel-border-color: $theme-color-palette-slate-20;
+
+// Tabs
+$tab-text-color: $theme-color-palette-graphite-70;
 
 // Core Uplift Controls
 @import '../core/controls-uplift';

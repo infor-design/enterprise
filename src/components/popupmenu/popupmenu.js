@@ -2090,7 +2090,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu.add(this.element).hasClass('is-open')) {
+    if (!this.menu || !this.menu.add(this.element).hasClass('is-open')) {
       return;
     }
 
@@ -2226,7 +2226,7 @@ PopupMenu.prototype = {
     this.menu.off('dragstart.popupmenu');
 
     // Remove the wrapper, if applicable
-    if (!this.preExistingWrapper) {
+    if (!this.preExistingWrapper && this.menu.parent().is('.popupmenu-wrapper')) {
       this.menu.unwrap();
     }
 
@@ -2290,6 +2290,10 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   destroy() {
+    if (!this.menu) {
+      return;
+    }
+
     this.close();
     this.teardown();
 

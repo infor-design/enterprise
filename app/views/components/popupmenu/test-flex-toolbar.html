@@ -129,7 +129,9 @@
     });
 
     $('#btn-trigger-updated-menubutton').on('click.test', function() {
-      popupmenuAPI.updated();
+      if (popupmenuAPI && typeof popupmenuAPI.updated === 'function') {
+        popupmenuAPI.updated();
+      }
     });
 
     $('#btn-destroy-invoke-menubutton').on('click.test', function() {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * IDS Enterprise Minify Process (Uglify-ES Wrapper)
+ * IDS Enterprise Minify Process
  */
 
 // -------------------------------------
