@@ -51,6 +51,8 @@ Soho.Locale.addCulture('sv-SE', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: undefined,
     minusSign: '-',
     decimal: ',',
     group: ' ',

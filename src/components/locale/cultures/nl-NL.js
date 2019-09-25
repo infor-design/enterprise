@@ -49,6 +49,8 @@ Soho.Locale.addCulture('nl-NL', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: undefined,
     minusSign: '-',
     decimal: ',',
     group: '.',

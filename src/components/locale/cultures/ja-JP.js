@@ -49,6 +49,8 @@ Soho.Locale.addCulture('ja-JP', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: undefined,
     minusSign: '-',
     decimal: '.',
     group: ',',

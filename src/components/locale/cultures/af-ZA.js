@@ -48,6 +48,8 @@ Soho.Locale.addCulture('af-ZA', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: undefined,
     minusSign: '-',
     decimal: '٫',
     group: ' ',

@@ -48,6 +48,8 @@ Soho.Locale.addCulture('tr-TR', {
   numbers: {
     percentSign: '%',
     percentFormat: '%###',
+    percentSuffix: undefined,
+    percentPrefix: '%',
     minusSign: '-',
     decimal: ',',
     group: '.',

@@ -50,6 +50,8 @@ Soho.Locale.addCulture('da-DK', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: undefined,
     minusSign: '-',
     decimal: ',',
     group: '.',
