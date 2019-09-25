@@ -11,7 +11,7 @@ xdescribe('Icon Soho (Subtle) tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should render without error', async () => {
+  it('Should render without any error', async () => {
     await utils.checkForErrors();
   });
 
