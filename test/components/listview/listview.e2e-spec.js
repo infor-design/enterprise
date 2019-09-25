@@ -572,3 +572,35 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
     expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
   });
 });
+
+describe('Listview flex card empty tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/listview/test-empty-message-flex-container?layout=nofrills');
+    const emptyMessage = await element(by.css('.empty-message'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(emptyMessage), config.waitsFor);
+  });
+
+  it('should toggle empty message', async () => {
+    expect(await element(by.css('.empty-message')).getText()).toEqual('No Stock Found');
+    await element(by.id('btn2')).click();
+
+    expect(await element(by.css('.empty-message')).isPresent()).toBeFalsy();
+    expect(await element.all(by.css('.listview li')).first().isPresent()).toBeTruthy();
+    await element(by.id('btn1')).click();
+
+    expect(await element(by.css('.empty-message')).isPresent()).toBeTruthy();
+    expect(await element.all(by.css('.listview li')).first().isPresent()).toBeFalsy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on empty message in the card', async () => {
+      const container = await element(by.css('.container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(container, 'listview-flex-card')).toEqual(0);
+    });
+  }
+});

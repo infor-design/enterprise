@@ -37,7 +37,7 @@ describe('CAP jquery context tests no-flex', () => {
 
   it('Should open popup on click no-flex', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
   });
@@ -51,7 +51,7 @@ describe('CAP jquery context tests no-flex', () => {
   });
 });
 
-describe('ContextualActionPanel example-index tests', () => {
+describe('Contextual Action Panel example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-index?layout=nofrills');
   });
@@ -62,26 +62,91 @@ describe('ContextualActionPanel example-index tests', () => {
       await actionButtonEl.click();
 
       const panelEl = await element(by.className('modal'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-index')).toEqual(0);
     });
   }
 });
 
-describe('ContextualActionPanel example-workspace tests', () => {
+describe('Contextual Action Panel example-workspace tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-workspaces.html');
   });
 
-  it('Should not have errrors', async () => {
+  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   it('Should open popup on click', async () => {
     await element(by.id('workspace-cap')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "always" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-always.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    xit('always should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(1200, 800);
+      await element(by.id('trigger-1')).click();
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toBeLessThan(0.5);
+    });
+  }
+
+  it('should always show the CAP as a full screen sheet', async () => {
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "responsive" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-responsive.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    xit('responsive should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(766, 600);
+      await element(by.id('trigger-1')).click();
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toBeLessThan(0.5);
+    });
+  }
+
+  it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#panel-1')).getAttribute('class')).not.toContain('display-fullsize');
+
+    // Resize the page
+    await browser.driver.manage().window().setSize(766, 600);
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });

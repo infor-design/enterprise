@@ -204,3 +204,33 @@ describe('Bar Chart axis formatter tests', () => {
     });
   }
 });
+
+describe('Bar Chart several on page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-several-on-page?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.axis.y .tick text'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not overwritten labels', async () => {
+    const checkText = async (svgId, tickNum, text) => {
+      expect(await element.all(by.css(`${svgId} .axis.y .tick text`)).get(tickNum).getText()).toEqual(text);
+    };
+
+    expect(await element.all(by.css('.bar-chart svg')).count()).toBe(2);
+    expect(await element.all(by.css('#bar-example1 .axis.y .tick text')).count()).toBe(3);
+    expect(await element.all(by.css('#bar-example2 .axis.y .tick text')).count()).toBe(3);
+
+    await checkText('#bar-example1', 0, 'Category A');
+    await checkText('#bar-example1', 1, 'Category B');
+    await checkText('#bar-example1', 2, 'Category C');
+
+    await checkText('#bar-example2', 0, 'Category D');
+    await checkText('#bar-example2', 1, 'Category E');
+    await checkText('#bar-example2', 2, 'Category F');
+  });
+});

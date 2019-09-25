@@ -1,0 +1,90 @@
+
+<div class="row">
+  <div class="full column center">
+    <div id="bullet-example1" class="chart-container"></div>
+    <div id="bullet-example2" class="chart-container"></div>
+  </div>
+</div>
+
+<ul id="action-popupmenu" class="popupmenu">
+  <li><a href="#" class="action-1">Action One</a></li>
+  <li><a href="#" class="action-2">Action Two</a></li>
+  <li><a href="#" class="action-3">Action Three</a></li>
+</ul>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var palette = Soho.theme.themeColors().palette;
+
+    //Example 1
+    var dataset1 = [{
+      data: [{
+        title: 'Revenue',
+        subtitle: 'US$, in thousands',
+        ranges: [150, 225, 300, 400, 600],
+        measures: [220, 270],
+        markers: [250],
+        url: 'http://someplace.com',
+        tooltip: [
+          '<b>Poor</b> 150',
+          '<b>Ok</b> 225',
+          '<b>Good</b> 300',
+          '<b>Excellent</b> 400',
+          '<b>Revenue</b> 600'
+        ]
+      }],
+      barColors: [
+        palette.turquoise['10'].value,
+        palette.turquoise['30'].value,
+        palette.turquoise['50'].value,
+        palette.turquoise['70'].value,
+        palette.turquoise['90'].value
+      ],
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+    //Example 2
+    var dataset2 = [{
+      data: [{
+        title: 'Profit',
+        subtitle: '%',
+        ranges: [20, 25, 30],
+        measures: [17, 21],
+        markers: [26]
+      }],
+      barColors: [
+        palette.azure['20'].value,
+        palette.azure['40'].value,
+        palette.azure['60'].value
+      ],
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+    // Element
+    var elem1 = $('#bullet-example1');
+    var elem2 = $('#bullet-example2');
+
+    // Show Popupmenu
+    function showPopupmenu (e, bulletEl) {
+      bulletEl.popupmenu({ trigger: 'immediate', menu: 'action-popupmenu', eventObj: e })
+        .off('selected').on('selected', function (e, anchor) {
+          console.log('selected:', anchor[0]);
+        });
+    }
+
+    // Invoke
+    elem1.chart({ type: 'bullet', dataset: dataset1 });
+    elem2.chart({ type: 'bullet', dataset: dataset2 });
+
+    // Bind Contextmenu
+    elem1.add(elem2).on('contextmenu', function(e, el, d) {
+      if (el) {
+        console.log('Contextmenu:', { element: el, data: d });
+        showPopupmenu(e, $(this));
+      }
+    });
+
+});
+</script>

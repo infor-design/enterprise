@@ -248,7 +248,7 @@ $toolbar-buttonset-height: 40px;
 
 .is-safari .toolbar,
 .is-safari .formatter-toolbar {
-  overflow-x: initial;
+  overflow-x: hidden;
 }
 
 // Styles for contextual toolbar

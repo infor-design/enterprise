@@ -3,14 +3,17 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal-wrapper {
-  display: table;
+  align-items: center;
+  display: flex;
   height: 100%;
+  justify-content: center;
   margin: 0 auto;
-  //overflow: hidden;
+  width: 100%;
 }
 
 .modal-page-container {
   height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
   width: 100%;
@@ -19,8 +22,8 @@
 .modal {
   @include css3(transform, scale(0.9, 0.9));
   @include css3(transition, opacity 0.2s, transform 0.2s);
-  //Added after size calc bottom: 0;
-  display: table-cell;
+  //Added after size calc
+  bottom: 0;
   height: auto;
   max-height: 90%;
   max-width: 90%;
@@ -58,7 +61,8 @@
     }
 
     textarea {
-      width: 300px;
+      min-width: 300px;
+      width: auto;
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
@@ -197,6 +201,27 @@
 
   .busy.overlay {
     background-color: $modal-bg-color;
+  }
+
+  // Creates the full size "sheet" effect
+  // See infor-design/enterprise#2433 for more info.
+  &.display-fullsize {
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+
+    .modal-content {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin: 0;
+    }
+
+    .modal-body-wrapper {
+      flex-grow: 1;
+    }
   }
 }
 

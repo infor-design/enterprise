@@ -4205,6 +4205,15 @@ Datagrid.prototype = {
   cacheColumnWidths() {
     for (let i = 0; i < this.settings.columns.length; i++) {
       const col = this.settings.columns[i];
+
+      // Check for duplicate ID's and adjust them.
+      const colsById = this.columnById(col.id);
+      if (colsById.length > 1) {
+        for (let k = 1; k < colsById.length; k++) {
+          colsById[k].id = `${colsById[k].id}-${k}`;
+        }
+      }
+
       this.calculateColumnWidth(col, i);
     }
   },
@@ -6473,7 +6482,7 @@ Datagrid.prototype = {
     this.renderRows();
     this.setSearchActivePage({ trigger: 'searched' });
 
-    if (!this.settings.paging) {
+    if (!(this.settings.paging && this.settings.source)) {
       this.highlightSearchRows(term);
     }
   },
@@ -9400,12 +9409,6 @@ Datagrid.prototype = {
   setDirtyCell(row, cell, dirtyOptions) {
     const cellNode = this.cellNode(row, cell);
 
-    // Do not show dirty indicator on new cells or cells with errors on them
-    if (this.settings.dataset[row] && this.settings.dataset[row].rowStatus &&
-      (this.settings.dataset[row].rowStatus.icon === 'new' || row === 0)) {
-      return;
-    }
-
     if (dirtyOptions) {
       this.addToDirtyArray(row, cell, dirtyOptions);
     }
@@ -9900,14 +9903,21 @@ Datagrid.prototype = {
             const node = $(this);
             const nodeLevel = parseInt(node.attr('aria-level'), 10);
 
-            if (!node.hasClass('is-filtered')) {
-              node.removeClass('is-hidden');
-            }
+            // Handles that child rows get the right states
+            if (nodeLevel === (lev + 1)) {
+              if (!node.hasClass('is-filtered')) {
+                node.removeClass('is-hidden');
 
-            if (node.is('.datagrid-tree-parent')) {
-              const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
-              if (nodeIsExpanded) {
-                setChildren(node, nodeLevel, !nodeIsExpanded);
+                if (self.settings.frozenColumns) {
+                  const rowindex = node.attr('aria-rowindex');
+                  self.tableBody.find(`[aria-rowindex="${rowindex}"]`).removeClass('is-hidden');
+                }
+              }
+              if (node.is('.datagrid-tree-parent')) {
+                const nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+                if (nodeIsExpanded) {
+                  setChildren(node, nodeLevel, !nodeIsExpanded);
+                }
               }
             }
           });

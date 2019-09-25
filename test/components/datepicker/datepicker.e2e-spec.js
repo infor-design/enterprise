@@ -33,7 +33,7 @@ describe('Datepicker example-index tests', () => {
   it('Should set todays date from popup to field', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();
-    await element(by.css('#monthview-popup button.is-today')).click();
+    await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();
     testDate.setHours(0);
@@ -490,6 +490,35 @@ describe('Datepicker Disable Month Year Changer Tests', () => {
   });
 });
 
+describe('Datepicker No Today Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-no-today?layout=nofrills');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not have a today link year picker', async () => {
+    expect(await element(by.css('.hyperlint.today')).isPresent()).toEqual(false);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field-no-today')).sendKeys('11/14/2018');
+      await element(by.css('#date-field-no-today')).click();
+
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toEqual(0);
+    });
+  }
+});
+
 describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
@@ -692,7 +721,7 @@ describe('Datepicker Timeformat Tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const testDate = new Date();
@@ -707,7 +736,7 @@ describe('Datepicker Timeformat Tests', () => {
     const datepickerEl = await element(by.id('dp2'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const testDate = new Date();
@@ -722,7 +751,7 @@ describe('Datepicker Timeformat Tests', () => {
     const datepickerEl = await element(by.id('dp3'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
     const value = await element(by.id('dp3')).getAttribute('value');
     const valueDate = new Date(value);
@@ -751,10 +780,9 @@ describe('Datepicker Umalqura Tests', () => {
 
     await browser.driver.sleep(config.sleepShort);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const value = await element(by.id('islamic-date')).getAttribute('value');
@@ -934,7 +962,7 @@ describe('Datepicker 12hr Time Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleep);
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
@@ -958,10 +986,9 @@ describe('Datepicker Umalqura EG Tests', () => {
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
     const result = await browser.executeScript('return Locale.calendar("ar-SA", "islamic-umalqura").conversions.fromGregorian(new Date())');
 
@@ -980,10 +1007,9 @@ describe('Datepicker Gregorian SA Tests', () => {
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.popup-footer .is-today')).getText()).toEqual('اليوم');
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('button.is-today'));
+    const todayEl = await element(by.css('.hyperlink.today'));
     await todayEl.click();
 
     await browser.driver.sleep(config.sleep);

@@ -20,6 +20,10 @@ module.exports = {
       addQuery = '';
       theme = `&${theme}`;
     }
+    if (url.indexOf('?theme') > -1) {
+      addQuery = '';
+      theme = '';
+    }
 
     const pageurl = `${browser.baseUrl + url}${addQuery}${theme}`;
     await browser.waitForAngularEnabled(false);
