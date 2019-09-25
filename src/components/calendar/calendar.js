@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable no-underscore-dangle, no-nested-ternary */
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { stringUtils } from '../../utils/string';
@@ -569,8 +569,12 @@ Calendar.prototype = {
       const icon = node.querySelector('.calendar-event-icon');
       if (icon) {
         if (typeof this.settings.iconTooltip === 'function') {
-          this.settings.iconTooltip({ month: this.settings.month, year: this.settings.year, event });
-        } else {
+          this.settings.iconTooltip({
+            month: this.settings.month,
+            year: this.settings.year,
+            event
+          });
+        } else if (event[this.settings.iconTooltip]) {
           icon.setAttribute('title', event[this.settings.iconTooltip]);
           $(icon).tooltip({
             content: icon.innerText
@@ -581,8 +585,12 @@ Calendar.prototype = {
 
     if (this.settings.eventTooltip !== 'overflow') {
       if (typeof this.settings.eventTooltip === 'function') {
-        this.settings.eventTooltip({ month: this.settings.month, year: this.settings.year, event });
-      } else {
+        this.settings.eventTooltip({
+          month: this.settings.month,
+          year: this.settings.year,
+          event
+        });
+      } else if (event[this.settings.eventTooltip]) {
         node.setAttribute('title', event[this.settings.eventTooltip]);
         $(node).tooltip({
           content: node.innerText
@@ -723,6 +731,8 @@ Calendar.prototype = {
           self.monthView.selectDay(key);
         }
       });
+
+      return false;
     });
 
     const showModalWithCallback = (eventData, isAdd) => {
