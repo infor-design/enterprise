@@ -49,7 +49,7 @@ Soho.Locale.addCulture('af-ZA', {
     percentSign: '%',
     percentFormat: '###%',
     percentSuffix: '%',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: '٫',
     group: ' ',

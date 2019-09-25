@@ -49,7 +49,7 @@ Soho.Locale.addCulture('cs-CZ', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

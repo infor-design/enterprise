@@ -50,7 +50,7 @@ Soho.Locale.addCulture('en-ZA', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

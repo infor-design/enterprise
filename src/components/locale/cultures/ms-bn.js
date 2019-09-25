@@ -50,7 +50,7 @@ Soho.Locale.addCulture('ms-bn', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

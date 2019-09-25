@@ -49,7 +49,7 @@ Soho.Locale.addCulture('sl-SI', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: '.',

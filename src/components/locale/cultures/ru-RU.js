@@ -49,7 +49,7 @@ Soho.Locale.addCulture('ru-RU', {
     percentSign: '%',
     percentFormat: '###%',
     percentSuffix: '%',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

@@ -49,7 +49,7 @@ Soho.Locale.addCulture('vi-VN', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: '.',

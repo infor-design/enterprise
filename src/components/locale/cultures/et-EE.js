@@ -50,7 +50,7 @@ Soho.Locale.addCulture('et-EE', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

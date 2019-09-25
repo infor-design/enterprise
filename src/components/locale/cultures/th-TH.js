@@ -49,7 +49,7 @@ Soho.Locale.addCulture('th-TH', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

@@ -49,7 +49,7 @@ Soho.Locale.addCulture('sk-SK', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

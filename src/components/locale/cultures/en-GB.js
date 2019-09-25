@@ -51,7 +51,7 @@ Soho.Locale.addCulture('en-GB', {
     percentSign: '%',
     percentFormat: '### %',
     percentSuffix: ' %',
-    percentPrefix: undefined,
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',
