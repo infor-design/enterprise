@@ -53,6 +53,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
  * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
+ * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
+ * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);

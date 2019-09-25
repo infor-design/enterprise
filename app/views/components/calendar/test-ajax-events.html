@@ -41,6 +41,8 @@
           }, 500); //slow it down a bit more
         });
       }
+    }).on('contextmenu', function (e, args) {
+      console.log('contextmenu fired', args);
     });
   });
 </script>
