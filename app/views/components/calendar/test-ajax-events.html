@@ -28,6 +28,8 @@
     $('.calendar').calendar({
       month: 7,
       year: 2018,
+      iconToolTip: 'status',
+      eventToolTip: 'comment',
       onRenderMonth: function (ui, response, args) {
         // Get both event types and events for the month (eventTypes can be passed initially)
         const events = $.get('{{basepath}}api/events');

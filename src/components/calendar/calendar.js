@@ -24,6 +24,8 @@ const COMPONENT_NAME_DEFAULTS = {
   modalTemplate: null,
   menuId: null,
   menuSelected: null,
+  eventTooltip: 'overflow',
+  iconTooltip: 'overflow',
   newEventDefaults: {
     title: 'NewEvent',
     subject: '',
@@ -158,7 +160,9 @@ Calendar.prototype = {
       selectable: true,
       locale: this.settings.locale,
       month: this.settings.month,
-      year: this.settings.year
+      year: this.settings.year,
+      eventTooltip: this.eventTooltip,
+      iconTooltip: this.iconTooltip
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();
@@ -559,8 +563,33 @@ Calendar.prototype = {
     </div>`;
     container.querySelector('.day-container').appendChild(node);
 
+    if (this.settings.iconTooltip !== 'overflow') {
+      const icon = node.querySelector('.calendar-event-icon');
+      if (icon) {
+        if (typeof this.settings.iconTooltip === 'function') {
+          this.settings.iconTooltip({ month: this.settings.month, year: this.settings.year, event });
+        } else {
+          icon.setAttribute('title', event[this.settings.iconTooltip]);
+          $(icon).tooltip({
+            content: icon.innerText
+          });
+        }
+      }
+    }
+
+    if (this.settings.eventTooltip !== 'overflow') {
+      if (typeof this.settings.eventTooltip === 'function') {
+        this.settings.eventTooltip({ month: this.settings.month, year: this.settings.year, event });
+      } else {
+        node.setAttribute('title', event[this.settings.eventTooltip]);
+        $(node).tooltip({
+          content: node.innerText
+        });
+      }
+    }
+
+    if (!event.shortSubject && (this.settings.eventTooltip === 'overflow' || this.settings.iconToolTip === 'overflow')) {
     // Show the full text if cut off
-    if (!event.shortSubject) {
       node.setAttribute('title', event.subject);
       $(node).tooltip({
         beforeShow: (response, ui) => {
@@ -658,28 +687,41 @@ Calendar.prototype = {
       this.monthView.selectDay(key);
     });
 
-    if (this.settings.menuId) {
-      this.element.off(`contextmenu.${COMPONENT_NAME}`).on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
-        e.preventDefault();
-        const event = $(e.currentTarget);
-        event.popupmenu({ attachToBody: true, menuId: this.settings.menuId, trigger: 'immediate', offset: { y: 5 } });
+    this.element.off(`contextmenu.${COMPONENT_NAME}`).on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
 
-        event.off('selected.calendar').on('selected.calendar', function (evt, elem) {
-          const eventId = this.getAttribute('data-id');
-          if (self.settings.menuSelected) {
-            self.settings.menuSelected(evt, elem, eventId);
-          }
+      const eventId = e.currentTarget.getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      this.element.triggerHandler('contextmenu', { originalEvent: e, month: this.settings.month, year: this.settings.year, event: eventData[0] });
 
-          if (elem.attr('data-action') === 'delete-event') {
-            self.deleteEvent({ id: eventId });
-          }
-          if (elem.attr('data-action') === 'show-event') {
-            const key = this.getAttribute('data-key');
-            self.monthView.selectDay(key);
-          }
-        });
+      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
+        return true;
+      }
+      e.preventDefault();
+      self.closePrevPopupmenu();
+
+      if (!hasMenu()) {
+        return true;
+      }
+
+      const event = $(e.currentTarget);
+      event.popupmenu({ attachToBody: true, menuId: this.settings.menuId, eventObj: e, trigger: 'immediate', offset: { y: 5 } });
+
+      event.off('selected.calendar').on('selected.calendar', function (evt, elem) {
+        // const eventId = this.getAttribute('data-id');
+        if (self.settings.menuSelected) {
+          self.settings.menuSelected(evt, elem, eventId);
+        }
+
+        if (elem.attr('data-action') === 'delete-event') {
+          self.deleteEvent({ id: eventId });
+        }
+        if (elem.attr('data-action') === 'show-event') {
+          const key = this.getAttribute('data-key');
+          self.monthView.selectDay(key);
+        }
       });
-    }
+    });
 
     const showModalWithCallback = (eventData, isAdd) => {
       this.showEventModal(eventData, (elem, event) => {
@@ -770,6 +812,41 @@ Calendar.prototype = {
       this.element.triggerHandler('dblclick', { eventData, api: this });
     });
     return this;
+  },
+
+  /**
+   * Check if the event is subscribed to.
+   * @private
+   * @param {object} e The update empty message config object.
+   * @param {string} eventName The update empty message config object.
+   * @returns {boolean} If the event is subscribed to.
+   */
+  isSubscribedTo(e, eventName) {
+    const self = this;
+    const calendarEvents = $._data(self.element[0]).events;
+
+    for (const event in calendarEvents) { //eslint-disable-line
+      if (event === eventName && !(calendarEvents[event].length === 1 && calendarEvents[event][0].namespace === 'calendar')) {
+        return true;
+      }
+    }
+
+    return false;
+  },
+
+  /**
+   * Close any previous opened popupmenus.
+   * @private
+   * @returns {void}
+   */
+  closePrevPopupmenu() {
+    const nodes = [].slice.call(this.element[0].querySelectorAll('.is-open:not(.popupmenu)'));
+    nodes.forEach((node) => {
+      const elem = $(node);
+      if (elem.data('popupmenu')) {
+        elem.trigger('close');
+      }
+    });
   },
 
   /**
