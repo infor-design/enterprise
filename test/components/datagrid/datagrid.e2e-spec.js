@@ -1027,9 +1027,35 @@ describe('Datagrid paging client side tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to move to keyword search', async () => {
+  it('Should be able to do a keyword search', async () => {
     await element(by.id('gridfilter')).sendKeys('ressor 2');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
+  });
+
+  it('Should be able to move to keyword search and sort', async () => {
+    await element(by.id('gridfilter')).sendKeys('ressor 1');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
+
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
+  });
+
+  it('Should be able to move to keyword search and page', async () => {
+    await element(by.id('gridfilter')).sendKeys('ressor 1');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
+
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
