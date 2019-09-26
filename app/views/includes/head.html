@@ -76,7 +76,7 @@
 
         if (parts[1] !== shortThemeName) {
           shortThemeName = parts[1];
-          $.get('http://localhost:4000/api/icons?theme=' + shortThemeName, function(htmlStr) {
+          $.get('/api/icons?theme=' + shortThemeName, function(htmlStr) {
             htmlStr = htmlStr.replace('</div>', '');
             htmlStr = htmlStr.replace('<div class="svg-icons">', '');
             $('div.svg.hidden:not(.patterns)').empty().append(htmlStr);
