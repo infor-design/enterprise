@@ -49,12 +49,10 @@ exports.config = {
   },
   multiCapabilities: [
     {
-      os: 'Windows',
-      os_version: '10',
       browserName: 'chrome',
       resolution: '1280x800',
-      local : 'false',
-      selenium_version: '3.141.59'
+      os_version: '10',
+      os: 'Windows'
     }
   ],
   onPrepare: () => {
