@@ -43,6 +43,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
     margin-left: -3px;
     margin-top: -($wizard-tick-size / 2) + ($wizard-tick-border-width / 2);
     position: absolute;
+    -webkit-touch-callout: none;
     width: $wizard-tick-size;
 
     // Border for incomplete or non-current ticks
@@ -81,6 +82,11 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       position: absolute;
       top: ($wizard-tick-size * 2) - 8;
       white-space: nowrap;
+
+      &.is-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     &.current,
@@ -309,17 +315,6 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
 
     .tick:not(.complete):not(.current) {
       background-color: $theme-color-palette-white;
-    }
-  }
-}
-
-// Hide the text from the non-current ticks in small form factors
-@include respond-to(phone) {
-  .wizard-header {
-    .tick:not(.current) {
-      .label {
-        visibility: hidden;
-      }
     }
   }
 }
