@@ -49,9 +49,12 @@ exports.config = {
   },
   multiCapabilities: [
     {
+      os: 'Windows',
+      os_version: '10',
       browserName: 'chrome',
-      os_version: 'Mojave',
-      os: 'OS X'
+      resolution: '1280x800',
+      local : 'false',
+      selenium_version: '3.5.2'
     }
   ],
   onPrepare: () => {
