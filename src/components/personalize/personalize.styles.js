@@ -385,6 +385,10 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
   color: ${colors.subtext} !important;
 }
 
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-selected {
+  background-color: ${colors.darker} !important;
+}
+
 html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded + .accordion-pane {
   background-color: ${colors.dark} !important;
 }

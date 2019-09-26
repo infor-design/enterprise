@@ -238,6 +238,8 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
     width: auto;
 
     .accordion-header {
+      @include transition(border-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
       border-bottom-color: transparent;
       color: $uplift-acc-header-text-color;
       height: auto;
@@ -246,6 +248,11 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
       .btn-expander {
         color: inherit;
         margin-right: 3px;
+
+        &:focus:not(.hide-focus) {
+          border-color: $uplift-appmenu-selected-border-color;
+          box-shadow: none;
+        }
       }
 
       .icon {
@@ -325,6 +332,7 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
         }
 
         &.is-selected {
+          background-color: $uplift-appmenu-selected-bg-color;
           border-bottom-color: transparent;
         }
 
@@ -417,7 +425,6 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
         }
 
         + .accordion-header {
-          &.is-selected,
           &.is-focused {
             border-top-color: $uplift-appmenu-selected-border-color;
           }
