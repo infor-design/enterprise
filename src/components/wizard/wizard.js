@@ -11,7 +11,7 @@ const COMPONENT_NAME = 'wizard';
 // Component Default Settings
 const WIZARD_DEFAULTS = {
   ticks: null,
-  ticksTemplate: '<a ng-click="handleClick()" class="tick {{state}}" href="{{href}}"><span class="label" data-shortlabel="{{shortLabel}}">{{label}}</span></a>'
+  ticksTemplate: '<a class="tick {{state}}" href="{{href}}"><span class="label" data-shortlabel="{{shortLabel}}">{{label}}</span></a>'
 };
 
 /**
