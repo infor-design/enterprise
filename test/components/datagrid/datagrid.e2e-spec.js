@@ -1591,9 +1591,9 @@ describe('Datagrid Empty Card Scrolling', () => {
   }
 });
 
-fdescribe('Datagrid Empty Message Tests After Load', () => {
+describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-message-after-load');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body'));
     await browser.driver
@@ -1616,14 +1616,14 @@ fdescribe('Datagrid Empty Message Tests After Load', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-after-load')).toEqual(0);
     });
   }
 });
 
-fdescribe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
+describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body'));
     await browser.driver
