@@ -16,6 +16,12 @@ const breakpoints = {
 };
 
 /**
+ * @returns {array} a list of available breakpoint names
+ */
+const availableBreakpoints = Object.keys(breakpoints);
+breakpoints.available = availableBreakpoints;
+
+/**
  * Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
  * <body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
  * above.

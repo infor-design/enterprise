@@ -34,9 +34,11 @@ module.exports = function (app, defaults) {
     }
 
     // Uses the minified version of the Soho library instead of the uncompressed version
+    // NOTE: see the `app/src/js/custom-route-options.js` middleware for where this
+    // setting is translated into `window.SohoConfig`.
     if (req.query.minify && req.query.minify.length > 0) {
       res.opts.minify = true;
-      logger('info', 'Using the minified version of "sohoxi.js"');
+      logger('info', 'Using the minified version of "sohoxi.js" and culture files');
     }
 
     // Uses Flex Toolbars in headers

@@ -78,6 +78,7 @@ const COMPONENT_NAME = 'datepicker';
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
+ * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -124,7 +125,8 @@ const DATEPICKER_DEFAULTS = {
   locale: '',
   useUTC: false,
   autoSize: false,
-  hideButtons: false
+  hideButtons: false,
+  showToday: true
 };
 
 function DatePicker(element, settings) {
@@ -503,11 +505,8 @@ DatePicker.prototype = {
         <button type="button" class="is-cancel btn-tertiary">
           ${Locale.translate('Clear', this.locale.name)}
         </button>
-        <button type="button" class="is-today btn-tertiary">
-          ${Locale.translate('Today', this.locale.name)}
-        </button>
         <button type="button" class="is-select btn-primary">
-          ${Locale.translate('Select', this.locale.name)}
+          ${Locale.translate('Apply', this.locale.name)}
         </button>
       </div>`);
 
@@ -518,7 +517,7 @@ DatePicker.prototype = {
             ${Locale.translate('Clear', this.locale.name)}
           </button>
           <button type="button" class="is-select-month btn-primary">
-            ${Locale.translate('Select', this.locale.name)}
+            ${Locale.translate('Apply', this.locale.name)}
           </button>
         </div>`);
     }
@@ -800,19 +799,6 @@ DatePicker.prototype = {
         }
       }
 
-      if (btn.hasClass('is-today')) {
-        if (s.range.useRange) {
-          self.setToday(true);
-          if (!s.range.second || (s.range.second && !s.range.second.date)) {
-            e.preventDefault();
-            return;
-          }
-        } else {
-          self.setToday();
-          self.closeCalendar();
-        }
-      }
-
       if (btn.hasClass('is-select')) {
         const status = self.calendarAPI.setRangeSelByClick();
         if (status === 1) {
@@ -837,6 +823,20 @@ DatePicker.prototype = {
         self.calendarAPI.monthYearPane.data('expandablearea').close();
       }
     });
+
+    this.popup.off('click.datepicker-today').on('click.datepicker-today', '.hyperlink.today', (e) => {
+      e.preventDefault();
+      if (s.range.useRange) {
+        self.setToday(true);
+        if (!s.range.second || (s.range.second && !s.range.second.date)) {
+          e.preventDefault();
+        }
+      } else {
+        self.setToday();
+        self.closeCalendar();
+      }
+    });
+
     setTimeout(() => {
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
@@ -1636,7 +1636,6 @@ DatePicker.prototype = {
 
     this.element.off('blur.datepicker');
     this.trigger.remove();
-    this.element.attr('data-mask', '');
     this.element.removeAttr('placeholder');
     if (this.calendarAPI) {
       this.calendarAPI.destroy();
@@ -1653,6 +1652,8 @@ DatePicker.prototype = {
     if (maskApi) {
       maskApi.destroy();
     }
+    this.element.removeAttr('data-mask');
+    this.element.removeData('mask');
 
     this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 

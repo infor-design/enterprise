@@ -36,3 +36,25 @@ describe('Message tests', () => {
     expect(['hide-focus', 'btn-modal', 'btn-modal hide-focus']).toContain(await modalButtonEl.getAttribute('class'));
   });
 });
+
+describe('Message xss tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/message/test-escaped-title');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show encoded text in the title', async () => {
+    const buttonEl = await element(by.id('show-message'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.message.modal'))), config.waitsFor);
+
+    expect(await element(by.css('.message.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
+  });
+});

@@ -60,6 +60,7 @@ describe('Personalization tests', () => {
 describe('Personalization example-tabs tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
+    await browser.driver.sleep(config.sleepShort);
   });
 
   it('Should not have errors', async () => {

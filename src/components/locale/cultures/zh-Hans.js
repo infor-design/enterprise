@@ -48,6 +48,8 @@ Soho.Locale.addCulture('zh-Hans', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

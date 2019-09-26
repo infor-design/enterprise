@@ -48,6 +48,8 @@ Soho.Locale.addCulture('ru-RU', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

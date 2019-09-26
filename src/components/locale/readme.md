@@ -32,7 +32,19 @@ Soho.Locale.set('es-ES').done(function() {
 });
 ```
 
-By default it will fetch the js files on your server from the cultures folder that is assumed to be in the same localtion as where the sohoxi.js script is. However, this can be adjusted by setting `SohoConfig.culturesPath = 'myserver/path/cultures/`
+By default, it will fetch the JS files on your server from the `cultures/` folder that is assumed to be in the same location as `sohoxi.js`. However, this can be adjusted by using SohoConfig:
+
+```javascript
+SohoConfig.culturesPath = 'myserver/path/cultures/';
+```
+
+## Code Example - Using minified files
+
+IDS ships with a minified set of Culture files.  To configure the Locale system to pull in these files instead of the uncompressed ones, you can use SohoConfig:
+
+```javascript
+SohoConfig.minifyCultures = true;
+```
 
 ## Code Example - Using a different Language and Locale
 

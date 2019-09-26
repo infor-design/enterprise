@@ -281,6 +281,8 @@ describe('Validation Legacy Tooltip', () => {
 describe('Validation on Accordion', () => {
   beforeEach(async () => {
     await utils.setPage('/components/validation/test-on-accordion');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.alternate .accordion-header'))), config.waitsFor);
   });
 
   it('Should validate on an accordion', async () => {
@@ -291,7 +293,7 @@ describe('Validation on Accordion', () => {
 
     const nameEl = await element(by.id('last-name2'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(nameEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(nameEl), config.waitsFor);
 
     await nameEl.clear();
     await nameEl.sendKeys(protractor.Key.TAB);
@@ -492,6 +494,61 @@ describe('Validation input tests', () => {
     expect(await element.all(by.css('.message-text')).count()).toEqual(1);
     expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Required');
     expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
+  });
+});
+
+describe('Validation mask tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/mask/example-index');
+    await browser.driver.sleep(config.sleepShort);
+  });
+
+  it('Should be able to validate 12 hour time', async () => {
+    const timeField = await element(by.id('time-input'));
+
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('12:12 AM');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('99:99');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Invalid Time');
+  });
+
+  it('Should be able to validate 24 hour time', async () => {
+    const timeField = await element(by.id('time-input-24h'));
+
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('13:01');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    await timeField.clear();
+    await timeField.sendKeys('99:99');
+    await timeField.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Invalid Time');
   });
 });
 

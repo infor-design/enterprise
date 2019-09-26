@@ -65,6 +65,13 @@ describe('Locale API', () => {
     window.SohoConfig.culturesPath = null;
   });
 
+  it('Should be possible to require minified cultures', () => {
+    window.SohoConfig = { minifyCultures: true };
+
+    expect(window.SohoConfig.minifyCultures).toBeTruthy();
+    window.SohoConfig.minifyCultures = null;
+  });
+
   it('Should be an object', () => {
     expect(Locale).toBeDefined();
   });

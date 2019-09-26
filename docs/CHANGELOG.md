@@ -6,18 +6,36 @@
 
 ### v4.22.0 Features
 
+- `[Build]` Replaced UglifyES in the minification script with Terser ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Build]` Added the Locale culture files to the minification script. `.min.js` versions of each locale are now available in the `dist/` folder. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Charts]` Added support for context menu event with charts. ([#2699](https://github.com/infor-design/enterprise/issues/2699))
+- `[Contextual Action Panel]` Added support for passing in a full range of settings to the underlying Modal component API. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
+- `[Locale]` Added support for fetching minified culture files. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Modal]` Added support for a "fullsize" sheet display at all times, or simply beneath the responsive breakpoint. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
 
 ### v4.22.0 Fixes
 
+- `[Application Menu]` Fixed an issue where footer toolbar area was overlapping to menu content. ([#2552](https://github.com/infor-design/enterprise/issues/2552))
+- `[Application Menu]` Fixed an issue where tooltip was showing white text on white background which makes text to be unreadable. ([#2811](https://github.com/infor-design/enterprise/issues/2811))
 - `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
+- `[Buttons]` Adjust the contrast of buttons (tertiary) on uplift theme. ([#396](https://github.com/infor-design/design-system/issues/396))
 - `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
 - `[Datagrid]` Made the text all white on the targeted achievement formatter. ([#2730](https://github.com/infor-design/enterprise/issues/2730))
+- `[Datagrid]` Fixed keyword search so that it will again work with client side paging. ([#2797](https://github.com/infor-design/enterprise/issues/2797))
+- `[Datepicker]` Moved the today button to the datepicker header and adding a setting to hide it if wanted. ([#2704](https://github.com/infor-design/enterprise/issues/2704))
+- `[Datepicker]` Fixed a bug in datepicker where the destroy method does not readd the masking functionality. [2832](https://github.com/infor-design/enterprise/issues/2832))
 - `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
 - `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
+- `[Mask]` Added an example showing how to user percent format with the locale. ([#434](https://github.com/infor-design/enterprise/issues/434))
+- `[Modal]` Fixed an issue where encoded html would not be recoded on the title. ([#246](https://github.com/infor-design/enterprise/issues/246))
 - `[Popupmenu]` Prevent popupmenus from closing after exit and reentry to the popupmenu submenu structure.. ([#2702](https://github.com/infor-design/enterprise/issues/2702))
+- `[Swaplist]` Fixed an issue where passed data for searched items were not syncing for beforeswap event. ([#2819](https://github.com/infor-design/enterprise/issues/2819))
 - `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
+- `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
+- `[Tabs-Module]` Fixed styling and appearance issues on an example page demonstrating the Go Button alongside a Searchfield with Categories. ([#2745](https://github.com/infor-design/enterprise/issues/2745))
+- `[Tabs-Multi]` Fixed an issue where tooltip was not showing when hovering a tab with cut-off text. ([#2747](https://github.com/infor-design/enterprise/issues/2747))
+- `[Validation]` Fixed an issue where if the mask is set to use a time other than the default time for the locale, this was not taken into account in validation. ([#2821](https://github.com/infor-design/enterprise/issues/2821))
 
 ### v4.22.0 Chores & Maintenance
 
