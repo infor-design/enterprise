@@ -50,9 +50,8 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'chrome',
-      resolution: '1280x800',
-      os_version: '10',
-      os: 'Windows'
+      os_version: 'Mojave',
+      os: 'OS X'
     }
   ],
   onPrepare: () => {
