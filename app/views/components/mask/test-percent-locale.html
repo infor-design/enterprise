@@ -16,10 +16,15 @@
 
 <script>
   $('body').on('initialized', function(locale, args) {
+    const numberInfo = Locale.currentLocale.data.numbers;
+
     $('#percentage-field').mask({
-      pattern: Locale.currentLocale.data.numbers.percentFormat,
+      pattern: numberInfo.percentFormat.replace(numberInfo.percentPrefix, '').replace(numberInfo.percentSuffix, ''),
+      process: 'number',
       patternOptions: {
-        allowDecimal: false
+        allowDecimal: false,
+        prefix: numberInfo.percentPrefix,
+        suffix: numberInfo.percentSuffix
       }
     });
   });

@@ -49,6 +49,8 @@ Soho.Locale.addCulture('ko-KR', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

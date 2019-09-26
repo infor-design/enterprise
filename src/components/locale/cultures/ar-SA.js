@@ -286,6 +286,8 @@ Soho.Locale.addCulture('ar-SA', {
   numbers: {
     percentSign: '٪',
     percentFormat: '### ٪',
+    percentSuffix: ' ٪',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '٫',
     group: '٬',

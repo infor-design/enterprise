@@ -49,6 +49,8 @@ Soho.Locale.addCulture('hr-HR', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: '.',

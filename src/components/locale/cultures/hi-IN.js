@@ -49,6 +49,8 @@ Soho.Locale.addCulture('hi-IN', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

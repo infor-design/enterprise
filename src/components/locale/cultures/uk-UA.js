@@ -48,6 +48,8 @@ Soho.Locale.addCulture('uk-UA', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

@@ -48,6 +48,8 @@ Soho.Locale.addCulture('cs-CZ', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',

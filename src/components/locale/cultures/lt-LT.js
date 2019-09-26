@@ -49,6 +49,8 @@ Soho.Locale.addCulture('lt-LT', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: ' ',
