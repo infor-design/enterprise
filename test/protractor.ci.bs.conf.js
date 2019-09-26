@@ -54,7 +54,7 @@ exports.config = {
       browserName: 'chrome',
       resolution: '1280x800',
       local : 'false',
-      selenium_version: '3.5.2'
+      selenium_version: '3.141.59'
     }
   ],
   onPrepare: () => {
