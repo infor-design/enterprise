@@ -623,16 +623,14 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {jQuery} anchor the anchor being checked
    * @returns {void}
    */
-  handleDismissOnClick(anchor) {
+  handleDismissOnClick() {
     if (!this.settings.dismissOnClickMobile) {
       return;
     }
 
     this.userOpened = false;
-    $(anchor).blur();
     if (this.isLargerThanBreakpoint()) {
       return;
     }
@@ -759,11 +757,10 @@ ApplicationMenu.prototype = {
 
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
-    }).on('selected.applicationmenu', (e, header) => {
-      const a = $(header).children('a');
-      self.handleDismissOnClick(a);
-    }).on('followlink.applicationmenu', (e, anchor) => {
-      self.handleDismissOnClick(anchor);
+    }).on('selected.applicationmenu', () => {
+      self.handleDismissOnClick();
+    }).on('followlink.applicationmenu', () => {
+      self.handleDismissOnClick();
     }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
       self.toggleScrollClass();
     });

@@ -1,19 +1,174 @@
 // Uplift Application Menu
 //================================================== //
 
-.application-menu {
-  background-color: $theme-color-palette-slate-90;
+@import '../accordion/accordion-mixins';
 
-  .searchfield-wrapper {
-    background-color: $theme-color-palette-slate-100;
-    border-radius: 6px;
-    margin: 0 $theme-number-spacing-base;
-    width: calc(100% - calc(#{$theme-number-spacing-base} * 2));
+$uplift-acc-border-radius: 6px;
+$uplift-acc-header-text-color: $theme-color-palette-slate-40;
+$uplift-acc-header-selected-text-color: $theme-color-palette-white;
+
+$uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
+
+$uplift-acc-expanded-bg-color: $theme-color-palette-slate-100;
+
+$uplift-appmenu-main-bg-color: $theme-color-palette-slate-90;
+$uplift-appmenu-header-bg-color: $theme-color-palette-slate-90;
+$uplift-appmenu-footer-bg-color: $theme-color-palette-slate-100;
+
+$uplift-appmenu-hover-bg-color: $theme-color-palette-slate-80;
+$uplift-appmenu-selected-bg-color: $theme-color-palette-black;
+$uplift-appmenu-selected-border-color: $theme-color-palette-white;
+
+// Application Menu's Accordion alignment rules
+//================================================== //
+
+.application-menu {
+
+  // Level 1 Pane
+  .accordion-pane {
+    @include left-align-cascade-styles-pane(20px, 46px, 40px);
+
+    // Level 2 Header
+    .accordion-header {
+      @include left-align-cascade-styles-header(20px, 18px, 49px, 41px);
+    }
+
+    // Level 2 Pane
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(49px, 72px, 40px);
+
+      // Level 3 Header
+      .accordion-header {
+        @include left-align-cascade-styles-header(40px, 44px, 72px, 41px);
+      }
+
+      // Level 3 Pane
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(78px, 97px, 59px);
+
+        // Level 4 Header
+        .accordion-header {
+          @include left-align-cascade-styles-header(59px, 69px, 97px, 60px);
+        }
+
+        // Level 4 Pane
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(97px, 122px, 78px);
+
+          // Level 5 Header
+          .accordion-header {
+            @include left-align-cascade-styles-header(78px, 94px, 122px, 79px);
+          }
+
+          // Level 5 Pane
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(116px, 150px, 122px);
+
+            // Level 6 Header
+            .accordion-header {
+              @include left-align-cascade-styles-header(122px, 122px, 150px, 99px);
+
+              &.no-icon {
+                > a {
+                  padding-left: 150px;
+                }
+              }
+            }
+
+            // Level 6 Pane
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(135px, 177px, 122px);
+            }
+          }
+        }
+      }
+    }
   }
 
-  .application-menu-header button:hover,
-  .application-menu-footer button:hover {
-    background-color: $theme-color-palette-slate-100;
+  &.has-icons {
+    // Level 1 Pane
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(20px, 46px, 40px);
+
+      .accordion-header {
+        @include left-align-cascade-styles-header(5px, 18px, 49px, 41px);
+      }
+
+      // Level 2 Pane
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(49px, 46px, 40px);
+
+        // Level 3 Header
+        .accordion-header {
+          @include left-align-cascade-styles-header(40px, 44px, 77px, 41px);
+        }
+
+        // Level 3 Pane
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(78px, 78px, 59px);
+
+          // Level 4 Header
+          .accordion-header {
+            @include left-align-cascade-styles-header(59px, 69px, 97px, 60px);
+          }
+
+          // Level 4 Pane
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(97px, 97px, 78px);
+
+            // Level 5 Header
+            .accordion-header {
+              @include left-align-cascade-styles-header(78px, 94px, 122px, 79px);
+            }
+
+            // Level 5 Pane
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(116px, 150px, 122px);
+
+              // Level 6 Header
+              .accordion-header {
+                @include left-align-cascade-styles-header(122px, 122px, 150px, 99px);
+              }
+
+              // Level 6 Pane
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(116px, 122px, 122px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.application-menu {
+  background-color: $uplift-appmenu-main-bg-color;
+
+  .searchfield-wrapper {
+    background-color: $uplift-acc-expanded-bg-color;
+    border-radius: $uplift-acc-border-radius;
+    margin: 0 $theme-number-spacing-base;
+    width: calc(100% - calc(#{$theme-number-spacing-base} * 2));
+
+    .searchfield {
+      height: 40px;
+    }
+  }
+
+  .application-menu-header,
+  .application-menu-footer {
+    padding: 10px 0;
+
+    button {
+      .icon {
+        color: $uplift-acc-header-text-color;
+      }
+
+      &:hover {
+        background-color: $uplift-appmenu-hover-bg-color;
+      }
+    }
   }
 
   .btn-icon {
@@ -21,9 +176,15 @@
   }
 
   .application-menu-header {
+    .icon.avatar {
+      left: 29px;
+      top: 0;
+    }
+
     .name-xl {
       font-size: $theme-size-font-md;
       font-weight: $theme-number-font-weight-bold;
+      padding-left: 29px;
       padding-top: calc(#{$theme-number-spacing-base} * 2);
     }
 
@@ -36,58 +197,304 @@
     }
   }
 
+  .application-menu-footer {
+    .application-menu-toolbar {
+      padding: 10px 0 10px 19px;
+    }
+  }
+
   .application-menu-switcher-panel {
-    background-color: $theme-color-palette-slate-100;
+    background-color: $uplift-appmenu-footer-bg-color;
 
     .accordion.panel.inverse {
-      background-color: $theme-color-palette-slate-100;
+      background-color: $uplift-appmenu-footer-bg-color;
 
       .accordion-header {
-        border-color: $theme-color-palette-slate-100;
+        border-radius: $uplift-acc-border-radius;
+
+        &.is-selected {
+          background-color: $uplift-appmenu-selected-bg-color;
+        }
       }
 
       .accordion-header:hover {
-        background-color: $theme-color-palette-black;
+        background-color: $uplift-appmenu-hover-bg-color;
       }
     }
   }
 
-  .application-menu-header,
-  .application-menu-footer {
-    background-color: $theme-color-palette-slate-90;
-
+  .application-menu-header {
+    background-color: $uplift-appmenu-header-bg-color;
   }
 
-  .accordion {
+  .application-menu-footer {
+    background-color: $uplift-appmenu-footer-bg-color;
+  }
+
+  // NOTE: panelled accordion is used inside of the app menu,
+  // so all internal accordion styles have to override this rule.
+  .accordion.panel.inverse {
     margin: calc(#{$theme-number-spacing-base} * 1);
     width: auto;
 
     .accordion-header {
-      border-radius: 6px;
+      border-bottom-color: transparent;
+      color: $uplift-acc-header-text-color;
+      height: auto;
+
+      .btn,
+      .btn-expander {
+        color: inherit;
+        margin-right: 3px;
+      }
+
+      .icon {
+        color: inherit;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-header-text-color;
+          }
+        }
+      }
+
+      &:hover {
+        background-color: $uplift-appmenu-hover-bg-color;
+        color: $uplift-acc-header-selected-text-color;
+      }
+
+      &.is-focused:not(.hide-focus) {
+        border-color: $uplift-appmenu-selected-border-color;
+        box-shadow: none;
+      }
+
+      &.is-selected {
+        background-color: $uplift-appmenu-selected-bg-color;
+        color: $uplift-acc-header-selected-text-color;
+
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-header-selected-text-color;
+          }
+        }
+      }
     }
 
-    > .accordion-header > a > span {
-      font-weight: $theme-number-font-weight-bold;
+    // Top level rules
+    > .accordion-header {
+      border-radius: $uplift-acc-border-radius;
+
+      > a {
+        padding: 10px 0 10px 20px;
+      }
+
+      &.is-selected {
+        border-bottom-color: transparent;
+
+        &:hover {
+          border-bottom-color: transparent;
+        }
+
+        &.is-focused {
+          border-bottom-color: $uplift-appmenu-selected-border-color;
+        }
+
+        > a > span {
+          font-weight: $theme-number-font-weight-bold;
+        }
+      }
+
+      &.is-expanded {
+        background-color: $uplift-acc-expanded-bg-color;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &:not(.is-focused),
+        &:not(.is-selected) {
+          border-bottom-color: transparent;
+        }
+
+        &.is-focused {
+          border-bottom-color: $uplift-appmenu-selected-border-color;
+
+          &.is-selected {
+            border-bottom-color: $uplift-appmenu-selected-border-color;
+          }
+        }
+
+        &.is-selected {
+          border-bottom-color: transparent;
+        }
+
+        + .accordion-pane {
+          background-color: $uplift-acc-expanded-bg-color;
+          border-bottom-left-radius: $uplift-acc-border-radius;
+          border-bottom-right-radius: $uplift-acc-border-radius;
+
+          .accordion-header:not(.is-selected):not(.is-focused) {
+            border-color: transparent;
+          }
+
+          .accordion-pane {
+            background: transparent;
+          }
+        }
+      }
+
+      + .accordion-header {
+        margin-top: 4px;
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header > a {
-      letter-spacing: 0.2px;
+    // Visible accordion panes force a border to show up on the next
+    // accordion header for visual separation
+    .accordion-pane {
+      .accordion-header {
+        border-bottom-color: transparent;
+        color: $uplift-acc-subheader-text-color;
+
+        a {
+          font-size: 14px;
+          padding-bottom: 9px;
+          padding-top: 9px;
+        }
+
+        .btn,
+        .btn-expander {
+          height: 25px;
+          width: 25px;
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              left: 4px;
+              top: 11px;
+              width: 15px;
+            }
+          }
+        }
+
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-subheader-text-color;
+          }
+        }
+
+        &:hover {
+          color: $uplift-acc-header-selected-text-color;
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              background-color: $uplift-acc-header-selected-text-color;
+            }
+          }
+        }
+
+        &.is-selected {
+          color: $uplift-acc-header-selected-text-color;
+
+          > a > span {
+            font-weight: $theme-number-font-weight-bold;
+          }
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              background-color: $uplift-acc-header-selected-text-color;
+            }
+          }
+        }
+      }
+
+      &.is-expanded {
+        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-content {
+          border-top-color: transparent;
+        }
+
+        + .accordion-header {
+          &.is-selected,
+          &.is-focused {
+            border-top-color: $uplift-appmenu-selected-border-color;
+          }
+        }
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header.is-selected {
-      background-color: transparent;
+    // Round the borders of 2nd-level accordion headers in some special cases
+    > .accordion-pane {
+      > .accordion-header {
+        &:not(.is-expanded):last-of-type {
+          border-bottom-left-radius: $uplift-acc-border-radius;
+          border-bottom-right-radius: $uplift-acc-border-radius;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: $uplift-acc-border-radius;
+          border-bottom-right-radius: $uplift-acc-border-radius;
+        }
+      }
+
+      &.is-expanded {
+        &:last-of-type {
+          border-bottom-left-radius: $uplift-acc-border-radius;
+          border-bottom-right-radius: $uplift-acc-border-radius;
+        }
+      }
+
+      + .accordion-header {
+        margin-top: 4px;
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header.is-selected > a {
-      letter-spacing: 0;
+    // Change some things on top-level icon app menus
+    &.has-icons {
+      > .accordion-header {
+        > a {
+          padding-left: 0;
+        }
+      }
+
+      .accordion-pane {
+        .accordion-header {
+          > a {
+            letter-spacing: 0.2px;
+          }
+
+          &.is-selected {
+            > a {
+              letter-spacing: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .application-menu {
+    .application-menu-header {
+      .icon.avatar {
+        left: 0;
+        right: 29px;
+      }
+
+      .name-xl {
+        padding-left: 0;
+        padding-right: 29px;
+      }
     }
 
-    .accordion-pane .accordion-header.is-selected > a > span {
-      font-weight: $theme-number-font-weight-bold;
-    }
-
-    &.panel.inverse .accordion-header:hover {
-      background-color: $theme-color-palette-slate-100;
+    .accordion {
+      > .accordion-header > a {
+        padding: 10px 20px 10px 0;
+      }
     }
   }
 }

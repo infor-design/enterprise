@@ -281,7 +281,7 @@ function personalizeStyles(colors) {
 }
 
 .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
-  background-color: ${colors.lighter} !important;
+  background-color: ${colors.lighter};
 }
 
 .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
@@ -348,13 +348,54 @@ function personalizeStyles(colors) {
   border-bottom: none !important;
 }
 
+html[class*="theme-uplift-"] .application-menu.is-personalizable .searchfield-wrapper {
+  background-color: ${colors.dark};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header {
+  background-color: transparent !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header:hover {
+  background-color: ${colors.darkest} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header.is-selected {
+  background-color: ${colors.darkest} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::before {
+  background-color: ${colors.subtext};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::after {
+  background-color: ${colors.subtext};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
+  background-color: transparent !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
+  color: ${colors.subtext};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded {
+  background-color: ${colors.dark} !important;
+  color: ${colors.subtext} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded + .accordion-pane {
+  background-color: ${colors.dark} !important;
+}
+
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.base} !important;;
+  background-color: ${colors.base} !important;
 }
 
 .is-personalizable .personalize-subheader {
-  background-color: ${colors.lighter} !important;;
+  background-color: ${colors.lighter} !important;
 }
 
 .is-personalizable .personalize-text {

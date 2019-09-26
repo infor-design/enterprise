@@ -1,6 +1,8 @@
 // Application Menu
 //================================================== //
 
+@import '../accordion/accordion';
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
@@ -196,20 +198,20 @@
     width: auto;
 
     &::placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-webkit-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-moz-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
   }
 

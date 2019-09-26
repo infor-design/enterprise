@@ -1,10 +1,10 @@
-<nav id="application-menu" class="application-menu is-open is-personalizable" data-options='{ "filterable": true }'>
+<nav id="application-menu" class="application-menu is-open is-personalizable" data-options='{ "filterable": true, "dismissOnClickMobile": true }'>
 
   <div class="flex-wrapper">
     <div class="application-menu-header expandable-area-header">
-      <img src="/images/11.jpg" class="icon avatar l-center" alt="Photo of Richard Fairbanks"/>
+      <img src="/images/11.jpg" class="icon avatar" alt="Photo of Richard Fairbanks"/>
       <button type="button" class="btn application-menu-switcher-trigger expandable-area-trigger" id="trigger-btn">
-        <span>Some extra long title or may be too long</span>
+        <span>Employee</span>
         <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-caret-down"></use>
         </svg>
@@ -33,43 +33,6 @@
               </div>
               <div class="accordion-header">
                 <a href="#"><span>Example Role</span></a>
-              </div>
-              <div class="accordion-heading" role="presentation">Proxy As...</div>
-              <div class="accordion-header">
-                <a href="#"><span>Glen Keller</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Julia Harrison</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Addie Ortiz</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Jeremy Yates</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Fannie Kennedy</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Kenneth Ramos</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Pauline Townsend</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Rosie Dixon</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Fannie Dawson</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Alice Dawson</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Caroline Weaver</span></a>
-              </div>
-              <div class="accordion-header">
-                <a href="#"><span>Cameron Briggs</span></a>
               </div>
             </div>
           </div>
@@ -118,110 +81,104 @@
   <div class="application-menu-content">
     <div class="searchfield-wrapper">
       <label class="audible" for="application-menu-searchfield">Search</label>
-      <input id="application-menu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
+      <input id="application-menu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Look up menu items"/>
     </div>
 
     <div class="accordion panel inverse" data-options="{'allowOnePane': false}" >
       <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-user"></use>
-        </svg>
-        <a href="#"><span>Employee</span></a>
+        <a href="#"><span>Home</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Profile</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Pay</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Benefits</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Time Off</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Growth</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Engagements</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Resources</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
-          <a href="#"><span>My Home</span></a>
+          <a href="#"><span>2nd Level Menu Item</span></a>
         </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Raves</span></a>
+        <div class="accordion-pane">
+          <div class="accordion-header">
+            <a href="#"><span>3rd Level Menu Item</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>4th Level Menu Item</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-header">
+                <a href="#"><span>5th Level Menu Item</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-header is-expanded">
+                  <a href="#"><span>6th Level Menu Item</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
         <div class="accordion-header">
-          <a href="#"><span>Request Time Off</span></a>
+          <a href="#"><span>2nd Level Menu Item</span></a>
         </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>My Growth</span></a>
+        <div class="accordion-pane">
+          <div class="accordion-header">
+            <a href="#"><span>3rd Level Menu Item</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>4th Level Menu Item</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-header">
+                <a href="#"><span>5th Level Menu Item</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-header is-expanded">
+                  <a href="#"><span>6th Level Menu Item</span></a>
+                </div>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>5th Level Menu Item</span></a>
+              </div>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>4th Level Menu Item</span></a>
+            </div>
+          </div>
+          <div class="accordion-header">
+            <a href="#"><span>3rd Level Menu Item</span></a>
+          </div>
         </div>
-
         <div class="accordion-header">
-          <a href="#"><span>My Rewards</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Find a Coworker</span></a>
-        </div>
-      </div>
-      <div class="accordion-header is-selected">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-distribution"></use>
-        </svg>
-        <a href="#"><span>Manager</span></a>
-      </div>
-      <div class="accordion-pane is-selected">
-        <div class="accordion-header">
-          <a href="#"><span>My Team</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Manage Goals</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Develop Employees</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Aquire Talent</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Compensation</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Engagement</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Health & Safety</span></a>
+          <a href="#"><span>2nd Level Menu Item</span></a>
         </div>
       </div>
       <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-roles"></use>
-        </svg>
-        <a href="#"><span>Recruiter</span></a>
+        <a href="#"><span>The Next Level One Menu Item</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
-          <a href="#"><span>Today</span></a>
+          <a href="#"><span>2nd Level Menu item</span></a>
         </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Candidate Pool</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Requisitions</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Workflows</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Resources</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Manage Transitions</span></a>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Reports</span></a>
-        </div>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Proxy</span></a>
       </div>
     </div>
   </div>
@@ -236,16 +193,24 @@
             </svg>
             <span>Settings</span>
           </button>
-          <button class="btn l-pull-right" type="button" title="About this App">
+          <button class="btn-icon" type="button" title="Proxy as user">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-employee-directory"></use>
+            </svg>
+          </button>
+          <button class="btn-icon" type="button" title="About this App">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-info"></use>
             </svg>
-            <span>About</span>
+          </button>
+          <button class="btn-icon" type="button" title="Log Out">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logout"></use>
+            </svg>
           </button>
         </div>
       </div>
     </div>
-    <a href="#" class="hyperlink"><span>Sign Out</span></a>
   </div>
 
 </nav>
