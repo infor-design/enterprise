@@ -472,6 +472,33 @@ describe('Datepicker Legend Tests', () => {
   });
 });
 
+describe('Datepicker Destroy Mask Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-mask-after-update');
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should still mask after destroy', async () => {
+    const inputEl = await element(by.id('dp1'));
+    inputEl.clear();
+    inputEl.sendKeys('101020011221AM');
+
+    expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
+    inputEl.clear();
+
+    await element(by.id('btn-update')).click();
+    inputEl.sendKeys('101020011221AM');
+
+    expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
+  });
+});
+
 describe('Datepicker Disable Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-month-year-picker');
