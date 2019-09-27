@@ -485,6 +485,7 @@ describe('Datepicker Destroy Mask Tests', () => {
   });
 
   it('Should still mask after destroy', async () => {
+    await browser.driver.sleep(config.sleepShort);
     const inputEl = await element(by.id('dp1'));
     inputEl.clear();
     inputEl.sendKeys('101020011221AM');
@@ -493,6 +494,7 @@ describe('Datepicker Destroy Mask Tests', () => {
     inputEl.clear();
 
     await element(by.id('btn-update')).click();
+    await browser.driver.sleep(config.sleepShort);
     inputEl.sendKeys('101020011221AM');
 
     expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
