@@ -698,6 +698,7 @@ Calendar.prototype = {
     });
 
     this.element.off(`contextmenu.${COMPONENT_NAME}`).on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      e.stopPropagation();
       const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
 
       const eventId = e.currentTarget.getAttribute('data-id');
