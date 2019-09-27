@@ -22,7 +22,7 @@ exports.config = {
   specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'https://fix-cron-enterprise.demo.design.infor.com/',
+  baseUrl: 'http://master-enterprise.demo.design.infor.com/',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 10000,
     showColors: true,
