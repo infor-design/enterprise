@@ -1741,7 +1741,7 @@ PopupMenu.prototype = {
         $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
           tracker = documentE.pageX;
         });
-      };
+      }
     }).on('mouseleave.popupmenu', '.submenu', function () {
       $(document).off(`mousemove.popupmenu.${this.id}`);
 
