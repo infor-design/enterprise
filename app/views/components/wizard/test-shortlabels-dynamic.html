@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Wizard - Example Short Labels Dynamic</h2>
+    <p>This Example use the <strong>Api Settings</strong> to render the Wizard Control.
+    <br>Resize the browser window to see short labels in place.</p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="wizard" id="wiz1" data-init="false"></div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+  $('body').on('initialized', function() {
+    var settings = {
+      ticks: [
+        {
+          label: 'Context Lightweight Applications',
+          shortLabel: 'Context Apps',
+          state: 'complete'
+        },
+        {
+          label: 'Best Utility Applications',
+          shortLabel: 'Util Apps',
+          state: 'complete'
+        },
+        {
+          label: 'Inbound Configuration',
+          shortLabel: 'Inb Conf',
+          state: 'current'
+        },
+        {
+          label: 'Object Identifiers Mapping',
+          shortLabel: 'OID Mapping'
+        }
+      ],
+      ticksTemplate: '<a class="tick {{state}}" href="{{href}}"><span class="label" data-shortlabel="{{shortLabel}}">{{label}}</span></a>'
+    };
+
+    // Invoke
+    $('#wiz1').wizard(settings);
+
+
+  });
+</script>
