@@ -3,22 +3,6 @@
 
 @import '../accordion/accordion-mixins';
 
-$uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $theme-color-palette-slate-40;
-$uplift-acc-header-selected-text-color: $theme-color-palette-white;
-
-$uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
-
-$uplift-acc-expanded-bg-color: $theme-color-palette-slate-100;
-
-$uplift-appmenu-main-bg-color: $theme-color-palette-slate-90;
-$uplift-appmenu-header-bg-color: $theme-color-palette-slate-90;
-$uplift-appmenu-footer-bg-color: $theme-color-palette-slate-100;
-
-$uplift-appmenu-hover-bg-color: $theme-color-palette-slate-80;
-$uplift-appmenu-selected-bg-color: $theme-color-palette-black;
-$uplift-appmenu-selected-border-color: $theme-color-palette-white;
-
 // Application Menu's Accordion alignment rules
 //================================================== //
 
@@ -153,6 +137,31 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
 
     .searchfield {
       height: 40px;
+
+      &::placeholder {
+        color: #d0d0d0;
+        opacity: 1;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #d0d0d0;
+        opacity: 1;
+        -webkit-text-fill-color: #d0d0d0;
+      }
+
+      &::-moz-placeholder {
+        color: #d0d0d0;
+        opacity: 1;
+      }
+
+      &:-ms-input-placeholder {
+        color: #d0d0d0;
+        opacity: 1;
+      }
+    }
+
+    > .icon {
+      top: 13px;
     }
   }
 
@@ -234,6 +243,7 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
   // NOTE: panelled accordion is used inside of the app menu,
   // so all internal accordion styles have to override this rule.
   .accordion.panel.inverse {
+    background-color: transparent;
     margin: calc(#{$theme-number-spacing-base} * 1);
     width: auto;
 
@@ -478,6 +488,19 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
             }
           }
         }
+      }
+    }
+  }
+}
+
+// Reset the Searchfield Wrapper height on Firefox
+html.is-firefox {
+  .application-menu {
+    .searchfield-wrapper {
+      height: auto;
+
+      > .icon {
+        top: 14px;
       }
     }
   }
