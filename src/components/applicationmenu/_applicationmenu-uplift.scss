@@ -139,23 +139,25 @@
       height: 40px;
 
       &::placeholder {
-        color: #d0d0d0;
+        color: $uplift-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
 
       &::-webkit-input-placeholder {
-        color: #d0d0d0;
+        color: $uplift-appmenu-searchfield-placeholder-color;
         opacity: 1;
-        -webkit-text-fill-color: #d0d0d0;
+        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &::-moz-placeholder {
-        color: #d0d0d0;
+        color: $uplift-appmenu-searchfield-placeholder-color;
+        line-height: normal;
         opacity: 1;
+        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &:-ms-input-placeholder {
-        color: #d0d0d0;
+        color: $uplift-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
     }
@@ -198,10 +200,15 @@
     }
 
     button.application-menu-switcher-trigger {
-      margin: 0 8px 0 0;
+      margin: 0 8px;
+      max-width: 72%;
 
       > * {
-        vertical-align: bottom;
+        vertical-align: middle;
+      }
+
+      > span {
+        padding-top: 0;
       }
     }
   }
@@ -493,14 +500,28 @@
   }
 }
 
-// Reset the Searchfield Wrapper height on Firefox
 html.is-firefox {
+
+  // Reset the Searchfield Wrapper height on Firefox
   .application-menu {
     .searchfield-wrapper {
       height: auto;
 
       > .icon {
         top: 14px;
+      }
+    }
+  }
+
+  // Reset this from the Soho theme (not needed in Uplift)
+  &.is-mac {
+    .application-menu {
+      .application-menu-switcher-trigger {
+        padding-top: 0;
+
+        > span {
+          padding-top: 0;
+        }
       }
     }
   }
