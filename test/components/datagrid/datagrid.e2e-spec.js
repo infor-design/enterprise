@@ -1593,7 +1593,7 @@ describe('Datagrid Empty Card Scrolling', () => {
 
 describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-message-after-load');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body'));
     await browser.driver
@@ -1609,6 +1609,46 @@ describe('Datagrid Empty Message Tests After Load', () => {
 
     expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('show-empty-message')).click();
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-after-load')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not show empty indicator initially', async () => {
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(0);
+  });
+
+  it('Should show empty indicator on load', async () => {
+    await element(by.id('show-empty-message')).click();
+
+    expect(await element.all(by.css('.empty-message')).count()).toEqual(1);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.id('show-empty-message')).click();
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-scroll-flex')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid Header Overlapping Sorting Indicator', () => {
