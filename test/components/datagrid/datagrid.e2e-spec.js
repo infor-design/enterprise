@@ -2150,6 +2150,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
 fdescribe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+    await element(by.id('add-context')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
