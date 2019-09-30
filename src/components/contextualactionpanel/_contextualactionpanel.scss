@@ -29,6 +29,20 @@
       .toolbar-section {
         &.title {
           padding-left: 15px;
+
+          span {
+            @media (min-width: $breakpoint-big-phone + 1) {
+              width: 150px;
+            }
+      
+            @media (min-width: $breakpoint-phablet + 1) {
+              width: 250px;
+            }
+
+            @media (max-width: $breakpoint-big-phone) {
+              display: none;
+            }
+          }
         }
       }
     }
