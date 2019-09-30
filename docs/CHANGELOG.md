@@ -2,9 +2,6 @@
 
 ## v4.22.0
 
-### v4.23.0 Fixes
-- `[Toolbar Flex]` Fixed a bug in toolbar flex where the title is getting truncated even there's enough space for it. ([#2810](https://github.com/infor-design/enterprise/issues/2810))
-
 ### v4.22.0 Deprecation
 
 - `[Icons]` The alert icons now all have a white background allowing them to appear on colored areas. There was previously a special `-solid` version of the icons created that is now not needed, if you used the `icon-<name>-solid` icon change it to just `icon-<name>`. ([#396](https://github.com/infor-design/design-system/issues/396))
@@ -40,6 +37,7 @@
 - `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
 - `[Tabs-Module]` Fixed styling and appearance issues on an example page demonstrating the Go Button alongside a Searchfield with Categories. ([#2745](https://github.com/infor-design/enterprise/issues/2745))
 - `[Tabs-Multi]` Fixed an issue where tooltip was not showing when hovering a tab with cut-off text. ([#2747](https://github.com/infor-design/enterprise/issues/2747))
+- `[Toolbar Flex]` Fixed a bug in toolbar flex where the title is getting truncated even there's enough space for it. ([#2810](https://github.com/infor-design/enterprise/issues/2810))
 - `[Validation]` Fixed an issue where if the mask is set to use a time other than the default time for the locale, this was not taken into account in validation. ([#2821](https://github.com/infor-design/enterprise/issues/2821))
 
 ### v4.22.0 Chores & Maintenance
