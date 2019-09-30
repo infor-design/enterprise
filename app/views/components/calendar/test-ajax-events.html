@@ -28,6 +28,8 @@
     $('.calendar').calendar({
       month: 7,
       year: 2018,
+      iconTooltip: 'status',
+      eventTooltip: 'comments',
       onRenderMonth: function (ui, response, args) {
         // Get both event types and events for the month (eventTypes can be passed initially)
         const events = $.get('{{basepath}}api/events');
@@ -39,6 +41,8 @@
           }, 500); //slow it down a bit more
         });
       }
+    }).on('contextmenu', function (e, args) {
+      console.log('contextmenu fired', args);
     });
   });
 </script>

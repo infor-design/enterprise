@@ -52,6 +52,7 @@
 
 ### v4.21.0 Features
 
+- `[Calendar]` Added the ability to show tooltip on event and event icon and the ability to fire a context menu event. ([#2518](https://github.com/infor-design/enterprise/issues/2518))
 - `[Datagrid]` Added the ability to use frozen columns with tree grid. ([#2102](https://github.com/infor-design/enterprise/issues/2102))
 - `[Datagrid]` Added support for a fixed row size, this can be used in some cases like frozen columns where rows may have a different size than the three row heights (normal, short, medium). ([#2101](https://github.com/infor-design/enterprise/issues/2101))
 - `[Datagrid]` Added filter row editor options to api setting. ([#2648](https://github.com/infor-design/enterprise/issues/2648))
