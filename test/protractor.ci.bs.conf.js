@@ -22,7 +22,7 @@ exports.config = {
   specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'http://master-enterprise.demo.design.infor.com',
+  baseUrl: 'http://master-enterprise.demo.design.infor.com/',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 10000,
     showColors: true,
@@ -44,15 +44,18 @@ exports.config = {
     },
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: true,
+    shardTestFiles: false,
     maxInstances: 3
   },
   multiCapabilities: [
     {
-      browserName: 'chrome',
-      resolution: '1280x800',
-      os_version: '10',
-      os: 'Windows'
+      'os' : 'Windows',
+      'os_version' : '10',
+      'browserName' : 'Chrome',
+      'browser_version' : '77.0',
+      'resolution' : '1280x800',
+      'browserstack.local' : 'false',
+      'browserstack.selenium_version' : '3.5.2'
     }
   ],
   onPrepare: () => {
