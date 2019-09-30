@@ -31,6 +31,12 @@
           padding-left: 15px;
 
           span {
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            white-space: nowrap;
+
             @media (min-width: $breakpoint-big-phone + 1) {
               width: 150px;
             }
