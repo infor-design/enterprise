@@ -530,19 +530,19 @@ describe('Validation mask tests', () => {
     const timeField = await element(by.id('time-input-24h'));
 
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
     await timeField.sendKeys('13:01');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
     await timeField.sendKeys('99:99');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     const messageList = element.all(by.css('.message-text'));

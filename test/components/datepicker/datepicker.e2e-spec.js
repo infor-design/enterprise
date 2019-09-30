@@ -1115,7 +1115,7 @@ describe('Datepicker Modal Test', () => {
     const datepickerEl = await element(by.id('date-field'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ESCAPE);
 
