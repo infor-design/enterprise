@@ -500,7 +500,6 @@ describe('Validation input tests', () => {
 describe('Validation mask tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/mask/example-index');
-    await browser.driver.sleep(config.sleepShort);
   });
 
   fit('Should be able to validate 12 hour time', async () => {
