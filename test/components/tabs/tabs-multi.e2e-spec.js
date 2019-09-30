@@ -16,7 +16,7 @@ describe('Tabs Multi tests', () => {
   });
 
   if (!utils.isBS() && !utils.isCi()) {
-    fit('should display a tooltip when hovering a tab with cut-off text', async () => {
+    it('should display a tooltip when hovering a tab with cut-off text', async () => {
       await browser.driver.sleep(config.sleepShort);
       await browser.actions()
         .mouseMove(await element(by.id('tabs-one-contracts-1')))

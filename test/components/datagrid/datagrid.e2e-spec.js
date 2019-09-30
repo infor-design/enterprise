@@ -2147,7 +2147,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-fdescribe('Datagrid on modal with no default size', () => {
+describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
     await element(by.id('add-context')).click();

@@ -502,7 +502,7 @@ describe('Validation mask tests', () => {
     await utils.setPage('/components/mask/example-index');
   });
 
-  fit('Should be able to validate 12 hour time', async () => {
+  it('Should be able to validate 12 hour time', async () => {
     const timeField = await element(by.id('time-input'));
 
     await timeField.sendKeys(protractor.Key.TAB);
