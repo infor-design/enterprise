@@ -15,11 +15,13 @@ describe('Tabs Multi tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('should display a tooltip when hovering a tab with cut-off text', async () => {
+      await browser.driver.sleep(config.sleepShort);
       await browser.actions()
         .mouseMove(await element(by.id('tabs-one-contracts-1')))
         .perform();
+      await browser.driver.sleep(config.sleepShort);
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
