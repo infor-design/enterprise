@@ -1729,21 +1729,23 @@ PopupMenu.prototype = {
 
     self.menu.find('.popupmenu').removeClass('is-open');
     self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
-      if (!$(thisE.target).hasClass('popupmenu')) {
-        const menuitem = $(this);
-        startY = thisE.pageX;
+      const menuitem = $(this);
+      startY = thisE.pageX;
 
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          self.openSubmenu(menuitem);
-        }, 300);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        self.openSubmenu(menuitem);
+      }, 300);
 
-        $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
-          tracker = documentE.pageX;
-        });
-      }
-    }).on('mouseleave.popupmenu', '.submenu', function () {
+      $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
+        tracker = documentE.pageX;
+      });
+    }).on('mouseleave.popupmenu', '.submenu', function (thatE) {
       $(document).off(`mousemove.popupmenu.${this.id}`);
+
+      if ($(thatE.target).hasClass('popupmenu')) { // on exit of any .submenu
+        self.close();
+      }
 
       menuToClose = $(this).find('ul');
 
