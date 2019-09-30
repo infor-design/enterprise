@@ -503,7 +503,7 @@ describe('Validation mask tests', () => {
     await browser.driver.sleep(config.sleepShort);
   });
 
-  it('Should be able to validate 12 hour time', async () => {
+  fit('Should be able to validate 12 hour time', async () => {
     const timeField = await element(by.id('time-input'));
 
     await timeField.sendKeys(protractor.Key.TAB);
