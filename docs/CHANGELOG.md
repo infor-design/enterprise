@@ -32,6 +32,7 @@
 - `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
 - `[Mask]` Added an example showing how to user percent format with the locale. ([#434](https://github.com/infor-design/enterprise/issues/434))
 - `[Modal]` Fixed an issue where encoded html would not be recoded on the title. ([#246](https://github.com/infor-design/enterprise/issues/246))
+- `[Modal]` Fixed an issue where the content behind was still scrollable while modal window open with IOS devices. ([#2678](https://github.com/infor-design/enterprise/issues/2678))
 - `[Swaplist]` Fixed an issue where passed data for searched items were not syncing for beforeswap event. ([#2819](https://github.com/infor-design/enterprise/issues/2819))
 - `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
 - `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
