@@ -3,7 +3,7 @@
 ## v4.22.0
 
 ### v4.23.0 Fixes
-- `[Toolbar Flex]` Fixed a bug in toolbar flex where the title is getting truncated even there's enough space for it.
+- `[Toolbar Flex]` Fixed a bug in toolbar flex where the title is getting truncated even there's enough space for it. ([#2810](https://github.com/infor-design/enterprise/issues/2810))
 
 ### v4.22.0 Deprecation
 
