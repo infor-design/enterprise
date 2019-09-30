@@ -2153,7 +2153,7 @@ fdescribe('Datagrid on modal with no default size', () => {
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {

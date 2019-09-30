@@ -15,7 +15,7 @@ describe('Tabs Multi tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isBS() && !utils.isCi()) {
     fit('should display a tooltip when hovering a tab with cut-off text', async () => {
       await browser.driver.sleep(config.sleepShort);
       await browser.actions()
