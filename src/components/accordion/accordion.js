@@ -215,19 +215,6 @@ Accordion.prototype = {
       this.element.addClass('has-icons');
     }
 
-    // Setup correct ARIA for accordion panes, and auto-collapse them
-    panes.each(function addPaneARIA() {
-      const pane = $(this);
-      const header = pane.prev('.accordion-header');
-
-      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
-
-      if (!self.isExpanded(header)) {
-        pane.data('ignore-animation-once', true);
-        self.collapse(header, false);
-      }
-    });
-
     // Expand to the current accordion header if we find one that's selected
     if (isGlobalBuild && !this.element.data('updating')) {
       let targetsToExpand = headers.filter('.is-selected, .is-expanded');
@@ -245,6 +232,19 @@ Accordion.prototype = {
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
+
+    // Setup correct ARIA for accordion panes, and auto-collapse them
+    panes.each(function addPaneARIA() {
+      const pane = $(this);
+      const header = pane.prev('.accordion-header');
+
+      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
+
+      if (!self.isExpanded(header)) {
+        pane.data('ignore-animation-once', true);
+        self.collapse(header, false);
+      }
+    });
 
     // Retain an internal storage of available filtered accordion headers.
     if (!noFilterReset) {
@@ -754,9 +754,8 @@ Accordion.prototype = {
         }
       });
 
-      if (pane && pane.length) {
-        header.add(pane).addClass('is-expanded');
-      }
+      header.add(pane).addClass('is-expanded');
+      header.children('a').attr('aria-expanded', 'true');
 
       /**
       * Fires when expanding a pane is initiated.
@@ -780,7 +779,6 @@ Accordion.prototype = {
         if (e) {
           e.stopPropagation();
         }
-        header.children('a').attr('aria-expanded', 'true');
         pane.triggerHandler('afterexpand', [a]);
         self.element.trigger('afterexpand', [a]);
         $.when(...expandDfds, ...collapseDfds).done(() => {
