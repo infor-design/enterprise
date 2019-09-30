@@ -521,9 +521,6 @@ describe('Validation mask tests', () => {
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
-    const messageList = element.all(by.css('.message-text'));
-
-    expect(await messageList.get(0).getText()).toBe('Invalid Time');
   });
 
   it('Should be able to validate 24 hour time', async () => {
