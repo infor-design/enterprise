@@ -504,19 +504,21 @@ describe('Validation mask tests', () => {
   });
 
   fit('Should be able to validate 12 hour time', async () => {
-    await element(by.id('time-input')).sendKeys(protractor.Key.TAB);
+    const timeField = await element(by.id('time-input'));
+
+    await timeField.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
-    await  element(by.id('time-input')).clear();
-    await  element(by.id('time-input')).sendKeys('12:12 AM');
-    await  element(by.id('time-input')).sendKeys(protractor.Key.TAB);
+    await timeField.clear();
+    await timeField.sendKeys('12:01 AM');
+    await timeField.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
-    await  element(by.id('time-input')).clear();
-    await  element(by.id('time-input')).sendKeys('99:99');
-    await  element(by.id('time-input')).sendKeys(protractor.Key.TAB);
+    await timeField.clear();
+    await timeField.sendKeys('99:99');
+    await timeField.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);

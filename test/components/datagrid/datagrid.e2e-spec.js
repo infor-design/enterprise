@@ -2163,8 +2163,6 @@ fdescribe('Datagrid on modal with no default size', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      await element(by.id('add-context')).click();
-
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
