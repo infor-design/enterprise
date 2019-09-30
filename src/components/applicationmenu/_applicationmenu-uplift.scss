@@ -141,7 +141,6 @@
       .btn,
       .btn-expander {
         color: inherit;
-        margin-right: 3px;
 
         &:focus:not(.hide-focus) {
           border-color: $uplift-appmenu-selected-border-color;
@@ -402,7 +401,13 @@ html.is-firefox {
 // RTL Styles
 html[dir='rtl'] {
   .application-menu {
+    background-color: $uplift-appmenu-main-bg-color;
+
     .application-menu-header {
+      .application-menu-switcher-trigger {
+        float: left;
+      }
+
       .icon.avatar {
         left: 0;
         right: 29px;
@@ -414,13 +419,11 @@ html[dir='rtl'] {
       }
     }
 
-    /*
-    .accordion {
-      > .accordion-header > a {
-        padding: 10px 20px 10px 0;
+    .searchfield-wrapper {
+      .icon:not(.close) {
+        right: 8px;
       }
     }
-    */
   }
 }
 
@@ -431,7 +434,7 @@ html[dir='rtl'] {
 
   // Level 1 Pane
   .accordion-pane {
-    @include left-align-cascade-styles-pane(21px, 46px, 40px);
+    @include left-align-cascade-styles-pane(21px, 46px, 21px);
 
     // Level 2 Header
     .accordion-header {
@@ -440,7 +443,7 @@ html[dir='rtl'] {
 
     // Level 2 Pane
     .accordion-pane {
-      @include left-align-cascade-styles-pane(47px, 72px, 40px);
+      @include left-align-cascade-styles-pane(47px, 72px, 47px);
 
       // Level 3 Header
       .accordion-header {
@@ -449,7 +452,7 @@ html[dir='rtl'] {
 
       // Level 3 Pane
       .accordion-pane {
-        @include left-align-cascade-styles-pane(73px, 97px, 59px);
+        @include left-align-cascade-styles-pane(73px, 97px, 73px);
 
         // Level 4 Header
         .accordion-header {
@@ -458,7 +461,7 @@ html[dir='rtl'] {
 
         // Level 4 Pane
         .accordion-pane {
-          @include left-align-cascade-styles-pane(98px, 122px, 78px);
+          @include left-align-cascade-styles-pane(98px, 122px, 98px);
 
           // Level 5 Header
           .accordion-header {
@@ -482,7 +485,7 @@ html[dir='rtl'] {
 
             // Level 6 Pane
             .accordion-pane {
-              @include left-align-cascade-styles-pane(127px, 177px, 122px);
+              @include left-align-cascade-styles-pane(127px, 177px, 151px);
             }
           }
         }
@@ -554,6 +557,148 @@ html[dir='rtl'] {
               // Level 6 Pane
               .accordion-pane {
                 @include left-align-cascade-styles-pane(158px, 182px, 122px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .application-menu {
+
+    // Level 1 Pane
+    .accordion-pane {
+      @include right-align-cascade-styles-pane(21px, 46px, 21px);
+
+      // Level 2 Header
+      .accordion-header {
+        @include right-align-cascade-styles-header(20px, 18px, 49px, 26px);
+      }
+
+      // Level 2 Pane
+      .accordion-pane {
+        @include right-align-cascade-styles-pane(47px, 72px, 47px);
+
+        // Level 3 Header
+        .accordion-header {
+          @include right-align-cascade-styles-header(40px, 44px, 72px, 52px);
+        }
+
+        // Level 3 Pane
+        .accordion-pane {
+          @include right-align-cascade-styles-pane(73px, 97px, 73px);
+
+          // Level 4 Header
+          .accordion-header {
+            @include right-align-cascade-styles-header(59px, 69px, 97px, 77px);
+          }
+
+          // Level 4 Pane
+          .accordion-pane {
+            @include right-align-cascade-styles-pane(98px, 122px, 98px);
+
+            // Level 5 Header
+            .accordion-header {
+              @include right-align-cascade-styles-header(78px, 94px, 122px, 102px);
+            }
+
+            // Level 5 Pane
+            .accordion-pane {
+              @include right-align-cascade-styles-pane(122px, 150px, 122px);
+
+              // Level 6 Header
+              .accordion-header {
+                @include right-align-cascade-styles-header(122px, 122px, 150px, 130px);
+
+                &.no-icon {
+                  > a {
+                    padding-left: auto;
+                    padding-right: 150px;
+                  }
+                }
+              }
+
+              // Level 6 Pane
+              .accordion-pane {
+                @include right-align-cascade-styles-pane(127px, 177px, 151px);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .accordion.has-icons {
+      .accordion-header {
+        > a {
+          padding-left: auto;
+          padding-right: 54px;
+        }
+
+        > .icon + a {
+          padding-left: auto;
+          padding-right: 0;
+        }
+      }
+
+      // Level 1 Pane
+      .accordion-pane {
+        @include right-align-cascade-styles-pane(55px, 78px, 56px);
+
+        .accordion-header {
+          @include right-align-cascade-styles-header(54px, 50px, 78px, 58px);
+        }
+
+        // Level 2 Pane
+        .accordion-pane {
+          @include right-align-cascade-styles-pane(55px, 103px, 78px);
+
+          // Level 3 Header
+          .accordion-header {
+            @include right-align-cascade-styles-header(59px, 74px, 102px, 82px);
+          }
+
+          // Level 3 Pane
+          .accordion-pane {
+            @include right-align-cascade-styles-pane(79px, 127px, 103px);
+
+            // Level 4 Header
+            .accordion-header {
+              @include right-align-cascade-styles-header(59px, 99px, 127px, 107px);
+            }
+
+            // Level 4 Pane
+            .accordion-pane {
+              @include right-align-cascade-styles-pane(104px, 152px, 128px);
+
+              // Level 5 Header
+              .accordion-header {
+                @include right-align-cascade-styles-header(78px, 124px, 152px, 132px);
+              }
+
+              // Level 5 Pane
+              .accordion-pane {
+                @include right-align-cascade-styles-pane(130px, 150px, 153px);
+
+                // Level 6 Header
+                .accordion-header {
+                  @include right-align-cascade-styles-header(122px, 152px, 180px, 160px);
+
+                  &.no-icon {
+                    > a {
+                      padding-left: auto;
+                      padding-right: 182px;
+                    }
+                  }
+                }
+
+                // Level 6 Pane
+                .accordion-pane {
+                  @include right-align-cascade-styles-pane(158px, 182px, 122px);
+                }
               }
             }
           }
