@@ -500,26 +500,25 @@ describe('Validation input tests', () => {
 describe('Validation mask tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/mask/example-index');
-    await browser.driver.sleep(config.sleepShort);
   });
 
   it('Should be able to validate 12 hour time', async () => {
     const timeField = await element(by.id('time-input'));
 
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
-    await timeField.sendKeys('12:12 AM');
+    await timeField.sendKeys('12:01 AM');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
     await timeField.sendKeys('99:99');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     const messageList = element.all(by.css('.message-text'));
@@ -531,19 +530,19 @@ describe('Validation mask tests', () => {
     const timeField = await element(by.id('time-input-24h'));
 
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
     await timeField.sendKeys('13:01');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     await timeField.clear();
     await timeField.sendKeys('99:99');
     await timeField.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     const messageList = element.all(by.css('.message-text'));
