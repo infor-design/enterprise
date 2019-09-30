@@ -89,10 +89,6 @@
 
             $('#datagrid').on('page', function(e, pi) {
               var gridApi = $(this).data('datagrid');
-              if (pi && pi.type === 'afterpaging') {
-                gridApi.validateAll();
-                return;
-              }
               var self = $(this).data('datagrid');
               if (pi && pi.type === 'next' || pi.type === 'prev') {
                 var offet = pi.pagesize;

@@ -701,13 +701,14 @@ Datagrid.prototype = {
       }
 
       /**
-      * Fires after changing paging has completed.
+      * Fires after changing paging has completed for source operations.
       * @event afterpaging
-      * @memberof Pager
+      * @memberof Datagrid
       * @property {object} event - The jquery event object
       * @property {object} pagingInfo - The paging info object
       */
       self.element.trigger('afterpaging', pagingInfo);
+      self.afterPaging(pagingInfo);
     }
 
     if (this.sortColumn && this.sortColumn.sortId) {
@@ -730,6 +731,38 @@ Datagrid.prototype = {
     this.element.trigger('paging', pagingInfo);
 
     this.settings.source(pagingInfo, response);
+  },
+
+  /**
+   * Do some work after changing the page
+   * @param {object} pagingInfo Info about the paging operation
+   * @private
+   */
+  afterPaging(pagingInfo) {
+    if (!this.settings.paging) {
+      return;
+    }
+
+    if (this.settings.source) {
+      // Hide the entire pager bar if we're only showing one page, if applicable
+      if (this.pagerAPI && this.pagerAPI.hidePagerBar(pagingInfo)) {
+        this.element.removeClass('paginated');
+      } else {
+        this.element.addClass('paginated');
+      }
+
+      if (pagingInfo.total) {
+        this.recordCount = pagingInfo.total;
+        this.displayCounts(pagingInfo.total);
+      }
+
+      // Handle row selection across pages
+      this.syncSelectedUI();
+    }
+
+    if (!this.settings.source && this.filterExpr && this.filterExpr[0] && this.filterExpr[0].column === 'all') {
+      this.highlightSearchRows(this.filterExpr[0].value);
+    }
   },
 
   /**
@@ -5681,33 +5714,16 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.settings.paging) {
-      this.element.on(`afterpaging.${COMPONENT_NAME}`, (e, args) => {
-      // Hide the entire pager bar if we're only showing one page, if applicable
-        if (self.pagerAPI.hidePagerBar(args)) {
-          self.element.removeClass('paginated');
-        } else {
-          self.element.addClass('paginated');
-        }
-
-        self.recordCount = args.total;
-        self.displayCounts(args.total);
-
-        // Handle row selection across pages
-        self.syncSelectedUI();
-
-        if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
-          self.highlightSearchRows(self.filterExpr[0].value);
-        }
-      });
-
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
         self.saveUserSettings();
         self.render(null, pagingInfo);
+        self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         self.render(null, pagingInfo);
+        self.afterPaging(pagingInfo);
       });
     }
 
@@ -10169,6 +10185,10 @@ Datagrid.prototype = {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
 
+      if (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].column === 'all') {
+        this.highlightSearchRows(this.filterExpr[0].value);
+      }
+
       if (this.settings.source) {
         this.triggerSource({ type: 'sorted' });
       }
@@ -10817,7 +10837,6 @@ Datagrid.prototype = {
 
     // UnBind the pager
     if (this.pagerAPI) {
-      this.pagerAPI.element.off(`afterpaging.${COMPONENT_NAME}`);
       this.tableBody.off(`page.${COMPONENT_NAME} pagesizechange.${COMPONENT_NAME}`);
       this.pagerAPI.destroy();
     }

@@ -1,0 +1,24 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <form >
+      <div class="field">
+        <label for="dp1" class="label">Date-Time Picker</label>
+        <input id="dp1" data-init="false" class="datepicker datetime" name="dp1" type="text" />
+      </div>
+    </form>
+    <button type="button" class="btn-secondary" id="btn-update">Update</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var datepicker = $('#dp1').datepicker({
+      showTime: true
+    });
+
+    $('#btn-update').on('click', function () {
+      datepicker.data('datepicker').updated();
+    });
+  });
+</script>

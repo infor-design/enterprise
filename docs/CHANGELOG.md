@@ -4,6 +4,8 @@
 
 ### v4.22.0 Deprecation
 
+- `[Icons]` The alert icons now all have a white background allowing them to appear on colored areas. There was previously a special `-solid` version of the icons created that is now not needed, if you used the `icon-<name>-solid` icon change it to just `icon-<name>`. ([#396](https://github.com/infor-design/design-system/issues/396))
+
 ### v4.22.0 Features
 
 - `[Build]` Replaced UglifyES in the minification script with Terser ([#2660](https://github.com/infor-design/enterprise/issues/2660))
@@ -13,6 +15,7 @@
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 - `[Locale]` Added support for fetching minified culture files. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Modal]` Added support for a "fullsize" sheet display at all times, or simply beneath the responsive breakpoint. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
+- `[Wizard]` Added support for short labels. If short labels not supplied it will add ellipsis to text and tooltip. ([#2604](https://github.com/infor-design/enterprise/issues/2604))
 
 ### v4.22.0 Fixes
 
@@ -24,6 +27,7 @@
 - `[Datagrid]` Made the text all white on the targeted achievement formatter. ([#2730](https://github.com/infor-design/enterprise/issues/2730))
 - `[Datagrid]` Fixed keyword search so that it will again work with client side paging. ([#2797](https://github.com/infor-design/enterprise/issues/2797))
 - `[Datepicker]` Moved the today button to the datepicker header and adding a setting to hide it if wanted. ([#2704](https://github.com/infor-design/enterprise/issues/2704))
+- `[Datepicker]` Fixed a bug in datepicker where the destroy method does not readd the masking functionality. [2832](https://github.com/infor-design/enterprise/issues/2832))
 - `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
 - `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
 - `[Mask]` Added an example showing how to user percent format with the locale. ([#434](https://github.com/infor-design/enterprise/issues/434))
@@ -33,6 +37,7 @@
 - `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
 - `[Tabs-Module]` Fixed styling and appearance issues on an example page demonstrating the Go Button alongside a Searchfield with Categories. ([#2745](https://github.com/infor-design/enterprise/issues/2745))
 - `[Tabs-Multi]` Fixed an issue where tooltip was not showing when hovering a tab with cut-off text. ([#2747](https://github.com/infor-design/enterprise/issues/2747))
+- `[Validation]` Fixed an issue where if the mask is set to use a time other than the default time for the locale, this was not taken into account in validation. ([#2821](https://github.com/infor-design/enterprise/issues/2821))
 
 ### v4.22.0 Chores & Maintenance
 

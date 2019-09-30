@@ -1418,7 +1418,7 @@ Pager.prototype = {
       return true;
     }
 
-    if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) &&
+    if (pagingInfo && (pagingInfo.firstPage === true && pagingInfo.lastPage === true) &&
       pagingInfo.hideDisabledPagers) {
       return true;
     }

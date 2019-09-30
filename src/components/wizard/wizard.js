@@ -10,7 +10,8 @@ const COMPONENT_NAME = 'wizard';
 
 // Component Default Settings
 const WIZARD_DEFAULTS = {
-  ticks: null
+  ticks: null,
+  ticksTemplate: '<a class="tick {{state}}" href="{{href}}"><span class="label" data-shortlabel="{{shortLabel}}">{{label}}</span></a>'
 };
 
 /**
@@ -36,6 +37,7 @@ Wizard.prototype = {
    * @private
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [COMPONENT_NAME] });
     this
       .build()
       .handleEvents();
@@ -74,68 +76,239 @@ Wizard.prototype = {
    * @returns {this} component instance
    */
   buildTicks() {
-    const settingTicks = this.settings.ticks;
-    const self = this;
-
+    const s = this.settings;
     this.ticks = this.bar.children('.tick');
 
-    if (!this.ticks.length && settingTicks) {
-      for (let i = 0; i < settingTicks.length; i++) {
-        const link = $(`<a ng-click="handleClick()" class="tick ${settingTicks[i].state ? settingTicks[i].state : ''}" href="${settingTicks[i].href ? settingTicks[i].href : '#'}"><span class="label">${settingTicks[i].label}</span></a>`);
+    if (!this.ticks.length && s.ticks) {
+      const replaceMatch = (str, c) => str.replace(/{{(\w+)}}/g, (m, p) => c[p]);
+      const defaultTick = { state: '', href: '#', label: '' };
+      for (let i = 0; i < s.ticks.length; i++) {
+        let linkStr = replaceMatch(s.ticksTemplate, $.extend({}, defaultTick, s.ticks[i]));
+        linkStr = linkStr.replace(/(\s(\w|-)+=("|')?)?undefined("|')?/gim, '');
+        const link = $(linkStr);
 
-        if (settingTicks[i].ngClick) {
-          link.attr('ng-click', settingTicks[i].ngClick);
+        if (s.ticks[i].ngClick) {
+          link.attr('ng-click', s.ticks[i].ngClick);
         }
 
-        self.bar.append(link);
+        this.bar.append(link);
       }
       this.ticks = this.bar.children('.tick');
     }
     this.positionTicks();
+    this.setLabelsData();
+    this.adjustLabels();
 
-    $('.tick', self.element).each(function () {
-      const tick = $(this);
-      if (tick.hasClass('is-disabled')) {
-        tick.removeAttr('onclick ng-click');
+    this.ticks.toArray().forEach((tick) => {
+      if (tick.classList.contains('is-disabled')) {
+        ['onclick', 'ng-click'].forEach(attr => tick.removeAttribute(attr));
       }
     });
 
-    this.element.find('.wizard-header')[0].style.opacity = '1';
+    this.header[0].style.opacity = '1';
     return this;
   },
 
+  /**
+   * Set the labels data to keep control in case overlapping.
+   * @private
+   * @returns {this} component instance
+   */
+  setLabelsData() {
+    const labels = [].slice.call(this.bar[0].querySelectorAll('.label'));
+    this.labels = [];
+
+    labels.forEach((node) => {
+      const label = node.textContent;
+      let shortLabel = node.getAttribute('data-shortlabel');
+      if (!shortLabel) {
+        shortLabel = node.getAttribute('shortlabel');
+      }
+      const data = { label, shortLabel, node, jqEl: $(node) };
+
+      if (!shortLabel || shortLabel === 'undefined') {
+        node.removeAttribute('data-shortlabel');
+        node.removeAttribute('shortlabel');
+        delete data.shortLabel;
+      }
+
+      this.labels.push(data);
+    });
+    return this;
+  },
+
+  /**
+   * Adjust the labels if overlapping.
+   * @private
+   * @returns {this} component instance
+   */
+  adjustLabels() {
+    const headerRect = this.header[0].getBoundingClientRect();
+    const barWidth = parseFloat(window.getComputedStyle(this.bar[0]).width);
+    const availWidth = ((100 / (this.labels.length - 1) / 100) * barWidth) - 15;
+    const usingShortLabel = [];
+    let labelsToFix = [];
+
+    // Reset given label
+    const resetLabel = (label) => {
+      delete label.isEllipsis;
+      label.node.classList.remove('is-ellipsis');
+      label.node.style.width = '';
+      this.removeTooltip(label);
+    };
+
+    // Add the fix to overlaping labels
+    const adjustLabel = (idx) => {
+      const label = this.labels[idx].node;
+      if (usingShortLabel.indexOf(idx) === -1) {
+        const shortLabel = this.labels[idx].shortLabel;
+        if (shortLabel) {
+          // Use short labels
+          label.textContent = shortLabel;
+          usingShortLabel.push(idx);
+          resetLabel(this.labels[idx]);
+        } else {
+          // Add ellipsis
+          label.classList.add('is-ellipsis');
+          label.style.width = `${availWidth}px`;
+          this.setTooltip(this.labels[idx]);
+          this.labels[idx].isEllipsis = true;
+        }
+      }
+      label.style.left = `-${(label.offsetWidth - label.parentNode.offsetWidth) / 2}px`;
+    };
+
+    // Add the fix to first and last labels
+    const adjustFirstAndLastLabels = () => {
+      const fixLabel = (label, diff, isLast) => {
+        if (label.isEllipsis) {
+          const width = parseFloat(label.node.style.width) - diff;
+          label.node.style.width = `${width}px`;
+          label.node.style.left = `-${(width - label.node.parentNode.offsetWidth) / 2}px`;
+        } else {
+          const left = parseFloat(label.node.style.left) + (diff * (isLast ? -1 : 1));
+          label.node.style.left = `${left}px`;
+        }
+      };
+      // First
+      let label = this.labels[0];
+      let labelRect = label.node.rect || label.node.getBoundingClientRect();
+      if (headerRect.left > labelRect.left) {
+        fixLabel(label, (headerRect.left - labelRect.left));
+      }
+      // Last
+      label = this.labels[this.labels.length - 1];
+      labelRect = label.node.rect || label.node.getBoundingClientRect();
+      if (headerRect.right < labelRect.right) {
+        fixLabel(label, (labelRect.right - headerRect.right), true);
+      }
+    };
+
+    // Reset all the labels to start from default
+    this.labels.forEach((label) => {
+      const node = label.node;
+      node.textContent = label.label;
+      node.style.left = `-${(node.offsetWidth - node.parentNode.offsetWidth) / 2}px`;
+      resetLabel(label);
+    });
+    adjustFirstAndLastLabels();
+
+    // Check for overlap
+    const overlap = (r1, r2) => !(r1.right < r2.left ||
+        r1.left > r2.right || r1.bottom < r2.top || r1.top > r2.bottom);
+
+    // Set the overlaping labels which need to fix
+    const setLabelsToFix = () => {
+      this.labels.forEach((label) => {
+        label.rect = label.node.getBoundingClientRect();
+      });
+      labelsToFix = [];
+      for (let i = 0, l = this.labels.length; i < l; i++) {
+        if (i < (l - 1)) {
+          const i2 = i + 1;
+          if (overlap(this.labels[i].rect, this.labels[i2].rect)) {
+            labelsToFix.push([i, i2]);
+          }
+        }
+      }
+    };
+
+    // Extra check to not loop more then max times
+    let max = 50;
+
+    // Start to add fix if needed, will execute at least once
+    do {
+      setLabelsToFix();
+      labelsToFix.forEach((arr) => {
+        const label1 = this.labels[arr[0]].node;
+        const label2 = this.labels[arr[1]].node;
+        const idx = label1.offsetWidth > label2.offsetWidth ? 0 : 1;
+        const i = arr[idx];
+        const i2 = idx ? arr[0] : arr[1];
+        adjustLabel(i);
+        if (overlap(this.labels[i].rect, this.labels[i2].rect)) {
+          adjustLabel(i2);
+        }
+      });
+      adjustFirstAndLastLabels();
+      setLabelsToFix();
+      max--;
+    } while (labelsToFix.length && max > 0);
+
+    // Check and fix first and last
+    adjustFirstAndLastLabels();
+
+    // Clear the cached bounding rect
+    this.labels.forEach((label) => {
+      delete label.isEllipsis;
+      delete label.rect;
+    });
+    return this;
+  },
+
+  /**
+   * Triggers tooltip
+   * @private
+   * @param  {object} label The label.
+   * @returns {void}
+   */
+  setTooltip(label) {
+    label.jqEl
+      .tooltip({ content: label.label, placement: 'bottom' })
+      .on(`blur.${COMPONENT_NAME}`, () => this.removeTooltip(label));
+  },
+
+  /**
+   * Removes tooltip
+   * @private
+   * @param  {object} label The label.
+   * @returns {void}
+   */
+  removeTooltip(label) {
+    const tooltipApi = label.jqEl.data('tooltip');
+    if (tooltipApi) {
+      tooltipApi.element.off(`blur.${COMPONENT_NAME}`);
+      tooltipApi.destroy();
+    }
+  },
+
+  /**
+   * Position the ticks
+   * @private
+   * @returns {void}
+   */
   positionTicks() {
-    const l = this.ticks.length;
-    const delta = 100 / (l - 1);
-    const tickPos = [];
+    const len = this.ticks.length;
+    const delta = 100 / (len - 1);
+    const getPoint = i => ((i === len - 1) ? 100 : (delta * i));
 
-    function getPoint(i) {
-      if (i === 0) {
-        return 0;
-      }
-      if (i === l - 1) {
-        return 100;
-      }
-      return delta * i;
-    }
+    this.ticks.toArray().forEach((tick, i) => {
+      const pos = getPoint(i);
+      const left = (Locale ? Locale.isRTL() : false) ? (100 - pos) : pos;
 
-    for (let i = 0; i < l; i++) {
-      tickPos.push(getPoint(i));
-    }
-
-    this.ticks.each(function (i) {
-      const tick = $(this);
-      const label = tick.children('.label');
-      const left = (Locale ? Locale.isRTL() : false) ? (100 - tickPos[i]) : tickPos[i];
-
-      this.style.left = `${left}%`;
-
-      for (let i2 = 0, l2 = label.length; i2 < l2; i2++) {
-        label[i2].style.left = `-${label.outerWidth() / 2 - tick.outerWidth() / 2}px`;
-      }
-
-      if (tick.is('.is-disabled')) {
-        tick.attr('tabindex', '-1');
+      tick.style.left = `${left}%`;
+      if (tick.classList.contains('is-disabled')) {
+        tick.setAttribute('tabindex', '-1');
       }
     });
   },
@@ -146,17 +319,16 @@ Wizard.prototype = {
    * @returns {this} component instance
    */
   updateRange() {
-    const currentTick = this.ticks.filter('.current').last();
-    let widthPercentage = 0;
+    const getStyle = (el, prop) => parseFloat(window.getComputedStyle(el)[prop]);
+    const tick = this.ticks.filter('.current').last();
+    let w = 0;
 
-    if (currentTick.length) {
-      widthPercentage = (100 * parseFloat(window.getComputedStyle(currentTick[0]).left) /
-        parseFloat(window.getComputedStyle(currentTick.parent()[0]).width));
-      widthPercentage = (Locale ? Locale.isRTL() : false) ? (100 - widthPercentage)
-        : widthPercentage;
+    if (tick.length) {
+      w = (100 * getStyle(tick[0], 'left') / getStyle(tick.parent()[0], 'width'));
+      w = (Locale ? Locale.isRTL() : false) ? (100 - w) : w;
     }
 
-    this.completedRange[0].style.width = `${widthPercentage}%`;
+    this.completedRange[0].style.width = `${w}%`;
     return this;
   },
 
@@ -182,8 +354,15 @@ Wizard.prototype = {
    * @returns {this} component instance
    */
   teardown() {
-    this.ticks.off('click.wizard');
-    this.element.off('updated.wizard');
+    this.labels.forEach((label) => {
+      this.removeTooltip(label);
+      label.jqEl.off().removeData();
+    });
+    delete this.labels;
+
+    this.ticks.off(`click.${COMPONENT_NAME}`);
+    this.element.off(`updated.${COMPONENT_NAME}`);
+    $('body').off(`resize.${this.namespace}`);
 
     this.ticks.remove();
     return this;
@@ -310,12 +489,16 @@ Wizard.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on('updated', () => {
+    this.element.on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
     });
 
-    this.ticks.on('click.wizard', function (e) {
+    this.ticks.on(`click.${COMPONENT_NAME}`, function (e) {
       self.activate(e, $(this));
+    });
+
+    $('body').on(`resize.${this.namespace}`, () => {
+      this.adjustLabels();
     });
 
     return this;

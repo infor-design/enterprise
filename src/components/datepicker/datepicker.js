@@ -1636,7 +1636,6 @@ DatePicker.prototype = {
 
     this.element.off('blur.datepicker');
     this.trigger.remove();
-    this.element.attr('data-mask', '');
     this.element.removeAttr('placeholder');
     if (this.calendarAPI) {
       this.calendarAPI.destroy();
@@ -1653,6 +1652,8 @@ DatePicker.prototype = {
     if (maskApi) {
       maskApi.destroy();
     }
+    this.element.removeAttr('data-mask');
+    this.element.removeData('mask');
 
     this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 

@@ -49,6 +49,8 @@ Soho.Locale.addCulture('es-MX', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',
