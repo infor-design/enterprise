@@ -21,6 +21,7 @@ Soho.Locale.addCulture('sk-SK', {
       month: 'd. MMMM',
       year: 'MMMM yyyy',
       timestamp: 'H:mm:ss',
+      hour: 'H:mm',
       datetime: 'd. M. yyyy H:mm',
       timezone: 'd. M. yyyy H:mm zz',
       timezoneLong: 'd. M. yyyy H:mm zzzz'

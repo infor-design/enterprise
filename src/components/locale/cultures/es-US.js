@@ -22,6 +22,7 @@ Soho.Locale.addCulture('es-US', {
       month: 'MMMM d',
       year: 'MMMM de yyyy',
       timestamp: 'h:mm:ss a',
+      hour: 'h:mm a',
       datetime: 'M/d/yyyy h:mm a',
       timezone: 'M/d/yyyy h:mm a zz',
       timezoneLong: 'M/d/yyyy h:mm a zzzz'

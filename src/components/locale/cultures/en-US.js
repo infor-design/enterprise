@@ -22,6 +22,7 @@ Soho.Locale.addCulture('en-US', {
       month: 'MMMM d',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',
+      hour: 'h:mm a',
       datetime: 'M/d/yyyy h:mm a',
       timezone: 'M/d/yyyy h:mm a zz',
       timezoneLong: 'M/d/yyyy h:mm a zzzz'
@@ -68,6 +69,7 @@ Soho.Locale.addCulture('en-US', {
     Alert: { id: 'Alert', value: 'Alert', comment: 'Alert' },
     AlertOnPage: { id: 'AlertOnPage', value: 'Alert message(s) on page', comment: 'Alert message(s) on page n' },
     All: { id: 'All', value: 'All', comment: 'All items in the context of a filter' },
+    AllDay: { id: 'AllDay', value: 'All Day', comment: 'Label for an event which lasts all day' },
     AllResults: { id: 'AllResults', value: 'All Results For', comment: 'Search Results Text' },
     AligntoBottom: { id: 'AligntoBottom', value: 'Align Bottom', comment: 'Align to Bottom tooltip' },
     AlignCenterHorizontally: { id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip' },

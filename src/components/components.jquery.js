@@ -66,6 +66,7 @@ import './tree/tree.jquery';
 import './treemap/treemap.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
+import './week-view/week-view.jquery';
 import './wizard/wizard.jquery';
 import './zoom/zoom.jquery';
 

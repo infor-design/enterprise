@@ -22,6 +22,7 @@ Soho.Locale.addCulture('lv-LV', {
       month: 'd. MMMM',
       year: 'yyyy. gada MMMM',
       timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',
       timezone: 'dd.MM.yyyy HH:mm zz',
       timezoneLong: 'dd.MM.yyyy HH:mm zzzz'

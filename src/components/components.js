@@ -67,4 +67,5 @@ export { FormCompact } from './form-compact/form-compact';
 export { Header } from './header/header';
 export { Lookup } from './lookup/lookup';
 export { MonthView } from './monthview/monthview';
+export { WeekView } from './week-view/week-view';
 export { MultiTabs } from './tabs-multi/multi-tabs';

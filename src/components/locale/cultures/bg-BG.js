@@ -22,6 +22,7 @@ Soho.Locale.addCulture('bg-BG', {
       month: 'd MMMM',
       year: 'MMMM yyyy г.',
       timestamp: 'H:mm:ss',
+      hour: 'H:mm',
       datetime: 'd.MM.yyyy H:mm',
       timezone: 'd.MM.yyyy H:mm zz',
       timezoneLong: 'd.MM.yyyy H:mm zzzz'

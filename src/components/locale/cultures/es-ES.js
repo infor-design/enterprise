@@ -67,6 +67,7 @@ Soho.Locale.addCulture('es-ES', {
     Alert: { id: 'Alert', value: 'Alerta', comment: 'Alert' },
     AlertOnPage: { id: 'AlertOnPage', value: 'Mensajes de alerta en la página', comment: 'Alert message(s) on page n' },
     All: { id: 'All', value: 'Todo', comment: 'All items in the context of a filter' },
+    AllDay: { id: 'AllDay', value: 'Todo el dia', comment: 'Label for an event which lasts all day' },
     AllResults: { id: 'AllResults', value: 'Todos los resultados para', comment: 'Search Results Text' },
     AligntoBottom: { id: 'AligntoBottom', value: 'Alinear en la parte inferior', comment: 'Align to Bottom tooltip' },
     AlignCenterHorizontally: { id: 'AlignCenterHorizontally', value: 'Alinear horizontalmente en centro', comment: 'Align Center Horizontally tooltip' },

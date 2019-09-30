@@ -1,0 +1,112 @@
+//* WeekView
+//================================================== *
+
+.week-view {
+  background-color: $popover-bg-color;
+  border: 1px solid $calendar-line-color;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+
+  .week-view-table-header {
+    th {
+      border-top: 0;
+      font-size: $theme-size-font-md;
+      height: 2.4rem;
+      line-height: 2.4rem;
+      text-align: left;
+
+      // Style todays date
+      .week-view-header-wrapper.is-today {
+        box-shadow: 0 4px 0 0 $theme-color-brand-primary-base;
+        color: $theme-color-brand-primary-base;
+        font-weight: $theme-number-font-weight-bold;
+      }
+    }
+
+    .week-view-all-day-wrapper {
+      border-top: 1px solid $calendar-line-color;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 5px;
+    }
+
+    th:nth-child(1) .week-view-all-day-wrapper {
+      border-top-color: transparent;
+    }
+
+    .week-view-header-wrapper {
+      padding: 0 5px;
+    }
+  }
+
+  .week-view-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+
+    .week-view-allday-row {
+      height: 4rem;
+    }
+
+    .week-view-hour-row,
+    .week-view-half-hour-row {
+      height: 2.5rem;
+    }
+
+    // Borders
+    th,
+    td {
+      border-bottom: 1px solid $calendar-line-color;
+      border-right: 1px solid $calendar-line-color;
+    }
+
+    // Legend Row with times
+    th:nth-child(1) {
+      font-size: $theme-size-font-xs;
+      width: 60px;
+    }
+
+    // First column size
+    td .week-view-cell-wrapper {
+      font-size: $theme-size-font-xs;
+    }
+
+    // Alternate row style
+    tr:nth-child(odd) td {
+      border-bottom: 1px solid $calendar-line-color-light;
+    }
+  }
+
+  // Header Section Container with All Day events
+  .week-view-container {
+    background-color: $popover-bg-color;
+    flex-shrink: 0;
+
+    th {
+      background-color: $popover-bg-color;
+      position: sticky;
+      top: 0;
+    }
+
+    .week-view-allday-row th {
+      top: 25px;
+    }
+  }
+
+  .week-view-cell-wrapper {
+    min-width: 50px;
+    padding: 0 5px;
+  }
+
+  // Moving time marker
+  .week-view-time-marker {
+    border: 1px solid $theme-color-brand-primary-base;
+    display: block;
+    height: 1px;
+    position: relative;
+    top: -5px;
+    width: 100%;
+  }
+}

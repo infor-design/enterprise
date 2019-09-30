@@ -563,7 +563,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('y', year);
 
     // Time
-    const showDayPeriods = ret.indexOf(' a') > -1;
+    const showDayPeriods = ret.indexOf(' a') > -1 || ret.indexOf('a') === 0;
 
     if (showDayPeriods && hours === 0) {
       ret = ret.replace('hh', 12);
@@ -589,6 +589,9 @@ const Locale = {  // eslint-disable-line
     // PM
     if (cal) {
       ret = ret.replace(' a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      if (ret.indexOf('a') === 0) {
+        ret = ret.replace('a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      }
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
 
@@ -612,6 +615,35 @@ const Locale = {  // eslint-disable-line
     }
 
     return ret.trim();
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} hour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHour(hour, options) {
+    let timeSeparator = this.calendar().dateFormat.timeSeparator;
+    let locale = this.currentLocale.name;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      timeSeparator = options.timeSeparator || this.calendar(locale).dateFormat.timeSeparator;
+    }
+    if (typeof hour === 'string' && hour.indexOf(timeSeparator) === -1) {
+      timeSeparator = ':';
+    }
+
+    const date = new Date();
+    if (typeof hour === 'number') {
+      date.setHours(hour);
+      date.setMinutes(0);
+    } else {
+      const parts = hour.split(timeSeparator);
+      date.setHours(parts[0]);
+      date.setMinutes(parts[1] || 0);
+    }
+    return this.formatDate(date, options || { date: 'hour' });
   },
 
   /**

@@ -21,6 +21,7 @@ Soho.Locale.addCulture('tr-TR', {
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'd.MM.yyyy HH:mm',
       timezone: 'd.MM.yyyy HH:mm zz',
       timezoneLong: 'd.MM.yyyy HH:mm zzzz'

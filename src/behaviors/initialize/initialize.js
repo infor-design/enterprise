@@ -213,6 +213,8 @@ const PLUGIN_MAPPINGS = [
 
   ['monthview', '.monthview'],
 
+  ['weekview', '.week-view'],
+
   ['listview'],
 
   // Track Dirty

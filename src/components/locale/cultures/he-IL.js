@@ -22,6 +22,7 @@ Soho.Locale.addCulture('he-IL', {
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'H:mm:ss',
+      hour: 'H:mm',
       datetime: 'dd/MM/yyyy H:mm',
       timezone: 'dd/MM/yyyy H:mm zz',
       timezoneLong: 'dd/MM/yyyy H:mm zzzz'
