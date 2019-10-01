@@ -452,6 +452,7 @@ ApplicationMenu.prototype = {
       // eslint-disable-next-line
       this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
+      document.body.classList.add('application-menu-is-open');
     }
 
     if (breakpoints.isBelow(this.settings.breakpoint)) {
@@ -543,6 +544,7 @@ ApplicationMenu.prototype = {
     this.timeout = setTimeout(close, 300);
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
+    document.body.removeClass('application-menu-is-open');
     $(document).off('click.applicationmenu');
   },
 
