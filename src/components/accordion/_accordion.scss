@@ -1,48 +1,8 @@
 // New Accordion Style
 //========================================================
 
-@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
-  > a {
-    padding-left: $a-padding;
-  }
-
-  > .icon,
-  > [class^='btn'] {
-    margin-left: $icon-margin;
-
-    + a {
-      padding-left: 0;
-      width: calc(100% - #{$width});
-    }
-  }
-
-  &.list-item {
-    &::before {
-      padding-left: $li-padding;
-    }
-
-    a {
-      padding-left: 0;
-      width: calc(100% - #{$width});
-    }
-  }
-}
-
-@mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
-  .accordion-content {
-    padding-left: $leftPadding;
-  }
-
-  &.has-icons {
-    .accordion-header.no-icon > a {
-      padding-left: $iconLinkPadding;
-    }
-
-    .accordion-content {
-      padding-left: $iconContentPadding;
-    }
-  }
-}
+@import 'accordion-mixins';
+@import '../button/button-chevron';
 
 /* stylelint-disable max-nesting-depth,selector-max-compound-selectors */
 
@@ -263,11 +223,17 @@
     .accordion-pane {
       background-color: $accordion-pane-bg-color;
 
-      // Visible accordion panes force a border to show up on the next accordion header for visual separation
+      // Visible accordion panes force a border to show up on the next
+      // accordion header for visual separation
       &.is-expanded {
-        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-header,
         + .accordion-content {
           border-top-color: $accordion-alternate-border-color;
+
+          &.is-focused,
+          &.is-selected {
+            border-top-color: transparent;
+          }
         }
       }
 
@@ -417,9 +383,16 @@
 
         // Visible accordion panes force a border to show up on the next accordion header for visual separation
         &.is-expanded {
-          + .accordion-header:not(.is-focused):not(.is-selected),
+          + .accordion-header,
           + .accordion-content {
             border-top-color: $accordion-inverse-border-color;
+          }
+
+          + .accordion-header {
+            &.is-focused,
+            &.is-selected {
+              border-top-color: transparent;
+            }
           }
         }
 
@@ -674,9 +647,14 @@
   &.is-expanded {
     padding: 0;
 
-    + .accordion-header:not(.is-focused):not(.is-selected),
+    + .accordion-header,
     + .accordion-content {
       border-top-color: $accordion-border-color;
+
+      &.is-focused,
+      &.is-selected {
+        border-top-color: transparent;
+      }
     }
   }
 
