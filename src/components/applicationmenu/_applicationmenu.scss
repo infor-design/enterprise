@@ -1,6 +1,8 @@
 // Application Menu
 //================================================== //
 
+@import '../accordion/accordion';
+
 body.is-open-touch {
   height: 100vh;
   overflow: hidden;
@@ -212,20 +214,20 @@ body.is-open-touch {
     width: auto;
 
     &::placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-webkit-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-moz-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
   }
 

@@ -215,19 +215,6 @@ Accordion.prototype = {
       this.element.addClass('has-icons');
     }
 
-    // Setup correct ARIA for accordion panes, and auto-collapse them
-    panes.each(function addPaneARIA() {
-      const pane = $(this);
-      const header = pane.prev('.accordion-header');
-
-      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
-
-      if (!self.isExpanded(header)) {
-        pane.data('ignore-animation-once', true);
-        self.collapse(header, false);
-      }
-    });
-
     // Expand to the current accordion header if we find one that's selected
     if (isGlobalBuild && !this.element.data('updating')) {
       let targetsToExpand = headers.filter('.is-selected, .is-expanded');
@@ -245,6 +232,19 @@ Accordion.prototype = {
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
+
+    // Setup correct ARIA for accordion panes, and auto-collapse them
+    panes.each(function addPaneARIA() {
+      const pane = $(this);
+      const header = pane.prev('.accordion-header');
+
+      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
+
+      if (!self.isExpanded(header)) {
+        pane.data('ignore-animation-once', true);
+        self.collapse(header, false);
+      }
+    });
 
     // Retain an internal storage of available filtered accordion headers.
     if (!noFilterReset) {
@@ -357,7 +357,8 @@ Accordion.prototype = {
         self.element.trigger('drilldown', [header[0]]);
       }
     } else {
-      anchor.focus();
+      self.orignalSelection = anchor;
+      self.focusOriginalType(header);
     }
 
     /**
@@ -422,7 +423,7 @@ Accordion.prototype = {
     if (pane.length) {
       this.toggle(header);
       this.select(header);
-      expander.focus();
+      this.focusOriginalType(header);
       return;
     }
 
@@ -753,7 +754,8 @@ Accordion.prototype = {
         }
       });
 
-      pane.addClass('is-expanded');
+      header.add(pane).addClass('is-expanded');
+      header.children('a').attr('aria-expanded', 'true');
 
       /**
       * Fires when expanding a pane is initiated.
@@ -777,7 +779,6 @@ Accordion.prototype = {
         if (e) {
           e.stopPropagation();
         }
-        header.children('a').attr('aria-expanded', 'true');
         pane.triggerHandler('afterexpand', [a]);
         self.element.trigger('afterexpand', [a]);
         $.when(...expandDfds, ...collapseDfds).done(() => {
@@ -861,7 +862,7 @@ Accordion.prototype = {
       expander.children('.audible').text(Locale.translate('Expand'));
     }
 
-    pane.removeClass('is-expanded');
+    header.add(pane).removeClass('is-expanded');
     a.attr('aria-expanded', 'false');
 
     if (closeChildren) {
@@ -1174,18 +1175,17 @@ Accordion.prototype = {
   },
 
   /**
-  * Selects an Accordion Header, then focuses either an expander button or an anchor.
+  * Focuses an accordion header by either its anchor, or its optional expander button.
   * Governed by the property "this.originalSelection".
   * @param {object} header - a jQuery object containing an Accordion header.
   * @returns {void}
   */
   focusOriginalType(header) {
-    // this.select(header.children('a'));
-
-    if (this.originalSelection.is('.btn') && header.children('.btn').length) {
-      header.children('.btn').focus();
+    const btns = header.children('[class*="btn"]');
+    if (this.originalSelection.is('[class*="btn"]') && btns.length) {
+      btns.first()[0].focus();
     } else {
-      header.children('a').focus();
+      header.children('a')[0].focus();
     }
   },
 
