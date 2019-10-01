@@ -1,12 +1,18 @@
 // Application Menu
 //================================================== //
 
-body.application-menu-is-open {
-  position: fixed;
+body.is-open-touch {
+  height: 100vh;
   overflow: hidden;
+  position: fixed;
   top: 0;
   width: 100vw;
-  height: 100vh;
+
+  .application-menu {
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .application-menu {
@@ -20,13 +26,12 @@ body.application-menu-is-open {
   color: $theme-color-palette-white;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
   width: $application-menu-width;
-  -webkit-overflow-scrolling: touch;
   z-index: 500;
 
   &.is-open {
