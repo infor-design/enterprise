@@ -454,7 +454,7 @@ charts.handleElementClick = function (line, series, settings) {
   if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
-    selector.on('click').call(selector.node(), selector.datum(), idx, true);
+    selector.dispatch('click');
   }
 
   if (elem.selectionObj) {
@@ -583,8 +583,8 @@ charts.setSelectedElement = function (o) {
           }
 
           if (isBar) {
-            if (thisData[0][o.i]) {
-              thisData = thisData[0][o.i];
+            if (thisData[i][o.i]) {
+              thisData = thisData[i][o.i];
             }
 
             if (thisData[o.i] && thisData[o.i][i]) {
@@ -594,9 +594,13 @@ charts.setSelectedElement = function (o) {
             if (thisData[i] && thisData[i][o.i]) {
               thisData = thisData[i][o.i];
             }
+          } else if (isStacked && !isSingle) {
+            if (thisData[thisGroupId] && thisData[thisGroupId].data[i]) {
+              thisData = thisData[thisGroupId].data[i];
+            }
           } else {
-            if (thisData[0].data[o.i]) {
-              thisData = thisData[0].data[o.i];
+            if (thisData[i].data[o.i]) {
+              thisData = thisData[i].data[o.i];
             }
 
             if (thisData[o.i] && thisData[o.i].data[i]) {
