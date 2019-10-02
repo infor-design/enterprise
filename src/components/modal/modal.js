@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { Environment as env } from '../../utils/environment';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
@@ -775,6 +776,10 @@ Modal.prototype = {
       let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
       thisElem.keepFocus();
 
+      if (env.os.name === 'ios') {
+        $('body').addClass('has-modal-open');
+      }
+
       /**
       * Fires when the modal opens.
       * @event open
@@ -1023,6 +1028,10 @@ Modal.prototype = {
       $('body').removeClass('modal-engaged');
       $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
       $('.overlay').remove();
+    }
+
+    if (env.os.name === 'ios') {
+      $('body').removeClass('has-modal-open');
     }
 
     // Fire Events
