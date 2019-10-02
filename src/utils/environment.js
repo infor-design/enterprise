@@ -28,9 +28,15 @@ const Environment = {
    */
   set() {
     $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
+
+    // Set the viewport meta tag to limit scaling
+    this.viewport = document.querySelector('meta[name=viewport]');
+    if (this.viewport) {
+      this.viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
+    }
+
     this.addBrowserClasses();
     this.addGlobalResize();
-    this.addGlobalEvents();
     this.addDeviceSpecs();
   },
 
@@ -253,91 +259,6 @@ const Environment = {
 
     // Also detect whenenver a load or orientation change occurs
     $(window).on('orientationchange load', () => breakpoints.compare());
-  },
-
-  /**
-   * Sets up global UI-specific event handlers
-   * @returns {void}
-   */
-  addGlobalEvents() {
-    const self = this;
-
-    /*
-    this.globalMouseActive = 0;
-    this.globalTouchActive = 0;
-
-    // At the time the environment is setup, the `<body>` tag may not yet exist.
-    $(document).ready(function () {
-      // Detect mouse/touch events on the body to help scrolling detection along
-      $('body')
-        .on(`mousedown.${UTIL_NAME}`, () => {
-          ++this.globalMouseActive;
-        })
-        .on(`mouseup.${UTIL_NAME}`, () => {
-          --this.globalMouseActive;
-        })
-        .on(`touchstart.${UTIL_NAME}`, () => {
-          ++this.globalTouchActive;
-        })
-        .on(`touchend.${UTIL_NAME}`, () => {
-          --this.globalTouchActive;
-        });
-
-      // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
-      // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
-      // class, only in iOS environments
-      $(window).on(`scroll.${UTIL_NAME}`, (e) => {
-        if (self.os.name !== 'ios' ||
-          (document.body.className.indexOf('no-scroll') === -1 &&
-          document.body.className.indexOf('modal-engaged') === -1)) {
-          return true;
-        }
-
-        // If a mouse button or touch is still active, continue as normal
-        if (this.globalTouchActive || this.globalMouseActive) {
-          return true;
-        }
-
-        e.preventDefault();
-        if (document.body.scrollTop > 0) {
-          document.body.scrollTop = 0;
-        }
-        return false;
-      });
-
-      // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
-      // Some components like Dropdown have this feature built in on their specified elements.
-      // This particular setup prevents zooming on input fields not tied to a component wrapper.
-      const zoomDetectionElems = ['INPUT', 'TEXTAREA'];
-
-      $('body').on(`focusin.${UTIL_NAME}`, 'input, textarea', (e) => {
-        const target = e.target;
-        if (target.className.indexOf('dropdown-search') > -1) {
-          return;
-        }
-
-        if (self.os.name === 'ios') {
-          $('head').triggerHandler('disable-zoom');
-        }
-      }).on(`focusout.${UTIL_NAME}`, 'input, textarea', (e) => {
-        const target = e.target;
-        if (target.className.indexOf('dropdown-search') > -1) {
-          return;
-        }
-
-        // If focus is on another elem that should not enable zooming, don't
-        // enable it.
-        const activeElem = document.activeElement;
-        if (zoomDetectionElems.indexOf(activeElem.tagName) > -1) {
-          return;
-        }
-
-        if (self.os.name === 'ios') {
-          $('head').triggerHandler('enable-zoom');
-        }
-      });
-    });
-    */
   },
 
   /**
