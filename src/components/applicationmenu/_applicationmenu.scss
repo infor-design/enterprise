@@ -2,7 +2,20 @@
 //================================================== //
 
 body.is-open-touch {
+  // height: 100vh;
   overflow: hidden;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // width: 100vw;
+
+  // .application-menu {
+  //   height: 100vh;
+  //   overflow-y: scroll;
+  //   /* stylelint-disable */
+  //   -webkit-overflow-scrolling: touch;
+  //   /* stylelint-enable */
+  // }
 }
 
 .application-menu {
