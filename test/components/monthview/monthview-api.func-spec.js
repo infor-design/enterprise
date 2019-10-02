@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-describe('Monthview API', () => {
+fdescribe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;
@@ -114,6 +114,7 @@ describe('Monthview API', () => {
   });
 
   it('Should move to next month and back', () => {
+    debugger;
     document.body.querySelector('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');
@@ -157,6 +158,7 @@ describe('Monthview API', () => {
   });
 
   it('Should move to next month and back to today', () => {
+    debugger;
     document.body.querySelector('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');

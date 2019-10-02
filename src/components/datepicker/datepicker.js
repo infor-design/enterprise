@@ -79,6 +79,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -126,7 +127,8 @@ const DATEPICKER_DEFAULTS = {
   useUTC: false,
   autoSize: false,
   hideButtons: false,
-  showToday: true
+  showToday: true,
+  onOpenCalendar: null
 };
 
 function DatePicker(element, settings) {

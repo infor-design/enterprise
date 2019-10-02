@@ -55,7 +55,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-fdescribe('Locale API', () => {
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   it('Should be possible to preset culturesPath', () => {
@@ -200,6 +200,13 @@ fdescribe('Locale API', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
+    Locale.set('en-US');
+  });
+
+  it('Should format year in da-DK', () => {
+    Locale.set('da-DK');
+
+    expect(Locale.formatDate(new Date(2019, 3, 1), { date: 'year' })).toEqual('april 2019');
     Locale.set('en-US');
   });
 

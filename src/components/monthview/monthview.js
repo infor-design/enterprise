@@ -4,6 +4,7 @@ import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
+import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
 
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
@@ -29,7 +30,7 @@ const COMPONENT_NAME_DEFAULTS = {
     { name: 'Public Holiday', color: '#76B051', dates: [] },
     { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
   ],
-  hideDays: false,
+  hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
   yearsBack: 4,
@@ -169,26 +170,6 @@ MonthView.prototype = {
         <span>${Locale.translate('NextMonth', { locale: this.locale.name })}</span>
       </button>`;
 
-    let monthYearPaneButton = `<button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
-        <span class="month">november</span>
-        <span class="year">2015</span>
-        <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-        <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-      </button>`;
-
-    if (this.settings.hideDays) {
-      monthYearPaneButton = '';
-    }
-
-    this.header = $('' +
-      `<div class="monthview-header">
-        ${this.settings.showMonthYearPicker ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
-        ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-      </div>`);
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
@@ -266,18 +247,10 @@ MonthView.prototype = {
     }
 
     // Reconfigure the header
+    // TODO
+    this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
     if (this.settings.headerStyle === 'full') {
-      this.header = $('' +
-        `<div class="monthview-header full">
-          ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-          <span class="monthview-datepicker">
-            <span class="hidden month"></span><span class="hidden year"></span>
-            <input aria-label="${Locale.translate('Today', { locale: this.locale.name })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
-          </span>
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
-        </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
-      this.todayLink = this.header.find('.hyperlink.today');
     } else if (this.settings.showToday) {
       this.header.find('.btn-icon.prev').before(`<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>`);
     }
@@ -292,16 +265,17 @@ MonthView.prototype = {
     // Add Legend
     this.addLegend();
 
-    if (this.settings.headerStyle === 'full') {
-      this.monthPicker.datepicker({
-        autoSize: true,
-        dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
-        locale: this.settings.locale,
-        showMonthYearPicker: true,
-        onOpenCalendar: () => this.currentDate
-      });
-      this.header.find('button, a').hideFocus();
-    }
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+      onOpenCalendar: () => this.currentDate,
+      locale: this.settings.locale,
+      year: this.currentYear,
+      month: this.currentMonth,
+      showToday: this.settings.showToday,
+      isAlternate: this.settings.headerStyle !== 'full',
+      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false
+    });
 
     this.handleEvents();
     return this;
@@ -409,14 +383,8 @@ MonthView.prototype = {
       this.header.find('.year').insertBefore(this.header.find('.month'));
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year', locale: this.locale.name }));
-      this.monthPicker.prev('.year').text(year);
-      this.monthPicker.prev().prev('.month').text(month);
-
-      if (this.monthPicker.data('datepicker')) {
-        this.monthPicker.data('datepicker').setSize();
-      }
+    if (s.headerStyle === 'full' && this.calendarToolbarAPI) {
+      this.calendarToolbarAPI.setInternalDate(new Date(year, month, 1));
     }
 
     this.appendMonthYearPicker(month, year);
@@ -920,14 +888,13 @@ MonthView.prototype = {
         });
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.off('change.monthview').on('change.monthview', function () {
-        const picker = $(this).data('datepicker');
-        self.selectDay(picker.currentDate, false, true);
-      });
-
-      this.todayLink.off('click.monthview').on('click.monthview', () => {
-        this.selectToday();
+    if (this.calendarToolbarEl) {
+      this.calendarToolbarEl.off('change-date.monthview').on('change-date.monthview', (e, args) => {
+        if (args.isToday) {
+          this.selectToday();
+          return;
+        }
+        this.selectDay(args.selectedDate, false, true);
       });
     }
 

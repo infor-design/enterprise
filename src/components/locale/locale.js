@@ -587,7 +587,7 @@ const Locale = {  // eslint-disable-line
     }
 
     // PM
-    if (cal) {
+    if (showDayPeriods && cal) {
       ret = ret.replace(' a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
       if (ret.indexOf('a') === 0) {
         ret = ret.replace('a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);

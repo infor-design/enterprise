@@ -38,34 +38,6 @@
 
     .monthview-header {
       height: 46px;
-
-      button {
-        top: 9px;
-      }
-
-      .datepicker {
-        margin-top: 5px;
-        padding-bottom: 6px;
-        padding-top: 8px;
-
-        + .icon {
-          top: 7px !important;
-        }
-      }
-
-      .today {
-        top: -1px;
-      }
-
-      #calendar-view-changer + .dropdown-wrapper {
-        float: right;
-        line-height: normal;
-        position: relative;
-        right: 15px;
-        text-indent: 0;
-        top: 5px;
-        width: 105px;
-      }
     }
   }
 

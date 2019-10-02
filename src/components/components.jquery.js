@@ -16,6 +16,7 @@ import './blockgrid/blockgrid.jquery';
 import './busyindicator/busyindicator.jquery';
 import './charts/charts.jquery';
 import './calendar/calendar.jquery';
+import './calendar-toolbar/calendar-toolbar.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';

@@ -94,18 +94,6 @@
 .monthview-popup.popover {
   max-width: inherit;
 
-  .hyperlink.today {
-    position: absolute;
-    right: 85px;
-    text-decoration: none;
-    top: 19px;
-
-    &::after {
-      left: 8px;
-      width: 100%;
-    }
-  }
-
   .tooltip-content {
     padding: 0;
   }
@@ -169,7 +157,7 @@ html[dir='rtl'] {
   }
 }
 
-// IE Hack
+// IE Hack TODO
 .ie11 {
   .datepicker + .icon {
     background-color: rgba($theme-color-palette-white, 0);
@@ -182,18 +170,10 @@ html[dir='rtl'] {
       position: relative;
       top: 7px;
     }
-
-    .monthview-header {
-      margin-bottom: -8px;
-      margin-top: 12px;
-
-      button {
-        top: 4px;
-      }
-    }
   }
 }
 
+// TODO
 .ie-edge {
   .monthview .btn-monthyear-pane {
     margin-left: 10px;

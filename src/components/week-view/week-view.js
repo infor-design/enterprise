@@ -120,8 +120,8 @@ WeekView.prototype = {
       let halfHourRow = '<tr class="week-view-half-hour-row"><td><div class="week-view-cell-wrapper"></div></td>';
 
       for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) { //eslint-disable-line
-        weekRow += `<td><div class="week-view-cell-wrapper">&nbsp;</div></td>`;
-        halfHourRow += `<td><div class="week-view-cell-wrapper">&nbsp;</div></td>`;
+        weekRow += '<td><div class="week-view-cell-wrapper">&nbsp;</div></td>';
+        halfHourRow += '<td><div class="week-view-cell-wrapper">&nbsp;</div></td>';
       }
       weekRow += '</tr>';
       halfHourRow += '</tr>';
