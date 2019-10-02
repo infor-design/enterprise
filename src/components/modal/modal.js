@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { Environment as env } from '../../utils/environment';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
+import { environment as env } from '../../utils/environment';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';

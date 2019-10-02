@@ -53,7 +53,7 @@ Zoom.prototype = {
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
     }).on('enable-zoom', () => {
-      self.enableZoom();
+      self.enableZoomOnDelay();
     }).on('disable-zoom', () => {
       self.disableZoom();
     });
@@ -65,39 +65,52 @@ Zoom.prototype = {
 
     // Setup conditional events for all elements that need it.
     this.body.on('touchstart.zoomdisabler', 'input, label', () => {
-      if (self.noZoomTimeout) {
-        return;
-      }
-
       self.disableZoom();
     }).on('touchend.zoomdisabler', 'input, label', () => {
-      if (self.noZoomTimeout) {
-        clearTimeout(self.noZoomTimeout);
-        self.noZoomTimeout = null;
-      }
-      self.noZoomTimeout = setTimeout(() => {
-        self.noZoomTimeout = null;
-        self.enableZoom();
-      }, 600);
+      self.enableZoomOnDelay();
     });
 
     return this;
   },
 
   /**
+   * @private
+   */
+  enableZoomOnDelay() {
+    if (this.noZoomTimeout) {
+      clearTimeout(this.noZoomTimeout);
+      this.noZoomTimeout = null;
+    }
+
+    this.noZoomTimeout = setTimeout(() => {
+      this.noZoomTimeout = null;
+      this.enableZoom();
+    }, 600);
+  },
+
+  /**
   * Enable zoom by un-setting the meta tag.
   */
   enableZoom() {
+    if (!this.disabled) {
+      return;
+    }
+
     // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
-    this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=1');
+    this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
   },
 
   /**
   * Disable zoom by setting the meta tag.
   */
   disableZoom() {
+    if (this.noZoomTimeout) {
+      return;
+    }
+
     // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
     this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
+    this.disabled = true;
   },
 
   /**

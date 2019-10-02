@@ -5,24 +5,28 @@
 
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
-			<div class="field">
-				<label for="subject">Problem</label>
-				<input type="text" id="subject" name="subject" />
-			</div>
+			<div class="row form-responsive no-indent">
+				<div class="twelve columns">
+					<div class="field">
+						<label for="subject">Problem</label>
+						<input type="text" id="subject" name="subject" />
+					</div>
 
-      <div class="field">
-        <label for="location" class="label">Location</label>
-        <select id="location" name="location" class="dropdown">
-          <option value="N">North</option>
-          <option value="S">South</option>
-          <option value="E">East</option>
-          <option value="W">West</option>
-        </select>
-      </div>
+		      <div class="field">
+		        <label for="location" class="label">Location</label>
+		        <select id="location" name="location" class="dropdown">
+		          <option value="N">North</option>
+		          <option value="S">South</option>
+		          <option value="E">East</option>
+		          <option value="W">West</option>
+		        </select>
+		      </div>
 
-			<div class="field">
-				<label for="notes-max">Notes (maxlength)</label>
-				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+					<div class="field">
+						<label for="notes-max">Notes (maxlength)</label>
+						<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -54,7 +58,8 @@ var modals = {
         },
         validate: false,
         isDefault: true
-      }]
+      }],
+			fullsize: 'responsive'
     }, opt);
 
     $('body').modal(opt);
