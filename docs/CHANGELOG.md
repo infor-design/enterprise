@@ -29,6 +29,7 @@
 - `[Datagrid]` Fixed keyword search so that it will again work with client side paging. ([#2797](https://github.com/infor-design/enterprise/issues/2797))
 - `[Datepicker]` Moved the today button to the datepicker header and adding a setting to hide it if wanted. ([#2704](https://github.com/infor-design/enterprise/issues/2704))
 - `[Datepicker]` Fixed a bug in datepicker where the destroy method does not readd the masking functionality. [2832](https://github.com/infor-design/enterprise/issues/2832))
+- `[Field Options]` Fixed an issue where the option menu is misaligned in full length input field in uplift theme. ([#2765](https://github.com/infor-design/enterprise/issues/2765))
 - `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
 - `[Icons]` Added and updated the following icons: icon-bed, icon-user-clock, icon-phone-filled, icon-phone-empty. ([#419](https://github.com/infor-design/design-system/issues/419))
 - `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
