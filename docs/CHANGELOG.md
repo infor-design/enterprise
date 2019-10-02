@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.21.2
+
+### v4.21.2 Fixes
+
+- `[Locale/Initialize]` Fixed an issue where opening some components like Contextual Action Panel would change the current locale because it calls initialize when it loads. ([#2873](https://github.com/infor-design/enterprise/issues/2873))
+
 ## v4.21.1
 
 ### v4.21.1 Fixes
