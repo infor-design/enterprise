@@ -154,7 +154,6 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
 describe('Contextual Action Panel Locale Tests', () => {
   it('should show the CAP in de-DE locale', async () => {
     await utils.setPage('/components/contextualactionpanel/test-locale?locale=de-DE');
-    const windowSize = await browser.driver.manage().window().getSize();
     await element(by.id('trigger-1')).click();
     await browser.driver.sleep(config.sleepLonger);
 
@@ -166,7 +165,6 @@ describe('Contextual Action Panel Locale Tests', () => {
 
   it('should show the CAP in default locale', async () => {
     await utils.setPage('/components/contextualactionpanel/test-locale');
-    const windowSize = await browser.driver.manage().window().getSize();
     await element(by.id('trigger-1')).click();
     await browser.driver.sleep(config.sleepLonger);
 
