@@ -1743,7 +1743,7 @@ PopupMenu.prototype = {
           tracker = documentE.pageX;
         });
       }
-    }).on('mouseleave.popupmenu', '.submenu', function (thatE) {
+    }).on('mouseleave.popupmenu', '.submenu', function () {
       $(document).off(`mousemove.popupmenu.${this.id}`);
 
       menuToClose = $(this).find('ul');
