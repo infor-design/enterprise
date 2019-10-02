@@ -29,6 +29,26 @@
       .toolbar-section {
         &.title {
           padding-left: 15px;
+
+          span {
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            white-space: nowrap;
+
+            @media (min-width: $breakpoint-big-phone + 1) {
+              width: 150px;
+            }
+
+            @media (min-width: $breakpoint-phablet + 1) {
+              width: 250px;
+            }
+
+            @media (max-width: $breakpoint-big-phone) {
+              display: none;
+            }
+          }
         }
       }
     }

@@ -526,3 +526,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+.ios {
+  .has-modal-open {
+    [aria-hidden='true'],
+    [aria-hidden='true'] * {
+      overflow: hidden;
+    }
+  }
+}
