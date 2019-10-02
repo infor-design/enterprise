@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.23.0
+
+### v4.23.0 Deprecation
+
+### v4.23.0 Features
+
+- `[Tabs-Vertical]` Added the ability to personalize Vertical Tabs in accordance with theming. ([#2824](https://github.com/infor-design/enterprise/issues/2824))
+
+### v4.23.0 Fixes
+
+### v4.23.0 Chores & Maintenance
+
 ## v4.22.0
 
 ### v4.22.0 Deprecation
