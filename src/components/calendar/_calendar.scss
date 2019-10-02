@@ -272,9 +272,10 @@
       display: inline-block;
       font-size: $theme-size-font-sm;
       left: 5px;
+      overflow-wrap: break-word;
       position: relative;
       top: -4px;
-      width: 145px;
+      width: 130px;
     }
 
     .calendar-upcoming-status-text {
@@ -408,6 +409,14 @@
 
     &.graphite {
       background-color: $theme-color-palette-graphite-60;
+    }
+  }
+}
+
+.calendar-event-modal {
+  .field {
+    input.spinbox {
+      width: calc(100% - 66px) !important;
     }
   }
 }

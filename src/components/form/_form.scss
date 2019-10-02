@@ -64,6 +64,12 @@
   }
 }
 
+// for uplift light theme overrides
+.theme-uplift-light .field .checkbox-label,
+.theme-uplift-light .field .checkbox > label {
+  margin-top: 40px;
+}
+
 html[dir='rtl'] {
   .form-responsive {
     .colorpicker-container {
