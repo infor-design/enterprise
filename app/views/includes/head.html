@@ -79,7 +79,7 @@
           $.get('/api/icons?theme=' + shortThemeName, function(htmlStr) {
             htmlStr = htmlStr.replace('</div>', '');
             htmlStr = htmlStr.replace('<div class="svg-icons">', '');
-            $('div.svg.hidden:not(.patterns)').empty().append(htmlStr);
+            $('div.svg-icons').empty().append(htmlStr);
           },'html');
         }
       });
