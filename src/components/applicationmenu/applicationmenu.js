@@ -670,11 +670,28 @@ ApplicationMenu.prototype = {
 
     $(window).off('scroll.applicationmenu');
     $('body').off('resize.applicationmenu');
-    $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.element.find('.expandable-area').off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
+    $(document).off([
+      'click.applicationmenu',
+      'open-applicationmenu',
+      'close-applicationmenu',
+      'dismiss-applicationmenu',
+      'keydown.applicationmenu'
+    ].join(' '));
 
-    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu afterexpand.applicationmenu aftercollapse.applicationmenu');
+    this.element.find('.expandable-area').off([
+      'beforeexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
+    this.accordion.off([
+      'blur.applicationmenu',
+      'selected.applicationmenu',
+      'followlink.applicationmenu',
+      'afterexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -683,7 +700,10 @@ ApplicationMenu.prototype = {
     }
 
     if (this.switcherPanel) {
-      this.switcherPanel.off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
+      this.switcherPanel.off([
+        'beforeexpand.applicationmenu',
+        'aftercollapse.applicationmenu'
+      ].join(' '));
     }
 
     if (this.searchfield && this.searchfield.length) {
