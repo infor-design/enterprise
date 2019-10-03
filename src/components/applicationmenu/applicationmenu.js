@@ -769,6 +769,8 @@ ApplicationMenu.prototype = {
       self.openMenu(undefined, true);
     }).on('close-applicationmenu', () => {
       self.closeMenu();
+    }).on('dismiss-applicationmenu', () => {
+      self.handleDismissOnClick();
     });
 
     $(window).on('scroll.applicationmenu', () => {
