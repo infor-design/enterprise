@@ -142,6 +142,47 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Set original dom position containment for given menu in case need to move
+   * @private
+   * @param {jQuery[]} menu the menu object
+   * @returns {void}
+   */
+  setMenuOrgContainment(menu) {
+    if (!menu || !menu.length) {
+      return;
+    }
+    const parent = menu.parent();
+    if (!parent.is('body')) {
+      this.menuOrgContainment = { parent, index: parent.children().index(menu) };
+    }
+  },
+
+  /**
+   * Insert the given element to arbitrarily based on containment with parent and index
+   * @private
+   * @param {jQuery[]} elem the element to insert
+   * @param {object} containment the original dom position containment
+   * @returns {void}
+   */
+  insertAtContainment(elem, containment) {
+    const isEl = el => el && el.length;
+    containment = containment || this.menuOrgContainment || {};
+    if (isEl(elem) && isEl(containment.parent)) {
+      let index = containment.index;
+      const parent = containment.parent;
+      const lastIndex = parent.children().length;
+      if (index < 0) {
+        index = Math.max(0, lastIndex + 1 + index);
+      }
+      if (index < lastIndex) {
+        parent.children().eq(index).before(elem);
+      } else {
+        parent.append(elem);
+      }
+    }
+  },
+
+  /**
    * Add markip including Aria
    * @private
    * @returns {void}
@@ -162,6 +203,7 @@ PopupMenu.prototype = {
             this.menu.data('trigger', this.element);
             triggerId = this.menu.data('trigger')[0].id;
             duplicateMenu = this.menu.clone();
+            this.setMenuOrgContainment(duplicateMenu);
             duplicateMenu.detach().appendTo('body');
 
             // add data-id attr to menus
@@ -210,6 +252,7 @@ PopupMenu.prototype = {
     // to prevent containment issues. (Now a Preference)
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
+      this.setMenuOrgContainment(this.menu);
       this.menu.detach().appendTo('body');
       if (this.settings.duplicateMenu) {
         this.menu.attr('id', `${this.settings.menu}-original`);
@@ -2236,12 +2279,14 @@ PopupMenu.prototype = {
 
     // Place the menu back where it came from while cleaning up.
     // Get an accurate target to place the menu back where it came from
-    let insertTarget = this.element;
     const searchfield = this.element.parent().children('.searchfield');
     if (searchfield.length) {
-      insertTarget = searchfield.first();
+      this.menu.insertAfter(searchfield.first());
+    } else if (this.menuOrgContainment) {
+      this.insertAtContainment(this.menu);
+    } else {
+      this.menu.insertAfter(this.element);
     }
-    this.menu.insertAfter(insertTarget);
 
     // Cleanup menu items
     this.menu.find('.submenu').children('a').each((i, item) => {
