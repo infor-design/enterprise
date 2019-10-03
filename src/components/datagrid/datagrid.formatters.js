@@ -327,8 +327,8 @@ const formatters = {
   Actions(row, cell, value, col) {
     // Render an Action Formatter
     return (
-      `<button type="button" class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="${col.menuId} +'">
-        <span class="audible">${col.title}</span>
+      `<button type="button" class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="${col.menuId}">
+        <span class="audible">${col.title || Locale.translate('More')}</span>
         ${$.createIcon({ icon: 'more' })}
       </button>`
     );
