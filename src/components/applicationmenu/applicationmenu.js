@@ -452,6 +452,9 @@ ApplicationMenu.prototype = {
       // eslint-disable-next-line
       this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
+      if (env.features.touch) {
+        $('body').addClass('is-open-touch');
+      }
     }
 
     if (breakpoints.isBelow(this.settings.breakpoint)) {
@@ -544,6 +547,10 @@ ApplicationMenu.prototype = {
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
     $(document).off('click.applicationmenu');
+
+    if (env.features.touch) {
+      $('body').removeClass('is-open-touch');
+    }
   },
 
   /**

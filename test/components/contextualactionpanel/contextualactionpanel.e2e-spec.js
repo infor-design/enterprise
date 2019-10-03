@@ -150,3 +150,27 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });
+
+describe('Contextual Action Panel Locale Tests', () => {
+  it('should show the CAP in de-DE locale', async () => {
+    await utils.setPage('/components/contextualactionpanel/test-locale?locale=de-DE');
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    const value = await element(by.id('notes')).getAttribute('value');
+    expect(value.replace(/[\s\r\n]+/g, '')).toEqual('Locale:de-DELang:deNumber:10.11.2019Date:1.000,00');
+    await utils.checkForErrors();
+  });
+
+  it('should show the CAP in default locale', async () => {
+    await utils.setPage('/components/contextualactionpanel/test-locale');
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    const value = await element(by.id('notes')).getAttribute('value');
+    expect(value.replace(/[\s\r\n]+/g, '')).toEqual('Locale:en-USLang:enNumber:11/10/2019Date:1,000.00');
+    await utils.checkForErrors();
+  });
+});
