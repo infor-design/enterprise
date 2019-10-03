@@ -2165,8 +2165,8 @@ describe('Datagrid on modal with no default size', () => {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+      await element(by.id('h1-title')).click();
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toBeLessThan(0.2);
     });
   }
 });

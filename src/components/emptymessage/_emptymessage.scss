@@ -21,6 +21,7 @@
 .datagrid {
   &.has-filterable-columns .empty-message {
     top: calc(50% + 32px);
+    z-index: -1;
   }
 
   .empty-message {
