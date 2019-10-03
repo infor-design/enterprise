@@ -1620,6 +1620,13 @@ PopupMenu.prototype = {
       }
     }
 
+    // Close Application Menu, if applicable
+    const openAppMenu = document.querySelector('.application-menu.is-open');
+    if (openAppMenu instanceof HTMLElement &&
+      (!openAppMenu.contains(this.element[0]) && !openAppMenu.contains(this.menu[0]))) {
+      $(document).triggerHandler('dismiss-applicationmenu');
+    }
+
     this.element.addClass('is-open');
     this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
