@@ -3,6 +3,10 @@
 
 @import '../accordion/accordion';
 
+body.is-open-touch {
+  overflow: hidden;
+}
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
