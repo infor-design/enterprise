@@ -21,6 +21,7 @@
 
 ### v4.22.0 Fixes
 
+- `[Accordion]` Fixed a Safari bug where accordion headers would not lose focus when another accordion header was clicked. ([#2851](https://github.com/infor-design/enterprise/issues/2851))
 - `[Application Menu]` Fixed an issue where footer toolbar area was overlapping to menu content. ([#2552](https://github.com/infor-design/enterprise/issues/2552))
 - `[Application Menu]` Fixed an issue where tooltip was showing white text on white background which makes text to be unreadable. ([#2811](https://github.com/infor-design/enterprise/issues/2811))
 - `[Application Menu]` Fixed an issue on mobile where the body was scroll bouncing when dragging/scrolling in the app menu. ([#2434](https://github.com/infor-design/enterprise/issues/2434))

@@ -345,6 +345,7 @@ Accordion.prototype = {
     // If it's not a real link, try and toggle an expansion pane.
     if (pane.length) {
       self.toggle(header);
+      self.focusOriginalType(header);
       return true;
     }
 
@@ -1182,10 +1183,13 @@ Accordion.prototype = {
   */
   focusOriginalType(header) {
     const btns = header.children('[class*="btn"]');
+    this.headers.not(header).removeClass('is-focused');
+
     if (this.originalSelection.is('[class*="btn"]') && btns.length) {
       btns.first()[0].focus();
     } else {
       header.children('a')[0].focus();
+      header.addClass('is-focused').removeClass('hide-focus');
     }
   },
 
@@ -1457,6 +1461,7 @@ Accordion.prototype = {
         self.originalSelection = target;
       }
 
+      headerElems.not($(this)).removeClass('is-focused');
       if (target.is(':not(.btn)')) {
         $(this).addClass('is-focused').removeClass('hide-focus');
       }
