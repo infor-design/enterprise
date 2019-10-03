@@ -39,6 +39,7 @@
 - `[Mask]` Added an example showing how to user percent format with the locale. ([#434](https://github.com/infor-design/enterprise/issues/434))
 - `[Modal]` Fixed an issue where encoded html would not be recoded on the title. ([#246](https://github.com/infor-design/enterprise/issues/246))
 - `[Modal]` Fixed an issue where the page content behind the modal is still scrollable while the modal window is open on iOS devices. ([#2678](https://github.com/infor-design/enterprise/issues/2678))
+- `[Popupmenu]` Prevent popupmenus from closing after exit and reentry to the popupmenu submenu structure. ([#2702](https://github.com/infor-design/enterprise/issues/2702))
 - `[Swaplist]` Fixed an issue where passed data for searched items were not syncing for beforeswap event. ([#2819](https://github.com/infor-design/enterprise/issues/2819))
 - `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
 - `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
