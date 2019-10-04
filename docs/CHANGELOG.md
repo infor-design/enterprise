@@ -355,7 +355,7 @@
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
 - `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
 - `[Summary Form]` Updated to improve readability. ([#1765](https://github.com/infor-design/enterprise/issues/1765))
--- `[Targeted Achievement]` Updated to work in uplift theme. ([#2220](https://github.com/infor-design/enterprise/issues/2220))
+- `[Targeted Achievement]` Updated to work in uplift theme. ([#2220](https://github.com/infor-design/enterprise/issues/2220))
 - `[Timepicker]` Fixed an issue where AM/PM dropdown tooltip was displaying on android devices. ([#1446](https://github.com/infor-design/enterprise/issues/1446))
 - `[Timepicker]` Fixed an issue where dropdown popup was out of position on android devices. ([#2021](https://github.com/infor-design/enterprise/issues/2021))
 - `[Timepicker]` Updated the Swedish translation for Set Time. ([#2153](https://github.com/infor-design/enterprise/issues/2153))
