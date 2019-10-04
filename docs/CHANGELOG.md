@@ -60,6 +60,8 @@
 - `[Demo App]` Changed the theme switch to call the page refresh. ([#2743](https://github.com/infor-design/enterprise/issues/2743))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 
+(53 Issues Solved this release, Backlog Enterprise 342, Backlog Ng 81, 892 Functional Tests, 909 e2e Test)
+
 ## v4.21.0
 
 ### v4.21.0 Deprecation
@@ -123,7 +125,7 @@
 
 - `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
 
-(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 1056 e2e Test)
+(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 880 e2e Test)
 
 ## v4.20.0
 
