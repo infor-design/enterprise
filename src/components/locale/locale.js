@@ -110,7 +110,7 @@ const Locale = {  // eslint-disable-line
   getCulturesPath() {
     if (!this.culturesPath) {
       const scripts = document.getElementsByTagName('script');
-      const partialPathRegexp = /sohoxi(.min){0,1}(.{0,1}[a-z0-9]*).js/;
+      const partialPathRegexp = /sohoxi(.min){0,1}(.{0,1}[a-z0-9]*)\.js/;
 
       for (let i = 0; i < scripts.length; i++) {
         let src = scripts[i].src;
