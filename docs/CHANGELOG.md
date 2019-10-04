@@ -33,6 +33,7 @@
 - `[Datagrid]` Made the text all white on the targeted achievement formatter. ([#2730](https://github.com/infor-design/enterprise/issues/2730))
 - `[Datagrid]` Fixed keyword search so that it will again work with client side paging. ([#2797](https://github.com/infor-design/enterprise/issues/2797))
 - `[Datagrid]` Fixed an issue where the header and cells do not align perfectly. ([#2849](https://github.com/infor-design/enterprise/issues/2849))
+- `[Datagrid]` Fixed an issue where actions menu was not opening after reload the data. ([#2876](https://github.com/infor-design/enterprise/issues/2876))
 - `[Datepicker]` Moved the today button to the datepicker header and adding a setting to hide it if wanted. ([#2704](https://github.com/infor-design/enterprise/issues/2704))
 - `[FieldSet]` Fixed an issue where the fieldset text in chart completion overlap when resizing the browser. ([#2610](https://github.com/infor-design/enterprise/issues/2610))
 - `[Datepicker]` Fixed a bug in datepicker where the destroy method does not readd the masking functionality. [2832](https://github.com/infor-design/enterprise/issues/2832))
