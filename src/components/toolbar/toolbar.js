@@ -247,7 +247,7 @@ Toolbar.prototype = {
     const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
       trigger: 'click',
       menu: this.moreMenu,
-      attachToBody: isMobile ? true : false
+      attachToBody: isMobile
     }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
     if (popupMenuInstance) {
       this.more
