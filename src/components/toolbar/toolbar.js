@@ -244,10 +244,11 @@ Toolbar.prototype = {
     // Setup an Event Listener that will refresh the contents of the More Actions
     // Menu's items each time the menu is opened.
     const isMobile = env.os.name === 'ios';
+    const isSafari = env.browser.name === 'safari';
     const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
       trigger: 'click',
       menu: this.moreMenu,
-      attachToBody: isMobile
+      attachToBody: isMobile || isSafari
     }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
     if (popupMenuInstance) {
       this.more
