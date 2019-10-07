@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.23.0
+
+### v4.23.0 Deprecation
+
+### v4.23.0 Features
+
+### v4.23.0 Fixes
+
+- `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
+
+### v4.23.0 Chores & Maintenance
+
 ## v4.22.0
 
 ### v4.22.0 Deprecation
