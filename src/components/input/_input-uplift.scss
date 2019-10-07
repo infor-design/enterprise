@@ -44,3 +44,7 @@ html:not(.is-firefox) {
     }
   }
 }
+
+.compound-field > .checkbox-group-label {
+  margin-bottom: -13px;
+}
