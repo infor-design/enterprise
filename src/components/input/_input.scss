@@ -794,6 +794,14 @@ label,
       padding: 0 5px;
     }
   }
+
+  .field > .checkbox-label {
+    margin-top: 30px;
+  }
+
+  .field > .label + .checkbox + .checkbox-label {
+    margin-top: 9px;
+  }
 }
 
 .has-actions-wrapper {

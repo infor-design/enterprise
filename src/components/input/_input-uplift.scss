@@ -48,3 +48,8 @@ html:not(.is-firefox) {
 .compound-field > .checkbox-group-label {
   margin-bottom: -13px;
 }
+
+// Pushes down the the checkboxes in the grid (test-checkbox-in-column)
+.field > .checkbox-label {
+  margin-top: 38px;
+}
