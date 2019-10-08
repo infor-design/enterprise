@@ -50,7 +50,7 @@ html:not(.is-firefox) {
 }
 
 // Pushes down the the checkboxes in the grid (test-checkbox-in-column)
-.field > .checkbox-label {
+.field > .checkbox-label.top-margin {
   margin-top: 38px;
 }
 
