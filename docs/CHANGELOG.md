@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.23.0
+
+### v4.23.0 Deprecation
+
+### v4.23.0 Features
+
+### v4.23.0 Fixes
+
+`[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
+
+### v4.22.0 Chores & Maintenance
+
 ## v4.22.0
 
 ### v4.22.0 Deprecation
