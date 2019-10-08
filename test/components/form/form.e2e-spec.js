@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Form Tests', () => {
+describe('Form Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on compound fields', async () => {
       await utils.setPage('/components/form/test-compound-checkboxes-alignment?layout=nofrills');
@@ -32,7 +32,7 @@ fdescribe('Form Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       await utils.checkForErrors();
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-layouts')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-inputs')).toEqual(0);
     });
 
     it('Should not visual regress on checkboxes in columns', async () => {
