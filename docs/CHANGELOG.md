@@ -9,6 +9,7 @@
 ### v4.23.0 Fixes
 
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
+- `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
 
 ### v4.23.0 Chores & Maintenance
 
