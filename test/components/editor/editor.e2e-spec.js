@@ -97,7 +97,7 @@ describe('Editor dirty tracking tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should render dirty tracker', async () => {
+  xit('Should render dirty tracker', async () => {
     await element(by.css('button[data-action="bold"]')).click();
     await element(by.id('editor1')).sendKeys('Test');
 
