@@ -53,3 +53,8 @@ html:not(.is-firefox) {
 .field > .checkbox-label {
   margin-top: 38px;
 }
+
+.compound-field > .field.field-checkbox label,
+.compound-field > .field-short.field-checkbox label {
+  margin-top: 30px !important;
+}
