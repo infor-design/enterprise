@@ -561,34 +561,24 @@
 </div>
 
 <script>
-  var setColors = function () {
-    const paletteColor = document.querySelectorAll('.palette-color');
+  const paletteColor = document.querySelectorAll('.palette-color');
 
-    function valueToHex(v) {
-      const hex = v.toString(16);
-      return hex.length === 1 ?  0 + hex : hex;
-    }
-
-    function rgbToHex(r,g,b) {
-      return '#' + valueToHex(parseInt(r)) + valueToHex(parseInt(g)) + valueToHex(parseInt(b));
-    }
-
-    Array.prototype.forEach.call(paletteColor, function(color) {
-      const paletteHex = color.querySelector('.palette-hex');
-      const bgColor = window.getComputedStyle(color, null).getPropertyValue("background-color");
-      const rgbValues = bgColor.match(/\d+/g);
-
-      if (paletteHex !== null) {
-        paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
-      }
-    })
+  function valueToHex(v) {
+    const hex = v.toString(16);
+    return hex.length === 1 ?  0 + hex : hex;
   }
-  setColors();
 
-  // Change color on theme change
-  $('html').on('themechanged', function (e, a) {
-    setTimeout(function () {
-      setColors();
-    }, 250);
-  });
+  function rgbToHex(r,g,b) {
+    return '#' + valueToHex(parseInt(r)) + valueToHex(parseInt(g)) + valueToHex(parseInt(b));
+  }
+
+  Array.prototype.forEach.call(paletteColor, function(color) {
+    const paletteHex = color.querySelector('.palette-hex');
+    const bgColor = window.getComputedStyle(color, null).getPropertyValue("background-color");
+    const rgbValues = bgColor.match(/\d+/g);
+
+    if (paletteHex !== null) {
+      paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
+    }
+  })
 </script>
