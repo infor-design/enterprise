@@ -4,7 +4,6 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
-import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../mask/mask-input.jquery';
