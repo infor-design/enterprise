@@ -817,8 +817,6 @@ PopupMenu.prototype = {
     }
 
     function contextMenuHandler(e, isLeftClick) {
-
-
       if (self.keydownThenClick) {
         delete self.keydownThenClick;
         return;
