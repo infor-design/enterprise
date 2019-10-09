@@ -38,7 +38,7 @@
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
     // Url to get some data via ajax
-    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=10';
 
     // Get data and initialize
     $.getJSON(url, function(res) {
