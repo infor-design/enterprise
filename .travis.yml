@@ -66,3 +66,5 @@ stages:
     # do not run the deploy stage for Pull Request checks
     # and require the branch name to be master (note for PRs this is the base branch name)
     if: NOT type IN (pull_request) AND branch = master
+webhooks:
+  - https://outlook.office.com/webhook/a9f75c6d-a5d9-4556-9125-a5538f972afb@457d5685-0467-4d05-b23b-8f817adda47c/TravisCI/c40cbf2648c543729c0325f090430919/75c2d6d6-0ebd-4d85-be35-735b5168a29d
