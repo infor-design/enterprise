@@ -933,7 +933,7 @@ html[dir='rtl'] {
 @include respond-to(phone) {
   .column .field > .checkbox-label.top-margin,
   .columns .field > .checkbox-label.top-margin {
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     margin-top: -5px;
   }
 
