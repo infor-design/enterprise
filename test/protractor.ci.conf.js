@@ -5,10 +5,6 @@ const protractorImageComparison = require('protractor-image-comparison');
 const group = process.env.GROUP;
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS, group || 'all');
 
-if (process.env.TRAVIS_BUILD_NUMBER) {
-  console.log(`Running tests for e2e:ci group : ${group}`)
-}
-
 exports.config = {
   params: {
     theme:  process.env.ENTERPRISE_THEME || 'light'
