@@ -189,7 +189,7 @@ describe('Lookup filtering tests', () => {
     await utils.setPage('/components/lookup/example-filter-row?layout=nofrills');
   });
 
-  if('should apply a filter', async () => {
+  it('should apply a filter', async () => {
     await element(by.css('#product-lookup + .trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 

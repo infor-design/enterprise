@@ -51,7 +51,7 @@ describe('Listview example-singleselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
 
-  if('Should deselect one item on click', async () => {
+  it('Should deselect one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver

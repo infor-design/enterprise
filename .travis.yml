@@ -35,7 +35,7 @@ script:
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group1:ci; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
   - if [ $TEST_SUITE = e2e-group2 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
-  - if [ $TEST_SUITE = e2e-group2 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group1:ci; fi
+  - if [ $TEST_SUITE = e2e-group2 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group2:ci; fi
   - if [ $TEST_SUITE = e2e-group2 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
   - if [ $TEST_SUITE = e2e-group3 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
   - if [ $TEST_SUITE = e2e-group3 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group3:ci; fi
@@ -45,7 +45,7 @@ script:
 jobs:
   include:
     - stage: deploy
-      env: TEST_SUITE=e2e
+      env: TEST_SUITE=lint
       before_install: skip
       install: skip
       script: skip

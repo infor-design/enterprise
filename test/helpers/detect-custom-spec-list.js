@@ -11,24 +11,24 @@ const logger = require('../../scripts/logger');
 const types = ['functional', 'e2e'];
 const EMPTY = [];
 
-var DEFAULT_E2E_SPECS = {};
-DEFAULT_E2E_SPECS['all'] = [
+const DEFAULT_E2E_SPECS = {};
+DEFAULT_E2E_SPECS.all = [
   'behaviors/**/*.e2e-spec.js',
   'components/**/*.e2e-spec.js',
   'kitchen-sink.e2e-spec.js'
 ];
 
-DEFAULT_E2E_SPECS['group1'] = [
+DEFAULT_E2E_SPECS.group1 = [
   'components/[d]*/*.e2e-spec.js',
 ];
 
-DEFAULT_E2E_SPECS['group2'] = [
+DEFAULT_E2E_SPECS.group2 = [
   'behaviors/**/*.e2e-spec.js',
   'components/[abcefghijkl]*/*.e2e-spec.js',
   'kitchen-sink.e2e-spec.js'
 ];
 
-DEFAULT_E2E_SPECS['group3'] = [
+DEFAULT_E2E_SPECS.group3 = [
   'components/[mnopqrstuvwxyz]*/*.e2e-spec.js',
 ];
 

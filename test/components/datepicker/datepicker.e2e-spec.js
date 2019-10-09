@@ -484,7 +484,7 @@ describe('Datepicker Destroy Mask Tests', () => {
     await utils.checkForErrors();
   });
 
-  if('Should still mask after destroy', async () => {
+  it('Should still mask after destroy', async () => {
     await utils.setPage('/components/datepicker/test-mask-after-update');
     await browser.driver.sleep(config.sleep);
     const inputEl = await element(by.id('dp1'));
