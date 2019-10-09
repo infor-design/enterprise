@@ -9,7 +9,7 @@
 ### v4.23.0 Fixes
 
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
-- `[Popupmenu]` Fixed an issue where the destroy event was bubbling. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
+- `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
 
 ### v4.23.0 Chores & Maintenance
 
