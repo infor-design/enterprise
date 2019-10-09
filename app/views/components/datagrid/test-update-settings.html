@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <input type="checkbox" class="checkbox" id="is-paging" checked="true"/>
+      <label for="is-paging" class="checkbox-label" >Paging</label>
+    </div>
+    <button class="btn-secondary" type="button" id="btn-update">Update</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var isPagingEl = $('#is-paging');
+    var gridEl = $('#datagrid');
+    var columns = [];
+    var gridApi = null;
+
+
+    // Get the paging setting
+    var isPaging = function() {
+      return isPagingEl.is(':checked');
+    };
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+    // Url to get some data via ajax
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=10';
+
+    // Get data and initialize
+    $.getJSON(url, function(res) {
+      gridEl.datagrid({
+        columns: columns,
+        dataset: res.data,
+        selectable: 'multiple',
+        paging: isPaging(),
+        pagesize: 10,
+        toolbar: { title: 'Compressors', results: true, actions: true, rowHeight: true }
+      });
+
+      gridApi = gridEl.data('datagrid');
+    });
+
+    // Bind update
+    $('#btn-update').on('click', function() {
+      if (gridApi) {
+        gridApi.updated({ paging: isPaging() });
+      }
+    });
+  });
+
+</script>

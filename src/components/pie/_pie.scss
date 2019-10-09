@@ -99,14 +99,6 @@
   }
 }
 
-// Slight Nudge
-@include respond-to(phone) {
-  .chart-pie.has-right-legend .chart-legend {
-    margin: 0;
-    width: 27%;
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
   .chart-pie.has-right-legend .chart-legend-item-text {
