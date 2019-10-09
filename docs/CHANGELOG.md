@@ -9,6 +9,7 @@
 ### v4.23.0 Fixes
 
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
+- `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
 
 ### v4.23.0 Chores & Maintenance
 
