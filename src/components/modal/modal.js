@@ -1011,6 +1011,10 @@ Modal.prototype = {
       return false;
     }
 
+    if (this.isCAP) {
+      this.element.addClass('is-animating');
+    }
+
     if (this.mainContent && this.removeNoScroll) {
       this.mainContent.removeClass('no-scroll');
     }

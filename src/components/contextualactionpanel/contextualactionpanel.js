@@ -380,10 +380,6 @@ ContextualActionPanel.prototype = {
         passEvent(e);
         self.panel.removeClass('is-animating');
       })
-      .off('beforeclose.contextualactionpanel')
-      .on('beforeclose.contextualactionpanel', () => {
-        self.panel.addClass('is-animating');
-      })
       .off('close.contextualactionpanel')
       .on('close.contextualactionpanel', (e) => {
         passEvent(e);
