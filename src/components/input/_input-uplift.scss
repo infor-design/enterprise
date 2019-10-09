@@ -44,17 +44,3 @@ html:not(.is-firefox) {
     }
   }
 }
-
-.compound-field > .checkbox-group-label {
-  margin-bottom: -13px;
-}
-
-// Pushes down the the checkboxes in the grid (test-checkbox-in-column)
-.field > .checkbox-label.top-margin {
-  margin-top: 38px;
-}
-
-.compound-field > .field.field-checkbox label,
-.compound-field > .field-short.field-checkbox label {
-  margin-top: 30px !important;
-}
