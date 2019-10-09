@@ -10277,7 +10277,7 @@ Datagrid.prototype = {
     let idx = -1;
 
     for (let i = 0, data; i < dataset.length; i++) {
-      if (s.groupable) {
+      if (s.groupable && !this.originalDataset) {
         // Object.values is not supported in IE11; hence usage of Object.keys and Map
         for (let k = 0; k < Object.keys(dataset[i]).length; k++) {
           idx++;
