@@ -10883,6 +10883,10 @@ Datagrid.prototype = {
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
+    if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
+      this.pagerAPI.destroy();
+    }
+
     if (settings && settings.frozenColumns) {
       this.headerRow = undefined;
       this.element.empty();
@@ -10898,6 +10902,7 @@ Datagrid.prototype = {
     }
 
     this.render();
+    this.handlePaging();
 
     return this;
   }
