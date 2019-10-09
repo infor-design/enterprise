@@ -2587,7 +2587,7 @@ describe('Datagrid save user settings', () => {
   if (!utils.isCI() && !utils.isBS()) {
     it('Should save active page on reload', async () => {
       await element(by.css('li.pager-next .btn-icon')).click();
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
       await browser.refresh();

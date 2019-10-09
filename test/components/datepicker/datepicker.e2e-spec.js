@@ -474,18 +474,19 @@ describe('Datepicker Legend Tests', () => {
 
 describe('Datepicker Destroy Mask Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-mask-after-update');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
   });
 
   it('Should not have errors', async () => {
+    await utils.setPage('/components/datepicker/test-mask-after-update');
     await utils.checkForErrors();
   });
 
-  it('Should still mask after destroy', async () => {
-    await browser.driver.sleep(config.sleepShort);
+  if('Should still mask after destroy', async () => {
+    await utils.setPage('/components/datepicker/test-mask-after-update');
+    await browser.driver.sleep(config.sleep);
     const inputEl = await element(by.id('dp1'));
     inputEl.clear();
     inputEl.sendKeys('101020011221AM');
@@ -494,7 +495,7 @@ describe('Datepicker Destroy Mask Tests', () => {
     inputEl.clear();
 
     await element(by.id('btn-update')).click();
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleepLonger);
     inputEl.sendKeys('101020011221AM');
 
     expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
