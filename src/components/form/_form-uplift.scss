@@ -19,7 +19,7 @@
 @include respond-to(phone) {
   .column .field > .checkbox-label.top-margin,
   .columns .field > .checkbox-label.top-margin {
-    margin-bottom: 16px !important;
+    margin-bottom: 5px !important;
     margin-top: 0 !important;
   }
 
