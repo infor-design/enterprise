@@ -9,6 +9,7 @@
 ### v4.23.0 Fixes
 
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
+- `[Pie]` Fixed an issue where legends in pie chart gets cut off on mobile view. ([#902](https://github.com/infor-design/enterprise/issues/902))
 
 ### v4.23.0 Chores & Maintenance
 
