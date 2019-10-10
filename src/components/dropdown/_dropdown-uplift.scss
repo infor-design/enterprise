@@ -58,6 +58,11 @@ div.multiselect {
 
       &.swatch {
         left: 12px;
+
+        + span {
+          position: relative;
+          top: 1px;
+        }
       }
 
       + span {
