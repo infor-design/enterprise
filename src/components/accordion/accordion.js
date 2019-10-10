@@ -3,6 +3,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 
 // jQuery components
 import '../icons/icons.jquery';
@@ -11,6 +12,12 @@ import '../../utils/behaviors';
 
 // Component Name
 const COMPONENT_NAME = 'accordion';
+
+// Expander Button Display Modes
+// In some cases, expander buttons can be all "plus-minus" icons, or all "chevron" icons.
+// "Classic" is the original mode, with Chevrons at the top level, and Plus-minus style on all subheaders.
+// "Plus-minus" mode is the replacement setting for the deprecated setting `displayChevron`
+const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
 
 /**
  * The Accordion is a grouped set of collapsible panels used to navigate sections of
@@ -21,24 +28,39 @@ const COMPONENT_NAME = 'accordion';
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
- * time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
- * @param {string} [settings.displayChevron=true]  Displays a "Chevron" icon that sits off to the right-most
+ * time. If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
+ * @param {boolean} [settings.displayChevron=true] (deprecated in v4.23.0) Displays a "Chevron" icon that sits off to the right-most
+ * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.  Use `settings.expanderDisplay` instead.
  * @param {boolean} [settings.enableTooltips=true] If false, does not run logic to apply tooltips to elements with truncated text.
- * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
-  displayChevron: true,
+  expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
   rerouteOnLinkClick: true,
   source: null
 };
 
+// Handles the conversion of deprecated settings to current settings
+function handleDeprecatedSettings(settings) {
+  if (settings.displayChevron !== undefined) {
+    warnAboutDeprecation('expanderDisplay setting', 'displayChevron setting');
+    if (settings.displayChevron === false) {
+      settings.expanderDisplay = expanderDisplayModes[1]; // plus-minus
+    } else {
+      settings.expanderDisplay = expanderDisplayModes[0]; // classic
+    }
+    delete settings.displayChevron;
+  }
+  return settings;
+}
+
 function Accordion(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, ACCORDION_DEFAULTS);
+  this.settings = handleDeprecatedSettings(this.settings);
 
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -152,7 +174,7 @@ Accordion.prototype = {
         expander = $('<button class="btn" type="button"></button>');
 
         let method = 'insertBefore';
-        if (self.settings.displayChevron && isTopLevel) {
+        if (self.settings.expanderDisplay !== 'plus-minus' && isTopLevel) {
           header.addClass('has-chevron');
           method = 'insertAfter';
         }
@@ -164,13 +186,14 @@ Accordion.prototype = {
       expander.hideFocus();
 
       // If Chevrons are turned off and an icon is present, it becomes the expander
-      if (outerIcon.length && !self.settings.displayChevron) {
+      if (outerIcon.length && (self.settings.expanderDisplay === 'classic' || self.settings.expanderDisplay === 'chevron')) {
         outerIcon.appendTo(expander);
       }
 
       let expanderIcon = expander.children('.icon, .svg, .plus-minus');
       if (!expanderIcon.length) {
-        if (self.settings.displayChevron && isTopLevel) {
+        if ((self.settings.expanderDisplay === 'classic' && isTopLevel) ||
+          self.settings.expanderDisplay === 'chevron') {
           expanderIcon = $.createIconElement({ icon: 'caret-down', classes: ['chevron'] });
         } else {
           const isActive = self.isExpanded(header) ? ' active' : '';
@@ -188,7 +211,8 @@ Accordion.prototype = {
       expanderIcon.attr(expanderIconOpts);
 
       // Move around the Expander depending on whether or not it's a chevron
-      if (expanderIcon.is('.chevron')) {
+      // ONLY do this if the chevron is top-level.
+      if (expanderIcon.is('.chevron') && isTopLevel) {
         header.addClass('has-chevron');
         expander.insertAfter(header.children('a'));
       } else {
@@ -198,7 +222,7 @@ Accordion.prototype = {
 
       // Double check to see if we have left-aligned expanders or icons present,
       // so we can add classes that do alignment
-      if (!self.settings.displayChevron && isTopLevel) {
+      if (self.settings.expanderDisplay !== 'plus-minus' && isTopLevel) {
         headersHaveIcons = true;
       }
       checkIfIcons();
@@ -1318,6 +1342,7 @@ Accordion.prototype = {
 
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = handleDeprecatedSettings(this.settings);
     }
 
     let currentFocus = $(document.activeElement);
