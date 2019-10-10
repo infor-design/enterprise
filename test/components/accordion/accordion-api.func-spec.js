@@ -5,18 +5,15 @@ const accordionHTML = require('../../../app/views/components/accordion/example-i
 const svg = require('../../../src/components/icons/svg.html');
 
 let accordionEl;
-let svgEl;
 let accordionObj;
 
 describe('Accordion API', () => {
   beforeEach(() => {
     accordionEl = null;
-    svgEl = null;
     accordionObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', accordionHTML);
     accordionEl = document.body.querySelector('.accordion');
-    svgEl = document.body.querySelector('.svg-icons');
     accordionObj = new Accordion(accordionEl);
   });
 
@@ -110,12 +107,10 @@ describe('Accordion API', () => {
 describe('Accordion API (settings)', () => {
   beforeEach(() => {
     accordionEl = null;
-    svgEl = null;
     accordionObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', accordionHTML);
     accordionEl = document.body.querySelector('.accordion');
-    svgEl = document.body.querySelector('.svg-icons');
   });
 
   afterEach(() => {
@@ -138,7 +133,7 @@ describe('Accordion API (settings)', () => {
   });
 
   // `displayChevron` deprecated as of v4.23.x
-  it('Converts the legacy setting `displayChevron: false` to `expanderDisplay: \'plus-minus\'`', () => {
+  it('Converts the legacy setting `displayChevron: true` to `expanderDisplay: \'classic\'`', () => {
     accordionObj = new Accordion(accordionEl, {
       displayChevron: true
     });
