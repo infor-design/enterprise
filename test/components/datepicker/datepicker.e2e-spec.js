@@ -544,7 +544,7 @@ describe('Datepicker No Today Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toBeLessThan(0.3);
     });
   }
 });
