@@ -32,6 +32,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @param {boolean} [settings.displayChevron=true] (deprecated in v4.23.0) Displays a "Chevron" icon that sits off to the right-most
  * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.  Use `settings.expanderDisplay` instead.
  * @param {boolean} [settings.enableTooltips=true] If false, does not run logic to apply tooltips to elements with truncated text.
+ * @param {string} [settings.expanderDisplay='classic'] Changes the iconography used in accordion header expander buttons. By default, top level expanders will be chevrons, and sub-header expanders will be "plus-minus" style.  This setting can also be "plus-minus" or "chevron" to force the same icons throughout the accordion.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
