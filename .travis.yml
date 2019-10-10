@@ -53,7 +53,7 @@ script:
 jobs:
   include:
     - stage: deploy
-      env: TEST_SUITE=lint
+      env: TEST_SUITE=e2e-group3
       before_install: skip
       install: skip
       script: skip
