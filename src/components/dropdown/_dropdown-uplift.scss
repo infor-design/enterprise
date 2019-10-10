@@ -12,8 +12,8 @@ div.multiselect {
   }
 
   > .listoption-icon {
-    top: 11px;
     left: 12px;
+    top: 11px;
 
     &.swatch {
       left: 13px;
@@ -31,6 +31,7 @@ div.multiselect {
       padding-left: 35px;
     }
   }
+
   > .trigger {
     width: $dropdown-size-padding-x-r;
 
