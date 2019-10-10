@@ -58,9 +58,21 @@ div.multiselect {
   }
 
   .dropdown-list {
+    > ul {
+      li.dropdown-option {
+        .listoption-icon {
+          top: 3px;
+        }
+      }
+    }
+
     &:not(.dropdown-short) {
       > .trigger {
         margin-left: -29px;
+      }
+
+      .listoption-icon {
+        top: 11px;
       }
     }
 
