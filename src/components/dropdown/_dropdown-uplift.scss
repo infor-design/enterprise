@@ -57,16 +57,36 @@ div.multiselect {
       top: 12px;
 
       &.swatch {
-        left: 15px;
+        left: 12px;
+      }
+
+      + span {
+        padding-left: 26px;
       }
     }
   }
 
   .dropdown-list {
+    &.has-icons {
+      .dropdown-search {
+        padding-left: 36px;
+      }
+    }
+
     > ul {
       li.dropdown-option {
         .listoption-icon {
           top: 3px;
+        }
+      }
+
+      li {
+        &.is-swatch {
+          padding-left: 26px;
+        }
+
+        span.swatch {
+          margin-left: -15px;
         }
       }
     }
@@ -78,6 +98,10 @@ div.multiselect {
 
       .listoption-icon {
         top: 11px;
+
+        &.swatch {
+          left: 11px;
+        }
       }
     }
 
@@ -106,7 +130,25 @@ div.multiselect {
       left: 12px;
 
       &.swatch {
-        left: 15px;
+        left: 12px;
+      }
+    }
+  }
+
+  .dropdown-list {
+    > .listoption-icon {
+      &.swatch {
+        left: 11px;
+      }
+    }
+
+    .dropdown-option {
+      &.is-swatch {
+        padding-left: 26px;
+      }
+
+      .swatch {
+        margin-left: -15px;
       }
     }
   }
@@ -124,6 +166,10 @@ html.is-firefox:not([dir='rtl']) {
 
     > .listoption-icon {
       top: 10px;
+
+      + span {
+        padding-left: 26px;
+      }
     }
   }
 
@@ -142,7 +188,7 @@ html.is-firefox:not([dir='rtl']) {
 
     &.has-icons {
       .dropdown-search {
-        padding: 6px 30px 6px 39px;
+        padding: 6px 30px 6px 36px;
       }
     }
 
