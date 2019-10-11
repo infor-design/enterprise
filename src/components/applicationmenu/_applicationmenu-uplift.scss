@@ -310,6 +310,12 @@
             }
           }
         }
+
+        &.list-item {
+          &::before {
+            font-size: 1rem;
+          }
+        }
       }
 
       &.is-expanded {

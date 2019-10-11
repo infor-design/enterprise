@@ -10,6 +10,7 @@ Soho.Locale.addCulture('th-TH', {
   direction: 'left-to-right',
   // ca-gregorian
   calendars: [{
+    name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
       separator: '/', // Infered

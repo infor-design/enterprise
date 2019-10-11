@@ -233,7 +233,7 @@ describe('Colorpicker states tests', () => {
   if (!utils.isCI() && !utils.isBS()) {
     it('Should check for Dirty Tracking', async () => {
       await element(by.css('#dirty-color + .trigger .icon')).click();
-      await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
+      await element.all(by.css('#colorpicker-menu li:first-child a:first-child')).first().click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-dirty'))), config.waitsFor);
 
@@ -361,15 +361,15 @@ describe('Colorpicker modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
 
     expect(await element(by.id('color2')).getAttribute('value')).toEqual('#1A1A1A');
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
     await browser.driver

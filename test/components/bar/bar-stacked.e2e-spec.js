@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Stacked Bar Chart example-index tests', () => {
+describe('Bar (Stacked) Chart example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar-stacked/example-index?layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -50,7 +50,7 @@ describe('Stacked Bar Chart example-index tests', () => {
   }
 });
 
-describe('Stacked Bar Chart example-colors', () => {
+describe('Bar (Stacked) Chart example-colors', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar-stacked/example-stacked-colors');
     await browser.driver.sleep(config.sleep);
@@ -75,7 +75,7 @@ describe('Stacked Bar Chart example-colors', () => {
   });
 });
 
-describe('Stacked Bar Chart 100% tests', () => {
+describe('Bar (Stacked) Chart 100% tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar-stacked/example-stacked-100?layout=nofrills');
     await browser.driver.sleep(config.sleep);

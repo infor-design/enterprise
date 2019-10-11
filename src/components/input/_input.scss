@@ -28,12 +28,15 @@
 
     &.field-checkbox label {
       line-height: 17px;
-      margin-bottom: -1px;
     }
 
     .error-message .message-text {
       float: left;
     }
+  }
+
+  > .checkbox-group-label {
+    margin-top: 2px;
   }
 
   > .field {
@@ -789,6 +792,14 @@ label,
       padding: 0 5px;
     }
   }
+
+  .field > .checkbox-label.top-margin {
+    margin-top: 30px;
+  }
+
+  .field-checkbox span.label {
+    margin-top: 10px;
+  }
 }
 
 .has-actions-wrapper {
@@ -916,5 +927,18 @@ html[dir='rtl'] {
   .input-lg,
   .field-short .input-lg {
     width: $field-md;
+  }
+}
+
+@include respond-to(phone) {
+  .column .field > .checkbox-label.top-margin,
+  .columns .field > .checkbox-label.top-margin {
+    margin-bottom: 5px;
+    margin-top: -5px;
+  }
+
+  .column .field-checkbox span.label,
+  .columns .field-checkbox span.label {
+    margin-top: -22px;
   }
 }

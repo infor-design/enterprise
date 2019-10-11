@@ -11,10 +11,25 @@ const logger = require('../../scripts/logger');
 const types = ['functional', 'e2e'];
 const EMPTY = [];
 
-const DEFAULT_E2E_SPECS = [
+const DEFAULT_E2E_SPECS = {};
+DEFAULT_E2E_SPECS.all = [
   'behaviors/**/*.e2e-spec.js',
   'components/**/*.e2e-spec.js',
   'kitchen-sink.e2e-spec.js'
+];
+
+DEFAULT_E2E_SPECS.group1 = [
+  'components/[d]*/*.e2e-spec.js',
+];
+
+DEFAULT_E2E_SPECS.group2 = [
+  'behaviors/**/*.e2e-spec.js',
+  'components/[abcefghijkl]*/*.e2e-spec.js',
+  'kitchen-sink.e2e-spec.js'
+];
+
+DEFAULT_E2E_SPECS.group3 = [
+  'components/[mnopqrstuvwxyz]*/*.e2e-spec.js',
 ];
 
 const DEFAULT_FUNC_SPECS = [
@@ -22,7 +37,7 @@ const DEFAULT_FUNC_SPECS = [
   'components/**/*.func-spec.js'
 ];
 
-function getCustomSpecs(type) {
+function getCustomSpecs(type, group) {
   let fileName = 'tests-functional.txt';
   if (type === 'e2e') {
     fileName = 'tests-e2e.txt';
@@ -32,7 +47,7 @@ function getCustomSpecs(type) {
 
   function defaults() {
     if (type === 'e2e') {
-      return DEFAULT_E2E_SPECS;
+      return DEFAULT_E2E_SPECS[group || 'all'];
     }
     return DEFAULT_FUNC_SPECS;
   }
@@ -53,7 +68,7 @@ function getCustomSpecs(type) {
   return specs.split('\n').filter(el => el !== null && el !== '');
 }
 
-module.exports = function (testType, envSpecs) {
+module.exports = function (testType, envSpecs, group) {
   if (envSpecs) {
     return envSpecs.split(',');
   }
@@ -62,5 +77,5 @@ module.exports = function (testType, envSpecs) {
     return EMPTY;
   }
 
-  return getCustomSpecs(testType);
+  return getCustomSpecs(testType, group);
 };

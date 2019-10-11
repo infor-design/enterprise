@@ -204,6 +204,6 @@ describe('Lookup API', () => {
 
       expect(lookupEl.value).toEqual('777777');
       done();
-    }, 500);
+    }, 600);
   });
 });
