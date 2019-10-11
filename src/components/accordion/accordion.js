@@ -187,7 +187,7 @@ Accordion.prototype = {
       expander.hideFocus();
 
       // If Chevrons are turned off and an icon is present, it becomes the expander
-      if (outerIcon.length && (self.settings.expanderDisplay === 'classic' || self.settings.expanderDisplay === 'chevron')) {
+      if (outerIcon.length && (self.settings.expanderDisplay === 'plus-minus')) {
         outerIcon.appendTo(expander);
       }
 
@@ -223,7 +223,7 @@ Accordion.prototype = {
 
       // Double check to see if we have left-aligned expanders or icons present,
       // so we can add classes that do alignment
-      if (self.settings.expanderDisplay !== 'plus-minus' && isTopLevel) {
+      if (self.settings.expanderDisplay === 'plus-minus' && isTopLevel) {
         headersHaveIcons = true;
       }
       checkIfIcons();

@@ -639,7 +639,6 @@ html[dir='rtl'] {
 
                 &.no-icon {
                   > a {
-                    padding-left: 0;
                     padding-right: 150px;
                   }
                 }
@@ -658,12 +657,10 @@ html[dir='rtl'] {
     .accordion.has-icons {
       .accordion-header {
         > a {
-          padding-left: 0;
           padding-right: 54px;
         }
 
         > .icon + a {
-          padding-left: 0;
           padding-right: 0;
         }
       }
@@ -713,7 +710,6 @@ html[dir='rtl'] {
 
                   &.no-icon {
                     > a {
-                      padding-left: 0;
                       padding-right: 182px;
                     }
                   }
