@@ -130,6 +130,13 @@ PopupMenu.prototype = {
       this.settings.menuId = undefined;
     }
 
+    // Automatically set iOS environments to be `attachToBody: true`
+    const isMobile = env.os.name === 'ios';
+    const isSafari = env.browser.name === 'safari';
+    if (isMobile && isSafari) {
+      this.settings.attachToBody = true;
+    }
+
     // keep track of how many popupmenus there are with an ID.
     // Used for managing events that are bound to $(document)
     if (!this.id) {
