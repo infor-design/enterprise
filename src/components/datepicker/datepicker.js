@@ -1659,6 +1659,7 @@ DatePicker.prototype = {
 
     if (this.addedValidation) {
       this.element.removeAttr('data-validate').removeData('validate validationEvents');
+      delete this.addedValidation;
     }
 
     return this;
