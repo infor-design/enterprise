@@ -423,7 +423,7 @@ DatePicker.prototype = {
     if (this.isFullMonth) {
       this.pattern = this.settings.dateFormat;
     } else if (this.element.data('mask') === undefined) {
-    //  this.element.mask(maskOptions);
+      this.element.mask(maskOptions);
     }
 
     this.addedValidation = false;
