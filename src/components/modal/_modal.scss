@@ -239,9 +239,31 @@
   z-index: 1000;
 }
 
-.modal-engaged .overlay {
-  opacity: 0.7;
-  visibility: visible;
+// Body tag is notified when a modal is present in the page.
+body.modal-engaged {
+  .overlay {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+// iOS has lots of issues regarding scrolling of elements that are
+// technically "behind" the modal.  This CSS, as well as some JS in the Modal component,
+// seek to stop scrolling behind the in-focus modal element.
+.ios {
+  body.modal-engaged {
+    -webkit-overflow-scrolling: auto;
+
+    .page-container.scrollable,
+    .page-container.scrollable-x,
+    .page-container.scrollable-y {
+      pointer-events: none;
+    }
+
+    .modal-body-wrapper {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 }
 
 .modal-header {

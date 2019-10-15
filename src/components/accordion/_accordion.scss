@@ -756,6 +756,16 @@
       background-color: $accordion-disabled-pane-bg-color !important;
       border-bottom-color: $accordion-disabled-pane-bg-color !important;
     }
+
+    // Subheaders can now have chevrons as of v4.23.x
+    &:not(.has-chevron) {
+      .icon.chevron {
+        height: 16px;
+        left: -8px;
+        top: -1px;
+        width: 16px;
+      }
+    }
   }
 
   // Level 2 Accordion Pane

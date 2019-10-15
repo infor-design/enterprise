@@ -6,7 +6,6 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../button/button.jquery';
 import '../mask/mask-input.jquery';
-import '../zoom/zoom.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
@@ -313,7 +312,7 @@ Spinbox.prototype = {
       this.decreaseValue();
     }
 
-    this.safeFocus();
+    this.element.focus();
   },
 
   /**
@@ -594,23 +593,6 @@ Spinbox.prototype = {
   },
 
   /**
-   * Focuses the main input field without a mobile zoom.
-   * @returns {void}
-   */
-  safeFocus() {
-    const isMobile = env.os.name === 'ios' || env.os.name === 'android';
-    if (isMobile) {
-      $('head').triggerHandler('disable-zoom');
-    }
-
-    this.element.focus();
-
-    if (isMobile) {
-      $('head').triggerHandler('enable-zoom');
-    }
-  },
-
-  /**
    * Enables the Spinbox
    * @returns {void}
    */
@@ -790,7 +772,7 @@ Spinbox.prototype = {
         $(document).one('mouseup', () => {
           self.disableLongPress(e, self);
           preventClick = false;
-          self.safeFocus();
+          self.element.focus();
         });
       }
     });
