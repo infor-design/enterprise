@@ -1628,10 +1628,6 @@ Dropdown.prototype = {
       isEmpty = true;
     }
 
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('disable-zoom');
-    }
-
     // Close any other drop downs.
     $('select').each(function () {
       const data = $(this).data();
@@ -1872,10 +1868,6 @@ Dropdown.prototype = {
       $(window).on('orientationchange.dropdown', () => {
         self.closeList('cancel');
       });
-    }
-
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('enable-zoom');
     }
   },
 

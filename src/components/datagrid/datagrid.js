@@ -1995,8 +1995,9 @@ Datagrid.prototype = {
           rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
-        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
-              columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
+        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') &&
+          !(conditions[i].value instanceof Array)) &&
+            !(/^(date|time|text)$/.test(columnDef.filterType))) {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
@@ -10883,6 +10884,10 @@ Datagrid.prototype = {
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
+    if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
+      this.pagerAPI.destroy();
+    }
+
     if (settings && settings.frozenColumns) {
       this.headerRow = undefined;
       this.element.empty();
@@ -10898,6 +10903,7 @@ Datagrid.prototype = {
     }
 
     this.render();
+    this.handlePaging();
 
     return this;
   }

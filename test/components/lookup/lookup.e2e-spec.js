@@ -191,6 +191,7 @@ describe('Lookup filtering tests', () => {
 
   it('should apply a filter', async () => {
     await element(by.css('#product-lookup + .trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
 

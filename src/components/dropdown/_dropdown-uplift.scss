@@ -12,11 +12,26 @@ div.multiselect {
   }
 
   > .listoption-icon {
+    left: 12px;
     top: 11px;
+
+    &.swatch {
+      left: 13px;
+    }
+
+    + span {
+      padding-left: 25px;
+    }
   }
 }
 
 .dropdown-list {
+  &.has-icons {
+    .dropdown-search {
+      padding-left: 35px;
+    }
+  }
+
   > .trigger {
     width: $dropdown-size-padding-x-r;
 
@@ -27,6 +42,18 @@ div.multiselect {
 
   > .listoption-icon {
     top: 10px;
+
+    &.swatch {
+      left: 12px;
+    }
+  }
+
+  li {
+    span {
+      &.swatch {
+        margin-left: -18px;
+      }
+    }
   }
 }
 
@@ -53,11 +80,49 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     > .listoption-icon {
+      left: 12px;
       top: 12px;
+
+      &.swatch {
+        left: 12px;
+
+        + span {
+          position: relative;
+          top: 1px;
+        }
+      }
+
+      + span {
+        padding-left: 26px;
+      }
     }
   }
 
   .dropdown-list {
+    &.has-icons {
+      .dropdown-search {
+        padding-left: 36px;
+      }
+    }
+
+    > ul {
+      li.dropdown-option {
+        .listoption-icon {
+          top: 3px;
+        }
+      }
+
+      li {
+        &.is-swatch {
+          padding-left: 26px;
+        }
+
+        span.swatch {
+          margin-left: -15px;
+        }
+      }
+    }
+
     &:not(.dropdown-short) {
       > .trigger {
         margin-left: -29px;
@@ -65,6 +130,10 @@ div.multiselect {
 
       .listoption-icon {
         top: 11px;
+
+        &.swatch {
+          left: 11px;
+        }
       }
     }
 
@@ -85,6 +154,38 @@ div.multiselect {
   }
 }
 
+// Dropdown icon for firefox
+.is-firefox {
+  div.dropdown,
+  div.multiselect {
+    > .listoption-icon {
+      left: 12px;
+
+      &.swatch {
+        left: 12px;
+      }
+    }
+  }
+
+  .dropdown-list {
+    > .listoption-icon {
+      &.swatch {
+        left: 11px;
+      }
+    }
+
+    .dropdown-option {
+      &.is-swatch {
+        padding-left: 26px;
+      }
+
+      .swatch {
+        margin-left: -15px;
+      }
+    }
+  }
+}
+
 // Icon placement isn't quite right on Firefox
 html.is-firefox:not([dir='rtl']) {
   div.dropdown,
@@ -97,6 +198,10 @@ html.is-firefox:not([dir='rtl']) {
 
     > .listoption-icon {
       top: 10px;
+
+      + span {
+        padding-left: 26px;
+      }
     }
   }
 
@@ -115,7 +220,7 @@ html.is-firefox:not([dir='rtl']) {
 
     &.has-icons {
       .dropdown-search {
-        padding: 6px 30px 6px 39px;
+        padding: 6px 30px 6px 36px;
       }
     }
 

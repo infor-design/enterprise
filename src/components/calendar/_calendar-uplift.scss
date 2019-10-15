@@ -1,0 +1,7 @@
+//* Calendar Uplift
+//================================================== *
+
+// Reduce the font size from being too large (calendar/example-index)
+.calendar-event-details .accordion-header a {
+  font-size: $theme-size-font-md;
+}

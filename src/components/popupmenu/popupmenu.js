@@ -130,6 +130,13 @@ PopupMenu.prototype = {
       this.settings.menuId = undefined;
     }
 
+    // Automatically set iOS environments to be `attachToBody: true`
+    const isMobile = env.os.name === 'ios';
+    const isSafari = env.browser.name === 'safari';
+    if (isMobile && isSafari) {
+      this.settings.attachToBody = true;
+    }
+
     // keep track of how many popupmenus there are with an ID.
     // Used for managing events that are bound to $(document)
     if (!this.id) {
@@ -817,8 +824,6 @@ PopupMenu.prototype = {
     }
 
     function contextMenuHandler(e, isLeftClick) {
-      e.preventDefault();
-
       if (self.keydownThenClick) {
         delete self.keydownThenClick;
         return;
@@ -862,7 +867,8 @@ PopupMenu.prototype = {
           this.element
             .on('touchstart.popupmenu', (e) => {
               // iOS needs this prevented to prevent its own longpress feature in Safari
-              if (env.os.name === 'ios') {
+              // NOTE: this should not interfere with normal text input on form fields.
+              if (env.os.name === 'ios' && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
               }
               $(e.target)
@@ -2354,7 +2360,7 @@ PopupMenu.prototype = {
     this.teardown();
 
     // In some cases, the menu needs to be completely removed on `destroy`.
-    this.menu.trigger('destroy');
+    this.menu.triggerHandler('destroy');
     if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
       this.menu.off().remove();
       delete this.menu;

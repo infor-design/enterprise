@@ -67,7 +67,6 @@ import './treemap/treemap.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
 import './wizard/wizard.jquery';
-import './zoom/zoom.jquery';
 
 // Complex ====/
 import './datagrid/datagrid.jquery';

@@ -1,3 +1,8 @@
 .tooltip-content {
   padding: 5px 10px 6px;
 }
+
+// Reduce the font size from being too large (calendar/example-index)
+.tooltip-title.filled {
+  font-size: $theme-size-font-md;
+}

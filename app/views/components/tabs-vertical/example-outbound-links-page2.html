@@ -19,19 +19,16 @@
     <div class="page-container no-scroll">
 
       <!-- Vertical Tabs inside of a tab panel -->
-      <div id="tabs-vertical" class="vertical tab-container scrollable">
+      <div id="tabs-vertical" class="vertical tab-container scrollable" data-options='{ "lazyLoad": false }'>
 
         <div class="tab-list-container">
-
           <ul class="tab-list">
-            <li class="tab"><a href="{{basepath}}components/tabs-vertical/outbound-links-page1">Page 1</a></li>
-            <li class="tab is-selected"><a href="{{basepath}}components/tabs-vertical/outbound-links-page2">Page 2</a></li>
+            <li class="tab"><a href="{{basepath}}components/tabs-vertical/example-outbound-links-page1">Page 1</a></li>
+            <li class="tab is-selected"><a href="#outbound-links-page-2">Page 2</a></li>
           </ul>
-
         </div>
         <div class="tab-panel-container">
-
-          <div class="tab-panel">
+          <div id="outbound-links-page-2" class="tab-panel">
             <div class="row">
               <div class="twelve columns">
                 <p>Page 2 Is Showing</p>
