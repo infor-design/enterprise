@@ -323,9 +323,9 @@
   }
 
   .modal-body-wrapper {
-    overflow: hidden;
+    overflow: auto;
     -webkit-overflow-scrolling: auto;
-    padding: 0 20px;
+    padding: 2px 20px;
 
     .field:last-child {
       margin-bottom: 0;
