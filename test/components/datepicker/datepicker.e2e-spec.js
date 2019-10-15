@@ -1234,7 +1234,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
   });
 
-  it('Should be Able to use current locale', async () => {
+  it('Should be able to use current locale', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await element(by.css('#date-field-normal + .icon')).click();
 
@@ -1249,7 +1249,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
   });
 
-  it('Should be Able to use non current locale', async () => {
+  it('Should be able to use non current locale', async () => {
     const datepickerEl = await element(by.id('date-field-danish'));
     await element(by.css('#date-field-danish + .icon')).click();
 
@@ -1261,7 +1261,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('da-DK').replace(/\//g, '-'));
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()}-${testDate.getMonth() + 1}-${testDate.getFullYear()}`);
   });
 
   it('Should be Able to use non current locale and a different langauge', async () => {
@@ -1276,6 +1276,6 @@ describe('Datepicker specific locale/langauge tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('de-DE').replace(/\//g, '-'));
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()}.${testDate.getMonth() + 1}.${testDate.getFullYear()}`);
   });
 });
