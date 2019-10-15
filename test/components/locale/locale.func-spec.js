@@ -1449,7 +1449,7 @@ describe('Locale API', () => {
     });
   });
 
-  fit('Should be able get translations in a non current locale', (done) => {
+  it('Should be able get translations in a non current locale', (done) => {
     Locale.set('fi-FI');
     Locale.setLanguage('sv');
     Locale.getLocale('de-DE');
