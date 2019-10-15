@@ -10,6 +10,7 @@ const COMPONENT_NAME = 'monthview';
 
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
+  language: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
   activeDate: null,
@@ -54,6 +55,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} element The plugin element for the constuctor
  * @param {object} [settings] The settings element.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
@@ -123,6 +125,11 @@ MonthView.prototype = {
    * @returns {void}
    */
   setLocale() {
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    }
+
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
@@ -159,12 +166,12 @@ MonthView.prototype = {
     this.prevButton = '' +
       `<button type="button" class="btn-icon prev">
         ${$.createIcon('caret-left')}
-        <span>${Locale.translate('PreviousMonth', { locale: this.locale.name })}</span>
+        <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
     this.nextButton = '' +
       `<button type="button" class="btn-icon next">
         ${$.createIcon('caret-right')}
-        <span>${Locale.translate('NextMonth', { locale: this.locale.name })}</span>
+        <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
 
     let monthYearPaneButton = `<button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
@@ -187,7 +194,7 @@ MonthView.prototype = {
         ${this.settings.showMonthYearPicker ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
         ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
       </div>`);
-    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
+    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name, language: this.language })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
         <tr>
@@ -270,9 +277,9 @@ MonthView.prototype = {
           ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
           <span class="monthview-datepicker">
             <span class="hidden month"></span><span class="hidden year"></span>
-            <input aria-label="${Locale.translate('Today', { locale: this.locale.name })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
+            <input aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
           </span>
-          <a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>
+          <a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>
         </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
       this.todayLink = this.header.find('.hyperlink.today');
@@ -1089,7 +1096,7 @@ MonthView.prototype = {
         this.element.find('.is-today').hide();
         this.element.find('.popup-footer').addClass('is-half');
         this.element.find('.is-select').removeClass('is-select').addClass('is-select-month-pane');
-        this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel'));
+        this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel', { locale: this.locale.name, language: this.language }));
       }
       // Focus the month
       setTimeout(() => {
@@ -1107,7 +1114,7 @@ MonthView.prototype = {
         this.element.find('.is-today').show();
         this.element.find('.popup-footer').removeClass('is-half');
         this.element.find('.is-select-month-pane').addClass('is-select').removeClass('is-select-month-pane');
-        this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear'));
+        this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear', { locale: this.locale.name, language: this.language }));
       }
     });
 

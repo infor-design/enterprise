@@ -348,7 +348,7 @@ function ValidationRules() {
         const pattern = timepickerSettings && timepickerSettings.timeFormat ?
           timepickerSettings.timeFormat :
           Locale.calendar().timeFormat;
-        const is24Hour = (pattern.match('HH') || []).length > 0;
+        const is24Hour = (pattern.match('HH') || pattern.match('H') || []).length > 0;
         const maxHours = is24Hour ? 24 : 12;
         const sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator);
         let valueHours = 0;

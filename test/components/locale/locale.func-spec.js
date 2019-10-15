@@ -1449,6 +1449,19 @@ describe('Locale API', () => {
     });
   });
 
+  fit('Should be able get translations in a non current locale', (done) => {
+    Locale.set('fi-FI');
+    Locale.setLanguage('sv');
+    Locale.getLocale('de-DE');
+
+    expect(Locale.translate('Required', { locale: 'fi-FI' })).toEqual('Obligatoriskt');
+    expect(Locale.translate('Required', { language: 'de' })).toEqual('Obligatorisch');
+    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'de' })).toEqual('Obligatorisch');
+    expect(Locale.translate('Required', { language: 'sv' })).toEqual('Obligatoriskt');
+    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'sv' })).toEqual('Obligatoriskt');
+    done();
+  });
+
   it('Should format times correctly', () => {
     Locale.set('af-ZA');
 
