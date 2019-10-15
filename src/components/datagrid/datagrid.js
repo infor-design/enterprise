@@ -1995,8 +1995,9 @@ Datagrid.prototype = {
           rowValue = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
-        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') && !(conditions[i].value instanceof Array)) &&
-              columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
+        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') &&
+          !(conditions[i].value instanceof Array)) &&
+            !(/^(date|time|text)$/.test(columnDef.filterType))) {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
         }
