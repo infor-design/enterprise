@@ -1004,11 +1004,6 @@ SearchField.prototype = {
    */
   handleBlur() {
     const self = this;
-
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('disable-zoom');
-    }
-
     self.handleSafeBlur();
   },
 
@@ -1811,10 +1806,6 @@ SearchField.prototype = {
       }
 
       self.element.trigger('beforecollapse');
-
-      if (env.os.name === 'ios') {
-        $('head').triggerHandler('enable-zoom');
-      }
 
       delete self.isExpanded;
       delete self.isExpanding;
