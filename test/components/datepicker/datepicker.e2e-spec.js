@@ -1229,3 +1229,54 @@ describe('Datepicker Time in Cs-Cz Format Tests', () => {
     expect(await element(by.id('dp3')).getAttribute('value')).toEqual('05.04.2018 16:15');
   });
 });
+
+describe('Datepicker specific locale/langauge tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-two-locales-same-page');
+  });
+
+  it('Should be Able to use current locale', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Today');
+    await element(by.css('.hyperlink.today')).click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
+
+  it('Should be Able to use non current locale', async () => {
+    const datepickerEl = await element(by.id('date-field-danish'));
+    await element(by.css('#date-field-danish + .icon')).click();
+
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
+    await element(by.css('.hyperlink.today')).click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('da-DK').replace(/\//g, '-'));
+  });
+
+  it('Should be Able to use non current locale and a different langauge', async () => {
+    const datepickerEl = await element(by.id('date-field-sv-de'));
+    await element(by.css('#date-field-sv-de + .icon')).click();
+
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Idag');
+    await element(by.css('.hyperlink.today')).click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('de-DE').replace(/\//g, '-'));
+  });
+});

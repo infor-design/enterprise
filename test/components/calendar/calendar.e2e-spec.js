@@ -261,6 +261,30 @@ describe('Calendar specific locale', () => {
   }
 });
 
+describe('Calendar specific locale and language', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-specific-locale-lang');
+    const dateField = await element(by.id('monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const calendarEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.sleep);
+      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
+
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toBeLessThan(1);
+    });
+  }
+});
+
 describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
