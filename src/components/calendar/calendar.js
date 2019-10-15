@@ -103,8 +103,10 @@ Calendar.prototype = {
    * @returns {void}
    */
   setLocale() {
-    Locale.getLocale(this.settings.language);
-    this.language = this.settings.language;
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    }
 
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
