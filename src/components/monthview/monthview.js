@@ -274,7 +274,8 @@ MonthView.prototype = {
       month: this.currentMonth,
       showToday: this.settings.showToday,
       isAlternate: this.settings.headerStyle !== 'full',
-      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false
+      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
+      showViewChanger: this.settings.showViewChanger
     });
 
     this.handleEvents();

@@ -89,7 +89,6 @@ Calendar.prototype = {
       .setCurrentCalendar()
       .renderEventTypes()
       .renderMonth()
-      .renderViewChanger()
       .handleEvents();
 
     return this;
@@ -158,7 +157,8 @@ Calendar.prototype = {
       selectable: true,
       locale: this.settings.locale,
       month: this.settings.month,
-      year: this.settings.year
+      year: this.settings.year,
+      showViewChanger: this.settings.showViewChanger
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();
@@ -207,29 +207,6 @@ Calendar.prototype = {
       <span class="calendar-upcoming-duration">${event.isDays ? event.duration : event.durationHours} ${event.durationUnits || ''}</span>`;
     upcomingEvent.innerHTML = upcomingEventsMarkup;
     this.upcomingEventsContainer.appendChild(upcomingEvent);
-  },
-
-  /**
-   * Render the dropdown to change views.
-   * @returns {object} The Calendar prototype, useful for chaining.
-   * @private
-   */
-  renderViewChanger() {
-    if (!this.settings.showViewChanger) {
-      return this;
-    }
-    const viewChangerHtml = `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name })}</label>
-      <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
-        <option value="month" selected>${Locale.translate('Month', { locale: this.locale.name })}</option>
-        <option value="week" disabled>${Locale.translate('Week', { locale: this.locale.name })}</option>
-        <option value="day" disabled>${Locale.translate('Day', { locale: this.locale.name })}</option>
-        <option value="schedule" disabled>${Locale.translate('Schedule', { locale: this.locale.name })}</option>
-      </select>
-    </div>`;
-    $(this.monthViewHeader).append(viewChangerHtml);
-    this.viewChangerHtml = $('#calendar-view-changer');
-    this.viewChangerHtml.dropdown();
-    return this;
   },
 
   /**

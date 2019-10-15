@@ -215,9 +215,10 @@ DatePicker.prototype = {
       return;
     }
     const elem = this.element[0];
-    const padding = 45;
+    const value = elem.value;
+
     elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(elem.value, 16) + padding}px`;
+    elem.style.width = `${stringUtils.textWidth(value, 45, $(elem).css('font'))}px`;
   },
 
   /**

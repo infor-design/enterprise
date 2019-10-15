@@ -243,10 +243,10 @@ describe('DatePicker API', () => {
       expect(nextButton.disabled).toEqual(false);
       nextButton.click();
 
-      expect(monthSpan.innerHTML).toEqual('May');
+      expect(monthSpan.innerHTML.trim()).toEqual('May');
       nextButton.click();
 
-      expect(monthSpan.innerHTML).toEqual('June');
+      expect(monthSpan.innerHTML.trim()).toEqual('June');
       expect(prevButton.disabled).toEqual(false);
       expect(nextButton.disabled).toEqual(true);
       done();

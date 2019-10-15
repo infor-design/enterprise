@@ -129,7 +129,8 @@ html[dir='rtl'] {
     + .icon,
     + .tooltip-description + .icon {
       margin-left: inherit;
-      margin-right: -28px;
+      margin-right: -26px;
+      margin-top: 10px;
     }
 
     + .icon + .icon-error {

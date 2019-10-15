@@ -31,6 +31,7 @@
   .calendar-monthview {
     background-color: $calendar-bg-color;
     flex: 1 1 auto;
+    margin-right: 0 !important;
 
     .monthview-table {
       table-layout: fixed;
@@ -432,6 +433,10 @@ html[dir='rtl'] {
     border-right: 1px solid $calendar-line-color;
   }
 
+  .calendar-toolbar .monthview-datepicker {
+    margin-left: 0;
+  }
+
   .calendar-upcoming-events {
     .calendar-upcoming-description {
       margin-left: 0;
@@ -449,4 +454,10 @@ html[dir='rtl'] {
       right: 0;
     }
   }
+}
+
+.week-view-header .calendar-toolbar {
+  border-bottom: 1px solid  $calendar-line-color;
+  height: 50px;
+  text-indent: 20px;
 }

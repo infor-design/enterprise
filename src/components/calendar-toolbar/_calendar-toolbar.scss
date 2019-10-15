@@ -42,6 +42,14 @@
     text-decoration: none;
   }
 
+  // View Switcher
+  .dropdown-wrapper {
+    right: 20px;
+    text-indent: 0;
+    top: 9px;
+    width: 105px;
+  }
+
   // No Month Year Picker
   .toolbar-section {
     > .month,
@@ -60,6 +68,10 @@
       margin-left: -7px;
       padding: 4px 5px;
     }
+
+    &.l-align-right {
+      text-align: right;
+    }
   }
 
   // Move the second section to the right
@@ -68,10 +80,6 @@
       left: -10px;
       margin-left: 0;
       position: relative;
-    }
-
-    .toolbar-section + .toolbar-section {
-      text-align: right;
     }
   }
 }

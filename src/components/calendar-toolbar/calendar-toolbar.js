@@ -19,6 +19,8 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open on the toolbar datepicker, allows you to set the date.
  * @param {boolean} [settings.isAlternate] Alternate style for the datepicker popup.
  * @param {boolean} [settings.isMenuButton] Show the month/year as a menu button object, works if isAlternate is true.
+ * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
+ * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -27,7 +29,9 @@ const COMPONENT_DEFAULTS = {
   showToday: true,
   onOpenCalendar: null,
   isAlternate: false,
-  isMenuButton: true
+  isMenuButton: true,
+  showViewChanger: false,
+  viewChangerValue: 'month'
 };
 
 function CalendarToolbar(element, settings) {
@@ -52,6 +56,7 @@ CalendarToolbar.prototype = {
   build() {
     this.setLocale();
     this.element[0].classList.add('flex-toolbar');
+    this.element[0].setAttribute('data-init', 'false');
 
     if (this.settings.isAlternate) {
       this.element[0].classList.add('is-alternate');
@@ -70,7 +75,7 @@ CalendarToolbar.prototype = {
         <div class="toolbar-section">
           ${this.settings.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
         </div>
-        <div class="toolbar-section buttonset">
+        <div class="toolbar-section buttonset l-align-right">
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
           <button type="button" class="btn-icon prev">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
@@ -101,13 +106,21 @@ CalendarToolbar.prototype = {
           </span>
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
         </div>
-        <div class="toolbar-section buttonset">
+        <div class="toolbar-section buttonset l-align-right">
+          ${!this.settings.showViewChanger ? '' : `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name })}</label>
+            <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
+              <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name })}</option>
+              <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name })}</option>
+              <option value="day" disabled ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name })}</option>
+              <option value="schedule" disabled ${this.settings.viewChangerValue === 'schedule' ? ' selected' : ''}>${Locale.translate('Schedule', { locale: this.locale.name })}</option>
+            </select>
+          </div>`}
         </div>
       `;
     }
 
     // Invoke the toolbar
-    this.toolbarApi = new ToolbarFlex(this.element[0], {});
+    this.toolbarApi = new ToolbarFlex(this.element[0], { allowTabs: true });
 
     // Setup the datepicker
     this.monthPicker = this.element.find('#monthview-datepicker-field').datepicker({
@@ -117,6 +130,9 @@ CalendarToolbar.prototype = {
       onOpenCalendar: this.settings.onOpenCalendar
     });
 
+    if (this.settings.showViewChanger) {
+      this.viewChanger = $('#calendar-view-changer').dropdown();
+    }
     this.todayLink = this.element.find('.hyperlink.today');
     this.monthPickerApi = this.monthPicker.data('datepicker');
 
@@ -142,7 +158,6 @@ CalendarToolbar.prototype = {
     this.monthPicker.val(Locale.formatDate(new Date(this.currentYear, this.currentMonth, this.currentDay), { date: 'year', locale: this.locale.name }));
     if (this.monthPickerApi) {
       this.monthPickerApi.setSize();
-      return;
     }
 
     this.setCurrentCalendar();
@@ -205,10 +220,10 @@ CalendarToolbar.prototype = {
     });
 
     this.element.find('.prev').off('click.calendar-toolbar-b').on('click.calendar-toolbar-b', () => {
-      this.element.trigger('change-next', { selectedDate: this.currentDate, isToday: false });
+      this.element.trigger('change-prev', { selectedDate: this.currentDate, isToday: false });
     });
     this.element.find('.next').off('click.calendar-toolbar-b').on('click.calendar-toolbar-b', () => {
-      this.element.trigger('change-prev', { selectedDate: this.currentDate, isToday: false });
+      this.element.trigger('change-next', { selectedDate: this.currentDate, isToday: false });
     });
     return this;
   },

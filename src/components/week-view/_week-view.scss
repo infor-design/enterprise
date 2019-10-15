@@ -9,6 +9,13 @@
   height: 100%;
   overflow: auto;
 
+  .week-view-header {
+    background-color: $popover-bg-color;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
   .week-view-table-header {
     th {
       border-top: 0;
@@ -16,6 +23,7 @@
       height: 2.4rem;
       line-height: 2.4rem;
       text-align: left;
+      z-index: 2;
 
       // Style todays date
       .week-view-header-wrapper.is-today {
@@ -87,7 +95,7 @@
     th {
       background-color: $popover-bg-color;
       position: sticky;
-      top: 0;
+      top: 50px;
     }
 
     .week-view-allday-row th {
@@ -108,5 +116,6 @@
     position: relative;
     top: -5px;
     width: 100%;
+    z-index: 1;
   }
 }

@@ -74,6 +74,6 @@ describe('About API', () => {
 
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 400);
+    }, 650);
   });
 });

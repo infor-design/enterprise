@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-fdescribe('MonthView Aria', () => {
+describe('MonthView Aria', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;

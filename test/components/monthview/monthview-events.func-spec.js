@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-fdescribe('Monthview API', () => {
+describe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;
