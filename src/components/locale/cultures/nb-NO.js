@@ -50,6 +50,8 @@ Soho.Locale.addCulture('nb-NO', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: ',',
     group: '.',

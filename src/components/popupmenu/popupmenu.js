@@ -130,6 +130,13 @@ PopupMenu.prototype = {
       this.settings.menuId = undefined;
     }
 
+    // Automatically set iOS environments to be `attachToBody: true`
+    const isMobile = env.os.name === 'ios';
+    const isSafari = env.browser.name === 'safari';
+    if (isMobile && isSafari) {
+      this.settings.attachToBody = true;
+    }
+
     // keep track of how many popupmenus there are with an ID.
     // Used for managing events that are bound to $(document)
     if (!this.id) {
@@ -139,6 +146,47 @@ PopupMenu.prototype = {
     // Set a reference collection for containing "pre-defined" menu items that should never
     // be replaced during an AJAX call.
     this.predefinedItems = $().add(this.settings.predefined);
+  },
+
+  /**
+   * Set original dom position containment for given menu in case need to move
+   * @private
+   * @param {jQuery[]} menu the menu object
+   * @returns {void}
+   */
+  setMenuOrgContainment(menu) {
+    if (!menu || !menu.length) {
+      return;
+    }
+    const parent = menu.parent();
+    if (!parent.is('body')) {
+      this.menuOrgContainment = { parent, index: parent.children().index(menu) };
+    }
+  },
+
+  /**
+   * Insert the given element to arbitrarily based on containment with parent and index
+   * @private
+   * @param {jQuery[]} elem the element to insert
+   * @param {object} containment the original dom position containment
+   * @returns {void}
+   */
+  insertAtContainment(elem, containment) {
+    const isEl = el => el && el.length;
+    containment = containment || this.menuOrgContainment || {};
+    if (isEl(elem) && isEl(containment.parent)) {
+      let index = containment.index;
+      const parent = containment.parent;
+      const lastIndex = parent.children().length;
+      if (index < 0) {
+        index = Math.max(0, lastIndex + 1 + index);
+      }
+      if (index < lastIndex) {
+        parent.children().eq(index).before(elem);
+      } else {
+        parent.append(elem);
+      }
+    }
   },
 
   /**
@@ -162,6 +210,7 @@ PopupMenu.prototype = {
             this.menu.data('trigger', this.element);
             triggerId = this.menu.data('trigger')[0].id;
             duplicateMenu = this.menu.clone();
+            this.setMenuOrgContainment(duplicateMenu);
             duplicateMenu.detach().appendTo('body');
 
             // add data-id attr to menus
@@ -210,6 +259,7 @@ PopupMenu.prototype = {
     // to prevent containment issues. (Now a Preference)
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
+      this.setMenuOrgContainment(this.menu);
       this.menu.detach().appendTo('body');
       if (this.settings.duplicateMenu) {
         this.menu.attr('id', `${this.settings.menu}-original`);
@@ -596,7 +646,7 @@ PopupMenu.prototype = {
           a.removeAttribute('disabled');
         }
 
-        // Checks for existing menus, and if present, apply a `.popupmenu` class automatically.
+        // Checks for existing menus, and if present, apply a `popupmenu` class automatically.
         if (submenu instanceof HTMLElement) {
           submenu.classList.add('popupmenu');
         }
@@ -774,8 +824,6 @@ PopupMenu.prototype = {
     }
 
     function contextMenuHandler(e, isLeftClick) {
-      e.preventDefault();
-
       if (self.keydownThenClick) {
         delete self.keydownThenClick;
         return;
@@ -819,7 +867,8 @@ PopupMenu.prototype = {
           this.element
             .on('touchstart.popupmenu', (e) => {
               // iOS needs this prevented to prevent its own longpress feature in Safari
-              if (env.os.name === 'ios') {
+              // NOTE: this should not interfere with normal text input on form fields.
+              if (env.os.name === 'ios' && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
               }
               $(e.target)
@@ -1620,6 +1669,13 @@ PopupMenu.prototype = {
       }
     }
 
+    // Close Application Menu, if applicable
+    const openAppMenu = document.querySelector('.application-menu.is-open');
+    if (openAppMenu instanceof HTMLElement &&
+      (!openAppMenu.contains(this.element[0]) && !openAppMenu.contains(this.menu[0]))) {
+      $(document).triggerHandler('dismiss-applicationmenu');
+    }
+
     this.element.addClass('is-open');
     this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
@@ -1729,17 +1785,20 @@ PopupMenu.prototype = {
 
     self.menu.find('.popupmenu').removeClass('is-open');
     self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
-      const menuitem = $(this);
-      startY = thisE.pageX;
+      if (!$(thisE.target).hasClass('popupmenu')) {
+        const menuitem = $(this);
 
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        self.openSubmenu(menuitem);
-      }, 300);
+        startY = thisE.pageX;
 
-      $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
-        tracker = documentE.pageX;
-      });
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          self.openSubmenu(menuitem);
+        }, 300);
+
+        $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
+          tracker = documentE.pageX;
+        });
+      }
     }).on('mouseleave.popupmenu', '.submenu', function () {
       $(document).off(`mousemove.popupmenu.${this.id}`);
 
@@ -1759,6 +1818,7 @@ PopupMenu.prototype = {
         menuToClose.parent().parent().removeClass('is-submenu-open');
         menuToClose = null;
       }
+
       clearTimeout(timeout);
     });
 
@@ -2232,12 +2292,14 @@ PopupMenu.prototype = {
 
     // Place the menu back where it came from while cleaning up.
     // Get an accurate target to place the menu back where it came from
-    let insertTarget = this.element;
     const searchfield = this.element.parent().children('.searchfield');
     if (searchfield.length) {
-      insertTarget = searchfield.first();
+      this.menu.insertAfter(searchfield.first());
+    } else if (this.menuOrgContainment) {
+      this.insertAtContainment(this.menu);
+    } else {
+      this.menu.insertAfter(this.element);
     }
-    this.menu.insertAfter(insertTarget);
 
     // Cleanup menu items
     this.menu.find('.submenu').children('a').each((i, item) => {
@@ -2298,7 +2360,7 @@ PopupMenu.prototype = {
     this.teardown();
 
     // In some cases, the menu needs to be completely removed on `destroy`.
-    this.menu.trigger('destroy');
+    this.menu.triggerHandler('destroy');
     if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
       this.menu.off().remove();
       delete this.menu;

@@ -36,6 +36,10 @@
     }
   }
 
+  .field-options {
+    width: calc(100% - 45px);
+  }
+
   [data-clearable='true'] ~ .icon.close.is-empty ~ .btn-actions {
     left: -12px;
   }

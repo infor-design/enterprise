@@ -35,14 +35,6 @@ function matchedItems(elem, selector) {
 // Array of plugin names, selectors (optional), and callback functions (optional),
 // for no-configuration initializations.
 const PLUGIN_MAPPINGS = [
-
-  // Mobile Zoom Control
-  // Needs manual invokation because the rest of initialization is scoped to the
-  // calling element, which is the <body> tag.
-  ['zoom', null, function () {
-    $('head').zoom();
-  }],
-
   // Application Menu
   ['applicationmenu', '#application-menu', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
@@ -409,15 +401,22 @@ function mapToInit(elem, plugin, selector, callback) {
  * @param {object} [settings] incoming settings
  */
 function Initialize(element, settings) {
-  // Settings and Options
+  // Fall back for old way of calling locale
+  let newSettings = settings;
   if (typeof settings === 'string') {
-    settings = {
+    newSettings = {
       locale: settings
     };
   }
 
   this.element = $(element);
-  this.settings = utils.mergeSettings(this.element[0], settings, INITIALIZE_DEFAULTS);
+
+  if (Locale.currentLocale && Locale.currentLocale.name && !settings) {
+    newSettings = {
+      locale: Locale.currentLocale.name
+    };
+  }
+  this.settings = utils.mergeSettings(this.element[0], newSettings, INITIALIZE_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -458,7 +457,7 @@ Initialize.prototype = {
     // to fire, but prevents the "initialized" event from bubbling up the DOM.
     // It should be possible to initialize just the contents of an element on
     // the page without causing the entire page to re-initialize.
-    this.element.triggerHandler('initialized');
+    this.element.triggerHandler('initialized', { locale: Locale.currentLocale });
 
     // Run validation on the entire element, if applicable.
     if ($.fn.validate) {

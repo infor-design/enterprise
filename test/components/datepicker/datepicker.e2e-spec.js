@@ -472,6 +472,36 @@ describe('Datepicker Legend Tests', () => {
   });
 });
 
+describe('Datepicker Destroy Mask Tests', () => {
+  beforeEach(async () => {
+    const Date = () => {  //eslint-disable-line
+      return new Date(2018, 1, 10);
+    };
+  });
+
+  it('Should not have errors', async () => {
+    await utils.setPage('/components/datepicker/test-mask-after-update');
+    await utils.checkForErrors();
+  });
+
+  it('Should still mask after destroy', async () => {
+    await utils.setPage('/components/datepicker/test-mask-after-update');
+    await browser.driver.sleep(config.sleep);
+    const inputEl = await element(by.id('dp1'));
+    inputEl.clear();
+    inputEl.sendKeys('101020011221AM');
+
+    expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
+    inputEl.clear();
+
+    await element(by.id('btn-update')).click();
+    await browser.driver.sleep(config.sleepLonger);
+    inputEl.sendKeys('101020011221AM');
+
+    expect(inputEl.getAttribute('value')).toEqual('10/10/2001 12:21 AM');
+  });
+});
+
 describe('Datepicker Disable Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-month-year-picker');
@@ -514,7 +544,7 @@ describe('Datepicker No Today Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toBeLessThan(0.3);
     });
   }
 });
@@ -1086,7 +1116,7 @@ describe('Datepicker Modal Test', () => {
     const datepickerEl = await element(by.id('date-field'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ESCAPE);
 

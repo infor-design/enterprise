@@ -1,6 +1,12 @@
 // Application Menu
 //================================================== //
 
+@import '../accordion/accordion';
+
+body.is-open-touch {
+  overflow: hidden;
+}
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
@@ -196,20 +202,20 @@
     width: auto;
 
     &::placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-webkit-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
 
     &::-moz-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: lighten($application-menu-searchfield-placeholder-color, 40%);
     }
   }
 
@@ -425,6 +431,13 @@
       text-align: right;
     }
   }
+
+  &.has-menu-footer {
+    .accordion,
+    .searchfield-wrapper + .accordion {
+      min-height: auto;
+    }
+  }
 }
 
 // Container Class for wrapping internal content in NG
@@ -432,6 +445,17 @@
   display: inherit;
   flex-direction: inherit;
   height: inherit;
+}
+
+// Ie11
+.ie11 {
+  .application-menu {
+    &.has-menu-footer {
+      &.has-scrollbar {
+        overflow-y: scroll;
+      }
+    }
+  }
 }
 
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up

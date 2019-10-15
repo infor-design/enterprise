@@ -50,6 +50,8 @@ Soho.Locale.addCulture('en-AU', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

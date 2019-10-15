@@ -57,7 +57,6 @@ export { Tree } from './tree/tree';
 export { Treemap } from './treemap/treemap';
 export { Validator } from './validation/validator';
 export { Wizard } from './wizard/wizard';
-export { Zoom } from './zoom/zoom';
 
 // Complex ====/
 export { Calendar } from './calendar/calendar';

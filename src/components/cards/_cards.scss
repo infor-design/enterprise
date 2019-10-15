@@ -1,6 +1,8 @@
 // Cards/Widgets
 //=======================================================
 
+@import '../button/button-chevron';
+
 @mixin auto-height {
   height: auto;
   min-height: 0;

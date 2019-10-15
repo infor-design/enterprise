@@ -63,6 +63,10 @@ ApplicationMenu.prototype = {
     this.hasTrigger = false;
     this.isAnimating = false;
 
+    if (this.element.find('.application-menu-footer').length) {
+      this.element.addClass('has-menu-footer');
+    }
+
     if (!this.hasTriggers()) {
       this.triggers = $();
     }
@@ -305,6 +309,24 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * Toggle scroll css class on ie11.
+   * @private
+   * @returns {void}
+   */
+  toggleScrollClass() {
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      const el = this.element[0];
+      if (el && el.classList.contains('has-menu-footer')) {
+        if (el.scrollHeight > el.clientHeight) {
+          el.classList.add('has-scrollbar');
+        } else {
+          el.classList.remove('has-scrollbar');
+        }
+      }
+    }
+  },
+
+  /**
    * Checks the window size against the defined breakpoint.
    * @private
    * @returns {boolean} whether or not the window size is larger than the
@@ -402,6 +424,7 @@ ApplicationMenu.prototype = {
         $('body').triggerHandler('resize');
       }
 
+      self.toggleScrollClass();
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
     }
@@ -429,6 +452,9 @@ ApplicationMenu.prototype = {
       // eslint-disable-next-line
       this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
+      if (env.features.touch) {
+        $('body').addClass('is-open-touch');
+      }
     }
 
     if (breakpoints.isBelow(this.settings.breakpoint)) {
@@ -521,6 +547,10 @@ ApplicationMenu.prototype = {
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
     $(document).off('click.applicationmenu');
+
+    if (env.features.touch) {
+      $('body').removeClass('is-open-touch');
+    }
   },
 
   /**
@@ -600,16 +630,14 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {jQuery} anchor the anchor being checked
    * @returns {void}
    */
-  handleDismissOnClick(anchor) {
+  handleDismissOnClick() {
     if (!this.settings.dismissOnClickMobile) {
       return;
     }
 
     this.userOpened = false;
-    $(anchor).blur();
     if (this.isLargerThanBreakpoint()) {
       return;
     }
@@ -649,9 +677,28 @@ ApplicationMenu.prototype = {
 
     $(window).off('scroll.applicationmenu');
     $('body').off('resize.applicationmenu');
-    $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu');
+    $(document).off([
+      'click.applicationmenu',
+      'open-applicationmenu',
+      'close-applicationmenu',
+      'dismiss-applicationmenu',
+      'keydown.applicationmenu'
+    ].join(' '));
+
+    this.element.find('.expandable-area').off([
+      'beforeexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
+    this.accordion.off([
+      'blur.applicationmenu',
+      'selected.applicationmenu',
+      'followlink.applicationmenu',
+      'afterexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -660,7 +707,10 @@ ApplicationMenu.prototype = {
     }
 
     if (this.switcherPanel) {
-      this.switcherPanel.off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
+      this.switcherPanel.off([
+        'beforeexpand.applicationmenu',
+        'aftercollapse.applicationmenu'
+      ].join(' '));
     }
 
     if (this.searchfield && this.searchfield.length) {
@@ -721,19 +771,33 @@ ApplicationMenu.prototype = {
       self.updated();
     });
 
+    // Fix: ie11 scrollbar causing to not calculate right height
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      self.element.find('.expandable-area')
+        .on('beforeexpand.applicationmenu', () => {
+          self.element[0].classList.remove('has-scrollbar');
+        })
+        .on('aftercollapse.applicationmenu', () => {
+          self.toggleScrollClass();
+        });
+    }
+
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
-    }).on('selected.applicationmenu', (e, header) => {
-      const a = $(header).children('a');
-      self.handleDismissOnClick(a);
-    }).on('followlink.applicationmenu', (e, anchor) => {
-      self.handleDismissOnClick(anchor);
+    }).on('selected.applicationmenu', () => {
+      self.handleDismissOnClick();
+    }).on('followlink.applicationmenu', () => {
+      self.handleDismissOnClick();
+    }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
+      self.toggleScrollClass();
     });
 
     $(document).on('open-applicationmenu', () => {
       self.openMenu(undefined, true);
     }).on('close-applicationmenu', () => {
       self.closeMenu();
+    }).on('dismiss-applicationmenu', () => {
+      self.handleDismissOnClick();
     });
 
     $(window).on('scroll.applicationmenu', () => {
@@ -742,6 +806,7 @@ ApplicationMenu.prototype = {
 
     $('body').on('resize.applicationmenu', () => {
       self.testWidth();
+      self.toggleScrollClass();
     });
 
     if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {

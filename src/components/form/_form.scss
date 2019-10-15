@@ -35,6 +35,17 @@
     margin-top: 30px;
   }
 
+  .checkbox-group-label + .compound-field {
+    .field .checkbox-label,
+    .field .checkbox > label {
+      margin-top: 0;
+    }
+
+    .field.field-checkbox {
+      margin-bottom: 0;
+    }
+  }
+
   .field-checkbox {
     text-align: left;
   }
@@ -59,8 +70,13 @@
   .form-responsive {
     .field .checkbox-label,
     .field .checkbox > label {
-      margin-top: -10px;
+      margin-bottom: 13px;
+      margin-top: -1px;
     }
+  }
+
+  .form-responsive .checkbox-group-label + .compound-field .field .checkbox-label {
+    margin-bottom: 0;
   }
 }
 

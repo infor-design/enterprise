@@ -50,6 +50,8 @@ Soho.Locale.addCulture('ms-MY', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

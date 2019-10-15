@@ -69,7 +69,6 @@ import './validation/validation.jquery';
 import './validation/validation.utils';
 import './week-view/week-view.jquery';
 import './wizard/wizard.jquery';
-import './zoom/zoom.jquery';
 
 // Complex ====/
 import './datagrid/datagrid.jquery';

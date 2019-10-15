@@ -52,14 +52,6 @@
     }
   }
 
-  &:not(.toolbar-searchfield-wrapper):hover {
-    input:not([disabled]):not(:focus) {
-      + .icon {
-        color: $button-color-tertiary-hover-font;
-      }
-    }
-  }
-
   .icon-dropdown {
     margin-left: 5px;
   }

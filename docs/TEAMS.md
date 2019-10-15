@@ -18,6 +18,7 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor CloudSuite Healthcare | Angular Components | | `4.x` |
 | Infor CloudSuite Human Capital Management (HCM) | Angular Components | | `4.x` |
 | Infor CloudSuite Public Sector | Angular Components | | `4.x` |
+| Infor CloudSuite WMS Admin Console | IDS Components | Hui Lui | `4.x` |
 | Infor M3 | Typescript, Angular, Soho Xi Port | Gerardo.Marquez@infor.com | `4.x` |
 | Infor M3 Demand Planning | Typescript, Angular, [Odin](https://github.com/infor-cloud/m3-h5-sdk/tree/master/m3-odin) | carmelo.galicia@infor.com | `4.x` |
 | Infor M3 Sales Hub | Angular Rewrite | | `4.x` |

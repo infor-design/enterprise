@@ -1510,7 +1510,7 @@ Tabs.prototype = {
       if (!classList.contains('is-in-responsive-mode')) {
         classList.add('is-in-responsive-mode');
         classList.add('header-tabs');
-        classList.add('alternate');
+        if (!classList.contains('is-personalizable')) classList.add('alternate');
         classList.remove('vertical');
         if (handleRebuild) {
           rebuild();

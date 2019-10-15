@@ -62,7 +62,7 @@ describe('Lookup example tests', () => {
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
 
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
     await browser.driver.sleep(config.sleep);
     await element.all(by.className('trigger')).first().click();
     await browser.driver.sleep(config.sleep);
@@ -191,6 +191,7 @@ describe('Lookup filtering tests', () => {
 
   it('should apply a filter', async () => {
     await element(by.css('#product-lookup + .trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
     expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
 
@@ -364,6 +365,7 @@ describe('Lookup custom matching tests', () => {
     await browser.driver.sleep(301);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
@@ -390,14 +392,16 @@ describe('Lookup modal tests', () => {
 
     const lookupEl = await element(by.id('product-lookup'));
 
-    await browser.driver.sleep(301);
+    await browser.driver.sleep(config.sleep);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+
+    await browser.driver.sleep(config.sleep);
     await element(by.css('#modal-1-text .trigger')).click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
     await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-    await browser.driver.sleep(301);
+    await browser.driver.sleep(config.sleep);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2241202|Different Compressor');
   });
@@ -432,7 +436,7 @@ describe('Lookup single select serverside tests', () => {
 
       expect(await lookupEl.getAttribute('value')).toEqual('214220');
 
-      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
       await browser.driver.sleep(301);
       await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
       await browser.driver.sleep(1000);
@@ -442,7 +446,7 @@ describe('Lookup single select serverside tests', () => {
 
       expect(await lookupEl.getAttribute('value')).toEqual('214221');
 
-      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
       await browser.driver.sleep(301);
       await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
       await browser.driver.sleep(1000);
