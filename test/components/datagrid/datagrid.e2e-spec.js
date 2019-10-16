@@ -1591,7 +1591,7 @@ describe('Datagrid Empty Card Scrolling', () => {
   }
 });
 
-describe('Datagrid Empty Message Tests After Load', () => {
+fdescribe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load?layout=nofrills');
 
@@ -1621,7 +1621,7 @@ describe('Datagrid Empty Message Tests After Load', () => {
   }
 });
 
-describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
+fdescribe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');
 
