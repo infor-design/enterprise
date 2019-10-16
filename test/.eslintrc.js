@@ -3,6 +3,11 @@
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
 module.exports = {
+  'extends': [
+    'plugin:jasmine/recommended',
+    'plugin:jasmine-jquery/recommended'
+  ],
+
   'plugins': [
     'jasmine',
     'jasmine-jquery',

@@ -37,6 +37,11 @@ module.exports = {
     'sourceType': 'module'
   },
 
+  // Add ES6 import plugins
+  'plugins': [
+    'import'
+  ],
+
   'rules': {
     // require trailing commas in multiline object literals
     'comma-dangle': ['off', {
