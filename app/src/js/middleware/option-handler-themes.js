@@ -18,6 +18,7 @@ module.exports = function (app) {
 
     // set theme defaults
     const iconsPath = path.resolve(__dirname, '..', '..', '..', '..', 'src', 'components', 'icons');
+    const iconsEmptyPath = path.resolve(__dirname, '..', '..', '..', '..', 'src', 'components', 'emptymessage');
     res.opts.theme = {
       name: 'soho',
       variant: 'light',
@@ -61,10 +62,12 @@ module.exports = function (app) {
     }
     logger('info', `Setting theme to "theme-${res.opts.theme.name}-${res.opts.theme.variant}"`);
     const svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString();
+    const svgEmptyHtmlPartial = fs.readFileSync(`${iconsEmptyPath}/theme-${res.opts.theme.name}-svg-empty.html`).toString();
 
     // Set icons to the partials
     app.locals.partials = {
-      svgIcons: svgHtmlPartial
+      svgIcons: svgHtmlPartial,
+      svgEmptyIcons: svgEmptyHtmlPartial
     };
     logger('info', `Setting icons to "theme-${res.opts.theme.name}-svg.html"`);
 
