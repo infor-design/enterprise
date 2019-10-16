@@ -10,6 +10,7 @@ const statesData = require('../../../app/data/states-all.json');
 const statesExtraData = (function (data) {
   const modified = [].concat(data);
   modified.forEach((item) => {
+    // eslint-disable-next-line
     item.addedValue = 'sandwich';
   });
   return modified;
