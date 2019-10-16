@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.21.3
+
+### v4.21.3 Fixes
+
+- `[Locale]` Fixed a bug that the language would reset when opening some components if a seperate language is used. ([#2982](https://github.com/infor-design/enterprise/issues/2982))
+
 ## v4.21.2
 
 ### v4.21.2 Fixes

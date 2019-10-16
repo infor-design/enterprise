@@ -84,6 +84,8 @@ describe('Accordion lazy loading tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child'))), config.waitsFor);
 
+    await browser.driver.sleep(600);
+
     expect(await element(by.css('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child')).getText()).toEqual('Apples');
   });
 });
