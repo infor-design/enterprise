@@ -252,6 +252,14 @@ div.multiselect {
         left: 0;
       }
     }
+
+    &.is-ontop {
+      > .trigger {
+        .icon {
+          top: 9px;
+        }
+      }
+    }
   }
 
   ul {
