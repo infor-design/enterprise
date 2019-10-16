@@ -751,6 +751,24 @@ describe('Locale API', () => {
     expect(Locale.parseNumber(undefined)).toEqual(NaN);
   });
 
+  it('Should parse with decimal and group properties', () => {
+    // group = space; decimal = comma
+    Locale.set('fr-FR');
+    expect(Locale.parseNumber('1 234 567 890,1234')).toEqual(1234567890.1234);
+
+    // // group = D9AC; decimal = D9AB
+    Locale.set('ar-SA');
+    expect(Locale.parseNumber('1٬234٬567٬890٫1234')).toEqual(1234567890.1234);
+
+    // group = period; decimal = comma
+    Locale.set('es-ES');
+    expect(Locale.parseNumber('1.234.567.890,1234')).toEqual(1234567890.1234);
+
+    // group = comma; decimal = period
+    Locale.set('en-US');
+    expect(Locale.parseNumber('1,234,567,890.1234')).toEqual(1234567890.1234);
+  });
+
   it('Should parse with multiple group separators', () => {
     Locale.set('en-US');
 

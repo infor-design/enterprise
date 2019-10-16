@@ -1402,7 +1402,8 @@ const Locale = {  // eslint-disable-line
     const percentSign = numSettings ? numSettings.percentSign : '%';
     const currencySign = localeData.currencySign || '$';
 
-    numString = numString.replace(new RegExp(`\\${group}`, 'g'), '');
+    const exp = (group === ' ') ? new RegExp(/\s/, 'g') : new RegExp(`\\${group}`, 'g');
+    numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
     numString = numString.replace(currencySign, '');
