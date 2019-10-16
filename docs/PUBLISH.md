@@ -94,3 +94,4 @@ git push origin master
 ```
 
 1. Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)
+1. Post a message in announcements on ms teams
