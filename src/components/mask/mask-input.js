@@ -58,7 +58,7 @@ const DEFAULT_MASK_INPUT_OPTIONS = {
   guide: false,
   keepCharacterPositions: false,
   maskAPI: MaskAPI,
-  locale: '',
+  locale: null,
   pattern: undefined,
   patternOptions: {},
   placeholderChar: '_',

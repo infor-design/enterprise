@@ -264,3 +264,39 @@ describe('MonthView disable month selection tests', () => {
     expect(await prevButton.getAttribute('disabled')).toBeTruthy();
   });
 });
+
+describe('MonthView specific locale tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/monthview/test-specific-locale');
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  it('Should render a specific locale', async () => {
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual('maj 2019');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('søn');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('lør');
+  });
+});
+
+describe('MonthView specific language tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/monthview/test-specific-locale-lang');
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  it('Should render a specific locale and language', async () => {
+    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual('oktober 2019');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('søn');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('lør');
+  });
+});

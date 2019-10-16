@@ -1193,7 +1193,12 @@ const Locale = {  // eslint-disable-line
     let languageData = this.currentLanguage;
     if (options && options.locale) {
       const lang = options.locale.split('-')[0];
-      return this.languages[lang];
+      languageData = this.languages[lang];
+    }
+    if (options && options.locale
+      && this.currentLanguage.name !== this.currentLocale.name.substr(0, 2)
+      && this.languages[this.currentLanguage.name]) {
+      languageData = this.languages[this.currentLanguage.name];
     }
     if (options && options.language && this.languages[options.language]) {
       languageData = this.languages[options.language];
