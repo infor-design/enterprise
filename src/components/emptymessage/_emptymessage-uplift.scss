@@ -1,0 +1,19 @@
+// Empty Message - Uplift / Vibrant
+//================================================== //
+
+.icon-empty-state {
+  fill: transparent;
+  height: 75px;
+  width: 75px;
+
+  &.is-graphite {
+    color: $icon-empty-bg-color;
+    fill: transparent;
+  }
+}
+
+.card-empty-title,
+.widget-empty-title,
+.empty-title {
+  font-size: 2rem;
+}

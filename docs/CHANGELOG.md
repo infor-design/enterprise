@@ -4,9 +4,11 @@
 
 ### v4.23.0 Deprecation
 
+- `[Icons]` We added per theme empty state icons for both uplift (vibrant) and soho (subtle) themes. Because of this `svg-empty.html` is now deprecated. Please use the theme based files `theme-soho-svg-empty.html` and `theme-uplift-svg-empty.html`. ([#426](https://github.com/infor-design/design-system/issues/426))
+
 ### v4.23.0 Features
 
-- [`Accordion`] Added a new setting `expanderDisplay` that can display all expander button icons in the classic style, or with all "chevron" or "plus-minus"-style icons.  Deprecated the legacy `displayChevron` setting in favor of this change. ([#2900](https://github.com/infor-design/enterprise/issues/2900))
+- `[Accordion]` Added a new setting `expanderDisplay` that can display all expander button icons in the classic style, or with all "chevron" or "plus-minus"-style icons.  Deprecated the legacy `displayChevron` setting in favor of this change. ([#2900](https://github.com/infor-design/enterprise/issues/2900))
 
 ### v4.23.0 Fixes
 
