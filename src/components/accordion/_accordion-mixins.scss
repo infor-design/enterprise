@@ -50,21 +50,24 @@
 //================================================== //
 @mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
   > a {
+    padding-left: 0;
     padding-right: $a-padding;
   }
 
   > .icon,
   > [class^='btn'] {
+    margin-left: auto;
     margin-right: $icon-margin;
 
     + a {
-      padding-right: auto;
+      padding-right: 0;
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
+      padding-left: 0;
       padding-right: $li-padding;
     }
 
@@ -77,15 +80,18 @@
 
 @mixin right-align-cascade-styles-pane($rightPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
+    padding-left: 0;
     padding-right: $rightPadding;
   }
 
   &.has-icons {
     .accordion-header.no-icon > a {
+      padding-left: 0;
       padding-right: $iconLinkPadding;
     }
 
     .accordion-content {
+      padding-left: 0;
       padding-right: $iconContentPadding;
     }
   }

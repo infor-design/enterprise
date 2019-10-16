@@ -109,7 +109,7 @@ describe('Flex Toolbar', () => {
       expect(overflow[0]).toEqual(jasmine.any(ToolbarFlexItem));
       expect(overflow[0].overflowed).toBeTruthy();
       done();
-    }, 350);
+    }, 500);
   });
 
   it('Can programmatically navigate toolbar items', () => {
@@ -332,14 +332,14 @@ describe('Flex Toolbar', () => {
         const textButton = toolbarAPI.items[0];
 
         expect(textButton.overflowed).toBeFalsy();
-      }, 300);
+      }, 500);
 
       setTimeout(() => {
         const secondIconButton = toolbarAPI.items[2];
 
         expect(secondIconButton.overflowed).toBeTruthy();
         done();
-      }, 300);
+      }, 500);
     });
   });
 
