@@ -12,7 +12,8 @@ const COMPONENT_NAME = 'initialize';
 
 // Component Defaults
 const INITIALIZE_DEFAULTS = {
-  locale: 'en-US'
+  locale: 'en-US',
+  language: null // same as locale by default
 };
 
 // Contains excluded CSS selectors that prevent automatic initialization
@@ -412,6 +413,13 @@ function Initialize(element, settings) {
       locale: Locale.currentLocale.name
     };
   }
+
+  if (Locale.currentLanguage && Locale.currentLanguage.name
+    && Locale.currentLocale.name.substr(0, 2) !== Locale.currentLanguage.name
+    && !settings) {
+    newSettings.language = Locale.currentLanguage.name;
+  }
+
   this.settings = utils.mergeSettings(this.element[0], newSettings, INITIALIZE_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -429,6 +437,12 @@ Initialize.prototype = {
   init() {
     const self = this;
     Locale.set(this.settings.locale).done(() => {
+      if (this.settings.language) {
+        Locale.setLanguage(this.settings.language).done(() => {
+          self.initAll();
+        });
+        return;
+      }
       self.initAll();
     });
 
