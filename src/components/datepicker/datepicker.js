@@ -4,7 +4,6 @@ import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
-import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../mask/mask-input.jquery';
@@ -673,10 +672,6 @@ DatePicker.prototype = {
     this.trigger.popover(popoverOpts)
       .off('show.datepicker')
       .on('show.datepicker', () => {
-        if (env.os.name === 'ios') {
-          $('head').triggerHandler('disable-zoom');
-        }
-
         // Horizontal view on mobile
         if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
@@ -704,12 +699,6 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
-        if (env.os.name === 'ios') {
-          this.trigger.one('hide', () => {
-            $('head').triggerHandler('enable-zoom');
-          });
-        }
-
         this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });

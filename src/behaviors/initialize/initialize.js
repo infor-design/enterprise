@@ -35,14 +35,6 @@ function matchedItems(elem, selector) {
 // Array of plugin names, selectors (optional), and callback functions (optional),
 // for no-configuration initializations.
 const PLUGIN_MAPPINGS = [
-
-  // Mobile Zoom Control
-  // Needs manual invokation because the rest of initialization is scoped to the
-  // calling element, which is the <body> tag.
-  ['zoom', null, function () {
-    $('head').zoom();
-  }],
-
   // Application Menu
   ['applicationmenu', '#application-menu', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
