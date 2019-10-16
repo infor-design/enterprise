@@ -9905,7 +9905,7 @@ Datagrid.prototype = {
       self.setExpandedInDataset(parentRowIdx, !isExpanded);
 
       const setChildren = function (elem, lev, expanded) {
-        const nodes = elem.nextUntil(`[aria-level="${level}"]`);
+        const nodes = elem.nextUntil(`[aria-level="${lev}"]`);
 
         if (expanded) {
           nodes.each(function () {

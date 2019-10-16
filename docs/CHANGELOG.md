@@ -12,6 +12,7 @@
 
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
 - `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
+- `[Datagrid]` Fixed an issue where the tree children expand and collapse was not working. ([#633](https://github.com/infor-design/enterprise-ng/issues/633))
 - `[Datagrid]` Fixed an issue where the pager was not updating with updated method. ([#2759](https://github.com/infor-design/enterprise/issues/2759))
 - `[Datagrid]` Fixed an issue where string include zeroes not working with text filter. ([#2854](https://github.com/infor-design/enterprise/issues/2854))
 - `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
