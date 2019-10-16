@@ -30,7 +30,8 @@ describe('TimePicker settings', () => {
 
   it('Should set settings', () => {
     const settings = {
-      locale: '',
+      locale: null,
+      language: null,
       timeFormat: 'HH:mm:ss',
       minuteInterval: 5,
       secondInterval: 5,
@@ -45,7 +46,8 @@ describe('TimePicker settings', () => {
 
   it('Should update set settings via data', () => {
     const settings = {
-      locale: '',
+      locale: null,
+      language: null,
       timeFormat: 'HH:mm:ss',
       minuteInterval: 10,
       secondInterval: 10,
@@ -64,7 +66,8 @@ describe('TimePicker settings', () => {
 
   it('Should update set settings via parameter', () => {
     const settings = {
-      locale: '',
+      locale: null,
+      language: null,
       timeFormat: 'HH:mm:ss',
       minuteInterval: 10,
       secondInterval: 10,

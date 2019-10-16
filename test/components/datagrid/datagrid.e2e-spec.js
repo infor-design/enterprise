@@ -12,7 +12,8 @@ const openPersonalizationDialog = async () => {
   await element(by.css('li a[data-option="personalize-columns"')).click();
   await browser.driver.sleep(config.sleep);
   await browser.driver
-    .wait(protractor.ExpectedConditions.presenceOf(await element.all(by.css('input[data-column-id="hidden"]')).last()), config.waitsFor);
+    .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.modal-content'))), config.waitsFor);
+  await browser.driver.sleep(config.sleep);
 };
 
 describe('Datagrid Alternate Row Tests', () => {
