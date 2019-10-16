@@ -73,6 +73,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
  * @param {string} [settings.calendarName] The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
@@ -121,7 +122,8 @@ const DATEPICKER_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   calendarName: null,
-  locale: '',
+  locale: null,
+  language: null,
   useUTC: false,
   autoSize: false,
   hideButtons: false,
@@ -168,7 +170,9 @@ DatePicker.prototype = {
     // Set the current calendar
     this.setLocale();
     this.addAria();
-    this.setCurrentCalendar();
+    if (!this.settings.locale && !this.settings.lanuage) {
+      this.setCurrentCalendar();
+    }
     this.setSize();
   },
 
@@ -183,6 +187,11 @@ DatePicker.prototype = {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
         this.setCurrentCalendar();
+      });
+    }
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language).done(() => {
+        this.language = this.settings.language;
       });
     }
   },
@@ -224,7 +233,7 @@ DatePicker.prototype = {
    */
   addAria() {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('PressDown', this.locale.name)}</span>`);
+    this.label.append(`<span class="audible">${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}</span>`);
   },
 
   /**
@@ -502,10 +511,10 @@ DatePicker.prototype = {
     this.footer = $('' +
       `<div class="popup-footer">
         <button type="button" class="is-cancel btn-tertiary">
-          ${Locale.translate('Clear', this.locale.name)}
+          ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
         </button>
         <button type="button" class="is-select btn-primary">
-          ${Locale.translate('Apply', this.locale.name)}
+          ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
         </button>
       </div>`);
 
@@ -513,10 +522,10 @@ DatePicker.prototype = {
       this.footer = $('' +
         `<div class="popup-footer">
           <button type="button" class="is-cancel btn-tertiary">
-            ${Locale.translate('Clear', this.locale.name)}
+            ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
           </button>
           <button type="button" class="is-select-month btn-primary">
-            ${Locale.translate('Apply', this.locale.name)}
+            ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
           </button>
         </div>`);
     }

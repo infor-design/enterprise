@@ -327,3 +327,32 @@ describe('Timepicker Custom Validation Tests', () => {
     expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 });
+
+describe('Timepicker specific locale/langauge tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/timepicker/test-specific-locale');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should set time and lanuage independently', async () => {
+    let timepickerEl = await element(by.id('timepicker-1'));
+    await element(by.css('#timepicker-1 + .icon')).click();
+
+    expect(await element(by.css('.btn-modal-primary')).getText()).toEqual('Indstil tid');
+
+    await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+
+    expect(await timepickerEl.getAttribute('value')).toEqual('01.00');
+
+    timepickerEl = await element(by.id('timepicker-2'));
+    await element(by.css('#timepicker-2 + .icon')).click();
+
+    expect(await element(by.css('.btn-modal-primary')).getText()).toEqual('Sätt tid');
+    await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+
+    expect(await timepickerEl.getAttribute('value')).toEqual('01:00');
+  });
+});
