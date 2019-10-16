@@ -13,6 +13,7 @@ const openPersonalizationDialog = async () => {
   await browser.driver.sleep(config.sleep);
   await browser.driver
     .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.modal-content'))), config.waitsFor);
+  await browser.driver.sleep(config.sleep);
 };
 
 describe('Datagrid Alternate Row Tests', () => {

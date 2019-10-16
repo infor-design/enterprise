@@ -18,6 +18,7 @@
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 - `[Locale]` Added support for fetching minified culture files. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
 - `[Locale]` Added new translations for missing entries. ([#2896](https://github.com/infor-design/enterprise/issues/2896))
+- `[Locale]` Fixed a bug that the language would reset when opening some components if a seperate language is used. ([#2982](https://github.com/infor-design/enterprise/issues/2982))
 - `[Modal]` Added support for a "fullsize" sheet display at all times, or simply beneath the responsive breakpoint. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
 - `[Tabs-Vertical]` Added the ability to personalize Vertical Tabs in accordance with theming. ([#2824](https://github.com/infor-design/enterprise/issues/2824))
 - `[Wizard]` Added support for short labels. If short labels not supplied it will add ellipsis to text and tooltip. ([#2604](https://github.com/infor-design/enterprise/issues/2604))
