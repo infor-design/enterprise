@@ -274,6 +274,12 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-text {
     width: $toolbarsearchfield-filled-out-width;
 
+    .icon {
+      &.close {
+        color: $searchfield-text-color;
+      }
+    }
+
     &.active {
       width: $toolbarsearchfield-max-width;
     }
