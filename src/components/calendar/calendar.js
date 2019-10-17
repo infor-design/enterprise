@@ -15,6 +15,7 @@ const COMPONENT_NAME_DEFAULTS = {
   ],
   events: [],
   locale: null,
+  language: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
   showViewChanger: true,
@@ -42,6 +43,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.eventTypes] An array of objects with data for the event types.
  * @param {array} [settings.events] An array of objects with data for the events.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {array} [settings.month] Initial month to show.
  * @param {array} [settings.year] Initial year to show.
  * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
@@ -104,6 +106,11 @@ Calendar.prototype = {
    * @returns {void}
    */
   setLocale() {
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    }
+
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
@@ -141,7 +148,7 @@ Calendar.prototype = {
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
       eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" checked="${eventType.checked ? 'true' : 'false'}" ${eventType.disabled ? 'disabled="true"' : ''} />
-        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name }) : eventType.label}</label><br/>`;
+        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
     return this;
@@ -451,7 +458,7 @@ Calendar.prototype = {
       false,
       event.isFullDay
     ));
-    event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name }) : Locale.translate('Day', { locale: this.locale.name });
+    event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name, language: this.language }) : Locale.translate('Day', { locale: this.locale.name, language: this.language });
     event.daysUntil = event.starts ? this.dateDiff(new Date(event.starts), new Date()) : 0;
     event.durationHours = this.dateDiff(new Date(event.starts), new Date(event.ends), true);
     event.isDays = true;
@@ -463,18 +470,18 @@ Calendar.prototype = {
       event.isDays = false;
       event.isAllDay = false;
       delete event.duration;
-      event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: this.locale.name }) : Locale.translate('Hour', { locale: this.locale.name });
+      event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: this.locale.name, language: this.language }) : Locale.translate('Hour', { locale: this.locale.name, language: this.language });
     }
     if (event.isAllDay.toString() === 'true') {
       event.isDays = true;
       delete event.durationHours;
-      event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name }) : Locale.translate('Day', { locale: this.locale.name });
+      event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name, language: this.language }) : Locale.translate('Day', { locale: this.locale.name, language: this.language });
       event.duration = this.dateDiff(new Date(event.starts), new Date(event.ends));
     }
     if (event.duration === 0 && event.isAllDay.toString() === 'true') {
       event.isDays = true;
       event.duration = 1;
-      event.durationUnits = Locale.translate('Day', { locale: this.locale.name });
+      event.durationUnits = Locale.translate('Day', { locale: this.locale.name, language: this.language });
     }
     if (event.starts) {
       const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
@@ -514,7 +521,7 @@ Calendar.prototype = {
 
     if (eventCnt >= 2) {
       const moreSpan = container.querySelector('.calendar-event-more');
-      const moreText = Locale.translate('More', { locale: this.locale.name }).replace('...', '');
+      const moreText = Locale.translate('More', { locale: this.locale.name, language: this.language }).replace('...', '');
       if (!moreSpan) {
         node = document.createElement('span');
         DOM.addClass(node, 'calendar-event-more');
@@ -585,7 +592,7 @@ Calendar.prototype = {
           const iconStatus = icon ? icon.querySelector('.icon').getAttribute('data-status') : '';
 
           if (title.offsetWidth > ui[0].scrollWidth - (icon ? icon.offsetWidth : 0)) {
-            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, { locale: this.locale.name }, false)})` : ''}`);
+            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, { locale: this.locale.name, language: this.language }, false)})` : ''}`);
             return;
           }
           response(false);
@@ -1033,12 +1040,12 @@ Calendar.prototype = {
     }
 
     if (event.comments === undefined && addPlaceholder) {
-      event.comments = Locale.translate('NoCommentsEntered', { locale: this.locale.name });
+      event.comments = Locale.translate('NoCommentsEntered', { locale: this.locale.name, language: this.language });
       event.noComments = true;
     }
 
     if (!event.subject && addPlaceholder) {
-      event.subject = Locale.translate('NoTitle', { locale: this.locale.name });
+      event.subject = Locale.translate('NoTitle', { locale: this.locale.name, language: this.language });
     }
 
     if (!event.type) {
@@ -1054,7 +1061,7 @@ Calendar.prototype = {
     }
 
     if (event.title === 'NewEvent') {
-      event.title = Locale.translate('NewEvent', { locale: this.locale.name });
+      event.title = Locale.translate('NewEvent', { locale: this.locale.name, language: this.language });
     }
   },
 

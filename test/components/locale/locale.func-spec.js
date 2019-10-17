@@ -888,6 +888,24 @@ describe('Locale API', () => {
     expect(Locale.parseNumber(undefined)).toEqual(NaN);
   });
 
+  it('Should parse with decimal and group properties', () => {
+    // group = space; decimal = comma
+    Locale.set('fr-FR');
+    expect(Locale.parseNumber('1 234 567 890,1234')).toEqual(1234567890.1234);
+
+    // // group = D9AC; decimal = D9AB
+    Locale.set('ar-SA');
+    expect(Locale.parseNumber('1٬234٬567٬890٫1234')).toEqual(1234567890.1234);
+
+    // group = period; decimal = comma
+    Locale.set('es-ES');
+    expect(Locale.parseNumber('1.234.567.890,1234')).toEqual(1234567890.1234);
+
+    // group = comma; decimal = period
+    Locale.set('en-US');
+    expect(Locale.parseNumber('1,234,567,890.1234')).toEqual(1234567890.1234);
+  });
+
   it('Should parse with multiple group separators', () => {
     Locale.set('en-US');
 
@@ -1591,6 +1609,19 @@ describe('Locale API', () => {
       expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
       done();
     });
+  });
+
+  it('Should be able get translations in a non current locale', (done) => {
+    Locale.set('fi-FI');
+    Locale.setLanguage('sv');
+    Locale.getLocale('de-DE');
+
+    expect(Locale.translate('Required', { locale: 'fi-FI' })).toEqual('Obligatoriskt');
+    expect(Locale.translate('Required', { language: 'de' })).toEqual('Obligatorisch');
+    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'de' })).toEqual('Obligatorisch');
+    expect(Locale.translate('Required', { language: 'sv' })).toEqual('Obligatoriskt');
+    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'sv' })).toEqual('Obligatoriskt');
+    done();
   });
 
   it('Should format times correctly', () => {

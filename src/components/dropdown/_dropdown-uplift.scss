@@ -55,6 +55,16 @@ div.multiselect {
       }
     }
   }
+
+  &.ffdropdown {
+    &.is-ontop {
+      > .trigger {
+        .icon {
+          top: 10px;
+        }
+      }
+    }
+  }
 }
 
 // Adjust Short Field Dropdowns

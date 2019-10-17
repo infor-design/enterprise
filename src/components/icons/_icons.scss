@@ -643,36 +643,3 @@ html[dir='rtl'] {
   }
 
 }
-
-// Empty State Widget Icons
-// NOTE: These styles also live inside of "<project root>/svg/icons-empty.svg"
-//================================================== //
-
-.icon-empty-state {
-  color: $theme-color-brand-primary-base; // Themable Empty Icons
-  display: inline-block;
-  fill: $theme-color-brand-primary-base; // Themable Empty Icons
-  height: 65px;
-  position: relative;
-  width: 65px;
-}
-
-.is-graphite.icon-empty-state {
-  color: $icon-empty-bg-color; // Grey Scale icon
-}
-
-// color defs
-
-.icon-empty-offset-color {
-  opacity: 0.4;
-}
-
-.icon-empty-center-color {
-  color: $theme-color-palette-white;
-}
-
-.space-icons {
-  svg {
-    margin-right: 20px;
-  }
-}

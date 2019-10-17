@@ -18,7 +18,8 @@ const TIMEPICKER_MODES = ['standard', 'range'];
 // Timepicker defaults
 const TIMEPICKER_DEFAULTS = function () {
   return {
-    locale: '',
+    locale: null,
+    language: null,
     timeFormat: undefined,
     minuteInterval: 5,
     secondInterval: 5,
@@ -35,6 +36,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {string} [settings.timeFormat = 'h:mm a'] The time format, defaults to the current locales time format.
  * @param {number} [settings.minuteInterval = 5]  Integer from 1 to 60.  Multiples of this value
  *  are displayed as options in the minutes dropdown.
@@ -79,6 +81,11 @@ TimePicker.prototype = {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
         this.setCurrentCalendar();
+      });
+    }
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language).done(() => {
+        this.language = this.settings.language;
       });
     }
   },
@@ -203,7 +210,7 @@ TimePicker.prototype = {
     // TODO: Confirm this with Accessibility Team
     this.label = $(`label[for="${this.element.attr('id')}"]`);
     this.label.find('.audible').remove();
-    this.label.append(`<span class="audible">${Locale.translate('UseArrow', { locale: this.locale.name })}</span>`);
+    this.label.append(`<span class="audible">${Locale.translate('UseArrow', { locale: this.locale.name, language: this.language })}</span>`);
     return this;
   },
 
@@ -425,7 +432,7 @@ TimePicker.prototype = {
       self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours', { locale: this.locale.name })}</label>`));
+    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours', { locale: this.locale.name, language: this.language })}</label>`));
     timeParts.append(this.hourSelect);
     timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
 
@@ -450,7 +457,7 @@ TimePicker.prototype = {
       this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes', { locale: this.locale.name })}</label>`));
+    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes', { locale: this.locale.name, language: this.language })}</label>`));
     timeParts.append(this.minuteSelect);
 
     // Seconds Picker
@@ -476,7 +483,7 @@ TimePicker.prototype = {
       }
 
       timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
-      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds', { locale: this.locale.name })}</label>`));
+      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds', { locale: this.locale.name, language: this.language })}</label>`));
       timeParts.append(this.secondSelect);
     }
 
@@ -498,7 +505,7 @@ TimePicker.prototype = {
 
         localeCount++;
       }
-      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod', { locale: this.locale.name })}</label>`));
+      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod', { locale: this.locale.name, language: this.language })}</label>`));
       timeParts.append(this.periodSelect);
     }
 
@@ -507,7 +514,7 @@ TimePicker.prototype = {
       // self.afterShow(this.settings.parentElement);
       self.popup = this.settings.parentElement.find('.timepicker-popup-content').addClass('timepicker-popup').attr('id', 'timepicker-popup');
     } else {
-      popupContent.append(`<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">${Locale.translate('SetTime', { locale: this.locale.name })}</button></div>`);
+      popupContent.append(`<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">${Locale.translate('SetTime', { locale: this.locale.name, language: this.language })}</button></div>`);
 
       let placementParent = this.element;
       let placementParentXAlignment = (this.isRTL ? 'right' : 'left');
