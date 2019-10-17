@@ -66,7 +66,7 @@ describe('Autocomplete API', () => {
 
     autocompleteAPI.select($(resultItems[0].querySelector('a')), data);
 
-    expect(spySelectedEvent).toHaveBeenTriggered()
+    expect(spySelectedEvent).toHaveBeenTriggered();
     expect(spySelectedEvent.calls.count()).toEqual(1);
     done();
   });
