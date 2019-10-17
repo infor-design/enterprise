@@ -1229,6 +1229,34 @@ describe('Datepicker Time in Cs-Cz Format Tests', () => {
   });
 });
 
+describe('Datepicker Body Re Initialize Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-validation-body-reinitialize');
+  });
+
+  it('Should Validate after body re-initialize', async () => {
+    let datepickerEl = await element(by.id('date-field'));
+    await datepickerEl.sendKeys('123');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.message-text')).isPresent()).toBe(true);
+    expect(await element(by.css('.message-text')).getText()).toEqual('Invalid Date');
+
+    await datepickerEl.clear();
+    await element(by.css('#btn-reinitialize')).click();
+    await browser.driver.sleep(config.sleep);
+
+    datepickerEl = await element(by.id('date-field'));
+    await datepickerEl.sendKeys('123');
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.message-text')).isPresent()).toBe(true);
+    expect(await element(by.css('.message-text')).getText()).toEqual('Invalid Date');
+  });
+});
+
 describe('Datepicker specific locale/langauge tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
