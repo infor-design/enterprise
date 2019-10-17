@@ -20,6 +20,7 @@
 - `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
 - `[Locale]` Fixed an issue where some culture files does not have a name property in the calendar. ([#2880](https://github.com/infor-design/enterprise/issues/2880))
 - `[Locale]` Fixed an issue where cultures with a group of space was not parsing correctly. ([#2959](https://github.com/infor-design/enterprise/issues/2959))
+- `[Lookup]` Fixed missing X button in searchfield on a mobile viewport. ([#2948](https://github.com/infor-design/enterprise/issues/2948))
 - `[Pie]` Fixed an issue where legends in pie chart gets cut off on mobile view. ([#902](https://github.com/infor-design/enterprise/issues/902))
 - `[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
 - `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
