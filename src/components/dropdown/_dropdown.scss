@@ -118,7 +118,7 @@ div.multiselect {
     height: 16px;
     left: 14px;
     position: absolute;
-    top: 9px;
+    top: 11px;
     vertical-align: middle;
     width: 16px;
 
@@ -221,6 +221,10 @@ div.multiselect {
   width: auto;
   z-index: 4501;
 
+  @media screen and (max-height: 270px) {
+    background-color: inherit;
+  }
+
   &.text-align-reverse {
     text-align: right;
   }
@@ -240,6 +244,22 @@ div.multiselect {
 
   &.is-ontop {
     box-shadow: $dropdown-box-shadow-top;
+  }
+
+  &.ffdropdown {
+    > .trigger {
+      .icon {
+        left: 0;
+      }
+    }
+
+    &.is-ontop {
+      > .trigger {
+        .icon {
+          top: 9px;
+        }
+      }
+    }
   }
 
   ul {
