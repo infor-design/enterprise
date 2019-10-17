@@ -1,5 +1,3 @@
-
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('es-US', {
   // layout/language

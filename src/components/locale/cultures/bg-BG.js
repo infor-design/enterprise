@@ -1,4 +1,3 @@
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('bg-BG', {
   // https://blazingbulgaria.wordpress.com/2012/06/15/time-in-bulgarian/

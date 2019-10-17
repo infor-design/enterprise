@@ -1,5 +1,3 @@
-
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('ms-MY', {
   // layout/language
