@@ -12,6 +12,7 @@
 
 ### v4.23.0 Fixes
 
+- `[Calendar]` Fixed disabled legend label color on vibrant/uplift with dark Variant theme. ([#2965](https://github.com/infor-design/enterprise/issues/2965))
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
 - `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
 - `[Datagrid]` Fixed an issue where the pager was not updating with updated method. ([#2759](https://github.com/infor-design/enterprise/issues/2759))
