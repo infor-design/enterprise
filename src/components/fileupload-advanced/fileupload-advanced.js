@@ -275,7 +275,8 @@ FileUploadAdvanced.prototype = {
       * @property {object} file - file to set the status
       */
       this.element.triggerHandler('beforecreatestatus', [files[i]]);
-      /* global FormData */
+
+      // use FormData API
       const fd = new FormData();
       fd.append(`${fileName}[]`, files[i]);
 
