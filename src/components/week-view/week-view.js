@@ -95,7 +95,6 @@ WeekView.prototype = {
       this.rendered = false;
       return this;
     }
-
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
@@ -110,6 +109,16 @@ WeekView.prototype = {
    */
   showWeek(startDate, endDate) {
     this.numberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+    if (this.numberOfDays === 0) {
+      this.element.addClass('is-day-view');
+      this.isDayView = true;
+      this.element.find('#calendar-view-changer').val('day').trigger('updated');
+    }
+    if (this.numberOfDays !== 7) {
+      this.hasIrregularDays = true;
+    }
+
     // Create the header consisting of days in the range
     this.weekHeader = `<thead class="week-view-table-header"><tr><th><div class="week-view-header-wrapper"><span class="audible">${Locale.translate('Hour')}</span></div>`;
     if (this.settings.showAllDay) {
@@ -152,7 +161,7 @@ WeekView.prototype = {
 
     // Add the time line and update the text on the month
     this.addTimeLine();
-    this.showMonth(startDate, endDate);
+    this.showToolbarMonth(startDate, endDate);
   },
 
   /**
@@ -162,7 +171,7 @@ WeekView.prototype = {
    * @param {date} endDate The end of the week or range.
    * @returns {void}
    */
-  showMonth(startDate, endDate) {
+  showToolbarMonth(startDate, endDate) {
     const startMonth = Locale.formatDate(startDate, { pattern: 'MMMM', locale: this.locale.name });
     const endMonth = Locale.formatDate(endDate, { pattern: 'MMMM', locale: this.locale.name });
     const startYear = Locale.formatDate(startDate, { pattern: 'yyyy', locale: this.locale.name });
@@ -222,7 +231,7 @@ WeekView.prototype = {
       isAlternate: false,
       isMenuButton: true,
       showViewChanger: this.settings.showViewChanger,
-      viewChangerValue: 'week'
+      viewChangerValue: !this.isDayView ? 'week' : 'day'
     });
     this.monthField = this.header.find('#monthview-datepicker-field');
   },
@@ -240,24 +249,46 @@ WeekView.prototype = {
     this.element.off(`change-date.${COMPONENT_NAME}`).on(`change-date.${COMPONENT_NAME}`, (e, args) => {
       const startDate = args.isToday ? new Date() : args.selectedDate;
       this.currentDate = startDate;
-      this.settings.startDate = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
-      this.settings.endDate = new Date(this.settings.startDate);
-      this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays);
+
+      if (this.isDayView) {
+        this.settings.startDate = startDate;
+        this.settings.endDate = startDate;
+      } else {
+        this.settings.startDate = this.hasIrregularDays ? startDate :
+          dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        this.settings.endDate = new Date(this.settings.startDate);
+        this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays);
+      }
       this.showWeek(this.settings.startDate, this.settings.endDate);
     });
 
     this.element.off(`change-next.${COMPONENT_NAME}`).on(`change-next.${COMPONENT_NAME}`, () => {
-      this.settings.startDate.setDate(this.settings.startDate.getDate() + this.numberOfDays);
-      this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays);
-      this.showWeek(this.settings.startDate, this.settings.endDate);
+      this.advanceDays(true);
     });
 
     this.element.off(`change-prev.${COMPONENT_NAME}`).on(`change-prev.${COMPONENT_NAME}`, () => {
-      this.settings.startDate.setDate(this.settings.startDate.getDate() - this.numberOfDays);
-      this.settings.endDate.setDate(this.settings.endDate.getDate() - this.numberOfDays);
-      this.showWeek(this.settings.startDate, this.settings.endDate);
+      this.advanceDays(false);
     });
     return this;
+  },
+
+  /**
+   * Handle updated settings and values.
+   * @param {boolean} advance Whether to go up or down in days.
+   */
+  advanceDays(advance) {
+    let diff = (this.isDayView ? 1 : this.numberOfDays);
+    if (!advance) {
+      diff = -diff;
+    }
+    this.settings.startDate.setDate(this.settings.startDate.getDate() + diff);
+    if (this.isDayView) {
+      this.settings.endDate = this.settings.startDate;
+    } else {
+      this.settings.endDate.setDate(this.settings.endDate.getDate() + diff);
+    }
+    this.currentDate = this.settings.startDate;
+    this.showWeek(this.settings.startDate, this.settings.endDate);
   },
 
   /**

@@ -111,8 +111,7 @@ CalendarToolbar.prototype = {
             <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
               <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name })}</option>
               <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name })}</option>
-              <option value="day" disabled ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name })}</option>
-              <option value="schedule" disabled ${this.settings.viewChangerValue === 'schedule' ? ' selected' : ''}>${Locale.translate('Schedule', { locale: this.locale.name })}</option>
+              <option value="day" ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name })}</option>
             </select>
           </div>`}
         </div>
