@@ -502,8 +502,12 @@ Header.prototype = {
    * @returns {void}
    */
   initPageChanger() {
-    const changer = this.element.find('.page-changer');
-    const api = changer.data('popupmenu');
+    this.changer = this.element.find('.page-changer');
+    const api = this.changer.data('popupmenu');
+    if (!api) {
+      this.changer.popupmenu();
+    }
+
     const menu = api.menu;
     const colorArea = menu.find('li.personalization-colors');
 
@@ -519,7 +523,7 @@ Header.prototype = {
       colorArea.replaceWith(colorsHtml);
     }
 
-    changer.on('selected.header', (e, link) => {
+    this.changer.on('selected.header', (e, link) => {
       // Change Theme with Variant
       const themeNameAttr = link.attr('data-theme-name');
       const themeVariantAttr = link.attr('data-theme-variant');
@@ -884,6 +888,15 @@ Header.prototype = {
     this.unbind();
     if (this.hasTitleButton) {
       this.toolbarElem.removeClass('has-title-button');
+    }
+
+    if (this.changer) {
+      const api = this.changer.data('popupmenu');
+      if (api && typeof api.destroy === 'function') {
+        api.destroy();
+      }
+      this.changer.remove();
+      delete this.changer;
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);
