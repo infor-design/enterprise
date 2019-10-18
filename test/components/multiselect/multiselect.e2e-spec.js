@@ -325,9 +325,18 @@ describe('Multiselect typeahead-reloading tests', () => {
 describe('Multiselect placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-placeholder');
+
+    const multiselectEl = await element(by.css('select.multiselect + .dropdown-wrapper div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
   });
 
   it('Show a placeholder', async () => {
-    expect(await element.all(by.css('[data-placeholder-text]')).first().isDisplayed()).toBeTruthy();
+    const selector = 'select.multiselect + .dropdown-wrapper div.dropdown [data-placeholder-text]';
+    const placeholderEl = await element(by.css(selector));
+
+    expect(await element.all(by.css(selector)).count()).toEqual(1);
+    expect(await placeholderEl.isDisplayed()).toBeTruthy();
+    expect(await placeholderEl.getAttribute('data-placeholder-text')).toEqual('Select a State');
   });
 });
