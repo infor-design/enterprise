@@ -803,7 +803,10 @@ Place.prototype = {
       (containerBleed ? windowW : containerRect.right) - placementObj.containerOffsetX;
     const bottomViewportEdge = (accountForScrolling ? scrollY : 0) +
       (containerBleed ? windowH : containerRect.bottom) - placementObj.containerOffsetY;
-    let d;
+    const availableX = rightViewportEdge - leftViewportEdge;
+    const availableY = bottomViewportEdge - topViewportEdge;
+    let dX = 0;
+    let dY = 0;
 
     // Shrink in each direction.
     // The value of the "containerOffsets" is "factored out" of each calculation,
@@ -811,46 +814,56 @@ Place.prototype = {
     placementObj.nudges = placementObj.nudges || {};
 
     if (useX) {
+      if (rect.width > availableX) {
+        placementObj.width = availableX;
+      }
+
       // Left
       if (rect.left < leftViewportEdge) {
-        d = Math.abs(leftViewportEdge - rect.left);
+        dX = Math.abs(leftViewportEdge - rect.left);
         if (rect.right >= rightViewportEdge) {
-          d -= placementObj.containerOffsetX;
+          dX -= placementObj.containerOffsetX;
         }
-        placementObj.width = rect.width - d;
-        placementObj.setCoordinate('x', placementObj.x + d);
-        placementObj.nudges.x += d;
       }
 
       // Right
       if (rect.right > rightViewportEdge) {
-        d = Math.abs(rect.right - rightViewportEdge);
+        dX = Math.abs(rect.right - rightViewportEdge);
         if (rect.left <= leftViewportEdge) {
-          d -= placementObj.containerOffsetX;
+          dX -= placementObj.containerOffsetX;
         }
-        placementObj.width = rect.width - d;
+      }
+
+      if (dX !== 0) {
+        placementObj.setCoordinate('x', placementObj.x + dX);
+        placementObj.nudges.x += dX;
       }
     }
 
     if (useY) {
+      if (rect.height > availableY) {
+        placementObj.height = availableY;
+      }
+
       // Top
       if (rect.top < topViewportEdge) {
-        d = Math.abs(topViewportEdge - rect.top);
+        dY = Math.abs(topViewportEdge - rect.top);
         if (rect.bottom >= bottomViewportEdge) {
-          d -= placementObj.containerOffsetY;
+          dY -= placementObj.containerOffsetY;
         }
-        placementObj.height = rect.height - d;
-        placementObj.setCoordinate('y', placementObj.y + d);
-        placementObj.nudges.y += d;
       }
 
       // Bottom
       if (rect.bottom > bottomViewportEdge) {
-        d = Math.abs(rect.bottom - bottomViewportEdge);
+        dY = Math.abs(rect.bottom - bottomViewportEdge);
         if (rect.top <= topViewportEdge) {
-          d -= placementObj.containerOffsetY;
+          dY -= placementObj.containerOffsetY;
         }
-        placementObj.height = rect.height - d;
+      }
+
+      if (dY !== 0) {
+        placementObj.setCoordinate('y', placementObj.y + dY);
+        placementObj.nudges.y += dY;
       }
     }
 
