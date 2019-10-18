@@ -42,7 +42,7 @@
     color: $trigger-icon-fill-color;
     cursor: pointer;
     height: 16px;
-    margin-left: -26px;
+    margin-left: -23px;
     margin-top: 9px;
     position: absolute;
     width: 16px;
@@ -93,6 +93,19 @@
 // Popup Adjustments
 .monthview-popup.popover {
   max-width: inherit;
+
+  // Week picker adjustments
+  &.is-range-week {
+    .monthview td .day-text {
+      transition: none;
+    }
+
+    tr:focus {
+      border-radius: 50px;
+      box-shadow: 0 0 0 1px $input-color-focus-border;
+      outline: none;
+    }
+  }
 
   .tooltip-content {
     padding: 0;

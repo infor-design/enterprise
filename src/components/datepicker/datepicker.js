@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { dateUtils } from '../../utils/date';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
@@ -34,7 +35,7 @@ const COMPONENT_NAME = 'datepicker';
  *  rounds the minutes value to the nearest interval when the field is blurred.
  * @param {string} [settings.dateFormat='locale'] Defaults to current locale but can be
  * @param {string} [settings.placeholder=false] Text to show in input element while empty.
- * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
+ * @param {number} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
@@ -71,6 +72,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.range.selectForward=false] Range only in forward direction.
  * @param {boolean} [settings.range.selectBackward=false] Range only in backward direction.
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
+ * @param {boolean} [settings.range.selectWeek=false] If true will act as a week picker.
  * @param {string} [settings.calendarName] The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
@@ -91,7 +93,7 @@ const DATEPICKER_DEFAULTS = {
   roundToInterval: undefined,
   dateFormat: 'locale', // or can be a specific format
   placeholder: false,
-  firstDayOfWeek: null,
+  firstDayOfWeek: 0,
   disable: {
     dates: [],
     minDate: '',
@@ -120,7 +122,8 @@ const DATEPICKER_DEFAULTS = {
     maxDays: 0, // Maximum days
     selectForward: false, // Only in forward direction
     selectBackward: false, // Only in backward direction
-    includeDisabled: false // if true range will include disable dates in it
+    includeDisabled: false, // if true range will include disable dates in it
+    selectWeek: false // if true will act as a week picker
   },
   calendarName: null,
   locale: null,
@@ -167,6 +170,13 @@ DatePicker.prototype = {
     // Hide icon if datepicker input is hidden
     if (this.element.hasClass('hidden')) {
       this.trigger.addClass('hidden');
+    }
+
+    // Enable classes and settings for week selection
+    if (this.settings.range.selectWeek) {
+      this.settings.selectForward = true;
+      this.settings.minDays = 6;
+      this.settings.maxDays = 7;
     }
 
     // Set the current calendar
@@ -226,7 +236,7 @@ DatePicker.prototype = {
     const value = elem.value;
 
     elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(value, 45, $(elem).css('font'))}px`;
+    elem.style.width = `${stringUtils.textWidth(value, 50, $(elem).css('font'))}px`;
   },
 
   /**
@@ -288,7 +298,7 @@ DatePicker.prototype = {
 
         // Tab closes Date Picker and goes to next field on the modal
         if (key === 9) {
-          if (s.range.useRange && $(e.target).is('.next')) {
+          if (s.range.useRange && $(e.target).is('.next') && !s.range.selectWeek) {
             this.calendarAPI.days.find('td:visible:last').attr('tabindex', 0).focus();
           } else {
             this.containFocus(e);
@@ -478,16 +488,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Open the calendar popup.
-   * This method is slated to be removed in a future v4.15.0 or v5.0.0.
-   * @deprecated as of v4.9.0. Please use `openCalendar()` instead.
-   * @returns {void}
-   */
-  open() {
-    return deprecateMethod(this.openCalendar, this.open).apply(this);
-  },
-
-  /**
    * Open the calendar in a popup
    * @private
    * @returns {void}
@@ -629,7 +629,24 @@ DatePicker.prototype = {
     // Handle day change
     this.settings.onSelected = (node, args) => {
       this.currentDate = new Date(args.year, args.month, args.day);
-      if (self.settings.range.useRange && self.settings.range.first) {
+
+      if (self.settings.range.useRange && self.settings.range.first &&
+        self.settings.range.selectWeek) {
+        const first = dateUtils.firstDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+        const last = dateUtils.lastDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+        self.settings.range.first = {};
+        self.settings.range.second = undefined;
+
+        self.setWeekRange(
+          { day: first.getDate(), month: first.getMonth(), year: first.getFullYear() },
+          { day: last.getDate(), month: last.getMonth(), year: last.getFullYear() }
+        );
+        self.closeCalendar();
+        self.element.focus();
+        return;
+      }
+      if (self.settings.range.useRange && self.settings.range.first &&
+        !self.settings.range.selectWeek) {
         return;
       }
       self.insertDate(this.currentDate);
@@ -639,6 +656,23 @@ DatePicker.prototype = {
         self.element.focus();
       }
     };
+
+    if (this.settings.range.useRange && this.settings.range.selectWeek) {
+      this.settings.onKeyDown = (args) => {
+        if (args.key === 37 || args.key === 39) {
+          return false;
+        }
+        if (args.key === 38 || args.key === 40) { // up and down a week
+          // TODO - Later if this is really needed.
+          return false;
+        }
+        if (args.key === 13) { // select a week
+          // TODO - Later if this is really needed.
+          return false;
+        }
+        return true;
+      };
+    }
 
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
@@ -676,7 +710,7 @@ DatePicker.prototype = {
       placement: 'bottom',
       popover: true,
       trigger: 'immediate',
-      extraClass: 'monthview-popup',
+      extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
       tooltipElement: '#monthview-popup',
       initializeContent: false
     };
@@ -708,6 +742,17 @@ DatePicker.prototype = {
           });
           this.popup.find('.btn-monthyear-pane').button();
         }
+
+        // Add range selection for each week
+        if (this.settings.range.selectWeek) {
+          const tableBody = this.popup.find('tbody');
+          this.popup.find('.monthview-table tr')
+            .hover((e) => {
+              const tr = $(e.currentTarget);
+              tableBody.find('td').removeClass('is-selected range-selection end-date');
+              tr.find('td').addClass('range-selection');
+            });
+        }
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
@@ -732,8 +777,15 @@ DatePicker.prototype = {
       if (td.hasClass('is-disabled')) {
         self.calendarAPI.activeTabindex(td, true);
       } else {
-        if (s.range.useRange && (!s.range.first || s.range.second)) {
+        if (s.range.useRange && (!s.range.first || s.range.second) && !s.range.selectWeek) {
           self.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+        }
+        if (s.range.useRange && s.range.selectWeek) {
+          const first = self.calendarAPI.getCellDate(self.calendar.find('td.range-selection').first());
+          const last = self.calendarAPI.getCellDate(self.calendar.find('td.range-selection').last());
+
+          self.setWeekRange(first, last);
+          return;
         }
         if (!s.range.useRange) {
           self.calendarAPI.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
@@ -873,6 +925,21 @@ DatePicker.prototype = {
   },
 
   /**
+   * Inserts a week range in the field.
+   * @private
+   * @param {object} first The first range object.
+   * @param {object} last The last range object.
+   * @returns {void}
+   */
+  setWeekRange(first, last) {
+    const s = this.settings;
+    s.range.first.date = new Date(first.year, first.month, first.day);
+    s.range.second = undefined;
+    this.setValue(new Date(last.year, last.month, last.day));
+    this.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+  },
+
+  /**
    * Close the calendar popup.
    * This method is slated to be removed in a future v4.15.0 or v5.0.0.
    * @deprecated as of v4.9.0. Please use `closeCalendar()` instead.
@@ -946,8 +1013,15 @@ DatePicker.prototype = {
       // Pre selection compleated now show the calendar
       this.popup.removeClass('is-hidden');
     }
-    this.calendarAPI.activeTabindex(this.calendar.find('td.is-selected'), true);
     this.calendarAPI.datepickerApi = this;
+
+    if (s.range.useRange && s.range.selectWeek) {
+      const tr = this.calendar.find('td.is-selected').first().parent();
+      this.calendar.find('td[tabindex]').removeAttr('tabindex');
+      tr.attr('tabindex', '0').focus();
+      return;
+    }
+    this.calendarAPI.activeTabindex(this.calendar.find('td.is-selected'), true);
   },
 
   /**

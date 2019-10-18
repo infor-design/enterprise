@@ -48,6 +48,7 @@ const COMPONENT_NAME_DEFAULTS = {
   },
   selectable: true,
   onSelected: null,
+  onKeyDown: null,
   showToday: true
 };
 
@@ -100,7 +101,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
  * @param {boolean} [settings.selectable=false] If true the month days can be clicked to select
- * @param {boolean} [settings.onSelected=false] Call back that fires when a month day is clicked.
+ * @param {boolean} [settings.onSelected=false] Callback that fires when a month day is clicked.
+ * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  */
 function MonthView(element, settings) {
@@ -515,21 +517,13 @@ MonthView.prototype = {
     this.setRangeSelection();
     this.validatePrevNext();
 
-    // Select the same day as last month
+    // Allow focus on the same day as last month
     if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
       this.element.find('td[tabindex]').removeAttr('tabindex');
       this.element
         .find('td:not(.alternate) .day-text')
-        .filter(function () {
-          let currentDay = self.currentDay;
-          if (s.activeDate) {
-            currentDay = s.activeDate.getDate();
-            self.currentDay = currentDay;
-          }
-          return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
-        })
+        .first()
         .closest('td')
-        .addClass('is-selected')
         .attr('tabindex', '0');
     }
 
@@ -1244,6 +1238,15 @@ MonthView.prototype = {
           this.datepickerApi.resetRange({ isData: true });
         }
       };
+
+      if (this.settings.onKeyDown) {
+        const callbackResult = this.settings.onKeyDown({ e, key, cell, node: this.element });
+        if (callbackResult === false) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
 
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {

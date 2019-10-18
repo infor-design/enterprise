@@ -7,8 +7,6 @@ const svg = require('../../../src/components/icons/svg.html');
 let monthviewEl;
 let svgEl;
 let monthviewAPI;
-let toolbarEl;
-let toolbarAPI;
 
 describe('Monthview API', () => {
   beforeEach(() => {
@@ -118,12 +116,10 @@ describe('Monthview API', () => {
 
   it('Should move to next month and back', () => {
     $('button.next').click();
-    //document.body.querySelector('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     $('button.prev').click();
-    //document.body.querySelector('button.prev').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');

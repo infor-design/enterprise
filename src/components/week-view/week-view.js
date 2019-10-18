@@ -210,10 +210,11 @@ WeekView.prototype = {
    */
   addToolbar() {
     // Invoke the toolbar
+    this.currentDate = new Date();
     this.header = $('<div class="week-view-header"><div class="calendar-toolbar"></div></div>').appendTo(this.element);
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
-      onOpenCalendar: () => this.settings.startDate,
+      onOpenCalendar: () => this.currentDate || this.settings.startDate,
       locale: this.settings.locale,
       year: this.currentYear,
       month: this.currentMonth,
@@ -238,6 +239,7 @@ WeekView.prototype = {
 
     this.element.off(`change-date.${COMPONENT_NAME}`).on(`change-date.${COMPONENT_NAME}`, (e, args) => {
       const startDate = args.isToday ? new Date() : args.selectedDate;
+      this.currentDate = startDate;
       this.settings.startDate = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
       this.settings.endDate = new Date(this.settings.startDate);
       this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays);
