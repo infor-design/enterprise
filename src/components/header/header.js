@@ -503,7 +503,9 @@ Header.prototype = {
    */
   initPageChanger() {
     const changer = this.element.find('.page-changer');
-    const colorArea = changer.next().find('li.personalization-colors');
+    const api = changer.data('popupmenu');
+    const menu = api.menu;
+    const colorArea = menu.find('li.personalization-colors');
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
@@ -522,8 +524,6 @@ Header.prototype = {
       const themeNameAttr = link.attr('data-theme-name');
       const themeVariantAttr = link.attr('data-theme-variant');
       if (themeNameAttr || themeVariantAttr) {
-        const api = changer.data('popupmenu');
-        const menu = api.menu;
         const name = menu.find('.is-checked a[data-theme-name]').attr('data-theme-name');
         const variant = menu.find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
         if (name && variant) {
