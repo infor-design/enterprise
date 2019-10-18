@@ -503,11 +503,11 @@ Header.prototype = {
    */
   initPageChanger() {
     this.changer = this.element.find('.page-changer');
-    const api = this.changer.data('popupmenu');
-    if (!api) {
-      this.changer.popupmenu();
+    if (!this.changer.length) {
+      return;
     }
 
+    const api = this.changer.data('popupmenu');
     const menu = api.menu;
     const colorArea = menu.find('li.personalization-colors');
 
