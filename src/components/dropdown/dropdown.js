@@ -871,6 +871,7 @@ Dropdown.prototype = {
       DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
       span = $(`#${this.element.attr('id')}`).next().find('span').first();
       DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
+      this.setPlaceholder(text);
       return;
     }
 
@@ -885,10 +886,7 @@ Dropdown.prototype = {
       span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
     }
 
-    // If there is a placeholder set the selected text
-    if (this.element.attr('placeholder')) {
-      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', text);
-    }
+    this.setPlaceholder(text);
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
@@ -925,11 +923,22 @@ Dropdown.prototype = {
       this.pseudoElem.hide().prev('label').hide();
       this.pseudoElem.next('svg').hide();
     }
+  },
 
-    // set placeholder text on pseudoElem span element
-    if (this.element.attr('placeholder')) {
-      this.pseudoElem.find('span').not('.audible').attr('data-placeholder-text', this.element.attr('placeholder'));
-      this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
+  /**
+   * Set placeholder text, if value empty
+   * @private
+   * @param  {string} text The selected text value.
+   * @returns {void}
+   */
+  setPlaceholder(text) {
+    this.placeholder = this.placeholder || { text: this.element.attr('placeholder') };
+    if (this.placeholder.text) {
+      const isEmpty = (typeof text !== 'string' || (typeof text === 'string' && text === ''));
+      this.placeholder.elem = this.placeholder.elem || this.pseudoElem.find('span:not(.audible)');
+      this.placeholder.elem.attr('data-placeholder-text', isEmpty ? this.placeholder.text : '');
+    } else {
+      delete this.placeholder;
     }
   },
 
@@ -1707,9 +1716,6 @@ Dropdown.prototype = {
         .text()
         .trim();
       this.searchInput.val(fieldValue);
-      if (this.element.attr('placeholder')) {
-        this.pseudoElem.find('span').not('.audible').attr('data-selected-text', '');
-      }
     }
 
     const noScroll = this.settings.multiple;
@@ -2940,6 +2946,9 @@ Dropdown.prototype = {
   destroy() {
     if (this.selectedValues) {
       delete this.selectedValues;
+    }
+    if (this.placeholder) {
+      delete this.placeholder;
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);

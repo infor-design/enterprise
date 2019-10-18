@@ -85,8 +85,8 @@ module.exports = {
     logger('error', msg);
   },
   rgb2hex: (str) => {
-    str = str.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (str && str.length === 4) ? `#${(`0${parseInt(str[1], 10).toString(16)}`).slice(-2)}${(`0${parseInt(str[2], 10).toString(16)}`).slice(-2)}${(`0${parseInt(str[3], 10).toString(16)}`).slice(-2)}` : '';
+    const newStr = str.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (newStr && newStr.length === 4) ? `#${(`0${parseInt(newStr[1], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[2], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[3], 10).toString(16)}`).slice(-2)}` : '';
   },
   waitsFor: async (condition, el) => {
     if (condition && el && protractor && browser && browser.driver) {
