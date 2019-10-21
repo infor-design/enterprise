@@ -450,11 +450,14 @@ const formatters = {
       delete item.isAllChildrenFiltered;
     }
 
-    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
+    // Tabsize as button width (+/-)
+    const tabsize = api.settings.rowHeight === 'short' ? 22 : 30;
+
+    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? ` <span>${value}</span>` : '')}`;
-    const node = ` <span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}>${value}</span>`;
+    const node = ` <span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth))}px` : '')}"` : '')}>${value}</span>`;
 
     return (item && item[col.children ? col.children : 'children'] ? button : node);
   },
