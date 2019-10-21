@@ -297,29 +297,6 @@ Autocomplete.prototype = {
   handleListResults(term, items, filterResult) {
     const self = this;
 
-    const afterPlaceCallback = function (placementObj) {
-      if (placementObj.wasFlipped === true) {
-        self.list.add(self.element).addClass('is-ontop');
-        placementObj.y += 1;
-      }
-      return placementObj;
-    };
-
-    const popupOpts = {
-      menuId: 'autocomplete-list',
-      ariaListbox: true,
-      mouseFocus: false,
-      trigger: 'immediate',
-      attachToBody: true,
-      autoFocus: false,
-      returnFocus: false,
-      triggerSelect: false,
-      placementOpts: {
-        parent: this.element,
-        callback: afterPlaceCallback
-      }
-    };
-
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
         const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
@@ -327,11 +304,36 @@ Autocomplete.prototype = {
       }
     });
 
-    this.element.addClass('is-open')
-      .popupmenu(popupOpts)
-      .one('close.autocomplete', () => {
-        self.closeList(true);
-      });
+    if (!this.previouslyOpened) {
+      const afterPlaceCallback = function (placementObj) {
+        if (placementObj.wasFlipped === true) {
+          self.list.add(self.element).addClass('is-ontop');
+          placementObj.y += 1;
+        }
+        return placementObj;
+      };
+
+      const popupOpts = {
+        menuId: 'autocomplete-list',
+        ariaListbox: true,
+        mouseFocus: false,
+        trigger: 'immediate',
+        attachToBody: true,
+        autoFocus: false,
+        returnFocus: false,
+        triggerSelect: false,
+        placementOpts: {
+          parent: this.element,
+          callback: afterPlaceCallback
+        }
+      };
+
+      this.element.addClass('is-open')
+        .popupmenu(popupOpts)
+        .one('close.autocomplete', () => {
+          self.closeList(true);
+        });
+    }
 
     // Adjust the widths of the LIs to the longest
     const lis = self.list.find('li');
@@ -360,28 +362,30 @@ Autocomplete.prototype = {
     */
     this.element.trigger('populated', [filterResult]).focus();
 
-    // Overrides the 'click' listener attached by the Popupmenu plugin
-    self.list
-      .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
-        self.select(e);
-      })
-      .on(`focusout.${COMPONENT_NAME}`, () => {
-        self.checkActiveElement();
+    if (!this.previouslyOpened) {
+      // Overrides the 'click' listener attached by the Popupmenu plugin
+      self.list
+        .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
+          self.select(e);
+        })
+        .on(`focusout.${COMPONENT_NAME}`, () => {
+          self.checkActiveElement();
+        });
+
+      // Highlight anchors on focus
+      const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
+        self.highlight($(this), all);
       });
 
-    // Highlight anchors on focus
-    const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
-      self.highlight($(this), all);
-    });
+      if (this.settings.offset) {
+        const domListParent = this.list.parent()[0];
 
-    if (this.settings.offset) {
-      const domListParent = this.list.parent()[0];
-
-      if (this.settings.offset.left) {
-        domListParent.style.left = `${parseInt(domListParent.style.left, 10) + this.settings.offset.left}px`;
-      }
-      if (this.settings.offset.top) {
-        domListParent.style.top = `${parseInt(domListParent.style.top, 10) + this.settings.offset.top}px`;
+        if (this.settings.offset.left) {
+          domListParent.style.left = `${parseInt(domListParent.style.left, 10) + this.settings.offset.left}px`;
+        }
+        if (this.settings.offset.top) {
+          domListParent.style.top = `${parseInt(domListParent.style.top, 10) + this.settings.offset.top}px`;
+        }
       }
     }
 
@@ -390,16 +394,23 @@ Autocomplete.prototype = {
     // added and will remove soon popup close that includes aria-live="polite"
     // which have the first suggested item automatically announced when it
     // appears without moving focus.
+    const previousLiveMessages = document.querySelectorAll('#ac-is-arialive');
+    if (previousLiveMessages) {
+      previousLiveMessages.forEach((messageElem) => {
+        messageElem.parentNode.removeChild(messageElem);
+      });
+    }
+
     DOM.append(
       self.list.parent('.popupmenu-wrapper'),
-      `${'' +
-        '<span id="ac-is-arialive" aria-live="polite" class="audible">'}${
+      `<span id="ac-is-arialive" aria-live="polite" class="audible">${
         $.trim(this.list.find('>li:first-child').text())
       }</span>`,
       '<div><span><a><small><img><svg><i><b><use><br><strong><em>'
     );
 
     this.noSelect = true;
+    this.previouslyOpened = true;
     this.element.trigger('listopen', [filterResult]);
   },
 
@@ -430,6 +441,7 @@ Autocomplete.prototype = {
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
     this.element.add(this.list).removeClass('is-open is-ontop');
+    delete this.previouslyOpened;
   },
 
   listIsOpen() {
