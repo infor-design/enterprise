@@ -1781,7 +1781,6 @@ PopupMenu.prototype = {
     let tracker = 0;
     let startY;
     let menuToClose;
-    let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
     self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
@@ -1790,8 +1789,8 @@ PopupMenu.prototype = {
 
         startY = thisE.pageX;
 
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
+        clearTimeout(self.submenuOpenTimeout);
+        self.submenuOpenTimeout = setTimeout(() => {
           self.openSubmenu(menuitem);
         }, 300);
 
@@ -1819,7 +1818,7 @@ PopupMenu.prototype = {
         menuToClose = null;
       }
 
-      clearTimeout(timeout);
+      clearTimeout(self.submenuOpenTimeout);
     });
 
     if (self.settings.autoFocus) {
@@ -2173,8 +2172,13 @@ PopupMenu.prototype = {
       .off([
         'mouseenter.popupmenu',
         'mouseleave.popupmenu'
-      ].join(' '))
-      .removeClass('is-submenu-open');
+      ].join(' '));
+    this.menu.find('.is-submenu-open').removeClass('is-submenu-open');
+
+    if (this.submenuOpenTimeout) {
+      clearTimeout(this.submenuOpenTimeout);
+      delete this.submenuOpenTimeout;
+    }
 
     if (menu[0]) {
       menu[0].style.left = '';
