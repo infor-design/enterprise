@@ -786,7 +786,8 @@ Place.prototype = {
     const container = this.getContainer(placementObj);
     const containerRect = container ? container[0].getBoundingClientRect() : {};
     const containerIsBody = container.length && container[0] === document.body;
-    const rect = this.element[0].getBoundingClientRect();
+    const coordinateShrink = placementObj.parent === null;
+    const rect = DOM.getDimensions(this.element[0]);
     const useX = dimension === undefined || dimension === null || dimension === 'x';
     const useY = dimension === undefined || dimension === null || dimension === 'y';
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
@@ -811,16 +812,15 @@ Place.prototype = {
     // Shrink in each direction.
     // The value of the "containerOffsets" is "factored out" of each calculation,
     // if for some reason the element is larger than the viewport/container space allowed.
-    placementObj.nudges = placementObj.nudges || {};
-
     if (useX) {
-      if (rect.width > availableX) {
+      // If using coordinates with no parent, shrink completely.
+      if (coordinateShrink && rect.width > availableX) {
         placementObj.width = availableX;
       }
 
       // Left
       if (rect.left < leftViewportEdge) {
-        dX = Math.abs(leftViewportEdge - rect.left);
+        dX = leftViewportEdge - rect.left;
         if (rect.right >= rightViewportEdge) {
           dX -= placementObj.containerOffsetX;
         }
@@ -828,7 +828,7 @@ Place.prototype = {
 
       // Right
       if (rect.right > rightViewportEdge) {
-        dX = Math.abs(rect.right - rightViewportEdge);
+        dX = rect.right - rightViewportEdge;
         if (rect.left <= leftViewportEdge) {
           dX -= placementObj.containerOffsetX;
         }
@@ -836,18 +836,21 @@ Place.prototype = {
 
       if (dX !== 0) {
         placementObj.setCoordinate('x', placementObj.x + dX);
-        placementObj.nudges.x += dX;
+        if (!coordinateShrink) {
+          placementObj.width = rect.width - dX;
+        }
       }
     }
 
     if (useY) {
-      if (rect.height > availableY) {
+      // If using coordinates with no parent, shrink completely.
+      if (coordinateShrink && rect.height > availableY) {
         placementObj.height = availableY;
       }
 
       // Top
       if (rect.top < topViewportEdge) {
-        dY = Math.abs(topViewportEdge - rect.top);
+        dY = topViewportEdge - rect.top;
         if (rect.bottom >= bottomViewportEdge) {
           dY -= placementObj.containerOffsetY;
         }
@@ -855,7 +858,7 @@ Place.prototype = {
 
       // Bottom
       if (rect.bottom > bottomViewportEdge) {
-        dY = Math.abs(rect.bottom - bottomViewportEdge);
+        dY = rect.bottom - bottomViewportEdge;
         if (rect.top <= topViewportEdge) {
           dY -= placementObj.containerOffsetY;
         }
@@ -863,7 +866,9 @@ Place.prototype = {
 
       if (dY !== 0) {
         placementObj.setCoordinate('y', placementObj.y + dY);
-        placementObj.nudges.y += dY;
+        if (!coordinateShrink) {
+          placementObj.height = rect.height - dY;
+        }
       }
     }
 
