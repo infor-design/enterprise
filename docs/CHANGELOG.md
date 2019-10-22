@@ -12,16 +12,22 @@
 
 ### v4.23.0 Fixes
 
+- `[Autocomplete]` Fixed memory leaks by preventing re-rendering of an open autocomplete list from attaching new events, adding multiple `aria-polite` elements, etc. ([#2888](https://github.com/infor-design/enterprise/issues/2888))
+- `[Calendar]` Fixed disabled legend label color on vibrant/uplift with dark Variant theme. ([#2965](https://github.com/infor-design/enterprise/issues/2965))
 - `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
 - `[Context Menu]` Fixed a placement bug that would cut the size of the menu to an unusable size in small viewport displays. ([#2899](https://github.com/infor-design/enterprise/issues/2899))
-- `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
+- `[Contextual Action Panel]` Fixed placement of `(X)` close button on both standard and Flex toolbars when using the `showCloseBtn` setting. ([#2834](https://github.com/infor-design/enterprise/issues/2834))
 - `[Datagrid]` Fixed an issue where the tree children expand and collapse was not working. ([#633](https://github.com/infor-design/enterprise-ng/issues/633))
 - `[Datagrid]` Fixed an issue where the pager was not updating with updated method. ([#2759](https://github.com/infor-design/enterprise/issues/2759))
 - `[Datagrid]` Fixed an issue where string include zeroes not working with text filter. ([#2854](https://github.com/infor-design/enterprise/issues/2854))
 - `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
+- `[Datagrid]` Fixed an issue where the select children for tree was not working. ([#2961](https://github.com/infor-design/enterprise/issues/2961))
 - `[Datepicker]` Fixed an issue where the validation after body re-initialize was not working. ([#2410](https://github.com/infor-design/enterprise/issues/2410))
 - `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
+- `[Dropdown]` Fixed an issue where the placeholder was incorrectly renders when initially set selected item. ([#2870](https://github.com/infor-design/enterprise/issues/2870))
 - `[Field Filter]` Fixed an issues where the icons are not vertically centered, and layout issues when opening the dropdown in a smaller height browser. ([#2951](https://github.com/infor-design/enterprise/issues/2951))
+- `[Header]` Fixed an iOS bug where the theme switcher wasn't working after Popupmenu lifecycle changes. ([#2986](https://github.com/infor-design/enterprise/issues/2986))
+- `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
 - `[Locale]` Fixed an issue where some culture files does not have a name property in the calendar. ([#2880](https://github.com/infor-design/enterprise/issues/2880))
 - `[Locale]` Fixed an issue where cultures with a group of space was not parsing correctly. ([#2959](https://github.com/infor-design/enterprise/issues/2959))
 - `[Lookup]` Fixed missing X button in searchfield on a mobile viewport. ([#2948](https://github.com/infor-design/enterprise/issues/2948))
@@ -31,6 +37,8 @@
 - `[Toolbar]` Fixed a bug where the dropdown/toolbar menu is being cut off on iOS device. ([#2800](https://github.com/infor-design/enterprise/issues/2800))
 
 ### v4.23.0 Chores & Maintenance
+
+- `[Build System]` Created separate sets linting rules for demoapp, source code, and tests, as well as a base set of rules for all environments. ([#2662](https://github.com/infor-design/enterprise/issues/2662))
 
 ## v4.22.0
 

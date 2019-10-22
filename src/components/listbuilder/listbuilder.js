@@ -734,7 +734,6 @@ ListBuilder.prototype = {
    * @returns {object} item node
    */
   isElement(obj) {
-    /* global Element */
     return (this.isjQuery(obj) && obj.get(0) instanceof Element) || obj instanceof Element;
   },
 

@@ -1,7 +1,3 @@
-// used with locale.func-spec.js to test getLocale custome filename
-
-/* eslint-disable no-bitwise, no-undef */
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('sv-SE', {
   // layout/language

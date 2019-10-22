@@ -9,6 +9,7 @@ import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
+import '../icons/icons.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'modal';
@@ -227,17 +228,23 @@ Modal.prototype = {
 
   appendContent() {
     let isAppended = false;
+    const maxWidth = this.settings.maxWidth ? ` style="max-width: ${this.settings.maxWidth}px;"` : '';
 
-    this.element = $(`${'<div class="modal">' +
-        '<div class="modal-content" style="max-width: '}${this.settings.maxWidth ? this.settings.maxWidth : ''}px${'">' +
-          '<div class="modal-header"><h1 class="modal-title">'}</h1></div>` +
-          '<div class="modal-body-wrapper">' +
-            '<div class="modal-body"></div>' +
-          '</div>' +
-        '</div>' +
-      '</div>');
+    this.element = $(`
+      <div class="modal">
+        <div class="modal-content"${maxWidth}>
+          <div class="modal-header"><h1 class="modal-title"></h1></div>
+          <div class="modal-body-wrapper">
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+    `);
 
-    if (this.settings.showCloseBtn) {
+    // Only draw the close button if we're not in a CAP.
+    // CAP has its own rendering process for buttons, which are inside a toolbar and not
+    // part of the Modal Buttonset
+    if (this.settings.showCloseBtn && !this.isCAP) {
       const closeBtn = $(`
         <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
           ${$.createIcon('close')}

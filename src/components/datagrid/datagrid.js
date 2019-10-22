@@ -3619,8 +3619,8 @@ Datagrid.prototype = {
             if (currentDepth < treeDepthItem.depth) {
               parentNode = self.settings.treeDepth[i2];
 
-              if (parentNode.node.isExpanded !== undefined && !parentNode.node.isExpanded
-                || currentDepth === 1) {
+              if (currentDepth === 1 ||
+                parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
                 break;
               }
             }
@@ -6733,8 +6733,12 @@ Datagrid.prototype = {
 
   /**
   * Deselect all rows that are currently selected.
+  * @private
+  * @param  {boolean} nosync Do not sync the header
+  * @param  {boolean} noTrigger Do not trgger event
+  * @returns {void}
   */
-  unSelectAllRows() {
+  unSelectAllRows(nosync, noTrigger) {
     // Nothing to do
     if (!this._selectedRows || this._selectedRows.length === 0) {
       return;
@@ -6742,14 +6746,22 @@ Datagrid.prototype = {
     this.dontSyncUi = true;
     // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
-      const idx = this.settings.groupable ?
-        this._selectedRows[i].idx : this.pagingRowIndex(this._selectedRows[i].idx);
-      this.unselectRow(idx, true, true);
+      if (this._selectedRows[i]) {
+        const idx = this.settings.groupable ?
+          this._selectedRows[i].idx : this.pagingRowIndex(this._selectedRows[i].idx);
+        this.unselectRow(idx, true, true);
+      }
     }
     // Sync the Ui and call the events
     this.dontSyncUi = false;
-    this.syncSelectedUI();
-    this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
+
+    if (!nosync) {
+      this.syncSelectedUI();
+    }
+
+    if (!noTrigger) {
+      this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
+    }
   },
 
   /**
@@ -6849,9 +6861,11 @@ Datagrid.prototype = {
       let rowData;
 
       if (s.treeGrid) {
+        const level = parseInt(rowNode.attr('aria-level'), 10);
+        rowData = s.treeDepth[self.pagerAPI && s.source ? rowNode.index() : idx].node;
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
           // Select node and node-children
-          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
+          rowNode.add(rowNode.nextUntil(`[aria-level="${level}"]`)).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
             const actualIdx = self.actualPagingRowIndex(index);
@@ -6860,36 +6874,58 @@ Datagrid.prototype = {
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
+              if (canAdd) {
+                self._selectedRows.push({
+                  idx: actualIdx,
+                  data,
+                  elem,
+                  page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+                  pagingIdx: actualIdx,
+                  pagesize: s.pagesize
+                });
+              }
             }
           });
         } else if (s.selectable === 'siblings') {
-          this.unSelectAllRows();
+          this.unSelectAllRows(true, true);
 
           // Select node and node-siblings
-          const level = rowNode.attr('aria-level');
-          let nexts = rowNode.nextUntil(`[aria-level!="${level}"]`);
-          let prevs = rowNode.prevUntil(`[aria-level!="${level}"]`);
+          let nexts;
+          let prevs;
 
-          if (level === '1') {
+          if (level === 1) {
             nexts = rowNode.parent().find('[aria-level="1"]');
-            prevs = null;
+          } else if (level > 1) {
+            nexts = rowNode.nextUntil(`[aria-level="${level - 1}"]`).filter(`[aria-level="${level}"]`);
+            prevs = rowNode.prevUntil(`[aria-level="${level - 1}"]`).filter(`[aria-level="${level}"]`);
           }
 
           rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
-            const actualIndex = self.actualPagingRowIndex(index);
-            const data = s.treeDepth[actualIndex].node;
+            const actualIdx = self.actualPagingRowIndex(index);
+            const data = s.treeDepth[actualIdx].node;
 
             // Allow select node if selectChildren is true or only first node
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
+              if (canAdd) {
+                self._selectedRows.push({
+                  idx: actualIdx,
+                  data,
+                  elem,
+                  page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+                  pagingIdx: actualIdx,
+                  pagesize: s.pagesize
+                });
+              }
             }
           });
         } else { // Default to Single element selection
-          rowData = s.treeDepth[self.pagerAPI && s.source ? rowNode.index() : idx].node;
           self.selectNode(rowNode, idx, rowData);
         }
         self.setNodeStatus(rowNode);
@@ -7467,9 +7503,10 @@ Datagrid.prototype = {
     };
 
     if (s.treeGrid) {
+      const level = parseInt(rowNode.attr('aria-level'), 10);
       if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
         // Select node and node-children
-        rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
+        rowNode.add(rowNode.nextUntil(`[aria-level="${level}"]`)).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
           const actualIndex = self.actualPagingRowIndex(index);
@@ -7578,12 +7615,19 @@ Datagrid.prototype = {
   * @returns {object} The status
   */
   getSelectedStatus(node) {
+    const s = this.settings;
     let status = false;
     let total = 0;
     let selected = 0;
     let unselected = 0;
+    let targetNodes = node.add(node.nextUntil('[aria-level="1"]'));
 
-    node.add(node.nextUntil('[aria-level="1"]')).each(function () {
+    if (s.treeGrid && s.selectable === 'multiple') {
+      const level = node.attr('aria-level');
+      targetNodes = node.add(node.nextUntil(`[aria-level="${level}"]`));
+    }
+
+    targetNodes.each(function () {
       total++;
       if ($(this).is('.is-selected')) {
         selected++;
@@ -10304,7 +10348,7 @@ Datagrid.prototype = {
             elem: this.visualRowNode(i),
             pagesize: this.settings.pagesize,
             page: this.pagerAPI ? this.pagerAPI.activePage : 1,
-            pagingIdx: idx
+            pagingIdx: i
           });
         }
       }

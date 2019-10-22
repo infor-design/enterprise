@@ -2987,7 +2987,7 @@ describe('Datagrid tree do not select siblings tests', () => {
 
 describe('Datagrid tree single select tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-tree-singleselect');
+    await utils.setPage('/components/datagrid/test-tree-select-single');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
     await browser.driver
@@ -3241,5 +3241,25 @@ describe('Datagrid Actions Popupmenu tests', () => {
     menuBtn.click();
 
     expect(await menuBtn.getAttribute('class')).toContain('is-open');
+  });
+});
+
+describe('Datagrid tree select multiple tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-select-multiple');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should select multiple', async () => {
+    await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
+
+    expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(3);
   });
 });

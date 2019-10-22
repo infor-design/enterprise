@@ -4,3 +4,11 @@
 label.inline:not(.checkbox-label) .checkbox ~ .label-text {
   margin: 0 auto 5px -5px;
 }
+
+label.inline .checkbox:disabled ~ .label-text,
+input.checkbox:disabled + label,
+input.checkbox:disabled + input[type='hidden'] + label,
+span.checkbox > input:disabled + label {
+  color: $checkbox-color-disabled-font;
+  cursor: default;
+}
