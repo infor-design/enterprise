@@ -462,7 +462,31 @@ describe('Dropdown placeholder tests', () => {
   });
 
   it('Show a placeholder', async () => {
-    expect(await element.all(by.css('[data-placeholder-text]')).first().isDisplayed()).toBeTruthy();
+    const selector = 'div.dropdown [data-placeholder-text]';
+    const placeholderEl = await element(by.css(selector));
+
+    expect(await element.all(by.css(selector)).count()).toEqual(1);
+    expect(await placeholderEl.isDisplayed()).toBeTruthy();
+    expect(await placeholderEl.getAttribute('data-placeholder-text')).toEqual('Select a State');
+  });
+});
+
+describe('Dropdown placeholder with initially selected tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-placeholder-initial-selected');
+
+    const dropdownEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+  });
+
+  it('Should not show a placeholder', async () => {
+    const selector = 'div.dropdown [data-placeholder-text]';
+    const placeholderEl = await element(by.css(selector));
+
+    expect(await element.all(by.css(selector)).count()).toEqual(1);
+    expect(await placeholderEl.isDisplayed()).toBeTruthy();
+    expect(await placeholderEl.getAttribute('data-placeholder-text')).toEqual('');
   });
 });
 

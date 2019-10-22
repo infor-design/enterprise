@@ -1,5 +1,3 @@
-/* eslint-disable global-require, no-param-reassign,
-  no-useless-concat, import/no-extraneous-dependencies */
 module.exports = function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;

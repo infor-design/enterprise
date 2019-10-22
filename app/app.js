@@ -3,7 +3,6 @@ const csp = require('express-csp');
 const express = require('express');
 const csrf = require('csurf');
 const session = require('express-session');
-const extend = require('extend'); // equivalent of $.extend()
 const mmm = require('mmm');
 const path = require('path');
 const utils = require('./src/js/utils');
