@@ -6,7 +6,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Modal init example-modal tests', () => {
+fdescribe('Modal init example-modal tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-index');
     const modalEl = await element(by.id('add-context'));
@@ -87,7 +87,7 @@ describe('Modal init example-modal tests', () => {
   }
 });
 
-describe('Modal open example-modal tests on click', () => {
+fdescribe('Modal open example-modal tests on click', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-index');
     const modalEl = await element(by.id('add-context'));
@@ -120,7 +120,7 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
-describe('Modal example-close-btn tests', () => {
+fdescribe('Modal example-close-btn tests', () => {
   it('Should close the modal via the x close icon', async () => {
     await utils.setPage('/components/modal/example-close-btn');
 
@@ -140,7 +140,7 @@ describe('Modal example-close-btn tests', () => {
   });
 });
 
-describe('Modal example-validation tests', () => {
+fdescribe('Modal example-validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-validation');
     const modalEl = await element(by.css('button[data-modal="modal-1"]'));
@@ -202,7 +202,7 @@ describe('Modal example-validation tests', () => {
   }
 });
 
-describe('Modal example-validation-editor tests', () => {
+fdescribe('Modal example-validation-editor tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-validation-editor');
     const modalEl = await element(by.css('button[data-modal="modal-1"]'));
@@ -239,7 +239,7 @@ describe('Modal example-validation-editor tests', () => {
   });
 });
 
-describe('Modal manual content loading', () => {
+fdescribe('Modal manual content loading', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-manual-open');
   });
@@ -269,7 +269,7 @@ describe('Modal manual content loading', () => {
   });
 });
 
-describe('Modal Full Content Tests', () => {
+fdescribe('Modal Full Content Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-full-content');
   });
@@ -293,7 +293,7 @@ describe('Modal Full Content Tests', () => {
   });
 });
 
-describe('Modal xss tests', () => {
+fdescribe('Modal xss tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-escaped-title');
   });
@@ -313,4 +313,25 @@ describe('Modal xss tests', () => {
 
     expect(await element(by.css('.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
   });
+});
+
+fdescribe('Modal button tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-inline-buttons.');
+    const modalEl = await element(by.id('btn-show-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
+    await modalEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on 3 buttons', async () => {
+      const bodyEl = await element(by.className('modal-engaged'));
+
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
+    });
+  }
 });
