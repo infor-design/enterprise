@@ -373,12 +373,8 @@ body.modal-engaged {
 
   > .btn-close {
     position: absolute;
-    right: 0;
-    top: 0;
-
-    .icon {
-      width: 16px;
-    }
+    right: 10px;
+    top: 14px;
   }
 
   .message {
@@ -542,7 +538,7 @@ html[dir='rtl'] {
     }
 
     .btn-close {
-      left: 0;
+      left: 10px;
       right: auto;
     }
   }

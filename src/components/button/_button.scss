@@ -501,6 +501,13 @@ a.btn-close {
   }
 }
 
+// Set the size of the "X"
+.btn-close {
+  > .icon {
+    width: 16px;
+  }
+}
+
 // Specific Icon Button styles
 .btn-icon {
   > span:not(.icon) {
