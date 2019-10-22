@@ -317,7 +317,7 @@ fdescribe('Modal xss tests', () => {
 
 fdescribe('Modal button tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/modal/test-inline-buttons.');
+    await utils.setPage('/components/modal/test-inline-buttons');
     const modalEl = await element(by.id('btn-show-modal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
@@ -325,6 +325,10 @@ fdescribe('Modal button tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
     await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
