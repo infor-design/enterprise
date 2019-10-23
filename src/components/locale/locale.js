@@ -1027,9 +1027,20 @@ const Locale = {  // eslint-disable-line
       }
     }
 
+    const isLeap = y => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
+    const closestLeap = (y) => {
+      let closestLeapYear = typeof y === 'number' && !isNaN(y) ? y : (new Date()).getFullYear();
+      for (let i2 = 0; i2 < 4; i2++) {
+        if (isLeap(closestLeapYear)) {
+          break;
+        }
+        closestLeapYear--;
+      }
+      return closestLeapYear;
+    };
+
     dateObj.return = undefined;
-    dateObj.leapYear = ((dateObj.year % 4 === 0) &&
-      (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
+    dateObj.leapYear = isLeap(dateObj.year);
 
     if ((isDateTime && !dateObj.h && !dateObj.mm)) {
       return undefined;
@@ -1044,7 +1055,8 @@ const Locale = {  // eslint-disable-line
         }
       }
       if (dateObj.isUndefindedYear) {
-        dateObj.year = (new Date()).getFullYear();
+        const isFeb29 = parseInt(dateObj.day, 10) === 29 && parseInt(dateObj.month, 10) === 1;
+        dateObj.year = isFeb29 ? closestLeap() : (new Date()).getFullYear();
       } else {
         delete dateObj.year;
       }
