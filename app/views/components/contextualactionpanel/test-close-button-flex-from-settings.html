@@ -3,7 +3,7 @@
     <button id="test-cap" data-init="false" type="button" class="btn-secondary contextual-action-panel-trigger">
       Contextual Action Panel
     </button>
-    <div class="contextual-action-panel" style="min-width: 600px;">
+    <div class="contextual-action-panel">
       <div class="row">
         <div class="six columns">
           <div class="field">
@@ -82,7 +82,16 @@
   </div>
 </div>
 
-<script>
+<style type="text/css" id="test-style">
+  /* Mimic the "phone-to-tablet" breakpoint */
+  @media (min-width: 767px) {
+    .contextual-action-panel {
+      min-width: 600px;
+    }
+  }
+</style>
+
+<script id="test-script">
   $('body').on('initialized', function() {
     $('#test-cap').contextualactionpanel({
       title: 'Company Information',
