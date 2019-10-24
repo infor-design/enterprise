@@ -3,7 +3,7 @@
     <button id="test-cap" data-init="false" type="button" class="btn-secondary contextual-action-panel-trigger">
       Contextual Action Panel
     </button>
-    <div class="contextual-action-panel" style="min-width: 600px;">
+    <div class="contextual-action-panel">
       <div class="flex-toolbar">
         <div class="toolbar-section title"><h2>Company Information</h2></div>
         <div class="toolbar-section buttonset">
@@ -121,7 +121,16 @@
   </div>
 </div>
 
-<script>
+<style type="text/css" id="test-style">
+  /* Mimic the "phone-to-tablet" breakpoint */
+  @media (min-width: 767px) {
+    .contextual-action-panel {
+      min-width: 600px;
+    }
+  }
+</style>
+
+<script id="test-script">
   $('body').on('initialized', function() {
     $('#test-cap').contextualactionpanel({
       showCloseButton: true,
