@@ -254,6 +254,13 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+    } else if (!this.languages[lang] && !data.messages) {
+      const match = this.defaultLocales.filter(a => a.lang === lang);
+      const parentLocale = match[0] || [{ default: 'en-US' }];
+      if (parentLocale.default && parentLocale.default !== locale &&
+        !this.cultures[parentLocale.default]) {
+        this.appendLocaleScript(parentLocale.default);
+      }
     }
   },
 

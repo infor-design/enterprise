@@ -1353,11 +1353,15 @@ DatePicker.prototype = {
         pattern: this.pattern,
         locale: this.locale.name
       });
-      gregorianValue = this.conversions.toGregorian(
-        islamicValue[0],
-        islamicValue[1],
-        islamicValue[2]
-      );
+      if (islamicValue instanceof Date) {
+        gregorianValue = this.conversions.toGregorian(islamicValue);
+      } else if (islamicValue instanceof Array) {
+        gregorianValue = this.conversions.toGregorian(
+          islamicValue[0],
+          islamicValue[1],
+          islamicValue[2]
+        );
+      }
     }
 
     this.currentDate = gregorianValue || new Date();
@@ -1382,6 +1386,7 @@ DatePicker.prototype = {
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
+      this.currentIslamicDate = this.currentDateIslamic;
     } else {
       this.currentDate = this.currentDate || new Date();
       this.currentMonth = this.currentDate.getMonth();

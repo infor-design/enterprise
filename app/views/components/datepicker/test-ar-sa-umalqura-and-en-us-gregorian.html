@@ -1,0 +1,24 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="gregorian-date-us" class="label">Date Picker (en-US - gregorian)</label>
+      <input id="gregorian-date-us" data-init="false" class="datepicker" name="gregorian-date-us" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="islamic-date-us" class="label">Date Picker (ar-SA islamic-umalqura in current locale)</label>
+      <input id="islamic-date-us" data-init="false" class="datepicker" name="islamic-date-us" type="text"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#gregorian-date-us').datepicker({locale: 'en-US', calendarName: 'gregorian'});
+    $('#islamic-date-us').datepicker({locale: 'ar-SA', calendarName: 'islamic-umalqura', dateFormat: 'yyyy/MM/dd'});
+  });
+
+</script>
