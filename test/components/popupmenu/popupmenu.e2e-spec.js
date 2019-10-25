@@ -289,3 +289,38 @@ describe('Contextmenu immediate tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tree-popupmenu'))), config.waitsFor);
   });
 });
+
+describe('Contextmenu Placement Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextmenu/example-page-rightclick');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should correctly resize to fit within the viewport boundaries', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await browser.driver.manage().window().setSize(640, 296);
+
+    // Popupmenu width is about 230px, so provide coords that would
+    // otherwise push it offscreen
+    const targetMouseCoords = {
+      x: 500,
+      y: 100
+    };
+
+    // Move the mouse to an area near the right edge of the page and click
+    await browser.actions().mouseMove(targetMouseCoords).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getSize()).toEqual(jasmine.objectContaining({
+      height: 266
+    }));
+
+    // Reset to the original viewport size
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+});

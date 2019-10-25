@@ -495,11 +495,24 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/28/2015 8:10:65', 'M/d/yyyy h:mm:ss').getTime()).toEqual(new Date(2015, 9, 28, 8, 10, 0).getTime());
   });
 
-  it('Should should handle leap years', () => {
+  it('Should handle leap years', () => {
+    const isLeap = y => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
+    const closestLeap = () => {
+      let closestLeapYear = (new Date()).getFullYear();
+      for (let i2 = 0; i2 < 4; i2++) {
+        if (isLeap(closestLeapYear)) {
+          break;
+        }
+        closestLeapYear--;
+      }
+      return closestLeapYear;
+    };
     Locale.set('en-US');
 
     expect(Locale.parseDate('02/29/2016', 'M/d/yyyy').getTime()).toEqual(new Date(2016, 1, 29).getTime());
     expect(Locale.parseDate('02/30/2016', 'M/d/yyyy')).toEqual(undefined);
+    expect(Locale.parseDate('0229', 'MMdd').getTime()).toEqual(new Date(closestLeap(), 1, 29).getTime());
+    expect(Locale.parseDate('February 29', 'MMMM d').getTime()).toEqual(new Date(closestLeap(), 1, 29).getTime());
   });
 
   it('Should cleanly handle non dates', () => {
