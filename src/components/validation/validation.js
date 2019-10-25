@@ -166,7 +166,20 @@ function ValidationRules() {
             const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
             format += ` ${timeFormat}`;
           }
+          if (datepickerApi && datepickerApi.isIslamic) {
+            format = {
+              pattern: datepickerApi.pattern,
+              locale: datepickerApi.locale.name
+            };
+          }
           dateObj = Locale.parseDate(dateObj, format);
+        }
+        if (datepickerApi && datepickerApi.isIslamic && dateObj instanceof Date) {
+          dateObj = datepickerApi.conversions.toGregorian(
+            dateObj.getFullYear(),
+            dateObj.getMonth(),
+            dateObj.getDate()
+          );
         }
         let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 

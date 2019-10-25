@@ -1354,7 +1354,11 @@ DatePicker.prototype = {
         locale: this.locale.name
       });
       if (islamicValue instanceof Date) {
-        gregorianValue = this.conversions.toGregorian(islamicValue);
+        gregorianValue = this.conversions.toGregorian(
+          islamicValue.getFullYear(),
+          islamicValue.getMonth(),
+          islamicValue.getDate()
+        );
       } else if (islamicValue instanceof Array) {
         gregorianValue = this.conversions.toGregorian(
           islamicValue[0],
