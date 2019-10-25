@@ -27,9 +27,11 @@
 <script>
   $('body').on('initialized', function () {
 
-    // valid dates are 1/1/1800 to 12/31/2199
-    var minDate = new Date(1799, 11, 31, 23, 59, 59, 999);
-    var maxDate = new Date(2200, 0, 1, 0, 0, 0, 0);
+    // Valid dates ***
+    // gregorian: 1/1/2019 - 12/31/2019
+    // umalqura: 4/25/1440 - 5/5/1441
+    var minDate = new Date(2018, 11, 31, 23, 59, 59, 999);
+    var maxDate = new Date(2020, 0, 1, 0, 0, 0, 0);
 
     // date format for the current locale
     var dateFormat = Soho.Locale.calendar().dateFormat.short;
