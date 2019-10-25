@@ -69,11 +69,13 @@
 }
 
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
-  .form-responsive {
-    .field .checkbox-label,
-    .field .checkbox > label {
-      margin-bottom: 13px;
-      margin-top: -1px;
+  .page-container {
+    .form-responsive {
+      .field .checkbox-label,
+      .field .checkbox > label {
+        margin-bottom: 13px;
+        margin-top: -1px;
+      }
     }
   }
 
