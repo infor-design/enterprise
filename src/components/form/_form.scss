@@ -1,7 +1,8 @@
 //  Form Layouts
 //================================================== //
 
-.page-container {
+.page-container,
+.container {
   .form-responsive {
     input,
     textarea {
@@ -69,7 +70,8 @@
 }
 
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
-  .page-container {
+  .page-container,
+  .container {
     .form-responsive {
       .field .checkbox-label,
       .field .checkbox > label {
