@@ -58,6 +58,10 @@ require('../../../src/components/locale/cultures/zh-TW.js');
 describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
+  afterEach(() => {
+    Locale.set('en-US');
+  });
+
   it('Should be possible to preset culturesPath', () => {
     window.SohoConfig = { culturesPath: 'dist/js/cultures/' };
 
@@ -120,7 +124,6 @@ describe('Locale API', () => {
 
     expect(html.getAttribute('lang')).toEqual('ar-SA');
     expect(html.getAttribute('dir')).toEqual('rtl');
-    Locale.set('en-US');
   });
 
   it('Should change font for some locales', () => {
@@ -155,7 +158,6 @@ describe('Locale API', () => {
     Locale.set('in-ID');
 
     expect(Locale.currentLocale.name).toEqual('id-ID');
-    Locale.set('en-US');
   });
 
   it('Should map iw and iw-IL to he-IL', () => {
@@ -166,7 +168,6 @@ describe('Locale API', () => {
     Locale.set('iw');
 
     expect(Locale.currentLocale.name).toEqual('he-IL');
-    Locale.set('en-US');
   });
 
   it('Should format arabic month format', () => {
@@ -174,7 +175,6 @@ describe('Locale API', () => {
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
-    Locale.set('en-US');
   });
 
   it('Should format hebrew dates', () => {
@@ -183,7 +183,6 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('1.1.2020');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('8 בנוב׳ 2019');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('8 בנובמבר 2019');
-    Locale.set('en-US');
   });
 
   it('Should format zh-Hans dates', () => {
@@ -193,14 +192,12 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('2019年11月8日');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('2019年11月8日');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'datetime' })).toEqual('2019/11/8 上午12:00');
-    Locale.set('en-US');
   });
 
   it('Should format year in es-ES', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
-    Locale.set('en-US');
   });
 
   it('Should parse year in different languages', () => {
@@ -238,7 +235,6 @@ describe('Locale API', () => {
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
-    Locale.set('en-US');
   });
 
   it('Should format timestamp in English', () => {
@@ -342,7 +338,6 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     expect(Locale.isRTL()).toEqual(true);
-    Locale.set('en-US');
   });
 
   // Formating Hours
@@ -427,7 +422,6 @@ describe('Locale API', () => {
     Locale.set('bg-BG');
 
     expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('1 януари 2015 г.');
-    Locale.set('en-US');
   });
 
   it('Should be able to parse dates', () => {
@@ -601,7 +595,6 @@ describe('Locale API', () => {
     Locale.set('ar-EG');
 
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
-    Locale.set('en-US');
   });
 
   it('Should be possible to add translations', () => {
@@ -650,7 +643,6 @@ describe('Locale API', () => {
     Locale.set('bg-BG');
 
     expect(Locale.formatNumber(12345.1)).toEqual('12 345,10');
-    Locale.set('en-US');
   });
 
   it('Should truncate and not round decimals', () => {
@@ -767,18 +759,22 @@ describe('Locale API', () => {
   it('Should parse with decimal and group properties', () => {
     // group = space; decimal = comma
     Locale.set('fr-FR');
+
     expect(Locale.parseNumber('1 234 567 890,1234')).toEqual(1234567890.1234);
 
     // // group = D9AC; decimal = D9AB
     Locale.set('ar-SA');
+
     expect(Locale.parseNumber('1٬234٬567٬890٫1234')).toEqual(1234567890.1234);
 
     // group = period; decimal = comma
     Locale.set('es-ES');
+
     expect(Locale.parseNumber('1.234.567.890,1234')).toEqual(1234567890.1234);
 
     // group = comma; decimal = period
     Locale.set('en-US');
+
     expect(Locale.parseNumber('1,234,567,890.1234')).toEqual(1234567890.1234);
   });
 
@@ -862,7 +858,6 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-﷼ 1٬000٬000٫00');
-    Locale.set('en-US');
   });
 
   it('Should round when the round option is used', () => {
@@ -932,7 +927,6 @@ describe('Locale API', () => {
     islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 1)));
 
     expect(`${islamicDate[0].toString()} ${islamicDate[1].toString()} ${islamicDate[2].toString()}`).toEqual('1431 11 25');
-    Locale.set('en-US');
   });
 
   it('Should properly convert from Islamic UmAlQura to Gregorian', () => {
@@ -940,7 +934,6 @@ describe('Locale API', () => {
     const time = Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime();
 
     expect(time).toEqual(new Date(2010, 11, 1, 0, 0, 0).getTime());
-    Locale.set('en-US');
   });
 
   it('Should handle numbers passed to parseNumber', () => {
@@ -982,14 +975,12 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatDate(new Date(2018, 5, 20), { pattern: 'yyyy/MM/dd', fromGregorian: true })).toEqual('1439/10/06');
-    Locale.set('en-US');
   });
 
   it('Should convert date to Gregorian (if needed) before formatting date (when toGregorian is true)', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatDate(Locale.parseDate('1439/10/06', Locale.calendar().dateFormat.short, false), { pattern: 'yyyyMMdd', toGregorian: true })).toEqual('20180620');
-    Locale.set('en-US');
   });
 
   it('Should parse dates with and without spaces, dash, comma format', () => {
@@ -1011,7 +1002,6 @@ describe('Locale API', () => {
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[0]).toEqual(1439);
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[1]).toEqual(11);
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
-    Locale.set('en-US');
   });
 
   it('Should parse or format a string of four, six, or eight zeroes', () => {
@@ -1568,5 +1558,17 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('es-419');
     expect(Locale.currentLanguage.name).toEqual('es');
     expect(Locale.translate('Required')).toEqual('Obligatorio');
+
+    Locale.set('nb-NO');
+
+    expect(Locale.currentLocale.name).toEqual('nb-NO');
+    expect(Locale.currentLanguage.name).toEqual('no');
+    expect(Locale.translate('Required')).toEqual('Obligatorisk');
+
+    Locale.set('no-NO');
+
+    expect(Locale.currentLocale.name).toEqual('no-NO');
+    expect(Locale.currentLanguage.name).toEqual('no');
+    expect(Locale.translate('Required')).toEqual('Obligatorisk');
   });
 });
