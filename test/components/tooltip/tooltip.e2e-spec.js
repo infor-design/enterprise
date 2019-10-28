@@ -58,7 +58,7 @@ describe('Tooltips on icon tests', () => {
   });
 });
 
-describe('Tooltip (personalizable) tests', () => {
+fdescribe('Tooltip (personalizable) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/header/example-disabled-buttons?theme=soho&variant=dark&colors=206b62');
   });
