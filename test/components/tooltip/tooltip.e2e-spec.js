@@ -23,7 +23,7 @@ describe('Tooltips index page tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       await browser.actions().mouseMove(await element(by.id('tooltip-btn'))).perform();
 
       await browser.driver
@@ -68,7 +68,7 @@ describe('Tooltip (personalizable) tests', () => {
   });
 
   // Fixes Github Issue `infor-design/enterprise#3011`
-  it('should have white tooltip text (and should not visually regress)', async () => {
+  fit('should have white tooltip text (and should not visually regress)', async () => {
     await browser.actions()
       .mouseMove(await element(by.id('header-more-actions')))
       .perform();
