@@ -315,7 +315,7 @@ describe('Modal xss tests', () => {
   });
 });
 
-describe('Modal button tests', () => {
+fdescribe('Modal button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-inline-buttons');
     const modalEl = await element(by.id('btn-show-modal'));
@@ -332,7 +332,7 @@ describe('Modal button tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on 3 buttons', async () => {
+    it('Should not visual regress on 4 buttons', async () => {
       const bodyEl = await element(by.className('modal-engaged'));
 
       expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
