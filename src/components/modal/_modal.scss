@@ -61,8 +61,7 @@
     }
 
     textarea {
-      min-width: 300px;
-      width: auto;
+      max-width: 300px;
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
