@@ -315,7 +315,7 @@ describe('Modal xss tests', () => {
   });
 });
 
-fdescribe('Modal button tests', () => {
+describe('Modal button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-inline-buttons');
     const modalEl = await element(by.id('btn-show-modal'));
