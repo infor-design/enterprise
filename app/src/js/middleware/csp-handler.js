@@ -9,6 +9,7 @@ function addNonceToScript(html, nonce) {
   nonced = nonced.replace(/&lt;script/ig, '<scriptno-nonce-lt');
   nonced = nonced.replace(/<script>/ig, `<script nonce="${nonce}">`);
   nonced = nonced.replace(/<script id/ig, `<script nonce="${nonce}" id`);
+  nonced = nonced.replace(/<script src/ig, `<script nonce="${nonce}" src`);
   nonced = nonced.replace(/<scriptno-nonce>/ig, '<script>');
   nonced = nonced.replace(/<scriptno-nonce-lt/ig, '&lt;script');
   return nonced;
