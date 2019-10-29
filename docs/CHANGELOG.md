@@ -9,6 +9,7 @@
 ### v4.23.0 Features
 
 - `[Accordion]` Added a new setting `expanderDisplay` that can display all expander button icons in the classic style, or with all "chevron" or "plus-minus"-style icons.  Deprecated the legacy `displayChevron` setting in favor of this change. ([#2900](https://github.com/infor-design/enterprise/issues/2900))
+- `[Locale]` Added updated translation files for 16 in house languages. ([#3049](https://github.com/infor-design/enterprise/issues/3049))
 
 ### v4.23.0 Fixes
 
