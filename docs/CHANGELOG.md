@@ -25,6 +25,7 @@
 - `[Datepicker]` Fixed an issue where the validation after body re-initialize was not working. ([#2410](https://github.com/infor-design/enterprise/issues/2410))
 - `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
 - `[Dropdown]` Fixed an issue where the placeholder was incorrectly renders when initially set selected item. ([#2870](https://github.com/infor-design/enterprise/issues/2870))
+- `[Dropdown]` Fixed an issue where it was possible to inject xss when clearing the typehead. ([#650](https://github.com/infor-design/enterprise-ng/issues/650))
 - `[Field Filter]` Fixed an issues where the icons are not vertically centered, and layout issues when opening the dropdown in a smaller height browser. ([#2951](https://github.com/infor-design/enterprise/issues/2951))
 - `[Header]` Fixed an iOS bug where the theme switcher wasn't working after Popupmenu lifecycle changes. ([#2986](https://github.com/infor-design/enterprise/issues/2986))
 - `[Header Tabs]` Added a more distinct style to selected header tabs. ([infor-design/design-system#422](https://github.com/infor-design/design-system/issues/422))
