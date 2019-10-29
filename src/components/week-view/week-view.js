@@ -1,7 +1,10 @@
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
+import { stringUtils } from '../../utils/string';
 import { dateUtils } from '../../utils/date';
 import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
+import { calendarShared } from '../calendar/calendar-shared';
 
 // Settings and Options
 const COMPONENT_NAME = 'weekview';
@@ -102,6 +105,190 @@ WeekView.prototype = {
   },
 
   /**
+   * Render all the events in the current view.
+   * @private
+   */
+  renderAllEvents() {
+    // Clone and sort the array
+    const filters = [];
+    const eventsSorted = this.settings.events.slice(0);
+    eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0))); // eslint-disable-line
+
+    for (let i = 0; i < eventsSorted.length; i++) {
+      const event = eventsSorted[i];
+      if (filters.indexOf(event.type) > -1) {
+        continue;
+      }
+      this.renderEvents(event);
+    }
+  },
+
+  /**
+   * Render a single event on the ui, use in the loop and other functions.
+   * @private
+   * @param  {object} event The event object.
+   */
+  renderEvents(event) {
+    const startDate = new Date(event.starts);
+    const startKey = stringUtils.padDate(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate(),
+    );
+
+    const endDate = new Date(event.ends);
+    const endKey = stringUtils.padDate(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+
+    const days = this.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
+    event.endKey = endKey;
+    event.startKey = startKey;
+    event = calendarShared.addCalculatedFields(
+      event,
+      this.locale,
+      this.language,
+      this.settings.eventTypes
+    );
+
+    // Event is only on this day
+    if (days.length === 1 && !event.isAllDay) {
+      this.appendEventToHours(days[0].elem, event);
+    }
+
+    if (days.length === 1 && event.isAllDay) {
+      this.appendEventToAllDay(days[0].elem, event);
+    }
+
+    // Event extends multiple days or is all day
+    if (days.length > 1) {
+      // TODO
+      for (let i = 0; i < days.length; i++) {
+        let cssClass = i === 0 ? 'calendar-event-start' : 'calendar-event-continue';
+        if (i === days.length - 1) {
+          cssClass = 'calendar-event-ends';
+        }
+        this.appendEventToAllDay(days[i].elem, event, cssClass);
+      }
+    }
+  },
+
+  /*
+   * Add the ui event to the container event day
+   * @private
+   * @param {object} container The container to append to
+   * @param {object} event The event data object.
+   * @param {string} cssClass An extra css class
+   */
+  appendEventToAllDay(container, event, cssClass) {
+    const allDayContainer = container.querySelector('.week-view-all-day-wrapper');
+
+    const node = document.createElement('a');
+    DOM.addClass(node, 'calendar-event', event.color, cssClass);
+    node.setAttribute('data-id', event.id);
+    node.setAttribute('data-key', event.startKey);
+    node.setAttribute('href', '#');
+
+    if (cssClass === 'calendar-event-continue' || cssClass === 'calendar-event-ends') {
+      node.setAttribute('tabindex', '-1');
+    }
+
+    node.innerHTML = `<div class="calendar-event-content">
+      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use xlink:href="#${event.icon}"></use></svg></span>` : ''}
+      <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
+    </div>`;
+
+    const containerEvents = allDayContainer.querySelectorAll('.calendar-event');
+    const eventCount = containerEvents.length;
+
+    if (eventCount >= 1) {
+      node.style.top = `${22 * eventCount}px`;
+    }
+    if (eventCount > 2) {
+      const nodes = this.element[0].querySelectorAll('.week-view-all-day-wrapper');
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].style.height = `${44 + ((eventCount - 1) * 23)}px`;
+      }
+    }
+    allDayContainer.appendChild(node);
+  },
+
+  /**
+   * Add the ui event to the container spanning hours
+   * @private
+   * @param {object} container The container to append to
+   * @param {object} event The event data object.
+   */
+  appendEventToHours(container, event) {
+    const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
+    for (let i = 0; i < dayHourContainers.length; i++) {
+      const tdEl = dayHourContainers[i];
+      const hour = tdEl.parentNode.getAttribute('data-hour');
+      const startsHere = parseFloat(hour, 10) === event.startsHour;
+
+      if (startsHere) {
+        let duration = event.endsHour - event.startsHour;
+        let displayedTime = '';
+        const node = document.createElement('a');
+        DOM.addClass(node, 'calendar-event', event.color);
+        node.setAttribute('data-id', event.id);
+        node.setAttribute('data-key', event.startKey);
+        node.setAttribute('href', '#');
+
+        if (duration < 0.5) {
+          DOM.addClass(node, 'reduced-padding', event.color);
+        }
+
+        if (duration < 1.5) {
+          DOM.addClass(node, 'is-ellipsis');
+        }
+
+        if (duration > 2) {
+          displayedTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+        }
+
+        // Max out at the bottom and show the time
+        if (event.startsHour + duration > this.settings.endHour) {
+          DOM.addClass(node, 'is-cutoff', event.color);
+          duration = this.settings.endHour + 1 - event.startsHour;
+        }
+
+        if (duration < 0.25) {
+          duration = 0.25;
+        }
+
+        // Add one per half hour + 1 px for each border crossed
+        node.style.height = `${25 * (duration * 2) + (1.5 * duration)}px`;
+
+        node.innerHTML = `<div class="calendar-event-content">
+          ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use xlink:href="#${event.icon}"></use></svg></span>` : ''}
+          <span class="calendar-event-title">${event.shortSubject || event.subject}${displayedTime}</span>
+        </div>`;
+
+        const containerWrapper = tdEl.querySelector('.week-view-cell-wrapper');
+        const containerEvents = tdEl.querySelectorAll('.calendar-event');
+        const eventCount = containerEvents.length;
+
+        if (eventCount > 0) {
+          const width = (100 / (eventCount + 1));
+          let j = 0;
+          for (j = 0; j < eventCount; j++) {
+            containerEvents[j].style.width = `${width}%`;
+            if (j > 0) {
+              containerEvents[j].style.left = `${width * j}%`;
+            }
+          }
+          node.style.width = `${width}%`;
+          node.style.left = `${width * j}%`;
+        }
+        containerWrapper.appendChild(node);
+      }
+    }
+  },
+
+  /**
    * Update the weekview to show the given range of days.
    * @param {date} startDate The start of the week or range.
    * @param {date} endDate The end of the week or range.
@@ -109,6 +296,7 @@ WeekView.prototype = {
    */
   showWeek(startDate, endDate) {
     this.numberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+    this.dayMap = [];
 
     if (this.numberOfDays === 0) {
       this.element.addClass('is-day-view');
@@ -127,7 +315,9 @@ WeekView.prototype = {
     this.weekHeader += '</th>';
 
     for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) {
-      this.weekHeader += `<th><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}">${Locale.formatDate(day, { pattern: 'dd EEEE', locale: this.locale.name })}</div>`;
+      // TODO if this is 'dd EEEE' has wierd overflow
+      const dayOfWeek = Locale.formatDate(day, { pattern: 'dd EEEE', locale: this.locale.name });
+      this.weekHeader += `<th data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}">${dayOfWeek}</div>`;
       if (this.settings.showAllDay) {
         this.weekHeader += '<div class="week-view-all-day-wrapper"></div>';
       }
@@ -138,12 +328,12 @@ WeekView.prototype = {
     // Show the hours in the days
     this.weekBody = '<tbody>';
     for (let hour = this.settings.startHour; hour <= this.settings.endHour; hour++) {
-      let weekRow = `<tr class="week-view-hour-row" data-hour="${hour}"><td><div class="week-view-cell-wrapper">${Locale.formatHour(hour)}</div></td>`;
-      let halfHourRow = '<tr class="week-view-half-hour-row"><td><div class="week-view-cell-wrapper"></div></td>';
+      let weekRow = `<tr class="week-view-hour-row" data-hour="${hour}"><td><div class="week-view-cell-wrapper">${Locale.formatHour(hour, { locale: this.locale })}</div></td>`;
+      let halfHourRow = `<tr class="week-view-half-hour-row" data-hour="${hour}.5"><td><div class="week-view-cell-wrapper"></div></td>`;
 
       for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) { //eslint-disable-line
-        weekRow += '<td><div class="week-view-cell-wrapper">&nbsp;</div></td>';
-        halfHourRow += '<td><div class="week-view-cell-wrapper">&nbsp;</div></td>';
+        weekRow += '<td><div class="week-view-cell-wrapper"></div></td>';
+        halfHourRow += '<td><div class="week-view-cell-wrapper"></div></td>';
       }
       weekRow += '</tr>';
       halfHourRow += '</tr>';
@@ -159,9 +349,17 @@ WeekView.prototype = {
       .append(this.weekContainer)
       .trigger('weekrendered', { startDate, endDate, elem: this.element, api: this });
 
+    this.element.find('th').each((i, elem) => {
+      const key = elem.getAttribute('data-key');
+      if (key) {
+        this.dayMap.push({ key, elem });
+      }
+    });
+
     // Add the time line and update the text on the month
     this.addTimeLine();
     this.showToolbarMonth(startDate, endDate);
+    this.renderAllEvents();
   },
 
   /**
@@ -199,7 +397,8 @@ WeekView.prototype = {
       const hours = now.getHours();
       const mins = now.getMinutes();
       const diff = hours - this.settings.startHour + (mins / 60);
-      this.markers.css('top', ((diff) * 50) - 5);
+      // 53 is the size of one whole hour (25 + two borders)
+      this.markers.css('top', ((diff) * 52));
     };
 
     if (!this.timeMarker) {
@@ -256,8 +455,11 @@ WeekView.prototype = {
       } else {
         this.settings.startDate = this.hasIrregularDays ? startDate :
           dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        this.settings.startDate.setHours(0, 0, 0, 0);
+
         this.settings.endDate = new Date(this.settings.startDate);
-        this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays);
+        this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
+        this.settings.endDate.setHours(23, 59, 59, 59);
       }
       this.showWeek(this.settings.startDate, this.settings.endDate);
     });
@@ -268,6 +470,11 @@ WeekView.prototype = {
 
     this.element.off(`change-prev.${COMPONENT_NAME}`).on(`change-prev.${COMPONENT_NAME}`, () => {
       this.advanceDays(false);
+    });
+
+    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      alert();
+      e.preventDefault();
     });
     return this;
   },
@@ -315,7 +522,6 @@ WeekView.prototype = {
 
   /**
    * Destroy - Remove added markup and events.
-   * @private
    * @returns {object} The prototype.
    */
   destroy() {

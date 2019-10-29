@@ -5,6 +5,7 @@ import { stringUtils } from '../../utils/string';
 import { MonthView } from '../monthview/monthview';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
+import { calendarShared } from './calendar-shared';
 
 // Settings and Options
 const COMPONENT_NAME = 'calendar';
@@ -315,25 +316,6 @@ Calendar.prototype = {
   },
 
   /**
-   * Get the difference between two dates.
-   * @private
-   * @param {date} first The first date.
-   * @param {date} second The second date.
-   * @param {boolean} useHours The different in hours if true, otherways days.
-   * @param {boolean} isFullDay Add an hour to include the full day to match the calendar.
-   * @returns {number} The difference between the two dates.
-   */
-  dateDiff(first, second, useHours, isFullDay) {
-    // Take the difference between the dates and divide by milliseconds per day.
-    // Round to nearest whole number to deal with DST.
-    let diff = Math.round((second - first) / (1000 * 60 * 60 * (useHours ? 1 : 24)));
-    if (isFullDay) {
-      diff += 1;
-    }
-    return diff;
-  },
-
-  /**
    * Render/ReRender the events attached to the settings.
    * @param {boolean} isCallback Will be set to true when a callback occurs
    * @returns {object} The Calendar prototype, useful for chaining.
@@ -394,8 +376,12 @@ Calendar.prototype = {
     const days = self.monthView.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
     event.endKey = endKey;
     event.startKey = startKey;
-    event = this.addCalculatedFields(event);
-    // const idx = self.monthView.dayMap.findIndex(day => day.key >= startKey && day.key <= endKey);
+    event = calendarShared.addCalculatedFields(
+      event,
+      this.locale,
+      this.language,
+      this.settings.eventTypes
+    );
     let idx = -1;
     for (let i = 0; i < self.monthView.dayMap.length; ++i) {
       if (self.monthView.dayMap[i].key >= startKey && self.monthView.dayMap[i].key <= endKey) {
@@ -442,61 +428,6 @@ Calendar.prototype = {
     for (let i = 0; i < this.monthView.dayMap.length; i++) {
       this.monthView.dayMap[i].events = [];
     }
-  },
-
-  /**
-   * Add calculated fields to the event object.
-   * @private
-   * @param {object} event The starting event object
-   * @returns {object} The event object with stuff added.
-   */
-  addCalculatedFields(event) {
-    event.color = this.getEventTypeColor(event.type);
-    event.duration = Math.abs(this.dateDiff(
-      new Date(event.ends),
-      new Date(event.starts),
-      false,
-      event.isFullDay
-    ));
-    event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name, language: this.language }) : Locale.translate('Day', { locale: this.locale.name, language: this.language });
-    event.daysUntil = event.starts ? this.dateDiff(new Date(event.starts), new Date()) : 0;
-    event.durationHours = this.dateDiff(new Date(event.starts), new Date(event.ends), true);
-    event.isDays = true;
-    if (event.isAllDay === undefined) {
-      event.isAllDay = true;
-    }
-
-    if (event.durationHours < 24) {
-      event.isDays = false;
-      event.isAllDay = false;
-      delete event.duration;
-      event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: this.locale.name, language: this.language }) : Locale.translate('Hour', { locale: this.locale.name, language: this.language });
-    }
-    if (event.isAllDay.toString() === 'true') {
-      event.isDays = true;
-      delete event.durationHours;
-      event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: this.locale.name, language: this.language }) : Locale.translate('Day', { locale: this.locale.name, language: this.language });
-      event.duration = this.dateDiff(new Date(event.starts), new Date(event.ends));
-    }
-    if (event.duration === 0 && event.isAllDay.toString() === 'true') {
-      event.isDays = true;
-      event.duration = 1;
-      event.durationUnits = Locale.translate('Day', { locale: this.locale.name, language: this.language });
-    }
-    if (event.starts) {
-      const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      event.startsLocale = Locale.formatDate(startsLocale, { locale: this.locale.name });
-    }
-    if (event.ends) {
-      const endsLocale = Locale.parseDate(event.ends, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      event.endsLocale = Locale.formatDate(endsLocale, { locale: this.locale.name });
-    }
-    event.eventTypes = this.settings.eventTypes;
-    event.isAllDay = event.isAllDay.toString();
-    if (event.isAllDay.toString() === 'false') {
-      delete event.isAllDay;
-    }
-    return event;
   },
 
   /**
@@ -601,25 +532,6 @@ Calendar.prototype = {
     }
 
     return this;
-  },
-
-  /**
-   * Find the matching type and get the color.
-   * @param {object} id The eventType id to find.
-   * @param {object} event The event data object.
-   * @returns {object} The Calendar prototype, useful for chaining.
-   */
-  getEventTypeColor(id) {
-    let color = 'azure';
-    if (!id) {
-      return color;
-    }
-
-    const eventInfo = this.settings.eventTypes.filter(eventType => eventType.id === id);
-    if (eventInfo.length === 1) {
-      color = eventInfo[0].color || 'azure';
-    }
-    return color;
   },
 
   /**
@@ -943,7 +855,7 @@ Calendar.prototype = {
       }
     }
 
-    event.color = this.getEventTypeColor(event.type);
+    event.color = calendarShared.getEventTypeColor(event.type, this.settings.eventTypes);
     event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.typeLabel = this.getEventTypeLabel(event.type);

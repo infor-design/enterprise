@@ -1,6 +1,8 @@
 //* WeekView
 //================================================== *
 
+$week-view-cell-height: 25px;
+
 .week-view {
   background-color: $popover-bg-color;
   border: 1px solid $calendar-line-color;
@@ -11,9 +13,14 @@
 
   .week-view-header {
     background-color: $popover-bg-color;
+    left: 0;
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 3;
+
+    .calendar-toolbar {
+      background-color: $popover-bg-color;
+    }
   }
 
   .week-view-table-header {
@@ -23,7 +30,7 @@
       height: 2.4rem;
       line-height: 2.4rem;
       text-align: left;
-      z-index: 2;
+      z-index: 3;
 
       // Style todays date
       .week-view-header-wrapper.is-today {
@@ -33,18 +40,58 @@
       }
     }
 
+    // Times on the right
+    .week-view-header-wrapper {
+      padding: 0 5px;
+    }
+
+    // All day section
     .week-view-all-day-wrapper {
       border-top: 1px solid $calendar-line-color;
-      height: 40px;
-      line-height: 40px;
-      padding: 0 5px;
+      height: 44px;
+      position: relative;
+
+      .calendar-event {
+        height: 20px;
+        top: 1px;
+
+        .calendar-event-content {
+          line-height: normal;
+          white-space: nowrap;
+        }
+
+        &.calendar-event-start {
+          border-radius: 3px 0 0 3px;
+        }
+
+        &.calendar-event-continue {
+          border-left: 0;
+          border-radius: 0;
+          left: -1px;
+          width: calc(100% + 1px);
+
+          .calendar-event-title {
+            color: transparent;
+          }
+        }
+
+        &.calendar-event-ends {
+          border-left: 0;
+          border-radius: 0 3px 3px 0;
+          color: transparent;
+          left: -1px;
+          width: calc(100% + 1px);
+
+          .calendar-event-title {
+            color: transparent;
+          }
+        }
+      }
     }
 
     th:nth-child(1) .week-view-all-day-wrapper {
       border-top-color: transparent;
-    }
-
-    .week-view-header-wrapper {
+      line-height: 35px;
       padding: 0 5px;
     }
   }
@@ -68,6 +115,7 @@
     td {
       border-bottom: 1px solid $calendar-line-color;
       border-right: 1px solid $calendar-line-color;
+      height: $week-view-cell-height;
     }
 
     // Legend Row with times
@@ -76,9 +124,13 @@
       width: 60px;
     }
 
-    // First column size
-    td .week-view-cell-wrapper {
+    // First column padding
+    tr td:nth-child(1) {
       font-size: $theme-size-font-xs;
+
+      .week-view-cell-wrapper {
+        padding: 0 5px;
+      }
     }
 
     // Alternate row style
@@ -104,8 +156,10 @@
   }
 
   .week-view-cell-wrapper {
+    height: $week-view-cell-height;
     min-width: 50px;
-    padding: 0 5px;
+    padding: 0;
+    position: relative;
   }
 
   // Moving time marker
@@ -113,9 +167,41 @@
     border: 1px solid $theme-color-brand-primary-base;
     display: block;
     height: 1px;
+    margin-top: -2px;
     position: relative;
     top: -5px;
     width: 100%;
+    z-index: 2;
+  }
+
+  // Adjust the calendar events
+  .calendar-event {
+    bottom: 0;
+    height: $week-view-cell-height + 1;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    top: 0;
+    width: 100%;
     z-index: 1;
+
+    &.reduced-padding .calendar-event-content {
+      padding: 0 5px;
+    }
+
+    &.is-cutoff {
+      border-radius: 3px 3px 0 0;
+    }
+
+    .calendar-event-content {
+      white-space: initial;
+    }
+
+    &.is-ellipsis .calendar-event-content {
+      white-space: nowrap;
+    }
   }
 }

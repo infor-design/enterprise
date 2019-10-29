@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
+import { stringUtils } from '../../utils/string';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
@@ -599,6 +600,12 @@ const Locale = {  // eslint-disable-line
     if (cal) {
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
+    if (cal) {
+      ret = ret.replace('EEE', cal.days.abbreviated[dayOfWeek]); // Day of Week
+    }
+    if (cal) {
+      ret = ret.replace('EE', cal.days.narrow[dayOfWeek]); // Day of Week
+    }
     ret = ret.replace('nnnnn', 'de');
     ret = ret.replace('nnnn', 'ngày');
     ret = ret.replace('t1áng', 'tháng');
@@ -636,14 +643,51 @@ const Locale = {  // eslint-disable-line
 
     const date = new Date();
     if (typeof hour === 'number') {
-      date.setHours(hour);
-      date.setMinutes(0);
+      const split = hour.toString().split('.');
+      date.setHours(split[0]);
+      date.setMinutes(split[1] ? (parseFloat(`0.${split[1]}`) * 60) : 0);
     } else {
       const parts = hour.split(timeSeparator);
       date.setHours(parts[0]);
       date.setMinutes(parts[1] || 0);
     }
-    return this.formatDate(date, options || { date: 'hour' });
+    return this.formatDate(date, { date: 'hour' });
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} startHour The hours to show in the current locale.
+  * @param {number} endHour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHourRange(startHour, endHour, options) {
+    let locale = this.currentLocale.name;
+    let dayPeriods = this.calendar(locale).dayPeriods;
+    let removePeriod = false;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      dayPeriods = this.calendar(locale).dayPeriods;
+    }
+    let range = `${Locale.formatHour(startHour, options)} - ${Locale.formatHour(endHour, options)}`;
+
+    if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
+      removePeriod = true;
+    }
+
+    if (stringUtils.count(range, dayPeriods[0]) > 1) {
+      range = range.replace(dayPeriods[0], '');
+    }
+
+    if (stringUtils.count(range, dayPeriods[1]) > 1) {
+      range = range.replace(` ${dayPeriods[1]}`, '');
+    }
+
+    range = range.replace('  ', ' ');
+    if (removePeriod) {
+      range = range.replace(':00 -', ' -');
+    }
+    return range;
   },
 
   /**

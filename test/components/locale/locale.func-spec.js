@@ -264,23 +264,30 @@ describe('Locale API', () => {
     expect(Locale.formatDate(dt, { pattern: 'HHmmss' })).toEqual(h24 + m + s);
   });
 
-  it('Should format hours', () => {
+  fit('Should format hours', () => { //eslint-disable-line
     Locale.set('en-US');
 
     expect(Locale.formatHour(0)).toEqual('12:00 AM');
     expect(Locale.formatHour('0:30')).toEqual('12:30 AM');
+    expect(Locale.formatHour(0.5)).toEqual('12:30 AM');
     expect(Locale.formatHour(5)).toEqual('5:00 AM');
     expect(Locale.formatHour('5:30')).toEqual('5:30 AM');
+    expect(Locale.formatHour(5.5)).toEqual('5:30 AM');
     expect(Locale.formatHour(10)).toEqual('10:00 AM');
     expect(Locale.formatHour('10:30')).toEqual('10:30 AM');
+    expect(Locale.formatHour(10.5)).toEqual('10:30 AM');
     expect(Locale.formatHour(12)).toEqual('12:00 PM');
     expect(Locale.formatHour('12:30')).toEqual('12:30 PM');
+    expect(Locale.formatHour(12.5)).toEqual('12:30 PM');
     expect(Locale.formatHour(15)).toEqual('3:00 PM');
     expect(Locale.formatHour('15:30')).toEqual('3:30 PM');
+    expect(Locale.formatHour(15.5)).toEqual('3:30 PM');
     expect(Locale.formatHour(20)).toEqual('8:00 PM');
     expect(Locale.formatHour('20:30')).toEqual('8:30 PM');
+    expect(Locale.formatHour(20.5)).toEqual('8:30 PM');
     expect(Locale.formatHour(24)).toEqual('12:00 AM');
     expect(Locale.formatHour('24:30')).toEqual('12:30 AM');
+    expect(Locale.formatHour(24.5)).toEqual('12:30 AM');
 
     Locale.set('en-US');
   });
@@ -392,6 +399,34 @@ describe('Locale API', () => {
     expect(Locale.formatHour('24:30')).toEqual('上午12:30');
 
     Locale.set('en-US');
+  });
+
+  fit('Should format hour range', () => { //eslint-disable-line
+    Locale.set('en-US');
+
+    expect(Locale.formatHourRange(0, 5)).toEqual('12 - 5:00 AM');
+    expect(Locale.formatHourRange(0.5, 5)).toEqual('12:30 - 5:00 AM');
+    expect(Locale.formatHourRange(5, 10)).toEqual('5 - 10:00 AM');
+    expect(Locale.formatHourRange(10, 12)).toEqual('10:00 AM - 12:00 PM');
+    expect(Locale.formatHourRange(10, 20)).toEqual('10:00 AM - 8:00 PM');
+    expect(Locale.formatHourRange(19, 20)).toEqual('7 - 8:00 PM');
+    expect(Locale.formatHourRange(12.5, 13)).toEqual('12:30 - 1:00 PM');
+    expect(Locale.formatHourRange(15.5, 17)).toEqual('3:30 - 5:00 PM');
+    expect(Locale.formatHourRange(20, 24)).toEqual('8:00 PM - 12:00 AM');
+
+    Locale.set('nl-NL');
+
+    expect(Locale.formatHourRange(0, 5)).toEqual('00:00 - 05:00');
+    expect(Locale.formatHourRange(0.5, 5)).toEqual('00:30 - 05:00');
+    expect(Locale.formatHourRange(0.25, 5)).toEqual('00:15 - 05:00');
+    expect(Locale.formatHourRange(5, 10)).toEqual('05:00 - 10:00');
+    expect(Locale.formatHourRange(10, 12)).toEqual('10:00 - 12:00');
+    expect(Locale.formatHourRange(10, 20)).toEqual('10:00 - 20:00');
+    expect(Locale.formatHourRange(19, 20)).toEqual('19:00 - 20:00');
+    expect(Locale.formatHourRange(12.5, 13)).toEqual('12:30 - 13:00');
+    expect(Locale.formatHourRange(15.5, 17)).toEqual('15:30 - 17:00');
+    expect(Locale.formatHourRange(15.25, 17)).toEqual('15:15 - 17:00');
+    expect(Locale.formatHourRange(20, 24)).toEqual('20:00 - 00:00');
   });
 
   it('Should format millis', () => {

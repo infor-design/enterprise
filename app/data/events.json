@@ -382,13 +382,234 @@
   },
   {
     "id": "37",
-    "subject": "Standup Meeting",
+    "subject": "Test Event A",
     "comments": "Weekly standup call",
     "status": "Recurring",
     "icon": "icon-load",
-    "starts": "2019-09-29T08:00:00.000",
-    "ends": "2019-09-29T08:30:00.000",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
     "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "38",
+    "subject": "Test Event B",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "39",
+    "subject": "Test Event C",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "40",
+    "subject": "Test Event D",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "41",
+    "subject": "Test Event A",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "42",
+    "subject": "Test Event B",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T07:00:00.000",
+    "ends": "2019-10-22T07:30:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "43",
+    "subject": "Test Event C",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T08:30:00.000",
+    "ends": "2019-10-22T09:00:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "44",
+    "subject": "Test Event D",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T10:00:00.000",
+    "ends": "2019-10-22T11:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "45",
+    "subject": "Test Event E",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T11:30:00.000",
+    "ends": "2019-10-22T12:30:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "46",
+    "subject": "Test Event F",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T13:30:00.000",
+    "ends": "2019-10-22T16:30:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "47",
+    "subject": "Test Event G",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T17:00:00.000",
+    "ends": "2019-10-22T20:30:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "48",
+    "subject": "IDS Component Updates",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-23T10:30:00.000",
+    "ends": "2019-10-23T11:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "49",
+    "subject": "QA Updates and Further Information",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-24T13:00:00.000",
+    "ends": "2019-10-24T13:10:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "50",
+    "subject": "Out of office in the afternoon",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-25T12:00:00.000",
+    "ends": "2019-10-25T17:00:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "51",
+    "subject": "Day Trip",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-26T00:00:00.000",
+    "ends": "2019-10-26T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "52",
+    "subject": "Sample Event",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-25T15:00:00.000",
+    "ends": "2019-10-25T15:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "53",
+    "subject": "Conference",
+    "starts": "2019-10-21T00:00:00.000",
+    "ends": "2019-10-23T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "54",
+    "subject": "Day Trip",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-31T00:00:00.000",
+    "ends": "2019-10-31T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "55",
+    "subject": "Conference",
+    "starts": "2019-10-28T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "56",
+    "subject": "All Day Event A",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "57",
+    "subject": "All Day Event B",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "58",
+    "subject": "All Day Event C",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "59",
+    "subject": "Sample Event",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-31T15:00:00.000",
+    "ends": "2019-10-31T15:59:59.999",
+    "type": "dto",
     "isAllDay": "false"
   }
 ]
