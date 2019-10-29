@@ -883,7 +883,7 @@ Dropdown.prototype = {
     text = text.trim();
     const span = this.pseudoElem.find('span');
     if (span.length > 0) {
-      span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${text}`;
+      span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${xssUtils.escapeHTML(text)}`;
     }
 
     this.setPlaceholder(text);
@@ -1058,6 +1058,7 @@ Dropdown.prototype = {
     list.not(results).add(headers).addClass('hidden');
     list.filter(results).each(function (i) {
       const li = $(this);
+      const a = li.children('a');
       li.attr('tabindex', i === 0 ? '0' : '-1');
 
       if (!selected) {
@@ -1067,14 +1068,15 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = self.getSearchRegex(term);
-      const text = li.text().replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+      const text = xssUtils.escapeHTML(li.text()).replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
         hasIcons = true;
       }
-
-      li.children('a').html(icon + text);
+      if (a[0]) {
+        a[0].innerHTML = icon + text;
+      }
     });
 
     headers.each(function () {
@@ -1116,14 +1118,16 @@ Dropdown.prototype = {
       const a = $(this).children('a');
       const li = $(this);
 
-      const text = a.text();
+      const text = xssUtils.escapeHTML(a.text());
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
 
       if (icon) {
         hasIcons = true;
       }
 
-      a.html(icon + text);
+      if (a[0]) {
+        a[0].innerHTML = icon + text;
+      }
     });
 
     // Adjust height / top position
