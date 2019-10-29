@@ -314,3 +314,28 @@ describe('Modal xss tests', () => {
     expect(await element(by.css('.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
   });
 });
+
+describe('Modal button tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-inline-buttons');
+    const modalEl = await element(by.id('btn-show-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
+    await modalEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on 4 buttons', async () => {
+      const bodyEl = await element(by.className('modal-engaged'));
+
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
+    });
+  }
+});

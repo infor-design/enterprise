@@ -60,7 +60,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lt', default: 'lt-LT' },
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
-    { lang: 'nb', default: 'nb-NO' },
+    { lang: 'nb', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
