@@ -36,6 +36,18 @@ input::-webkit-inner-spin-button {
     position: relative;
     vertical-align: top;
   }
+
+  .spinbox-field-container {
+    display: inline-block;
+
+    > .spinbox-wrapper {
+      width: 148px;
+
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        width: 232px;
+      }
+    }
+  }
 }
 
 .spinbox-control {
