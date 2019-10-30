@@ -350,7 +350,7 @@ describe('Timepicker specific locale/langauge tests', () => {
     timepickerEl = await element(by.id('timepicker-2'));
     await element(by.css('#timepicker-2 + .icon')).click();
 
-    expect(await element(by.css('.btn-modal-primary')).getText()).toEqual('Sätt tid');
+    expect(await element(by.css('.btn-modal-primary')).getText()).toEqual('Ange tid');
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
 
     expect(await timepickerEl.getAttribute('value')).toEqual('01:00');
