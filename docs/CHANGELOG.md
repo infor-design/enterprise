@@ -9,6 +9,7 @@
 ### v4.23.0 Features
 
 - `[Accordion]` Added a new setting `expanderDisplay` that can display all expander button icons in the classic style, or with all "chevron" or "plus-minus"-style icons.  Deprecated the legacy `displayChevron` setting in favor of this change. ([#2900](https://github.com/infor-design/enterprise/issues/2900))
+- `[Empty Messages]` Added a new icon `empty-no-users`. ([#3046](https://github.com/infor-design/enterprise/issues/3046))
 - `[Locale]` Added updated translation files for 16 in house languages. ([#3049](https://github.com/infor-design/enterprise/issues/3049))
 
 ### v4.23.0 Fixes
@@ -24,6 +25,7 @@
 - `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
 - `[Datagrid]` Fixed an issue where the select children for tree was not working. ([#2961](https://github.com/infor-design/enterprise/issues/2961))
 - `[Datepicker]` Fixed an issue where the validation after body re-initialize was not working. ([#2410](https://github.com/infor-design/enterprise/issues/2410))
+- `[Datepicker]` Fixed an issue where the islamic-umalqura calendar was not working, when used with user vs settings locale and translate data was not loading from parent locale. ([#2878](https://github.com/infor-design/enterprise/issues/2878))
 - `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
 - `[Dropdown]` Fixed an issue where the placeholder was incorrectly renders when initially set selected item. ([#2870](https://github.com/infor-design/enterprise/issues/2870))
 - `[Field Filter]` Fixed an issues where the icons are not vertically centered, and layout issues when opening the dropdown in a smaller height browser. ([#2951](https://github.com/infor-design/enterprise/issues/2951))
@@ -40,6 +42,7 @@
 - `[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
 - `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
 - `[Toolbar]` Fixed a bug where the dropdown/toolbar menu is being cut off on iOS device. ([#2800](https://github.com/infor-design/enterprise/issues/2800))
+- `[Tooltip]` Fixed a personalization bug on Dark Themes where text colors were sometimes illegible when using certain color configurations. ([#3011](https://github.com/infor-design/enterprise/issues/3011))
 
 ### v4.23.0 Chores & Maintenance
 

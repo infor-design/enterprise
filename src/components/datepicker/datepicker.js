@@ -177,21 +177,47 @@ DatePicker.prototype = {
   },
 
   /**
+   * Get list of similar api elements.
+   * @private
+   * @param {string} key to check
+   * @param {string} value to check
+   * @returns {array} list of api elements
+   */
+  getSimilarApi(key, value) {
+    const elems = [].slice.call(document.querySelectorAll('.datepicker'));
+    const similarApi = [];
+    elems.forEach((node) => {
+      const datepickerApi = $(node).data('datepicker');
+      if (datepickerApi && datepickerApi.settings[key] === value) {
+        similarApi.push(datepickerApi);
+      }
+    });
+    return similarApi;
+  },
+
+  /**
    * Set current locale to be used.
    * @private
    * @returns {void}
    */
   setLocale() {
+    const s = this.settings;
     this.locale = Locale.currentLocale;
-    if (this.settings.locale) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.setCurrentCalendar();
+    if (s.locale) {
+      Locale.getLocale(s.locale).done((locale) => {
+        const similarApi = this.getSimilarApi('locale', locale);
+        similarApi.forEach((api) => {
+          api.locale = Locale.cultures[locale];
+          api.setCurrentCalendar();
+        });
       });
     }
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language).done(() => {
-        this.language = this.settings.language;
+    if (s.language) {
+      Locale.getLocale(s.language).done(() => {
+        const similarApi = this.getSimilarApi('language', s.language);
+        similarApi.forEach((api) => {
+          api.language = s.language;
+        });
       });
     }
   },
@@ -1353,11 +1379,19 @@ DatePicker.prototype = {
         pattern: this.pattern,
         locale: this.locale.name
       });
-      gregorianValue = this.conversions.toGregorian(
-        islamicValue[0],
-        islamicValue[1],
-        islamicValue[2]
-      );
+      if (islamicValue instanceof Date) {
+        gregorianValue = this.conversions.toGregorian(
+          islamicValue.getFullYear(),
+          islamicValue.getMonth(),
+          islamicValue.getDate()
+        );
+      } else if (islamicValue instanceof Array) {
+        gregorianValue = this.conversions.toGregorian(
+          islamicValue[0],
+          islamicValue[1],
+          islamicValue[2]
+        );
+      }
     }
 
     this.currentDate = gregorianValue || new Date();
@@ -1382,6 +1416,7 @@ DatePicker.prototype = {
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
+      this.currentIslamicDate = this.currentDateIslamic;
     } else {
       this.currentDate = this.currentDate || new Date();
       this.currentMonth = this.currentDate.getMonth();

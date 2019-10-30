@@ -254,6 +254,13 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+    } else if (!this.languages[lang] && !data.messages) {
+      const match = this.defaultLocales.filter(a => a.lang === lang);
+      const parentLocale = match[0] || [{ default: 'en-US' }];
+      if (parentLocale.default && parentLocale.default !== locale &&
+        !this.cultures[parentLocale.default]) {
+        this.appendLocaleScript(parentLocale.default);
+      }
     }
   },
 
@@ -365,7 +372,6 @@ const Locale = {  // eslint-disable-line
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   getLocale(locale, filename) {
-    const self = this;
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -383,10 +389,10 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript(locale, false, false, filename);
     }
 
-    if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
+    if (locale && this.currentLocale.data && this.currentLocale.dataName === locale) {
       this.dff[locale].resolve(locale);
     }
-    if (self.cultures[locale] && this.cultureInHead()) {
+    if (this.cultures[locale] && this.cultureInHead()) {
       this.dff[locale].resolve(locale);
     }
 
