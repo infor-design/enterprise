@@ -39,6 +39,7 @@
 - `[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
 - `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
 - `[Toolbar]` Fixed a bug where the dropdown/toolbar menu is being cut off on iOS device. ([#2800](https://github.com/infor-design/enterprise/issues/2800))
+- `[Tooltip]` Fixed a personalization bug on Dark Themes where text colors were sometimes illegible when using certain color configurations. ([#3011](https://github.com/infor-design/enterprise/issues/3011))
 
 ### v4.23.0 Chores & Maintenance
 
