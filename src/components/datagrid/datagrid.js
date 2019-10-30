@@ -5610,12 +5610,14 @@ Datagrid.prototype = {
   */
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
-    const cell = $(e.target).closest('td').index();
-    const rowElem = $(e.target).closest('tr');
+    const target = $(e.target);
+    const rowElem = target.closest('tr');
+    const cellElem = target.closest('td');
+    const cell = cellElem.index();
     let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
-    if ($(e.target).is('a')) {
+    if (target.is('a')) {
       stopPropagation = false;
     }
 
@@ -5640,7 +5642,8 @@ Datagrid.prototype = {
     }
 
     if (isTrigger) {
-      self.element.trigger(eventName, [{ row, cell, item, originalEvent: e }]);
+      const args = { row, rowElem, cell, cellElem, item, originalEvent: e };
+      self.element.trigger(eventName, [args]);
     }
 
     return false;
@@ -6029,18 +6032,15 @@ Datagrid.prototype = {
     * @property {object} args.originalEvent The original event object.
     */
     this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
-      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      e.stopPropagation();
+      self.closePrevPopupmenu();
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
-      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
+      const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
+      if (!hasMenu() || (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu())) {
         return true;
       }
       e.preventDefault();
-      self.closePrevPopupmenu();
-
-      if (!hasMenu()) {
-        return true;
-      }
 
       $(e.currentTarget).popupmenu({
         menuId: self.settings.menuId,
