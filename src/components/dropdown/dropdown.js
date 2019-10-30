@@ -523,7 +523,7 @@ Dropdown.prototype = {
     const optText = this.getOptionText(opts);
     this.tooltipApi = this.pseudoElem.find('span')
       .tooltip({
-        content: optText,
+        content: xssUtils.escapeHTML(optText),
         parentElement: this.pseudoElem,
         trigger: this.isMobile() ? 'immediate' : 'hover',
       })
@@ -1068,14 +1068,25 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = self.getSearchRegex(term);
-      const text = xssUtils.escapeHTML(li.text()).replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+      // const text = xssUtils.escapeHTML(li.text()).replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+      let text = li.text();
+      text = xssUtils.escapeHTML(text);
+      text = text.replace(/&lt;/g, '&#16;');
+      text = text.replace(/&gt;/g, '&#17;');
+      text = text.replace(/&amp;/g, '&');
+      text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+      text = text.replace(/&#16;/g, '&lt;');
+      text = text.replace(/&#17;/g, '&gt;');
+
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
+      const swatch = li.children('a').find('.swatch');
+      const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
 
       if (icon) {
         hasIcons = true;
       }
       if (a[0]) {
-        a[0].innerHTML = icon + text;
+        a[0].innerHTML = swatchHtml + icon + text;
       }
     });
 
@@ -1120,13 +1131,15 @@ Dropdown.prototype = {
 
       const text = xssUtils.escapeHTML(a.text());
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
+      const swatch = li.children('a').find('.swatch');
+      const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
 
       if (icon) {
         hasIcons = true;
       }
 
       if (a[0]) {
-        a[0].innerHTML = icon + text;
+        a[0].innerHTML = swatchHtml + icon + text;
       }
     });
 

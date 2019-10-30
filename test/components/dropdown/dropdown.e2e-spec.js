@@ -555,4 +555,28 @@ describe('Dropdown xss tests', () => {
 
     await utils.checkForErrors();
   });
+
+  it('Should not get confused filtering with encoding', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('l');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
+    await utils.checkForErrors();
+  });
+
+  it('Should filter on &', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states2 + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('&');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('Hello 0 1 2 & Hello 3 4 5');
+    await utils.checkForErrors();
+  });
 });
