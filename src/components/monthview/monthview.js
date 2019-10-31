@@ -49,7 +49,8 @@ const COMPONENT_NAME_DEFAULTS = {
   selectable: true,
   onSelected: null,
   onKeyDown: null,
-  showToday: true
+  showToday: true,
+  onChangeView: null
 };
 
 /**
@@ -104,6 +105,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.onSelected=false] Callback that fires when a month day is clicked.
  * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -283,7 +285,8 @@ MonthView.prototype = {
       showToday: this.settings.showToday,
       isAlternate: this.settings.headerStyle !== 'full',
       isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
-      showViewChanger: this.settings.showViewChanger
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.settings.onChangeView
     });
 
     this.handleEvents();

@@ -1,11 +1,14 @@
 /* eslint-disable no-underscore-dangle, no-nested-ternary */
-import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
+import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
+import { dateUtils } from '../../utils/date';
+import { calendarShared } from './calendar-shared';
+
 import { MonthView } from '../monthview/monthview';
+import { WeekView } from '../week-view/week-view';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { calendarShared } from './calendar-shared';
 
 // Settings and Options
 const COMPONENT_NAME = 'calendar';
@@ -33,6 +36,14 @@ const COMPONENT_NAME_DEFAULTS = {
     subject: '',
     isAllDay: true,
     comments: ''
+  },
+  onChangeView: null,
+  showToday: true,
+  weekViewSettings: {
+    firstDayOfWeek: 0,
+    startHour: 7,
+    endHour: 19,
+    showAllDay: true
   }
 };
 
@@ -51,6 +62,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {string} [settings.template] The ID of the template used for the events.
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
@@ -58,6 +70,12 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
+ * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
+ * @param {object} [settings.weekViewSettings = {}] an object containing settings for the internal weekview component.
+ * @param {boolean} [settings.weekViewSettings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
+ * @param {number} [settings.weekViewSettings.startHour=7] The hour (0-24) to end on each day.
+ * @param {number} [settings.weekViewSettings.endHour=19] The hour (0-24) to end on each day.
+ * @param {boolean} [settings.weekViewSettings.showAllDay=true] Detemines if the all day events row should be shown.
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -95,7 +113,8 @@ Calendar.prototype = {
     this
       .setCurrentCalendar()
       .renderEventTypes()
-      .renderMonth()
+      .renderMonthView()
+      .renderWeekView()
       .handleEvents();
 
     return this;
@@ -160,8 +179,18 @@ Calendar.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    * @private
    */
-  renderMonth() {
+  renderMonthView() {
     this.monthViewContainer = document.querySelector('.calendar .calendar-monthview');
+
+    // Handle changing view
+    this.activeView = 'month';
+    this.onChangeToMonth = (args) => {
+      if (this.settings.onChangeView) {
+        this.settings.onChangeView(args);
+        return;
+      }
+      this.changeView(args.viewName);
+    };
 
     this.monthView = new MonthView(this.monthViewContainer, {
       onRenderMonth: this.settings.onRenderMonth,
@@ -172,11 +201,111 @@ Calendar.prototype = {
       year: this.settings.year,
       eventTooltip: this.eventTooltip,
       iconTooltip: this.iconTooltip,
-      showViewChanger: this.settings.showViewChanger
+      showToday: this.settings.showToday,
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.onChangeToMonth
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();
     return this;
+  },
+
+  /**
+   * Render the weekview calendar
+   * @returns {object} The Calendar prototype, useful for chaining.
+   * @private
+   */
+  renderWeekView() {
+    this.weekViewContainer = document.querySelector('.calendar .calendar-weekview');
+    if (!this.weekViewContainer) {
+      return this;
+    }
+
+    // Handle changing view
+    this.weekViewContainer.classList.add('week-view', 'hidden');
+    this.onChangeToWeekDay = (args) => {
+      if (this.settings.onChangeView) {
+        this.settings.onChangeView(args);
+        return;
+      }
+      this.changeView(args.viewName);
+    };
+
+    const startDate = new Date(this.currentDate());
+    const endDate = new Date(this.currentDate());
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    this.weekView = new WeekView(this.weekViewContainer, {
+      locale: this.settings.locale,
+      startDate,
+      endDate,
+      eventTypes: this.settings.eventTypes,
+      events: this.settings.events,
+      firstDayOfWeek: this.settings.weekViewSettings.firstDayOfWeek,
+      showAllDay: this.settings.weekViewSettings.showAllDay,
+      startHour: this.settings.weekViewSettings.startHour,
+      endHour: this.settings.weekViewSettings.endHour,
+      showToday: this.settings.showToday,
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.onChangeToWeekDay,
+      onChangeWeek: (args) => {
+        this.monthView.selectDay(args.startDate, false, true);
+      }
+    });
+    this.weekViewHeader = document.querySelector('.calendar .calendar-weekview .monthview-header');
+
+    this.weekView.settings.filteredTypes = this.filterEventTypes();
+    this.weekView.renderAllEvents();
+    return this;
+  },
+
+  /**
+   * Set the current view (day, week or month)
+   * @param {string} viewName to set selection
+   * @returns {void}
+   */
+  changeView(viewName) {
+    if (viewName === this.activeView) {
+      return;
+    }
+
+    let startDate = new Date(this.currentDate());
+    let endDate = new Date(this.currentDate());
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    switch (viewName) {
+      case 'day':
+        this.monthViewContainer.classList.add('hidden');
+        this.weekViewContainer.classList.remove('hidden');
+        this.activeView = 'day';
+        this.weekView.settings.filteredTypes = this.filterEventTypes();
+        this.weekView.showWeek(startDate, endDate);
+        this.clearEventDetails();
+        this.weekView.calendarToolbarAPI.setViewChangerValue(this.activeView);
+        break;
+      case 'week':
+        this.monthViewContainer.classList.add('hidden');
+        this.weekViewContainer.classList.remove('hidden');
+        this.activeView = 'week';
+        startDate = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        endDate = dateUtils.lastDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        this.weekView.settings.filteredTypes = this.filterEventTypes();
+        this.weekView.showWeek(startDate, endDate);
+        this.weekView.calendarToolbarAPI.setViewChangerValue(this.activeView);
+        this.clearEventDetails();
+        break;
+      case 'month':
+        this.monthViewContainer.classList.remove('hidden');
+        this.weekViewContainer.classList.add('hidden');
+        this.activeView = 'month';
+        this.monthView.showMonth(this.settings.month, this.settings.year);
+        this.monthView.calendarToolbarAPI.setViewChangerValue(this.activeView);
+        this.monthView.selectDay(this.currentDate(), false, true);
+        break;
+      default:
+    }
   },
 
   /**
@@ -230,7 +359,7 @@ Calendar.prototype = {
    * @private
    */
   renderEventDetails(eventId, count) {
-    if (!this.settings.events) {
+    if (!this.settings.events || this.activeView !== 'month') {
       return;
     }
 
@@ -347,6 +476,10 @@ Calendar.prototype = {
     }
 
     this.renderSelectedEventDetails();
+    if (this.weekView) {
+      this.weekView.settings.filteredTypes = filters;
+      this.weekView.renderAllEvents();
+    }
     return this;
   },
 
@@ -787,7 +920,7 @@ Calendar.prototype = {
    * @returns {date} the currently selected date on the control.
    */
   currentDate() {
-    return this.isRTL ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+    return this.isIslamic ? this.monthView.currentIslamicDate : this.monthView.currentDate;
   },
 
   /**
@@ -995,7 +1128,12 @@ Calendar.prototype = {
     DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
     document.getElementsByTagName('body')[0].appendChild(this.modalContents);
 
-    event = this.addCalculatedFields(event);
+    event = calendarShared.addCalculatedFields(
+      event,
+      this.locale,
+      this.language,
+      this.settings.eventTypes
+    );
     this.renderTmpl(event || {}, this.settings.modalTemplate, this.modalContents);
     const dayObj = this.getDayEvents();
     const modalOptions = this.settings.modalOptions || {

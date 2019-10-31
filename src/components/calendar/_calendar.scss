@@ -50,6 +50,10 @@
     }
   }
 
+  .calendar-weekview {
+    flex: 1 1 auto;
+  }
+
   .calendar-event-types {
     margin-bottom: -3px;
     margin-right: 5px;
@@ -210,6 +214,7 @@
     }
 
     .icon {
+      color: $button-color-tertiary-initial-font;
       height: 16px;
       margin-left: 5px;
       margin-top: 1px;

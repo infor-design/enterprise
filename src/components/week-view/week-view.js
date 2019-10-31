@@ -13,6 +13,7 @@ const COMPONENT_NAME_DEFAULTS = {
   eventTypes: [
     { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
   ],
+  filteredTypes: [],
   events: [],
   locale: null,
   firstDayOfWeek: 0,
@@ -22,7 +23,10 @@ const COMPONENT_NAME_DEFAULTS = {
   startHour: 7,
   endHour: 19,
   showToday: true,
-  showViewChanger: true
+  showViewChanger: true,
+  onChangeView: null,
+  onChangeWeek: null,
+  onChangeDay: null
 };
 
 /**
@@ -35,11 +39,15 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {date} [settings.startDate] Start of the week to show.
  * @param {date} [settings.endDate] End of the week to show.
+ * @param {boolean} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {boolean} [settings.showAllDay=true] Detemines if the all day events row should be shown.
  * @param {number} [settings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
+ * @param {function} [settings.onChangeWeek] Call back for when the week is changed.
+ * @param {function} [settings.onChangeDay] Call back for when the day is changed (for day view)
  */
 function WeekView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -110,16 +118,30 @@ WeekView.prototype = {
    */
   renderAllEvents() {
     // Clone and sort the array
-    const filters = [];
     const eventsSorted = this.settings.events.slice(0);
     eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0))); // eslint-disable-line
+    this.removeAllEvents();
 
     for (let i = 0; i < eventsSorted.length; i++) {
       const event = eventsSorted[i];
-      if (filters.indexOf(event.type) > -1) {
+      if (this.settings.filteredTypes.indexOf(event.type) > -1) {
         continue;
       }
       this.renderEvents(event);
+    }
+  },
+
+  /**
+   * Remove all events from the month.
+   */
+  removeAllEvents() {
+    const events = this.element[0].querySelectorAll('.calendar-event');
+    for (let i = 0; i < events.length; i++) {
+      events[i].parentNode.removeChild(events[i]);
+    }
+
+    for (let i = 0; i < this.dayMap.length; i++) {
+      this.dayMap[i].events = [];
     }
   },
 
@@ -184,6 +206,9 @@ WeekView.prototype = {
    */
   appendEventToAllDay(container, event, cssClass) {
     const allDayContainer = container.querySelector('.week-view-all-day-wrapper');
+    if (!allDayContainer) {
+      return;
+    }
 
     const node = document.createElement('a');
     DOM.addClass(node, 'calendar-event', event.color, cssClass);
@@ -297,8 +322,9 @@ WeekView.prototype = {
   showWeek(startDate, endDate) {
     this.numberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
     this.dayMap = [];
+    this.isDayView = false;
 
-    if (this.numberOfDays === 0) {
+    if (this.numberOfDays === 0 || this.numberOfDays === 1) {
       this.element.addClass('is-day-view');
       this.isDayView = true;
       this.element.find('#calendar-view-changer').val('day').trigger('updated');
@@ -345,9 +371,14 @@ WeekView.prototype = {
     this.weekContainer = `<div class="week-view-container"><table class="week-view-table">${this.weekHeader}${this.weekBody}</table></div>`;
     this.element.find('.week-view-container').remove();
 
+    const args = { isDayView: this.isDayView, startDate, endDate, elem: this.element, api: this };
     this.element
       .append(this.weekContainer)
-      .trigger('weekrendered', { startDate, endDate, elem: this.element, api: this });
+      .trigger('weekrendered', args);
+
+    if (this.settings.onChangeWeek) {
+      this.settings.onChangeWeek(args);
+    }
 
     this.element.find('th').each((i, elem) => {
       const key = elem.getAttribute('data-key');
@@ -360,6 +391,10 @@ WeekView.prototype = {
     this.addTimeLine();
     this.showToolbarMonth(startDate, endDate);
     this.renderAllEvents();
+
+    // Update currently set start and end date
+    this.settings.startDate = startDate;
+    this.settings.endDate = endDate;
   },
 
   /**
@@ -430,6 +465,7 @@ WeekView.prototype = {
       isAlternate: false,
       isMenuButton: true,
       showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.settings.onChangeView,
       viewChangerValue: !this.isDayView ? 'week' : 'day'
     });
     this.monthField = this.header.find('#monthview-datepicker-field');
@@ -490,7 +526,9 @@ WeekView.prototype = {
     }
     this.settings.startDate.setDate(this.settings.startDate.getDate() + diff);
     if (this.isDayView) {
-      this.settings.endDate = this.settings.startDate;
+      this.settings.endDate = new Date(this.settings.startDate);
+      this.settings.startDate.setHours(0, 0, 0, 0);
+      this.settings.endDate.setHours(23, 59, 59, 999);
     } else {
       this.settings.endDate.setDate(this.settings.endDate.getDate() + diff);
     }

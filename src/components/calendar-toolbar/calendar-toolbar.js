@@ -17,6 +17,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {number} [settings.year] The year to show.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open on the toolbar datepicker, allows you to set the date.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {boolean} [settings.isAlternate] Alternate style for the datepicker popup.
  * @param {boolean} [settings.isMenuButton] Show the month/year as a menu button object, works if isAlternate is true.
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
@@ -28,6 +29,7 @@ const COMPONENT_DEFAULTS = {
   locale: null,
   showToday: true,
   onOpenCalendar: null,
+  onChangeView: null,
   isAlternate: false,
   isMenuButton: true,
   showViewChanger: false,
@@ -130,7 +132,7 @@ CalendarToolbar.prototype = {
     });
 
     if (this.settings.showViewChanger) {
-      this.viewChanger = $('#calendar-view-changer').dropdown();
+      this.viewChanger = this.element.find('#calendar-view-changer').dropdown();
     }
     this.todayLink = this.element.find('.hyperlink.today');
     this.monthPickerApi = this.monthPicker.data('datepicker');
@@ -202,6 +204,17 @@ CalendarToolbar.prototype = {
   },
 
   /**
+   * Set the view changer dropdown value
+   * @private
+   * @param {string} viewChangerValue The view changer value to use (month, day or week)
+   * @returns {void}
+   */
+  setViewChangerValue(viewChangerValue) {
+    this.settings.viewChangerValue = viewChangerValue;
+    this.viewChanger.val(viewChangerValue).trigger('updated');
+  },
+
+  /**
    * Attach Events used by the Component.
    * @private
    * @returns {void}
@@ -224,6 +237,17 @@ CalendarToolbar.prototype = {
     this.element.find('.next').off('click.calendar-toolbar-b').on('click.calendar-toolbar-b', () => {
       this.element.trigger('change-next', { selectedDate: this.currentDate, isToday: false });
     });
+
+    if (this.settings.onChangeView) {
+      this.element.find('#calendar-view-changer').off('change.calendar-toolbar-v').on('change.calendar-toolbar-v', (e) => {
+        this.settings.onChangeView({
+          viewName: e.currentTarget.value,
+          elem: e.currentTarget,
+          api: this
+        });
+      });
+    }
+
     return this;
   },
 
