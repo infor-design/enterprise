@@ -1,0 +1,91 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- BEGIN Toolbar with All Buttons (Buttonset Favoring) -->
+    <div class="flex-toolbar" id="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button class="btn-menu" id="menu-button">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu" id="menu-button-popupmenu">
+          <li><a href="#">Menu Button Item #1</a></li>
+          <li><a href="#">Menu Button Item #2</a></li>
+          <li class="submenu">
+            <a href="#">Menu Button Item #3</a>
+            <ul class="popupmenu">
+              <li><a href="#">Menu Button Sub-Item One</a></li>
+              <li><a href="#">Menu Button Sub-Item Two</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Menu Button Item #4</a></li>
+        </ul>
+
+        <button class="btn-icon" disabled>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">More One</a></li>
+          <li><a href="#">More Two</a></li>
+          <li class="submenu">
+            <a href="#">More Three</a>
+            <ul class="popupmenu">
+              <li><a href="#">Sub-Item One</a></li>
+              <li><a href="#">Sub-Item Two</a></li>
+            </ul>
+          </li>
+          <li><a href="#">More Three</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- END Toolbar with All Buttons (Buttonset Favoring) -->
+
+  </div>
+</div>
+
+<script id="test-script" type="text/javascript">
+  // Show a Toast whenever a Toolbar Item or a valid Action Menu item is selected.
+  $('.flex-toolbar').on('selected.test', function(e, item, secondArg) {
+    var text = $(item.element).text().trim();
+    var selectedItem;
+
+    if (secondArg) {
+      selectedItem = 'Selected Menu Item: ' + $(secondArg).text().trim() + '<br />';
+    }
+
+    $('body').toast({
+      title: 'Toolbar Item Selected',
+      message: '<p>' +
+        'text content: "<b>'+ text +'</b>"<br/>' +
+        'item type: "<b>'+ item.type +'</b>"' +
+        (selectedItem ? '<br />' + selectedItem : '') +
+        '</p>'
+    });
+  });
+</script>

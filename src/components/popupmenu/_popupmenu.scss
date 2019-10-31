@@ -1,6 +1,66 @@
 // Popup Menu
 // ==================================================
 
+@mixin multiselectable-list-item {
+  position: relative;
+
+  a {
+    padding-left: 35px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  &::before,
+  &.is-focused::before {
+    @include checkbox-unchecked-before-style;
+
+    margin-left: 7px;
+    margin-top: 0;
+    top: 8px;
+  }
+
+  &.is-checked::before {
+    @include checkbox-checked-before-style;
+
+    margin-left: 7px;
+    margin-top: 0;
+    top: 8px;
+  }
+
+  &.is-checked::after {
+    @include checkbox-checked-after-style;
+
+    left: 12px;
+    margin-top: 4px;
+    top: 5px;
+  }
+
+  &.is-disabled {
+    &::before {
+      @include checkbox-unchecked-disabled-before-style;
+
+      margin-left: 7px;
+      margin-top: 0;
+      top: 9px;
+    }
+
+    &.is-checked {
+      &::before {
+        @include checkbox-checked-disabled-before-style;
+      }
+
+      &::after {
+        @include checkbox-checked-disabled-after-style;
+
+        left: 12px;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
 // Contains the main popupmenu UL for positioning.
 .popupmenu-wrapper {
   @include css3(user-select, none);
@@ -290,6 +350,10 @@
       }
     }
 
+    &.is-multiselectable {
+      @include multiselectable-list-item();
+    }
+
     &.is-placeholder {
       cursor: default;
 
@@ -466,68 +530,12 @@
     }
   }
 
+  // Entirely Multi-selectable Popupmenus
   &.is-multiselectable {
     li {
-      position: relative;
-
-      a {
-        &::before {
-          display: none;
-        }
-      }
-
-      &::before,
-      &.is-focused::before {
-        @include checkbox-unchecked-before-style;
-
-        margin-left: 7px;
-        margin-top: 0;
-        top: 8px;
-      }
-
-      &.is-checked::before {
-        @include checkbox-checked-before-style;
-
-        margin-left: 7px;
-        margin-top: 0;
-        top: 8px;
-      }
-
-      &.is-checked::after {
-        @include checkbox-checked-after-style;
-
-        left: 12px;
-        margin-top: 4px;
-        top: 5px;
-      }
-
-      &.is-disabled {
-        &::before {
-          @include checkbox-unchecked-disabled-before-style;
-
-          margin-left: 7px;
-          margin-top: 0;
-          top: 9px;
-        }
-
-        &.is-checked {
-          &::before {
-            @include checkbox-checked-disabled-before-style;
-          }
-
-          &::after {
-            @include checkbox-checked-disabled-after-style;
-
-            left: 12px;
-            margin-top: 5px;
-          }
-        }
-      }
-
+      @include multiselectable-list-item();
     }
-
   }
-
 }
 
 //Footer Buttons
@@ -573,6 +581,16 @@
         border-left: 1px solid $popover-separator-color;
       }
     }
+  }
+}
+
+@mixin rtl-multiselectable-list-item {
+  &::before {
+    right: 8px;
+  }
+
+  &::after {
+    right: 13px;
   }
 }
 
@@ -628,21 +646,19 @@ html[dir='rtl'] {
           padding-right: 35px;
         }
       }
-    }
 
-    // Full menu is multiselectable:
-    &.is-multiselectable {
-      li {
-        &::before {
-          right: 8px;
-        }
-
-        &::after {
-          right: 13px;
-        }
+      // Individual multiselectable item
+      &.is-multiselectable {
+        @include rtl-multiselectable-list-item();
       }
     }
 
+    // Full menu is multiselectable
+    &.is-multiselectable {
+      li {
+        @include rtl-multiselectable-list-item();
+      }
+    }
   }
 
   .popup-footer {

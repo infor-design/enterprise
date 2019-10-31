@@ -488,12 +488,17 @@ ToolbarFlex.prototype = {
       noMenuWrap: true
     };
 
-    let hasIcons = false;
-
     function getItemData(item) {
       const itemData = item.toPopupmenuData();
-      if (itemData && itemData.icon) {
-        hasIcons = true;
+
+      if (itemData) {
+        // Pass along some properties to the top level data object
+        if (itemData.icon) {
+          data.hasIcons = true;
+        }
+        if (itemData.selectable) {
+          data.selectable = itemData.selectable;
+        }
       }
       return itemData;
     }
@@ -504,8 +509,6 @@ ToolbarFlex.prototype = {
       }
       return true;
     }).map(item => getItemData(item));
-
-    data.hasIcons = hasIcons;
 
     return data;
   },
