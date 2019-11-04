@@ -299,16 +299,16 @@
 
 // Styles to reset the modal
 .calendar-popup {
-  overflow-x: hidden;
-  overflow-y: auto;
-
   .tooltip-content {
-    padding: 20px 0;
+    height: calc(100% - 48px);
+    overflow: auto;
+    padding: 20px 0 0;
   }
 
   .modal-buttonset {
-    margin-bottom: -21px;
+    height: 45px;
     margin-top: 0;
+    padding: 0;
 
     button {
       width: 50%;

@@ -266,7 +266,7 @@ Calendar.prototype = {
    * @returns {void}
    */
   changeView(viewName) {
-    if (viewName === this.activeView) {
+    if (viewName === this.activeView || !this.weekViewContainer) {
       return;
     }
 
@@ -399,6 +399,30 @@ Calendar.prototype = {
 
     for (let i = 0; i < dayObj.events.length; i++) {
       this.renderEventDetails(dayObj.events[i].id, dayObj.events.length);
+    }
+  },
+
+  /**
+   * If a upcomming day is clicked render that day/year.
+   * @private
+   * @param {string} key The date as an index key.
+   */
+  renderDay(key) {
+    this.monthView.selectDay(key);
+
+    let startDate = new Date(this.currentDate());
+    let endDate = new Date(this.currentDate());
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    if (this.activeView === 'day') {
+      this.weekView.showWeek(startDate, endDate);
+    }
+
+    if (this.activeView === 'week') {
+      startDate = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+      endDate = dateUtils.lastDayOfWeek(startDate, this.settings.firstDayOfWeek);
+      this.weekView.showWeek(startDate, endDate);
     }
   },
 
@@ -723,7 +747,7 @@ Calendar.prototype = {
 
     this.element.off(`click.${COMPONENT_NAME}-upcoming`).on(`click.${COMPONENT_NAME}-upcoming`, '.calendar-upcoming-event', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
-      this.monthView.selectDay(key);
+      this.renderDay(key);
     });
 
     this.element.off(`contextmenu.${COMPONENT_NAME}`).on(`contextmenu.${COMPONENT_NAME}`, '.calendar-event', (e) => {
@@ -765,7 +789,7 @@ Calendar.prototype = {
       return false;
     });
 
-    const showModalWithCallback = (eventData, isAdd) => {
+    const showModalWithCallback = (eventData, isAdd, eventTarget) => {
       this.showEventModal(eventData, (elem, event) => {
         // Collect the data and popuplate the event object
         const inputs = elem.querySelectorAll('input, textarea, select');
@@ -778,7 +802,7 @@ Calendar.prototype = {
         } else {
           this.updateEvent(event);
         }
-      });
+      }, eventTarget);
     };
 
     let timer = 0;
@@ -792,7 +816,7 @@ Calendar.prototype = {
           if (!eventData || eventData.length === 0) {
             return;
           }
-          showModalWithCallback(eventData[0], false);
+          showModalWithCallback(eventData[0], false, $(e.currentTarget).find('.calendar-event-title'));
           /**
            * Fires when an event in the calendar is clicked.
            * @event eventclick
@@ -841,7 +865,15 @@ Calendar.prototype = {
       eventData.ends = day;
       e.stopPropagation();
 
-      this.cleanEventData(eventData, false);
+      calendarShared.cleanEventData(
+        eventData,
+        false,
+        this.currentDate(),
+        this.locale,
+        this.language,
+        this.settings.events,
+        this.settings.eventTypes
+      );
       showModalWithCallback(eventData, true);
 
       /**
@@ -901,13 +933,23 @@ Calendar.prototype = {
     function response(events, eventTypes) {
       if (eventTypes && eventTypes.length > 0) {
         self.settings.eventTypes = eventTypes;
+
+        if (self.weekView) {
+          self.weekView.settings.eventTypes = eventTypes;
+        }
         self.renderEventTypes();
       }
       if (events && events.length > 0) {
         self.settings.events = events;
         self.renderAllEvents(true);
+
+        if (self.weekView) {
+          self.weekView.settings.events = events;
+          self.weekView.renderAllEvents(true);
+        }
       }
     }
+
     this.settings.onRenderMonth(this.element, response, {
       api: self,
       month: this.settings.month,
@@ -949,7 +991,10 @@ Calendar.prototype = {
       );
     }
 
-    const dayObj = this.monthView.dayMap.filter(dayFilter => dayFilter.key === date);
+    let dayObj = this.monthView.dayMap.filter(dayFilter => dayFilter.key === date);
+    if (this.activeView !== 'month') {
+      dayObj = this.weekView.dayMap.filter(dayFilter => dayFilter.key === date);
+    }
 
     const dayEvents = {
       date: this.monthView.currentDate,
@@ -1009,10 +1054,22 @@ Calendar.prototype = {
    * @param {object} event The event object with common event properties.
    */
   addEvent(event) {
-    this.cleanEventData(event, true);
+    calendarShared.cleanEventData(
+      event,
+      true,
+      this.currentDate(),
+      this.locale,
+      this.language,
+      this.settings.events,
+      this.settings.eventTypes
+    );
     this.settings.events.push(event);
     this.renderEvent(event);
     this.renderSelectedEventDetails();
+
+    if (this.weekView) {
+      this.weekView.addEvent(event);
+    }
   },
 
   /**
@@ -1025,11 +1082,23 @@ Calendar.prototype = {
     for (let i = this.settings.events.length - 1; i >= 0; i--) {
       if (this.settings.events[i].id === eventId) {
         this.settings.events[i] = utils.extend(true, this.settings.events[i], event);
-        this.cleanEventData(this.settings.events[i], true);
+        calendarShared.cleanEventData(
+          this.settings.events[i],
+          true,
+          this.currentDate(),
+          this.locale,
+          this.language,
+          this.settings.events,
+          this.settings.eventTypes
+        );
       }
     }
 
     this.renderAllEvents();
+
+    if (this.weekView) {
+      this.weekView.updateEvent(event);
+    }
   },
 
   /**
@@ -1045,68 +1114,21 @@ Calendar.prototype = {
       }
     }
     this.renderAllEvents();
+
+    if (this.weekView) {
+      this.weekView.deleteEvent(event);
+    }
   },
 
   /**
-   * Fix missing / incomlete event data
-   * @param {object} event The event object with common event properties.
-   * @param {boolean} addPlaceholder If true placeholder text will be added for some empty fields.
-   * @private
+   * Remove all events from the calendar
    */
-  cleanEventData(event, addPlaceholder) {
-    const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-    let startDate = new Date(event.starts);
-    let endDate = new Date(event.ends);
+  clearEvents() {
+    this.settings.events = [];
+    this.renderAllEvents();
 
-    if (!Locale.isValidDate(startDate)) {
-      startDate = this.currentDate();
-    }
-    if (!Locale.isValidDate(endDate)) {
-      endDate = this.currentDate();
-    }
-
-    if (isAllDay) {
-      startDate.setHours(0, 0, 0, 0);
-      event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      endDate.setHours(23, 59, 59, 999);
-      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      event.duration = event.starts === event.ends ? 1 : null;
-      event.isAllDay = true;
-    } else {
-      if (startDate === endDate) {
-        endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
-        event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-        event.duration = null;
-      } else {
-        event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      }
-      event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: this.locale.name });
-      event.isAllDay = false;
-    }
-
-    if (event.comments === undefined && addPlaceholder) {
-      event.comments = Locale.translate('NoCommentsEntered', { locale: this.locale.name, language: this.language });
-      event.noComments = true;
-    }
-
-    if (!event.subject && addPlaceholder) {
-      event.subject = Locale.translate('NoTitle', { locale: this.locale.name, language: this.language });
-    }
-
-    if (!event.type) {
-      // Default to the first one
-      event.type = this.settings.eventTypes[0].id;
-    }
-
-    if (event.id === undefined && addPlaceholder) {
-      const lastId = this.settings.events.length === 0
-        ? 0
-        : parseInt(this.settings.events[this.settings.events.length - 1].id, 10);
-      event.id = (lastId + 1).toString();
-    }
-
-    if (event.title === 'NewEvent') {
-      event.title = Locale.translate('NewEvent', { locale: this.locale.name, language: this.language });
+    if (this.weekView) {
+      this.weekView.clearEvents();
     }
   },
 
@@ -1114,8 +1136,9 @@ Calendar.prototype = {
    * Show a modal used to add/edit events. This uses the modalTemplate setting for the modal contents.
    * @param {object} event The event object with common event properties for defaulting fields in the template.
    * @param {function} done The callback for when the modal closes.
+   * @param {object} eventTarget The target element for the popup.
    */
-  showEventModal(event, done) {
+  showEventModal(event, done, eventTarget) {
     if (!this.settings.modalTemplate) {
       return;
     }
@@ -1136,15 +1159,32 @@ Calendar.prototype = {
     );
     this.renderTmpl(event || {}, this.settings.modalTemplate, this.modalContents);
     const dayObj = this.getDayEvents();
+
+    let isCancel = true;
+    dayObj.elem = $(dayObj.elem);
+    let placementArgs = dayObj.elem.index() === 6 ? this.isRTL ? 'right' : 'left' : this.isRTL ? 'left' : 'right';
+
+    if (!eventTarget && this.activeView === 'day') {
+      eventTarget = $('.week-view-header-wrapper');
+      placementArgs = this.isRTL ? 'left' : 'right';
+    }
+
+    if (!eventTarget) {
+      eventTarget = dayObj.elem;
+    }
+
     const modalOptions = this.settings.modalOptions || {
       content: $(this.modalContents),
       closebutton: true,
-      // Placement logic wasnt working, flip left most cell
-      placement: dayObj.elem.index() === 6 ? 'left' : 'right',
       popover: true,
-      offset: {
-        y: 10
+      placementOpts: {
+        parent: eventTarget,
+        strategies: ['nudge', 'flip'],
+        parentXAlignment: 'center',
+        parentYAlignment: 'center',
+        placement: placementArgs,
       },
+      offset: { y: 15, x: 15 },
       title: event.title || event.subject,
       trigger: 'immediate',
       keepOpen: true,
@@ -1153,8 +1193,7 @@ Calendar.prototype = {
       headerClass: event.color
     };
 
-    let isCancel = true;
-    dayObj.elem
+    eventTarget
       .off('hide.calendar')
       .on('hide.calendar', () => {
         if (isCancel) {
@@ -1191,7 +1230,7 @@ Calendar.prototype = {
 
         // Wire the buttons
         elem.find('button').on('click', (e) => {
-          const popupApi = dayObj.elem.data('tooltip');
+          const popupApi = eventTarget.data('tooltip');
           const action = e.currentTarget.getAttribute('data-action');
           isCancel = action !== 'submit';
           if (popupApi) {
@@ -1200,7 +1239,7 @@ Calendar.prototype = {
         });
       });
 
-    this.activeElem = dayObj.elem;
+    this.activeElem = eventTarget;
   },
 
   /**
@@ -1219,18 +1258,12 @@ Calendar.prototype = {
     this.modalContents = null;
     if (this.activeElem) {
       this.activeElem.off();
-      this.activeElem.data('tooltip').destroy();
+      if (this.activeElem.data('tooltip')) {
+        this.activeElem.data('tooltip').destroy();
+      }
     }
     DOM.remove(document.getElementById('calendar-popup'));
     DOM.remove(document.querySelector('.calendar-event-modal'));
-  },
-
-  /**
-   * Remove all events from the calendar
-   */
-  clearEvents() {
-    this.settings.events = [];
-    this.renderAllEvents();
   },
 
   /**
@@ -1249,8 +1282,28 @@ Calendar.prototype = {
       this.destroy().init();
       return this;
     }
+
+    // Update weekview mapped settings.
+    if (this.weekView && settings.events) {
+      this.weekView.settings.events = settings.events;
+    }
+    if (this.weekView && settings.eventTypes) {
+      this.weekView.settings.events = settings.events;
+    }
+    if (this.weekView && settings.weekViewSettings) {
+      this.weekView.settings = utils.mergeSettings(
+        this.element[0],
+        settings.weekViewSettings,
+        this.weekViews.settings
+      );
+    }
+
     this.monthView.showMonth(this.settings.month, this.settings.year);
     this.renderAllEvents();
+
+    if (this.weekView && settings.weekViewSettings) {
+      this.weekView.renderAllEvents();
+    }
     return this;
   },
 
@@ -1263,6 +1316,13 @@ Calendar.prototype = {
     this.element.off();
     $(this.monthViewContainer).off();
 
+    if (this.monthView) {
+      this.monthView.destroy();
+    }
+
+    if (this.weekView) {
+      this.weekView.destroy();
+    }
     return this;
   },
 

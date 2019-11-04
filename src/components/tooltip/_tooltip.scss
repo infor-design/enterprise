@@ -166,6 +166,7 @@
       border-bottom-color: $popover-arrow-border-color;
       left: calc(50% - 12px);
       top: -12px;
+      z-index: -1;
     }
 
     .arrow::after {

@@ -165,7 +165,11 @@ DatePicker.prototype = {
     this.element.attr('autocomplete', 'off');
 
     // Append a trigger button
-    this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+    if (this.element.next().is('svg')) {
+      this.trigger = this.element.next();
+    } else {
+      this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+    }
 
     // Hide icon if datepicker input is hidden
     if (this.element.hasClass('hidden')) {

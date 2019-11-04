@@ -611,5 +611,32 @@
     "ends": "2019-10-31T15:59:59.999",
     "type": "dto",
     "isAllDay": "false"
+  },
+  {
+    "id": "60",
+    "subject": "Dentist",
+    "comments": "Dentist Appt",
+    "starts": "2019-11-03T15:00:00.000",
+    "ends": "2019-11-03T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "61",
+    "subject": "Doctor",
+    "comments": "Doctor Appt",
+    "starts": "2019-11-06T15:00:00.000",
+    "ends": "2019-11-06T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "62",
+    "subject": "Personal",
+    "comments": "Personal Appt",
+    "starts": "2019-11-30T15:00:00.000",
+    "ends": "2019-11-30T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
   }
 ]

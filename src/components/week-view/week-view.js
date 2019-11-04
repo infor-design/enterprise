@@ -25,8 +25,7 @@ const COMPONENT_NAME_DEFAULTS = {
   showToday: true,
   showViewChanger: true,
   onChangeView: null,
-  onChangeWeek: null,
-  onChangeDay: null
+  onChangeWeek: null
 };
 
 /**
@@ -47,7 +46,6 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {function} [settings.onChangeWeek] Call back for when the week is changed.
- * @param {function} [settings.onChangeDay] Call back for when the day is changed (for day view)
  */
 function WeekView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -94,6 +92,18 @@ WeekView.prototype = {
   },
 
   /**
+   * Set current calendar
+   * @private
+   * @returns {void}
+   */
+  setCurrentCalendar() {
+    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+    this.isRTL = this.locale.direction === 'right-to-left';
+    this.conversions = this.currentCalendar.conversions;
+  },
+
+  /**
    * Add any needed markup to the component.
    * @private
    * @returns {object} The WeekView prototype, useful for chaining.
@@ -106,6 +116,8 @@ WeekView.prototype = {
       this.rendered = false;
       return this;
     }
+
+    this.rendered = true;
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
@@ -127,7 +139,7 @@ WeekView.prototype = {
       if (this.settings.filteredTypes.indexOf(event.type) > -1) {
         continue;
       }
-      this.renderEvents(event);
+      this.renderEvent(event);
     }
   },
 
@@ -150,7 +162,7 @@ WeekView.prototype = {
    * @private
    * @param  {object} event The event object.
    */
-  renderEvents(event) {
+  renderEvent(event) {
     const startDate = new Date(event.starts);
     const startKey = stringUtils.padDate(
       startDate.getFullYear(),
@@ -372,6 +384,19 @@ WeekView.prototype = {
     this.element.find('.week-view-container').remove();
 
     const args = { isDayView: this.isDayView, startDate, endDate, elem: this.element, api: this };
+
+    /**
+    * Fires as the calendar popup is opened.
+    * @event weekrendered
+    * @memberof WeekView
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event arguments
+    * @property {boolean} args.isDayView - True if one day is showing.
+    * @property {object} args.startDate - The start date of the event
+    * @property {object} args.endDate - The start date of the event
+    * @property {object} args.elem - The current element.
+    * @property {object} args.api - The WeekView api
+    */
     this.element
       .append(this.weekContainer)
       .trigger('weekrendered', args);
@@ -508,9 +533,41 @@ WeekView.prototype = {
       this.advanceDays(false);
     });
 
+    const fireEvent = (target, eventName) => {
+      const eventId = target.getAttribute('data-id');
+      const eventData = this.settings.events.filter(event => event.id === eventId);
+      if (!eventData || eventData.length === 0) {
+        return;
+      }
+      /**
+      * Fires as the calendar popup is opened.
+      * @event eventclick
+      * @memberof WeekView
+      * @property {object} event - The jquery event object
+      * @property {object} args - The event arguments
+      * @property {object} args.settings - The current settings including start and end date.
+      * @property {object} args.event - The event data.
+      */
+      /**
+      * Fires as the calendar popup is opened.
+      * @event eventdblclick
+      * @memberof WeekView
+      * @property {object} event - The jquery event object
+      * @property {object} args - The event arguments
+      * @property {object} args.settings - The current settings including start and end date.
+      * @property {object} args.event - The event data.
+      */
+      this.element.trigger(eventName, { settings: this.settings, event: eventData[0] });
+    };
+
     this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
-      alert();
-      e.preventDefault();
+      fireEvent(e.currentTarget, 'eventclick');
+      e.stopPropagation();
+    });
+
+    this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+      fireEvent(e.currentTarget, 'eventdblclick');
+      e.stopPropagation();
     });
     return this;
   },
@@ -537,13 +594,91 @@ WeekView.prototype = {
   },
 
   /**
+   * Add a new event via the event object and show it if it should be visible in the calendar.
+   * @param {object} event The event object with common event properties.
+   */
+  addEvent(event) {
+    calendarShared.cleanEventData(
+      event,
+      true,
+      this.settings.startDate,
+      this.locale,
+      this.language,
+      this.settings.events,
+      this.settings.eventTypes
+    );
+
+    this.settings.events.push(event);
+    this.renderEvent(event);
+  },
+
+  /**
+   * Remove all events from the calendar
+   */
+  clearEvents() {
+    this.settings.events = [];
+    this.renderAllEvents();
+  },
+
+  /**
+   * Update an event via the event object and show it if it should be visible in the calendar.
+   * It uses the event id to do this.
+   * @param {object} event The event object with common event properties.
+   */
+  updateEvent(event) {
+    const eventId = event.id;
+    for (let i = this.settings.events.length - 1; i >= 0; i--) {
+      if (this.settings.events[i].id === eventId) {
+        this.settings.events[i] = utils.extend(true, this.settings.events[i], event);
+        calendarShared.cleanEventData(
+          this.settings.events[i],
+          true,
+          this.settings.startDate,
+          this.locale,
+          this.language,
+          this.settings.events,
+          this.settings.eventTypes
+        );
+      }
+    }
+
+    this.renderAllEvents();
+  },
+
+  /**
+   * Remove an event from the dataset and page. It uses the id property.
+   * @param {object} event The event object with common event properties.
+   */
+  deleteEvent(event) {
+    const eventId = event.id;
+
+    for (let i = this.settings.events.length - 1; i >= 0; i--) {
+      if (this.settings.events[i].id === eventId) {
+        this.settings.events.splice(i, 1);
+      }
+    }
+    this.renderAllEvents();
+  },
+
+  /**
    * Handle updated settings and values.
+   * @param {object} settings The new settings object to use.
    * @returns {object} [description]
    */
-  updated() {
-    return this
-      .destroy()
-      .init();
+  updated(settings) {
+    if (!settings) {
+      settings = {};
+    }
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+    if (settings.locale) {
+      this.destroy().init();
+      return this;
+    }
+
+    this.renderAllEvents();
+    return this;
   },
 
   /**

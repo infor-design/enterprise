@@ -83,4 +83,80 @@ calendarShared.getEventTypeColor = function getEventTypeColor(id, eventTypes) {
   return color;
 };
 
+/**
+ * Fix missing / incomlete event data
+ * @param {object} event The event object with common event properties.
+ * @param {boolean} addPlaceholder If true placeholder text will be added for some empty fields.
+ * @param {date} currentDate Active date in the calendar.
+ * @param {object} locale The locale to use.
+ * @param {string} language The langauge to use.
+ * @param {array} events The events array.
+ * @param {array} eventTypes The event types array.
+ * @private
+ */
+calendarShared.cleanEventData = function cleanEventData(
+  event,
+  addPlaceholder,
+  currentDate,
+  locale,
+  language,
+  events,
+  eventTypes,
+) {
+  const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
+  let startDate = new Date(event.starts);
+  let endDate = new Date(event.ends);
+
+  if (!Locale.isValidDate(startDate)) {
+    startDate = currentDate;
+  }
+  if (!Locale.isValidDate(endDate)) {
+    endDate = currentDate;
+  }
+
+  if (isAllDay) {
+    startDate.setHours(0, 0, 0, 0);
+    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    endDate.setHours(23, 59, 59, 999);
+    event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.duration = event.starts === event.ends ? 1 : null;
+    event.isAllDay = true;
+  } else {
+    if (startDate === endDate) {
+      endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
+      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.duration = null;
+    } else {
+      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    }
+    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.isAllDay = false;
+  }
+
+  if (event.comments === undefined && addPlaceholder) {
+    event.comments = Locale.translate('NoCommentsEntered', { locale: locale.name, language });
+    event.noComments = true;
+  }
+
+  if (!event.subject && addPlaceholder) {
+    event.subject = Locale.translate('NoTitle', { locale: locale.name, language });
+  }
+
+  if (!event.type) {
+    // Default to the first one
+    event.type = eventTypes[0].id;
+  }
+
+  if (event.id === undefined && addPlaceholder) {
+    const lastId = this.settings.events.length === 0
+      ? 0
+      : parseInt(this.settings.events[this.settings.events.length - 1].id, 10);
+    event.id = (lastId + 1).toString();
+  }
+
+  if (event.title === 'NewEvent') {
+    event.title = Locale.translate('NewEvent', { locale: locale.name, language });
+  }
+};
+
 export { calendarShared }; //eslint-disable-line
