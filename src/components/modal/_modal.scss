@@ -61,8 +61,7 @@
     }
 
     textarea {
-      min-width: 300px;
-      width: auto;
+      max-width: 300px;
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
@@ -373,12 +372,8 @@ body.modal-engaged {
 
   > .btn-close {
     position: absolute;
-    right: 0;
-    top: 0;
-
-    .icon {
-      width: 16px;
-    }
+    right: 10px;
+    top: 14px;
   }
 
   .message {
@@ -424,7 +419,6 @@ body.modal-engaged {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
   margin-top: 20px;
-  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
     @include css3(transition, color 0.3s ease 0s);
@@ -437,13 +431,14 @@ body.modal-engaged {
     float: left;
     font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
-    height: 46px;
-    line-height: 46px; // Used same value as height to get accurate measurement of vertical height
+    height: 49px;
+    line-height: 49px;
     margin-right: 0;
+    min-width: 0;
     overflow: hidden;
     position: relative;
     text-align: center;
-    width: 100%;// [50px-4px] Keep smaller 4px for border to show around on focus
+    width: 100%;
 
     &:hover {
       color: $modal-btn-hover-color;
@@ -542,7 +537,7 @@ html[dir='rtl'] {
     }
 
     .btn-close {
-      left: 0;
+      left: 10px;
       right: auto;
     }
   }

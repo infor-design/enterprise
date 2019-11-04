@@ -61,7 +61,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lt', default: 'lt-LT' },
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
-    { lang: 'nb', default: 'nb-NO' },
+    { lang: 'nb', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
@@ -255,6 +255,13 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+    } else if (!this.languages[lang] && !data.messages) {
+      const match = this.defaultLocales.filter(a => a.lang === lang);
+      const parentLocale = match[0] || [{ default: 'en-US' }];
+      if (parentLocale.default && parentLocale.default !== locale &&
+        !this.cultures[parentLocale.default]) {
+        this.appendLocaleScript(parentLocale.default);
+      }
     }
   },
 
@@ -366,7 +373,6 @@ const Locale = {  // eslint-disable-line
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   getLocale(locale, filename) {
-    const self = this;
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -384,10 +390,10 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript(locale, false, false, filename);
     }
 
-    if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
+    if (locale && this.currentLocale.data && this.currentLocale.dataName === locale) {
       this.dff[locale].resolve(locale);
     }
-    if (self.cultures[locale] && this.cultureInHead()) {
+    if (this.cultures[locale] && this.cultureInHead()) {
       this.dff[locale].resolve(locale);
     }
 
@@ -1103,9 +1109,20 @@ const Locale = {  // eslint-disable-line
       }
     }
 
+    const isLeap = y => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
+    const closestLeap = (y) => {
+      let closestLeapYear = typeof y === 'number' && !isNaN(y) ? y : (new Date()).getFullYear();
+      for (let i2 = 0; i2 < 4; i2++) {
+        if (isLeap(closestLeapYear)) {
+          break;
+        }
+        closestLeapYear--;
+      }
+      return closestLeapYear;
+    };
+
     dateObj.return = undefined;
-    dateObj.leapYear = ((dateObj.year % 4 === 0) &&
-      (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
+    dateObj.leapYear = isLeap(dateObj.year);
 
     if ((isDateTime && !dateObj.h && !dateObj.mm)) {
       return undefined;
@@ -1120,7 +1137,8 @@ const Locale = {  // eslint-disable-line
         }
       }
       if (dateObj.isUndefindedYear) {
-        dateObj.year = (new Date()).getFullYear();
+        const isFeb29 = parseInt(dateObj.day, 10) === 29 && parseInt(dateObj.month, 10) === 1;
+        dateObj.year = isFeb29 ? closestLeap() : (new Date()).getFullYear();
       } else {
         delete dateObj.year;
       }

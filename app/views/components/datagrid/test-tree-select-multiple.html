@@ -1,0 +1,109 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var data = [{
+      id: 1,
+      escalated: 0,
+      depth: 1,
+      expanded: true,
+      taskName: 'Follow up action with Residental Housing',
+      desc: 'Contact sales representative with the updated purchase order.',
+      comments: 2,
+      time: '22:10 PM',
+      children: [{
+        id: 2,
+        escalated: 0,
+        depth: 2,
+        taskName: 'Follow up action with Universal HMM Logistics',
+        desc: 'Contact sales representative.',
+        comments: 2,
+        time: '22:10 PM'
+      },
+      {
+        id: 3,
+        escalated: 0,
+        depth: 2,
+        expanded: true,
+        taskName: 'Follow up action with Residental Shipping Logistics ',
+        desc: 'Contact sales representative.',
+        comments: 2,
+        time: '7:04 AM',
+        children: [{
+          id: 4,
+          escalated: 0,
+          depth: 3,
+          taskName: 'Follow up action with Universal Shipping Logistics Customers',
+          desc: 'Contact sales representative.',
+          comments: 2,
+          time: '14:10 PM'
+        },
+        {
+          id: 5,
+          escalated: 0,
+          depth: 3,
+          // expanded: true,
+          expanded: false,
+          taskName: 'Follow up action with Acme Universal Logistics Customers',
+          desc: 'Contact sales representative.',
+          comments: 2,
+          time: '7:04 AM',
+          children: [{
+            id: 6,
+            escalated: 0,
+            depth: 4,
+            taskName: 'More Contact',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '14:10 PM'
+          },
+          {
+            id: 7,
+            escalated: 0,
+            depth: 4,
+            taskName: 'More Follow up',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '7:04 AM'
+          }]
+        },
+        {
+          id: 8,
+          escalated: 0,
+          depth: 3,
+          taskName: 'Follow up action with Residental Housing',
+          desc: 'Contact sales representative with the updated purchase order.',
+          comments: 2,
+          time: '18:10 PM'
+        }]
+      }]
+    }];
+
+    // Define Columns for the Grid
+    var columns = [];
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+    columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+    // initialize the Grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      selectable: 'multiple',
+      treeGrid: true,
+      toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
+
+  });
+</script>

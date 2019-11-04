@@ -692,7 +692,8 @@ MonthView.prototype = {
     const s = this.settings;
     const min = (new Date(s.disable.minDate)).setHours(0, 0, 0, 0);
     const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
-    let d2 = new Date(year, month, date);
+    let d2 = this.isIslamic ?
+      this.conversions.toGregorian(year, month, date) : new Date(year, month, date);
 
     // dayOfWeek
     if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {

@@ -27,6 +27,13 @@
   }
 }
 
+// Resize the "x" in the close button back to Soho-style sizes
+.btn-close {
+  > .icon {
+    width: 14px;
+  }
+}
+
 // IE11's `middle`, `sub`, and `text-bottom` alignments don't jive
 // well with our iconography.
 .ie11 {

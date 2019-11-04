@@ -88,6 +88,11 @@ function personalizeStyles(colors) {
   opacity: 1;
 }
 
+html[class*="theme-uplift-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+  opacity: 1;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before {
   background-color: ${colors.contrast};
 }
@@ -577,6 +582,7 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 .tooltip.is-personalizable p,
 .tooltip.is-personalizable .chart-swatch .swatch-row span,
 .tooltip.is-personalizable .chart-swatch .swatch-row b {
+  -webkit-text-fill-color: ${colors.tooltipText};
   color: ${colors.tooltipText};
 }
 .tooltip.is-personalizable.top .arrow::after {

@@ -497,8 +497,10 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   render() {
+    // eslint-disable-next-line
     this.disabled = this.disabled;
     if (this.hasReadOnly) {
+      // eslint-disable-next-line
       this.readonly = this.readonly;
     }
 

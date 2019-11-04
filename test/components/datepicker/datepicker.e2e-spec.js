@@ -1289,7 +1289,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()}-${testDate.getMonth() + 1}-${testDate.getFullYear()}`);
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getFullYear()}`);
   });
 
   it('Should be Able to use non current locale and a different langauge', async () => {
@@ -1304,6 +1304,6 @@ describe('Datepicker specific locale/langauge tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate()}.${testDate.getMonth() + 1}.${testDate.getFullYear()}`);
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}.${(testDate.getMonth() + 1).toString().padStart(2, '0')}.${testDate.getFullYear()}`);
   });
 });

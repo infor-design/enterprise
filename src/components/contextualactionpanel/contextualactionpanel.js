@@ -1,6 +1,9 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { warnAboutDeprecation } from '../../utils/deprecated';
+import { Locale } from '../locale/locale';
+
+import '../icons/icons.jquery';
 
 const COMPONENT_NAME = 'contextualactionpanel';
 
@@ -324,23 +327,21 @@ ContextualActionPanel.prototype = {
     this.buttons = this.panel.find('.buttonset').children('button');
 
     this.closeButton = this.panel.find('.modal-header').find('.btn-close, [name="close"], button.close-button');
-    if (!predefined && this.settings.modalSettings.showCloseBtn && !this.closeButton.length) {
+    if (this.settings.modalSettings.showCloseBtn && !this.closeButton.length) {
+      const closeText = Locale.translate('Close');
       this.closeButton = $(`
-        <button class="btn-close" type="button">
-          <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-close"></use>
-          </svg>
-          <span>Close</span>
+        <button class="btn-close" type="button" title="${closeText}">
+          ${$.createIcon('close')}
+          <span class="audible">${closeText}</span>
         </button>
       `);
 
       if (!this.settings.modalSettings.useFlexToolbar) {
-        const CAPToolbarButton = $('<div class="close-button"></div>').append(this.closeButton);
-        this.header.append(CAPToolbarButton);
+        buttonset.append(this.closeButton);
       } else {
         const standaloneSection = $('<div class="toolbar-section static"></div>').append(this.closeButton);
         const more = this.toolbar.find('.toolbar-section.more');
-        standaloneSection.after(more.length ? more : buttonset);
+        standaloneSection.insertAfter(more.length ? more : buttonset);
       }
     }
 

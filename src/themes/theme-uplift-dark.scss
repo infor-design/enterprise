@@ -307,6 +307,7 @@ $cardlist-box-shadow-color: rgba(0, 0, 0, 0.7);
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
+$checkbox-color-disabled-font: $input-color-disabled-font;
 
 // Switch
 $radio-checked-color: $theme-color-brand-primary-base;
@@ -443,7 +444,7 @@ $rating-hover-color: $theme-color-brand-primary-base;
 
 // Tabs
 $tab-text-color: $theme-color-palette-slate-20;
-$tab-selected-color: $theme-color-brand-primary-base;
+$tab-selected-color: $theme-color-brand-primary-lighter;
 $tab-border-color: $theme-color-palette-slate-70;
 $tab-hover-color: $font-color-extrahighcontrast;
 

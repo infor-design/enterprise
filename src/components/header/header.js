@@ -502,8 +502,14 @@ Header.prototype = {
    * @returns {void}
    */
   initPageChanger() {
-    const changer = this.element.find('.page-changer');
-    const colorArea = changer.next().find('li.personalization-colors');
+    this.changer = this.element.find('.page-changer');
+    if (!this.changer.length) {
+      return;
+    }
+
+    const api = this.changer.data('popupmenu');
+    const menu = api.menu;
+    const colorArea = menu.find('li.personalization-colors');
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
@@ -517,13 +523,13 @@ Header.prototype = {
       colorArea.replaceWith(colorsHtml);
     }
 
-    changer.on('selected.header', (e, link) => {
+    this.changer.on('selected.header', (e, link) => {
       // Change Theme with Variant
       const themeNameAttr = link.attr('data-theme-name');
       const themeVariantAttr = link.attr('data-theme-variant');
       if (themeNameAttr || themeVariantAttr) {
-        const name = changer.next().find('.is-checked a[data-theme-name]').attr('data-theme-name');
-        const variant = changer.next().find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
+        const name = menu.find('.is-checked a[data-theme-name]').attr('data-theme-name');
+        const variant = menu.find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
         if (name && variant) {
           personalization.setTheme(`${name}-${variant}`);
         }
@@ -882,6 +888,15 @@ Header.prototype = {
     this.unbind();
     if (this.hasTitleButton) {
       this.toolbarElem.removeClass('has-title-button');
+    }
+
+    if (this.changer) {
+      const api = this.changer.data('popupmenu');
+      if (api && typeof api.destroy === 'function') {
+        api.destroy();
+      }
+      this.changer.remove();
+      delete this.changer;
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);

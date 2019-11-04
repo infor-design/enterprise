@@ -169,6 +169,18 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .monthview-popup.popover {
+    .hyperlink.today {
+      left: 85px;
+      right: auto;
+
+      &::after {
+        left: auto;
+        right: 8px;
+      }
+    }
+  }
 }
 
 // IE Hack TODO

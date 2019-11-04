@@ -781,20 +781,27 @@ Place.prototype = {
 
   // If element height/width is greater than window height/width, shrink to fit
   shrink(placementObj, dimension) {
+    let dX = 0;
+    let dY = 0;
+    const useX = dimension === undefined || dimension === null || dimension === 'x';
+    const useY = dimension === undefined || dimension === null || dimension === 'y';
+
     const accountForScrolling = this.accountForScrolling(placementObj);
+    const menuRect = DOM.getDimensions(this.element[0]);
     const containerBleed = this.settings.bleedFromContainer;
     const container = this.getContainer(placementObj);
     const containerRect = container ? container[0].getBoundingClientRect() : {};
     const containerIsBody = container.length && container[0] === document.body;
-    const rect = this.element[0].getBoundingClientRect();
-    const useX = dimension === undefined || dimension === null || dimension === 'x';
-    const useY = dimension === undefined || dimension === null || dimension === 'y';
+    const coordinateShrink = placementObj.parent === null;
+
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
     // Firefox $('body').scrollTop() will always return zero.
     const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
     const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
     const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+    // Figure out the viewport boundaries
     const leftViewportEdge = (accountForScrolling ? scrollX : 0) +
       (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX;
     const topViewportEdge = (accountForScrolling ? scrollY : 0) +
@@ -803,54 +810,63 @@ Place.prototype = {
       (containerBleed ? windowW : containerRect.right) - placementObj.containerOffsetX;
     const bottomViewportEdge = (accountForScrolling ? scrollY : 0) +
       (containerBleed ? windowH : containerRect.bottom) - placementObj.containerOffsetY;
-    let d;
+
+    // If shrinking a coordinate-placed object (no parent), the full range between top/bottom
+    // and left/right boundaries will be used.
+    // If shrinking a parent-placed object, the distance between the parent and whichever
+    // boundary is further will be used.
+    let availableX = rightViewportEdge - leftViewportEdge;
+    let availableY = bottomViewportEdge - topViewportEdge;
+    if (!coordinateShrink) {
+      const parentRect = DOM.getDimensions(placementObj.parent[0]);
+      const availableTop = parentRect.top - topViewportEdge;
+      const availableBottom = bottomViewportEdge - parentRect.bottom;
+      const availableLeft = parentRect.left - leftViewportEdge;
+      const availableRight = rightViewportEdge - parentRect.right;
+      availableX = availableLeft > availableRight ? availableLeft : availableRight;
+      availableY = availableTop > availableBottom ? availableTop : availableBottom;
+    }
 
     // Shrink in each direction.
     // The value of the "containerOffsets" is "factored out" of each calculation,
     // if for some reason the element is larger than the viewport/container space allowed.
-    placementObj.nudges = placementObj.nudges || {};
-
     if (useX) {
+      if (menuRect.width > availableX) {
+        placementObj.width = availableX;
+      }
+
       // Left
-      if (rect.left < leftViewportEdge) {
-        d = Math.abs(leftViewportEdge - rect.left);
-        if (rect.right >= rightViewportEdge) {
-          d -= placementObj.containerOffsetX;
-        }
-        placementObj.width = rect.width - d;
-        placementObj.setCoordinate('x', placementObj.x + d);
-        placementObj.nudges.x += d;
+      if (menuRect.left < leftViewportEdge) {
+        dX = leftViewportEdge - menuRect.left;
       }
 
       // Right
-      if (rect.right > rightViewportEdge) {
-        d = Math.abs(rect.right - rightViewportEdge);
-        if (rect.left <= leftViewportEdge) {
-          d -= placementObj.containerOffsetX;
-        }
-        placementObj.width = rect.width - d;
+      if (menuRect.right > rightViewportEdge) {
+        dX = menuRect.right - rightViewportEdge;
+      }
+
+      if (dX !== 0) {
+        placementObj.setCoordinate('x', placementObj.x + dX);
       }
     }
 
     if (useY) {
+      if (menuRect.height > availableY) {
+        placementObj.height = availableY;
+      }
+
       // Top
-      if (rect.top < topViewportEdge) {
-        d = Math.abs(topViewportEdge - rect.top);
-        if (rect.bottom >= bottomViewportEdge) {
-          d -= placementObj.containerOffsetY;
-        }
-        placementObj.height = rect.height - d;
-        placementObj.setCoordinate('y', placementObj.y + d);
-        placementObj.nudges.y += d;
+      if (menuRect.top < topViewportEdge) {
+        dY = topViewportEdge - menuRect.top;
       }
 
       // Bottom
-      if (rect.bottom > bottomViewportEdge) {
-        d = Math.abs(rect.bottom - bottomViewportEdge);
-        if (rect.top <= topViewportEdge) {
-          d -= placementObj.containerOffsetY;
-        }
-        placementObj.height = rect.height - d;
+      if (menuRect.bottom > bottomViewportEdge) {
+        dY = menuRect.bottom - bottomViewportEdge;
+      }
+
+      if (dY !== 0) {
+        placementObj.setCoordinate('y', placementObj.y + dY);
       }
     }
 
