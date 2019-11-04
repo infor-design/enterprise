@@ -1023,8 +1023,8 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 EST', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
     Locale.set('nl-NL');
 
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
-    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
+    expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
   it('Should format dates with long timezones', () => {
