@@ -835,17 +835,9 @@ Place.prototype = {
         placementObj.width = availableX;
       }
 
-      // Left
+      // Shift back into the viewport if off the Left
       if (menuRect.left < leftViewportEdge) {
         dX = leftViewportEdge - menuRect.left;
-      }
-
-      // Right
-      if (menuRect.right > rightViewportEdge) {
-        dX = menuRect.right - rightViewportEdge;
-      }
-
-      if (dX !== 0) {
         placementObj.setCoordinate('x', placementObj.x + dX);
       }
     }
@@ -855,17 +847,9 @@ Place.prototype = {
         placementObj.height = availableY;
       }
 
-      // Top
+      // Shift back into the viewport if off the Top
       if (menuRect.top < topViewportEdge) {
         dY = topViewportEdge - menuRect.top;
-      }
-
-      // Bottom
-      if (menuRect.bottom > bottomViewportEdge) {
-        dY = menuRect.bottom - bottomViewportEdge;
-      }
-
-      if (dY !== 0) {
         placementObj.setCoordinate('y', placementObj.y + dY);
       }
     }
