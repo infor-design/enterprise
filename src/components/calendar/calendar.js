@@ -796,7 +796,6 @@ Calendar.prototype = {
         for (let i = 0; i < inputs.length; i++) {
           event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
         }
-
         if (isAdd) {
           this.addEvent(event);
         } else {
@@ -1210,14 +1209,17 @@ Calendar.prototype = {
       .off('show.calendar')
       .on('show.calendar', (evt, elem) => {
         this.element.trigger('showmodal', { elem: this.modalContents, event });
-
         // Wire the click on isAllDay to disable spinbox.
         elem.find('#isAllDay').off().on('click.calendar', (e) => {
           const isDisabled = $(e.currentTarget).prop('checked');
           if (isDisabled) {
-            elem.find('#durationHours').data('spinbox').disable();
+            elem.find('#durationHours').prop('disabled', true);
+            elem.find('#endsHourLocale').prop('disabled', true);
+            elem.find('#startsHourLocale').prop('disabled', true);
           } else {
-            elem.find('#durationHours').data('spinbox').enable();
+            elem.find('#durationHours').prop('disabled', false);
+            elem.find('#endsHourLocale').prop('disabled', false);
+            elem.find('#startsHourLocale').prop('disabled', false);
           }
         });
 

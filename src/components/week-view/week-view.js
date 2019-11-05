@@ -562,12 +562,10 @@ WeekView.prototype = {
 
     this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       fireEvent(e.currentTarget, 'eventclick');
-      e.stopPropagation();
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       fireEvent(e.currentTarget, 'eventdblclick');
-      e.stopPropagation();
     });
     return this;
   },

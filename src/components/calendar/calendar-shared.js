@@ -47,12 +47,14 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   if (event.starts) {
     const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
     event.startsLocale = Locale.formatDate(startsLocale, { locale: locale.name });
+    event.startsHourLocale = Locale.formatDate(startsLocale, { date: 'hour', locale: locale.name });
     event.startsHour = parseFloat(new Date(event.starts).getHours() +
       (new Date(event.starts).getMinutes() / 60));
   }
   if (event.ends) {
     const endsLocale = Locale.parseDate(event.ends, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
     event.endsLocale = Locale.formatDate(endsLocale, { locale: locale.name });
+    event.endsHourLocale = Locale.formatDate(endsLocale, { date: 'hour', locale: locale.name });
     event.endsHour = parseFloat(new Date(event.ends).getHours() +
       (new Date(event.ends).getMinutes() / 60));
   }
@@ -104,8 +106,8 @@ calendarShared.cleanEventData = function cleanEventData(
   eventTypes,
 ) {
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-  let startDate = new Date(event.starts);
-  let endDate = new Date(event.ends);
+  let startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
+  let endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
 
   if (!Locale.isValidDate(startDate)) {
     startDate = currentDate;
@@ -126,6 +128,24 @@ calendarShared.cleanEventData = function cleanEventData(
       endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
       event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
       event.duration = null;
+    } else if (event.endsHourLocale && event.startsHourLocale) {
+      const startsHours = Locale.parseDate(event.startsHourLocale, { date: 'hour', locale: locale.name });
+      const endsHours = Locale.parseDate(event.endsHourLocale, { date: 'hour', locale: locale.name });
+      startDate.setHours(
+        startsHours.getHours(),
+        startsHours.getMinutes(),
+        startsHours.getSeconds(),
+        startsHours.getMilliseconds()
+      );
+      endDate.setHours(
+        endsHours.getHours(),
+        endsHours.getMinutes(),
+        endsHours.getSeconds(),
+        endsHours.getMilliseconds()
+      );
+      event.starts = Locale.formatDate(startDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.duration = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends));
     } else {
       event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
     }
