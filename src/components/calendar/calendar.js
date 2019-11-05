@@ -923,7 +923,7 @@ Calendar.prototype = {
   },
 
   /**
-   * Handle updated settings and values.
+   *  Execute onRenderMonth and handle the call back.
    * @private
    */
   callOnRenderMonth() {

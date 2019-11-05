@@ -25,7 +25,10 @@ const COMPONENT_NAME_DEFAULTS = {
   showToday: true,
   showViewChanger: true,
   onChangeView: null,
-  onChangeWeek: null
+  onChangeWeek: null,
+  onRenderWeek: null,
+  eventTooltip: 'overflow',
+  iconTooltip: 'overflow'
 };
 
 /**
@@ -46,6 +49,9 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {function} [settings.onChangeWeek] Call back for when the week is changed.
+ * @param {function} [settings.onRenderMonth] Fires when a week is rendered, allowing you to pass back events or event types to show.
+* @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
+ * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  */
 function WeekView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -126,9 +132,15 @@ WeekView.prototype = {
 
   /**
    * Render all the events in the current view.
+   * @param {boolean} isCallback Will be set to true when a callback occurs
    * @private
    */
-  renderAllEvents() {
+  renderAllEvents(isCallback) {
+    if (this.settings.onRenderWeek && !isCallback) {
+      this.callOnRenderWeek();
+      return;
+    }
+
     // Clone and sort the array
     const eventsSorted = this.settings.events.slice(0);
     eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0))); // eslint-disable-line
@@ -141,6 +153,29 @@ WeekView.prototype = {
       }
       this.renderEvent(event);
     }
+  },
+
+  /**
+   * Execute onRenderWeek and handle the call back.
+   * @private
+   */
+  callOnRenderWeek() {
+    const self = this;
+
+    function response(events, eventTypes) {
+      if (eventTypes && eventTypes.length > 0) {
+        self.settings.eventTypes = eventTypes;
+      }
+      if (events && events.length > 0) {
+        self.settings.events = events;
+        self.renderAllEvents(true);
+      }
+    }
+
+    this.settings.onRenderWeek(this.element, response, {
+      api: self,
+      settings: this.settings
+    });
   },
 
   /**
@@ -250,6 +285,7 @@ WeekView.prototype = {
       }
     }
     allDayContainer.appendChild(node);
+    this.attachTooltip(node, event);
   },
 
   /**
@@ -321,7 +357,65 @@ WeekView.prototype = {
           node.style.left = `${width * j}%`;
         }
         containerWrapper.appendChild(node);
+        this.attachTooltip(node, event);
       }
+    }
+  },
+
+  /**
+   * Add the tooltip functionality.
+   * @private
+   * @param {object} node The dom element.
+   * @param {object} event The event data object.
+   */
+  attachTooltip(node, event) {
+    if (this.settings.iconTooltip !== 'overflow') {
+      const icon = node.querySelector('.calendar-event-icon');
+      if (icon) {
+        if (typeof this.settings.iconTooltip === 'function') {
+          this.settings.iconTooltip({
+            settings: this.settings,
+            event
+          });
+        } else if (event[this.settings.iconTooltip]) {
+          icon.setAttribute('title', event[this.settings.iconTooltip]);
+          $(icon).tooltip({
+            content: icon.innerText
+          });
+        }
+      }
+    }
+
+    if (this.settings.eventTooltip !== 'overflow') {
+      if (typeof this.settings.eventTooltip === 'function') {
+        this.settings.eventTooltip({
+          settings: this.settings,
+          event
+        });
+      } else if (event[this.settings.eventTooltip]) {
+        node.setAttribute('title', event[this.settings.eventTooltip]);
+        $(node).tooltip({
+          content: node.innerText
+        });
+      }
+    }
+
+    if (!event.shortSubject && (this.settings.eventTooltip === 'overflow' || this.settings.iconToolTip === 'overflow')) {
+      // Show the full text if cut off
+      node.setAttribute('title', event.subject);
+      $(node).tooltip({
+        beforeShow: (response, ui) => {
+          const title = ui[0].querySelector('.calendar-event-title');
+          const icon = ui[0].querySelector('.calendar-event-icon');
+          const iconStatus = icon ? icon.querySelector('.icon').getAttribute('data-status') : '';
+
+          if (title.offsetWidth > ui[0].scrollWidth - (icon ? icon.offsetWidth : 0)) {
+            response(`${title.innerText}${iconStatus ? ` (${Locale.translate(iconStatus, { locale: this.locale.name }, false)})` : ''}`);
+            return;
+          }
+          response(false);
+        }
+      });
     }
   },
 
