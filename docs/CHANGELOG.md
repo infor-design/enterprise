@@ -21,6 +21,7 @@
 - `[Contextual Action Panel]` Fixed placement of `(X)` close button on both standard and Flex toolbars when using the `showCloseBtn` setting. ([#2834](https://github.com/infor-design/enterprise/issues/2834))
 - `[Datagrid]` Fixed an issue where the tree children expand and collapse was not working. ([#633](https://github.com/infor-design/enterprise-ng/issues/633))
 - `[Datagrid]` Fixed an issue where the pager was not updating with updated method. ([#2759](https://github.com/infor-design/enterprise/issues/2759))
+- `[Datagrid]` Fixed an issue where the browser contextmenu was not showing by default. ([#2842](https://github.com/infor-design/enterprise/issues/2842))
 - `[Datagrid]` Fixed an issue where string include zeroes not working with text filter. ([#2854](https://github.com/infor-design/enterprise/issues/2854))
 - `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
 - `[Datagrid]` Fixed an issue where the select children for tree was not working. ([#2961](https://github.com/infor-design/enterprise/issues/2961))
