@@ -529,8 +529,54 @@ describe('Dropdown xss tests', () => {
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
 
-    expect(await element(by.id('states')).getAttribute('value')).toEqual('<script nonce=');
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
     await browser.driver.sleep(config.sleep);
+    await utils.checkForErrors();
+  });
+
+  it('Should not inject scripts on reset list', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('x');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(&#x27;dropdown xss\')</script>XSS');
+    await utils.checkForErrors();
+    await browser.driver.sleep(config.sleep);
+
+    await searchEl.sendKeys(protractor.Key.BACK_SPACE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('list-option-0')).getText()).toEqual('Hello');
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(&#x27;dropdown xss\')</script>XSS');
+    expect(await element(by.id('list-option-2')).getText()).toEqual('World');
+
+    await utils.checkForErrors();
+  });
+
+  it('Should not get confused filtering with encoding', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('l');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
+    await utils.checkForErrors();
+  });
+
+  it('Should filter on &', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states2 + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('&');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('Hello 0 1 2 & Hello 3 4 5');
     await utils.checkForErrors();
   });
 });
