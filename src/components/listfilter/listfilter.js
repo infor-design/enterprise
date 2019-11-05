@@ -157,6 +157,7 @@ ListFilter.prototype = {
     // string result from that callback. Otherwise, perform the standard method
     // of grabbing text content.
     function getSearchableContent(item) {
+      let santitize = true;
       if (typeof self.settings.searchableTextCallback === 'function') {
         return self.settings.searchableTextCallback(item);
       }
@@ -167,12 +168,17 @@ ListFilter.prototype = {
       } else if (item instanceof $) {
         targetContent = $(item).text();
       } else if (item instanceof HTMLElement) {
+        santitize = false; // safe from innerText and we wan encoding.
         targetContent = item.innerText;
       } else { // Object
         targetContent = getObjectPropsAsText(item);
       }
 
-      return xssUtils.sanitizeHTML(targetContent);
+      let ret = targetContent;
+      if (santitize) {
+        ret = xssUtils.sanitizeHTML(targetContent);
+      }
+      return ret;
     }
 
     // Iterates through each list item and attempts to find the provided search term.

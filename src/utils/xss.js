@@ -137,15 +137,11 @@ xssUtils.escapeHTML = function (value) {
  * @returns {string} the modified value
  */
 xssUtils.unescapeHTML = function (value) {
-  let newValue = value;
   if (typeof value === 'string') {
-    newValue = newValue.replace(/&amp;/g, '&');
-    newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    newValue = newValue.replace(/&quot;/g, '"');
-    newValue = newValue.replace(/&#x27;/g, "'");
-    newValue = newValue.replace(/&#x2F;/g, '/');
+    const doc = new DOMParser().parseFromString(value, 'text/html');
+    return doc.documentElement.textContent;
   }
-  return newValue;
+  return value;
 };
 
 /**
