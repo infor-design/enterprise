@@ -342,6 +342,7 @@ Personalize.prototype = {
     newCss.on('load', () => {
       originalCss.remove();
       self.unBlockUi();
+      self.triggerEvent(incomingTheme);
     }).on('error', () => {
       self.unBlockUi();
     });
@@ -362,20 +363,6 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
-
-    /**
-    * Fires after the theme is changed
-    * @event themechanged
-    * @memberof Personalize
-    * @property {object} event - The jquery event object
-    * @property {object} args - The event args
-    * @property {string} args.theme - The theme id changed to.
-    */
-    this.element.triggerHandler('themechanged', {
-      colors: this.settings.colors.header ||
-        this.settings.colors || theme.themeColors().brand.primary.alt.value,
-      theme: incomingTheme || 'theme-soho-light'
-    });
 
     $('body').trigger('resize');
   },
@@ -412,12 +399,35 @@ Personalize.prototype = {
   },
 
   /**
+   * Trigger the change events.
+   * @private
+   * @param {string} incomingTheme Represents the file name of a color
+   * @returns {void}
+   */
+  triggerEvent(incomingTheme) {
+    /**
+    * Fires after the theme is changed
+    * @event themechanged
+    * @memberof Personalize
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event args
+    * @property {string} args.theme - The theme id changed to.
+    */
+    this.element.triggerHandler('themechanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      theme: incomingTheme || 'theme-soho-light'
+    });
+  },
+
+  /**
    * Removes a temporary page overlay built by `blockUi()`
    * @private
    * @returns {void}
    */
   unBlockUi() {
     const self = this;
+
     if (!self.settings.blockUI || !self.pageOverlay) {
       return;
     }

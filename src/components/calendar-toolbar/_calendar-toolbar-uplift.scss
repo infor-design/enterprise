@@ -1,0 +1,25 @@
+// Calendar Toolbar - Uplift
+//================================================== //
+
+.calendar-toolbar {
+  .datepicker {
+    @include font-size(21);
+
+    padding: 3px 10px;
+  }
+
+  .datepicker + .icon {
+    margin-top: 10px;
+  }
+
+  .today {
+    @include font-size(14);
+
+    top: -1px;
+  }
+
+  .toolbar-section > .month,
+  .toolbar-section > .year {
+    @include font-size(21);
+  }
+}

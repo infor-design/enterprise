@@ -1808,7 +1808,7 @@ MonthView.prototype = {
    */
   updated() {
     return this
-      .destroy()
+      .teardown()
       .init();
   },
 

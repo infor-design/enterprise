@@ -248,6 +248,11 @@ CalendarToolbar.prototype = {
       });
     }
 
+    $('html').off('themechanged.calendar-toolbar').on('themechanged.calendar-toolbar', () => {
+      if (this.monthPickerApi) {
+        this.monthPickerApi.setSize();
+      }
+    });
     return this;
   },
 
@@ -274,6 +279,7 @@ CalendarToolbar.prototype = {
     this.monthPicker.off();
     this.todayLink.off();
     this.element.find('.prev .next').off();
+    return this;
   },
 
   /**

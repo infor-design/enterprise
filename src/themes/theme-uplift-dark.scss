@@ -26,7 +26,7 @@ $header-disabled-color: $theme-color-palette-slate-50;
 $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
-$panel-bg-color: $theme-color-palette-slate-80;
+$panel-bg-color: $theme-color-palette-slate-100;
 $panel-border-color: $theme-color-palette-slate-70;
 $drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba(141, 201, 230, 0.3);
@@ -711,8 +711,8 @@ $treemap-title-color: $theme-color-palette-slate-100;
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-event-color: $theme-color-palette-slate-100;
-$calendar-line-color: $theme-color-palette-slate-60;
-$calendar-line-color-light: $theme-color-palette-slate-70;
+$calendar-line-color: $theme-color-palette-slate-70;
+$calendar-line-color-light: $theme-color-palette-graphite-70;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $theme-color-palette-slate-80;
 $calendar-hover-bg-color: rgba(49, 50, 54, 0.5);

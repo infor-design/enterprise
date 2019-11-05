@@ -204,8 +204,6 @@ const PLUGIN_MAPPINGS = [
 
   ['calendar', '.calendar'],
 
-  ['calendartoolbar', '.calendar-toolbar'],
-
   ['monthview', '.monthview'],
 
   ['weekview', '.week-view'],

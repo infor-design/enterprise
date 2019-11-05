@@ -1,0 +1,18 @@
+//* WeekView - uplift
+//================================================== *
+
+.week-view .week-view-table-header th {
+  @include font-size(16);
+}
+
+.week-view .week-view-table th:nth-child(1),
+.week-view .week-view-table tr td:nth-child(1) {
+  @include font-size(12);
+}
+
+.week-view .calendar-event.reduced-padding .calendar-event-content {
+  .calendar-event-title {
+    position: relative;
+    top: -1.5px;
+  }
+}

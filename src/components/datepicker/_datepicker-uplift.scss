@@ -17,6 +17,10 @@
   }
 }
 
+.calendar-toolbar .toolbar-section .btn-monthyear-pane {
+  font-size: $theme-size-font-md !important;
+}
+
 // Firefox needs some help
 html.is-firefox {
   .datepicker {
