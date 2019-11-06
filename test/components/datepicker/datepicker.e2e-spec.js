@@ -1296,7 +1296,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     const datepickerEl = await element(by.id('date-field-sv-de'));
     await element(by.css('#date-field-sv-de + .icon')).click();
 
-    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Idag');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
     await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();

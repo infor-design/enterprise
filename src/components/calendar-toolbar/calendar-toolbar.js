@@ -79,14 +79,14 @@ CalendarToolbar.prototype = {
           ${this.settings.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
         </div>
         <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
+          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
           <button type="button" class="btn-icon prev">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
-            <span>${Locale.translate('PreviousMonth')}</span>
+            <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
             </button>
           <button type="button" class="btn-icon next">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg>
-              <span>${Locale.translate('NextMonth')}</span>
+              <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
           </button>
         </div>
       `;
@@ -95,26 +95,26 @@ CalendarToolbar.prototype = {
         <div class="toolbar-section">
           <button type="button" class="btn-icon prev">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
-            <span>${Locale.translate('PreviousMonth')}</span>
+            <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
             </button>
           <button type="button" class="btn-icon next">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg>
-              <span>${Locale.translate('NextMonth')}</span>
+              <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
           </button>
           <span class="monthview-datepicker">
             <span class="hidden month" data-month="9">9</span>
             <span class="hidden year">2019</span>
             <label class="audible" for="monthview-datepicker-field">${Locale.translate('SelectDay')}</label>
-            <input aria-label="${Locale.translate('Today')}" id="monthview-datepicker-field" class="datepicker" type="text" data-validate="none"/>
+            <input aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" class="datepicker" type="text" data-validate="none"/>
           </span>
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
+          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
         </div>
         <div class="toolbar-section buttonset l-align-right">
-          ${!this.settings.showViewChanger ? '' : `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name })}</label>
+          ${!this.settings.showViewChanger ? '' : `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name, language: this.language })}</label>
             <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
-              <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name })}</option>
-              <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name })}</option>
-              <option value="day" ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name })}</option>
+              <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name, language: this.language })}</option>
+              <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name, language: this.language })}</option>
+              <option value="day" ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name, language: this.language })}</option>
             </select>
           </div>`}
         </div>

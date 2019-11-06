@@ -136,7 +136,7 @@ MonthView.prototype = {
       Locale.getLocale(this.settings.language);
       this.language = this.settings.language;
     } else {
-      this.language = Locale.currentLanguage;
+      this.language = Locale.currentLanguage.name;
     }
 
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
@@ -282,6 +282,7 @@ MonthView.prototype = {
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
       onOpenCalendar: () => this.currentDate,
       locale: this.settings.locale,
+      language: this.settings.language,
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
@@ -900,8 +901,11 @@ MonthView.prototype = {
 
     if (this.calendarToolbarEl) {
       this.calendarToolbarEl.off('change-date.monthview').on('change-date.monthview', (e, args) => {
+        if (args.isToday && this.settings.isPopup) {
+          return;
+        }
         if (args.isToday) {
-          this.selectToday();
+          this.setToday();
           return;
         }
         this.selectDay(args.selectedDate, false, true);
@@ -1219,7 +1223,7 @@ MonthView.prototype = {
   /**
    * Select todays date visually.
    */
-  selectToday() {
+  setToday() {
     this.selectDay(new Date(), false, true);
   },
 
@@ -1465,7 +1469,7 @@ MonthView.prototype = {
             this.datepickerApi.closeCalendar();
           }
         } else {
-          this.selectToday();
+          this.setToday();
         }
         handled = true;
       }

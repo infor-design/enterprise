@@ -219,7 +219,13 @@ DatePicker.prototype = {
   setLocale() {
     const s = this.settings;
     this.locale = Locale.currentLocale;
-    this.language = Locale.currentLanguage;
+
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
+    }
 
     if (s.locale) {
       Locale.getLocale(s.locale).done((locale) => {
