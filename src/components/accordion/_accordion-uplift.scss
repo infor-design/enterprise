@@ -19,6 +19,21 @@
         padding-top: 6px;
       }
     }
+
+    &:hover {
+      color: darken($accordion-hover-text-color, 10%);
+
+      .icon {
+        color: darken($accordion-icon-color, 10%);
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: darken($accordion-icon-color, 10%);
+          }
+        }
+      }
+    }
   }
 }
 
