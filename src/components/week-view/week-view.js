@@ -16,6 +16,7 @@ const COMPONENT_NAME_DEFAULTS = {
   filteredTypes: [],
   events: [],
   locale: null,
+  langauge: null,
   firstDayOfWeek: 0,
   startDate: null,
   endDate: null,
@@ -39,6 +40,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.eventTypes] An array of objects with data for the event types.
  * @param {array} [settings.events] An array of objects with data for the events.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {date} [settings.startDate] Start of the week to show.
  * @param {date} [settings.endDate] End of the week to show.
  * @param {boolean} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
@@ -86,6 +88,13 @@ WeekView.prototype = {
    * @returns {void}
    */
   setLocale() {
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
+    }
+
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
@@ -94,6 +103,7 @@ WeekView.prototype = {
       });
     } else if (!this.settings.locale) {
       this.locale = Locale.currentLocale;
+      this.setCurrentCalendar();
     }
   },
 
@@ -105,8 +115,9 @@ WeekView.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = this.language.direction === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
+    return this;
   },
 
   /**
@@ -347,14 +358,23 @@ WeekView.prototype = {
         if (eventCount > 0) {
           const width = (100 / (eventCount + 1));
           let j = 0;
+
           for (j = 0; j < eventCount; j++) {
             containerEvents[j].style.width = `${width}%`;
-            if (j > 0) {
+            if (j > 0 && this.isRTL) {
+              containerEvents[j].style.right = `${width * j}%`;
+            }
+            if (j > 0 && !this.isRTL) {
               containerEvents[j].style.left = `${width * j}%`;
             }
           }
           node.style.width = `${width}%`;
-          node.style.left = `${width * j}%`;
+
+          if (this.isRTL) {
+            node.style.right = `${width * j}%`;
+          } else {
+            node.style.left = `${width * j}%`;
+          }
         }
         containerWrapper.appendChild(node);
         this.attachTooltip(node, event);

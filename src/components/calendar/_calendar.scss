@@ -349,7 +349,9 @@ html[dir='rtl'] {
   }
 
   .calendar-toolbar .monthview-datepicker {
-    margin-left: 0;
+    margin-left: 5px;
+    margin-right: 15px;
+    position: static;
   }
 
   .calendar-upcoming-events {

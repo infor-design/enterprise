@@ -260,7 +260,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(dt, { pattern: 'HHmmss' })).toEqual(h24 + m + s);
   });
 
-  fit('Should format hours', () => { //eslint-disable-line
+  it('Should format hours', () => {
     Locale.set('en-US');
 
     expect(Locale.formatHour(0)).toEqual('12:00 AM');
@@ -397,7 +397,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  fit('Should format hour range', () => { //eslint-disable-line
+  it('Should format hour range', () => {
     Locale.set('en-US');
 
     expect(Locale.formatHourRange(0, 5)).toEqual('12 - 5:00 AM');

@@ -205,3 +205,15 @@ $week-view-cell-height: 25px;
     }
   }
 }
+
+html[dir='rtl'] {
+  .week-view {
+    .week-view-table-header th {
+      text-align: right;
+    }
+
+    .calendar-event .calendar-event-content {
+      text-align: right;
+    }
+  }
+}

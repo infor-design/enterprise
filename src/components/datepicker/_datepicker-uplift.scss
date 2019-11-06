@@ -18,17 +18,7 @@
 }
 
 .calendar-toolbar .toolbar-section .btn-monthyear-pane {
-  font-size: $theme-size-font-md !important;
-}
-
-// Firefox needs some help
-html.is-firefox {
-  .datepicker {
-    + .icon,
-    + .tooltip-description + .icon {
-      margin-top: 9px;
-    }
-  }
+  font-size: 2.1rem !important;
 }
 
 html[dir='rtl'] {

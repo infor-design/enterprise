@@ -46,8 +46,10 @@ function CalendarToolbar(element, settings) {
 CalendarToolbar.prototype = {
 
   init() {
-    this.build();
-    this.handleEvents();
+    this
+      .setLocale()
+      .build()
+      .handleEvents();
   },
 
   /**
@@ -56,7 +58,6 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   build() {
-    this.setLocale();
     this.element[0].classList.add('flex-toolbar');
     this.element[0].setAttribute('data-init', 'false');
 
@@ -77,7 +78,7 @@ CalendarToolbar.prototype = {
         <div class="toolbar-section">
           ${this.settings.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
         </div>
-        <div class="toolbar-section buttonset l-align-right">
+        <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>` : ''}
           <button type="button" class="btn-icon prev">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
@@ -137,10 +138,9 @@ CalendarToolbar.prototype = {
     this.todayLink = this.element.find('.hyperlink.today');
     this.monthPickerApi = this.monthPicker.data('datepicker');
 
-    this.setInternalDate(new Date(this.settings.year, this.settings.month, 1));
-
     // Hide focus on buttons
     this.element.find('button, a').hideFocus();
+    this.setInternalDate(new Date(this.settings.year, this.settings.month, 1));
     return this;
   },
 
@@ -161,8 +161,11 @@ CalendarToolbar.prototype = {
       this.monthPickerApi.setSize();
     }
 
-    this.setCurrentCalendar();
-    const monthName = this.currentCalendar.months.wide[this.currentMonth];
+    if (!this.currentCalendar || !this.currentCalendar.months) {
+      this.currentCalendar = Locale.calendar();
+    }
+
+    const monthName = this.currentCalendar.months ? this.currentCalendar.months.wide[this.currentMonth] : '';
     this.element.find('span.month').attr('data-month', this.currentMonth).text(monthName);
     this.element.find('span.year').text(` ${this.currentYear}`);
 
@@ -175,15 +178,19 @@ CalendarToolbar.prototype = {
       this.element.find('span.year').text(`${justYear} `);
       this.element.find('span.year').insertBefore(this.element.find('span.month'));
     }
+    return this;
   },
 
   /**
    * Set current calendar
    * @private
-   * @returns {void}
+   * @returns {this} Rhe object for chaining
    */
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+    this.isRTL = this.language.direction === 'right-to-left';
+    return this;
   },
 
   /**
@@ -192,15 +199,23 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   setLocale() {
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
+    }
+
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
         this.setCurrentCalendar();
-        this.build().handleEvents();
       });
     } else if (!this.settings.locale) {
       this.locale = Locale.currentLocale;
+      this.setCurrentCalendar();
     }
+    return this;
   },
 
   /**

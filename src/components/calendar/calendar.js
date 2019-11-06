@@ -129,6 +129,8 @@ Calendar.prototype = {
     if (this.settings.language) {
       Locale.getLocale(this.settings.language);
       this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
     }
 
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {

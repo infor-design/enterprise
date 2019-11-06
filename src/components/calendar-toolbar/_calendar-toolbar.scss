@@ -66,12 +66,15 @@
       color: $datepicker-month-year-color;
       font-size: $theme-size-font-lg;
       font-weight: 400;
-      margin-left: -7px;
       padding: 4px 5px;
     }
 
     &.l-align-right {
       text-align: right;
+    }
+
+    &.l-align-left {
+      text-align: left;
     }
   }
 
@@ -89,14 +92,14 @@
   .calendar-toolbar {
     border-bottom: 1px solid  $calendar-line-color;
     height: 50px;
-    text-indent: 20px;
+    padding-left: 20px;
   }
 }
 
 .monthview-popup {
   .calendar-toolbar {
     border-bottom: 1px solid $popover-separator-color;
-    text-indent: 25px;
+    padding: 0 5px 0 20px;
   }
 }
 
@@ -105,8 +108,43 @@ html[dir='rtl'] {
     button.prev,
     button.next {
       left: 0;
+      margin-left: -5px !important;
       right: auto;
       transform: rotate(180deg);
+    }
+
+    .toolbar-section > .month,
+    .toolbar-section > .year {
+      top: -3px;
+    }
+
+    .toolbar-section .btn-monthyear-pane {
+      padding: 0;
+      top: -2px;
+    }
+
+    .is-alternate .today {
+      left: 0;
+    }
+
+    .datepicker + .icon {
+      margin-right: -15px;
+      margin-top: 11px;
+    }
+
+    .today {
+      left: 0;
+      margin-right: 10px;
+    }
+
+    #monthview-datepicker-field + .icon {
+      margin-right: -23px;
+    }
+  }
+
+  .monthview-popup {
+    .calendar-toolbar {
+      padding: 0 20px 0 5px;
     }
   }
 }

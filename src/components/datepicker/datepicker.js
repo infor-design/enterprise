@@ -219,6 +219,8 @@ DatePicker.prototype = {
   setLocale() {
     const s = this.settings;
     this.locale = Locale.currentLocale;
+    this.language = Locale.currentLanguage;
+
     if (s.locale) {
       Locale.getLocale(s.locale).done((locale) => {
         const similarApi = this.getSimilarApi('locale', locale);
@@ -246,7 +248,7 @@ DatePicker.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = this.language.direction === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
@@ -265,8 +267,9 @@ DatePicker.prototype = {
     const elem = this.element[0];
     const value = elem.value;
 
+    const font = `${getComputedStyle(elem).fontSize} ${getComputedStyle(elem).fontFamily}`;
     elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(value, 50, $(elem).css('font'))}px`;
+    elem.style.width = `${stringUtils.textWidth(value, 50, font)}px`;
   },
 
   /**
@@ -541,14 +544,16 @@ DatePicker.prototype = {
     */
     this.element.addClass('is-active is-open').trigger('listopened');
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
+    const clearButton = `<button type="button" class="is-cancel btn-tertiary">
+      ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
+    </button>`;
+    const applyButton = ` <button type="button" class="is-select btn-primary">
+      ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
+    </button>`;
+
     this.footer = $('' +
       `<div class="popup-footer">
-        <button type="button" class="is-cancel btn-tertiary">
-          ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
-        </button>
-        <button type="button" class="is-select btn-primary">
-          ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
-        </button>
+        ${this.isRTL ? applyButton + clearButton : clearButton + applyButton}
       </div>`);
 
     if (s.hideDays) {

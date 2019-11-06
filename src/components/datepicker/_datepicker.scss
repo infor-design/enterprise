@@ -139,11 +139,9 @@
 // RTL Styles
 html[dir='rtl'] {
   .datepicker {
-    + .icon,
-    + .tooltip-description + .icon {
-      margin-left: inherit;
+    + .icon {
+      margin-left: -23px;
       margin-right: -26px;
-      margin-top: 10px;
     }
 
     + .icon + .icon-error {
@@ -170,31 +168,17 @@ html[dir='rtl'] {
     }
   }
 
-  .monthview-popup.popover {
-    .hyperlink.today {
-      left: 85px;
-      right: auto;
-
-      &::after {
-        left: auto;
-        right: 8px;
-      }
+  .monthview-popup .calendar-toolbar {
+    button.prev {
+      margin-left: -6px;
     }
-  }
-}
 
-// IE Hack TODO
-.ie11 {
-  .datepicker + .icon {
-    background-color: rgba($theme-color-palette-white, 0);
-  }
+    button.next {
+      margin-left: 5px;
+    }
 
-  .is-monthyear {
-    .month,
-    .year {
-      line-height: normal;
-      position: relative;
-      top: 7px;
+    &.is-alternate .today {
+      left: 0;
     }
   }
 }

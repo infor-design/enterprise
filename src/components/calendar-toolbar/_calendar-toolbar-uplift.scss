@@ -15,6 +15,7 @@
   .today {
     @include font-size(14);
 
+    margin-left: 5px;
     top: -1px;
   }
 

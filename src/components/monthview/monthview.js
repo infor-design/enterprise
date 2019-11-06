@@ -135,6 +135,8 @@ MonthView.prototype = {
     if (this.settings.language) {
       Locale.getLocale(this.settings.language);
       this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage;
     }
 
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
@@ -301,7 +303,7 @@ MonthView.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = this.language.direction === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
   },
 
@@ -358,6 +360,9 @@ MonthView.prototype = {
     }
 
     this.currentDay = this.currentDay || now.getDate();
+    if (!this.currentCalendar || !this.currentCalendar.days) {
+      this.currentCalendar = Locale.calendar();
+    }
 
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
