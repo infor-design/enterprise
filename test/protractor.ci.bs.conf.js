@@ -53,7 +53,7 @@ exports.config = {
       'os' : 'Windows',
       'os_version' : '10',
       'browserName' : 'Chrome',
-      'browser_version' : '77.0',
+      'browser_version' : '78.0',
       'resolution' : '1280x800',
       'browserstack.local' : 'false',
       'browserstack.selenium_version' : '3.5.2'

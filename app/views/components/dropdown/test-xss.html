@@ -1,10 +1,22 @@
 <div class="row">
   <div class="twelve columns">
-    <label for="states" class="label">State</label>
+    <label for="states" class="label">Xss Test One</label>
     <select id="states" class="dropdown">
       <option value="Hello">Hello</option>
-      <option value="<script>window.alert('dropdown xss')</script>XSS">&lt;script&gt;window.alert('dropdown xss')&lt;/script&gt;XSS</option>
+      <option value="<script no-nonce>window.alert('dropdown xss')</script>XSS">&lt;script&gt;window.alert('dropdown xss')&lt;/script&gt;XSS</option>
       <option value="World">World</option>
+    </select>
+    <label for="states2" class="label">Xss Test Two</label>
+    <select id="states2" class="dropdown">
+      <option value="Hello1">Hello</option>
+      <option value="Hello2">Hello 0 1 2 & Hello 3 4 5</option>
+      <option value="Hello3">Hello "there"</option>
+      <<option value="Hello5">&lt; Hello</option>
+      <option value="Hello6">&gt; Hello</option>
+      <option value="Hello7">< Hello</option>
+      <option value="<script no-nonce>window.alert('dropdown xss')</script>XSS">&lt;script&gt;window.alert('dropdown xss')&lt;/script&gt;XSS</option>
+      <option value="World">World</option>
+      <option value="World2">&lt;World&gt;</option>
     </select>
   </div>
 </div>
