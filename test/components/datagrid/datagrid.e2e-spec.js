@@ -3220,7 +3220,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
     await utils.setPage('/components/datagrid/test-actions-reload?layout=nofrills');
     const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -3230,7 +3230,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
   it('Should open on click', async () => {
     const selector = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1) .btn-actions';
     let menuBtn = await element(by.css(selector));
-    menuBtn.click();
+    await menuBtn.click();
 
     expect(await menuBtn.getAttribute('class')).toContain('is-open');
     await element(by.id('btn-reload')).click();
@@ -3238,7 +3238,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
 
     expect(await menuBtn.getAttribute('class')).not.toContain('is-open');
     menuBtn = await element(by.css(selector));
-    menuBtn.click();
+    await menuBtn.click();
 
     expect(await menuBtn.getAttribute('class')).toContain('is-open');
   });

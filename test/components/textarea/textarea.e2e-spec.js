@@ -135,6 +135,7 @@ describe('Textarea size tests', () => {
   });
 
   it('Should support check sizes', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1200, 800);
     await browser.driver.sleep(config.sleepShort);
 
@@ -155,6 +156,7 @@ describe('Textarea size tests', () => {
     const h = parseInt(await responsiveEl.getCssValue('width'), 10);
 
     expect(h).toBeGreaterThan(950);
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });
 

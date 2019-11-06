@@ -91,7 +91,7 @@ describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-colors?layout=nofrills');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
