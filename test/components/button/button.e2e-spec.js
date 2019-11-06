@@ -240,14 +240,11 @@ describe('Button example-toggle-button tests', () => {
 });
 
 describe('Button example-100-percent tests', () => {
-  let windowSize = {};
   beforeEach(async () => {
     await utils.setPage('/components/button/example-100-percent');
-    windowSize = await browser.driver.manage().window().getSize();
   });
 
   afterEach(async () => {
-    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     await browser.driver.sleep(config.sleep);
   });
 
@@ -261,35 +258,43 @@ describe('Button example-100-percent tests', () => {
     });
 
     it('Should not visual regress on example-100-percent at 1280px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 800);
       await browser.driver.sleep(config.sleep);
       const buttonElContainer = await element(by.id('maincontent'));
 
       expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-1280')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
 
     it('Should not visual regress on example-100-percent at 768px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(768, 1024);
       await browser.driver.sleep(config.sleep);
       const buttonElContainer = await element(by.id('maincontent'));
 
       expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-768')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
 
     it('Should not visual regress on example-100-percent at 500px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
       const buttonElContainer = await element(by.id('maincontent'));
 
       expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-500')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
 
     it('Should not visual regress on example-100-percent at 320px', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(320, 480);
       await browser.driver.sleep(config.sleep);
       const buttonElContainer = await element(by.id('maincontent'));
 
       expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-320')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 });

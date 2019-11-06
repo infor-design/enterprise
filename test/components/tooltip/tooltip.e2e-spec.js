@@ -68,15 +68,17 @@ describe('Tooltip (personalizable) tests', () => {
   });
 
   // Fixes Github Issue `infor-design/enterprise#3011`
-  it('should have white tooltip text (and should not visually regress)', async () => {
-    await browser.actions()
-      .mouseMove(await element(by.id('header-more-actions')))
-      .perform();
+  if (utils.isChrome() && utils.isCI()) {
+    it('should have white tooltip text (and should not visually regress)', async () => {
+      await browser.actions()
+        .mouseMove(await element(by.id('header-more-actions')))
+        .perform();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
-    const tooltipEl = await element(by.id('tooltip'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+      const tooltipEl = await element(by.id('tooltip'));
 
-    expect(await browser.protractorImageComparison.checkElement(tooltipEl, 'tooltip-personalized-text-color')).toEqual(0);
-  });
+      expect(await browser.protractorImageComparison.checkElement(tooltipEl, 'tooltip-personalized-text-color')).toEqual(0);
+    });
+  }
 });

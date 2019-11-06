@@ -109,6 +109,7 @@ describe('Grouped Bar Chart example-selected tests', () => {
   });
 
   it('Should be highlighted when selected', async () => {
+    await browser.driver.sleep(config.sleep);
     const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
 
     expect(await fGroupEl.getAttribute('class')).toContain('is-selected');

@@ -44,6 +44,7 @@ describe('Flex toobar ajax tests', () => {
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-submenu')).toEqual(0);
 
       // shrink the page to check ajax menu button in the overflow
+      const windowSize = await browser.driver.manage().window().getSize();
       browser.driver.manage().window().setSize(450, 1000);
       await browser.driver.sleep(config.sleep);
 
@@ -68,6 +69,7 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button-submenu')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
 });
