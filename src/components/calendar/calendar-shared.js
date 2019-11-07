@@ -48,15 +48,27 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
     event.startsLocale = Locale.formatDate(startsLocale, { locale: locale.name });
     event.startsHourLocale = Locale.formatDate(startsLocale, { date: 'hour', locale: locale.name });
-    event.startsHour = parseFloat(new Date(event.starts).getHours() +
-      (new Date(event.starts).getMinutes() / 60));
+
+    if (Array.isArray(startsLocale)) {
+      event.startsHour = parseFloat(startsLocale[3] +
+        (startsLocale[4] / 60));
+    } else {
+      event.startsHour = parseFloat(startsLocale.getHours() +
+        (startsLocale.getMinutes() / 60));
+    }
   }
   if (event.ends) {
     const endsLocale = Locale.parseDate(event.ends, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
     event.endsLocale = Locale.formatDate(endsLocale, { locale: locale.name });
     event.endsHourLocale = Locale.formatDate(endsLocale, { date: 'hour', locale: locale.name });
-    event.endsHour = parseFloat(new Date(event.ends).getHours() +
-      (new Date(event.ends).getMinutes() / 60));
+
+    if (Array.isArray(endsLocale)) {
+      event.endsHour = parseFloat(endsLocale[3] +
+        (endsLocale[4] / 60));
+    } else {
+      event.endsHour = parseFloat(endsLocale.getHours() +
+        (endsLocale.getMinutes() / 60));
+    }
   }
   event.eventTypes = eventTypes;
   event.isAllDay = event.isAllDay.toString();

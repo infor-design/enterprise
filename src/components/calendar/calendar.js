@@ -136,6 +136,7 @@ Calendar.prototype = {
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
         this.setCurrentCalendar();
         this.build();
       });
@@ -151,7 +152,7 @@ Calendar.prototype = {
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     return this;
   },
 
@@ -224,7 +225,8 @@ Calendar.prototype = {
     }
 
     // Handle changing view
-    this.weekViewContainer.classList.add('week-view', 'hidden');
+    this.weekViewContainer.classList.add('week-view');
+    this.weekViewContainer.classList.add('hidden');
     this.onChangeToWeekDay = (args) => {
       if (this.settings.onChangeView) {
         this.settings.onChangeView(args);

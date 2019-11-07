@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -19,27 +19,27 @@ describe('Calendar index tests', () => {
   });
 
   it('Should be able to change month to next', async () => {
-    const nextButton = await element(by.css('button.next'));
+    const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await utils.checkForErrors();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await nextButton.getText()).toEqual('Next Month');
   });
 
   it('Should be able to change month to prev', async () => {
-    const prevButton = await element(by.css('.btn-icon.prev'));
+    const prevButton = await element(by.css('.calendar-monthview .btn-icon.prev'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     await prevButton.click();
     await utils.checkForErrors();
 
@@ -49,7 +49,7 @@ describe('Calendar index tests', () => {
     await testDate.setMinutes(0);
     await testDate.setSeconds(0);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
@@ -58,7 +58,7 @@ describe('Calendar index tests', () => {
 describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -72,7 +72,7 @@ describe('Calendar ajax loading tests', () => {
     await testDate.setMonth(7);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should render ajax loaded dates for august 2018', async () => {
@@ -93,7 +93,7 @@ describe('Calendar ajax loading tests', () => {
     await testDate.setMonth(8);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(2);
   });
@@ -102,7 +102,7 @@ describe('Calendar ajax loading tests', () => {
 describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -116,7 +116,7 @@ describe('Calendar specific month tests', () => {
     await testDate.setMonth(9);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should be able to click on events', async () => {
@@ -208,7 +208,7 @@ describe('Calendar specific month tests', () => {
 describe('Calendar only calendar', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -240,7 +240,7 @@ describe('Calendar only calendar', () => {  //eslint-disable-line
 describe('Calendar specific locale', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -264,7 +264,7 @@ describe('Calendar specific locale', () => {
 describe('Calendar specific locale and language', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale-lang');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -288,7 +288,7 @@ describe('Calendar specific locale and language', () => {
 describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });

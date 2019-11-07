@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Tooltips index page tests', () => {
+describe('Tooltips index page tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tooltip/example-index?layout=nofrills');
   });
@@ -37,7 +37,7 @@ fdescribe('Tooltips index page tests', () => {
   }
 });
 
-fdescribe('Tooltips on icon tests', () => {
+describe('Tooltips on icon tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-tooltips');
   });
@@ -58,7 +58,7 @@ fdescribe('Tooltips on icon tests', () => {
   });
 });
 
-fdescribe('Tooltip (personalizable) tests', () => {
+describe('Tooltip (personalizable) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/header/example-disabled-buttons?theme=soho&variant=dark&colors=206b62');
   });

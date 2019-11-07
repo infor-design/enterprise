@@ -91,9 +91,9 @@ describe('Listview example-singleselect tests', () => {
 describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-multiselect');
-    const listviewEl = await element(by.css('#multiselect-listview li'));
+    const listviewEl = await element.all(by.css('#multiselect-listview li')).first();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(listviewEl), config.waitsFor);
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -462,7 +462,7 @@ describe('Listview server-side indeterminate paging tests', () => {
 describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/test-remove-clear');
-    const listviewMultiSelectEl = await element(by.css('#multiselect-listview li'));
+    const listviewMultiSelectEl = await element.all(by.css('#multiselect-listview li')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
   });

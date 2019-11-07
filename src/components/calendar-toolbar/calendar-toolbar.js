@@ -20,6 +20,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {boolean} [settings.isAlternate] Alternate style for the datepicker popup.
  * @param {boolean} [settings.isMenuButton] Show the month/year as a menu button object, works if isAlternate is true.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
  * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
 */
@@ -33,7 +34,8 @@ const COMPONENT_DEFAULTS = {
   isAlternate: false,
   isMenuButton: true,
   showViewChanger: false,
-  viewChangerValue: 'month'
+  viewChangerValue: 'month',
+  isMonthPicker: false
 };
 
 function CalendarToolbar(element, settings) {
@@ -129,7 +131,8 @@ CalendarToolbar.prototype = {
       autoSize: true,
       dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
       locale: this.settings.locale,
-      onOpenCalendar: this.settings.onOpenCalendar
+      onOpenCalendar: this.settings.onOpenCalendar,
+      isMonthPicker: this.settings.isMonthPicker
     });
 
     if (this.settings.showViewChanger) {
@@ -189,7 +192,7 @@ CalendarToolbar.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.language.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     return this;
   },
 
@@ -209,6 +212,7 @@ CalendarToolbar.prototype = {
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
         this.setCurrentCalendar();
       });
     } else if (!this.settings.locale) {
@@ -262,12 +266,6 @@ CalendarToolbar.prototype = {
         });
       });
     }
-
-    $('html').off('themechanged.calendar-toolbar').on('themechanged.calendar-toolbar', () => {
-      if (this.monthPickerApi) {
-        this.monthPickerApi.setSize();
-      }
-    });
     return this;
   },
 

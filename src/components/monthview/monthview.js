@@ -50,7 +50,8 @@ const COMPONENT_NAME_DEFAULTS = {
   onSelected: null,
   onKeyDown: null,
   showToday: true,
-  onChangeView: null
+  onChangeView: null,
+  isMonthPicker: false
 };
 
 /**
@@ -66,6 +67,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
@@ -142,6 +144,8 @@ MonthView.prototype = {
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
+        this.settings.language = this.language;
         this.setCurrentCalendar();
         this.build().handleEvents();
       });
@@ -286,6 +290,7 @@ MonthView.prototype = {
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
+      isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
       isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
       showViewChanger: this.settings.showViewChanger,
@@ -304,7 +309,7 @@ MonthView.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.language.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
   },
 
@@ -700,6 +705,10 @@ MonthView.prototype = {
     const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
       this.conversions.toGregorian(year, month, date) : new Date(year, month, date);
+
+    if (!d2) {
+      return false;
+    }
 
     // dayOfWeek
     if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {

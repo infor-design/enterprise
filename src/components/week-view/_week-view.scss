@@ -25,6 +25,7 @@ $week-view-cell-height: 25px;
 
   .week-view-table-header {
     th {
+      background-clip: padding-box;
       border-top: 0;
       font-size: $theme-size-font-md;
       height: 2.4rem;
@@ -91,8 +92,7 @@ $week-view-cell-height: 25px;
 
     th:nth-child(1) .week-view-all-day-wrapper {
       border-top-color: transparent;
-      line-height: 35px;
-      padding: 0 5px;
+      padding: 5px;
     }
   }
 

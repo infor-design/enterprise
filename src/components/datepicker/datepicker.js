@@ -82,6 +82,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -132,7 +133,8 @@ const DATEPICKER_DEFAULTS = {
   autoSize: false,
   hideButtons: false,
   showToday: true,
-  onOpenCalendar: null
+  onOpenCalendar: null,
+  isMonthPicker: false
 };
 
 function DatePicker(element, settings) {
@@ -186,29 +188,10 @@ DatePicker.prototype = {
     // Set the current calendar
     this.setLocale();
     this.addAria();
-    if (!this.settings.locale && !this.settings.lanuage) {
+    if (!this.settings.locale && !this.settings.language) {
       this.setCurrentCalendar();
     }
     this.setSize();
-  },
-
-  /**
-   * Get list of similar api elements.
-   * @private
-   * @param {string} key to check
-   * @param {string} value to check
-   * @returns {array} list of api elements
-   */
-  getSimilarApi(key, value) {
-    const elems = [].slice.call(document.querySelectorAll('.datepicker'));
-    const similarApi = [];
-    elems.forEach((node) => {
-      const datepickerApi = $(node).data('datepicker');
-      if (datepickerApi && datepickerApi.settings[key] === value) {
-        similarApi.push(datepickerApi);
-      }
-    });
-    return similarApi;
   },
 
   /**
@@ -232,6 +215,7 @@ DatePicker.prototype = {
         const similarApi = this.getSimilarApi('locale', locale);
         similarApi.forEach((api) => {
           api.locale = Locale.cultures[locale];
+          api.language = this.settings.language || api.locale.language;
           api.setCurrentCalendar();
         });
       });
@@ -247,6 +231,25 @@ DatePicker.prototype = {
   },
 
   /**
+   * Get list of similar api elements.
+   * @private
+   * @param {string} key to check
+   * @param {string} value to check
+   * @returns {array} list of api elements
+   */
+  getSimilarApi(key, value) {
+    const elems = [].slice.call(document.querySelectorAll('.datepicker'));
+    const similarApi = [];
+    elems.forEach((node) => {
+      const datepickerApi = $(node).data('datepicker');
+      if (datepickerApi && datepickerApi.settings[key] === value) {
+        similarApi.push(datepickerApi);
+      }
+    });
+    return similarApi;
+  },
+
+  /**
    *  Sets current calendar information.
    * @private
    * @returns {void}
@@ -254,7 +257,7 @@ DatePicker.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.language.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
@@ -551,7 +554,7 @@ DatePicker.prototype = {
     this.element.addClass('is-active is-open').trigger('listopened');
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
     const clearButton = `<button type="button" class="is-cancel btn-tertiary">
-      ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
+      ${Locale.translate(this.settings.isMonthPicker ? 'Cancel' : 'Clear', { locale: this.locale.name, language: this.language })}
     </button>`;
     const applyButton = ` <button type="button" class="is-select btn-primary">
       ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
@@ -715,6 +718,10 @@ DatePicker.prototype = {
       };
     }
 
+    if (!this.settings.language) {
+      this.settings.language = this.language;
+    }
+
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
 
@@ -857,8 +864,10 @@ DatePicker.prototype = {
         * @memberof DatePicker
         * @property {object} event - The jquery event object
         */
-        self.element.val('').trigger('change').trigger('input');
-        self.currentDate = null;
+        if (!self.settings.isMonthPicker) {
+          self.element.val('').trigger('change').trigger('input');
+          self.currentDate = null;
+        }
         self.closeCalendar();
       }
 

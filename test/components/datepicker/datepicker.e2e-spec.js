@@ -1292,11 +1292,11 @@ describe('Datepicker specific locale/langauge tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getFullYear()}`);
   });
 
-  it('Should be Able to use non current locale and a different langauge', async () => {
+  it('Should be Able to use non current locale and a different language', async () => {
     const datepickerEl = await element(by.id('date-field-sv-de'));
     await element(by.css('#date-field-sv-de + .icon')).click();
 
-    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Idag');
     await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();
