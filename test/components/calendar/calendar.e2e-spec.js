@@ -318,9 +318,11 @@ describe('Calendar only monthview and legend', () => {
   }
 });
 
-describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
+fdescribe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   beforeEach(async () => {
+    await utils.mockDate('2019-11-08 14:52:12');
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
+
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
@@ -348,7 +350,7 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {  //eslint-disable-line
+    fit('Should not visual regress', async () => {  //eslint-disable-line
       const weekviewEl = await element(by.className('calendar'));
 
       const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();

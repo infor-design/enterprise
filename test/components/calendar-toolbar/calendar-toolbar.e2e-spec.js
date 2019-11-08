@@ -17,7 +17,7 @@ describe('Calendar Toolbar index tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar-toolbar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar')).toEqual(0);
     });
@@ -25,7 +25,7 @@ describe('Calendar Toolbar index tests', () => {
     it('Should not visual regress in RTL', async () => {
       await utils.setPage('/components/calendar-toolbar/example-index?layout=nofrills&locale=ar-SA');
       const calendarEl = await element(by.className('calendar-toolbar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar-rtl')).toEqual(0);
     });
@@ -44,7 +44,7 @@ describe('Calendar Toolbar Datepicker tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar-toolbar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar-datepicker')).toEqual(0);
     });
@@ -52,7 +52,7 @@ describe('Calendar Toolbar Datepicker tests', () => {
     it('Should not visual regress in RTL', async () => {
       await utils.setPage('/components/calendar-toolbar/example-index?layout=nofrills&locale=ar-SA');
       const calendarEl = await element(by.className('calendar-toolbar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar-datepicker-rtl')).toEqual(0);
     });
