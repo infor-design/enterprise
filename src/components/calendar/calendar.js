@@ -43,7 +43,8 @@ const COMPONENT_NAME_DEFAULTS = {
     firstDayOfWeek: 0,
     startHour: 7,
     endHour: 19,
-    showAllDay: true
+    showAllDay: true,
+    showTimeLine: true
   }
 };
 
@@ -76,6 +77,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.weekViewSettings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.weekViewSettings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.weekViewSettings.showAllDay=true] Detemines if the all day events row should be shown.
+ * @param {boolean} [settings.weekViewSettings.showTimeLine=true] Shows a bar across the current time.
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -248,6 +250,7 @@ Calendar.prototype = {
       events: this.settings.events,
       firstDayOfWeek: this.settings.weekViewSettings.firstDayOfWeek,
       showAllDay: this.settings.weekViewSettings.showAllDay,
+      showTimeLine: this.settings.weekViewSettings.showTimeLine,
       startHour: this.settings.weekViewSettings.startHour,
       endHour: this.settings.weekViewSettings.endHour,
       showToday: this.settings.showToday,

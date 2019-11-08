@@ -320,7 +320,6 @@ describe('Calendar only monthview and legend', () => {
 
 fdescribe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   beforeEach(async () => {
-    await utils.mockDate('2019-11-08 14:52:12');
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
 
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));

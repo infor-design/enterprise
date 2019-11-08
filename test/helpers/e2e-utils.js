@@ -93,15 +93,5 @@ module.exports = {
       const expected = protractor.ExpectedConditions;
       await browser.driver.wait(expected[condition](el), config.waitsFor);
     }
-  },
-  mockDate: async (date) => {
-    const constantDate = new Date(date);
-
-    /* eslint no-global-assign:off */
-    Date = class extends Date {
-      constructor() {
-        return constantDate;
-      }
-    };
   }
 };

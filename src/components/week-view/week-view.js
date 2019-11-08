@@ -21,6 +21,7 @@ const COMPONENT_NAME_DEFAULTS = {
   startDate: null,
   endDate: null,
   showAllDay: true,
+  showTimeLine: true,
   startHour: 7,
   endHour: 19,
   showToday: true,
@@ -45,6 +46,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {date} [settings.endDate] End of the week to show.
  * @param {boolean} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {boolean} [settings.showAllDay=true] Detemines if the all day events row should be shown.
+ * @param {boolean} [settings.showTimeLine=true] Shows a bar across the current time.
  * @param {number} [settings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
@@ -568,6 +570,10 @@ WeekView.prototype = {
    * @private
    */
   addTimeLine() {
+    if (!this.settings.showTimeLine) {
+      return;
+    }
+
     const setTime = () => {
       const now = new Date();
       const hours = now.getHours();
