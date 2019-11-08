@@ -350,7 +350,6 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {  //eslint-disable-line
       const weekviewEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
 
       const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -362,7 +361,7 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
       await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
       await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
       await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-      await browser.driver.sleep(config.sleepShort);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'calendar-week-view-settings')).toEqual(0);
     });
@@ -382,9 +381,11 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
-  it('Should switch to day', async () => {  //eslint-disable-line
+  fit('Should switch to day', async () => {  //eslint-disable-line
+    await browser.driver.sleep(config.sleep);
+
     expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
-    await element.all(by.cssContainingText('.monthview-table td', 'Birthday Off')).first().click();
+    await element.all(by.cssContainingText('.monthview-table td', '12')).first().click();
 
     const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -396,10 +397,10 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
     expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);

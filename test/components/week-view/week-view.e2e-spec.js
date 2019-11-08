@@ -99,7 +99,6 @@ describe('WeekView events tests', () => {  //eslint-disable-line
     it('Should not visual regress', async () => {  //eslint-disable-line
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
       expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-events')).toEqual(0);
     });
@@ -128,7 +127,6 @@ describe('WeekView Start Week tests', () => {  //eslint-disable-line
     it('Should not visual regress', async () => {  //eslint-disable-line
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
       expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-start-week')).toEqual(0);
     });
