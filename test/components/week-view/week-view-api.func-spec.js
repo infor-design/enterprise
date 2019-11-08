@@ -345,7 +345,7 @@ describe('WeekView API', () => {
       endHour: 17
     });
 
-    expect(document.body.querySelectorAll('.calendar-event').length).toEqual(3);
+    expect(document.body.querySelectorAll('.calendar-event').length).toEqual(5);
     weekViewAPI.clearEvents();
 
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(0);

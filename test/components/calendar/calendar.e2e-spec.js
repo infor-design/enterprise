@@ -380,4 +380,32 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
     await utils.checkForErrors();
   });
+
+  if (!utils.isCI()) {
+    it('Should switch to day', async () => {
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
+      await element.all(by.cssContainingText('.monthview-table td', '12')).first().click();
+
+      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+      const searchEl = await element(by.css('.dropdown-search'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
+      expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);
+      expect(await element(by.css('.week-view-table .calendar-event')).getText()).toEqual('Birthday Off');
+    });
+  }
 });
