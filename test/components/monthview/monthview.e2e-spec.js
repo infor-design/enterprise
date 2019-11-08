@@ -286,6 +286,7 @@ describe('MonthView specific locale tests', () => {
 describe('MonthView specific language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-specific-locale-lang');
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should render without error', async () => {
