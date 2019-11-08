@@ -283,7 +283,7 @@ describe('MonthView specific locale tests', () => {
   });
 });
 
-fdescribe('MonthView specific language tests', () => {
+describe('MonthView specific language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-specific-locale-lang');
   });
