@@ -1,5 +1,4 @@
 import { utils } from '../../utils/utils';
-import { ToolbarFlex } from '../toolbar-flex/toolbar-flex';
 import { Locale } from '../locale/locale';
 
 // Default Settings
@@ -124,7 +123,7 @@ CalendarToolbar.prototype = {
     }
 
     // Invoke the toolbar
-    this.toolbarApi = new ToolbarFlex(this.element[0], { allowTabs: true });
+    this.element.toolbarflex({ allowTabs: true });
 
     // Setup the datepicker
     this.monthPicker = this.element.find('#monthview-datepicker-field').datepicker({

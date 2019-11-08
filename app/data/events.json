@@ -638,5 +638,40 @@
     "ends": "2019-11-30T15:59:59.999",
     "type": "sick",
     "isAllDay": "false"
+  },
+  {
+    "id": "63",
+    "subject": "Chiropractor",
+    "comments": "Chiropractor Appt",
+    "starts": "2019-12-02T15:00:00.000",
+    "ends": "2019-12-02T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "64",
+    "subject": "Day Off",
+    "starts": "2019-12-03T15:00:00.000",
+    "ends": "2019-12-03T15:59:59.999",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "65",
+    "subject": "Personal",
+    "icon": "icon-clock",
+    "comments": "Personal Appt",
+    "starts": "2019-12-04T15:00:00.000",
+    "ends": "2019-12-04T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "66",
+    "subject": "Mom in Town",
+    "starts": "2019-12-04T00:00:00.000",
+    "ends": "2019-12-05T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
   }
 ]

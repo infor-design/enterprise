@@ -18,6 +18,15 @@ describe('Calendar index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should be able to cancel month selector', async () => {
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual('November 2019');
+
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('button.is-cancel'));
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual('November 2019');
+  });
+
   it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
@@ -307,4 +316,93 @@ describe('Calendar only monthview and legend', () => {
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toBeLessThan(1);
     });
   }
+});
+
+describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {  //eslint-disable-line
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(14);
+    await utils.checkForErrors();
+  });
+
+  it('Should switch to week', async () => {  //eslint-disable-line
+    expect(await element(by.css('.week-view ')).isDisplayed()).toBe(false);
+    const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    expect(await element(by.css('.week-view ')).isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {  //eslint-disable-line
+      const weekviewEl = await element(by.className('calendar'));
+      await browser.driver.sleep(config.sleep);
+
+      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+      const searchEl = await element(by.css('.dropdown-search'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleepShort);
+
+      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'calendar-week-view-settings')).toEqual(0);
+    });
+  }
+});
+
+describe('Calendar Switch to Day view', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-specific-month?layout=nofrills');
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {  //eslint-disable-line
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    await utils.checkForErrors();
+  });
+
+  it('Should switch to day', async () => {  //eslint-disable-line
+    expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
+    await element.all(by.cssContainingText('.monthview-table td', 'Birthday Off')).first().click();
+
+    const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
+
+    expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
+    expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);
+    expect(await element(by.css('.week-view-table .calendar-event')).getText()).toEqual('Birthday Off');
+  });
 });

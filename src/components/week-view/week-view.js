@@ -16,7 +16,7 @@ const COMPONENT_NAME_DEFAULTS = {
   filteredTypes: [],
   events: [],
   locale: null,
-  langauge: null,
+  language: null,
   firstDayOfWeek: 0,
   startDate: null,
   endDate: null,
@@ -192,6 +192,7 @@ WeekView.prototype = {
 
   /**
    * Remove all events from the month.
+   * @private
    */
   removeAllEvents() {
     const events = this.element[0].querySelectorAll('.calendar-event');
@@ -711,6 +712,15 @@ WeekView.prototype = {
    * @param {object} event The event object with common event properties.
    */
   addEvent(event) {
+    if (!event.startsLocale) {
+      event = calendarShared.addCalculatedFields(
+        event,
+        this.locale,
+        this.language,
+        this.settings.eventTypes
+      );
+    }
+
     calendarShared.cleanEventData(
       event,
       true,

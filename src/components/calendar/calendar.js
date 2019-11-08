@@ -474,6 +474,7 @@ Calendar.prototype = {
 
   /**
    * Render/ReRender the events attached to the settings.
+   * @private
    * @param {boolean} isCallback Will be set to true when a callback occurs
    * @returns {object} The Calendar prototype, useful for chaining.
    */

@@ -19,11 +19,11 @@ $('body').one('initialized', function () {
       }).weekview({
         eventTypes: eventTypes,
         events: events,
-        showViewChanger: false,
+        showViewChanger: true,
         startDate: new Date(2019, 09, 21),
         endDate: new Date(2019, 09, 21),
-        onChangeWeek: function (args) {
-          console.log('Change Week', args);
+        onViewChange: function (args) {
+          console.log('Change View', args);
         }
       }).on('eventclick', function (e, args) {
         console.log('eventclick Week', args);

@@ -103,7 +103,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(id, eventTypes) {
  * @param {boolean} addPlaceholder If true placeholder text will be added for some empty fields.
  * @param {date} currentDate Active date in the calendar.
  * @param {object} locale The locale to use.
- * @param {string} language The langauge to use.
+ * @param {string} language The language to use.
  * @param {array} events The events array.
  * @param {array} eventTypes The event types array.
  * @private
