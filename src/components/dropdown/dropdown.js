@@ -123,6 +123,13 @@ Dropdown.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not this Dropdown component is a "short" field.
+   */
+  get isShortField() {
+    return this.element.closest('.field-short').length > 0;
+  },
+
+  /**
    * Initialize the dropdown.
    * @private
    * @returns {object} The api for chaining
@@ -847,9 +854,8 @@ Dropdown.prototype = {
       this.listUl.find('[title]').addClass('has-tooltip').tooltip();
     }
 
-    this.position();
-
     if (this.isOpen()) {
+      this.position();
       this.highlightOption(this.listUl.find('li:visible:not(.separator):not(.group-label):not(.is-disabled)').first());
     }
   },
@@ -1685,9 +1691,9 @@ Dropdown.prototype = {
     this.list.show();
 
     // Persist the "short" input field
-    const isShort = (this.element.closest('.field-short').length === 1);
-
-    this.list.addClass(isShort ? 'dropdown-short' : '');
+    if (this.isShortField) {
+      this.list[0].classList.add('dropdown-short');
+    }
 
     this.pseudoElem
       .attr('aria-expanded', 'true')
@@ -1913,6 +1919,9 @@ Dropdown.prototype = {
         self.listUl.prependTo(self.list);
       }
 
+      const listStyle = window.getComputedStyle(self.list[0]);
+      const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
+
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
       const listHeight = parseInt(self.list[0].offsetHeight, 10) + 5;
@@ -1922,17 +1931,24 @@ Dropdown.prototype = {
       const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2))
         && (ulHeight + searchInputHeight >= listHeight);
 
-      if (isSmaller && !isToBottom) {
-        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
-      }
-
-      if (isSmaller && isToBottom) {
-        self.listUl[0].style.height = `${listHeight - (searchInputHeight * 2)}px`;
-        self.list[0].style.height = `${parseInt(self.list[0].style.height, 10) - 10}px`;
+      let adjustedUlHeight;
+      if (isSmaller) {
+        adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
+        if (isToBottom) {
+          self.list[0].style.height = `${parseInt(listHeight, 10) - 10}px`;
+        }
       }
 
       if (placementObj.wasFlipped) {
-        self.listUl[0].style.height = `${parseInt(self.listUl[0].style.height, 10) + (searchInputHeight - 5)}px`;
+        adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
+
+        if (!self.isShortField) {
+          self.list[0].style.top = `${listStyleTop + searchInputHeight}px`;
+        }
+      }
+
+      if (adjustedUlHeight) {
+        self.listUl[0].style.height = adjustedUlHeight;
       }
 
       return placementObj;
