@@ -318,7 +318,7 @@ describe('Calendar only monthview and legend', () => {
   }
 });
 
-fdescribe('Calendar WeekView settings tests', () => {  //eslint-disable-line
+describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
 
@@ -349,7 +349,7 @@ fdescribe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {  //eslint-disable-line
+    it('Should not visual regress', async () => {
       const weekviewEl = await element(by.className('calendar'));
 
       const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
