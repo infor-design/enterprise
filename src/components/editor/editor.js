@@ -7,6 +7,7 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 
@@ -810,17 +811,19 @@ Editor.prototype = {
   bindButtons() {
     const self = this;
 
-    this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
-      const btn = $(this);
-      const action = btn.attr('data-action');
+    function editorButtonActionHandler(e, item) {
+      const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
       if (btn.is('.btn-actions')) {
         return;
       }
 
+      const action = btn.attr('data-action');
+      const currentElem = self.getCurrentElement();
+
       e.preventDefault();
-      self.getCurrentElement().focus();
+      currentElem.focus();
 
       if (self.selection === undefined) {
         self.checkSelection();
@@ -835,17 +838,32 @@ Editor.prototype = {
       }
 
       if (self.isIe || self.isIeEdge) {
-        self.getCurrentElement().trigger('change');
+        currentElem.trigger('change');
       }
 
-      return false;
-    });
+      if (btn[0].classList.contains('longpress-target')) {
+        return false;
+      }
+    }
+
+    // Most components work fine with the `selected` event on the toolbars.
+    // Colorpicker components aren't "triggered" by a selected event, so they work
+    // off of the click event.
+    if (this.settings.useFlexToolbar) {
+      this.toolbar.on('selected.editor', editorButtonActionHandler);
+      this.toolbar.on('click.editor', '.colorpicker-editor-button', editorButtonActionHandler);
+    } else {
+      this.toolbar.on('click.editor', 'button', editorButtonActionHandler);
+    }
 
     return this;
   },
 
   bindModals() {
     const self = this;
+    const modalSettings = {
+      noRefocus: true
+    };
 
     this.modals = {
       url: this.createURLModal(),
@@ -854,7 +872,7 @@ Editor.prototype = {
 
     $(`[name="em-target-${this.id}"]`).dropdown();
 
-    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal()
+    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal(modalSettings)
       .on('beforeopen', function () {
         self.savedSelection = self.saveSelection();
 
@@ -2358,9 +2376,10 @@ Editor.prototype = {
       }
     }
 
-    this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
+    this.toolbar.off('click.editor selected.editor mousedown.editor');
     this.toolbar.remove();
     this.toolbar = undefined;
+
     this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
     this.element.prev('.label').off('click.editor');

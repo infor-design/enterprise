@@ -5,6 +5,7 @@ import { Locale } from '../locale/locale';
 
 // jQuery components
 import '../icons/icons.jquery';
+import '../tooltip/tooltip.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'button';
