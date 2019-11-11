@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.24.0
+
+### v4.24.0 Fixes
+
+- `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
+
 ## v4.23.0
 
 ### v4.23.0 Deprecation
