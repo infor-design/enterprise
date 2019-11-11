@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.24.0
+
+### v4.24.0 Deprecation
+
+### v4.24.0 Features
+
+### v4.24.0 Fixes
+
+- `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
+
+### v4.24.0 Chores & Maintenance
+
 ## v4.23.0
 
 ### v4.23.0 Deprecation
