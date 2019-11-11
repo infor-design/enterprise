@@ -1922,10 +1922,23 @@ Dropdown.prototype = {
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
 
+      // When flipping, account for borders in the adjusted placement
+      let flippedOffset = 0;
+      if (!env.browser.isIE11()) {
+        flippedOffset = parseInt(listStyle.borderBottomWidth, 10) +
+          parseInt(listStyle.borderTopWidth, 10);
+      }
+
+      // Firefox has different alignments without an adjustment:
+      let browserOffset = 0;
+      if (env.browser.name === 'firefox') {
+        browserOffset = 4;
+      }
+
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
       const listHeight = parseInt(self.list[0].offsetHeight, 10) + 5;
-      const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+      const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
       const isToBottom = parseInt(self.list[0].offsetTop, 10) +
         parseInt(self.list[0].offsetHeight, 10) >= window.innerHeight;
       const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2))
@@ -1940,10 +1953,10 @@ Dropdown.prototype = {
       }
 
       if (placementObj.wasFlipped) {
-        adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
+        adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 5}px`;
 
         if (!self.isShortField) {
-          self.list[0].style.top = `${listStyleTop + searchInputHeight}px`;
+          self.list[0].style.top = `${listStyleTop + searchInputHeight + flippedOffset}px`;
         }
       }
 
