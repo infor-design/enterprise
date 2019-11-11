@@ -62,6 +62,15 @@ describe('Datepicker example-index tests', () => {
     expect(await element.all(by.css('.monthview-table .is-selected')).count()).toEqual(1);
   });
 
+  it('Should be able to clear a date', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('4/12/2024');
+    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('button.is-cancel')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
+  });
+
   if (!utils.isBS()) {
     it('Should be able to select with arrows and enter', async () => {
       const datepickerEl = await element(by.id('date-field-normal'));
@@ -1257,7 +1266,7 @@ describe('Datepicker Body Re Initialize Tests', () => {
   });
 });
 
-describe('Datepicker specific locale/langauge tests', () => {
+describe('Datepicker specific locale/language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
   });
@@ -1292,7 +1301,7 @@ describe('Datepicker specific locale/langauge tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getFullYear()}`);
   });
 
-  it('Should be Able to use non current locale and a different langauge', async () => {
+  it('Should be Able to use non current locale and a different language', async () => {
     const datepickerEl = await element(by.id('date-field-sv-de'));
     await element(by.css('#date-field-sv-de + .icon')).click();
 

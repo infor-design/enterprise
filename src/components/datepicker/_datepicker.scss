@@ -94,15 +94,16 @@
 .monthview-popup.popover {
   max-width: inherit;
 
-  .hyperlink.today {
-    position: absolute;
-    right: 85px;
-    text-decoration: none;
-    top: 19px;
+  // Week picker adjustments
+  &.is-range-week {
+    .monthview td .day-text {
+      transition: none;
+    }
 
-    &::after {
-      left: 8px;
-      width: 100%;
+    tr:focus {
+      border-radius: 50px;
+      box-shadow: 0 0 0 1px $input-color-focus-border;
+      outline: none;
     }
   }
 
@@ -138,10 +139,9 @@
 // RTL Styles
 html[dir='rtl'] {
   .datepicker {
-    + .icon,
-    + .tooltip-description + .icon {
-      margin-left: inherit;
-      margin-right: -28px;
+    + .icon {
+      margin-left: -23px;
+      margin-right: -26px;
     }
 
     + .icon + .icon-error {
@@ -168,44 +168,22 @@ html[dir='rtl'] {
     }
   }
 
-  .monthview-popup.popover {
-    .hyperlink.today {
-      left: 85px;
-      right: auto;
+  .monthview-popup .calendar-toolbar {
+    button.prev {
+      margin-left: -6px;
+    }
 
-      &::after {
-        left: auto;
-        right: 8px;
-      }
+    button.next {
+      margin-left: 5px;
+    }
+
+    &.is-alternate .today {
+      left: 0;
     }
   }
 }
 
-// IE Hack
-.ie11 {
-  .datepicker + .icon {
-    background-color: rgba($theme-color-palette-white, 0);
-  }
-
-  .is-monthyear {
-    .month,
-    .year {
-      line-height: normal;
-      position: relative;
-      top: 7px;
-    }
-
-    .monthview-header {
-      margin-bottom: -8px;
-      margin-top: 12px;
-
-      button {
-        top: 4px;
-      }
-    }
-  }
-}
-
+// TODO
 .ie-edge {
   .monthview .btn-monthyear-pane {
     margin-left: 8px;

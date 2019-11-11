@@ -104,6 +104,8 @@
 
 // Complex ====/
 @import '../components/calendar/calendar';
+@import '../components/calendar-toolbar/calendar-toolbar';
+@import '../components/calendar-toolbar/calendar-toolbar-uplift';
 @import '../components/calendar/calendar-uplift';
 @import '../components/compositeform/compositeform';
 @import '../components/contextualactionpanel/contextualactionpanel';
@@ -115,6 +117,8 @@
 @import '../components/form-compact/form-compact-uplift';
 @import '../components/monthview/monthview';
 @import '../components/monthview/monthview-uplift';
+@import '../components/week-view/week-view';
+@import '../components/week-view/week-view-uplift';
 @import '../components/notification/notification';
 
 // Charts ====/

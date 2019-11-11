@@ -8,11 +8,12 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-describe('Monthview API', () => {
+describe('Monthview API', () => { //eslint-disable-line
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;
     monthviewAPI = null;
+
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
     monthviewEl = document.body.querySelector('.monthview');
@@ -114,11 +115,11 @@ describe('Monthview API', () => {
   });
 
   it('Should move to next month and back', () => {
-    document.body.querySelector('button.next').click();
+    $('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
-    document.body.querySelector('button.prev').click();
+    $('button.prev').click();
 
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');

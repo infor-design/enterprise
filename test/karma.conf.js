@@ -12,6 +12,11 @@ const files = [
   'dist/js/d3.v4.js',
   'dist/js/sohoxi.js',
   'dist/js/cultures/en-US.js',
+  'dist/js/cultures/ar-EG.js',
+  'dist/js/cultures/es-ES.js',
+  'dist/js/cultures/fr-FR.js',
+  'dist/js/cultures/no-NO.js',
+  'dist/js/cultures/pt-PT.js',
   'app/www/test/js/sv-SE.f0r73571n6purp0537051mul473h45h.js'
 ].concat(specs);
 

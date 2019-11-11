@@ -129,4 +129,14 @@ stringUtils.escapeRegExp = function escapeRegExp(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& whole matched string
 };
 
+/**
+ * Return the count of a occurences in a string
+ * @param  {string} string The string
+ * @param  {string} subString The substring to count
+ * @returns {number} The frequency
+ */
+stringUtils.count = function count(string, subString) {
+  return string.split(subString).length - 1;
+};
+
 export { stringUtils }; //eslint-disable-line

@@ -20,6 +20,7 @@ Soho.Locale.addCulture('it-IT', {
       month: 'dd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'M/d/yyyy HH:mm',
       timezone: 'M/d/yyyy HH:mm zz',
       timezoneLong: 'M/d/yyyy HH:mm zzzz'

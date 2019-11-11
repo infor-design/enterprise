@@ -17,6 +17,7 @@ import './busyindicator/busyindicator.jquery';
 import './charts/charts.jquery';
 import './calendar/calendar.jquery';
 import './circlepager/circlepager.jquery';
+import './calendar-toolbar/calendar-toolbar.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
 import './contextualactionpanel/contextualactionpanel.jquery';
@@ -66,6 +67,7 @@ import './tree/tree.jquery';
 import './treemap/treemap.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
+import './week-view/week-view.jquery';
 import './wizard/wizard.jquery';
 
 // Complex ====/

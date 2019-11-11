@@ -4,6 +4,7 @@ import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
+import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
 
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
@@ -30,7 +31,7 @@ const COMPONENT_NAME_DEFAULTS = {
     { name: 'Public Holiday', color: '#76B051', dates: [] },
     { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
   ],
-  hideDays: false,
+  hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
   yearsBack: 4,
@@ -47,7 +48,10 @@ const COMPONENT_NAME_DEFAULTS = {
   },
   selectable: true,
   onSelected: null,
-  showToday: true
+  onKeyDown: null,
+  showToday: true,
+  onChangeView: null,
+  isMonthPicker: false
 };
 
 /**
@@ -63,6 +67,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
@@ -99,8 +104,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
  * @param {boolean} [settings.selectable=false] If true the month days can be clicked to select
- * @param {boolean} [settings.onSelected=false] Call back that fires when a month day is clicked.
+ * @param {boolean} [settings.onSelected=false] Callback that fires when a month day is clicked.
+ * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -130,11 +137,15 @@ MonthView.prototype = {
     if (this.settings.language) {
       Locale.getLocale(this.settings.language);
       this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
     }
 
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
+        this.settings.language = this.language;
         this.setCurrentCalendar();
         this.build().handleEvents();
       });
@@ -176,27 +187,7 @@ MonthView.prototype = {
         <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
 
-    let monthYearPaneButton = `<button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
-        <span class="month">november</span>
-        <span class="year">2015</span>
-        <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-        <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-      </button>`;
-
-    if (this.settings.hideDays) {
-      monthYearPaneButton = '';
-    }
-
-    this.header = $('' +
-      `<div class="monthview-header">
-        ${this.settings.showMonthYearPicker ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
-        ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-      </div>`);
-    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name, language: this.language })}" role="application"></table>`);
+    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
         <tr>
@@ -273,18 +264,9 @@ MonthView.prototype = {
     }
 
     // Reconfigure the header
+    this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
     if (this.settings.headerStyle === 'full') {
-      this.header = $('' +
-        `<div class="monthview-header full">
-          ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-          <span class="monthview-datepicker">
-            <span class="hidden month"></span><span class="hidden year"></span>
-            <input aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
-          </span>
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
-        </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
-      this.todayLink = this.header.find('.hyperlink.today');
     } else if (this.settings.showToday) {
       this.header.find('.btn-icon.prev').before(`<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>`);
     }
@@ -299,16 +281,21 @@ MonthView.prototype = {
     // Add Legend
     this.addLegend();
 
-    if (this.settings.headerStyle === 'full') {
-      this.monthPicker.datepicker({
-        autoSize: true,
-        dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
-        locale: this.settings.locale,
-        showMonthYearPicker: true,
-        onOpenCalendar: () => this.currentDate
-      });
-      this.header.find('button, a').hideFocus();
-    }
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+      onOpenCalendar: () => this.currentDate,
+      locale: this.settings.locale,
+      language: this.settings.language,
+      year: this.currentYear,
+      month: this.currentMonth,
+      showToday: this.settings.showToday,
+      isMonthPicker: this.settings.headerStyle === 'full',
+      isAlternate: this.settings.headerStyle !== 'full',
+      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.settings.onChangeView
+    });
 
     this.handleEvents();
     return this;
@@ -322,7 +309,7 @@ MonthView.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
   },
 
@@ -379,6 +366,9 @@ MonthView.prototype = {
     }
 
     this.currentDay = this.currentDay || now.getDate();
+    if (!this.currentCalendar || !this.currentCalendar.days) {
+      this.currentCalendar = Locale.calendar();
+    }
 
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
@@ -416,14 +406,8 @@ MonthView.prototype = {
       this.header.find('.year').insertBefore(this.header.find('.month'));
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year', locale: this.locale.name }));
-      this.monthPicker.prev('.year').text(year);
-      this.monthPicker.prev().prev('.month').text(month);
-
-      if (this.monthPicker.data('datepicker')) {
-        this.monthPicker.data('datepicker').setSize();
-      }
+    if (s.headerStyle === 'full' && this.calendarToolbarAPI) {
+      this.calendarToolbarAPI.setInternalDate(new Date(year, month, 1));
     }
 
     this.appendMonthYearPicker(month, year);
@@ -547,21 +531,13 @@ MonthView.prototype = {
     this.setRangeSelection();
     this.validatePrevNext();
 
-    // Select the same day as last month
+    // Allow focus on the same day as last month
     if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
       this.element.find('td[tabindex]').removeAttr('tabindex');
       this.element
         .find('td:not(.alternate) .day-text')
-        .filter(function () {
-          let currentDay = self.currentDay;
-          if (s.activeDate) {
-            currentDay = s.activeDate.getDate();
-            self.currentDay = currentDay;
-          }
-          return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
-        })
+        .first()
         .closest('td')
-        .addClass('is-selected')
         .attr('tabindex', '0');
     }
 
@@ -729,6 +705,10 @@ MonthView.prototype = {
     const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
       this.conversions.toGregorian(year, month, date) : new Date(year, month, date);
+
+    if (!d2) {
+      return false;
+    }
 
     // dayOfWeek
     if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
@@ -928,14 +908,16 @@ MonthView.prototype = {
         });
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.off('change.monthview').on('change.monthview', function () {
-        const picker = $(this).data('datepicker');
-        self.selectDay(picker.currentDate, false, true);
-      });
-
-      this.todayLink.off('click.monthview').on('click.monthview', () => {
-        this.selectToday();
+    if (this.calendarToolbarEl) {
+      this.calendarToolbarEl.off('change-date.monthview').on('change-date.monthview', (e, args) => {
+        if (args.isToday && this.settings.isPopup) {
+          return;
+        }
+        if (args.isToday) {
+          this.setToday();
+          return;
+        }
+        this.selectDay(args.selectedDate, false, true);
       });
     }
 
@@ -1250,7 +1232,7 @@ MonthView.prototype = {
   /**
    * Select todays date visually.
    */
-  selectToday() {
+  setToday() {
     this.selectDay(new Date(), false, true);
   },
 
@@ -1278,6 +1260,15 @@ MonthView.prototype = {
           this.datepickerApi.resetRange({ isData: true });
         }
       };
+
+      if (this.settings.onKeyDown) {
+        const callbackResult = this.settings.onKeyDown({ e, key, cell, node: this.element });
+        if (callbackResult === false) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
 
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
@@ -1487,7 +1478,7 @@ MonthView.prototype = {
             this.datepickerApi.closeCalendar();
           }
         } else {
-          this.selectToday();
+          this.setToday();
         }
         handled = true;
       }
@@ -1835,7 +1826,7 @@ MonthView.prototype = {
    */
   updated() {
     return this
-      .destroy()
+      .teardown()
       .init();
   },
 

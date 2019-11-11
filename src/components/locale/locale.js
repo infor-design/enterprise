@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
+import { stringUtils } from '../../utils/string';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
@@ -569,7 +570,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('y', year);
 
     // Time
-    const showDayPeriods = ret.indexOf(' a') > -1;
+    const showDayPeriods = ret.indexOf(' a') > -1 || ret.indexOf('a') === 0;
 
     if (showDayPeriods && hours === 0) {
       ret = ret.replace('hh', 12);
@@ -593,14 +594,23 @@ const Locale = {  // eslint-disable-line
     }
 
     // PM
-    if (cal) {
+    if (showDayPeriods && cal) {
       ret = ret.replace(' a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      if (ret.indexOf('a') === 0) {
+        ret = ret.replace('a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      }
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
 
     // Day of Week
     if (cal) {
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
+    }
+    if (cal) {
+      ret = ret.replace('EEE', cal.days.abbreviated[dayOfWeek]); // Day of Week
+    }
+    if (cal) {
+      ret = ret.replace('EE', cal.days.narrow[dayOfWeek]); // Day of Week
     }
     ret = ret.replace('nnnnn', 'de');
     ret = ret.replace('nnnn', 'ngày');
@@ -618,6 +628,72 @@ const Locale = {  // eslint-disable-line
     }
 
     return ret.trim();
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} hour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHour(hour, options) {
+    let timeSeparator = this.calendar().dateFormat.timeSeparator;
+    let locale = this.currentLocale.name;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      timeSeparator = options.timeSeparator || this.calendar(locale).dateFormat.timeSeparator;
+    }
+    if (typeof hour === 'string' && hour.indexOf(timeSeparator) === -1) {
+      timeSeparator = ':';
+    }
+
+    const date = new Date();
+    if (typeof hour === 'number') {
+      const split = hour.toString().split('.');
+      date.setHours(split[0]);
+      date.setMinutes(split[1] ? (parseFloat(`0.${split[1]}`) * 60) : 0);
+    } else {
+      const parts = hour.split(timeSeparator);
+      date.setHours(parts[0]);
+      date.setMinutes(parts[1] || 0);
+    }
+    return this.formatDate(date, { date: 'hour' });
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} startHour The hours to show in the current locale.
+  * @param {number} endHour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHourRange(startHour, endHour, options) {
+    let locale = this.currentLocale.name;
+    let dayPeriods = this.calendar(locale).dayPeriods;
+    let removePeriod = false;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      dayPeriods = this.calendar(locale).dayPeriods;
+    }
+    let range = `${Locale.formatHour(startHour, options)} - ${Locale.formatHour(endHour, options)}`;
+
+    if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
+      removePeriod = true;
+    }
+
+    if (stringUtils.count(range, dayPeriods[0]) > 1) {
+      range = range.replace(dayPeriods[0], '');
+    }
+
+    if (stringUtils.count(range, dayPeriods[1]) > 1) {
+      range = range.replace(` ${dayPeriods[1]}`, '');
+    }
+
+    range = range.replace('  ', ' ');
+    if (removePeriod) {
+      range = range.replace(':00 -', ' -');
+    }
+    return range;
   },
 
   /**

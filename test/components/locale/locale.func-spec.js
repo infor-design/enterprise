@@ -200,6 +200,13 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
   });
 
+  it('Should format year in da-DK', () => {
+    Locale.set('da-DK');
+
+    expect(Locale.formatDate(new Date(2019, 3, 1), { date: 'year' })).toEqual('april 2019');
+    Locale.set('en-US');
+  });
+
   it('Should parse year in different languages', () => {
     Locale.set('es-ES');
 
@@ -251,6 +258,171 @@ describe('Locale API', () => {
 
     expect(Locale.formatDate(dt, { pattern: 'hmmss' })).toEqual(h + m + s);
     expect(Locale.formatDate(dt, { pattern: 'HHmmss' })).toEqual(h24 + m + s);
+  });
+
+  it('Should format hours', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatHour(0)).toEqual('12:00 AM');
+    expect(Locale.formatHour('0:30')).toEqual('12:30 AM');
+    expect(Locale.formatHour(0.5)).toEqual('12:30 AM');
+    expect(Locale.formatHour(5)).toEqual('5:00 AM');
+    expect(Locale.formatHour('5:30')).toEqual('5:30 AM');
+    expect(Locale.formatHour(5.5)).toEqual('5:30 AM');
+    expect(Locale.formatHour(10)).toEqual('10:00 AM');
+    expect(Locale.formatHour('10:30')).toEqual('10:30 AM');
+    expect(Locale.formatHour(10.5)).toEqual('10:30 AM');
+    expect(Locale.formatHour(12)).toEqual('12:00 PM');
+    expect(Locale.formatHour('12:30')).toEqual('12:30 PM');
+    expect(Locale.formatHour(12.5)).toEqual('12:30 PM');
+    expect(Locale.formatHour(15)).toEqual('3:00 PM');
+    expect(Locale.formatHour('15:30')).toEqual('3:30 PM');
+    expect(Locale.formatHour(15.5)).toEqual('3:30 PM');
+    expect(Locale.formatHour(20)).toEqual('8:00 PM');
+    expect(Locale.formatHour('20:30')).toEqual('8:30 PM');
+    expect(Locale.formatHour(20.5)).toEqual('8:30 PM');
+    expect(Locale.formatHour(24)).toEqual('12:00 AM');
+    expect(Locale.formatHour('24:30')).toEqual('12:30 AM');
+    expect(Locale.formatHour(24.5)).toEqual('12:30 AM');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hours in de-DE', () => {
+    Locale.set('de-DE');
+
+    expect(Locale.formatHour(0)).toEqual('00:00');
+    expect(Locale.formatHour('0:30')).toEqual('00:30');
+    expect(Locale.formatHour(5)).toEqual('05:00');
+    expect(Locale.formatHour('5:30')).toEqual('05:30');
+    expect(Locale.formatHour(10)).toEqual('10:00');
+    expect(Locale.formatHour('10:30')).toEqual('10:30');
+    expect(Locale.formatHour(12)).toEqual('12:00');
+    expect(Locale.formatHour('12:30')).toEqual('12:30');
+    expect(Locale.formatHour(15)).toEqual('15:00');
+    expect(Locale.formatHour('15:30')).toEqual('15:30');
+    expect(Locale.formatHour(20)).toEqual('20:00');
+    expect(Locale.formatHour('20:30')).toEqual('20:30');
+    expect(Locale.formatHour(24)).toEqual('00:00');
+    expect(Locale.formatHour('24:30')).toEqual('00:30');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hours in da-DK', () => {
+    Locale.set('da-DK');
+
+    expect(Locale.formatHour(0)).toEqual('00.00');
+    expect(Locale.formatHour('0:30')).toEqual('00.30');
+    expect(Locale.formatHour('0.30')).toEqual('00.30');
+    expect(Locale.formatHour(5)).toEqual('05.00');
+    expect(Locale.formatHour('5:30')).toEqual('05.30');
+    expect(Locale.formatHour('5.30')).toEqual('05.30');
+    expect(Locale.formatHour(10)).toEqual('10.00');
+    expect(Locale.formatHour('10:30')).toEqual('10.30');
+    expect(Locale.formatHour(12)).toEqual('12.00');
+    expect(Locale.formatHour('12:30')).toEqual('12.30');
+    expect(Locale.formatHour(15)).toEqual('15.00');
+    expect(Locale.formatHour('15:30')).toEqual('15.30');
+    expect(Locale.formatHour(20)).toEqual('20.00');
+    expect(Locale.formatHour('20:30')).toEqual('20.30');
+    expect(Locale.formatHour(24)).toEqual('00.00');
+    expect(Locale.formatHour('24:30')).toEqual('00.30');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hours in fi-FI', () => {
+    Locale.set('fi-FI');
+
+    expect(Locale.formatHour(0)).toEqual('0.00');
+    expect(Locale.formatHour('0:30')).toEqual('0.30');
+    expect(Locale.formatHour('0.30')).toEqual('0.30');
+    expect(Locale.formatHour(5)).toEqual('5.00');
+    expect(Locale.formatHour('5:30')).toEqual('5.30');
+    expect(Locale.formatHour('5.30')).toEqual('5.30');
+    expect(Locale.formatHour(10)).toEqual('10.00');
+    expect(Locale.formatHour('10:30')).toEqual('10.30');
+    expect(Locale.formatHour(12)).toEqual('12.00');
+    expect(Locale.formatHour('12:30')).toEqual('12.30');
+    expect(Locale.formatHour(15)).toEqual('15.00');
+    expect(Locale.formatHour('15:30')).toEqual('15.30');
+    expect(Locale.formatHour(20)).toEqual('20.00');
+    expect(Locale.formatHour('20:30')).toEqual('20.30');
+    expect(Locale.formatHour(24)).toEqual('0.00');
+    expect(Locale.formatHour('24:30')).toEqual('0.30');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hours in ko-KR', () => {
+    Locale.set('ko-KR');
+
+    expect(Locale.formatHour(0)).toEqual('오전 12:00');
+    expect(Locale.formatHour('0:30')).toEqual('오전 12:30');
+    expect(Locale.formatHour(5)).toEqual('오전 5:00');
+    expect(Locale.formatHour('5:30')).toEqual('오전 5:30');
+    expect(Locale.formatHour(10)).toEqual('오전 10:00');
+    expect(Locale.formatHour('10:30')).toEqual('오전 10:30');
+    expect(Locale.formatHour(12)).toEqual('오후 12:00');
+    expect(Locale.formatHour('12:30')).toEqual('오후 12:30');
+    expect(Locale.formatHour(15)).toEqual('오후 3:00');
+    expect(Locale.formatHour('15:30')).toEqual('오후 3:30');
+    expect(Locale.formatHour(20)).toEqual('오후 8:00');
+    expect(Locale.formatHour('20:30')).toEqual('오후 8:30');
+    expect(Locale.formatHour(24)).toEqual('오전 12:00');
+    expect(Locale.formatHour('24:30')).toEqual('오전 12:30');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hours in zh-Hant', () => {
+    Locale.set('zh-Hant');
+
+    expect(Locale.formatHour(0)).toEqual('上午12:00');
+    expect(Locale.formatHour('0:30')).toEqual('上午12:30');
+    expect(Locale.formatHour(5)).toEqual('上午5:00');
+    expect(Locale.formatHour('5:30')).toEqual('上午5:30');
+    expect(Locale.formatHour(10)).toEqual('上午10:00');
+    expect(Locale.formatHour('10:30')).toEqual('上午10:30');
+    expect(Locale.formatHour(12)).toEqual('下午12:00');
+    expect(Locale.formatHour('12:30')).toEqual('下午12:30');
+    expect(Locale.formatHour(15)).toEqual('下午3:00');
+    expect(Locale.formatHour('15:30')).toEqual('下午3:30');
+    expect(Locale.formatHour(20)).toEqual('下午8:00');
+    expect(Locale.formatHour('20:30')).toEqual('下午8:30');
+    expect(Locale.formatHour(24)).toEqual('上午12:00');
+    expect(Locale.formatHour('24:30')).toEqual('上午12:30');
+
+    Locale.set('en-US');
+  });
+
+  it('Should format hour range', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatHourRange(0, 5)).toEqual('12 - 5:00 AM');
+    expect(Locale.formatHourRange(0.5, 5)).toEqual('12:30 - 5:00 AM');
+    expect(Locale.formatHourRange(5, 10)).toEqual('5 - 10:00 AM');
+    expect(Locale.formatHourRange(10, 12)).toEqual('10:00 AM - 12:00 PM');
+    expect(Locale.formatHourRange(10, 20)).toEqual('10:00 AM - 8:00 PM');
+    expect(Locale.formatHourRange(19, 20)).toEqual('7 - 8:00 PM');
+    expect(Locale.formatHourRange(12.5, 13)).toEqual('12:30 - 1:00 PM');
+    expect(Locale.formatHourRange(15.5, 17)).toEqual('3:30 - 5:00 PM');
+    expect(Locale.formatHourRange(20, 24)).toEqual('8:00 PM - 12:00 AM');
+
+    Locale.set('nl-NL');
+
+    expect(Locale.formatHourRange(0, 5)).toEqual('00:00 - 05:00');
+    expect(Locale.formatHourRange(0.5, 5)).toEqual('00:30 - 05:00');
+    expect(Locale.formatHourRange(0.25, 5)).toEqual('00:15 - 05:00');
+    expect(Locale.formatHourRange(5, 10)).toEqual('05:00 - 10:00');
+    expect(Locale.formatHourRange(10, 12)).toEqual('10:00 - 12:00');
+    expect(Locale.formatHourRange(10, 20)).toEqual('10:00 - 20:00');
+    expect(Locale.formatHourRange(19, 20)).toEqual('19:00 - 20:00');
+    expect(Locale.formatHourRange(12.5, 13)).toEqual('12:30 - 13:00');
+    expect(Locale.formatHourRange(15.5, 17)).toEqual('15:30 - 17:00');
+    expect(Locale.formatHourRange(15.25, 17)).toEqual('15:15 - 17:00');
+    expect(Locale.formatHourRange(20, 24)).toEqual('20:00 - 00:00');
   });
 
   it('Should format millis', () => {

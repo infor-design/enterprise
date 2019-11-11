@@ -1,0 +1,59 @@
+<div class="full-height full-width">
+  <div class="flex-toolbar">
+    <div class="toolbar-section title">
+      <h2>Week View Updated Tests</h2>
+    </div>
+
+    <div class="toolbar-section buttonset">
+      <button class="btn-icon" id="actions">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-refresh"></use>
+        </svg>
+        <span class="audible">Refresh</span>
+      </button>
+    </div>
+  </div>
+  <div class="week-view" data-init="false">
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
+  var events = [];
+  var weekview = null
+
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+      weekview = $('.week-view').weekview({
+        startDate: new Date(2019, 08, 16),
+        endDate: new Date(2019, 08, 29),
+        showViewChanger: false,
+        showAllDay: true,
+        startHour: 8,
+        endHour: 17,
+      }).data('weekview');
+    });
+  });
+
+  // Set up a test update button
+  $('#actions').on('click', function () {
+    console.log('Calling updated to refresh');
+    var settings = {
+      startDate: new Date(2019, 08, 16),
+      endDate: new Date(2019, 08, 29),
+      showAllDay: true,
+      showViewChanger: false,
+      startHour: 8,
+      endHour: 17,
+      events: events,
+      eventTypes: eventTypes
+    };
+    weekview.updated(settings);
+  });
+});
+</script>

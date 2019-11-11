@@ -19,7 +19,8 @@ Soho.Locale.addCulture('zh-Hant', {
       full: 'yyyy年M月d日 EEEE',
       month: 'M月d日',
       year: 'yyyy年M',
-      timestamp: 'ah:mm:ss a',
+      timestamp: 'ah:mm:ss',
+      hour: 'ah:mm',
       datetime: 'M/d/yyyy ah:mm',
       timezone: 'M/d/yyyy ah:mm zz',
       timezoneLong: 'M/d/yyyy ah:mm zzzz'
