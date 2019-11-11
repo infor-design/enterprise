@@ -6,6 +6,7 @@ import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
 import { xssUtils } from '../../utils/xss';
+import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -1079,10 +1080,14 @@ Dropdown.prototype = {
       text = xssUtils.escapeHTML(text);
       text = text.replace(/&lt;/g, '&#16;');
       text = text.replace(/&gt;/g, '&#17;');
+      text = text.replace(/&apos;/g, '&#18;');
+      text = text.replace(/&quot;/g, '&#19;');
       text = text.replace(/&amp;/g, '&');
       text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       text = text.replace(/&#16;/g, '&lt;');
       text = text.replace(/&#17;/g, '&gt;');
+      text = text.replace(/&#18;/g, '&apos;');
+      text = text.replace(/&#19;/g, '&quot;');
 
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
       const swatch = li.children('a').find('.swatch');
@@ -1575,7 +1580,7 @@ Dropdown.prototype = {
     let regex;
 
     try {
-      regex = new RegExp(`(${term})`, 'i');
+      regex = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'i');
     } catch (e) {
       // create a "matches all" regex if we can't create a regex from the search term
       regex = /[\s\S]*/i;
