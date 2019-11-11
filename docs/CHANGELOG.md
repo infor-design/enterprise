@@ -58,6 +58,8 @@
 
 - `[Build System]` Created separate sets linting rules for demoapp, source code, and tests, as well as a base set of rules for all environments. ([#2662](https://github.com/infor-design/enterprise/issues/2662))
 
+(58 Issues Solved this release, Backlog Enterprise 378, Backlog Ng 82, 937 Functional Tests, 1136 e2e Test)
+
 ## v4.22.0
 
 ### v4.22.0 Deprecation
