@@ -14,6 +14,10 @@
   &.is-monthyear {
     height: 370px;
 
+    .calendar-toolbar {
+      display: none;
+    }
+
     &.is-monthonly {
       min-width: 225px;
 
@@ -33,10 +37,6 @@
       }
     }
 
-    .monthview-header {
-      display: none;
-    }
-
     .monthview-monthyear-pane {
       padding: 10px 0;
       position: static;
@@ -52,7 +52,7 @@
     }
 
     .popup-footer {
-      margin-top: 0;
+      margin-top: 5px;
 
       button {
         margin-right: 0;
@@ -98,7 +98,7 @@
 
     .icon-opened,
     .icon-closed {
-      margin-left: 6px !important;
+      margin-left: 0 !important;
     }
   }
 
@@ -109,7 +109,7 @@
     max-height: calc(100% - 50px);
     overflow: hidden;
     position: absolute;
-    top: 50px;
+    top: 47px;
     width: 100%;
     z-index: 3011;
 
@@ -523,62 +523,6 @@
 
   // Full size calendar
   &.is-fullsize {
-    .monthview-header {
-      border-bottom: 1px solid $calendar-line-color;
-
-      &.full {
-        .prev {
-          left: 5px;
-          right: 0;
-          top: 5px;
-        }
-
-        .next {
-          left: 36px;
-          right: 0;
-          top: 5px;
-        }
-
-        .datepicker {
-          @include font-size(16);
-
-          border-color: transparent;
-          box-shadow: none;
-
-          + .icon {
-            height: 14px;
-            margin-left: -22px;
-            top: 8px;
-          }
-
-          &:focus {
-            @include focus-state();
-          }
-
-          &[readonly] {
-            background-color: transparent;
-            color: $input-color;
-            -webkit-text-fill-color: $input-color;
-
-            + .icon {
-              cursor: pointer;
-            }
-          }
-        }
-
-        .monthview-datepicker {
-          margin-left: 55px;
-        }
-
-        .today {
-          font-size: $theme-size-font-sm;
-          font-weight: $theme-number-font-weight-bold;
-          margin-left: 10px;
-          text-decoration: none;
-        }
-      }
-    }
-
     &.monthview {
       border: 1px solid  $calendar-line-color;
       margin-right: -1px;
@@ -679,47 +623,6 @@
   }
 }
 
-// Header Area of monthview
-.monthview-header {
-  border-bottom: 1px solid $popover-separator-color;
-  height: 49px;
-  line-height: 50px;
-  position: relative;
-  text-align: left;
-  text-indent: 18px;
-
-  button {
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    color: transparent;
-    cursor: pointer;
-    display: inline-block;
-    margin: 0;
-    position: absolute;
-    top: 8px;
-    transition: border-color 0.3s ease;
-
-    &.prev {
-      right: 44px;
-    }
-
-    &.next {
-      right: 8px;
-    }
-
-  }
-
-  .month,
-  .year {
-    color: $datepicker-month-year-color;
-    font-size: $theme-size-font-lg;
-    left: 8px;
-    position: relative;
-    top: 2px;
-  }
-}
-
 //monthview legend
 .monthview-legend {
   margin: 0 auto;
@@ -748,46 +651,6 @@
 
 // RTL Styles
 html[dir='rtl'] {
-
-  // Header Area of monthview
-  .monthview-header {
-    padding-right: 0;
-    text-align: right;
-    text-indent: 22px;
-
-    .month {
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-
-    button.prev,
-    button.next {
-      left: 0;
-      right: auto;
-      transform: rotate(180deg);
-
-      &.prev {
-        left: 40px;
-        right: auto;
-
-        svg {
-          left: auto;
-          right: 0;
-        }
-      }
-
-      &.next {
-        margin: 0 5px 0 10px;
-
-        svg {
-          left: auto;
-          right: 0;
-        }
-      }
-
-    }
-  }
-
   .monthview {
     td {
       &.range-prev.include-disabled,
@@ -909,62 +772,6 @@ html[dir='rtl'] {
         border-left: 1px solid $popover-separator-color;
         border-right: 1px solid transparent;
       }
-    }
-  }
-
-  // Adjust the full header
-  .is-fullsize {
-    .monthview-header.full {
-      .prev {
-        left: 0;
-        right: 5px;
-      }
-
-      .next {
-        left: 0;
-        right: 35px;
-      }
-
-      .monthview-datepicker {
-        margin-left: 0;
-        margin-right: 55px;
-      }
-
-      .today {
-        margin-left: 0;
-        margin-right: 5px;
-      }
-
-      .td:first-child {
-        border: 1px solid  $calendar-line-color;
-        border-left: 0;
-      }
-    }
-  }
-}
-
-// IE Hack
-.ie11 {
-  .monthview-header {
-    line-height: normal;
-    padding-left: 18px;
-    text-indent: inherit;
-
-    .month,
-    .year {
-      position: relative;
-      top: 15px;
-    }
-
-    .btn-monthyear-pane {
-      .month,
-      .year {
-        top: 0;
-      }
-    }
-
-    .btn-icon {
-      top: 7px;
     }
   }
 }

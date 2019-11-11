@@ -1,0 +1,33 @@
+<div class="full-height full-width">
+  <div class="week-view" data-init="false">
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+  $('.week-view').weekview({
+    locale: null,
+    startDate: new Date(2019, 08, 16),
+    endDate: new Date(2019, 08, 29),
+    showViewChanger: false,
+    showAllDay: true,
+    startHour: 8,
+    endHour: 17,
+    iconTooltip: 'status',
+    eventTooltip: 'comments',
+    onRenderWeek: function (ui, response, args) {
+      // Get both event types and events for the month (eventTypes can be passed initially)
+      const events = $.get('{{basepath}}api/events');
+      const eventTypes = $.get('{{basepath}}api/event-types');
+      console.log('Render for Year: ' + args.year + ' Month: ' + args.month )
+      $.when(events, eventTypes).done(function completed(events, eventTypes) {
+        setTimeout(function () {
+          response(events[0], eventTypes[0]);
+        }, 500); //slow it down a bit more
+      });
+    }
+  }).on('contextmenu', function (e, args) {
+    console.log('contextmenu fired', args);
+  });
+});
+</script>

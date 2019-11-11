@@ -17,7 +17,7 @@ describe('Contextmenu index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should open on click and close on click out', async () => {
+  it('Should open on click and close on click out', async () => { //eslint-disable-line
     let input = await element(by.id('input-menu2'));
     await browser.actions().mouseMove(input).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
@@ -28,7 +28,7 @@ describe('Contextmenu index tests', () => {
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
 
     input = await element(by.id('input-menu'));
-    await input.click();
+    await element.all(by.css('label[for="input-menu"]')).click();
     await input.sendKeys(protractor.Key.TAB);
 
     await browser.driver
@@ -299,28 +299,30 @@ describe('Contextmenu Placement Tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should correctly resize to fit within the viewport boundaries', async () => {
-    const windowSize = await browser.driver.manage().window().getSize();
-    await browser.driver.manage().window().setSize(640, 296);
+  if (!utils.isBS()) {
+    it('Should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(640, 296);
 
-    // Popupmenu width is about 230px, so provide coords that would
-    // otherwise push it offscreen
-    const targetMouseCoords = {
-      x: 500,
-      y: 100
-    };
+      // Popupmenu width is about 230px, so provide coords that would
+      // otherwise push it offscreen
+      const targetMouseCoords = {
+        x: 500,
+        y: 100
+      };
 
-    // Move the mouse to an area near the right edge of the page and click
-    await browser.actions().mouseMove(targetMouseCoords).perform();
-    await browser.actions().click(protractor.Button.RIGHT).perform();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+      // Move the mouse to an area near the right edge of the page and click
+      await browser.actions().mouseMove(targetMouseCoords).perform();
+      await browser.actions().click(protractor.Button.RIGHT).perform();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
 
-    expect(await element(by.id('action-popupmenu')).getSize()).toEqual(jasmine.objectContaining({
-      height: 266
-    }));
+      expect(await element(by.id('action-popupmenu')).getSize()).toEqual(jasmine.objectContaining({
+        height: 266
+      }));
 
-    // Reset to the original viewport size
-    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
-  });
+      // Reset to the original viewport size
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
 });

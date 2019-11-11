@@ -130,10 +130,9 @@ PopupMenu.prototype = {
       this.settings.menuId = undefined;
     }
 
-    // Automatically set iOS environments to be `attachToBody: true`
-    const isMobile = env.os.name === 'ios';
+    // Automatically set safari environments to be `attachToBody: true`
     const isSafari = env.browser.name === 'safari';
-    if (isMobile && isSafari) {
+    if (isSafari) {
       this.settings.attachToBody = true;
     }
 

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -18,28 +18,37 @@ describe('Calendar index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should be able to cancel month selector', async () => {
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual('November 2019');
+
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('button.is-cancel'));
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual('November 2019');
+  });
+
   it('Should be able to change month to next', async () => {
-    const nextButton = await element(by.css('button.next'));
+    const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await utils.checkForErrors();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await nextButton.getText()).toEqual('Next Month');
   });
 
   it('Should be able to change month to prev', async () => {
-    const prevButton = await element(by.css('.btn-icon.prev'));
+    const prevButton = await element(by.css('.calendar-monthview .btn-icon.prev'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     await prevButton.click();
     await utils.checkForErrors();
 
@@ -49,7 +58,7 @@ describe('Calendar index tests', () => {
     await testDate.setMinutes(0);
     await testDate.setSeconds(0);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
@@ -58,7 +67,7 @@ describe('Calendar index tests', () => {
 describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -72,7 +81,7 @@ describe('Calendar ajax loading tests', () => {
     await testDate.setMonth(7);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should render ajax loaded dates for august 2018', async () => {
@@ -93,7 +102,7 @@ describe('Calendar ajax loading tests', () => {
     await testDate.setMonth(8);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(2);
   });
@@ -102,7 +111,7 @@ describe('Calendar ajax loading tests', () => {
 describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -116,7 +125,7 @@ describe('Calendar specific month tests', () => {
     await testDate.setMonth(9);
     await testDate.setFullYear(2018);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should be able to click on events', async () => {
@@ -208,7 +217,7 @@ describe('Calendar specific month tests', () => {
 describe('Calendar only calendar', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -240,7 +249,7 @@ describe('Calendar only calendar', () => {  //eslint-disable-line
 describe('Calendar specific locale', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -264,7 +273,7 @@ describe('Calendar specific locale', () => {
 describe('Calendar specific locale and language', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale-lang');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -288,7 +297,7 @@ describe('Calendar specific locale and language', () => {
 describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
-    const dateField = await element(by.id('monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
   });
@@ -305,6 +314,99 @@ describe('Calendar only monthview and legend', () => {
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toBeLessThan(1);
+    });
+  }
+});
+
+describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
+
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {  //eslint-disable-line
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(14);
+    await utils.checkForErrors();
+  });
+
+  it('Should switch to week', async () => {  //eslint-disable-line
+    expect(await element(by.css('.week-view ')).isDisplayed()).toBe(false);
+    const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+
+    expect(await element(by.css('.week-view ')).isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const weekviewEl = await element(by.className('calendar'));
+
+      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+      const searchEl = await element(by.css('.dropdown-search'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'calendar-week-view-settings')).toEqual(0);
+    });
+  }
+});
+
+describe('Calendar Switch to Day view', () => {  //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-specific-month?layout=nofrills');
+    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    await utils.checkForErrors();
+  });
+
+  if (!utils.isCI()) {
+    it('Should switch to day', async () => {
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
+      await element.all(by.cssContainingText('.monthview-table td', '12')).first().click();
+
+      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+      const searchEl = await element(by.css('.dropdown-search'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
+      expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);
+      expect(await element(by.css('.week-view-table .calendar-event')).getText()).toEqual('Birthday Off');
     });
   }
 });

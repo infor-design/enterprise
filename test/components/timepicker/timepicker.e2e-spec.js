@@ -328,7 +328,7 @@ describe('Timepicker Custom Validation Tests', () => {
   });
 });
 
-describe('Timepicker specific locale/langauge tests', () => {
+describe('Timepicker specific locale/language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-specific-locale');
   });

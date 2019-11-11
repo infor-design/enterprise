@@ -18,7 +18,7 @@ describe('Popdown Index Tests', () => {
   it('Should display on click', async () => {
     await element(by.id('popdown-example-trigger')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popdown'))), config.waitsFor);
     await utils.checkForErrors();
 
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();

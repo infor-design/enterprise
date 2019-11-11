@@ -20,6 +20,7 @@ Soho.Locale.addCulture('en-NZ', {
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',
+      hour: 'h:mm a',
       datetime: 'd/MM/yyyy h:mm a',
       timezone: 'd/MM/yyyy h:mm a zz',
       timezoneLong: 'd/MM/yyyy h:mm a zzzz'

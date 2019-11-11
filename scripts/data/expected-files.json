@@ -291,6 +291,7 @@
 	"/dist/sass/src/components/typography/_typography-uplift.scss",
 	"/dist/sass/src/components/typography/_typography.scss",
 	"/dist/sass/src/components/visibility/_visibility.scss",
+	"/dist/sass/src/components/week-view/_week-view.scss",
 	"/dist/sass/src/components/wizard/_wizard.scss",
 	"/dist/sass/src/core/_config.scss",
 	"/dist/sass/src/core/_controls-uplift.scss",

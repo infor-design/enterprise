@@ -1,0 +1,63 @@
+<div class="calendar" data-init="false">
+  <div class="calendar-events">
+    <div class="accordion" data-options="{'allowOnePane': false}">
+      <div class="accordion-header is-expanded">
+        <a href="#"><span data-translate="text">Legend</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-types accordion-content">
+        </div>
+      </div>
+      <div class="accordion-header is-expanded">
+        <a href="#"><span data-translate="text">UpComing</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-upcoming-events accordion-content">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="calendar-monthview">
+  </div>
+  <div class="calendar-weekview">
+  </div>
+  <div class="calendar-dayview">
+  </div>
+  <div class="calendar-event-details accordion" data-init="false" data-options="{'allowOnePane': false}">
+  </div>
+</div>
+
+<ul id="calendar-actions-menu" class="popupmenu">
+  <li><a href="#" data-action="delete-event"><span data-translate="text">DeleteEvent</span></a></li>
+  <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
+</ul>
+
+<script id="test-script">
+  var events = [];
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
+
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+      eventTypes = res;
+
+      $.getJSON('{{basepath}}api/events', function(res) {
+        events = res;
+
+        $('.calendar').calendar({
+          eventTypes: eventTypes,
+          events: events,
+          showToday: false,
+          showViewChanger: true,
+          weekViewSettings: {
+            firstDayOfWeek: 1,
+            startHour: 6,
+            endHour: 20,
+            showAllDay: false,
+            showTimeLine: false
+          }
+        });
+      });
+    });
+  });
+</script>

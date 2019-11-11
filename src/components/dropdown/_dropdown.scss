@@ -396,6 +396,14 @@ div.multiselect {
     + span {
       padding-left: 39px;
     }
+
+  }
+
+  &.is-ontop {
+    > .listoption-icon {
+      bottom: 8px;
+      top: auto;
+    }
   }
 
   &.has-icons {
@@ -755,10 +763,6 @@ div.dropdown-xs,
     }
   }
 
-  &.is-ontop {
-    margin-top: 8px;
-  }
-
   > .icon {
     height: 24px;
     margin-left: -21px;
@@ -790,10 +794,6 @@ div.dropdown-xs,
   // Multiple
   &.multiple {
     li {
-      &::before {
-        margin-left: 5px;
-      }
-
       &::after {
         margin-top: 0;
       }
@@ -1003,8 +1003,10 @@ html[dir='rtl'] {
   .dropdown-list {
     &.multiple {
       li::before {
+        left: auto;
         margin-left: inherit;
-        margin-right: -23px;
+        margin-right: 0;
+        right: 10px;
       }
 
       li.is-selected::after {
@@ -1200,39 +1202,6 @@ html[dir='rtl'] {
         .dropdown-search {
           padding: 6px 25px 5px 21px;
         }
-      }
-    }
-  }
-
-  // TODO: Figure out why our rules for multiselect checkboxes no longer
-  // work correctly across all browsers.
-  &:not(.is-firefox):not(.ie11) {
-    .dropdown-list.multiple {
-      li::before {
-        margin-right: 10px;
-      }
-
-      &.dropdown-short {
-        li::before {
-          margin-right: 5px;
-        }
-      }
-    }
-  }
-
-  &.is-firefox,
-  &.ie11 {
-    .dropdown-list.dropdown-short.multiple {
-      li::before {
-        margin-right: 5px;
-      }
-    }
-  }
-
-  &.is-safari {
-    .dropdown-list.dropdown-short.multiple {
-      li::after {
-        right: 10px;
       }
     }
   }

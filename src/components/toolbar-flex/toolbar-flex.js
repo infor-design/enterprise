@@ -14,14 +14,16 @@ const COMPONENT_NAME = 'toolbar-flex';
  * @namespace
  */
 const TOOLBAR_FLEX_DEFAULTS = {
-  // ajax function to be called before the more menu is opened
-  beforeMoreMenuOpen: null
+  beforeMoreMenuOpen: null,
+  allowTabs: false
 };
 
 /**
  * @constructor
  * @param {HTMLElement} element the base element
  * @param {object} [settings] incoming settings
+ * @param {function} [settings.beforeMoreMenuOpen=null] Ajax function to be called before the more menu is opened
+ * @param {boolean} [settings.allowTabs] Allows tab to navigate the toolbar
  */
 function ToolbarFlex(element, settings) {
   this.element = element;
@@ -55,7 +57,8 @@ ToolbarFlex.prototype = {
       }
       $(item).toolbarflexitem({
         toolbarAPI: this,
-        componentSettings: itemComponentSettings
+        componentSettings: itemComponentSettings,
+        allowTabs: this.settings.allowTabs
       });
       return $(item).data('toolbarflexitem');
     });
@@ -65,17 +68,20 @@ ToolbarFlex.prototype = {
     }
 
     // Check for a focused item
-    this.items.forEach((item) => {
-      if (item.focused) {
-        if (this.focusedItem === undefined) {
-          this.focusedItem = item;
-        } else {
-          item.focused = false;
+    if (!this.settings.allowTabs) {
+      this.items.forEach((item) => {
+        if (item.focused) {
+          if (this.focusedItem === undefined) {
+            this.focusedItem = item;
+          } else {
+            item.focused = false;
+          }
         }
+      });
+
+      if (!this.focusedItem) {
+        this.focusedItem = this.items[0];
       }
-    });
-    if (!this.focusedItem) {
-      this.focusedItem = this.items[0];
     }
 
     this.render();
@@ -97,14 +103,16 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    this.keydownListener = this.handleKeydown.bind(this);
-    this.element.addEventListener('keydown', this.keydownListener);
+    if (!this.settings.allowTabs) {
+      this.keydownListener = this.handleKeydown.bind(this);
+      this.element.addEventListener('keydown', this.keydownListener);
 
-    this.keyupListener = this.handleKeyup.bind(this);
-    this.element.addEventListener('keyup', this.keyupListener);
+      this.keyupListener = this.handleKeyup.bind(this);
+      this.element.addEventListener('keyup', this.keyupListener);
 
-    this.clickListener = this.handleClick.bind(this);
-    this.element.addEventListener('click', this.clickListener);
+      this.clickListener = this.handleClick.bind(this);
+      this.element.addEventListener('click', this.clickListener);
+    }
 
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
       log('dir', args);
@@ -284,7 +292,7 @@ ToolbarFlex.prototype = {
    * @returns {ToolbarFlexItem} an instance of a Toolbar item
    */
   getItemFromElement(element) {
-    if (element instanceof ToolbarFlexItem) {
+    if (element instanceof ToolbarFlexItem || element.isToolbarFlexItem) {
       return element;
     }
 
@@ -550,9 +558,11 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   teardown() {
-    this.element.removeEventListener('keydown', this.keydownListener);
-    this.element.removeEventListener('keyup', this.keyupListener);
-    this.element.removeEventListener('click', this.clickListener);
+    if (!this.settings.allowTabs) {
+      this.element.removeEventListener('keydown', this.keydownListener);
+      this.element.removeEventListener('keyup', this.keyupListener);
+      this.element.removeEventListener('click', this.clickListener);
+    }
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
     $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);

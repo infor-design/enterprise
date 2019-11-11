@@ -23,6 +23,7 @@ Soho.Locale.addCulture('ar-EG', {
         month: 'MMMM dd',
         year: 'yyyy MMMM',
         timestamp: 'h:mm:ss a',
+        hour: 'h:mm a',
         datetime: 'yyyy/MM/dd h:mm a',
         timezone: 'yyyy/MM/dd h:mm a zz',
         timezoneLong: 'yyyy-MM-dd h:mm a zzzz'

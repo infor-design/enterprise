@@ -20,6 +20,7 @@ Soho.Locale.addCulture('el-GR', {
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',
+      hour: 'h:mm a',
       datetime: 'd/M/yyyy h:mm a',
       timezone: 'd/M/yyyy h:mm a zz',
       timezoneLong: 'd/M/yyyy h:mm a zzzz'

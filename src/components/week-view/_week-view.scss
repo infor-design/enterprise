@@ -1,0 +1,219 @@
+//* WeekView
+//================================================== *
+
+$week-view-cell-height: 25px;
+
+.week-view {
+  background-color: $calendar-bg-color;
+  border: 1px solid $calendar-line-color;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+
+  .week-view-header {
+    background-color: $calendar-bg-color;
+    left: 0;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+
+    .calendar-toolbar {
+      background-color: $calendar-bg-color;
+    }
+  }
+
+  .week-view-table-header {
+    th {
+      background-clip: padding-box;
+      border-top: 0;
+      font-size: $theme-size-font-md;
+      height: 2.4rem;
+      line-height: 2.4rem;
+      text-align: left;
+      z-index: 3;
+
+      // Style todays date
+      .week-view-header-wrapper.is-today {
+        box-shadow: 0 4px 0 0 $theme-color-brand-primary-base;
+        color: $theme-color-brand-primary-base;
+        font-weight: $theme-number-font-weight-bold;
+      }
+    }
+
+    // Times on the right
+    .week-view-header-wrapper {
+      padding: 0 5px;
+    }
+
+    // All day section
+    .week-view-all-day-wrapper {
+      border-top: 1px solid $calendar-line-color;
+      height: 44px;
+      position: relative;
+
+      .calendar-event {
+        height: 20px;
+        top: 1px;
+
+        .calendar-event-content {
+          line-height: normal;
+          white-space: nowrap;
+        }
+
+        &.calendar-event-start {
+          border-radius: 3px 0 0 3px;
+        }
+
+        &.calendar-event-continue {
+          border-left: 0;
+          border-radius: 0;
+          left: -1px;
+          width: calc(100% + 1px);
+
+          .calendar-event-title {
+            color: transparent;
+          }
+        }
+
+        &.calendar-event-ends {
+          border-left: 0;
+          border-radius: 0 3px 3px 0;
+          color: transparent;
+          left: -1px;
+          width: calc(100% + 1px);
+
+          .calendar-event-title {
+            color: transparent;
+          }
+        }
+      }
+    }
+
+    th:nth-child(1) .week-view-all-day-wrapper {
+      border-top-color: transparent;
+      padding: 5px;
+    }
+  }
+
+  .week-view-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+
+    .week-view-allday-row {
+      height: 4rem;
+    }
+
+    .week-view-hour-row,
+    .week-view-half-hour-row {
+      height: 2.5rem;
+    }
+
+    // Borders
+    th,
+    td {
+      border-bottom: 1px solid $calendar-line-color;
+      border-right: 1px solid $calendar-line-color;
+      height: $week-view-cell-height;
+    }
+
+    // Legend Row with times
+    th:nth-child(1) {
+      font-size: $theme-size-font-xs;
+      width: 60px;
+    }
+
+    // First column padding
+    tr td:nth-child(1) {
+      font-size: $theme-size-font-xs;
+
+      .week-view-cell-wrapper {
+        padding: 0 5px;
+      }
+    }
+
+    // Alternate row style
+    tr:nth-child(odd) td {
+      border-bottom: 1px solid $calendar-line-color-light;
+    }
+  }
+
+  // Header Section Container with All Day events
+  .week-view-container {
+    background-color: $calendar-bg-color;
+    flex-shrink: 0;
+
+    th {
+      background-color: $calendar-bg-color;
+      position: sticky;
+      top: 50px;
+    }
+
+    .week-view-allday-row th {
+      top: 25px;
+    }
+  }
+
+  .week-view-cell-wrapper {
+    height: $week-view-cell-height;
+    min-width: 50px;
+    padding: 0;
+    position: relative;
+  }
+
+  // Moving time marker
+  .week-view-time-marker {
+    border: 1px solid $theme-color-brand-primary-base;
+    display: block;
+    height: 1px;
+    margin-top: -2px;
+    position: relative;
+    top: -5px;
+    width: 100%;
+    z-index: 2;
+  }
+
+  // Adjust the calendar events
+  .calendar-event {
+    bottom: 0;
+    height: $week-view-cell-height + 1;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+    &.reduced-padding .calendar-event-content {
+      padding: 0 5px;
+    }
+
+    &.is-cutoff {
+      border-radius: 3px 3px 0 0;
+    }
+
+    .calendar-event-content {
+      white-space: initial;
+    }
+
+    &.is-ellipsis .calendar-event-content {
+      white-space: nowrap;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .week-view {
+    .week-view-table-header th {
+      text-align: right;
+    }
+
+    .calendar-event .calendar-event-content {
+      text-align: right;
+    }
+  }
+}

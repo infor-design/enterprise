@@ -50,13 +50,15 @@ exports.config = {
   },
   multiCapabilities: [
     {
-      'os' : 'Windows',
-      'os_version' : '10',
+      'os' : 'OS X',
+      'os_version' : 'Mojave',
       'browserName' : 'Chrome',
       'browser_version' : '78.0',
-      'resolution' : '1280x800',
       'browserstack.local' : 'false',
-      'browserstack.selenium_version' : '3.5.2'
+      'browserstack.video' : 'false',
+      'browserstack.timezone' : 'New_York',
+      'browserstack.selenium_version' : '3.5.2',
+      'browserstack.seleniumLogs' : 'false'
     }
   ],
   onPrepare: () => {

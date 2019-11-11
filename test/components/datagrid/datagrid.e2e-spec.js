@@ -1500,9 +1500,9 @@ describe('Datagrid onKeyDown Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-onkeydown?layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -1514,7 +1514,7 @@ describe('Datagrid onKeyDown Tests', () => {
 
     const editCellSelector = '.has-editor.is-editing input';
     const inputEl = await element(by.css(editCellSelector));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(inputEl), config.waitsFor);
     await element(by.css(editCellSelector)).sendKeys('j');
     await element(by.css(editCellSelector)).sendKeys(protractor.Key.TAB);
 
@@ -2279,7 +2279,7 @@ describe('Datagrid paging multiselect tests', () => {
 
     const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -2672,7 +2672,7 @@ describe('Datagrid select event tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-selected-event');
 
-    const datagridEl = await element(by.id('testing-datagrid'));
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -2685,6 +2685,7 @@ describe('Datagrid select event tests', () => {
     await element(by.css('#testing-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(2)')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('#toast-container .toast-message')).getText()).toEqual(['The row #1 containing the product name Compressor triggered a selected event']);
   });
@@ -2727,22 +2728,22 @@ describe('Datagrid timezone tests', () => {
   });
 
   if (utils.isChrome() && !utils.isCI()) {
-    it('Should Render Timezones', async () => {
+    it('Should Render Timezones', async () => { //eslint-disable-line
       expect(await element(by.css('.datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('03-04-2019');
       let text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(2)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT', '03-04-2019 00:00 EST']).toContain(text);
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(3)')).getText();
 
       expect(['03-04-2019 00:00 Eastern-standaardtijd', '03-04-2019 00:00 Eastern-zomertijd']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(4)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT', '03-04-2019 00:00 EST']).toContain(text);
 
       text = await element(by.css('.datagrid tr:nth-child(1) td:nth-child(5)')).getText();
 
-      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT']).toContain(text);
+      expect(['03-04-2019 00:00 GMT-5', '03-04-2019 00:00 GMT-4', '03-04-2019 00:00 EDT', '03-04-2019 00:00 EST']).toContain(text);
     });
   }
 });
@@ -3220,7 +3221,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
     await utils.setPage('/components/datagrid/test-actions-reload?layout=nofrills');
     const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -3230,7 +3231,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
   it('Should open on click', async () => {
     const selector = '#datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1) .btn-actions';
     let menuBtn = await element(by.css(selector));
-    menuBtn.click();
+    await menuBtn.click();
 
     expect(await menuBtn.getAttribute('class')).toContain('is-open');
     await element(by.id('btn-reload')).click();
@@ -3238,7 +3239,7 @@ describe('Datagrid Actions Popupmenu tests', () => {
 
     expect(await menuBtn.getAttribute('class')).not.toContain('is-open');
     menuBtn = await element(by.css(selector));
-    menuBtn.click();
+    await menuBtn.click();
 
     expect(await menuBtn.getAttribute('class')).toContain('is-open');
   });

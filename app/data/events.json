@@ -339,5 +339,339 @@
     "ends": "2019-09-13T18:00:00.000",
     "type": "dto",
     "isAllDay": "false"
+  },
+  {
+    "id": "34",
+    "subject": "Standup Meeting",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-09-22T08:00:00.000",
+    "ends": "2019-09-22T08:30:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "34",
+    "subject": "IDS Component Updates",
+    "comments": "IDS Team Call",
+    "starts": "2019-09-22T10:00:00.000",
+    "ends": "2019-09-22T11:00:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "35",
+    "subject": "Out of Office",
+    "comments": "Out of office in the afternoon",
+    "status": "Approved",
+    "icon": "icon-success",
+    "starts": "2019-09-25T12:00:00.000",
+    "ends": "2019-09-25T18:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "36",
+    "subject": "Out of Office",
+    "comments": "Long Weekend",
+    "starts": "2019-09-27T00:00:00.000",
+    "ends": "2019-09-29T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "37",
+    "subject": "Test Event A",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "38",
+    "subject": "Test Event B",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "39",
+    "subject": "Test Event C",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "40",
+    "subject": "Test Event D",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "41",
+    "subject": "Test Event E",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-21T07:00:00.000",
+    "ends": "2019-10-21T07:15:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "42",
+    "subject": "Test Event F",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T07:00:00.000",
+    "ends": "2019-10-22T07:30:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "43",
+    "subject": "Test Event G",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T08:30:00.000",
+    "ends": "2019-10-22T09:00:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "44",
+    "subject": "Test Event H",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T10:00:00.000",
+    "ends": "2019-10-22T11:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "45",
+    "subject": "Test Event I",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T11:30:00.000",
+    "ends": "2019-10-22T12:30:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "46",
+    "subject": "Test Event J",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T13:30:00.000",
+    "ends": "2019-10-22T16:30:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "47",
+    "subject": "Test Event K",
+    "comments": "Weekly standup call",
+    "status": "Recurring",
+    "icon": "icon-load",
+    "starts": "2019-10-22T17:00:00.000",
+    "ends": "2019-10-22T20:30:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "48",
+    "subject": "IDS Component Updates",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-23T10:30:00.000",
+    "ends": "2019-10-23T11:00:00.000",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "49",
+    "subject": "QA Updates and Further Information",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-24T13:00:00.000",
+    "ends": "2019-10-24T13:10:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "50",
+    "subject": "Out of office in the afternoon",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "status": "Recurring",
+    "starts": "2019-10-25T12:00:00.000",
+    "ends": "2019-10-25T17:00:00.000",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "51",
+    "subject": "Day Trip",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-26T00:00:00.000",
+    "ends": "2019-10-26T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "52",
+    "subject": "Sample Event",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-25T15:00:00.000",
+    "ends": "2019-10-25T15:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "53",
+    "subject": "Conference",
+    "starts": "2019-10-21T00:00:00.000",
+    "ends": "2019-10-23T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "54",
+    "subject": "Day Trip",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-31T00:00:00.000",
+    "ends": "2019-10-31T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "55",
+    "subject": "Conference",
+    "starts": "2019-10-28T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "56",
+    "subject": "All Day Event A",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "57",
+    "subject": "All Day Event B",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "58",
+    "subject": "All Day Event C",
+    "starts": "2019-10-30T00:00:00.000",
+    "ends": "2019-10-30T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "59",
+    "subject": "Sample Event",
+    "icon": "icon-success",
+    "comments": "Weekly call",
+    "starts": "2019-10-31T15:00:00.000",
+    "ends": "2019-10-31T15:59:59.999",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "60",
+    "subject": "Dentist",
+    "comments": "Dentist Appt",
+    "starts": "2019-11-03T15:00:00.000",
+    "ends": "2019-11-03T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "61",
+    "subject": "Doctor",
+    "comments": "Doctor Appt",
+    "starts": "2019-11-06T15:00:00.000",
+    "ends": "2019-11-06T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "62",
+    "subject": "Personal",
+    "comments": "Personal Appt",
+    "starts": "2019-11-30T15:00:00.000",
+    "ends": "2019-11-30T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "63",
+    "subject": "Chiropractor",
+    "comments": "Chiropractor Appt",
+    "starts": "2019-12-02T15:00:00.000",
+    "ends": "2019-12-02T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "64",
+    "subject": "Day Off",
+    "starts": "2019-12-03T15:00:00.000",
+    "ends": "2019-12-03T15:59:59.999",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "65",
+    "subject": "Personal",
+    "icon": "icon-clock",
+    "comments": "Personal Appt",
+    "starts": "2019-12-04T15:00:00.000",
+    "ends": "2019-12-04T15:59:59.999",
+    "type": "sick",
+    "isAllDay": "false"
+  },
+  {
+    "id": "66",
+    "subject": "Mom in Town",
+    "starts": "2019-12-04T00:00:00.000",
+    "ends": "2019-12-05T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
   }
 ]
