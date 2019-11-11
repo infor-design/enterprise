@@ -15,7 +15,7 @@ let hierarchyEl;
 let hierarchyAPI;
 const hierarchyId = '#hierarchy';
 
-describe('hierarchy API', () => {
+describe('Hierarchy API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;

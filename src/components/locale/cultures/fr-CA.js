@@ -20,6 +20,7 @@ Soho.Locale.addCulture('fr-CA', {
       month: 'd MMMM',
       year: 'MMMM yyyy',
       timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'yyyy-MM-dd HH:mm',
       timezone: 'yyyy-MM-dd HH:mm zz',
       timezoneLong: 'yyyy-MM-dd HH:mm zzzz'

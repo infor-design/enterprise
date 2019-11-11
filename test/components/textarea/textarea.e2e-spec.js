@@ -95,6 +95,9 @@ describe('Textarea example-index tests', () => {
   });
 
   it('Should display textbox label correctly', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.field label')).get(0)), config.waitsFor);
+
     expect(await element.all(by.css('.field label')).get(0).isDisplayed()).toBeTruthy();
   });
 

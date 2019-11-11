@@ -80,6 +80,7 @@ TimePicker.prototype = {
     if (this.settings.locale) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
         this.setCurrentCalendar();
       });
     }
@@ -100,7 +101,7 @@ TimePicker.prototype = {
     if (this.settings.timeFormat === undefined) {
       this.settings.timeFormat = this.currentCalendar.timeFormat || 'h:mm a';
     }
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.build();
     return this;
   },

@@ -54,7 +54,8 @@ const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
   readOnly: false,
   hidden: false,
-  componentSettings: undefined
+  componentSettings: undefined,
+  allowTabs: false
 };
 
 /**
@@ -103,6 +104,11 @@ ToolbarFlexItem.prototype = {
    * @property {HTMLElement} toolbar the parent toolbar's base element.
    */
   type: undefined,
+
+  /**
+   * @property {boolean} a different type to check if the object is a ToolbarFlexItem.
+   */
+  isToolbarFlexItem: true,
 
   /**
    * @private
@@ -450,7 +456,9 @@ ToolbarFlexItem.prototype = {
       $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
 
-    $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));
+    if (!this.settings.allowTabs) {
+      $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));
+    }
   },
 
   /**

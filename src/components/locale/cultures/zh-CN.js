@@ -20,6 +20,7 @@ Soho.Locale.addCulture('zh-CN', {
       month: 'M月d日',
       year: 'yyyy年M',
       timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'yyyy/M/d ah:mm',
       timezone: 'yyyy/M/d ah:mm zz',
       timezoneLong: 'yyyy/M/d ah:mm zzzz'
