@@ -160,6 +160,44 @@ describe('Calendar API', () => { //eslint-disable-line
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(21);
   });
 
+  it('Should handle adding events off the month', () => {
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+
+    const newEvent = {
+      id: '6',
+      subject: 'Discretionary Time Off',
+      shortSubject: 'DTO',
+      comments: 'Personal time',
+      location: 'Canada Office',
+      status: 'Approved',
+      starts: '2018-08-24T10:00:00.000',
+      ends: '2018-08-24T14:00:00.999',
+      type: 'dto',
+      isAllDay: false
+    };
+    calendarObj.addEvent(newEvent);
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+  });
+
+  it('Should handle adding events in iso format', () => {
+    const newEvent = {
+      id: '6',
+      subject: 'Discretionary Time Off',
+      shortSubject: 'DTO',
+      comments: 'Personal time',
+      location: 'Canada Office',
+      status: 'Approved',
+      starts: '2018-11-10T10:00:00.000',
+      ends: '2018-11-10T14:00:00.999',
+      type: 'dto',
+      isAllDay: false
+    };
+    calendarObj.addEvent(newEvent);
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(21);
+  });
+
   it('Should handle clearing events', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
 
