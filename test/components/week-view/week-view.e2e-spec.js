@@ -122,15 +122,6 @@ describe('WeekView Start Week tests', () => {  //eslint-disable-line
     expect(await element(by.css('.week-view-table th:nth-child(2)')).getText()).toContain('Montag');
     expect(await element(by.css('.week-view-table th:nth-child(8)')).getText()).toContain('Sonntag');
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {  //eslint-disable-line
-      const weekviewEl = await element(by.className('week-view'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-start-week')).toEqual(0);
-    });
-  }
 });
 
 describe('WeekView updated tests', () => {  //eslint-disable-line
