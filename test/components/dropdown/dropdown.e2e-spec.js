@@ -542,7 +542,7 @@ describe('Dropdown xss tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
 
-    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(&#x27;dropdown xss\')</script>XSS');
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
     await utils.checkForErrors();
     await browser.driver.sleep(config.sleep);
 
@@ -550,7 +550,7 @@ describe('Dropdown xss tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('list-option-0')).getText()).toEqual('Hello');
-    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(&#x27;dropdown xss\')</script>XSS');
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
     expect(await element(by.id('list-option-2')).getText()).toEqual('World');
 
     await utils.checkForErrors();
