@@ -65,6 +65,13 @@ div.multiselect {
       }
     }
   }
+
+  &.is-ontop {
+    > .listoption-icon {
+      bottom: 8px;
+      top: auto;
+    }
+  }
 }
 
 // Adjust Short Field Dropdowns
@@ -145,6 +152,13 @@ div.multiselect {
           left: 11px;
         }
       }
+
+      &.is-ontop {
+        > .listoption-icon {
+          bottom: 6px;
+          top: auto;
+        }
+      }
     }
 
     &.dropdown-short {
@@ -193,6 +207,13 @@ div.multiselect {
         margin-left: -15px;
       }
     }
+
+    &.is-ontop {
+      > .listoption-icon {
+        bottom: 8px;
+        top: auto;
+      }
+    }
   }
 }
 
@@ -226,6 +247,13 @@ html.is-firefox:not([dir='rtl']) {
 
     > .listoption-icon {
       top: 9px;
+    }
+
+    &.is-ontop {
+      > .listoption-icon {
+        bottom: 8px;
+        top: auto;
+      }
     }
 
     &.has-icons {

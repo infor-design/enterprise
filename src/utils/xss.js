@@ -121,7 +121,7 @@ xssUtils.escapeHTML = function (value) {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#x27;'
+      "'": '&apos;'
     };
     const reg = /[&<>"']/ig;
     return newValue.replace(reg, match => (map[match]));

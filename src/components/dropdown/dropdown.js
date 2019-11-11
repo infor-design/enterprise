@@ -6,6 +6,7 @@ import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
 import { xssUtils } from '../../utils/xss';
+import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -1079,10 +1080,14 @@ Dropdown.prototype = {
       text = xssUtils.escapeHTML(text);
       text = text.replace(/&lt;/g, '&#16;');
       text = text.replace(/&gt;/g, '&#17;');
+      text = text.replace(/&apos;/g, '&#18;');
+      text = text.replace(/&quot;/g, '&#19;');
       text = text.replace(/&amp;/g, '&');
       text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       text = text.replace(/&#16;/g, '&lt;');
       text = text.replace(/&#17;/g, '&gt;');
+      text = text.replace(/&#18;/g, '&apos;');
+      text = text.replace(/&#19;/g, '&quot;');
 
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
       const swatch = li.children('a').find('.swatch');
@@ -1575,7 +1580,7 @@ Dropdown.prototype = {
     let regex;
 
     try {
-      regex = new RegExp(`(${term})`, 'i');
+      regex = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'i');
     } catch (e) {
       // create a "matches all" regex if we can't create a regex from the search term
       regex = /[\s\S]*/i;
@@ -1922,10 +1927,23 @@ Dropdown.prototype = {
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
 
+      // When flipping, account for borders in the adjusted placement
+      let flippedOffset = 0;
+      if (!env.browser.isIE11()) {
+        flippedOffset = parseInt(listStyle.borderBottomWidth, 10) +
+          parseInt(listStyle.borderTopWidth, 10);
+      }
+
+      // Firefox has different alignments without an adjustment:
+      let browserOffset = 0;
+      if (env.browser.name === 'firefox') {
+        browserOffset = 4;
+      }
+
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
       const ulHeight = parseInt(self.listUl[0].offsetHeight, 10);
       const listHeight = parseInt(self.list[0].offsetHeight, 10) + 5;
-      const searchInputHeight = $(this).hasClass('dropdown-short') ? 24 : 34;
+      const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
       const isToBottom = parseInt(self.list[0].offsetTop, 10) +
         parseInt(self.list[0].offsetHeight, 10) >= window.innerHeight;
       const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2))
@@ -1940,10 +1958,10 @@ Dropdown.prototype = {
       }
 
       if (placementObj.wasFlipped) {
-        adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
+        adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 5}px`;
 
         if (!self.isShortField) {
-          self.list[0].style.top = `${listStyleTop + searchInputHeight}px`;
+          self.list[0].style.top = `${listStyleTop + searchInputHeight + flippedOffset}px`;
         }
       }
 
