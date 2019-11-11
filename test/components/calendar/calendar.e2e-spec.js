@@ -347,26 +347,6 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
 
     expect(await element(by.css('.week-view ')).isDisplayed()).toBe(true);
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const weekviewEl = await element(by.className('calendar'));
-
-      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-
-      const searchEl = await element(by.css('.dropdown-search'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
-
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'calendar-week-view-settings')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar Switch to Day view', () => {  //eslint-disable-line
