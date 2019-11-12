@@ -2083,6 +2083,7 @@ Dropdown.prototype = {
   /**
    * Try matching the option's text if 'cur' comes back empty or overpopulated.
    * Supports options that don't have a 'value' attribute, And also some special &quote handling.
+   * @private
    * @param  {object} option The object to correct.
    * @returns {object} The corrected object
    */
