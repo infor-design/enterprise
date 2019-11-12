@@ -878,17 +878,18 @@ DatePicker.prototype = {
       if (btn.hasClass('is-select-month') || btn.hasClass('is-select-month-pane')) {
         const year = parseInt(self.calendarAPI.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
         const month = parseInt(self.calendarAPI.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
+        const day = self.calendarAPI.currentDay || 1;
 
-        self.currentDate = new Date(year, month, 1);
+        self.currentDate = new Date(year, month, day);
 
         if (self.isIslamic) {
           self.currentDateIslamic[0] = year;
           self.currentDateIslamic[1] = month;
-          self.currentDateIslamic[2] = 1;
+          self.currentDateIslamic[2] = day;
           self.currentYear = year;
           self.currentMonth = month;
-          self.currentDay = 1;
-          self.currentDate = self.conversions.toGregorian(year, month, 1);
+          self.currentDay = day;
+          self.currentDate = self.conversions.toGregorian(year, month, day);
         }
 
         if (s.range.useRange) {
@@ -1494,6 +1495,17 @@ DatePicker.prototype = {
         );
       }
     }
+    const getSelectedDay = () => {
+      let day = (new Date()).getDate();
+      if (this.calendarAPI) {
+        const selected = this.calendarAPI.dayMap.filter(d => d.elem.is('.is-selected'));
+        if (selected.length) {
+          day = parseInt(selected[0].key.substr(6), 10);
+        }
+      }
+      return day;
+    };
+    const selectedDay = getSelectedDay();
 
     this.currentDate = gregorianValue || new Date();
     if (typeof this.currentDate === 'string') {
@@ -1502,6 +1514,9 @@ DatePicker.prototype = {
         locale: this.locale.name,
         calendarName: this.settings.calendarName
       }, false);
+      if (this.pattern && this.pattern.indexOf('d') === -1) {
+        this.currentDate.setDate(selectedDay);
+      }
     }
 
     if (this.currentDate === undefined) {
@@ -1535,11 +1550,15 @@ DatePicker.prototype = {
     }, isStrict);
 
     if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
-      self.setValue(Locale.parseDate(self.element.val().trim(), {
+      const thisParseDate = Locale.parseDate(self.element.val().trim(), {
         pattern: self.pattern,
         locale: this.locale.name,
         calendarName: this.settings.calendarName
-      }, false));
+      }, false);
+      if (self.pattern && self.pattern.indexOf('d') === -1) {
+        thisParseDate.setDate(selectedDay);
+      }
+      self.setValue(thisParseDate);
     }
 
     if (s.range.useRange && s.range.first && s.range.first.date && s.range.second) {
