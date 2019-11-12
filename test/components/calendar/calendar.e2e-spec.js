@@ -75,9 +75,21 @@ describe('Calendar index tests', () => {
     await element(by.id('subject')).sendKeys('Test Event');
     await element(by.id('submit')).click();
 
-    const afterCount = await element.all(by.css('.calendar-event')).count();
+    let afterCount = await element.all(by.css('.calendar-event')).count();
 
     expect(afterCount).toEqual(beforeCount + 1);
+
+    await browser.actions().mouseMove(await element(by.cssContainingText('.calendar-event', 'Test Event'))).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('calendar-actions-menu'))), config.waitsFor);
+
+    await element.all(by.css('.popupmenu-wrapper li a')).first().click();
+
+    afterCount = await element.all(by.css('.calendar-event')).count();
+
+    expect(afterCount).toEqual(beforeCount);
   });
 });
 
@@ -185,7 +197,7 @@ describe('Calendar specific month tests', () => {
   });
 
   it('should offer a right click menu', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await browser.actions().mouseMove(event).perform();
@@ -197,11 +209,11 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
     await element.all(by.css('#calendar-actions-menu a')).first().click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
-  it('should add new events on click and cancel', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+  it('Should add new events on click and cancel', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -212,11 +224,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.css('.calendar-popup .btn-close')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
-  it('should add new events on click and submit', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+  it('Should add new events on click and submit', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -227,11 +239,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 });
 
-describe('Calendar only calendar', () => {  //eslint-disable-line
+describe('Calendar only calendar', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -335,7 +347,7 @@ describe('Calendar only monthview and legend', () => {
   }
 });
 
-describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
+describe('Calendar WeekView settings tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
 
@@ -344,12 +356,12 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
   });
 
-  it('Should render without error', async () => {  //eslint-disable-line
+  it('Should render without error', async () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(14);
     await utils.checkForErrors();
   });
 
-  it('Should switch to week', async () => {  //eslint-disable-line
+  it('Should switch to week', async () => {
     expect(await element(by.css('.week-view ')).isDisplayed()).toBe(false);
     const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -366,7 +378,7 @@ describe('Calendar WeekView settings tests', () => {  //eslint-disable-line
   });
 });
 
-describe('Calendar Switch to Day view', () => {  //eslint-disable-line
+describe('Calendar Switch to Day view', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month?layout=nofrills');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -375,13 +387,13 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
   });
 
   it('Should render without error', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
     await utils.checkForErrors();
   });
 
   if (!utils.isCI()) {
     it('Should switch to day', async () => {
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
       await element.all(by.cssContainingText('.monthview-table td', '12')).first().click();
@@ -391,7 +403,7 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
 
       const searchEl = await element(by.css('.dropdown-search'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(searchEl), config.waitsFor);
 
       await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
       await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
@@ -399,7 +411,7 @@ describe('Calendar Switch to Day view', () => {  //eslint-disable-line
 
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
       expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);
