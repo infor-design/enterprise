@@ -1,5 +1,6 @@
 import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
 import { ToolbarFlexItem } from '../../../src/components/toolbar-flex/toolbar-flex.item';
+import { cleanup } from '../../helpers/func-utils';
 
 const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -9,7 +10,7 @@ let toolbarAPI;
 let rowEl;
 let svgEl;
 
-describe('Flex Toolbar', () => {
+describe('Flex Toolbar', () => { //eslint-disable-line
   beforeEach(() => {
     toolbarEl = null;
     toolbarAPI = null;
@@ -27,13 +28,11 @@ describe('Flex Toolbar', () => {
 
   afterEach(() => {
     toolbarAPI.destroy();
-    rowEl.parentNode.removeChild(rowEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const popupmenuEl = document.body.querySelector('.popupmenu');
-    if (popupmenuEl) {
-      popupmenuEl.parentNode.removeChild(popupmenuEl);
-    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('Should be invoked', () => {
