@@ -237,8 +237,14 @@ Calendar.prototype = {
       this.changeView(args.viewName);
     };
 
-    const startDate = new Date(this.currentDate());
-    const endDate = new Date(this.currentDate());
+    const startDate = dateUtils.firstDayOfWeek(
+      new Date(this.currentDate()),
+      this.settings.weekViewSettings.firstDayOfWeek
+    );
+    const endDate = dateUtils.lastDayOfWeek(
+      new Date(this.currentDate()),
+      this.settings.weekViewSettings.firstDayOfWeek
+    );
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
@@ -255,14 +261,14 @@ Calendar.prototype = {
       endHour: this.settings.weekViewSettings.endHour,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
-      onChangeView: this.onChangeToWeekDay,
-      onChangeWeek: (args) => {
-        this.monthView.selectDay(args.startDate, false, true);
-      }
+      onChangeView: this.onChangeToWeekDay
     });
     this.weekViewHeader = document.querySelector('.calendar .calendar-weekview .monthview-header');
 
     this.weekView.settings.filteredTypes = this.filterEventTypes();
+    this.weekView.settings.onChangeWeek = (args) => {
+      this.monthView.selectDay(args.startDate, false, true);
+    };
     this.weekView.renderAllEvents();
     return this;
   },
@@ -931,7 +937,7 @@ Calendar.prototype = {
   },
 
   /**
-   *  Execute onRenderMonth and handle the call back.
+   * Execute onRenderMonth and handle the call back.
    * @private
    */
   callOnRenderMonth() {
@@ -1274,6 +1280,7 @@ Calendar.prototype = {
     }
     DOM.remove(document.getElementById('calendar-popup'));
     DOM.remove(document.querySelector('.calendar-event-modal'));
+    $('#timepicker-popup').hide();
   },
 
   /**

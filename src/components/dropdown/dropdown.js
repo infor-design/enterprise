@@ -1738,11 +1738,13 @@ Dropdown.prototype = {
     if (this.filterTerm) {
       this.searchInput.val(this.filterTerm);
     } else {
-      const fieldValue = this.pseudoElem.find('span:not(.audible)')
+      let span = this.pseudoElem.find('span:not(.audible)')
         .contents()
-        .eq(1)
-        .text()
-        .trim();
+        .eq(1);
+      if (span.length === 0) {
+        span = this.pseudoElem.find('span:not(.audible)');
+      }
+      const fieldValue = span.text().trim();
       this.searchInput.val(fieldValue);
     }
 
