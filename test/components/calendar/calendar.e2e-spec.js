@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Calendar index tests', () => {  //eslint-disable-line
+describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
