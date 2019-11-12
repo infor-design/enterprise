@@ -28,6 +28,7 @@
 
 ### v4.23.0 Fixes
 
+- `[Accordion]` Fixed the font color when hovered on uplift high contrast. ([#3042](https://github.com/infor-design/enterprise/issues/3042))
 - `[Autocomplete]` Fixed memory leaks by preventing re-rendering of an open autocomplete list from attaching new events, adding multiple `aria-polite` elements, etc. ([#2888](https://github.com/infor-design/enterprise/issues/2888))
 - `[Calendar]` Fixed disabled legend label color on vibrant/uplift with dark Variant theme. ([#2965](https://github.com/infor-design/enterprise/issues/2965))
 - `[Calendar]` Fixed missing arrow and scrolling issues in the event popup. ([#2962](https://github.com/infor-design/enterprise/issues/2962))
