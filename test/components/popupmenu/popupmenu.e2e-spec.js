@@ -121,7 +121,7 @@ describe('Popupmenu example-selectable tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-focused');
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toContain('is-focused');
     });
 
     it('Should select last item on spacebar, arrowing down', async () => {
@@ -137,7 +137,7 @@ describe('Popupmenu example-selectable tests', () => {
       // Re-open menu so we can see the checked item
       await element(by.id('single-select-popupmenu-trigger')).click();
 
-      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-checked');
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toContain('is-checked');
     });
   }
 });
@@ -200,8 +200,8 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
-      expect(await firstItem.getAttribute('class')).toEqual('is-checked');
+      expect(await lastItem.getAttribute('class')).toContain('is-checked');
+      expect(await firstItem.getAttribute('class')).toContain('is-checked');
     });
 
     it('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
@@ -218,11 +218,11 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
-      expect(await firstItem.getAttribute('class')).toEqual('is-checked');
+      expect(await lastItem.getAttribute('class')).toContain('is-checked');
+      expect(await firstItem.getAttribute('class')).toContain('is-checked');
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).not.toEqual('is-focused is-checked');
+      expect(await lastItem.getAttribute('class')).not.toContain('is-checked');
     });
   }
 });
