@@ -33,7 +33,8 @@ const MESSAGE_DEFAULTS = {
   cssClass: null,
   returnFocus: null,
   allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
-  audibleLabel: ''
+  audibleLabel: '',
+  overlayOpacity: 0.7
 };
 
 function Message(element, settings) {
@@ -79,7 +80,8 @@ Message.prototype = {
       buttons: this.settings.buttons,
       resizable: this.settings.resizable,
       close: this.settings.close,
-      isAlert: true
+      isAlert: true,
+      overlayOpacity: this.settings.overlayOpacity
     });
 
     // Adjust Width if Set as a Setting

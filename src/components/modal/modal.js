@@ -58,7 +58,8 @@ const MODAL_DEFAULTS = {
   showCloseBtn: false,
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
-  breakpoint: 'phone-to-tablet'
+  breakpoint: 'phone-to-tablet',
+  overlayOpacity: 0.7
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -173,7 +174,7 @@ Modal.prototype = {
     }
 
     if (!this.overlay) {
-      this.overlay = $('<div class="overlay"></div>');
+      this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
     }
 
     this.oldActive = this.trigger;
