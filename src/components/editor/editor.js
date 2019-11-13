@@ -66,8 +66,16 @@ const EDITOR_DEFAULTS = {
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
-  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
-  image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
+  anchor: {
+    url: 'http://www.example.com',
+    class: 'hyperlink',
+    target: 'NewWindow',
+    isClickable: false,
+    showIsClickable: false
+  },
+  image: {
+    url: 'http://localhost:4000/images/placeholder-80x80.png'
+  },
   onLinkClick: null,
   showHtmlView: false,
   preview: false,
