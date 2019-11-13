@@ -2,9 +2,12 @@
 
 ## v4.24.0
 
+### v4.24.0 Features
+
 ### v4.24.0 Fixes
 
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
+- `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
 
 ## v4.23.0
 
@@ -22,6 +25,7 @@
 
 ### v4.23.0 Fixes
 
+- `[Accordion]` Fixed the font color when hovered on uplift high contrast. ([#3042](https://github.com/infor-design/enterprise/issues/3042))
 - `[Autocomplete]` Fixed memory leaks by preventing re-rendering of an open autocomplete list from attaching new events, adding multiple `aria-polite` elements, etc. ([#2888](https://github.com/infor-design/enterprise/issues/2888))
 - `[Calendar]` Fixed disabled legend label color on vibrant/uplift with dark Variant theme. ([#2965](https://github.com/infor-design/enterprise/issues/2965))
 - `[Calendar]` Fixed missing arrow and scrolling issues in the event popup. ([#2962](https://github.com/infor-design/enterprise/issues/2962))
@@ -57,12 +61,15 @@
 - `[Pie]` Fixed an issue where legends in pie chart gets cut off on mobile view. ([#902](https://github.com/infor-design/enterprise/issues/902))
 - `[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
 - `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
+- `[Popupmenu]` Fixed an issue where checkable menu items were not causing a popupmenu list to become properly formatted to fit the checkmarks when generated as part of a Flex Toolbar.  Also reworked the selection system to better handle selectable sections. ([#2989](https://github.com/infor-design/enterprise/issues/2809))
 - `[Toolbar]` Fixed a bug where the dropdown/toolbar menu is being cut off on iOS device. ([#2800](https://github.com/infor-design/enterprise/issues/2800))
 - `[Tooltip]` Fixed a personalization bug on Dark Themes where text colors were sometimes illegible when using certain color configurations. ([#3011](https://github.com/infor-design/enterprise/issues/3011))
 
 ### v4.23.0 Chores & Maintenance
 
 - `[Build System]` Created separate sets linting rules for demoapp, source code, and tests, as well as a base set of rules for all environments. ([#2662](https://github.com/infor-design/enterprise/issues/2662))
+
+(58 Issues Solved this release, Backlog Enterprise 378, Backlog Ng 82, 937 Functional Tests, 1136 e2e Test)
 
 ## v4.22.0
 
