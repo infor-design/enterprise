@@ -141,6 +141,7 @@
       .btn,
       .btn-expander {
         color: inherit;
+        top: auto;
 
         &:focus:not(.hide-focus) {
           border-color: $uplift-appmenu-selected-border-color;
@@ -150,6 +151,7 @@
 
       .icon {
         color: inherit;
+        top: auto;
 
         &.plus-minus {
           &::before,

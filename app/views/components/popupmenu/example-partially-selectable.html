@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Partially-selectable Menus</h2>
+    <p>It's possible to separate parts of Popupmenus so that the sections have individual selections</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <button id="partially-checkable-menu" class="btn-menu">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presenation">
+        <use xlink:href="#icon-checkbox"></use>
+      </svg>
+      <span>Show Partially Checkable Menu</span>
+    </button>
+    <ul class="popupmenu">
+      <li><a href="#">Non-selectable Item #1</a></li>
+      <li><a href="#">Non-selectable Item #2</a></li>
+      <li><a href="#">Non-selectable Item #3</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Single-Selectable Section</li>
+      <li class="is-selectable is-checked"><a href="#">Single-selectable Item #1</a></li>
+      <li class="is-selectable"><a href="#">Single-selectable Item #2</a></li>
+      <li class="is-selectable"><a href="#">Single-selectable Item #3</a></li>
+      <li class="is-selectable"><a href="#">Single-selectable Item #4</a></li>
+      <li class="separator multi-selectable-section"></li>
+      <li class="heading">Multi-Selectable Section</li>
+      <li class="is-multiselectable is-checked"><a href="#">Multi-selectable Item #1</a></li>
+      <li class="is-multiselectable is-checked"><a href="#">Multi-selectable Item #2</a></li>
+      <li class="is-multiselectable"><a href="#">Multi-selectable Item #3</a></li>
+      <li class="is-multiselectable"><a href="#">Multi-selectable Item #4</a></li>
+      <li class="separator"></li>
+      <li class="heading">More Non-Selectable Items</li>
+      <li><a href="#">Non-selectable Item #4</a></li>
+      <li class="submenu">
+        <a href="#">Non-selectable Item #5</a>
+        <ul class="popupmenu">
+          <li><a href="#">Non-selectable Sub-item #1</a></li>
+          <li><a href="#">Non-selectable Sub-item #2</a></li>
+          <li><a href="#">Non-selectable Sub-item #3</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Single-Selectable Section</li>
+          <li class="is-selectable is-checked"><a href="#">Single-selectable Sub-item #1</a></li>
+          <li class="is-selectable"><a href="#">Single-selectable Sub-item #2</a></li>
+          <li class="is-selectable"><a href="#">Single-selectable Sub-item #3</a></li>
+          <li class="is-selectable"><a href="#">Single-selectable Sub-item #4</a></li>
+          <li class="separator multi-selectable-section"></li>
+          <li class="heading">Multi-Selectable Section</li>
+          <li class="is-multiselectable is-checked"><a href="#">Multi-selectable Sub-item #1</a></li>
+          <li class="is-multiselectable is-checked"><a href="#">Multi-selectable Sub-item #2</a></li>
+          <li class="is-multiselectable"><a href="#">Multi-selectable Sub-item #3</a></li>
+          <li class="is-multiselectable"><a href="#">Multi-selectable Sub-item #4</a></li>
+          <li class="separator"></li>
+          <li class="heading">More Non-Selectable Items</li>
+          <li><a href="#">Non-selectable Sub-item #4</a></li>
+          <li><a href="#">Non-selectable Sub-item #5</a></li>
+          <li><a href="#">Non-selectable Sub-item #6</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Non-selectable Item #6</a></li>
+    </ul>
+  </div>
+</div>
