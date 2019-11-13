@@ -8,20 +8,17 @@ const svg = require('../../../src/components/icons/svg.html');
 let toolbarEl;
 let toolbarAPI;
 let rowEl;
-let svgEl;
 
 describe('Flex Toolbar', () => { //eslint-disable-line
   beforeEach(() => {
     toolbarEl = null;
     toolbarAPI = null;
-    svgEl = null;
     rowEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', toolbarFavorButtonsetHTML);
 
     rowEl = document.body.querySelector('.row');
-    svgEl = document.body.querySelector('.svg-icons');
     toolbarEl = document.body.querySelector('.flex-toolbar');
     toolbarAPI = new ToolbarFlex(toolbarEl);
   });
