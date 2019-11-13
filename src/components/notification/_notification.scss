@@ -19,6 +19,15 @@
     top: calc(50% - 9px);
   }
 
+  .notification-animate {
+    animation: fadein 1s;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
   .notification-close {
     color: inherit;
     position: absolute;

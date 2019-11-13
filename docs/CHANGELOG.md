@@ -25,6 +25,7 @@
 - `[Calendar / Week View]` A new component Week View was added. You can show events in a series of days. This is also integrated into view switcher in the calendar component. ([#1757](https://github.com/infor-design/enterprise/issues/1757))
 - `[Empty Messages]` Added a new icon `empty-no-users`. ([#3046](https://github.com/infor-design/enterprise/issues/3046))
 - `[Locale]` Added updated translation files for 16 in house languages. ([#3049](https://github.com/infor-design/enterprise/issues/3049))
+- `[Notification]` Improved the animation of the icon in NG. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 
 ### v4.23.0 Fixes
 

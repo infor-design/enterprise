@@ -56,7 +56,7 @@ Notification.prototype = {
     this.notificationEl.classList.add(this.settings.type);
 
     const htmlIcon = `
-      <svg class="icon notification-icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
+      <svg class="icon notification-icon notification-animate icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-${this.settings.type}"></use>
       </svg>`;
 
