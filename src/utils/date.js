@@ -47,17 +47,12 @@ dateUtils.lastDayOfWeek = function lastDayOfWeek(date, startsOn = 0) {
  * @param {date} first The first date.
  * @param {date} second The second date.
  * @param {boolean} useHours The different in hours if true, otherways days.
- * @param {boolean} isFullDay Add an hour to include the full day to match the calendar.
- * @returns {number} The difference between the two dates.
+* @returns {number} The difference between the two dates.
  */
-dateUtils.dateDiff = function (first, second, useHours, isFullDay) {
+dateUtils.dateDiff = function (first, second, useHours) {
   // Take the difference between the dates and divide by milliseconds per day.
   // Round to nearest whole number to deal with DST.
-  let diff = Math.round((second - first) / (1000 * 60 * 60 * (useHours ? 1 : 24)));
-  if (isFullDay) {
-    diff += 1;
-  }
-  return diff;
+  return Math.round((second - first) / (1000 * 60 * 60 * (useHours ? 1 : 24)));
 };
 
 export { dateUtils }; //eslint-disable-line

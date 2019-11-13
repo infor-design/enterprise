@@ -6,8 +6,10 @@
     @include font-size(16);
 
     background-color: transparent;
-    border-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
     box-shadow: none;
+    padding: 8px 36px 7px 8px;
 
     &:focus {
       @include focus-state();
@@ -22,6 +24,12 @@
         cursor: pointer;
       }
     }
+
+    + .icon {
+      margin-left: -25px;
+      position: relative;
+      top: 2px;
+    }
   }
 
   // Adjust toolbar objects
@@ -33,14 +41,15 @@
   .monthview-datepicker {
     margin-left: -5px;
     position: relative;
-    top: 1px;
+    top: 2px;
   }
 
   .today {
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
-    margin-left: 10px;
+    margin-left: 18px;
     text-decoration: none;
+    top: 1px;
   }
 
   // View Switcher

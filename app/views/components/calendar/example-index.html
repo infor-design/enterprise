@@ -135,9 +135,20 @@
       {{/status}}
       <div class="field">
         <span class="label">Date</span>
+        {{#duration}}
         <span class="data">
-          {{startsLong}} to {{endsLong}}
+          {{startsLong}}
+              to
+          {{endsLong}}
         </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              to
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
       </div>
       <div class="field">
         <span class="label">Event Type</span>

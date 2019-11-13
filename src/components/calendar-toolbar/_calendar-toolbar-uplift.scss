@@ -3,24 +3,17 @@
 
 .calendar-toolbar {
   .datepicker {
-    @include font-size(21);
+    @include font-size(20);
 
-    padding: 3px 10px;
-  }
-
-  .datepicker + .icon {
-    margin-top: 10px;
+    padding: 7px 36px 8px 8px;
   }
 
   .today {
     @include font-size(14);
-
-    margin-left: 5px;
-    top: -1px;
   }
 
   .toolbar-section > .month,
   .toolbar-section > .year {
-    @include font-size(21);
+    @include font-size(20);
   }
 }

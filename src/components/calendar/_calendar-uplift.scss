@@ -3,7 +3,11 @@
 
 // Reduce the font size from being too large (calendar/example-index)
 .calendar-event-details .accordion-header a {
-  font-size: $theme-size-font-md;
+  @include font-size(20);
+}
+
+.calendar-toolbar .datepicker + .icon {
+  top: 1px;
 }
 
 .calendar {
