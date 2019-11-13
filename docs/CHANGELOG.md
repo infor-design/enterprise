@@ -4,8 +4,11 @@
 
 ### v4.24.0 Features
 
+- `[Datagrid]` Added support to get data nodes as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+
 ### v4.24.0 Fixes
 
+- `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
 
