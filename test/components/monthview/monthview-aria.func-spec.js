@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-describe('MonthView Aria', () => { //eslint-disable-line
+describe('MonthView Aria', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;

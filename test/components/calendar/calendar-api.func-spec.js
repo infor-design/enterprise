@@ -18,7 +18,7 @@ const settings = {
   year: 2018
 };
 
-describe('Calendar API', () => { //eslint-disable-line
+describe('Calendar API', () => {
   beforeEach(() => {
     calendarEl = null;
     calendarObj = null;
@@ -108,7 +108,7 @@ describe('Calendar API', () => { //eslint-disable-line
 
     calendarObj = new Calendar(calendarEl, newSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('marts 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('marts 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
   });
@@ -225,7 +225,7 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.updated(updatedSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(4);
@@ -241,7 +241,7 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.updated(updatedSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('juni 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('juni 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
@@ -257,7 +257,7 @@ describe('Calendar API', () => { //eslint-disable-line
     calendarObj.settings.eventTypes = eventTypes;
     calendarObj.updated();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
