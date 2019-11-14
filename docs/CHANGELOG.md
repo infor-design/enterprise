@@ -2,15 +2,12 @@
 
 ## v4.24.0
 
-### v4.24.0 Deprecation
-
 ### v4.24.0 Features
 
 ### v4.24.0 Fixes
 
+- `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
-
-### v4.24.0 Chores & Maintenance
 
 ## v4.23.0
 
