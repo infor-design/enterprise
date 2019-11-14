@@ -2,6 +2,8 @@
 
 ## v4.24.0
 
+### v4.24.0 Deprecation
+
 ### v4.24.0 Features
 
 ### v4.24.0 Fixes
@@ -9,6 +11,12 @@
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
+- `[Editor]` Corrected CSP errors and broken images in the Editor Preview when inserting the default image. ([#2937](https://github.com/infor-design/enterprise/issues/2937))
+- `[Editor]` Fixes issues with Editors configured to use Flex Toolbar, where toolbar buttons were not properly triggering selected events, and overflowed items were not triggering editor actions as expected. ([#2938](https://github.com/infor-design/enterprise/issues/2938))
+- `[Editor]` The Editor now uses the same routine for stripping disallowed tags and attributes from pasted content when it transitions from the Source View to the Preview. This makes it impossible to paste/type HTML tags containing a `style` property with CSS rules that are not allowed to be applied to inline Editor elements, such as `font-family`. ([#2987](https://github.com/infor-design/enterprise/issues/2987))
+- `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
+
+### v4.24.0 Chores & Maintenance
 
 ## v4.23.0
 
