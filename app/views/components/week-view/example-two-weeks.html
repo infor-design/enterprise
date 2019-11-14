@@ -16,8 +16,8 @@ $('body').one('initialized', function () {
       events = res;
       $('.week-view').weekview({
         locale: null,
-        startDate: new Date(2019, 08, 16),
-        endDate: new Date(2019, 08, 29),
+        startDate: new Date(2019, 08, 16, 0, 0, 0, 0),
+        endDate: new Date(2019, 08, 29, 23, 59, 59, 59),
         showViewChanger: false,
         showTimeLine: false,
         showAllDay: true,
