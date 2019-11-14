@@ -2,7 +2,6 @@ import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { dateUtils } from '../../utils/date';
-import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
 
@@ -78,7 +77,6 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
- * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
@@ -130,7 +128,6 @@ const DATEPICKER_DEFAULTS = {
   locale: null,
   language: null,
   useUTC: false,
-  autoSize: false,
   hideButtons: false,
   showToday: true,
   onOpenCalendar: null,
@@ -191,7 +188,6 @@ DatePicker.prototype = {
     if (!this.settings.locale && !this.settings.language) {
       this.setCurrentCalendar();
     }
-    this.setSize();
   },
 
   /**
@@ -262,23 +258,6 @@ DatePicker.prototype = {
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
     this.mask();
-  },
-
-  /**
-   * Set size attribute based on current contents
-   * @private
-   * @returns {void}
-   */
-  setSize() {
-    if (!this.settings.autoSize) {
-      return;
-    }
-    const elem = this.element[0];
-    const value = elem.value;
-
-    const font = `${getComputedStyle(elem).fontSize} ${getComputedStyle(elem).fontFamily}`;
-    elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(value, 50, font)}px`;
   },
 
   /**
@@ -878,17 +857,18 @@ DatePicker.prototype = {
       if (btn.hasClass('is-select-month') || btn.hasClass('is-select-month-pane')) {
         const year = parseInt(self.calendarAPI.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
         const month = parseInt(self.calendarAPI.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
+        const day = self.calendarAPI.currentDay || 1;
 
-        self.currentDate = new Date(year, month, 1);
+        self.currentDate = new Date(year, month, day);
 
         if (self.isIslamic) {
           self.currentDateIslamic[0] = year;
           self.currentDateIslamic[1] = month;
-          self.currentDateIslamic[2] = 1;
+          self.currentDateIslamic[2] = day;
           self.currentYear = year;
           self.currentMonth = month;
-          self.currentDay = 1;
-          self.currentDate = self.conversions.toGregorian(year, month, 1);
+          self.currentDay = day;
+          self.currentDate = self.conversions.toGregorian(year, month, day);
         }
 
         if (s.range.useRange) {
@@ -1196,8 +1176,6 @@ DatePicker.prototype = {
         this.element.trigger('change').trigger('input');
       }
     }
-
-    this.setSize();
   },
 
   /**
@@ -1494,6 +1472,17 @@ DatePicker.prototype = {
         );
       }
     }
+    const getSelectedDay = () => {
+      let day = (new Date()).getDate();
+      if (this.calendarAPI) {
+        const selected = this.calendarAPI.dayMap.filter(d => d.elem.is('.is-selected'));
+        if (selected.length) {
+          day = parseInt(selected[0].key.substr(6), 10);
+        }
+      }
+      return day;
+    };
+    const selectedDay = getSelectedDay();
 
     this.currentDate = gregorianValue || new Date();
     if (typeof this.currentDate === 'string') {
@@ -1502,6 +1491,9 @@ DatePicker.prototype = {
         locale: this.locale.name,
         calendarName: this.settings.calendarName
       }, false);
+      if (this.pattern && this.pattern.indexOf('d') === -1) {
+        this.currentDate.setDate(selectedDay);
+      }
     }
 
     if (this.currentDate === undefined) {
@@ -1535,11 +1527,15 @@ DatePicker.prototype = {
     }, isStrict);
 
     if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
-      self.setValue(Locale.parseDate(self.element.val().trim(), {
+      const thisParseDate = Locale.parseDate(self.element.val().trim(), {
         pattern: self.pattern,
         locale: this.locale.name,
         calendarName: this.settings.calendarName
-      }, false));
+      }, false);
+      if (self.pattern && self.pattern.indexOf('d') === -1) {
+        thisParseDate.setDate(selectedDay);
+      }
+      self.setValue(thisParseDate);
     }
 
     if (s.range.useRange && s.range.first && s.range.first.date && s.range.second) {

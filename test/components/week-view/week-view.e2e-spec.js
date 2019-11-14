@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('WeekView index tests', () => { //eslint-disable-line
+describe('WeekView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-index?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -19,7 +19,7 @@ describe('WeekView index tests', () => { //eslint-disable-line
   });
 });
 
-describe('WeekView ajax loading tests', () => { //eslint-disable-line
+describe('WeekView ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-ajax-events');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -56,7 +56,7 @@ describe('WeekView specific week tests', () => {  //eslint-disable-line
     await testDate.setMonth(11);
     await testDate.setFullYear(2019);
 
-    expect(await element(by.css('.week-view #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.week-view #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   if (utils.isChrome() && utils.isCI()) {

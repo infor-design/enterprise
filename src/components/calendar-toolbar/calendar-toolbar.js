@@ -105,8 +105,8 @@ CalendarToolbar.prototype = {
           <span class="monthview-datepicker">
             <span class="hidden month" data-month="9">9</span>
             <span class="hidden year">2019</span>
-            <label class="audible" for="monthview-datepicker-field">${Locale.translate('SelectDay')}</label>
-            <input aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" class="datepicker" type="text" data-validate="none"/>
+            <span class="audible">${Locale.translate('SelectDay')}</span>
+            <span tabindex="0" aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" class="datepicker input-auto" data-validation="">October 2019</span>
           </span>
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
         </div>
@@ -127,11 +127,11 @@ CalendarToolbar.prototype = {
 
     // Setup the datepicker
     this.monthPicker = this.element.find('#monthview-datepicker-field').datepicker({
-      autoSize: true,
       dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
       locale: this.settings.locale,
       onOpenCalendar: this.settings.onOpenCalendar,
-      isMonthPicker: this.settings.isMonthPicker
+      isMonthPicker: this.settings.isMonthPicker,
+      showToday: this.settings.showToday
     });
 
     if (this.settings.showViewChanger) {
@@ -158,11 +158,7 @@ CalendarToolbar.prototype = {
     this.currentDay = date.getDate();
     this.currentDate = date;
 
-    this.monthPicker.val(Locale.formatDate(new Date(this.currentYear, this.currentMonth, this.currentDay), { date: 'year', locale: this.locale.name }));
-    if (this.monthPickerApi) {
-      this.monthPickerApi.setSize();
-    }
-
+    this.monthPicker.text(Locale.formatDate(new Date(this.currentYear, this.currentMonth, this.currentDay), { date: 'year', locale: this.locale.name }));
     if (!this.currentCalendar || !this.currentCalendar.months) {
       this.currentCalendar = Locale.calendar();
     }

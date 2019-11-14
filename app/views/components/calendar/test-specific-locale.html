@@ -57,8 +57,8 @@ $('body').one('initialized', function () {
 });
 </script>
 
-{{={{{ }}}=}}
 <script id="tmpl-readonly" type="text/html">
+{{={{{ }}}=}}
   {{#event}}
   <div class="accordion-header is-expanded {{color}}">
     <a href="#">{{subject}}</a>
@@ -78,9 +78,20 @@ $('body').one('initialized', function () {
       {{/status}}
       <div class="field">
         <span class="label">Date</span>
+        {{#duration}}
         <span class="data">
-          {{startsLong}} to {{endsLong}}
+          {{startsLong}}
+              to
+          {{endsLong}}
         </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              to
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
       </div>
       <div class="field">
         <span class="label">Event Type</span>
@@ -117,29 +128,15 @@ $('body').one('initialized', function () {
   <div class="form-responsive row">
     <div class="twelve columns">
       <div class="field">
-        <label for="subject" class="label">Subject</label>
+        <label for="subject" class="label" data-translate="text"><span data-translate="text">Subject</span></label>
         <input id="subject" type="text" value="{{subject}}">
-      </div>
-    </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="six columns">
-      <div class="field">
-        <label for="starts" class="label">From</label>
-        <input id="starts" class="datepicker" name="starts" type="text" value="{{startsLocale}}"/>
-      </div>
-    </div>
-    <div class="six columns">
-      <div class="field">
-        <label for="ends" class="label">To</label>
-        <input id="ends" class="datepicker" name="ends" type="text" value="{{endsLocale}}"/>
       </div>
     </div>
   </div>
   <div class="form-responsive row">
     <div class="twelve columns">
       <div class="field">
-        <label for="type" class="label">Type</label>
+        <label for="type" class="label"><span data-translate="text">Type</span></label>
         <select id="type" class="dropdown" name="type">
           {{#eventTypes}}
           <option value="{{id}}">{{label}}</option>
@@ -149,23 +146,45 @@ $('body').one('initialized', function () {
     </div>
   </div>
   <div class="form-responsive row">
+    <div class="twelve columns">
+      <div class="field field-checkbox">
+        <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
+        <label for="isAllDay" class="checkbox-label"><span data-translate="text">AllDay</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
     <div class="six columns">
       <div class="field">
-        <label for="durationHours">Hours</label>
-        <input id="durationHours" name="durationHours" type="text" class="spinbox"{{#isAllDay}}disabled="true"{{/isAllDay}}  data-options="{min: 0, max: 24}" value="8"/>
+        <label for="startsLocale" class="label"><span data-translate="text">From</span></label>
+        <input id="startsLocale" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required date"/>
       </div>
     </div>
     <div class="six columns">
-      <div class="field field-checkbox">
-        <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
-        <label for="isAllDay" class="checkbox-label">All Day</label>
+      <div class="field">
+        <label for="startsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
+        <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
+      </div>
+    </div>
+  </div>
+  <div class="form-responsive row">
+    <div class="six columns">
+      <div class="field">
+        <label for="endsLocale" class="label"><span data-translate="text">To</span></label>
+        <input id="endsLocale" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required date"/>
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="field">
+        <label for="endsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
+        <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
       </div>
     </div>
   </div>
   <div class="form-responsive row">
     <div class="twelve columns">
       <div class="field">
-        <label for="comments" class="label">Comments</label>
+        <label for="comments" class="label"><span data-translate="text">Comments</span></label>
         <textarea id="comments" type="text" value="{{comments}}"></textarea>
       </div>
     </div>

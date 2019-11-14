@@ -16,13 +16,13 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   event.duration = Math.abs(dateUtils.dateDiff(
     new Date(event.ends),
     new Date(event.starts),
-    false,
-    event.isFullDay
+    false
   ));
   event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
   event.daysUntil = event.starts ? dateUtils.dateDiff(new Date(event.starts), new Date()) : 0;
   event.durationHours = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends), true);
   event.isDays = true;
+
   if (event.isAllDay === undefined) {
     event.isAllDay = true;
   }
@@ -30,7 +30,6 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   if (event.durationHours < 24) {
     event.isDays = false;
     event.isAllDay = false;
-    delete event.duration;
     event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: locale.name, language }) : Locale.translate('Hour', { locale: locale.name, language });
   }
   if (event.isAllDay.toString() === 'true') {
@@ -75,6 +74,13 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   if (event.isAllDay.toString() === 'false') {
     delete event.isAllDay;
   }
+
+  if (!event.isAllDay && event.durationHours >= 24) {
+    event.isAllDay = true;
+    event.durationUnits = Locale.translate('Days', { locale: locale.name, language });
+    event.durationHours = (event.durationHours / 24).toFixed(2);
+    delete event.duration;
+  }
   return event;
 };
 
@@ -118,8 +124,21 @@ calendarShared.cleanEventData = function cleanEventData(
   eventTypes,
 ) {
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-  let startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
-  let endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+  let startDate = currentDate;
+  let endDate = currentDate;
+
+  if (event.startsLocale && event.endsLocale) {
+    startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
+    endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+  }
+
+  if (typeof event.starts === 'string' || !event.startsLocale) {
+    startDate = new Date(event.starts);
+  }
+
+  if (typeof event.ends === 'string' || !event.endsLocale) {
+    endDate = new Date(event.ends);
+  }
 
   if (!Locale.isValidDate(startDate)) {
     startDate = currentDate;
@@ -180,9 +199,9 @@ calendarShared.cleanEventData = function cleanEventData(
   }
 
   if (event.id === undefined && addPlaceholder) {
-    const lastId = this.settings.events.length === 0
+    const lastId = events.length === 0
       ? 0
-      : parseInt(this.settings.events[this.settings.events.length - 1].id, 10);
+      : parseInt(events[events.length - 1].id, 10);
     event.id = (lastId + 1).toString();
   }
 

@@ -114,8 +114,8 @@
   });
 </script>
 
-{{={{{ }}}=}}
 <script id="tmpl-readonly" type="text/html">
+{{={{{ }}}=}}
   {{#event}}
   <div class="accordion-header is-expanded {{color}}">
     <a href="#">{{subject}}</a>
@@ -135,9 +135,20 @@
       {{/status}}
       <div class="field">
         <span class="label">Date</span>
+        {{#duration}}
         <span class="data">
-          {{startsLong}} to {{endsLong}}
+          {{startsLong}}
+              to
+          {{endsLong}}
         </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              to
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
       </div>
       <div class="field">
         <span class="label">Event Type</span>
@@ -208,7 +219,7 @@
     </div>
     <div class="six columns">
       <div class="field">
-        <label for="startsHourLocale" class="label"><span class="audible">Time</span></label>
+        <label for="startsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
         <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
       </div>
     </div>
@@ -222,7 +233,7 @@
     </div>
     <div class="six columns">
       <div class="field">
-        <label for="endsHourLocale" class="label"><span class="audible">Time</span></label>
+        <label for="endsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
         <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
       </div>
     </div>

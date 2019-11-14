@@ -561,8 +561,7 @@ WeekView.prototype = {
       monthStr = `${Locale.formatDate(startDate, { pattern: 'MMM yyyy', locale: this.locale.name })} - ${Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name })}`;
     }
 
-    this.monthField.val(monthStr);
-    this.calendarToolbarAPI.monthPickerApi.setSize();
+    this.monthField.text(monthStr);
   },
 
   /**

@@ -18,7 +18,7 @@ const settings = {
   year: 2018
 };
 
-describe('Calendar API', () => { //eslint-disable-line
+describe('Calendar API', () => {
   beforeEach(() => {
     calendarEl = null;
     calendarObj = null;
@@ -51,7 +51,8 @@ describe('Calendar API', () => { //eslint-disable-line
       '.row',
       '#tmpl-readonly',
       '#test-script',
-      '#tmpl-modal'
+      '#tmpl-modal',
+      '#calendar-actions-menu'
     ]);
 
     jasmine.clock().uninstall();
@@ -108,7 +109,7 @@ describe('Calendar API', () => { //eslint-disable-line
 
     calendarObj = new Calendar(calendarEl, newSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('marts 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('marts 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
   });
@@ -145,7 +146,7 @@ describe('Calendar API', () => { //eslint-disable-line
     const endsDate = new Date(baseTime);
     endsDate.setHours(23, 59, 59, 999);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(26);
     const newEvent = {
       id: (settings.events.length + 1).toString(),
       subject: 'New Random Event',
@@ -157,11 +158,48 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.addEvent(newEvent);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(21);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(28);
+  });
+
+  it('Should handle adding events off the month', () => {
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(26);
+
+    const newEvent = {
+      subject: 'Discretionary Time Off',
+      shortSubject: 'DTO',
+      comments: 'Personal time',
+      location: 'Canada Office',
+      status: 'Approved',
+      starts: '2018-11-24T10:00:00.000',
+      ends: '2018-11-24T14:00:00.999',
+      type: 'dto',
+      isAllDay: false
+    };
+    calendarObj.addEvent(newEvent);
+
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(27);
+  });
+
+  it('Should handle adding events in iso format', () => {
+    const newEvent = {
+      id: '6',
+      subject: 'Discretionary Time Off',
+      shortSubject: 'DTO',
+      comments: 'Personal time',
+      location: 'Canada Office',
+      status: 'Approved',
+      starts: '2018-11-10T10:00:00.000',
+      ends: '2018-11-10T14:00:00.999',
+      type: 'dto',
+      isAllDay: false
+    };
+    calendarObj.addEvent(newEvent);
+
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(28);
   });
 
   it('Should handle clearing events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.clearEvents();
 
@@ -169,23 +207,23 @@ describe('Calendar API', () => { //eslint-disable-line
   });
 
   it('Should handle deleting events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.deleteEvent({ id: '13' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(25);
 
     calendarObj.deleteEvent({ id: '11' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(3);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(4);
   });
 
   it('Should handle updating events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.updateEvent({ id: '13', subject: 'Updated Subject' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
     expect(calendarObj.settings.events[12].subject).toEqual('Updated Subject');
     expect(calendarObj.settings.events[12].id).toEqual('13');
   });
@@ -225,10 +263,10 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.updated(updatedSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
-    expect(document.querySelectorAll('.calendar-event').length).toEqual(4);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(11);
   });
 
   it('Should update locale when passing settings in ', () => {
@@ -241,7 +279,7 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.updated(updatedSettings);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('juni 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('juni 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
@@ -257,7 +295,7 @@ describe('Calendar API', () => { //eslint-disable-line
     calendarObj.settings.eventTypes = eventTypes;
     calendarObj.updated();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(3);

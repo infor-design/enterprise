@@ -1075,7 +1075,6 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = self.getSearchRegex(term);
-      // const text = xssUtils.escapeHTML(li.text()).replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       let text = li.text();
       text = xssUtils.escapeHTML(text);
       text = text.replace(/&lt;/g, '&#16;');
@@ -1288,7 +1287,8 @@ Dropdown.prototype = {
           e.preventDefault();
 
           if (options.length && selectedIndex > -1) {
-            self.selectOption($(options[selectedIndex])); // store the current selection
+            // store the current selection
+            self.selectOption(this.correctValue($(options[selectedIndex])));
           }
 
           if (self.settings.closeOnSelect) {
@@ -1738,11 +1738,13 @@ Dropdown.prototype = {
     if (this.filterTerm) {
       this.searchInput.val(this.filterTerm);
     } else {
-      const fieldValue = this.pseudoElem.find('span:not(.audible)')
+      let span = this.pseudoElem.find('span:not(.audible)')
         .contents()
-        .eq(1)
-        .text()
-        .trim();
+        .eq(1);
+      if (span.length === 0) {
+        span = this.pseudoElem.find('span:not(.audible)');
+      }
+      const fieldValue = span.text().trim();
       this.searchInput.val(fieldValue);
     }
 
@@ -2047,18 +2049,7 @@ Dropdown.prototype = {
       return true;  //eslint-disable-line
     }
 
-    const val = target.attr('data-val').replace(/"/g, '/quot/');
-    let cur = this.element.find(`option[value="${val}"]`);
-    // Try matching the option's text if 'cur' comes back empty or overpopulated.
-    // Supports options that don't have a 'value' attribute
-    // And also some special &quote handling
-    if (cur.length === 0 || cur.length > 1) {
-      cur = this.element.find('option').filter(function () {
-        const elem = $(this);
-        const attr = elem.attr('value');
-        return elem.text() === val || (attr && attr.replace(/"/g, '/quot/') === val);
-      });
-    }
+    const cur = this.correctValue(target);
 
     if (cur.is(':disabled')) {
       return false; //eslint-disable-line
@@ -2089,6 +2080,26 @@ Dropdown.prototype = {
     }
 
     return true;  //eslint-disable-line
+  },
+
+  /**
+   * Try matching the option's text if 'cur' comes back empty or overpopulated.
+   * Supports options that don't have a 'value' attribute, And also some special &quote handling.
+   * @private
+   * @param  {object} option The object to correct.
+   * @returns {object} The corrected object
+   */
+  correctValue(option) {
+    const val = option.attr('data-val').replace(/"/g, '/quot/');
+    let cur = this.element.find(`option[value="${val}"]`);
+    if (cur.length === 0 || cur.length > 1) {
+      cur = this.element.find('option').filter(function () {
+        const elem = $(this);
+        const attr = elem.attr('value');
+        return elem.text() === val || (attr && attr.replace(/"/g, '/quot/') === val);
+      });
+    }
+    return cur;
   },
 
   /**
