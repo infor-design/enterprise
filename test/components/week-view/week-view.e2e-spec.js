@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('WeekView index tests', () => { //eslint-disable-line
+describe('WeekView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-index?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -19,7 +19,7 @@ describe('WeekView index tests', () => { //eslint-disable-line
   });
 });
 
-describe('WeekView ajax loading tests', () => { //eslint-disable-line
+describe('WeekView ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-ajax-events');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));

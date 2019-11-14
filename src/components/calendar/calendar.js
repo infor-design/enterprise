@@ -1053,6 +1053,8 @@ Calendar.prototype = {
     event.color = calendarShared.getEventTypeColor(event.type, this.settings.eventTypes);
     event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
+    event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;
+    event.endsHoursLong = `${Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.ends, { date: 'hour', locale: this.locale.name })}`;
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(template, { event });

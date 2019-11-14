@@ -16,13 +16,13 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   event.duration = Math.abs(dateUtils.dateDiff(
     new Date(event.ends),
     new Date(event.starts),
-    false,
-    event.isFullDay
+    false
   ));
   event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
   event.daysUntil = event.starts ? dateUtils.dateDiff(new Date(event.starts), new Date()) : 0;
   event.durationHours = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends), true);
   event.isDays = true;
+
   if (event.isAllDay === undefined) {
     event.isAllDay = true;
   }
@@ -30,7 +30,6 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   if (event.durationHours < 24) {
     event.isDays = false;
     event.isAllDay = false;
-    delete event.duration;
     event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: locale.name, language }) : Locale.translate('Hour', { locale: locale.name, language });
   }
   if (event.isAllDay.toString() === 'true') {
@@ -74,6 +73,13 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   event.isAllDay = event.isAllDay.toString();
   if (event.isAllDay.toString() === 'false') {
     delete event.isAllDay;
+  }
+
+  if (!event.isAllDay && event.durationHours >= 24) {
+    event.isAllDay = true;
+    event.durationUnits = Locale.translate('Days', { locale: locale.name, language });
+    event.durationHours = (event.durationHours / 24).toFixed(2);
+    delete event.duration;
   }
   return event;
 };

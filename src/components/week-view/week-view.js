@@ -562,7 +562,6 @@ WeekView.prototype = {
     }
 
     this.monthField.val(monthStr);
-    this.calendarToolbarAPI.monthPickerApi.setSize();
   },
 
   /**
