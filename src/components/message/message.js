@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return.
  * @param {string} [settings.allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
  * @param {string} [settings.audibleLabel='']  String to include in message title that is strictly audible.
+ * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
  */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
