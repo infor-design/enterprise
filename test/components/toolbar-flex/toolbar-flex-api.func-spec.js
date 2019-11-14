@@ -1,5 +1,6 @@
 import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
 import { ToolbarFlexItem } from '../../../src/components/toolbar-flex/toolbar-flex.item';
+import { cleanup } from '../../helpers/func-utils';
 
 const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -7,33 +8,28 @@ const svg = require('../../../src/components/icons/svg.html');
 let toolbarEl;
 let toolbarAPI;
 let rowEl;
-let svgEl;
 
-describe('Flex Toolbar', () => {
+describe('Flex Toolbar', () => { //eslint-disable-line
   beforeEach(() => {
     toolbarEl = null;
     toolbarAPI = null;
-    svgEl = null;
     rowEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', toolbarFavorButtonsetHTML);
 
     rowEl = document.body.querySelector('.row');
-    svgEl = document.body.querySelector('.svg-icons');
     toolbarEl = document.body.querySelector('.flex-toolbar');
     toolbarAPI = new ToolbarFlex(toolbarEl);
   });
 
   afterEach(() => {
     toolbarAPI.destroy();
-    rowEl.parentNode.removeChild(rowEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const popupmenuEl = document.body.querySelector('.popupmenu');
-    if (popupmenuEl) {
-      popupmenuEl.parentNode.removeChild(popupmenuEl);
-    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('Should be invoked', () => {

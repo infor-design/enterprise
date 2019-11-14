@@ -149,7 +149,7 @@
       overflow-wrap: break-word;
       position: relative;
       top: -4px;
-      width: 130px;
+      width: 110px;
     }
 
     .calendar-upcoming-status-text {
@@ -171,7 +171,7 @@
       font-size: $theme-size-font-sm;
       font-style: italic;
       position: relative;
-      right: 5px;
+      right: 0;
       top: -12px;
     }
   }
@@ -298,6 +298,9 @@
 
 // Styles to reset the modal
 .calendar-popup {
+  max-width: 320px;
+  width: 320px;
+
   .tooltip-content {
     height: calc(100% - 48px);
     overflow: auto;

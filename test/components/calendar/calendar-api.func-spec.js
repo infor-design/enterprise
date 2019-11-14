@@ -51,7 +51,8 @@ describe('Calendar API', () => { //eslint-disable-line
       '.row',
       '#tmpl-readonly',
       '#test-script',
-      '#tmpl-modal'
+      '#tmpl-modal',
+      '#calendar-actions-menu'
     ]);
 
     jasmine.clock().uninstall();
@@ -145,7 +146,7 @@ describe('Calendar API', () => { //eslint-disable-line
     const endsDate = new Date(baseTime);
     endsDate.setHours(23, 59, 59, 999);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
     const newEvent = {
       id: (settings.events.length + 1).toString(),
       subject: 'New Random Event',
@@ -157,7 +158,7 @@ describe('Calendar API', () => { //eslint-disable-line
     };
     calendarObj.addEvent(newEvent);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(21);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(28);
   });
 
   it('Should handle adding events off the month', () => {
@@ -199,7 +200,7 @@ describe('Calendar API', () => { //eslint-disable-line
   });
 
   it('Should handle clearing events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.clearEvents();
 
@@ -207,23 +208,23 @@ describe('Calendar API', () => { //eslint-disable-line
   });
 
   it('Should handle deleting events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.deleteEvent({ id: '13' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(18);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(25);
 
     calendarObj.deleteEvent({ id: '11' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(3);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(4);
   });
 
   it('Should handle updating events', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.updateEvent({ id: '13', subject: 'Updated Subject' });
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
     expect(calendarObj.settings.events[12].subject).toEqual('Updated Subject');
     expect(calendarObj.settings.events[12].id).toEqual('13');
   });
@@ -266,7 +267,7 @@ describe('Calendar API', () => { //eslint-disable-line
     expect(document.getElementById('monthview-datepicker-field').value).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
-    expect(document.querySelectorAll('.calendar-event').length).toEqual(4);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(11);
   });
 
   it('Should update locale when passing settings in ', () => {
