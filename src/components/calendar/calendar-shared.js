@@ -193,9 +193,9 @@ calendarShared.cleanEventData = function cleanEventData(
   }
 
   if (event.id === undefined && addPlaceholder) {
-    const lastId = this.settings.events.length === 0
+    const lastId = events.length === 0
       ? 0
-      : parseInt(this.settings.events[this.settings.events.length - 1].id, 10);
+      : parseInt(events[events.length - 1].id, 10);
     event.id = (lastId + 1).toString();
   }
 
