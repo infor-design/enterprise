@@ -11,7 +11,7 @@ const events = require('../../../app/data/events');
 let weekViewEl;
 let weekViewAPI;
 
-describe('WeekView API', () => {
+describe('WeekView API', () => { //eslint-disable-line
   beforeEach(() => {
     weekViewEl = null;
     weekViewAPI = null;
@@ -70,7 +70,7 @@ describe('WeekView API', () => {
   });
 
   it('Should render week start and end day', () => {
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('December 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll Day');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 Sunday');
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 Saturday');
@@ -79,7 +79,7 @@ describe('WeekView API', () => {
     Soho.Locale.set('sv-SE'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('december 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('december 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('TimmeHela dagen');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 söndag');
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 lördag');
@@ -88,7 +88,7 @@ describe('WeekView API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ذو الحجة 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('ساعةطوال اليوم');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 الأحد');
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 السبت');
@@ -117,25 +117,25 @@ describe('WeekView API', () => {
     Soho.Locale.set('en-US'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('December 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
 
     Locale.set('ja-JP');
     Soho.Locale.set('ja-JP'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('2019年 12月');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('2019年 12月');
 
     Locale.set('ar-SA');
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ذو الحجة 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 2019');
 
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('Dezember 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Dezember 2019');
   });
 
   it('Should populate month name spanning months', () => {
@@ -144,7 +144,7 @@ describe('WeekView API', () => {
 
     weekViewAPI.showWeek(new Date(2020, 0, 31), new Date(2020, 1, 6));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('Jan - February 2020');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Jan - February 2020');
   });
 
   it('Should populate month name spanning years', () => {
@@ -153,25 +153,25 @@ describe('WeekView API', () => {
 
     weekViewAPI.showWeek(new Date(2019, 11, 31), new Date(2020, 0, 6));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('Dec 2019 - Jan 2020');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Dec 2019 - Jan 2020');
   });
 
   it('Should move to next month and back to today', () => {
     document.body.querySelector('.btn-icon.next').click();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('December 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
     document.body.querySelector('.hyperlink.today').click();
 
     const testDate = new Date();
     const stringDate = testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual(stringDate);
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual(stringDate);
   });
 
   it('Should be able to render a single day', () => {
     weekViewAPI.showWeek(new Date(2019, 9, 21), new Date(2019, 9, 21));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
 
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21 Monday');
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(2);
@@ -180,7 +180,7 @@ describe('WeekView API', () => {
   it('Should be able to render two days', () => {
     weekViewAPI.showWeek(new Date(2019, 9, 21), new Date(2019, 9, 22));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
 
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21 Monday');
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(3);
@@ -189,7 +189,7 @@ describe('WeekView API', () => {
   it('Should be able to render two weeks', () => {
     weekViewAPI.showWeek(new Date(2019, 8, 16), new Date(2019, 8, 29));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2019');
 
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('16 Monday');
     expect(document.body.querySelector('thead tr th:nth-child(15)').textContent.trim()).toEqual('29 Sunday');

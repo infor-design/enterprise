@@ -9,7 +9,7 @@ const eventTypes = require('../../../app/data/event-types');
 let weekViewEl;
 let weekViewAPI;
 
-describe('WeekView Events', () => {
+describe('WeekView Events', () => { //eslint-disable-line
   beforeEach(() => {
     weekViewEl = null;
     weekViewAPI = null;
