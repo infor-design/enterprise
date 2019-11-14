@@ -197,7 +197,7 @@ describe('Calendar specific month tests', () => {
   });
 
   it('should offer a right click menu', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await browser.actions().mouseMove(event).perform();
@@ -209,11 +209,11 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
     await element.all(by.css('#calendar-actions-menu a')).first().click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
   });
 
   it('Should add new events on click and cancel', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -224,11 +224,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.css('.calendar-popup .btn-close')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
   it('Should add new events on click and submit', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -239,7 +239,7 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 });
 
@@ -376,46 +376,4 @@ describe('Calendar WeekView settings tests', () => {
 
     expect(await element(by.css('.week-view ')).isDisplayed()).toBe(true);
   });
-});
-
-describe('Calendar Switch to Day view', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/calendar/test-specific-month?layout=nofrills');
-    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
-  });
-
-  it('Should render without error', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
-    await utils.checkForErrors();
-  });
-
-  if (!utils.isCI()) {
-    it('Should switch to day', async () => {
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await element(by.css('.week-view')).isDisplayed()).toBe(false);
-      await element.all(by.cssContainingText('.monthview-table td', '12')).first().click();
-
-      const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
-      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-
-      const searchEl = await element(by.css('.dropdown-search'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(searchEl), config.waitsFor);
-
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
-      await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
-
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.week-view-table .calendar-event')).last()), config.waitsFor);
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await element(by.css('.week-view-table .calendar-event')).isDisplayed()).toBe(true);
-      expect(await element.all(by.css('.week-view-table .calendar-event')).count()).toEqual(1);
-      expect(await element(by.css('.week-view-table .calendar-event')).getText()).toEqual('Birthday Off');
-    });
-  }
 });

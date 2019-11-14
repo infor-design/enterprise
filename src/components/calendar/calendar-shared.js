@@ -124,8 +124,21 @@ calendarShared.cleanEventData = function cleanEventData(
   eventTypes,
 ) {
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-  let startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
-  let endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+  let startDate = currentDate;
+  let endDate = currentDate;
+
+  if (event.startsLocale && event.endsLocale) {
+    startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
+    endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+  }
+
+  if (typeof event.starts === 'string' || !event.startsLocale) {
+    startDate = new Date(event.starts);
+  }
+
+  if (typeof event.ends === 'string' || !event.endsLocale) {
+    endDate = new Date(event.ends);
+  }
 
   if (!Locale.isValidDate(startDate)) {
     startDate = currentDate;

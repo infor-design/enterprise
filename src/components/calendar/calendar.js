@@ -975,7 +975,11 @@ Calendar.prototype = {
    * @returns {date} the currently selected date on the control.
    */
   currentDate() {
-    return this.isIslamic ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+    const ret = this.isIslamic ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+    if (!Locale.isValidDate(ret)) {
+      return new Date();
+    }
+    return ret;
   },
 
   /**
