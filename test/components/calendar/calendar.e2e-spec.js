@@ -64,7 +64,7 @@ describe('Calendar index tests', () => {
   });
 
   it('Should be able to add with the modal', async () => {
-    const beforeCount = await element.all(by.css('.calendar-event')).count();
+    const beforeCount = await element.all(by.css('.calendar-monthview .calendar-event')).count();
     await element.all(by.cssContainingText('.monthview-table td', '13')).first().click();
     await browser.actions()
       .doubleClick(await element.all(by.cssContainingText('.monthview-table td', '13')).first())
@@ -77,9 +77,9 @@ describe('Calendar index tests', () => {
 
     let afterCount = await element.all(by.css('.calendar-event')).count();
 
-    expect(afterCount).toEqual(beforeCount + 1);
+    expect(afterCount).toEqual(beforeCount + 2);
 
-    await browser.actions().mouseMove(await element(by.cssContainingText('.calendar-event', 'Test Event'))).perform();
+    await browser.actions().mouseMove(await element(by.cssContainingText('.calendar-monthview .calendar-event', 'Test Event'))).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
 
     await browser.driver
@@ -87,7 +87,7 @@ describe('Calendar index tests', () => {
 
     await element.all(by.css('.popupmenu-wrapper li a')).first().click();
 
-    afterCount = await element.all(by.css('.calendar-event')).count();
+    afterCount = await element.all(by.css('.calendar-monthview .calendar-event')).count();
 
     expect(afterCount).toEqual(beforeCount);
   });

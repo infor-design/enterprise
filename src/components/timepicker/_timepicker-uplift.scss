@@ -19,6 +19,11 @@
   }
 }
 
+#timepicker-popup .dropdown + .icon {
+  right: 8px;
+  top: 3px;
+}
+
 html.is-firefox {
   .timepicker {
     + .icon,
