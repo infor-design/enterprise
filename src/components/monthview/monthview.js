@@ -423,6 +423,7 @@ MonthView.prototype = {
     let exYear;
     let exMonth;
     let exDay;
+    let foundSelected = false;
 
     this.dayMap = [];
     this.days.find('td').each(function (i) {
@@ -456,10 +457,11 @@ MonthView.prototype = {
           const tHours = elementDate.getHours();
           const tMinutes = elementDate.getMinutes();
           const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+          const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
-          const newDate = (new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds, 0);
-
-          if (newDate === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
+          const newDate = setHours(new Date(year, month, dayCnt));
+          if (newDate === setHours(elementDate) || newDate === setHours(self.currentDate)) {
+            foundSelected = true;
             th
               .addClass(`is-selected${(s.range.useRange ? ' range' : '')}`)
               .attr('aria-selected', 'true').attr('tabindex', '0');
@@ -506,6 +508,13 @@ MonthView.prototype = {
         nextMonthDayCnt++;
       }
     });
+
+    if (!foundSelected && !s.range.useRange) {
+      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(year, month, 1));
+      if (firstDay.length) {
+        firstDay[0].elem.addClass('is-selected').attr({ tabindex: 0, 'aria-selected': true });
+      }
+    }
 
     // Hide 6th Row if all disabled
     const row = this.days.find('tr').eq(5);
