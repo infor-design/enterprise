@@ -439,7 +439,7 @@ fdescribe('Datepicker custom format tests', () => {
 
 fdescribe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-disabled-dates');
+    await utils.setPage('/components/datepicker/example-disabled-dates?layout=nofrills');
   });
 
   it('Should support custom validation', async () => {
@@ -479,7 +479,7 @@ fdescribe('Datepicker disabled date tests', () => {
 
 fdescribe('Datepicker Legend Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-legend');
+    await utils.setPage('/components/datepicker/example-legend?layout=nofrills');
   });
 
   it('Should render a legend', async () => {
