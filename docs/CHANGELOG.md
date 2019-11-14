@@ -29,6 +29,7 @@
 - `[Datagrid]` Fixed an issue where string include zeroes not working with text filter. ([#2854](https://github.com/infor-design/enterprise/issues/2854))
 - `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
 - `[Datagrid]` Fixed an issue where the select children for tree was not working. ([#2961](https://github.com/infor-design/enterprise/issues/2961))
+- `[Datepicker]` Fixed an issue where the selected date was getting cleared and creating js error after changing month or year in Umalqura date and Calendar. ([#3093](https://github.com/infor-design/enterprise/issues/3093))
 - `[Datepicker]` Fixed an issue where the validation after body re-initialize was not working. ([#2410](https://github.com/infor-design/enterprise/issues/2410))
 - `[Datepicker]` Fixed an issue where the islamic-umalqura calendar was not working, when used with user vs settings locale and translate data was not loading from parent locale. ([#2878](https://github.com/infor-design/enterprise/issues/2878))
 - `[Datepicker]` Fixed layout issues in RTL mode, also the buttons are switched the to the opposite side now. ([#3068](https://github.com/infor-design/enterprise/issues/3068))
