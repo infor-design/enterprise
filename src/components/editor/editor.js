@@ -1727,23 +1727,27 @@ Editor.prototype = {
         }
       });
 
-    this.container
-      .on(`focusin.${COMPONENT_NAME}`, '.editor, .editor-source', function containerFocusHandler() {
-        const elem = $(this);
+    // Handle visual styles at the container level on blur/focus
+    function containerFocusHandler() {
+      const elem = $(this);
 
-        editorContainer.addClass('is-active');
-        setTimeout(() => {
-          if (elem.hasClass('error')) {
-            editorContainer.parent().find('.editor-toolbar').addClass('error');
-            editorContainer.parent().find('.editor-source').addClass('error');
-          }
-        }, 100);
-      })
-      .on(`focusout.${COMPONENT_NAME}`, '.editor, .editor-source', function containerBlurHandler() {
-        editorContainer.removeClass('is-active');
-        editorContainer.parent().find('.editor-toolbar').removeClass('error');
-        editorContainer.parent().find('.editor-source').removeClass('error');
-      });
+      editorContainer.addClass('is-active');
+      setTimeout(() => {
+        if (elem.hasClass('error')) {
+          editorContainer.parent().find('.editor-toolbar').addClass('error');
+          editorContainer.parent().find('.editor-source').addClass('error');
+        }
+      }, 100);
+    }
+    function containerBlurHandler() {
+      editorContainer.removeClass('is-active');
+      editorContainer.parent().find('.editor-toolbar').removeClass('error');
+      editorContainer.parent().find('.editor-source').removeClass('error');
+    }
+
+    this.container
+      .on(`focusin.${COMPONENT_NAME}`, '.editor, .editor-source', containerFocusHandler)
+      .on(`focusout.${COMPONENT_NAME}`, '.editor, .editor-source', containerBlurHandler);
 
     if (self.settings.onLinkClick) {
       editorContainer.on('click.editorlinks', 'a', (e) => {
@@ -1919,12 +1923,15 @@ Editor.prototype = {
     // Preview Mode
     const doPreviewMode = (res) => {
       let content = res || this.textarea.val();
+      content = xssUtils.sanitizeHTML(content);
+      content = this.getCleanedHtml(content);
+
       this.element.empty().removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
       this.switchToolbars();
       setTimeout(() => {
-        this.element.html(xssUtils.sanitizeHTML(content));
+        this.element.html(content);
         content = this.element.html();
         /**
          * Fires after preview mode activated.
