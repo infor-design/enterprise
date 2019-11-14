@@ -58,8 +58,8 @@ $('body').one('initialized', function () {
 });
 </script>
 
-{{={{{ }}}=}}
 <script id="tmpl-readonly" type="text/html">
+{{={{{ }}}=}}
   {{#event}}
   <div class="accordion-header is-expanded {{color}}">
     <a href="#">{{subject}}</a>
@@ -79,9 +79,20 @@ $('body').one('initialized', function () {
       {{/status}}
       <div class="field">
         <span class="label">Date</span>
+        {{#duration}}
         <span class="data">
-          {{startsLong}} to {{endsLong}}
+          {{startsLong}}
+              to
+          {{endsLong}}
         </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              to
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
       </div>
       <div class="field">
         <span class="label">Event Type</span>
@@ -112,6 +123,7 @@ $('body').one('initialized', function () {
   </div>
   {{/event}}
 </script>
+
 <script id="tmpl-modal" type="text/html">
   {{#event}}
   <div class="form-responsive row">

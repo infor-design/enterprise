@@ -8,7 +8,7 @@ let monthviewEl;
 let svgEl;
 let monthviewAPI;
 
-describe('Monthview API', () => { //eslint-disable-line
+describe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
     svgEl = null;
@@ -67,21 +67,21 @@ describe('Monthview API', () => { //eslint-disable-line
   });
 
   it('Should render month text and start day', () => {
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
 
     Locale.set('sv-SE');
     Soho.Locale.set('sv-SE'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('augusti 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('augusti 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('mån');
 
     Locale.set('ar-SA');
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 1440);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ربيع الأول 1440');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ربيع الأول 1440');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('السبت');
     expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('25');
     expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('1');
@@ -95,7 +95,7 @@ describe('Monthview API', () => { //eslint-disable-line
       locale: 'da-DK'
     });
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('maj 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('maj 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
   });
@@ -117,11 +117,11 @@ describe('Monthview API', () => { //eslint-disable-line
   it('Should move to next month and back', () => {
     $('button.next').click();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     $('button.prev').click();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
   });
 
@@ -136,60 +136,60 @@ describe('Monthview API', () => { //eslint-disable-line
     Soho.Locale.set('en-US'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
 
     Locale.set('ja-JP');
     Soho.Locale.set('ja-JP'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('2018年 8月');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('2018年 8月');
 
     Locale.set('ar-SA');
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('ربيع الأول 1440');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ربيع الأول 1440');
 
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
   });
 
   it('Should move to next month and back to today', () => {
     document.body.querySelector('button.next').click();
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('October 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2018');
     document.body.querySelector('.hyperlink.today').click();
 
     const testDate = new Date();
     const stringDate = testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual(stringDate);
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual(stringDate);
   });
 
   it('Should be able to select a day by date', () => {
     monthviewAPI.selectDay(new Date(2018, 7, 15));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('15');
 
     monthviewAPI.selectDay(new Date(2018, 8, 22));
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
   });
 
   it('Should be able to select a day by key', () => {
     monthviewAPI.selectDay('20180820');
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('August 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('20');
 
     monthviewAPI.selectDay('20180922');
 
-    expect(document.getElementById('monthview-datepicker-field').value).toEqual('September 2018');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
   });
 });

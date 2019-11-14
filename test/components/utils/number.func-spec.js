@@ -1,6 +1,6 @@
 import { numberUtils } from '../../../src/utils/number';
 
-describe('Number Utils', () => { //eslint-disable-line
+describe('Number Utils', () => {
   it('Should Replace toFixed', () => {
     for (let i = 0; i < 10000; i++) {
       const number = `${i}.${i}`;

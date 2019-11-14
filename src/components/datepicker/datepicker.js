@@ -2,7 +2,6 @@ import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { dateUtils } from '../../utils/date';
-import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
 
@@ -78,7 +77,6 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
- * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
@@ -130,7 +128,6 @@ const DATEPICKER_DEFAULTS = {
   locale: null,
   language: null,
   useUTC: false,
-  autoSize: false,
   hideButtons: false,
   showToday: true,
   onOpenCalendar: null,
@@ -191,7 +188,6 @@ DatePicker.prototype = {
     if (!this.settings.locale && !this.settings.language) {
       this.setCurrentCalendar();
     }
-    this.setSize();
   },
 
   /**
@@ -262,23 +258,6 @@ DatePicker.prototype = {
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
     this.mask();
-  },
-
-  /**
-   * Set size attribute based on current contents
-   * @private
-   * @returns {void}
-   */
-  setSize() {
-    if (!this.settings.autoSize) {
-      return;
-    }
-    const elem = this.element[0];
-    const value = elem.value;
-
-    const font = `${getComputedStyle(elem).fontSize} ${getComputedStyle(elem).fontFamily}`;
-    elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(value, 50, font)}px`;
   },
 
   /**
@@ -1197,8 +1176,6 @@ DatePicker.prototype = {
         this.element.trigger('change').trigger('input');
       }
     }
-
-    this.setSize();
   },
 
   /**
