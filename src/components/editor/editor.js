@@ -2374,7 +2374,7 @@ Editor.prototype = {
       }
 
       const button = $(buttons[i]).data('button');
-      if (tooltip && typeof tooltip.destroy === 'function') {
+      if (button && typeof button.destroy === 'function') {
         button.destroy();
       }
     }
