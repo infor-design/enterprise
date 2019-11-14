@@ -103,7 +103,7 @@ fdescribe('Datepicker example-index tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual();
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
     });
   }
 });
@@ -466,8 +466,8 @@ fdescribe('Datepicker disabled date tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('11/14/2018');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field')).sendKeys('11/14/2018');
+      await element(by.css('#date-field + .icon')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -494,8 +494,8 @@ fdescribe('Datepicker Legend Tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('2017-01-03');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field')).sendKeys('2017-01-03');
+      await element(by.css('#date-field + .icon')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
