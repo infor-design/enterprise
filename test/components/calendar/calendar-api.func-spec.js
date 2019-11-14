@@ -146,7 +146,7 @@ describe('Calendar API', () => {
     const endsDate = new Date(baseTime);
     endsDate.setHours(23, 59, 59, 999);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(26);
     const newEvent = {
       id: (settings.events.length + 1).toString(),
       subject: 'New Random Event',
@@ -158,27 +158,26 @@ describe('Calendar API', () => {
     };
     calendarObj.addEvent(newEvent);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(28);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(28);
   });
 
   it('Should handle adding events off the month', () => {
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(26);
 
     const newEvent = {
-      id: '6',
       subject: 'Discretionary Time Off',
       shortSubject: 'DTO',
       comments: 'Personal time',
       location: 'Canada Office',
       status: 'Approved',
-      starts: '2018-08-24T10:00:00.000',
-      ends: '2018-08-24T14:00:00.999',
+      starts: '2018-11-24T10:00:00.000',
+      ends: '2018-11-24T14:00:00.999',
       type: 'dto',
       isAllDay: false
     };
     calendarObj.addEvent(newEvent);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(19);
+    expect(document.querySelectorAll('.calendar-event').length).toEqual(27);
   });
 
   it('Should handle adding events in iso format', () => {
@@ -196,7 +195,7 @@ describe('Calendar API', () => {
     };
     calendarObj.addEvent(newEvent);
 
-    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(21);
+    expect(document.querySelectorAll('.calendar-event-title').length).toEqual(28);
   });
 
   it('Should handle clearing events', () => {
