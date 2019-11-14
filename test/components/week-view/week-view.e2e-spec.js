@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('WeekView index tests', () => {
+describe('WeekView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-index?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -19,7 +19,7 @@ fdescribe('WeekView index tests', () => {
   });
 });
 
-fdescribe('WeekView ajax loading tests', () => {
+describe('WeekView ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-ajax-events');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -39,7 +39,7 @@ fdescribe('WeekView ajax loading tests', () => {
   });
 });
 
-fdescribe('WeekView specific week tests', () => {  //eslint-disable-line
+describe('WeekView specific week tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-specific-week?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -81,7 +81,7 @@ fdescribe('WeekView specific week tests', () => {  //eslint-disable-line
   });
 });
 
-fdescribe('WeekView events tests', () => {  //eslint-disable-line
+describe('WeekView events tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-events?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -105,7 +105,7 @@ fdescribe('WeekView events tests', () => {  //eslint-disable-line
   }
 });
 
-fdescribe('WeekView Start Week tests', () => {  //eslint-disable-line
+describe('WeekView Start Week tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-start-week?layout=nofrills&locale=de-DE');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -124,7 +124,7 @@ fdescribe('WeekView Start Week tests', () => {  //eslint-disable-line
   });
 });
 
-fdescribe('WeekView updated tests', () => {  //eslint-disable-line
+describe('WeekView updated tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-updated?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -151,7 +151,7 @@ fdescribe('WeekView updated tests', () => {  //eslint-disable-line
   });
 });
 
-fdescribe('WeekView two weeks tests', () => {  //eslint-disable-line
+describe('WeekView two weeks tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-two-weeks?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -174,7 +174,7 @@ fdescribe('WeekView two weeks tests', () => {  //eslint-disable-line
   }
 });
 
-fdescribe('WeekView one day weeks tests', () => {  //eslint-disable-line
+describe('WeekView one day weeks tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-one-day?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -197,7 +197,7 @@ fdescribe('WeekView one day weeks tests', () => {  //eslint-disable-line
   }
 });
 
-fdescribe('WeekView two day tests', () => {  //eslint-disable-line
+describe('WeekView two day tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-two-day?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
