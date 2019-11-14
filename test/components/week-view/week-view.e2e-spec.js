@@ -56,7 +56,7 @@ describe('WeekView specific week tests', () => {  //eslint-disable-line
     await testDate.setMonth(11);
     await testDate.setFullYear(2019);
 
-    expect(await element(by.css('.week-view #monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.week-view #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   if (utils.isChrome() && utils.isCI()) {
