@@ -17,8 +17,8 @@
         <button type="button" id="modified-rows" class="btn">
           <span>Get Modified Rows</span>
         </button>
-        <button type="button" id="modified-rows-data-nodes-only" class="btn">
-          <span>Get Modified Rows(DataNodesOnly)</span>
+        <button type="button" id="modified-rows-only-changed-values" class="btn">
+          <span>Get Modified Rows(onlyChangedValues)</span>
         </button>
       </div>
     </div>
@@ -158,11 +158,11 @@
         console.log(modifiedRows);
         // alert('Number Modified Rows: ' + modifiedRows.length);
       });
-      $('#modified-rows-data-nodes-only').on('click', function () {
-        var modifiedRowsDataNodesOnly = gridApi.getModifiedRows(true);
-        console.log('modifiedRowsDataNodesOnly ++++');
-        console.log(modifiedRowsDataNodesOnly);
-        // alert('Number Modified Rows Data Nodes Only: ' + modifiedRowsDataNodesOnly.length);
+      $('#modified-rows-only-changed-values').on('click', function () {
+        var modifiedRowsOnlyChangedValues = gridApi.getModifiedRows(true);
+        console.log('modifiedRowsOnlyChangedValues ++++');
+        console.log(modifiedRowsOnlyChangedValues);
+        // alert('Number Modified Rows Only Changed Values: ' + modifiedRowsOnlyChangedValues.length);
       });
     });
   });

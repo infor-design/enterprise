@@ -9102,10 +9102,10 @@ Datagrid.prototype = {
   /**
   * Return an array containing all of the currently modified rows, the type of modification
   * and the cells that are dirty and the data.
-  * @param  {boolean} isDataNodesOnly If true will return an array of data nodes only
+  * @param  {boolean} onlyChangedValues If true will return an array of only changed values
   * @returns {array} An array showing the dirty row info.
   */
-  getModifiedRows(isDataNodesOnly) {
+  getModifiedRows(onlyChangedValues) {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     const modified = [];
@@ -9116,8 +9116,8 @@ Datagrid.prototype = {
       // First add the dirty rows
       if (this.isRowDirty(i)) {
         data.type = 'dirty';
-        // No need to run trhu columns loop, if need data nodes only to returns
-        for (let j = 0; (!isDataNodesOnly && (j < this.dirtyArray[i].length)); j++) {
+        // No need to run trhu columns loop, if need only changed values to returns
+        for (let j = 0; (!onlyChangedValues && (j < this.dirtyArray[i].length)); j++) {
           const cellData = this.dirtyArray[i][j];
           if (typeof cellData !== 'undefined' && cellData.isDirty) {
             data.cells.push({ row: i, col: j, cellData });
@@ -9131,7 +9131,7 @@ Datagrid.prototype = {
       }
       // Add to modified
       if (typeof data.type !== 'undefined') {
-        modified.push(isDataNodesOnly ? node : data);
+        modified.push(onlyChangedValues ? node : data);
       }
     }
     return modified;

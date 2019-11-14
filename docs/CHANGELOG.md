@@ -4,7 +4,7 @@
 
 ### v4.24.0 Features
 
-- `[Datagrid]` Added support to get data nodes as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+- `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
 
 ### v4.24.0 Fixes
 

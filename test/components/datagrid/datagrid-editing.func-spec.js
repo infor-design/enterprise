@@ -93,7 +93,7 @@ describe('Datagrid Editing API', () => {
     expect(modifiedRows[3].type).toEqual('error');
   });
 
-  it('Should be able to get all modified rows data nodes only', () => {
+  it('Should be able to get all modified rows only changed values', () => {
     // Make a 3 cells dirty
     datagridObj.addToDirtyArray(0, 5, { originalVal: false, isDirty: false });
     datagridObj.updateCellNode(0, 5, true, false);
