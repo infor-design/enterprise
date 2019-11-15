@@ -562,9 +562,16 @@ Datagrid.prototype = {
         this.originalDataset ? this.originalDataset : this.settings.dataset;
     const rowData = arrayToUse[row];
 
-    this.unselectRow(row, noSync);
+    this.saveDirtyRows();
 
+    this.unselectRow(row, noSync);
     arrayToUse.splice(row, 1);
+    this.restoreDirtyRows();
+
+    if (this.settings.selectable) {
+      this.syncDatasetWithSelectedRows();
+    }
+
     this.preventSelection = true;
     if (!noSync) {
       this.setRowGrouping();
