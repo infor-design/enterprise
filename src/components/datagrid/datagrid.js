@@ -569,7 +569,9 @@ Datagrid.prototype = {
     this.restoreDirtyRows();
 
     if (this.settings.selectable) {
-      this.syncDatasetWithSelectedRows();
+      if (!this.settings.groupable && (this.settings.groupable && this.originalDataset)) {
+        this.syncDatasetWithSelectedRows();
+      }
     }
 
     this.preventSelection = true;
