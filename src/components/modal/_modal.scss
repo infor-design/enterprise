@@ -383,6 +383,10 @@ body.modal-engaged {
     max-width: 369px;
     padding: 15px 0 25px;
     text-align: left;
+
+    .modal-body-wrapper {
+      padding: 5px 20px;
+    }
   }
 
   .alert-text {
