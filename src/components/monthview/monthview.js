@@ -356,6 +356,8 @@ MonthView.prototype = {
       month = 0;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
     if (month < 0) {
@@ -363,6 +365,8 @@ MonthView.prototype = {
       month = 11;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
     this.currentDay = this.currentDay || now.getDate();

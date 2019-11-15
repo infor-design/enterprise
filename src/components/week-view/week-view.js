@@ -601,7 +601,10 @@ WeekView.prototype = {
     this.header = $('<div class="week-view-header"><div class="calendar-toolbar"></div></div>').appendTo(this.element);
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
-      onOpenCalendar: () => this.currentDate || this.settings.startDate,
+      onOpenCalendar: () => {
+        debugger;
+        return this.currentDate || this.settings.startDate;
+      },
       locale: this.settings.locale,
       year: this.currentYear,
       month: this.currentMonth,
