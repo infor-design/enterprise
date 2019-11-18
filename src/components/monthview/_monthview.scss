@@ -417,7 +417,7 @@
     //Other month color
     &.alternate {
       .day-text {
-        color: $datepicker-alternate-month-color;
+        color: $datepicker-alternate-month-color !important;
       }
     }
 
@@ -445,7 +445,7 @@
     &.is-colored.is-selected .day-text {
       height: 34px;
       line-height: 34px;
-      margin: 2px;
+      margin: 3px;
       width: 34px;
     }
 
@@ -469,8 +469,6 @@
 
     &.is-selected,
     &.is-selected:hover {
-      // color: $datepicker-selected-color;
-
       .day-text {
         background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
