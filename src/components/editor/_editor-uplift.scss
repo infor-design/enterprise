@@ -10,7 +10,6 @@
 
   [class*='btn'] {
     font-size: normal;
-    margin-top: 4px;
     min-height: 24px;
 
     &:first-child {
@@ -62,6 +61,14 @@
 
 .editor-container .icon-dirty {
   top: 61px;
+}
+
+.is-safari {
+  .flex-toolbar.formatter-toolbar {
+    > * {
+      display: unset;
+    }
+  }
 }
 
 // IE/Edge have different icon alignments

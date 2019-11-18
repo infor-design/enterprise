@@ -196,7 +196,7 @@ Editor.prototype = {
     this.initTextarea();
 
     this.bindParagraphCreation().bindTab();
-    this.initToolbar()
+    this.createToolbar()
       .bindButtons()
       .bindModals()
       .bindAnchorPreview();
@@ -283,15 +283,6 @@ Editor.prototype = {
     return this;
   },
 
-  initToolbar() {
-    if (this.toolbar) {
-      return this;
-    }
-
-    this.createToolbar();
-    return this;
-  },
-
   // Set excluded buttons
   setExcludedButtons() {
     const excludeButtons = (elements, toExclude) => {
@@ -332,7 +323,15 @@ Editor.prototype = {
     return setButtons();
   },
 
+  /**
+   * @private
+   * @returns {this} component instance
+   */
   createToolbar() {
+    if (this.toolbar) {
+      return this;
+    }
+
     const toolbarCssClasses = [
       this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar',
       'editor-toolbar',
@@ -398,7 +397,7 @@ Editor.prototype = {
 
     // Rebind everything to the new element
     this.setupTextareaEvents();
-    this.initToolbar();
+    this.createToolbar();
     this.bindButtons().bindModals().bindAnchorPreview();
     this.bindSelect().bindPaste().setupKeyboardEvents();
     this.toolbar.find('button').button();
