@@ -2562,11 +2562,16 @@ Dropdown.prototype = {
 
     this.setBadge(option);
 
-    if (env.browser.name === 'ie' && env.browser.version === '11') {
-      const ieHtml = $(`#${this.element.attr('id')}`).html();
-      const ieVal = $(`#${this.element.attr('id')}`).val();
-      this.element.html(ieHtml);
-      this.element.val(ieVal);
+    const id = this.element.attr('id');
+    if (env.browser.isIE11() && id) {
+      const ieHtml = $(`#${id}`).html();
+      const ieVal = $(`#${id}`).val();
+      if (ieHtml) {
+        this.element.html(ieHtml);
+      }
+      if (ieVal) {
+        this.element.val(ieVal);
+      }
     }
   },
 
