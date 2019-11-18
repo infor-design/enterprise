@@ -241,8 +241,9 @@ CalendarToolbar.prototype = {
       self.element.trigger('change-date', { selectedDate: picker.currentDate, isToday: false });
     });
 
-    this.todayLink.off('click.calendar-toolbar-t').on('click.calendar-toolbar-t', () => {
+    this.todayLink.off('click.calendar-toolbar-t').on('click.calendar-toolbar-t', (e) => {
       this.element.trigger('change-date', { selectedDate: this.currentDate, isToday: true });
+      e.preventDefault();
     });
 
     this.element.find('.prev').off('click.calendar-toolbar-b').on('click.calendar-toolbar-b', () => {
