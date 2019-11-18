@@ -5184,6 +5184,12 @@ Datagrid.prototype = {
     // Shrink or add colgroups
     this.updateColumnGroup();
 
+    // Handle initially hidden column
+    if (this.headerWidths[idx] && this.headerWidths[idx].width < 1) {
+      this.clearHeaderCache();
+      this.syncColGroups();
+    }
+
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
       let colSpan = this.headerContainer.find('th').eq(idx).attr('colspan');
