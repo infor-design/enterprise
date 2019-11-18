@@ -78,7 +78,7 @@ EmptyMessage.prototype = {
         '</div>').appendTo(this.element);
 
       if (opts.button.click) {
-        this.element.on('click', opts.button.click);
+        this.element.on('click', 'button', opts.button.click);
       }
     }
 
@@ -104,6 +104,7 @@ EmptyMessage.prototype = {
   destroy() {
     $.removeData(this.element[0], COMPONENT_NAME);
     this.element.empty();
+    this.element.removeClass('empty-message');
   }
 };
 
