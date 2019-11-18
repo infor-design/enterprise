@@ -101,9 +101,9 @@ describe('Datepicker example-index tests', () => {
       await element(by.css('#date-field-normal + .icon')).click();
 
       const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleepLonger);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toBeLessThan(0.2);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
     });
   }
 });
@@ -439,7 +439,7 @@ describe('Datepicker custom format tests', () => {
 
 describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-disabled-dates');
+    await utils.setPage('/components/datepicker/example-disabled-dates?layout=nofrills');
   });
 
   it('Should support custom validation', async () => {
@@ -463,11 +463,23 @@ describe('Datepicker disabled date tests', () => {
 
     expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field')).sendKeys('11/14/2018');
+      await element(by.css('#date-field + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-disabled-dates')).toEqual(0);
+    });
+  }
 });
 
 describe('Datepicker Legend Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-legend');
+    await utils.setPage('/components/datepicker/example-legend?layout=nofrills');
   });
 
   it('Should render a legend', async () => {
@@ -479,6 +491,18 @@ describe('Datepicker Legend Tests', () => {
     expect(await element.all(by.css('.monthview-legend-item')).count()).toEqual(5);
     expect(await element.all(by.css('.is-colored')).count()).toEqual(17);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field')).sendKeys('2017-01-03');
+      await element(by.css('#date-field + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-legend')).toEqual(0);
+    });
+  }
 });
 
 describe('Datepicker Destroy Mask Tests', () => {
