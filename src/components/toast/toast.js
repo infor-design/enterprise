@@ -18,7 +18,8 @@ const TOAST_DEFAULTS = {
   timeout: 6000,
   allowLink: false,
   draggable: false,
-  savePosition: false
+  savePosition: false,
+  uniqueId: null
 };
 
 /**
@@ -38,6 +39,7 @@ const TOAST_DEFAULTS = {
  * @param {boolean} [settings.allowLink = false] if true, allows user to put links in the toast message.
  * @param {boolean} [settings.draggable = false] if true, allows user to drag/drop the toast container.
  * @param {boolean} [settings.savePosition] Save positon to local storage.
+ * @param {string} [settings.uniqueId] A uniqueId to save positon to local storage, so same saved positon can be use for whole app.
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -355,13 +357,7 @@ Toast.prototype = {
   */
   uniqueId(suffix) {
     suffix = (suffix === undefined || suffix === null) ? '' : suffix;
-    const uniqueid = `toast-${window.location.pathname.split('/').pop()
-      .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-      .replace(/[^-\w]+/g, '')
-      .replace(/\./g, '-')
-      .replace(/ /g, '-')
-      .replace(/%20/g, '-')}-${suffix}`;
-
+    const uniqueid = `toast-${this.settings.uniqueid || ''}-${suffix}`;
     return uniqueid.replace(/--/g, '-').replace(/-$/g, '');
   },
 

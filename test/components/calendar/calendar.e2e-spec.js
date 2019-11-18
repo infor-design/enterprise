@@ -212,6 +212,25 @@ describe('Calendar specific month tests', () => {
 
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
+
+  it('Should be able to add with the modal', async () => {
+    const beforeCount = await element.all(by.css('.calendar-monthview .calendar-event')).count();
+    await element.all(by.cssContainingText('.monthview-table td', '13')).first().click();
+    await browser.actions()
+      .doubleClick(await element.all(by.cssContainingText('.monthview-table td', '13')).first())
+      .perform();
+
+    expect(beforeCount).toEqual(16);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('subject'))), config.waitsFor);
+    await element(by.id('subject')).sendKeys('Test Event');
+    await element(by.id('submit')).click();
+
+    const afterCount = await element.all(by.css('.calendar-event')).count();
+
+    expect(afterCount).toEqual(beforeCount + 1);
+  });
 });
 
 describe('Calendar only calendar', () => {

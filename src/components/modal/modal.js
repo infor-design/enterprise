@@ -42,6 +42,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
+* @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -58,7 +59,8 @@ const MODAL_DEFAULTS = {
   showCloseBtn: false,
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
-  breakpoint: 'phone-to-tablet'
+  breakpoint: 'phone-to-tablet',
+  overlayOpacity: 0.7
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -173,7 +175,7 @@ Modal.prototype = {
     }
 
     if (!this.overlay) {
-      this.overlay = $('<div class="overlay"></div>');
+      this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
     }
 
     this.oldActive = this.trigger;

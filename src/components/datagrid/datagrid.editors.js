@@ -428,6 +428,9 @@ const editors = {
       const selected = this.input.find(':selected');
       let val = selected.attr('value');
       const dataType = selected.attr('data-type');
+      if (!val && this.input.find('option[selected]').length > 0) {
+        val = this.input.find('option[selected]').attr('value');
+      }
 
       // For non-string option values (number, boolean, etc.),
       // convert string attr value to proper type
