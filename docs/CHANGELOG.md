@@ -11,6 +11,7 @@
 - `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
 - `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
+- `[Datagrid]` Fixed an issue where the grouping filter was not working after do sort. ([#3012](https://github.com/infor-design/enterprise/issues/3012))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
