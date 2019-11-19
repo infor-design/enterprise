@@ -89,7 +89,7 @@ describe('Calendar ajax loading tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(4);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(10);
   });
 
   it('Should render ajax loaded dates for sept 2018', async () => {
@@ -104,7 +104,7 @@ describe('Calendar ajax loading tests', () => {
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(2);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(8);
   });
 });
 
