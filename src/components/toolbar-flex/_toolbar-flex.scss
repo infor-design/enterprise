@@ -139,8 +139,8 @@ html[dir='rtl'] {
     &.buttonset {
       margin-left: 0;
 
-      [class^='btn'] {
-        margin-left: 15px; // reset
+      [class*='btn'] {
+        margin-left: 0;
         margin-right: 0;
       }
     }
