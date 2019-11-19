@@ -29,7 +29,7 @@ module.exports = function (app, defaults) {
     }
 
     // Sets a simulated response delay for API Calls
-    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) {
+    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) { //eslint-disable-line
       res.opts.delay = req.query.delay;
     }
 
