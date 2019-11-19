@@ -2,6 +2,10 @@
 
 ## v4.24.0
 
+### v4.24.0 Important Changes
+
+- `[Icons]` Reversed a change in previous versions to make alert icons all have a white background as this caused issues. Concerning alert icons there are now the following `icon-[name]` - which will have transparent background, in Uplift these are linear in style, in soho these are solid in style. We also add a `icon-[name]-alert` for alert icons with a white background. If you need a white background you can use these otherwise we have restored the functionality from the 4.21 version, you might need a white background in calendar icons. Also the pending icon is fixed and now orange. ([#3052](https://github.com/infor-design/enterprise/issues/3052))
+
 ### v4.24.0 Features
 
 - `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
