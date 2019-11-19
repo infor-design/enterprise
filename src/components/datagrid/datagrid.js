@@ -5287,7 +5287,7 @@ Datagrid.prototype = {
             searchableTextCallback: item => item.name
           }
         })
-        .on('selected', (selectedEvent, args) => {
+        .on('selected', function (selectedEvent, args) {
           const chk = args.elem.find('.checkbox');
           const id = chk.attr('data-column-id');
           const isChecked = chk.prop('checked');
@@ -5299,12 +5299,23 @@ Datagrid.prototype = {
           }
           self.isColumnsChanged = true;
 
+          // Set listview dataset node state, to be in sync after filtering
+          const lv = { node: {}, api: $(this).data('listview') };
+          if (lv.api) {
+            const idx = self.columnIdxById(id);
+            if (idx !== -1 && lv.api.settings.dataset[idx]) {
+              lv.node = lv.api.settings.dataset[idx];
+            }
+          }
+
           if (!isChecked) {
             self.showColumn(id);
             chk.prop('checked', true);
+            lv.node.hidden = false;
           } else {
             self.hideColumn(id);
             chk.prop('checked', false);
+            lv.node.hidden = true;
           }
         });
 
