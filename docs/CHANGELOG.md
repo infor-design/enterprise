@@ -66,6 +66,7 @@
 - `[Locale]` Fixed an issue where cultures with a group of space was not parsing correctly. ([#2959](https://github.com/infor-design/enterprise/issues/2959))
 - `[Locale]` Fixed a problem loading nb-NO locale where it would fail to find translations and possibly error. ([#3035](https://github.com/infor-design/enterprise/issues/3035))
 - `[Lookup]` Fixed missing X button in searchfield on a mobile viewport. ([#2948](https://github.com/infor-design/enterprise/issues/2948))
+- `[Message]` Fixed an issue with an extra scroll bar, updated padding. ([#2964](https://github.com/infor-design/enterprise/issues/2964))
 - `[Modal]` Fixed a layout issue when using 2 or more buttons on some smaller devices. ([#3014](https://github.com/infor-design/enterprise/issues/3014))
 - `[Monthview]` Fixed an issue that the month/year text will reset when pressing cancel. ([#3080](https://github.com/infor-design/enterprise/issues/3080))
 - `[Monthview]` Fixed a layout issue on the header in IE 11. ([#2862](https://github.com/infor-design/enterprise/issues/2862))

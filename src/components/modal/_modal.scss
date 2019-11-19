@@ -493,6 +493,13 @@ body.modal-engaged {
   }
 }
 
+// Message specific styles
+.message {
+  .modal-body-wrapper {
+    padding: 5px 20px;
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {

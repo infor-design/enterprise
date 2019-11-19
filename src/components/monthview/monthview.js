@@ -356,6 +356,8 @@ MonthView.prototype = {
       month = 0;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
     if (month < 0) {
@@ -363,6 +365,8 @@ MonthView.prototype = {
       month = 11;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
     this.currentDay = this.currentDay || now.getDate();
@@ -425,6 +429,12 @@ MonthView.prototype = {
     let exDay;
     let foundSelected = false;
 
+    // Set selected state
+    const setSelected = (el, isFound) => {
+      foundSelected = isFound;
+      el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+    };
+
     this.dayMap = [];
     this.days.find('td').each(function (i) {
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
@@ -451,7 +461,7 @@ MonthView.prototype = {
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
           if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+            setSelected(th, true);
           }
         } else {
           const tHours = elementDate.getHours();
@@ -461,10 +471,7 @@ MonthView.prototype = {
 
           const newDate = setHours(new Date(year, month, dayCnt));
           if (newDate === setHours(elementDate) || newDate === setHours(self.currentDate)) {
-            foundSelected = true;
-            th
-              .addClass(`is-selected${(s.range.useRange ? ' range' : '')}`)
-              .attr('aria-selected', 'true').attr('tabindex', '0');
+            setSelected(th, true);
           }
         }
 
@@ -512,7 +519,7 @@ MonthView.prototype = {
     if (!foundSelected && !s.range.useRange) {
       const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(year, month, 1));
       if (firstDay.length) {
-        firstDay[0].elem.addClass('is-selected').attr({ tabindex: 0, 'aria-selected': true });
+        setSelected(firstDay[0].elem, false);
       }
     }
 
