@@ -151,7 +151,7 @@ describe('WeekView updated tests', () => {  //eslint-disable-line
   });
 });
 
-describe('WeekView two weeks tests', () => {  //eslint-disable-line
+fdescribe('WeekView two weeks tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-two-weeks?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));

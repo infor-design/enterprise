@@ -79,7 +79,7 @@ describe('Personalization example-tabs tests', () => {
   }
 });
 
-describe('Personalization form tests', () => {
+fdescribe('Personalization form tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
   });
@@ -100,7 +100,7 @@ describe('Personalization form tests', () => {
   }
 });
 
-describe('Personalization alternate form tests', () => {
+fdescribe('Personalization alternate form tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-form3.html?layout=nofrills');
   });
