@@ -1039,6 +1039,7 @@ describe('Datagrid paging client side tests', () => {
   it('Should be able to move to keyword search and sort', async () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
@@ -1052,6 +1053,7 @@ describe('Datagrid paging client side tests', () => {
   it('Should be able to move to keyword search and page', async () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
@@ -2167,6 +2169,7 @@ describe('Datagrid on modal with no default size', () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
       await element(by.id('h1-title')).click();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toBeLessThan(0.2);
     });
   }
