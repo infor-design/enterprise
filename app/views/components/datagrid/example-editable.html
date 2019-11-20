@@ -74,6 +74,11 @@
       columns = [],
       data = [];
 
+    var isDisabled = function(row, cell, value, item) {
+      console.log(item);
+      return (row % 2 === 0);
+    }
+
     // Some Sample Data
     data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity: '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate: '00000000', portable: false, action: 1, description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
     data.push({ id: 2, productId: 2241202, productName: 'console.log', activity: 'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: '', portable: false, action: 1, description: 'The kit has an air blow gun that can be used for cleaning'});
@@ -89,14 +94,11 @@
     columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
-    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row, cell, value, col, item) {
-        //For this fake logic just disable odd rows
-        return (row % 2 === 0);
-      }});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: isDisabled});
     columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date', width: 120});
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required',
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', isEditable: isDisabled,
     options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
     });
 

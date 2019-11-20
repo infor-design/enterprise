@@ -580,3 +580,51 @@ describe('Dropdown xss tests', () => {
     await utils.checkForErrors();
   });
 });
+
+fdescribe('Dropdown badge tests', () => { //eslint-disable-line
+  it('Should not error on left to right', async () => {
+    await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
+    await utils.checkForErrors();
+  });
+
+  it('Should not error on right to left', async () => {
+    await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should look good on left to right', async () => {
+      await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
+      const dropdownEl = element(by.css('div.dropdown'));
+      const dropdownElList = element(by.id('dropdown-list'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+      await clickOnDropdown();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+    });
+
+    it('Should look good on right to left', async () => {
+      await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
+      const dropdownEl = element(by.css('div.dropdown'));
+      const dropdownElList = element(by.id('dropdown-list'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+      await clickOnDropdown();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+    });
+  }
+});
