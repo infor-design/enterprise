@@ -22,20 +22,19 @@
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
 - `[Dropdown]` Fix a layout issue in RTL on the badges example. ([#3150](https://github.com/infor-design/enterprise/issues/3150))
-- `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
-- `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
-- `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
-- `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
-- `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
 - `[Editor]` Corrected CSP errors and broken images in the Editor Preview when inserting the default image. ([#2937](https://github.com/infor-design/enterprise/issues/2937))
 - `[Editor]` Fixes issues with Editors configured to use Flex Toolbar, where toolbar buttons were not properly triggering selected events, and overflowed items were not triggering editor actions as expected. ([#2938](https://github.com/infor-design/enterprise/issues/2938))
 - `[Editor]` The Editor now uses the same routine for stripping disallowed tags and attributes from pasted content when it transitions from the Source View to the Preview. This makes it impossible to paste/type HTML tags containing a `style` property with CSS rules that are not allowed to be applied to inline Editor elements, such as `font-family`. ([#2987](https://github.com/infor-design/enterprise/issues/2987))
 - `[Editor]` Fixed a problem in Safari that would cause scrolling to occur inside Flex Toolbars unexpectedly. ([#3033](https://github.com/infor-design/enterprise/issues/3033))
 - `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
+- `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
+- `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
+- `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
 
 ### v4.24.0 Chores & Maintenance
+- `[Toolbar Searchfield]` Increased the amount of text shown when the Searchfield is not expanded, and appears similar to a button.  Also modified some styles in all themes to make alignment of the text better between the Searchfield and buttons when the Searchfield is not expanded. ([#2944](https://github.com/infor-design/enterprise/issues/2944))
 
 ## v4.23.0
 
