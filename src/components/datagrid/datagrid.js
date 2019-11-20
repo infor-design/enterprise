@@ -8358,7 +8358,7 @@ Datagrid.prototype = {
       return false;
     }
 
-    if (this.isRowDisabled(row)) {
+    if (this.isRowDisabled(row) || !this.activeCell.node) {
       return false;
     }
 
