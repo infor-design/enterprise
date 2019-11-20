@@ -582,7 +582,6 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 .tooltip.is-personalizable p,
 .tooltip.is-personalizable .chart-swatch .swatch-row span,
 .tooltip.is-personalizable .chart-swatch .swatch-row b {
-  -webkit-text-fill-color: ${colors.tooltipText};
   color: ${colors.tooltipText};
 }
 .tooltip.is-personalizable.top .arrow::after {

@@ -1402,7 +1402,6 @@ html[dir='rtl'] {
   &.tooltip-accordion-style {
     background-color: $theme-color-palette-white;
     color: $theme-color-palette-black;
-    -webkit-text-fill-color: $theme-color-palette-black;
 
     .arrow {
       display: none;
@@ -1413,7 +1412,6 @@ html[dir='rtl'] {
 
       p {
         color: $theme-color-palette-black;
-        -webkit-text-fill-color: $theme-color-palette-black;
       }
     }
   }

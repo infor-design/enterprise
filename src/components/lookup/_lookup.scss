@@ -28,7 +28,6 @@
       background-color: $input-color-initial-background;
       border: 1px solid $input-color-initial-border;
       color: $input-color;
-      -webkit-text-fill-color: $input-color;
 
       &:not([disabled]) + .trigger {
         cursor: pointer;
