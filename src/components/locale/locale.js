@@ -583,7 +583,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('H', hours);
     ret = ret.replace('mm', this.pad(mins, 2));
     ret = ret.replace('ss', this.pad(seconds, 2));
-    ret = ret.replace('SSS', this.pad(millis, 0));
+    ret = ret.replace('SSS', this.pad(millis, 3));
 
     // months
     ret = ret.replace('MMMM', cal ? cal.months.wide[month] : null); // full

@@ -1334,7 +1334,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-describe('Datagrid Checkbox Disabled Editor', () => {
+describe('Datagrid checkbox disabled editor tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
 
@@ -1848,6 +1848,54 @@ describe('Datagrid Custom Tooltip tests', () => {
 
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
     expect(await tooltip.getText()).toEqual('Row: 0 Cell: 3 Value: Error');
+  });
+});
+
+describe('Datagrid custom number format tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-number-formats?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should format numbers correctly', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('145000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('210.990');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('$210.99');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('14,500,000 %');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getText()).toEqual('145,000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(7)')).getText()).toEqual('145,000.00');
+  });
+});
+
+describe('Datagrid custom date format tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-date-formats?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should format dates correctly', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('3/15/2016');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('3/15/2016 12:30:36');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('3/15/2016 12:30 PM');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('2016-03-15T12:30:36.120');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(4)')).getText()).toEqual('2016-03-15T00:30:36.008');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(4)')).getText()).toEqual('2014-07-03T01:00:00.000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('3/15/2016');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getText()).toEqual('12:30:36 PM');
   });
 });
 
