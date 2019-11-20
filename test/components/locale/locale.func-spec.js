@@ -533,6 +533,20 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
+  it('Should parseDate in fi-FI', () => {
+    Locale.set('fi-FI');
+
+    expect(Locale.parseDate('18.10.2019 7.15', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
+    expect(Locale.parseDate('18.10.2019 7.15', Locale.calendar().dateFormat.datetime, true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short, true).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
+  });
+
+  it('Should parseDate with single digit formats', () => {
+    expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm').getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm', true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+  });
+
   it('Should be able to parse UTC toISOString', () => {
     Locale.set('en-US');
 

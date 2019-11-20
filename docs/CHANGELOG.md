@@ -2,6 +2,10 @@
 
 ## v4.24.0
 
+### v4.24.0 Important Changes
+
+- `[Icons]` Reversed a change in previous versions to make alert icons all have a white background as this caused issues. Concerning alert icons there are now the following `icon-[name]` - which will have transparent background, in Uplift these are linear in style, in soho these are solid in style. We also add a `icon-[name]-alert` for alert icons with a white background. If you need a white background you can use these otherwise we have restored the functionality from the 4.21 version, you might need a white background in calendar icons. Also the pending icon is fixed and now orange. ([#3052](https://github.com/infor-design/enterprise/issues/3052))
+
 ### v4.24.0 Deprecation
 
 ### v4.24.0 Features
@@ -13,10 +17,13 @@
 - `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
 - `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
+- `[Datagrid]` Fixed an issue where the grouping filter was not working after do sort. ([#3012](https://github.com/infor-design/enterprise/issues/3012))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
+- `[Dropdown]` Fix a layout issue in RTL on the badges example. ([#3150](https://github.com/infor-design/enterprise/issues/3150))
 - `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
+- `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))

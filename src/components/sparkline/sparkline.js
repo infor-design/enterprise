@@ -361,7 +361,7 @@ Sparkline.prototype = {
    * @returns {object} The api for chaining.
    */
   updated(settings) {
-    const type = settings.type || this.settings.type;
+    const type = (settings && settings.type) || this.settings.type;
     this.settings = settings;
     this.settings.type = type;
     this.element.empty();
