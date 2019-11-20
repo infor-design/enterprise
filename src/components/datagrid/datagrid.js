@@ -437,10 +437,10 @@ Datagrid.prototype = {
     this.isInitialRender = true;
     self.table.empty();
     self.clearHeaderCache();
+    self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.element.append(this.bodyContainer);
     self.renderHeader();
-    self.container = self.element.closest('.datagrid-container');
 
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
@@ -3352,10 +3352,6 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (!self.activeCell || !self.activeCell.node) {
-      self.activeCell = { node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
-    }
-
     if (self.activeCell.isFocused) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
@@ -3400,7 +3396,18 @@ Datagrid.prototype = {
         self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
         self.headerTableRight.width(w);
       }
+      this.activateFirstCell();
     });
+  },
+
+  /**
+   * Set active node to first cell and focus if possible
+   * @private
+   */
+  activateFirstCell() {
+    if (!this.activeCell || !this.activeCell.node) {
+      this.activeCell = { node: this.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
+    }
   },
 
   /**
@@ -9648,7 +9655,6 @@ Datagrid.prototype = {
       container = row.closest('.datagrid-container');
       row = row.attr('aria-rowindex') - 1;
     }
-
     return container.find(`> .datagrid-body-container > .datagrid-body > table > tbody > tr[aria-rowindex="${row + 1}"]`);
   },
 
