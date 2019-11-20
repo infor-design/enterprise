@@ -9628,15 +9628,14 @@ Datagrid.prototype = {
    * @returns {object} The dom jQuery node
    */
   rowNodes(row) {
+    let container = this.element;
+
     if (row instanceof jQuery) {
+      container = row.closest('.datagrid-container');
       row = row.attr('aria-rowindex') - 1;
     }
-    const getRow = el => (el ? el.find(`tr[aria-rowindex="${row + 1}"]`) : $());
-    const leftNodes = getRow(this.tableBodyLeft);
-    const centerNodes = getRow(this.tableBody);
-    const rightNodes = getRow(this.tableBodyRight);
 
-    return $(centerNodes).add(leftNodes).add(rightNodes);
+    return container.find(`> .datagrid-body-container > .datagrid-body > table > tbody > tr[aria-rowindex="${row + 1}"]`);
   },
 
   /**
