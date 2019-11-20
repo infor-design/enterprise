@@ -581,7 +581,7 @@ describe('Dropdown xss tests', () => {
   });
 });
 
-fdescribe('Dropdown badge tests', () => { //eslint-disable-line
+describe('Dropdown badge tests', () => {
   it('Should not error on left to right', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
     await utils.checkForErrors();
@@ -601,13 +601,13 @@ fdescribe('Dropdown badge tests', () => { //eslint-disable-line
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-badges-init')).toEqual(0);
       await clickOnDropdown();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-badges-open')).toEqual(0);
     });
 
     it('Should look good on right to left', async () => {
@@ -618,13 +618,13 @@ fdescribe('Dropdown badge tests', () => { //eslint-disable-line
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-badges-init-rtl')).toEqual(0);
       await clickOnDropdown();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-badges-open-rtl')).toEqual(0);
     });
   }
 });
