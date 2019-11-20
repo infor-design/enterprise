@@ -673,49 +673,6 @@ SearchField.prototype = {
   },
 
   /**
-  * Fires when the searchfield is focused.
-  * @event focusin
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  * /
-  /**
-  * Fires when a key is pressed inside of the searchfield.
-  * @event keydown
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  *  Fires when a `collapse` event is triggered externally on the searchfield.
-  * @event collapse
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  *  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
-  * @event beforeopen
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  * Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
-  * @event navigate
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  * Fires when a `keydown` event is triggered at the `document` level.
-  * @event keydown
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-   * Fires when a `resize` event is triggered at the `body` level.
-   * @event resize
-   * @memberof ToolbarSearchfield
-   * @property {object} event - The jquery event object
-   */
-
-  /**
    * Sets up the event-listening structure for this component instance.
    * @private
    * @returns {this} component instance
@@ -1536,6 +1493,13 @@ SearchField.prototype = {
    * @param  {object} anchor the link object
    */
   handleCategorySelected(e, anchor) {
+    /**
+     * Fires when the searchfield has become collapsed.
+     * @event selected
+     * @memberof SearchField
+     * @type {object}
+     * @property {object} event - The jquery event object
+     */
     this.element.trigger('selected', [anchor]);
 
     // Only change the text and searchfield size if we can
@@ -1746,6 +1710,13 @@ SearchField.prototype = {
         eventArgs.push(containerSizeSetters);
       }
 
+      /**
+       * Fires before the searchfield is expanded.
+       * @event beforeexpand
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       */
       self.element.trigger('beforeexpand');
       $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
 
@@ -1754,7 +1725,16 @@ SearchField.prototype = {
         updateCallback() {}, // TODO: make this work without an empty function
         timeoutCallback() {
           $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+
+          /**
+           * Fires when the searchfield has become expanded.
+           * @event expanded
+           * @memberof SearchField
+           * @type {object}
+           * @property {object} event - The jquery event object
+           */
           self.element.trigger('expanded');
+
           delete self.isExpanding;
           self.isExpanded = true;
 
@@ -1805,6 +1785,13 @@ SearchField.prototype = {
         self.categoryButton.data('popupmenu').close(false, true);
       }
 
+      /**
+       * Fires before the searchfield is collapsed.
+       * @event beforecollapse
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       */
       self.element.trigger('beforecollapse');
 
       delete self.isExpanded;
@@ -1816,6 +1803,14 @@ SearchField.prototype = {
         timeoutCallback() {
           delete self.isCollapsing;
           $(self.toolbarParent).triggerHandler('recalculate-buttons');
+
+          /**
+           * Fires when the searchfield has become collapsed.
+           * @event collapsed
+           * @memberof SearchField
+           * @type {object}
+           * @property {object} event - The jquery event object
+           */
           self.element.trigger('collapsed');
           resolve();
         }
@@ -1854,6 +1849,14 @@ SearchField.prototype = {
 
     // Collapse followed by a special event trigger (gets picked up by Flex Toolbar)
     this.collapse().then(() => {
+      /**
+       * Fires when the searchfield has become collapsed.
+       * @event collapsed-responsive
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {number} dir - The direction in which the Flex Toolbar has navigated (can be 0 to stay, or 1 to navigate forward)
+       */
       self.wrapper.trigger('collapsed-responsive', [dir]);
     });
   },

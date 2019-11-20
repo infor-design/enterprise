@@ -3111,6 +3111,20 @@ Datagrid.prototype = {
 
       // Handle Grouping
       if (this.settings.groupable) {
+        // Filter and sorted
+        if (s.dataset[i].values) {
+          const thisLength = s.dataset[i].values.length;
+          let thisFilterCount = 0;
+          for (let k = 0; k < thisLength; k++) {
+            if (s.dataset[i].values[k].isFiltered) {
+              thisFilterCount++;
+            }
+          }
+          if (thisFilterCount === thisLength) {
+            continue; //eslint-disable-line
+          }
+        }
+
         // First push group row
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row

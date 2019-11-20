@@ -133,11 +133,13 @@ svg.icon-dirty,
 }
 
 .icon-dirtyerror,
-.icon-error {
+.icon-error,
+.icon-error-alert {
   color: $theme-color-status-danger !important;
 }
 
-.icon-success {
+.icon-success,
+.icon-success-alert {
   color: $success-icon-fill !important;
 }
 
@@ -146,20 +148,21 @@ svg.icon-dirty,
   color: $icon-color;
 }
 
-.icon-alert {
+.icon-alert,
+.icon-alert-alert {
   color: $theme-color-status-warning !important;
 }
 
 .icon-pending {
-  background: $theme-color-status-caution !important;
-  border: 2px solid $theme-color-status-caution;
-  border-radius: 50%;
-  color: $theme-color-palette-white !important;
-  height: 18px;
-  width: 18px;
+  color: $theme-color-status-warning !important;
 }
 
-.icon-info {
+.icon-pending-alert {
+  color: $theme-color-status-warning !important;
+}
+
+.icon-info,
+.icon-info-alert {
   color: $info-icon-fill !important;
 }
 
