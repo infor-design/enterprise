@@ -1636,7 +1636,7 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ', { showBrackets: false })).toEqual('XYZ');
   });
 
-  it('Should be able get translations in a non current locale', (done) => {
+  it('Should be able get translations in a non current locale (de-DE)', (done) => {
     Locale.set('en-US');
     Locale.getLocale('de-DE').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
@@ -1649,7 +1649,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able get translations in a non current locale', (done) => {
+  it('Should be able get translations in a non current locale  (fi-FI)', (done) => {
     Locale.set('fi-FI');
     Locale.setLanguage('sv');
     Locale.getLocale('de-DE');

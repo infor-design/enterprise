@@ -459,9 +459,7 @@ WeekView.prototype = {
       this.isDayView = true;
       this.element.find('#calendar-view-changer').val('day').trigger('updated');
     }
-    if (this.numberOfDays !== 7) {
-      this.hasIrregularDays = true;
-    }
+    this.hasIrregularDays = this.numberOfDays !== 7;
 
     // Create the header consisting of days in the range
     this.weekHeader = `<thead class="week-view-table-header"><tr><th><div class="week-view-header-wrapper"><span class="audible">${Locale.translate('Hour')}</span></div>`;

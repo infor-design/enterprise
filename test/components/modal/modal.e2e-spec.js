@@ -357,6 +357,7 @@ describe('Modal overlay opacity tests', () => {
 
   it('Should be able to set overlay opacity to 30%', async () => {
     const overlayEl = await element(by.css('.overlay'));
+
     expect(await overlayEl.getCssValue('opacity')).toBe('0.3');
   });
 });

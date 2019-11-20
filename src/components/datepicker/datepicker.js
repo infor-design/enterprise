@@ -637,6 +637,8 @@ DatePicker.prototype = {
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
+      this.settings.month = this.settings.activeDate.getMonth();
+      this.settings.year = this.settings.activeDate.getFullYear();
 
       if (this.isIslamic) {
         this.settings.activeDateIslamic = this.conversions.fromGregorian(this.settings.activeDate);

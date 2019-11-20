@@ -35,6 +35,7 @@ function warnAboutDeprecation(newMethod, oldMethod) {
   if (typeof console !== 'object') {
     return;
   }
+  // eslint-disable-next-line no-console
   console.warn(`IDS Enterprise: "${oldMethodName}" is deprecated. Please use "${newMethodName}" instead.`);
 }
 
@@ -47,6 +48,7 @@ function warnAboutRemoval(removedName) {
   if (typeof console !== 'object') {
     return;
   }
+  // eslint-disable-next-line no-console
   console.warn(`IDS Enterprise: "${removedName}" is deprecated and will be later removed. Please adjust your code accordingly.`);
 }
 
