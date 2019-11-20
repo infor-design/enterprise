@@ -54,3 +54,26 @@ export function log(type, message) {
 
   console[type](`${message}`); // eslint-disable-line
 }
+
+/**
+ * Returns a list of all elements that currently have a $.data() property.
+ * @param {jQuery[]|HTMLElement} rootElem the root element to work from.
+ * @returns {array} containing all matching elements with a data property attached.
+ */
+export function getComponents(rootElem) {
+  const elem = !rootElem ? $('body') : $(rootElem);
+  const allElems = elem.find('*');
+  const results = [];
+
+  allElems.each((i, thisElem) => {
+    const data = $(thisElem).data();
+    if (data && Object.keys(data).length) {
+      results.push({
+        data,
+        element: thisElem
+      });
+    }
+  });
+
+  return results;
+}

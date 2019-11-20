@@ -12,14 +12,40 @@
         <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
       </div>
     </div>
-
   </div>
 </div>
 
 <script id="test-script">
   $('body').on('initialized', function() {
-    $('#editor1').editor({
+    var $editor = $('#editor1');
+    $editor.editor({
       useFlexToolbar: true
+    });
+
+    var api = $editor.data('editor').toolbarAPI;
+    var elem = api.element;
+
+    // Show a toast when a button is selected.
+    $(elem).on('selected.test', function(e, item, secondArg) {
+      var text = $(item.element).text().trim();
+      var selectedItem;
+
+      if (secondArg) {
+        selectedItem = 'Selected Menu Item: ' + $(secondArg).text().trim() + '<br />';
+      }
+
+      $('body').toast({
+        title: 'Toolbar Item Selected',
+        message: '<p>' +
+          'text content: "<b>'+ text +'</b>"<br/>' +
+          'item type: "<b>'+ item.type +'</b>"' +
+          (selectedItem ? '<br />' + selectedItem : '') +
+        '</p>'
+      });
+    });
+
+    $(elem).on('focusin.test', function(e) {
+      console.dir(e.target);
     });
   });
 </script>

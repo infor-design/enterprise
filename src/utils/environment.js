@@ -276,6 +276,13 @@ const Environment = {
 };
 
 /**
+ * @returns {boolean} whether or not the current browser is MS Edge
+ */
+Environment.browser.isEdge = function () {
+  return Environment.browser.name === 'edge';
+};
+
+/**
  * @returns {boolean} whether or not the current browser is IE11
  */
 Environment.browser.isIE11 = function () {

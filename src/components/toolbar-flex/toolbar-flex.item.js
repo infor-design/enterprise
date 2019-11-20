@@ -383,7 +383,7 @@ ToolbarFlexItem.prototype = {
 
       if (this.focused) {
         this.toolbarAPI.focusedItem = this;
-        this.toolbarAPI.navigate(-1, undefined, true);
+        this.toolbarAPI.navigate(-1, undefined);
       }
       return;
     }
