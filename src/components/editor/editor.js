@@ -76,7 +76,7 @@ const EDITOR_DEFAULTS = {
     showIsClickable: false
   },
   image: {
-    url: 'http://localhost:4000/images/placeholder-80x80.png'
+    url: '/images/placeholder-80x80.png'
   },
   onLinkClick: null,
   showHtmlView: false,
