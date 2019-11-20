@@ -673,5 +673,14 @@
     "ends": "2019-12-05T23:59:59.999",
     "type": "dto",
     "isAllDay": "true"
+  },{
+    "id": "67",
+    "subject": "Quick trip",
+    "comments": "Short getaway",
+    "status": "Draft",
+    "starts": "2019-11-20T00:00:00.000",
+    "ends": "2019-11-22T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
   }
 ]
