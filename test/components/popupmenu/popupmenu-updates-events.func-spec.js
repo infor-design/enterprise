@@ -64,6 +64,7 @@ describe('Popupmenu Events', () => {
   it('Should not bubble "destroy" event', () => {
     const spyEvent = spyOnEvent('.field', 'destroy');
     popupmenuObj.destroy();
+    
     expect(spyEvent).not.toHaveBeenTriggered();
   });
 });

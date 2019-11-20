@@ -6,6 +6,10 @@ $flex-toolbar-searchfield-focus-width: 225px;
 $responsive-searchfield-filled-out-width: 34px;
 
 .toolbar-section {
+  &.search {
+    padding: 4px 0;
+  }
+
   .searchfield-wrapper {
     margin: 0 5px 0 0;
 

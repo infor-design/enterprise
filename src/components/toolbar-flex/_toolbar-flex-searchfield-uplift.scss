@@ -1,0 +1,27 @@
+// ==================================================
+// Uplift Flexible Toolbar - Searchfield Component
+// ==================================================
+
+@include respond-to(phone) {
+  .toolbar-section {
+    .searchfield-wrapper {
+      &.is-open {
+        .collapse-button {
+          height: 38px;
+        }
+      }
+    }
+  }
+
+  html.is-firefox {
+    .toolbar-section {
+      .searchfield-wrapper {
+        &.is-open {
+          .collapse-button {
+            height: 36px;
+          }
+        }
+      }
+    }
+  }
+}
