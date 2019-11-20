@@ -362,7 +362,6 @@ describe('Calendar WeekView settings tests', () => {
   });
 
   it('Should render without error', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(14);
     await utils.checkForErrors();
   });
 

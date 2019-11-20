@@ -829,7 +829,13 @@ Calendar.prototype = {
           if (!eventData || eventData.length === 0) {
             return;
           }
-          showModalWithCallback(eventData[0], false, $(e.currentTarget).find('.calendar-event-title'));
+          const target = $(e.currentTarget);
+          let eventTarget = target.find('.calendar-event-title');
+          if (e.currentTarget.classList.contains('event-day-span') ||
+            e.currentTarget.classList.contains('event-day-end')) {
+            eventTarget = self.element.find(`.event-day-start[data-id="${target.attr('data-id')}"] .calendar-event-title`);
+          }
+          showModalWithCallback(eventData[0], false, eventTarget);
           /**
            * Fires when an event in the calendar is clicked.
            * @event eventclick
