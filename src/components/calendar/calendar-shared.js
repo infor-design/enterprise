@@ -76,9 +76,10 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   }
 
   if (!event.isAllDay && event.durationHours >= 24) {
-    event.isAllDay = true;
-    event.durationUnits = Locale.translate('Days', { locale: locale.name, language });
-    event.durationHours = (event.durationHours / 24).toFixed(2);
+    event.isAllDay = false;
+    event.durationUnits = Locale.translate('Hours', { locale: locale.name, language });
+    event.durationHours = event.durationHours;
+    event.isDays = false;
     delete event.duration;
   }
   return event;
