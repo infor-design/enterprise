@@ -168,7 +168,7 @@ describe('Calendar specific month tests', () => {
   });
 
   it('Should offer a right click menu', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await browser.actions().mouseMove(event).perform();
@@ -180,11 +180,11 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
     await element.all(by.css('#calendar-actions-menu a')).first().click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
   it('Should add new events on click and cancel', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -195,11 +195,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.css('.calendar-popup .btn-close')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
   it('Should add new events on click and submit', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -210,26 +210,23 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
   it('Should be able to add with the modal', async () => {
-    const beforeCount = await element.all(by.css('.calendar-monthview .calendar-event')).count();
     await element.all(by.cssContainingText('.monthview-table td', '13')).first().click();
     await browser.actions()
       .doubleClick(await element.all(by.cssContainingText('.monthview-table td', '13')).first())
       .perform();
 
-    expect(beforeCount).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('subject'))), config.waitsFor);
     await element(by.id('subject')).sendKeys('Test Event');
     await element(by.id('submit')).click();
 
-    const afterCount = await element.all(by.css('.calendar-event')).count();
-
-    expect(afterCount).toEqual(beforeCount + 1);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(19);
   });
 
   it('Should update datepicker date', async () => {
