@@ -363,8 +363,6 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
-
-    $('body').trigger('resize');
   },
 
   /**
@@ -418,6 +416,7 @@ Personalize.prototype = {
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
       theme: incomingTheme || 'theme-soho-light'
     });
+    $('body').trigger('resize');
   },
 
   /**
