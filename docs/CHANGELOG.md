@@ -30,6 +30,7 @@
 - `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
 - `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
+- `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Sparkline Chart]` Fixed an issue where an error was thrown while a sparkline chart was present during a theme chnage. ([#3159](https://github.com/infor-design/enterprise/issues/3159))
