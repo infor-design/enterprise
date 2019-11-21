@@ -15,7 +15,8 @@ const settings = {
   eventTypes,
   events,
   month: 10,
-  year: 2018
+  year: 2018,
+  day: 10
 };
 
 describe('Calendar API', () => {
