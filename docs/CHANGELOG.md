@@ -14,10 +14,12 @@
 
 ### v4.24.0 Fixes
 
+- `[Datagrid]` Fixed an issue where the hide pager on one page setting was not working correctly when applying a filter. ([#2676](https://github.com/infor-design/enterprise/issues/2676))
 - `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
 - `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
 - `[Datagrid]` Fixed an issue where the grouping filter was not working after do sort. ([#3012](https://github.com/infor-design/enterprise/issues/3012))
+- `[Datagrid]` Fixed an issue where when hovering a parent row the same row index in the child row will show the hover state. ([#2227](https://github.com/infor-design/enterprise/issues/2227))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
@@ -29,6 +31,7 @@
 - `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
 - `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
+- `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
 - `[Mask]` Fixed a Safari bug where certain masked values would not trigger a "change" event on the input field. ([#3002](https://github.com/infor-design/enterprise/issues/3002))
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))

@@ -289,7 +289,7 @@ describe('Datagrid API', () => {
     expect(idx).toEqual(2);
   });
 
-  it('Should be able to check if a cell is editable', () => {
+  it('Should be able to check if a cell is editable', (done) => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
@@ -298,30 +298,33 @@ describe('Datagrid API', () => {
       isRowDisabled: a => a === 5
     });
 
-    // Test Column readonly property
-    let isEditable = datagridObj.isCellEditable(0, 2);
+    setTimeout(() => {
+      // Test Column readonly property
+      let isEditable = datagridObj.isCellEditable(0, 2);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
 
-    // Test column with editor
-    isEditable = datagridObj.isCellEditable(0, 1);
+      // Test column with editor
+      isEditable = datagridObj.isCellEditable(0, 1);
 
-    expect(isEditable).toEqual(true);
+      expect(isEditable).toEqual(true);
 
-    // Test column with nothing specified
-    isEditable = datagridObj.isCellEditable(0, 0);
+      // Test column with nothing specified
+      isEditable = datagridObj.isCellEditable(0, 0);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
 
-    // Test column with isEditable function specified
-    isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
+      // Test column with isEditable function specified
+      isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
 
-    expect(isEditable).toEqual(true);
+      expect(isEditable).toEqual(true);
 
-    // Test column with isDisabled function specified
-    isEditable = datagridObj.isCellEditable(0, 5);
+      // Test column with isDisabled function specified
+      isEditable = datagridObj.isCellEditable(0, 5);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
+      done();
+    });
   });
 
   it('Should be able to validate required on a cell', (done) => {
