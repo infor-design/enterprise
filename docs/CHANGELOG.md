@@ -14,6 +14,7 @@
 
 ### v4.24.0 Fixes
 
+- `[Datagrid]` Fixed an issue where the hide pager on one page and filter was not working correctly. ([#2676](https://github.com/infor-design/enterprise/issues/2676))
 - `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
 - `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
