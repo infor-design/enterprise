@@ -14,6 +14,7 @@ const COMPONENT_NAME_DEFAULTS = {
   language: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
+  day: new Date().getDate(),
   activeDate: null,
   activeDateIslamic: null,
   isPopup: false,
@@ -63,6 +64,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
+ * @param {number} [settings.day] The initial selected day to show.
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
@@ -369,7 +371,7 @@ MonthView.prototype = {
       this.currentDate.setMonth(month);
     }
 
-    this.currentDay = this.currentDay || now.getDate();
+    this.currentDay = this.currentDay || this.settings.day;
     if (!this.currentCalendar || !this.currentCalendar.days) {
       this.currentCalendar = Locale.calendar();
     }
@@ -517,7 +519,11 @@ MonthView.prototype = {
     });
 
     if (!foundSelected && !s.range.useRange) {
-      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(year, month, 1));
+      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(
+        year,
+        month,
+        this.settings.day
+      ));
       if (firstDay.length) {
         setSelected(firstDay[0].elem, false);
       }

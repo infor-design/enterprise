@@ -22,6 +22,7 @@ const COMPONENT_NAME_DEFAULTS = {
   language: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
+  day: new Date().getDate(),
   showViewChanger: true,
   onRenderMonth: null,
   template: null,
@@ -57,8 +58,9 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.events] An array of objects with data for the events.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
- * @param {array} [settings.month] Initial month to show.
  * @param {array} [settings.year] Initial year to show.
+ * @param {array} [settings.month] Initial month to show.
+ * @param {number} [settings.day] The initial selected day to show.
  * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
@@ -204,6 +206,7 @@ Calendar.prototype = {
       locale: this.settings.locale,
       month: this.settings.month,
       year: this.settings.year,
+      day: this.settings.day,
       eventTooltip: this.eventTooltip,
       iconTooltip: this.iconTooltip,
       showToday: this.settings.showToday,
