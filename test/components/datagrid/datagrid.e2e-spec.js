@@ -3315,3 +3315,44 @@ describe('Datagrid tree select multiple tests', () => {
     expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(3);
   });
 });
+
+describe('Datagrid hide pager on one page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-hide-pager-if-one-page-filter');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(4)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should hide pager on one page and filter', async () => {
+    const selector = {
+      rows: '#datagrid .datagrid-body tbody tr[role="row"]',
+      filter: '#datagrid .datagrid-header thead th[data-column-id="3"] .datagrid-filter-wrapper select',
+      filterSel: '#datagrid .datagrid-header thead th[data-column-id="3"] div.dropdown',
+      filterOpt: '.dropdown-list .dropdown-option #list-option-0'
+    };
+    const pagerBar = await element(by.css('.pager-toolbar'));
+
+    expect(await pagerBar.getAttribute('class')).not.toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(5);
+
+    const filterSel = await element(by.css(selector.filterSel));
+    await filterSel.click();
+    const filterOpt = await element(by.css(selector.filterOpt));
+    await filterOpt.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await pagerBar.getAttribute('class')).toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(2);
+    await filterOpt.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await pagerBar.getAttribute('class')).not.toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(5);
+  });
+});
