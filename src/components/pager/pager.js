@@ -1166,8 +1166,11 @@ Pager.prototype = {
       }
     }
 
-    if (this.hidePagerBar(pagingInfo)) {
-      this.pagerBar[0].classList.add('hidden');
+    const classList = this.pagerBar[0] ? this.pagerBar[0].classList : null;
+    if (this.hidePagerBar(pagingInfo) && classList) {
+      classList.add('hidden');
+    } else if (this.settings.hideOnOnePage && classList && classList.contains('hidden')) {
+      classList.remove('hidden');
     }
 
     this.initTabIndexes();
