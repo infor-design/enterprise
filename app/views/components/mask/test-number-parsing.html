@@ -37,6 +37,11 @@
       // transform
       var nbr = Soho.Locale.parseNumber(value);
       $('#parsed-number-field').val(nbr);
+
+      $('body').toast({
+        title: 'Change Event Fired!',
+        message: 'Parsed Number: <b>'+ nbr +'</b>'
+      });
     });
   });
 </script>
