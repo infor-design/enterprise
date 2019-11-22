@@ -6011,8 +6011,6 @@ Datagrid.prototype = {
         const btn = $(this).find('button');
         btn.popupmenu({
           attachToBody: true,
-          autoFocus: false,
-          mouseFocus: true,
           menuId: col.menuId,
           trigger: 'immediate',
           offset: { y: 5 }
