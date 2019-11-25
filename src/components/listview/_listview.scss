@@ -345,14 +345,12 @@
 
     color: $listview-disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $listview-disabled-color;
 
     * {
       @include unselectable;
 
       color: $listview-disabled-color;
       cursor: default;
-      -webkit-text-fill-color: $listview-disabled-color;
     }
 
     &:hover {
@@ -624,7 +622,6 @@
     &[disabled] {
       color: $listview-search-disabled-color;
       opacity: $listview-search-disabled-opacity;
-      -webkit-text-fill-color: $listview-search-disabled-color;
 
       &:hover {
         border-color: $listview-search-disabled-border-color;

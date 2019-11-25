@@ -15,16 +15,6 @@
       @include focus-state();
     }
 
-    &[readonly] {
-      background-color: transparent;
-      color: $input-color;
-      -webkit-text-fill-color: $input-color;
-
-      + .icon {
-        cursor: pointer;
-      }
-    }
-
     + .icon {
       margin-left: -25px;
       position: relative;

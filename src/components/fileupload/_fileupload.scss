@@ -51,19 +51,16 @@
       background-color: transparent;
       color: $input-color;
       padding-right: 50px;
-      -webkit-text-fill-color: $input-color;
       text-overflow: ellipsis;
 
       &.readonly {
         background-color: $input-color-readonly-background;
         color: $input-readonly-color;
-        -webkit-text-fill-color: $input-readonly-color;
       }
 
       &[disabled] {
         background-color: $input-color-disabled-background;
         color: $input-disabled-color;
-        -webkit-text-fill-color: $input-disabled-color;
       }
     }
   }
