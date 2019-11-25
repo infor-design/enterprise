@@ -43,7 +43,7 @@ module.exports = (req, res) => {
       type = req.query.return;
     }
 
-    if (req.query.paragraphs && !isNaN(req.query.paragraphs)) {
+    if (req.query.paragraphs && !isNaN(req.query.paragraphs)) { //eslint-disable-line
       paragraphs = parseInt(req.query.paragraphs, 10);
     }
   }

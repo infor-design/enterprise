@@ -383,7 +383,7 @@ ToolbarFlexItem.prototype = {
 
       if (this.focused) {
         this.toolbarAPI.focusedItem = this;
-        this.toolbarAPI.navigate(-1, undefined, true);
+        this.toolbarAPI.navigate(-1, undefined);
       }
       return;
     }
@@ -588,12 +588,12 @@ ToolbarFlexItem.prototype = {
       return;
     }
 
-    this.hasNoOverflowedItems = true;
-
     const menuAPI = this.componentAPI;
-    if (!menuAPI || !this.toolbarAPI) {
+    if (!menuAPI || !this.toolbarAPI || menuAPI.isOpen) {
       return;
     }
+
+    this.hasNoOverflowedItems = true;
 
     // If there are toolbar items, but no predefined items, render the more-actions menu
     if ((!menuAPI.settings.beforeOpen && (!this.predefinedItems || !this.predefinedItems.length))

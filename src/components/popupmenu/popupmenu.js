@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
@@ -391,8 +392,10 @@ PopupMenu.prototype = {
       if (settings.heading) {
         headingText += `<li class="heading">${settings.heading}</li>`;
       }
-      if (settings.nextSectionSelect === 'single' || settings.nextSectionSelect === 'multiple') {
-        sectionSelectClass = ` ${settings.nextSectionSelect}`;
+      if (settings.nextSectionSelect === 'single') {
+        sectionSelectClass = ' single-selectable-section';
+      } else if (settings.nextSectionSelect === 'multiple') {
+        sectionSelectClass = ' multi-selectable-section';
       }
 
       return stringUtils.stripWhitespace(`
@@ -494,6 +497,7 @@ PopupMenu.prototype = {
   toData(settings) {
     let data = {};
     const menu = [];
+    const self = this;
 
     settings = settings || {};
 
@@ -516,11 +520,8 @@ PopupMenu.prototype = {
     const hasIcons = settings.contextElement.hasClass('has-icons');
     data.hasIcons = hasIcons;
 
-    if (settings.noMenuWrap) {
-      data = menu;
-    } else {
-      data.menu = menu;
-    }
+    let singleSelectable;
+    let multiSelectable;
 
     function decodeListItem(item) {
       const li = $(item);
@@ -536,9 +537,11 @@ PopupMenu.prototype = {
         liData.separator = true;
 
         if (li.hasClass('single-selectable-section')) {
+          singleSelectable = true;
           liData.nextSectionSelect = 'single';
         }
         if (li.hasClass('multi-selectable-section')) {
+          multiSelectable = true;
           liData.nextSectionSelect = 'multiple';
         }
 
@@ -566,10 +569,26 @@ PopupMenu.prototype = {
         liData.icon = icon[0].querySelector('use').getAttribute('xlink:href').replace('#icon-', '');
       }
 
-      if (li.hasClass('is-selectable')) {
+      const notGloballySelectable = !singleSelectable && !multiSelectable;
+      const noSelectableSections = !self.hasSelectableSeparator(li);
+
+      /*
+      // Determine single/multi-select
+      if (li.hasClass('is-selectable') || li.hasClass('is-checked')) {
         liData.selectable = 'single';
       } else if (li.hasClass('is-multiselectable')) {
         liData.selectable = 'multiple';
+      }
+      */
+
+      // If selection isn't contained to a header, set it for the entire menu
+      if (liData.selectable && notGloballySelectable && noSelectableSections) {
+        if (liData.selectable === 'single') {
+          singleSelectable = true;
+        } else if (liData.selectable === 'multiple') {
+          multiSelectable = true;
+        }
+        data.selectable = liData.selectable;
       }
 
       const submenu = li.find('.popupmenu');
@@ -595,6 +614,12 @@ PopupMenu.prototype = {
       }
       menu.push(liData);
     });
+
+    if (settings.noMenuWrap) {
+      data = menu;
+    } else {
+      data.menu = menu;
+    }
 
     return data;
   },
@@ -675,6 +700,15 @@ PopupMenu.prototype = {
         if (DOM.hasClass(li, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
+
+          // Make all adjacent items selectable.
+          if (!self.hasSelectableSeparator(li)) {
+            let selectableClassName = 'is-selectable';
+            if (self.menu.is('.is-multiselectable')) {
+              selectableClassName = 'is-multiselectable';
+            }
+            self.getAdjacentSelectables(li).addClass(selectableClassName);
+          }
         }
 
         // is-not-checked
@@ -1196,7 +1230,7 @@ PopupMenu.prototype = {
     const href = anchor.attr('href');
     let selectionResult = [anchor];
 
-    if (!e && !anchor) {
+    if (!e && !anchor || !anchor.length) {
       return false;
     }
 
@@ -1215,7 +1249,7 @@ PopupMenu.prototype = {
       e.preventDefault();
     }
 
-    if (this.isInSelectableSection(anchor) || this.menu.hasClass('is-selectable') || this.menu.hasClass('is-multiselectable')) {
+    if (this.isSelectable(anchor.parent())) {
       selectionResult = this.select(anchor);
     }
 
@@ -2047,14 +2081,14 @@ PopupMenu.prototype = {
     const returnObj = [anchor];
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
-    if (singleMenu || singleSection) {
+    if (parent.hasClass('is-selectable') || singleMenu || singleSection) {
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
       returnObj.push('selected');
       return returnObj;
     }
 
-    if (multipleMenu || multipleSection) {
+    if (parent.hasClass('is-multiselectable') || multipleMenu || multipleSection) {
       if (parent.hasClass('is-checked')) {
         parent.removeClass('is-checked');
         returnObj.push('deselected');
@@ -2081,17 +2115,69 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Checks if a list item is selectable, single or multi.
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {boolean} whether or not the element is selectable
+   */
+  isSelectable(li) {
+    return $(li).is('.is-selectable, .is-multiselectable') ||
+      this.hasSelectableSeparator(li) ||
+      this.menu.hasClass('is-selectable') ||
+      this.menu.hasClass('is-multiselectable');
+  },
+
+  /**
+   * @private
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {jQuery[]} element representing a menu item's adjacent selectable header, if applicable.
+   */
+  getSelectableSeparator(li) {
+    return $(li).prevAll('.separator.single-selectable-section, .separator.multi-selectable-section').first();
+  },
+
+  /**
+   * @private
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {boolean} whether or not a menu item has an adjacent selectable header.
+   */
+  hasSelectableSeparator(li) {
+    const sep = this.getSelectableSeparator(li);
+    return (sep && sep.length);
+  },
+
+  /**
+   * Gets references to the adjacent menu items in a selectable section
+   * If there are no selectable sections defined, consider the entire menu
+   * as selectable (not including submenu items)
+   * @param {HTMLElement} li the list item being checked.
+   * @returns {jQuery[]} elements inside the selectable section.
+   */
+  getAdjacentSelectables(li) {
+    const sep = this.getSelectableSeparator(li);
+    const exclusions = ':not(.heading):not(.separator):not(.submenu)';
+
+    if (!sep || !sep.length) {
+      return $(li).parent().children(`li${exclusions}`);
+    }
+    return $(sep).nextUntil('.separator').filter(exclusions);
+  },
+
+  /**
    * Determines whether or not an anchor resides inside of a selectable Popupmenu section.
+   * @private
+   * @deprecated as of v4.24.x. Use `hasSelectableSeparator()` instead.
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected.
    */
   isInSelectableSection(anchor) {
+    warnAboutDeprecation('hasSelectableSeparator()', 'isInSelectableSection()');
     const separator = anchor.parent().prevAll().filter('.separator').first();
     return (separator.hasClass('multi-selectable-section') || separator.hasClass('single-selectable-section'));
   },
 
   /**
    * Determines whether or not an anchor resides inside of a single-selectable Popupmenu section.
+   * @private
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected
    *  within a single-selectable section.
@@ -2103,6 +2189,7 @@ PopupMenu.prototype = {
 
   /**
    * Determines whether or not an anchor resides inside of a multi-selectable Popupmenu section.
+   * @private
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected
    *  within a multi-selectable section.

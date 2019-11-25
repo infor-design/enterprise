@@ -86,7 +86,6 @@ input::-webkit-inner-spin-button {
     border-color: $input-color-disabled-border;
     color: $disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $disabled-color;
   }
 }
 
@@ -129,7 +128,6 @@ input::-webkit-inner-spin-button {
         border-color: $input-color-disabled-border;
         color: $disabled-color;
         cursor: default;
-        -webkit-text-fill-color: $disabled-color;
       }
     }
 
@@ -141,7 +139,6 @@ input::-webkit-inner-spin-button {
       border-color: $input-color-disabled-border;
       color: $disabled-color;
       cursor: default;
-      -webkit-text-fill-color: $disabled-color;
     }
   }
 
@@ -150,7 +147,6 @@ input::-webkit-inner-spin-button {
       background-color: $input-color-readonly-background;
       color: $input-readonly-color;
       cursor: default;
-      -webkit-text-fill-color: $input-readonly-color;
     }
   }
 

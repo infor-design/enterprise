@@ -139,7 +139,7 @@
   &.panel {
     background-color: $accordion-bg-color;
     border-color: $accordion-panel-border-color;
-    border-right-color: $accordion-toplevel-border-color;
+    border-right-color: $accordion-panel-border-color;
 
     .accordion-header {
       border-bottom-color: $accordion-panel-border-color;
@@ -162,6 +162,10 @@
 
         > .icon {
           color: $accordion-selected-text-color;
+
+          .chevron {
+            top: -1px;
+          }
         }
 
         > [class^='btn'] {
@@ -217,6 +221,22 @@
 
       &:last-child {
         border-bottom-color: transparent;
+      }
+
+      .btn {
+        top: -1px;
+      }
+
+      .icon {
+        top: -3px;
+
+        &.chevron {
+          top: 1px;
+
+          &.active {
+            top: 0;
+          }
+        }
       }
     }
 
@@ -754,7 +774,6 @@
 
     &.is-disabled {
       background-color: $accordion-disabled-pane-bg-color !important;
-      border-bottom-color: $accordion-disabled-pane-bg-color !important;
     }
 
     // Subheaders can now have chevrons as of v4.23.x
@@ -1383,7 +1402,6 @@ html[dir='rtl'] {
   &.tooltip-accordion-style {
     background-color: $theme-color-palette-white;
     color: $theme-color-palette-black;
-    -webkit-text-fill-color: $theme-color-palette-black;
 
     .arrow {
       display: none;
@@ -1394,7 +1412,6 @@ html[dir='rtl'] {
 
       p {
         color: $theme-color-palette-black;
-        -webkit-text-fill-color: $theme-color-palette-black;
       }
     }
   }

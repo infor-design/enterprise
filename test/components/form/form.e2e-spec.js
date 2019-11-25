@@ -14,6 +14,7 @@ describe('Form Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       await utils.checkForErrors();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compound-checkboxes-alignment')).toEqual(0);
     });
 
@@ -23,6 +24,7 @@ describe('Form Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       await utils.checkForErrors();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-layouts')).toEqual(0);
     });
 
@@ -32,6 +34,7 @@ describe('Form Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       await utils.checkForErrors();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-inputs')).toEqual(0);
     });
 
@@ -41,6 +44,7 @@ describe('Form Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       await utils.checkForErrors();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-checkbox-in-columns')).toEqual(0);
     });
   }

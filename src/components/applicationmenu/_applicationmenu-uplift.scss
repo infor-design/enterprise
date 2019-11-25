@@ -23,14 +23,12 @@
       &::-webkit-input-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
         opacity: 1;
-        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &::-moz-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
         line-height: normal;
         opacity: 1;
-        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &:-ms-input-placeholder {
@@ -141,6 +139,7 @@
       .btn,
       .btn-expander {
         color: inherit;
+        top: auto;
 
         &:focus:not(.hide-focus) {
           border-color: $uplift-appmenu-selected-border-color;
@@ -150,6 +149,7 @@
 
       .icon {
         color: inherit;
+        top: auto;
 
         &.plus-minus {
           &::before,

@@ -83,8 +83,8 @@
     top: calc(50% - 14px);
   }
 
-  //Input Actions Button - controls/input-actions
-  .btn-actions {
+  // Input Actions Button - controls/input-actions
+  > .btn-actions {
     border-radius: 50%;
     height: 30px;
     min-height: 30px;
@@ -204,19 +204,16 @@ textarea {
   &.is-disabled {
     background-color: $input-color-disabled-background;
     border: solid 1px $input-color-disabled-border;
-    -webkit-text-fill-color: $input-disabled-color;
   }
 
   &[readonly],
   &.is-readonly {
     background-color: $input-color-readonly-background;
     border-color: $input-color-readonly-border;
-    -webkit-text-fill-color: $input-readonly-color;
   }
 
   &.is-placeholder {
     color: $input-placeholder-color;
-    -webkit-text-fill-color: $input-placeholder-color;
   }
 
   &.is-focused {
@@ -448,13 +445,11 @@ label,
 ::selection {
   background: $theme-color-brand-primary-base;
   color: $inverse-color;
-  -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
   background: $theme-color-brand-primary-base;
   color: $inverse-color;
-  -webkit-text-fill-color: $inverse-color;
 }
 
 // Mask component Adjustment Classes

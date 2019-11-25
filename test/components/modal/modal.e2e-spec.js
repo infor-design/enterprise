@@ -339,3 +339,25 @@ describe('Modal button tests', () => {
     });
   }
 });
+
+describe('Modal overlay opacity tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-overlay-opacity');
+    const buttonEl = await element(by.id('add-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to set overlay opacity to 30%', async () => {
+    const overlayEl = await element(by.css('.overlay'));
+
+    expect(await overlayEl.getCssValue('opacity')).toBe('0.3');
+  });
+});

@@ -7,10 +7,13 @@ import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
+
+const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
 
 /**
 * The Editor Component displays and edits markdown.
@@ -65,8 +68,16 @@ const EDITOR_DEFAULTS = {
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
-  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
-  image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
+  anchor: {
+    url: 'http://www.example.com',
+    class: 'hyperlink',
+    target: 'NewWindow',
+    isClickable: false,
+    showIsClickable: false
+  },
+  image: {
+    url: '/images/placeholder-80x80.png'
+  },
   onLinkClick: null,
   showHtmlView: false,
   preview: false,
@@ -99,18 +110,10 @@ Editor.prototype = {
   },
 
   init() {
-    const s = this.settings;
-    this.isIe = env.browser.name === 'ie';
-    this.isIeEdge = env.browser.name === 'edge';
-    this.isIe11 = this.isIe && env.browser.version === '11';
-    this.isMac = env.os.name === 'Mac OS X';
-    this.isFirefox = env.browser.name === 'firefox';
-    this.textarea = null;
-
-    this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
     this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
-
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
+
+    this.label = this.element.prevAll('.label').first();
 
     // Preview mode
     if (!this.previewRendered && (this.element.hasClass('is-preview') || this.settings.preview)) {
@@ -122,6 +125,7 @@ Editor.prototype = {
       return;
     }
 
+    const s = this.settings;
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);
     s.image = $.extend({}, EDITOR_DEFAULTS.image, s.image);
 
@@ -192,7 +196,7 @@ Editor.prototype = {
     this.initTextarea();
 
     this.bindParagraphCreation().bindTab();
-    this.initToolbar()
+    this.createToolbar()
       .bindButtons()
       .bindModals()
       .bindAnchorPreview();
@@ -279,15 +283,6 @@ Editor.prototype = {
     return this;
   },
 
-  initToolbar() {
-    if (this.toolbar) {
-      return this;
-    }
-
-    this.createToolbar();
-    return this;
-  },
-
   // Set excluded buttons
   setExcludedButtons() {
     const excludeButtons = (elements, toExclude) => {
@@ -328,7 +323,15 @@ Editor.prototype = {
     return setButtons();
   },
 
+  /**
+   * @private
+   * @returns {this} component instance
+   */
   createToolbar() {
+    if (this.toolbar) {
+      return this;
+    }
+
     const toolbarCssClasses = [
       this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar',
       'editor-toolbar',
@@ -394,7 +397,7 @@ Editor.prototype = {
 
     // Rebind everything to the new element
     this.setupTextareaEvents();
-    this.initToolbar();
+    this.createToolbar();
     this.bindButtons().bindModals().bindAnchorPreview();
     this.bindSelect().bindPaste().setupKeyboardEvents();
     this.toolbar.find('button').button();
@@ -444,7 +447,6 @@ Editor.prototype = {
   },
 
   setupKeyboardEvents() {
-    const self = this;
     const currentElement = this.getCurrentElement();
     const keys = {
       b: 66, // {Ctrl + B} bold
@@ -539,7 +541,7 @@ Editor.prototype = {
     // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
     this.element.on('mousedown.editor', 'a', function (e) {
       const href = $(this).attr('href');
-      if (!self.isFirefox && ((self.isMac && e.metaKey) || (!self.isMac && e.ctrlKey))) {
+      if (env.browser.name !== 'firefox' && (env.os.name === 'Mac OS X' && (e.metaKey || e.ctrlKey))) {
         window.open(href, '_blank');
         e.preventDefault();
       }
@@ -810,17 +812,19 @@ Editor.prototype = {
   bindButtons() {
     const self = this;
 
-    this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
-      const btn = $(this);
-      const action = btn.attr('data-action');
+    function editorButtonActionHandler(e, item) {
+      const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
       if (btn.is('.btn-actions')) {
         return;
       }
 
+      const action = btn.attr('data-action');
+      const currentElem = self.getCurrentElement();
+
       e.preventDefault();
-      self.getCurrentElement().focus();
+      currentElem.focus();
 
       if (self.selection === undefined) {
         self.checkSelection();
@@ -834,18 +838,33 @@ Editor.prototype = {
         self.execAction(action, e);
       }
 
-      if (self.isIe || self.isIeEdge) {
-        self.getCurrentElement().trigger('change');
+      if (env.browser.name === 'ie' || env.browser.isEdge()) {
+        currentElem.trigger('change');
       }
 
-      return false;
-    });
+      if (btn[0].classList.contains('longpress-target')) {
+        return false;
+      }
+    }
+
+    // Most components work fine with the `selected` event on the toolbars.
+    // Colorpicker components aren't "triggered" by a selected event, so they work
+    // off of the click event.
+    if (this.settings.useFlexToolbar) {
+      this.toolbar.on('selected.editor', editorButtonActionHandler);
+      this.toolbar.on('click.editor', '.colorpicker-editor-button', editorButtonActionHandler);
+    } else {
+      this.toolbar.on('click.editor', 'button', editorButtonActionHandler);
+    }
 
     return this;
   },
 
   bindModals() {
     const self = this;
+    const modalSettings = {
+      noRefocus: true
+    };
 
     this.modals = {
       url: this.createURLModal(),
@@ -854,7 +873,7 @@ Editor.prototype = {
 
     $(`[name="em-target-${this.id}"]`).dropdown();
 
-    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal()
+    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal(modalSettings)
       .on('beforeopen', function () {
         self.savedSelection = self.saveSelection();
 
@@ -1071,7 +1090,7 @@ Editor.prototype = {
       let rangeStr;
       let rangeImg;
 
-      if (!this.selection.isCollapsed || this.isIe11) {
+      if (!this.selection.isCollapsed || env.browser.isIE11()) {
         // get example from: http://jsfiddle.net/jwvha/1/
         // and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
         if (window.getSelection) {
@@ -1246,7 +1265,7 @@ Editor.prototype = {
     let parentNode = this.getSelectedParentElement();
 
     while (parentNode.tagName !== undefined &&
-      this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+      EDITOR_PARENT_ELEMENTS.indexOf(parentNode.tagName.toLowerCase) === -1) {
       this.activateButton(parentNode.tagName.toLowerCase());
 
       // we can abort the search upwards if we leave the contentEditable element
@@ -1367,7 +1386,7 @@ Editor.prototype = {
       if (clipboardData && clipboardData.types) {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
-            (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
+            (types.indexOf && types.indexOf('text/html') !== -1) || env.browser.isEdge()) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
         if (types instanceof DOMStringList && types.contains('text/plain')) {
@@ -1393,7 +1412,7 @@ Editor.prototype = {
         }
       }
 
-      self.pastedData = self.isIe11 ?
+      self.pastedData = env.browser.isIE11() ?
         pastedData : self.getCleanedHtml(pastedData);
 
       /**
@@ -1407,7 +1426,7 @@ Editor.prototype = {
       */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
-          if (!self.isIe11 && !self.isIeEdge) {
+          if (!env.browser.isIE11() && !env.browser.isEdge()) {
             e.preventDefault();
           }
 
@@ -1430,7 +1449,7 @@ Editor.prototype = {
         self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
       });
-      if (!self.isIe11) {
+      if (!env.browser.isIE11()) {
         return false;
       }
     };
@@ -1453,7 +1472,7 @@ Editor.prototype = {
         range = sel.getRangeAt(0);
         range.deleteContents();
 
-        if (self.isIe11) {
+        if (env.browser.isIE11()) {
           html = templIE11;
         }
 
@@ -1483,7 +1502,7 @@ Editor.prototype = {
         }
 
         // IE 11
-        if (self.isIe11) {
+        if (env.browser.isIE11()) {
           let maxRun = 50;
           const deferredIE11 = $.Deferred();
 
@@ -1676,7 +1695,7 @@ Editor.prototype = {
   },
 
   bindWindowActions() {
-    const editorContainer = this.element.closest('.editor-container');
+    const editorContainer = this.container;
     const currentElement = this.getCurrentElement();
     const self = this;
 
@@ -1687,7 +1706,7 @@ Editor.prototype = {
         this.mousedown = true;
       })
       .on('focus.editor', () => {
-        if (this.isFirefox && !this.mousedown && this.element === currentElement) {
+        if (env.browser.name === 'firefox' && !this.mousedown && this.element === currentElement) {
           this.setFocus();
         }
       })
@@ -1707,23 +1726,27 @@ Editor.prototype = {
         }
       });
 
-    editorContainer
-      .on('focus.editor', '.editor, .editor-source', function () {
-        const elem = $(this);
+    // Handle visual styles at the container level on blur/focus
+    function containerFocusHandler() {
+      const elem = $(this);
 
-        editorContainer.addClass('is-active');
-        setTimeout(() => {
-          if (elem.hasClass('error')) {
-            editorContainer.parent().find('.editor-toolbar').addClass('error');
-            editorContainer.parent().find('.editor-source').addClass('error');
-          }
-        }, 100);
-      })
-      .on('blur.editor', '.editor, .editor-source', () => {
-        editorContainer.removeClass('is-active');
-        editorContainer.parent().find('.editor-toolbar').removeClass('error');
-        editorContainer.parent().find('.editor-source').removeClass('error');
-      });
+      editorContainer.addClass('is-active');
+      setTimeout(() => {
+        if (elem.hasClass('error')) {
+          editorContainer.parent().find('.editor-toolbar').addClass('error');
+          editorContainer.parent().find('.editor-source').addClass('error');
+        }
+      }, 100);
+    }
+    function containerBlurHandler() {
+      editorContainer.removeClass('is-active');
+      editorContainer.parent().find('.editor-toolbar').removeClass('error');
+      editorContainer.parent().find('.editor-source').removeClass('error');
+    }
+
+    this.container
+      .on(`focusin.${COMPONENT_NAME}`, '.editor, .editor-source', containerFocusHandler)
+      .on(`focusout.${COMPONENT_NAME}`, '.editor, .editor-source', containerBlurHandler);
 
     if (self.settings.onLinkClick) {
       editorContainer.on('click.editorlinks', 'a', (e) => {
@@ -1735,14 +1758,10 @@ Editor.prototype = {
     }
 
     // Attach Label
-    const label = this.element.prevAll('.label');
-    for (let i = 0, l = label.length; i < l; i++) {
-      label[i].style.cursor = 'default';
-    }
-    label.on('click.editor', () => {
+    this.label.on('click.editor', () => {
       currentElement.focus();
     });
-    currentElement.attr('aria-label', label.text());
+    currentElement.attr('aria-label', this.label.text());
     return this;
   },
 
@@ -1903,12 +1922,15 @@ Editor.prototype = {
     // Preview Mode
     const doPreviewMode = (res) => {
       let content = res || this.textarea.val();
+      content = xssUtils.sanitizeHTML(content);
+      content = this.getCleanedHtml(content);
+
       this.element.empty().removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
       this.switchToolbars();
       setTimeout(() => {
-        this.element.html(xssUtils.sanitizeHTML(content));
+        this.element.html(content);
         content = this.element.html();
         /**
          * Fires after preview mode activated.
@@ -2022,13 +2044,13 @@ Editor.prototype = {
         p.innerHTML = elem.innerHTML;
         parent.replaceChild(p, elem);
       };
-      if (this.parentElements.indexOf(parentTag) > -1) {
+      if (EDITOR_PARENT_ELEMENTS.indexOf(parentTag) > -1) {
         if (parentTag !== 'p') {
           document.execCommand('removeFormat', false, null);
           replaceTag(parentEl);
         }
       } else {
-        this.parentElements.forEach((el) => {
+        EDITOR_PARENT_ELEMENTS.forEach((el) => {
           if (el !== 'p') {
             const nodes = [].slice.call(parentEl.querySelectorAll(el));
             nodes.forEach(node => replaceTag(node));
@@ -2094,7 +2116,7 @@ Editor.prototype = {
     const containsNodeInSelection = (node) => {
       const sel = window.getSelection();
       let r = false;
-      if (this.isIe11) {
+      if (env.browser.isIE11()) {
         const rangeAt = sel.getRangeAt(0);
         const range = document.createRange();
         range.selectNode(node);
@@ -2188,7 +2210,7 @@ Editor.prototype = {
     // Set selection color checkmark in picker popup
     // by adding/updating ['data-value'] attribute
     if (cpApi) {
-      if (this.isFirefox && action === 'backColor') {
+      if (env.browser.name === 'firefox' && action === 'backColor') {
         color = $(window.getSelection().focusNode.parentNode).css('background-color');
       }
       // IE-11 queryCommandValue returns the as decimal
@@ -2224,7 +2246,7 @@ Editor.prototype = {
 
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
-      if (this.isIe || action === 'foreColor') {
+      if (env.browser.name === 'ie' || action === 'foreColor') {
         if (value) {
           document.execCommand(action, false, value);
         } else {
@@ -2284,7 +2306,7 @@ Editor.prototype = {
     // blockquote needs to be called as indent
     // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
     // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-    if (this.isIe) {
+    if (env.browser.name === 'ie') {
       if (el === 'blockquote') {
         return document.execCommand('indent', false, el);
       }
@@ -2302,7 +2324,7 @@ Editor.prototype = {
       tagName = el.tagName.toLowerCase();
     }
 
-    while (el && this.parentElements.indexOf(tagName) === -1) {
+    while (el && EDITOR_PARENT_ELEMENTS.indexOf(tagName) === -1) {
       el = el.parentNode;
       if (el && el.tagName) {
         tagName = el.tagName.toLowerCase();
@@ -2316,7 +2338,7 @@ Editor.prototype = {
     let parentNode = node.parentNode;
     let tagName = parentNode.tagName.toLowerCase();
 
-    while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
+    while (EDITOR_PARENT_ELEMENTS.indexOf(tagName) === -1 && tagName !== 'div') {
       if (tagName === 'li') {
         return true;
       }
@@ -2337,19 +2359,26 @@ Editor.prototype = {
     this.element = checkJQ(this.element);
     this.textarea = checkJQ(this.textarea);
 
-    const toolbarApi = this.toolbar.data('toolbar');
+    const toolbarApi = this.toolbar.data('toolbar') || this.toolbar.data('toolbar-flex');
     if (toolbarApi) {
       toolbarApi.destroy();
     }
 
-    const tooltips = this.toolbar.find('button');
-    for (let i = 0, l = tooltips.length; i < l; i++) {
-      const tooltip = $(tooltips[i]).data('tooltip');
+    // Cleanup buttons
+    const buttons = this.toolbar.find('button');
+    for (let i = 0, l = buttons.length; i < l; i++) {
+      const tooltip = $(buttons[i]).data('tooltip');
       if (tooltip && typeof tooltip.destroy === 'function') {
         tooltip.destroy();
       }
+
+      const button = $(buttons[i]).data('button');
+      if (button && typeof button.destroy === 'function') {
+        button.destroy();
+      }
     }
 
+    // Cleanup pickers
     const colorpickers = $('[data-action="foreColor"], [data-action="backColor"]', this.element);
     for (let i = 0, l = colorpickers.length; i < l; i++) {
       const colorpicker = $(colorpickers[i]).data('colorpicker');
@@ -2358,14 +2387,35 @@ Editor.prototype = {
       }
     }
 
-    this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
+    // Unbind/Remove Toolbar Component (generically)
+    this.toolbar.off([
+      `click.${COMPONENT_NAME}`,
+      `selected.${COMPONENT_NAME}`
+    ].join(' '));
     this.toolbar.remove();
-    this.toolbar = undefined;
-    this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
-    this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
+    delete this.toolbar;
+
+    // Remove events that could be bound to either:
+    // - the WYSIWYG editor
+    // - the source code view
+    const boundEventNames = [
+      'blur',
+      'DOMNodeInserted',
+      'focus',
+      `input.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
+      `keypress.${COMPONENT_NAME}`,
+      `keyup.${COMPONENT_NAME}`,
+      `mouseup.${COMPONENT_NAME}`,
+      `mousedown.${COMPONENT_NAME}`,
+      `paste.${COMPONENT_NAME}`
+    ].join(' ');
+
+    this.element.off(boundEventNames);
+    this.textarea.off(boundEventNames);
     this.element.prev('.label').off('click.editor');
 
-    this.element.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
+    this.container.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
 
     let state = this.colorpickerButtonState('foreColor');
     let cpBtn = state.cpBtn;
@@ -2375,19 +2425,25 @@ Editor.prototype = {
     cpBtn = state.cpBtn;
     cpBtn.off('selected.editor');
 
+    delete this.pasteWrapper;
+    delete this.pasteWrapperHtml;
+    delete this.selectionHandler;
+
     $(window).off('resize.editor');
 
     if (this.modals) {
-      for (let i = 0, l = this.modals.length; i < l; i++) {
-        const modal = $(this.modals[i]);
+      const modalTypes = Object.keys(this.modals);
+      for (let i = 0, l = modalTypes.length; i < l; i++) {
+        const modal = $(`#modal-${modalTypes[i]}-${this.id}`);
         const modalApi = modal.data('modal');
         modal.off('beforeclose.editor close.editor open.editor beforeopen.editor');
         if (modalApi && typeof modalApi.destroy === 'function') {
           modalApi.destroy();
         }
+        modal.remove();
       }
     }
-    this.modals = {};
+    delete this.modals;
 
     this.element.trigger('destroy.toolbar.editor');
   },
@@ -2489,20 +2545,49 @@ Editor.prototype = {
   },
 
   teardown() {
-    this.element.attr('contenteditable', 'false');
-    this.element.off('input.editor keyup.editor');
-    $('html').off('mouseup.editor');
-
     this.destroyToolbar();
+
+    // Cleanup Source View elements and events
     if (this.sourceView) {
       this.sourceView.off('.editor');
       this.sourceView.remove();
-      this.sourceView = null;
+      delete this.sourceView;
     }
 
-    if ($('[data-editor="true"]').length === 1) {
-      $(`#modal-url-${this.id}, #modal-image-${this.id}`).remove();
+    delete this.textarea;
+    if (this.lineNumbers) {
+      delete this.lineNumbers;
     }
+    if (this.selection) {
+      delete this.selection;
+    }
+    if (this.selectionRange) {
+      delete this.selectionRange;
+    }
+
+    // Cleanup container
+    this.container.off([
+      `focusin.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `input.${COMPONENT_NAME}`,
+      `keyup.${COMPONENT_NAME}`
+    ].join(' '));
+    this.container.removeClass('editor-container');
+    delete this.container;
+
+    // Cleanup label
+    this.label.off(`click.${COMPONENT_NAME}`);
+    delete this.label;
+
+    // Cleanup Editor Element
+    this.element.attr('contenteditable', 'false');
+    this.element.off([
+      `mousedown.${COMPONENT_NAME}`,
+      `updated.${COMPONENT_NAME}`
+    ].join(' '));
+
+    delete this.id;
+    delete this.isActive;
 
     return this;
   },
@@ -2590,7 +2675,7 @@ Editor.prototype = {
 
   // Called whenever a paste event has occured
   onPasteTriggered() {
-    if (!this.isFirefox && document.addEventListener) {
+    if (env.browser.name !== 'firefox' && document.addEventListener) {
       document.addEventListener('paste', (e) => {
         if (typeof e.clipboardData !== 'undefined') {
           const copiedData = e.clipboardData.items[0]; // Get the clipboard data

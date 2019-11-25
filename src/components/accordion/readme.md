@@ -75,9 +75,9 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-url"></use>
+      <use xlink:href="#icon-notes"></use>
     </svg>
-    <a href="#"><span>Learning</span></a>
+    <a href="#"><span>Notes</span></a>
   </div>
   <div class="accordion-pane">
     <div class="accordion-header">

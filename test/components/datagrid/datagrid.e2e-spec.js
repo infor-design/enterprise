@@ -1039,6 +1039,7 @@ describe('Datagrid paging client side tests', () => {
   it('Should be able to move to keyword search and sort', async () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
@@ -1052,6 +1053,7 @@ describe('Datagrid paging client side tests', () => {
   it('Should be able to move to keyword search and page', async () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+
     expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
@@ -1332,7 +1334,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-describe('Datagrid Checkbox Disabled Editor', () => {
+describe('Datagrid checkbox disabled editor tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
 
@@ -1849,6 +1851,54 @@ describe('Datagrid Custom Tooltip tests', () => {
   });
 });
 
+describe('Datagrid custom number format tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-number-formats?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should format numbers correctly', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('145000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('210.990');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('$210.99');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('14,500,000 %');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getText()).toEqual('145,000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(7)')).getText()).toEqual('145,000.00');
+  });
+});
+
+describe('Datagrid custom date format tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-custom-date-formats?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should format dates correctly', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(1)')).getText()).toEqual('3/15/2016');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('3/15/2016 12:30:36');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(3)')).getText()).toEqual('3/15/2016 12:30 PM');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(4)')).getText()).toEqual('2016-03-15T12:30:36.120');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(4)')).getText()).toEqual('2016-03-15T00:30:36.008');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(4)')).getText()).toEqual('2014-07-03T01:00:00.000');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('3/15/2016');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getText()).toEqual('12:30:36 PM');
+  });
+});
+
 describe('Datagrid filter load data and update columns tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-load-data-update-columns?layout=nofrills');
@@ -2167,6 +2217,7 @@ describe('Datagrid on modal with no default size', () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
       await element(by.id('h1-title')).click();
+
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toBeLessThan(0.2);
     });
   }
@@ -3262,5 +3313,46 @@ describe('Datagrid tree select multiple tests', () => {
     await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(5) td:nth-child(1)')).click();
 
     expect(await element.all(await by.css('tr.is-selected')).count()).toEqual(3);
+  });
+});
+
+describe('Datagrid hide pager on one page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-hide-pager-if-one-page-filter');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-body tbody tr:nth-child(4)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should hide pager on one page and filter', async () => {
+    const selector = {
+      rows: '#datagrid .datagrid-body tbody tr[role="row"]',
+      filter: '#datagrid .datagrid-header thead th[data-column-id="3"] .datagrid-filter-wrapper select',
+      filterSel: '#datagrid .datagrid-header thead th[data-column-id="3"] div.dropdown',
+      filterOpt: '.dropdown-list .dropdown-option #list-option-0'
+    };
+    const pagerBar = await element(by.css('.pager-toolbar'));
+
+    expect(await pagerBar.getAttribute('class')).not.toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(5);
+
+    const filterSel = await element(by.css(selector.filterSel));
+    await filterSel.click();
+    const filterOpt = await element(by.css(selector.filterOpt));
+    await filterOpt.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await pagerBar.getAttribute('class')).toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(2);
+    await filterOpt.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await pagerBar.getAttribute('class')).not.toContain('hidden');
+    expect(await element.all(by.css(selector.rows)).count()).toEqual(5);
   });
 });

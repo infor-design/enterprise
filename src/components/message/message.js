@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return.
  * @param {string} [settings.allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
  * @param {string} [settings.audibleLabel='']  String to include in message title that is strictly audible.
+ * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
  */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
@@ -33,7 +34,8 @@ const MESSAGE_DEFAULTS = {
   cssClass: null,
   returnFocus: null,
   allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
-  audibleLabel: ''
+  audibleLabel: '',
+  overlayOpacity: 0.7
 };
 
 function Message(element, settings) {
@@ -79,7 +81,8 @@ Message.prototype = {
       buttons: this.settings.buttons,
       resizable: this.settings.resizable,
       close: this.settings.close,
-      isAlert: true
+      isAlert: true,
+      overlayOpacity: this.settings.overlayOpacity
     });
 
     // Adjust Width if Set as a Setting

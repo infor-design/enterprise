@@ -31,7 +31,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {isAlert} [settings.isAlert=false] Adds alertdialog role for message dialogs.
 * @param {content} [settings.content=null] Ability to pass in dialog html content.
 * @param {string} [settings.cssClass=null] Append a css class to top level.
-* @param {boolean} [settings.autoFocus=true] If true the first input will be focused.
+* @param {boolean} [settings.autoFocus=true] If true, when the modal is opened, the first available input/button in its content area will be focused.
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
@@ -42,6 +42,8 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
+* @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
+* @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -58,7 +60,9 @@ const MODAL_DEFAULTS = {
   showCloseBtn: false,
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
-  breakpoint: 'phone-to-tablet'
+  breakpoint: 'phone-to-tablet',
+  overlayOpacity: 0.7,
+  noRefocus: false
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -173,7 +177,7 @@ Modal.prototype = {
     }
 
     if (!this.overlay) {
-      this.overlay = $('<div class="overlay"></div>');
+      this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
     }
 
     this.oldActive = this.trigger;
@@ -1049,11 +1053,13 @@ Modal.prototype = {
     self.element.trigger('close', self.isCancelled);
 
     // Restore focus
-    if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
-      this.oldActive.focus();
-      this.oldActive = null;
-    } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
-      this.trigger.focus();
+    if (!this.settings.noRefocus) {
+      if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
+        this.oldActive.focus();
+        this.oldActive = null;
+      } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
+        this.trigger.focus();
+      }
     }
 
     // close tooltips

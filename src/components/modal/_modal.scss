@@ -484,15 +484,6 @@ body.modal-engaged {
   }
 }
 
-// Fix scrollbar in IE on single-line Message Modals
-.ie {
-  .modal-content {
-    .modal-body-wrapper {
-      padding: 2px 20px;
-    }
-  }
-}
-
 // Message specific styles
 .message {
   .modal-body-wrapper {

@@ -484,6 +484,17 @@ describe('Locale API', () => {
     expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
   });
 
+  it('Should format milliseconds', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date('2015-01-01T06:00:00.123Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-01T01:00:00.123');
+    expect(Locale.formatDate(new Date('2015-01-02T06:00:00.120Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-02T01:00:00.120');
+    expect(Locale.formatDate(new Date('2015-01-03T06:00:00.012Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-03T01:00:00.012');
+    expect(Locale.formatDate(new Date('2015-01-04T06:00:00.100Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-04T01:00:00.100');
+    expect(Locale.formatDate(new Date('2015-01-05T06:00:00.010Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-05T01:00:00.010');
+    expect(Locale.formatDate(new Date('2015-01-06T06:00:00.001Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-06T01:00:00.001');
+  });
+
   // monthYear and yearMonth
   it('Should format a year and month locale', () => {
     Locale.set('en-US');
@@ -531,6 +542,20 @@ describe('Locale API', () => {
 
     expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).toEqual(new Date(2010, 9, 10, 0, 0, 0).getTime());
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
+  });
+
+  it('Should parseDate in fi-FI', () => {
+    Locale.set('fi-FI');
+
+    expect(Locale.parseDate('18.10.2019 7.15', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
+    expect(Locale.parseDate('18.10.2019 7.15', Locale.calendar().dateFormat.datetime, true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short, true).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
+  });
+
+  it('Should parseDate with single digit formats', () => {
+    expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm').getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm', true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
   });
 
   it('Should be able to parse UTC toISOString', () => {
@@ -1636,7 +1661,7 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ', { showBrackets: false })).toEqual('XYZ');
   });
 
-  it('Should be able get translations in a non current locale', (done) => {
+  it('Should be able get translations in a non current locale (de-DE)', (done) => {
     Locale.set('en-US');
     Locale.getLocale('de-DE').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
@@ -1649,7 +1674,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able get translations in a non current locale', (done) => {
+  it('Should be able get translations in a non current locale  (fi-FI)', (done) => {
     Locale.set('fi-FI');
     Locale.setLanguage('sv');
     Locale.getLocale('de-DE');

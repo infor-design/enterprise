@@ -168,6 +168,12 @@ MaskInput.prototype = {
   handleEvents() {
     const self = this;
 
+    // On change event
+    this.changeEventHandler = function () {
+      self.hasTriggeredChangeEvent = true;
+    };
+    this.element.addEventListener('change', this.changeEventHandler);
+
     // Store an initial value on focus
     this.focusEventHandler = function () {
       self.state.initialValue = self.element.value;
@@ -176,6 +182,7 @@ MaskInput.prototype = {
 
     // Handle all masking on the `input` event
     this.inputEventHandler = function () {
+      self.hasTriggeredChangeEvent = false;
       return self.process();
     };
     this.element.addEventListener('input', this.inputEventHandler);
@@ -192,8 +199,9 @@ MaskInput.prototype = {
         // in IE11 or Edge, change event doesn't fire for some unknown reason.
         // Added this for backwards compatility with this OS/Browser combo.
         // See http://jira.infor.com/browse/SOHO-6895
-        if (self._hasChangedValue() && self._isEdgeIE()) {
+        if (self._hasChangedValue() && (self._isEdgeIE() || !self.hasTriggeredChangeEvent)) {
           $(self.element).trigger('change');
+          self.hasTriggeredChangeEvent = true;
         }
       }
 
@@ -591,6 +599,11 @@ MaskInput.prototype = {
     if (this.blurEventHandler) {
       this.element.removeEventListener('blur', this.blurEventHandler);
       delete this.blurEventHandler;
+    }
+
+    if (this.changeEventHandler) {
+      this.element.removeEventListener('change', this.changeEventHandler);
+      delete this.changeEventHandler;
     }
 
     return this;

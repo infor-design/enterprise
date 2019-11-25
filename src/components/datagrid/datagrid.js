@@ -437,10 +437,10 @@ Datagrid.prototype = {
     this.isInitialRender = true;
     self.table.empty();
     self.clearHeaderCache();
+    self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.element.append(this.bodyContainer);
     self.renderHeader();
-    self.container = self.element.closest('.datagrid-container');
 
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
@@ -562,9 +562,18 @@ Datagrid.prototype = {
         this.originalDataset ? this.originalDataset : this.settings.dataset;
     const rowData = arrayToUse[row];
 
-    this.unselectRow(row, noSync);
+    this.saveDirtyRows();
 
+    this.unselectRow(row, noSync);
     arrayToUse.splice(row, 1);
+    this.restoreDirtyRows();
+
+    if (this.settings.selectable) {
+      if (!this.settings.groupable && (this.settings.groupable && this.originalDataset)) {
+        this.syncDatasetWithSelectedRows();
+      }
+    }
+
     this.preventSelection = true;
     if (!noSync) {
       this.setRowGrouping();
@@ -3102,6 +3111,20 @@ Datagrid.prototype = {
 
       // Handle Grouping
       if (this.settings.groupable) {
+        // Filter and sorted
+        if (s.dataset[i].values) {
+          const thisLength = s.dataset[i].values.length;
+          let thisFilterCount = 0;
+          for (let k = 0; k < thisLength; k++) {
+            if (s.dataset[i].values[k].isFiltered) {
+              thisFilterCount++;
+            }
+          }
+          if (thisFilterCount === thisLength) {
+            continue; //eslint-disable-line
+          }
+        }
+
         // First push group row
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row
@@ -3329,10 +3352,6 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (!self.activeCell || !self.activeCell.node) {
-      self.activeCell = { node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
-    }
-
     if (self.activeCell.isFocused) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
@@ -3377,7 +3396,18 @@ Datagrid.prototype = {
         self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
         self.headerTableRight.width(w);
       }
+      this.activateFirstCell();
     });
+  },
+
+  /**
+   * Set active node to first cell and focus if possible
+   * @private
+   */
+  activateFirstCell() {
+    if (!this.activeCell || !this.activeCell.node) {
+      this.activeCell = { node: this.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
+    }
   },
 
   /**
@@ -5175,6 +5205,12 @@ Datagrid.prototype = {
     // Shrink or add colgroups
     this.updateColumnGroup();
 
+    // Handle initially hidden column
+    if (this.headerWidths[idx] && this.headerWidths[idx].width < 1) {
+      this.clearHeaderCache();
+      this.syncColGroups();
+    }
+
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
       let colSpan = this.headerContainer.find('th').eq(idx).attr('colspan');
@@ -5272,7 +5308,7 @@ Datagrid.prototype = {
             searchableTextCallback: item => item.name
           }
         })
-        .on('selected', (selectedEvent, args) => {
+        .on('selected', function (selectedEvent, args) {
           const chk = args.elem.find('.checkbox');
           const id = chk.attr('data-column-id');
           const isChecked = chk.prop('checked');
@@ -5284,12 +5320,23 @@ Datagrid.prototype = {
           }
           self.isColumnsChanged = true;
 
+          // Set listview dataset node state, to be in sync after filtering
+          const lv = { node: {}, api: $(this).data('listview') };
+          if (lv.api) {
+            const idx = self.columnIdxById(id);
+            if (idx !== -1 && lv.api.settings.dataset[idx]) {
+              lv.node = lv.api.settings.dataset[idx];
+            }
+          }
+
           if (!isChecked) {
             self.showColumn(id);
             chk.prop('checked', true);
+            lv.node.hidden = false;
           } else {
             self.hideColumn(id);
             chk.prop('checked', false);
+            lv.node.hidden = true;
           }
         });
 
@@ -8311,7 +8358,7 @@ Datagrid.prototype = {
       return false;
     }
 
-    if (this.isRowDisabled(row)) {
+    if (this.isRowDisabled(row) || !this.activeCell.node) {
       return false;
     }
 
@@ -9102,41 +9149,36 @@ Datagrid.prototype = {
   /**
   * Return an array containing all of the currently modified rows, the type of modification
   * and the cells that are dirty and the data.
+  * @param  {boolean} onlyChangedValues If true will return an array of only changed values
   * @returns {array} An array showing the dirty row info.
   */
-  getModifiedRows() {
+  getModifiedRows(onlyChangedValues) {
     const s = this.settings;
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     const modified = [];
 
-    // First add the dirty rows
-    if (this.dirtyArray && this.dirtyArray.length) {
-      for (let i = 0; i < this.dirtyArray.length; i++) {
-        if (this.dirtyArray[i] === undefined) {
-          continue;
-        }
-
-        const data = {
-          data: s.treeGrid ? dataset[i].node : dataset[i],
-          row: i,
-          type: 'dirty',
-          cells: []
-        };
-
-        for (let j = 0; j < this.dirtyArray[i].length; j++) {
-          if (this.dirtyArray[i][j] !== undefined) {
-            data.cells.push(this.dirtyArray[i][j]);
+    for (let i = 0; i < dataset.length; i++) {
+      const node = s.treeGrid ? dataset[i].node : dataset[i];
+      const data = { row: i, data: node, cells: [] };
+      // First add the dirty rows
+      if (this.isRowDirty(i)) {
+        data.type = 'dirty';
+        // No need to run trhu columns loop, if need only changed values to returns
+        for (let j = 0; (!onlyChangedValues && (j < this.dirtyArray[i].length)); j++) {
+          const cellData = this.dirtyArray[i][j];
+          if (typeof cellData !== 'undefined' && cellData.isDirty) {
+            data.cells.push({ row: i, col: j, cellData });
           }
         }
-        modified.push(data);
       }
-    }
-
-    // Now add error and in progress rows
-    for (let i = 0; i < dataset.length; i++) {
-      const el = dataset[i];
-      if (el.rowStatus !== undefined && (el.rowStatus.icon === 'error' || el.rowStatus.icon === 'in-progress')) {
-        modified.push({ data: el, row: i, type: el.rowStatus.icon, cells: [] });
+      // Now add error and in progress rows
+      if (typeof node.rowStatus !== 'undefined' &&
+        (node.rowStatus.icon === 'error' || node.rowStatus.icon === 'in-progress')) {
+        data.type = data.type === 'dirty' ? ['dirty', node.rowStatus.icon] : node.rowStatus.icon;
+      }
+      // Add to modified
+      if (typeof data.type !== 'undefined') {
+        modified.push(onlyChangedValues ? node : data);
       }
     }
     return modified;
@@ -9429,6 +9471,29 @@ Datagrid.prototype = {
   },
 
   /**
+   * Function to check if given row has true value for isDirty in any cell in it
+   * @private
+   * @param {number} rowIndex The row index
+   * @returns {boolean} true if isDirty
+   */
+  isRowDirty(rowIndex) {
+    let isDirty = false;
+    if (typeof rowIndex === 'number' && this.dirtyArray && this.dirtyArray.length) {
+      const row = this.dirtyArray[rowIndex];
+      if (typeof row !== 'undefined') {
+        for (let i = 0, l = row.length; i < l; i++) {
+          const col = row[i];
+          if (typeof col !== 'undefined' && col.isDirty) {
+            isDirty = true;
+            break;
+          }
+        }
+      }
+    }
+    return isDirty;
+  },
+
+  /**
    * Function to check if given cell has true value for isDirty
    * @private
    * @param {number} row The row index
@@ -9502,7 +9567,7 @@ Datagrid.prototype = {
       this.addToDirtyArray(row, cell, data);
     }
 
-    if (row < 0 || cell < 0) {
+    if (row < 0 || cell < 0 || !cellNode.length) {
       return;
     }
 
@@ -9584,16 +9649,13 @@ Datagrid.prototype = {
    * @returns {object} The dom jQuery node
    */
   rowNodes(row) {
+    let container = this.element;
+
     if (row instanceof jQuery) {
+      container = row.closest('.datagrid-container');
       row = row.attr('aria-rowindex') - 1;
     }
-    const leftNodes = this.tableBodyLeft ? this.tableBodyLeft.find(`tr[aria-rowindex="${row + 1}"]`) : $();
-    const centerNodes = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
-    const rightNodes = this.tableBodyRight ? this.tableBodyRight.find(`tr[aria-rowindex="${row + 1}"]`) : $();
-
-    return $(centerNodes)
-      .add(leftNodes)
-      .add(rightNodes);
+    return container.find(`> .datagrid-body-container > .datagrid-body > table > tbody > tr[aria-rowindex="${row + 1}"]`);
   },
 
   /**

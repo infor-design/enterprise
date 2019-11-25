@@ -496,12 +496,17 @@ ToolbarFlex.prototype = {
       noMenuWrap: true
     };
 
-    let hasIcons = false;
-
     function getItemData(item) {
       const itemData = item.toPopupmenuData();
-      if (itemData && itemData.icon) {
-        hasIcons = true;
+
+      if (itemData) {
+        // Pass along some properties to the top level data object
+        if (itemData.icon) {
+          data.hasIcons = true;
+        }
+        if (itemData.selectable) {
+          data.selectable = itemData.selectable;
+        }
       }
       return itemData;
     }
@@ -512,8 +517,6 @@ ToolbarFlex.prototype = {
       }
       return true;
     }).map(item => getItemData(item));
-
-    data.hasIcons = hasIcons;
 
     return data;
   },
@@ -539,6 +542,35 @@ ToolbarFlex.prototype = {
       return;
     }
     this.element.classList.remove('is-disabled');
+  },
+
+  /**
+   * Detects whether or not a toolbar item is currently overflowed.
+   * @param {ToolbarFlexItem|jQuery[]|HTMLElement} item the Toolbar Item or Element to check for overlflow.
+   * @returns {boolean} whether or not the item is overflowed.
+   */
+  isItemOverflowed(item) {
+    if (!item) {
+      return false;
+    }
+
+    // If we get an HTMLElement or jQuery object, rzesolve the ToolbarFlex Item
+    // from either of those, if applicable. Otherwise, it's not overflowed.
+    let targetItem;
+    if (item instanceof HTMLElement || item instanceof $) {
+      targetItem = $(item).data('toolbarflexitem');
+      if (!targetItem) {
+        return false;
+      }
+      item = targetItem;
+    }
+
+    // If this item isn't inside this toolbar, it's definitely not overflowed.
+    if (this.items.indexOf(item) < 0) {
+      return false;
+    }
+
+    return item.overflowed;
   },
 
   /**

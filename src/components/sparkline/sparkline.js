@@ -315,8 +315,8 @@ Sparkline.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
-      this.updated();
+    this.element.on(`updated.${COMPONENT_NAME}`, (e, settings) => {
+      this.updated(settings);
     });
 
     if (this.settings.redrawOnResize) {
@@ -361,9 +361,9 @@ Sparkline.prototype = {
    * @returns {object} The api for chaining.
    */
   updated(settings) {
-    const type = settings.type || this.settings.type;
-    this.settings = settings;
-    this.settings.type = type;
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
     this.element.empty();
 
     return this

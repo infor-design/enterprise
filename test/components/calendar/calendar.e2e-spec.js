@@ -89,7 +89,7 @@ describe('Calendar ajax loading tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(4);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(10);
   });
 
   it('Should render ajax loaded dates for sept 2018', async () => {
@@ -104,7 +104,7 @@ describe('Calendar ajax loading tests', () => {
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(2);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(8);
   });
 });
 
@@ -168,7 +168,7 @@ describe('Calendar specific month tests', () => {
   });
 
   it('Should offer a right click menu', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await browser.actions().mouseMove(event).perform();
@@ -180,11 +180,11 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
     await element.all(by.css('#calendar-actions-menu a')).first().click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
   it('Should add new events on click and cancel', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -195,11 +195,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.css('.calendar-popup .btn-close')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
   it('Should add new events on click and submit', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -210,7 +210,23 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+  });
+
+  it('Should be able to add with the modal', async () => {
+    await element.all(by.cssContainingText('.monthview-table td', '13')).first().click();
+    await browser.actions()
+      .doubleClick(await element.all(by.cssContainingText('.monthview-table td', '13')).first())
+      .perform();
+
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('subject'))), config.waitsFor);
+    await element(by.id('subject')).sendKeys('Test Event');
+    await element(by.id('submit')).click();
+
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(19);
   });
 
   it('Should update datepicker date', async () => {
@@ -343,7 +359,6 @@ describe('Calendar WeekView settings tests', () => {
   });
 
   it('Should render without error', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(14);
     await utils.checkForErrors();
   });
 

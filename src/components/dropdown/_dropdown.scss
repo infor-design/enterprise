@@ -107,7 +107,6 @@ div.multiselect {
     &[data-placeholder-text]::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
-      -webkit-text-fill-color: $input-placeholder-color;
     }
   }
 
@@ -143,7 +142,6 @@ div.multiselect {
     color: $input-disabled-color;
     cursor: default;
     pointer-events: none;
-    -webkit-text-fill-color: $input-disabled-color;
 
     .icon,
     + .icon {
@@ -189,7 +187,6 @@ div.multiselect {
     border-color: $input-color-readonly-border;
     color: $input-readonly-color;
     cursor: text;
-    -webkit-text-fill-color: $input-readonly-color;
 
     &[tabindex='-1']:focus {
       border-color: $input-color-readonly-border !important;
@@ -371,7 +368,7 @@ div.multiselect {
       display: inline-block;
       float: right;
       margin-left: -40px;
-      margin-top: 4px;
+      margin-top: 5px;
       position: relative;
       right: 8px;
       text-indent: 0;
@@ -1061,6 +1058,14 @@ html[dir='rtl'] {
           margin-left: auto;
           margin-right: -17px;
         }
+      }
+
+      // Badge Support
+      .badge {
+        float: left;
+        margin-left: 0;
+        right: -10px;
+        text-indent: 0;
       }
     }
 
