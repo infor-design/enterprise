@@ -179,6 +179,14 @@ body.is-open-touch {
       box-shadow: none !important;
     }
 
+    .searchfield {
+      padding-left: 53px;
+      padding-right: 34px;
+    }
+
+    .icon:not(.close):not(.icon-error) {
+      left: 18px;
+    }
   }
 
   .searchfield,
@@ -198,24 +206,23 @@ body.is-open-touch {
 
   .searchfield {
     color: $application-menu-searchfield-text-color;
-    padding-left: 53px;
-    width: auto;
+    display: block;
 
     &::placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 40%);
+      color: $application-menu-searchfield-placeholder-color;
     }
 
     &::-webkit-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 40%);
+      color: $application-menu-searchfield-placeholder-color;
     }
 
     &::-moz-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 40%);
+      color: $application-menu-searchfield-placeholder-color;
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 40%);
+      color: $application-menu-searchfield-placeholder-color;
     }
   }
 
@@ -518,17 +525,12 @@ html[dir='rtl'] {
           left: auto;
           right: 18px;
         }
-
-        &.close {
-          left: 45px;
-          right: auto;
-        }
       }
-    }
 
-    .searchfield {
-      padding-left: 34px;
-      padding-right: 53px;
+      .searchfield {
+        padding-left: 34px;
+        padding-right: 53px;
+      }
     }
 
     .accordion {

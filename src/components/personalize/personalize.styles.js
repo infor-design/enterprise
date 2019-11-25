@@ -320,7 +320,7 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 
 .application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder {
   color: ${colors.contrast};
-  opacity: .8;
+  opacity: .5;
 }
 
 .application-menu.is-personalizable .searchfield-wrapper .icon {
@@ -351,6 +351,11 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 .application-menu.is-personalizable .searchfield-wrapper {
   background-color: ${colors.base};
   border-bottom: none !important;
+}
+
+html[dir='rtl'] .application-menu.is-personalizable {
+  background-color: ${colors.lighter};
+  border-left: ${colors.light};
 }
 
 html[class*="theme-uplift-"] .application-menu.is-personalizable .searchfield-wrapper {
