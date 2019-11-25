@@ -3843,6 +3843,7 @@ Datagrid.prototype = {
       }
 
       cssClass += (col.focusable ? ' is-focusable' : '');
+      cssClass += (formatter.name === 'Actions' ? ' has-btn-actions' : '');
 
       const rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
 
@@ -5905,6 +5906,10 @@ Datagrid.prototype = {
       const target = $(e.target);
 
       if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
+        return;
+      }
+
+      if (target.closest('td').is('.has-btn-actions') && !target.is('.btn-actions')) {
         return;
       }
 
@@ -9830,7 +9835,7 @@ Datagrid.prototype = {
         self.activeCell.groupNode = self.activeCell.node;
       }
     }
-    if (self.activeCell.node.hasClass('is-focusable')) {
+    if (self.activeCell.node.is('.is-focusable, .has-btn-actions')) {
       self.activeCell.node.find('button').focus();
     }
 
