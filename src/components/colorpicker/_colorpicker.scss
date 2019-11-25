@@ -105,10 +105,6 @@
         color: $input-color;
       }
 
-      input[readonly]:focus {
-        color: transparent;
-      }
-
       .icon:not(.icon-error),
       .icon:hover {
         color: $trigger-icon-fill-color;
