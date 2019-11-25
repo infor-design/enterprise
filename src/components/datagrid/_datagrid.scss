@@ -786,6 +786,10 @@ $datagrid-short-row-height: 25px;
 
         //Editing
         &.is-editing {
+          &.has-singlecolumn {
+            min-height: $datagrid-medium-row-height + 8;
+          }
+
           .colorpicker-container {
             padding: 4px 15px 0;
           }
@@ -1133,6 +1137,10 @@ $datagrid-short-row-height: 25px;
 
         //Editing
         &.is-editing {
+          &.has-singlecolumn {
+            min-height: $datagrid-short-row-height + 8;
+          }
+
           &.is-fileupload {
             .trigger,
             .trigger-close {
@@ -1921,6 +1929,11 @@ $datagrid-short-row-height: 25px;
       background-color: $datagrid-cell-editing-bg-color;
       position: relative;
 
+      &.has-singlecolumn {
+        display: block;
+        min-height: $datagrid-row-height + 7;
+      }
+
       .datagrid-cell-wrapper {
         border: 1px solid $theme-color-brand-primary-base;
         left: 0;
@@ -1966,6 +1979,13 @@ $datagrid-short-row-height: 25px;
 
       .checkbox-label::after {
         left: 9px;
+      }
+
+      &.has-singlecolumn {
+        .checkbox-label::after {
+          left: 7px;
+          top: 20px;
+        }
       }
 
       &.is-fileupload {
