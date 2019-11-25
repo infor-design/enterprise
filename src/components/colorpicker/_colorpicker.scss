@@ -103,11 +103,6 @@
         background-color: $input-color-initial-background;
         border-color: $input-color-initial-border;
         color: $input-color;
-        -webkit-text-fill-color: $input-color;
-      }
-
-      input[readonly]:focus {
-        color: transparent;
       }
 
       .icon:not(.icon-error),

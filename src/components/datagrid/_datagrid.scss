@@ -365,7 +365,6 @@ $datagrid-short-row-height: 25px;
         div.dropdown {
           border-color: $datagrid-list-filter-border-color !important;
           color: $datagrid-list-filter-color;
-          -webkit-text-fill-color: $datagrid-list-filter-color;
 
           &:disabled,
           &.is-disabled {
@@ -2563,7 +2562,6 @@ $datagrid-short-row-height: 25px;
       height: 24px;
       line-height: 21px;
       padding: 3px 0 0 5px;
-      -webkit-text-fill-color: $datagrid-filter-color;
       vertical-align: top;
       width: calc(100% - 5px);
 
@@ -2594,7 +2592,6 @@ $datagrid-short-row-height: 25px;
 
       > span {
         color: inherit;
-        -webkit-text-fill-color: inherit;
         width: calc(100% - 16px);
       }
 
