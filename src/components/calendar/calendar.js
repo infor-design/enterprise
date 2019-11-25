@@ -261,7 +261,9 @@ Calendar.prototype = {
       endHour: this.settings.weekViewSettings.endHour,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
-      onChangeView: this.onChangeToWeekDay
+      onChangeView: this.onChangeToWeekDay,
+      eventTooltip: this.settings.eventTooltip,
+      iconTooltip: this.settings.iconTooltip,
     });
     this.weekViewHeader = document.querySelector('.calendar .calendar-weekview .monthview-header');
 
