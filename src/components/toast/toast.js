@@ -73,9 +73,9 @@ Toast.prototype = {
     let isPausePlay = false;
     let percentage = 100;
 
-    this.uniqueId = this.generateUniqueId('usersettings-position');
+    this.uniqueId = s.uniqueid ? this.generateUniqueId('usersettings-position') : '';
 
-    let container = $(`#toast-container-${this.uniqueId}`);
+    let container = $(`#toast-container${this.uniqueId}`);
     const toast = $(`
       <div class="toast">
         <span class="toast-title">${xssUtils.stripHTML(s.title)}</span>
@@ -90,7 +90,7 @@ Toast.prototype = {
     const progress = $('<div class="toast-progress"></div>');
 
     if (!container.length) {
-      container = $(`<div id="toast-container-${this.uniqueId}" class="toast-container" aria-relevant="additions" aria-live="polite"></div>`).appendTo('body');
+      container = $(`<div id="toast-container${this.uniqueId}" class="toast-container" aria-relevant="additions" aria-live="polite"></div>`).appendTo('body');
     }
 
     container
@@ -266,7 +266,7 @@ Toast.prototype = {
     const doc = $(document);
     doc
       .off('mouseup.toast').on('mouseup.toast', (e) => {
-        if ($(`#toast-container-${this.uniqueId} .toast`).length === 1) {
+        if ($(`#toast-container${this.uniqueId} .toast`).length === 1) {
           const dragApi = container.data('drag');
           if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
             const args = { dragApi, x: e.pageX, y: e.pageY };
@@ -277,7 +277,7 @@ Toast.prototype = {
         }
       })
       .off('touchend.toast').on('touchend.toast', (e) => {
-        if ($(`#toast-container-${this.uniqueId} .toast`).length === 1) {
+        if ($(`#toast-container${this.uniqueId} .toast`).length === 1) {
           const dragApi = container.data('drag');
           if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
             const orig = e.originalEvent;
@@ -402,7 +402,7 @@ Toast.prototype = {
   remove(toast) {
     const removeCallback = () => {
       toast.remove();
-      const canDestroy = !$(`#toast-container-${this.uniqueId} .toast`).length;
+      const canDestroy = !$(`#toast-container${this.uniqueId} .toast`).length;
       if (canDestroy) {
         this.destroy();
       }
@@ -443,7 +443,7 @@ Toast.prototype = {
    * @returns {void}
    */
   destroy() {
-    const container = $(`#toast-container-${this.uniqueId}`);
+    const container = $(`#toast-container${this.uniqueId}`);
     if (container[0]) {
       const toasts = [].slice.call(container[0].querySelectorAll('.toast'));
       toasts.forEach((toast) => {
