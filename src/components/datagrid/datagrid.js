@@ -8492,6 +8492,10 @@ Datagrid.prototype = {
     */
     this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
+    if (this.visibleColumns().length === 1) {
+      cellParent.addClass('has-singlecolumn');
+    }
+
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
     this.editor.row = idx;
     this.editor.cell = cell;
@@ -8630,7 +8634,7 @@ Datagrid.prototype = {
 
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');
-    cellNode.removeClass('is-editing is-editing-inline');
+    cellNode.removeClass('is-editing is-editing-inline has-singlecolumn');
 
     // Editor.destroy
     this.editor.destroy();
