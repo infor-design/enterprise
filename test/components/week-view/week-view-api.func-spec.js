@@ -11,7 +11,7 @@ const events = require('../../../app/data/events');
 let weekViewEl;
 let weekViewAPI;
 
-describe('WeekView API', () => { //eslint-disable-line
+describe('WeekView API', () => {
   beforeEach(() => {
     weekViewEl = null;
     weekViewAPI = null;
@@ -159,13 +159,14 @@ describe('WeekView API', () => { //eslint-disable-line
   it('Should move to next month and back to today', () => {
     document.body.querySelector('.btn-icon.next').click();
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
+    weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
+
     document.body.querySelector('.hyperlink.today').click();
 
     const testDate = new Date();
-    const stringDate = testDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    testDate.setHours(0, 0, 0, 0);
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual(stringDate);
+    expect(weekViewAPI.settings.startDate.getTime()).toEqual(testDate.getTime());
   });
 
   it('Should be able to render a single day', () => {
