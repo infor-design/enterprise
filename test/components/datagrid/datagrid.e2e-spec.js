@@ -1871,6 +1871,24 @@ describe('Datagrid custom number format tests', () => {
     expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(5)')).getText()).toEqual('14,500,000 %');
     expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getText()).toEqual('145,000');
     expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(7)')).getText()).toEqual('145,000.00');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(8)')).getText()).toEqual('100.00');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(8)')).getText()).toEqual('836.45');
+  });
+
+  it('Should format numbers correctly as strings (nl-NL)', async () => {
+    await utils.setPage('/components/datagrid/test-custom-number-formats?layout=nofrills&locale=nl-NL');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(8)')).getText()).toEqual('100,00');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(8)')).getText()).toEqual('836,45');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(8)')).getText()).toEqual('1.200,12');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(4) td:nth-child(8)')).getText()).toEqual('1.200,12');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(5) td:nth-child(8)')).getText()).toEqual('10,99');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(6) td:nth-child(8)')).getText()).toEqual('130.300,00');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(7) td:nth-child(8)')).getText()).toEqual('130.300,00');
   });
 });
 

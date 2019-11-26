@@ -1343,9 +1343,6 @@ const Locale = {  // eslint-disable-line
     }
 
     if (typeof number === 'string') {
-      if (decimal !== '.') {
-        number = number.replace(decimal, '.');
-      }
       number = Locale.parseNumber(number);
     }
 
