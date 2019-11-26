@@ -943,6 +943,16 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('12.345,12 €')).toEqual(12345.12);
   });
 
+  it('Should format numbers in current locale', () => {
+    Locale.set('nl-NL');
+
+    expect(Locale.parseNumber('100,00')).toEqual(100);
+    expect(Locale.parseNumber('836,45')).toEqual(836.45);
+    expect(Locale.parseNumber('1200,12')).toEqual(1200.12);
+    expect(Locale.parseNumber('10,99')).toEqual(10.99);
+    expect(Locale.parseNumber('130300,00')).toEqual(130300.00);
+  });
+
   it('Should return NaN for bad numbers', () => {
     Locale.set('en-US');
 
