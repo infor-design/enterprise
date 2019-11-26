@@ -47,6 +47,19 @@
     }
   }
 
+  // Medium Row Height
+  &.medium-rowheight {
+    tbody tr {
+      td {
+        &.is-editing {
+          &.has-singlecolumn {
+            min-height: $datagrid-medium-row-height + 10;
+          }
+        }
+      }
+    }
+  }
+
   // Short Row Height
   &.short-rowheight {
     tbody {

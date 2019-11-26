@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var data = [];
+    var columns = [];
+
+    // Some Sample Data
+    data.push({ productName: 'Compressor' });
+    data.push({ productName: 'Some Compressor' });
+    data.push({ productName: 'Portable Compressor' });
+    data.push({ productName: 'Another Compressor' });
+    data.push({ productName: 'De Wallt Compressor' });
+    data.push({ productName: 'Air Compressors' });
+    data.push({ productName: 'Some Compressor' });
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
+
+    // Init the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      showNewRowIndicator: false,
+      clickToSelect: false,
+      toolbar: { title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true }
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+    });
+
+  });
+</script>
