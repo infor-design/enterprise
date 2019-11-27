@@ -32,6 +32,7 @@ import './field-filter/field-filter.jquery';
 import './field-options/field-options.jquery';
 import './fileupload/fileupload.jquery';
 import './fileupload-advanced/fileupload-advanced.jquery';
+import './fontpicker/fontpicker.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
