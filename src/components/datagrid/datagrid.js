@@ -6018,7 +6018,8 @@ Datagrid.prototype = {
           attachToBody: true,
           menuId: col.menuId,
           trigger: 'immediate',
-          offset: { y: 5 }
+          offset: { y: 5 },
+          returnFocus: () => elem.focus()
         }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
           const el = $(this);
           if (el.data('popupmenu') && !el.data('tooltip')) {
@@ -8185,6 +8186,14 @@ Datagrid.prototype = {
         }
       }
 
+      // Action button from Formatters.Actions
+      if (key === 13 && node.is('.has-btn-actions')) {
+        const btnAction = node.find('.btn-actions');
+        if (btnAction.length) {
+          btnAction.trigger('click');
+        }
+      }
+
       // if column have click function to fire [ie. action button]
       if (key === 13 && col.click && typeof col.click === 'function') {
         if (!node.hasClass('is-cell-readonly')) {
@@ -9833,13 +9842,14 @@ Datagrid.prototype = {
       self.activeCell = prevCell;
     }
 
-    if (!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) {
+    if ((!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
       self.activeCell.node.focus();
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;
       }
     }
-    if (self.activeCell.node.is('.is-focusable, .has-btn-actions')) {
+
+    if (self.activeCell.node.is('.is-focusable')) {
       self.activeCell.node.find('button').focus();
     }
 
