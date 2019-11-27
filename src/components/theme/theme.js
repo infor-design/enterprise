@@ -66,7 +66,7 @@ const theme = {
    * Get the colors used in the current theme that are reccomended for personalization
    * @returns {object} An object full of the colors with id, name abd hex value
    */
-  personalizationColors: function themeColors() {
+  personalizationColors: function personalizationColors() {
     const palette = this.themeColors().palette;
     const brand = this.themeColors().brand;
     const personalize = {};
