@@ -39,7 +39,7 @@ describe('WeekView ajax loading tests', () => {
   });
 });
 
-fdescribe('WeekView specific week tests', () => {  //eslint-disable-line
+describe('WeekView specific week tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-specific-week?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));

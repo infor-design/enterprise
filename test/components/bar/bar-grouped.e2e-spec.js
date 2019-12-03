@@ -45,7 +45,7 @@ describe('Grouped Bar Chart example-index tests', () => {
   }
 });
 
-fdescribe('Grouped Bar formatter tests', () => {
+describe('Grouped Bar formatter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar-grouped/example-formatter?layout=nofrills');
   });

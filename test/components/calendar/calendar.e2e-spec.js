@@ -302,7 +302,7 @@ describe('Calendar specific locale', () => {
   }
 });
 
-fdescribe('Calendar specific locale and language', () => {
+describe('Calendar specific locale and language', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale-lang');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
