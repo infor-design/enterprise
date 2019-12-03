@@ -212,7 +212,7 @@ describe('MonthView disable day tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-weekends')).toBeLessThan(0.2);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-weekends')).toEqual(0);
     });
   }
 });

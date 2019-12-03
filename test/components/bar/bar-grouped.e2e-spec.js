@@ -40,7 +40,7 @@ describe('Grouped Bar Chart example-index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toEqual(0);
     });
   }
 });
@@ -59,7 +59,7 @@ describe('Grouped Bar formatter tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toEqual(0);
     });
   }
 });
@@ -78,7 +78,7 @@ describe('Grouped Bar many groups tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-many-groups')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-many-groups')).toEqual(0);
     });
   }
 });

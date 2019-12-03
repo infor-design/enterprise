@@ -144,7 +144,7 @@ describe('Calendar specific month tests', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
     });
   }
 
@@ -273,7 +273,7 @@ describe('Calendar only calendar', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toEqual(0);
     });
   }
 });
@@ -297,7 +297,7 @@ describe('Calendar specific locale', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toEqual(0);
     });
   }
 });
@@ -321,7 +321,7 @@ describe('Calendar specific locale and language', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toEqual(0);
     });
   }
 });
@@ -345,7 +345,7 @@ describe('Calendar only monthview and legend', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toEqual(0);
     });
   }
 });
