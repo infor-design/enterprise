@@ -5904,12 +5904,14 @@ Datagrid.prototype = {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
+      const td = target.closest('td');
 
       if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
         return;
       }
 
-      if (target.closest('td').is('.has-btn-actions') && !target.is('.btn-actions')) {
+      if (td.is('.has-btn-actions') && !target.is('.btn-actions')) {
+        self.setActiveCell(td);
         return;
       }
 
@@ -5930,7 +5932,7 @@ Datagrid.prototype = {
       * @property {object} args.originalEvent The original event object.
       */
       self.triggerRowEvent('click', e, true);
-      self.setActiveCell(target.closest('td'));
+      self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -5975,8 +5977,7 @@ Datagrid.prototype = {
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       // Handle Cell Click Event
-      const elem = $(this).closest('td');
-      const cell = elem.attr('aria-colindex') - 1;
+      const cell = td.attr('aria-colindex') - 1;
       const col = self.columnSettings(cell);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
@@ -5987,7 +5988,7 @@ Datagrid.prototype = {
           self.settings.treeDepth[rowIdx].node :
           self.settings.dataset[dataRowIdx];
 
-        if (elem.hasClass('is-focusable')) {
+        if (td.hasClass('is-focusable')) {
           if (!target.is(self.buttonSelector)) {
             if (!target.parent('button').is(self.buttonSelector)) {
               return;
@@ -6005,7 +6006,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
         }
       }
@@ -6019,7 +6020,7 @@ Datagrid.prototype = {
           menuId: col.menuId,
           trigger: 'immediate',
           offset: { y: 5 },
-          returnFocus: () => elem.focus()
+          returnFocus: () => td.focus()
         }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
           const el = $(this);
           if (el.data('popupmenu') && !el.data('tooltip')) {
@@ -6035,7 +6036,7 @@ Datagrid.prototype = {
       // Apply Quick Edit Mode
       if (isEditable) {
         setTimeout(() => {
-          if ($('textarea, input', elem).length &&
+          if ($('textarea, input', td).length &&
               (!$('.dropdown,' +
               '[type=file],' +
               '[type=image],' +
@@ -6043,7 +6044,7 @@ Datagrid.prototype = {
               '[type=submit],' +
               '[type=reset],' +
               '[type=checkbox],' +
-              '[type=radio]', elem).length)) {
+              '[type=radio]', td).length)) {
             self.quickEditMode = true;
           }
         }, 0);
