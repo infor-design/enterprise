@@ -57,7 +57,7 @@ fdescribe('Grouped Bar formatter tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toEqual(0);
     });

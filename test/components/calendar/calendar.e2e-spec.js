@@ -318,9 +318,9 @@ fdescribe('Calendar specific locale and language', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toEqual(0);
     });
