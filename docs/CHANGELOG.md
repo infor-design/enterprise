@@ -40,6 +40,7 @@
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Sparkline Chart]` Fixed an issue where an error was thrown while a sparkline chart was present during a theme chnage. ([#3159](https://github.com/infor-design/enterprise/issues/3159))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
+- `[Tree]` Fixed an issue where the nodes were not rendering. ([#3194](https://github.com/infor-design/enterprise/issues/3194))
 
 ### v4.24.0 Chores & Maintenance
 
