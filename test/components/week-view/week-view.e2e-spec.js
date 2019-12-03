@@ -39,7 +39,7 @@ describe('WeekView ajax loading tests', () => {
   });
 });
 
-describe('WeekView specific week tests', () => {  //eslint-disable-line
+fdescribe('WeekView specific week tests', () => {  //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/week-view/test-specific-week?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
@@ -53,7 +53,7 @@ describe('WeekView specific week tests', () => {  //eslint-disable-line
 
     const testDate = new Date();
     await testDate.setDate(1);
-    await testDate.setMonth(11);
+    await testDate.setMonth(10);
     await testDate.setFullYear(2019);
 
     expect(await element(by.css('.week-view #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
