@@ -18,15 +18,6 @@ describe('Calendar index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to cancel month selector', async () => {
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-
-    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
-    await element(by.css('button.is-cancel'));
-
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-  });
-
   it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
@@ -127,6 +118,15 @@ describe('Calendar specific month tests', () => {
     await testDate.setFullYear(2018);
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+  });
+
+  it('Should be able to cancel month selector', async () => {
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
+
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('button.is-cancel'));
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
   });
 
   it('Should be able to click on events', async () => {
