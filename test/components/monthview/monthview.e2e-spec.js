@@ -295,7 +295,7 @@ describe('MonthView specific language tests', () => {
   });
 
   it('Should render a specific locale and language', async () => {
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('oktober 2019');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
