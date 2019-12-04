@@ -90,6 +90,30 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('de-DE');
   });
 
+  it('Should be possible to set locale and use the format', (done) => {
+    let locale = 'en-GB';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('en-GB');
+      expect(Locale.currentLocale.data.englishName).toEqual('English (United Kingdom)');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
+    });
+
+    locale = 'es-US';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('es-US');
+      expect(Locale.currentLocale.data.englishName).toEqual('Spanish (United States)');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('12/4/2019');
+    });
+
+    locale = 'da-DK';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('da-DK');
+      expect(Locale.currentLocale.data.englishName).toEqual('Danish (Denmark)');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04-12-2019');
+      done();
+    });
+  });
+
   it('Should be impossible to set locale that is not in the default list', () => {
     Locale.set('xx-XX');
 

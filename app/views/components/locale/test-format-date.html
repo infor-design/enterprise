@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="date-field" class="label">en-GB</label>
+      <input id="date-field" />
+    </div>
+    <div class="field">
+      <label for="date-field2" class="label">es-US</label>
+      <input id="date-field2" />
+    </div>
+    <div class="field">
+      <label for="date-field3" class="label">da-DK</label>
+      <input id="date-field3" />
+    </div>
+  </div>
+</div>
+
+<script>
+  var locale = 'en-GB';
+  Soho.Locale.set(locale).done(function(a) {
+    console.log(a, Soho.Locale.currentLocale.data);
+  	const val = Soho.Locale.formatDate(new Date());
+    $('#date-field').val(val);
+  });
+
+  var locale = 'es-US';
+  Soho.Locale.set(locale).done(function(a) {
+    console.log(a, Soho.Locale.currentLocale.data);
+  	const val = Soho.Locale.formatDate(new Date());
+    $('#date-field2').val(val);
+  });
+
+  var locale = 'da-DK';
+  Soho.Locale.set(locale).done(function(a) {
+    console.log(a, Soho.Locale.currentLocale.data);
+  	const val = Soho.Locale.formatDate(new Date());
+    $('#date-field3').val(val);
+  });
+</script>
