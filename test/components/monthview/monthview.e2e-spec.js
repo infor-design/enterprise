@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('MonthView index tests', () => { //eslint-disable-line
+describe('MonthView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index?layout=nofrills');
   });
@@ -46,7 +46,7 @@ fdescribe('MonthView index tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Monthview keyboard tests', () => { //eslint-disable-line
+describe('Monthview keyboard tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/example-index');
   });
@@ -192,7 +192,7 @@ fdescribe('Monthview keyboard tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('MonthView disable day tests', () => { //eslint-disable-line
+describe('MonthView disable day tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-disable-weekends.html?layout=nofrills');
   });
@@ -208,7 +208,7 @@ fdescribe('MonthView disable day tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('MonthView disable month selection tests', () => { //eslint-disable-line
+describe('MonthView disable month selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-restrict-month-selection.html');
   });
@@ -256,7 +256,7 @@ fdescribe('MonthView disable month selection tests', () => { //eslint-disable-li
   });
 });
 
-fdescribe('MonthView specific locale tests', () => { //eslint-disable-line
+describe('MonthView specific locale tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-specific-locale');
   });
@@ -274,7 +274,7 @@ fdescribe('MonthView specific locale tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('MonthView specific language tests', () => { //eslint-disable-line
+describe('MonthView specific language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-specific-locale-lang');
     await browser.driver.sleep(config.sleep);

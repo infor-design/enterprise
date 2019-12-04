@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Calendar index tests', () => { //eslint-disable-line
+describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -55,7 +55,7 @@ fdescribe('Calendar index tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar ajax loading tests', () => { //eslint-disable-line
+describe('Calendar ajax loading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -100,7 +100,7 @@ fdescribe('Calendar ajax loading tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar specific month tests', () => { //eslint-disable-line
+describe('Calendar specific month tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -236,7 +236,7 @@ fdescribe('Calendar specific month tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar only calendar', () => { //eslint-disable-line
+describe('Calendar only calendar', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -258,7 +258,7 @@ fdescribe('Calendar only calendar', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar specific locale', () => { //eslint-disable-line
+describe('Calendar specific locale', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -272,7 +272,7 @@ fdescribe('Calendar specific locale', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar specific locale and language', () => { //eslint-disable-line
+describe('Calendar specific locale and language', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale-lang');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -286,7 +286,7 @@ fdescribe('Calendar specific locale and language', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar only monthview and legend', () => { //eslint-disable-line
+describe('Calendar only monthview and legend', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -300,7 +300,7 @@ fdescribe('Calendar only monthview and legend', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Calendar WeekView settings tests', () => { //eslint-disable-line
+describe('Calendar WeekView settings tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
 
