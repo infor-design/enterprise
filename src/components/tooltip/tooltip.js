@@ -478,12 +478,14 @@ Tooltip.prototype = {
 
     this.tooltip[0].setAttribute('class', classes);
 
+    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length;
+
     if (typeof content === 'string') {
       content = $(content);
       contentArea.html(content);
       contentArea.find('.hidden').removeClass('hidden');
     } else {
-      contentArea.html(content);
+      contentArea.html(useHtml ? content.html() : content);
     }
 
     const popoverWidth = contentArea.width();
@@ -496,7 +498,10 @@ Tooltip.prototype = {
       this.settings.placementOpts.parent = this.element;
     }
 
-    content[0].classList.remove('hidden');
+    if (!useHtml) {
+      content[0].classList.remove('hidden');
+    }
+
     contentArea[0].firstElementChild.classList.remove('hidden');
 
     const parentWidth = this.settings.placementOpts.parent.width();
