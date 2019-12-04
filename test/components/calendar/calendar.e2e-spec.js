@@ -138,16 +138,6 @@ describe('Calendar specific month tests', () => {
     await utils.checkForErrors();
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
-    });
-  }
-
   it('Should render icons on events', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event.azure.event-day-start .icon'))), config.waitsFor);
@@ -266,16 +256,6 @@ describe('Calendar only calendar', () => {
     expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Out of Office" Clicked');
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar specific locale', () => {
@@ -290,16 +270,6 @@ describe('Calendar specific locale', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar specific locale and language', () => {
@@ -314,17 +284,6 @@ describe('Calendar specific locale and language', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleepLonger);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar only monthview and legend', () => {
@@ -339,16 +298,6 @@ describe('Calendar only monthview and legend', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar WeekView settings tests', () => {
