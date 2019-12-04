@@ -615,6 +615,7 @@
   {
     "id": "60",
     "subject": "Dentist",
+    "icon": "icon-pending",
     "comments": "Dentist Appt",
     "starts": "2019-11-03T15:00:00.000",
     "ends": "2019-11-03T15:59:59.999",
@@ -680,6 +681,14 @@
     "status": "Draft",
     "starts": "2019-11-20T00:00:00.000",
     "ends": "2019-11-22T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "true"
+  },
+  {
+    "id": "68",
+    "subject": "Friends in Town",
+    "starts": "2019-11-04T00:00:00.000",
+    "ends": "2019-11-05T23:59:59.999",
     "type": "dto",
     "isAllDay": "true"
   }

@@ -102,7 +102,7 @@ describe('Lookup example tests', () => {
       const modalEl = await element(by.className('modal'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toBeLessThan(0.2);
+      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
     });
   }
 });
