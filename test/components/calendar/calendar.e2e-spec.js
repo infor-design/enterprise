@@ -18,15 +18,6 @@ describe('Calendar index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to cancel month selector', async () => {
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-
-    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
-    await element(by.css('button.is-cancel'));
-
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-  });
-
   it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
@@ -129,6 +120,15 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
+  it('Should be able to cancel month selector', async () => {
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
+
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('button.is-cancel'));
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
+  });
+
   it('Should be able to click on events', async () => {
     await element.all(by.css('.calendar-event-title')).first().click();
     await browser.driver
@@ -144,7 +144,7 @@ describe('Calendar specific month tests', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
     });
   }
 
@@ -273,7 +273,7 @@ describe('Calendar only calendar', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toEqual(0);
     });
   }
 });
@@ -297,7 +297,7 @@ describe('Calendar specific locale', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toEqual(0);
     });
   }
 });
@@ -318,10 +318,11 @@ describe('Calendar specific locale and language', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
+      await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toEqual(0);
     });
   }
 });
@@ -345,7 +346,7 @@ describe('Calendar only monthview and legend', () => {
       await browser.driver.sleep(config.sleep);
       await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toEqual(0);
     });
   }
 });
