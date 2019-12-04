@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar index tests', () => {
+fdescribe('Calendar index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -55,7 +55,7 @@ describe('Calendar index tests', () => {
   });
 });
 
-describe('Calendar ajax loading tests', () => {
+fdescribe('Calendar ajax loading tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-ajax-events');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -100,7 +100,7 @@ describe('Calendar ajax loading tests', () => {
   });
 });
 
-describe('Calendar specific month tests', () => {
+fdescribe('Calendar specific month tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-month');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -137,16 +137,6 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.css('#calendar-popup')).isDisplayed()).toBe(true);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toEqual(0);
-    });
-  }
 
   it('Should render icons on events', async () => {
     await browser.driver
@@ -246,7 +236,7 @@ describe('Calendar specific month tests', () => {
   });
 });
 
-describe('Calendar only calendar', () => {
+fdescribe('Calendar only calendar', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -266,19 +256,9 @@ describe('Calendar only calendar', () => {
     expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Out of Office" Clicked');
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toEqual(0);
-    });
-  }
 });
 
-describe('Calendar specific locale', () => {
+fdescribe('Calendar specific locale', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -290,19 +270,9 @@ describe('Calendar specific locale', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toEqual(0);
-    });
-  }
 });
 
-describe('Calendar specific locale and language', () => {
+fdescribe('Calendar specific locale and language', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-locale-lang');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -314,20 +284,9 @@ describe('Calendar specific locale and language', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleepLonger);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toEqual(0);
-    });
-  }
 });
 
-describe('Calendar only monthview and legend', () => {
+fdescribe('Calendar only monthview and legend', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-only-calendar-legend');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
@@ -339,19 +298,9 @@ describe('Calendar only monthview and legend', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toEqual(0);
-    });
-  }
 });
 
-describe('Calendar WeekView settings tests', () => {
+fdescribe('Calendar WeekView settings tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-weekview-settings?layout=nofrills');
 
