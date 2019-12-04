@@ -44,7 +44,8 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 const EDITOR_DEFAULTS = {
   buttons: {
     editor: [
-      'header1', 'header2',
+      'fontPicker',
+      //'header1', 'header2',
       'separator', 'bold', 'italic', 'underline', 'strikethrough',
       'separator', 'foreColor', 'backColor',
       'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
@@ -372,6 +373,13 @@ Editor.prototype = {
     } else {
       this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
         this.element.prev() : this.element);
+    }
+
+    // Invoke Fontpicker, if applicable
+    const fpElement = this.toolbar.find('[data-action="fontStyle"]').first();
+    if (fpElement && fpElement.length) {
+      fpElement.fontpicker();
+      this.fontPickerElem = fpElement;
     }
 
     // Invoke Colorpicker, if applicable
@@ -741,6 +749,8 @@ Editor.prototype = {
 
       unorderedlist: `<button type="button" class="btn" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
 
+      fontPicker: `<button type="button" class="btn fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
+
       justifyLeft: `<button type="button" class="btn" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
 
       justifyCenter: `<button type="button" class="btn" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
@@ -855,6 +865,12 @@ Editor.prototype = {
       this.toolbar.on('click.editor', '.colorpicker-editor-button', editorButtonActionHandler);
     } else {
       this.toolbar.on('click.editor', 'button', editorButtonActionHandler);
+    }
+
+    if (this.fontPickerElem) {
+      this.fontPickerElem.on('font-selected', (e, fontPickerStyle) => {
+        this.execFormatBlock(fontPickerStyle.tagName);
+      });
     }
 
     return this;
@@ -1261,6 +1277,9 @@ Editor.prototype = {
     if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
       this.colorpickerButtonState('backColor');
     }
+    if (this.fontPickerElem) {
+      this.checkButtonState('fontStyle');
+    }
 
     let parentNode = this.getSelectedParentElement();
 
@@ -1281,6 +1300,17 @@ Editor.prototype = {
       return;
     }
 
+    // 'fontStyle' type notifies the FontPicker component if the current selection doesn't match.
+    if (this.fontPickerElem && command === 'fontStyle') {
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      const selectedElem = this.getSelectionParentElement();
+      const selectedElemTag = selectedElem.tagName.toLowerCase();
+      const fontStyle = fontpickerAPI.getStyleByTagName(selectedElemTag);
+      fontpickerAPI.select(fontStyle.id, true);
+      return;
+    }
+
+    // Standard Button State Check
     if (document.queryCommandState(command)) {
       this.toolbar.find(`[data-action="${command}"]`).addClass('is-active');
     } else {
@@ -2290,7 +2320,17 @@ Editor.prototype = {
     cpApi.toggleList();
   },
 
+  /**
+   * Formats the currently-selected block of content in the editor with a predefined HTML element
+   * and style, if applicable.
+   * @param {string} el, the desired block-level element with which to wrap the current block.
+   * @returns {void|boolean} same return value as [`document.execCommand()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+   */
   execFormatBlock(el) {
+    if (!this.selection || !(this.selection instanceof Selection)) {
+      return;
+    }
+
     const selectionData = this.getSelectionData(this.selection.anchorNode);
     // FF handles blockquote differently on formatBlock
     // allowing nesting, we need to use outdent
@@ -2385,6 +2425,15 @@ Editor.prototype = {
       if (colorpicker && typeof colorpicker.destroy === 'function') {
         colorpicker.destroy();
       }
+    }
+
+    if (this.fontPickerElem) {
+      this.fontPickerElem.off(`font-selected.${COMPONENT_NAME}`);
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      if (fontpickerAPI) {
+        fontpickerAPI.destroy();
+      }
+      delete this.fontPickerElem;
     }
 
     // Unbind/Remove Toolbar Component (generically)

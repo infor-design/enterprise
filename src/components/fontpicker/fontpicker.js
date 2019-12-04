@@ -30,6 +30,10 @@ function FontPicker(element, settings) {
   }
 
   this.settings = utils.mergeSettings(element, settings, FONTPICKER_DEFAULTS);
+  if (settings && Array.isArray(settings.styles)) {
+    this.settings.styles = settings.styles;
+  }
+
   this.element = element;
 
   this.init();
@@ -42,7 +46,7 @@ FontPicker.prototype = {
    * @returns {Popupmenu|undefined} the Popupmenu API for the picker, if applicable.
    */
   get menuAPI() {
-    const api = this.element.data('popupmenu');
+    const api = $(this.element).data('popupmenu');
     if (!api) {
       return undefined;
     }
@@ -52,7 +56,7 @@ FontPicker.prototype = {
   /**
    * @returns {FontPickerStyle} currently selected font
    */
-  get selectedFont() {
+  get selected() {
     let selected;
     this.settings.styles.forEach((style) => {
       if (style.selected) {
@@ -60,13 +64,14 @@ FontPicker.prototype = {
       }
     });
     if (!selected) {
-      return this.settings.styles[0].selected;
+      this.settings.styles[0].selected = true;
+      return this.settings.styles[0];
     }
     return selected;
   },
 
   /**
-   * Gets a reference to a FontPickerStyle object defined within this component.
+   * Gets a reference to a FontPickerStyle object defined within this component, targeted by its ID.
    * @param {string} id an id representing a font style within this fontpicker's selections.
    * @returns {FontPickerStyle} a font style within this component's selections by its unique ID.
    */
@@ -85,12 +90,48 @@ FontPicker.prototype = {
   },
 
   /**
+   * Gets a reference to a FontPickerStyle object defined within this component, targeted by its Tag Name.
+   * @param {string} tagName an id representing a font style within this fontpicker's selections.
+   * @returns {FontPickerStyle} a font style within this component's selections by its unique ID.
+   */
+  getStyleByTagName(tagName) {
+    let targetStyle;
+    this.settings.styles.forEach((style) => {
+      if (style.tagName === tagName) {
+        targetStyle = style;
+      }
+    });
+
+    if (!targetStyle) {
+      throw new Error(`No FontPickerStyle available with tagName "${tagName}"`);
+    }
+    return targetStyle;
+  },
+
+  get disabled() {
+    return this.trueDisabled;
+  },
+
+  /**
+   * @param {boolean} bool whether or not to disable this component
+   * @returns {void}
+   */
+  set disabled(bool) {
+    this.trueDisabled = bool;
+    if (bool === true) {
+      this.element.disabled = true;
+      return;
+    }
+    this.element.disabled = false;
+  },
+
+  /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
     // Ensure we have an array for this, otherwise reset to default.
-    if (!Array.isArray(this.settings.styles)) {
+    if (!Array.isArray(this.settings.styles) || !this.settings.styles.length) {
       this.settings.styles = FONTPICKER_DEFAULTS.styles;
     }
 
@@ -120,7 +161,21 @@ FontPicker.prototype = {
       menu: $menu
     });
 
+    this.render();
+
     return this;
+  },
+
+  /**
+   * Renders the button's display.
+   * @private
+   * @returns {void}
+   */
+  render() {
+    const selected = this.selected;
+    const spanElem = this.element.querySelector('span');
+
+    $(spanElem).html(selected.displayName);
   },
 
   /**
@@ -137,7 +192,7 @@ FontPicker.prototype = {
       </li>`;
     });
 
-    return `${menuHTML}</ul>`;
+    return `${menuHTML}`;
   },
 
   /**
@@ -163,8 +218,10 @@ FontPicker.prototype = {
   /**
    * Selects a font from the list
    * @param {string|FontPickerStyle} id either an ID string, or a direct reference to a FontPickerStyle
+   * @param {boolean} preventEvent whether or not to fire an event to annouce the selection change.  In some cases, this method is called directly by a parent component, which may have been responsible for the change by other means.
+   * @returns {void}
    */
-  select(id) {
+  select(id, preventEvent) {
     if (!id || (typeof id !== 'string' && !(id instanceof FontPickerStyle))) {
       throw new Error('"id" property must be defined in order to select.');
     }
@@ -177,10 +234,19 @@ FontPicker.prototype = {
       style = id;
     }
 
-    // Update the font
-    $(this.element).find('span').text(style.displayName);
+    // Deselect all other styles except for this one.
+    this.settings.styles.forEach((thisStyle) => {
+      thisStyle.selected = false;
+    });
+    style.selected = true;
 
-    $(this.element).triggerHandler('font-selected', [style]);
+    // Update the button's visuals
+    this.render(style);
+
+    // Notify externally
+    if (!preventEvent) {
+      $(this.element).triggerHandler('font-selected', [style]);
+    }
   },
 
   /**

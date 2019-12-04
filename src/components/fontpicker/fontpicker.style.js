@@ -1,5 +1,8 @@
 import { xssUtils } from '../../utils/xss';
 
+// Valid supported tagNames for applying fonts.
+const validTagNames = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'code', 'div'];
+
 /**
  * Defines a style that can be used inside a Fontpicker component
  * @class FontPickerStyle
@@ -23,6 +26,10 @@ function FontPickerStyle(id, displayName, tagName = 'p', className = '', stylePr
   this.displayName = displayName;
 
   // `tagName` is required, but defaults to `p`
+  tagName = tagName.toLowerCase();
+  if (validTagNames.indexOf(tagName) === -1) {
+    tagName = 'p';
+  }
   this.tagName = tagName;
 
   if (typeof className === 'string' && className.length) {
