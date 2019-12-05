@@ -18,15 +18,6 @@ describe('Calendar index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to cancel month selector', async () => {
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-
-    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
-    await element(by.css('button.is-cancel'));
-
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('November 2019');
-  });
-
   it('Should be able to change month to next', async () => {
     const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
@@ -89,7 +80,7 @@ describe('Calendar ajax loading tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(10);
+    expect(await element.all(by.css('.calendar-event.azure')).count()).toEqual(3);
   });
 
   it('Should render ajax loaded dates for sept 2018', async () => {
@@ -104,7 +95,8 @@ describe('Calendar ajax loading tests', () => {
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(8);
+    expect(await element.all(by.css('.calendar-event.graphite')).count()).toEqual(1);
+    expect(await element.all(by.css('.calendar-event.emerald')).count()).toEqual(1);
   });
 });
 
@@ -128,6 +120,15 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
+  it('Should be able to cancel month selector', async () => {
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
+
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('button.is-cancel'));
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
+  });
+
   it('Should be able to click on events', async () => {
     await element.all(by.css('.calendar-event-title')).first().click();
     await browser.driver
@@ -136,16 +137,6 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.css('#calendar-popup')).isDisplayed()).toBe(true);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-index')).toBeLessThan(1);
-    });
-  }
 
   it('Should render icons on events', async () => {
     await browser.driver
@@ -168,7 +159,7 @@ describe('Calendar specific month tests', () => {
   });
 
   it('Should offer a right click menu', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await browser.actions().mouseMove(event).perform();
@@ -180,11 +171,11 @@ describe('Calendar specific month tests', () => {
     expect(await element(by.id('calendar-actions-menu')).getAttribute('class')).toContain('is-open');
     await element.all(by.css('#calendar-actions-menu a')).first().click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(15);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
   });
 
   it('Should add new events on click and cancel', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -195,11 +186,11 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.css('.calendar-popup .btn-close')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
   it('Should add new events on click and submit', async () => {
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     const event = await element.all(by.cssContainingText('.monthview-table td', '1')).first();
     await event.click();
@@ -210,26 +201,23 @@ describe('Calendar specific month tests', () => {
     await element(by.id('subject')).sendKeys('New Event Name');
     await element(by.id('submit')).click();
 
-    expect(await element.all(by.css('.calendar-event')).count()).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
   });
 
   it('Should be able to add with the modal', async () => {
-    const beforeCount = await element.all(by.css('.calendar-monthview .calendar-event')).count();
     await element.all(by.cssContainingText('.monthview-table td', '13')).first().click();
     await browser.actions()
       .doubleClick(await element.all(by.cssContainingText('.monthview-table td', '13')).first())
       .perform();
 
-    expect(beforeCount).toEqual(16);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(17);
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('subject'))), config.waitsFor);
     await element(by.id('subject')).sendKeys('Test Event');
     await element(by.id('submit')).click();
 
-    const afterCount = await element.all(by.css('.calendar-event')).count();
-
-    expect(afterCount).toEqual(beforeCount + 1);
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(19);
   });
 
   it('Should update datepicker date', async () => {
@@ -268,16 +256,6 @@ describe('Calendar only calendar', () => {
     expect(await element.all(by.css('.toast-message')).first().getText()).toEqual('Event "Out of Office" Clicked');
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview')).toBeLessThan(1);
-    });
-  }
 });
 
 describe('Calendar specific locale', () => {
@@ -292,16 +270,6 @@ describe('Calendar specific locale', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale')).toBeLessThan(1);
-    });
-  }
 });
 
 describe('Calendar specific locale and language', () => {
@@ -316,16 +284,6 @@ describe('Calendar specific locale and language', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-specific-locale-lang')).toBeLessThan(1);
-    });
-  }
 });
 
 describe('Calendar only monthview and legend', () => {
@@ -340,16 +298,6 @@ describe('Calendar only monthview and legend', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element(by.className('calendar'));
-      await browser.driver.sleep(config.sleep);
-      await element.all(by.cssContainingText('.monthview-table td', '2')).first().click();
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-only-monthview-legend')).toBeLessThan(1);
-    });
-  }
 });
 
 describe('Calendar WeekView settings tests', () => {

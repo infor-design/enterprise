@@ -330,7 +330,6 @@ $datagrid-short-row-height: 25px;
         div.dropdown {
           border-color: $datagrid-list-filter-border-color !important;
           color: $datagrid-list-filter-color;
-          -webkit-text-fill-color: $datagrid-list-filter-color;
 
           &:disabled,
           &.is-disabled {
@@ -712,6 +711,10 @@ $datagrid-short-row-height: 25px;
 
         //Editing
         &.is-editing {
+          &.has-singlecolumn {
+            min-height: $datagrid-medium-row-height + 8;
+          }
+
           .colorpicker-container {
             padding: 4px 15px 0;
           }
@@ -1066,6 +1069,10 @@ $datagrid-short-row-height: 25px;
 
         //Editing
         &.is-editing {
+          &.has-singlecolumn {
+            min-height: $datagrid-short-row-height + 8;
+          }
+
           &.is-fileupload {
             .trigger,
             .trigger-close {
@@ -1879,6 +1886,11 @@ $datagrid-short-row-height: 25px;
       background-color: $datagrid-cell-editing-bg-color;
       position: relative;
 
+      &.has-singlecolumn {
+        display: block;
+        min-height: $datagrid-row-height + 7;
+      }
+
       .datagrid-cell-wrapper {
         border: 1px solid $theme-color-brand-primary-base;
         left: 0;
@@ -1924,6 +1936,13 @@ $datagrid-short-row-height: 25px;
 
       .checkbox-label::after {
         left: 9px;
+      }
+
+      &.has-singlecolumn {
+        .checkbox-label::after {
+          left: 7px;
+          top: 20px;
+        }
       }
 
       &.is-fileupload {
@@ -2515,7 +2534,6 @@ $datagrid-short-row-height: 25px;
       height: 24px;
       line-height: 21px;
       padding: 3px 0 0 5px;
-      -webkit-text-fill-color: $datagrid-filter-color;
       vertical-align: top;
       width: calc(100% - 5px);
 
@@ -2546,7 +2564,6 @@ $datagrid-short-row-height: 25px;
 
       > span {
         color: inherit;
-        -webkit-text-fill-color: inherit;
         width: calc(100% - 16px);
       }
 

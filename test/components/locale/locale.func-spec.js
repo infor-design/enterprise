@@ -484,6 +484,17 @@ describe('Locale API', () => {
     expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
   });
 
+  it('Should format milliseconds', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date('2015-01-01T06:00:00.123Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-01T01:00:00.123');
+    expect(Locale.formatDate(new Date('2015-01-02T06:00:00.120Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-02T01:00:00.120');
+    expect(Locale.formatDate(new Date('2015-01-03T06:00:00.012Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-03T01:00:00.012');
+    expect(Locale.formatDate(new Date('2015-01-04T06:00:00.100Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-04T01:00:00.100');
+    expect(Locale.formatDate(new Date('2015-01-05T06:00:00.010Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-05T01:00:00.010');
+    expect(Locale.formatDate(new Date('2015-01-06T06:00:00.001Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-06T01:00:00.001');
+  });
+
   // monthYear and yearMonth
   it('Should format a year and month locale', () => {
     Locale.set('en-US');
@@ -930,6 +941,16 @@ describe('Locale API', () => {
     Locale.set('de-DE');
 
     expect(Locale.parseNumber('12.345,12 €')).toEqual(12345.12);
+  });
+
+  it('Should format numbers in current locale', () => {
+    Locale.set('nl-NL');
+
+    expect(Locale.parseNumber('100,00')).toEqual(100);
+    expect(Locale.parseNumber('836,45')).toEqual(836.45);
+    expect(Locale.parseNumber('1200,12')).toEqual(1200.12);
+    expect(Locale.parseNumber('10,99')).toEqual(10.99);
+    expect(Locale.parseNumber('130300,00')).toEqual(130300.00);
   });
 
   it('Should return NaN for bad numbers', () => {

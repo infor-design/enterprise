@@ -428,6 +428,7 @@ Datagrid.prototype = {
 
     self.table.empty();
     self.clearHeaderCache();
+    self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.renderHeader();
 
@@ -3260,10 +3261,6 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (!self.activeCell || !self.activeCell.node) {
-      self.activeCell = { node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
-    }
-
     if (self.activeCell.isFocused) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
@@ -3309,7 +3306,18 @@ Datagrid.prototype = {
         self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
         self.headerTableRight.width(w);
       }
+      this.activateFirstCell();
     });
+  },
+
+  /**
+   * Set active node to first cell and focus if possible
+   * @private
+   */
+  activateFirstCell() {
+    if (!this.activeCell || !this.activeCell.node) {
+      this.activeCell = { node: this.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0 };
+    }
   },
 
   /**
@@ -3745,6 +3753,7 @@ Datagrid.prototype = {
       }
 
       cssClass += (col.focusable ? ' is-focusable' : '');
+      cssClass += (formatter.name === 'Actions' ? ' has-btn-actions' : '');
 
       const rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
 
@@ -5636,8 +5645,14 @@ Datagrid.prototype = {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
+      const td = target.closest('td');
 
       if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
+        return;
+      }
+
+      if (td.is('.has-btn-actions') && !target.is('.btn-actions')) {
+        self.setActiveCell(td);
         return;
       }
 
@@ -5658,7 +5673,7 @@ Datagrid.prototype = {
       * @property {object} args.originalEvent The original event object.
       */
       self.triggerRowEvent('click', e, true);
-      self.setActiveCell(target.closest('td'));
+      self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -5703,8 +5718,7 @@ Datagrid.prototype = {
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       // Handle Cell Click Event
-      const elem = $(this).closest('td');
-      const cell = elem.attr('aria-colindex') - 1;
+      const cell = td.attr('aria-colindex') - 1;
       const col = self.columnSettings(cell);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
@@ -5715,7 +5729,7 @@ Datagrid.prototype = {
           self.settings.treeDepth[rowIdx].node :
           self.settings.dataset[dataRowIdx];
 
-        if (elem.hasClass('is-focusable')) {
+        if (td.hasClass('is-focusable')) {
           if (!target.is(self.buttonSelector)) {
             if (!target.parent('button').is(self.buttonSelector)) {
               return;
@@ -5733,7 +5747,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
         }
       }
@@ -5744,11 +5758,10 @@ Datagrid.prototype = {
         const btn = $(this).find('button');
         btn.popupmenu({
           attachToBody: true,
-          autoFocus: false,
-          mouseFocus: true,
           menuId: col.menuId,
           trigger: 'immediate',
-          offset: { y: 5 }
+          offset: { y: 5 },
+          returnFocus: () => td.focus()
         }).off('close.gridpopupbtn').on('close.gridpopupbtn', function () {
           const el = $(this);
           if (el.data('popupmenu') && !el.data('tooltip')) {
@@ -5764,7 +5777,7 @@ Datagrid.prototype = {
       // Apply Quick Edit Mode
       if (isEditable) {
         setTimeout(() => {
-          if ($('textarea, input', elem).length &&
+          if ($('textarea, input', td).length &&
               (!$('.dropdown,' +
               '[type=file],' +
               '[type=image],' +
@@ -5772,7 +5785,7 @@ Datagrid.prototype = {
               '[type=submit],' +
               '[type=reset],' +
               '[type=checkbox],' +
-              '[type=radio]', elem).length)) {
+              '[type=radio]', td).length)) {
             self.quickEditMode = true;
           }
         }, 0);
@@ -7913,6 +7926,14 @@ Datagrid.prototype = {
         }
       }
 
+      // Action button from Formatters.Actions
+      if (key === 13 && node.is('.has-btn-actions')) {
+        const btnAction = node.find('.btn-actions');
+        if (btnAction.length) {
+          btnAction.trigger('click');
+        }
+      }
+
       // if column have click function to fire [ie. action button]
       if (key === 13 && col.click && typeof col.click === 'function') {
         if (!node.hasClass('is-cell-readonly')) {
@@ -8068,7 +8089,7 @@ Datagrid.prototype = {
       return false;
     }
 
-    if (this.isRowDisabled(row)) {
+    if (this.isRowDisabled(row) || !this.activeCell.node) {
       return false;
     }
 
@@ -8198,6 +8219,10 @@ Datagrid.prototype = {
     * @property {object} args.editor The editor object.
     */
     this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
+
+    if (this.visibleColumns().length === 1) {
+      cellParent.addClass('has-singlecolumn');
+    }
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
     this.editor.row = idx;
@@ -8337,7 +8362,7 @@ Datagrid.prototype = {
 
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');
-    cellNode.removeClass('is-editing is-editing-inline');
+    cellNode.removeClass('is-editing is-editing-inline has-singlecolumn');
 
     // Editor.destroy
     this.editor.destroy();
@@ -9356,15 +9381,13 @@ Datagrid.prototype = {
    * @returns {object} The dom jQuery node
    */
   rowNodes(row) {
+    let container = this.element;
+
     if (row instanceof jQuery) {
+      container = row.closest('.datagrid-container');
       row = row.attr('aria-rowindex') - 1;
     }
-    const getRow = el => (el ? el.find(`tr[aria-rowindex="${row + 1}"]`) : $());
-    const leftNodes = getRow(this.tableBodyLeft);
-    const centerNodes = getRow(this.tableBody);
-    const rightNodes = getRow(this.tableBodyRight);
-
-    return $(centerNodes).add(leftNodes).add(rightNodes);
+    return container.find(`> .datagrid-body-container > .datagrid-body > table > tbody > tr[aria-rowindex="${row + 1}"]`);
   },
 
   /**
@@ -9535,13 +9558,14 @@ Datagrid.prototype = {
       self.activeCell = prevCell;
     }
 
-    if (!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) {
+    if ((!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
       self.activeCell.node.focus();
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;
       }
     }
-    if (self.activeCell.node.hasClass('is-focusable')) {
+
+    if (self.activeCell.node.is('.is-focusable')) {
       self.activeCell.node.find('button').focus();
     }
 

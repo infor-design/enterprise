@@ -23,14 +23,12 @@
       &::-webkit-input-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
         opacity: 1;
-        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &::-moz-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
         line-height: normal;
         opacity: 1;
-        -webkit-text-fill-color: $uplift-appmenu-searchfield-placeholder-color;
       }
 
       &:-ms-input-placeholder {
@@ -128,7 +126,7 @@
   // so all internal accordion styles have to override this rule.
   .accordion.panel.inverse {
     background-color: transparent;
-    margin: calc(#{$theme-number-spacing-base} * 1);
+    padding: calc(#{$theme-number-spacing-base} * 1);
     width: auto;
 
     .accordion-header {

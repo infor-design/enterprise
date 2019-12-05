@@ -102,7 +102,7 @@ describe('Contextual Action Panel "always" fullsize tests', () => {
       await browser.driver.sleep(config.sleep);
       const panelEl = await element(by.css('#panel-1'));
 
-      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toBeLessThan(0.5);
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toEqual(0);
     });
   }
 
@@ -130,7 +130,7 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
       await browser.driver.sleep(config.sleep);
       const panelEl = await element(by.css('#panel-1'));
 
-      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toBeLessThan(0.5);
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toEqual(0);
     });
   }
 

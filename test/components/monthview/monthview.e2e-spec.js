@@ -206,15 +206,6 @@ describe('MonthView disable day tests', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-weekends')).toBeLessThan(0.2);
-    });
-  }
 });
 
 describe('MonthView disable month selection tests', () => {
@@ -295,7 +286,7 @@ describe('MonthView specific language tests', () => {
   });
 
   it('Should render a specific locale and language', async () => {
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('oktober 2019');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
