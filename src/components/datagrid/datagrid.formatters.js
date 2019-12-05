@@ -1,6 +1,7 @@
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
+import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 
 /**
  * *
@@ -349,6 +350,56 @@ const formatters = {
     return `<div class="${classes}">${xssUtils.unescapeHTML(formatted)}</div>`;
   },
 
+  
+  getNumberArray: function getNumberArray(columnName, records) {
+    records = records.filter(x => !x['isFiltered']);
+    return records.map(x => !isNaN(x[columnName]) ? 0 + Number(x[columnName]) : 0);
+  },
+
+  sum: function sum(columnName, records) {
+    const numbers = this.getNumberArray(columnName, records);
+
+    return Number(numbers.reduce((agg, curr) => agg + curr, 0).toFixed(4));
+  },
+  
+  avg: function avg(columnName, records) {
+    let result = this.sum(columnName, records);
+    result = result / records.length;
+    return Number(result.toFixed(4));
+  },
+
+  min: function min(columnName, records) {
+    const numbers = this.getNumberArray(columnName, records);
+    const result = numbers.sort((a, b) => a - b);
+    numbers.sort((a, b) => a - b);
+    if (result && result.length > 0) {
+       return result[0];
+    } else {
+       return 0;
+    }
+  },
+
+  max: function max(columnName, records) {
+    const numbers = this.getNumberArray(columnName, records);
+    const result = numbers.sort((a, b) => a - b);
+    if (result && result.length > 0) {
+       return result[result.length - 1];
+    } else {
+       return 0;
+    }
+
+ },
+
+ count: function count(columnName, records) {
+    if (records) {
+      records = records.filter(x => !x['isFiltered']);
+       return records.length;
+    } else {
+       return 0;
+    }
+ },
+
+
   // Expand / Collapse Button
   Expander(row, cell, value) {
     const button = `<button type="button" aria-label="${Locale.translate('ExpandCollapse')}" class="btn-icon datagrid-expand-btn" tabindex="-1">
@@ -369,22 +420,77 @@ const formatters = {
       isOpen = groupSettings.expanded(row, cell, value, col, item, api);
     }
 
-    for (let i = 0; i < groupSettings.fields.length; i++) {
-      groups += item[groupSettings.fields[i]] + (i === 0 ? '' : ',');
-    }
 
     if (groupSettings.groupRowFormatter) {
       groups = groupSettings.groupRowFormatter(row, cell, value, col, item, api);
-    }
+      
+      groups = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1">
+      <span class="icon plus-minus${(isOpen ? ' active' : '')}"></span>
+      <span class="audible">${Locale.translate('ExpandCollapse')}</span>
+      </button><span> ${groups}</span>`;
 
-    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1">
-    <span class="icon plus-minus${(isOpen ? ' active' : '')}"></span>
-    <span class="audible">${Locale.translate('ExpandCollapse')}</span>
-    </button><span> ${groups}</span>`;
+
+    } else {
+      var isGroupColumn = (field) => { 
+        if (!groupSettings.fields) {
+          return false;
+        }
+        var columns = groupSettings.fields.filter(x => x === field);
+        return columns && columns.length > 0;
+      };
+
+      var getAggregatedColumn = (field) => { 
+        if (!groupSettings.aggregatedColumns){
+          return undefined;
+        }
+        var columns = groupSettings.aggregatedColumns.filter(x => x.field === field);
+        return columns && columns.length > 0 ? columns[0] : undefined;
+      };
+
+      var expanderButton = '<button type="button" class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1">\n    <span class="icon plus-minus' + (isOpen ? ' active' : '') + '"></span>\n    <span class="audible">' + Locale.translate('ExpandCollapse') + '</span>\n    </button>';
+      var getFillerCell = (colSpan) =>  colSpan > 0 ? '<td role="gridcell" colspan="'+ (colSpan) +'"><div class="datagrid-cell-wrapper"></div></td>' : '';
+      var colSpan = 0;
+      var firstCell = true;
+      for(var i= 0;i< api.settings.columns.length; i++){
+        var field = api.settings.columns[i].field;
+
+        if(api.settings.columns[i].id === 'expander'){
+          groups += '<td role="gridcell">' + expanderButton + '</td>';
+          colSpan =0;
+        } else if(isGroupColumn(field)){
+          // Add groupColumn to align the columns
+          groups += getFillerCell(colSpan);
+          groups += '<td role="gridcell" style="padding-left: 0px;" class="l-left-text"><div class="datagrid-cell-wrapper"><span>' + item[field] + "</span></div></td>";
+        
+          colSpan = 0;
+        } else if (getAggregatedColumn(field)) {
+          var aggregatedColumn = getAggregatedColumn(field);
+          groups += getFillerCell(colSpan);
+
+          if (item.values){
+                          
+            var aggregated = 0;
+            if(this.hasOwnProperty(aggregatedColumn.aggregator)) {
+              aggregated = this[aggregatedColumn.aggregator](field, item.values);
+            }
+            groups += '<td role="gridcell" style="padding-left: 0px;" class="l-right-text"><div class="datagrid-cell-wrapper"><span>' + aggregated + '</span></div></td>';
+          } else {
+            groups += '<td role="gridcell" class="l-right-text"><div class="datagrid-cell-wrapper">0</div></td>';
+          }
+          
+          colSpan = 0;
+
+        } else {
+          colSpan++;
+        }
+
+      }
+      groups += getFillerCell(colSpan);
+    }
 
     // Take the first
     const container = api.getContainer(groupSettings.fields ? groupSettings.fields[0] : '');
-    rowHtml[container] = button;
+    rowHtml[container] = groups;
     return rowHtml;
   },
 

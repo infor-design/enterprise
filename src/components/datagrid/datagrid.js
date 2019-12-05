@@ -2949,6 +2949,13 @@ Datagrid.prototype = {
       return;
     }
 
+    // if there is an expander column in this grid then don't add
+    const expanderColumn = this.columnById('expander');
+    if (!expanderColumn || expanderColumn.length === 0){
+      this.settings.columns.splice(0, 0, {id:'expander'});
+    }
+   
+
     if (!this.originalDataset) {
       this.originalDataset = this.settings.dataset.slice();
     } else {
@@ -3687,9 +3694,9 @@ Datagrid.prototype = {
 
     if (this.settings.groupable && isGroup && !isFooter) {
       const groupRowHtml = Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this);
-      containerHtml.left = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${visibleColumnsLeft}">${groupRowHtml.left || '<span>&nbsp;</span>'}</td></tr>`;
-      containerHtml.center = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${visibleColumnsCenter}">${groupRowHtml.center || '<span>&nbsp;</span>'}</td></tr>`;
-      containerHtml.right = `<tr class="datagrid-rowgroup-header${isHidden ? '' : ' is-expanded'}" role="rowgroup"><td role="gridcell" colspan="${visibleColumnsRight}">${groupRowHtml.right || '<span>&nbsp;</span>'}</td></tr>`;
+      containerHtml.left = '<tr class="datagrid-rowgroup-header' + (isHidden ? '' : ' is-expanded') + '" role="rowgroup">' + (groupRowHtml.left || '<span>&nbsp;</span>') + '</tr>';
+      containerHtml.center = '<tr class="datagrid-rowgroup-header' + (isHidden ? '' : ' is-expanded') + '" role="rowgroup">' + (groupRowHtml.center || '<span>&nbsp;</span>') + '</tr>';
+      containerHtml.right = '<tr class="datagrid-rowgroup-header' + (isHidden ? '' : ' is-expanded') + '" role="rowgroup">' + (groupRowHtml.right || '<span>&nbsp;</span>') + '</tr>';
       return containerHtml;
     }
 
