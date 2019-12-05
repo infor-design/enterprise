@@ -10,13 +10,16 @@ import '../popupmenu/popupmenu.jquery';
 const COMPONENT_NAME = 'fontpicker';
 
 // Default Settings
-const FONTPICKER_DEFAULTS = {
-  styles: [
-    new FontPickerStyle('default', 'Default'),
-    new FontPickerStyle('header1', 'Header 1', 'h3'),
-    new FontPickerStyle('header2', 'Header 2', 'h4')
-  ]
-};
+// NOTE: new settings are created at runtime to avoid retention of state on FontPickerStyle objects
+function fontpickerSettingsFactory() {
+  return {
+    styles: [
+      new FontPickerStyle('default', 'Default'),
+      new FontPickerStyle('header1', 'Header 1', 'h3'),
+      new FontPickerStyle('header2', 'Header 2', 'h4')
+    ]
+  };
+}
 
 /**
  * Fontpicker Component
@@ -29,7 +32,7 @@ function FontPicker(element, settings) {
     throw new Error('Property "element" is not an HTMLElement type');
   }
 
-  this.settings = utils.mergeSettings(element, settings, FONTPICKER_DEFAULTS);
+  this.settings = utils.mergeSettings(element, settings, fontpickerSettingsFactory());
   if (settings && Array.isArray(settings.styles)) {
     this.settings.styles = settings.styles;
   }
@@ -132,7 +135,7 @@ FontPicker.prototype = {
   init() {
     // Ensure we have an array for this, otherwise reset to default.
     if (!Array.isArray(this.settings.styles) || !this.settings.styles.length) {
-      this.settings.styles = FONTPICKER_DEFAULTS.styles;
+      this.settings.styles = fontpickerSettingsFactory().styles;
     }
 
     // Do initialization. Build or Events ect
@@ -148,10 +151,16 @@ FontPicker.prototype = {
    */
   build() {
     const $element = $(this.element);
+
+    // Invoke button
+    let ddIcon = this.element.querySelector('svg.icon.icon-dropdown');
+    if (!ddIcon) {
+      ddIcon = $.createIcon({ icon: 'dropdown', classes: ['icon-dropdown'] });
+      this.element.insertAdjacentHTML('beforeend', ddIcon);
+    }
     $element.button();
 
-    // TODO: render a poupmenu element before invoking, similar to how Flex Toolbar Item renders.
-    // see the `renderMoreActionsMenu()` method in Flex Toolbar's API.
+    // Invoke menu
     let $menu = $element.next('.popupmenu');
     if (!$menu || !$menu.length) {
       $menu = $('<ul class="popupmenu"></ul>').insertAfter(this.element);
@@ -161,6 +170,7 @@ FontPicker.prototype = {
       menu: $menu
     });
 
+    // Set initial state
     this.render();
 
     return this;
@@ -208,8 +218,8 @@ FontPicker.prototype = {
         const val = selectedItem.attr('data-val');
         this.select(val);
       })
-      .on(`updated.${COMPONENT_NAME}`, () => {
-        self.updated();
+      .on(`updated.${COMPONENT_NAME}`, (e, settings) => {
+        self.updated(settings);
       });
 
     return this;
@@ -251,9 +261,23 @@ FontPicker.prototype = {
 
   /**
    * Handle updated settings and values.
+   * @param {object} [settings=undefined] optional incoming fontpicker settings
    * @returns {object} [description]
    */
-  updated() {
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      let incomingStyles;
+      if (Array.isArray(settings.styles)) {
+        incomingStyles = settings.styles;
+      }
+
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+      if (incomingStyles) {
+        this.settings.styles = incomingStyles;
+      }
+    }
+
     return this
       .teardown()
       .init();
@@ -262,19 +286,34 @@ FontPicker.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * @returns {object} The Component prototype, useful for chaining.
-   * @private
    */
   teardown() {
+    // Remove icon
+    const ddIcon = this.element.querySelector('svg.icon.icon-dropdown');
+    ddIcon.parentNode.removeChild(ddIcon);
+
+    // Destroy sub-components
+    const menuAPI = this.menuAPI;
+    if (menuAPI && typeof menuAPI.destroy === 'function') {
+      menuAPI.destroy();
+    }
+    const buttonAPI = $(this.element).data('button');
+    if (buttonAPI && typeof buttonAPI.destroy === 'function') {
+      buttonAPI.destroy();
+    }
+
+    // Remove events
     $(this.element).off([
       `selected.${COMPONENT_NAME}`,
       `updated.${COMPONENT_NAME}`
     ].join(' '));
+
     return this;
   },
 
   /**
-   * Teardown - Remove added markup and events.
-   * @private
+   * Completely removes this component instance from its base element.
+   * @returns {void}
    */
   destroy() {
     this.teardown();

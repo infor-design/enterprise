@@ -18,13 +18,22 @@ describe('Fontpicker API', () => {
   });
 
   afterEach(() => {
-    cleanup(['.editor', '.svg-icons', '.modal', '.row', '.modal-page-container']);
+    if (fontpickerAPI) {
+      fontpickerAPI.destroy();
+    }
+    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container']);
   });
 
   it('can be invoked', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
 
     expect(fontpickerAPI).toEqual(jasmine.any(Object));
+  });
+
+  it('should be completely rendered after the page is loaded', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Default');
   });
 
   it('can be disabled and re-enabled', () => {
@@ -38,25 +47,86 @@ describe('Fontpicker API', () => {
     expect(fontpickerEl.disabled).toBeFalsy();
   });
 
-  it('should be completely rendered after the page is loaded', () => {
+  it('can update its settings via `updated() method`', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
+    fontpickerAPI.updated({
+      styles: [
+        new FontPickerStyle('codeblock', 'Code Block', 'code'),
+        new FontPickerStyle('quoteblock', 'Quote Block', 'blockquote')
+      ]
+    });
+    const updatedStyles = fontpickerAPI.settings.styles;
 
-    expect(fontpickerEl.querySelector('span').innerText).toBe('Default');
+    expect(updatedStyles).toBeDefined();
+    expect(Array.isArray(updatedStyles)).toBeTruthy();
+    expect(updatedStyles.length).toEqual(2);
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Code Block');
+  });
+
+  it('can update its settings by triggering an `updated()` event on its base element', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+    $(fontpickerEl).trigger('updated', [{
+      styles: [
+        new FontPickerStyle('codeblock', 'Code Block', 'code'),
+        new FontPickerStyle('quoteblock', 'Quote Block', 'blockquote')
+      ]
+    }]);
+
+    const updatedStyles = fontpickerAPI.settings.styles;
+
+    expect(updatedStyles).toBeDefined();
+    expect(Array.isArray(updatedStyles)).toBeTruthy();
+    expect(updatedStyles.length).toEqual(2);
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Code Block');
+  });
+
+  it('can select a font style programmatically with an ID', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
+
+    // Select via API
+    fontpickerAPI.select('header1');
+
+    expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerAPI.selected.tagName).toEqual('h3');
+  });
+
+  it('can select a font style programmatically with a reference to a valid FontPickerStyle object', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
+
+    // Get the target `header1` object
+    const targetStyle = fontpickerAPI.settings.styles[1];
+
+    // Select via API
+    fontpickerAPI.select(targetStyle);
+
+    expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
   it('should trigger a "font-selected" event when a font style is picked', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
     const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
-    fontpickerAPI.menuAPI.open();
 
-    const firstEntry = document.body.querySelector('button.fontpicker + div ul li:nth-child(1) a');
+    // Select via menu with a couple of clicks
+    fontpickerAPI.menuAPI.open();
+    const firstEntry = document.body.querySelector('button.fontpicker + div ul li:nth-child(2) a');
     firstEntry.click();
 
     expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
-  xit('should not trigger a "font-selected" event when the `select()` method is called with a `true` second argument', () => {
+  it('should not trigger a "font-selected" event when the `select()` method is called with a `true` second argument', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
 
+    // Select via API
+    fontpickerAPI.select('header1', true);
+
+    expect(fontpickerSpyEvent).not.toHaveBeenTriggered();
+    expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
   it('has three default font block styles', () => {
@@ -88,15 +158,44 @@ describe('Fontpicker API', () => {
     expect(styles.length).toEqual(2);
   });
 
-  xit('should reset available font styles to the default list if an empty list is provided', () => {
+  it('should reset available font styles to the default list if an empty list is provided', () => {
+    const settings = {
+      styles: []
+    };
 
+    fontpickerAPI = new FontPicker(fontpickerEl, settings);
+    const styles = fontpickerAPI.settings.styles;
+
+    expect(styles).toBeDefined();
+    expect(Array.isArray(styles)).toBeTruthy();
+    expect(styles.length).toEqual(3);
+
+    expect(styles[0] instanceof FontPickerStyle).toBeTruthy();
+    expect(styles[0].displayName).toEqual('Default');
+    expect(styles[0].tagName).toEqual('p');
   });
 
-  xit('should describe whether or not a font style is available by its ID', () => {
+  it('should describe whether or not a font style is available by its ID', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
 
+    // NOTE: need to wrap function that throws error in order to catch the error contents inside the test.
+    function doGetStyleIncorrectly() {
+      fontpickerAPI.getStyleById('notAStyle');
+    }
+
+    expect(fontpickerAPI.getStyleById('header1')).toBeTruthy();
+    expect(doGetStyleIncorrectly).toThrow(new Error('No FontPickerStyle available with id "notAStyle"'));
   });
 
-  xit('should describe whether or not a font style is available by its tagName', () => {
+  it('should describe whether or not a font style is available by its tagName', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
 
+    // NOTE: need to wrap function that throws error in order to catch the error contents inside the test.
+    function doGetStyleIncorrectly() {
+      fontpickerAPI.getStyleByTagName('span');
+    }
+
+    expect(fontpickerAPI.getStyleByTagName('h3')).toBeTruthy();
+    expect(doGetStyleIncorrectly).toThrow(new Error('No FontPickerStyle available with tagName "span"'));
   });
 });
