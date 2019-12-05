@@ -67,6 +67,7 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor Docs Admin Console | docs.infor.com  admin tool | Xiwen Zhao| `4.x` |
 | Infor GFC | Lawson App | Tiffany Kai King, Jon Cadag | `3.x` |
 | Infor HMS | | David Parisi | `3.x` |
+| Infor POS | | Emerson Versoza | `3.x` `Angular 1.7` |
 | Hansen 8 | An ASP Application interested in accessibility  | Ovidiu Petruescu | `^4.x` |
 | IES | | Timothy Kettering | `4.x` |
 | ILMS | | Muhammad Kamran Zahid | `4.x` |

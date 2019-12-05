@@ -1,35 +1,47 @@
+<style>
+  .six.columns {
+    max-width: 900px;
+    height: 250px;
+    margin-bottom: 60px;
+  }
+
+  .row:first-of-type {
+    padding-top: 10px;
+  }
+</style>
+
 <div class="row">
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+  <div class="six columns">
     <div id="datagrid"></div>
   </div>
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+  <div class="six columns">
     <div id="datagrid-filters"></div>
   </div>
 </div>
 
-<div class="row" style="margin-top: 60px;">
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+<div class="row">
+  <div class="six columns">
     <div id="datagrid-groups"></div>
   </div>
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+  <div class="six columns">
     <div id="datagrid-both"></div>
   </div>
 </div>
 
-<div class="row" style="margin-top: 60px;">
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+<div class="row">
+  <div class="six columns">
     <div id="datagrid-paging"></div>
   </div>
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+  <div class="six columns">
     <div id="datagrid-paging-filters"></div>
   </div>
 </div>
 
-<div class="row" style="margin-top: 60px;">
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+<div class="row">
+  <div class="six columns">
     <div id="datagrid-paging-groups"></div>
   </div>
-  <div class="six columns" style="max-width: 900px; height: 250px;">
+  <div class="six columns">
     <div id="datagrid-paging-both"></div>
   </div>
 </div>
@@ -179,6 +191,7 @@
     $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
+      selectable: 'multiple',
       toolbar: {
         title: 'No extras',
         actions: true,
@@ -189,6 +202,7 @@
     $('#datagrid-filters').datagrid({
       columns: columns,
       dataset: data,
+      selectable: 'multiple',
       filterable: true,
       toolbar: {
         title: 'Filters',
@@ -206,6 +220,7 @@
         { colspan: 3, id: 'group4', name: 'Column Group four' }
       ],
       dataset: data,
+      selectable: 'multiple',
       toolbar: {
         title: 'Groups',
         actions: true,
@@ -222,6 +237,7 @@
         { colspan: 3, id: 'group4', name: 'Column Group four' }
       ],
       dataset: data,
+      selectable: 'multiple',
       filterable: true,
       toolbar: {
         title: 'Both',
@@ -233,6 +249,7 @@
     $('#datagrid-paging').datagrid({
       columns: columns,
       dataset: data,
+      selectable: 'multiple',
       paging: true,
       toolbar: {
         title: 'No extras',
@@ -244,6 +261,7 @@
     $('#datagrid-paging-filters').datagrid({
       columns: columns,
       dataset: data,
+      selectable: 'multiple',
       paging: true,
       filterable: true,
       toolbar: {
@@ -262,6 +280,7 @@
         { colspan: 3, id: 'group4', name: 'Column Group four' }
       ],
       dataset: data,
+      selectable: 'multiple',
       paging: true,
       toolbar: {
         title: 'Groups',
@@ -279,6 +298,7 @@
         { colspan: 3, id: 'group4', name: 'Column Group four' }
       ],
       dataset: data,
+      selectable: 'multiple',
       paging: true,
       filterable: true,
       toolbar: {

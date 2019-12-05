@@ -902,7 +902,7 @@ Modal.prototype = {
     }
 
     if (this.element.hasClass('lookup-modal')) {
-      const table = this.element.find('.datagrid-body');
+      const table = this.element.find('.datagrid-wrapper');
       const hasPager = this.element.find('.pager-toolbar');
       const container = table.closest('.datagrid-container');
 

@@ -1,10 +1,11 @@
-# What's New with Enterprise
+columns# What's New with Enterprise
 
 ## v4.24.0
 
 ### v4.24.0 Important Changes
 
 - `[Icons]` Reversed a change in previous versions to make alert icons all have a white background as this caused issues. Concerning alert icons there are now the following `icon-[name]` - which will have transparent background, in Uplift these are linear in style, in soho these are solid in style. We also add a `icon-[name]-alert` for alert icons with a white background. If you need a white background you can use these otherwise we have restored the functionality from the 4.21 version, you might need a white background in calendar icons. Also the pending icon is fixed and now orange. ([#3052](https://github.com/infor-design/enterprise/issues/3052))
+- `[Datagrid]` Changed the way tables are rendered to avoid gaps at the end of the grid and fix the sizes so they work in resize. This is done by using css position: sticky for headers. It has a few consequences. The spaceColumn option which was never really completed was removed. The stretchColumn option is still working but is less important. IE 11 does not support sticky headers anymore as it does not support position sticky. This improves all issues with columns getting out of alignment. ([#2825](https://github.com/infor-design/enterprise/issues/2825))
 
 ### v4.24.0 Deprecation
 

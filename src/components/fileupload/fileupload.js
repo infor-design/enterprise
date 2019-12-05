@@ -176,12 +176,9 @@ FileUpload.prototype = {
   * Clear the Input Upload File
   */
   clearUploadFile() {
-    const val = this.fileInput.val();
     this.fileInput.add(this.textInput).val('');
     this.svgClose.hide().removeClass('is-visible');
-    if (val !== '') {
-      this.fileInput.triggerHandler('change');
-    }
+    this.fileInput.triggerHandler('change');
   },
 
   // Unbind all events

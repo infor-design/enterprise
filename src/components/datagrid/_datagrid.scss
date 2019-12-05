@@ -44,7 +44,7 @@
   }
 }
 
-$datagrid-header-height: 39px;  //1px border in parent
+$datagrid-header-height: 39px;  // 1px border on parent
 $datagrid-filterable-header-height: 61px;
 
 $datagrid-row-height: 43px;
@@ -57,26 +57,40 @@ $datagrid-short-row-height: 25px;
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
-  clear: both;
+  display: flex;
   height: inherit;
   min-width: 100%;
   overflow: hidden;
   position: relative;
 
-  // Empty Space Background Fill
-  &.is-windows.has-vertical-scroll {
-    background-color: $datagrid-header-bg-color;
-
-    .datagrid-body {
-      background-color: $datagrid-empty-bg-color;
-    }
+  &.has-empty-message.is-empty {
+    min-height: 300px;
   }
 
   &.has-horizontal-scroll {
-    .datagrid-body.left,
-    .datagrid-body.right {
+    .datagrid-wrapper.left,
+    .datagrid-wrapper.right {
       // Make bottom visible to prevent space different at the bottom.
       overflow-x: scroll;
+    }
+  }
+
+  // Scrolling headers for grouped headers
+  &.has-group-headers {
+    tr.datagrid-header-groups th {
+      top: 0;
+    }
+
+    tr:not(.datagrid-header-groups) th {
+      top: 39px;
+    }
+
+    &.short-rowheight tr:not(.datagrid-header-groups) th {
+      top: 25px;
+    }
+
+    &.medium-rowheight tr:not(.datagrid-header-groups) th {
+      top: 30px;
     }
   }
 
@@ -86,9 +100,7 @@ $datagrid-short-row-height: 25px;
     height: auto;
   }
 
-  .datagrid-body {
-    height: calc(100% - 39px);
-
+  .datagrid-wrapper {
     &:first-of-type {
       tr.rowstatus-row-error td:first-child {
         @include rowstatusEndBorders($theme-color-status-danger);
@@ -167,42 +179,7 @@ $datagrid-short-row-height: 25px;
     height: calc(100% - 40px);
   }
 
-  &.has-toolbar.paginated {
-    height: calc(100% - 90px);
-  }
-
-  // Adjust borders and IE adjustment for vertical scrollbars
-  &.has-vertical-scroll {
-    &.is-windows:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
-      .datagrid-header:not(.left):not(.right) {
-        margin-right: 18px;
-      }
-    }
-
-    &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
-      .datagrid-header:not(.left):not(.right) {
-        margin-right: 14px;
-      }
-    }
-  }
-
-  &.has-group-headers {
-    .datagrid-body {
-      height: calc(100% - 78px);
-    }
-  }
-
-  &.has-group-headers.has-filterable-columns {
-    .datagrid-body {
-      height: calc(100% - 105px);
-    }
-  }
-
   &.has-filterable-columns {
-    .datagrid-body {
-      height: calc(100% - 66px);
-    }
-
     .datagrid-filter-wrapper {
       height: 24px;
       margin: 3px 0;
@@ -235,14 +212,6 @@ $datagrid-short-row-height: 25px;
         }
       }
     }
-  }
-
-  tr:not(.datagrid-expandable-row):last-child td {
-    border-bottom-color: transparent;
-  }
-
-  &.has-less-rows tr:last-child td {
-    border-bottom-color: $datagrid-cell-border-color;
   }
 
   //State Change
@@ -347,10 +316,6 @@ $datagrid-short-row-height: 25px;
       }
     }
 
-    .datagrid-body {
-      background-color: transparent !important;
-    }
-
     tr td {
       border-left: 0;
       border-right: 0;
@@ -434,28 +399,11 @@ $datagrid-short-row-height: 25px;
       min-height: $datagrid-short-row-height + 7;
     }
 
-    //Set Container Heights for scrolling
-    .datagrid-body {
-      height: calc(100% - 28px);
-    }
-
-    &.has-group-headers .datagrid-body {
-      height: calc(100% - 54px);
-    }
-
     &.has-filterable-columns {
-      .datagrid-body {
-        height: calc(100% - 57px);
-      }
-
       .is-filterable th,
       .is-filterable .datagrid-column-wrapper {
         height: 28px;
       }
-    }
-
-    &.has-group-headers.has-filterable-columns .datagrid-body {
-      height: calc(100% - 85px);
     }
 
     //Resize Drag Arrows
@@ -564,23 +512,6 @@ $datagrid-short-row-height: 25px;
   &.medium-rowheight {
     .datagrid-cell-wrapper {
       min-height: $datagrid-short-row-height + 6;
-    }
-
-    //Set Container Heights for scrolling
-    .datagrid-body {
-      height: calc(100% - 30px);
-    }
-
-    &.has-group-headers .datagrid-body {
-      height: calc(100% - 61px);
-    }
-
-    &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 60px);
-    }
-
-    &.has-group-headers.has-filterable-columns .datagrid-body {
-      height: calc(100% - 92px);
     }
 
     .drag-target-arrows {
@@ -694,9 +625,14 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-// Grid Body container
-.datagrid-body {
+// Datagrid Scroll Wrapper
+.datagrid-wrapper {
+  height: 100%;
   overflow: hidden;
+
+  &.center {
+    width: 100%;
+  }
 
   &.scroll-x {
     overflow-x: auto;
@@ -726,23 +662,6 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-.full-height .datagrid-body {
-  .empty-message {
-    @include vertical-align();
-  }
-}
-
-.card,
-.widget {
-  .datagrid-container .empty-message {
-    left: 50%;
-    margin-top: 15px;
-    position: absolute;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-  }
-}
-
 // Grid Styling
 .datagrid {
   background-color: transparent;
@@ -759,6 +678,13 @@ $datagrid-short-row-height: 25px;
       line-height: $datagrid-medium-row-height;
 
       td {
+        // Expandable Cells
+        &.is-active {
+          .datagrid-cell-wrapper {
+            padding: 4px 14px;
+          }
+        }
+
         .datagrid-row-heading {
           margin-top: 25px;
         }
@@ -1006,6 +932,13 @@ $datagrid-short-row-height: 25px;
       }
 
       td {
+        // Expandable Cells
+        &.is-active {
+          .datagrid-cell-wrapper {
+            padding: 3px 9px;
+          }
+        }
+
         span {
           line-height: $datagrid-short-row-height;
         }
@@ -1449,10 +1382,15 @@ $datagrid-short-row-height: 25px;
     }
 
     &.is-rowdisabled {
-      opacity: 0.6;
       pointer-events: none;
 
       td {
+        color: $disabled-color;
+
+        .trigger {
+          color: $disabled-color;
+        }
+
         &:hover {
           .datagrid-checkbox {
             cursor: default;
@@ -1462,6 +1400,28 @@ $datagrid-short-row-height: 25px;
         &.has-editor:hover {
           .icon {
             visibility: hidden;
+          }
+        }
+
+        .hyperlink {
+          color: $hyperlink-disabled-color;
+        }
+
+        .datagrid-checkbox {
+          cursor: default;
+
+          &::before {
+            @include checkbox-unchecked-disabled-before-style;
+          }
+
+          &.is-checked {
+            &::before {
+              @include checkbox-checked-disabled-before-style;
+            }
+
+            &::after {
+              @include checkbox-checked-disabled-after-style;
+            }
           }
         }
       }
@@ -1577,8 +1537,6 @@ $datagrid-short-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
-
       border: 1px solid transparent;
       display: block;
       min-height: $datagrid-row-height + 6;
@@ -2073,10 +2031,12 @@ $datagrid-short-row-height: 25px;
         margin-top: 4px;
       }
 
-      //Text Area
+      // Text Area
       textarea {
         border: 0;
+        min-height: 0;
         padding: 5px 0 0;
+        position: absolute;
         width: inherit;
 
         &:focus {
@@ -2260,16 +2220,6 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-.datagrid-header-container {
-  background-color: $datagrid-header-bg-color;
-  display: flex;
-}
-
-.datagrid-body-container {
-  display: flex;
-  height: 100%;
-}
-
 //Grid Headers
 .datagrid-header {
   background-color: $datagrid-header-bg-color;
@@ -2307,8 +2257,10 @@ $datagrid-short-row-height: 25px;
     border-right: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     overflow: hidden;
-    position: relative;
+    position: sticky;
     text-align: left;
+    top: 0;
+    z-index: 1;
 
     &.text-ellipsis {
       .datagrid-column-wrapper {
@@ -2761,6 +2713,7 @@ $datagrid-short-row-height: 25px;
     border-bottom: 1px solid $datagrid-cell-border-color;
     border-right: 1px solid $datagrid-cell-border-color;
     padding: 0 20px;
+    -webkit-text-size-adjust: none; //Prevent huge text on IOS
 
     &:focus,
     &.is-focused {
@@ -2888,7 +2841,7 @@ td .btn-actions {
   margin: 0 -20px;
   min-height: $datagrid-row-height - 1;
   overflow: auto;
-  padding: 5px 20px;
+  padding: 10px 20px;
   white-space: pre-line;
   word-wrap: break-word;
 }
@@ -3712,41 +3665,16 @@ html[dir='rtl'] {
   }
 
   .datagrid-container {
-    &.has-vertical-scroll {
-      &.is-windows .datagrid-header {
-        margin-left: 18px;
-        margin-right: 0;
-      }
-
-      &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
-        .datagrid-header:not(.left):not(.right) {
-          margin-left: 15px;
-          margin-right: 0;
-        }
-      }
-    }
-
-    .datagrid-body:not(.left) td:last-child {
+    .datagrid-wrapper:not(.left) td:last-child {
       border-right-color: $datagrid-cell-border-color;
     }
 
-    .datagrid-body.left td:last-child {
+    .datagrid-wrapper.left td:last-child {
       border-left: 1px solid $datagrid-cell-border-color;
     }
 
-    .datagrid-body:not(.left):not(.right) td:first-child {
+    .datagrid-wrapper:not(.left):not(.right) td:first-child {
       border-right-color: transparent;
-    }
-  }
-
-  &.ios .datagrid-container,
-  &.android .datagrid-container {
-    &.has-vertical-scroll {
-      &:not(.has-frozen-right-columns):not(.has-frozen-left-columns) {
-        .datagrid-header:not(.left):not(.right) {
-          margin-left: 0;
-        }
-      }
     }
   }
 }
@@ -3899,13 +3827,6 @@ html[dir='rtl'] {
 
   .datagrid-filter-wrapper .dropdown {
     padding-top: 4px !important;
-  }
-}
-
-.is-mac.is-firefox,
-.is-mac.is-safari {
-  .has-visible-scrollbars .datagrid-body.right table {
-    margin-right: 15px;
   }
 }
 
@@ -4150,14 +4071,8 @@ html[dir='rtl'] {
 }
 
 .ie {
-  .datagrid-body {
+  .datagrid-wrapper {
     tbody tr {
-      td {
-        .datagrid-cell-wrapper {
-          @include css3(transition, none);
-        }
-      }
-
       &.is-active-row {
         outline: 0;
 
