@@ -395,6 +395,10 @@
         border-bottom-color: rgba($searchfield-moduletabs-border-color, 0.4);
         border-top-color: rgba($searchfield-moduletabs-bg-color, 0.4);
         color: $module-tabs-inactive-text-color;
+
+        @media (max-width: $breakpoint-phone-to-tablet - 1) {
+          padding-right: 20px;
+        }
       }
     }
 
@@ -428,6 +432,10 @@
     &.has-focus {
       .searchfield {
         color: $module-tabs-active-text-color;
+
+        @media (max-width: $breakpoint-phone-to-tablet - 1) {
+          padding-right: 34px;
+        }
       }
 
       .icon:not(.error) {

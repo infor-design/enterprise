@@ -22,6 +22,14 @@
   margin-bottom: 20px;
   position: relative;
 
+  &.toolbar-searchfield-wrapper {
+    width: calc(100% - 1px) !important;
+
+    @media (min-width: $breakpoint-tablet-reduced) {
+      width: 274px !important;
+    }
+  }
+
   @include transition(width 300ms $cubic-ease,
   left 300ms $cubic-ease,
   right 300ms $cubic-ease,
