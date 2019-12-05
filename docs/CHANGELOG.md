@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## #3213 Datagrid Grouping on multiple columns
+- `[DataGrid]` Created a new default behavior on column grouping. ([#3213](https://github.com/infor-design/enterprise/issues/3213))
+
 ## v4.24.0
 
 ### v4.24.0 Important Changes
