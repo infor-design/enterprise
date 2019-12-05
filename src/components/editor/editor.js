@@ -1303,10 +1303,22 @@ Editor.prototype = {
     // 'fontStyle' type notifies the FontPicker component if the current selection doesn't match.
     if (this.fontPickerElem && command === 'fontStyle') {
       const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      const fontpickerSupportedTags = fontpickerAPI.supportedTagNames;
+
       const selectedElem = this.getSelectionParentElement();
-      const selectedElemTag = selectedElem.tagName.toLowerCase();
-      const fontStyle = fontpickerAPI.getStyleByTagName(selectedElemTag);
-      fontpickerAPI.select(fontStyle.id, true);
+      const searchElems = $(selectedElem).add($(selectedElem).parentsUntil(this.element));
+      let targetElemTag;
+      let fontStyle;
+
+      for (let i = 0; i < searchElems.length && fontStyle === undefined; i++) {
+        targetElemTag = searchElems[i].tagName.toLowerCase();
+        if (fontpickerSupportedTags.indexOf(targetElemTag) > -1) {
+          fontStyle = fontpickerAPI.getStyleByTagName(targetElemTag);
+          fontpickerAPI.select(fontStyle, true);
+          break;
+        }
+      }
+
       return;
     }
 

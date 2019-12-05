@@ -129,6 +129,17 @@ FontPicker.prototype = {
   },
 
   /**
+   * @returns {array} of tagNames currently supported by this fontpicker
+   */
+  get supportedTagNames() {
+    const tagNames = [];
+    this.settings.styles.forEach((style) => {
+      tagNames.push(style.tagName);
+    });
+    return tagNames;
+  },
+
+  /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
    */

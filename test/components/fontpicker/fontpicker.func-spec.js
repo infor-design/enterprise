@@ -175,6 +175,16 @@ describe('Fontpicker API', () => {
     expect(styles[0].tagName).toEqual('p');
   });
 
+  it('can get a list of available tagNames', () => {
+    fontpickerAPI = new FontPicker(fontpickerEl);
+    const tagNames = fontpickerAPI.supportedTagNames;
+
+    expect(tagNames).toBeDefined();
+    expect(Array.isArray(tagNames)).toBeTruthy();
+    expect(tagNames.length).toEqual(3);
+    expect(tagNames[1]).toBe('h3');
+  });
+
   it('should describe whether or not a font style is available by its ID', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
 
