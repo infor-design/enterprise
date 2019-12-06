@@ -5,7 +5,9 @@
 import { Environment as env } from '../../utils/environment';
 import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { FontPickerStyle } from '../fontpicker/fontpicker';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
@@ -45,7 +47,6 @@ const EDITOR_DEFAULTS = {
   buttons: {
     editor: [
       'fontPicker',
-      //'header1', 'header2',
       'separator', 'bold', 'italic', 'underline', 'strikethrough',
       'separator', 'foreColor', 'backColor',
       'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
@@ -64,8 +65,6 @@ const EDITOR_DEFAULTS = {
     source: []
   },
   delay: 200,
-  firstHeader: 'h3',
-  secondHeader: 'h4',
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
@@ -147,6 +146,38 @@ Editor.prototype = {
         this.settings.anchor.defaultTarget = val;
       }
     });
+
+    // Convert legacy header settings into Fontpicker settings
+    if (this.settings.firstHeader || this.settings.secondHeader) {
+      let removeFirstHeader = false;
+      let removeSecondHeader = false;
+      if (!Array.isArray(this.settings.fontpickerSettings.styles)) {
+        this.settings.fontpickerSettings.styles = [];
+      }
+      if (!this.settings.fontpickerSettings.styles.length) {
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyDefault', 'Default'));
+      }
+      if (this.settings.firstHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`firstHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader1', 'Header 1', this.settings.firstHeader));
+        delete this.settings.firstHeader;
+        removeFirstHeader = true;
+      }
+      if (this.settings.secondHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`secondHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader2', 'Header 2', this.settings.secondHeader));
+        delete this.settings.secondHeader;
+        removeSecondHeader = true;
+      }
+
+      // Remove the old button definitions from the `settings.buttons` array
+      this.settings.buttons.editor = this.settings.buttons.editor.filter((btn) => {
+        if ((btn === 'header1' && removeFirstHeader) || (btn === 'header2' && removeSecondHeader)) {
+          return false;
+        }
+        return true;
+      });
+    }
 
     if (!s.anchor.defaultTarget) {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
