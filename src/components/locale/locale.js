@@ -457,7 +457,6 @@ const Locale = {  // eslint-disable-line
   setCurrentLocale(name, data) {
     const lang = this.remapLanguage(name.substr(0, 2));
     this.currentLocale.name = name;
-    //this.currentLanguage.name = lang;
 
     if (data) {
       this.currentLocale.data = data;
