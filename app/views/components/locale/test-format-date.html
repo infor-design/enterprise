@@ -18,19 +18,19 @@
 <script>
   var locale = 'en-GB';
   Soho.Locale.set(locale).done(function(a) {
-    console.log(a, Soho.Locale.currentLocale.data, Soho.Locale.currentLanguage.name);
+    console.log(Soho.Locale.currentLanguage, Soho.Locale.currentLanguage.name);
   	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
     $('#date-field1').val(val);
   });
   var locale = 'es-US';
   Soho.Locale.set(locale).done(function(a) {
-    console.log(a, Soho.Locale.currentLocale.data, Soho.Locale.currentLanguage.name);
+    console.log(Soho.Locale.currentLanguage, Soho.Locale.currentLanguage.name);
   	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
     $('#date-field2').val(val);
   });
   var locale = 'da-DK';
   Soho.Locale.set(locale).done(function(a) {
-    console.log(a, Soho.Locale.currentLocale.data, Soho.Locale.currentLanguage.name);
+    console.log(Soho.Locale.currentLanguage, Soho.Locale.currentLanguage.name);
   	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
     $('#date-field3').val(val);
   });

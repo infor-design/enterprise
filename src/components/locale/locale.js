@@ -279,6 +279,7 @@ const Locale = {  // eslint-disable-line
   appendLocaleScript(locale, isCurrent, parentLocale, filename) {
     const script = document.createElement('script');
     const min = this.minify ? '.min' : '';
+    script.async = false;
 
     if (this.appendedLocales.indexOf(locale) > -1) {
       return;
@@ -461,6 +462,9 @@ const Locale = {  // eslint-disable-line
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
+      this.currentLanguage = {};
+      this.currentLanguage.name = lang;
+
       if (this.languages[lang]) {
         this.currentLanguage = this.languages[lang];
         this.updateLanguageTag(name);

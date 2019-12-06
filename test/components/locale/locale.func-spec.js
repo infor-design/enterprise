@@ -95,6 +95,8 @@ describe('Locale API', () => {
     Locale.set(locale).done((name) => {
       expect(name).toEqual('en-GB');
       expect(Locale.currentLocale.data.englishName).toEqual('English (United Kingdom)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('en');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
     });
 
@@ -102,6 +104,8 @@ describe('Locale API', () => {
     Locale.set(locale).done((name) => {
       expect(name).toEqual('es-US');
       expect(Locale.currentLocale.data.englishName).toEqual('Spanish (United States)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('es');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('12/4/2019');
     });
 
@@ -109,6 +113,8 @@ describe('Locale API', () => {
     Locale.set(locale).done((name) => {
       expect(name).toEqual('da-DK');
       expect(Locale.currentLocale.data.englishName).toEqual('Danish (Denmark)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('da');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04-12-2019');
       done();
     });
