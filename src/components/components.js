@@ -29,7 +29,7 @@ export { DatePicker } from './datepicker/datepicker';
 export { Dropdown } from './dropdown/dropdown';
 export { EmptyMessage } from './emptymessage/emptymessage';
 export { ExpandableArea } from './expandablearea/expandablearea';
-export { FontPicker } from './fontpicker/fontpicker';
+export { FontPicker, FontPickerStyle } from './fontpicker/fontpicker';
 export { Line } from './line/line';
 export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';

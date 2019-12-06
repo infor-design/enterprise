@@ -3,3 +3,13 @@
 .fontpicker {
 
 }
+
+// Overwrites the default Popupmenu styles
+.fontpicker-menu {
+  li {
+    a {
+      align-items: center;
+      display: flex;
+    }
+  }
+}

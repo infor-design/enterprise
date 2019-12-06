@@ -1,5 +1,4 @@
-import FontPickerStyle from '../../../src/components/fontpicker/fontpicker.style';
-import { FontPicker } from '../../../src/components/fontpicker/fontpicker';
+import { FontPicker, FontPickerStyle } from '../../../src/components/fontpicker/fontpicker';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/fontpicker/example-index.html');
@@ -51,7 +50,6 @@ describe('Fontpicker API', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
     fontpickerAPI.updated({
       styles: [
-        new FontPickerStyle('codeblock', 'Code Block', 'code'),
         new FontPickerStyle('quoteblock', 'Quote Block', 'blockquote')
       ]
     });
@@ -59,15 +57,14 @@ describe('Fontpicker API', () => {
 
     expect(updatedStyles).toBeDefined();
     expect(Array.isArray(updatedStyles)).toBeTruthy();
-    expect(updatedStyles.length).toEqual(2);
-    expect(fontpickerEl.querySelector('span').innerText).toBe('Code Block');
+    expect(updatedStyles.length).toEqual(1);
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Quote Block');
   });
 
   it('can update its settings by triggering an `updated()` event on its base element', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
     $(fontpickerEl).trigger('updated', [{
       styles: [
-        new FontPickerStyle('codeblock', 'Code Block', 'code'),
         new FontPickerStyle('quoteblock', 'Quote Block', 'blockquote')
       ]
     }]);
@@ -76,8 +73,8 @@ describe('Fontpicker API', () => {
 
     expect(updatedStyles).toBeDefined();
     expect(Array.isArray(updatedStyles)).toBeTruthy();
-    expect(updatedStyles.length).toEqual(2);
-    expect(fontpickerEl.querySelector('span').innerText).toBe('Code Block');
+    expect(updatedStyles.length).toEqual(1);
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Quote Block');
   });
 
   it('can select a font style programmatically with an ID', () => {
@@ -145,7 +142,6 @@ describe('Fontpicker API', () => {
   it('can use a custom list of available font styles', () => {
     const settings = {
       styles: [
-        new FontPickerStyle('codeblock', 'Code Block', 'code'),
         new FontPickerStyle('quoteblock', 'Quote Block', 'blockquote')
       ]
     };
@@ -155,7 +151,7 @@ describe('Fontpicker API', () => {
 
     expect(styles).toBeDefined();
     expect(Array.isArray(styles)).toBeTruthy();
-    expect(styles.length).toEqual(2);
+    expect(styles.length).toEqual(1);
   });
 
   it('should reset available font styles to the default list if an empty list is provided', () => {

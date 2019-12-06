@@ -169,16 +169,20 @@ FontPicker.prototype = {
       ddIcon = $.createIcon({ icon: 'dropdown', classes: ['icon-dropdown'] });
       this.element.insertAdjacentHTML('beforeend', ddIcon);
     }
+    this.ddIcon = this.element.querySelector('svg.icon.icon-dropdown');
     $element.button();
 
     // Invoke menu
     let $menu = $element.next('.popupmenu');
     if (!$menu || !$menu.length) {
-      $menu = $('<ul class="popupmenu"></ul>').insertAfter(this.element);
+      $menu = $('<ul class="popupmenu fontpicker-menu"></ul>').insertAfter(this.element);
     }
     $menu.html(this.buildMenuHTML());
     $element.popupmenu({
-      menu: $menu
+      menu: $menu,
+      offset: {
+        y: 10
+      }
     });
 
     // Set initial state
@@ -208,8 +212,10 @@ FontPicker.prototype = {
     let menuHTML = '';
 
     this.settings.styles.forEach((style) => {
+      const itemRender = style.render(style.displayName);
+
       menuHTML += `<li class="fontpicker-style">
-        <a href="#" data-val="${style.id}">${style.displayName}</a>
+        <a href="#" data-val="${style.id}">${itemRender}</a>
       </li>`;
     });
 
@@ -332,4 +338,4 @@ FontPicker.prototype = {
   }
 };
 
-export { FontPicker, COMPONENT_NAME };
+export { FontPicker, FontPickerStyle, COMPONENT_NAME };

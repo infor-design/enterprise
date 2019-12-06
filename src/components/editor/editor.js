@@ -13,7 +13,7 @@ import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
 
-const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
+const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'code'];
 
 /**
 * The Editor Component displays and edits markdown.
@@ -84,7 +84,8 @@ const EDITOR_DEFAULTS = {
   preview: false,
   useFlexToolbar: false,
   useSourceFormatter: false,
-  formatterTabsize: 4
+  formatterTabsize: 4,
+  fontpickerSettings: {}
 };
 
 function Editor(element, settings) {
@@ -378,7 +379,7 @@ Editor.prototype = {
     // Invoke Fontpicker, if applicable
     const fpElement = this.toolbar.find('[data-action="fontStyle"]').first();
     if (fpElement && fpElement.length) {
-      fpElement.fontpicker();
+      fpElement.fontpicker(this.settings.fontpickerSettings);
       this.fontPickerElem = fpElement;
     }
 

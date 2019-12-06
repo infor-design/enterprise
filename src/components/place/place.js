@@ -931,6 +931,9 @@ Place.prototype = {
     if (target.is('.colorpicker-editor-button')) {
       target = target.find('.trigger .icon');
     }
+    if (target.is('.fontpicker')) {
+      target = target.find('.icon.icon-dropdown');
+    }
 
     // reset if we borked the target
     if (!target.length) {
