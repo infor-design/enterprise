@@ -11,6 +11,7 @@
 ### v4.24.0 Features
 
 - `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+- `[Editor]` Replaced the `h3` and `h4` buttons with a more robust Fontpicker component. ([#2722](https://github.com/infor-design/enterprise/issues/2722))
 
 ### v4.24.0 Fixes
 
