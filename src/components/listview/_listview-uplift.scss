@@ -28,6 +28,18 @@
   }
 }
 
+// Firefox/Safari icon placement adjustments
+html.is-safari,
+html.is-firefox {
+  .listview-search {
+    .searchfield-wrapper {
+      .icon:not(.close):not(.icon-error) {
+        top: 12px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .listview-search {
     .searchfield-wrapper {
