@@ -115,7 +115,7 @@ const COMPONENT_NAME = 'datagrid';
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}} set this to null for no message
  * or will default to 'No Data Found with an icon.'
- * @param {boolean}  [settings.allowChildExpandOnMatch=false] use  with filter
+ * @param {boolean} [settings.allowChildExpandOnMatch=false] Used with filter
  * if true:
  * and if only parent has a match then add all children nodes too
  * or if one or more child node got match then add parent node and all the children nodes
