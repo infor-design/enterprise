@@ -621,7 +621,7 @@ DatePicker.prototype = {
     this.todayDay = this.todayDate.getDate();
 
     if (this.isIslamic) {
-      this.todayDateIslamic = this.conversions.fromGregorian(this.todayDate);
+      this.todayDateIslamic = Locale.gregorianToUmalqura(this.todayDate);
       this.todayYear = this.todayDateIslamic[0];
       this.todayMonth = this.todayDateIslamic[1];
       this.todayDay = this.todayDateIslamic[2];
@@ -631,7 +631,7 @@ DatePicker.prototype = {
     this.settings.year = this.currentYear;
     if (this.isIslamic) {
       this.settings.activeDateIslamic = this.activeDate instanceof Date ?
-        this.conversions.fromGregorian(this.activeDate) : this.activeDate;
+        Locale.gregorianToUmalqura(this.activeDate) : this.activeDate;
     }
 
     if (this.settings.onOpenCalendar) {
@@ -641,7 +641,7 @@ DatePicker.prototype = {
       this.settings.year = this.settings.activeDate.getFullYear();
 
       if (this.isIslamic) {
-        this.settings.activeDateIslamic = this.conversions.fromGregorian(this.settings.activeDate);
+        this.settings.activeDateIslamic = Locale.gregorianToUmalqura(this.settings.activeDate);
       }
     } else {
       this.settings.activeDate = this.currentDate || this.todayDate;
@@ -870,7 +870,7 @@ DatePicker.prototype = {
           self.currentYear = year;
           self.currentMonth = month;
           self.currentDay = day;
-          self.currentDate = self.conversions.toGregorian(year, month, day);
+          self.currentDate = Locale.umalquraToGregorian(year, month, day);
         }
 
         if (s.range.useRange) {
@@ -950,7 +950,7 @@ DatePicker.prototype = {
       self.currentYear = year;
       self.currentMonth = month;
       self.currentDay = day;
-      self.currentDate = self.conversions.toGregorian(year, month, day);
+      self.currentDate = Locale.umalquraToGregorian(year, month, day);
     }
 
     self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
@@ -1153,7 +1153,7 @@ DatePicker.prototype = {
 
     if (date instanceof Array) {
       this.currentIslamicDate = date;
-      this.currentDate = this.conversions.toGregorian(date[0], date[1], date[2]);
+      this.currentDate = Locale.umalquraToGregorian(date[0], date[1], date[2]);
     }
 
     if (s.range.useRange) {
@@ -1461,13 +1461,13 @@ DatePicker.prototype = {
         locale: this.locale.name
       });
       if (islamicValue instanceof Date) {
-        gregorianValue = this.conversions.toGregorian(
+        gregorianValue = Locale.umalquraToGregorian(
           islamicValue.getFullYear(),
           islamicValue.getMonth(),
           islamicValue.getDate()
         );
       } else if (islamicValue instanceof Array) {
-        gregorianValue = this.conversions.toGregorian(
+        gregorianValue = Locale.umalquraToGregorian(
           islamicValue[0],
           islamicValue[1],
           islamicValue[2]
@@ -1507,7 +1507,7 @@ DatePicker.prototype = {
     }
 
     if (this.isIslamic) {
-      this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+      this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
@@ -1612,7 +1612,7 @@ DatePicker.prototype = {
     }
 
     if (this.isIslamic) {
-      const islamicDateParts = this.conversions.fromGregorian(this.currentDate);
+      const islamicDateParts = Locale.gregorianToUmalqura(this.currentDate);
       this.currentDateIslamic = islamicDateParts;
     }
 

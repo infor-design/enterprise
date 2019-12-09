@@ -2,6 +2,7 @@
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
 import { stringUtils } from '../../utils/string';
+import { ummalquraData } from './info/umalqura-data';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
@@ -542,12 +543,12 @@ const Locale = {  // eslint-disable-line
 
     if (cal && cal.conversions) {
       if (options.fromGregorian) {
-        const islamicParts = cal.conversions.fromGregorian(value);
+        const islamicParts = this.gregorianToUmalqura(value);
         day = islamicParts[2];
         month = islamicParts[1];
         year = islamicParts[0];
       } else if (options.toGregorian) {
-        const gregorianDate = cal.conversions.toGregorian(year, month, day);
+        const gregorianDate = this.umalquraToGregorian(year, month, day);
         day = gregorianDate.getDate();
         month = gregorianDate.getMonth();
         year = gregorianDate.getFullYear();
@@ -1702,6 +1703,111 @@ const Locale = {  // eslint-disable-line
     }
 
     return words.join(' ');
+  },
+
+  /**
+   * Convert gregorian to umalqura date.
+   * @param {object} date the date
+   * @returns {array} year, month, day, hours, minutes, seconds, milliseconds
+   */
+  gregorianToUmalqura(date) {
+    // fromGregorian
+    // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
+    if (typeof date.getMonth !== 'function') {
+      return null;
+    }
+
+    const getJd = (year, month, day) => {
+      if (year < 0) {
+        year++;
+      }
+      if (month < 3) {
+        month += 12;
+        year--;
+      }
+      const a = Math.floor(year / 100);
+      const b = 2 - a + Math.floor(a / 4);
+      return Math.floor(365.25 * (year + 4716)) +
+        Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+    };
+    const jd = getJd(date.getFullYear(), date.getMonth() + 1, date.getDate());
+
+    const julianToUmalqura = (julianDate) => {
+      const mcjdn = julianDate - 2400000 + 0.5;
+      let index = 0;
+      for (let i = 0; i < ummalquraData.length; i++) {
+        if (ummalquraData[i] > mcjdn) {
+          break;
+        }
+        index++;
+      }
+      const lunation = index + 15292;
+      const ii = Math.floor((lunation - 1) / 12);
+      const year = ii + 1;
+      const month = lunation - 12 * ii;
+      const day = mcjdn - ummalquraData[index - 1] + 1;
+      return { year, month: month - 1, day };
+    };
+    const umalquraDate = julianToUmalqura(jd);
+
+    return [
+      umalquraDate.year,
+      umalquraDate.month,
+      umalquraDate.day,
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    ];
+  },
+  /**
+   * Convert umalqura to gregorian date.
+   * @param {number} year the year
+   * @param {number} month the month
+   * @param {number} day the day
+   * @returns {obgect} the date
+   */
+  umalquraToGregorian(year, month, day) {
+    // toGregorian
+    // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
+    const isNumber = n => typeof n === 'number' && !isNaN(n);
+    if (!isNumber(year) || !isNumber(month) || !isNumber(day)) {
+      return null;
+    }
+
+    const getJd = (y, m, d) => {
+      const index = (12 * (y - 1)) + m - 15292;
+      const mcjdn = d + ummalquraData[index - 1] - 1;
+      return mcjdn + 2400000 - 0.5;
+    };
+    const jd = getJd(year, month + 1, day);
+
+    const julianToGregorian = (julianDate) => {
+      const z = Math.floor(julianDate + 0.5);
+      let a = Math.floor((z - 1867216.25) / 36524.25);
+      a = z + 1 + a - Math.floor(a / 4);
+      const b = a + 1524;
+      const c = Math.floor((b - 122.1) / 365.25);
+      const d = Math.floor(365.25 * c);
+      const e = Math.floor((b - d) / 30.6001);
+      const gday = b - d - Math.floor(e * 30.6001);
+      const gmonth = e - (e > 13.5 ? 13 : 1);
+      let gyear = c - (gmonth > 2.5 ? 4716 : 4715);
+      // No zero year
+      if (gyear <= 0) {
+        gyear--;
+      }
+      return { year: gyear, month: gmonth - 1, day: gday };
+    };
+    const gregorianDateObj = julianToGregorian(jd);
+
+    const gregorianDate = new Date();
+    gregorianDate.setFullYear(gregorianDateObj.year);
+    gregorianDate.setMonth(gregorianDateObj.month);
+    gregorianDate.setDate(gregorianDateObj.day);
+    gregorianDate.setHours(0, 0, 0, 0);
+
+    return gregorianDate;
   },
 
   /**
