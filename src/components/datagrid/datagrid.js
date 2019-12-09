@@ -481,6 +481,7 @@ Datagrid.prototype = {
     this.syncSelectedRowsIdx();
 
     // Add to ui
+    this.clearCache();
     this.renderRows();
 
     // Sync with others
@@ -568,6 +569,7 @@ Datagrid.prototype = {
     if (!noSync) {
       this.setRowGrouping();
       this.pagerRefresh('top', true);
+      this.clearCache();
       this.renderRows();
     }
 
@@ -5574,6 +5576,7 @@ Datagrid.prototype = {
 
           if (scrollTop !== oldScroll && (hitTop || hitBottom)) {
             oldScroll = this.scrollTop;
+            self.clearCache();
             self.renderRows();
           }
         }, 0));
@@ -5583,6 +5586,7 @@ Datagrid.prototype = {
 
         if (height !== oldHeight) {
           oldHeight = this.scrollTop;
+          self.clearCache();
           self.renderRows();
         }
       });
@@ -6298,6 +6302,7 @@ Datagrid.prototype = {
     this.filterExpr.push({ column: 'all', operator: 'contains', value: term, keywordSearch: true });
 
     this.filterKeywordSearch();
+    this.clearCache();
     this.renderRows();
     this.setSearchActivePage({ trigger: 'searched' });
 

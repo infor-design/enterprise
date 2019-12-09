@@ -87,6 +87,7 @@ $datagrid-short-row-height: 25px;
   // Scrolling headers for grouped headers
   &.has-group-headers {
     tr.datagrid-header-groups th {
+      border-bottom: 1px solid $datagrid-header-border-color;
       top: 0;
     }
 
