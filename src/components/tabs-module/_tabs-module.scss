@@ -352,6 +352,11 @@
   .toolbar-searchfield-wrapper {
     color: $module-tabs-active-text-color;
     text-align: right;
+    width: calc(100% - 1px) !important;
+
+    @media (min-width: $breakpoint-tablet-reduced) {
+      width: 274px !important;
+    }
 
     .icon:not(.error) {
       color: $module-tabs-inactive-text-color;
