@@ -697,6 +697,16 @@ input.dropdown.error:focus {
 
 }
 
+// Compound field icon adjustments
+.compound-field {
+  div.dropdown,
+  div.multiselect {
+    + .icon {
+      top: 4px;
+    }
+  }
+}
+
 // Different Width Dropdowns
 .dropdown-lg,
 .field-short .dropdown-lg {

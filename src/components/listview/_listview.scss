@@ -620,6 +620,7 @@
     width: 100%;
 
     &[disabled] {
+      background-color: $listview-search-disabled-bg-color;
       color: $listview-search-disabled-color;
       opacity: $listview-search-disabled-opacity;
 
