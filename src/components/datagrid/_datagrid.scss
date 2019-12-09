@@ -64,8 +64,6 @@ $datagrid-short-row-height: 25px;
   position: relative;
 
   &.has-empty-message.is-empty {
-    min-height: 300px;
-
     .datagrid-wrapper {
       min-height: 300px;
     }

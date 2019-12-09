@@ -2098,7 +2098,7 @@ describe('Datagrid hide selection checkbox tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-selection-checkbox');
 
-    const datagridEl = await element(by.css('#datagrid .datagrid-header thead .datagrid-checkbox'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-header .datagrid-checkbox'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -2108,7 +2108,7 @@ describe('Datagrid hide selection checkbox tests', () => {
   });
 
   it('Should not show selection checkbox', async () => {
-    expect(await element(by.css('#datagrid .datagrid-header thead .datagrid-checkbox')).isDisplayed()).toBeFalsy();
+    expect(await element(by.css('#datagrid .datagrid-header .datagrid-checkbox')).isDisplayed()).toBeFalsy();
   });
 });
 
@@ -3117,13 +3117,13 @@ describe('Datagrid tooltip tests', () => {
   });
 
   it('Should show tooltip on header text cut off with ellipsis', async () => {
-    await browser.actions().mouseMove(element(by.css('.datagrid-header thead th[data-column-id="orderDate"] .datagrid-column-wrapper'))).perform();
+    await browser.actions().mouseMove(element(by.css('.datagrid-header th[data-column-id="orderDate"] .datagrid-column-wrapper'))).perform();
     await browser.driver.sleep(config.sleepLonger);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
     const tooltip = await element(by.css('.grid-tooltip'));
 
-    expect(await element(by.css('.datagrid-header thead th[data-column-id="orderDate"]')).getAttribute('class')).toContain('text-ellipsis');
+    expect(await element(by.css('.datagrid-header th[data-column-id="orderDate"]')).getAttribute('class')).toContain('text-ellipsis');
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
   });
 });
@@ -3350,8 +3350,8 @@ describe('Datagrid hide pager on one page tests', () => {
   it('Should hide pager on one page and filter', async () => {
     const selector = {
       rows: '#datagrid .datagrid-body tbody tr[role="row"]',
-      filter: '#datagrid .datagrid-header thead th[data-column-id="3"] .datagrid-filter-wrapper select',
-      filterSel: '#datagrid .datagrid-header thead th[data-column-id="3"] div.dropdown',
+      filter: '#datagrid .datagrid-header th[data-column-id="3"] .datagrid-filter-wrapper select',
+      filterSel: '#datagrid .datagrid-header th[data-column-id="3"] div.dropdown',
       filterOpt: '.dropdown-list .dropdown-option #list-option-0'
     };
     const pagerBar = await element(by.css('.pager-toolbar'));

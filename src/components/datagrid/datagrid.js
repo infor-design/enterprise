@@ -4371,8 +4371,8 @@ Datagrid.prototype = {
     // Set selector
     const selector = {
       th: '.datagrid-header th',
-      td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
-      rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
     };
 
     if (this.settings.filterable) {
@@ -10642,8 +10642,8 @@ Datagrid.prototype = {
       // Set selector
       const selector = {
         th: '.datagrid-header th',
-        td: '.datagrid-body tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
-        rowstatus: '.datagrid-body tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+        td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+        rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
       };
       selector.str = `${selector.th}, ${selector.td}, ${selector.rowstatus}`;
 
