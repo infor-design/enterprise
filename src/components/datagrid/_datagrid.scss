@@ -65,6 +65,10 @@ $datagrid-short-row-height: 25px;
 
   &.has-empty-message.is-empty {
     min-height: 300px;
+
+    .datagrid-wrapper {
+      min-height: 300px;
+    }
   }
 
   &.has-horizontal-scroll {
@@ -72,6 +76,13 @@ $datagrid-short-row-height: 25px;
     .datagrid-wrapper.right {
       // Make bottom visible to prevent space different at the bottom.
       overflow-x: scroll;
+    }
+  }
+
+  &.has-vertical-scroll {
+    .datagrid-wrapper.right {
+      overflow-x: scroll;
+      overflow-y: scroll;
     }
   }
 
@@ -2272,10 +2283,12 @@ $datagrid-short-row-height: 25px;
 
   // Table Headers
   th {
+    background-clip: padding-box;
     background-color: $datagrid-header-bg-color;
     border-right: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     overflow: hidden;
+    position: -webkit-sticky;
     position: sticky;
     text-align: left;
     top: 0;

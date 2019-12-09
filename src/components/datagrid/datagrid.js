@@ -3299,13 +3299,13 @@ Datagrid.prototype = {
       self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
 
       // Hack for scrolling issue on windows
-      // TODO Do i need?
+      /* TODO Do i need?
       if (self.hasRightPane && this.isWindows) {
         const w = self.tableRight.width() + 17;
         self.tableRight.parent().width(w);
         self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
         self.headerTableRight.width(w);
-      }
+      }*/
       this.activateFirstCell();
     });
   },
@@ -4087,10 +4087,16 @@ Datagrid.prototype = {
     if (!this.hasLeftPane && !this.hasRightPane) {
       return;
     }
+    this.element.removeClass('has-vertical-scroll has-less-rows');
 
     const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
     const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
+    const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
 
+    if (hasScrollBarV) {
+      this.element.addClass('has-vertical-scroll');
+    }
     if (hasScrollBarH) {
       this.element.addClass('has-horizontal-scroll');
     }
@@ -4516,6 +4522,18 @@ Datagrid.prototype = {
   },
 
   /**
+   * Returns all colgroup nodes
+   * @private
+   * @returns {array} Array with all colgroups across all panes
+   */
+  colGroupNodes() {
+    if (!this.headerRow) {
+      return $();
+    }
+    return this.element.find('colgroup col');
+  },
+
+  /**
    * Refresh one row in the grid
    * @param  {number} idx The row index to update.
    * @param  {object} data The data object.
@@ -4895,14 +4913,10 @@ Datagrid.prototype = {
 
     this.settings.columns[idx].hidden = true;
     this.headerNodes().eq(idx).addClass('is-hidden');
+    this.colGroupNodes().eq(idx).addClass('is-hidden');
     this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
-
     // Shrink or remove colgroups
     this.updateColumnGroup();
-
-    if (this.bodyColGroup) {
-      this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
-    }
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -5053,7 +5067,7 @@ Datagrid.prototype = {
             searchableTextCallback: item => item.name
           }
         })
-        .on('selected', function (selectedEvent, args) {
+        .off('selected.datagrid').on('selected.datagrid', function (selectedEvent, args) {
           const chk = args.elem.find('.checkbox');
           const id = chk.attr('data-column-id');
           const isChecked = chk.prop('checked');
@@ -5588,10 +5602,13 @@ Datagrid.prototype = {
       .off('click.datagrid-header')
       .on('click.datagrid-header', '.datagrid-header th.is-sortable, .datagrid-header th.btn-filter', function (e) {
         if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
-          return;
+          return false;
         }
 
+        // Prevent parent grid from sorting when nested
+        e.stopPropagation();
         self.setSortColumn($(this).attr('data-column-id'));
+        return false;
       });
 
     // Prevent redirects
@@ -8192,10 +8209,7 @@ Datagrid.prototype = {
       if (isEditor) {
         cellNode.css({ position: 'static', height: cellNode.outerHeight() });
       }
-      // initialis Editor
-      cellParent
-        .addClass('is-editing')
-        .css({ 'max-width': cellWidth, 'min-width': cellWidth, width: cellWidth });
+      cellParent.addClass('is-editing');
 
       cellNode.empty();
     } else {
@@ -9387,7 +9401,7 @@ Datagrid.prototype = {
       container = row.closest('.datagrid-container');
       row = row.attr('aria-rowindex') - 1;
     }
-    return container.find(`> .datagrid-body-container > .datagrid-body > table > tbody > tr[aria-rowindex="${row + 1}"]`);
+    return container.find(`> .datagrid-wrapper > table > tbody > tr[aria-rowindex="${row + 1}"]`);
   },
 
   /**
@@ -9934,11 +9948,11 @@ Datagrid.prototype = {
     let childrenRight = $();
 
     if (this.hasLeftPane) {
-      childrenLeft = this.tableLeft.find('tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
+      childrenLeft = this.tableLeft.find('tbody tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
     }
-    children = this.table.find('tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
+    children = this.table.find('tbody tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
     if (this.hasRightPane) {
-      childrenRight = this.tableRight.find('tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
+      childrenRight = this.tableRight.find('tbody tr').eq(rowIdx).nextUntil('.datagrid-rowgroup-header');
     }
     const expandButton = rowElement.find('.datagrid-expand-btn');
 
@@ -10304,7 +10318,7 @@ Datagrid.prototype = {
   getPageableElements() {
     let elements = this.element.children().not('.datagrid-expandable-row');
     if (elements.is('table')) {
-      elements = elements.find('tr');
+      elements = elements.find('tbody tr');
     }
     return elements;
   },

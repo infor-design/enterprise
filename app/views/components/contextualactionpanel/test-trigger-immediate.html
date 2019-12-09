@@ -147,7 +147,7 @@
       paging: true,
       pagesize: 10,
       pagesizes: [10, 25, 50, 75],
-      toolbar: {title: 'Current Contacts', results: true, keywordFilter: true, advancedFilter: true, actions: false, views: true, rowHeight: true}
+      toolbar: {title: 'Current Contacts', results: true, keywordFilter: true, actions: false, views: true, rowHeight: true}
     }).on('selected.test', function (e, args) {
       console.log(args);
       openEditContactPanel(args, args[0].data);

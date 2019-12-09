@@ -15,7 +15,7 @@
           <input id="record-count" name="record-count" type="text" class="new-mask input-sm" value="10000" data-options='{ "process": "number", "pattern" : "#,###,###" }' />
         </div>
 
-         <button type="button" id="load" class="btn-primary"><span>Load Data</span></button>
+         <button type="button" id="load" class="btn-secondary"><span>Load Data</span></button>
          <hr class="fieldset-hr">
       </div>
    </div>
@@ -53,7 +53,7 @@
             paging: true,
             pagesize: 10,
             pagesizes: [5, 10, 25, 50],
-            toolbar: {title: 'Records', results: true, dateFilter: true, keywordFilter: true, advancedFilter: true, actions: true, exportToExcel: true, views: true, rowHeight: true, collapsibleFilter: true}
+            toolbar: {title: 'Records', results: true, dateFilter: true, keywordFilter: true, actions: true, exportToExcel: true, views: true, rowHeight: true, collapsibleFilter: true}
          }).data('datagrid');
 
          // Load function
