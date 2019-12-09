@@ -1224,7 +1224,7 @@ Tree.prototype = {
       a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
     }
 
-    const isChildren = data.children && data.children.constructor === Array;
+    const isChildren = data.children && Array.isArray(data.children);
     let liClassList = isChildren ? 'folder' : '';
     liClassList += data.selected ? ' is-selected' : '';
     if (liClassList !== '') {
