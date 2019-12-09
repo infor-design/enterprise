@@ -698,7 +698,7 @@ Tooltip.prototype = {
         self.hide();
       });
 
-      self.element.closest('.datagrid-body').on('scroll.tooltip', () => {
+      self.element.closest('.datagrid-wrapper').on('scroll.tooltip', () => {
         self.hide();
       });
 

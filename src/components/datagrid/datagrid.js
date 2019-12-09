@@ -427,7 +427,7 @@ Datagrid.prototype = {
     }
 
     self.table.empty();
-    self.clearHeaderCache();
+    self.clearCache();
     self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.renderHeader();
@@ -840,12 +840,12 @@ Datagrid.prototype = {
     // Resize and re-render if have a new dataset
     // (since automatic column sizing depends on the dataset)
     if (pagerInfo.type === 'initial') {
-      this.clearHeaderCache();
+      this.clearCache();
       this.restoreUserSettings();
       this.renderRows();
       this.renderHeader();
     } else if (this.element.find('.datagrid-filter-wrapper .is-open').length === 0) {
-      this.clearHeaderCache();
+      this.clearCache();
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
@@ -2160,6 +2160,7 @@ Datagrid.prototype = {
     this.setChildExpandOnMatch();
 
     if (!this.settings.source) {
+      this.clearCache();
       this.renderRows();
     }
 
@@ -3297,15 +3298,6 @@ Datagrid.prototype = {
     */
     setTimeout(() => {
       self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
-
-      // Hack for scrolling issue on windows
-      /* TODO Do i need?
-      if (self.hasRightPane && this.isWindows) {
-        const w = self.tableRight.width() + 17;
-        self.tableRight.parent().width(w);
-        self.tableRight.parent().find('.datagrid-column-wrapper').eq(0).width(w);
-        self.headerTableRight.width(w);
-      }*/
       this.activateFirstCell();
     });
   },
@@ -4107,7 +4099,7 @@ Datagrid.prototype = {
    * @private
    * @returns {void}
    */
-  clearHeaderCache() {
+  clearCache() {
     this.totalWidths.left = 0;
     this.totalWidths.center = 0;
     this.totalWidths.right = 0;
@@ -5117,7 +5109,6 @@ Datagrid.prototype = {
   * @private
   * @param {string} id Specifies if the column info is provide by id or as a node reference.
   * @param {number} width The width of the column
-  * @param {number} diff The difference between the old and new width
   * @param {boolean} set If true the width will actively be set, else it was set during resize.
   */
   setColumnWidth(id, width, set) {
@@ -5498,7 +5489,7 @@ Datagrid.prototype = {
   * @private
   */
   rerender() {
-    this.clearHeaderCache();
+    this.clearCache();
     this.renderRows();
     this.renderHeader();
   },
@@ -8181,7 +8172,6 @@ Datagrid.prototype = {
       this.dataRowIndex(thisRow);
     const rowData = this.rowData(this.dataRowIndex(thisRow));
 
-    const cellWidth = cellParent.outerWidth();
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
     let cellValue = (cellNode.text() ?
@@ -10028,7 +10018,7 @@ Datagrid.prototype = {
         this.setTreeDepth();
         this.setRowGrouping();
         this.setTreeRootNodes();
-        this.clearHeaderCache();
+        this.clearCache();
         this.renderRows();
         // Update selected and Sync header checkbox
         this.syncSelectedUI();
