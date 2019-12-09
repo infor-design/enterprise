@@ -79,7 +79,6 @@
   "dependencies": {
     "d3": "^4.13.0",
     "jquery": "^3.4.1",
-    "npm": "^6.13.2",
     "promise-polyfill": "^8.1.0"
   },
   "devDependencies": {
