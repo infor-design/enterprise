@@ -238,10 +238,11 @@ $listview-full-width-bg-color: $theme-color-palette-graphite-10;
 $listview-full-width-hover-color: $list-color-item-hover-background;
 $listview-full-width-border-color: $theme-color-palette-graphite-30;
 
-$listview-search-disabled-color: $input-color-readonly-background;
+$listview-search-disabled-color: $input-color-readonly-font;
 $listview-search-disabled-opacity: 0.5;
+$listview-search-disabled-bg-color: $input-color-readonly-background;
 $listview-search-disabled-border-color: $input-color-readonly-background;
-$listview-search-disabled-icon-color: $input-color-readonly-background;
+$listview-search-disabled-icon-color: $input-color-readonly-font;
 
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
