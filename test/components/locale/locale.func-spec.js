@@ -97,6 +97,9 @@ describe('Locale API', () => {
       expect(Locale.currentLocale.data.englishName).toEqual('English (United Kingdom)');
       expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
       expect(Locale.currentLanguage.name).toEqual('en');
+      expect(Locale.currentLanguage.name).toEqual('en');
+      expect(Locale.currentLocale.dataName).toEqual('en-GB');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd/MM/yyyy');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
     });
 
@@ -106,6 +109,8 @@ describe('Locale API', () => {
       expect(Locale.currentLocale.data.englishName).toEqual('Spanish (United States)');
       expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
       expect(Locale.currentLanguage.name).toEqual('es');
+      expect(Locale.currentLocale.dataName).toEqual('es-US');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('M/d/yyyy');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('12/4/2019');
     });
 
@@ -116,6 +121,20 @@ describe('Locale API', () => {
       expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
       expect(Locale.currentLanguage.name).toEqual('da');
       expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04-12-2019');
+      expect(Locale.currentLocale.dataName).toEqual('da-DK');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd-MM-yyyy');
+      done();
+    });
+
+    locale = 'pt-BR';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('pt-BR');
+      expect(Locale.currentLocale.data.englishName).toEqual('Portuguese (Brazil)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('pt');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
+      expect(Locale.currentLocale.dataName).toEqual('pt-BR');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd/MM/yyyy');
       done();
     });
   });

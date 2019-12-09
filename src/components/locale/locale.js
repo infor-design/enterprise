@@ -302,7 +302,8 @@ const Locale = {  // eslint-disable-line
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);
         this.dff[parentLocale].resolve(parentLocale);
       }
-      if (parentLocale === 'en-US' && this.dff[locale] && this.cultures[locale]) {
+      if (parentLocale && this.dff[locale] && this.cultures[locale]) {
+        console.log(parentLocale, locale);
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.dff[locale].resolve(locale);
       }
@@ -362,7 +363,7 @@ const Locale = {  // eslint-disable-line
     // Also load the default locale for that locale
     if (hasParentLocale) {
       if (parentLocale.default !== 'en-US') {
-        this.appendLocaleScript(parentLocale.default, false, locale);
+        this.appendLocaleScript(parentLocale.default, false);
       }
       this.appendLocaleScript(locale, false, parentLocale.default);
     }
