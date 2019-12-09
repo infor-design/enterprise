@@ -566,18 +566,6 @@ describe('Datepicker No Today Tests', () => {
   it('Should not have a today link year picker', async () => {
     expect(await element(by.css('.hyperlint.today')).isPresent()).toEqual(false);
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      await element(by.css('#date-field-no-today')).sendKeys('11/14/2018');
-      await element(by.css('#date-field-no-today')).click();
-
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-no-today')).toEqual(0);
-    });
-  }
 });
 
 describe('Datepicker Month Year Changer Tests', () => {

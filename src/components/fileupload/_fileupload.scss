@@ -60,6 +60,7 @@
 
       &[disabled] {
         background-color: $input-color-disabled-background;
+        border-color: $input-disabled-color;
         color: $input-disabled-color;
       }
     }

@@ -717,6 +717,10 @@ $calendar-hover-bg-color: rgba(49, 50, 54, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-slate-80;
 $calendar-disabled-color: $theme-color-palette-slate-40;
 
+// Builder
+$builder-actions-bg-color: $panel-bg-color;
+$builder-sidebar-bg-color: $panel-bg-color;
+
 // Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $theme-color-palette-slate-40;
