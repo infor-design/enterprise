@@ -90,6 +90,55 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('de-DE');
   });
 
+  it('Should be possible to set locale and use the format', (done) => {
+    let locale = 'en-GB';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('en-GB');
+      expect(Locale.currentLocale.data.englishName).toEqual('English (United Kingdom)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('en');
+      expect(Locale.currentLanguage.name).toEqual('en');
+      expect(Locale.currentLocale.dataName).toEqual('en-GB');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd/MM/yyyy');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
+    });
+
+    locale = 'es-US';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('es-US');
+      expect(Locale.currentLocale.data.englishName).toEqual('Spanish (United States)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('es');
+      expect(Locale.currentLocale.dataName).toEqual('es-US');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('12/4/2019');
+    });
+
+    locale = 'da-DK';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('da-DK');
+      expect(Locale.currentLocale.data.englishName).toEqual('Danish (Denmark)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('da');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04-12-2019');
+      expect(Locale.currentLocale.dataName).toEqual('da-DK');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd-MM-yyyy');
+      done();
+    });
+
+    locale = 'pt-BR';
+    Locale.set(locale).done((name) => {
+      expect(name).toEqual('pt-BR');
+      expect(Locale.currentLocale.data.englishName).toEqual('Portuguese (Brazil)');
+      expect(Object.keys(Locale.currentLanguage.messages).length).toBeGreaterThan(1);
+      expect(Locale.currentLanguage.name).toEqual('pt');
+      expect(Locale.formatDate(new Date(2019, 11, 4))).toEqual('04/12/2019');
+      expect(Locale.currentLocale.dataName).toEqual('pt-BR');
+      expect(Locale.currentLocale.data.calendars[0].dateFormat.short).toEqual('dd/MM/yyyy');
+      done();
+    });
+  });
+
   it('Should be impossible to set locale that is not in the default list', () => {
     Locale.set('xx-XX');
 

@@ -37,6 +37,7 @@
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
 - `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
 - `[Locale/Datagrid]` Fixed an issue in the datagrid/locale that meant if a string is provided in the current locale for a number it wont parse correctly if the decimal format is a `,` (such as nl-NL). ([#3165](https://github.com/infor-design/enterprise/issues/3165))
+- `[Locale]` Fixed an issue when loading en-XX locales where some data may be mixed with en-US. ([#3208](https://github.com/infor-design/enterprise/issues/3208))
 - `[Mask]` Fixed a Safari bug where certain masked values would not trigger a "change" event on the input field. ([#3002](https://github.com/infor-design/enterprise/issues/3002))
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Popover]` Fixed an issue where the content was disappearing when change themes on IE11. ([#2954](https://github.com/infor-design/enterprise/issues/2954))
