@@ -551,7 +551,7 @@ describe('Datepicker Disable Month Year Changer Tests', () => {
   });
 });
 
-fdescribe('Datepicker No Today Tests', () => { //eslint-disable-line
+describe('Datepicker No Today Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-today?layout=nofrills');
     const Date = () => {  //eslint-disable-line
