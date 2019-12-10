@@ -155,6 +155,54 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// Various sizes
+.spinbox-sm,
+.spinbox-mm,
+.spinbox-md,
+.spinbox-lg {
+  input {
+    width: calc(100% - 66px);
+  }
+}
+
+.spinbox-xs {
+  width: 75px;
+
+  input {
+    width: calc(100% - 36px);
+  }
+
+  .spinbox-control {
+    padding: 7px 3px;
+    width: 18px;
+  }
+}
+
+.spinbox-sm {
+  width: 150px;
+}
+
+.spinbox-mm {
+  width: 226px;
+}
+
+.spinbox-md {
+  width: 300px;
+}
+
+.spinbox-lg {
+  width: 400px;
+}
+
+// When on smaller form factors make 400px fields go down to medium size.
+// Matches similar rules on the standard input fields.
+@include respond-to(phone) {
+  .spinbox-lg,
+  .field-short .spinbox-lg {
+    width: 300px;
+  }
+}
+
 // Short Fields
 .field-short {
   .spinbox-wrapper {
@@ -172,10 +220,6 @@ input::-webkit-inner-spin-button {
     padding: 4px 7px;
     width: 25px;
   }
-}
-
-.field .spinbox {
-  width: calc(100% - 66px);
 }
 
 // Override for iOS to correctly align ".spinbox" as child of  ".field-short"

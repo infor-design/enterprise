@@ -66,6 +66,14 @@
     .row.no-bottom-margin {
       margin-bottom: 0;
     }
+
+    .spinbox-wrapper {
+      width: 100%;
+
+      input {
+        width: calc(100% - 66px);
+      }
+    }
   }
 }
 
