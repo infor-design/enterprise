@@ -11,6 +11,7 @@
 ### v4.24.0 Features
 
 - `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+- `[Spinbox]` Standardized Spinbox field sizes to match other input field sizes, added responsive form (fluid) functionality for Spinbox, and reworked the standard size of the Spinbox to match other form fields. ([#1344](https://github.com/infor-design/enterprise/issues/1344))
 
 ### v4.24.0 Fixes
 
