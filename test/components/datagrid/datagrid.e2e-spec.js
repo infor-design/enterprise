@@ -1131,6 +1131,26 @@ describe('Datagrid paging client side tests', () => {
   });
 });
 
+describe('Datagrid Date default values', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render dates and N/A', async () => {
+    expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(5) div')).getText()).toEqual('01.10.2018');
+    expect(await element(by.css('tbody tr:nth-child(2) td:nth-child(5) div')).getText()).toEqual('03.11.2017');
+    expect(await element(by.css('tbody tr:nth-child(3) td:nth-child(5) div')).getText()).toEqual('N/A');
+  });
+});
+
 describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');

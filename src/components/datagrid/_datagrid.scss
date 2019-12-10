@@ -2249,7 +2249,7 @@ $datagrid-short-row-height: 25px;
   }
 }
 
-//Grid Headers
+// Grid Headers
 .datagrid-header {
   background-color: $datagrid-header-bg-color;
   overflow: hidden;
@@ -2729,6 +2729,7 @@ $datagrid-short-row-height: 25px;
   }
 }
 
+// Grouped Headers
 .datagrid-rowgroup-header {
 
   // Animating while closing
@@ -2806,6 +2807,7 @@ $datagrid-short-row-height: 25px;
   }
 }
 
+// Sort indicators
 .is-sorted-asc {
   .sort-indicator .icon {
     opacity: 1;
@@ -4099,6 +4101,7 @@ html[dir='rtl'] {
   }
 }
 
+// All IE hacks
 .ie {
   .datagrid-wrapper {
     tbody tr {
@@ -4126,5 +4129,12 @@ html[dir='rtl'] {
         }
       }
     }
+  }
+}
+
+// IE 11 Hacks
+.ie11 {
+  .datagrid-header th {
+    z-index: auto;
   }
 }
