@@ -3334,6 +3334,32 @@ describe('Datagrid tree select multiple tests', () => {
   });
 });
 
+fdescribe('Datagrid horizontal scrolling tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-horizontal-scroll.html?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid-paging-both tr:nth-child(3)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(900, 1300);
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-horizontal-scrolling')).toEqual(0);
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
+});
+
 describe('Datagrid hide pager on one page tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-pager-if-one-page-filter');
