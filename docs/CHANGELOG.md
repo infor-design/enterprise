@@ -12,6 +12,7 @@
 
 - `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
 - `[Editor]` Replaced the `h3` and `h4` buttons with a more robust Fontpicker component. ([#2722](https://github.com/infor-design/enterprise/issues/2722))
+- `[Spinbox]` Standardized Spinbox field sizes to match other input field sizes, added responsive form (fluid) functionality for Spinbox, and reworked the standard size of the Spinbox to match other form fields. ([#1344](https://github.com/infor-design/enterprise/issues/1344))
 
 ### v4.24.0 Fixes
 
@@ -38,11 +39,13 @@
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
 - `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
 - `[Locale/Datagrid]` Fixed an issue in the datagrid/locale that meant if a string is provided in the current locale for a number it wont parse correctly if the decimal format is a `,` (such as nl-NL). ([#3165](https://github.com/infor-design/enterprise/issues/3165))
+- `[Locale]` Fixed an issue when loading en-XX locales where some data may be mixed with en-US. ([#3208](https://github.com/infor-design/enterprise/issues/3208))
 - `[Mask]` Fixed a Safari bug where certain masked values would not trigger a "change" event on the input field. ([#3002](https://github.com/infor-design/enterprise/issues/3002))
 - `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
 - `[Popover]` Fixed an issue where the content was disappearing when change themes on IE11. ([#2954](https://github.com/infor-design/enterprise/issues/2954))
 - `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
 - `[Sparkline Chart]` Fixed an issue where an error was thrown while a sparkline chart was present during a theme chnage. ([#3159](https://github.com/infor-design/enterprise/issues/3159))
+- `[Tabs Module]` Fixed missing ellipsis and spacing issue on mobile view in searchfield of tabs module when resizing the browser. ([#2940](https://github.com/infor-design/enterprise/issues/2940))
 - `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
 - `[Tree]` Fixed an issue where the nodes were not rendering. ([#3194](https://github.com/infor-design/enterprise/issues/3194))
 

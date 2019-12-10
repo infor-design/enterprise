@@ -265,6 +265,8 @@ const Locale = {  // eslint-disable-line
     }
   },
 
+  appendedLocales: [],
+
   /**
    * Append the local script to the page.
    * @private
@@ -277,6 +279,12 @@ const Locale = {  // eslint-disable-line
   appendLocaleScript(locale, isCurrent, parentLocale, filename) {
     const script = document.createElement('script');
     const min = this.minify ? '.min' : '';
+    script.async = false;
+
+    if (this.appendedLocales.indexOf(locale) > -1) {
+      return;
+    }
+    this.appendedLocales.push(locale);
 
     if (!filename) {
       script.src = `${this.getCulturesPath() + locale}${min}.js`;
@@ -293,6 +301,10 @@ const Locale = {  // eslint-disable-line
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);
         this.dff[parentLocale].resolve(parentLocale);
+      }
+      if (parentLocale && this.dff[locale] && this.cultures[locale]) {
+        this.setCurrentLocale(locale, this.cultures[locale]);
+        this.dff[locale].resolve(locale);
       }
       if (!isCurrent && !parentLocale && this.dff[locale]) {
         this.dff[locale].resolve(locale);
@@ -327,8 +339,8 @@ const Locale = {  // eslint-disable-line
       return this.dff.promise();
     }
 
-    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      this.appendLocaleScript('en-US', false);
+    if (!this.cultures['en-US']) {
+      this.appendLocaleScript('en-US', locale === 'en-US');
     }
 
     const lang = locale.split('-')[0];
@@ -341,7 +353,7 @@ const Locale = {  // eslint-disable-line
     }
 
     if (!hasParentLocale && locale && !this.cultures[locale] &&
-      this.currentLocale.name !== locale) {
+      this.currentLocale.name !== locale && locale !== 'en-US') {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
       this.appendLocaleScript(locale, true);
@@ -349,7 +361,9 @@ const Locale = {  // eslint-disable-line
 
     // Also load the default locale for that locale
     if (hasParentLocale) {
-      this.appendLocaleScript(parentLocale.default, false, locale);
+      if (parentLocale.default !== 'en-US') {
+        this.appendLocaleScript(parentLocale.default, false);
+      }
       this.appendLocaleScript(locale, false, parentLocale.default);
     }
 
@@ -386,7 +400,7 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript('en-US', false);
     }
 
-    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
+    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale && locale !== 'en-US') {
       this.appendLocaleScript(locale, false, false, filename);
     }
 
@@ -448,8 +462,11 @@ const Locale = {  // eslint-disable-line
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
-      this.currentLanguage = this.languages[lang];
-      if (this.currentLanguage) {
+      this.currentLanguage = {};
+      this.currentLanguage.name = lang;
+
+      if (this.languages[lang]) {
+        this.currentLanguage = this.languages[lang];
         this.updateLanguageTag(name);
       }
     }
