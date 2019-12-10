@@ -303,7 +303,6 @@ const Locale = {  // eslint-disable-line
         this.dff[parentLocale].resolve(parentLocale);
       }
       if (parentLocale && this.dff[locale] && this.cultures[locale]) {
-        console.log(parentLocale, locale);
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.dff[locale].resolve(locale);
       }
