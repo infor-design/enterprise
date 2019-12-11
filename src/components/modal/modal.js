@@ -921,14 +921,13 @@ Modal.prototype = {
     }
 
     if (this.element.hasClass('datagrid-columns-dialog')) {
+      wrapper[0].style.overflow = 'hidden';
       if (calcHeight > 220) {
-        wrapper[0].style.overflow = 'auto';
         this.element.find('.modal-body')[0].style.height = '';
         this.element.find('.listview.alternate-bg')[0].style.maxHeight = '';
         this.element.find('.listview.alternate-bg')[0].style.height = '';
         this.element.find('.listview.alternate-bg')[0].style.minHeight = '';
       } else {
-        wrapper[0].style.overflow = 'hidden';
         this.element.find('.modal-body')[0].style.height = `${calcHeight}px`;
         this.element.find('.listview.alternate-bg')[0].style.maxHeight = `${calcHeight - 41}px`;
         this.element.find('.listview.alternate-bg')[0].style.height = `${calcHeight - 41}px`;
