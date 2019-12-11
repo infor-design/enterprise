@@ -5,7 +5,9 @@
 import { Environment as env } from '../../utils/environment';
 import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { FontPickerStyle } from '../fontpicker/fontpicker';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
@@ -13,7 +15,7 @@ import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
 
-const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
+const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'code'];
 
 /**
 * The Editor Component displays and edits markdown.
@@ -44,7 +46,7 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 const EDITOR_DEFAULTS = {
   buttons: {
     editor: [
-      'header1', 'header2',
+      'fontPicker',
       'separator', 'bold', 'italic', 'underline', 'strikethrough',
       'separator', 'foreColor', 'backColor',
       'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
@@ -63,8 +65,6 @@ const EDITOR_DEFAULTS = {
     source: []
   },
   delay: 200,
-  firstHeader: 'h3',
-  secondHeader: 'h4',
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
@@ -83,7 +83,8 @@ const EDITOR_DEFAULTS = {
   preview: false,
   useFlexToolbar: false,
   useSourceFormatter: false,
-  formatterTabsize: 4
+  formatterTabsize: 4,
+  fontpickerSettings: {}
 };
 
 function Editor(element, settings) {
@@ -145,6 +146,38 @@ Editor.prototype = {
         this.settings.anchor.defaultTarget = val;
       }
     });
+
+    // Convert legacy header settings into Fontpicker settings
+    if (this.settings.firstHeader || this.settings.secondHeader) {
+      let removeFirstHeader = false;
+      let removeSecondHeader = false;
+      if (!Array.isArray(this.settings.fontpickerSettings.styles)) {
+        this.settings.fontpickerSettings.styles = [];
+      }
+      if (!this.settings.fontpickerSettings.styles.length) {
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyDefault', 'Default'));
+      }
+      if (this.settings.firstHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`firstHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader1', 'Header 1', this.settings.firstHeader));
+        delete this.settings.firstHeader;
+        removeFirstHeader = true;
+      }
+      if (this.settings.secondHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`secondHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader2', 'Header 2', this.settings.secondHeader));
+        delete this.settings.secondHeader;
+        removeSecondHeader = true;
+      }
+
+      // Remove the old button definitions from the `settings.buttons` array
+      this.settings.buttons.editor = this.settings.buttons.editor.filter((btn) => {
+        if ((btn === 'header1' && removeFirstHeader) || (btn === 'header2' && removeSecondHeader)) {
+          return false;
+        }
+        return true;
+      });
+    }
 
     if (!s.anchor.defaultTarget) {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
@@ -372,6 +405,13 @@ Editor.prototype = {
     } else {
       this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
         this.element.prev() : this.element);
+    }
+
+    // Invoke Fontpicker, if applicable
+    const fpElement = this.toolbar.find('[data-action="fontStyle"]').first();
+    if (fpElement && fpElement.length) {
+      fpElement.fontpicker(this.settings.fontpickerSettings);
+      this.fontPickerElem = fpElement;
     }
 
     // Invoke Colorpicker, if applicable
@@ -741,6 +781,8 @@ Editor.prototype = {
 
       unorderedlist: `<button type="button" class="btn" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
 
+      fontPicker: `<button type="button" class="btn fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
+
       justifyLeft: `<button type="button" class="btn" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
 
       justifyCenter: `<button type="button" class="btn" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
@@ -855,6 +897,12 @@ Editor.prototype = {
       this.toolbar.on('click.editor', '.colorpicker-editor-button', editorButtonActionHandler);
     } else {
       this.toolbar.on('click.editor', 'button', editorButtonActionHandler);
+    }
+
+    if (this.fontPickerElem) {
+      this.fontPickerElem.on('font-selected', (e, fontPickerStyle) => {
+        this.execFormatBlock(fontPickerStyle.tagName);
+      });
     }
 
     return this;
@@ -1261,6 +1309,9 @@ Editor.prototype = {
     if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
       this.colorpickerButtonState('backColor');
     }
+    if (this.fontPickerElem) {
+      this.checkButtonState('fontStyle');
+    }
 
     let parentNode = this.getSelectedParentElement();
 
@@ -1281,6 +1332,29 @@ Editor.prototype = {
       return;
     }
 
+    // 'fontStyle' type notifies the FontPicker component if the current selection doesn't match.
+    if (this.fontPickerElem && command === 'fontStyle') {
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      const fontpickerSupportedTags = fontpickerAPI.supportedTagNames;
+
+      const selectedElem = this.getSelectionParentElement();
+      const searchElems = $(selectedElem).add($(selectedElem).parentsUntil(this.element));
+      let targetElemTag;
+      let fontStyle;
+
+      for (let i = 0; i < searchElems.length && fontStyle === undefined; i++) {
+        targetElemTag = searchElems[i].tagName.toLowerCase();
+        if (fontpickerSupportedTags.indexOf(targetElemTag) > -1) {
+          fontStyle = fontpickerAPI.getStyleByTagName(targetElemTag);
+          fontpickerAPI.select(fontStyle, true);
+          break;
+        }
+      }
+
+      return;
+    }
+
+    // Standard Button State Check
     if (document.queryCommandState(command)) {
       this.toolbar.find(`[data-action="${command}"]`).addClass('is-active');
     } else {
@@ -2290,7 +2364,17 @@ Editor.prototype = {
     cpApi.toggleList();
   },
 
+  /**
+   * Formats the currently-selected block of content in the editor with a predefined HTML element
+   * and style, if applicable.
+   * @param {string} el, the desired block-level element with which to wrap the current block.
+   * @returns {void|boolean} same return value as [`document.execCommand()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+   */
   execFormatBlock(el) {
+    if (!this.selection || !(this.selection instanceof Selection)) {
+      return;
+    }
+
     const selectionData = this.getSelectionData(this.selection.anchorNode);
     // FF handles blockquote differently on formatBlock
     // allowing nesting, we need to use outdent
@@ -2385,6 +2469,15 @@ Editor.prototype = {
       if (colorpicker && typeof colorpicker.destroy === 'function') {
         colorpicker.destroy();
       }
+    }
+
+    if (this.fontPickerElem) {
+      this.fontPickerElem.off(`font-selected.${COMPONENT_NAME}`);
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      if (fontpickerAPI) {
+        fontpickerAPI.destroy();
+      }
+      delete this.fontPickerElem;
     }
 
     // Unbind/Remove Toolbar Component (generically)
