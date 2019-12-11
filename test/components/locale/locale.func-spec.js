@@ -1176,18 +1176,18 @@ describe('Locale API', () => {
 
   it('Should properly convert from Gregorian to Islamic UmAlQura', () => {
     Locale.set('ar-SA');
-    let islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2017, 4, 31)));
+    let islamicDate = Locale.gregorianToUmalqura(new Date(new Date(2017, 4, 31)));
 
     expect(`${islamicDate[0].toString()} ${islamicDate[1].toString()} ${islamicDate[2].toString()}`).toEqual('1438 8 5');
 
-    islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 1)));
+    islamicDate = Locale.gregorianToUmalqura(new Date(new Date(2010, 11, 1)));
 
     expect(`${islamicDate[0].toString()} ${islamicDate[1].toString()} ${islamicDate[2].toString()}`).toEqual('1431 11 25');
   });
 
   it('Should properly convert from Islamic UmAlQura to Gregorian', () => {
     Locale.set('ar-SA');
-    const time = Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime();
+    const time = Locale.umalquraToGregorian(1431, 11, 25).getTime();
 
     expect(time).toEqual(new Date(2010, 11, 1, 0, 0, 0).getTime());
   });

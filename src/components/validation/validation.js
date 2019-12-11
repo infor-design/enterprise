@@ -175,7 +175,7 @@ function ValidationRules() {
           dateObj = Locale.parseDate(dateObj, format);
         }
         if (datepickerApi && datepickerApi.isIslamic && dateObj instanceof Date) {
-          dateObj = datepickerApi.conversions.toGregorian(
+          dateObj = Locale.umalquraToGregorian(
             dateObj.getFullYear(),
             dateObj.getMonth(),
             dateObj.getDate()

@@ -131,7 +131,7 @@ describe('DatePicker API', () => {
 
     expect(todayDate.toString()).toEqual(testDate.toString());
 
-    const converted = datepickerAPI.conversions.fromGregorian(testDate);
+    const converted = Locale.gregorianToUmalqura(testDate);
 
     expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')} 12:00 ص`);
   });
@@ -158,7 +158,7 @@ describe('DatePicker API', () => {
 
     expect(todayDate.toString()).toEqual(testDate.toString());
 
-    const converted = datepickerAPI.conversions.fromGregorian(testDate);
+    const converted = Locale.gregorianToUmalqura(testDate);
 
     let hours = testDate.getHours();
     let minutes = testDate.getMinutes();
