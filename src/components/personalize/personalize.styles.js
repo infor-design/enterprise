@@ -395,12 +395,30 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
   color: ${colors.subtext} !important;
 }
 
-html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-selected {
+html[class*="theme-uplift"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused:not(.hide-focus):not(.is-expanded) {
+  border-color: ${colors.contrast} !important;
+}
+
+html[class*="theme-uplift"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused.is-expanded {
+  border-color: transparent !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-selected::before {
   background-color: ${colors.darker} !important;
+  border-color: ${colors.darker} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-focused::before {
+  border-color: ${colors.contrast} !important;
 }
 
 html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded + .accordion-pane {
   background-color: ${colors.dark} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded:hover::before {
+  border-color: ${colors.darkest} !important;
+  background-color: ${colors.darkest} !important;
 }
 
 .is-personalizable .personalize-header,
