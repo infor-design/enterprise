@@ -47,6 +47,7 @@
 - `[Editor]` Fixed a problem in Safari that would cause scrolling to occur inside Flex Toolbars unexpectedly. ([#3033](https://github.com/infor-design/enterprise/issues/3033))
 - `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
 - `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
+- `[Header]` Update the header placeholder text color to match better. ([#3040](https://github.com/infor-design/enterprise/issues/3040))
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
 - `[Locale]` Added new conversion methods for gregorian to umalqura dates and vice versa with Locale. The fromGregorian and togregorian methods were in two separate locations ar-SA and ar-EG. These new methods gregorianToUmalqura and umalquraToGregorian now moved to to one location in locale and removed the maxDate on them. ([#3051](https://github.com/infor-design/enterprise/issues/3051))
 - `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
