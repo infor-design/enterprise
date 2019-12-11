@@ -74,6 +74,8 @@
           menu: $('#grid-actions-menu'),
           trigger: 'immediate'
         });
+        args.originalEvent.preventDefault();
+        return false;
       });
 
     });

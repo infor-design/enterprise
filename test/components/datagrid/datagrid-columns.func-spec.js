@@ -1,5 +1,6 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -9,7 +10,6 @@ let data = [];
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 
 // Define Columns for the Grid.
@@ -24,17 +24,15 @@ columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent'
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 
-describe('Datagrid Columns API', () => {
+describe('Datagrid Columns API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
     datagridEl = null;
-    svgEl = null;
     datagridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datagridHTML);
     datagridEl = document.body.querySelector('#datagrid');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.set('en-US');
     data = JSON.parse(JSON.stringify(originalData));
@@ -44,20 +42,18 @@ describe('Datagrid Columns API', () => {
 
   afterEach(() => {
     datagridObj.destroy();
-    datagridEl.parentNode.removeChild(datagridEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '#datagrid-script',
+      '.svg-icons',
+      '.row',
+      '#tooltip',
+      '.grid-tooltip'
+    ]);
   });
 
   it('Should be able to call visibleColumns', () => {
     expect(datagridObj.visibleColumns().length).toEqual(8);
     expect(datagridObj.visibleColumns(true).length).toEqual(7);
-  });
-
-  it('Should be able to call lastIndex', () => {
-    expect(datagridObj.lastColumnIdx()).toEqual(8);
   });
 
   it('Should be able to call updateColumns', () => {

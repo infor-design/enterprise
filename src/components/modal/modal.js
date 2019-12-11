@@ -902,7 +902,7 @@ Modal.prototype = {
     }
 
     if (this.element.hasClass('lookup-modal')) {
-      const table = this.element.find('.datagrid-body');
+      const table = this.element.find('.datagrid-wrapper');
       const hasPager = this.element.find('.pager-toolbar');
       const container = table.closest('.datagrid-container');
 
@@ -917,6 +917,21 @@ Modal.prototype = {
       } else {
         table[0].style.maxHeight = `${calcHeight}px`;
         table[0].style.maxWidth = `${calcWidth}px`;
+      }
+    }
+
+    if (this.element.hasClass('datagrid-columns-dialog')) {
+      wrapper[0].style.overflow = 'hidden';
+      if (calcHeight > 220) {
+        this.element.find('.modal-body')[0].style.height = '';
+        this.element.find('.listview.alternate-bg')[0].style.maxHeight = '';
+        this.element.find('.listview.alternate-bg')[0].style.height = '';
+        this.element.find('.listview.alternate-bg')[0].style.minHeight = '';
+      } else {
+        this.element.find('.modal-body')[0].style.height = `${calcHeight}px`;
+        this.element.find('.listview.alternate-bg')[0].style.maxHeight = `${calcHeight - 41}px`;
+        this.element.find('.listview.alternate-bg')[0].style.height = `${calcHeight - 41}px`;
+        this.element.find('.listview.alternate-bg')[0].style.minHeight = 0;
       }
     }
 

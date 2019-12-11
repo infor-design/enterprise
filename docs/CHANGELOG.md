@@ -5,6 +5,7 @@
 ### v4.24.0 Important Changes
 
 - `[Icons]` Reversed a change in previous versions to make alert icons all have a white background as this caused issues. Concerning alert icons there are now the following `icon-[name]` - which will have transparent background, in Uplift these are linear in style, in soho these are solid in style. We also add a `icon-[name]-alert` for alert icons with a white background. If you need a white background you can use these otherwise we have restored the functionality from the 4.21 version, you might need a white background in calendar icons. Also the pending icon is fixed and now orange. ([#3052](https://github.com/infor-design/enterprise/issues/3052))
+- `[Datagrid]` Changed the way tables are rendered to avoid gaps at the end of the grid and fix the sizes so they work in resize. This is done by using css position: sticky for headers. It has a few consequences. The spaceColumn option which was never completed was removed. The stretchColumn option is still working but is less important now and defaults to no stretch. IE 11 will now no longer support sticky headers because it does not support css position sticky, so it will degrade in functionality. This improves all issues with columns getting out of alignment. ([#2825](https://github.com/infor-design/enterprise/issues/2825))
 
 ### v4.24.0 Deprecation
 
@@ -25,6 +26,16 @@
 - `[Datagrid]` Fixed an issue where the editable single column was not working. ([#3023](https://github.com/infor-design/enterprise/issues/3023))
 - `[Datagrid]` Fixed an issue where when hovering a parent row the same row index in the child row will show the hover state. ([#2227](https://github.com/infor-design/enterprise/issues/2227))
 - `[Datagrid]` Fixed an issue where the focus state for action button formatter was not working correctly. ([#3006](https://github.com/infor-design/enterprise/issues/3006))
+- `[Datagrid]` Fixed an issue where the personalization dialog was not centered on IE 11. ([#3175](https://github.com/infor-design/enterprise/issues/3175))
+- `[Datagrid]` Fixed an issue finally so that all columns will always align and will never come out of alignment. ([#2835](https://github.com/infor-design/enterprise/issues/2835))
+- `[Datagrid]` Fixed an issue where in some cases when there is no data you could not scroll right. ([#2363](https://github.com/infor-design/enterprise/issues/2363))
+- `[Datagrid]` Fixed an issue where in some cases where you could not scroll right over the empty message. ([#2864](https://github.com/infor-design/enterprise/issues/2864))
+- `[Datagrid]` Fixed an issue where the IOS text would appear very large on group headers. ([#2224](https://github.com/infor-design/enterprise/issues/2224))
+- `[Datagrid]` Fixed an issue where in some cases where if you have one column and are in edit mode resizing the page behaved strangely. ([#3193](https://github.com/infor-design/enterprise/issues/3193))
+- `[Datagrid]` Changed the rendering of columns so that there will never be a gap on the left side, changed the default of stretchColumn to null which will fill. ([#1818](https://github.com/infor-design/enterprise/issues/1818))
+- `[Datagrid]` Fixed an issue that hyperlinks in the datagrid would redirect. ([#3207](https://github.com/infor-design/enterprise/issues/3207))
+- `[Datagrid]` Changed the behavior of column resizing to use "fit" during resize, which means adgecent columns only will be resized. ([#605](https://github.com/infor-design/enterprise/issues/605))
+- `[Datagrid]` Fixed an issue that resizing the last column would create a gap. ([#1671](https://github.com/infor-design/enterprise/issues/1671))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))

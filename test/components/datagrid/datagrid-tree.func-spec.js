@@ -1,6 +1,7 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-tree.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -10,7 +11,6 @@ let data = [];
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 
 // Define Columns for the Grid.
@@ -21,17 +21,15 @@ columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.I
 columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink });
 columns.push({ id: 'time', name: 'Time', field: 'time' });
 
-describe('Datagrid Tree', () => {
+describe('Datagrid Tree', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
     datagridEl = null;
-    svgEl = null;
     datagridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datagridHTML);
     datagridEl = document.body.querySelector('#datagrid');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.set('en-US');
     data = JSON.parse(JSON.stringify(originalData));
@@ -41,8 +39,13 @@ describe('Datagrid Tree', () => {
 
   afterEach(() => {
     datagridObj.destroy();
-    datagridEl.parentNode.removeChild(datagridEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup([
+      '#datagrid-script',
+      '.svg-icons',
+      '.row',
+      '#tooltip',
+      '.grid-tooltip'
+    ]);
   });
 
   it('Should be defined as an object', () => {

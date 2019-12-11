@@ -1,6 +1,7 @@
 /* eslint-disable object-curly-newline */
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -10,7 +11,6 @@ let data = [];
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 let defaultSettings;
 
@@ -25,17 +25,15 @@ columns.push({ id: 'percent', align: 'right', name: 'Actual %', hideable: true, 
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', hideable: true, reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', hideable: false, reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 
-describe('Datagrid Settings', () => {
+describe('Datagrid Settings', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
     datagridEl = null;
-    svgEl = null;
     datagridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datagridHTML);
     datagridEl = document.body.querySelector('#datagrid');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.set('en-US');
     data = JSON.parse(JSON.stringify(originalData));
@@ -73,9 +71,8 @@ describe('Datagrid Settings', () => {
       selectChildren: true,
       allowSelectAcrossPages: null,
       groupable: null,
-      spacerColumn: false,
       showNewRowIndicator: true,
-      stretchColumn: 'last',
+      stretchColumn: null,
       stretchColumnOnChange: false,
       twoLineHeader: false,
       clickToSelect: true,
@@ -122,11 +119,13 @@ describe('Datagrid Settings', () => {
 
   afterEach(() => {
     datagridObj.destroy();
-    datagridEl.parentNode.removeChild(datagridEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '#datagrid-script',
+      '.svg-icons',
+      '.row',
+      '#tooltip',
+      '.grid-tooltip'
+    ]);
   });
 
   it('Should set settings', () => {

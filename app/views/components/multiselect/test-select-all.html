@@ -17,7 +17,8 @@
 <script>
   $('#states-multi').multiselect({
     source: '{{basepath}}api/states?term=',
-    showSelectAll: true
+    showSelectAll: false,
+    showEmptyGroupHeaders: false
   });
   $('#states-multi').on('change', function () {
     console.log('change fired');

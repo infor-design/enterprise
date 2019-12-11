@@ -438,16 +438,12 @@ const formatters = {
       api.settings.treeDepth[row].depth : 0;
 
     // When use filter then
-    // If (settings.allowChildExpandOnMatch === false) and only parent node got match
-    // then make expand/collapse button to be collapsed and disabled
+    // If (settings.allowChildExpandOnMatch === false) and only parent node has a match
+    // then make expand/collapse button collapsed and disabled
     const isExpandedBtnDisabled = item && item.isAllChildrenFiltered;
     const expandedBtnDisabledHtml = isExpandedBtnDisabled ? ' disabled' : '';
     if (isOpen && isExpandedBtnDisabled) {
       isOpen = false;
-    }
-    if (item && typeof item.isAllChildrenFiltered !== 'undefined') {
-      // Remove key after use to reset
-      delete item.isAllChildrenFiltered;
     }
 
     // Tabsize as button width (+/-)

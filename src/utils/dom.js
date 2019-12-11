@@ -276,4 +276,58 @@ DOM.parents = function parents(el, selector, closest) {
   return parentEls;
 };
 
+/**
+ * Get the next sibling with an optional css selector.
+ * @param {HTMLElement/SVGElement} el The element being checked
+ * @param {string} selector a valid CSS selector
+ * @returns {HTMLElement} The next sibling
+ */
+DOM.getNextSibling = function getNextSibling(el, selector) {
+  if (el instanceof $ && el.length) {
+    el = el[0];
+  }
+
+  // Get the next sibling element
+  let sibling = el.nextElementSibling;
+
+  // If there's no selector, return the first sibling
+  if (!selector) return sibling;
+
+  // If the sibling matches our selector, use it
+  // If not, jump to the next sibling and continue the loop
+  while (sibling) {
+    if (sibling.matches(selector)) return sibling;
+    sibling = sibling.nextElementSibling;
+  }
+
+  return undefined;
+};
+
+/**
+ * Get the next previous with an optional css selector.
+ * @param {HTMLElement/SVGElement} el The element being checked
+ * @param {string} selector a valid CSS selector
+ * @returns {HTMLElement} The previous sibling
+ */
+DOM.getPreviousSibling = function getPreviousSibling(el, selector) {
+  if (el instanceof $ && el.length) {
+    el = el[0];
+  }
+
+  // Get the previous sibling element
+  let sibling = el.previousElementSibling;
+
+  // If there's no selector, return the first sibling
+  if (!selector) return sibling;
+
+  // If the sibling matches our selector, use it
+  // If not, jump to the previous sibling and continue the loop
+  while (sibling) {
+    if (sibling.matches(selector)) return sibling;
+    sibling = sibling.previousElementSibling;
+  }
+
+  return undefined;
+};
+
 export { DOM };
