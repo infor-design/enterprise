@@ -26,17 +26,22 @@ function methodName(method) {
  * Warns about a deprecated property/method via a console warning
  * @param {function|string} newMethod the new method to call
  * @param {function|string} oldMethod the name of the old method
+ * @param {string} [context=''] optional additional context
  * @returns {void}
  */
-function warnAboutDeprecation(newMethod, oldMethod) {
-  const newMethodName = methodName(newMethod);
-  const oldMethodName = methodName(oldMethod);
-
+function warnAboutDeprecation(newMethod, oldMethod, context = '') {
   if (typeof console !== 'object') {
     return;
   }
+
+  const newMethodName = methodName(newMethod);
+  const oldMethodName = methodName(oldMethod);
+  if (context.length) {
+    context = ` (${context})`;
+  }
+
   // eslint-disable-next-line no-console
-  console.warn(`IDS Enterprise: "${oldMethodName}" is deprecated. Please use "${newMethodName}" instead.`);
+  console.warn(`IDS Enterprise${context}: "${oldMethodName}" is deprecated. Please use "${newMethodName}" instead.`);
 }
 
 /**

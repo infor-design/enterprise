@@ -55,7 +55,7 @@
     margin-bottom: 0;
     z-index: 20;
 
-    [class^='btn'] {
+    [class*='btn'] {
       border-radius: 2px;
     }
   }
@@ -169,29 +169,59 @@
     }
   }
 
-  // Element Style
+  p {
+    margin-bottom: 15px;
+  }
+
+  ul,
+  ol {
+    margin-bottom: 10px;
+  }
+
+  blockquote {
+    margin-bottom: 15px;
+  }
+}
+
+// Element Styles in both the editor, and the corresponding
+// FontPicker component, if applicable.
+.editor,
+.fontpicker-menu {
   p {
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
     font-size: $theme-size-font-base;
-    margin-bottom: 15px;
 
     .hyperlink {
       color: $hyperlink-color;
     }
   }
 
-  h3 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $editor-color;
-    font-size: $theme-size-font-xl;
     line-height: normal;
   }
 
+  h1 {
+    font-size: $theme-size-font-px-40;
+  }
+
+  h2 {
+    font-size: $theme-size-font-px-32;
+  }
+
+  h3 {
+    font-size: $theme-size-font-px-28;
+  }
+
   h4 {
-    color: $editor-color;
-    font-size: $theme-size-font-lg;
-    line-height: normal;
+    font-size: $theme-size-font-px-24;
   }
 
   ul,
@@ -202,7 +232,6 @@
     color: $input-color;
     font-size: $theme-size-font-base;
     list-style: disc;
-    margin-bottom: 10px;
 
     li {
       line-height: inherit;
@@ -228,7 +257,6 @@
 
     border-left: 3px solid $editor-blockquote-color;
     line-height: 22px;
-    margin-bottom: 15px;
     margin-left: 7px;
     padding-left: 15px;
   }
@@ -268,7 +296,7 @@
     width: 100%;
   }
 
-  [class^='btn'] {
+  [class*='btn'] {
     margin-top: 6px;
   }
 
@@ -300,7 +328,7 @@
   text-align: left;
 
   .buttonset {
-    [class^='btn'] {
+    [class*='btn'] {
       &:first-child {
         margin-left: 16px;
       }
@@ -329,14 +357,14 @@
     }
   }
 
-  [class^='btn'] {
+  [class*='btn'] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     color: $editor-btn-color;
     height: 20px;
     line-height: normal;
     min-width: 18px;
-    padding: 0 !important; //overrides some media queries
+    padding: 0;
     text-align: left;
 
     span:not(.audible) {
@@ -362,7 +390,9 @@
     }
 
     &:focus:not(.hide-focus),
-    &.is-active:not(.error) {
+    &.is-active:not(.error),
+    &.is-open,
+    &.is-open:hover {
       color: $editor-btn-active-color;
 
       span {
@@ -520,6 +550,16 @@
     &[data-element='img'] {
       margin-left: 4px;
       margin-right: 16px;
+    }
+
+    &.fontpicker {
+      padding: 0 5px;
+
+      span {
+        display: inline-block;
+        max-width: 100px;
+        width: 100px;
+      }
     }
   }
 }

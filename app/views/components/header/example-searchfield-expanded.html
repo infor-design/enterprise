@@ -1,4 +1,4 @@
-<header class="header is-sticky">
+<header class="header is-sticky is-personalizable">
   <div class="toolbar">
     <div class="title">
       <button class="btn-icon application-menu-trigger" type="button">
@@ -15,8 +15,8 @@
 
     <div class="buttonset">
       <label class="audible">Search</label>
-      <input class="searchfield " data-options="{collapsible: false}"/>
+      <input class="searchfield " data-options="{collapsible: false}" placeholder="Search"/>
     </div>
-
+    {{> includes/header-actionbutton}}
   </div>
 </header>

@@ -12,6 +12,7 @@
 ### v4.24.0 Features
 
 - `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+- `[Editor]` Replaced the `h3` and `h4` buttons with a more robust Fontpicker component. ([#2722](https://github.com/infor-design/enterprise/issues/2722))
 - `[Spinbox]` Standardized Spinbox field sizes to match other input field sizes, added responsive form (fluid) functionality for Spinbox, and reworked the standard size of the Spinbox to match other form fields. ([#1344](https://github.com/infor-design/enterprise/issues/1344))
 
 ### v4.24.0 Fixes
@@ -46,6 +47,7 @@
 - `[Editor]` Fixed a problem in Safari that would cause scrolling to occur inside Flex Toolbars unexpectedly. ([#3033](https://github.com/infor-design/enterprise/issues/3033))
 - `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
 - `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
+- `[Header]` Update the header placeholder text color to match better. ([#3040](https://github.com/infor-design/enterprise/issues/3040))
 - `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
 - `[Locale]` Added new conversion methods for gregorian to umalqura dates and vice versa with Locale. The fromGregorian and togregorian methods were in two separate locations ar-SA and ar-EG. These new methods gregorianToUmalqura and umalquraToGregorian now moved to to one location in locale and removed the maxDate on them. ([#3051](https://github.com/infor-design/enterprise/issues/3051))
 - `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
@@ -64,6 +66,8 @@
 
 - `[Demoapp]` Allow the query params that affect theming/personalization (theme/variant/colors) to be appended/adjusted on the browser's URL without affecting other query parameters, or adding unnecessary paramters that weren't changed.
 - `[Toolbar Searchfield]` Increased the amount of text shown when the Searchfield is not expanded, and appears similar to a button.  Also modified some styles in all themes to make alignment of the text better between the Searchfield and buttons when the Searchfield is not expanded. ([#2944](https://github.com/infor-design/enterprise/issues/2944))
+
+(68 Issues Solved this release, Backlog Enterprise 370, Backlog Ng 87, 1174 Functional Tests, 1136 e2e Test)
 
 ## v4.23.0
 
