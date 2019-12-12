@@ -484,8 +484,15 @@ Tooltip.prototype = {
       content = $(content);
       contentArea.html(content);
       contentArea.find('.hidden').removeClass('hidden');
+    } else if (useHtml) {
+      const clone = content[0].cloneNode(true);
+      const id = clone.id;
+      if (id) {
+        clone.id = `${id}-${this.uniqueId}`;
+      }
+      contentArea.html(clone.outerHTML);
     } else {
-      contentArea.html(useHtml ? content[0].outerHTML : content);
+      contentArea.html(content);
     }
 
     const popoverWidth = contentArea.width();
