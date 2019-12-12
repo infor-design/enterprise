@@ -3175,7 +3175,7 @@ Datagrid.prototype = {
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
-      self.tableBody.before(self.bodyColGroup);
+      (self.headerRow || self.tableBody).before(self.bodyColGroup);
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
