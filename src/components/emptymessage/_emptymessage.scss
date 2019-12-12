@@ -66,3 +66,13 @@
     width: inherit;
   }
 }
+
+// IE11
+.ie11 {
+  .datagrid-container {
+    .empty-message-container {
+      left: 0;
+      top: 0;
+    }
+  }
+}
