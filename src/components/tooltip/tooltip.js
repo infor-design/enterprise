@@ -478,21 +478,14 @@ Tooltip.prototype = {
 
     this.tooltip[0].setAttribute('class', classes);
 
-    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length;
+    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length && this.settings.trigger === 'hover';
 
     if (typeof content === 'string') {
       content = $(content);
       contentArea.html(content);
       contentArea.find('.hidden').removeClass('hidden');
-    } else if (useHtml) {
-      const clone = content[0].cloneNode(true);
-      const id = clone.id;
-      if (id) {
-        clone.id = `${id}-${this.uniqueId}`;
-      }
-      contentArea.html(clone.outerHTML);
     } else {
-      contentArea.html(content);
+      contentArea.html(useHtml ? content[0].outerHTML : content);
     }
 
     const popoverWidth = contentArea.width();
