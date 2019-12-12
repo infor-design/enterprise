@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.25.0
+
+### v4.25.0 Deprecation
+
+### v4.25.0 Features
+
+### v4.25.0 Fixes
+
+- `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
+
+### v4.25.0 Chores & Maintenance
+
 ## v4.24.0
 
 ### v4.24.0 Important Changes
