@@ -77,7 +77,11 @@
   // Responsive Mode (more columns)
   //=================================================
   &.is-in-responsive-mode {
+    overflow: auto;
+
     > .scrollable-flex-content {
+      flex-shrink: 0;
+
       > .tab-container {
         height: 40px;
 
