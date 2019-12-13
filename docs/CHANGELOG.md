@@ -8,6 +8,7 @@
 
 ### v4.25.0 Fixes
 
+- `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
 ### v4.25.0 Chores & Maintenance
