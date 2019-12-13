@@ -131,6 +131,20 @@ Dropdown.prototype = {
   },
 
   /**
+   * @returns {array} a list of currently selected options' values.
+   */
+  get selectedValues() {
+    return this.selectedOptions.map(opt => opt.value);
+  },
+
+  /**
+   * @returns {array} a list of selected options from inside this component's base element.
+   */
+  get selectedOptions() {
+    return utils.getArrayFromList(this.element[0].querySelectorAll('option')).filter(opt => opt.selected);
+  },
+
+  /**
    * Initialize the dropdown.
    * @private
    * @returns {object} The api for chaining
@@ -251,12 +265,14 @@ Dropdown.prototype = {
       this.element.prop('multiple', true);
     }
 
+    /*
     // Add the internal hash for typeahead filtering, if applicable
     if (this.settings.reload === 'typeahead') {
       this.selectedValues = [];
     } else {
       delete this.selectedValues;
     }
+    */
 
     const dataSource = this.element.attr('data-source');
     if (dataSource && dataSource !== 'source') {
@@ -1288,6 +1304,7 @@ Dropdown.prototype = {
 
           if (options.length && selectedIndex > -1) {
             // store the current selection
+            // selectValue
             self.selectOption(this.correctValue($(options[selectedIndex])));
           }
 
@@ -1735,7 +1752,7 @@ Dropdown.prototype = {
 
     // Set the contents of the search input.
     // If we've got a stored typeahead
-    if (this.filterTerm) {
+    if (typeof this.filterTerm === 'string') {
       this.searchInput.val(this.filterTerm);
     } else {
       let span = this.pseudoElem.find('span:not(.audible)')
@@ -2001,14 +2018,17 @@ Dropdown.prototype = {
     positionOpts.parent = parentElement;
     positionOpts.useParentWidth = useParentWidth;
 
-    // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-    const isRetina = window.devicePixelRatio > 1;
-    const isChrome = env.browser.name === 'chrome';
+    // Use negative height of the pseudoElem to get the Dropdown list to overlap the input.
+    // Ignore this for Multiselect and always position below/above the field.
+    if (!this.settings.multiple) {
+      const isRetina = window.devicePixelRatio > 1;
+      const isChrome = env.browser.name === 'chrome';
+      positionOpts.y = -(parseInt(parentElement[0].clientHeight, 10) +
+        parseInt(parentElementStyle.borderTopWidth, 10) +
+        parseInt(parentElementStyle.borderBottomWidth, 10) - (!isChrome && isRetina ? 1 : 0));
+      positionOpts.x = 0;
+    }
 
-    positionOpts.y = -(parseInt(parentElement[0].clientHeight, 10) +
-      parseInt(parentElementStyle.borderTopWidth, 10) +
-      parseInt(parentElementStyle.borderBottomWidth, 10) - (!isChrome && isRetina ? 1 : 0));
-    positionOpts.x = 0;
     if (self.settings.placementOpts && self.settings.placementOpts.x) {
       positionOpts.x = self.settings.placementOpts.x;
     }
@@ -2338,6 +2358,27 @@ Dropdown.prototype = {
   },
 
   /**
+   * Renders a Dropdown/Multiselect item based on its corresponding <option> element's state
+   * @private
+   * @param {HTMLOptionElement} optionEl the option element
+   * @returns {void}
+   */
+  renderListItem(optionEl) {
+    const optionVal = optionEl.value;
+    const selected = optionEl.selected;
+    const li = this.listUl.find(`li[data-val="${optionVal}"]`);
+
+    if (selected) {
+      li[0].classList.add('is-selected');
+      li[0].setAttribute('aria-selected', true);
+      return;
+    }
+
+    li[0].classList.remove('is-selected');
+    li[0].removeAttribute('aria-selected');
+  },
+
+  /**
    * Toggle all selection for items.
    * @private
    * @param {boolean} doSelectAll true to select and false will clear selection for all items.
@@ -2427,6 +2468,7 @@ Dropdown.prototype = {
    * @private
    * @param {object} option - the incoming li option
    * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to
+   * @returns {void}
    * fire on the list item.
    */
   selectOption(option, noTrigger) {
@@ -2435,6 +2477,7 @@ Dropdown.prototype = {
     }
     let li;
 
+    // Discovers a `<option>` incoming item from its corresponding Dropdown List item's `data-val` attribute.
     if (option.is('li')) {
       li = option;
       option = this.element.find(`option[value="${option.attr('data-val')}"]`);
@@ -2446,94 +2489,56 @@ Dropdown.prototype = {
           return $(this).text() === li.attr('data-val');
         });
       }
+
+      if (option.prop('disabled')) {
+        return;
+      }
     }
 
-    let value = option.val();
-    if (!option) {
-      return;
+    let optionVal = option.val();
+
+    if (typeof option === 'string') {
+      li = this.listUl.find(`li[data-val="${option}"]`);
+      optionVal = option;
+      option = this.element.find(`option[value="${optionVal}"]`);
+    } else if (typeof optionVal === 'string') {
+      optionVal = optionVal.replace(/"/g, '/quot/');
+      li = this.listUl.find(`li[data-val="${optionVal}"]`);
     }
 
-    if (!li && typeof value === 'string') {
-      value = value.replace(/"/g, '/quot/');
-      li = this.listUl.find(`li[data-val="${value}"]`);
-    }
-
-    if (option.hasClass('is-disabled') || option.is(':disabled')) {
-      return;
-    }
-
-    const optionVal = option.val();
-    let val = this.element.val();
-    let text = '';
-    let trimmed = '';
-    let clearSelection = false;
-
-    if (this.settings.reload === 'typeahead') {
-      val = this.selectedValues || [];
-    }
-
-    // Sets to false if the option is being removed from a multi-select instead of added
     let isAdded = true;
+    let currentValue = this.selectedValues;
+    let clearSelection = false;
 
     if (option.hasClass('clear') || !li) {
       clearSelection = true;
     }
 
+    // If in single-select mode, or forcing a clear, unset all selections.
+    if (clearSelection) {
+      this.deselectAll();
+    }
+
+    // In a multi-select setting, it's possible for deselection to happen instead of selection.
     if (this.settings.multiple) {
-      // Working with a select multiple allows for the "de-selection" of items in the list
-      if (!val) {
-        val = [];
+      if (!Array.isArray(currentValue)) {
+        currentValue = [currentValue];
       }
-      if ($.inArray(optionVal, val) !== -1) {
-        val = $.grep(val, optionValue => optionValue !== optionVal);
-        li.removeClass('is-selected').removeAttr('aria-selected');
-        this.previousActiveDescendant = undefined;
+      if (currentValue.indexOf(optionVal) > -1) {
         isAdded = false;
-      } else {
-        if (!isNaN(this.settings.maxSelected) &&  //eslint-disable-line
-          this.element.find('option:selected').length >= this.settings.maxSelected) {
-          return;
-        }
-
-        val = typeof val === 'string' ? [val] : val;
-        val.push(optionVal);
-        li.addClass('is-selected').attr('aria-selected', 'true');
-        this.previousActiveDescendant = option.val();
       }
+    }
 
-      const newOptions = this.element.find('option').filter(function () {
-        return $.inArray($(this)[0].value, val) !== -1;
-      });
-      text = this.getOptionText(newOptions);
+    if (isAdded) {
+      this.select(option[0]);
+      this.previousActiveDescendant = optionVal;
     } else {
-      // Working with a single select
-      val = optionVal;
-      this.listUl.find('li.is-selected').removeClass('is-selected').removeAttr('aria-selected');
-      if (!clearSelection) {
-        li.addClass('is-selected').attr('aria-selected', 'true');
-      }
-      this.previousActiveDescendant = option.val();
-      text = option.text();
+      this.deselect(option[0]);
+      this.previousActiveDescendant = undefined;
     }
 
-    if (!clearSelection) {
-      this.element.find('option').each(function () {  //eslint-disable-line
-        if (this.value === optionVal) {
-          $(this).prop('selected', true);
-          return false;
-        }
-      });
-    }
-
-    if (this.element.attr('maxlength')) {
-      trimmed = text.substr(0, this.element.attr('maxlength'));
-      this.pseudoElem.find('span').text(trimmed);
-      this.searchInput.val(trimmed);
-    }
-
-    // Set the new value on the <select>
-    this.selectedValues = val;
-    this.element.val(val);
+    this.renderListItem(option[0]);
+    this.setDisplayedValues();
     this.updateItemIcon(option);
 
     /**
@@ -2547,13 +2552,6 @@ Dropdown.prototype = {
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
       this.toggleTooltip();
     }
-
-    /**
-    * Fires after the value in the input is changed by user interaction.
-    * @event input
-    * @memberof Dropdown
-    * @property {object} event The jquery event object
-    */
 
     // If multiselect, reset the menu to the unfiltered mode
     if (this.settings.multiple) {
@@ -2576,8 +2574,30 @@ Dropdown.prototype = {
   },
 
   /**
-   * Select an option by the value.
+   * Selects an option element directly.
+   * @param {HTMLOptionElement} optionEl the option to be deselected
+   * @returns {void}
+   */
+  select(optionEl) {
+    if (!optionEl || !(optionEl instanceof HTMLOptionElement)) {
+      return;
+    }
+
+    // If this is a multselect, never allow more items to be selected than
+    // defined by settings.
+    if (this.settings.multiple) {
+      if (this.selectedValues.length >= this.settings.maxSelected) {
+        return;
+      }
+    }
+
+    optionEl.selected = true;
+  },
+
+  /**
+   * Select an option by its value.
    * @param {string} value - A string containing the value to look for. (Case insensitive)
+   * @returns {void}
    */
   selectValue(value) {
     if (typeof value !== 'string') {
@@ -2589,9 +2609,50 @@ Dropdown.prototype = {
       return;
     }
 
-    this.element.find('option:selected').prop('selected', false);
-    option.prop('selected', true);
-    this.updated();
+    this.select(option[0]);
+  },
+
+  /**
+   * Deselects an option element directly.
+   * @param {HTMLOptionElement} optionEl the option to be deselected
+   * @returns {void}
+   */
+  deselect(optionEl) {
+    if (!optionEl || !(optionEl instanceof HTMLOptionElement)) {
+      return;
+    }
+
+    optionEl.selected = false;
+  },
+
+  /**
+   * Deselect an option by its value.
+   * @param {string} value - A string containing the value to look for. (Case insensitive)
+   * @returns {void}
+   */
+  deselectValue(value) {
+    if (typeof value !== 'string') {
+      return;
+    }
+
+    const option = this.element.find(`option[value="${value}"]`);
+    if (!option || !option.length) {
+      return;
+    }
+
+    this.deselect(option[0]);
+  },
+
+  /**
+   * Deselects all <select> options.
+   * @returns {void}
+   */
+  deselectAll() {
+    const allOptions = this.element.find('option');
+    allOptions.each((option) => {
+      $(option).prop('selected', false);
+      this.deselectValue(option);
+    });
   },
 
   /**
@@ -2733,7 +2794,8 @@ Dropdown.prototype = {
           textContent = option.label;
         }
 
-        const selectedValues = (self.selectedValues && self.selectedValues.indexOf(val) > -1);
+        const selectedValues = self.selectedValues;
+        const hasSelectedValues = selectedValues.indexOf(val) > -1;
         if (self.settings.multiple) {
           val.forEach((value) => {
             if (value === option.value) {
@@ -2741,7 +2803,7 @@ Dropdown.prototype = {
               selected = ' selected';
             }
           });
-        } else if (option.value === val || selectedValues) {
+        } else if (option.value === val || hasSelectedValues) {
           option.selected = true;
           selected = ' selected';
         }
@@ -3011,9 +3073,6 @@ Dropdown.prototype = {
    * Tear down events and restore to original state.
    */
   destroy() {
-    if (this.selectedValues) {
-      delete this.selectedValues;
-    }
     if (this.placeholder) {
       delete this.placeholder;
     }
