@@ -265,6 +265,17 @@ Accordion.prototype = {
 
       header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
 
+      // double-check the contents of the pane. If all children are filtered out,
+      // label this at the top level
+      const children = pane.children();
+      let allChildrenFiltered = true;
+      children.each((i, child) => {
+        if ($(child).is('.accordion-header') && !$(child).hasClass('filtered')) {
+          allChildrenFiltered = false;
+        }
+      });
+      pane[allChildrenFiltered ? 'addClass' : 'removeClass']('all-children-filtered');
+
       if (!self.isExpanded(header)) {
         pane.data('ignore-animation-once', true);
         self.collapse(header, false);
@@ -740,7 +751,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    let pane = header.next('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -750,6 +761,13 @@ Accordion.prototype = {
     }
 
     function continueExpand() {
+      // Don't try to expand any further if this header has no associated accordion pane.
+      // NOTE: We re-check for the pane's existence here because it may have been loaded via AJAX.
+      pane = header.next('.accordion-pane');
+      if (!pane || !pane.length) {
+        return dfd.reject();
+      }
+
       // Change the expander button into "collapse" mode
       const expander = header.children('.btn');
       if (expander.length) {
@@ -813,13 +831,9 @@ Accordion.prototype = {
       }
 
       if (pane.hasClass('no-transition')) {
-        for (let i = 0; i < pane.length; i++) {
-          pane[i].style.display = 'block';
-          pane[i].style.height = 'auto';
-        }
         handleAfterExpand();
       } else {
-        pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
+        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
       }
     }
 
@@ -916,8 +930,6 @@ Accordion.prototype = {
       if (e) {
         e.stopPropagation();
       }
-      pane[0].style.display = 'none';
-      pane[0].style.height = '0px';
       pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
       dfd.resolve();
@@ -1232,6 +1244,7 @@ Accordion.prototype = {
     if (doReset) {
       const collapsePromise = this.collapseAll();
       this.headers.removeClass('filtered has-filtered-children hide-focus');
+      this.panes.removeClass('all-children-filtered');
 
       $.when(collapsePromise).then(() => {
         this.currentlyFiltered = $();

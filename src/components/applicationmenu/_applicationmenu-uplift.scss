@@ -211,7 +211,7 @@
         background-color: $uplift-acc-expanded-bg-color;
         border-radius: 0;
         margin: 10px -10px 0;
-        padding: 10px 10px 0;
+        padding: 10px;
         position: relative;
 
         &:not(.is-focused),
@@ -233,7 +233,7 @@
             border-radius: $uplift-acc-border-radius;
             content: ' ';
             display: block;
-            height: calc(100% - 12px);
+            height: calc(100% - 22px);
             position: absolute;
             width: calc(100% - 20px);
           }
@@ -269,7 +269,7 @@
           }
         }
 
-        + .accordion-pane {
+        + .accordion-pane:not(.all-children-filtered) {
           background-color: $uplift-acc-expanded-bg-color;
           margin: 0 -10px;
           padding: 0 10px 10px;
@@ -291,6 +291,12 @@
 
       + .accordion-header {
         margin-top: 4px;
+      }
+
+      &.filtered {
+        + .accordion-pane {
+          display: none;
+        }
       }
     }
 
