@@ -1242,15 +1242,12 @@ Accordion.prototype = {
     const self = this;
 
     if (doReset) {
-      const collapsePromise = this.collapseAll();
-      this.headers.removeClass('filtered has-filtered-children hide-focus');
-      this.panes.removeClass('all-children-filtered');
+      this.headers.removeClass('filtered has-filtered-children hide-focus is-expanded');
+      this.panes.removeClass('all-children-filtered is-expanded').removeAttr('style');
 
-      $.when(collapsePromise).then(() => {
-        this.currentlyFiltered = $();
-        this.build(undefined, true);
-        this.filter(headers);
-      });
+      this.currentlyFiltered = $();
+      this.build(undefined, true);
+      this.filter(headers);
       return;
     }
 
