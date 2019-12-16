@@ -1316,6 +1316,25 @@ describe('Datagrid single select tests', () => {
   });
 });
 
+describe('Datagrid summary row tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-summary-row');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should add up rows', async () => {
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(4)')).getText()).toEqual('72.48');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(5)')).getText()).toEqual('100 %');
+  });
+});
+
 describe('Datagrid Client Side Filter and Sort Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
