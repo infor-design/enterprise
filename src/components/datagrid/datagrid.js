@@ -5034,7 +5034,7 @@ Datagrid.prototype = {
         text: Locale.translate('Close'),
         click(e, modal) {
           modal.close();
-          $('body').off('open.datagrid');
+          $('body').off('beforeopen.datagrid');
         }
       }]
     }).off('beforeopen.datagrid')
@@ -5110,7 +5110,7 @@ Datagrid.prototype = {
           // Escape Button Code. Make sure to close the modal correctly.
           if (event.keyCode === 27) {
             modal.close();
-            $('body').off('open.datagrid');
+            $('body').off('beforeopen.datagrid');
           }
         });
       });
