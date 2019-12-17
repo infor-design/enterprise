@@ -8,6 +8,9 @@
 
 ### v4.25.0 Fixes
 
+- `[About]` Added further indication for Microsoft Edge Chrome next to the underlying chrome version. ([#3073](https://github.com/infor-design/enterprise/issues/3073))
+- `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
+- `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
 - `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
 - `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
