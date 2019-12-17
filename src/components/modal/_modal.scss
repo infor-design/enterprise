@@ -492,6 +492,25 @@ body.modal-engaged {
   }
 }
 
+// IE-specific adjustments
+html.ie {
+  .modal {
+    &.full-width {
+      margin: 0;
+    }
+  }
+}
+
+// iOS specific adjustments
+html.ios {
+  .has-modal-open {
+    [aria-hidden='true'],
+    [aria-hidden='true'] * {
+      overflow: hidden;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
@@ -538,15 +557,6 @@ html[dir='rtl'] {
     .btn-close {
       left: 10px;
       right: auto;
-    }
-  }
-}
-
-.ios {
-  .has-modal-open {
-    [aria-hidden='true'],
-    [aria-hidden='true'] * {
-      overflow: hidden;
     }
   }
 }

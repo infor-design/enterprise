@@ -478,7 +478,7 @@ Tooltip.prototype = {
 
     this.tooltip[0].setAttribute('class', classes);
 
-    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length;
+    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length && this.settings.trigger === 'hover';
 
     if (typeof content === 'string') {
       content = $(content);
