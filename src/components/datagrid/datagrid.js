@@ -284,6 +284,7 @@ Datagrid.prototype = {
     this.firstRender();
     this.handleEvents();
     this.handleKeys();
+    this.syncColGroupNodes();
 
     /**
      * Fires after the grid is rendered.
@@ -3265,6 +3266,7 @@ Datagrid.prototype = {
       self.checkEmptyMessage();
     }
 
+    self.syncColGroupNodes();
     self.setAlternateRowShading();
     self.createDraggableRows();
 
@@ -3306,6 +3308,31 @@ Datagrid.prototype = {
       self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
       this.activateFirstCell();
     });
+  },
+
+  /**
+   * Sync the colgroup nodes
+   * @private
+   * @returns {void}
+   */
+  syncColGroupNodes() {
+    const colGroupNodes = this.colGroupNodes();
+    const headerNodes = this.headerNodes();
+    const len = headerNodes.length;
+    let done = false;
+    let max = 25;
+    let isMatch;
+
+    while (!done && max > -1 && len) {
+      max--;
+      isMatch = [];
+      for (let i = 0; i < len; i++) {
+        const w = this.getOuterWidth(headerNodes[i]);
+        isMatch.push(w === $(colGroupNodes[i]).width());
+        $(colGroupNodes[i]).width(w);
+      }
+      done = isMatch.indexOf(false) === -1;
+    }
   },
 
   /**
@@ -5286,25 +5313,28 @@ Datagrid.prototype = {
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         const currentColWidth = parseInt(currentCol.style.width, 10);
         const nextCol = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextCol.style.width, 10);
-        const nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
-        const nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
 
-        // Calculate
-        const width = currentColWidth - diff;
-        const nextWidth = nextColWidth + diff;
+        if (diff && nextCol) {
+          const nextColWidth = parseInt(nextCol.style.width, 10);
+          const nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
+          const nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
 
-        // Enforce Column or Default min and max widths
-        if (width < minWidth || width > maxWidth
-          || nextWidth < nextMinWidth || nextWidth > nextMaxWidth) {
-          self.resizeHandle.css('cursor', 'inherit');
-          return;
+          // Calculate
+          const width = currentColWidth - diff;
+          const nextWidth = nextColWidth + diff;
+
+          // Enforce Column or Default min and max widths
+          if (width < minWidth || width > maxWidth
+            || nextWidth < nextMinWidth || nextWidth > nextMaxWidth) {
+            self.resizeHandle.css('cursor', 'inherit');
+            return;
+          }
+
+          // Update the DOM
+          nextCol.style.width = (`${nextWidth}px`);
+          currentCol.style.width = (`${width}px`);
+          startingLeft = ui.left;
         }
-
-        // Update the DOM
-        nextCol.style.width = (`${nextWidth}px`);
-        currentCol.style.width = (`${width}px`);
-        startingLeft = ui.left;
       })
       .on('dragend.datagrid', () => {
         self.dragging = false;
@@ -5315,15 +5345,17 @@ Datagrid.prototype = {
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         const currentColWidth = parseInt(currentCol.style.width, 10);
         const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
-        const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextColGroup.style.width, 10);
 
-        self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
         if (nextCol) {
+          const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
+          const nextColWidth = parseInt(nextColGroup.style.width, 10);
+
+          self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
           self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
-        }
-        if (self.isEllipsisActiveHeader(column)) {
-          self.activeEllipsisHeader(self.currentHeader[0]);
+
+          if (self.isEllipsisActiveHeader(column)) {
+            self.activeEllipsisHeader(self.currentHeader[0]);
+          }
         }
       });
   },

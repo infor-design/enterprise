@@ -36,6 +36,7 @@
 - `[Datagrid]` Fixed an issue where in some cases where if you have one column and are in edit mode resizing the page behaved strangely. ([#3193](https://github.com/infor-design/enterprise/issues/3193))
 - `[Datagrid]` Changed the rendering of columns so that there will never be a gap on the left side, changed the default of stretchColumn to null which will fill. ([#1818](https://github.com/infor-design/enterprise/issues/1818))
 - `[Datagrid]` Fixed an issue that hyperlinks in the datagrid would redirect. ([#3207](https://github.com/infor-design/enterprise/issues/3207))
+- `[Datagrid]` Fixed an issue where the drag pointer was not in sync while resize columns. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
 - `[Datagrid]` Changed the behavior of column resizing to use "fit" during resize, which means adgecent columns only will be resized. ([#605](https://github.com/infor-design/enterprise/issues/605))
 - `[Datagrid]` Fixed an issue that resizing the last column would create a gap. ([#1671](https://github.com/infor-design/enterprise/issues/1671))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
