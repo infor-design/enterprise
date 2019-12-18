@@ -64,7 +64,8 @@ const POPUPMENU_DEFAULTS = {
     y: 0
   },
   predefined: $(),
-  duplicateMenu: null
+  duplicateMenu: null,
+  stretchToWidestMenuItem: false
 };
 
 function PopupMenu(element, settings) {
@@ -359,6 +360,12 @@ PopupMenu.prototype = {
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
       this.menu.removeClass('hidden');
+    }
+
+    // If `settings.stretchToWidestMenuItem` is true, the trigger element will be sized
+    // to match the size of the menu's largest item.
+    if (this.settings.stretchToWidestMenuItem) {
+      this.element.width(parseInt(this.getMaxMenuWidth(), 10));
     }
   },
 
@@ -1634,6 +1641,35 @@ PopupMenu.prototype = {
     }
 
     this.settings.beforeOpen(response, callbackOpts);
+  },
+
+  /**
+   * Gets the width of the menu
+   * @returns {number} representing the width of the largest menu item.
+   */
+  getMaxMenuWidth() {
+    if (!(this.menu instanceof $)) {
+      return 0;
+    }
+
+    const wasOriginallyClosed = !this.isOpen;
+    if (wasOriginallyClosed) {
+      this.menu.css({
+        left: '-999999px'
+      });
+      this.menu.addClass('is-open');
+    }
+
+    const width = this.menu.width();
+
+    if (wasOriginallyClosed) {
+      this.menu.css({
+        left: ''
+      });
+      this.menu.removeClass('is-open');
+    }
+
+    return width;
   },
 
   /**
