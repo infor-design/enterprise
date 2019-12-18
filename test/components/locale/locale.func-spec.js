@@ -1829,7 +1829,6 @@ describe('Locale API', () => { //eslint-disable-line
   });
 
   it('Should provide a different fr-CA and fr-FR', () => {
-    debugger;
     Locale.set('fr-FR');
 
     expect(Locale.currentLocale.name).toEqual('fr-FR');
