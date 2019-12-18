@@ -259,7 +259,7 @@ Datagrid.prototype = {
     this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
-    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+    this.setOriginalColumns();
     this.removeToolbarOnDestroy = false;
     this.nonVisibleCellErrors = [];
     this.recordCount = 0;
@@ -4568,6 +4568,7 @@ Datagrid.prototype = {
     }
 
     this.settings.columns = columns;
+    this.setOriginalColumns();
 
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
@@ -4674,6 +4675,14 @@ Datagrid.prototype = {
     }
 
     return false;
+  },
+
+  /**
+   * Set the original column which may later be reloaded.
+   * @private
+   */
+  setOriginalColumns() {
+    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
   },
 
   /**
