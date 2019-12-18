@@ -19,18 +19,19 @@
 <script id="test-script">
   $('body').on('initialized', function () {
     const FontPickerStyle = Soho.components.FontPickerStyle;
+    const translate = Soho.Locale.translate;
 
     $('#editor1').editor({
       fontpickerSettings: {
         styles: [
-          new FontPickerStyle('default', 'Default', 'p'),
-          new FontPickerStyle('header1', 'Header 1', 'h1'),
-          new FontPickerStyle('header2', 'Header 2', 'h2'),
-          new FontPickerStyle('header3', 'Header 3', 'h3'),
-          new FontPickerStyle('header4', 'Header 4', 'h4'),
-          new FontPickerStyle('header5', 'Header 5', 'h5'),
-          new FontPickerStyle('header6', 'Header 6', 'h6'),
-          new FontPickerStyle('blockquote', 'Blockquote', 'blockquote')
+          new FontPickerStyle('normal', Soho.Locale.translate('FontPickerNormal'), 'p'),
+          new FontPickerStyle('header1', Soho.Locale.translate('FontPickerHeader').replace('{0}', '1'), 'h1'),
+          new FontPickerStyle('header2', Soho.Locale.translate('FontPickerHeader').replace('{0}', '2'), 'h2'),
+          new FontPickerStyle('header3', Soho.Locale.translate('FontPickerHeader').replace('{0}', '3'), 'h3'),
+          new FontPickerStyle('header4', Soho.Locale.translate('FontPickerHeader').replace('{0}', '4'), 'h4'),
+          new FontPickerStyle('header5', Soho.Locale.translate('FontPickerHeader').replace('{0}', '5'), 'h5'),
+          new FontPickerStyle('header6', Soho.Locale.translate('FontPickerHeader').replace('{0}', '6'), 'h6'),
+          new FontPickerStyle('blockquote', Soho.Locale.translate('Blockquote'), 'blockquote')
         ]
       }
     });

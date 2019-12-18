@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils'; // NOTE: update this path when moving to a component folder
 
 import FontPickerStyle from './fontpicker.style';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -14,9 +15,9 @@ const COMPONENT_NAME = 'fontpicker';
 function fontpickerSettingsFactory() {
   return {
     styles: [
-      new FontPickerStyle('default', 'Default'),
-      new FontPickerStyle('header1', 'Header 1', 'h3'),
-      new FontPickerStyle('header2', 'Header 2', 'h4')
+      new FontPickerStyle('default', Locale.translate('FontPickerNormal')),
+      new FontPickerStyle('header1', Locale.translate('FontPickerHeader').replace('{0}', '1'), 'h3'),
+      new FontPickerStyle('header2', Locale.translate('FontPickerHeader').replace('{0}', '2'), 'h4')
     ]
   };
 }

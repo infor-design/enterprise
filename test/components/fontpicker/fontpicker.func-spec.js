@@ -1,4 +1,5 @@
 import { FontPicker, FontPickerStyle } from '../../../src/components/fontpicker/fontpicker';
+import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/fontpicker/example-index.html');
@@ -14,6 +15,9 @@ describe('Fontpicker API', () => {
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', editorHTML);
     fontpickerEl = document.body.querySelector('.fontpicker');
+
+    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
+    Locale.set('en-US');
   });
 
   afterEach(() => {
@@ -32,7 +36,7 @@ describe('Fontpicker API', () => {
   it('should be completely rendered after the page is loaded', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
 
-    expect(fontpickerEl.querySelector('span').innerText).toBe('Default');
+    expect(fontpickerEl.querySelector('span').innerText).toBe('Normal Text');
   });
 
   it('can be disabled and re-enabled', () => {
@@ -135,7 +139,7 @@ describe('Fontpicker API', () => {
     expect(styles.length).toEqual(3);
 
     expect(styles[0] instanceof FontPickerStyle).toBeTruthy();
-    expect(styles[0].displayName).toEqual('Default');
+    expect(styles[0].displayName).toEqual('Normal Text');
     expect(styles[0].tagName).toEqual('p');
   });
 
@@ -167,7 +171,7 @@ describe('Fontpicker API', () => {
     expect(styles.length).toEqual(3);
 
     expect(styles[0] instanceof FontPickerStyle).toBeTruthy();
-    expect(styles[0].displayName).toEqual('Default');
+    expect(styles[0].displayName).toEqual('Normal Text');
     expect(styles[0].tagName).toEqual('p');
   });
 
