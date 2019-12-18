@@ -306,17 +306,32 @@ PopupMenu.prototype = {
       }
     });
 
-    // If the trigger element is a button with no border append arrow markup
+    // Some popupmenu components will contain an arrow that points to their
+    // triggering element, or a child of that element.
+    let doSetArrow = false;
     const containerClass = this.element.parent().attr('class');
-    if ((this.element.hasClass('btn-menu') ||
-        this.element.hasClass('btn-actions') ||
-        this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
-        this.settings.menu === 'colorpicker-menu' ||
-        this.element.closest('.toolbar').length > 0 ||
-        this.element.closest('.masthead').length > 0 ||
-        this.element.is('.searchfield-category-button') ||
-        (containerClass && containerClass.indexOf('more') >= 0) ||
-        containerClass && containerClass.indexOf('btn-group') >= 0) || this.settings.showArrow) {
+
+    // `true` setting takes precedent over all else
+    if (this.settings.showArrow === true) {
+      doSetArrow = false;
+    } else if (this.settings.showArrow === null) {
+      const closestToolbar = this.element.closest('.toolbar');
+      const closestMasthead = this.element.closest('.masthead');
+
+      if ((this.element.hasClass('btn-menu') ||
+          this.element.hasClass('btn-actions') ||
+          this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
+          (closestToolbar.length > 0 && !closestToolbar.is('.formatter-toolbar')) ||
+          closestMasthead.length > 0 ||
+          (this.settings.menu === 'colorpicker-menu') ||
+          this.element.is('.searchfield-category-button') ||
+          (containerClass && containerClass.indexOf('more') >= 0) ||
+          containerClass && containerClass.indexOf('btn-group') >= 0)) {
+        doSetArrow = true;
+      }
+    }
+
+    if (doSetArrow) {
       const arrow = $('<div class="arrow"></div>');
       const wrapper = this.menu.parent('.popupmenu-wrapper');
 

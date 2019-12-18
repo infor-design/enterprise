@@ -84,7 +84,14 @@ const EDITOR_DEFAULTS = {
   useFlexToolbar: false,
   useSourceFormatter: false,
   formatterTabsize: 4,
-  fontpickerSettings: {}
+  fontpickerSettings: {
+    popupmenuSettings: {
+      showArrow: false,
+      offset: {
+        y: 0
+      }
+    }
+  }
 };
 
 function Editor(element, settings) {
@@ -416,11 +423,26 @@ Editor.prototype = {
 
     // Invoke Colorpicker, if applicable
     const cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
-    cpElements.colorpicker({ placeIn: 'editor' });
+    cpElements.colorpicker({
+      placeIn: 'editor',
+      popupmenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
     $('.trigger', cpElements).off('click.colorpicker');
 
     // Invoke the (Flex?) Toolbar
-    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']();
+    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']({
+      moreMenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
 
     // Invoke Tooltips
     this.toolbar.find('button[title]').tooltip();

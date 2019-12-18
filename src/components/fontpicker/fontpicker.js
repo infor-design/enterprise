@@ -14,6 +14,11 @@ const COMPONENT_NAME = 'fontpicker';
 // NOTE: new settings are created at runtime to avoid retention of state on FontPickerStyle objects
 function fontpickerSettingsFactory() {
   return {
+    popupmenuSettings: {
+      offset: {
+        y: 10
+      }
+    },
     styles: [
       new FontPickerStyle('default', Locale.translate('FontPickerNormal')),
       new FontPickerStyle('header1', Locale.translate('FontPickerHeader').replace('{0}', '1'), 'h3'),
@@ -179,12 +184,11 @@ FontPicker.prototype = {
       $menu = $('<ul class="popupmenu fontpicker-menu"></ul>').insertAfter(this.element);
     }
     $menu.html(this.buildMenuHTML());
-    $element.popupmenu({
-      menu: $menu,
-      offset: {
-        y: 10
-      }
+
+    const menuSettings = utils.extend({}, this.settings.popupmenuSettings, {
+      menu: $menu
     });
+    $element.popupmenu(menuSettings);
 
     // Set initial state
     this.render();
