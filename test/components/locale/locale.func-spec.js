@@ -55,7 +55,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => {
+describe('Locale API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
@@ -1826,5 +1826,76 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('no-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
     expect(Locale.translate('Required')).toEqual('Obligatorisk');
+  });
+
+  it('Should provide a different fr-CA and fr-FR', () => {
+    Locale.set('fr-FR');
+
+    expect(Locale.currentLocale.name).toEqual('fr-FR');
+    expect(Locale.currentLanguage.name).toEqual('fr');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Retrier les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionnez un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profile utilisateur');
+
+    Locale.set('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('fr-CA');
+    expect(Locale.currentLanguage.name).toEqual('fr');
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+  });
+
+  it('Should be able to set language to full code', () => {
+    Locale.set('en-US');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
+    expect(Locale.currentLanguage.name).toEqual('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+
+    Locale.setLanguage('de-DE');
+
+    expect(Locale.translate('AddComments')).toEqual('Anmerkungen hinzufügen');
+    expect(Locale.translate('ReorderRows')).toEqual('Zeilen neu anordnen');
+    expect(Locale.translate('SelectDay')).toEqual('Tag auswählen');
+    expect(Locale.translate('UserProfile')).toEqual('Benutzerprofil');
+  });
+
+  it('Should be able to set language to full code from a similar language', () => {
+    Locale.set('fr-FR');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('fr-FR');
+    expect(Locale.currentLanguage.name).toEqual('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+  });
+
+  it('Should be able to switch language', () => {
+    Locale.set('en-US');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+
+    Locale.setLanguage('fr-FR');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    Locale.setLanguage('fr-FR');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
   });
 });

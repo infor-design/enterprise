@@ -84,6 +84,7 @@ const Locale = {  // eslint-disable-line
     'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
+  translatedLocales: ['fr-CA', 'fr-FR'],
   defaultLocale: 'en-US',
   minify: minifyCultures,
 
@@ -208,8 +209,6 @@ const Locale = {  // eslint-disable-line
     }
 
     correctLanguage = this.remapLanguage(lang);
-
-    correctLanguage = this.defaultLocale.substr(0, 2);
     return correctLanguage;
   },
 
@@ -256,14 +255,37 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+      this.languages[locale] = {
+        name: locale,
+        direction: data.direction || (langData ? langData.direction : ''),
+        nativeName: data.nativeName || (langData ? langData.nativeName : ''),
+        messages: data.messages || (langData ? langData.messages : {})
+      };
     } else if (!this.languages[lang] && !data.messages) {
-      const match = this.defaultLocales.filter(a => a.lang === lang);
-      const parentLocale = match[0] || [{ default: 'en-US' }];
+      const parentLocale = this.parentLocale(locale);
       if (parentLocale.default && parentLocale.default !== locale &&
         !this.cultures[parentLocale.default]) {
         this.appendLocaleScript(parentLocale.default);
       }
     }
+  },
+
+  /**
+   * Find the parent locale (meaning shared translations), if it exists.
+   * @private
+   * @param {string} locale The locale we are checking.
+   * @returns {string} The parent locale.
+   */
+  parentLocale(locale) {
+    const lang = locale.substr(0, 2);
+    const match = this.defaultLocales.filter(a => a.lang === lang);
+    const parentLocale = match[0] || [{ default: 'en-US' }];
+
+    // fr-FR and fr-CA are different / do not have a default
+    if (this.translatedLocales.includes(locale)) {
+      return { lang: 'fr', default: 'fr-CA' };
+    }
+    return parentLocale;
   },
 
   appendedLocales: [],
@@ -344,10 +366,8 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript('en-US', locale === 'en-US');
     }
 
-    const lang = locale.split('-')[0];
     let hasParentLocale = false;
-    const match = this.defaultLocales.filter(a => a.lang === lang);
-    const parentLocale = match[0] || [{ default: 'en-US' }];
+    const parentLocale = this.parentLocale(locale);
     if (parentLocale.default && parentLocale.default !== locale &&
       !this.cultures[parentLocale.default]) {
       hasParentLocale = true;
@@ -469,6 +489,20 @@ const Locale = {  // eslint-disable-line
       if (this.languages[lang]) {
         this.currentLanguage = this.languages[lang];
         this.updateLanguageTag(name);
+      }
+
+      if (this.translatedLocales.includes(name)) {
+        this.languages[lang].direction = data.direction;
+        this.languages[lang].messages = data.messages;
+        this.languages[lang].name = lang;
+        this.languages[lang].nativeName = data.nativeName;
+
+        this.languages[name] = {
+          direction: data.direction,
+          messages: data.messages,
+          name,
+          nativeName: data.nativeName
+        };
       }
     }
   },
@@ -1777,6 +1811,7 @@ const Locale = {  // eslint-disable-line
       date.getMilliseconds()
     ];
   },
+
   /**
    * Convert umalqura to gregorian date.
    * @param {number} year the year
