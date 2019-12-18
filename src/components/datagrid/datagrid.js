@@ -3903,10 +3903,6 @@ Datagrid.prototype = {
     let hasButton = false;
     const self = this;
 
-    if (columnDef.hidden) {
-      return 0;
-    }
-
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
     } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
