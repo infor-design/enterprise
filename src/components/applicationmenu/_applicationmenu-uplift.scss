@@ -253,6 +253,7 @@
         &.is-selected {
           background-color: $uplift-acc-expanded-bg-color;
           border-bottom-color: transparent;
+          border-top-color: transparent;
 
           &::before {
             background-color: $uplift-appmenu-selected-bg-color;
@@ -379,12 +380,6 @@
         + .accordion-header:not(.is-focused):not(.is-selected),
         + .accordion-content {
           border-top-color: transparent;
-        }
-
-        + .accordion-header {
-          &.is-focused {
-            border-top-color: $uplift-appmenu-selected-border-color;
-          }
         }
       }
     }
