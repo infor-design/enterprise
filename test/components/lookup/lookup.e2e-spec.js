@@ -457,3 +457,35 @@ describe('Lookup single select serverside tests', () => {
     });
   }
 });
+
+fdescribe('Lookup minWidth tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/example-minwidth');
+  });
+
+  it('Should open the lookup with min width', async () => {
+    const buttonEl = await element.all(by.className('trigger')).last();
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+    const modalEl = await element(by.className('modal'));
+    await browser.driver.sleep(config.sleep);
+
+    expect(modalEl.isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.className('trigger')).last();
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+      const modalEl = await element(by.className('modal'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-min-width')).toEqual(0);
+    });
+  }
+});

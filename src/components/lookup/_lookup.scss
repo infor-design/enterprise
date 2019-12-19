@@ -98,6 +98,13 @@
     }
   }
 
+  &.has-minwidth {
+    .datagrid-wrapper,
+    table {
+      min-width: inherit;
+    }
+  }
+
   .datagrid tr:last-child td {
     border-bottom: 0;
   }
