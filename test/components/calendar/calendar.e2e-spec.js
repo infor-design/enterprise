@@ -79,8 +79,8 @@ describe('Calendar ajax loading tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.calendar-event-more'))), 4000);
 
-    expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(1);
-    expect(await element.all(by.css('.calendar-event.azure')).count()).toEqual(3);
+    expect(await element.all(by.css('.monthview-table .calendar-event-more')).count()).toEqual(1);
+    expect(await element.all(by.css('.monthview-table .calendar-event.azure')).count()).toEqual(3);
   });
 
   it('Should render ajax loaded dates for sept 2018', async () => {
