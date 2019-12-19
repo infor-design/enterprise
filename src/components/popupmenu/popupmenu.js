@@ -277,7 +277,8 @@ PopupMenu.prototype = {
 
     this.wrapper = this.menu.parent('.popupmenu-wrapper');
     if (!this.wrapper.length) {
-      this.wrapper = this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.wrapper = this.menu.parent('.popupmenu-wrapper');
     }
 
     // Invoke all icons as icons
@@ -365,7 +366,13 @@ PopupMenu.prototype = {
     // If `settings.stretchToWidestMenuItem` is true, the trigger element will be sized
     // to match the size of the menu's largest item.
     if (this.settings.stretchToWidestMenuItem) {
-      this.element.width(parseInt(this.getMaxMenuWidth(), 10));
+      const btnStyle = window.getComputedStyle(this.element[0]);
+      let padding = 0;
+      if (btnStyle && btnStyle.getPropertyValue('padding-left')) {
+        padding = parseInt(btnStyle.getPropertyValue('padding-left'), 10) + parseInt(btnStyle.getPropertyValue('padding-right'), 10);
+      }
+
+      this.element.width(parseInt(this.getMaxMenuWidth(), 10) - padding);
     }
   },
 
@@ -1654,7 +1661,7 @@ PopupMenu.prototype = {
 
     const wasOriginallyClosed = !this.isOpen;
     if (wasOriginallyClosed) {
-      this.menu.css({
+      this.wrapper.css({
         left: '-999999px'
       });
       this.menu.addClass('is-open');
@@ -1663,7 +1670,7 @@ PopupMenu.prototype = {
     const width = this.menu.width();
 
     if (wasOriginallyClosed) {
-      this.menu.css({
+      this.wrapper.css({
         left: ''
       });
       this.menu.removeClass('is-open');

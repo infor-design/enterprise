@@ -8,7 +8,7 @@
       align-items: center;
       display: flex;
       line-height: normal;
-      padding: 7px 30px 7px 10px;
+      padding: 7px 10px;
     }
   }
 }
@@ -22,14 +22,6 @@
 }
 
 html[dir='rtl'] {
-  .fontpicker-menu {
-    li {
-      a {
-        padding: 7px 10px 7px 30px;
-      }
-    }
-  }
-
   .btn.fontpicker {
     text-align: right;
 
