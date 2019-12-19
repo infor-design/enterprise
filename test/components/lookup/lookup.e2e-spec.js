@@ -473,6 +473,7 @@ fdescribe('Lookup minWidth tests', () => { //eslint-disable-line
     await browser.driver.sleep(config.sleep);
 
     expect(modalEl.isDisplayed()).toBe(true);
+    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
