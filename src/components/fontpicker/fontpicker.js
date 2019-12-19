@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils'; // NOTE: update this path when moving to a component folder
 
 import FontPickerStyle from './fontpicker.style';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -13,10 +14,15 @@ const COMPONENT_NAME = 'fontpicker';
 // NOTE: new settings are created at runtime to avoid retention of state on FontPickerStyle objects
 function fontpickerSettingsFactory() {
   return {
+    popupmenuSettings: {
+      offset: {
+        y: 10
+      }
+    },
     styles: [
-      new FontPickerStyle('default', 'Default'),
-      new FontPickerStyle('header1', 'Header 1', 'h3'),
-      new FontPickerStyle('header2', 'Header 2', 'h4')
+      new FontPickerStyle('default', Locale.translate('FontPickerNormal')),
+      new FontPickerStyle('header1', Locale.translate('FontPickerHeader').replace('{0}', '1'), 'h3'),
+      new FontPickerStyle('header2', Locale.translate('FontPickerHeader').replace('{0}', '2'), 'h4')
     ]
   };
 }
@@ -178,12 +184,12 @@ FontPicker.prototype = {
       $menu = $('<ul class="popupmenu fontpicker-menu"></ul>').insertAfter(this.element);
     }
     $menu.html(this.buildMenuHTML());
-    $element.popupmenu({
+
+    const menuSettings = utils.extend({}, this.settings.popupmenuSettings, {
       menu: $menu,
-      offset: {
-        y: 10
-      }
+      stretchToWidestMenuItem: true
     });
+    $element.popupmenu(menuSettings);
 
     // Set initial state
     this.render();
