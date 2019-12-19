@@ -64,7 +64,8 @@ const POPUPMENU_DEFAULTS = {
     y: 0
   },
   predefined: $(),
-  duplicateMenu: null
+  duplicateMenu: null,
+  stretchToWidestMenuItem: false
 };
 
 function PopupMenu(element, settings) {
@@ -276,7 +277,8 @@ PopupMenu.prototype = {
 
     this.wrapper = this.menu.parent('.popupmenu-wrapper');
     if (!this.wrapper.length) {
-      this.wrapper = this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.wrapper = this.menu.parent('.popupmenu-wrapper');
     }
 
     // Invoke all icons as icons
@@ -306,17 +308,32 @@ PopupMenu.prototype = {
       }
     });
 
-    // If the trigger element is a button with no border append arrow markup
+    // Some popupmenu components will contain an arrow that points to their
+    // triggering element, or a child of that element.
+    let doSetArrow = false;
     const containerClass = this.element.parent().attr('class');
-    if ((this.element.hasClass('btn-menu') ||
-        this.element.hasClass('btn-actions') ||
-        this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
-        this.settings.menu === 'colorpicker-menu' ||
-        this.element.closest('.toolbar').length > 0 ||
-        this.element.closest('.masthead').length > 0 ||
-        this.element.is('.searchfield-category-button') ||
-        (containerClass && containerClass.indexOf('more') >= 0) ||
-        containerClass && containerClass.indexOf('btn-group') >= 0) || this.settings.showArrow) {
+
+    // `true` setting takes precedent over all else
+    if (this.settings.showArrow === true) {
+      doSetArrow = false;
+    } else if (this.settings.showArrow === null) {
+      const closestToolbar = this.element.closest('.toolbar');
+      const closestMasthead = this.element.closest('.masthead');
+
+      if ((this.element.hasClass('btn-menu') ||
+          this.element.hasClass('btn-actions') ||
+          this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
+          (closestToolbar.length > 0 && !closestToolbar.is('.formatter-toolbar')) ||
+          closestMasthead.length > 0 ||
+          (this.settings.menu === 'colorpicker-menu') ||
+          this.element.is('.searchfield-category-button') ||
+          (containerClass && containerClass.indexOf('more') >= 0) ||
+          containerClass && containerClass.indexOf('btn-group') >= 0)) {
+        doSetArrow = true;
+      }
+    }
+
+    if (doSetArrow) {
       const arrow = $('<div class="arrow"></div>');
       const wrapper = this.menu.parent('.popupmenu-wrapper');
 
@@ -344,6 +361,18 @@ PopupMenu.prototype = {
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
       this.menu.removeClass('hidden');
+    }
+
+    // If `settings.stretchToWidestMenuItem` is true, the trigger element will be sized
+    // to match the size of the menu's largest item.
+    if (this.settings.stretchToWidestMenuItem) {
+      const btnStyle = window.getComputedStyle(this.element[0]);
+      let padding = 0;
+      if (btnStyle && btnStyle.getPropertyValue('padding-left')) {
+        padding = parseInt(btnStyle.getPropertyValue('padding-left'), 10) + parseInt(btnStyle.getPropertyValue('padding-right'), 10);
+      }
+
+      this.element.width(parseInt(this.getMaxMenuWidth(), 10) - padding);
     }
   },
 
@@ -1619,6 +1648,35 @@ PopupMenu.prototype = {
     }
 
     this.settings.beforeOpen(response, callbackOpts);
+  },
+
+  /**
+   * Gets the width of the menu
+   * @returns {number} representing the width of the largest menu item.
+   */
+  getMaxMenuWidth() {
+    if (!(this.menu instanceof $)) {
+      return 0;
+    }
+
+    const wasOriginallyClosed = !this.isOpen;
+    if (wasOriginallyClosed) {
+      this.wrapper.css({
+        left: '-999999px'
+      });
+      this.menu.addClass('is-open');
+    }
+
+    const width = this.menu.width();
+
+    if (wasOriginallyClosed) {
+      this.wrapper.css({
+        left: ''
+      });
+      this.menu.removeClass('is-open');
+    }
+
+    return width;
   },
 
   /**

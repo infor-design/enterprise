@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { log } from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
@@ -14,8 +15,9 @@ const COMPONENT_NAME = 'toolbar-flex';
  * @namespace
  */
 const TOOLBAR_FLEX_DEFAULTS = {
+  allowTabs: false,
   beforeMoreMenuOpen: null,
-  allowTabs: false
+  moreMenuSettings: {},
 };
 
 /**
@@ -24,6 +26,7 @@ const TOOLBAR_FLEX_DEFAULTS = {
  * @param {object} [settings] incoming settings
  * @param {function} [settings.beforeMoreMenuOpen=null] Ajax function to be called before the more menu is opened
  * @param {boolean} [settings.allowTabs] Allows tab to navigate the toolbar
+ * @param {object} [settings.moreMenuSettings] if defined on a toolbar containing a More Actions menu, this will pass settings into this toolbar's More Actions menu
  */
 function ToolbarFlex(element, settings) {
   this.element = element;
@@ -51,10 +54,17 @@ ToolbarFlex.prototype = {
     this.uniqueId = utils.uniqueId(this.element);
     this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
-      const itemComponentSettings = {};
-      if ($(item).hasClass('btn-actions') && !!this.settings.beforeMoreMenuOpen) {
+      let itemComponentSettings = {};
+      const isActionButton = $(item).hasClass('btn-actions');
+
+      if (isActionButton || this.settings.moreMenuSettings) {
+        itemComponentSettings = this.settings.moreMenuSettings;
+      }
+      if (this.settings.beforeMoreMenuOpen) {
+        warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
         itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
       }
+
       $(item).toolbarflexitem({
         toolbarAPI: this,
         componentSettings: itemComponentSettings,
