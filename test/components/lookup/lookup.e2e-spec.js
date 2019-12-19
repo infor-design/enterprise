@@ -468,11 +468,8 @@ fdescribe('Lookup minWidth tests', () => { //eslint-disable-line
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
-
-    const modalEl = await element(by.className('modal'));
     await browser.driver.sleep(config.sleep);
 
-    expect(modalEl.isDisplayed()).toBe(true);
     await utils.checkForErrors();
   });
 
