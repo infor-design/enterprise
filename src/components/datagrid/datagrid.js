@@ -8192,9 +8192,10 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ? this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
+    const idx = this.settings.treeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
       this.dataRowIndex(thisRow);
-    const rowData = this.rowData(this.dataRowIndex(thisRow));
+    const rowData = this.rowData(idx);
 
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
@@ -9065,7 +9066,10 @@ Datagrid.prototype = {
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
-    let dataRowIndex = this.dataRowIndex(rowNodes);
+    let dataRowIndex = isTreeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(rowNodes)) :
+      this.dataRowIndex(rowNodes);
+
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }

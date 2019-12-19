@@ -11,11 +11,13 @@
 - `[About]` Added further indication for Microsoft Edge Chrome next to the underlying chrome version. ([#3073](https://github.com/infor-design/enterprise/issues/3073))
 - `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
 - `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
+- `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
 - `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
 - `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
 - `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
+- `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
 ### v4.25.0 Chores & Maintenance
