@@ -458,7 +458,7 @@ describe('Lookup single select serverside tests', () => {
   }
 });
 
-fdescribe('Lookup minWidth tests', () => { //eslint-disable-line
+describe('Lookup minWidth tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-minwidth');
   });
