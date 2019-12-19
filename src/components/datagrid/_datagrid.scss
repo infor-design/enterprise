@@ -393,6 +393,7 @@ $datagrid-short-row-height: 25px;
 
       .datagrid-header-groups th {
         background-color: $datagrid-list-group-header-bg-color;
+        border-right: 1px solid $datagrid-list-group-header-border-color;
       }
 
       .handle {
