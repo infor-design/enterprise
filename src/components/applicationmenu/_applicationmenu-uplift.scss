@@ -211,7 +211,7 @@
         background-color: $uplift-acc-expanded-bg-color;
         border-radius: 0;
         margin: 10px -10px 0;
-        padding: 10px 10px 0;
+        padding: 10px;
         position: relative;
 
         &:not(.is-focused),
@@ -233,7 +233,7 @@
             border-radius: $uplift-acc-border-radius;
             content: ' ';
             display: block;
-            height: calc(100% - 12px);
+            height: calc(100% - 22px);
             position: absolute;
             width: calc(100% - 20px);
           }
@@ -253,6 +253,7 @@
         &.is-selected {
           background-color: $uplift-acc-expanded-bg-color;
           border-bottom-color: transparent;
+          border-top-color: transparent;
 
           &::before {
             background-color: $uplift-appmenu-selected-bg-color;
@@ -269,7 +270,7 @@
           }
         }
 
-        + .accordion-pane {
+        + .accordion-pane:not(.all-children-filtered) {
           background-color: $uplift-acc-expanded-bg-color;
           margin: 0 -10px;
           padding: 0 10px 10px;
@@ -291,6 +292,12 @@
 
       + .accordion-header {
         margin-top: 4px;
+      }
+
+      &.filtered {
+        + .accordion-pane {
+          display: none;
+        }
       }
     }
 
@@ -373,12 +380,6 @@
         + .accordion-header:not(.is-focused):not(.is-selected),
         + .accordion-content {
           border-top-color: transparent;
-        }
-
-        + .accordion-header {
-          &.is-focused {
-            border-top-color: $uplift-appmenu-selected-border-color;
-          }
         }
       }
     }
