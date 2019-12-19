@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var auditData = [
+      {
+        id: 1, escalated: 2, depth: 1, expanded: false, entity: 'All', view: false, create: false, change: false,
+        delete: false, activate: false, deactivate: false, export: false, import: false, purge: false, approve: false,
+        children: [
+          {
+            id: 2, escalated: 0, depth: 2, entity: 'Process', view: false, create: false, change: false,
+            delete: false, activate: false, deactivate: false, export: false, import: false, purge: false, approve: false,
+            children: [
+              {
+                id: 3, escalated: 0, depth: 3, entity: 'Workflows',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              },
+              {
+                id: 4, escalated: 0, depth: 3, entity: 'Monitors',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              }]
+          },
+          {
+            id: 5, escalated: 0, depth: 2, entity: 'Connect',
+            view: false, create: false, change: false,
+            delete: false, activate: false, deactivate: false, export: false, import: false,
+            purge: false, approve: false, children: [
+              {
+                id: 6, escalated: 0, depth: 3, entity: 'Document Flows',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              },
+              {
+                id: 7, escalated: 0, depth: 3, entity: 'Connection points',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              }]
+          },
+
+          {
+            id: 8, escalated: 0, depth: 2, entity: 'Scripting', view: false, create: false, change: false,
+            delete: false, activate: false, deactivate: false, export: false, import: false, purge: false, approve: false,
+            children: [
+              {
+                id: 9, escalated: 0, depth: 3, entity: 'Scripting submenu1',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              },
+              {
+                id: 10, escalated: 0, depth: 3, entity: 'Scripting submenu2',
+                view: false, create: false, change: false,
+                delete: false, activate: false, deactivate: false, export: false, import: false,
+                purge: false, approve: false
+              }]
+          },
+        ]
+      }
+    ];
+
+    // Define Columns for the Grid.
+    var columns = [
+      { id: 'name', name: 'Entity', field: 'entity', expanded: 'expanded', formatter: Soho.Formatters.Tree, filterType: 'text' },
+      { id: 'view', name: 'View', field: 'view', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'create', name: 'Create', field: 'create', formatter: Soho.Formatters.SelectionCheckbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'change', name: 'Change', field: 'change', formatter: Soho.Formatters.SelectionCheckbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'delete', name: 'Delete', field: 'delete', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'activate', name: 'Activate', field: 'activate', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'deactivate', name: 'Deactivate', field: 'deactivate', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'export', name: 'Export', field: 'export', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'import', name: 'Import', field: 'import', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'purge', name: 'Purge', field: 'purge', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 },
+      { id: 'approve', name: 'Approve', field: 'approve', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, width: 95 }
+    ];
+
+    // Init the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: auditData,
+      treeGrid: true,
+      editable: true,
+      showDirty: true,
+      paging: true,
+      pagesize: 2,
+      toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange:', { arguments: args, data: auditData });
+    });
+
+  });
+</script>
