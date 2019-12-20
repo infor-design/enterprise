@@ -39,26 +39,10 @@ describe('Editor example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('Should not visually regress', async () => {
       const elem = await element(by.css('.editor'));
 
-      await elem.clear();
-      await elem.sendKeys('Test');
-
-      await browser.driver.sleep(config.sleep);
-      await element(by.css('button[data-action=source]')).click();
-      await browser.driver.sleep(config.sleep);
-
-      const sourceElem = await element(by.tagName('textarea'));
-
-      await sourceElem.sendKeys('<b>Test</b>');
-      await element(by.css('button[data-action=visual]')).click();
-      await browser.driver.sleep(config.sleepLonger);
-
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-index')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-index')).toEqual(0);
     });
   }
 });

@@ -5,19 +5,19 @@
 
     <div class="field">
       <label for="paging" class="label">Paging</label>
-      <input id="paging" data-init="false" class="lookup" name="paging" type="text">
+      <input id="paging" data-init="false" class="lookup" name="paging" type="text"/>
     </div>
 
     <div class="field">
       <label for="pagingSmall" class="label">Paging Small</label>
-      <input id="pagingSmall" data-init="false" class="lookup" name="pagingSmall" type="text">
+      <input id="pagingSmall" data-init="false" class="lookup" name="pagingSmall" type="text"/>
     </div>
-    
+
     <div class="field">
       <label for="pagingSmallMinWidth" class="label">Paging Small (minWidth=640)</label>
-      <input id="pagingSmallMinWidth" data-init="false" class="lookup" name="pagingSmallMinWidth" type="text">
+      <input id="pagingSmallMinWidth" data-init="false" class="lookup" name="pagingSmallMinWidth" type="text"/>
     </div>
-    
+
   </div>
 </div>
 
@@ -38,7 +38,7 @@
       //Define Columns for the Grid.
       columnsSmall.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
       columnsSmall.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      
+
       //Get some data via ajax
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
       $.getJSON(url, function(data) {
@@ -88,7 +88,7 @@
               }
             }
         });
-        
+
         //Init the Lookup with that data and paging options
         $('#pagingSmallMinWidth').lookup({
             field: 'productId',
@@ -113,7 +113,7 @@
               }
             }
         });
-        
-        
+
+
       });
 </script>

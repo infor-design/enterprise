@@ -174,6 +174,8 @@ Soho.Locale.addCulture('en-US', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'First Page', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal Text', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Header {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'From', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full View', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Go Forward', comment: 'Move Page / object this direction' },
