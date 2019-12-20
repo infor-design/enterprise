@@ -57,12 +57,13 @@ ToolbarFlex.prototype = {
       let itemComponentSettings = {};
       const isActionButton = $(item).hasClass('btn-actions');
 
-      if (isActionButton || this.settings.moreMenuSettings) {
-        itemComponentSettings = this.settings.moreMenuSettings;
-      }
-      if (this.settings.beforeMoreMenuOpen) {
-        warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
-        itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
+      if (isActionButton) {
+        itemComponentSettings = this.settings.moreMenuSettings || itemComponentSettings;
+
+        if (this.settings.beforeMoreMenuOpen) {
+          warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
+          itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
+        }
       }
 
       $(item).toolbarflexitem({

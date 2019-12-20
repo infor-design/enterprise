@@ -77,11 +77,6 @@
   .toolbar.formatter-toolbar,
   .flex-toolbar.formatter-toolbar {
     [class*='btn'] {
-      .icon {
-        margin-left: -2px;
-        margin-top: -5px;
-      }
-
       &[data-action='visual'] {
         width: 85px;
       }
