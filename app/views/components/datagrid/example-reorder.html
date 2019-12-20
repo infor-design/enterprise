@@ -8,8 +8,7 @@
   toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
 
 <script>
-  $(function() {
-
+  $('body').one('initialized', function () {
     var grid,
       columns = [],
       data = [];
@@ -54,7 +53,6 @@
         }).on('settingschanged', function (e, args) {
           console.log('Settings Changed', args);
         });
-
     });
  });
 </script>

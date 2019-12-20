@@ -595,19 +595,21 @@ $datagrid-row-icon-color: $theme-color-palette-graphite-60;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-10;
 $datagrid-alternate-row-hover-color: $theme-color-palette-graphite-20;
-$datagrid-list-header-bg-color: $list-color-item-hover-background;
+$datagrid-list-header-bg-color: $theme-color-palette-graphite-20;
+$datagrid-list-group-header-bg-color: $theme-color-palette-graphite-30;
+$datagrid-list-group-header-border-color: $theme-color-palette-graphite-20;
+$datagrid-list-header-active-color: $theme-color-palette-graphite-30;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
 $datagrid-list-header-border-color: $theme-color-palette-graphite-30;
 $datagrid-list-header-color: $theme-color-palette-graphite-60;
-$datagrid-list-header-hover-color: $list-color-item-hover-background;
+$datagrid-list-header-hover-color: $theme-color-palette-graphite-20;
 $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $theme-color-brand-secondary-base;
 $datagrid-list-sort-icon-hover-color: $theme-color-palette-graphite-50;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $theme-color-brand-secondary-alt;
-$datagrid-list-header-active-color: $theme-color-brand-secondary-base;
 $datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
 $datagrid-filter-border-color: $theme-color-palette-slate-40;
