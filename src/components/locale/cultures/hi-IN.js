@@ -39,7 +39,8 @@ Soho.Locale.addCulture('hi-IN', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['पूर्व', 'अपर']
+    dayPeriods: ['पूर्व', 'अपर'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₹',

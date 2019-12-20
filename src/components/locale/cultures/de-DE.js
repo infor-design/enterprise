@@ -40,7 +40,8 @@ Soho.Locale.addCulture('de-DE', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
-    dayPeriods: ['vorm.', 'nachm.'] // Not used 24h
+    dayPeriods: ['vorm.', 'nachm.'], // Not used 24h
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '€',

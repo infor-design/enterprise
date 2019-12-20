@@ -40,7 +40,7 @@ Soho.Locale.addCulture('sv-SE', {
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['fm', 'em'],
-    firstDayofWeek: 1, // Starts on Monday
+    firstDayofWeek: 1 // Starts on Monday
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'kr',
