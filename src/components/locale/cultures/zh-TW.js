@@ -39,7 +39,8 @@ Soho.Locale.addCulture('zh-TW', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'ah:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['上午', '下午']
+    dayPeriods: ['上午', '下午'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'NT$',

@@ -111,8 +111,8 @@ describe('Calendar API', () => {
     calendarObj = new Calendar(calendarEl, newSettings);
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('marts 2019');
-    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
-    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('man');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('søn');
   });
 
   it('Should render upcoming dates', () => {
@@ -281,8 +281,8 @@ describe('Calendar API', () => {
     calendarObj.updated(updatedSettings);
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('juni 2019');
-    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
-    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('man');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('søn');
     expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
     expect(Locale.currentLocale.name).toEqual('en-US');
   });

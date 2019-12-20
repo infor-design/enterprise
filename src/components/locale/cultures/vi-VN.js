@@ -39,7 +39,8 @@ Soho.Locale.addCulture('vi-VN', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['SA', 'CH']
+    dayPeriods: ['SA', 'CH'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₫',

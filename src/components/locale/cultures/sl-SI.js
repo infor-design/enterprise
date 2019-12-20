@@ -2,8 +2,8 @@
 Soho.Locale.addCulture('sl-SI', {
   // layout/language
   language: 'sl',
-  englishName: 'Slovenian (Slovenia)!!!',
-  nativeName: 'slovenski (Slovenija)!!!',
+  englishName: 'Slovenian (Slovenia)',
+  nativeName: 'slovenski (Slovenija)',
   // layout/orientation/@characters
   direction: 'left-to-right',
   // ca-gregorian
@@ -39,7 +39,8 @@ Soho.Locale.addCulture('sl-SI', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['dop.', 'pop.']
+    dayPeriods: ['dop.', 'pop.'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'Sk',

@@ -39,7 +39,8 @@ Soho.Locale.addCulture('ja-JP', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['午前', '午後']
+    dayPeriods: ['午前', '午後'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '¥',
