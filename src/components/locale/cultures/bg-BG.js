@@ -40,7 +40,8 @@ Soho.Locale.addCulture('bg-BG', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['пр.об', 'сл.об']
+    dayPeriods: ['пр.об', 'сл.об'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'лв',

@@ -79,3 +79,9 @@
     }
   }
 }
+
+// Adjust handle for resize on lists
+.is-gridlist.has-draggable-columns th .handle {
+  font-size: 23px;
+  top: -3px;
+}

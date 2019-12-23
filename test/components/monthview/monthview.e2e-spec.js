@@ -269,8 +269,8 @@ describe('MonthView specific locale tests', () => {
   it('Should render a specific locale', async () => {
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('maj 2019');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
-    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('søn');
-    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('lør');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('søn');
   });
 });
 
@@ -290,7 +290,7 @@ describe('MonthView specific language tests', () => {
 
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('oktober 2019');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
-    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('søn');
-    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('lør');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('søn');
   });
 });

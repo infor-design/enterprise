@@ -40,7 +40,8 @@ Soho.Locale.addCulture('da-DK', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH.mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['', '']
+    dayPeriods: ['', ''],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'kr',

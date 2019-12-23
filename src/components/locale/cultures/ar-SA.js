@@ -37,7 +37,7 @@ Soho.Locale.addCulture('ar-SA', {
       },
       timeFormat: 'h:mm a',
       dayPeriods: ['ص', 'م'],
-      firstDayofWeek: 6, // Starts on Sat
+      firstDayofWeek: 0, // Starts on Sun
       conversions: {
         yearInfo: [
           [746, -2198707200000],
@@ -277,7 +277,8 @@ Soho.Locale.addCulture('ar-SA', {
       // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
       // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
+      dayPeriods: ['ص', 'م'],
+      firstDayofWeek: 0 // Starts on Sun
     }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '﷼',

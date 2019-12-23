@@ -42,7 +42,8 @@ Soho.Locale.addCulture('ar-EG', {
       // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
       // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
+      dayPeriods: ['ص', 'م'],
+      firstDayofWeek: 6 // Starts on Sat
     },
     {
       name: 'islamic-umalqura',

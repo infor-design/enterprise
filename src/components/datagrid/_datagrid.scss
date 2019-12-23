@@ -269,7 +269,7 @@ $datagrid-short-row-height: 25px;
       }
     }
 
-    tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
+    tr.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-list-row-hover-color;
 
       .is-readonly {
@@ -388,6 +388,17 @@ $datagrid-short-row-height: 25px;
           &:hover:not(:disabled) + .icon {
             color: $datagrid-list-filter-hover-color !important;
           }
+        }
+      }
+
+      .datagrid-header-groups th {
+        background-color: $datagrid-list-group-header-bg-color;
+        border-right: 1px solid $datagrid-list-group-header-border-color;
+      }
+
+      .handle {
+        &:hover {
+          color: $datagrid-list-header-color;
         }
       }
     }

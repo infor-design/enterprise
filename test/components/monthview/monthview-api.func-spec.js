@@ -82,9 +82,9 @@ describe('Monthview API', () => {
     monthviewAPI.showMonth(7, 1440);
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ربيع الأول 1440');
-    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('السبت');
-    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('25');
-    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('1');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('الأحد');
+    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('26');
+    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('2');
   });
 
   it('Should render based on locale setting', () => {
@@ -96,8 +96,8 @@ describe('Monthview API', () => {
     });
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('maj 2019');
-    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('søn');
-    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('lør');
+    expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('man');
+    expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('søn');
   });
 
   it('Should render disabled days', () => {

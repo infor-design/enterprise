@@ -39,7 +39,8 @@ Soho.Locale.addCulture('lt-LT', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['pr.p.', 'pop.']
+    dayPeriods: ['pr.p.', 'pop.'],
+    firstDayofWeek: 1 // Starts on Monday
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'Lt',
