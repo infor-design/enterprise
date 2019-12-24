@@ -19,6 +19,7 @@
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
 - `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
 - `[Locale]` Corrected and added the firstDayofWeek setting for every locale. ([#3060](https://github.com/infor-design/enterprise/issues/3060))
+- `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
 - `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
