@@ -79,6 +79,90 @@
     }
   }
 
+  &.is-linkable {
+    border: 1px solid transparent;
+    cursor: pointer;
+    line-height: 21px;
+
+    .linkable-btn {
+      cursor: pointer;
+      padding-left: 5px;
+      position: relative;
+
+      .icon {
+        color: $badge-neutral-icon-color;
+        height: 10px;
+        left: 2px;
+        top: 1px;
+        width: 10px;
+
+        &:hover {
+          color: $badge-neutral-hover-icon-color;
+        }
+      }
+    }
+
+    &.good {
+      .linkable-btn {
+        .icon {
+          color: $badge-good-icon-color;
+
+          &:hover {
+            color: $badge-good-hover-icon-color;
+          }
+        }
+      }
+    }
+
+    &.alert {
+      .linkable-btn {
+        .icon {
+          color: $badge-alert-icon-color;
+
+          &:hover {
+            color: $badge-alert-hover-icon-color;
+          }
+        }
+      }
+    }
+
+    &.error {
+      .linkable-btn {
+        .icon {
+          color: $badge-error-icon-color;
+
+          &:hover {
+            color: $badge-error-hover-icon-color;
+          }
+        }
+      }
+    }
+
+    &.info {
+      .linkable-btn {
+        .icon {
+          color: $badge-info-icon-color;
+
+          &:hover {
+            color: $badge-info-hover-icon-color;
+          }
+        }
+      }
+    }
+
+    &.neutral {
+      .linkable-btn {
+        .icon {
+          color: $badge-neutral-icon-color;
+
+          &:hover {
+            color: $badge-neutral-hover-icon-color;
+          }
+        }
+      }
+    }
+  }
+
   // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
   &.is-dismissable,
   &.is-dismissible {
