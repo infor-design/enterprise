@@ -6,6 +6,8 @@
 
 ### v4.25.0 Features
 
+- `[Tag]` Added a new style for linkable tags that will work for default, info, good, error, alert, and neutral styles. ([#3113](https://github.com/infor-design/enterprise/issues/3113))
+
 ### v4.25.0 Fixes
 
 - `[About]` Added further indication for Microsoft Edge Chrome next to the underlying chrome version. ([#3073](https://github.com/infor-design/enterprise/issues/3073))
