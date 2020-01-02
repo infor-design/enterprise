@@ -282,7 +282,7 @@ const Locale = {  // eslint-disable-line
     const parentLocale = match[0] || [{ default: 'en-US' }];
 
     // fr-FR and fr-CA are different / do not have a default
-    if (this.translatedLocales.includes(locale)) {
+    if (this.translatedLocales.indexOf(locale) > -1) {
       return { lang: 'fr', default: 'fr-CA' };
     }
     return parentLocale;
@@ -491,7 +491,7 @@ const Locale = {  // eslint-disable-line
         this.updateLanguageTag(name);
       }
 
-      if (this.translatedLocales.includes(name)) {
+      if (this.translatedLocales.indexOf(name) > -1) {
         this.languages[lang].direction = data.direction;
         this.languages[lang].messages = data.messages;
         this.languages[lang].name = lang;
