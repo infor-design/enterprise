@@ -24,7 +24,7 @@ fdescribe('Calendar Toolbar index tests', () => { //eslint-disable-line
   }
 });
 
-describe('Calendar Toolbar Datepicker tests', () => { //eslint-disable-line
+fdescribe('Calendar Toolbar Datepicker tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/test-datepicker?layout=nofrills');
   });
