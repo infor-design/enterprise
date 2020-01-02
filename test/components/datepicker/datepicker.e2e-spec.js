@@ -654,7 +654,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   }
 });
 
-fdescribe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disable-line
+describe('Datepicker Month Year Changer Year First Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
     const Date = () => {  //eslint-disable-line

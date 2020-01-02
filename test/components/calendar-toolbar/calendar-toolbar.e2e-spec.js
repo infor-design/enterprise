@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Calendar Toolbar index tests', () => { //eslint-disable-line
+describe('Calendar Toolbar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/example-index?layout=nofrills');
   });
@@ -24,7 +24,7 @@ fdescribe('Calendar Toolbar index tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Calendar Toolbar Datepicker tests', () => { //eslint-disable-line
+describe('Calendar Toolbar Datepicker tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/test-datepicker?layout=nofrills');
   });
