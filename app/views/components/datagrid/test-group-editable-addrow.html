@@ -1,0 +1,169 @@
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">N</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" id="btn-add-row" class="btn-menu">
+          <span>Add Row</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" data-action="top">Top (in group)</a></li>
+          <li><a href="#" data-action="bot">Bottom (in group)</a></li>
+          <li><a href="#" data-action="at-selected">At Selected</a></li>
+        </ul>
+
+        <button class="btn" type="button" id="btn-load-data">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+          <span>Load new Data</span>
+        </button>
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+          <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#" data-translate="text">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#" data-translate="text">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="btn-remove">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Remove</span>
+        </button>
+        <button class="btn-icon" type="button" id="btn-alert">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-alert"></use>
+          </svg>
+          <span class="audible">Alert</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+$('body').one('initialized', function () {
+
+  var gridApi;
+  var columns = [];
+  var data = [];
+  var data2 = [];
+
+  // Define Columns for the Grid.
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
+  columns.push({ id: 'id', name: 'Customer Id', field: 'id', formatter: Formatters.Readonly });
+  columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Readonly });
+  columns.push({ id: 'name', name: 'Name', field: 'name', editor: Editors.Input });
+  columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, editor: Editors.Input });
+  columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Editors.Input });
+  columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', editor: Editors.Input, mask: '#####' });
+
+  // Some Sample Data
+  data.push({ id: 1, type: 'Hardware Customer', name: 'Abbott Ltd.', location: 'CA, USA', phone: '(312) 555-7854', purchases: 1200 });
+  data.push({ id: 2, type: 'Hardware Customer', name: 'Access GMBH', location: 'Germany', phone: '+49 (897) 104-6155', purchases: 1800 });
+  data.push({ id: 3, type: 'Service Customer', name: 'Ad Foods', location: 'OR, USA', phone: '(503) 555-1358', purchases: 2200 });
+  data.push({ id: 4, type: 'Hardware Prospect', name: 'Adams Waste Systems', location: 'FL, USA', phone: '(924) 555-8609', purchases: 3200 });
+  data.push({ id: 5, type: 'Service Customer', name: 'Advanced Billing Inc.', location: 'On, Canada', phone: '(905) 555-8992', purchases: 1500 });
+  data.push({ id: 6, type: 'Hardware Customer', name: 'Portable Compressor', location: 'Australia', phone: '+61 (029) 377-7044', purchases: 1700 });
+  data.push({ id: 7, type: 'Service Customer', name: 'Akorn Lines', location: 'AZ, USA', phone: '(602) 922-2828', purchases: 1900 });
+  data.push({ id: 8, type: 'Service Customer', name: 'Alexander Kan Ltd.', location: 'Germany', phone: '+49 (894) 580-8913', purchases: 2000 });
+  data.push({ id: 9, type: 'Service Customer', name: 'Alfa Quality', location: 'Spain', phone: '+34 (932) 227-1103', purchases: 2100 });
+  data.push({ id: 10, type: 'Software Prospect', name: 'American Audio Inc.', location: 'Mo, USA', phone: '(252) 262-2821', purchases: 2200 });
+  data.push({ id: 11, type: 'Hardware Prospect', name: 'Amalfitano B Inc', location: 'Spain', phone: '+34(233) 828-2202', purchases: 3200 });
+
+  // More Sample Data
+  data2.push({ id: 100, type: 'Hardware Customer (new)', name: 'Abbott Ltd.', location: 'CA, USA', phone: '(312) 555-7854', purchases: 1200 });
+  data2.push({ id: 200, type: 'Hardware Customer (new)', name: 'Access GMBH', location: 'Germany', phone: '+49 (897) 104-6155', purchases: 1800 });
+  data2.push({ id: 300, type: 'Service Customer (new)', name: 'Ad Foods', location: 'OR, USA', phone: '(503) 555-1358', purchases: 2200 });
+  data2.push({ id: 400, type: 'Hardware Prospect (new)', name: 'Adams Waste Systems', location: 'FL, USA', phone: '(924) 555-8609', purchases: 3200 });
+  data2.push({ id: 500, type: 'Service Customer (new)', name: 'Advanced Billing Inc.', location: 'On, Canada', phone: '(905) 555-8992', purchases: 1500 });
+  data2.push({ id: 600, type: 'Hardware Customer (new)', name: 'Portable Compressor', location: 'Australia', phone: '+61 (029) 377-7044', purchases: 1700 });
+  data2.push({ id: 700, type: 'Service Customer (new)', name: 'Akorn Lines', location: 'AZ, USA', phone: '(602) 922-2828', purchases: 1900 });
+  data2.push({ id: 800, type: 'Service Customer (new)', name: 'Alexander Kan Ltd.', location: 'Germany', phone: '+49 (894) 580-8913', purchases: 2000 });
+  data2.push({ id: 900, type: 'Service Customer (new)', name: 'Alfa Quality', location: 'Spain', phone: '+34 (932) 227-1103', purchases: 2100 });
+  data2.push({ id: 1000, type: 'Software Prospect (new)', name: 'American Audio Inc.', location: 'Mo, USA', phone: '(252) 262-2821', purchases: 2200 });
+  data2.push({ id: 1100, type: 'Hardware Prospect (new)', name: 'Amalfitano B Inc', location: 'Spain', phone: '+34(233) 828-2202', purchases: 3200 });
+
+  gridApi = $('#datagrid').datagrid({
+    columns: columns,
+    dataset: data,
+    editable: true,
+    selectable: 'multiple',
+    clickToSelect: false,
+    showDirty: true,
+    paging: true,
+    pagesize: 2,
+    pagesizes: [2, 4, 10],
+    stretchColumn: 'last',
+    groupable: {
+      fields: ['type'],
+      aggregator: '',
+      expanded: true
+    },
+    toolbar: { title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false }
+  }).data('datagrid');
+
+  var newId = 17;
+
+  // Add new row
+  $('#btn-add-row').on('selected', function (e, args) {
+    var action = args.attr('data-action');
+    var selectedRows = gridApi.selectedRows();
+    var len = selectedRows.length;
+
+    if (len) {
+      var target = selectedRows[len - 1];
+      var targetType = target.data.type || 'No Type';
+      var newRowData = { id: newId, type: targetType, name: 'Temp name', location: 'Malvern, PA', phone: '(123) 456-7890', purchases: 0 };
+
+      if (action === 'top') {
+        gridApi.addRow(newRowData);
+      } else if (action === 'bot') {
+        gridApi.addRow(newRowData, 'bottom');
+      } else if (action === 'at-selected') {
+        gridApi.addRow(newRowData, target.idx);
+      }
+    }
+  });
+
+  // Load new data
+  $('#btn-load-data').on('click', function () {
+    gridApi.loadData(data2);
+  });
+
+  // Remove selected
+  $('#btn-remove').on('click', function () {
+    gridApi.removeSelected();
+  });
+
+  // Add row status (error icon)
+  $('#btn-alert').on('click', function () {
+    var selectedRows = gridApi.selectedRows();
+    var lastSelectedRow = selectedRows[selectedRows.length - 1];
+    gridApi.rowStatus(lastSelectedRow.idx, 'error', 'Error');
+  });
+});
+
+</script>
