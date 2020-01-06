@@ -33,6 +33,8 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * in the Search Input field in the open combo box
 * @param {boolean} [settings.showEmptyGroupHeaders = false]  If true, displays optgroup headers in the list
 * even if no selectable options are present underneath.
+* @param {boolean} [settings.showSelectAll] if true, shows a `Select All` option at the top of a multiselect.
+* @param {boolean} [settings.showTags] if true, replaces the text-based pseudo-element in the page with a dismissible, tag-based display.
 * @param {boolean} [settings.source]  A function that can do an ajax call.
 * @param {boolean} [settings.sourceArguments = {}]  If a source method is defined, this flexible object can be
 * passed into the source method, and augmented with parameters specific to the implementation.
@@ -56,7 +58,8 @@ const DROPDOWN_DEFAULTS = {
   multiple: false, // Turns the dropdown into a multiple selection box
   noSearch: false,
   showEmptyGroupHeaders: false,
-  showSelectAll: false, // (Multiselect) shows an item the top of the list labeled "select all".
+  showSelectAll: false,
+  showTags: false,
   source: undefined,
   sourceArguments: {},
   reload: reloadSourceStyles[0],
@@ -885,9 +888,23 @@ Dropdown.prototype = {
     const opts = this.element.find('option:selected');
     let text = this.getOptionText(opts);
 
+    /*
     if (opts.hasClass('clear')) {
-      text = '';
+      this.settings.showTags {
+        this.removeAllTags();
+      } else {
+        text = '';
+      }
     }
+    */
+
+    /*
+    if (this.settings.showTags) {
+      // Render tags instead
+    } else {
+
+    }
+    */
 
     if (this.settings.empty && opts.length === 0) {
       let span = this.pseudoElem.find('span').first();
@@ -1673,14 +1690,9 @@ Dropdown.prototype = {
       this.list.find('.is-selected');
     const self = this;
     const threshold = 10;
-    let isEmpty = true;
     let pos;
 
     this.touchPrevented = false;
-
-    if (current.length > 0) {
-      isEmpty = true;
-    }
 
     // Close any other drop downs.
     $('select').each(function () {
@@ -1752,17 +1764,10 @@ Dropdown.prototype = {
 
     // Set the contents of the search input.
     // If we've got a stored typeahead
-    if (typeof this.filterTerm === 'string') {
+    if (typeof this.filterTerm === 'string' && this.filterTerm.length > 0) {
       this.searchInput.val(this.filterTerm);
-    } else {
-      let span = this.pseudoElem.find('span:not(.audible)')
-        .contents()
-        .eq(1);
-      if (span.length === 0) {
-        span = this.pseudoElem.find('span:not(.audible)');
-      }
-      const fieldValue = span.text().trim();
-      this.searchInput.val(fieldValue);
+    } else if (!this.settings.multiple && current.length) {
+      this.searchInput.val(current.find('a').text());
     }
 
     const noScroll = this.settings.multiple;
@@ -1772,10 +1777,6 @@ Dropdown.prototype = {
       setTimeout(() => {
         self.listUl.scrollTop(0);
       }, 0);
-    }
-
-    if (!this.settings.multiple && !isEmpty) {
-      this.searchInput.val(current.find('a').text());
     }
 
     this.handleSearchEvents();

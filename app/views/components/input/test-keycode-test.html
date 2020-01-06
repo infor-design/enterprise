@@ -119,7 +119,7 @@
         }
 
         if (metaKeys['' + keycode] !== undefined) {
-          var keyTag = $('<div class="tag graphite02" style="margin-right: 2px;">'+ metaKeys['' + keycode] +'</div>');
+          var keyTag = $('<div class="badge graphite02" style="margin-right: 2px;">'+ metaKeys['' + keycode] +'</div>');
           $('#meta-keys').append(keyTag);
           $(this).one('keyup.demo', function() {
             keyTag.remove();

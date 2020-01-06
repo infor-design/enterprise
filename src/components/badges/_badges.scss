@@ -18,6 +18,11 @@
   text-decoration: none;
   vertical-align: middle;
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   &.secondary {
     background-color: $badge-secondary-bg-color;
     border: 1px solid $badge-secondary-border-color;
@@ -62,20 +67,23 @@
   }
 
   &.is-clickable {
+    @include transition(background-color 200ms $cubic-ease);
+
     background-color: $badge-neutral-bg-color;
     border: 1px solid transparent;
-    cursor: pointer;
     line-height: 21px;
 
     &:hover {
       background-color: $badge-neutral-hover-bg-color;
     }
 
-    &:focus:not(.hide-focus) {
+    &:not(.hide-focus) {
       border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
-      outline: none;
-      -moz-outline-style: none;
+    }
+
+    a {
+      cursor: pointer;
     }
   }
 
@@ -163,8 +171,6 @@
     }
   }
 
-  // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
-  &.is-dismissable,
   &.is-dismissible {
     background-color: $badge-neutral-bg-color;
     border: 1px solid transparent;
@@ -172,11 +178,9 @@
     line-height: 21px;
     padding: 0 10px;
 
-    &:focus:not(.hide-focus) {
+    &:not(.hide-focus) {
       border-color: $theme-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
-      outline: none;
-      -moz-outline-style: none;
     }
 
     &.secondary {
@@ -185,7 +189,6 @@
       color: $badge-secondary-color;
     }
 
-    .dismissable-btn,
     .dismissible-btn {
       cursor: pointer;
       padding-left: 5px;
@@ -204,7 +207,16 @@
           color: $badge-neutral-hover-icon-color;
         }
       }
+    }
+  }
 
+  &.is-focused:not(.hide-focus) {
+    border-color: $theme-color-brand-primary-base;
+    box-shadow: $focus-box-shadow;
+
+    a {
+      outline: none;
+      -moz-outline-style: none;
     }
   }
 }
