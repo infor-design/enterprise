@@ -39,7 +39,8 @@ Soho.Locale.addCulture('en-US', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 0 // Starts on Sunday
   }],
 
   // numbers/currencyFormats-numberSystem-latn/standard
@@ -88,6 +89,7 @@ Soho.Locale.addCulture('en-US', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Bookmark this', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Breadcrumb', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Browser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Browser Language', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Bulleted list', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Camera', comment: 'Camera tooltip' },
@@ -173,6 +175,8 @@ Soho.Locale.addCulture('en-US', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'First Page', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal Text', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Header {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'From', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full View', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Go Forward', comment: 'Move Page / object this direction' },
@@ -217,6 +221,7 @@ Soho.Locale.addCulture('en-US', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Align Left', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Align Right', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Keyword', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Language', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Launch', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Last Page', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Left', comment: 'Left tooltip' },

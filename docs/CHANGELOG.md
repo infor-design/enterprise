@@ -1,5 +1,32 @@
 # What's New with Enterprise
 
+## v4.25.0
+
+### v4.25.0 Deprecation
+
+### v4.25.0 Features
+
+- `[Tag]` Added a new style for linkable tags that will work for default, info, good, error, alert, and neutral styles. ([#3113](https://github.com/infor-design/enterprise/issues/3113))
+
+### v4.25.0 Fixes
+
+- `[About]` Added further indication for Microsoft Edge Chrome next to the underlying chrome version. ([#3073](https://github.com/infor-design/enterprise/issues/3073))
+- `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
+- `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
+- `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
+- `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
+- `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
+- `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
+- `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
+- `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
+- `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
+- `[Locale]` Corrected and added the firstDayofWeek setting for every locale. ([#3060](https://github.com/infor-design/enterprise/issues/3060))
+- `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
+- `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
+- `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
+
+### v4.25.0 Chores & Maintenance
+
 ## v4.24.0
 
 ### v4.24.0 Important Changes
@@ -20,6 +47,7 @@
 - `[All]` Removed the property `-webkit-text-fill-color` from usage throughout out our codebase, except for one rule that changes it to `unset` if it's present. ([#3041](https://github.com/infor-design/enterprise/issues/3041))
 - `[Application Menu]` Fixed issue in application menu where scrollbar is visible even if it's not needed in uplift theme. ([#3134](https://github.com/infor-design/enterprise/issues/3134))
 - `[Datagrid]` Fixed an issue where the hide pager on one page setting was not working correctly when applying a filter. ([#2676](https://github.com/infor-design/enterprise/issues/2676))
+- `[Datagrid]` Fixed an issue where if the grid is initialized with an empty array then updateColumns is used the resetColumns function failed. ([#690](https://github.com/infor-design/enterprise-ng/issues/690))
 - `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
 - `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
 - `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
@@ -39,6 +67,7 @@
 - `[Datagrid]` Fixed an issue that resizing the last column would create a gap. ([#1671](https://github.com/infor-design/enterprise/issues/1671))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
+- `[Datepicker]` Fixed an issue where the calendar layout was not working on ie11. ([#3226](https://github.com/infor-design/enterprise/issues/3226))
 - `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
 - `[Dropdown]` Fix a layout issue in RTL on the badges example. ([#3150](https://github.com/infor-design/enterprise/issues/3150))
 - `[Editor]` Corrected CSP errors and broken images in the Editor Preview when inserting the default image. ([#2937](https://github.com/infor-design/enterprise/issues/2937))
@@ -67,7 +96,7 @@
 - `[Demoapp]` Allow the query params that affect theming/personalization (theme/variant/colors) to be appended/adjusted on the browser's URL without affecting other query parameters, or adding unnecessary paramters that weren't changed.
 - `[Toolbar Searchfield]` Increased the amount of text shown when the Searchfield is not expanded, and appears similar to a button.  Also modified some styles in all themes to make alignment of the text better between the Searchfield and buttons when the Searchfield is not expanded. ([#2944](https://github.com/infor-design/enterprise/issues/2944))
 
-(68 Issues Solved this release, Backlog Enterprise 370, Backlog Ng 87, 1174 Functional Tests, 1136 e2e Test)
+(74 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 85, 974 Functional Tests, 1191 e2e Test)
 
 ## v4.23.0
 

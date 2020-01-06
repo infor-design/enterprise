@@ -259,7 +259,7 @@ Datagrid.prototype = {
     this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
-    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+    this.setOriginalColumns();
     this.removeToolbarOnDestroy = false;
     this.nonVisibleCellErrors = [];
     this.recordCount = 0;
@@ -2929,6 +2929,10 @@ Datagrid.prototype = {
     self.bodyColGroupHtmlRight = '<colgroup>';
     self.triggerDestroyCell(); // Trigger Destroy on previous cells
 
+    if (!self.settings.columns || self.settings.columns.length === 0) {
+      self.settings.columns.push({ id: 'blank', value: '', field: '' });
+    }
+
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
       const container = self.getContainer(col.id);
@@ -3175,7 +3179,7 @@ Datagrid.prototype = {
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
-      self.tableBody.before(self.bodyColGroup);
+      (self.headerRow || self.tableBody).before(self.bodyColGroup);
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
@@ -3899,10 +3903,6 @@ Datagrid.prototype = {
     let hasButton = false;
     const self = this;
 
-    if (columnDef.hidden) {
-      return 0;
-    }
-
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
     } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
@@ -4564,6 +4564,7 @@ Datagrid.prototype = {
     }
 
     this.settings.columns = columns;
+    this.setOriginalColumns();
 
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
@@ -4670,6 +4671,14 @@ Datagrid.prototype = {
     }
 
     return false;
+  },
+
+  /**
+   * Set the original column which may later be reloaded.
+   * @private
+   */
+  setOriginalColumns() {
+    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
   },
 
   /**
@@ -5030,80 +5039,86 @@ Datagrid.prototype = {
         text: Locale.translate('Close'),
         click(e, modal) {
           modal.close();
-          $('body').off('open.datagrid');
+          $('body').off('beforeopen.datagrid');
         }
       }]
-    }).on('beforeopen.datagrid', (e, modal) => {
-      self.isColumnsChanged = false;
-      modal.element.find('.searchfield').searchfield({ clearable: true });
-      modal.element.find('.listview')
-        .listview({
-          source: this.settings.columns,
-          template: `
-          <ul>
-          {{#dataset}}
-            {{#name}}
-            <li>
-              <a href="#" target="_self" tabindex="-1">
-                <label class="inline">
-                  <input tabindex="-1" type="checkbox" class="checkbox" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
-                  <span class="label-text">{{name}}</span>
-                </label>
-              </a>
-            </li>
-            {{/name}}
-          {{/dataset}}
-          </ul>`,
-          searchable: true,
-          selectOnFocus: false,
-          listFilterSettings: {
-            filterMode: 'contains',
-            searchableTextCallback: item => item.name
-          }
-        })
-        .off('selected.datagrid').on('selected.datagrid', function (selectedEvent, args) {
-          const chk = args.elem.find('.checkbox');
-          const id = chk.attr('data-column-id');
-          const isChecked = chk.prop('checked');
+    }).off('beforeopen.datagrid')
+      .on('beforeopen.datagrid', (e, modal) => {
+        if (!modal) {
+          return;
+        }
 
-          args.elem.removeClass('is-selected hide-selected-color');
-
-          if (chk.is(':disabled')) {
-            return;
-          }
-          self.isColumnsChanged = true;
-
-          // Set listview dataset node state, to be in sync after filtering
-          const lv = { node: {}, api: $(this).data('listview') };
-          if (lv.api) {
-            const idx = self.columnIdxById(id);
-            if (idx !== -1 && lv.api.settings.dataset[idx]) {
-              lv.node = lv.api.settings.dataset[idx];
+        self.isColumnsChanged = false;
+        modal.element.find('.searchfield').searchfield({ clearable: true });
+        modal.element.find('.listview')
+          .listview({
+            source: this.settings.columns,
+            template: `
+            <ul>
+            {{#dataset}}
+              {{#name}}
+              <li>
+                <a href="#" target="_self" tabindex="-1">
+                  <label class="inline">
+                    <input tabindex="-1" type="checkbox" class="checkbox" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
+                    <span class="label-text">{{name}}</span>
+                  </label>
+                </a>
+              </li>
+              {{/name}}
+            {{/dataset}}
+            </ul>`,
+            searchable: true,
+            selectOnFocus: false,
+            listFilterSettings: {
+              filterMode: 'contains',
+              searchableTextCallback: item => item.name
             }
-          }
+          })
+          .off('selected.datagrid')
+          .on('selected.datagrid', function (selectedEvent, args) {
+            const chk = args.elem.find('.checkbox');
+            const id = chk.attr('data-column-id');
+            const isChecked = chk.prop('checked');
 
-          if (!isChecked) {
-            self.showColumn(id);
-            chk.prop('checked', true);
-            lv.node.hidden = false;
-          } else {
-            self.hideColumn(id);
-            chk.prop('checked', false);
-            lv.node.hidden = true;
+            args.elem.removeClass('is-selected hide-selected-color');
+
+            if (chk.is(':disabled')) {
+              return;
+            }
+            self.isColumnsChanged = true;
+
+            // Set listview dataset node state, to be in sync after filtering
+            const lv = { node: {}, api: $(this).data('listview') };
+            if (lv.api) {
+              const idx = self.columnIdxById(id);
+              if (idx !== -1 && lv.api.settings.dataset[idx]) {
+                lv.node = lv.api.settings.dataset[idx];
+              }
+            }
+
+            if (!isChecked) {
+              self.showColumn(id);
+              chk.prop('checked', true);
+              lv.node.hidden = false;
+            } else {
+              self.hideColumn(id);
+              chk.prop('checked', false);
+              lv.node.hidden = true;
+            }
+          });
+
+        modal.element.on('close.datagrid', () => {
+          self.isColumnsChanged = false;
+        });
+        modal.element.on('keydown.datagrid', (event) => {
+          // Escape Button Code. Make sure to close the modal correctly.
+          if (event.keyCode === 27) {
+            modal.close();
+            $('body').off('beforeopen.datagrid');
           }
         });
-
-      modal.element.on('close.datagrid', () => {
-        self.isColumnsChanged = false;
       });
-      modal.element.on('keydown.datagrid', (event) => {
-        // Escape Button Code. Make sure to close the modal correctly.
-        if (event.keyCode === 27) {
-          modal.close();
-          $('body').off('open.datagrid');
-        }
-      });
-    });
   },
 
   /**
@@ -8173,9 +8188,10 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ? this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
+    const idx = this.settings.treeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
       this.dataRowIndex(thisRow);
-    const rowData = this.rowData(this.dataRowIndex(thisRow));
+    const rowData = this.rowData(idx);
 
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
@@ -9046,7 +9062,10 @@ Datagrid.prototype = {
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
-    let dataRowIndex = this.dataRowIndex(rowNodes);
+    let dataRowIndex = isTreeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(rowNodes)) :
+      this.dataRowIndex(rowNodes);
+
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }

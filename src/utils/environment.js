@@ -138,6 +138,7 @@ const Environment = {
     let nameOffset;
     let verOffset;
     let ix;
+    let browserVersionName = '';
 
     if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
       browser = 'Opera';
@@ -158,6 +159,9 @@ const Environment = {
     } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
       browser = 'Chrome';
       version = nUAgent.substring(verOffset + 7);
+      if (nUAgent.indexOf('Edg') > -1) {
+        browserVersionName = 'Microsoft Edge';
+      }
     } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
       browser = 'Safari';
       version = nUAgent.substring(verOffset + 7);
@@ -243,7 +247,8 @@ const Environment = {
       browserMajorVersion: majorVersion,
       isMobile: mobile,
       os,
-      currentOSVersion: osVersion
+      currentOSVersion: osVersion,
+      browserVersionName
     };
   },
 

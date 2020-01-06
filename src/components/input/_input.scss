@@ -344,12 +344,14 @@ label,
 // don't want to use generally because it conflicts.
 .is-safari {
   input {
-    &::-webkit-input-placeholder {
-      -webkit-text-fill-color: $input-placeholder-color;
-    }
-
     &[disabled] {
       -webkit-text-fill-color: $input-disabled-color;
+    }
+  }
+
+  .searchfield {
+    &[disabled] {
+      -webkit-text-fill-color: $theme-color-palette-graphite-70;
     }
   }
 }

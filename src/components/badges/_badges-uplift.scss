@@ -16,6 +16,12 @@
       }
     }
   }
+
+  &.is-linkable {
+    .linkable-btn {
+      top: -2px;
+    }
+  }
 }
 
 .ie11 {

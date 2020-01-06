@@ -84,7 +84,14 @@ const EDITOR_DEFAULTS = {
   useFlexToolbar: false,
   useSourceFormatter: false,
   formatterTabsize: 4,
-  fontpickerSettings: {}
+  fontpickerSettings: {
+    popupmenuSettings: {
+      showArrow: false,
+      offset: {
+        y: 0
+      }
+    }
+  }
 };
 
 function Editor(element, settings) {
@@ -149,8 +156,6 @@ Editor.prototype = {
 
     // Convert legacy header settings into Fontpicker settings
     if (this.settings.firstHeader || this.settings.secondHeader) {
-      let removeFirstHeader = false;
-      let removeSecondHeader = false;
       if (!Array.isArray(this.settings.fontpickerSettings.styles)) {
         this.settings.fontpickerSettings.styles = [];
       }
@@ -161,22 +166,35 @@ Editor.prototype = {
         warnAboutDeprecation('`fontpickerSettings.styles` setting', '`firstHeader` setting', 'Editor Component');
         this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader1', 'Header 1', this.settings.firstHeader));
         delete this.settings.firstHeader;
-        removeFirstHeader = true;
       }
       if (this.settings.secondHeader) {
         warnAboutDeprecation('`fontpickerSettings.styles` setting', '`secondHeader` setting', 'Editor Component');
         this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader2', 'Header 2', this.settings.secondHeader));
         delete this.settings.secondHeader;
-        removeSecondHeader = true;
       }
+    }
 
-      // Remove the old button definitions from the `settings.buttons` array
-      this.settings.buttons.editor = this.settings.buttons.editor.filter((btn) => {
-        if ((btn === 'header1' && removeFirstHeader) || (btn === 'header2' && removeSecondHeader)) {
-          return false;
-        }
-        return true;
-      });
+    if (s.buttons && s.buttons.editor) {
+      let foundOldSettings = false;
+      const styles = [new FontPickerStyle('default', 'Default', 'p')];
+
+      const headers = s.buttons.editor.filter(el => el.substr(0, 6) === 'header');
+
+      for (let i = 0; i < headers.length; i++) {
+        const hLevel = headers[i].substr(6, 1);
+        foundOldSettings = true;
+        styles.push(new FontPickerStyle(`header${hLevel}`, `Header ${hLevel}`, `h${hLevel}`));
+      }
+      if (foundOldSettings) {
+        s.buttons.editor = s.buttons.editor.filter(el => el.substr(0, 6) !== 'header');
+        s.fontpickerSettings = { styles };
+      }
+      if (s.buttons.editor[0] === 'seperator') {
+        s.buttons.editor.splice(0, 1);
+      }
+      if (foundOldSettings) {
+        s.buttons.editor = ['fontPicker'].concat(s.buttons.editor);
+      }
     }
 
     if (!s.anchor.defaultTarget) {
@@ -416,11 +434,26 @@ Editor.prototype = {
 
     // Invoke Colorpicker, if applicable
     const cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
-    cpElements.colorpicker({ placeIn: 'editor' });
+    cpElements.colorpicker({
+      placeIn: 'editor',
+      popupmenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
     $('.trigger', cpElements).off('click.colorpicker');
 
     // Invoke the (Flex?) Toolbar
-    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']();
+    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']({
+      moreMenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
 
     // Invoke Tooltips
     this.toolbar.find('button[title]').tooltip();

@@ -682,7 +682,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
 
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2019/04/01');
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${new Date().getFullYear()}/04/01`);
   });
 
   it('Should be able to change year', async () => {

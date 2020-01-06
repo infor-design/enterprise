@@ -122,9 +122,19 @@ $badge-secondary-color: $theme-color-palette-black;
 $badge-secondary-bg-color: $theme-color-palette-graphite-20;
 $badge-secondary-border-color: $theme-color-palette-graphite-60;
 $badge-error-color: $theme-color-palette-white;
+$badge-error-icon-color: $theme-color-palette-white;
+$badge-error-hover-icon-color: $theme-color-palette-graphite-40;
+$badge-alert-color: $theme-color-palette-white;
+$badge-alert-icon-color: $theme-color-palette-white;
+$badge-alert-hover-icon-color: $theme-color-palette-graphite-40;
+$badge-good-color: $theme-color-palette-white;
+$badge-good-icon-color: $theme-color-palette-white;
+$badge-good-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-alert-color: $theme-color-palette-graphite-90;
 $badge-good-color: $theme-color-palette-graphite-90;
 $badge-info-color: $theme-color-palette-white;
+$badge-info-icon-color: $theme-color-palette-white;
+$badge-info-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $theme-color-palette-graphite-90;
 $badge-neutral-hover-icon-color: $theme-color-palette-graphite-60;
@@ -158,6 +168,7 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
+$input-placeholder-color: $theme-color-palette-graphite-70;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
@@ -521,20 +532,21 @@ $datagrid-row-icon-color: $theme-color-palette-graphite-90;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-30;
 $datagrid-alternate-row-hover-color: $theme-color-brand-secondary-alt;
-$datagrid-list-header-bg-color: $theme-color-brand-secondary-alt;
-
+$datagrid-list-header-bg-color:  $theme-color-palette-graphite-30;
+$datagrid-list-group-header-bg-color: $theme-color-palette-graphite-40;
+$datagrid-list-group-header-border-color: $theme-color-palette-graphite-30;
+$datagrid-list-header-active-color: $theme-color-palette-graphite-40;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-list-header-border-color: transparent;
-$datagrid-list-header-color: $theme-color-palette-graphite-10;
-$datagrid-list-header-hover-color: $theme-color-brand-secondary-alt;
+$datagrid-list-header-color: $theme-color-palette-graphite-100;
+$datagrid-list-header-hover-color: $theme-color-palette-graphite-40;
 $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $theme-color-brand-secondary-alt;
 $datagrid-list-sort-icon-hover-color: $theme-color-palette-graphite-60;
 $datagrid-header-focus-bg-color: $theme-color-palette-graphite-80;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $theme-color-palette-slate-50;
-$datagrid-list-header-active-color: $theme-color-palette-graphite-50;
 $datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
 $datagrid-filter-border-color: $theme-color-palette-slate-60;
@@ -788,6 +800,28 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
         border-bottom: 1px solid $theme-color-palette-graphite-60 !important;
         border-color: transparent;
       }
+    }
+  }
+}
+
+html.is-chrome:not(.is-mac) {
+  ::-webkit-scrollbar-track {
+    background-color: $theme-color-body-base;
+    border-left: 1px solid $theme-color-brand-secondary-lighter;
+  }
+
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    height: 8px;
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $theme-color-brand-secondary-base;
+    border-radius: 10px;
+
+    &:hover {
+      background: $theme-color-brand-secondary-alt;
     }
   }
 }

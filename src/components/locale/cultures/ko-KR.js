@@ -39,7 +39,8 @@ Soho.Locale.addCulture('ko-KR', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'a h:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['오전', '오후']
+    dayPeriods: ['오전', '오후'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₩',

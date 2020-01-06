@@ -18,7 +18,7 @@ Soho.Locale.addCulture('zh-Hant', {
       long: 'yyyy年M月d日',
       full: 'yyyy年M月d日 EEEE',
       month: 'M月d日',
-      year: 'yyyy年M',
+      year: 'yyyy年 M月',
       timestamp: 'ah:mm:ss',
       hour: 'ah:mm',
       datetime: 'M/d/yyyy ah:mm',
@@ -33,13 +33,14 @@ Soho.Locale.addCulture('zh-Hant', {
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-      abbreviated: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+      wide: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      abbreviated: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'ah:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['上午', '下午']
+    dayPeriods: ['上午', '下午'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'NT$',

@@ -1131,6 +1131,38 @@ describe('Datagrid paging client side tests', () => {
   });
 });
 
+describe('Datagrid Row Indeterminate Activation tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-paging-indeterminate');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show activation row for indeterminate with mixed selection', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
+    await element(by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+    await element(by.css('li.pager-next .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+
+    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+  });
+});
+
 describe('Datagrid Date default values', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');
@@ -1313,6 +1345,25 @@ describe('Datagrid single select tests', () => {
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
     expect(await element.all(by.css('#datagrid .datagrid-row.is-selected td:nth-child(1) span')).first().getText()).toEqual('2642205');
+  });
+});
+
+describe('Datagrid summary row tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-summary-row');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should add up rows', async () => {
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(4)')).getText()).toEqual('72.48');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(5)')).getText()).toEqual('100 %');
   });
 });
 
@@ -3173,35 +3224,42 @@ describe('Datagrid Row Activation tests', () => {
   });
 });
 
-describe('Datagrid Row Indeterminate Activation tests', () => {
+describe('Datagrid update column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-paging-indeterminate');
+    await utils.setPage('/components/datagrid/test-update-columns');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('Should update columns on demand', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
+    await element(by.id('update')).click();
+
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(3);
     await utils.checkForErrors();
   });
+});
 
-  it('Should show activation row for indeterminate with mixed selection', async () => {
+describe('Datagrid update column and reset tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-update-columns-empty');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
 
-    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).not.toContain('is-rowactivated');
-    await element(by.css('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]')).click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+  it('Should update columns after reset', async () => {
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(1);
+    await element(by.id('update')).click();
 
-    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
-    await element(by.css('li.pager-next .btn-icon')).click();
-    await browser.driver.sleep(config.sleep);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
+    await element(by.id('reset')).click();
 
-    expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
+    await utils.checkForErrors();
   });
 });
 

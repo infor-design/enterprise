@@ -89,6 +89,16 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// Modify the control size on `.spinbox-xs` classes
+.spinbox-xs {
+  .spinbox-control {
+    &.down,
+    &.up {
+      padding: 7px 3px;
+    }
+  }
+}
+
 // Everything inside the spinbox wrapper is vertically-aligned middle.
 .spinbox-wrapper {
   display: inline-block;

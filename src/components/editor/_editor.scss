@@ -191,6 +191,10 @@
   h6 {
     color: $editor-color;
     line-height: normal;
+
+    .hyperlink {
+      font-size: inherit;
+    }
   }
 
   h1 {
@@ -207,6 +211,14 @@
 
   h4 {
     font-size: $theme-size-font-px-24;
+  }
+
+  h5 {
+    font-size: $theme-size-font-px-20;
+  }
+
+  h6 {
+    font-size: $theme-size-font-px-16;
   }
 
   ul,
@@ -316,6 +328,10 @@
     [class*='btn'] {
       &:first-child {
         margin-left: 16px;
+
+        &.fontpicker {
+          margin-left: 5px;
+        }
       }
     }
   }
@@ -538,7 +554,7 @@
     }
 
     &.fontpicker {
-      padding: 0 5px;
+      padding: 0 10px;
 
       span {
         display: inline-block;
@@ -675,12 +691,43 @@
   white-space: pre;
 }
 
+// Adjust fontpicker element aligment only on Firefox
+html.is-firefox {
+  .flex-toolbar.formatter-toolbar {
+    .fontpicker {
+      span {
+        display: inline-block;
+        padding-top: 2px;
+        vertical-align: baseline;
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .editor-container {
     .editor[data-error-type='tooltip'] {
       ~ .icon-error {
         left: 40px;
+      }
+    }
+  }
+
+  .toolbar,
+  .flex-toolbar {
+    &.formatter-toolbar {
+      .buttonset {
+        [class*='btn'] {
+          &:first-child {
+            margin-left: auto;
+            margin-right: 16px;
+
+            &.fontpicker {
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
   }

@@ -114,6 +114,17 @@ Tag.prototype = {
       </span>`);
     const dismissibleClass = '.is-dismissable, .is-dismissible';
 
+    const linkableClass = '.is-linkable';
+    const btnLinkable = $('' +
+      `<span class="linkable-btn">
+        ${$.createIcon('caret-right')}
+      </span>`);
+
+    // Append linkable html in dom element
+    if (self.element.is(linkableClass)) {
+      self.element.append(btnLinkable);
+    }
+
     // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
     if (self.element.is(dismissibleClass)) {
       self.element.append(btnDismissable);
