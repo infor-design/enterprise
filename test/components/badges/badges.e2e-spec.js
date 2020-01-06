@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Badge example-index tests', () => {
+fdescribe('Badge example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/badges/example-index?layout=nofrills');
   });

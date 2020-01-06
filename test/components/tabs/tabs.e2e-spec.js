@@ -159,7 +159,7 @@ describe('Tabs click example-counts tests', () => {
   });
 });
 
-describe('Tabs click example-counts uplift tests', () => {
+fdescribe('Tabs click example-counts uplift tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-counts?theme=uplift');
     const tabsEl = await element(by.id('tabs-counts'));
