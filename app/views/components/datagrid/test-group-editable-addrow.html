@@ -137,6 +137,7 @@ $('body').one('initialized', function () {
       var target = selectedRows[len - 1];
       var targetType = target.data.type || 'No Type';
       var newRowData = { id: newId, type: targetType, name: 'Temp name', location: 'Malvern, PA', phone: '(123) 456-7890', purchases: 0 };
+      newId++;
 
       if (action === 'top') {
         gridApi.addRow(newRowData);
