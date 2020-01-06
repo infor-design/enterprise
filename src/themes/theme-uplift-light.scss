@@ -15,6 +15,9 @@
 @import '../core/config';
 
 // Uplift Light Overrides
+$header-bg-color: $theme-color-brand-primary-base;
+$subhead-bg-color: $theme-color-brand-primary-alt;
+
 $body-color-primary-background: $theme-color-palette-white;
 $drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);
 

@@ -52,6 +52,7 @@ This is a list of Infor teams and contributors using the Enterprise controls rep
 | Infor HCM Onboarding | Landmark Angular | | `^4.x` |
 | Infor HCM HR | Landmark Angular | | `^4.x` |
 | Infor HCM Payroll | Landmark Angular | | `^4.x` |
+| Infor Hospitality Price Optimizer | New Design from Manila based in Tunisia | Hamza Bou Ali | `^4.x` |
 | Infor Hospitality | POS  (France) | Bruno Martinot | `^4.x` |
 | Infor Hospitality Care Assignments | | Michael Welborn | `3.x` |
 | Infor Xtreme Support | ASP | Julia Walker | `4.x` |

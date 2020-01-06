@@ -15,15 +15,8 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $theme-color-palette-black;
-$subhead-bg-color: $theme-color-palette-slate-100;
-$header-border-color: $theme-color-palette-slate-90;
-$header-button-color: rgba($theme-color-palette-white, 0.7);
-$header-button-focus-color: rgba($theme-color-palette-white, 1);
-$header-button-hover-color: rgba($theme-color-palette-white, 1);
-$header-button-disabled-color: rgba($theme-color-palette-white, 0.3);
-$header-disabled-color: $theme-color-palette-slate-50;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
+$header-bg-color: $theme-color-brand-primary-base;
+$subhead-bg-color: $theme-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
 $panel-bg-color: $theme-color-palette-slate-100;
@@ -313,9 +306,9 @@ $checkbox-color-disabled-font: $input-color-disabled-font;
 // Switch
 $radio-checked-color: $theme-color-brand-primary-base;
 $switch-checked-bg-color: $theme-color-palette-azure-30;
-$switch-unchecked-bg-color: $theme-color-palette-slate-50;
-$switch-unchecked-bar-color: $theme-color-palette-slate-30;
-$switch-unchecked-border-color: $theme-color-palette-slate-60;
+$switch-unchecked-bg-color:  $theme-color-palette-white;
+$switch-unchecked-bar-color: $theme-color-palette-slate-40;
+$switch-unchecked-border-color: $theme-color-palette-white;
 $switch-unchecked-color: $theme-color-palette-slate-50;
 $switch-unchecked-pressed-bg-color: $theme-color-palette-slate-40;
 $switch-disabled-border-color: $theme-color-palette-slate-60;
@@ -327,14 +320,14 @@ $switch-hover-box-shadow: 0 2px 5px $drop-shadow-depth;
 
 // Editor
 $editor-bg-color: transparent;
-$editor-border-color: $theme-color-palette-slate-40;
-$editor-hover-border-color: $theme-color-palette-slate-20;
+$editor-border-color: $input-color-initial-border;
+$editor-hover-border-color: $theme-color-palette-white;
 $editor-focus-border-color: $theme-color-brand-primary-base;
 $editor-line-number-color: $theme-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $theme-color-palette-slate-80;
+$editor-toolbar-bg-color: $theme-color-palette-slate-50;
 $editor-middle-border-color: $theme-color-palette-slate-40;
-$editor-btn-color: $theme-color-palette-slate-30;
+$editor-btn-color: $theme-color-palette-slate-20;
 $editor-btn-hover-color: $theme-color-palette-white;
 $editor-btn-active-color: $theme-color-brand-primary-base;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
@@ -378,7 +371,7 @@ $modal-btn-color: $theme-color-palette-slate-30;
 $modal-color: $theme-color-palette-white;
 $modal-btn-border-color: $theme-color-palette-slate-50;
 $modal-btn-hover-color: $theme-color-palette-white;
-$modal-btn-primary-color: $theme-color-brand-primary-lighter;
+$modal-btn-primary-color: $theme-color-palette-azure-40;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-30;
 $modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
@@ -741,27 +734,6 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
 
 // Core Uplift Components
 @import '../core/controls-uplift';
-
-// Temporary Banner - Remove this when not beta.
-body::before {
-  background: $theme-color-status-base;
-  bottom: 12px;
-  color: $theme-color-palette-white;
-  content: 'beta';
-  font-size: 13px;
-  font-weight: 900;
-  height: 25px;
-  left: -25px;
-  line-height: 27px;
-  position: fixed;
-  text-align: center;
-  text-transform: uppercase;
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  width: 100px;
-  z-index: 1000;
-}
 
 // Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
