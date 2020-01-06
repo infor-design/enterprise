@@ -23,8 +23,15 @@
 
     .timepicker + .icon {
       right: -3px;
-      top: -2px;
+      top: -4px;
     }
+  }
+}
+
+// Adjust icon for firefox
+.is-firefox {
+  .datagrid-header .datagrid-filter-wrapper .timepicker + .icon {
+    top: -2px;
   }
 }
 
