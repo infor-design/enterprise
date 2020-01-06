@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Line Chart tests', () => {
+describe('Line Chart tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/line/example-index?layout=nofrills');
   });
