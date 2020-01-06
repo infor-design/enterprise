@@ -73,7 +73,7 @@
   .palette-label {
     @include antialiased();
 
-    color: $font-color;
+    color: $theme-color-palette-black;
     display: block;
     font-size: 1.6rem;
     text-align: center;
