@@ -28,6 +28,13 @@
   }
 }
 
+// Adjust icon for firefox
+.is-firefox {
+  .datagrid-header .datagrid-filter-wrapper .timepicker + .icon {
+    top: -2px;
+  }
+}
+
 // Adjust header text
 .datagrid-header-text {
   font-size: $theme-size-font-xs !important;

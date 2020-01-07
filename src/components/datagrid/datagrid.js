@@ -457,42 +457,80 @@ Datagrid.prototype = {
     let args;
     let rowNode;
 
+    // Get first or last index of matching key/value
+    function getIndexByKey(array, key, value, isReverse) {
+      for (let i = 0, l = array.length; i < l; i++) {
+        const idx = isReverse ? ((l - 1) - i) : i;
+        if (array[idx][key] === value) {
+          return idx;
+        }
+      }
+      return -1;
+    }
+
     if (!location || location === 'top') {
       location = 'top';
       isTop = true;
     }
+
     // Add row status
-    data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    const newRowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+
+    data = data || {};
+    data.rowStatus = data.rowStatus || newRowStatus;
+
     this.saveDirtyRows();
 
-    // Add to array
-    const appendArray = this.settings.groupable &&
-      this.originalDataset ? this.originalDataset : this.settings.dataset;
+    let dataset = this.settings.dataset;
 
-    if (typeof location === 'string') {
-      appendArray[isTop ? 'unshift' : 'push'](data);
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+      let targetIndex = -1;
+      if (typeof location === 'string') {
+        const field = this.settings.groupable.fields[0];
+        const idx = getIndexByKey(dataset, field, data[field], !isTop);
+        targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
+        dataset.splice(targetIndex, 0, data);
+        row = targetIndex;
+      } else {
+        dataset.splice(location, 0, data);
+        row = location;
+      }
+    } else if (typeof location === 'string') {
+      dataset[isTop ? 'unshift' : 'push'](data);
+      row = isTop ? row : dataset.length - 1;
     } else {
-      appendArray.splice(location, 0, data);
+      dataset.splice(location, 0, data);
+      row = location;
     }
 
     this.restoreDirtyRows();
     this.setRowGrouping();
-    this.pagerRefresh(location);
+
+    if (!this.settings.groupable) {
+      this.pagerRefresh(location);
+    }
+
     this.syncSelectedRowsIdx();
 
     // Add to ui
     this.clearCache();
     this.renderRows();
 
+    if (this.settings.groupable) {
+      rowNode = this.dataRowNode(row);
+      row = this.visualRowIndex(rowNode);
+    }
+
     // Sync with others
     this.syncSelectedUI();
 
     // Set active and fire handler
     setTimeout(() => {
-      row = isTop ? row : self.settings.dataset.length - 1;
       self.setActiveCell(row, cell);
-
-      rowNode = self.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
+      if (!this.settings.groupable) {
+        rowNode = this.visualRowNode(row);
+      }
       args = { row, cell, target: rowNode, value: data, oldValue: {} };
 
       /**
@@ -534,8 +572,8 @@ Datagrid.prototype = {
       pagingInfo.pagesize = this.settings.pagesize;
     }
     if (savePage) {
-      pagingInfo.activePage = this.settings.pagesize * this.pager.activePage >
-        this.settings.dataset.length ? 1 : this.pager.activePage;
+      pagingInfo.activePage = this.settings.pagesize * this.pagerAPI.activePage >
+        this.settings.dataset.length ? 1 : this.pagerAPI.activePage;
     }
     this.renderPager(pagingInfo, true);
   },
@@ -808,6 +846,15 @@ Datagrid.prototype = {
         /first|last|next|prev|sorted/.test(pagerInfo.type)) {
         this.dirtyArray = undefined;
       }
+    }
+
+    // Clear groupable
+    if (this.settings.groupable &&
+      this.settings.dataset[0] &&
+      !this.settings.dataset[0].values) {
+      this._selectedRows = [];
+      this.originalDataset = null;
+      this.clearDirty();
     }
 
     // Update Paging and Clear Rows
@@ -6926,22 +6973,33 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRowsIdx() {
-    if (this._selectedRows.length === 0 || this.settings.dataset.length === 0) {
+    const dataset = this.settings.groupable && this.originalDataset ?
+      this.originalDataset : this.settings.dataset;
+    if (this._selectedRows.length === 0 || dataset.length === 0) {
       return;
     }
     this._selectedRows = [];
 
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      if (this.settings.dataset[i]._selected) {
-        const calculatePagerInfo = this.calculatePagerInfo(i);
-        this._selectedRows.push({
+    for (let i = 0; i < dataset.length; i++) {
+      if (dataset[i]._selected) {
+        const selectedRow = {
           idx: i,
-          data: this.settings.dataset[i],
+          data: dataset[i],
           elem: this.dataRowNode(i),
-          page: calculatePagerInfo.page,
           pagingIdx: i,
           pagesize: this.settings.pagesize
-        });
+        };
+        if (this.settings.groupable) {
+          const rowNode = this.rowNodesByDataIndex(i);
+          const row = this.actualPagingRowIndex(this.actualRowIndex(rowNode));
+          const group = this.groupArray[row].group;
+          selectedRow.group = this.settings.dataset[group];
+          selectedRow.page = this.calculatePagerInfo(group).page;
+        } else {
+          selectedRow.page = this.calculatePagerInfo(i).page;
+        }
+
+        this._selectedRows.push(selectedRow);
       }
     }
   },
@@ -10097,7 +10155,10 @@ Datagrid.prototype = {
    */
   saveDirtyRows() {
     const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+    }
     if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
       for (let i = 0, l = dataset.length; i < l; i++) {
         if (typeof this.dirtyArray[i] !== 'undefined') {
@@ -10115,7 +10176,10 @@ Datagrid.prototype = {
   */
   restoreDirtyRows() {
     const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+    }
     if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
       const changes = [];
       for (let i = 0, l = dataset.length; i < l; i++) {
