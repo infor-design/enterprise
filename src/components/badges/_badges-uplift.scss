@@ -3,6 +3,7 @@
 
 .tag,
 .badge {
+  font-size: 14px;
   line-height: 20px;
 
   &.round {
@@ -32,6 +33,12 @@
         .icon {
           top: -5px;
         }
+      }
+    }
+
+    &.is-linkable {
+      .linkable-btn .icon {
+        top: -2px;
       }
     }
   }
