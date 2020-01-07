@@ -141,13 +141,13 @@ Sparkline.prototype = {
         .append('rect')
         .attr('width', maxWidth)
         .attr('height', bot)
-        .style('fill', '#d8d8d8')
+        .style('opacity', '0.06')
         .on(`mouseenter.${self.namespace}`, function () {
           const rect = this.getBoundingClientRect();
           let content = '<p class="sparkline-tooltip">' + // eslint-disable-line
-            Locale.translate('Median') + '<b>' + median + '</b><br>' +
-            Locale.translate('Range') + '<b>' + range + '</b>' +
-            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') +'<b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
+            Locale.translate('Median') + ': <b>' + median + '</b><br>' +
+            Locale.translate('Range') + ': <b>' + range + '</b>' +
+            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') + ': <b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
 
           const show = function () {
             const size = charts.tooltipSize(content);

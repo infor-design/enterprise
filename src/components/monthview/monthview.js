@@ -2,6 +2,7 @@ import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { theme } from '../theme/theme';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
 import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
@@ -29,8 +30,8 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   legend: [
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
   hideDays: false, // TODO
   showMonthYearPicker: true,
@@ -797,12 +798,16 @@ MonthView.prototype = {
       return;
     }
 
-    const hex = this.getLegendColor(year, month, date);
-
+    let hex = this.getLegendColor(year, month, date);
     elem[0].style.backgroundColor = '';
     elem.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
       // set color on elem at .3 of provided color as per design
       elem.addClass('is-colored');
       elem[0].style.backgroundColor = colorUtils.hexToRgba(hex, 0.3);
@@ -815,10 +820,12 @@ MonthView.prototype = {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
+        thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
       }).on('mouseleave.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';
+        thisElem.find('.day-text')[0].style.backgroundColor = '';
       });
     }
   },
@@ -1591,9 +1598,17 @@ MonthView.prototype = {
 
     for (let i = 0; i < s.legend.length; i++) {
       const series = s.legend[i];
+      let hex = series.color;
+
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
+
       const item = '' +
         `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(series.color, 0.3)}"></span>
+          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
 

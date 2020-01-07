@@ -107,10 +107,9 @@ const DATEPICKER_DEFAULTS = {
   yearsAhead: 5,
   yearsBack: 4,
   legend: [
-    // Legend Build up example
-    // Color in level 6 - http://usmvvwdev53:424/controls/colors
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    // Legend Build up exampleazure07
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
   range: {
     useRange: false, // true - if datepicker using range dates
