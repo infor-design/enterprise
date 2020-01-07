@@ -587,6 +587,7 @@
 @mixin rtl-multiselectable-list-item {
   &::before {
     right: 8px;
+    top: 9px;
   }
 
   &::after {
