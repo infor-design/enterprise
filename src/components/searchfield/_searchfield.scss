@@ -64,6 +64,16 @@
     border-color 300ms $cubic-ease);
   }
 
+  // This rule will only work when searchfield is clearable.
+  &.has-close-icon-button {
+    .searchfield {
+      overflow: hidden;
+      padding-right: 28px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
   &.context {
     white-space: nowrap;
