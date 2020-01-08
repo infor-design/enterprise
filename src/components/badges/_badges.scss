@@ -387,6 +387,18 @@ html[class*='theme-soho-'] {
       }
     }
   }
+
+  &.ie {
+    .tag,
+    .badge {
+      .dismissible-btn,
+      .linkable-btn {
+        .icon {
+          top: 0;
+        }
+      }
+    }
+  }
 }
 
 html[class*='theme-uplift-'] {
@@ -396,6 +408,50 @@ html[class*='theme-uplift-'] {
     .linkable-btn {
       .icon {
         top: -1px;
+      }
+    }
+  }
+
+  &.is-firefox {
+    .tag,
+    .badge {
+      &.is-linkable {
+        line-height: 19px;
+      }
+    }
+  }
+
+  &.is-firefox,
+  &.is-safari {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: 0;
+      }
+    }
+  }
+
+  &.ie {
+    .tag,
+    .badge {
+      .dismissible-btn,
+      .linkable-btn {
+        .icon {
+          top: -3px;
+        }
+      }
+    }
+  }
+}
+
+// IE
+html.ie {
+  .tag,
+  .badge {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: 0;
       }
     }
   }
