@@ -424,6 +424,10 @@ Header.prototype = {
         self.drillup(viewTitle);
       });
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updatePageChanger();
+    });
+
     // Events for the title button.  e.preventDefault(); stops Application Menu
     // functionality while drilled
     this.handleTitleButtonEvents();
@@ -572,6 +576,24 @@ Header.prototype = {
       this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
       this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
     }
+  },
+
+  /**
+   * Sets up the page changer after changing theme.
+   * @private
+   * @returns {void}
+   */
+  updatePageChanger() {
+    const api = this.changer.data('popupmenu');
+    const menu = api.menu;
+    const tags = menu.find('[data-rgbcolor]');
+    const colors = theme.personalizationColors();
+    const keys = Object.keys(colors);
+
+    for (let i = 0; i < tags.length; i++) {
+      tags[i].setAttribute('data-rgbcolor', colors[keys[i]].value);
+    }
+    console.log(menu.html());
   },
 
   /**
@@ -860,6 +882,8 @@ Header.prototype = {
       `drilldown.${COMPONENT_NAME}`,
       `drillup.${COMPONENT_NAME}`,
     ].join(' '));
+
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
 
     return this;
   },

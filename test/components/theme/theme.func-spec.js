@@ -35,7 +35,7 @@ describe('Theme API', () => {
   });
 
   it('Should list Uplift theme variant colors and Amber10 should be the same', () => {
-    const upliftAmber10 = '#fdf0dd';
+    const upliftAmber10 = '#fef2e5';
 
     expect(theme.allColors[3].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
     expect(theme.allColors[4].colors.palette.amber['10'].value.toLowerCase()).toBe(upliftAmber10);
@@ -60,7 +60,7 @@ describe('Theme API', () => {
     expect(theme.themeColors().palette.azure['70'].value).toEqual('#2578a9');
     theme.setTheme('theme-uplift-light');
 
-    expect(theme.themeColors().palette.azure['70'].value).toEqual('#0563C2');
+    expect(theme.themeColors().palette.azure['70'].value).toEqual('#0066D4');
     theme.setTheme('theme-soho-light');
   });
 
@@ -70,7 +70,7 @@ describe('Theme API', () => {
     expect(theme.personalizationColors().azure.name).toEqual('Azure');
     theme.setTheme('theme-uplift-light');
 
-    expect(theme.personalizationColors().azure.value).toEqual('#0563C2');
+    expect(theme.personalizationColors().azure.value).toEqual('#0066D4');
     expect(theme.personalizationColors().azure.id).toEqual('azure');
     theme.setTheme('theme-soho-light');
   });

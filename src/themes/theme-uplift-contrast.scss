@@ -15,8 +15,8 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $theme-color-palette-azure-90;
-$subhead-bg-color: $theme-color-palette-azure-80;
+$header-bg-color: $theme-color-brand-primary-base;
+$subhead-bg-color: $theme-color-brand-primary-alt;
 $header-border-color: $theme-color-palette-slate-100;
 $header-button-color: rgba($theme-color-palette-white, 1);
 $header-button-focus-color: rgba($theme-color-palette-white, 1);
@@ -115,7 +115,7 @@ $tooltip-error-border-color:  $theme-color-status-danger;
 $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
-$badge-neutral-color: $theme-color-palette-black;
+$badge-neutral-color: $theme-color-palette-graphite-90;
 $badge-neutral-bg-color: $theme-color-palette-graphite-40;
 $badge-neutral-hover-bg-color: $theme-color-palette-graphite-50;
 $badge-secondary-color: $theme-color-palette-black;
@@ -130,6 +130,8 @@ $badge-alert-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-good-color: $theme-color-palette-white;
 $badge-good-icon-color: $theme-color-palette-white;
 $badge-good-hover-icon-color: $theme-color-palette-graphite-40;
+$badge-alert-color: $theme-color-palette-graphite-90;
+$badge-good-color: $theme-color-palette-graphite-90;
 $badge-info-color: $theme-color-palette-white;
 $badge-info-icon-color: $theme-color-palette-white;
 $badge-info-hover-icon-color: $theme-color-palette-graphite-40;
@@ -149,7 +151,7 @@ $popupmenu-bg-color: $theme-color-palette-white;
 $popupmenu-border-color: $theme-color-palette-graphite-60;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $theme-color-palette-graphite-70;
-$popupmenu-hover-color: $theme-color-palette-graphite-50;
+$popupmenu-hover-color: $theme-color-palette-graphite-30;
 $popupmenu-checked-color: $theme-color-palette-azure-90;
 $popupmenu-checked-color-inverse: $theme-color-brand-primary-base;
 
@@ -335,16 +337,16 @@ $cardlist-actions-color: $theme-color-palette-graphite-90;
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Switch
-$radio-checked-color: $theme-color-brand-primary-base;
-$switch-checked-bg-color: $theme-color-brand-primary-base;
+$radio-checked-color:  $theme-color-palette-azure-100;
+$switch-checked-bg-color:  $theme-color-palette-azure-90;
 $switch-unchecked-bg-color: $theme-color-palette-white;
-$switch-unchecked-bar-color: $theme-color-palette-graphite-70;
+$switch-unchecked-bar-color: $theme-color-palette-graphite-80;
 $switch-unchecked-border-color: $theme-color-palette-graphite-60;
 $switch-unchecked-color: $theme-color-palette-slate-50;
 $switch-unchecked-pressed-bg-color: $theme-color-palette-slate-40;
-$switch-disabled-bg-color: $input-color-readonly-background;
-$switch-disabled-border-color: $theme-color-brand-secondary-alt;
-$switch-disabled-bar-color: $theme-color-brand-secondary-alt;
+$switch-disabled-bg-color:  $theme-color-palette-graphite-20;
+$switch-disabled-border-color: $theme-color-palette-graphite-20;
+$switch-disabled-bar-color: $theme-color-palette-graphite-40;
 $switch-disabled-label-color: $disabled-color;
 $switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $theme-color-brand-primary-base, 0 0 4px 6px rgba(41, 41, 41, 0.3);
 $switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -772,27 +774,6 @@ $uplift-appmenu-selected-border-color: $theme-color-palette-white;
 
 // Core Uplift Components
 @import '../core/controls-uplift';
-
-// Temporary Banner - Remove this when not beta.
-body::before {
-  background: $theme-color-status-base;
-  bottom: 12px;
-  color: $theme-color-palette-white;
-  content: 'beta';
-  font-size: 13px;
-  font-weight: 900;
-  height: 25px;
-  left: -25px;
-  line-height: 27px;
-  position: fixed;
-  text-align: center;
-  text-transform: uppercase;
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  width: 100px;
-  z-index: 1000;
-}
 
 //Swaplist
 .swaplist {

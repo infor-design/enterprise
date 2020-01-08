@@ -6,14 +6,17 @@
     cursor: default;
   }
 
+  &.is-hover:not(.is-readonly):not(.is-disabled) {
+    .editor,
+    .toolbar {
+      border-color: $editor-hover-border-color;
+    }
+  }
+
   &.is-readonly,
   &.is-disabled {
     .editor {
       border-top: 1px solid $editor-border-color;
-    }
-
-    &.editor-container:hover .editor:not(.error) {
-      border-color: $editor-hover-border-color;
     }
 
     .editor-toolbar {
@@ -60,34 +63,16 @@
     }
   }
 
-  &:hover {
-    .toolbar,
-    .flex-toolbar {
-      .formatter-toolbar:not(.error) {
-        border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
-      }
-    }
-
-    .editor:not(.error),
-    .editor-source:not(.error) {
-      border-color: transparent $editor-hover-border-color $editor-hover-border-color;
-    }
-  }
-
   &.is-active,
   &.is-active:hover:not(.error) {
     .toolbar,
     .flex-toolbar {
       &.formatter-toolbar {
-        border-left-color: $editor-focus-border-color;
-        border-right-color: $editor-focus-border-color;
-        border-top-color: $editor-focus-border-color;
+        border-color: $editor-focus-border-color;
         box-shadow: $editor-top-focus-box-shadow; //-2px -2px 3px 0px rgba(54, 138, 192, 0.3);
 
         &.error {
-          border-left-color: $error-color;
-          border-right-color: $error-color;
-          border-top-color: $error-color;
+          border-color: $error-color;
         }
       }
     }

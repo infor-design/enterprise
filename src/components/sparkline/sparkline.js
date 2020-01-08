@@ -3,6 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -12,7 +13,7 @@ const COMPONENT_NAME = 'sparkline';
 // The Component Defaults
 const SPARKLINE_DEFAULTS = {
   dataset: [],
-  colors: ['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8'],
+  colors: null,
   isDots: false,
   isPeakDot: false,
   isMinMax: false,
@@ -49,6 +50,14 @@ Sparkline.prototype = {
    * @returns {object} The sparkline prototype for chaining.
    */
   init() {
+    if (!this.settings.colors) {
+      const palette = theme.themeColors().palette;
+      this.settings.colors = [];
+      this.settings.colors[0] = palette.azure[theme.uplift ? '80' : '70'].value;
+      this.settings.colors[1] = palette.graphite['40'].value;
+      this.settings.colors[2] = palette.graphite['30'].value;
+      this.settings.colors[3] = palette.graphite['20'].value;
+    }
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.sparklineColors = d3.scaleOrdinal().range(this.settings.colors);
 
@@ -132,13 +141,13 @@ Sparkline.prototype = {
         .append('rect')
         .attr('width', maxWidth)
         .attr('height', bot)
-        .style('fill', '#d8d8d8')
+        .style('opacity', '0.06')
         .on(`mouseenter.${self.namespace}`, function () {
           const rect = this.getBoundingClientRect();
           let content = '<p class="sparkline-tooltip">' + // eslint-disable-line
-            Locale.translate('Median') + '<b>' + median + '</b><br>' +
-            Locale.translate('Range') + '<b>' + range + '</b>' +
-            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') +'<b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
+            Locale.translate('Median') + ': <b>' + median + '</b><br>' +
+            Locale.translate('Range') + ': <b>' + range + '</b>' +
+            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') + ': <b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
 
           const show = function () {
             const size = charts.tooltipSize(content);

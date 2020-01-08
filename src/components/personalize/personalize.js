@@ -147,14 +147,14 @@ Personalize.prototype = {
 
     // Force to be light text on custom colors { color: ['soho', 'uplift'] }
     const forceToBeLightTextOn = {
-      amber: ['#db7726', '#9b3300'],
-      amethyst: ['#9279a6', '#7834dd'],
-      azure: ['#2578a9', '#0563c2'],
-      emerald: ['#56932e', '#0a834b'],
-      graphite: ['#5c5c5c', '#808080'],
-      ruby: ['#941e1e', '#7b0f11'],
-      slate: ['#50535a', '#98949e'],
-      turquoise: ['#206b62', '#248b8f']
+      amber: ['#db7726', '#9b3300'], // amber 09
+      amethyst: ['#9279a6', '#7834dd'], // amethyst 06
+      azure: ['#2578a9', '#0563c2'], // azure 07/08
+      emerald: ['#56932e', '#0a834b'], // emerald 08
+      graphite: ['#5c5c5c', '#808080'], // graphite 06
+      ruby: ['#941e1e', '#7b0f11'], // ruby 09
+      slate: ['#50535a', '#98949e'], // slate 06
+      turquoise: ['#206b62', '#248b8f'] // turquoise 09
     };
     let foundColor = false;
     let isDark = `${colors.header || defaultColors.header}`.toLowerCase();

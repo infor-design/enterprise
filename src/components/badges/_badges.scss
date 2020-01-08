@@ -217,7 +217,7 @@
 
     // Clock circle
     &::before {
-      border: 1px solid $theme-color-palette-white;
+      border: 1px solid $badge-alert-color;
       border-radius: 50%;
       content: '';
       height: 14px;
@@ -229,8 +229,8 @@
 
     // Clock hands
     &::after {
-      border-bottom: 1px solid $theme-color-palette-white;
-      border-left: 1px solid $theme-color-palette-white;
+      border-bottom: 1px solid $badge-alert-color;
+      border-left: 1px solid $badge-alert-color;
       content: '';
       height: 6px;
       left: 9px;

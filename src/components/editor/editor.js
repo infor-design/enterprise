@@ -1855,6 +1855,16 @@ Editor.prototype = {
       .on(`focusin.${COMPONENT_NAME}`, '.editor, .editor-source', containerFocusHandler)
       .on(`focusout.${COMPONENT_NAME}`, '.editor, .editor-source', containerBlurHandler);
 
+    this.container
+      .on(`mouseenter.${COMPONENT_NAME}`, () => {
+        if (!this.element.hasClass('error')) {
+          this.container.addClass('is-hover');
+        }
+      })
+      .on(`mouseleave.${COMPONENT_NAME}`, () => {
+        this.container.removeClass('is-hover');
+      });
+
     if (self.settings.onLinkClick) {
       editorContainer.on('click.editorlinks', 'a', (e) => {
         self.settings.onLinkClick(e, { elem: this, url: e.currentTarget.getAttribute('data-url') });
@@ -2695,6 +2705,8 @@ Editor.prototype = {
     this.container.off([
       `focusin.${COMPONENT_NAME}`,
       `focusout.${COMPONENT_NAME}`,
+      `mouseneter.${COMPONENT_NAME}`,
+      `mouseleave.${COMPONENT_NAME}`,
       `input.${COMPONENT_NAME}`,
       `keyup.${COMPONENT_NAME}`
     ].join(' '));
