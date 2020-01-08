@@ -51,7 +51,7 @@ function Tag(element, settings) {
   } else {
     // Create the internal bit of tag content
     span = document.createElement('span');
-    span.classList = element.classList;
+    span.className += `${element.className}`;
     if (element.id && element.id.length) {
       span.id = element.id;
       element.removeAttribute('id');
