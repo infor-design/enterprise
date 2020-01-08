@@ -122,6 +122,9 @@
   });
 
   $('body').on('initialized', function () {
+    if ($('#newtag-is-link').prop('checked')) {
+      $('#href-settings-container').removeClass('hidden');
+    }
 
     // Submit
     $('#create-tag').on('submit.test', function (e) {
