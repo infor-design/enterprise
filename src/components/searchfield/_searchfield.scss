@@ -67,7 +67,10 @@
   // This rule will only work when searchfield is clearable.
   &.has-close-icon-button {
     .searchfield {
+      overflow: hidden;
       padding-right: 28px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
