@@ -85,7 +85,7 @@ TagList.prototype = {
       tag = tagObj;
     }
 
-    if (this.tags.indexOf(tag) > -1) {
+    if (this.tags.indexOf(tag) === -1) {
       this.tags.push(tag);
     }
 
@@ -95,10 +95,11 @@ TagList.prototype = {
   /**
    * Removes a tag from the collection.
    * @param {Tag|object} tagObj an incoming Tag Component instance, or object representing tag data.
+   * @param {boolean} [doDestroy=false] if true, calls `Tag.prototype.remove()` and removes the tag from the DOM.
    * @returns {Tag|undefined} a reference to the removed tag, if one has been removed. Returns undefined if no tags
    * have been removed.
    */
-  remove(tagObj) {
+  remove(tagObj, doDestroy) {
     if (tagObj instanceof Tag) {
       tagObj = tagObj.settings;
     }
@@ -121,7 +122,24 @@ TagList.prototype = {
     if (updatedTagsList.length < this.tags.length) {
       this.tags = updatedTagsList;
     }
+
+    // Destroy the tag, if applicable
+    if (doDestroy) {
+      removedTag.remove();
+    }
+
     return removedTag;
+  },
+
+  /**
+   * Removes all tags from this tag list.
+   * @returns {void}
+   */
+  removeAll() {
+    this.tags.forEach((tag) => {
+      tag.remove();
+    });
+    this.tags = [];
   },
 
   /**

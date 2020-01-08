@@ -11,8 +11,9 @@ const tagStyles = ['default', 'neutral', 'secondary', 'error', 'alert', 'good', 
 // Default Tag Options
 const TAG_DEFAULTS = {
   audibleContent: undefined,
+  clickable: false,
   clickHandler: undefined,
-  content: '',
+  content: ' ',
   dismissible: false,
   href: undefined,
   id: undefined,
@@ -110,9 +111,11 @@ Tag.prototype = {
       contentTagType = 'a';
     }
     if (hasHref) {
-      elemClasses.add('is-linkable');
       href = ` href="${this.settings.href}"`;
-      linkableBtn = `<button class="linkable-btn">
+    }
+    if (this.settings.clickable || typeof this.settings.clickHandler === 'function') {
+      elemClasses.add('is-linkable');
+      linkableBtn = `<button class="linkable-btn" focusable="false" tabIndex="-1">
         ${$.createIcon('caret-right')}
       </button>`;
     }
@@ -169,16 +172,20 @@ Tag.prototype = {
       this.settings.dismissible = true;
     }
 
-    // Hyperlink State, href
+    // Hyperlink State, href, show/hide the "clickable" icon
     const hyperlink = this.element.querySelector('a');
     const hasHyperlinkCss = this.element.className.indexOf('is-linkable') > -1;
-    if (hyperlink || hasHyperlinkCss) {
+    const hasLinkableIcon = this.element.querySelector('.linkable-btn');
+    if (hyperlink || hasHyperlinkCss || hasLinkableIcon) {
       this.originallyAnchor = true;
       let href = hyperlink.getAttribute('href');
       if (href && href.length) {
         href = xssUtils.stripTags(href);
         this.settings.href = href;
       }
+    }
+    if (hasHyperlinkCss || hasLinkableIcon) {
+      this.settings.clickable = true;
     }
 
     // Audible content

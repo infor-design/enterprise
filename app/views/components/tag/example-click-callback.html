@@ -1,19 +1,19 @@
 <div class="row">
   <div class="six columns">
-    <h2>Tags Example: Clickable (with Callback)</h2>
+    <h2>Tags Example: Linkable (with Callback)</h2>
     <p><a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/3114" target="_blank">Github Issue #3114</a>.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-    <a data-init="false" href="#" id="example-clickable" class="tag is-clickable">This Tag is Clickable</a>
+    <a data-init="false" href="#" id="example-linkable" class="tag is-linkable">This Tag is Linkable</a>
   </div>
 </div>
 
 <script id="test-script">
   $('body').on('initialized', function () {
-    const tagAPI = $('#example-clickable').tag({
+    const tagAPI = $('#example-linkable').tag({
       clickHandler: function (tagAPI) {
         const tagContents = tagAPI.settings.content;
 

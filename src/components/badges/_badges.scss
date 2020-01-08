@@ -41,6 +41,10 @@
   .dismissible-btn,
   .linkable-btn {
     color: inherit;
+
+    .icon {
+      position: relative;
+    }
   }
 
   span {
@@ -69,7 +73,6 @@
 
       .icon {
         height: 10px;
-        left: 2px;
         width: 10px;
       }
     }
@@ -81,7 +84,7 @@
 
     // Neutral color style for focus/hover
     &:hover,
-    &.is-focused {
+    &.is-focused:not(.hide-focus) {
       background-color: $badge-neutral-hover-bg-color;
     }
   }
@@ -96,7 +99,6 @@
 
       .icon {
         height: 10px;
-        left: 2px;
         width: 10px;
       }
     }
@@ -135,7 +137,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-neutral-hover-bg-color;
       }
     }
@@ -159,7 +161,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-secondary-hover-bg-color;
         border-color: $badge-secondary-hover-border-color;
       }
@@ -198,7 +200,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-error-hover-bg-color;
       }
     }
@@ -222,7 +224,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-alert-hover-bg-color;
       }
     }
@@ -244,7 +246,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-good-hover-bg-color;
       }
     }
@@ -266,7 +268,7 @@
 
     &.is-linkable {
       &:hover,
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         background-color: $badge-info-hover-bg-color;
       }
     }
@@ -382,6 +384,18 @@ html[class*='theme-soho-'] {
     button {
       .icon {
         top: 1px;
+      }
+    }
+  }
+}
+
+html[class*='theme-uplift-'] {
+  .tag,
+  .badge {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: -1px;
       }
     }
   }
