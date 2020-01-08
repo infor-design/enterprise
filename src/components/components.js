@@ -48,6 +48,7 @@ export { Splitter } from './splitter/splitter';
 export { StepChart } from './stepchart/stepchart';
 export { Tabs } from './tabs/tabs';
 export { Tag } from './tag/tag';
+export { TagList } from './tag/tag.list';
 export { Textarea } from './textarea/textarea';
 export { TimePicker } from './timepicker/timepicker';
 export { Toast } from './toast/toast';

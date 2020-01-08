@@ -15,6 +15,8 @@ const TAG_DEFAULTS = {
   content: '',
   dismissible: false,
   href: undefined,
+  id: undefined,
+  parent: undefined,
   style: tagStyles[0]
 };
 
@@ -29,41 +31,50 @@ function Tag(element, settings) {
 
   // Normalize the element type
   let span;
-  if (element instanceof HTMLElement) {
-    if (!element.querySelector('.tag-content')) {
-      span = document.createElement('span');
-      span.classList = element.classList;
-      if (element.id && element.id.length) {
-        span.id = element.id;
-        element.removeAttribute('id');
-      }
-      element.insertAdjacentElement('beforebegin', span);
-      span.appendChild(element);
-      span.classList.add('tag');
-      element.className = '';
-      element.classList.add('tag-content');
-    } else {
-      span = element;
-    }
-
-    const audibleContent = element.querySelector('.audible');
-    if (audibleContent) {
-      span.insertAdjacentElement('afterbegin', audibleContent);
-    }
-    this.element = span;
-  } else {
+  if (!(element instanceof HTMLElement)) {
     // If no element or the wrong element exists, we just create it from scratch.
     // If a valid element was passed in, we "replace" it in the DOM.
     // Otherwise, it's up to the implementing dev to place/insert the tag.
     span = document.createElement('span');
     span.classList.add('tag');
-    if (element) {
-      element.insertAdjacentElement('beforebegin', span);
-      element.remove();
+    if (this.settings && (this.settings.parent instanceof HTMLElement)) {
+      this.settings.parent.appendChild(span);
     }
-    this.element = span;
+    if (typeof this.settings.id === 'string' && this.settings.id.length) {
+      span.id = this.settings.id;
+      delete this.settings.id;
+    }
+  } else if (element.querySelector('.tag-content')) {
+    // The tag is fully formed and doesn't need modification
+    span = element;
+  } else {
+    // Create the internal bit of tag content
+    span = document.createElement('span');
+    span.classList = element.classList;
+    if (element.id && element.id.length) {
+      span.id = element.id;
+      element.removeAttribute('id');
+    } else if (typeof this.settings.id === 'string' && this.settings.id.length) {
+      span.id = this.settings.id;
+      delete this.settings.id;
+    }
+    element.insertAdjacentElement('beforebegin', span);
+    span.appendChild(element);
+    span.classList.add('tag');
+    element.className = '';
+    element.classList.add('tag-content');
   }
 
+  // Move the audible content around, if applicable
+  if (element) {
+    const audibleContent = element.querySelector('.audible');
+    if (audibleContent) {
+      span.insertAdjacentElement('afterbegin', audibleContent);
+    }
+  }
+  this.element = span;
+
+  // Use the element to change settings object, if applicable
   this.getSettingsFromElement();
 
   this.init();
@@ -94,9 +105,12 @@ Tag.prototype = {
     let contentTagType = 'span';
     let href = '';
     let linkableBtn = '';
-    if ((this.settings.href && this.settings.href.length) || this.originallyAnchor) {
-      elemClasses.add('is-linkable');
+    const hasHref = (this.settings.href && this.settings.href.length);
+    if (hasHref || this.originallyAnchor) {
       contentTagType = 'a';
+    }
+    if (hasHref) {
+      elemClasses.add('is-linkable');
       href = ` href="${this.settings.href}"`;
       linkableBtn = `<button class="linkable-btn">
         ${$.createIcon('caret-right')}
@@ -115,7 +129,7 @@ Tag.prototype = {
     }
 
     // Do the render!
-    this.element.innerHTML = `${audibleContent}${content}${dismissibleBtn}${linkableBtn}`;
+    this.element.innerHTML = `${audibleContent}${content}${linkableBtn}${dismissibleBtn}`;
 
     // Setup the HideFocus behavior
     $(this.element).hideFocus();
@@ -174,8 +188,10 @@ Tag.prototype = {
     }
 
     // Text Content
-    const text = this.element.querySelector('.tag-content').innerText;
-    this.settings.content = xssUtils.sanitizeHTML(text);
+    const contentElem = this.element.querySelector('.tag-content');
+    if (contentElem) {
+      this.settings.content = xssUtils.sanitizeHTML(contentElem.innerText);
+    }
   },
 
   /**
