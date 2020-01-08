@@ -26,6 +26,7 @@
 - `[Locale]` Corrected and added the firstDayofWeek setting for every locale. ([#3060](https://github.com/infor-design/enterprise/issues/3060))
 - `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
 - `[Multiselect]` Adjusted the placeholder color as it was too dark. ([#3276](https://github.com/infor-design/enterprise/issues/3276))
+- `[Searchfield]` Fixed an issue where multiselect items' checkboxes and text were misaligned in RTL mode. ([#1811](https://github.com/infor-design/enterprise/issues/1811))
 - `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
