@@ -4313,7 +4313,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
-      return ' style="max-width: 99%"';
+      return ` style="width: 99%;min-width: ${this.widthPercent ? `${colPercWidth}%` : `${colWidth}px`}"`;
     }
 
     // For the last column stretch it if it doesnt fit the area
