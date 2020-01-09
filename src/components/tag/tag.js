@@ -15,6 +15,7 @@ const TAG_DEFAULTS = {
   clickHandler: undefined,
   content: ' ',
   dismissible: false,
+  dismissHandler: undefined,
   href: undefined,
   id: undefined,
   parent: undefined,
@@ -207,7 +208,7 @@ Tag.prototype = {
    */
   remove() {
     const thisNode = this.element;
-    const parentNode = thisNode.parentNode;
+    const parentNode = this.settings.parentAPI ? this.settings.parentAPI.element : thisNode.parentNode;
 
     /**
     * Fires before tag remove.
@@ -221,7 +222,7 @@ Tag.prototype = {
     $(parentNode).triggerHandler('beforetagremove', [this]);
 
     this.destroy();
-    parentNode.removeChild(thisNode);
+    thisNode.remove();
 
     /**
     * Fires after tag remove.
@@ -232,6 +233,18 @@ Tag.prototype = {
     * @property {object} event - The jquery event object
     */
     $(parentNode).triggerHandler('aftertagremove', [this]);
+  },
+
+  /**
+   * Glorified way to remove a tag with an extra callback
+   * @param {jQuery.Event} [e] the event that triggered dismissal, if applicable.
+   * @returns {void}
+   */
+  dismiss(e) {
+    this.remove(e);
+    if (typeof this.settings.dismissHandler === 'function') {
+      this.settings.dismissHandler(this);
+    }
   },
 
   /**
@@ -323,7 +336,7 @@ Tag.prototype = {
        * @property {object} e - The jquery event object
        */
       $(this.element).on('click.tag', '.dismissible-btn', (e) => {
-        this.remove(e);
+        this.dismiss(e);
       });
 
       /**
@@ -335,7 +348,7 @@ Tag.prototype = {
       */
       $(this.element).on('keydown.tag', 'a', (e) => {
         if (e.keyCode === 8) { // Backspace
-          this.remove(e);
+          this.dismiss(e);
         }
       });
     }

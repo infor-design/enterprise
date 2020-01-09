@@ -98,7 +98,7 @@ div.multiselect {
     text-align: center;
   }
 
-  > span {
+  > span:not(.tag-list) {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -198,6 +198,19 @@ div.multiselect {
     border-color: $input-color-focus-border !important;
   }
 
+  .tag-list {
+    margin: 0;
+    overflow: auto;
+    text-overflow: clip;
+    white-space: normal;
+
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        vertical-align: baseline;
+      }
+    }
+  }
 }
 
 // The List

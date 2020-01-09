@@ -5,6 +5,7 @@ import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
+import { Tag, TagList } from '../tag/tag.list';
 import { xssUtils } from '../../utils/xss';
 import { stringUtils } from '../../utils/string';
 
@@ -268,6 +269,11 @@ Dropdown.prototype = {
       this.element.prop('multiple', true);
     }
 
+    // Create a taglist, if applicable
+    if (this.settings.showTags) {
+      this.renderTagList();
+    }
+
     /*
     // Add the internal hash for typeahead filtering, if applicable
     if (this.settings.reload === 'typeahead') {
@@ -360,6 +366,43 @@ Dropdown.prototype = {
     this.element.triggerHandler('rendered');
 
     return this.handleEvents();
+  },
+
+  renderTagList() {
+    const self = this;
+    function dismissHandler(tag) {
+      const targets = self.selectedOptions.filter((el) => {
+        const optionText = xssUtils.stripHTML(el.innerText);
+        return optionText === tag.settings.content;
+      });
+      if (targets.length) {
+        self.deselect(targets[0]);
+        if (self.isOpen()) {
+          self.updateList();
+        }
+      }
+    }
+
+    const tags = this.toTagData();
+    tags.forEach((tag) => {
+      tag.dismissHandler = dismissHandler;
+    });
+
+    const span = this.pseudoElem.children('span')[0];
+    if (!this.tagListAPI) {
+      this.tagListAPI = new TagList(span, {
+        tags
+      });
+      span.classList.add('tag-list');
+    } else {
+      this.tagListAPI.updated({
+        tags
+      });
+    }
+
+    if (this.isOpen()) {
+      this.position();
+    }
   },
 
   /**
@@ -888,23 +931,10 @@ Dropdown.prototype = {
     const opts = this.element.find('option:selected');
     let text = this.getOptionText(opts);
 
-    /*
+    // Clear Text
     if (opts.hasClass('clear')) {
-      this.settings.showTags {
-        this.removeAllTags();
-      } else {
-        text = '';
-      }
+      text = '';
     }
-    */
-
-    /*
-    if (this.settings.showTags) {
-      // Render tags instead
-    } else {
-
-    }
-    */
 
     if (this.settings.empty && opts.length === 0) {
       let span = this.pseudoElem.find('span').first();
@@ -915,15 +945,22 @@ Dropdown.prototype = {
       return;
     }
 
-    // Displays the text on the pseudo-element
-    const maxlength = this.element.attr('maxlength');
-    if (maxlength) {
-      text = text.substr(0, maxlength);
-    }
-    text = text.trim();
-    const span = this.pseudoElem.find('span');
-    if (span.length > 0) {
-      span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${xssUtils.escapeHTML(text)}`;
+    // Displays the tags/text on the pseudo-element
+    if (this.settings.showTags && this.tagListAPI) {
+      // Render tags instead
+      this.renderTagList();
+      // this.tagListAPI.add(this.toTagData());
+      // this.tagListAPI.render();
+    } else {
+      const maxlength = this.element.attr('maxlength');
+      if (maxlength) {
+        text = text.substr(0, maxlength);
+      }
+      text = text.trim();
+      const span = this.pseudoElem.find('span');
+      if (span.length > 0) {
+        span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${xssUtils.escapeHTML(text)}`;
+      }
     }
 
     this.setPlaceholder(text);
@@ -1734,6 +1771,9 @@ Dropdown.prototype = {
       .addClass('is-open');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
+    if (this.settings.showTags) {
+      this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
+    }
 
     // In a grid cell
     this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
@@ -2966,6 +3006,25 @@ Dropdown.prototype = {
   },
 
   /**
+   * Gets a data-representation of the currently-selected Multiselect items in a format
+   * compatible with the TagList component.
+   * @returns {array} containing JSON-compatible data representing a collection of tags
+   */
+  toTagData() {
+    const tagData = [];
+    this.selectedOptions.forEach((opt) => {
+      tagData.push({
+        content: opt.innerText.trim(),
+        dismissible: true,
+        href: '#',
+        id: opt.value,
+        style: 'secondary'
+      });
+    });
+    return tagData;
+  },
+
+  /**
    * Disable the input element.
    */
   disable() {
@@ -3111,6 +3170,16 @@ Dropdown.prototype = {
         }
       }).on('mouseup.dropdown', (e) => {
         if (e.button === 2) {
+          return;
+        }
+
+        // If the element clicked is a tag, ignore and let the tag handle it.
+        const containedByTag = $(e.target).parents('.tag').length > 0;
+        let isTag = false;
+        if (e.target instanceof HTMLElement && typeof e.target.className === 'string') {
+          isTag = e.target.className.indexOf('tag') > -1;
+        }
+        if (isTag || containedByTag) {
           return;
         }
         self.toggle();

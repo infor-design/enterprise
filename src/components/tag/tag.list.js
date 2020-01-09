@@ -30,6 +30,13 @@ function TagList(element, settings) {
 TagList.prototype = {
 
   /**
+   * @returns {number} representing the number of tags in the list.
+   */
+  get length() {
+    return this.tags.length;
+  },
+
+  /**
    * Initialize the collection
    * @private
    * @returns {void}
@@ -67,12 +74,20 @@ TagList.prototype = {
   /**
    * Adds a new tag to the collection
    * @param {Tag|object} tagObj an incoming Tag Component instance, or object representing tag data.
-   * @returns {Tag} the newly formed tag object.
+   * @returns {Tag|array<Tag>} the newly formed tag object.
    */
   add(tagObj) {
     let tag;
     if (!tagObj) {
       throw new Error('No object was provided');
+    }
+    // Re-run this function on each item in an array
+    if (Array.isArray(tagObj)) {
+      const tags = [];
+      tagObj.forEach((thisTagObj) => {
+        tags.push(this.add(thisTagObj));
+      });
+      return tags;
     }
     if (objectUtils.isEmpty(tagObj)) {
       throw new Error('Provided object has no unique keys to use for creation of a Tag.');
@@ -80,9 +95,11 @@ TagList.prototype = {
 
     if (!(tagObj instanceof Tag)) {
       tagObj.parent = this.element;
+      tagObj.parentAPI = this;
       tag = new Tag(undefined, tagObj);
     } else {
       tag = tagObj;
+      tagObj.settings.parentAPI = this;
     }
 
     if (this.tags.indexOf(tag) === -1) {
@@ -150,8 +167,23 @@ TagList.prototype = {
     this.tags.forEach((tag) => {
       tag.render();
     });
-  }
+  },
 
+  /**
+   * Updates the component with new settings
+   * @param {object} [settings] if provided, updates the settings on this component instance
+   * @returns {void}
+   */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+      if (Array.isArray(settings.tags)) {
+        this.settings.tags = settings.tags;
+      }
+    }
+    this.removeAll();
+    this.init();
+  }
 };
 
-export { TagList, COMPONENT_NAME };
+export { Tag, TagList, COMPONENT_NAME };
