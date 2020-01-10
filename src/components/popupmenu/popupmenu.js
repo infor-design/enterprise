@@ -1838,7 +1838,10 @@ PopupMenu.prototype = {
       });
 
       $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
-        self.close();
+        const delay = self.isInViewport(self.element[0]) ? 0 : 150;
+        setTimeout(() => {
+          self.close();
+        }, delay);
       });
 
       /**
@@ -1933,6 +1936,19 @@ PopupMenu.prototype = {
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
     }
+  },
+
+  /**
+   * Checks if given element is all in viewport
+   * @private
+   * @param {HTMLElement} elem an HTML element to check
+   * @returns {boolean} true if given element is all in viewport
+   */
+  isInViewport(elem) {
+    const b = elem.getBoundingClientRect();
+    return b.top > 0 && b.left > 0 &&
+      b.bottom < (window.innerHeight || document.documentElement.clientHeight) &&
+      b.right < (window.innerWidth || document.documentElement.clientWidth);
   },
 
   /**
