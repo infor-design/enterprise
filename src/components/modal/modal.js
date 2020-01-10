@@ -613,7 +613,7 @@ Modal.prototype = {
 
     if (this.settings.triggerButton) {
       this.oldActive = this.useJqEl(this.settings.triggerButton);
-    } else if (!this.trigger || this.trigger.length === 0) {
+    } else if (!this.trigger || this.trigger.length === 0 || this.trigger.is('body')) {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
     }
 
@@ -1079,7 +1079,6 @@ Modal.prototype = {
       }
       if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
         this.oldActive.focus();
-        this.oldActive = null;
       } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
         this.trigger.focus();
       }

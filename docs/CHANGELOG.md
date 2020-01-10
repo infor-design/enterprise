@@ -15,6 +15,7 @@
 - `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
 - `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
 - `[Accordion]` Fixed inconsistency style of focus element after clicking on a certain accordion header. ([#3082](https://github.com/infor-design/enterprise/issues/3082))
+- `[Autocomplete]` Fixed an issue where selected event was not firing when its parent is partly overflowing. ([#3072](https://github.com/infor-design/enterprise/issues/3072))
 - `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
 - `[Datagrid]` Fixed an issue where the add row or load new data for grouping was not working. ([#2801](https://github.com/infor-design/enterprise/issues/2801))
 - `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
