@@ -815,13 +815,34 @@ const Locale = {  // eslint-disable-line
   * @param {number} number The number to convert
   * @param {string} locale The number to convert
   * @param {object} options The number to convert
+  * @param {string} groupSeparator If provided will replace with browser default character
   * @returns {string} The converted number.
   */
-  toLocaleString(number, locale, options) {
+  toLocaleString(number, locale, options, groupSeparator) {
     if (typeof number !== 'number') {
       return '';
     }
-    return number.toLocaleString(locale || Locale.currentLocale.name, options || undefined);
+    const args = { locale: locale || Locale.currentLocale.name, options: options || undefined };
+    let n = number.toLocaleString(args.locale, args.options);
+    if (!(/undefined|null/.test(typeof groupSeparator))) {
+      const gSeparator = this.getSeparator(args.locale, 'group');
+      n = n.replace(new RegExp(gSeparator, 'g'), groupSeparator.toString());
+    }
+    return n;
+  },
+
+  /**
+  * Find browser default separator for given locale
+  * @param {string} locale The locale
+  * @param {string} separatorType The separator type be found `group`|`decimal`
+  * @returns {string} The browser default separator character
+  */
+  getSeparator(locale, separatorType) {
+    const number = 1000.1;
+    return Intl.NumberFormat(locale)
+      .formatToParts(number)
+      .find(part => part.type === separatorType)
+      .value;
   },
 
   /**
