@@ -102,11 +102,6 @@
         width: 10px;
       }
     }
-
-    &:not(.hide-focus) {
-      border-color: $theme-color-brand-primary-base;
-      box-shadow: $focus-box-shadow;
-    }
   }
 
   &.is-focused:not(.hide-focus) {
@@ -117,6 +112,10 @@
       outline: none;
       -moz-outline-style: none;
     }
+  }
+
+  &.is-disabled {
+
   }
 
   // Neutral (Default-style) Tags

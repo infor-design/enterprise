@@ -23,6 +23,15 @@ div.multiselect {
       padding-left: 25px;
     }
   }
+
+  .tag-list {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        vertical-align: middle;
+      }
+    }
+  }
 }
 
 .dropdown-list {

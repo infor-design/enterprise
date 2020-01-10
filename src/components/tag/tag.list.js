@@ -49,6 +49,7 @@ TagList.prototype = {
         this.add(tag);
       });
     }
+    this.render();
   },
 
   /**
@@ -167,6 +168,7 @@ TagList.prototype = {
     this.tags.forEach((tag) => {
       tag.render();
     });
+    this.element.classList[this.tags.length ? 'remove' : 'add']('empty');
   },
 
   /**

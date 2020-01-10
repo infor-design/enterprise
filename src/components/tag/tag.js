@@ -19,7 +19,8 @@ const TAG_DEFAULTS = {
   href: undefined,
   id: undefined,
   parent: undefined,
-  style: tagStyles[0]
+  style: tagStyles[0],
+  value: undefined
 };
 
 /**

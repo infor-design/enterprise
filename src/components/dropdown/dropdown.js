@@ -5,7 +5,7 @@ import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
-import { Tag, TagList } from '../tag/tag.list';
+import { TagList } from '../tag/tag.list';
 import { xssUtils } from '../../utils/xss';
 import { stringUtils } from '../../utils/string';
 
@@ -48,6 +48,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
+* @param {object} [settings.tagSettings] if defined, passes along 'clickHandler' and 'dismissHandler' functions to any Tags in the Taglist
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -68,7 +69,8 @@ const DROPDOWN_DEFAULTS = {
   delay: 300,
   maxWidth: null,
   placementOpts: null,
-  onKeyDown: null
+  onKeyDown: null,
+  tagSettings: {}
 };
 
 function Dropdown(element, settings) {
@@ -274,15 +276,6 @@ Dropdown.prototype = {
       this.renderTagList();
     }
 
-    /*
-    // Add the internal hash for typeahead filtering, if applicable
-    if (this.settings.reload === 'typeahead') {
-      this.selectedValues = [];
-    } else {
-      delete this.selectedValues;
-    }
-    */
-
     const dataSource = this.element.attr('data-source');
     if (dataSource && dataSource !== 'source') {
       this.settings.source = dataSource;
@@ -368,12 +361,22 @@ Dropdown.prototype = {
     return this.handleEvents();
   },
 
+  /**
+   * Updates/Renders the TagList
+   * @private
+   * @returns {void}
+   */
   renderTagList() {
     const self = this;
     function dismissHandler(tag) {
+      // Run a dismissHandler, if defined
+      if (self.settings.dismissHandler) {
+        self.settings.dismissHandler(tag);
+      }
+
       const targets = self.selectedOptions.filter((el) => {
-        const optionText = xssUtils.stripHTML(el.innerText);
-        return optionText === tag.settings.content;
+        const optionValue = xssUtils.stripHTML(el.getAttribute('value'));
+        return optionValue === tag.settings.value;
       });
       if (targets.length) {
         self.deselect(targets[0]);
@@ -381,11 +384,15 @@ Dropdown.prototype = {
           self.updateList();
         }
       }
+      self.tagListAPI.element.classList[self.selectedOptions.length ? 'remove' : 'add']('empty');
     }
 
     const tags = this.toTagData();
     tags.forEach((tag) => {
       tag.dismissHandler = dismissHandler;
+      if (self.settings.clickHandler) {
+        tag.clickHandler = self.settings.clickHandler;
+      }
     });
 
     const span = this.pseudoElem.children('span')[0];
@@ -399,6 +406,8 @@ Dropdown.prototype = {
         tags
       });
     }
+
+    this.tagListAPI.element.classList[this.selectedOptions.length ? 'remove' : 'add']('empty');
 
     if (this.isOpen()) {
       this.position();
@@ -936,22 +945,22 @@ Dropdown.prototype = {
       text = '';
     }
 
-    if (this.settings.empty && opts.length === 0) {
-      let span = this.pseudoElem.find('span').first();
-      DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
-      span = $(`#${this.element.attr('id')}`).next().find('span').first();
-      DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
-      this.setPlaceholder(text);
-      return;
-    }
-
     // Displays the tags/text on the pseudo-element
     if (this.settings.showTags && this.tagListAPI) {
-      // Render tags instead
+      // Render tags
       this.renderTagList();
-      // this.tagListAPI.add(this.toTagData());
-      // this.tagListAPI.render();
     } else {
+      // If empty, render an accessibility message
+      if (this.settings.empty && opts.length === 0) {
+        let span = this.pseudoElem.find('span').first();
+        DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
+        span = $(`#${this.element.attr('id')}`).next().find('span').first();
+        DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
+        this.setPlaceholder(text);
+        return;
+      }
+
+      // Render text
       const maxlength = this.element.attr('maxlength');
       if (maxlength) {
         text = text.substr(0, maxlength);
@@ -1616,6 +1625,11 @@ Dropdown.prototype = {
 
     if (useSearchInput || self.isMobile()) {
       input = this.searchInput;
+    }
+
+    if (this.currentlyScrolledPos) {
+      this.listUl.scrollTop(this.currentlyScrolledPos);
+      delete this.currentlyScrolledPos;
     }
 
     if (useSearchInput && (input && (input.hasClass('is-readonly') || input.prop('readonly') === true))) {
@@ -2578,6 +2592,11 @@ Dropdown.prototype = {
       this.previousActiveDescendant = undefined;
     }
 
+    const listScrollTop = this.listUl[0].scrollTop;
+    if (listScrollTop > 0) {
+      this.currentlyScrolledPos = listScrollTop;
+    }
+
     this.renderListItem(option[0]);
     this.setDisplayedValues();
     this.updateItemIcon(option);
@@ -3012,13 +3031,16 @@ Dropdown.prototype = {
    */
   toTagData() {
     const tagData = [];
+    const componentID = this.element[0].id || utils.uniqueId(this.element[0], this.element[0].className);
+
     this.selectedOptions.forEach((opt) => {
       tagData.push({
         content: opt.innerText.trim(),
         dismissible: true,
         href: '#',
-        id: opt.value,
-        style: 'secondary'
+        id: `${componentID}-tag-${opt.value}`,
+        style: 'secondary',
+        value: opt.value
       });
     });
     return tagData;
@@ -3135,6 +3157,10 @@ Dropdown.prototype = {
   destroy() {
     if (this.placeholder) {
       delete this.placeholder;
+    }
+
+    if (this.currentlyScrolledPos) {
+      delete this.currentlyScrolledPos;
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);

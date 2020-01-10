@@ -204,6 +204,10 @@ div.multiselect {
     text-overflow: clip;
     white-space: normal;
 
+    &.empty {
+      display: inline-block;
+    }
+
     .dismissible-btn,
     .linkable-btn {
       .icon {
