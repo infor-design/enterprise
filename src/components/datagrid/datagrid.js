@@ -266,6 +266,8 @@ Datagrid.prototype = {
     this.canvas = null;
     this.totalWidths = { left: 0, center: 0, right: 0 };
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.editor = null; // Current Cell Editor thats in Use
     this.activeCell = { node: null, cell: null, row: null }; // Current Active Cell
     this.dontSyncUi = false;
@@ -431,6 +433,11 @@ Datagrid.prototype = {
     self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.renderHeader();
+    
+    if (this.stretchColumnDiff < 0) {
+        const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+        currentCol.style.width = `${this.stretchColumnWidth}px`;
+    }
 
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
@@ -4155,6 +4162,8 @@ Datagrid.prototype = {
     this.elemWidth = 0;
     this.lastColumn = null;
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.fixColumnIds();
   },
 
@@ -4174,6 +4183,28 @@ Datagrid.prototype = {
         }
       }
     }
+  },
+  
+  /**
+   * Return the index of the stretch column
+   * @private
+   * @returns {number}
+   */
+  getStretchColumnIdx() {
+    const self = this;
+    let stretchColumnIdx = self.stretchColumnIdx;
+
+    if (stretchColumnIdx === -1 && self.settings.stretchColumn !== 'last') {
+      self.headerNodes().each(function (i) {
+        const col = $(this);
+
+        if (col.attr('data-column-id') === self.settings.stretchColumn) {
+          stretchColumnIdx = i;
+        }
+      });
+    }
+    
+    return stretchColumnIdx;
   },
 
   /**
@@ -4313,7 +4344,8 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
-      return ` style="width: 99%;min-width: ${this.widthPercent ? `${colPercWidth}%` : `${colWidth}px`}"`;
+      this.stretchColumnWidth = colWidth;
+      return ' style="width: 99%"';
     }
 
     // For the last column stretch it if it doesnt fit the area
@@ -4327,7 +4359,7 @@ Datagrid.prototype = {
       }
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
-        this.stretchColumnWidth += diff;
+        this.stretchColumnDiff = diff;
       }
 
       if (this.hasLeftPane) {
@@ -5870,6 +5902,18 @@ Datagrid.prototype = {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
       });
+      $(window).on('resize.datagrid', () => {
+        let j = 0;
+        this.clearCache();
+        for (j = 0; j < self.settings.columns.length; j++) {
+          const col = self.settings.columns[j];
+          const colWidth = self.columnWidth(col, j);
+        }
+
+        const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+        currentCol.style.width = `${self.stretchColumnDiff > 0 ? `99%` : `${self.stretchColumnWidth}px`}`;
+      });
+      
     }
 
     /**
