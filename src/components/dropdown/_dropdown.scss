@@ -200,7 +200,7 @@ div.multiselect {
 
   &.has-tags {
     line-height: normal;
-    padding: 3px 30px 5px 10px;
+    padding: 2px 30px 4px 10px;
   }
 
   .tag-list {
@@ -912,6 +912,10 @@ div.dropdown-xs,
 
     &.has-tags {
       padding: 3px 30px 5px 10px;
+
+      > span {
+        padding-top: 0;
+      }
     }
   }
 

@@ -1,13 +1,6 @@
 <div class="row">
   <div class="six columns">
-    <h2>Multiselect with Tags</h2>
-    <p><a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/3314">Github Issue #3114</a></p>
-  </div>
-</div>
-
-<div class="row top-padding">
-  <div class="six columns">
-    <label for="multi-tags">States</label>
-    <select multiple id="multi-tags" class="multiselect" data-source="{{basepath}}api/states?term=" data-maxselected="10" data-options="{ showTags: true }"></select>
+    <h2 class="fieldset-title">Multiselect (with Tags)</h2>
+    {{> components/multiselect/_samples-tagged}}
   </div>
 </div>

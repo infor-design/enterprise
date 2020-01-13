@@ -2075,8 +2075,8 @@ Dropdown.prototype = {
     positionOpts.useParentWidth = useParentWidth;
 
     // Use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-    // Ignore this for Multiselect and always position below/above the field.
-    if (!this.settings.multiple) {
+    // Ignore this for Tag List Display and always position below/above the field.
+    if (!this.settings.showTags) {
       const isRetina = window.devicePixelRatio > 1;
       const isChrome = env.browser.name === 'chrome';
       positionOpts.y = -(parseInt(parentElement[0].clientHeight, 10) +
