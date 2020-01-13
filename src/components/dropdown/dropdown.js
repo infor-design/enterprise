@@ -3032,7 +3032,10 @@ Dropdown.prototype = {
    */
   toTagData() {
     const tagData = [];
-    const componentID = this.element[0].id || utils.uniqueId(this.element[0], this.element[0].className);
+    let componentID = this.element[0].id;
+    if (!componentID) {
+      componentID = utils.uniqueId(this.element[0], this.element[0].className);
+    }
 
     this.selectedOptions.forEach((opt) => {
       tagData.push({
