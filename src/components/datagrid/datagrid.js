@@ -3347,6 +3347,11 @@ Datagrid.prototype = {
       self.syncSelectedUI();
     }
 
+    if (this.stretchColumnDiff < 0) {
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
+    }
+    
     /**
     * Fires after the entire grid is rendered.
     * @event afterrender
