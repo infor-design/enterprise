@@ -833,6 +833,7 @@ const Locale = {  // eslint-disable-line
 
   /**
   * Find browser default separator for given locale
+  * @private
   * @param {string} locale The locale
   * @param {string} separatorType The separator type be found `group`|`decimal`
   * @returns {string} The browser default separator character
