@@ -1821,12 +1821,10 @@ Dropdown.prototype = {
     // If we've got a stored typeahead
     if (typeof this.filterTerm === 'string' && this.filterTerm.length > 0) {
       this.searchInput.val(this.filterTerm);
-    } else if (!this.settings.multiple && current.length) {
-      // Get value of text nodes, not badges/tags
-      const textElems = current.find('a').contents().filter(function () {
-        return this.nodeType === 3;
-      });
-      this.searchInput.val(textElems.text().trim());
+    } else if (!this.settings.showTags) {
+      const selectedOpts = $(this.selectedOptions);
+      const text = this.getOptionText(selectedOpts);
+      this.searchInput.val(text);
     }
 
     const noScroll = this.settings.multiple;

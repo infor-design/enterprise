@@ -906,16 +906,14 @@ div.dropdown-xs,
   div.multiselect {
     padding: 9px 30px 8px 10px;
 
-    > span {
-      padding-top: 1px;
+    &:not(.has-tags) {
+      > span {
+        padding-top: 1px;
+      }
     }
 
     &.has-tags {
       padding: 3px 30px 5px 10px;
-
-      > span {
-        padding-top: 0;
-      }
     }
   }
 
