@@ -198,14 +198,21 @@ div.multiselect {
     border-color: $input-color-focus-border !important;
   }
 
+  &.has-tags {
+    line-height: normal;
+    padding: 3px 30px 5px 10px;
+  }
+
   .tag-list {
+    display: block;
+    line-height: 26px;
     margin: 0;
     overflow: auto;
     text-overflow: clip;
     white-space: normal;
 
     &.empty {
-      display: inline-block;
+      padding: 13px;
     }
 
     .dismissible-btn,
@@ -213,6 +220,14 @@ div.multiselect {
       .icon {
         vertical-align: baseline;
       }
+    }
+
+    .tag {
+      margin: 0 3px 0 0;
+    }
+
+    .icon {
+      background-color: transparent;
     }
   }
 }
@@ -894,6 +909,10 @@ div.dropdown-xs,
     > span {
       padding-top: 1px;
     }
+
+    &.has-tags {
+      padding: 3px 30px 5px 10px;
+    }
   }
 
   // Reset the padding in the rule above for Short Fields
@@ -1018,6 +1037,13 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -33px;
       right: auto !important;
+    }
+  }
+
+  div.dropdown,
+  div.multiselect {
+    &.has-tags {
+      padding: 5px 10px 5px 30px;
     }
   }
 

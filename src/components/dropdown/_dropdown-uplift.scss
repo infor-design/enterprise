@@ -24,6 +24,14 @@ div.multiselect {
     }
   }
 
+  &.has-tags {
+    padding: 2px 30px 5px 10px;
+
+    + .icon {
+      height: 30px;
+    }
+  }
+
   .tag-list {
     .dismissible-btn,
     .linkable-btn {
@@ -242,6 +250,10 @@ html.is-firefox:not([dir='rtl']) {
       + span {
         padding-left: 26px;
       }
+    }
+
+    &.has-tags {
+      padding: 0 30px 5px 10px;
     }
   }
 

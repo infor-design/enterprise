@@ -273,6 +273,7 @@ Dropdown.prototype = {
 
     // Create a taglist, if applicable
     if (this.settings.showTags) {
+      this.pseudoElem[0].classList.add('has-tags');
       this.renderTagList();
     }
 
@@ -380,11 +381,11 @@ Dropdown.prototype = {
       });
       if (targets.length) {
         self.deselect(targets[0]);
-        if (self.isOpen()) {
-          self.updateList();
-        }
       }
       self.tagListAPI.element.classList[self.selectedOptions.length ? 'remove' : 'add']('empty');
+      if (self.isOpen()) {
+        self.updateList();
+      }
     }
 
     const tags = this.toTagData();
@@ -3211,7 +3212,7 @@ Dropdown.prototype = {
         const containedByTag = $(e.target).parents('.tag').length > 0;
         let isTag = false;
         if (e.target instanceof HTMLElement && typeof e.target.className === 'string') {
-          isTag = e.target.className.indexOf('tag') > -1;
+          isTag = e.target.classList.contains('tag');
         }
         if (isTag || containedByTag) {
           return;
