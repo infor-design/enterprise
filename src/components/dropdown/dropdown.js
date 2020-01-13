@@ -3065,6 +3065,10 @@ Dropdown.prototype = {
       .prop('readonly', false)
       .prop('disabled', true);
     this.closeList('cancel');
+
+    if (this.settings.showTags) {
+      this.pseudoElem.find('.tag').addClass('is-disabled');
+    }
   },
 
   /**
@@ -3088,6 +3092,10 @@ Dropdown.prototype = {
       .attr('tabindex', '0')
       .removeClass('is-disabled')
       .removeClass('is-readonly');
+
+    if (this.settings.showTags) {
+      this.pseudoElem.find('.tag').removeClass('is-disabled');
+    }
   },
 
   /**

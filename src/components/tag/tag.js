@@ -14,6 +14,7 @@ const TAG_DEFAULTS = {
   clickable: false,
   clickHandler: undefined,
   content: ' ',
+  disabled: false,
   dismissible: false,
   dismissHandler: undefined,
   href: undefined,
@@ -91,11 +92,23 @@ Tag.prototype = {
     this.handleEvents();
   },
 
+  /**
+   * @returns {HTMLElement|undefined} the element that contains the Tag's text copy
+   */
+  get contentElement() {
+    return this.element.querySelector('.tag-content');
+  },
+
   render() {
     const elemClasses = this.element.classList;
     const currentState = this.settings.style;
     if (this.element.className.indexOf(currentState) === -1 && currentState !== 'default') {
       elemClasses.add(currentState);
+    }
+
+    // Disabled
+    if (this.settings.disabled) {
+      elemClasses.add('is-disabled');
     }
 
     // Auduble content
@@ -167,6 +180,9 @@ Tag.prototype = {
       this.settings.style = styleState;
     }
 
+    // Disabled State
+    this.settings.disabled = this.disabled;
+
     // Dismissible State
     const dismissibleBtn = this.dismissibleBtn;
     const hasDismissibleCss = this.element.className.indexOf('is-dismissible') > -1;
@@ -197,7 +213,7 @@ Tag.prototype = {
     }
 
     // Text Content
-    const contentElem = this.element.querySelector('.tag-content');
+    const contentElem = this.contentElement;
     if (contentElem) {
       this.settings.content = xssUtils.sanitizeHTML(contentElem.innerText);
     }
@@ -237,15 +253,50 @@ Tag.prototype = {
   },
 
   /**
-   * Glorified way to remove a tag with an extra callback
+   * Glorified way to remove a tag with an extra callback, and a check for disabled
    * @param {jQuery.Event} [e] the event that triggered dismissal, if applicable.
    * @returns {void}
    */
   dismiss(e) {
+    if (this.disabled) {
+      return;
+    }
+
     this.remove(e);
     if (typeof this.settings.dismissHandler === 'function') {
       this.settings.dismissHandler(this);
     }
+  },
+
+  /**
+   * @returns {boolean} whether or not this component is currently disabled
+   */
+  get disabled() {
+    return this.element.className.indexOf('is-disabled') > -1;
+  },
+
+  /**
+   * Disables the tag.
+   * @returns {void}
+   */
+  disable() {
+    if (this.disabled) {
+      return;
+    }
+    this.settings.disabled = true;
+    this.element.classList.add('is-disabled');
+  },
+
+  /**
+   * Enables the tag.
+   * @returns {void}
+   */
+  enable() {
+    if (!this.disabled) {
+      return;
+    }
+    this.settings.disabled = false;
+    this.element.classList.remove('is-disabled');
   },
 
   /**
