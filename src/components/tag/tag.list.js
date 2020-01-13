@@ -185,6 +185,22 @@ TagList.prototype = {
     }
     this.removeAll();
     this.init();
+  },
+
+  /**
+   * Destroys this component instance
+   * @returns {void}
+   */
+  destroy() {
+    this.tags.forEach((tag) => {
+      tag.remove();
+    });
+    delete this.tags;
+
+    const $api = $(this.element).data(COMPONENT_NAME);
+    if ($api) {
+      $.removeData(this.element, COMPONENT_NAME);
+    }
   }
 };
 

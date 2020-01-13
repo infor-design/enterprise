@@ -25,10 +25,22 @@ const TAG_DEFAULTS = {
 };
 
 /**
- * Implements functionality on tag objects, such as closing tabs.
+ * Implements functionality on tag objects, such as dismissable, hyperlink, disable, and more.
  * @class Tag
- * @param {string} element The component element.
- * @param {string} settings The component settings.
+ * @param {string} element The element representing a Tag.
+ * @param {string} [settings=object] The Tag component's desired settings.
+ * @param {string} [settings.audibleContent=undefined] if defined, will contain screen-reading only content for tags that will be read out upon focus/click.
+ * @param {boolean} [settings.clickable=false] if true, allows click/focus functionality on this tag and turns it into an HTMLAnchorElement.
+ * @param {function} [settings.clickHandler=undefined] a callback function that will occur on click. Passes this tag's component instance as an argument.
+ * @param {string} settings.content the Tag's visible text content
+ * @param {boolean} [settings.disabled=false] if true, causes the tag to become disabled when settings are updated.
+ * @param {boolean} [settings.dismissible=false] if true, creates an "X" button on the tag, and allows it to be dismissed from the page by click or keyboard command (Alt+Del)
+ * @param {function} [settings.dismissHandler=undefined] a callback function that will occur when the tag is dismissed. Passes this tag's component instance as an argument.
+ * @param {string} [settings.href=undefined] if provded when `settings.clickable` is true, allows this tag to link out to another page.
+ * @param {string} [settings.id=undefined] sets an HTML `id` attribute on this tag.
+ * @param {HTMLElement} [settings.parent=undefined] if defined, creates a reference to a parent node that can be used for operations like removal, or to check a parent's TagList component instance.
+ * @param {string} [settings.style='default'] optionally creates a different visual style on this tag, such as "error", "alert", "good", "info", or "secondary"
+ * @param {string} [settings.value=undefined] if provided, creates a hidden "value" against this tag that can represent properties in corresponding components.  This correlation is user-defined.
  */
 function Tag(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TAG_DEFAULTS);
@@ -87,6 +99,10 @@ function Tag(element, settings) {
 // Tag Methods
 Tag.prototype = {
 
+  /**
+   * @private
+   * @returns {void}
+   */
   init() {
     this.render();
     this.handleEvents();
@@ -99,6 +115,10 @@ Tag.prototype = {
     return this.element.querySelector('.tag-content');
   },
 
+  /**
+   * Renders the contents of this tag on its base element.
+   * @returns {void}
+   */
   render() {
     const elemClasses = this.element.classList;
     const currentState = this.settings.style;
@@ -225,7 +245,10 @@ Tag.prototype = {
    */
   remove() {
     const thisNode = this.element;
-    const parentNode = this.settings.parentAPI ? this.settings.parentAPI.element : thisNode.parentNode;
+    let parentNode = thisNode.parentNode;
+    if (this.settings.parentAPI) {
+      parentNode = this.settings.parentAPI.element;
+    }
 
     /**
     * Fires before tag remove.
@@ -302,7 +325,7 @@ Tag.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {object} The api
+   * @returns {Tag} This component's API.
    */
   teardown() {
     const $element = $(this.element);
@@ -329,8 +352,8 @@ Tag.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {object} settings The settings to apply.
-   * @returns {object} The api
+   * @param {object} [settings] representing updated component settings.
+   * @returns {Tag} This component's API.
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

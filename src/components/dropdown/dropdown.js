@@ -376,7 +376,7 @@ Dropdown.prototype = {
       }
 
       const targets = self.selectedOptions.filter((el) => {
-        const optionValue = xssUtils.stripHTML(el.getAttribute('value'));
+        const optionValue = xssUtils.stripHTML(el.value);
         return optionValue === tag.settings.value;
       });
       if (targets.length) {
