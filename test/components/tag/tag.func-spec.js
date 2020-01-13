@@ -64,6 +64,6 @@ describe('Tag API (as span)', () => {
     tagAPI = new Tag(tagEl);
 
     expect(tagAPI.element.querySelector('.tag-content').tagName).toEqual('A');
-    expect(tagAPI.element.querySelector('a').getAttribute('href')).toEqual('undefined');
+    expect(tagAPI.element.querySelector('a').getAttribute('href')).toEqual(null);
   });
 });
