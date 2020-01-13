@@ -435,8 +435,8 @@ Datagrid.prototype = {
     self.renderHeader();
     
     if (this.stretchColumnDiff < 0) {
-        const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-        currentCol.style.width = `${this.stretchColumnWidth}px`;
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     if (this.settings.emptyMessage) {
@@ -5907,13 +5907,12 @@ Datagrid.prototype = {
         this.clearCache();
         for (j = 0; j < self.settings.columns.length; j++) {
           const col = self.settings.columns[j];
-          const colWidth = self.columnWidth(col, j);
+          self.columnWidth(col, j);
         }
 
         const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-        currentCol.style.width = `${self.stretchColumnDiff > 0 ? `99%` : `${self.stretchColumnWidth}px`}`;
+        currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
       });
-      
     }
 
     /**
