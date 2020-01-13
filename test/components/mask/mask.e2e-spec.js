@@ -46,7 +46,7 @@ describe('Mask Percent Format Tests', () => {
     expect(await inputEl.getAttribute('value')).toEqual('100 ٪');
   });
 
-  it('Should be type in fr-FR', async () => {
+  it('Should be able to type in fr-FR', async () => {
     await utils.setPage('/components/mask/test-number-mask-gauntlet.html?locale=fr-FR');
     let inputEl = await element(by.id('number-dec-thousands'));
     await browser.driver
