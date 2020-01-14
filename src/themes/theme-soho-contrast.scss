@@ -120,12 +120,16 @@ $tooltip-error-color: $theme-color-palette-white;
 // Badges
 $badge-neutral-color: $theme-color-palette-black;
 $badge-neutral-bg-color: $theme-color-palette-graphite-40;
-$badge-neutral-hover-bg-color: $theme-color-palette-graphite-50;
+$badge-neutral-hover-bg-color: $theme-color-palette-white;
+$badge-neutral-hover-border-color: $theme-color-palette-black;
 $badge-secondary-color: $theme-color-palette-black;
-$badge-secondary-bg-color: $theme-color-palette-graphite-20;
+$badge-secondary-bg-color: $theme-color-palette-graphite-30;
 $badge-secondary-border-color: $theme-color-palette-graphite-60;
+$badge-secondary-hover-bg-color: $theme-color-palette-white;
+$badge-secondary-disabled-border-color: $theme-color-palette-graphite-50;
 $badge-error-color: $theme-color-palette-white;
 $badge-error-icon-color: $theme-color-palette-white;
+$badge-error-hover-bg-color: $theme-color-palette-ruby-40;
 $badge-error-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-alert-color: $theme-color-palette-white;
 $badge-alert-icon-color: $theme-color-palette-white;
@@ -133,12 +137,16 @@ $badge-alert-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-good-color: $theme-color-palette-white;
 $badge-good-icon-color: $theme-color-palette-white;
 $badge-good-hover-icon-color: $theme-color-palette-graphite-40;
+$badge-good-hover-bg-color: $theme-color-palette-emerald-30;
 $badge-info-color: $theme-color-palette-white;
 $badge-info-icon-color: $theme-color-palette-white;
 $badge-info-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $theme-color-palette-graphite-90;
 $badge-neutral-hover-icon-color: $theme-color-palette-graphite-60;
+$badge-disabled-text-color: $theme-color-palette-slate-60;
+$badge-disabled-icon-color: $theme-color-palette-slate-60;
+$badge-disabled-bg-color: $theme-color-palette-graphite-30;
 
 .tag,
 .badge {

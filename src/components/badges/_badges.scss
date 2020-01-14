@@ -5,23 +5,27 @@
   &.is-disabled {
     background-color: $badge-disabled-bg-color;
     border-color: transparent;
-    color: $disabled-color;
+    color: $badge-disabled-text-color;
     pointer-events: none;
 
     .dismissible-btn,
     .linkable-btn {
-      color: $disabled-color;
+      color: $badge-disabled-text-color;
     }
 
     &:hover {
       .icon {
-        color: $disabled-color;
+        color: $badge-disabled-text-color;
       }
     }
   }
 }
 
 // See also Colors.scss
+.tag {
+  display: inline-flex;
+}
+
 .tag,
 .badge {
   @include antialiased();
@@ -29,7 +33,6 @@
   background-color: $badge-neutral-bg-color;
   border-radius: 15px;
   color: $badge-neutral-color;
-  display: inline-flex;
   font-size: $theme-size-font-sm;
   font-weight: $theme-number-font-weight-base;
   height: 22px;
@@ -57,13 +60,19 @@
     }
   }
 
-  .icon,
   .dismissible-btn,
   .linkable-btn {
-    color: inherit;
+    color: $badge-neutral-icon-color;
 
     .icon {
+      color: inherit;
       position: relative;
+    }
+
+    &:hover {
+      .icon {
+        color: $badge-neutral-hover-icon-color;
+      }
     }
   }
 
@@ -202,6 +211,10 @@
     }
 
     @include disabled-tag();
+
+    &.is-disabled {
+      border-color: $badge-secondary-disabled-border-color;
+    }
   }
 
   // Error Tags
@@ -267,6 +280,10 @@
 
       &:hover {
         color: $badge-good-hover-icon-color;
+
+        .icon {
+          color: $badge-good-hover-icon-color;
+        }
       }
     }
 
@@ -405,6 +422,28 @@
 
   .tag {
     margin: 0 5px 5px 0;
+  }
+}
+
+// Add borders to the standard tag style's hover state on Constrast themes only.
+html.theme-soho-contrast,
+html.theme-uplift-contrast {
+  .tag,
+  .badge {
+    border: 1px solid transparent;
+
+    &.secondary {
+      border-color: $badge-secondary-border-color;
+    }
+
+    &:not(.error):not(.alert):not(.info):not(.good) {
+      &.is-linkable {
+        &:hover,
+        &.is-focused:not(.hide-focus) {
+          border-color: $badge-neutral-hover-border-color;
+        }
+      }
+    }
   }
 }
 

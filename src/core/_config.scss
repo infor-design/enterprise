@@ -126,6 +126,7 @@ $badge-neutral-color: $theme-color-palette-graphite-100;
 $badge-neutral-icon-color: $theme-color-palette-graphite-100;
 $badge-neutral-hover-icon-color: $theme-color-palette-graphite-60;
 $badge-neutral-bg-color: $theme-color-palette-graphite-20;
+$badge-neutral-hover-border-color: transparent;
 $badge-neutral-hover-bg-color: $theme-color-palette-graphite-30;
 $badge-secondary-color: $theme-color-palette-graphite-100;
 $badge-secondary-icon-color: $theme-color-palette-graphite-100;
@@ -134,6 +135,7 @@ $badge-secondary-bg-color: $theme-color-palette-white;
 $badge-secondary-hover-bg-color: $theme-color-palette-graphite-20;
 $badge-secondary-border-color: $theme-color-palette-graphite-30;
 $badge-secondary-hover-border-color: $theme-color-palette-graphite-50;
+$badge-secondary-disabled-border-color: $theme-color-palette-slate-40;
 $badge-error-color: $theme-color-palette-white;
 $badge-error-bg-color: $theme-color-status-danger;
 $badge-error-hover-bg-color: $theme-color-palette-ruby-80;
@@ -154,6 +156,7 @@ $badge-info-bg-color: $theme-color-palette-azure-70;
 $badge-info-hover-bg-color: $theme-color-palette-azure-50;
 $badge-info-icon-color: $theme-color-palette-white;
 $badge-info-hover-icon-color: $theme-color-palette-azure-20;
+$badge-disabled-text-color: $theme-color-palette-slate-50;
 $badge-disabled-bg-color: $theme-color-palette-graphite-20;
 
 // Popup Menu
