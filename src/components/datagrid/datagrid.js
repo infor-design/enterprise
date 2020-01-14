@@ -10871,6 +10871,7 @@ Datagrid.prototype = {
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid');
     $(window).off('orientationchange.datagrid');
+    $(window).off('resize.datagrid');
     return this;
   },
 
