@@ -3258,7 +3258,7 @@ describe('Datagrid update column and reset tests', () => {
     expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
     await element(by.id('reset')).click();
 
-    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(1);
     await utils.checkForErrors();
   });
 });
