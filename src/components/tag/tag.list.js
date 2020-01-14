@@ -24,6 +24,15 @@ function TagList(element, settings) {
 
   this.settings = utils.mergeSettings(element, settings, TAG_LIST_DEFAULTS);
   this.element = element;
+
+  const tags = utils.getArrayFromList(this.element.querySelectorAll('.tag'));
+  if (tags.length) {
+    this.settings.tags = [];
+    tags.forEach((tag) => {
+      this.settings.tags.push(new Tag(tag));
+    });
+  }
+
   this.init();
 }
 
@@ -34,6 +43,14 @@ TagList.prototype = {
    */
   get length() {
     return this.tags.length;
+  },
+
+  /**
+   * @returns {array<HTMLElement>} containing a list of HTMLElement objects representing
+   * the current list of tags.
+   */
+  get elements() {
+    return this.tags.map(tag => tag.element);
   },
 
   /**
@@ -169,6 +186,46 @@ TagList.prototype = {
       tag.render();
     });
     this.element.classList[this.tags.length ? 'remove' : 'add']('empty');
+  },
+
+  /**
+   * Focuses a tag in the taglist by referencing its Index within the `.tag-list` element.
+   * @param {number} [tagIndex=0] the index of the tag within the tag list
+   * @returns {HTMLElement} the element that will be focused
+   */
+  focusByIndex(tagIndex = 0) {
+    const elems = this.elements;
+    const min = 0;
+    const max = elems.length;
+    if (tagIndex < min) {
+      tagIndex = min;
+    }
+    if (tagIndex > max) {
+      tagIndex = max;
+    }
+    const targetElem = elems[tagIndex];
+    const targetAnchor = targetElem.querySelector('a');
+    if (targetAnchor) {
+      targetAnchor.focus();
+    }
+    return targetElem;
+  },
+
+  /**
+   * Focuses a tag in the taglist by referencing its Element.
+   * @param {HTMLElement} element the element that will be focused
+   * @returns {HTMLElement} the element that will be focused
+   */
+  focusPreviousElement(element) {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error(`${element} is not an HTMLElement`);
+    }
+    const index = this.elements.indexOf(element);
+    const hasElem = index > -1;
+    if (!hasElem) {
+      throw new Error(`${element} does not exist within this TagList`);
+    }
+    return this.focusByIndex(index - 1);
   },
 
   /**

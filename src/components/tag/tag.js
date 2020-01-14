@@ -289,6 +289,13 @@ Tag.prototype = {
     if (typeof this.settings.dismissHandler === 'function') {
       this.settings.dismissHandler(this);
     }
+
+    // If a keypress is dismissing the tag from a taglist,
+    // find the previous tag in the chain and focus it.
+    const parentAPI = this.settings.parentAPI;
+    if (parentAPI) {
+      parentAPI.focusPreviousElement(this.element);
+    }
   },
 
   /**
