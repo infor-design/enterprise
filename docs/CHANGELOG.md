@@ -24,7 +24,7 @@
 - `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
 - `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
 - `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
-- `[Datagrid]` Fixed strech columns minimum width. ([#3308](https://github.com/infor-design/enterprise/issues/3308))
+- `[Datagrid]` Fixed issues with the stretch columns minimum width. ([#3308](https://github.com/infor-design/enterprise/issues/3308))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
 - `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
