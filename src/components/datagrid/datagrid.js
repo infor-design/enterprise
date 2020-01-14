@@ -4617,7 +4617,6 @@ Datagrid.prototype = {
     }
 
     this.settings.columns = columns;
-    // this.setOriginalColumns();
 
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
