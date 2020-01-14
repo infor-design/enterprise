@@ -1,18 +1,32 @@
-// Uplift Colorpicker
-//================================================== //
+.colorpicker-container .trigger {
+  margin-left: -12px;
+  margin-top: -2px;
 
-.colorpicker-container {
   .icon {
-    &:not(.icon-error) {
-      top: 6px;
-    }
+    left: 14px;
   }
 
   .colorpicker {
-    max-height: 36px;
+    width: 126px;
   }
+}
 
-  .swatch {
-    height: 34px;
+.field-short,
+.form-field-short {
+  .colorpicker-container .trigger {
+    margin-top: 1px;
+  }
+}
+
+html[dir='rtl'] {
+  .colorpicker-container {
+    .colorpicker {
+      padding: 11px 10px 8px 0;
+    }
+
+    .trigger .icon {
+      left: -3px;
+      top: 10px;
+    }
   }
 }

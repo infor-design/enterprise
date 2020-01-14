@@ -570,6 +570,10 @@ div.multiselect {
     > .trigger {
       margin-left: -18px;
     }
+
+    &.ffdropdown > .trigger {
+      margin-left: 14px;
+    }
   }
 }
 
@@ -639,19 +643,27 @@ input.dropdown.error:focus {
   color: $input-color;
 }
 
-.field,
-.field-short {
+.field-short,
+.form-field-short .field {
   .dropdown-wrapper {
     margin-bottom: 0;
   }
 
   .dropdown {
-    line-height: normal;
+    height: $input-size-compact-height;
   }
 }
 
 // Zeroes out a standard form-field rule
 .field {
+  .dropdown-wrapper {
+    margin-bottom: 0;
+  }
+
+  .dropdown {
+    height: $input-size-regular-height;
+  }
+
   div.dropdown,
   div.multiselect {
     .icon + span {
@@ -660,12 +672,13 @@ input.dropdown.error:focus {
   }
 }
 
-//Shorter Field Size
-.field-short {
+// Shorter Field Size
+.field-short,
+.form-field-short .field {
   div.dropdown {
-    font-size: $theme-size-font-sm;
+    font-size: $input-size-compact-font-size;
     margin-bottom: 0;
-    padding: 5px 21px 5px 5px;
+    padding: $dropdown-size-compact-padding;
 
     > .listoption-icon {
       height: 14px;
@@ -684,6 +697,7 @@ input.dropdown.error:focus {
       height: 30px;
       right: 4px;
       top: -2px;
+      width: 16px;
     }
 
     ~ .icon-error {
@@ -699,6 +713,10 @@ input.dropdown.error:focus {
 
 // Compound field icon adjustments
 .compound-field {
+  .dropdown-wrapper {
+    margin-top: 0;
+  }
+
   div.dropdown,
   div.multiselect {
     + .icon {
@@ -707,9 +725,22 @@ input.dropdown.error:focus {
   }
 }
 
+.compound-field {
+  .field-short,
+  .form-field-short .field {
+    div.dropdown,
+    div.multiselect {
+      + .icon {
+        top: -2px;
+      }
+    }
+  }
+}
+
 // Different Width Dropdowns
 .dropdown-lg,
-.field-short .dropdown-lg {
+.field-short .dropdown-lg,
+.form-field-short .field .dropdown-lg {
   width: 400px;
 }
 
@@ -719,33 +750,39 @@ div.dropdown-lg {
 
 .dropdown-md,
 div.dropdown-md,
-.field-short .dropdown-md {
+.field-short .dropdown-md,
+.form-field-short .field .dropdown-md {
   width: 300px;
 }
 
 .dropdown-mm,
 div.dropdown-mm,
-.field-short .dropdown-mm {
+.field-short .dropdown-mm,
+.form-field-short .field .dropdown-mm {
   width: 225px;
 }
 
 .dropdown-sm,
 div.dropdown-sm,
-.field-short .dropdown-sm {
+.field-short .dropdown-sm,
+.form-field-short .field .dropdown-sm {
   width: 150px;
 }
 
 .dropdown-xs,
 div.dropdown-xs,
-.field-short .dropdown-xs {
+.field-short .dropdown-xs,
+.form-field-short .field .dropdown-xs {
   width: 75px;
 }
 
 // Shorter Drop Down Lists
 .dropdown-list.dropdown-short {
   .dropdown-search {
-    font-size: $theme-size-font-sm;
-    padding: 5px 16px 5px 5px;
+    font-size: $input-size-compact-font-size !important;
+    height: $input-size-compact-height !important;
+    padding: $input-size-compact-padding !important;
+    padding-right: 21px;
   }
 
   &.has-icons {
@@ -761,7 +798,10 @@ div.dropdown-xs,
 
   li {
     > a {
-      line-height: 24px;
+      font-size: $input-size-compact-font-size !important;
+      line-height: $input-size-compact-font-size * 2;
+      min-height: $input-size-compact-font-size;
+      text-indent: 5px;
     }
 
     .listoption-icon {
@@ -785,14 +825,16 @@ div.dropdown-xs,
 
   > .trigger {
     .icon {
+      height: 16px;
       left: auto;
-      right: 5px;
-      top: 3px;
+      right: 1px;
+      top: 4px;
+      width: 16px;
 
       &.search {
         height: 12px;
-        right: -4px;
-        top: -2px;
+        right: -1px;
+        top: 5px;
         width: 12px;
       }
     }
@@ -872,7 +914,7 @@ div.dropdown-xs,
 
   div.dropdown,
   div.multiselect {
-    padding: 9px 30px 8px 10px;
+    padding: $dropdown-size-regular-padding;
 
     > span {
       padding-top: 1px;
@@ -880,10 +922,18 @@ div.dropdown-xs,
   }
 
   // Reset the padding in the rule above for Short Fields
-  .field-short {
+  .field-short,
+  .form-field-short .field {
     div.dropdown,
     div.multiselect {
-      padding: 5px 21px 5px 5px;
+      font-size: $input-size-compact-font-size;
+      height: $input-size-compact-height !important;
+      padding: $dropdown-size-compact-padding !important;
+
+      + .icon {
+        right: 4px !important;
+        top: -2px !important;
+      }
     }
   }
 
@@ -1151,7 +1201,8 @@ html[dir='rtl'] {
     }
   }
 
-  .field-short {
+  .field-short,
+  .form-field-short .field {
     .dropdown,
     .multiselect,
     input.dropdown,
@@ -1202,7 +1253,8 @@ html[dir='rtl'] {
     }
 
     // Reset the padding in the rule above for Short Fields
-    .field-short {
+    .field-short,
+    .form-field-short .field {
       div.dropdown,
       div.multiselect {
         padding: 5px 5px 5px 21px;

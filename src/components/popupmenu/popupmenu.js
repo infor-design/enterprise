@@ -343,7 +343,8 @@ PopupMenu.prototype = {
     }
 
     // If inside of a ".field-short" container, make smaller
-    const addFieldShort = this.element.closest('.field-short').length;
+    const addFieldShort = this.element.closest('.field-short').length > 0 ||
+          this.element.closest('.form-field-short').length > 0;
     this.menu[addFieldShort ? 'addClass' : 'removeClass']('popupmenu-short');
 
     // If button is part of a header/masthead or a container using the "alternate"

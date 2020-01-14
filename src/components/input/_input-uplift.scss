@@ -37,11 +37,3 @@ label.required .label-text:not(.accessible)::after,
     height: 15px;
   }
 }
-
-html:not(.is-firefox) {
-  .field-short {
-    input {
-      padding: 3px 5px;
-    }
-  }
-}

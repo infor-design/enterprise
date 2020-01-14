@@ -10,14 +10,14 @@
   .trigger-close {
     cursor: pointer;
     display: inline-block;
-    margin-left: -36px;
+    margin-left: -34px;
     outline: 0;
     text-align: center;
     width: 36px;
 
     &.trigger-close {
       display: none;
-      margin-left: -50px;
+      margin-left: -46px;
     }
 
     .icon {
@@ -45,12 +45,12 @@
     }
   }
 
-  //Allows fileupload to be readonly without textarea readonly styling
+  // Allows fileupload to be readonly without textarea readonly styling
   input {
     &.fileupload-background-transparent {
       background-color: transparent;
       color: $input-color;
-      padding-right: 50px;
+      padding-right: 42px;
       text-overflow: ellipsis;
 
       &.readonly {
@@ -419,12 +419,6 @@
 
 // OVERWRITES
 //================================================== //
-
-// IE Hack
-.ie9 .fileupload .icon,
-.ie10 .fileupload .icon {
-  background-color: rgba($theme-color-palette-white, 0);
-}
 
 // RTL Styles
 html[dir='rtl'] {

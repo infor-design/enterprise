@@ -44,13 +44,6 @@
   }
 }
 
-// Reset specific line height on Mac Firefox from the standard component
-.is-mac.is-firefox {
-  .field-short [class*='btn'] {
-    line-height: normal;
-  }
-}
-
 // Safari's and Firefox's `middle` alignment doesn't jive
 // well with our iconography
 .is-safari,
@@ -62,14 +55,17 @@
   }
 }
 
-.field-short [class*='btn'] {
-  min-height: 25px;
+.field-short [class*='btn'],
+.form-field-short .field [class*='btn'] {
+  min-height: $button-size-compact-height;
 
   > .icon {
     vertical-align: sub;
 
     &:not(.icon-dropdown) {
-      height: 18px;
+      height: 16px;
+      position: relative;
+      top: -2px;
       vertical-align: sub;
 
       + span:not(.audible) {

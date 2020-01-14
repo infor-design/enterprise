@@ -13,8 +13,8 @@
   .timepicker {
     + .icon,
     + .tooltip-description + .icon {
-      margin-left: -25px;
-      margin-top: 8px;
+      margin-left: -23px;
+      margin-top: 7px;
     }
   }
 }
@@ -42,17 +42,20 @@ html[dir='rtl'] {
     }
   }
 
-  .field-short {
+  .field-short,
+  .form-field-short .field {
     .timepicker {
       + .icon,
       + .tooltip-description + .icon {
-        margin-top: 6px;
+        margin-right: -22px;
+        margin-top: 7px;
       }
     }
   }
 
   &.is-firefox {
-    .field-short {
+    .field-short,
+    .form-field-short .field {
       .timepicker {
         + .icon,
         + .tooltip-description + .icon {

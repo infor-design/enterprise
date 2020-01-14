@@ -579,9 +579,10 @@ a.btn-close {
 }
 
 // Short field buttons
-.field-short {
+.field-short,
+.form-field-short .field {
   [class*='btn'] {
-    height: 25px;
+    height: $button-size-compact-height;
     margin-bottom: 10px;
     min-width: 0;
 
@@ -724,9 +725,14 @@ html[lang^='fr-'] {
 }
 
 .is-mac.is-firefox {
-  .field-short {
+  .field-short,
+  .form-field-short .field {
     [class^='btn'] {
-      line-height: 25px;
+      line-height: $button-size-compact-height;
+
+      > .icon:not(.icon-dropdown) {
+        margin-top: -2px;
+      }
     }
   }
 }
