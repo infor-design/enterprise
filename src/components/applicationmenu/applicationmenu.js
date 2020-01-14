@@ -45,6 +45,16 @@ function ApplicationMenu(element, settings) {
 ApplicationMenu.prototype = {
 
   /**
+   * @returns {SearchField|undefined} an IDS SearchField API, if one exists.
+   */
+  get searchfieldAPI() {
+    if (!this.searchfield || !this.searchfield.length) {
+      return undefined;
+    }
+    return this.searchfield.data('searchfield');
+  },
+
+  /**
    * Initialize the plugin.
    * @private
    * @returns {void}
@@ -137,11 +147,17 @@ ApplicationMenu.prototype = {
           return item;
         },
         clearResultsCallback() {
-          self.accordionAPI.unfilter();
+          if (self.searchfieldAPI && !self.searchfieldAPI.isFocused) {
+            self.accordionAPI.unfilter();
+          }
         },
         displayResultsCallback(results, done) {
           return self.filterResultsCallback(results, done);
         }
+      });
+
+      this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
+        self.accordionAPI.unfilter();
       });
     }
 
@@ -714,7 +730,10 @@ ApplicationMenu.prototype = {
     }
 
     if (this.searchfield && this.searchfield.length) {
-      this.searchfield.off('input.applicationmenu');
+      this.searchfield.off([
+        'input.applicationmenu',
+        `cleared.${COMPONENT_NAME}`
+      ].join(' '));
       const sfAPI = this.searchfield.data('searchfield');
       if (sfAPI) {
         sfAPI.destroy();
