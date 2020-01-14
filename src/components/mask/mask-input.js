@@ -241,8 +241,8 @@ MaskInput.prototype = {
       return false;
     }
 
-    let posBegin = this.element.selectionStart;
-    let posEnd = this.element.selectionEnd;
+    let posBegin = this.element.selectionStart || 0;
+    let posEnd = this.element.selectionEnd || 0;
 
     // On Android, the first character inserted into a field is automatically
     // selected when it shouldn't be. This snippet fixes that problem.

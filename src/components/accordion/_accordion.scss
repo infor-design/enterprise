@@ -198,23 +198,21 @@
         }
       }
 
-      &.has-filtered-children,
-      &.has-filtered-children.is-focused,
-      &.has-filtered-children.is-selected {
-        background-color: $accordion-header-filtered-children-background-color;
+      &.filtered.has-filtered-children {
+        &:not(:hover):not(.is-selected) {
+          > a {
+            color: $accordion-filtered-text-color;
+          }
 
-        > a {
-          color: $accordion-filtered-text-color !important;
-        }
+          > .icon {
+            color: $accordion-filtered-text-color;
+          }
 
-        > .icon {
-          color: $accordion-filtered-text-color !important;
-        }
-
-        > .btn > .icon {
-          &::before,
-          &::after {
-            background-color: $accordion-filtered-text-color !important;
+          > .btn > .icon {
+            &::before,
+            &::after {
+              background-color: $accordion-filtered-text-color;
+            }
           }
         }
       }
@@ -437,12 +435,6 @@
               color: $accordion-selected-text-color;
             }
           }
-
-          &.has-filtered-children,
-          &.has-filtered-children.is-focused,
-          &.has-filtered-children.is-selected {
-            background-color: transparent;
-          }
         }
 
         .accordion-content {
@@ -572,7 +564,7 @@
 
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
-    border-color: $accordion-focused-border-color !important;
+    border-color: $accordion-focused-border-color;
     box-shadow: $focus-box-shadow;
   }
 
@@ -659,6 +651,7 @@
 .accordion-pane {
   @include transition(padding 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
+  display: block;
   overflow: hidden;
   padding: 0;
 

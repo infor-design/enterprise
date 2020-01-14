@@ -518,7 +518,13 @@ Datagrid.prototype = {
       this.pagerRefresh(location);
     }
 
-    this.syncSelectedRowsIdx();
+    // Update selected
+    this._selectedRows.forEach((selected) => {
+      if (typeof selected.pagingIdx !== 'undefined' && selected.pagingIdx >= row) {
+        selected.idx++;
+        selected.pagingIdx++;
+      }
+    });
 
     // Add to ui
     this.clearCache();
@@ -6771,6 +6777,9 @@ Datagrid.prototype = {
       }
       if (selectedIndex !== -1) {
         this.unselectRow(selectedIndex, true, true);
+        if (!rowNode.length && this._selectedRows.length > 0) {
+          this._selectedRows.pop();
+        }
       }
     }
 
@@ -6859,7 +6868,10 @@ Datagrid.prototype = {
             idx: rowData.idx,
             data: rowData,
             elem: rowNode,
-            group: s.dataset[self.groupArray[row].group]
+            group: s.dataset[self.groupArray[row].group],
+            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+            pagingIdx: dataRowIndex,
+            pagesize: self.settings.pagesize
           });
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
@@ -6955,31 +6967,38 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRows() {
+    const s = this.settings;
+    const dataset = s.groupable && this.originalDataset ? this.originalDataset : s.dataset;
     let idx = null;
+
+    const selectNode = (i) => {
+      const elem = s.groupable ? this.dataRowNode(idx) : this.visualRowNode(idx);
+      if (elem[0]) {
+        this._selectedRows[i].elem = elem;
+        this.selectNode(elem, idx, dataset[idx], true);
+      }
+    };
 
     for (let i = 0; i < this._selectedRows.length; i++) {
       if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
         idx = this._selectedRows[i].idx;
-        const elem = this.visualRowNode(idx);
-        if (elem[0]) {
-          this._selectedRows[i].elem = elem;
-          this.selectNode(elem, idx, this.settings.dataset[idx], true);
-        }
-      }
-      // Check for rows that changed page
-      idx = this._selectedRows[i].pagingIdx;
-      if (this._selectedRows[i].pagesize !== this.settings.pagesize && this.settings.dataset[idx]) {
-        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
-        this._selectedRows[i].pagesize = this.settings.pagesize;
-        this._selectedRows[i].idx = idx;
-        this._selectedRows[i].page = this.pagerAPI.activePage;
+        selectNode(i);
       }
 
-      if (this._selectedRows[i].pagesize !== this.settings.pagesize &&
-        !this.settings.dataset[idx]) {
-        this._selectedRows[i].idx = idx % this.settings.pagesize;
-        this._selectedRows[i].page = Math.round(idx / this.settings.pagesize) + 1;
-        this._selectedRows[i].pagesize = this.settings.pagesize;
+      // Check for rows that changed page
+      if (this._selectedRows[i].pagesize !== s.pagesize && !s.groupable) {
+        idx = this._selectedRows[i].pagingIdx;
+
+        if (s.dataset[idx]) {
+          selectNode(i);
+          this._selectedRows[i].idx = idx;
+          this._selectedRows[i].page = this.pagerAPI.activePage;
+          this._selectedRows[i].pagesize = s.pagesize;
+        } else {
+          this._selectedRows[i].idx = idx % s.pagesize;
+          this._selectedRows[i].page = Math.round(idx / s.pagesize) + 1;
+          this._selectedRows[i].pagesize = s.pagesize;
+        }
       }
     }
   },
@@ -7039,10 +7058,12 @@ Datagrid.prototype = {
         };
         if (this.settings.groupable) {
           const rowNode = this.rowNodesByDataIndex(i);
-          const row = this.actualPagingRowIndex(this.actualRowIndex(rowNode));
-          const group = this.groupArray[row].group;
-          selectedRow.group = this.settings.dataset[group];
-          selectedRow.page = this.calculatePagerInfo(group).page;
+          if (rowNode.length) {
+            const row = this.actualPagingRowIndex(this.actualRowIndex(rowNode));
+            const group = this.groupArray[row].group;
+            selectedRow.group = this.settings.dataset[group];
+            selectedRow.page = this.calculatePagerInfo(group).page;
+          }
         } else {
           selectedRow.page = this.calculatePagerInfo(i).page;
         }
