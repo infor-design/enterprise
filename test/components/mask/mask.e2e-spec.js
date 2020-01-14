@@ -46,3 +46,24 @@ describe('Mask Percent Format Tests', () => {
     expect(await inputEl.getAttribute('value')).toEqual('100 ٪');
   });
 });
+
+describe('Number Masks', () => {
+  it('should correctly format on `input[type="number"]` fields', async () => {
+    await utils.setPage('/components/mask/test-input-type-numeric');
+    const inputEl = await element(by.id('test-input'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+
+    await inputEl.clear();
+    await inputEl.sendKeys('123.45');
+
+    expect(await inputEl.getAttribute('value')).toEqual('123.45');
+
+    await inputEl.clear();
+    await inputEl.sendKeys('777777777777'); // 12
+
+    expect(await inputEl.getAttribute('value')).toEqual('7777777'); // 7
+
+    await (utils.checkForErrors());
+  });
+});
