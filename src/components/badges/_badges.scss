@@ -22,10 +22,6 @@
 }
 
 // See also Colors.scss
-.tag {
-  display: inline-flex;
-}
-
 .tag,
 .badge {
   @include antialiased();
@@ -398,6 +394,14 @@
       width: 100%;
     }
   }
+}
+
+.tag {
+  display: inline-flex;
+}
+
+.badge {
+  display: inline-block;
 }
 
 .hyperlink + .tag {
