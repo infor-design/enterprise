@@ -24,7 +24,7 @@ describe('Fontpicker API', () => {
     if (fontpickerAPI) {
       fontpickerAPI.destroy();
     }
-    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container']);
+    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container', '.popupmenu-wrapper', '.popupmenu']);
   });
 
   it('can be invoked', () => {
@@ -112,7 +112,7 @@ describe('Fontpicker API', () => {
 
     // Select via menu with a couple of clicks
     fontpickerAPI.menuAPI.open();
-    const firstEntry = document.body.querySelector('button.fontpicker + div ul li:nth-child(2) a');
+    const firstEntry = document.body.querySelector('ul.popupmenu.fontpicker-menu li:nth-child(2) a');
     firstEntry.click();
 
     expect(fontpickerSpyEvent).toHaveBeenTriggered();
