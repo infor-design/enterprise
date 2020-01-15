@@ -240,6 +240,17 @@
         var numberSpan = $(this).prev('label').find('.number');
         var spanText = numberSpan.text();
 
+        // Update quintillion text
+        if (spanText.indexOf('18') > -1) {
+          var quintillion = {
+            '(18, 6)': '100,000,000,000,000,000.000000',
+            'Minus (18, 6)': '-100,000,000,000,000,000.000000',
+            '(18) Digits': '100000000000000000',
+            'Minus (18) Digits': '-100000000000000000',
+          }
+          spanText = quintillion[spanText];
+        }
+
         // Check for thousands separators and decimals inside the label span
         var thousandsRegex = new RegExp(',', 'g');
         var hasThousands = thousandsRegex.test(spanText);

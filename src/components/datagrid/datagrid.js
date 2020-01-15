@@ -1000,7 +1000,7 @@ Datagrid.prototype = {
   updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
-      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+      this.originalColGroups = this.deepCopy(colGroups);
     }
 
     if (this.settings.groupable) {
@@ -1094,7 +1094,7 @@ Datagrid.prototype = {
     }
 
     if (!this.originalColGroups) {
-      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+      this.originalColGroups = this.deepCopy(colGroups);
     }
 
     const groups = colGroups.map(group => parseInt(group.colspan, 10));
@@ -4654,7 +4654,6 @@ Datagrid.prototype = {
     }
 
     this.settings.columns = columns;
-    this.setOriginalColumns();
 
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
@@ -4764,11 +4763,22 @@ Datagrid.prototype = {
   },
 
   /**
+   * Create deep copy for given array.
+   * @private
+   * @param  {array} arr The array to be copied.
+   * @returns {array} The copied array.
+   */
+  deepCopy(arr) {
+    const copy = items => items.map(item => (Array.isArray(item) ? copy(item) : item));
+    return copy(arr || []);
+  },
+
+  /**
    * Set the original column which may later be reloaded.
    * @private
    */
   setOriginalColumns() {
-    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+    this.originalColumns = this.deepCopy(this.settings.columns);
   },
 
   /**

@@ -2,12 +2,12 @@
 	{
 		"id": 0,
 		"name": "Archived",
-		"color": "graphite03"
+		"color": "neutral"
 	},
 	{
 		"id": 1,
 		"name": "Inactive",
-		"color": "graphite03"
+		"color": "neutral"
 	},
 	{
 		"id": 2,
@@ -28,5 +28,10 @@
 		"id": 5,
 		"name": "Complete",
 		"color": "good"
+	},
+	{
+		"id": 6,
+		"name": "Secondary",
+		"color": "secondary"
 	}
 ]

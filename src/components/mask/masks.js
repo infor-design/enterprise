@@ -107,7 +107,7 @@ function addThousandsSeparator(n, thousands, locale, options) {
   if (n === '' || isNaN(n)) {
     return n;
   }
-  return Locale.toLocaleString(Number(n), locale, options);
+  return Locale.toLocaleString(Number(n), locale, options, thousands);
 }
 
 // Gets an array of Regex objects matching the number of digits present in a source string
