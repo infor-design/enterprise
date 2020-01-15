@@ -141,9 +141,13 @@ Tag.prototype = {
     let contentTagType = 'span';
     let href = '';
     let linkableBtn = '';
+    let tabIndex = '';
     const hasHref = (this.settings.href && this.settings.href.length);
     if (hasHref || this.originallyAnchor) {
       contentTagType = 'a';
+      if (this.settings.disabled) {
+        tabIndex = ' tabIndex="-1"';
+      }
     }
     if (hasHref) {
       href = ` href="${this.settings.href}"`;
@@ -154,7 +158,7 @@ Tag.prototype = {
         ${$.createIcon('caret-right')}
       </button>`;
     }
-    const content = `<${contentTagType} class="tag-content"${href}>${xssUtils.sanitizeHTML(this.settings.content)}</${contentTagType}>`;
+    const content = `<${contentTagType} class="tag-content"${href}${tabIndex}>${xssUtils.sanitizeHTML(this.settings.content)}</${contentTagType}>`;
 
     // Dismissible Button
     let dismissibleBtn = '';
@@ -313,6 +317,9 @@ Tag.prototype = {
     if (this.disabled) {
       return;
     }
+    if (this.contentElement.tagName === 'A') {
+      this.contentElement.tabIndex = -1;
+    }
     this.settings.disabled = true;
     this.element.classList.add('is-disabled');
   },
@@ -324,6 +331,9 @@ Tag.prototype = {
   enable() {
     if (!this.disabled) {
       return;
+    }
+    if (this.contentElement.tagName === 'A') {
+      this.contentElement.tabIndex = 0;
     }
     this.settings.disabled = false;
     this.element.classList.remove('is-disabled');

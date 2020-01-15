@@ -394,6 +394,9 @@ Dropdown.prototype = {
       if (self.settings.clickHandler) {
         tag.clickHandler = self.settings.clickHandler;
       }
+      if (self.isDisabled()) {
+        tag.disabled = true;
+      }
     });
 
     const span = this.pseudoElem.children('span')[0];
