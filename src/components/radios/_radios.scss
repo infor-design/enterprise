@@ -306,7 +306,7 @@ html[dir='rtl'] {
 
   .inline .radio ~ .label-text,
   .radio + label {
-    padding-right: 28px;
+    padding-right: 27px;
   }
 
   .inline .radio ~ .label-text::before,
@@ -318,7 +318,21 @@ html[dir='rtl'] {
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: 5px;
+    right: 4px;
+  }
+
+  // Adjust the label padding for RTL in short mode
+  .field-short,
+  .form-field-short .field {
+    .inline .radio ~ .label-text,
+    .radio + label {
+      padding-right: 24px;
+    }
+
+    .inline .radio ~ .label-text::before,
+    .radio + label::before {
+      margin-right: -24px;
+    }
   }
 
   // Radio Section
@@ -361,7 +375,6 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Short Fields
@@ -405,7 +418,7 @@ html[dir='rtl'] {
 .field-short,
 .form-field-short .field {
   > .radio-label.radio-label:first-of-type {
-    margin-top: -26px;
+    margin-top: -23px;
   }
 }
 

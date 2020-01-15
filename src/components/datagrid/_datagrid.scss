@@ -2905,6 +2905,10 @@ td .btn-actions {
 .datagrid-checkbox-wrapper {
   margin-top: -14px;
   top: -50%;
+
+  .datagrid-checkbox::before {
+    top: -1px;
+  }
 }
 
 .datagrid-checkbox {
