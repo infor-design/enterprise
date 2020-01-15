@@ -494,7 +494,14 @@
   // Some javascript in "popupmenu.js" that facilitates this.
   &.popupmenu-short {
     a {
-      line-height: 24px;
+      font-size: $input-size-compact-font-size;
+      line-height: $input-size-compact-font-size * 2;
+      min-height: $input-size-compact-font-size;
+      padding: $input-size-compact-padding;
+    }
+
+    span {
+      font-size: $input-size-compact-font-size;
     }
 
     &.has-icons {

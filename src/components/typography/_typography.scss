@@ -169,8 +169,8 @@ label,
 .label {
   color: $label-color;
   display: block;
-  font-size: $theme-size-font-sm;
-  margin-bottom: 8px;
+  font-size: $label-size-regular-font-size;
+  margin: $label-size-regular-margin;
   min-height: 13px; //prevents need to use &nbsp; for blank labels
 }
 

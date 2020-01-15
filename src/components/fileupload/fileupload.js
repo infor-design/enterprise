@@ -41,7 +41,7 @@ FileUpload.prototype = {
 
     this.fileInput = hasInlineLabel ? elem.find('input') : elem;
 
-    elem.closest('.field').addClass('field-fileupload');
+    elem.closest('.field, .field-short').addClass('field-fileupload');
 
     // append markup
     let id = elem.find('input').attr('name');
@@ -148,7 +148,7 @@ FileUpload.prototype = {
       if (this.files.length > 0) {
         self.textInput.val(this.files[0].name).trigger('change');
         self.svgClose.show().addClass('is-visible');
-      } else {
+      } else if (!self.clearing) {
         self.clearUploadFile();
       }
     });
@@ -176,9 +176,11 @@ FileUpload.prototype = {
   * Clear the Input Upload File
   */
   clearUploadFile() {
+    this.clearing = true;
     this.fileInput.add(this.textInput).val('');
     this.svgClose.hide().removeClass('is-visible');
     this.fileInput.triggerHandler('change');
+    this.clearing = false;
   },
 
   // Unbind all events

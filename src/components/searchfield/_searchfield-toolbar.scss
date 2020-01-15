@@ -191,6 +191,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
+      height: 34px; // Unable to use token here. need to use the soho height
       padding-right: 34px;
       text-transform: none;
 

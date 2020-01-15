@@ -600,13 +600,13 @@ $progress-border-color: $theme-color-palette-graphite-60;
 $progress-bar-bg-color: $theme-color-palette-azure-90;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: #767676;
+$chart-progressbar-bg-color: $theme-color-palette-graphite-40;
 $chart-progressbar-bg-color-dark: $theme-color-palette-graphite-50;
 $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $theme-color-palette-graphite-50;
 $chart-progressbar-primary-fill: $theme-color-brand-primary-base;
 $chart-progressbar-dark-fill: $theme-color-palette-graphite-80;
-$chart-targeted-achievement-bg-color: $theme-color-brand-secondary-alt;
+$chart-targeted-achievement-bg-color: $theme-color-palette-graphite-40;
 
 //Timeline
 $timeline-indicator-color: $theme-color-palette-graphite-50;

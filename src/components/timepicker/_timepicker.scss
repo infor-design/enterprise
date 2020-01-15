@@ -69,11 +69,6 @@
   }
 }
 
-.ie9 .timepicker + .icon,
-.ie10 .timepicker + .icon {
-  background-color: rgba($theme-color-palette-white, 0);
-}
-
 #timepicker-period + .dropdown-wrapper {
   .dropdown {
     width: 68px;
@@ -138,7 +133,8 @@
 }
 
 // Short Fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .timepicker {
     padding-right: 18px;
 
@@ -185,7 +181,8 @@ html[dir='rtl'] {
   }
 
   // Short Fields
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .timepicker {
       padding-left: 18px;
       padding-right: 2px;
@@ -193,7 +190,7 @@ html[dir='rtl'] {
       + .icon,
       + .tooltip-description + .icon {
         margin-left: inherit;
-        margin-right: -22px;
+        margin-right: -24px;
       }
 
       ~ .icon-error {

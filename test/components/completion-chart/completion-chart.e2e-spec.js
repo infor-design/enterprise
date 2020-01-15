@@ -46,3 +46,24 @@ describe('Completion Chart color tests', () => {
     });
   }
 });
+
+describe('Completion Chart Short Field tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/completion-chart/example-short.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepLonger);
+
+      expect(await browser.protractorImageComparison.checkScreen('completion-chart-short')).toEqual(0);
+    });
+  }
+});

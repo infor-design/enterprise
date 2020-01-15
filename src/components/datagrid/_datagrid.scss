@@ -1844,10 +1844,8 @@ $datagrid-short-row-height: 25px;
     }
 
     .hyperlink {
-      color: $hyperlink-color;
       display: inline-block;
       font-size: $theme-size-font-base;
-      vertical-align: middle;
 
       &:focus {
         outline: none;
@@ -1976,8 +1974,7 @@ $datagrid-short-row-height: 25px;
       input {
         border: 1px solid transparent;
         outline: none;
-        padding: 12px 0 8px;
-        vertical-align: top;
+        padding: 0;
         width: 100%;
 
         &.lookup {
@@ -2903,8 +2900,12 @@ td .btn-actions {
 
 // Grid Checkboxes
 .datagrid-checkbox-wrapper {
-  margin-top: -14px;
+  margin-top: -13px;
   top: -50%;
+
+  .datagrid-checkbox::before {
+    top: -1px;
+  }
 }
 
 .datagrid-checkbox {

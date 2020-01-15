@@ -128,14 +128,15 @@
 }
 
 // Short fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .datepicker {
     padding-right: 24px;
 
     + .icon {
-      height: 13px;
-      margin-left: -22px;
-      margin-top: 6px;
+      margin-left: -21px;
+      margin-top: 5px;
+      width: 14px;
     }
   }
 }
@@ -160,7 +161,8 @@ html[dir='rtl'] {
   }
 
   // Short fields
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .datepicker {
       padding-left: 24px;
       padding-right: 2px;

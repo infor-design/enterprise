@@ -91,11 +91,11 @@
     .icon {
       color: $hyperlink-color;
       display: inline;
-      height: 20px;
+      height: 12px;
       position: relative;
       top: -1px;
       vertical-align: middle;
-      width: 20px;
+      width: 12px;
     }
 
     &:focus:not(.hide-focus) {
@@ -110,8 +110,8 @@
 
   &.back {
     .icon {
-      left: -6px;
-      margin-right: -12px;
+      left: -4px;
+      margin-right: -5px;
     }
 
     span {
@@ -124,7 +124,7 @@
 
   &.directional {
     .icon {
-      left: -5px;
+      left: -1px;
       margin-right: -3px;
     }
 
@@ -137,7 +137,14 @@
   }
 }
 
-//Inline text should be 14px to match content
+.field-short,
+.form-layout-compact .field {
+  .hyperlink {
+    font-size: $input-size-compact-font-size;
+  }
+}
+
+// Inline text should be 14px to match content
 p .hyperlink {
   font-size: $theme-size-font-base;
   white-space: nowrap;
