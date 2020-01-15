@@ -19,13 +19,17 @@ describe('Tabs Module Toolbar tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
-      const tabsEl = await element(by.id('module-tabs-controls'));
+      const containerEl = await element(by.className('container'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
+      await element(by.id('submit')).click();
+      await element(by.id('submit')).click();
+      await element(by.id('submit')).click();
+      await element(by.id('submit')).click();
 
-      expect(tabsEl.isPresent()).toEqual(true);
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-module-spillover')).toEqual(0);
+      expect(containerEl.isPresent()).toEqual(true);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tabs-module-spillover')).toEqual(0);
     });
   }
 });
