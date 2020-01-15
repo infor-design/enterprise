@@ -55,7 +55,7 @@ describe('Form Tests', () => {
 
       await utils.checkForErrors();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-fields')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-mode')).toEqual(0);
     });
 
     it('Should not visual regress on compact/short fields in RTL', async () => {
@@ -65,7 +65,7 @@ describe('Form Tests', () => {
 
       await utils.checkForErrors();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-fields')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-mode-rtl')).toEqual(0);
     });
   }
 });
