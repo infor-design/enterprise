@@ -19,7 +19,7 @@ describe('Flex toobar ajax tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visually regress', async () => {
+    it('Should not visually regress', async () => {
       const flexToolbarEl = await element(by.className('no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(flexToolbarEl), config.waitsFor);
@@ -65,7 +65,7 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button')).toEqual(0);
-      browser.driver.actions().mouseMove(element.all(by.css('ul#menu-button-popupmenu li.submenu')).first()).perform();
+      browser.driver.actions().mouseMove(element.all(by.css('ul#menu-button-popupmenu')).first()).perform();
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-menu-button-submenu')).toEqual(0);

@@ -152,7 +152,7 @@ describe('Popupmenu missing submenu tests', () => {
     await utils.checkForErrors();
   });
 
-  fit('Should have no errors when hovering an item with a submenu', async () => {
+  it('Should have no errors when hovering an item with a submenu', async () => {
     await element(by.id('open-me')).click();
 
     const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
