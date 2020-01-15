@@ -1,0 +1,145 @@
+<div class="row">
+  <div class="six columns">
+    <h2 class="fieldset-title">Add a new tag below:</h2>
+    <form id="create-tag" action="#" method="post">
+      <p>
+        <label for="newtag-content" class="required">Content</label>
+        <input id="newtag-content" type="text" />
+      </p>
+      <p>
+        <label for="newtag-audible-content">Audible Content</label>
+        <span class="label">(will be hidden, but spoken by screen readers)</span>
+        <input id="newtag-audible-content" type="text" />
+      </p>
+      <p>
+        <label for="newtag-display-style">Display Style</label>
+        <select id="newtag-display-style" class="dropdown">
+          <option value="neutral">Neutral</option>
+          <option value="secondary">Secondary</option>
+          <option value="info">Info</option>
+          <option value="good">Good</option>
+          <option value="error">Error</option>
+          <option value="alert">Alert</option>
+        </select>
+      </p>
+      <div class="field field-checkbox">
+        <input id="newtag-is-dismissible" class="checkbox" type="checkbox"/>
+        <label for="newtag-is-dismissible" class="checkbox-label">Can be dismissed</label>
+      </div>
+      <div class="field field-checkbox">
+        <input id="newtag-is-linkable" class="checkbox" type="checkbox"/>
+        <label for="newtag-is-linkable" class="checkbox-label">Defined as "Linkable" (shows arrow icon)</label>
+      </div>
+      <div class="field field-checkbox">
+        <input id="newtag-callback" class="checkbox" type="checkbox"/>
+        <label for="newtag-callback" class="checkbox-label">Fires a callback when clicked</label>
+      </div>
+      <div class="field field-checkbox">
+        <input id="newtag-is-link" class="checkbox" type="checkbox"/>
+        <label for="newtag-is-link" class="checkbox-label">Contains a hyperlink</label>
+      </div>
+      <p id="href-settings-container" class="hidden">
+        <label for="newtag-href">Hyperlink target</label>
+        <input id="newtag-href" type="text"/>
+        <button id="newtag-hash" class="btn-secondary btn-icon">#</button>
+      </p>
+      <p>
+        <button id="newtag-reset" class="btn-secondary" type="reset">Reset Fields</button>
+        <button id="newtag-submit" class="btn-primary" type="submit">Create Tag</button>
+      </p>
+    </form>
+  </div>
+  <div class="six columns">
+    <div id="tag-list" class="tag-list"></div>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <button id="taglist-clear" class="btn-secondary" type="submit">Reset Tag List</button>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#tag-list').taglist();
+
+  var UNIQUE_ID_COUNT = 0;
+  var tagListAPI = $('#tag-list').data('taglist');
+
+  function serialize() {
+    var ret = {
+      id: 'tag-'+UNIQUE_ID_COUNT,
+      content: Soho.xss.stripHTML($('#newtag-content').val()),
+      dismissible: $('#newtag-is-dismissible').prop('checked'),
+      style: Soho.xss.stripHTML($('#newtag-display-style').val())
+    }
+
+    var linkable = $('#newtag-is-linkable').prop('checked');
+    if (linkable) {
+      ret.clickable = true;
+    }
+
+    var clickCallback = $('#newtag-callback').prop('checked');
+    if (clickCallback) {
+      ret.clickHandler = function (tagAPI) {
+        const tagContents = tagAPI.settings.content;
+
+        $('body').toast({
+          title: 'Tag Clicked!',
+          message: 'The tag containing the text "' + tagContents + '" has been clicked!'
+        });
+      }
+    }
+
+    var audible = Soho.xss.stripHTML($('#newtag-audible-content').val());
+    if (audible.length) {
+      ret.audibleContent = audible;
+    }
+
+    var href = Soho.xss.stripHTML($('#newtag-href').val());
+    if (href.length) {
+      ret.href = href;
+    }
+
+    return ret;
+  }
+
+  // Show/Hide the hyperlink field if the checkbox changes state.
+  $('#newtag-is-link').on('change.test', function () {
+    var container = $('#href-settings-container');
+    var checked = $(this).prop('checked');
+    container[checked ? 'removeClass' : 'addClass']('hidden');
+
+    if (!checked) {
+      $('#newtag-href').val('');
+    }
+  });
+
+  // Sets the hyperlink input field to "#" if this button is clicked.
+  $('#newtag-hash').on('click.test', function (e) {
+    e.preventDefault();
+    $('#newtag-href').val('#');
+  });
+
+  $('body').on('initialized', function () {
+    if ($('#newtag-is-link').prop('checked')) {
+      $('#href-settings-container').removeClass('hidden');
+    }
+
+    // Submit
+    $('#create-tag').on('submit.test', function (e) {
+      e.preventDefault();
+      var newTagSettings = serialize();
+      tagListAPI.add(newTagSettings);
+      UNIQUE_ID_COUNT++;
+    });
+
+    // Reset all tags
+    $('#taglist-clear').on('click.test', function () {
+      tagListAPI.removeAll();
+      UNIQUE_ID_COUNT = 0;
+    });
+  });
+
+
+</script>
