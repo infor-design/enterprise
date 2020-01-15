@@ -22,7 +22,14 @@ describe('Button API', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container', '.popupmenu-wrapper', '.popupmenu']);
+    cleanup([
+      'button',
+      '.icon-dropdown',
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper',
+      '.popupmenu'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {
