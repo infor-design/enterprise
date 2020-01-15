@@ -174,7 +174,7 @@ describe('Mask Input Field Api', () => {
     expect(inputComponent.settings.patternOptions.symbols.decimal).toEqual(',');
     expect(inputComponent.settings.patternOptions.symbols.thousands).toEqual(' ');
     expect(inputComponent.settings.patternOptions.symbols.currency).toEqual('€');
-    expect(['5 333,66 €', '5 333,66 €']).toContain(input.value);
+    expect(['5 333,66 €', '5 333,66 €']).toContain(input.value);
   });
 
   it('Should display reversed prefix/suffix when in RTL mode', () => {
