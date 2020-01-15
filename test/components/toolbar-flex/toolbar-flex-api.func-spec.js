@@ -340,38 +340,46 @@ describe('Flex Toolbar', () => { //eslint-disable-line
   });
 
   describe('Item selected events', () => {
-    it('Should trigger "selected" event for a normal button', () => {
+    it('Should trigger "selected" event for a normal button', (done) => {
       const button = toolbarAPI.items[0].element;
       const buttonSpyEvent = spyOnEvent('div.buttonset button:first-child', 'selected');
 
       button.click();
-
-      expect(buttonSpyEvent).toHaveBeenTriggered();
+      setTimeout(() => {
+        expect(buttonSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
     });
 
-    it('Should trigger "selected" event for a menu button', () => {
+    it('Should trigger "selected" event for a menu button', (done) => {
       const menuButton = toolbarAPI.items[1];
       const menuButtonSpyEvent = spyOnEvent('button#menu-button', 'selected');
       const firstMenuEntry = document.body.querySelector('ul#popupmenu-1 li a');
 
       menuButton.componentAPI.open();
-      firstMenuEntry.click();
+      setTimeout(() => {
+        firstMenuEntry.click();
 
-      expect(menuButtonSpyEvent).toHaveBeenTriggered();
+        expect(menuButtonSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
     });
 
-    it('Should trigger "selected" event for overflow menu', () => {
+    it('Should trigger "selected" event for overflow menu', (done) => {
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
       const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(5) a');
 
       moreMenuButton.componentAPI.open();
-      firstMoreMenuEntry.click();
+      setTimeout(() => {
+        firstMoreMenuEntry.click();
 
-      expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
     });
 
-    it('Should trigger "selected" event for menu button in the overflow menu', () => {
+    it('Should trigger "selected" event for menu button in the overflow menu', (done) => {
       rowEl.style.width = '700px';
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
@@ -379,11 +387,13 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(2) a#item-one');
 
       moreMenuButton.componentAPI.open();
-      $(overflowedMenuButton).trigger('mouseover');
+      setTimeout(() => {
+        $(overflowedMenuButton).trigger('mouseover');
+        firstMoreMenuEntry.click();
 
-      firstMoreMenuEntry.click();
-
-      expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
     });
   });
 });

@@ -42,14 +42,17 @@ describe('Searchfield Events', () => {
     ]);
   });
 
-  it('triggers a `selected` event on the searchfield element when a category is selected', () => {
+  it('triggers a `selected` event on the searchfield element when a category is selected', (done) => {
     const spyEvent = spyOnEvent($(searchfieldInputEl), 'selected');
     const popupmenuAPI = searchfieldAPI.categoryButton.data('popupmenu');
 
     popupmenuAPI.open();
-    const selectItem = document.body.querySelector('ul#popupmenu-1 li:nth-child(2) a');
-    selectItem.click();
+    setTimeout(() => {
+      const selectItem = document.body.querySelector('ul#popupmenu-1 li:nth-child(2) a');
+      $(selectItem).trigger('click');
 
-    expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenTriggered();
+      done();
+    }, 300);
   });
 });
