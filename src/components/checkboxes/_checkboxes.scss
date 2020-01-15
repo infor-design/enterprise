@@ -243,10 +243,10 @@ span.checkbox > input:checked + label::after,
 
   display: block;
   font-size: $theme-size-font-sm;
-  margin-bottom: 12px;
+  margin-bottom: 3px;
 
   ~ .field {
-    margin-bottom: 12px;
+    margin-bottom: 3px;
   }
 
   ~ .field-short,
