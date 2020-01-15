@@ -136,7 +136,7 @@
 }
 
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   > .textarea-wordcount {
     color: $label-color;
     font-size: $label-size-compact-font-size - 0.1;
@@ -484,7 +484,7 @@ label,
 
 // Shorter/Legacy Inputs
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   font-size: 0;
   margin-bottom: $form-size-field-compact-margin-bottom;
   position: relative;
@@ -591,7 +591,7 @@ label,
 }
 
 // Sets fields to compact at the form level
-.form-field-short {
+.form-layout-compact {
   .field {
     margin-bottom: $form-size-field-compact-margin-bottom;
   }
@@ -630,7 +630,7 @@ label,
 .input-lg,
 .colorpicker-container .input-lg.colorpicker,
 .field-short .input-lg,
-.form-field-short .field .input-lg {
+.form-layout-compact .field .input-lg {
   width: $field-lg;
 }
 
@@ -638,7 +638,7 @@ label,
 .colorpicker-container .input-md.colorpicker,
 .input-md.datepicker,
 .field-short .input-md,
-.form-field-short .field .input-md {
+.form-layout-compact .field .input-md {
   width: $field-md;
 }
 
@@ -646,21 +646,21 @@ label,
 .colorpicker-container .input-mm.colorpicker,
 .input-mm.datepicker,
 .field-short .input-mm,
-.form-field-short .field .input-mm {
+.form-layout-compact .field .input-mm {
   width: $field-mm;
 }
 
 .input-sm,
 .colorpicker-container .input-sm.colorpicker,
 .field-short .input-sm,
-.form-field-short .field .input-sm {
+.form-layout-compact .field .input-sm {
   width: $field-sm;
 }
 
 .input-xs,
 .colorpicker-container .input-xs.colorpicker,
 .field-short .input-xs,
-.form-field-short .field .input-xs {
+.form-layout-compact .field .input-xs {
   width: $field-xs;
 }
 

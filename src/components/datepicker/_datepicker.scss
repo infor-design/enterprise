@@ -129,7 +129,7 @@
 
 // Short fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .datepicker {
     padding-right: 24px;
 
@@ -162,7 +162,7 @@ html[dir='rtl'] {
 
   // Short fields
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .datepicker {
       padding-left: 24px;
       padding-right: 2px;

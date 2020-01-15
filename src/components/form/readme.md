@@ -13,6 +13,8 @@ demo:
     slug: example-inputs-simple
   - name: Form Layouts
     slug: example-forms
+  - name: Compact Fields in Forms
+    slug: example-compact-fields
 ---
 
 ## Layout Classes
@@ -31,6 +33,8 @@ The following classes can be used for form and label alignment.
 - `field-flex` - Makes all the labels and fields inside go into a side by side layout. Yet still work responsively. This can be used for labels input description situations or to force some labels to sit together , similar to compound fields [See Example](./demo/components/form/example-labels?font=source-sans)
 - `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example](./demo/form/example-labels?font=source-sans)
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/form/example-forms?font=source-sans)
+- `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/form/example-forms?font=source-sans)
+- `form-layout-compact` - Used to set the form fields in a more compact mode so more fields can fit in the page. [See Example](./demo/form/example-compact-fields?font=source-sans)
 
 ## Accessibility
 

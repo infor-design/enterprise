@@ -128,7 +128,7 @@ Dropdown.prototype = {
    */
   get isShortField() {
     return this.element.closest('.field-short').length > 0 ||
-      this.element.closest('.form-field-short').length > 0;
+      this.element.closest('.form-layout-compact').length > 0;
   },
 
   /**

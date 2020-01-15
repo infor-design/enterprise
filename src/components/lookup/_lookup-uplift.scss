@@ -1,7 +1,7 @@
 // Uplift Lookup
 //================================================== //
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .lookup-wrapper {
     .trigger {
       .icon {
@@ -23,7 +23,7 @@ html.is-firefox {
 
 html[dir='rtl'] {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .lookup-wrapper {
       .trigger {
         .icon {

@@ -134,7 +134,7 @@
 
 // Short Fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .timepicker {
     padding-right: 18px;
 
@@ -182,7 +182,7 @@ html[dir='rtl'] {
 
   // Short Fields
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .timepicker {
       padding-left: 18px;
       padding-right: 2px;

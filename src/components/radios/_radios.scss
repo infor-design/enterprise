@@ -194,7 +194,7 @@
 }
 
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .radio-group {
     margin-bottom: -6px;
   }
@@ -323,7 +323,7 @@ html[dir='rtl'] {
 
   // Adjust the label padding for RTL in short mode
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .inline .radio ~ .label-text,
     .radio + label {
       padding-right: 24px;
@@ -379,7 +379,7 @@ html[dir='rtl'] {
 
 // Short Fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .radio-group legend {
     font-size: $input-size-compact-font-size;
     padding-bottom: 20px;
@@ -416,14 +416,14 @@ html[dir='rtl'] {
 }
 
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   > .radio-label.radio-label:first-of-type {
     margin-top: -23px;
   }
 }
 
 .radio-group,
-.form-field-short .field .radio-group {
+.form-layout-compact .field .radio-group {
   .field-short:first-of-type {
     margin-bottom: 8px;
     margin-top: 19px;

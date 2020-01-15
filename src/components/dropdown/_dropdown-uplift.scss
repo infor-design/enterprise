@@ -76,7 +76,7 @@ div.multiselect {
 
 // Adjust Short Field Dropdowns
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   div.dropdown,
   div.multiselect {
     + .icon {
@@ -177,7 +177,7 @@ div.multiselect {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       > .listoption-icon {
@@ -289,7 +289,7 @@ html.is-firefox:not([dir='rtl']) {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       padding: 2px 16px 2px 5px;
@@ -331,7 +331,7 @@ html[dir='rtl'] {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       padding: 5px 5px 2px 8px;
@@ -397,7 +397,7 @@ html[dir='rtl'] {
   // Re-apply extended padding for Firefox
   &.is-firefox {
     .field-short,
-    .form-field-short .field {
+    .form-layout-compact .field {
       div.dropdown,
       div.multiselect {
         padding: 2px 5px 2px 16px;
@@ -433,7 +433,7 @@ html[dir='rtl'] {
 
 .compound-field {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       + .icon {

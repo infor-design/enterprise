@@ -644,7 +644,7 @@ input.dropdown.error:focus {
 }
 
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .dropdown-wrapper {
     margin-bottom: 0;
   }
@@ -674,7 +674,7 @@ input.dropdown.error:focus {
 
 // Shorter Field Size
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   div.dropdown {
     font-size: $input-size-compact-font-size;
     margin-bottom: 0;
@@ -727,7 +727,7 @@ input.dropdown.error:focus {
 
 .compound-field {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       + .icon {
@@ -740,7 +740,7 @@ input.dropdown.error:focus {
 // Different Width Dropdowns
 .dropdown-lg,
 .field-short .dropdown-lg,
-.form-field-short .field .dropdown-lg {
+.form-layout-compact .field .dropdown-lg {
   width: 400px;
 }
 
@@ -751,28 +751,28 @@ div.dropdown-lg {
 .dropdown-md,
 div.dropdown-md,
 .field-short .dropdown-md,
-.form-field-short .field .dropdown-md {
+.form-layout-compact .field .dropdown-md {
   width: 300px;
 }
 
 .dropdown-mm,
 div.dropdown-mm,
 .field-short .dropdown-mm,
-.form-field-short .field .dropdown-mm {
+.form-layout-compact .field .dropdown-mm {
   width: 225px;
 }
 
 .dropdown-sm,
 div.dropdown-sm,
 .field-short .dropdown-sm,
-.form-field-short .field .dropdown-sm {
+.form-layout-compact .field .dropdown-sm {
   width: 150px;
 }
 
 .dropdown-xs,
 div.dropdown-xs,
 .field-short .dropdown-xs,
-.form-field-short .field .dropdown-xs {
+.form-layout-compact .field .dropdown-xs {
   width: 75px;
 }
 
@@ -923,7 +923,7 @@ div.dropdown-xs,
 
   // Reset the padding in the rule above for Short Fields
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     div.dropdown,
     div.multiselect {
       font-size: $input-size-compact-font-size;
@@ -1202,7 +1202,7 @@ html[dir='rtl'] {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .dropdown,
     .multiselect,
     input.dropdown,
@@ -1254,7 +1254,7 @@ html[dir='rtl'] {
 
     // Reset the padding in the rule above for Short Fields
     .field-short,
-    .form-field-short .field {
+    .form-layout-compact .field {
       div.dropdown,
       div.multiselect {
         padding: 5px 5px 5px 21px;

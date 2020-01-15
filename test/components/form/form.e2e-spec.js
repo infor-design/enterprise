@@ -47,5 +47,25 @@ describe('Form Tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-checkbox-in-columns')).toEqual(0);
     });
+
+    it('Should not visual regress on compact/short fields', async () => {
+      await utils.setPage('/components/form/example-compact-fields?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-fields')).toEqual(0);
+    });
+
+    it('Should not visual regress on compact/short fields in RTL', async () => {
+      await utils.setPage('/components/form/example-compact-fields?layout=nofrills&locale=ar-SA');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-fields')).toEqual(0);
+    });
   }
 });

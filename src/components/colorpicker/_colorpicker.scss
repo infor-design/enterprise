@@ -316,7 +316,7 @@
 
 // Short Fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .colorpicker-container {
     height: $input-size-compact-height;
     width: inherit;
@@ -390,7 +390,7 @@ html[dir='rtl'] {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .colorpicker-container {
       .trigger {
         left: $input-size-compact-height - 0.2;

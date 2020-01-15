@@ -11,7 +11,7 @@
 }
 
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     top: 13px;
@@ -19,11 +19,11 @@
 }
 
 .field-short .radio-group legend,
-.form-field-short .field .radio-group legend {
+.form-layout-compact .field .radio-group legend {
   padding-bottom: 18px;
 }
 
 .radio-group .field-short:first-of-type,
-.form-field-short .field .radio-group .field-short:first-of-type {
+.form-layout-compact .field .radio-group .field-short:first-of-type {
   margin-top: 17px;
 }

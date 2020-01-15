@@ -56,7 +56,7 @@
 }
 
 .field-short [class*='btn'],
-.form-field-short .field [class*='btn'] {
+.form-layout-compact .field [class*='btn'] {
   min-height: $button-size-compact-height;
 
   > .icon {

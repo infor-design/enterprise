@@ -202,7 +202,7 @@
 
 // Short fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   .lookup-wrapper {
     margin-bottom: 0;
 
@@ -247,7 +247,7 @@ html[dir='rtl'] {
   }
 
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .lookup-wrapper .trigger {
       margin-left: 0;
       margin-right: -20px;

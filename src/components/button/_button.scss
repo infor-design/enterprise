@@ -580,7 +580,7 @@ a.btn-close {
 
 // Short field buttons
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   [class*='btn'] {
     height: $button-size-compact-height;
     margin-bottom: 10px;
@@ -726,7 +726,7 @@ html[lang^='fr-'] {
 
 .is-mac.is-firefox {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     [class^='btn'] {
       line-height: $button-size-compact-height;
 

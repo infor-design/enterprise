@@ -250,8 +250,8 @@ span.checkbox > input:checked + label::after,
   }
 
   ~ .field-short,
-  .form-field-short .field,
-  .form-field-short .field-checkbox {
+  .form-layout-compact .field,
+  .form-layout-compact .field-checkbox {
     margin-bottom: 0;
   }
 }
@@ -340,8 +340,8 @@ html[dir='rtl'] {
   }
 
   .field-short,
-  .form-field-short .field,
-  .form-field-short .field-checkbox {
+  .form-layout-compact .field,
+  .form-layout-compact .field-checkbox {
     .dirty-checkbox {
       right: 12px;
     }
@@ -378,8 +378,8 @@ html[dir='rtl'] {
 
 // Short Fields
 .field-short,
-.form-field-short .field,
-.form-field-short .field-checkbox {
+.form-layout-compact .field,
+.form-layout-compact .field-checkbox {
 
   // Reduce Checkbox Size
   .checkbox-label,

@@ -199,14 +199,14 @@ input::-webkit-inner-spin-button {
 @include respond-to(phone) {
   .spinbox-lg,
   .field-short .spinbox-lg,
-  .form-field-short .field .spinbox-lg {
+  .form-layout-compact .field .spinbox-lg {
     width: 300px;
   }
 }
 
 // Short Fields
 .field-short,
-.form-field-short .field {
+.form-layout-compact .field {
   input.spinbox {
     width: 100px;
   }
@@ -231,7 +231,7 @@ input::-webkit-inner-spin-button {
 // Override for iOS to correctly align ".spinbox" as child of  ".field-short"
 .ios {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .spinbox {
       padding-top: 6px;
     }
@@ -241,7 +241,7 @@ input::-webkit-inner-spin-button {
 // Override for IE to correctly align ".spinbox" as child of  ".field-short"
 .ie {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .spinbox {
       height: 25px;
     }
@@ -304,7 +304,7 @@ html[dir='rtl'] {
 
   &:not(.ie11) {
     .field-short,
-    .form-field-short .field {
+    .form-layout-compact .field {
       .spinbox-control {
         padding: 3px 7px 4px;
       }
@@ -313,7 +313,7 @@ html[dir='rtl'] {
 
   &.is-firefox {
     .field-short,
-    .form-field-short .field {
+    .form-layout-compact .field {
       .spinbox {
         padding: 5px 4px 4px;
       }
@@ -324,7 +324,7 @@ html[dir='rtl'] {
 // Ie11
 .ie11 {
   .field-short,
-  .form-field-short .field {
+  .form-layout-compact .field {
     .spinbox-control {
       height: 25px;
     }
