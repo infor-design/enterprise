@@ -23,6 +23,29 @@ div.multiselect {
       padding-left: 25px;
     }
   }
+
+  &.has-tags {
+    padding: 2px 30px 3px 10px;
+
+    + .icon {
+      height: 30px;
+    }
+  }
+
+  .tag-list {
+    padding: 1px 4px 4px;
+
+    &.empty {
+      padding: 16px 0 15px;
+    }
+
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        vertical-align: middle;
+      }
+    }
+  }
 }
 
 .dropdown-list {
@@ -242,6 +265,10 @@ html.is-firefox:not([dir='rtl']) {
       + span {
         padding-left: 26px;
       }
+    }
+
+    &.has-tags {
+      padding: 1px 30px 1px 10px;
     }
   }
 

@@ -38,7 +38,7 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu')).toEqual(0);
-      browser.driver.actions().mouseMove(element(by.css('button.btn-actions + div.popupmenu-wrapper li:nth-child(7)'))).perform();
+      browser.driver.actions().mouseMove(element(by.css('ul#popupmenu-2 li:nth-child(7)'))).perform();
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-submenu')).toEqual(0);
@@ -53,11 +53,11 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu')).toEqual(0);
-      browser.driver.actions().mouseMove(element(by.css('button.btn-actions + div.popupmenu-wrapper li:nth-child(2)'))).perform();
+      browser.driver.actions().mouseMove(element(by.css('ul#popupmenu-2 li:nth-child(2)'))).perform();
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-overflowed-menu-button')).toEqual(0);
-      browser.driver.actions().mouseMove(element(by.css('a#flex-toolbar-menu-button + div.wrapper li.submenu'))).perform();
+      browser.driver.actions().mouseMove(element(by.css('ul#popupmenu-2 li:nth-child(2) li.submenu'))).perform();
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-overflowed-menu-button-submenu')).toEqual(0);

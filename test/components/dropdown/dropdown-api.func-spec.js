@@ -82,7 +82,14 @@ describe('Dropdown API', () => {
     expect(dropdownObj.element.val()).toBe('NY');
   });
 
-  it('can have its value programmatically changed with a list item reference', () => {
+  it('can have its value programmatically changed with a reference to one of its option elements', () => {
+    const targetOpt = dropdownEl.querySelector('option[value="NY"]');
+    dropdownObj.select(targetOpt);
+
+    expect(dropdownObj.element.val()).toBe('NY');
+  });
+
+  it('can have its value programmatically changed with a reference to one of its rendered list items', () => {
     dropdownObj.open();
 
     // `targetEl` will be the list item for New Hampshire

@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.trigger='click']  Action on which to trigger a menu can be: click, rightClick, immediate ect.
  * @param {boolean} [settings.autoFocus=true]  If false the focus will not focus the first list element. (At the cost of accessibility).
  * @param {boolean} [settings.mouseFocus=true]  If false the focus will not highlight the first list element. (At the cost of accessibility).
- * @param {boolean} [settings.attachToBody=false]  If true the menu will be moved out to the body. To be used in certin overflow situations.
+ * @param {boolean} [settings.attachToBody=true]  If true the menu will be moved out to the body. If false, the menu HTML will remain adjacent to its trigger button. To be used in certin overflow situations.
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
@@ -46,7 +46,7 @@ const POPUPMENU_DEFAULTS = {
   trigger: 'click',
   autoFocus: true,
   mouseFocus: true,
-  attachToBody: false,
+  attachToBody: true,
   removeOnDestroy: false,
   beforeOpen: null,
   ariaListbox: false,
@@ -130,12 +130,6 @@ PopupMenu.prototype = {
     if (this.settings.menuId) {
       this.settings.menu = this.settings.menuId;
       this.settings.menuId = undefined;
-    }
-
-    // Automatically set safari environments to be `attachToBody: true`
-    const isSafari = env.browser.name === 'safari';
-    if (isSafari) {
-      this.settings.attachToBody = true;
     }
 
     // keep track of how many popupmenus there are with an ID.

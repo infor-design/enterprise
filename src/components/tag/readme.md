@@ -17,8 +17,8 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 <span class="tag good">Open Order</span>
 <span class="tag alert"><span class="audible">Alert</span>Help Order</span>
 <br><br><br><br>
-<a href="#" id="example-clickable" class="tag is-clickable">#Clickable</a>
-<a href="#" id="example-dismissable" class="tag is-dismissable">#Dismissable</a>
+<a href="#" id="example-clickable" class="tag is-linkable">#Linkable</a>
+<a href="#" id="example-dismissible" class="tag is-dismissible">#Dismissible</a>
 ```
 
 ## Accessibility
@@ -36,7 +36,7 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 ## States and Variations
 
 - Dismissible
-- Clickable
+- Linkable
 
 ## Responsive Guidelines
 

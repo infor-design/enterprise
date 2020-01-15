@@ -98,7 +98,7 @@ div.multiselect {
     text-align: center;
   }
 
-  > span {
+  > span:not(.tag-list) {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -198,6 +198,39 @@ div.multiselect {
     border-color: $input-color-focus-border !important;
   }
 
+  &.has-tags {
+    line-height: normal;
+    padding: 0 30px 1px 10px;
+  }
+
+  .tag-list {
+    display: block;
+    line-height: 26px;
+    margin: 0;
+    overflow: auto;
+    padding: 2px 4px 3px;
+    text-overflow: clip;
+    white-space: normal;
+
+    &.empty {
+      padding: 16px 0 15px;
+    }
+
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        vertical-align: baseline;
+      }
+    }
+
+    .tag {
+      margin: 0 3px 0 0;
+    }
+
+    .icon {
+      background-color: transparent;
+    }
+  }
 }
 
 // The List
@@ -916,8 +949,14 @@ div.dropdown-xs,
   div.multiselect {
     padding: $dropdown-size-regular-padding;
 
-    > span {
-      padding-top: 1px;
+    &:not(.has-tags) {
+      > span {
+        padding-top: 1px;
+      }
+    }
+
+    &.has-tags {
+      padding: 1px 30px 0 10px;
     }
   }
 
@@ -1051,6 +1090,13 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -33px;
       right: auto !important;
+    }
+  }
+
+  div.dropdown,
+  div.multiselect {
+    &.has-tags {
+      padding: 5px 10px 5px 30px;
     }
   }
 

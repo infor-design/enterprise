@@ -155,11 +155,11 @@ describe('Popupmenu missing submenu tests', () => {
   it('Should have no errors when hovering an item with a submenu', async () => {
     await element(by.id('open-me')).click();
 
-    const popupmenuElem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open'));
+    const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(popupmenuElem), config.waitsFor);
 
-    const thirdItem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open > li.submenu'));
+    const thirdItem = await element(by.css('ul.popupmenu.is-open'));
     await browser.actions().mouseMove(thirdItem).perform();
     await browser.driver.sleep(config.sleep);
 
