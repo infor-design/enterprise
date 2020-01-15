@@ -521,8 +521,15 @@ html[dir='rtl'] {
       &:nth-child(1) {
         border-left: 1px solid $modal-btn-border-color;
       }
-    }
 
+      &:last-child {
+        border-left-color: transparent;
+
+        &:focus {
+          border-left-color: $input-color-focus-border;
+        }
+      }
+    }
   }
 
   .modal-content {

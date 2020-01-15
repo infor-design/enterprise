@@ -135,9 +135,11 @@
   }
 }
 
-.field-short {
+.field-short,
+.form-field-short .field {
   > .textarea-wordcount {
     color: $label-color;
+    font-size: $label-size-compact-font-size - 0.1;
     margin-bottom: 0;
   }
 }
@@ -496,7 +498,9 @@ label,
   }
 
   textarea {
+    font-size: $input-size-compact-font-size;
     min-height: $textarea-size-compact-height;
+    padding: $input-size-compact-padding;
   }
 
   &:last-child:not(:only-child) {
@@ -596,6 +600,11 @@ label,
   .label {
     font-size: $label-size-compact-font-size;
     margin: $label-size-compact-margin;
+  }
+
+  label.inline .checkbox ~ .label-text,
+  .checkbox-label {
+    line-height: $label-size-compact-font-size;
   }
 
   .field.field-checkbox {
@@ -948,12 +957,6 @@ html[dir='rtl'] {
   .field-short label ~ .error-message {
     left: initial;
     right: 84px;
-  }
-
-  .field .checkbox-label,
-  .field .checkbox > label {
-    margin-left: inherit;
-    margin-right: -5px;
   }
 
   // Field stacked optionally stacks the label
