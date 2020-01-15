@@ -425,6 +425,7 @@ SearchField.prototype = {
 
     if (this.settings.clearable) {
       this.element.clearable();
+      this.wrapper.addClass('has-close-icon-button');
       this.xButton = this.wrapper.children('.icon.close');
     }
 

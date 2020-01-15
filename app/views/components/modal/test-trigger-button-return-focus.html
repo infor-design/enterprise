@@ -34,7 +34,11 @@ var modals = {
     'add-context': {
       'title': 'Add Context',
       'id': 'my-id',
-      'content': $('#modal-add-context')
+      'content': $('#modal-add-context'),
+			'noRefocus': false,
+			'triggerButton': '#add-context' // selector
+			// 'triggerButton': document.getElementById('add-context') // DOM
+			// 'triggerButton': $('#add-context') // jQuery
     }
   },
 
@@ -61,7 +65,6 @@ var modals = {
   };
 
   $('#add-context').on('click', function () {
-		$(this).focus();
     setModal(modals[this.id]);
   });
 

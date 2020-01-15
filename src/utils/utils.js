@@ -854,8 +854,15 @@ utils.isNumber = function isNumber(value) {
  * @param {HTMLElement} element the element to get selection
  * @param {number} startPos starting position of the text caret
  * @param {number} endPos ending position of the text caret
+ * @returns {void}
  */
 utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
+  // If this text field doesn't support text caret selection, return out
+  const compatibleTypes = ['text', 'password', 'search', 'url', 'week', 'month'];
+  if (!(element instanceof HTMLInputElement) || compatibleTypes.indexOf(element.type) === -1) {
+    return;
+  }
+
   if (startPos && endPos === undefined) {
     endPos = startPos;
   }
