@@ -25,7 +25,7 @@ div.multiselect {
   }
 
   &.has-tags {
-    padding: 3px 30px 7px 10px;
+    padding: 2px 30px 3px 10px;
 
     + .icon {
       height: 30px;
@@ -33,6 +33,12 @@ div.multiselect {
   }
 
   .tag-list {
+    padding: 1px 4px 4px;
+
+    &.empty {
+      padding: 16px 0 15px;
+    }
+
     .dismissible-btn,
     .linkable-btn {
       .icon {
@@ -253,7 +259,7 @@ html.is-firefox:not([dir='rtl']) {
     }
 
     &.has-tags {
-      padding: 1px 30px 6px 10px;
+      padding: 1px 30px 1px 10px;
     }
   }
 

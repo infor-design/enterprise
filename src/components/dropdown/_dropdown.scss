@@ -200,7 +200,7 @@ div.multiselect {
 
   &.has-tags {
     line-height: normal;
-    padding: 2px 30px 4px 10px;
+    padding: 0 30px 1px 10px;
   }
 
   .tag-list {
@@ -208,11 +208,12 @@ div.multiselect {
     line-height: 26px;
     margin: 0;
     overflow: auto;
+    padding: 2px 4px 3px;
     text-overflow: clip;
     white-space: normal;
 
     &.empty {
-      padding: 13px;
+      padding: 16px 0 15px;
     }
 
     .dismissible-btn,
@@ -913,7 +914,7 @@ div.dropdown-xs,
     }
 
     &.has-tags {
-      padding: 3px 30px 5px 10px;
+      padding: 1px 30px 0 10px;
     }
   }
 
