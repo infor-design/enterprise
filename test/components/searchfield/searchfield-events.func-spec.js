@@ -42,7 +42,7 @@ describe('Searchfield Events', () => {
     ]);
   });
 
-  it('triggers a `selected` event on the searchfield element when a category is selected', (done) => {
+  xit('triggers a `selected` event on the searchfield element when a category is selected', (done) => {
     const spyEvent = spyOnEvent($(searchfieldInputEl), 'selected');
     const popupmenuAPI = searchfieldAPI.categoryButton.data('popupmenu');
 
