@@ -49,7 +49,7 @@ describe('Form Tests', () => {
     });
 
     it('Should not visual regress on compact/short fields', async () => {
-      await utils.setPage('/components/form/example-compact-fields?layout=nofrills');
+      await utils.setPage('/components/form/example-compact-layout?layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -59,7 +59,7 @@ describe('Form Tests', () => {
     });
 
     it('Should not visual regress on compact/short fields in RTL', async () => {
-      await utils.setPage('/components/form/example-compact-fields?layout=nofrills&locale=ar-SA');
+      await utils.setPage('/components/form/example-compact-layout?layout=nofrills&locale=ar-SA');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
