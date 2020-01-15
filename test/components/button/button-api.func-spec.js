@@ -1,38 +1,37 @@
 import { Button } from '../../../src/components/button/button';
+import { cleanup } from '../../helpers/func-utils';
 
 const buttonHTML = require('../../../app/views/components/button/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let buttonEl;
-let svgEl;
-let buttonObj;
+let buttonAPI;
 
 describe('Button API', () => {
   beforeEach(() => {
     buttonEl = null;
-    svgEl = null;
-    buttonObj = null;
+    buttonAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', buttonHTML);
     buttonEl = document.body.querySelector('.btn');
-    svgEl = document.body.querySelector('.svg-icons');
     buttonEl.classList.add('no-init');
-    buttonObj = new Button(buttonEl);
+    buttonAPI = new Button(buttonEl);
   });
 
   afterEach(() => {
-    buttonObj.destroy();
-    buttonEl.parentNode.removeChild(buttonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    if (buttonAPI) {
+      buttonAPI.destroy();
+    }
+    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container', '.popupmenu-wrapper', '.popupmenu']);
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(buttonObj).toEqual(jasmine.any(Object));
+    expect(buttonAPI).toEqual(jasmine.any(Object));
   });
 
   it('Should destroy button', (done) => {
     const spyEvent = spyOnEvent(buttonEl, 'click.button');
-    buttonObj.destroy();
+    buttonAPI.destroy();
     buttonEl.click();
     setTimeout(() => {
       expect(spyEvent).not.toHaveBeenTriggered();
@@ -50,7 +49,7 @@ describe('Button API', () => {
       hideMenuArrow: null
     };
 
-    expect(buttonObj.settings).toEqual(settings);
+    expect(buttonAPI.settings).toEqual(settings);
   });
 
   it('Should update settings via parameter', () => {
@@ -60,9 +59,9 @@ describe('Button API', () => {
       toggleOnIcon: null,
       hideMenuArrow: null
     };
-    buttonObj.updated(settings);
+    buttonAPI.updated(settings);
 
-    expect(buttonObj.settings.replaceText).toEqual(settings.replaceText);
+    expect(buttonAPI.settings.replaceText).toEqual(settings.replaceText);
   });
 
   it('Should update menu icon setting via parameter', () => {
@@ -72,13 +71,13 @@ describe('Button API', () => {
       toggleOnIcon: null,
       hideMenuArrow: true
     };
-    buttonObj.updated(settings);
+    buttonAPI.updated(settings);
 
-    expect(buttonObj.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
+    expect(buttonAPI.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
   });
 
   it('Should remove menu icon if hideMenuArrow set to true', () => {
-    buttonObj.updated({ hideMenuArrow: true });
+    buttonAPI.updated({ hideMenuArrow: true });
 
     expect(document.body.querySelector('.icon-dropdown')).toBeFalsy();
   });

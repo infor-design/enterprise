@@ -352,7 +352,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     it('Should trigger "selected" event for a menu button', () => {
       const menuButton = toolbarAPI.items[1];
       const menuButtonSpyEvent = spyOnEvent('button#menu-button', 'selected');
-      const firstMenuEntry = document.body.querySelector('button#menu-button + div ul li a');
+      const firstMenuEntry = document.body.querySelector('ul#popupmenu-1 li a');
 
       menuButton.componentAPI.open();
       firstMenuEntry.click();
@@ -363,7 +363,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     it('Should trigger "selected" event for overflow menu', () => {
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const firstMoreMenuEntry = document.body.querySelector('button.btn-actions + div ul li:nth-child(5) a');
+      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(5) a');
 
       moreMenuButton.componentAPI.open();
       firstMoreMenuEntry.click();
@@ -375,8 +375,8 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       rowEl.style.width = '700px';
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const overflowedMenuButton = document.body.querySelector('button.btn-actions + div ul li:nth-child(2)');
-      const firstMoreMenuEntry = document.body.querySelector('button.btn-actions + div ul li:nth-child(2) a#item-one');
+      const overflowedMenuButton = document.body.querySelector('ul#popupmenu-2 li:nth-child(2)');
+      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(2) a#item-one');
 
       moreMenuButton.componentAPI.open();
       $(overflowedMenuButton).trigger('mouseover');

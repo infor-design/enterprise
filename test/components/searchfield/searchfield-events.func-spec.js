@@ -1,26 +1,20 @@
 import { SearchField } from '../../../src/components/searchfield/searchfield';
+import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/test-selected-event.html');
 const svgHTML = require('../../../src/components/icons/svg.html');
 
 let searchfieldInputEl;
 let searchfieldAPI;
-let svgEl;
-let rowEl;
-
 describe('Searchfield Events', () => {
   beforeEach(() => {
     searchfieldInputEl = null;
     searchfieldAPI = null;
-    svgEl = null;
-    rowEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', exampleHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
-    rowEl = document.body.querySelector('.row');
-    searchfieldInputEl = document.body.querySelector('.searchfield');
+    searchfieldInputEl = document.body.querySelector('#short-category-searchfield');
     searchfieldInputEl.removeAttribute('data-options');
     searchfieldInputEl.classList.add('no-init');
 
@@ -37,10 +31,15 @@ describe('Searchfield Events', () => {
   });
 
   afterEach(() => {
-    searchfieldAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    searchfieldInputEl.parentNode.removeChild(searchfieldInputEl);
-    rowEl.parentNode.removeChild(rowEl);
+    if (searchfieldAPI) {
+      searchfieldAPI.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.searchfield-wrapper',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('triggers a `selected` event on the searchfield element when a category is selected', () => {
@@ -48,8 +47,8 @@ describe('Searchfield Events', () => {
     const popupmenuAPI = searchfieldAPI.categoryButton.data('popupmenu');
 
     popupmenuAPI.open();
-    const selectItem = document.body.querySelectorAll('.popupmenu a');
-    $(selectItem[2]).trigger('click');
+    const selectItem = document.body.querySelector('ul#popupmenu-1 li:nth-child(2) a');
+    selectItem.click();
 
     expect(spyEvent).toHaveBeenTriggered();
   });

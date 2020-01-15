@@ -1,4 +1,5 @@
 import { SearchField } from '../../../src/components/searchfield/searchfield';
+import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/example-categories-full.html');
 const svgHTML = require('../../../src/components/icons/svg.html');
@@ -8,8 +9,6 @@ let searchfieldSingleInputEl;
 let searchfieldSingleAPI;
 let searchfieldMultiInputEl;
 let searchfieldMultiAPI;
-let svgEl;
-let rowEls;
 let testScriptEl;
 
 describe('Searchfield API (full categories)', () => {
@@ -18,14 +17,10 @@ describe('Searchfield API (full categories)', () => {
     searchfieldSingleAPI = null;
     searchfieldMultiInputEl = null;
     searchfieldMultiAPI = null;
-    svgEl = null;
-    rowEls = null;
 
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', exampleHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
-    rowEls = document.body.querySelectorAll('.row');
     searchfieldSingleInputEl = document.body.querySelector('#category-searchfield');
     searchfieldMultiInputEl = document.body.querySelector('#multi-category-searchfield');
     testScriptEl = document.body.querySelector('#test-script');
@@ -44,13 +39,18 @@ describe('Searchfield API (full categories)', () => {
   });
 
   afterEach(() => {
-    searchfieldSingleAPI.destroy();
-    searchfieldMultiAPI.destroy();
-
-    svgEl.parentNode.removeChild(svgEl);
-    Array.from(rowEls).forEach((row) => { // eslint-disable-line compat/compat
-      row.parentNode.removeChild(row);
-    });
+    if (searchfieldSingleAPI) {
+      searchfieldSingleAPI.destroy();
+    }
+    if (searchfieldMultiAPI) {
+      searchfieldMultiAPI.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.searchfield-wrapper',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('can be invoked', () => {
