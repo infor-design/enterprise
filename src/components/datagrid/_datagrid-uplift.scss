@@ -26,6 +26,10 @@
       top: -4px;
     }
   }
+
+  th .datagrid-header-text.required::after {
+    font-size: 1.8rem;
+  }
 }
 
 // Adjust icon for firefox

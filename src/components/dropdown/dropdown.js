@@ -133,7 +133,8 @@ Dropdown.prototype = {
    * @returns {boolean} whether or not this Dropdown component is a "short" field.
    */
   get isShortField() {
-    return this.element.closest('.field-short').length > 0;
+    return this.element.closest('.field-short').length > 0 ||
+      this.element.closest('.form-layout-compact').length > 0;
   },
 
   /**

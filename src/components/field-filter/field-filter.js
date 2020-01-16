@@ -99,7 +99,7 @@ FieldFilter.prototype = {
       const ffId = `${id}-ff`;
 
       // Set Field
-      this.field = this.element.closest('.field');
+      this.field = this.element.closest('.field, .field-short');
 
       // RTL list x-position
       const isRTL = Locale.isRTL();

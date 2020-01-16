@@ -1,4 +1,5 @@
 import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
+import { cleanup } from '../../helpers/func-utils';
 
 const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
@@ -33,9 +34,14 @@ describe('Popupmenu Menu Button API', () => {
   });
 
   afterEach(() => {
-    popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    if (popupmenuObj) {
+      popupmenuObj.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -55,8 +61,10 @@ describe('Popupmenu Menu Button API', () => {
   it('Should position correctly', () => {
     // Indirectly tests Place component
     popupmenuObj.position(ePage);
+    const ulElem = document.querySelector('ul#popupmenu-1');
+    const parentElem = ulElem.parentNode;
 
-    expect(document.querySelector('.popupmenu-wrapper').classList.toString()).toContain('placeable bottom');
+    expect(parentElem.classList.toString()).toContain('placeable bottom');
   });
 
   it('Should open', () => {

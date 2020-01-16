@@ -1,9 +1,36 @@
 // Completion Chart
 //==================================================//
 
+.chart-container {
+  &.input-size {
+    .chart-completion-target,
+    .chart-completion,
+    .label {
+      width: 300px;
+    }
+  }
+}
+
 .completion-chart {
   color: $label-color;
-  margin: 10px 0;
+  font-size: $label-size-regular-font-size;
+  margin: $label-size-regular-margin;
+}
+
+.field-short .completion-chart,
+.form-layout-compact .field .completion-chart {
+  font-size: $label-size-compact-font-size;
+
+  .chart-targeted-achievement {
+    .bar,
+    &.bar {
+      height: ($input-size-compact-height/2) !important;
+
+      &.completed {
+        margin-top: -($input-size-compact-height/2) !important;
+      }
+    }
+  }
 }
 
 .chart-completion-target,

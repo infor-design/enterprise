@@ -6,6 +6,7 @@
 
 ### v4.25.0 Features
 
+- `[Fields]` Added a form level class to toggle all fields in the form to a more compact (shorter) mode called `form-layout-compact`. Added and fixed existing components so that there is now the option to have more compact forms by using shorter fields. ([#3249](https://github.com/infor-design/enterprise/issues/3249))
 - `[Tag]` Added a new style for linkable tags that will work for default, info, good, error, alert, and neutral styles. ([#3113](https://github.com/infor-design/enterprise/issues/3113))
 - `[Multiselect]` Added Tag Display as a new style for interacting with selected results in Multiselect components. ([#3114](https://github.com/infor-design/enterprise/issues/3114))
 - `[Colors]` Updated design system tokens to new colors for uplift and did a pass on all three theme variants. This impacts and improves many internal colors in components and charts. ([#3007](https://github.com/infor-design/enterprise/issues/3007))
@@ -35,6 +36,7 @@
 - `[Mask]` Fixed an issue when applying Masks to input fields configured for numbers, where errors would be thrown when the Mask attempted to overwrite the input field value. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
 - `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
 - `[Multiselect]` Adjusted the placeholder color as it was too dark. ([#3276](https://github.com/infor-design/enterprise/issues/3276))
+- `[Popupmenu]` Switched the `attachToBody` setting to be true by default. ([#3331](https://github.com/infor-design/enterprise/issues/3331))
 - `[Searchfield]` Fixed an issue where multiselect items' checkboxes and text were misaligned in RTL mode. ([#1811](https://github.com/infor-design/enterprise/issues/1811))
 - `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
 - `[Searchfield]` Fixed an overlapping text in searchfield when close icon button is showed. ([#3135](https://github.com/infor-design/enterprise/issues/3135))

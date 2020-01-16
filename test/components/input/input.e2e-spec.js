@@ -76,3 +76,43 @@ describe('Input tooltip tests', () => {
     expect(highligtedText).toEqual('John Johnson');
   });
 });
+
+describe('Input Short Field Sizes tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/test-short-field-sizes?layout=nofrills');
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-short-fields-sizes')).toEqual(0);
+    });
+  }
+});
+
+describe('Input Short Field tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/test-short-fields?layout=nofrills');
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-short-fields')).toEqual(0);
+    });
+  }
+});
