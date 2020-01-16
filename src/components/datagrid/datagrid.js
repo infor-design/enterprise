@@ -5382,9 +5382,14 @@ Datagrid.prototype = {
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         const currentColWidth = parseInt(currentCol.style.width, 10);
         const nextCol = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextCol.style.width, 10);
-        const nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
-        const nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
+        let nextColWidth = 12;
+        let nextMinWidth = 12;
+        let nextMaxWidth = 1000;
+        if (nextCol) {
+          nextColWidth = parseInt(nextCol.style.width, 10);
+          nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
+          nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
+        }
 
         // Calculate
         const width = currentColWidth - diff;
@@ -5398,8 +5403,17 @@ Datagrid.prototype = {
         }
 
         // Update the DOM
-        nextCol.style.width = (`${nextWidth}px`);
-        currentCol.style.width = (`${width}px`);
+        if (nextCol && nextCol.style.width.indexOf('%') === -1) {
+          nextCol.style.width = (`${nextWidth}px`);
+        }
+        if (currentCol.style.width.indexOf('%') === -1) {
+          currentCol.style.width = (`${width}px`);
+        }
+        // Two percentage fields
+        if (nextCol && nextCol.style.width.indexOf('%') !== -1 && currentCol.style.width.indexOf('%') !== -1) {
+          nextCol.style.width = (`${nextWidth}px`);
+          currentCol.style.width = (`${width}px`);
+        }
         startingLeft = ui.left;
       })
       .on('dragend.datagrid', () => {
@@ -5407,19 +5421,21 @@ Datagrid.prototype = {
         const node = self.currentHeader;
         const idx = node.index();
 
-        // Find how the adjacent column
-        const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-        const currentColWidth = parseInt(currentCol.style.width, 10);
-        const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
-        const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextColGroup.style.width, 10);
+        if (self.settings.stretchColumn === 'last') {
+          // Find how the adjacent column
+          const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
+          const currentColWidth = parseInt(currentCol.style.width, 10);
+          const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
+          const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
+          const nextColWidth = parseInt(nextColGroup.style.width, 10);
 
-        self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
-        if (nextCol) {
-          self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
-        }
-        if (self.isEllipsisActiveHeader(column)) {
-          self.activeEllipsisHeader(self.currentHeader[0]);
+          self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
+          if (nextCol) {
+            self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
+          }
+          if (self.isEllipsisActiveHeader(column)) {
+            self.activeEllipsisHeader(self.currentHeader[0]);
+          }
         }
       });
   },
