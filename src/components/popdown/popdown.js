@@ -19,10 +19,22 @@ const COMPONENT_NAME = 'popdown';
  * @property {boolean} [settings.keepOpen = false] If true, will keep the Popdown open after clicking out until the Trigger
  * element is clicked, or until another pop-open element is opened.
  * @property {jQuery[]} [settings.trigger] If defined, provides a way to place the popdown against an alternate element.
+ * @param {boolean} [settings.autoFocus=false] If true, when the popdown is opened, the first available input/button in its content area will be focused.
+ * @param {boolean} [settings.toggleOnFocus=false] If true, popdown will be toggle soon focused on the popdown trigger.
+ * @param {function|boolean|object} [settings.firstLastTab=null] it can have three way to tab or shift-tab to first/last input/select/textarea in popdown.
+ * If given value is function it will be call back that goes along with first/last tab in/out.
+ * If given value is boolean and true it will run the default function `closeAndContinue`.
+ * If given value is object it can have key/value `first`, `last`, `callback` as:
+ * first - jQuery[]|string, first element to bind with tab in/out.
+ * last - jQuery[]|string, last element to bind with tab in/out.
+ * callback - function, a call back that goes along with first/last tab in/out.
 */
 const POPDOWN_DEFAULTS = {
   keepOpen: false,
-  trigger: undefined
+  trigger: undefined,
+  autoFocus: false,
+  toggleOnFocus: false,
+  firstLastTab: null
 };
 
 function Popdown(element, settings) {
@@ -133,6 +145,16 @@ Popdown.prototype = {
         self.updated();
       });
 
+    // First and last tab
+    this.setFirstLastTab();
+
+    // Toggle on focus for popdown trigger
+    if (this.settings.toggleOnFocus) {
+      this.trigger.on('focus.popdown', () => {
+        this.toggle();
+      });
+    }
+
     return this;
   },
 
@@ -169,6 +191,101 @@ Popdown.prototype = {
   },
 
   /**
+   * Set first last tab action.
+   * @private
+   * @returns {void}
+   */
+  setFirstLastTab() {
+    const s = this.settings;
+    if (s.firstLastTab && (/function|boolean|object/.test(typeof s.firstLastTab))) {
+      let first = null;
+      let last = null;
+      let callback = null;
+      if (typeof s.firstLastTab === 'object') {
+        if (s.firstLastTab.first) {
+          first = s.firstLastTab.first instanceof jQuery ?
+            s.firstLastTab.first : $(s.firstLastTab.first);
+          first.first();
+          if (!this.popdown[0].contains(first[0])) {
+            first = null;
+          }
+        }
+        if (s.firstLastTab.last) {
+          last = s.firstLastTab.last instanceof jQuery ?
+            s.firstLastTab.last : $(s.firstLastTab.last);
+          last.first();
+          if (!this.popdown[0].contains(last[0])) {
+            last = null;
+          }
+        }
+        if (typeof s.firstLastTab.callback === 'function') {
+          callback = s.firstLastTab.callback;
+        }
+      } else if (typeof s.firstLastTab === 'function') {
+        callback = s.firstLastTab;
+      } else if (typeof s.firstLastTab === 'boolean' ||
+        s.firstLastTab) {
+        callback = this.closeAndContinue;
+      }
+
+      if (callback) {
+        if ((!first || !last) || (first && !first.length) || (last && !last.length)) {
+          // Focusable (only input/select/textarea or with tabindex) elements in popdown
+          const focusable = `input:not(:disabled):not([tabindex^="-"]),
+            select:not(:disabled):not([tabindex^="-"]),
+            textarea:not(:disabled):not([tabindex^="-"]),
+            [tabindex]:not(:disabled):not([tabindex^="-"])`;
+          const focusableElem = this.popdown.find(focusable);
+          if (!first || (first && !first.length)) {
+            first = focusableElem.first();
+          }
+          if (!last || (last && !last.length)) {
+            last = focusableElem.last();
+          }
+        }
+
+        // Attach them to self, so later can turn them off
+        this.focusableElem = { first, last };
+
+        // First element
+        first.on('keydown.popdown', (e) => {
+          if (e.keyCode === 9 && e.shiftKey) {
+            e.preventDefault();
+            callback({ e, self: this, first });
+          }
+        });
+        // Last element
+        last.on('keydown.popdown', (e) => {
+          if (e.keyCode === 9 && !e.shiftKey) {
+            e.preventDefault();
+            callback({ e, self: this, last });
+          }
+        });
+      }
+    }
+  },
+
+  /**
+   * Close the popdown and if available focus to prev/next focusable item.
+   * @private
+   * @param  {object} args The keydown event, first or last element and popdown reference
+   * @returns {void}
+   */
+  closeAndContinue(args) {
+    const focusable = $(document).find(':focusable');
+    let index = focusable.index(args.self.trigger);
+    if (args.e.shiftKey) {
+      index = ((index - 1) < 0 ? -1 : (index - 1));
+    } else {
+      index = ((index + 1) >= focusable.length ? -1 : (index + 1));
+    }
+    if (index !== -1) {
+      focusable.eq(index).focus();
+    }
+    args.self.close();
+  },
+
+  /**
    * Determines whether or not the popdown is open.
    * @returns {boolean} returns current state.
    */
@@ -190,6 +307,13 @@ Popdown.prototype = {
     this.trigger.attr('aria-expanded', 'true');
     this.position();
     this.popdown.addClass('visible');
+
+    // Auto focus
+    if (this.settings.autoFocus) {
+      const focusElem = this.focusableElem ?
+        this.focusableElem.first : this.popdown.find(':focusable').first();
+      focusElem.focus();
+    }
 
     function handleFocusOut(e) {
       if (!self.hasFocus(e.target)) {
@@ -404,9 +528,16 @@ Popdown.prototype = {
     }
 
     this.trigger
-      .off('updated.popdown click.popdown')
+      .off('updated.popdown click.popdown focus.popdown')
       .removeAttr('aria-controls')
       .removeAttr('aria-expanded');
+
+    // First and last turn off and withdraw
+    if (this.focusableElem) {
+      this.focusableElem.first.off('keydown.popdown');
+      this.focusableElem.last.off('keydown.popdown');
+      delete this.focusableElem;
+    }
 
     if (this.originalParent && this.originalParent.length) {
       this.popdown.detach().appendTo(this.originalParent);
