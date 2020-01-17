@@ -121,10 +121,11 @@ Tag.prototype = {
    */
   render() {
     const elemClasses = this.element.classList;
+    const elemClassArr = utils.getArrayFromList(this.element.classList);
     const currentState = this.settings.style;
 
     // Update "style" class on the top-level element
-    elemClasses.forEach((cssClass) => {
+    elemClassArr.forEach((cssClass) => {
       if (tagStyles.indexOf(cssClass) > -1) {
         elemClasses.remove(cssClass);
       }
