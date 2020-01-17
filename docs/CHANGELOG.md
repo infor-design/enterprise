@@ -27,6 +27,7 @@
 - `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
 - `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
 - `[Datagrid]` Fixed an issue where converting circular structure to JSON was throwing an error. ([#3309](https://github.com/infor-design/enterprise/issues/3309))
+- `[Editor]` Fixed an issue where line spacing was inconsistent. ([#3335](https://github.com/infor-design/enterprise/issues/3335))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
 - `[Locale]` Fixed an issue where enter all digits was not working for fr-FR. ([#3217](https://github.com/infor-design/enterprise/issues/3217))
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
