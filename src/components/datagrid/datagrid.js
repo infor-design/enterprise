@@ -9342,7 +9342,9 @@ Datagrid.prototype = {
       if (col.minWidth && newWidth > col.maxWidth) {
         newWidth = col.maxWidth;
       }
-      if (newWidth > 0) {
+      if (newWidth > 0 && ((newWidth - this.stretchColumnWidth) > this.stretchColumnDiff)) {
+        this.stretchColumnWidth = newWidth;
+        this.stretchColumnDiff = 0;
         this.setColumnWidth(col.id, newWidth, true);
       }
     }
