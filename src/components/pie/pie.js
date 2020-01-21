@@ -156,6 +156,12 @@ Pie.prototype = {
       width: w
     };
 
+    if ((this.settings.lines.show === 'label' && this.settings.legendPlacement === 'bottom')
+      || (this.settings.lines.show === 'label' && this.settings.showLegend === 'false')) {
+      self.mainGroup
+        .attr('transform', `translate(${dims.width * 0.67777}, ${dims.height / 2})`);
+    }
+
     if (self.settings.legendPlacement === 'right') {
       dims.width = w * 0.75;
     }
@@ -186,7 +192,7 @@ Pie.prototype = {
     self.svg
       .attr('width', self.settings.legendPlacement === 'right' ? '75%' : '100%')
       .attr('height', self.settings.showMobile ? '80%' : '100%');
-
+    
     self.mainGroup
       .attr('transform', `translate(${dims.width / 2},${dims.height / 2})`);
 
