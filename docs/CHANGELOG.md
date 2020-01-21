@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.26.0
+
+### v4.26.0 Deprecation
+
+### v4.26.0 Features
+
+### v4.26.0 Fixes
+
+- `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+
+### v4.26.0 Chores & Maintenance
+
 ## v4.25.0
 
 ### v4.25.0 Deprecation
