@@ -561,10 +561,10 @@ Header.prototype = {
     const currentTheme = theme.currentTheme;
     if (currentTheme.id !== 'theme-soho-light') {
       const themeParts = currentTheme.id.split('-');
-      this.element.find('[data-theme-name]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
-      this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-name]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-variant]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
     }
 
     if (personalization.settings.colors) {
@@ -573,8 +573,8 @@ Header.prototype = {
         personalization.settings.colors;
       colors = colors.replace('#', '');
 
-      this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
-      this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-rgbcolor]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
     }
   },
 

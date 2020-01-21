@@ -20,12 +20,10 @@
   }
 
   .label-line {
-    color: none;
     stroke-width: 2px;
   }
 
   polyline {
-    color: none;
     shape-rendering: crispEdges;
     stroke: $chart-font-color;
     stroke-width: 1px;

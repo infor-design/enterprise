@@ -56,6 +56,10 @@
   .calendar-event-types {
     margin-bottom: -3px;
     margin-right: 5px;
+
+    .checkbox-label {
+      margin: $label-size-regular-margin;
+    }
   }
 
   .calendar-event-more {
