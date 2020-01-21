@@ -66,4 +66,28 @@ describe('Tag API (as span)', () => {
     expect(tagAPI.element.querySelector('.tag-content').tagName).toEqual('A');
     expect(tagAPI.element.querySelector('a').getAttribute('href')).toEqual(null);
   });
+
+  it('can change its "style" when updating', () => {
+    tagEl.insertAdjacentHTML('afterbegin', '<a class="tag-content">This is a Tag!</a>');
+    tagAPI = new Tag(tagEl, {
+      style: 'info'
+    });
+
+    expect(tagAPI.element.classList.contains('info')).toBeTruthy();
+
+    tagAPI.updated({
+      style: 'error'
+    });
+
+    expect(tagAPI.element.classList.contains('info')).toBeFalsy();
+    expect(tagAPI.element.classList.contains('error')).toBeTruthy();
+
+    // 'default' doesn't render a CSS class
+    tagAPI.updated({
+      style: 'default'
+    });
+
+    expect(tagAPI.element.classList.contains('error')).toBeFalsy();
+    expect(tagAPI.element.classList.contains('default')).toBeFalsy();
+  });
 });

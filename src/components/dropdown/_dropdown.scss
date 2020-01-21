@@ -695,6 +695,10 @@ input.dropdown.error:focus {
 
   .dropdown {
     height: $input-size-regular-height;
+
+    &.has-tags {
+      height: auto;
+    }
   }
 
   div.dropdown,
@@ -972,6 +976,10 @@ div.dropdown-xs,
       + .icon {
         right: 4px !important;
         top: -2px !important;
+      }
+
+      &.has-tags {
+        height: auto !important;
       }
     }
   }
