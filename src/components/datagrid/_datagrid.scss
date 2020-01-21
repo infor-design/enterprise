@@ -741,8 +741,8 @@ $datagrid-short-row-height: 25px;
           }
 
           .datepicker {
-            margin-top: 12px;
-            padding: 0 15px;
+            margin-top: 3px;
+            padding: 0 5px 0 15px;
           }
 
           input {
@@ -1113,7 +1113,8 @@ $datagrid-short-row-height: 25px;
           }
 
           .datepicker {
-            margin-top: 6px;
+            height: 3rem;
+            margin-top: 0;
             padding: 0 10px;
 
             + .icon {
@@ -2096,9 +2097,9 @@ $datagrid-short-row-height: 25px;
       //Date Picker
       .datepicker {
         border: 0;
-        margin-top: 17px;
+        margin-top: 8px;
         padding: 0 0 0 20px;
-        width: calc(100% - 28px);
+        width: calc(100% - 27px);
 
         ~ .icon {
           left: auto;
@@ -3236,7 +3237,7 @@ td .btn-actions {
         }
 
         .datepicker {
-          margin-top: 13px;
+          margin-top: 4px;
 
           ~ .icon {
             top: calc(50% - 15px);
@@ -3258,14 +3259,6 @@ td .btn-actions {
         .lookup-wrapper {
           .lookup ~ .trigger .icon {
             top: calc(50% - 5px);
-          }
-        }
-
-        .datepicker {
-          margin-top: 8px;
-
-          ~ .icon {
-            top: calc(50% - 14px);
           }
         }
 
