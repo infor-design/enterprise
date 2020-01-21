@@ -374,7 +374,7 @@ cp <CONTAINER_ID>:/home/travis/enterprise/test/baseline/<name-of-test-file.png> 
 For example:
 
 ```sh
-docker cp 91085d589653:/root/enterprise/test/.tmp/diff /Users/tmcconechy/dev/diff
+docker cp ab2c46e49db9:/root/enterprise/test/.tmp/diff /Users/tmcconechy/dev/diff
 ```
 
 Or copy them all to your local directory for inspection.

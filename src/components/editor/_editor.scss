@@ -9,7 +9,6 @@
   &.is-hover:not(.is-readonly):not(.is-disabled) {
     .editor,
     .toolbar {
-      border-bottom-color: transparent;
       border-color: $editor-hover-border-color;
     }
   }
@@ -319,7 +318,7 @@
 .flex-toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
-  border-bottom-color: transparent !important;
+  border-bottom-color: $editor-toolbar-bottom-border-color !important;
   border-radius: 2px 2px 0 0;
   margin-bottom: -1px;
   padding: 0;

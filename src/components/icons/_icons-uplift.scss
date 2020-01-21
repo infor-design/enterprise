@@ -29,3 +29,12 @@
     width: 16px;
   }
 }
+
+label.inline .checkbox ~ .label-text,
+.checkbox-label {
+  line-height: 15px;
+}
+
+.icon-dirty.dirty-checkbox.is-checked {
+  top: 3px;
+}
