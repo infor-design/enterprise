@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Fieldset Tests', () => { // eslint-disable-line
+describe('Fieldset Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on index', async () => {
       await utils.setPage('/components/fieldset/example-index.html?layout=nofrills');

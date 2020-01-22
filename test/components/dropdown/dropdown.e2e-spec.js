@@ -610,7 +610,7 @@ describe('Dropdown badge tests', () => {
       expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-badges-open')).toEqual(0);
     });
 
-    fit('Should look good on right to left', async () => {
+    it('Should look good on right to left', async () => {
       await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
       const dropdownEl = element(by.css('div.dropdown'));
       const dropdownElList = element(by.id('dropdown-list'));

@@ -97,7 +97,7 @@ describe('Input Short Field Sizes tests', () => {
   }
 });
 
-fdescribe('Input Short Field tests', () => {
+describe('Input Short Field tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/input/test-short-fields?layout=nofrills');
     await browser.driver.sleep(config.sleep);
