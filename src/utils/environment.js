@@ -67,7 +67,7 @@ const Environment = {
       if ((window.webkit && window.webkit.messageHandlers) || !lte9 || idb) {
         // WKWebView
         this.browser.name = 'wkwebview';
-        cssClasses += 'is-safari is-wkwebview';
+        cssClasses += 'is-safari is-wkwebview ';
         this.browser.isWKWebView = function () {
           return true;
         };
