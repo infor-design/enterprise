@@ -516,7 +516,7 @@ Pie.prototype = {
         .append('text')
         .attr('dy', '.35em')
         .text(function (d) {
-          return charts.formatToSettings(d, self.settings.lines);
+          return isMobile ? d.data.shortName : charts.formatToSettings(d, self.settings.lines);
         })
         .merge(text)
         .transition()
