@@ -59,6 +59,10 @@
 .form-layout-compact .field [class*='btn'] {
   min-height: $button-size-compact-height;
 
+  > .icon + span:not(.audible):not(:empty) {
+    padding: 0;
+  }
+
   > .icon {
     vertical-align: sub;
 

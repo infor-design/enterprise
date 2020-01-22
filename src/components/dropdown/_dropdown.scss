@@ -685,6 +685,12 @@ input.dropdown.error:focus {
   .dropdown {
     height: $input-size-compact-height;
   }
+
+  .dropdown-list {
+    .group-label {
+      text-indent: 5px;
+    }
+  }
 }
 
 // Zeroes out a standard form-field rule
@@ -1029,10 +1035,6 @@ div.dropdown-xs,
     > .listoption-icon {
       top: 11px;
     }
-
-    + .icon {
-      top: 4px;
-    }
   }
 
   .dropdown-list {
@@ -1040,6 +1042,17 @@ div.dropdown-xs,
       .icon {
         &.close {
           top: 10px;
+        }
+      }
+    }
+
+    &.dropdown-short {
+      > .trigger {
+        .icon {
+          &.close {
+            height: 15px;
+            top: 5px;
+          }
         }
       }
     }
@@ -1153,7 +1166,7 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -23px;
+        margin-right: -20px;
       }
     }
 
@@ -1215,7 +1228,7 @@ html[dir='rtl'] {
 
   .dropdown-list.dropdown-short {
     .dropdown-search {
-      padding: 5px 5px 5px 32px;
+      padding: 4px 5px 5px 32px !important;
     }
 
     &.has-icons {
@@ -1234,7 +1247,15 @@ html[dir='rtl'] {
       li {
         a {
           padding-left: 0;
-          padding-right: 27px;
+          padding-right: 22px;
+        }
+
+        &::before {
+          right: 5px;
+        }
+
+        &.is-selected::after {
+          right: 10px;
         }
       }
     }
@@ -1261,7 +1282,7 @@ html[dir='rtl'] {
     .multiselect,
     input.dropdown,
     input.multiselect {
-      padding: 5px 5px 5px 18px;
+      padding: 4px 5px 5px 18px;
 
       ~ .icon-error {
         margin-left: inherit;

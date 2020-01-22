@@ -956,7 +956,7 @@ html[dir='rtl'] {
 
   .field-short label ~ .error-message {
     left: initial;
-    right: 84px;
+    right: 150px;
   }
 
   // Field stacked optionally stacks the label
@@ -1015,14 +1015,6 @@ html[dir='rtl'] {
       padding-left: 10px;
       padding-right: inherit;
       text-align: left;
-
-      ~ .error-message {
-        .icon,
-        .message-text {
-          left: auto;
-          right: $field-sm;
-        }
-      }
     }
   }
 

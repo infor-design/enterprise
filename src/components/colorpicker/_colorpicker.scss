@@ -216,16 +216,6 @@
   }
 }
 
-@include respond-to(phablet) {
-  .colorpicker-container {
-    width: 100% !important;
-  }
-
-  .colorpicker-container input {
-    width: calc(100% - 64px) !important;
-  }
-}
-
 .popupmenu.colorpicker {
   margin-left: -33px;
   max-width: 340px;
