@@ -11,7 +11,7 @@ describe('Fieldset Tests', () => {
     it('Should not visual regress on index', async () => {
       await utils.setPage('/components/fieldset/example-index.html?layout=nofrills');
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       await utils.checkForErrors();
 
@@ -21,7 +21,7 @@ describe('Fieldset Tests', () => {
     it('Should not visual regress on short layouts', async () => {
       await utils.setPage('/components/fieldset/example-short.html?layout=nofrills');
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       await utils.checkForErrors();
 
