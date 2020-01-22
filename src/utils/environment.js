@@ -56,7 +56,9 @@ const Environment = {
       this.browser.name = 'safari';
     }
 
-    this.browser.isWKWebView = false;
+    this.browser.isWKWebView = function () {
+      return false;
+    };
 
     if (navigator.platform.substr(0, 2) === 'iP') {
       const lte9 = /constructor/i.test(window.HTMLElement);
