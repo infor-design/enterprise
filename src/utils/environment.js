@@ -56,6 +56,22 @@ const Environment = {
       this.browser.name = 'safari';
     }
 
+    this.browser.isWKWebView = false;
+
+    if (navigator.platform.substr(0, 2) === 'iP') {
+      const lte9 = /constructor/i.test(window.HTMLElement);
+      const idb = !!window.indexedDB;
+
+      if ((window.webkit && window.webkit.messageHandlers) || !lte9 || idb) {
+        // WKWebView
+        this.browser.name = 'wkwebview';
+        cssClasses += 'is-safari is-wkwebview';
+        this.browser.isWKWebView = function () {
+          return true;
+        };
+      }
+    }
+
     if (ua.indexOf('Chrome') !== -1) {
       cssClasses += 'is-chrome ';
       this.browser.name = 'chrome';
@@ -168,6 +184,10 @@ const Environment = {
       if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
         version = nUAgent.substring(verOffset + 8);
       }
+    } else if (this.browser.isWKWebView()) { //eslint-disable-line
+      browser = `WKWebView`; //eslint-disable-line
+      version = '';
+      majorVersion = '';
     } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
       browser = 'Firefox';
       version = nUAgent.substring(verOffset + 8);
@@ -243,7 +263,7 @@ const Environment = {
 
     this.devicespecs = {
       currentBrowser: browser,
-      browserVersion: version,
+      browserVersion: version.trim(),
       browserMajorVersion: majorVersion,
       isMobile: mobile,
       os,
@@ -292,6 +312,13 @@ Environment.browser.isEdge = function () {
  */
 Environment.browser.isIE11 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is Safari and includes wkWebView as safari
+ */
+Environment.browser.isSafari = function () {
+  return Environment.browser.name === 'safari' || Environment.browser.name === 'wkwebview';
 };
 
 /**
