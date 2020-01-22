@@ -124,6 +124,7 @@
     border-bottom-color: $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
+    position: relative;
 
     &:hover {
       background-color: $listview-hover-bg-color;

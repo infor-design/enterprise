@@ -17,6 +17,7 @@ const MULTISELECT_DEFAULTS = {
   multiple: true,
   showEmptyGroupHeaders: false,
   showSelectAll: false,
+  showTags: false,
   source: undefined
 };
 

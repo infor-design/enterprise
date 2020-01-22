@@ -251,6 +251,7 @@
 	"/dist/sass/src/components/processindicator/_processindicator.scss",
 	"/dist/sass/src/components/progress/_progress.scss",
 	"/dist/sass/src/components/radar/_radar.scss",
+	"/dist/sass/src/components/radios/_radios-uplift.scss",
 	"/dist/sass/src/components/radios/_radios.scss",
 	"/dist/sass/src/components/rating/_rating.scss",
 	"/dist/sass/src/components/searchfield/_searchfield-toolbar.scss",

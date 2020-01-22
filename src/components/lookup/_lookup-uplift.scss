@@ -1,11 +1,11 @@
 // Uplift Lookup
 //================================================== //
-
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .lookup-wrapper {
     .trigger {
       .icon {
-        top: 8px;
+        top: 7px;
       }
     }
   }
@@ -22,7 +22,8 @@ html.is-firefox {
 }
 
 html[dir='rtl'] {
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .lookup-wrapper {
       .trigger {
         .icon {

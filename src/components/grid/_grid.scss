@@ -42,6 +42,10 @@ $gutter-neg-size: -20px;
     padding-top: 30px;
   }
 
+  &.small-top-padding {
+    padding-top: 10px;
+  }
+
   &.no-top-padding {
     padding-top: 0 !important;
   }

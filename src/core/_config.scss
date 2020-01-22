@@ -123,26 +123,41 @@ $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
 $badge-neutral-color: $theme-color-palette-graphite-100;
+$badge-neutral-icon-color: $theme-color-palette-graphite-100;
+$badge-neutral-hover-icon-color: $theme-color-palette-graphite-60;
 $badge-neutral-bg-color: $theme-color-palette-graphite-20;
-$badge-neutral-hover-bg-color: $theme-color-palette-graphite-20;
+$badge-neutral-hover-border-color: transparent;
+$badge-neutral-hover-bg-color: $theme-color-palette-graphite-30;
 $badge-secondary-color: $theme-color-palette-graphite-100;
+$badge-secondary-icon-color: $theme-color-palette-graphite-100;
+$badge-secondary-hover-icon-color: $theme-color-palette-graphite-80;
 $badge-secondary-bg-color: $theme-color-palette-white;
+$badge-secondary-hover-bg-color: $theme-color-palette-graphite-20;
 $badge-secondary-border-color: $theme-color-palette-graphite-30;
+$badge-secondary-hover-border-color: $theme-color-palette-graphite-50;
+$badge-secondary-disabled-border-color: $theme-color-palette-slate-40;
 $badge-error-color: $theme-color-palette-white;
+$badge-error-bg-color: $theme-color-status-danger;
+$badge-error-hover-bg-color: $theme-color-palette-ruby-80;
 $badge-error-icon-color: $theme-color-palette-white;
-$badge-error-hover-icon-color: $theme-color-palette-white;
+$badge-error-hover-icon-color: $theme-color-palette-ruby-20;
 $badge-alert-color: $theme-color-palette-graphite-100;
-$badge-alert-icon-color: $theme-color-palette-graphite-60;
-$badge-alert-hover-icon-color: $theme-color-palette-graphite-100;
+$badge-alert-bg-color: $theme-color-status-caution;
+$badge-alert-hover-bg-color: $theme-color-palette-amber-60;
+$badge-alert-icon-color: $theme-color-palette-graphite-100;
+$badge-alert-hover-icon-color: $theme-color-palette-amber-90;
 $badge-good-color: $theme-color-palette-white;
-$badge-good-icon-color:$theme-color-palette-white;
-$badge-good-hover-icon-color: $theme-color-palette-white;
+$badge-good-bg-color: $theme-color-status-success;
+$badge-good-hover-bg-color: $theme-color-palette-emerald-70;
+$badge-good-icon-color: $theme-color-palette-white;
+$badge-good-hover-icon-color: $theme-color-palette-emerald-20;
 $badge-info-color: $theme-color-palette-white;
-$badge-info-icon-color: $theme-color-palette-white;
-$badge-info-hover-icon-color: $theme-color-palette-white;
 $badge-info-bg-color: $theme-color-palette-azure-70;
-$badge-neutral-icon-color: $theme-color-palette-graphite-60;
-$badge-neutral-hover-icon-color: $theme-color-palette-graphite-100;
+$badge-info-hover-bg-color: $theme-color-palette-azure-50;
+$badge-info-icon-color: $theme-color-palette-white;
+$badge-info-hover-icon-color: $theme-color-palette-azure-20;
+$badge-disabled-text-color: $theme-color-palette-slate-50;
+$badge-disabled-bg-color: $theme-color-palette-graphite-20;
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
@@ -668,13 +683,13 @@ $progress-border-color: $theme-color-brand-secondary-alt;
 $progress-bar-bg-color: $theme-color-brand-primary-base;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $theme-color-brand-secondary-base;
+$chart-progressbar-bg-color: $theme-color-palette-graphite-30;
 $chart-progressbar-bg-color-dark: $theme-color-brand-secondary-alt;
 $chart-progressbar-completed-fill: $theme-color-palette-emerald-70;
 $chart-progressbar-target-fill: $theme-color-brand-secondary-alt;
 $chart-progressbar-primary-fill: $theme-color-brand-primary-base;
 $chart-progressbar-dark-fill: $theme-color-palette-graphite-60;
-$chart-targeted-achievement-bg-color: $theme-color-brand-secondary-base;
+$chart-targeted-achievement-bg-color: $theme-color-palette-graphite-30;
 
 //Timeline
 $timeline-indicator-color: $theme-color-brand-secondary-base;

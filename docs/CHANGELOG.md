@@ -1,12 +1,26 @@
 # What's New with Enterprise
 
+## v4.26.0
+
+### v4.26.0 Deprecation
+
+### v4.26.0 Features
+
+### v4.26.0 Fixes
+
+- `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+
+### v4.26.0 Chores & Maintenance
+
 ## v4.25.0
 
 ### v4.25.0 Deprecation
 
 ### v4.25.0 Features
 
+- `[Fields]` Added a form level class to toggle all fields in the form to a more compact (shorter) mode called `form-layout-compact`. Added and fixed existing components so that there is now the option to have more compact forms by using shorter fields. ([#3249](https://github.com/infor-design/enterprise/issues/3249))
 - `[Tag]` Added a new style for linkable tags that will work for default, info, good, error, alert, and neutral styles. ([#3113](https://github.com/infor-design/enterprise/issues/3113))
+- `[Multiselect]` Added Tag Display as a new style for interacting with selected results in Multiselect components. ([#3114](https://github.com/infor-design/enterprise/issues/3114))
 - `[Colors]` Updated design system tokens to new colors for uplift and did a pass on all three theme variants. This impacts and improves many internal colors in components and charts. ([#3007](https://github.com/infor-design/enterprise/issues/3007))
 
 ### v4.25.0 Fixes
@@ -15,6 +29,8 @@
 - `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
 - `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
 - `[Accordion]` Fixed inconsistency style of focus element after clicking on a certain accordion header. ([#3082](https://github.com/infor-design/enterprise/issues/3082))
+- `[Accordion]` Fixed an issue that when all panes are expanded then they could no longer be closed. ([#701](https://github.com/infor-design/enterprise-ng/issues/3217))
+- `[Application Menu]` Fixed minor usability issues when attempting to filter on application menus, display of hidden filtered children, and filtering reset when a Searchfield is blurred. ([#3285](https://github.com/infor-design/enterprise/issues/3285))
 - `[Autocomplete]` Fixed an issue where selected event was not firing when its parent is partly overflowing. ([#3072](https://github.com/infor-design/enterprise/issues/3072))
 - `[Calendar]` Fixed an issue setting the legend checked elements to false in the api. ([#3170](https://github.com/infor-design/enterprise/issues/3170))
 - `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
@@ -22,13 +38,17 @@
 - `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
 - `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
 - `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
+- `[Datagrid]` Fixed an issue where converting circular structure to JSON was throwing an error. ([#3309](https://github.com/infor-design/enterprise/issues/3309))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
+- `[Locale]` Fixed an issue where enter all digits was not working for fr-FR. ([#3217](https://github.com/infor-design/enterprise/issues/3217))
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
 - `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
 - `[Locale]` Corrected and added the firstDayofWeek setting for every locale. ([#3060](https://github.com/infor-design/enterprise/issues/3060))
+- `[Mask]` Fixed an issue when applying Masks to input fields configured for numbers, where errors would be thrown when the Mask attempted to overwrite the input field value. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
 - `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
 - `[Multiselect]` Adjusted the placeholder color as it was too dark. ([#3276](https://github.com/infor-design/enterprise/issues/3276))
 - `[Pie]` Fixed cut off line labels when something other than value is used. ([#3143](https://github.com/infor-design/enterprise/issues/3143))
+- `[Popupmenu]` Switched the `attachToBody` setting to be true by default. ([#3331](https://github.com/infor-design/enterprise/issues/3331))
 - `[Searchfield]` Fixed an issue where multiselect items' checkboxes and text were misaligned in RTL mode. ([#1811](https://github.com/infor-design/enterprise/issues/1811))
 - `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
 - `[Searchfield]` Fixed an overlapping text in searchfield when close icon button is showed. ([#3135](https://github.com/infor-design/enterprise/issues/3135))

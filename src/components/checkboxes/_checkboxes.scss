@@ -16,7 +16,7 @@
   content: '';
   height: 14px;
   margin-left: -25px;
-  margin-top: 4px;
+  margin-top: 0;
   position: absolute;
   width: 14px;
 }
@@ -88,10 +88,11 @@ input.checkbox + input[type='hidden'] + label,
 span.checkbox > label {
   @include no-select();
 
-  color: $checkbox-color-unchecked-initial-font;
+  color: $label-color;
   cursor: pointer;
   display: inline-block;
   font-size: $theme-size-font-base;
+  margin-bottom: 0;
   padding-left: 26px;
   position: relative;
 }
@@ -101,8 +102,6 @@ input.checkbox + label::before,
 input.checkbox + input[type='hidden'] + label::before,
 span.checkbox > label::before {
   @include checkbox-unchecked-before-style;
-
-  margin-top: 0;
 }
 
 label.inline .checkbox:checked ~ .label-text::before,
@@ -250,8 +249,14 @@ span.checkbox > input:checked + label::after,
     margin-bottom: 12px;
   }
 
-  ~ .field-short {
-    margin-bottom: 0;
+  ~ .field-short,
+  .form-layout-compact .field,
+  .form-layout-compact .field-checkbox {
+    margin-bottom: 3px;
+  }
+
+  + .compound-field {
+    margin-top: -8px;
   }
 }
 
@@ -338,9 +343,32 @@ html[dir='rtl'] {
     right: 8px;
   }
 
-  .field-short {
+  .field-short,
+  .form-layout-compact .field,
+  .form-layout-compact .field-checkbox {
     .dirty-checkbox {
       right: 12px;
+    }
+
+    label.inline .checkbox ~ .label-text,
+    input.checkbox + label,
+    input.checkbox + input[type='hidden'] + label,
+    span.checkbox > label {
+      padding-right: 21px;
+    }
+
+    label.inline .checkbox ~ .label-text::before,
+    input.checkbox + label::before,
+    input.checkbox + input[type='hidden'] + label::before,
+    span.checkbox > label::before {
+      margin-right: -21px;
+    }
+
+    label.inline .checkbox:checked ~ .label-text::after,
+    input.checkbox:checked + label::after,
+    input.checkbox:checked + input[type='hidden'] + label::after,
+    span.checkbox > input:checked + label::after {
+      right: 8px;
     }
   }
 
@@ -353,7 +381,25 @@ html[dir='rtl'] {
 }
 
 // Short Fields
-.field-short {
+.field-short,
+.form-layout-compact .field,
+.form-layout-compact .field-checkbox {
+
+  // Reduce Checkbox Size
+  .checkbox-label,
+  .checkbox > label {
+    font-size: $input-size-compact-font-size;
+    padding-left: 21px;
+  }
+
+  label.inline .checkbox ~ .label-text::before,
+  input.checkbox + label::before,
+  input.checkbox + input[type='hidden'] + label::before,
+  span.checkbox > label::before {
+    margin-left: -21px;
+    margin-top: -1px;
+  }
+
   input.checkbox {
     padding: 0;
   }
@@ -367,15 +413,16 @@ html[dir='rtl'] {
     width: auto;
   }
 
+  label.inline .checkbox:checked ~ .label-text::after,
+  input.checkbox:checked + label::after,
+  input.checkbox:checked + input[type='hidden'] + label::after,
+  span.checkbox > input:checked + label::after {
+    left: 2px;
+    top: 8px;
+  }
+
   .icon-dirty.dirty-checkbox {
     left: auto;
-  }
-}
-
-.ie10 {
-  input.checkbox,
-  span.checkbox > input {
-    left: -25px;
   }
 }
 

@@ -606,6 +606,7 @@ Pie.prototype = {
    * @returns {void}
    */
   setInitialSelected() {
+    const self = this;
     let selected = 0;
     let selector;
 
