@@ -192,7 +192,7 @@ Pie.prototype = {
     self.svg
       .attr('width', self.settings.legendPlacement === 'right' ? '75%' : '100%')
       .attr('height', self.settings.showMobile ? '80%' : '100%');
-    
+
     self.mainGroup
       .attr('transform', `translate(${dims.width / 2},${dims.height / 2})`);
 
