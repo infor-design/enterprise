@@ -83,12 +83,10 @@ describe('Button API', () => {
     expect(buttonAPI.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
   });
 
-  it('Should remove menu icon if hideMenuArrow set to true', (done) => {
+  it('Should remove menu icon if hideMenuArrow set to true', () => {
+    const elem = buttonAPI.element[0];
     buttonAPI.updated({ hideMenuArrow: true });
 
-    setTimeout(() => {
-      expect(document.body.querySelector('.icon-dropdown')).toBeFalsy();
-      done();
-    }, 10);
+    expect(elem.querySelector('.icon-dropdown')).toBeFalsy();
   });
 });

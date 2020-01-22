@@ -61,27 +61,5 @@ html {
     .btn {
       top: -1px;
     }
-
-    /*
-    &.filtered.has-filtered-children {
-      &:not(:hover),
-      &:not(.is-selected) {
-        > a {
-          color: inherit;
-        }
-
-        > .icon {
-          color: inherit;
-        }
-
-        > .btn > .icon {
-          &::before,
-          &::after {
-            background-color: inherit;
-          }
-        }
-      }
-    }
-    */
   }
 }

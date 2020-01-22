@@ -27,7 +27,6 @@
 
       &::-moz-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
-        line-height: normal;
         opacity: 1;
       }
 
@@ -39,6 +38,10 @@
 
     > .icon {
       top: 13px;
+    }
+
+    &:first-child {
+      margin-top: 10px;
     }
   }
 
@@ -376,7 +379,9 @@
 
         &.list-item {
           &::before {
-            font-size: 1rem;
+            color: inherit;
+            font-size: 0.8rem;
+            padding-right: 12px;
           }
         }
 
@@ -478,10 +483,20 @@ html[dir='rtl'] {
 
     .accordion.panel.inverse {
       .accordion-pane {
-        .accordion-header:not(.has-chevron) {
-          .icon.chevron {
-            left: auto;
-            right: -5px;
+        .accordion-header {
+          &:not(.has-chevron) {
+            .icon.chevron {
+              left: auto;
+              right: -5px;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              font-size: 1.2rem;
+              padding-left: 8px;
+              padding-right: 28px;
+            }
           }
         }
       }
