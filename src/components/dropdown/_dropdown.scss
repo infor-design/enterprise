@@ -979,11 +979,6 @@ div.dropdown-xs,
       height: $input-size-compact-height !important;
       padding: $dropdown-size-compact-padding !important;
 
-      + .icon {
-        right: 4px !important;
-        top: -2px !important;
-      }
-
       &.has-tags {
         height: auto !important;
       }

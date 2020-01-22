@@ -959,6 +959,10 @@ html[dir='rtl'] {
     right: 150px;
   }
 
+  .field-short.field-stacked label ~ .error-message {
+    right: initial;
+  }
+
   // Field stacked optionally stacks the label
   .field-short.field-stacked {
     label:not(.radio-label) {

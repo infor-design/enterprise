@@ -290,6 +290,15 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &.is-firefox {
+    .field-short,
+    .form-layout-compact .field {
+      .spinbox-control {
+        padding: 3px 7px 5px;
+      }
+    }
+  }
 }
 
 // Ie11
