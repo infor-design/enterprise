@@ -39,6 +39,10 @@
     > .icon {
       top: 13px;
     }
+
+    &:first-child {
+      margin-top: 10px;
+    }
   }
 
   .application-menu-header,
