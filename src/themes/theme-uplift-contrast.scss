@@ -176,7 +176,7 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
-$input-placeholder-color: $theme-color-palette-graphite-70;
+$input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
@@ -186,7 +186,7 @@ $alert-color: $theme-color-palette-amber-100;
 $success-color: $theme-color-status-success;
 $info-color: $theme-color-brand-primary-base;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
-$dirty-icon-fill: $theme-color-status-caution;
+$dirty-icon-fill: $theme-color-palette-amber-50;
 $success-icon-fill: $theme-color-status-success;
 $info-icon-fill: $theme-color-palette-azure-80;
 $selected-bg-color: rgba($theme-color-brand-primary-base, 0.3);
@@ -367,6 +367,7 @@ $editor-focus-border-color: $input-color-focus-border;
 $editor-line-number-color: $theme-color-palette-graphite-50;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $theme-color-palette-graphite-20;
+$editor-toolbar-bottom-border-color: $theme-color-palette-graphite-30;
 $editor-middle-border-color: $theme-color-palette-graphite-60;
 $editor-btn-color: $theme-color-palette-graphite-90;
 $editor-btn-hover-color: $theme-color-palette-graphite-50;
@@ -770,7 +771,7 @@ $uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
 
 $uplift-acc-expanded-bg-color: $theme-color-palette-slate-100;
 
-$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-50;
+$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-30;
 
 $uplift-appmenu-main-bg-color: $theme-color-palette-black;
 $uplift-appmenu-header-bg-color: $theme-color-palette-black;

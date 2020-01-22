@@ -121,7 +121,15 @@ Tag.prototype = {
    */
   render() {
     const elemClasses = this.element.classList;
+    const elemClassArr = utils.getArrayFromList(this.element.classList);
     const currentState = this.settings.style;
+
+    // Update "style" class on the top-level element
+    elemClassArr.forEach((cssClass) => {
+      if (tagStyles.indexOf(cssClass) > -1) {
+        elemClasses.remove(cssClass);
+      }
+    });
     if (this.element.className.indexOf(currentState) === -1 && currentState !== 'default') {
       elemClasses.add(currentState);
     }

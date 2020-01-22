@@ -17,6 +17,7 @@
 // Uplift Light Overrides
 $header-bg-color: $theme-color-brand-primary-base;
 $subhead-bg-color: $theme-color-brand-primary-alt;
+$disabled-color: $theme-color-brand-secondary-lighter;
 
 $body-color-primary-background: $theme-color-palette-white;
 $drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);
@@ -65,7 +66,7 @@ $uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
 
 $uplift-acc-expanded-bg-color: $theme-color-palette-black;
 
-$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-70;
+$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-60;
 
 $uplift-appmenu-main-bg-color: $theme-color-palette-slate-100;
 $uplift-appmenu-header-bg-color: $theme-color-palette-slate-100;

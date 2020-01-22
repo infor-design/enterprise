@@ -228,13 +228,13 @@ svg.icon-logo {
     margin-top: 8px;
 
     &.dirty-checkbox {
-      left: -4px;
+      left: 0;
       margin-top: inherit;
       top: 1px;
 
       &.is-checked {
-        // left: -4px;
-        top: 0;
+        left: 0;
+        top: 1px;
       }
     }
   }
