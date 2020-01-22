@@ -318,7 +318,7 @@
 .flex-toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
-  border-bottom-color: none;
+  border-bottom-color: $editor-toolbar-bottom-border-color !important;
   border-radius: 2px 2px 0 0;
   margin-bottom: -1px;
   padding: 0;

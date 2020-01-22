@@ -388,9 +388,9 @@ html[dir='rtl'] {
     }
 
     > .trigger .icon {
-      margin-right: -26px;
+      margin-right: -21px;
       right: auto;
-      top: 2px;
+      top: 6px;
     }
 
     > .listoption-icon {
@@ -400,6 +400,12 @@ html[dir='rtl'] {
     &.has-icons {
       .dropdown-search {
         padding: 2px 25px 2px 16px;
+      }
+    }
+
+    &.is-ontop {
+      > .trigger .icon {
+        top: 8px;
       }
     }
   }

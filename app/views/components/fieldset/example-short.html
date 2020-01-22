@@ -1,0 +1,135 @@
+<div class="row small-top-padding">
+  <div class="twelve columns">
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn btn-toggle is-selected is-pressed" type="button" id="toggle-compact">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-change-row-line-height"></use>
+          </svg>
+          <span>Compact Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <form class="form-layout-compact">
+      <!-- Variation One -->
+      <fieldset>
+        <legend>Company Information</legend>
+        <div class="summary-form">
+
+          <div class="row">
+            <div class="one-half column">
+
+              <div class="field">
+                <span class="label">Company Name</span>
+                <span class="data">Building Suppliers</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Company Type</span>
+                <span class="data">Contractor</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Company Address</span>
+                <span class="data">4209 Industrial Avenue <br/>Los Angeles, California 90001 USA</span>
+              </div>
+
+            </div>
+
+            <div class="one-half column">
+
+              <div class="field">
+                <span class="label">Phone Number</span>
+                <span class="data">(999) 810-2604</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Website</span>
+                <span class="data">www.buildings.com</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Estimated Delivery</span>
+                <span class="data">June 21, 2015 <i> (4 days)</i></span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </fieldset>
+
+      <!-- Variation Two -->
+      <div class="fieldset">
+        <h2 class="fieldset-title">Credit Information</h2>
+        <div id="container-1" class="char-container"></div>
+      </div>
+
+      <div class="fieldset">
+        <h2 class="fieldset-title">Delivery Addresses</h2>
+
+        <div class="summary-form">
+          <div class="field">
+            <span class="data">4209 Industrial Avenue Los Angeles, California 90001 USA<br/>
+              Default Shipping Address</span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var container = [{
+      data: [{
+        name: {
+          text: 'Available Credit'
+        },
+        completed: {
+          text: 'Spent',
+          value: 50000,
+          format: '$,.0f'
+        },
+        remaining: {
+          text: 'Pending',
+          value: 10000,
+          format: '$,.0f'
+        },
+        total: {
+          value: 95000,
+          format: '$,.0f'
+        },
+      }]
+    }];
+
+    $('#container-1').chart({
+      dataset: container,
+      type: 'completion-target'
+    }).data('chart');
+
+
+  });
+</script>
+
+<script id="script-toggle-compact">
+  $('#toggle-compact').on('click', function() {
+    var className = 'form-layout-compact';
+    var hasClass = $('form').hasClass(className);
+    if (hasClass) {
+      $('form').removeClass(className);
+    } else {
+      $('form').addClass(className);
+    }
+  });
+</script>

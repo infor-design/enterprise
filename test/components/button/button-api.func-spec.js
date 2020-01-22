@@ -84,8 +84,9 @@ describe('Button API', () => {
   });
 
   it('Should remove menu icon if hideMenuArrow set to true', () => {
+    const elem = buttonAPI.element[0];
     buttonAPI.updated({ hideMenuArrow: true });
 
-    expect(document.body.querySelector('.icon-dropdown')).toBeFalsy();
+    expect(elem.querySelector('.icon-dropdown')).toBeFalsy();
   });
 });

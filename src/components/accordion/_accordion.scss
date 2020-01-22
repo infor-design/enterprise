@@ -838,6 +838,19 @@
   padding: 15px 0 15px 20px;
 }
 
+// Slight adjustment to padding/placement of icons on JP styles.
+// JP fonts have different character spacing/padding requirements.
+// See Github: infor-design/enterprise#3364
+html[lang='ja-JP'] {
+  .accordion-pane {
+    .accordion-header.list-item {
+      &::before {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .accordion {

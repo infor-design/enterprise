@@ -1,5 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
+
 import { Locale } from '../locale/locale';
 import { Validation } from './validation';
 
@@ -896,6 +898,9 @@ Validator.prototype = {
     rule.icon = rule.icon || validationType.icon;
 
     let markup;
+    const icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      `${validationType.type}-alert` : `${validationType.type}`;
+
     if (rule.type === 'icon') {
       markup = '' +
         `<div class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
@@ -908,7 +913,7 @@ Validator.prototype = {
     } else {
       markup = '' +
         `<div class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
-          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon: validationType.type })}
+          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
           </pre>
