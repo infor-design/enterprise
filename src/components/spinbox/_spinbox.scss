@@ -104,7 +104,7 @@ input::-webkit-inner-spin-button {
   }
 
   &.error .spinbox-control {
-    border-color: $error-color;
+    border-color: $error-color !important;
     color: $error-color;
   }
 
@@ -228,26 +228,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// Override for iOS to correctly align ".spinbox" as child of  ".field-short"
-.ios {
-  .field-short,
-  .form-layout-compact .field {
-    .spinbox {
-      padding-top: 6px;
-    }
-  }
-}
-
-// Override for IE to correctly align ".spinbox" as child of  ".field-short"
-.ie {
-  .field-short,
-  .form-layout-compact .field {
-    .spinbox {
-      height: 25px;
-    }
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
   .spinbox-control {
@@ -314,8 +294,8 @@ html[dir='rtl'] {
   &.is-firefox {
     .field-short,
     .form-layout-compact .field {
-      .spinbox {
-        padding: 5px 4px 4px;
+      .spinbox-control {
+        padding: 3px 7px 5px;
       }
     }
   }

@@ -1,4 +1,6 @@
 .fieldset-title,
-.section-title {
+.section-title,
+fieldset > legend,
+.fieldset > legend {
   font-size: $theme-size-font-md;
 }

@@ -218,7 +218,8 @@ FieldFilter.prototype = {
     this.ffdropdown
       .on(`listopened.${COMPONENT_NAME}`, () => {
         // drowpdownWidth - border (52)
-        $('#dropdown-list ul').width(this.element.outerWidth() + 52);
+        const extra = this.field.is('.field-short') ? 42 : 52;
+        $('#dropdown-list ul').width(this.element.outerWidth() + extra);
       })
       .on(`selected.${COMPONENT_NAME}`, (e, args) => {
         /**

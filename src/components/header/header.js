@@ -848,8 +848,12 @@ Header.prototype = {
 
     this.toolbarAPI.teardown();
 
-    this.titlePopup.data('popupmenu').destroy();
-    this.titlePopup.data('button').destroy();
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('popupmenu').destroy();
+    }
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('button').destroy();
+    }
     this.titlePopupMenu.remove();
     this.titlePopup.children('h1').detach().insertBefore(self.titlePopup);
     this.titlePopup.remove();
