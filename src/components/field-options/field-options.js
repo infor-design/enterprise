@@ -42,7 +42,7 @@ FieldOptions.prototype = {
    */
   setElements() {
     this.isFirefox = env.browser.name === 'firefox';
-    this.isSafari = env.browser.name === 'safari';
+    this.isSafari = env.browser.isSafari();
 
     this.field = this.element.closest('.field, .radio-group');
     this.targetElem = this.element;
