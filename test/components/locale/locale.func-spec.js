@@ -46,6 +46,7 @@ require('../../../src/components/locale/cultures/ro-RO.js');
 require('../../../src/components/locale/cultures/ru-RU.js');
 require('../../../src/components/locale/cultures/sl-SI.js');
 require('../../../src/components/locale/cultures/sv-SE.js');
+require('../../../src/components/locale/cultures/sk-SK.js');
 require('../../../src/components/locale/cultures/th-TH.js');
 require('../../../src/components/locale/cultures/tr-TR.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
@@ -1281,6 +1282,13 @@ describe('Locale API', () => { //eslint-disable-line
 
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
+  });
+
+  it('Should format dates in Slovak', () => {
+    Locale.set('sk-SK');
+
+    expect(Locale.formatDate(new Date(2019, 7, 15), { pattern: Locale.currentLocale.data.calendars[0].dateFormat.full })).toEqual('štvrtok 15. augusta 2019');
+    expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. augusta 2019');
   });
 
   it('Should format dates with long timezones', () => {
