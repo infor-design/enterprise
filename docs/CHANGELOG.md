@@ -10,6 +10,7 @@
 
 ### v4.26.0 Fixes
 
+- `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
 
 ### v4.26.0 Chores & Maintenance

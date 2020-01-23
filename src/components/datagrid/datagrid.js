@@ -433,7 +433,7 @@ Datagrid.prototype = {
     self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.renderHeader();
-    
+
     if (this.stretchColumnDiff < 0) {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
       currentCol.style.width = `${this.stretchColumnWidth}px`;
@@ -3328,7 +3328,9 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (self.activeCell.isFocused) {
+    const focusedEl = document.activeElement;
+    if (self.activeCell.isFocused &&
+        (!focusedEl || (focusedEl && focusedEl.tagName.toLowerCase() === 'body'))) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
 
@@ -3357,7 +3359,7 @@ Datagrid.prototype = {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
       currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
-    
+
     /**
     * Fires after the entire grid is rendered.
     * @event afterrender
@@ -4195,7 +4197,7 @@ Datagrid.prototype = {
       }
     }
   },
-  
+
   /**
    * Return the index of the stretch column
    * @private
@@ -4214,7 +4216,7 @@ Datagrid.prototype = {
         }
       });
     }
-    
+
     return stretchColumnIdx;
   },
 
