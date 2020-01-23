@@ -175,6 +175,8 @@ $.fn.removeMessage = function (settings) {
     const field = $(this);
     const dataAttr = `${settings.type}message`;
     const errors = $.fn.getField(field).data(dataAttr);
+    field.removeClass('error');
+
     if (!errors) {
       return;
     }

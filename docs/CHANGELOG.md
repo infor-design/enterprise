@@ -11,6 +11,7 @@
 ### v4.26.0 Fixes
 
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+- `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
 
 ### v4.26.0 Chores & Maintenance
 
