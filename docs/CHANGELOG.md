@@ -47,7 +47,7 @@
 - `[Searchfield]` Fixed an overlapping text in searchfield when close icon button is showed. ([#3135](https://github.com/infor-design/enterprise/issues/3135))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
-### v4.25.0 Chores & Maintenance
+(44 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 96, 980 Functional Tests, 1196 e2e Test)
 
 ## v4.24.0
 
