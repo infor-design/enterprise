@@ -746,10 +746,11 @@ $datagrid-short-row-height: 25px;
           }
 
           input {
-            padding: 7px 0;
             vertical-align: top;
 
             &.lookup {
+              height: inherit;
+              padding: 7px 15px 7px 0;
               width: calc(100% - 13px);
 
               ~ .trigger .icon {
@@ -883,8 +884,8 @@ $datagrid-short-row-height: 25px;
       padding-top: 2px !important;
 
       .trigger {
-        margin-left: -10px !important;
-        margin-top: -5px !important;
+        margin-left: -8px !important;
+        margin-top: -4px !important;
       }
 
       .align-text-right {
@@ -902,7 +903,11 @@ $datagrid-short-row-height: 25px;
     .datagrid-trigger-cell {
       .icon {
         left: -6px;
-        top: 3px;
+        top: 4px;
+
+        &.icon-calendar {
+          top: 2px;
+        }
       }
 
       .colorpicker-container {
@@ -1001,7 +1006,6 @@ $datagrid-short-row-height: 25px;
 
         .hyperlink {
           line-height: 1.4rem;
-          vertical-align: middle;
         }
 
         .row-btn {
@@ -1050,14 +1054,13 @@ $datagrid-short-row-height: 25px;
 
           .icon {
             height: 16px;
-            margin-bottom: -1px;
             top: 3px;
 
             &.icon-calendar,
             &.icon-fileupload {
               height: 15px;
               left: -5px;
-              top: 1px;
+              top: 2px;
             }
 
             &.icon-clock {
@@ -1134,8 +1137,7 @@ $datagrid-short-row-height: 25px;
           }
 
           input {
-            padding: 3px 0 0;
-            vertical-align: top;
+            height: 26px;
           }
 
           .dropdown {
@@ -1144,10 +1146,11 @@ $datagrid-short-row-height: 25px;
 
           .lookup-wrapper {
             padding-left: 10px;
+            padding-top: 2px;
 
             .trigger {
-              margin-left: -34px;
-              top: -6px;
+              margin-left: -32px;
+              margin-top: -7px;
             }
           }
 
@@ -1926,8 +1929,8 @@ $datagrid-short-row-height: 25px;
 
       .lookup-wrapper {
         margin-bottom: 0;
-        padding-left: 19px;
-        padding-top: 4px;
+        padding-left: 18px;
+        padding-top: 8px;
         vertical-align: top;
         width: 100%;
 
@@ -1942,8 +1945,8 @@ $datagrid-short-row-height: 25px;
         }
 
         .trigger {
-          margin-left: -37px;
-          margin-top: 1px;
+          margin-left: -34px;
+          margin-top: -3px;
         }
       }
 
@@ -1979,6 +1982,9 @@ $datagrid-short-row-height: 25px;
         width: 100%;
 
         &.lookup {
+          margin-left: -1px;
+          padding-right: 33px;
+
           &.align-text-right {
             width: 100%;
           }
@@ -2989,7 +2995,7 @@ td .btn-actions {
     visibility: hidden;
 
     &.icon-search-list {
-      left: -2px;
+      left: -1px;
       top: 4px;
     }
   }
