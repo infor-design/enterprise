@@ -1,5 +1,20 @@
 # What's New with Enterprise
 
+## v4.26.0
+
+### v4.26.0 Deprecation
+
+### v4.26.0 Features
+
+- `[Datagrid]` Added fixes for editing lookup fields, fixed the styling of the lookup editor and improved padding, also fixed the sort indicator color. ([#3160](https://github.com/infor-design/enterprise/issues/3160))
+- `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#397](https://github.com/infor-design/design-system/issues/397))
+
+### v4.26.0 Fixes
+
+- `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+
+### v4.26.0 Chores & Maintenance
+
 ## v4.25.0
 
 ### v4.25.0 Deprecation
