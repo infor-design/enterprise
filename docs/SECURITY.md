@@ -1,6 +1,6 @@
 # Security Notes
 
-Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/docs/adopting-csp.html) and [Veracode](https://www.veracode.com/security/vulnerability-scanning-tools) scanner.
+Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/docs/adopting-csp.html) checking for general xss issues.
 
 ## Content Security Policy (CSP)
 
@@ -33,7 +33,7 @@ Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/do
     object-src 'none'
     ```
 
-## Common Veracode Errors and remediation
+## Common Errors and remediation
 
 ### Context Escaping
 
