@@ -13,7 +13,7 @@
 
     &.close {
       right: 8px;
-      top: 13px;
+      top: 11px;
     }
   }
 
@@ -37,17 +37,7 @@
       padding-top: 10px;
     }
 
-    .icon:not(.close) {
-      top: 12px;
-    }
-
     .icon.close {
-      top: 12px;
-    }
-  }
-
-  &.is-open {
-    .icon {
       top: 12px;
     }
   }
