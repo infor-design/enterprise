@@ -1,0 +1,59 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Label Long Text</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+    data: [{
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 10.6,
+      }, {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 10.2,
+      }, {
+        name: 'Company Taxes',
+        shortName: 'C Tax',
+        value: 14.35,
+      }, {
+        name: 'Taxes',
+        shortName: 'Taxes',
+        value: 15.6,
+      }, {
+        name: 'After-tax Deductions',
+        shortName: 'Af-tax',
+        value: 21.6,
+      }, {
+        name: 'Company Deductions',
+        shortName: 'C Dedc',
+        value: 41.6,
+      }]
+    }];
+
+  $('#pie-chart-example').chart({
+    type: 'pie',
+    dataset: pieData,
+    showLegend: false,
+    showLinesMobile: true,
+    legendPlacement: 'bottom',
+    lines: {
+      show: 'label'
+    }
+  });
+
+});
+</script>
