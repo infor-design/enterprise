@@ -743,6 +743,10 @@ $datagrid-short-row-height: 25px;
           .datepicker {
             margin-top: 3px;
             padding: 0 5px 0 15px;
+
+            ~ .icon {
+              top: calc(50% - 16px);
+            }
           }
 
           input {

@@ -53,6 +53,10 @@
     &.is-editing {
       .datepicker {
         margin-top: 6px;
+
+        ~ .icon {
+          top: calc(50% - 18px);
+        }
       }
     }
   }
@@ -68,6 +72,10 @@
 
           .datepicker {
             margin-top: 0;
+
+            ~ .icon {
+              top: calc(50% - 17px);
+            }
           }
         }
       }
@@ -79,6 +87,14 @@
     tbody {
       tr {
         td {
+          &.is-editing {
+            .datepicker {
+              ~ .icon {
+                top: calc(50% - 18px);
+              }
+            }
+          }
+
           // Adjust Tags
           span {
             line-height: 22px;
