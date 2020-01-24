@@ -12,6 +12,7 @@
 
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
 - `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
+- `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
 
 ### v4.26.0 Chores & Maintenance
 
