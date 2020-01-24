@@ -968,6 +968,13 @@ div.dropdown-xs,
     &.has-tags {
       padding: 1px 30px 0 10px;
     }
+
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: 2px;
+      }
+    }
   }
 
   // Reset the padding in the rule above for Short Fields
