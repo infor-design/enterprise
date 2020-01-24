@@ -51,10 +51,18 @@
 
 // Main Grid
 .datagrid {
-  td {
-    // Adjust Row Links
-    .hyperlink {
-      margin-top: -2px;
+  > tbody > tr .datagrid-cell-wrapper {
+    padding: 3px 19px 0;
+  }
+
+  td.is-editing {
+    .lookup-wrapper {
+      padding-top: 5px;
+
+      .trigger {
+        margin-left: -36px;
+        margin-top: 0;
+      }
     }
   }
 
@@ -68,6 +76,11 @@
           }
         }
       }
+    }
+
+    .is-editing .lookup-wrapper .trigger {
+      margin-left: -10px !important;
+      margin-top: -3px !important;
     }
   }
 
@@ -84,6 +97,14 @@
           // Adjust Row Buttons
           .row-btn {
             min-height: 25px;
+          }
+
+          // Adjust editors
+          &.is-editing {
+            .lookup-wrapper .trigger {
+              margin-left: -34px;
+              margin-top: -6px;
+            }
           }
         }
       }
