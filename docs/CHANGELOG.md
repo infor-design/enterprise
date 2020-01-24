@@ -1,20 +1,5 @@
 # What's New with Enterprise
 
-## v4.26.0
-
-### v4.26.0 Deprecation
-
-### v4.26.0 Features
-
-- `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#397](https://github.com/infor-design/design-system/issues/397))
-
-### v4.26.0 Fixes
-
-- `[Datagrid]` Added fixes for editing lookup fields, fixed the styling of the lookup editor and improved padding, also fixed the sort indicator color. ([#3160](https://github.com/infor-design/enterprise/issues/3160))
-- `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
-
-### v4.26.0 Chores & Maintenance
-
 ## v4.25.0
 
 ### v4.25.0 Deprecation
@@ -45,6 +30,7 @@
 - `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
 - `[Datagrid]` Fixed an issue where converting circular structure to JSON was throwing an error. ([#3309](https://github.com/infor-design/enterprise/issues/3309))
 - `[Datagrid]` Fixed an issue where focus in date picker field was not aligning. ([#3350](https://github.com/infor-design/enterprise/issues/3350))
+- `[Datagrid]` Added fixes for editing lookup fields, fixed the styling of the lookup editor and improved padding, also fixed the sort indicator color. ([#3160](https://github.com/infor-design/enterprise/issues/3160))
 - `[Editor]` Fixed an issue where line spacing was inconsistent. ([#3335](https://github.com/infor-design/enterprise/issues/3335))
 - `[General]` Added detection for wkWebView which is paired with safari. This caused issues with all black text as this browser had previously been unknown. ([#3336](https://github.com/infor-design/enterprise/issues/3336))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
