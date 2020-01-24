@@ -95,12 +95,12 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
-        const splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
-        splitterButton.appendTo(splitter);
+        this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
+        this.splitterCollapseButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
-          $('#splitter-collapse-btn').addClass('rotate');
+          this.splitterCollapseButton.addClass('rotate');
         }
-        $('#splitter-collapse-btn').click(function () {
+        this.splitterCollapseButton.click(function () {
           if (savedOffset <= 0) {
             if (splitter[0].offsetLeft <= 10) {
               self.splitTo(defaultOffset, parentHeight);
@@ -154,7 +154,7 @@ Splitter.prototype = {
     this.splitTo(w, parentHeight);
 
     if (w <= 10) {
-      $('#splitter-collapse-btn').removeClass('rotate');
+      this.splitterCollapseButton.removeClass('rotate');
     }
 
     // Add the Splitter Events
@@ -333,7 +333,7 @@ Splitter.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, SPLITTER_DEFAULTS);
     }
     return this
-      .unbind()
+      .destroy()
       .init();
   },
 
@@ -343,6 +343,9 @@ Splitter.prototype = {
   */
   destroy() {
     this.unbind();
+    if (this.splitterCollapseButton) {
+      this.splitterCollapseButton.remove();
+    }
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
