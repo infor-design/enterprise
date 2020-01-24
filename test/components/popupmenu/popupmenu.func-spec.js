@@ -58,17 +58,14 @@ describe('Popupmenu Menu Button API', () => {
     expect(popupmenuObj.getPositionFromEvent(eClient)).toEqual({ x: 222, y: 333 });
   });
 
-  it('Should position correctly', (done) => {
+  it('Should position correctly', () => {
     // Indirectly tests Place component
     popupmenuObj.position(ePage);
 
-    setTimeout(() => {
-      const ulElem = document.querySelector('ul#popupmenu-1');
-      const parentElem = ulElem.parentNode;
+    const ulElem = popupmenuObj.menu[0];
+    const parentElem = ulElem.parentNode;
 
-      expect(parentElem.className).toContain('placeable bottom');
-      done();
-    }, 10);
+    expect(parentElem.className).toContain('placeable bottom');
   });
 
   it('Should open', () => {
