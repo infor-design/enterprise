@@ -32,13 +32,6 @@
   }
 }
 
-// Adjust icon for firefox
-.is-firefox {
-  .datagrid-header .datagrid-filter-wrapper .timepicker + .icon {
-    top: -2px;
-  }
-}
-
 // Adjust header text
 .datagrid-header-text {
   font-size: $theme-size-font-xs !important;
@@ -64,6 +57,16 @@
         margin-top: 0;
       }
     }
+
+    &.is-editing {
+      .datepicker {
+        margin-top: 6px;
+
+        ~ .icon {
+          top: calc(50% - 18px);
+        }
+      }
+    }
   }
 
   // Medium Row Height
@@ -73,6 +76,14 @@
         &.is-editing {
           &.has-singlecolumn {
             min-height: $datagrid-medium-row-height + 10;
+          }
+
+          .datepicker {
+            margin-top: 0;
+
+            ~ .icon {
+              top: calc(50% - 17px);
+            }
           }
         }
       }
@@ -89,6 +100,14 @@
     tbody {
       tr {
         td {
+          &.is-editing {
+            .datepicker {
+              ~ .icon {
+                top: calc(50% - 18px);
+              }
+            }
+          }
+
           // Adjust Tags
           span {
             line-height: 22px;
@@ -116,4 +135,42 @@
 .is-gridlist.has-draggable-columns th .handle {
   font-size: 23px;
   top: -3px;
+}
+
+// Firefox
+.is-firefox {
+  // Adjust icon for firefox
+  .datagrid-header .datagrid-filter-wrapper .timepicker + .icon {
+    top: -2px;
+  }
+
+  // Main Grid for firefox
+  .datagrid {
+    td {
+      &.is-editing {
+        .datepicker {
+          ~ .icon {
+            top: calc(50% - 17px);
+          }
+        }
+      }
+    }
+
+    // Medium Row Height for firefox
+    &.medium-rowheight {
+      tbody tr {
+        td {
+          &.is-editing {
+            .datepicker {
+              margin-top: 0;
+
+              ~ .icon {
+                top: calc(50% - 17px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
