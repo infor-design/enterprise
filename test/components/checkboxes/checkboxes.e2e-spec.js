@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Checkbox example-index tests', () => {
+describe('Checkbox example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/checkboxes/example-index?layout=nofrills');
   });
@@ -26,7 +26,7 @@ fdescribe('Checkbox example-index tests', () => {
   }
 });
 
-fdescribe('Checkbox Required tests', () => { //eslint-disable-line
+describe('Checkbox Required tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/checkboxes/example-required?layout=nofrills');
   });
