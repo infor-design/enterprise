@@ -169,7 +169,7 @@ Validator.prototype = {
     });
 
     // Link on to the current object and perform validation.
-    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], input[type=file]').each(function () {
+    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=file]').each(function () {
       const field = $(this);
       const eventAttr = field.attr('data-validation-events');
       const events = self.extractEvents(eventAttr || 'blur.validate change.validate keyup.validate');

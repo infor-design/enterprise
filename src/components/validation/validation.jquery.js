@@ -101,9 +101,17 @@ $.fn.scrollIntoView = function (alignToTop, settings) {
   }
 
   const instance = new Validator(this, settings);
-  const elem = instance.getField($(this));
+  let elem = instance.getField($(this));
+
   elem[0].scrollIntoView(alignToTop);
   elem.focus();
+
+  if (elem.is('input.checkbox')) {
+    elem = elem.next('.checkbox-label');
+    if (elem[0]) {
+      elem[0].scrollIntoView(alignToTop);
+    }
+  }
 };
 
 /**

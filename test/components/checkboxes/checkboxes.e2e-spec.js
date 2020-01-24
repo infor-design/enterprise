@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Checkbox example-index tests', () => {
+fdescribe('Checkbox example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/checkboxes/example-index?layout=nofrills');
   });
@@ -22,6 +22,27 @@ describe('Checkbox example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkScreen('checkboxes')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Checkbox Required tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/checkboxes/example-required?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('checkboxes-required')).toEqual(0);
     });
   }
 });

@@ -11,6 +11,7 @@
 ### v4.26.0 Fixes
 
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+- `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
 
 ### v4.26.0 Chores & Maintenance
 
