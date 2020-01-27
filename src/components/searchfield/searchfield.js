@@ -35,7 +35,8 @@ const SEARCHFIELD_DEFAULTS = {
   source: undefined,
   template: undefined,
   clearable: false,
-  collapsible: SEARCHFIELD_COLLAPSE_MODES[0]
+  collapsible: SEARCHFIELD_COLLAPSE_MODES[0],
+  collapseSize: undefined
 };
 
 // Used throughout:
@@ -63,6 +64,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @param {boolean} [settings.collapsible = true] If "true", allows the field to expand/collapse on larger breakpoints when
  * focused/blurred respectively
  * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
+ * @param {number} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.
  */
 function SearchField(element, settings) {
   this.element = $(element);
@@ -277,6 +279,7 @@ SearchField.prototype = {
     // wrapper to help with positioning.
     if (this.toolbarParent) {
       this.label.prependTo(this.wrapper);
+      this.setInitalWidth();
     }
 
     const customClasses = ['context', 'alternate'];
@@ -1338,28 +1341,12 @@ SearchField.prototype = {
   },
 
   /**
+   * @deprecated as of v4.26.0
    * @private
    * @returns {void}
    */
   setClosedWidth() {
-    let closedWidth = 0;
-
-    // If the searchfield category button exists, change the width of the
-    // input field on the inside to provide space for the (variable) size of the currently-selected
-    // category (or categories)
-    if ((this.categoryButton instanceof $) && this.categoryButton.length) {
-      const buttonStyle = window.getComputedStyle(this.categoryButton[0]);
-      const buttonWidth = this.categoryButton.width();
-      const buttonBorder = parseInt(buttonStyle.borderLeftWidth, 10) * 2;
-      const buttonPadding = parseInt(buttonStyle.paddingLeft, 10) +
-        parseInt(buttonStyle.paddingRight, 10);
-
-      closedWidth += (buttonWidth + buttonBorder + buttonPadding + 4);
-    }
-
-    if (this.wrapper[0]) {
-      this.wrapper[0].style.width = `${closedWidth}px`;
-    }
+    return this.setInitalWidth();
   },
 
   /**
@@ -1679,6 +1666,9 @@ SearchField.prototype = {
         self.appendToParent();
       }
 
+      self.wrapper.removeAttr('style');
+      self.input.removeAttribute('style');
+
       // Re-adjust the size of the buttonset element if the expanded searchfield would be
       // too large to fit.
       let buttonsetWidth = 0;
@@ -1764,10 +1754,16 @@ SearchField.prototype = {
 
       self.isCollapsing = true;
 
+      self.wrapper.removeAttr('style');
+      self.input.removeAttribute('style');
+
       // Puts the input wrapper back where it should be if it's been moved due to small form factors.
       self.appendToButtonset();
 
       self.checkContents();
+      if (self.toolbarParent) {
+        self.setInitalWidth();
+      }
 
       self.clearResponsiveState();
 
@@ -1778,9 +1774,6 @@ SearchField.prototype = {
       if (this.isContainedByFlexToolbar || !this.isFocused) {
         self.wrapper[0].classList.remove('has-focus');
       }
-
-      self.wrapper.removeAttr('style');
-      self.input.removeAttribute('style');
 
       if (self.categoryButton && self.categoryButton.length) {
         self.categoryButton.data('popupmenu').close(false, true);
@@ -1863,18 +1856,71 @@ SearchField.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the Searchfield contains a valid value.
+   */
+  get hasText() {
+    const value = !this.input.value ? '' : this.input.value.trim();
+    return value !== '';
+  },
+
+  /**
    * Adds/removes a CSS class to the searchfield wrapper depending on whether or not the input field is empty.
    * Needed for expand/collapse scenarios, for proper searchfield resizing.
    * @private
    * @returns {void}
    */
   checkContents() {
-    let textMethod = 'remove';
-    const value = !this.input.value ? '' : this.input.value.trim();
-    if (value !== '') {
-      textMethod = 'add';
+    return this.wrapper[0].classList[this.hasText ? 'add' : 'remove']('has-text');
+  },
+
+  /**
+   * Sets the width of the Searchfield when it closes.
+   * @private
+   * @returns {void}
+   */
+  setInitalWidth() {
+    if (!this.hasText) {
+      return;
     }
-    this.wrapper[0].classList[textMethod]('has-text');
+
+    // If the searchfield category button exists, change the width of the
+    // input field on the inside to provide space for the (variable) size of the currently-selected
+    // category (or categories)
+    /*
+    let buttonSize = 0;
+    if ((this.categoryButton instanceof $) && this.categoryButton.length) {
+      const buttonStyle = window.getComputedStyle(this.categoryButton[0]);
+      const buttonWidth = this.categoryButton.width();
+      const buttonBorder = parseInt(buttonStyle.borderLeftWidth, 10) * 2;
+      const buttonPadding = parseInt(buttonStyle.paddingLeft, 10) +
+        parseInt(buttonStyle.paddingRight, 10);
+
+      buttonSize += (buttonWidth + buttonBorder + buttonPadding + 4);
+    }
+    */
+
+    // If collapsing with a search term present,
+    // shrink the unfocused state to a custom-defined width instead of the default "button" size.
+    // If a function is provided instead of a number, the function should eventually return a number.
+    let size;
+    if (this.settings.collapseSize) {
+      if (typeof this.settings.collapseSize === 'function') {
+        size = this.settings.collapseSize(this);
+      } else {
+        size = parseInt(this.settings.collapseSize, 10);
+      }
+    }
+
+    if (isNaN(size)) {
+      return;
+    }
+
+    //size += buttonSize;
+
+    // this.wrapper.outerWidth(size);
+    if (this.wrapper[0]) {
+      this.wrapper[0].style.width = `${size}px`;
+    }
   },
 
   /**
