@@ -11,7 +11,7 @@
 ### v4.26.0 Fixes
 
 - `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
-- `[Datagrid]` Fixed similar alternate background color rows when hovering in uplift high contrast. ([#3338](https://github.com/infor-design/enterprise/issues/3338))
+- `[Datagrid]` Fixed hover color should not be similar to alternate rows when hovering in uplift high contrast. ([#3338](https://github.com/infor-design/enterprise/issues/3338))
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
 - `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
