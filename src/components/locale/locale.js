@@ -957,6 +957,10 @@ const Locale = {  // eslint-disable-line
     dateFormat = dateFormat.replace(' de ', ' ');
     dateString = dateString.replace(' de ', ' ');
 
+    // Remove commas
+    dateFormat = dateFormat.replace(',', '');
+    dateString = dateString.replace(',', '');
+
     if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
       dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
       dateString = `${dateString.substr(0, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2)}`;
