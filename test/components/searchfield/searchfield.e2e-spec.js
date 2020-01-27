@@ -177,13 +177,11 @@ describe('Searchfield `collapseSize` tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on test-configure-close-size', async () => {
-      const searchfieldInputEl = await element(by.id('useful-toolbar-search'));
-      const searchfieldSection = await element(by.css('.toolbar-section.search'));
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.id('useful-toolbar-search'))), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'searchfield-collapse-size')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
     });
   }
 });
