@@ -3741,6 +3741,12 @@ Datagrid.prototype = {
         cssClass += ' datagrid-trigger-cell';
       }
 
+      if (formatted.indexOf('trigger') === -1 && col && col.editor
+        && ['colorpicker', 'dropdown', 'time', 'lookup', 'date']
+          .indexOf(col.editor.name.toLowerCase()) >= 0) {
+        cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
+      }
+
       if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
       }

@@ -131,6 +131,25 @@
   }
 }
 
+// Fix header alignment
+.datagrid-container {
+  th.text-ellipsis .datagrid-header-text {
+    margin: 7px 0 0 !important;
+  }
+
+  &.short-rowheight th.text-ellipsis .datagrid-header-text {
+    margin: 3px 0 0 !important;
+  }
+
+  &.medium-rowheight th.text-ellipsis .datagrid-header-text {
+    margin: 5px 0 0 !important;
+  }
+}
+
+.datagrid.short-rowheight tbody tr td.datagrid-trigger-cell .icon {
+  top: 4px;
+}
+
 // Adjust handle for resize on lists
 .is-gridlist.has-draggable-columns th .handle {
   font-size: 23px;
