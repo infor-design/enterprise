@@ -176,7 +176,7 @@ describe('Searchfield `collapseSize` tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on test-configure-close-size', async () => {
+    it('Should not visual regress on test-configure-close-size', async () => {
       const searchfieldInputEl = await element(by.id('useful-toolbar-search'));
       const searchfieldSection = await element(by.css('.toolbar-section.search'));
       await browser.driver
