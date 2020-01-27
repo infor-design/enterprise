@@ -64,7 +64,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @param {boolean} [settings.collapsible = true] If "true", allows the field to expand/collapse on larger breakpoints when
  * focused/blurred respectively
  * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
- * @param {number} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.
+ * @param {number|function} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.  If defined as a function, gets a reference to this API as its primary argument, and returns a number.
  */
 function SearchField(element, settings) {
   this.element = $(element);
