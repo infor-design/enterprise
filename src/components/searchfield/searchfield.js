@@ -1883,22 +1883,6 @@ SearchField.prototype = {
       return;
     }
 
-    // If the searchfield category button exists, change the width of the
-    // input field on the inside to provide space for the (variable) size of the currently-selected
-    // category (or categories)
-    /*
-    let buttonSize = 0;
-    if ((this.categoryButton instanceof $) && this.categoryButton.length) {
-      const buttonStyle = window.getComputedStyle(this.categoryButton[0]);
-      const buttonWidth = this.categoryButton.width();
-      const buttonBorder = parseInt(buttonStyle.borderLeftWidth, 10) * 2;
-      const buttonPadding = parseInt(buttonStyle.paddingLeft, 10) +
-        parseInt(buttonStyle.paddingRight, 10);
-
-      buttonSize += (buttonWidth + buttonBorder + buttonPadding + 4);
-    }
-    */
-
     // If collapsing with a search term present,
     // shrink the unfocused state to a custom-defined width instead of the default "button" size.
     // If a function is provided instead of a number, the function should eventually return a number.
@@ -1914,8 +1898,6 @@ SearchField.prototype = {
     if (isNaN(size)) {
       return;
     }
-
-    //size += buttonSize;
 
     // this.wrapper.outerWidth(size);
     if (this.wrapper[0]) {
