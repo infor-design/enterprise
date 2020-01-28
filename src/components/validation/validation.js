@@ -114,8 +114,10 @@ function ValidationRules() {
 
         let dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short;
 
+        let dtApi = null;
         if (field && field.data('datepicker')) {
-          dateFormat = field.data('datepicker').pattern;
+          dtApi = field.data('datepicker');
+          dateFormat = dtApi.pattern;
         }
 
         const isStrict = !(
@@ -125,6 +127,13 @@ function ValidationRules() {
           dateFormat === 'MMMM d' ||
           dateFormat === 'yyyy'
         );
+        if (dtApi) {
+          dateFormat = {
+            locale: dtApi.locale.name,
+            pattern: dateFormat,
+            calendarName: dtApi.currentCalendar.name
+          };
+        }
         const parsedDate = Locale.parseDate(value, dateFormat, isStrict);
         return !(((parsedDate === undefined) && value !== ''));
       },
