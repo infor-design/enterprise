@@ -19,6 +19,7 @@
 - `[Accordion]` Fixed an issue that when all panes are expanded then they could no longer be closed. ([#701](https://github.com/infor-design/enterprise-ng/issues/3217))
 - `[Application Menu]` Fixed minor usability issues when attempting to filter on application menus, display of hidden filtered children, and filtering reset when a Searchfield is blurred. ([#3285](https://github.com/infor-design/enterprise/issues/3285))
 - `[Application Menu]` Fixed incorrect font-size/padding around list item headers' bullet points. ([#3364](https://github.com/infor-design/enterprise/issues/3364))
+- `[Application Menu]` Tweaked some font colors on the Vibrant theme. ([#3400](https://github.com/infor-design/enterprise/issues/3400))
 - `[Autocomplete]` Fixed an issue where selected event was not firing when its parent is partly overflowing. ([#3072](https://github.com/infor-design/enterprise/issues/3072))
 - `[Calendar]` Fixed an issue setting the legend checked elements to false in the api. ([#3170](https://github.com/infor-design/enterprise/issues/3170))
 - `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
