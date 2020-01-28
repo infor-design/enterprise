@@ -60,6 +60,18 @@
     }
   }
 
+  .accordion-static-panel {
+    .btn-menu {
+      span {
+        max-width: 150px;
+      }
+
+      svg {
+        margin-top: -10px;
+      }
+    }
+  }
+
   .btn-icon {
     font-size: normal;
   }

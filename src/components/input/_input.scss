@@ -319,7 +319,7 @@ textarea {
 label,
 .label {
   &.required {
-    &:not(.inline) {
+    &:not(.inline):not(.checkbox-label) {
       &:not(.accessible)::after {
         @include required-indicator($is-content: true);
       }
@@ -341,7 +341,6 @@ label,
   }
 }
 
-// Required standalone span
 span.required::after {
   @include required-indicator($is-content: true);
 }

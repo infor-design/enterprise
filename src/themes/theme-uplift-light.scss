@@ -27,6 +27,7 @@ $accordion-inverse-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-border-color:  $theme-color-palette-slate-90;
 $accordion-inverse-text-color: $theme-color-palette-white;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
@@ -40,6 +41,7 @@ $datagrid-list-group-header-bg-color: $theme-color-palette-graphite-20;
 $datagrid-list-group-header-border-color: $theme-color-palette-graphite-10;
 $datagrid-list-header-active-color: $theme-color-palette-graphite-20;
 $datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
+$datagrid-sort-icon-color: $theme-color-palette-slate-50;
 $listview-border-color: $theme-color-palette-slate-20;
 $panel-border-color: $theme-color-palette-graphite-30;
 
@@ -59,10 +61,10 @@ $calendar-disabled-color: $theme-color-brand-secondary-contrast;
 
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $theme-color-palette-slate-40;
+$uplift-acc-header-text-color: $theme-color-palette-slate-20;
 $uplift-acc-header-selected-text-color: $theme-color-palette-white;
 
-$uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
+$uplift-acc-subheader-text-color: $theme-color-palette-slate-20;
 
 $uplift-acc-expanded-bg-color: $theme-color-palette-black;
 

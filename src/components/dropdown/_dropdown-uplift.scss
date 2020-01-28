@@ -210,7 +210,22 @@ div.multiselect {
   }
 }
 
-// Dropdown icon for firefox
+// Fix Tag icon placement on IE/Edge
+html.ie {
+  div.dropdown,
+  div.multiselect {
+    .tag-list {
+      .dismissible-btn,
+      .linkable-btn {
+        .icon {
+          top: -1px;
+        }
+      }
+    }
+  }
+}
+
+// Dropdown icon and Tags for Firefox
 .is-firefox {
   div.dropdown,
   div.multiselect {
@@ -219,6 +234,17 @@ div.multiselect {
 
       &.swatch {
         left: 12px;
+      }
+    }
+
+    .tag-content {
+      line-height: normal;
+    }
+
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: -1px;
       }
     }
   }

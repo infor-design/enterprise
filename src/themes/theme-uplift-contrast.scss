@@ -433,6 +433,7 @@ $accordion-hover-border-color: $theme-color-palette-black;
 $accordion-hover-text-color: $theme-color-palette-graphite-100;
 
 $accordion-panel-border-color: $theme-color-palette-graphite-40;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $accordion-alternate-bg-color: $theme-color-palette-white;
 $accordion-alternate-border-color: $theme-color-palette-graphite-40;
@@ -518,11 +519,11 @@ $datagrid-header-color: $theme-color-palette-white;
 $datagrid-header-bg-color: $theme-color-palette-graphite-80;
 $datagrid-nested-header-bg-color: $theme-color-palette-graphite-60;
 $datagrid-nested-header-border-color: $theme-color-brand-secondary-alt;
-$datagrid-header-border-color: $theme-color-palette-graphite-60;
+$datagrid-header-border-color: $theme-color-palette-graphite-50;
 $datagrid-header-hover-color: $theme-color-palette-graphite-100;
 $datagrid-header-active-color: $theme-color-palette-graphite-80;
 $datagrid-header-checkbox-border-color: $theme-color-palette-graphite-50;
-$datagrid-sort-icon-color: $theme-color-brand-secondary-alt;
+$datagrid-sort-icon-color: $theme-color-palette-graphite-40;
 $datagrid-sort-icon-sorted-color: $theme-color-palette-white;
 $datagrid-required-icon-color: $theme-color-palette-white;
 
@@ -536,7 +537,7 @@ $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #b3ccdb;
 $datagrid-row-selected-color-dark: #a2bbca;
-$datagrid-row-hover-color: $theme-color-palette-graphite-30;
+$datagrid-row-hover-color: $theme-color-palette-graphite-40;
 $datagrid-row-icon-color: $theme-color-palette-graphite-90;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-30;
@@ -764,10 +765,10 @@ $calendar-disabled-color: $theme-color-palette-graphite-100;
 
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $theme-color-palette-slate-40;
+$uplift-acc-header-text-color: $theme-color-palette-slate-10;
 $uplift-acc-header-selected-text-color: $theme-color-palette-white;
 
-$uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
+$uplift-acc-subheader-text-color: $theme-color-palette-slate-10;
 
 $uplift-acc-expanded-bg-color: $theme-color-palette-slate-100;
 
