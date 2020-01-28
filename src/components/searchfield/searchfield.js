@@ -274,6 +274,9 @@ SearchField.prototype = {
     }
 
     this.checkContents();
+    if (this.settings.collapseSize) {
+      this.wrapper[0].classList.add('has-custom-collapse-size');
+    }
 
     // Label for toolbar-inlined searchfields needs to be inside the
     // wrapper to help with positioning.
@@ -498,6 +501,8 @@ SearchField.prototype = {
         this.wrapper[0].classList.remove('is-open');
       }
 
+      this.setInitalWidth();
+
       return;
     }
 
@@ -514,6 +519,8 @@ SearchField.prototype = {
     if (this.isExpanded) {
       this.collapse();
     }
+
+    this.setInitalWidth();
   },
 
   /**
@@ -1755,7 +1762,6 @@ SearchField.prototype = {
       self.isCollapsing = true;
 
       self.wrapper.removeAttr('style');
-      self.input.removeAttribute('style');
 
       // Puts the input wrapper back where it should be if it's been moved due to small form factors.
       self.appendToButtonset();
@@ -1879,7 +1885,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   setInitalWidth() {
-    if (!this.hasText) {
+    if (this.shouldBeFullWidth() || !this.hasText) {
       return;
     }
 

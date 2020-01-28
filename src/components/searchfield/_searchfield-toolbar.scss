@@ -302,6 +302,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
+    &.has-custom-collapse-size {
+      width: 0;
+    }
+
     &.active {
       width: $toolbarsearchfield-max-width;
     }
@@ -316,6 +320,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.has-text {
       width: $toolbarsearchfield-filled-out-width;
+
+      &.has-custom-collapse-size {
+        width: 0;
+      }
 
       &.active {
         width: $toolbarsearchfield-max-width;
@@ -699,6 +707,10 @@ html.is-firefox {
 
     &.has-text {
       width: $toolbarsearchfield-max-width;
+
+      &.has-custom-collapse-size {
+        width: 0;
+      }
 
       &.active {
         width: $toolbarsearchfield-max-width;
