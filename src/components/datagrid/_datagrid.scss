@@ -767,14 +767,14 @@ $datagrid-short-row-height: 25px;
             }
 
             &.timepicker {
-              margin-top: 11px;
+              margin-top: 3px;
               padding: 0 15px;
               width: calc(100% - 26px);
 
               ~ .icon {
                 left: auto;
-                margin-left: -5px;
-                top: calc(50% - 18px);
+                margin-left: -4px;
+                top: calc(50% - 17px);
               }
             }
 
@@ -890,6 +890,7 @@ $datagrid-short-row-height: 25px;
       .trigger {
         margin-left: -8px !important;
         margin-top: -4px !important;
+        overflow: visible;
       }
 
       .align-text-right {
@@ -1058,7 +1059,7 @@ $datagrid-short-row-height: 25px;
           }
 
           .icon {
-            height: 16px;
+            height: 18px;
             top: 3px;
 
             &.icon-calendar,
@@ -1069,8 +1070,8 @@ $datagrid-short-row-height: 25px;
             }
 
             &.icon-clock {
-              left: -8px;
-              top: 1px;
+              left: -9px;
+              top: 3px;
             }
 
             &.icon-close {
@@ -1132,17 +1133,17 @@ $datagrid-short-row-height: 25px;
           }
 
           .timepicker {
-            margin-top: 6px;
-            padding: 0 10px;
+            margin-top: 3px;
+            padding: 0 8px;
 
             + .icon {
               margin-left: -2px;
-              top: -4px;
+              top: -3px;
             }
           }
 
           input {
-            height: 26px;
+            height: 25px;
           }
 
           .dropdown {
@@ -2004,13 +2005,13 @@ $datagrid-short-row-height: 25px;
         }
 
         &.timepicker {
-          margin-top: 16px;
+          margin-top: 8px;
           padding: 0 19px;
           width: calc(100% - 26px);
 
           ~ .icon {
             left: auto;
-            margin-left: -5px;
+            margin-left: -4px;
             top: calc(50% - 17px);
           }
         }
@@ -2961,8 +2962,7 @@ td .btn-actions {
     @include no-animation();
 
     margin-left: -2px;
-    margin-top: -4px;
-    top: 2px;
+    margin-top: -5px;
   }
 
   .datagrid-checkbox {
@@ -2985,6 +2985,24 @@ td .btn-actions {
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
+  }
+
+  &.text-ellipsis {
+    .datagrid-cell-wrapper {
+      overflow: visible;
+    }
+
+    &.datagrid-no-default-formatter .datagrid-cell-wrapper {
+      overflow: hidden;
+    }
+
+    span.trigger {
+      line-height: normal;
+      overflow: hidden;
+      padding-right: 4px;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
   }
 
   .align-text-right {

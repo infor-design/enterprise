@@ -484,14 +484,14 @@ $chart-arc-stroke: $theme-color-palette-slate-70;
 // DataGrid
 $datagrid-border-color: $theme-color-palette-slate-50;
 $datagrid-header-color: $theme-color-palette-slate-100;
-$datagrid-header-bg-color: $theme-color-palette-slate-50;
+$datagrid-header-bg-color: $theme-color-palette-slate-30;
 $datagrid-nested-header-bg-color: $theme-color-palette-slate-40;
-$datagrid-nested-header-border-color: $theme-color-palette-slate-70;
+$datagrid-nested-header-border-color: $theme-color-palette-slate-60;
 $datagrid-header-border-color: $theme-color-palette-slate-70;
 $datagrid-header-hover-color: $theme-color-palette-slate-20;
 $datagrid-header-active-color: $theme-color-palette-slate-40;
 $datagrid-header-checkbox-border-color: $theme-color-palette-slate-90;
-$datagrid-sort-icon-color: $theme-color-palette-slate-60;
+$datagrid-sort-icon-color: $theme-color-palette-slate-40;
 $datagrid-sort-icon-sorted-color: $theme-color-palette-slate-100;
 $datagrid-required-icon-color: $theme-color-palette-slate-100;
 
@@ -500,7 +500,7 @@ $datagrid-cell-bg-color: $body-color-primary-background;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
 $datagrid-cell-readonly-bg-color: $theme-color-palette-slate-70;
 $datagrid-cell-readonly-color: $theme-color-palette-white;
-$datagrid-cell-border-color: $theme-color-palette-slate-80;
+$datagrid-cell-border-color: $theme-color-palette-slate-70;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;

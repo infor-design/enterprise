@@ -23,8 +23,6 @@
 
 ## v4.25.0
 
-### v4.25.0 Deprecation
-
 ### v4.25.0 Features
 
 - `[Fields]` Added a form level class to toggle all fields in the form to a more compact (shorter) mode called `form-layout-compact`. Added and fixed existing components so that there is now the option to have more compact forms by using shorter fields. ([#3249](https://github.com/infor-design/enterprise/issues/3249))
