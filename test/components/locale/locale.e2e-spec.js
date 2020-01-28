@@ -13,6 +13,8 @@ describe('Locale Format Date Tests', () => {
   });
 
   it('Should format dates when set to a specific locale', async () => {
+    expect(await element(by.css('[for="date-field0"]')).getText()).toEqual('en-US (MMM d, yyyy)');
+    expect(await element(by.id('date-field0')).getAttribute('value')).toEqual('Dec 5, 2019');
     expect(await element(by.css('[for="date-field1"]')).getText()).toEqual('en-GB (dd/MM/yyyy)');
     expect(await element(by.id('date-field1')).getAttribute('value')).toEqual('05/12/2019');
     expect(await element(by.css('[for="date-field2"]')).getText()).toEqual('es-US (M/d/yyyy)');
