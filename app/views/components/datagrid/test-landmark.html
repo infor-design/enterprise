@@ -1,0 +1,2214 @@
+<div class="full-height full-width">
+  <div id="datagrid" class="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var settings = {
+      "actionableMode": true,
+      "cellNavigation": true,
+      "rowNavigation": true,
+      "showHoverState": true,
+      "alternateRowShading": false,
+      "columns": [
+        {
+          "id": "selectionCheckbox",
+          "sortable": false,
+          "resizable": false,
+          "align": "center",
+          "width": 43,
+          "hideable": true,
+          "onBeforeSelect": null,
+          "groupable": null,
+          "formatter": Formatters.SelectionCheckbox
+        },
+          {
+            "id": "ProductName1",
+            "field": "fields.ProductName.value",
+            "sortable": false,
+            "fieldId": "ProductName",
+            "name": "Product Name",
+            "filterType": "text",
+            "maxLength": 30,
+            "uppercase": false,
+            "align": "left",
+            "hideable": true,
+            "textOverflow": "ellipsis",
+            "formatter": Formatters.Readonly
+          },
+        {
+          "id": "Manufacturer0",
+          "field": "fields.Manufacturer.value",
+          "sortable": false,
+          "fieldId": "Manufacturer",
+          "name": "Manufacturer (Ed, Ell)",
+          "filterType": "lookup",
+          "textOverflow": "ellipsis",
+          "editor": Editors.Lookup
+        },
+        {
+          "id": "Manufacturer1",
+          "field": "fields.Manufacturer.value",
+          "sortable": false,
+          "fieldId": "Manufacturer",
+          "name": "Manufacturer (Frm, Ed, Ell)",
+          "filterType": "lookup",
+          "textOverflow": "ellipsis",
+          "editor": Editors.Lookup,
+          "formatter": Formatters.Lookup
+        },
+        {
+          "id": "Manufacturer1",
+          "field": "fields.Manufacturer.value",
+          "sortable": false,
+          "fieldId": "Manufacturer",
+          "name": "Manufacturer (Frm, Ed)",
+          "filterType": "lookup",
+          "editor": Editors.Lookup,
+          "formatter": Formatters.Lookup
+        },
+        {
+          "id": "DateField3-1",
+          "field": "fields.DateField.value",
+          "sortable": false,
+          "fieldId": "DateField",
+          "name": "Date Field (Ed, Ell)",
+          "filterType": "date",
+          "dateFormat": "M/d/yyyy",
+          "editorOptions": {
+            "dateFormat": "M/d/yyyy",
+            "showMonthYearPicker": true
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "editor": Editors.Date
+        },
+        {
+          "id": "DateField3-2",
+          "field": "fields.DateField.value",
+          "sortable": false,
+          "fieldId": "DateField",
+          "name": "Date Field (Form, Ed, Ell)",
+          "filterType": "date",
+          "dateFormat": "M/d/yyyy",
+          "editorOptions": {
+            "dateFormat": "M/d/yyyy",
+            "showMonthYearPicker": true
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "formatter": Formatters.Date,
+          "editor": Editors.Date
+        },
+        {
+          "id": "DateField3-3",
+          "field": "fields.DateField.value",
+          "sortable": false,
+          "fieldId": "DateField",
+          "name": "Date Field (Form, Ed)",
+          "filterType": "date",
+          "dateFormat": "M/d/yyyy",
+          "editorOptions": {
+            "dateFormat": "M/d/yyyy",
+            "showMonthYearPicker": true
+          },
+          "align": "left",
+          "hideable": true,
+          "formatter": Formatters.Date,
+          "editor": Editors.Date
+        },
+        {
+          "id": "TimeField4-1",
+          "field": "fields.TimeField.value",
+          "sortable": false,
+          "fieldId": "TimeField",
+          "name": "Time Field (Ed, Ell)",
+          "filterType": "time",
+          "editorOptions": {
+            "roundToInterval": false
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "editor": Editors.Time
+        },
+        {
+          "id": "TimeField4-2",
+          "field": "fields.TimeField.value",
+          "sortable": false,
+          "fieldId": "TimeField",
+          "name": "Time Field (Frm, Ed, Ell)",
+          "filterType": "time",
+          "editorOptions": {
+            "roundToInterval": false
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "editor": Editors.Time,
+          "formatter": Formatters.Time,
+        },
+        {
+          "id": "TimeField4-3",
+          "field": "fields.TimeField.value",
+          "sortable": false,
+          "fieldId": "TimeField",
+          "name": "Time Field (Frm, Ed)",
+          "filterType": "time",
+          "editorOptions": {
+            "roundToInterval": false
+          },
+          "align": "left",
+          "hideable": true,
+          "formatter": Formatters.Time,
+          "editor": Editors.Time
+        },
+        {
+          "id": "AnniversaryField5",
+          "field": "fields.AnniversaryField.value",
+          "sortable": false,
+          "fieldId": "AnniversaryField",
+          "name": "Anniversary Field",
+          "filterType": "date",
+          "dateFormat": "MMMM d",
+          "editorOptions": {
+            "dateFormat": "MMMM d"
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "formatter": Formatters.Date,
+          "editor": Editors.Date
+        },
+        {
+          "id": "YearField7",
+          "field": "fields.YearField.value",
+          "sortable": false,
+          "fieldId": "YearField",
+          "name": "Year Field",
+          "filterType": "date",
+          "dateFormat": "yyyy",
+          "editorOptions": {
+            "showMonthYearPicker": true,
+            "hideDays": true,
+            "dateFormat": "yyyy"
+          },
+          "align": "left",
+          "hideable": true,
+          "textOverflow": "ellipsis",
+          "formatter": Formatters.Date,
+          "editor": Editors.Date
+        }
+      ],
+      "dataset": [
+        {
+          "resourceId": "Product(1,1)",
+          "busClassName": "Product",
+          "navigations": [],
+          "name": "Product",
+          "posToViewKey": {
+            "pk": "Product(1,1)"
+          },
+          "id": 1,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "1:00 AM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "October 26"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2018041617000000"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201810"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Dakar XLT 2",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "1",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "04/16/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2018"
+            }
+          },
+          "representativeText": "Product Dakar XLT 2"
+        },
+        {
+          "resourceId": "Product(1,10)",
+          "busClassName": "Product",
+          "navigations": [],
+          "name": "Product",
+          "posToViewKey": {
+            "pk": "Product(1,10)"
+          },
+          "id": 2,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "1:00 AM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "March 22"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2018031217355500"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201312"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Turner 5-Spot",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "10",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "06/19/2019"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2023"
+            }
+          },
+          "representativeText": "Product Turner 5-Spot"
+        },
+        {
+          "resourceId": "Product(1,100)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            11,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,100)"
+          },
+          "id": 3,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "1:00 AM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "August 2"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2018031505000000"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201806"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "test",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "100",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "03/15/2019"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2018"
+            }
+          },
+          "representativeText": "Product test"
+        },
+        {
+          "resourceId": "Product(1,11)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            11,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,11)"
+          },
+          "id": 4,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "3:25 PM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "January 15"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2020011522083000"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201706"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "eleven",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "11",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "01/01/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2019"
+            }
+          },
+          "representativeText": "Product eleven"
+        },
+        {
+          "resourceId": "Product(1,12)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,12)"
+          },
+          "id": 5,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "6:22 PM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "August 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "15/15/2020"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "202001"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Twelve",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "12",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "02/15/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2020"
+            }
+          },
+          "representativeText": "Product Twelve"
+        },
+        {
+          "resourceId": "Product(1,13456)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,13456)"
+          },
+          "id": 6,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "5:36 AM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "December 31"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2020011510000000"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201502"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Apples",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "13456",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "07/16/2019"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2015"
+            }
+          },
+          "representativeText": "Product Apples"
+        },
+        {
+          "resourceId": "Product(1,16)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,16)"
+          },
+          "id": 7,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "3:00 PM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "January 1"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": "2020013118000000"
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201707"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "16",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "16",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "04/16/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2010"
+            }
+          },
+          "representativeText": "Product 16"
+        },
+        {
+          "resourceId": "Product(1,17)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,17)"
+          },
+          "id": 8,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "4:22 AM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "Novermber 16"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "201609"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Prod 17",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "17",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "01/01/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2011"
+            }
+          },
+          "representativeText": "Product Prod 17"
+        },
+        {
+          "resourceId": "Product(1,19)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,19)"
+          },
+          "id": 9,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": "3:0 PM"
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 5"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "202001"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "19",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "19",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "01/08/2020"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2018"
+            }
+          },
+          "representativeText": "Product 19"
+        },
+        {
+          "resourceId": "Product(1,2)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,2)"
+          },
+          "id": 10,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "December 21"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": "202002"
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Turner 5-Spot",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "2",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": "01/10/202"
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2018"
+            }
+          },
+          "representativeText": "Product Turner 5-Spot"
+        },
+        {
+          "resourceId": "Product(1,22)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,22)"
+          },
+          "id": 11,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "January 1"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "test",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "22",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2020"
+            }
+          },
+          "representativeText": "Product test"
+        },
+        {
+          "resourceId": "Product(1,26)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,26)"
+          },
+          "id": 12,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "December 20"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "26",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "26",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": "2019"
+            }
+          },
+          "representativeText": "Product 26"
+        },
+        {
+          "resourceId": "Product(1,28)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,28)"
+          },
+          "id": 13,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "Decemeber 10"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "28",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "28",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product 28"
+        },
+        {
+          "resourceId": "Product(1,29)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,29)"
+          },
+          "id": 14,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "29",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "29",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product 29"
+        },
+        {
+          "resourceId": "Product(1,3)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,3)"
+          },
+          "id": 15,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Three",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "3",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product Three"
+        },
+        {
+          "resourceId": "Product(1,30)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,30)"
+          },
+          "id": 16,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "30",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "30",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product 30"
+        },
+        {
+          "resourceId": "Product(1,343)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,343)"
+          },
+          "id": 17,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Lettuce",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "343",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product Lettuce"
+        },
+        {
+          "resourceId": "Product(1,345)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,345)"
+          },
+          "id": 18,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": "June 3"
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Peppers",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "345",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product Peppers"
+        },
+        {
+          "resourceId": "Product(1,40)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,40)"
+          },
+          "id": 19,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Tomato",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "40",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product Tomato"
+        },
+        {
+          "resourceId": "Product(1,41)",
+          "busClassName": "Product",
+          "navigations": [],
+          "actionMeta": {},
+          "name": "Product",
+          "actionIndexes": [
+            17,
+            22,
+            24,
+            23,
+            20,
+            21,
+            19,
+            8,
+            12,
+            15,
+            16,
+            14,
+            0,
+            29
+          ],
+          "posToViewKey": {
+            "pk": "Product(1,41)"
+          },
+          "id": 20,
+          "fields": {
+            "TimeField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "AnniversaryField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            },
+            "TimeStampField": {
+              "size": 16,
+              "mutable": true,
+              "value": ""
+            },
+            "PeriodField": {
+              "size": 6,
+              "mutable": true,
+              "value": ""
+            },
+            "ProductName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Name",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Dakar",
+                  "selected": false
+                },
+                {
+                  "label": "Turner",
+                  "selected": false
+                },
+                {
+                  "label": "Apples",
+                  "selected": false
+                },
+                {
+                  "label": "Lettuce",
+                  "selected": false
+                },
+                {
+                  "label": "Peppers",
+                  "selected": false
+                }
+              ]
+            },
+            "Manufacturer": {
+              "size": 4,
+              "mutable": false,
+              "value": "Manufacturer Name",
+              "required": true
+            },
+            "Product": {
+              "symbolicKey": true,
+              "size": 9,
+              "mutable": false,
+              "value": "41",
+              "required": true
+            },
+            "DateField": {
+              "size": 8,
+              "mutable": true,
+              "value": ""
+            },
+            "YearField": {
+              "size": 4,
+              "mutable": true,
+              "value": ""
+            }
+          },
+          "representativeText": "Product Name"
+        }
+      ],
+      "editable": true,
+      "rowHeight": "short",
+      "selectable": "mixed",
+      "toolbar": {title: 'Products', results: true, actions: true, rowHeight: true, personalize: true},
+      "columnIds": [],
+      "hidePagerOnOnePage": false,
+      "filterWhenTyping": false,
+      "disableClientFilter": true,
+      "disableClientSort": true,
+      "resultsText": null,
+      "rowReorder": false,
+      "showDirty": true,
+      "showSelectAllCheckBox": true,
+      "allowOneExpandedRow": true,
+      "enableTooltips": true,
+      "disableRowDeactivation": true
+    };
+
+    $('#datagrid').datagrid(settings);
+  });
+</script>
