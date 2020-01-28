@@ -339,7 +339,11 @@ label,
       }
     }
   }
+}
 
+// Required standalone span
+span.required::after {
+  @include required-indicator($is-content: true);
 }
 
 // Placeholder - Inline help
