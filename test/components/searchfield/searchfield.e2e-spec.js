@@ -178,7 +178,7 @@ describe('Searchfield `collapseSize` tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on test-configure-close-size', async () => {
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.id('useful-toolbar-search'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
