@@ -240,6 +240,7 @@ $contextual-panel-seperator-bg-color: $theme-color-palette-slate-30;
 $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-50;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -254,6 +255,7 @@ $datepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $datepicker-disabled-border-color: $theme-color-palette-slate-50;
 $datepicker-disabled-bg-color: $theme-color-palette-slate-60;
 $datepicker-disabled-color: $theme-color-palette-slate-40;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Time Picker
 $timepicker-disabled-icon-color: $theme-color-palette-slate-50;
@@ -263,6 +265,7 @@ $timepicker-disabled-color: $theme-color-palette-slate-40;
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
 $colorpicker-swatch-border-color: $theme-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-slate-50;

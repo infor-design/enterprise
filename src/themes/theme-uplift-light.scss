@@ -45,9 +45,6 @@ $datagrid-sort-icon-color: $theme-color-palette-slate-50;
 $listview-border-color: $theme-color-palette-slate-20;
 $panel-border-color: $theme-color-palette-graphite-30;
 
-// Tabs
-$tab-text-color: $theme-color-palette-graphite-70;
-
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $theme-color-palette-graphite-30;
@@ -58,6 +55,18 @@ $calendar-selected-bg-color: $theme-color-palette-graphite-20;
 $calendar-hover-bg-color: rgba(240, 240, 240, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-graphite-20;
 $calendar-disabled-color: $theme-color-brand-secondary-contrast;
+
+// Color Picker
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Date Picker
+$datepicker-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Dropdown
+$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Tabs
+$tab-text-color: $theme-color-palette-graphite-70;
 
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;

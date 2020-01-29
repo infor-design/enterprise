@@ -94,7 +94,7 @@
 
   &.is-readonly {
     background-color: $input-color-readonly-background;
-    border-color: $input-color-readonly-border;
+    border-color: $input-color-readonly-border !important;
 
     &.is-not-editable {
       background-color: $input-color-initial-background;
@@ -118,10 +118,13 @@
       border-color: $input-color-focus-border !important;
     }
 
-    .icon:not(.icon-error),
-    .icon:hover {
-      color: $trigger-disabled-color;
+    .icon:not(.icon-error) {
+      color: $colorpicker-readonly-icon-color;
       cursor: default;
+
+      &:hover {
+        color: $colorpicker-readonly-icon-color;
+      }
     }
   }
 
