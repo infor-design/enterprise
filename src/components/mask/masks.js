@@ -87,6 +87,23 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
   integerLimit: null
 };
 
+// Gets the number of leading zeros in a string representing a formatted number.
+// @param {string} formattedStr the string to be checked
+// @returns {number} containing the number of leading zeros.
+function getLeadingZeroes(formattedStr) {
+  let count = 0;
+  if (typeof formattedStr !== 'string' || !formattedStr.length) {
+    return count;
+  }
+  for (let i = 0; i < formattedStr.length; i++) {
+    if (formattedStr[i] !== '0') {
+      break;
+    }
+    count++;
+  }
+  return count;
+}
+
 // Converts a string representing a formatted number into a Number Mask.
 // @param {string} strNumber incoming string
 // @returns {array} contains strings representing character literals and regex patterns.
@@ -99,15 +116,31 @@ function convertToMask(strNumber) {
 // Adds thousands separators to the correct spot in a formatted number string.
 // @param {string} n - the string
 // @param {string} thousands - the thousands separator.
-// @param {string} [locale] - if defined, uses a custom locale string for formatting
-// @param {object} [options] - settings for `toLocaleString`
+// @param {object} [options] - number mask function options.
+// @param {object} [localeStringOpts] - settings for `toLocaleString`.
 // @returns {string} the incoming string formatted with a thousands separator.
 // http://stackoverflow.com/a/10899795/604296
-function addThousandsSeparator(n, thousands, locale, options) {
+function addThousandsSeparator(n, thousands, options, localeStringOpts) {
   if (n === '' || isNaN(n)) {
     return n;
   }
-  return Locale.toLocaleString(Number(n), locale, options, thousands);
+
+  let formatted = Locale.toLocaleString(Number(n), options.locale, localeStringOpts, thousands);
+
+  // `Number.toLocaleString` does not account for leading zeroes, so we have to put them
+  // back if we've configured this Mask to use them.
+  if (options && options.allowLeadingZeroes && n.indexOf('0') === 0) {
+    let zeros = getLeadingZeroes(n);
+    if (formatted.indexOf('0') === 0) {
+      formatted = formatted.substring(1);
+    }
+    while (zeros > 0) {
+      zeros -= 1;
+      formatted = `0${formatted}`;
+    }
+  }
+
+  return formatted;
 }
 
 // Gets an array of Regex objects matching the number of digits present in a source string
@@ -219,7 +252,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       useGrouping: true
     };
     integer = (options.allowThousandsSeparator) ?
-      addThousandsSeparator(integer, THOUSANDS, options.locale, localeOptions) : integer;
+      addThousandsSeparator(integer, THOUSANDS, options, localeOptions) : integer;
 
     mask = convertToMask(integer);
 

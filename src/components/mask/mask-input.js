@@ -270,7 +270,7 @@ MaskInput.prototype = {
         if (rawValue === '') {
           rawValue = this.state.previousMaskResult;
           numberInputCorrections = true;
-        } else if (this.type === 'number' && e.data === definedDecimal && rawValue.indexOf(definedDecimal) > -1) {
+        } else if (e.data === definedDecimal && rawValue.indexOf(definedDecimal) > -1) {
           numberInputCorrections = true;
         }
       }
