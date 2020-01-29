@@ -1,4 +1,5 @@
 import { utils } from '../../utils/utils';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils as str } from '../../utils/string';
 import { Locale } from '../locale/locale';
 
@@ -83,14 +84,14 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
   locale: '',
   requireDecimal: false,
   allowNegative: false,
-  allowLeadingZeroes: false,
+  allowLeadingZeros: false,
   integerLimit: null
 };
 
 // Gets the number of leading zeros in a string representing a formatted number.
 // @param {string} formattedStr the string to be checked
 // @returns {number} containing the number of leading zeros.
-function getLeadingZeroes(formattedStr) {
+function getLeadingZeros(formattedStr) {
   let count = 0;
   if (typeof formattedStr !== 'string' || !formattedStr.length) {
     return count;
@@ -129,8 +130,8 @@ function addThousandsSeparator(n, thousands, options, localeStringOpts) {
 
   // `Number.toLocaleString` does not account for leading zeroes, so we have to put them
   // back if we've configured this Mask to use them.
-  if (options && options.allowLeadingZeroes && n.indexOf('0') === 0) {
-    let zeros = getLeadingZeroes(n);
+  if (options && options.allowLeadingZeros && n.indexOf('0') === 0) {
+    let zeros = getLeadingZeros(n);
     if (formatted.indexOf('0') === 0) {
       formatted = formatted.substring(1);
     }
@@ -178,6 +179,12 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   options = utils.mergeSettings(undefined, options, DEFAULT_NUMBER_MASK_OPTIONS);
   if (!options.locale || !options.locale.length) {
     options.locale = Locale.currentLocale.name;
+  }
+  // Deprecated in v4.25.1
+  if (options.allowLeadingZeroes) {
+    warnAboutDeprecation('allowLeadingZeros', 'allowLeadingZeroes', 'Number Mask');
+    options.allowLeadingZeros = options.allowLeadingZeroes;
+    options.allowLeadingZeroes = undefined;
   }
 
   const PREFIX = options.prefix;
@@ -242,7 +249,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
 
     integer = integer.replace(masks.NON_DIGITS_REGEX, masks.EMPTY_STRING);
 
-    if (!options.allowLeadingZeroes) {
+    if (!options.allowLeadingZeros) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1');
     }
 

@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'mask';
  * @param {number} [settings.patternOptions.decimalLimit] [number masks only] defines the number of characters allowed after the decimal point.
  * @param {number} [settings.patternOptions.integerLimit] [number masks only] defines the number of characters allowed before the decimal point.
  * @param {boolean} [settings.patternOptions.allowNegative] [number masks only] allows a number to be negative (adds/retains a "minus" symbol at the beginning of the value)
- * @param {boolean} [settings.patternOptions.allowLeadingZeroes] [number masks only] allows a zero be placed before a decimal or other numbers.
+ * @param {boolean} [settings.patternOptions.allowLeadingZeros] [number masks only] allows a zero be placed before a decimal or other numbers.
  * @param {string} [settings.placeholderChar='_'] If using the `settings.guide`, will be used as the placeholder
  *  for characters that are not yet typed.
  * @param {function} [settings.pipe] provides a way of adjusting the masked content, caret position,

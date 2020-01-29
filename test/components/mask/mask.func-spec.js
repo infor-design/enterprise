@@ -328,7 +328,7 @@ describe('Mask API', () => {
         start: 0
       },
       patternOptions: {
-        allowLeadingZeroes: true,
+        allowLeadingZeros: true,
         allowThousands: true,
         allowDecimal: true,
         allowNegative: true,
@@ -486,4 +486,38 @@ describe('Mask API', () => {
    *  2. run _conformToMask_ directly with mask, etc
    *});
    */
+});
+
+describe('Number Mask API', () => {
+  const DEFAULT_SETTINGS = {
+    process: 'number',
+    pattern: masks.numberMask,
+    pipe: undefined
+  };
+
+  it('Should convert legacy settings to current settings', () => {
+    spyOn(console, 'warn');
+
+    const api = new MaskAPI(DEFAULT_SETTINGS);
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowLeadingZeroes: true, // should be `allowLeadingZeros`
+        allowThousands: true,
+        allowDecimal: true,
+        allowNegative: true,
+        integerLimit: 10,
+        decimalLimit: 3,
+        locale: 'en-US'
+      }
+    };
+
+    const textValue = '00000.123';
+    const result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('00000.123');
+    expect(console.warn).toHaveBeenCalled();
+  });
 });
