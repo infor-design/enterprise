@@ -166,3 +166,18 @@ describe('Searchfield full-text category with go button tests', () => {
       .toEqual('Animals , Baby , Clothing , Images , Places');
   });
 });
+
+describe('Searchfield `collapseSize` tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on test-configure-close-size', async () => {
+      expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
+    });
+  }
+});
