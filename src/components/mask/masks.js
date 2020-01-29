@@ -92,17 +92,7 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
 // @param {string} formattedStr the string to be checked
 // @returns {number} containing the number of leading zeros.
 function getLeadingZeros(formattedStr) {
-  let count = 0;
-  if (typeof formattedStr !== 'string' || !formattedStr.length) {
-    return count;
-  }
-  for (let i = 0; i < formattedStr.length; i++) {
-    if (formattedStr[i] !== '0') {
-      break;
-    }
-    count++;
-  }
-  return count;
+  return `${formattedStr}`.match(/^0*/)[0].length;
 }
 
 // Converts a string representing a formatted number into a Number Mask.
