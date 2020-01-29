@@ -315,6 +315,61 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('一二三四五六七七九');
   });
 
+  it('Should process number masks with leading zeros', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'number';
+    settings.pattern = masks.numberMask;
+    const api = new MaskAPI(settings);
+
+    // Handle big numbers with thousands separators
+    let textValue = '00001';
+    const opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        allowLeadingZeroes: true,
+        allowThousands: true,
+        allowDecimal: true,
+        allowNegative: true,
+        integerLimit: 10,
+        decimalLimit: 3,
+        locale: 'en-US'
+      }
+    };
+    let result = api.process(textValue, opts);
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(jasmine.any(Object));
+    expect(result.conformedValue).toEqual(jasmine.any(String));
+    expect(result.conformedValue).toEqual('00001');
+
+    textValue = '10000';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('10,000');
+
+    textValue = '00000.123';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('00000.123');
+
+    textValue = '10000.123';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('10,000.123');
+
+    textValue = '10000.100';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('10,000.100');
+
+    textValue = '-00000.123';
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('-00000.123');
+  });
+
   it('Should process short dates', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';
