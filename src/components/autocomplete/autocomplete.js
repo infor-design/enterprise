@@ -304,6 +304,16 @@ Autocomplete.prototype = {
       }
     });
 
+    /**
+     * Fires before the menu DOM is populated with the filter results.
+     *
+     * @event beforepopulated
+     * @memberof Autocomplete
+     * @param {object} event - The jquery event object
+     * @param {object} filterResult - The results of the filtering
+     */
+    this.element.trigger('beforepopulated', [filterResult]);
+
     const afterPlaceCallback = function (placementObj) {
       if (placementObj.wasFlipped === true) {
         self.list.add(self.element).addClass('is-ontop');
