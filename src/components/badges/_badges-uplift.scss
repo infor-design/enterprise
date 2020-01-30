@@ -6,8 +6,64 @@
   font-size: 14px;
   line-height: 20px;
 
+  button {
+    .icon {
+      top: -1px;
+    }
+  }
+
   &.round {
     width: 30px;
+  }
+}
+
+html {
+  &.is-mac {
+    .tag,
+    .badge {
+      button {
+        .icon {
+          top: -1px;
+        }
+      }
+    }
+  }
+
+  &.ie11 {
+    .tag,
+    .badge {
+      button {
+        .icon {
+          top: -3px;
+        }
+      }
+    }
+  }
+
+  &.is-safari {
+    .tag,
+    .badge {
+      button {
+        .icon {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .tag,
+    .badge {
+      button {
+        .icon {
+          top: 0;
+        }
+      }
+
+      .tag-content {
+        line-height: 19px;
+      }
+    }
   }
 }
 
