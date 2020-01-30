@@ -451,80 +451,27 @@ html.theme-uplift-contrast {
   }
 }
 
-html[class*='theme-soho-'] {
-  .tag,
-  .badge {
-    button {
-      .icon {
-        top: 1px;
-      }
-    }
-  }
-
-  &.ie {
-    .tag,
-    .badge {
-      .dismissible-btn,
-      .linkable-btn {
-        .icon {
-          top: 0;
-        }
-      }
-    }
-  }
-}
-
-html[class*='theme-uplift-'] {
-  .tag,
-  .badge {
-    .dismissible-btn,
-    .linkable-btn {
-      .icon {
-        top: -1px;
-      }
-    }
-  }
-
+// Bump all icons in tags by 1px on a Mac
+html {
+  &.is-mac,
   &.is-firefox {
     .tag,
     .badge {
-      &.is-linkable {
-        line-height: 19px;
-      }
-    }
-  }
-
-  &.is-firefox,
-  &.is-safari {
-    .dismissible-btn,
-    .linkable-btn {
-      .icon {
-        top: 0;
-      }
-    }
-  }
-
-  &.ie {
-    .tag,
-    .badge {
-      .dismissible-btn,
-      .linkable-btn {
+      button {
         .icon {
-          top: -3px;
+          top: 1px;
         }
       }
     }
   }
-}
 
-// IE
-html.ie {
-  .tag,
-  .badge {
-    .dismissible-btn,
-    .linkable-btn {
-      .icon {
-        top: 0;
+  &.ios {
+    .tag,
+    .badge {
+      button {
+        .icon {
+          top: 2px;
+        }
       }
     }
   }
