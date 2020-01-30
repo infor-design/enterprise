@@ -6,6 +6,7 @@
 
 - `[Datagrid]` Fixed a bug where if there was an editor datagrid might error when loading. ([#3313](https://github.com/infor-design/enterprise/issues/3313))
 - `[Mask]` Fixed a bug where leading zeroes were not possible to apply against Number Masks on standard input fields that also handled formatting for thousands separators. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
+- `[General]` Improved the colors of windows chrome custom scrollbars in uplift themes. ([#3413](https://github.com/infor-design/enterprise/issues/3413))
 
 ## v4.25.0
 
@@ -40,7 +41,6 @@
 - `[Datagrid]` Fixed a bug that made selecting blank items in lists in a dropdown not possible. ([#3313](https://github.com/infor-design/enterprise/issues/3313))
 - `[Editor]` Fixed an issue where line spacing was inconsistent. ([#3335](https://github.com/infor-design/enterprise/issues/3335))
 - `[General]` Added detection for wkWebView which is paired with safari. This caused issues with all black text as this browser had previously been unknown. ([#3336](https://github.com/infor-design/enterprise/issues/3336))
-- `[General]` Improved the colors of windows chrome custom scrollbars in uplift themes. ([#3413](https://github.com/infor-design/enterprise/issues/3413))
 - `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
 - `[Locale]` Fixed an issue where enter all digits was not working for fr-FR. ([#3217](https://github.com/infor-design/enterprise/issues/3217))
 - `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
