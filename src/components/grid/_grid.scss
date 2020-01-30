@@ -143,7 +143,6 @@ $gutter-neg-size: -20px;
       width: calc(100% - 10px);
     }
   }
-
 }
 
 .row::after {
@@ -183,6 +182,7 @@ $gutter-neg-size: -20px;
 
     .field .checkbox-label {
       margin-top: ($input-size-compact-height / 2) + 0.4 !important;
+      overflow: visible;
     }
   }
 
@@ -308,6 +308,11 @@ $gutter-neg-size: -20px;
   .column,
   .columns {
     padding: 0;
+  }
+
+  .column .field-flex input,
+  .columns .field-flex input {
+    width: 100%;
   }
 
   .one.column,
