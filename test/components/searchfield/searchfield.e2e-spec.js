@@ -186,11 +186,16 @@ if (utils.isChrome() && utils.isCI()) {
       await utils.setPage('/components/searchfield/test-place-on-bottom.html?layout=nofrills');
       await browser.driver
         .wait(protractor.ExpectedConditions
-          .presenceOf(element(by.id('#searchfield-template'))), config.waitsFor);
+          .presenceOf(element(by.id('searchfield-template'))), config.waitsFor);
     });
 
     it('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
-      const searchfieldInputEl = await element(by.id('#searchfield-template'));
+      // shrink the page to check ajax menu button in the overflow
+      const windowSize = await browser.driver.manage().window().getSize();
+      browser.driver.manage().window().setSize(640, 480);
+      await browser.driver.sleep(config.sleep);
+      
+      const searchfieldInputEl = await element(by.id('searchfield-template'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
@@ -199,7 +204,9 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison
-        .checkElement(await element(by.id('maincontent')), 'searchfield-open')).toEqual(0);
+        .checkElement(await element(by.css('.container')), 'searchfield-open')).toEqual(0);
+
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   });
 }
