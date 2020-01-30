@@ -264,6 +264,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
+$dropdown-readonly-icon-color: $theme-color-palette-graphite-50;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
@@ -278,6 +279,7 @@ $datepicker-hover-bg-color: $theme-color-palette-graphite-30;
 $datepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $datepicker-disabled-bg-color: $theme-color-palette-graphite-20;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
+$datepicker-readonly-icon-color: $theme-color-palette-graphite-50;
 
 .calendar-table .is-today {
   text-decoration: underline;
@@ -292,6 +294,7 @@ $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-60;
 $colorpicker-checkmark-one-color: $theme-color-palette-black;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
+$colorpicker-readonly-icon-color: $theme-color-palette-graphite-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-graphite-50;
