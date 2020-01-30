@@ -82,8 +82,12 @@ $uplift-appmenu-selected-border-color: $theme-color-brand-primary-alt;
 
 html.is-chrome:not(.is-mac) {
   ::-webkit-scrollbar-track {
-    background-color: $theme-color-body-base;
-    border-left: 1px solid $theme-color-brand-secondary-lighter;
+    background-color: $body-color-primary-background;
+    border: 1px solid $theme-color-palette-slate-10;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: $body-color-primary-background;
   }
 
   ::-webkit-scrollbar {
@@ -93,11 +97,11 @@ html.is-chrome:not(.is-mac) {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $theme-color-brand-secondary-base;
+    background: $theme-color-palette-slate-20;
     border-radius: 10px;
 
     &:hover {
-      background: $theme-color-brand-secondary-alt;
+      background: $theme-color-palette-slate-30;
     }
   }
 }
