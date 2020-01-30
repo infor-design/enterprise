@@ -423,7 +423,7 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.dark} !important;
 }
 
 .is-personalizable .personalize-subheader {
