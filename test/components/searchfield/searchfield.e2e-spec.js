@@ -181,7 +181,7 @@ if (utils.isChrome() && utils.isCI()) {
     });
   });
 
-  fdescribe('Searchfield placement tests', () => {
+  describe('Searchfield placement tests', () => {
     beforeEach(async () => {
       await utils.setPage('/components/searchfield/test-place-on-bottom.html?layout=nofrills');
       await browser.driver
@@ -194,7 +194,7 @@ if (utils.isChrome() && utils.isCI()) {
       const windowSize = await browser.driver.manage().window().getSize();
       browser.driver.manage().window().setSize(640, 480);
       await browser.driver.sleep(config.sleep);
-      
+
       const searchfieldInputEl = await element(by.id('searchfield-template'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
