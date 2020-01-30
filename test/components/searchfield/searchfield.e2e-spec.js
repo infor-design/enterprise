@@ -167,17 +167,39 @@ describe('Searchfield full-text category with go button tests', () => {
   });
 });
 
-describe('Searchfield `collapseSize` tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
-  });
+if (utils.isChrome() && utils.isCI()) {
+  describe('Searchfield `collapseSize` tests', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+    });
 
-  if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on test-configure-close-size', async () => {
       expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
     });
-  }
-});
+  });
+
+  fdescribe('Searchfield placement tests', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/searchfield/test-place-on-bottom.html?layout=nofrills');
+      await browser.driver
+        .wait(protractor.ExpectedConditions
+          .presenceOf(element(by.id('#searchfield-template'))), config.waitsFor);
+    });
+
+    it('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
+      const searchfieldInputEl = await element(by.id('#searchfield-template'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+      await searchfieldInputEl.clear();
+      await searchfieldInputEl.sendKeys('n');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison
+        .checkElement(await element(by.id('maincontent')), 'searchfield-open')).toEqual(0);
+    });
+  });
+}
