@@ -204,7 +204,13 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison
-        .checkElement(await element(by.css('.container')), 'searchfield-open')).toEqual(0);
+        .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
+
+      await searchfieldInputEl.sendKeys('ew');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison
+        .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
 
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
