@@ -5,6 +5,7 @@
 ### v4.25.1 Fixes
 
 - `[Datagrid]` Fixed a bug where if there was an editor datagrid might error when loading. ([#3313](https://github.com/infor-design/enterprise/issues/3313))
+- `[Mask]` Fixed a bug where leading zeroes were not possible to apply against Number Masks on standard input fields that also handled formatting for thousands separators. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
 
 ## v4.25.0
 
