@@ -593,7 +593,6 @@ Header.prototype = {
     for (let i = 0; i < tags.length; i++) {
       tags[i].setAttribute('data-rgbcolor', colors[keys[i]].value);
     }
-    console.log(menu.html());
   },
 
   /**
