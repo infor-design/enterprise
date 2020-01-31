@@ -203,14 +203,20 @@ if (utils.isChrome() && utils.isCI()) {
       await searchfieldInputEl.sendKeys('n');
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison
-        .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
+      // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
+      await browser.executeScript(() => 'document.activeElement.blur();').then(async () => {
+        expect(await browser.protractorImageComparison
+          .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
+      });
 
       await searchfieldInputEl.sendKeys('ew');
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison
-        .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
+      // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
+      await browser.executeScript(() => 'document.activeElement.blur();').then(async () => {
+        expect(await browser.protractorImageComparison
+          .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
+      });
 
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
