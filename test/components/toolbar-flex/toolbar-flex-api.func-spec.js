@@ -393,7 +393,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
 
         expect(moreActionsSpyEvent).toHaveBeenTriggered();
         done();
-      }, 300);
+      }, 500);
     });
   });
 });

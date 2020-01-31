@@ -858,7 +858,7 @@ DatePicker.prototype = {
       if (btn.hasClass('is-select-month') || btn.hasClass('is-select-month-pane')) {
         const year = parseInt(self.calendarAPI.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
         const month = parseInt(self.calendarAPI.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
-        const day = self.calendarAPI.currentDay || 1;
+        const day = 1;
 
         self.currentDate = new Date(year, month, day);
 
