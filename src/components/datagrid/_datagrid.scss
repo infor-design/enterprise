@@ -2901,16 +2901,16 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
-    min-height: $datagrid-medium-row-height + 2;
     margin-top: -8px;
+    min-height: $datagrid-medium-row-height + 2;
   }
 }
 
 .short-rowheight {
   .datagrid-multiline-text {
+    margin-bottom: -4px;
     min-height: $datagrid-short-row-height + 6;
     padding: 0px 20px;
-    margin-bottom: -4px;
   }
 }
 
