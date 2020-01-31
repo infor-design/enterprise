@@ -192,6 +192,10 @@ div.multiselect {
       border-color: $input-color-readonly-border !important;
       box-shadow: none;
     }
+
+    + .icon {
+      color: $dropdown-readonly-icon-color;
+    }
   }
 
   &:focus {

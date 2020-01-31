@@ -3755,10 +3755,13 @@ Datagrid.prototype = {
         cssClass += ' datagrid-trigger-cell';
       }
 
-      if (formatted.indexOf('trigger') === -1 && col && col.editor
-        && ['colorpicker', 'dropdown', 'time', 'lookup', 'date']
-          .indexOf(col.editor.name.toLowerCase()) >= 0) {
-        cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
+      if (formatted.indexOf('trigger') === -1 && col && col.editor) {
+        const editorName = this.getEditorName(col.editor);
+
+        if (['colorpicker', 'dropdown', 'time', 'lookup', 'date']
+          .indexOf(editorName) >= 0) {
+          cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
+        }
       }
 
       if (col.editor && this.settings.editable) {
@@ -3958,6 +3961,28 @@ Datagrid.prototype = {
     }
 
     return containerHtml;
+  },
+
+  /**
+   * Return the name of the editor.
+   * @private
+   * @param  {object} editor The editor to check
+   * @returns {string} The editors name
+   */
+  getEditorName(editor) {
+    if (!editor) {
+      return '';
+    }
+
+    let editorName = editor.name;
+    // In IE functions do not have names
+    if (!(function f() {}).name) {
+      const getFnName = function getFnName(fn) {
+        return (fn.toString().match(/function (.+?)\(/)||[,''])[1]; //eslint-disable-line
+      };
+      editorName = getFnName(editor);
+    }
+    return editorName ? editorName.toLowerCase() : '';
   },
 
   /**
@@ -8427,7 +8452,7 @@ Datagrid.prototype = {
     if (this.settings.showDirty) {
       let originalVal = cellValue;
 
-      if (originalVal === '' && /checkbox|favorite/i.test(this.editor.name)) {
+      if (originalVal === '' && /checkbox|favorite/i.test(this.getEditorName(this.editor))) {
         originalVal = false;
       }
 
@@ -8483,8 +8508,9 @@ Datagrid.prototype = {
     const input = this.editor.input;
     let newValue;
     let cellNode;
-    const isEditor = this.editor.name === 'editor';
-    const isFileupload = this.editor.name === 'fileupload';
+    const editorName = this.getEditorName(this.editor);
+    const isEditor = editorName === 'editor';
+    const isFileupload = editorName === 'fileupload';
     const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox, .colorpicker'));
 
     // Editor.getValue
