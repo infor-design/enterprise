@@ -2902,12 +2902,15 @@ td .btn-actions {
 .medium-rowheight {
   .datagrid-multiline-text {
     min-height: $datagrid-medium-row-height + 2;
+    margin-top: -8px;
   }
 }
 
 .short-rowheight {
   .datagrid-multiline-text {
     min-height: $datagrid-short-row-height + 6;
+    padding: 0px 20px;
+    margin-bottom: -4px;
   }
 }
 
