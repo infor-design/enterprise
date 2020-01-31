@@ -189,7 +189,7 @@ if (utils.isChrome() && utils.isCI()) {
           .presenceOf(element(by.id('searchfield-template'))), config.waitsFor);
     });
 
-    fit('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
+    it('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
       // shrink the page to check ajax menu button in the overflow
       const windowSize = await browser.driver.manage().window().getSize();
       browser.driver.manage().window().setSize(640, 480);
