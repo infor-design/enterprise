@@ -204,7 +204,7 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
 
       // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
-      await browser.executeScript(() => 'document.activeElement.blur();').then(async () => {
+      await browser.executeScript('document.activeElement.blur();').then(async () => {
         expect(await browser.protractorImageComparison
           .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
       });
@@ -213,7 +213,7 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
 
       // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
-      await browser.executeScript(() => 'document.activeElement.blur();').then(async () => {
+      await browser.executeScript('document.activeElement.blur();').then(async () => {
         expect(await browser.protractorImageComparison
           .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
       });
