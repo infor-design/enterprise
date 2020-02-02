@@ -79,7 +79,7 @@
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
       columns.push({ id: 'price', name: 'Price', field: 'price',  formatter: Formatters.Decimal, editor: Editors.Input });
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', editor: Editors.Date });
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, editor: Editors.Input });
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Textarea, editor: Editors.Textarea });
       columns.push({ id: 'action', name: 'Action Item', field: 'action' });
 
 

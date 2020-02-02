@@ -125,8 +125,12 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<textarea class="textarea"></textarea>').appendTo(container);
-
+      container.addClass('datagrid-textarea-cell-wrapper');
+      const autogrowStartHeight = container.get(0).scrollHeight;
+      this.api = $(`<textarea class="textarea" >${this.originalValue}</textarea>`).data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
+      this.input = this.api.element.appendTo(container);
+      
+      
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
       }
@@ -151,6 +155,7 @@ const editors = {
     this.destroy = function () {
       setTimeout(() => {
         this.input.remove();
+        container.removeClass('datagrid-textarea-cell-wrapper');
       }, 0);
     };
 
