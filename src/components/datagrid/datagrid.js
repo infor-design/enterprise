@@ -6341,32 +6341,32 @@ Datagrid.prototype = {
       if (this.settings.toolbar.rowHeight) {
         menu.append(`${'<li class="separator single-selectable-section"></li>' +
           '<li class="heading">'}${Locale.translate('RowHeight')}</li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'short' ? ' is-checked' : ''}"><a data-option="row-short">${Locale.translate('Short')}</a></li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'medium' ? ' is-checked' : ''}"><a data-option="row-medium">${Locale.translate('Medium')}</a></li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
+          `<li class="is-selectable${this.settings.rowHeight === 'short' ? ' is-checked' : ''}"><a href="#" data-option="row-short">${Locale.translate('Short')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'medium' ? ' is-checked' : ''}"><a href="#" data-option="row-medium">${Locale.translate('Medium')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a href="#" data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
       }
 
       if (this.settings.toolbar.filterRow === true) {
         menu.append(`${'<li class="separator"></li>' +
           '<li class="heading">'}${Locale.translate('Filter')}</li>` +
-          `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>` +
-          `<li class="is-indented"><a data-option="run-filter">${Locale.translate('RunFilter')}</a></li>` +
-          `<li class="is-indented"><a data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`);
+          `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a href="#" data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>` +
+          `<li class="is-indented"><a href="#" data-option="run-filter">${Locale.translate('RunFilter')}</a></li>` +
+          `<li class="is-indented"><a href="#" data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`);
       }
 
       if (typeof this.settings.toolbar.filterRow === 'object') {
         let filterOptions = '<li class="separator"></li>';
 
         if (this.settings.toolbar.filterRow.showFilter) {
-          filterOptions += `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>`;
+          filterOptions += `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a href="#" data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>`;
         }
 
         if (this.settings.toolbar.filterRow.runFilter && !this.settings.filterWhenTyping) {
-          filterOptions += `<li class="is-indented"><a data-option="run-filter">${Locale.translate('RunFilter')}</a></li>`;
+          filterOptions += `<li class="is-indented"><a href="#" data-option="run-filter">${Locale.translate('RunFilter')}</a></li>`;
         }
 
         if (this.settings.toolbar.filterRow.clearFilter) {
-          filterOptions += `<li class="is-indented"><a data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`;
+          filterOptions += `<li class="is-indented"><a href="#" data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`;
         }
         menu.append(filterOptions);
       }
