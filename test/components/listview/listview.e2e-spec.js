@@ -307,9 +307,8 @@ describe('Listview example-search tests', () => {
 describe('Listview example-paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-paging');
-    const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview ul li:last-child'))), config.waitsFor);
   });
 
   if (!utils.isIE()) {

@@ -10,7 +10,7 @@ describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-index?layout=nofrills');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
