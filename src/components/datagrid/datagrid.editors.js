@@ -127,9 +127,8 @@ const editors = {
     this.init = function () {
       container.addClass('datagrid-textarea-cell-wrapper');
       const autogrowStartHeight = container.get(0).scrollHeight;
-      this.api = $(`<textarea class="textarea" >${this.originalValue}</textarea>`).data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
-      this.input = this.api.element.appendTo(container);
-      
+      this.input = $(`<textarea class="textarea" >${this.originalValue}</textarea>`).appendTo(container);
+      this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
       
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);

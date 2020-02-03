@@ -75,7 +75,7 @@
       columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, editor: Editors.Input });
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Textarea, editor: Editors.Textarea });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Textarea, editor: Editors.Textarea, editorOptions: { maxLength: 500, charRemainingText: 'You can type {0} more characters.' } });
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
       columns.push({ id: 'price', name: 'Price', field: 'price',  formatter: Formatters.Decimal, editor: Editors.Input });
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', editor: Editors.Date });
