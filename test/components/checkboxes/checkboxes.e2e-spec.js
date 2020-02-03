@@ -28,7 +28,7 @@ describe('Checkbox example-index tests', () => {
 
 describe('Checkbox Uplift tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-index?layout=nofrills&theme=upift');
+    await utils.setPage('/components/checkboxes/example-index?theme=uplift&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
