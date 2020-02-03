@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="four columns">
+    <div class="calendar-toolbar" data-init="false" id="example-1"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-2"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-3"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-4"></div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+    $('#example-1').calendartoolbar({ month: 1, year: 2020 });
+    $('#example-2').calendartoolbar({ month: 1, year: 2020, isAlternate: true });
+    $('#example-3').calendartoolbar({ month: 1, year: 2020, isAlternate: true, isMenuButton: false });
+    $('#example-4').calendartoolbar({ month: 1, year: 2020, showToday: false });
+  });
+</script>
