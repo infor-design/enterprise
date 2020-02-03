@@ -81,6 +81,24 @@
       display: inline-block;
       width: calc(100% - 105px);
     }
+
+    .buttonset {
+      button[class^='btn'] {
+        color: $contextual-panel-button-color;
+
+        &:hover {
+          color: $contextual-panel-hover-icon-color;
+
+          .icon {
+            color: $contextual-panel-hover-icon-color;
+          }
+        }
+
+        .icon {
+          color: $contextual-panel-icon-color;
+        }
+      }
+    }
   }
 
   .toolbar-section {

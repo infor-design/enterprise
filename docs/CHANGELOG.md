@@ -12,6 +12,7 @@
 ### v4.26.0 Fixes
 
 - `[Application Menu]` Fixed overlap button when label is too long, and aligned dropdown icon in application menu uplift theme. ([#3133](https://github.com/infor-design/enterprise/issues/3133))
+- `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
 - `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
 - `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
