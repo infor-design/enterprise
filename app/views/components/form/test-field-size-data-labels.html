@@ -1,0 +1,61 @@
+<div class="row small-top-padding">
+  <div class="twelve columns">
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Shorter Input Field Sizes</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn btn-toggle is-selected is-pressed" type="button" id="toggle-compact">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-change-row-line-height"></use>
+          </svg>
+          <span>Compact Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form>
+  <div class="row form-responsive flex-align-bottom">
+    <div class="one-half column">
+      <div class="field">
+        <label for="input-1">Entity</label>
+        <input type="text" id="input-1" aria-required="true" value="Test"/>
+      </div>
+    </div>
+    <div class="one-half column">
+        <div class="field">
+          <span class="label">Entity Info</span>
+          <span class="data field-height">USA Based</span>
+        </div>
+    </div>
+  </div>
+  <div class="row form-responsive">
+    <div class="one-half column">
+      <div class="field">
+        <label for="input-2">Currency</label>
+        <input type="text" id="input-2" aria-required="true"  value="Test" readonly />
+      </div>
+    </div>
+    <div class="one-half column">
+        <div class="field">
+          <span class="label">Currency Info</span>
+          <span class="data field-height">USA Based</span>
+        </div>
+    </div>
+  </div>
+</form>
+
+<script id="script-toggle-compact">
+  $('#toggle-compact').on('click', function() {
+    var className = 'form-layout-compact';
+    var hasClass = $('form').hasClass(className);
+    if (hasClass) {
+      $('form').removeClass(className);
+    } else {
+      $('form').addClass(className);
+    }
+  });
+</script>
