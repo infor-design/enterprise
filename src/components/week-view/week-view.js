@@ -679,6 +679,7 @@ WeekView.prototype = {
 
     this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       fireEvent(e.currentTarget, 'eventclick');
+      e.preventDefault();
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event', (e) => {
@@ -733,6 +734,27 @@ WeekView.prototype = {
 
     this.settings.events.push(event);
     this.renderEvent(event);
+  },
+
+  /**
+   * Select header for given date
+   * @private
+   * @param {object|string} d The date or key use for attribute in header `data-kay`.
+   * @returns {void}
+   */
+  selectHeader(d) {
+    const key = d instanceof Date ?
+      stringUtils.padDate(d.getFullYear(), d.getMonth(), d.getDate()) : d;
+    const selector = { all: '.week-view-table-header th' };
+    selector.current = `${selector.all}[data-key="${key}"]`;
+    const headers = [].slice.call(this.element[0].querySelectorAll(selector.all));
+    headers.forEach((header) => {
+      header.classList.remove('is-selected');
+    });
+    const thisHeader = this.element[0].querySelector(selector.current);
+    if (thisHeader) {
+      thisHeader.classList.add('is-selected');
+    }
   },
 
   /**
