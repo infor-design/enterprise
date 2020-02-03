@@ -131,7 +131,7 @@ const editors = {
       this.input = $(`<textarea class="textarea" ${maxLength}>${this.originalValue}</textarea>`).appendTo(container);
       const editorOptions = column.editorOptions ? column.editorOptions : {};
       // disable the characterCounter by default
-      if ('characterCounter' in editorOptions) {
+      if (!('characterCounter' in editorOptions)) {
         editorOptions.characterCounter = false;
       }
       this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
