@@ -26,15 +26,10 @@ describe('Checkbox example-index tests', () => {
   }
 });
 
-describe('Checkbox Required tests', () => {
+describe('Checkbox Uplift tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-required?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-index?layout=nofrills&theme=upift');
   });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
@@ -42,7 +37,7 @@ describe('Checkbox Required tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('checkboxes-required')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('checkboxes-uplift')).toEqual(0);
     });
   }
 });
