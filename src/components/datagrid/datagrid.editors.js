@@ -153,9 +153,9 @@ const editors = {
     };
 
     this.destroy = function () {
+      container.removeClass('datagrid-textarea-cell-wrapper');
       setTimeout(() => {
         this.input.remove();
-        container.removeClass('datagrid-textarea-cell-wrapper');
       }, 0);
     };
 
