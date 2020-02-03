@@ -1,17 +1,5 @@
 //  Form Layouts
 //================================================== //
-
-// Pushes down the checkbox in the grid (form/example-inputs.html)
-.page-container,
-.container {
-  .form-responsive {
-    .field .checkbox-label,
-    .field .checkbox > label {
-      margin-top: 39px !important;
-    }
-  }
-}
-
 .form-responsive .compound-field .checkbox-label {
   margin-top: 0 !important;
 }

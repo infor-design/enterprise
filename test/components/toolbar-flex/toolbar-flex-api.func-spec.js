@@ -376,7 +376,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
 
         expect(moreActionsSpyEvent).toHaveBeenTriggered();
         done();
-      }, 300);
+      }, 500);
     });
 
     it('Should trigger "selected" event for menu button in the overflow menu', (done) => {

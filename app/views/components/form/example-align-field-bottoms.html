@@ -1,0 +1,107 @@
+<div class="row small-top-padding">
+  <div class="twelve columns">
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Example</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn btn-toggle" type="button" id="toggle-compact">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-change-row-line-height"></use>
+          </svg>
+          <span>Compact Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<form>
+  <div class="row flex-align-bottom">
+    <div class="three columns">
+      <div class="field">
+          <label for="field-1">Refresh interval for Action List summary (seconds)</label>
+          <input id="field-1" value="360"/>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+          <label for="field-2">Allow multiple instances of Workspace</label>
+          <select class="dropdown" id="field-2">
+            <option selected="selected">Yes</option>
+            <option>No</option>
+          </select>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+        <label for="field-3">Task Banner Image URL</label>
+        <div class="field-flex">
+          <input id="field-3"/>
+          <button class="btn-icon enable" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="icon" role="presentation" aria-hidden="true" focusable="false">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-confirm" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+          <label label="field-4">Task Banner Background Colour</label>
+          <input id="field-4" value="transparent"/>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-align-bottom">
+    <div class="three columns">
+      <div class="field">
+        <label for="field-5">Show Status Bar</label>
+        <select class="dropdown" id="field-5">
+          <option selected="selected">Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+        <label for="field-6">Allow Users To Upload Profile Images</label>
+        <select class="dropdown" id="field-6">
+          <option selected="selected">Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+        <label for="field-7">Allow users to re-order Dashboard columns</label>
+        <select class="dropdown" id="field-7">
+          <option selected="selected">Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+    <div class="three columns">
+      <div class="field">
+        <label for="field-8">Show Edit User Option in Dashboard</label>
+        <select class="dropdown" id="field-8">
+          <option selected="selected">Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script id="script-toggle-compact">
+  $('#toggle-compact').on('click', function() {
+    var className = 'form-layout-compact';
+    var hasClass = $('form').hasClass(className);
+    if (hasClass) {
+      $('form').removeClass(className);
+    } else {
+      $('form').addClass(className);
+    }
+  });
+</script>
