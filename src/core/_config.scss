@@ -298,6 +298,9 @@ $contextual-toolbar-button-color: rgba($button-color-primary-initial-font, 0.8);
 $contextual-toolbar-button-hover-color: rgba($button-color-primary-initial-font, 1);
 $contextual-toolbar-button-disabled-color: rgba($button-color-primary-initial-font, 0.3);
 $contextual-panel-seperator-bg-color: $theme-color-brand-secondary-alt;
+$contextual-panel-button-color: $button-color-tertiary-initial-font;
+$contextual-panel-icon-color: $button-color-tertiary-initial-font;
+$contextual-panel-hover-icon-color: $button-color-tertiary-hover-font;
 
 // Swaplist
 $swaplist-bg-color: $theme-color-palette-graphite-10;
