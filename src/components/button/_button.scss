@@ -584,6 +584,7 @@ a.btn-close {
   [class*='btn'] {
     height: $button-size-compact-height;
     margin-bottom: 10px;
+    min-height: $button-size-compact-height;
     min-width: 0;
 
     > .icon:not(.icon-dropdown) {

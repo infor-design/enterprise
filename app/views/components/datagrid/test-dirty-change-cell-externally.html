@@ -104,7 +104,7 @@
 
     //Example changing cell value
     $('#change-cell').on('click', function () {
-      // In Landmark, the values of a datagrid maybe updated externally - in a modeal dialog and new data values returned to the row.
+      // The values of a datagrid maybe updated externally - in a modeal dialog and new data values returned to the row.
       // In this simplified example, changing the quantity value from 1 to 50 for row 0
       gridApi.updateRow(0, { id: 0, productId: 2142201, productName: 'Compressor', activity:  'Filter Testing', quantity: 50, price: 210.99, status: 'OK', orderDate:  '', portable: false, action: 1 });
       gridApi.rowStatus(0, 'in-progress', 'Row has changed');

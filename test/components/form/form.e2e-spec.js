@@ -67,5 +67,55 @@ describe('Form Tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-compact-mode-rtl')).toEqual(0);
     });
+
+    it('Should not visual regress on fields with very long labels', async () => { //eslint-disable-line
+      await utils.setPage('/components/form/test-long-labels.html?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-long-labels')).toEqual(0);
+    });
+
+    it('Should not visual regress on flex fields', async () => { //eslint-disable-line
+      await utils.setPage('/components/form/test-flex-field.html?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-flex-field')).toEqual(0);
+    });
+
+    it('Should not visual regress on bottom aligned rows', async () => { //eslint-disable-line
+      await utils.setPage('/components/form/example-align-field-bottoms?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-align-field-bottoms')).toEqual(0);
+    });
+
+    it('Should not visual regress on preventing wrapped labels', async () => { //eslint-disable-line
+      await utils.setPage('/components/form/test-wrapped-labels?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-wrapped-labels')).toEqual(0);
+    });
+
+    it('Should not visual regress on field height static text', async () => { //eslint-disable-line
+      await utils.setPage('/components/form/test-field-size-data-labels?layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      await utils.checkForErrors();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'form-field-size-data')).toEqual(0);
+    });
   }
 });

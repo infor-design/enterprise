@@ -288,8 +288,9 @@ Calendar.prototype = {
       return;
     }
 
-    let startDate = new Date(this.currentDate());
-    let endDate = new Date(this.currentDate());
+    const currentDate = this.currentDate();
+    let startDate = new Date(currentDate);
+    let endDate = new Date(currentDate);
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
@@ -313,6 +314,8 @@ Calendar.prototype = {
         this.weekView.showWeek(startDate, endDate);
         this.weekView.calendarToolbarAPI.setViewChangerValue(this.activeView);
         this.clearEventDetails();
+        this.monthView.selectDay(currentDate, false, true);
+        this.weekView.selectHeader(currentDate);
         break;
       case 'month':
         this.monthViewContainer.classList.remove('hidden');
@@ -320,7 +323,7 @@ Calendar.prototype = {
         this.activeView = 'month';
         this.monthView.showMonth(this.settings.month, this.settings.year);
         this.monthView.calendarToolbarAPI.setViewChangerValue(this.activeView);
-        this.monthView.selectDay(this.currentDate(), false, true);
+        this.monthView.selectDay(currentDate, false, true);
         break;
       default:
     }
@@ -628,20 +631,27 @@ Calendar.prototype = {
 
     if (eventCnt >= 2) {
       const moreSpan = container.querySelector('.calendar-event-more');
-      const moreText = Locale.translate('More', { locale: this.locale.name, language: this.language }).replace('...', '');
+      const setMoreSpan = (elem, count) => {
+        elem.setAttribute('data-count', count);
+        // Wrap text in extra span here, so link should not expand more than text, because `more span` is styled as block level element
+        elem.innerHTML = `<span>+ ${count} ${Locale.translate('More', { locale: this.locale.name, language: this.language }).replace('...', '')}</span>`;
+      };
       if (!moreSpan) {
         node = document.createElement('span');
         DOM.addClass(node, 'calendar-event-more');
-        node.innerHTML = `+ 1 ${moreText}`;
-        node.setAttribute('data-count', 1);
+        setMoreSpan(node, 1);
         container.querySelector('.day-container').appendChild(node);
+        // Switch to day view on click
+        $(container)
+          .off(`click.${COMPONENT_NAME}`)
+          .on(`click.${COMPONENT_NAME}`, '.calendar-event-more span', () => {
+            const thisDate = this.monthView.dayMap[idx].key;
+            this.monthView.selectDay(thisDate, false, true);
+            this.changeView('day');
+          });
       } else {
-        let cnt = moreSpan.getAttribute('data-count');
-        cnt++;
-        moreSpan.setAttribute('data-count', cnt);
-        moreSpan.innerHTML = `+ ${cnt} ${moreText}`;
+        setMoreSpan(moreSpan, parseInt(moreSpan.getAttribute('data-count'), 10) + 1);
       }
-
       return this;
     }
 
@@ -875,11 +885,11 @@ Calendar.prototype = {
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
+      const key = e.currentTarget.getAttribute('data-key');
       // throw this case out or you can click the wrong day
-      if (this.isSwitchingMonth || this.modalVisible()) {
+      if (!key || this.isSwitchingMonth || this.modalVisible()) {
         return;
       }
-      const key = e.currentTarget.getAttribute('data-key');
       const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
 
       const eventData = utils.extend({ }, this.settings.newEventDefaults);
