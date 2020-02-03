@@ -26,6 +26,7 @@
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
 - `[Popupmenu]` Fixed an issue where list separators were disappearing when reduced the browser zoom level e.g. 70-80%. ([#3407](https://github.com/infor-design/enterprise/issues/3407))
 - `[Radar Chart]` Fixed an issue where labels was cut off for some screen sizes. ([#3320](https://github.com/infor-design/enterprise/issues/3320))
+- `[Searchfield]` Fixed a bug where changing filter results while the autocomplete is open may result in the menu being positioned incorrectly. ([#3243](https://github.com/infor-design/enterprise/issues/3243))
 - `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
 - `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))

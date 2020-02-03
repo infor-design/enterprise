@@ -800,7 +800,7 @@ SearchField.prototype = {
     }
 
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    self.element.on(`populated.${this.id}`, (e, items) => {
+    self.element.on(`beforepopulated.${this.id}`, (e, items) => {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -1928,7 +1928,7 @@ SearchField.prototype = {
     const separator = $('<li class="separator" role="presentation"></li>').appendTo(list);
     const more = $('<li role="presentation"></li>').appendTo(list);
     this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
-      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
+      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumericWithSpaces(val)}"</span>`)
       .appendTo(more);
 
     if (this.autocomplete.maxWidth) {
@@ -1949,7 +1949,8 @@ SearchField.prototype = {
 
     const none = $('<li role="presentation" class="is-placeholder"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>')
+      .html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**
