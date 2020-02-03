@@ -21,6 +21,7 @@
 - `[Input]` Added the ability to line up data labels with inputs by adding class `field-height` to the `data` element and placing it in a responsive grid. ([#987](https://github.com/infor-design/enterprise/issues/987))
 - `[Input]` Added the ability to use standalone required spans, this will help on responsive fields if they are cut off. ([#3115](https://github.com/infor-design/enterprise/issues/3115))
 - `[Input/Forms]` Added the ability to add a class to rows to align the fields on the bottom, this will line up fields if they have wrapping labels or long labels with required fields. To enable this add class `flex-align-bottom` to the grid `row`. ([#443](https://github.com/infor-design/enterprise/issues/443))
+- `[Locale]` Fixed an issue where formatDate() method was not working for es-419. ([#3363](https://github.com/infor-design/enterprise/issues/3363))
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
 - `[Popupmenu]` Fixed an issue where list separators were disappearing when reduced the browser zoom level e.g. 70-80%. ([#3407](https://github.com/infor-design/enterprise/issues/3407))
 - `[Radar Chart]` Fixed an issue where labels was cut off for some screen sizes. ([#3320](https://github.com/infor-design/enterprise/issues/3320))
