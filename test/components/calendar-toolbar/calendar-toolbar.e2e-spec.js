@@ -13,15 +13,6 @@ describe('Calendar Toolbar index tests', () => {
   it('Should render without error', async () => {
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const calendarEl = await element.all(by.className('calendar-toolbar')).first();
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar')).toEqual(0);
-    });
-  }
 });
 
 describe('Calendar Toolbar Datepicker tests', () => {
@@ -32,13 +23,23 @@ describe('Calendar Toolbar Datepicker tests', () => {
   it('Should render without error', async () => {
     await utils.checkForErrors();
   });
+});
+
+describe('Calendar Toolbar visual tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar-toolbar/test-visuals?layout=nofrills');
+  });
+
+  it('Should render without error', async () => {
+    await utils.checkForErrors();
+  });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const calendarEl = await element.all(by.className('calendar-toolbar')).first();
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar-datepicker')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'calendar-toolbar-visuals')).toEqual(0);
     });
   }
 });
