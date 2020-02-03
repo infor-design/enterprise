@@ -146,7 +146,7 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 }
 
 .module-tabs.is-personalizable .tab:hover {
-  background-color: ${colors.hover} !important;
+  background-color: ${colors.darker} !important;
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
