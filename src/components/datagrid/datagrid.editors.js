@@ -127,10 +127,19 @@ const editors = {
     this.init = function () {
       container.addClass('datagrid-textarea-cell-wrapper');
       const autogrowStartHeight = container.get(0).scrollHeight;
-      const maxLength = column.maxLength ? '' : `maxlength="${column.maxLength}"`;
+      const maxLength = column.maxLength ? `maxlength="${column.maxLength}"` : '';
       this.input = $(`<textarea class="textarea" ${maxLength}>${this.originalValue}</textarea>`).appendTo(container);
+      const editorOptions = column.editorOptions ? column.editorOptions : {};
+      // disable the characterCounter by default
+      if ('characterCounter' in editorOptions) {
+        editorOptions.characterCounter = false;
+      }
       this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
-      
+
+      this.input.on('click.textareaeditor', function(e) {
+        e.stopPropagation();
+      });
+
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
       }
@@ -149,12 +158,13 @@ const editors = {
     };
 
     this.focus = function () {
-      this.input.focus();
+      this.input.focus().select();;
     };
 
     this.destroy = function () {
       container.removeClass('datagrid-textarea-cell-wrapper');
       setTimeout(() => {
+        this.input.off('click.textareaeditor');
         this.input.remove();
       }, 0);
     };
