@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -581,7 +582,7 @@ SwapList.prototype = {
       const itemData = dataList[i];
       if (isFiltered) {
         itemData.node = li;
-        delete itemData.isFiltered;
+        delete itemData._isFilteredOut;
       }
       if (li.is('.is-selected')) {
         this.selections.itemsData.push(itemData);

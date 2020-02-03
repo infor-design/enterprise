@@ -2176,10 +2176,10 @@ Datagrid.prototype = {
               isFiltered = !checkRow(childNode);
             }
 
-            childNode.isFiltered = !checkRow(childNode);
+            childNode._isFilteredOut = !checkRow(childNode);
 
-            if (parentNode && !childNode.isFiltered) {
-              parentNode.isFiltered = false;
+            if (parentNode && !childNode._isFilteredOut) {
+              parentNode._isFilteredOut = false;
             }
 
             if (childNode.children && childNode.children.length) {
@@ -2195,26 +2195,26 @@ Datagrid.prototype = {
             checkChildNodes(dataset[i].children);
           }
 
-          dataset[i].isFiltered = isFiltered;
+          dataset[i]._isFilteredOut = isFiltered;
         }
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
           for (i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
             isFiltered = !checkRow(this.settings.dataset[i].values[i2]);
-            this.settings.dataset[i].values[i2].isFiltered = isFiltered;
+            this.settings.dataset[i].values[i2]._isFilteredOut = isFiltered;
 
             if (!isFiltered) {
               isGroupFiltered = false;
             }
           }
 
-          this.settings.dataset[i].isFiltered = isGroupFiltered;
+          this.settings.dataset[i]._isFilteredOut = isGroupFiltered;
         }
       } else {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           isFiltered = !checkRow(this.settings.dataset[i]);
-          this.settings.dataset[i].isFiltered = isFiltered;
+          this.settings.dataset[i]._isFilteredOut = isFiltered;
         }
       }
     }
@@ -2305,15 +2305,15 @@ Datagrid.prototype = {
           const childrenLen = children ? children.length : 0;
 
           if (childrenLen) {
-            if (!node.isFiltered) {
+            if (!node._isFilteredOut) {
               if (s.allowChildExpandOnMatch) {
                 for (let i2 = 0; i2 < childrenLen; i2++) {
-                  children[i2].isFiltered = false;
+                  children[i2]._isFilteredOut = false;
                 }
               } else {
                 let isAllChildrenFiltered = true;
                 for (let i2 = 0; i2 < childrenLen; i2++) {
-                  if (!children[i2].isFiltered) {
+                  if (!children[i2]._isFilteredOut) {
                     isAllChildrenFiltered = false;
                   }
                 }
@@ -2436,9 +2436,10 @@ Datagrid.prototype = {
     }
 
     const filterExpr = [];
+    const self = this;
 
     // Create an array of objects with: field, id, filterType, operator, value
-    this.element.find('th').each(function () {
+    this.element.find('th.is-filterable').each(function () {
       const rowElem = $(this);
       const btn = rowElem.find('.btn-filter');
       const input = rowElem.find('input, select');
@@ -2490,6 +2491,10 @@ Datagrid.prototype = {
         condition.innerHTML = input[0].innerHTML;
       }
 
+      const column = self.columnById(condition.columnId);
+      if (column && column[0]) {
+        condition.filterType = column[0].filterType;
+      }
       filterExpr.push(condition);
     });
 
@@ -3051,7 +3056,7 @@ Datagrid.prototype = {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
         if (activePage === 1 && (i - this.filteredCount) >= s.pagesize) {
-          if (!s.dataset[i].isFiltered) {
+          if (!s.dataset[i]._isFilteredOut) {
             this.recordCount++;
           } else {
             this.filteredCount++;
@@ -3061,7 +3066,7 @@ Datagrid.prototype = {
 
         if (activePage > 1 && !((i - this.filteredCount) >= s.pagesize * (activePage - 1) &&
           (i - this.filteredCount) < s.pagesize * activePage)) {
-          if (!s.dataset[i].isFiltered) {
+          if (!s.dataset[i]._isFilteredOut) {
             if (this.filteredCount) {
               this.recordCount++;
             }
@@ -3080,7 +3085,7 @@ Datagrid.prototype = {
       }
 
       // Exclude Filtered Rows
-      if ((!s.treeGrid && s.dataset[i]).isFiltered) {
+      if ((!s.treeGrid && s.dataset[i])._isFilteredOut) {
         this.filteredCount++;
         continue; //eslint-disable-line
       }
@@ -3092,7 +3097,7 @@ Datagrid.prototype = {
           const thisLength = s.dataset[i].values.length;
           let thisFilterCount = 0;
           for (let k = 0; k < thisLength; k++) {
-            if (s.dataset[i].values[k].isFiltered) {
+            if (s.dataset[i].values[k]._isFilteredOut) {
               thisFilterCount++;
             }
           }
@@ -3142,7 +3147,7 @@ Datagrid.prototype = {
 
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
-          if (!s.dataset[i].values[k].isFiltered) {
+          if (!s.dataset[i].values[k]._isFilteredOut) {
             const rowHtml = self.rowHtml(
               s.dataset[i].values[k],
               this.recordCount,
@@ -3634,7 +3639,7 @@ Datagrid.prototype = {
           if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
             isHidden = true;
           } else {
-            isHidden = rowData.isFiltered;
+            isHidden = rowData._isFilteredOut;
           }
 
           depth = treeDepthItem.depth;
@@ -3713,7 +3718,7 @@ Datagrid.prototype = {
       }${isRowDisabled ? ' aria-disabled="true"' : ''
       }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
         isHidden ? ' is-hidden' : ''}${
-        rowData.isFiltered ? ' is-filtered' : ''
+        rowData._isFilteredOut ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
       }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
@@ -4661,7 +4666,7 @@ Datagrid.prototype = {
     let rowData = data;
 
     if (!rowData) {
-      rowData = s.treeGrid ? s.treeDepth[idx].node : this.getDataset()[idx];
+      rowData = s.treeGrid ? s.treeDepth[idx].node : this.getActiveDataset()[idx];
     }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
@@ -4686,6 +4691,10 @@ Datagrid.prototype = {
       columnGroups = null;
     }
 
+    let conditions = [];
+    if (this.settings.filterable && this.filterRowRendered) {
+      conditions = this.filterConditions();
+    }
     this.settings.columns = columns;
 
     if (columnGroups) {
@@ -4705,6 +4714,10 @@ Datagrid.prototype = {
     */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
     this.saveUserSettings();
+
+    if (this.settings.filterable && this.filterRowRendered) {
+      this.setFilterConditions(conditions);
+    }
   },
 
   /**
@@ -6333,12 +6346,29 @@ Datagrid.prototype = {
           `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
       }
 
-      if (this.settings.toolbar.filterRow) {
+      if (this.settings.toolbar.filterRow === true) {
         menu.append(`${'<li class="separator"></li>' +
           '<li class="heading">'}${Locale.translate('Filter')}</li>` +
           `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>` +
           `<li class="is-indented"><a data-option="run-filter">${Locale.translate('RunFilter')}</a></li>` +
           `<li class="is-indented"><a data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`);
+      }
+
+      if (typeof this.settings.toolbar.filterRow === 'object') {
+        let filterOptions = '<li class="separator"></li>';
+
+        if (this.settings.toolbar.filterRow.showFilter) {
+          filterOptions += `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>`;
+        }
+
+        if (this.settings.toolbar.filterRow.runFilter && !this.settings.filterWhenTyping) {
+          filterOptions += `<li class="is-indented"><a data-option="run-filter">${Locale.translate('RunFilter')}</a></li>`;
+        }
+
+        if (this.settings.toolbar.filterRow.clearFilter) {
+          filterOptions += `<li class="is-indented"><a data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`;
+        }
+        menu.append(filterOptions);
       }
 
       if (this.settings.toolbar.actions) {
@@ -6586,13 +6616,13 @@ Datagrid.prototype = {
       dataset = self.settings.treeDepth;
       for (i = 0, len = dataset.length; i < len; i++) {
         isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node, i);
-        dataset[i].node.isFiltered = isFiltered;
+        dataset[i].node._isFilteredOut = isFiltered;
       }
     } else {
       dataset = self.settings.dataset;
       for (i = 0, len = dataset.length; i < len; i++) {
         isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i], i);
-        dataset[i].isFiltered = isFiltered;
+        dataset[i]._isFilteredOut = isFiltered;
       }
     }
   },
@@ -6658,7 +6688,7 @@ Datagrid.prototype = {
    * @private
    * @returns {array} The dataset to use.
    */
-  getDataset() {
+  getActiveDataset() {
     const s = this.settings;
     let dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.groupable) {
@@ -6668,18 +6698,31 @@ Datagrid.prototype = {
   },
 
   /**
+   * Return the current data and remove any adding properties.
+   * @returns {array} The current dataset.
+   */
+  getDataset() {
+    const dataset = this.settings.dataset;
+
+    return dataset.map((item) => {
+      delete item._isFilteredOut;
+      return item;
+    });
+  },
+
+  /**
   * Select all rows. If serverside paging, this will be only the current page.
   * For client side paging, all rows across all pages are selected.
   */
   selectAllRows() {
     const rows = [];
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
-        if (!dataset[i].isFiltered) {
+        if (!dataset[i]._isFilteredOut) {
           rows.push(idx);
         }
       } else {
@@ -7138,13 +7181,13 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedUI() {
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
     let rows = dataset;
 
     if (this.filterRowRendered) {
       rows = [];
       for (let i = 0, l = dataset.length; i < l; i++) {
-        if (!dataset[i].isFiltered) {
+        if (!dataset[i]._isFilteredOut) {
           rows.push(i);
         }
       }
@@ -7669,7 +7712,7 @@ Datagrid.prototype = {
     const isSingle = s.selectable === 'single';
     const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
     const isSiblings = s.selectable === 'siblings';
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
 
     if (typeof row === 'number') {
       row = [row];
@@ -7726,7 +7769,7 @@ Datagrid.prototype = {
    */
   findRowsByValue(fieldName, value) {
     const s = this.settings;
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
     let idx = -1;
     const matchedRows = [];
     for (let i = 0, data; i < dataset.length; i++) {
@@ -7755,7 +7798,7 @@ Datagrid.prototype = {
   * @param {object} tooltip The information for the message/tooltip
   */
   rowStatus(idx, status, tooltip) {
-    const arrayToUse = this.getDataset();
+    const arrayToUse = this.getActiveDataset();
 
     if (!status) {
       delete arrayToUse[idx].rowStatus;
@@ -8547,7 +8590,7 @@ Datagrid.prototype = {
     const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
-      this.getDataset()[dataRowIndex];
+      this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
 
     if (col.beforeCommitCellEdit && !isCallback) {
