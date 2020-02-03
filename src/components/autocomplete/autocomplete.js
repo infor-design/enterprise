@@ -304,35 +304,50 @@ Autocomplete.prototype = {
       }
     });
 
+    /**
+     * Fires before the menu DOM is populated with the filter results.
+     *
+     * @event beforepopulated
+     * @memberof Autocomplete
+     * @param {object} event - The jquery event object
+     * @param {object} filterResult - The results of the filtering
+     */
+    this.element.trigger('beforepopulated', [filterResult]);
+
+    const afterPlaceCallback = function (placementObj) {
+      if (placementObj.wasFlipped === true) {
+        self.list.add(self.element).addClass('is-ontop');
+        placementObj.y += 1;
+      }
+      return placementObj;
+    };
+
+    const popupOpts = {
+      menuId: 'autocomplete-list',
+      ariaListbox: true,
+      mouseFocus: false,
+      trigger: 'immediate',
+      attachToBody: true,
+      autoFocus: false,
+      returnFocus: false,
+      triggerSelect: false,
+      placementOpts: {
+        parent: this.element,
+        callback: afterPlaceCallback
+      }
+    };
+
     if (!this.previouslyOpened) {
-      const afterPlaceCallback = function (placementObj) {
-        if (placementObj.wasFlipped === true) {
-          self.list.add(self.element).addClass('is-ontop');
-          placementObj.y += 1;
-        }
-        return placementObj;
-      };
-
-      const popupOpts = {
-        menuId: 'autocomplete-list',
-        ariaListbox: true,
-        mouseFocus: false,
-        trigger: 'immediate',
-        attachToBody: true,
-        autoFocus: false,
-        returnFocus: false,
-        triggerSelect: false,
-        placementOpts: {
-          parent: this.element,
-          callback: afterPlaceCallback
-        }
-      };
-
       this.element.addClass('is-open')
         .popupmenu(popupOpts)
         .one('close.autocomplete', () => {
           self.closeList(true);
         });
+    } else {
+      const popupmenuAPI = this.element.data('popupmenu');
+      if (popupmenuAPI) {
+        popupmenuAPI.position();
+      }
     }
 
     // Adjust the widths of the LIs to the longest
