@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Calendar Toolbar index tests', () => {
+fdescribe('Calendar Toolbar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/example-index?layout=nofrills');
   });
@@ -15,7 +15,7 @@ describe('Calendar Toolbar index tests', () => {
   });
 });
 
-describe('Calendar Toolbar Datepicker tests', () => {
+fdescribe('Calendar Toolbar Datepicker tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/test-datepicker?layout=nofrills');
   });
@@ -25,7 +25,7 @@ describe('Calendar Toolbar Datepicker tests', () => {
   });
 });
 
-describe('Calendar Toolbar visual tests', () => {
+fdescribe('Calendar Toolbar visual tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar-toolbar/test-visuals?layout=nofrills');
   });
@@ -36,10 +36,10 @@ describe('Calendar Toolbar visual tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const calendarEl = await element.all(by.className('calendar-toolbar')).first();
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(calendarEl, 'calendar-toolbar-visuals')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'calendar-toolbar-visuals')).toEqual(0);
     });
   }
 });

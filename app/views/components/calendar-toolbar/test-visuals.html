@@ -9,9 +9,9 @@
 
 <script id="datagrid-script">
   $('body').one('initialized', function () {
-    $('#example-1').calendartoolbar();
-    $('#example-2').calendartoolbar({ isAlternate: true });
-    $('#example-3').calendartoolbar({ isAlternate: true, isMenuButton: false });
-    $('#example-4').calendartoolbar({ showToday: false });
+    $('#example-1').calendartoolbar({ month: 1, year: 2020 });
+    $('#example-2').calendartoolbar({ month: 1, year: 2020, isAlternate: true });
+    $('#example-3').calendartoolbar({ month: 1, year: 2020, isAlternate: true, isMenuButton: false });
+    $('#example-4').calendartoolbar({ month: 1, year: 2020, showToday: false });
   });
 </script>
