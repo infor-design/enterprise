@@ -30,6 +30,7 @@ describe('Checkbox Uplift tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/checkboxes/example-index?layout=nofrills&theme=upift');
   });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
