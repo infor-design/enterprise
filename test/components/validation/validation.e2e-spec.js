@@ -600,6 +600,21 @@ describe('Validation narrow field', () => {
   });
 });
 
+describe('Validation just error class tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-just-error-class');
+  });
+
+  it('Should be able to remove a manually added error class', async () => {
+    const field = await element(by.id('test-input'));
+
+    expect(await field.getAttribute('class')).toContain('error');
+    await await element(by.id('clear')).click();
+
+    expect(await field.getAttribute('class')).not.toContain('error');
+  });
+});
+
 describe('Validation message types', () => {
   const exprAlerts = /(error|alert|success|info|icon)/;
   const color = {

@@ -264,6 +264,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-30;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
@@ -279,6 +280,7 @@ $datepicker-hover-bg-color: $theme-color-palette-graphite-30;
 $datepicker-disabled-border-color: $input-color-disabled-border;
 $datepicker-disabled-bg-color: $theme-color-palette-graphite-20;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-30;
 
 .calendar-table .is-today {
   text-decoration: underline;
@@ -293,6 +295,7 @@ $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-60;
 $colorpicker-checkmark-one-color: $theme-color-palette-black;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-30;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-graphite-50;
@@ -433,6 +436,7 @@ $accordion-hover-border-color: $theme-color-palette-black;
 $accordion-hover-text-color: $theme-color-palette-graphite-100;
 
 $accordion-panel-border-color: $theme-color-palette-graphite-40;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $accordion-alternate-bg-color: $theme-color-palette-white;
 $accordion-alternate-border-color: $theme-color-palette-graphite-40;
@@ -536,7 +540,7 @@ $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #b3ccdb;
 $datagrid-row-selected-color-dark: #a2bbca;
-$datagrid-row-hover-color: $theme-color-palette-graphite-30;
+$datagrid-row-hover-color: $theme-color-palette-graphite-40;
 $datagrid-row-icon-color: $theme-color-palette-graphite-90;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-30;

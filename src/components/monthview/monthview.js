@@ -1890,8 +1890,10 @@ MonthView.prototype = {
    */
   destroy() {
     this.teardown();
-    this.element.empty();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.element) {
+      this.element.empty();
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
     return this;
   }
 };

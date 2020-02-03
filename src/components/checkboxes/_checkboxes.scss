@@ -44,7 +44,7 @@
   border-width: 2px 2px 0 0;
   content: '';
   height: 10px;
-  left: 3px;
+  left: 2px;
   position: absolute;
   top: 13px;
   width: 4px;
@@ -55,7 +55,8 @@
 }
 
 @mixin checkbox-focus-state {
-  box-shadow: $checkbox-shadow-focus-boxshadow;
+  border: solid 1px $input-color-focus-border;
+  box-shadow: $focus-box-shadow;
 }
 
 @mixin checkbox-hover-state {
@@ -80,6 +81,23 @@ span.checkbox > input {
   position: fixed;
   top: 0;
   width: 16px;// use fixed, to prevent page jump on click
+
+  &.error {
+    + label {
+      &::before {
+        border: 1px solid $error-color;
+      }
+    }
+
+    &:focus:not(.hide-focus) {
+      + label {
+        &::before {
+          border-color: $error-color !important;
+          box-shadow: $error-focus-box-shadow !important;
+        }
+      }
+    }
+  }
 }
 
 label.inline .checkbox ~ .label-text,
@@ -93,7 +111,7 @@ span.checkbox > label {
   display: inline-block;
   font-size: $theme-size-font-base;
   margin-bottom: 0;
-  padding-left: 26px;
+  padding-left: 25px;
   position: relative;
 }
 
@@ -172,10 +190,10 @@ span.checkbox > input:focus:not(.hide-focus) + label::before {
 }
 
 // Hover State
-label.inline .checkbox:not(:checked):not(:disabled):hover ~ .label-text::before,
-input.checkbox:not(:checked):not(:disabled):hover + label::before,
-input.checkbox:not(:checked):not(:disabled):hover + input[type='hidden'] + label::before,
-span.checkbox > input:not(:checked):not(:disabled):hover + label::before {
+label.inline .checkbox:not(:checked):not(.error):not(:disabled):hover ~ .label-text::before,
+input.checkbox:not(:checked):not(.error):not(:disabled):hover + label::before,
+input.checkbox:not(:checked):not(.error):not(:disabled):hover + input[type='hidden'] + label::before,
+span.checkbox > input:not(:checked):not(.error):not(:disabled):hover + label::before {
   @include checkbox-hover-state;
 }
 

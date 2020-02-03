@@ -220,6 +220,11 @@ $toolbar-separator-color: $theme-color-palette-slate-50;
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $theme-color-palette-slate-30;
 
+// Color Picker
+$colorpicker-initial-bg-color: $theme-color-palette-slate-40;
+$colorpicker-swatch-border-color: $theme-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-60;
+
 // Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $theme-color-brand-primary-base;
@@ -229,6 +234,7 @@ $contextual-panel-seperator-bg-color: $theme-color-palette-slate-30;
 $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-50;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-60;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -241,15 +247,12 @@ $datepicker-today-color: $inverse-color;
 $datepicker-hover-bg-color: $theme-color-palette-slate-70;
 $datepicker-disabled-bg-color: $theme-color-palette-slate-70;
 $datepicker-disabled-color: $theme-color-palette-slate-10;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-60;
 
 // Time Picker
 $timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
-
-// Color Picker
-$colorpicker-initial-bg-color: $theme-color-palette-slate-40;
-$colorpicker-swatch-border-color: $theme-color-palette-slate-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-slate-50;
@@ -405,6 +408,7 @@ $accordion-hover-border-color: $theme-color-palette-white;
 $accordion-hover-text-color: $theme-color-palette-white;
 
 $accordion-panel-border-color: $theme-color-palette-slate-90;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $accordion-alternate-bg-color: $theme-color-palette-slate-90;
 $accordion-alternate-border-color: $theme-color-palette-slate-100;

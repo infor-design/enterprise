@@ -75,6 +75,7 @@ describe('Popdown first last tab Tests', () => {
     await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     // Popdown should open and first input should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();

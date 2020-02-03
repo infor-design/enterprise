@@ -1,0 +1,21 @@
+<form>
+
+  <div class="row top-padding">
+    <div class="twelve columns">
+       <div class="field">
+        <label for="test-input">Just the Error class</label>
+        <input type="text" class="error" id="test-input" name="test-input" />
+        <br />
+        <br />
+        <button type="button" id="clear" class="btn-secondary">Clear Error</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<script>
+  $('#clear').on('click', function (e, args) {
+     $("#test-input").removeMessage();
+  });
+</script>

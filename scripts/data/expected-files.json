@@ -262,6 +262,7 @@
 	"/dist/sass/src/components/slider/_slider.scss",
 	"/dist/sass/src/components/spinbox/_spinbox-uplift.scss",
 	"/dist/sass/src/components/spinbox/_spinbox.scss",
+	"/dist/sass/src/components/splitter/_splitter-uplift.scss",
 	"/dist/sass/src/components/splitter/_splitter.scss",
 	"/dist/sass/src/components/stepchart/_stepchart.scss",
 	"/dist/sass/src/components/swaplist/_swaplist-uplift.scss",

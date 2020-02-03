@@ -266,6 +266,8 @@ Datagrid.prototype = {
     this.canvas = null;
     this.totalWidths = { left: 0, center: 0, right: 0 };
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.editor = null; // Current Cell Editor thats in Use
     this.activeCell = { node: null, cell: null, row: null }; // Current Active Cell
     this.dontSyncUi = false;
@@ -431,6 +433,11 @@ Datagrid.prototype = {
     self.container = self.element.closest('.datagrid-container');
     self.renderRows();
     self.renderHeader();
+
+    if (this.stretchColumnDiff < 0) {
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
+    }
 
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
@@ -3321,7 +3328,9 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (self.activeCell.isFocused) {
+    const focusedEl = document.activeElement;
+    if (self.activeCell.isFocused &&
+        (!focusedEl || (focusedEl && focusedEl.tagName.toLowerCase() === 'body'))) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
 
@@ -3344,6 +3353,11 @@ Datagrid.prototype = {
       self.settings.allowSelectAcrossPages === null) {
       self.syncSelectedRows();
       self.syncSelectedUI();
+    }
+
+    if (this.stretchColumnDiff < 0) {
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     /**
@@ -4192,6 +4206,8 @@ Datagrid.prototype = {
     this.elemWidth = 0;
     this.lastColumn = null;
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.fixColumnIds();
   },
 
@@ -4211,6 +4227,28 @@ Datagrid.prototype = {
         }
       }
     }
+  },
+
+  /**
+   * Return the index of the stretch column
+   * @private
+   * @returns {number}
+   */
+  getStretchColumnIdx() {
+    const self = this;
+    let stretchColumnIdx = self.stretchColumnIdx;
+
+    if (stretchColumnIdx === -1 && self.settings.stretchColumn !== 'last') {
+      self.headerNodes().each(function (i) {
+        const col = $(this);
+
+        if (col.attr('data-column-id') === self.settings.stretchColumn) {
+          stretchColumnIdx = i;
+        }
+      });
+    }
+
+    return stretchColumnIdx;
   },
 
   /**
@@ -4350,7 +4388,8 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
-      return ' style="max-width: 99%"';
+      this.stretchColumnWidth = colWidth;
+      return ' style="width: 99%"';
     }
 
     // For the last column stretch it if it doesnt fit the area
@@ -4364,7 +4403,7 @@ Datagrid.prototype = {
       }
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
-        this.stretchColumnWidth += diff;
+        this.stretchColumnDiff = diff;
       }
 
       if (this.hasLeftPane) {
@@ -5376,9 +5415,14 @@ Datagrid.prototype = {
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         const currentColWidth = parseInt(currentCol.style.width, 10);
         const nextCol = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextCol.style.width, 10);
-        const nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
-        const nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
+        let nextColWidth = 12;
+        let nextMinWidth = 12;
+        let nextMaxWidth = 1000;
+        if (nextCol) {
+          nextColWidth = parseInt(nextCol.style.width, 10);
+          nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
+          nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
+        }
 
         // Calculate
         const width = currentColWidth - diff;
@@ -5392,8 +5436,17 @@ Datagrid.prototype = {
         }
 
         // Update the DOM
-        nextCol.style.width = (`${nextWidth}px`);
-        currentCol.style.width = (`${width}px`);
+        if (nextCol && nextCol.style.width.indexOf('%') === -1) {
+          nextCol.style.width = (`${nextWidth}px`);
+        }
+        if (currentCol.style.width.indexOf('%') === -1) {
+          currentCol.style.width = (`${width}px`);
+        }
+        // Two percentage fields
+        if (nextCol && nextCol.style.width.indexOf('%') !== -1 && currentCol.style.width.indexOf('%') !== -1) {
+          nextCol.style.width = (`${nextWidth}px`);
+          currentCol.style.width = (`${width}px`);
+        }
         startingLeft = ui.left;
       })
       .on('dragend.datagrid', () => {
@@ -5401,19 +5454,21 @@ Datagrid.prototype = {
         const node = self.currentHeader;
         const idx = node.index();
 
-        // Find how the adjacent column
-        const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-        const currentColWidth = parseInt(currentCol.style.width, 10);
-        const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
-        const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        const nextColWidth = parseInt(nextColGroup.style.width, 10);
+        if (self.settings.stretchColumn === 'last') {
+          // Find how the adjacent column
+          const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
+          const currentColWidth = parseInt(currentCol.style.width, 10);
+          const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
+          const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
+          const nextColWidth = parseInt(nextColGroup.style.width, 10);
 
-        self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
-        if (nextCol) {
-          self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
-        }
-        if (self.isEllipsisActiveHeader(column)) {
-          self.activeEllipsisHeader(self.currentHeader[0]);
+          self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
+          if (nextCol) {
+            self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
+          }
+          if (self.isEllipsisActiveHeader(column)) {
+            self.activeEllipsisHeader(self.currentHeader[0]);
+          }
         }
       });
   },
@@ -5916,6 +5971,17 @@ Datagrid.prototype = {
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
+      });
+      $(window).on('resize.datagrid', () => {
+        let j = 0;
+        this.clearCache();
+        for (j = 0; j < self.settings.columns.length; j++) {
+          const col = self.settings.columns[j];
+          self.columnWidth(col, j);
+        }
+
+        const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+        currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
       });
     }
 
@@ -9310,7 +9376,9 @@ Datagrid.prototype = {
       if (col.minWidth && newWidth > col.maxWidth) {
         newWidth = col.maxWidth;
       }
-      if (newWidth > 0) {
+      if (newWidth > 0 && ((newWidth - this.stretchColumnWidth) > this.stretchColumnDiff)) {
+        this.stretchColumnWidth = newWidth;
+        this.stretchColumnDiff = 0;
         this.setColumnWidth(col.id, newWidth, true);
       }
     }
@@ -10865,6 +10933,7 @@ Datagrid.prototype = {
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid');
     $(window).off('orientationchange.datagrid');
+    $(window).off('resize.datagrid');
     return this;
   },
 

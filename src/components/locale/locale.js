@@ -957,6 +957,10 @@ const Locale = {  // eslint-disable-line
     dateFormat = dateFormat.replace(' de ', ' ');
     dateString = dateString.replace(' de ', ' ');
 
+    // Remove commas
+    dateFormat = dateFormat.replace(',', '');
+    dateString = dateString.replace(',', '');
+
     if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
       dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
       dateString = `${dateString.substr(0, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2)}`;
@@ -1875,12 +1879,15 @@ const Locale = {  // eslint-disable-line
     };
     const gregorianDateObj = julianToGregorian(jd);
 
-    const gregorianDate = new Date();
-    gregorianDate.setFullYear(gregorianDateObj.year);
-    gregorianDate.setMonth(gregorianDateObj.month);
-    gregorianDate.setDate(gregorianDateObj.day);
-    gregorianDate.setHours(0, 0, 0, 0);
-
+    const gregorianDate = new Date(
+      gregorianDateObj.year,
+      gregorianDateObj.month,
+      gregorianDateObj.day,
+      0,
+      0,
+      0,
+      0
+    );
     return gregorianDate;
   },
 
