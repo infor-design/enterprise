@@ -18,8 +18,12 @@ label.required:not(.inline):not(.accessible)::after,
 .label.required:not(.inline):not(.accessible)::after,
 label.required .label-text:not(.accessible)::after,
 .label.required .label-text:not(.accessible)::after {
-  font-size: $theme-size-font-sm;
-  top: 1px;
+  font-size: $theme-size-font-md;
+  top: 3px;
+}
+
+span.required::after {
+  font-size: $theme-size-font-md;
 }
 
 .field-info {
