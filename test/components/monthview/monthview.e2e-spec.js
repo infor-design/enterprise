@@ -259,6 +259,9 @@ describe('MonthView disable month selection tests', () => {
 describe('MonthView specific locale tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/monthview/test-specific-locale');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
   });
 
   it('Should render without error', async () => {

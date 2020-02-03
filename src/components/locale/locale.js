@@ -1879,12 +1879,15 @@ const Locale = {  // eslint-disable-line
     };
     const gregorianDateObj = julianToGregorian(jd);
 
-    const gregorianDate = new Date();
-    gregorianDate.setFullYear(gregorianDateObj.year);
-    gregorianDate.setMonth(gregorianDateObj.month);
-    gregorianDate.setDate(gregorianDateObj.day);
-    gregorianDate.setHours(0, 0, 0, 0);
-
+    const gregorianDate = new Date(
+      gregorianDateObj.year,
+      gregorianDateObj.month,
+      gregorianDateObj.day,
+      0,
+      0,
+      0,
+      0
+    );
     return gregorianDate;
   },
 
