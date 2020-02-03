@@ -97,6 +97,7 @@ Accordion.prototype = {
   build(headers, noFilterReset) {
     let anchors;
     let panes;
+    let contentAreas;
     const self = this;
     let isGlobalBuild = true;
 
@@ -104,18 +105,22 @@ Accordion.prototype = {
       this.headers = this.element.find('.accordion-header');
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
-      anchors = headers.children('a');
+      anchors = this.anchors;
       this.panes = headers.next('.accordion-pane');
-      panes = headers.next('.accordion-pane');
+      panes = this.panes;
+      this.contentAreas = panes.children('.accordion-content');
+      contentAreas = this.contentAreas;
     } else {
       anchors = headers.children('a');
       panes = headers.next('.accordion-pane');
+      contentAreas = panes.children('.accordion-content');
       isGlobalBuild = false;
 
       // update internal refs
       this.headers = this.headers.add(headers);
       this.anchors = this.anchors.add(anchors);
       this.panes = this.panes.add(panes);
+      this.contentAreas = this.contentAreas.add(contentAreas);
     }
 
     let headersHaveIcons = false;
@@ -1253,7 +1258,8 @@ Accordion.prototype = {
 
     // If headers are included in the currentlyFiltered storage, removes the ones that
     // have previously been filtered
-    const toFilter = headers.not(this.currentlyFiltered);
+    const contentAreas = this.contentAreas;
+    const toFilter = headers.add(contentAreas).not(this.currentlyFiltered);
     let panes = toFilter.next('.accordion-pane');
 
     // Store a list of all modified parent headers
@@ -1268,6 +1274,12 @@ Accordion.prototype = {
         // only add headers that weren't already in the collection
         const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
         allParentHeaders = allParentHeaders.add(parentHeaders);
+      }
+    });
+    this.contentAreas.each((i, contentArea) => {
+      const header = $(contentArea).parent('.accordion-pane').prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+      if (header.length) {
+        allParentHeaders = allParentHeaders.add(header);
       }
     });
 
@@ -1433,6 +1445,11 @@ Accordion.prototype = {
     if (globalEventTeardown) {
       this.element.off('updated.accordion selected.accordion');
     }
+
+    delete this.anchors;
+    delete this.headers;
+    delete this.panes;
+    delete this.contentAreas;
 
     return this;
   },
