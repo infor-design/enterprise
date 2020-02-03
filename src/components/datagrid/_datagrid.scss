@@ -2084,18 +2084,18 @@ $datagrid-short-row-height: 25px;
       // Text Area
       textarea {
         border: 0;
-        width: inherit;
         height: inherit;
+        width: inherit;
 
         &:focus {
           box-shadow: none;
           outline: none;
         }
       }
-      
+
       .datagrid-textarea-cell-wrapper {
         margin-bottom: -9px;
-        padding: 0 0;
+        padding: 0;
         position: inherit;
       }
 
