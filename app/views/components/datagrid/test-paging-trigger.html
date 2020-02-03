@@ -64,8 +64,7 @@
           }
 
           $.getJSON(url, function(res) {
-            // In this example we know the total records count, but in landmark
-            // we don't. So spoofing what landmark does here by setting firstPage and
+            // We dont know the total records count, so spoofing this here by setting firstPage and
             // lastPage to be solely responsible for determining if we can next/prev/first/last.
             //req.total = 10000;
             req.firstPage = req.activePage === 1;
