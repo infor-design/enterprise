@@ -63,6 +63,15 @@
       white-space: nowrap;
     }
 
+    .row.flex-align-bottom,
+    &.row.flex-align-bottom {
+      .label,
+      label:not(.checkbox-label) {
+        overflow: visible;
+        white-space: normal;
+      }
+    }
+
     .row.no-bottom-margin {
       margin-bottom: 0;
     }

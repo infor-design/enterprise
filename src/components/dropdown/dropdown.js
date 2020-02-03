@@ -3211,7 +3211,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
       .on('click.dropdown', (e) => {
-        // landmark would like the click event to bubble up if ctrl and shift are pressed
+        // Would like the click event to bubble up if ctrl and shift are pressed
         if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
           e.stopPropagation();
         }
