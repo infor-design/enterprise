@@ -3860,6 +3860,18 @@ html[dir='rtl'] {
     .drag-target-arrows {
       height: $datagrid-filterable-header-height;
     }
+
+    &.has-group-headers {
+      .drag-target-arrows {
+        &::before {
+          top: -6px;
+        }
+
+        &::after {
+          bottom: -8px;
+        }
+      }
+    }
   }
 
 }

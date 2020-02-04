@@ -332,6 +332,37 @@ describe('Datagrid filter tests', () => {
   }
 });
 
+describe('Datagrid filter alternate row tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row')).count()).toEqual(8);
+
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).clear();
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).sendKeys('22');
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row')).count()).toEqual(6);
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row.alt-shading')).count()).toEqual(3);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-alt-row-shading')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid filter medium row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-medium-rowheight?layout=nofrills');
