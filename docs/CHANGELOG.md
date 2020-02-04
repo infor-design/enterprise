@@ -7,10 +7,11 @@
 ### v4.26.0 Features
 
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#397](https://github.com/infor-design/design-system/issues/397))
-- `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accomodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
+- `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
 
 ### v4.26.0 Fixes
 
+- `[Application Menu]` Fixed bugs with filtering where it was not possible to have the filter match text within content areas, as well as general expand/collapse bugs with filtering. ([#3131](https://github.com/infor-design/enterprise/issues/3131))
 - `[Application Menu]` Fixed overlap button when label is too long, and aligned dropdown icon in application menu uplift theme. ([#3133](https://github.com/infor-design/enterprise/issues/3133))
 - `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
