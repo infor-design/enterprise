@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle, prefer-arrow-callback */
 import { utils } from '../../utils/utils';
-import { xssUtils } from '../../utils/xss';
 import { Environment as env } from '../../utils/environment';
 import { breakpoints } from '../../utils/breakpoints';
 import { Locale } from '../locale/locale';

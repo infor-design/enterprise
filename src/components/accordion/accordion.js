@@ -1425,37 +1425,39 @@ Accordion.prototype = {
       headerElems = this.headers;
       globalEventTeardown = true;
     }
-    const anchors = headerElems.find('a');
 
-    headerElems
-      .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
-      .each(function () {
-        const header = $(this);
-        const icon = header.children('.icon');
+    if (headerElems && headerElems.length) {
+      headerElems
+        .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
+        .each(function () {
+          const header = $(this);
+          const icon = header.children('.icon');
 
-        const hideFocus = header.data('hidefocus');
-        if (hideFocus) {
-          hideFocus.destroy();
-        }
-
-        if (icon.length) {
-          const iconAPI = icon.data('icon');
-          if (iconAPI) {
-            iconAPI.destroy();
+          const hideFocus = header.data('hidefocus');
+          if (hideFocus) {
+            hideFocus.destroy();
           }
-        }
 
-        const expander = header.data('addedExpander');
-        if (expander) {
-          expander.remove();
-          $.removeData(this, 'addedExpander');
-        }
-      });
+          if (icon.length) {
+            const iconAPI = icon.data('icon');
+            if (iconAPI) {
+              iconAPI.destroy();
+            }
+          }
 
-    anchors.off('touchend.accordion keydown.accordion click.accordion');
+          const expander = header.data('addedExpander');
+          if (expander) {
+            expander.remove();
+            $.removeData(this, 'addedExpander');
+          }
+        });
 
-    headerElems.children('[class^="btn"]')
-      .off('touchend.accordion click.accordion keydown.accordion');
+      const anchors = headerElems.not('.accordion-content').find('a');
+      anchors.off('touchend.accordion keydown.accordion click.accordion');
+
+      headerElems.children('[class^="btn"]')
+        .off('touchend.accordion click.accordion keydown.accordion');
+    }
 
     if (globalEventTeardown) {
       this.element.off('updated.accordion selected.accordion');
