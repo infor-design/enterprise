@@ -143,13 +143,11 @@ describe('Accordion API (settings)', () => {
   });
 });
 
-fdescribe('Accordion API (data)', () => {
+describe('Accordion API (data)', () => {
   beforeEach(() => {
     accordionEl = null;
     accordionObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
-    document.body.insertAdjacentHTML('afterbegin', accordionHTML);
-    accordionEl = document.body.querySelector('.accordion');
   });
 
   afterEach(() => {
@@ -162,13 +160,15 @@ fdescribe('Accordion API (data)', () => {
   });
 
   it('can create a data representation of itself', () => {
+    document.body.insertAdjacentHTML('afterbegin', accordionHTML);
+    accordionEl = document.body.querySelector('.accordion');
     accordionObj = new Accordion(accordionEl);
     const data = accordionObj.toData();
 
     expect(Array.isArray(data)).toBeTruthy();
     expect(data.length).toBe(4);
     expect(data[0].text).toBe('Warehouse Location');
-    expect(data[0].content).toBeDefined();
-    debugger;
+    expect(data[0].type).toBe('header');
+    expect(Array.isArray(data[0].children)).toBeTruthy();
   });
 });
