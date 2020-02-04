@@ -127,8 +127,7 @@ const editors = {
     this.init = function () {
       container.addClass('datagrid-textarea-cell-wrapper');
       const autogrowStartHeight = container.get(0).scrollHeight;
-      const maxLength = column.maxLength ? `maxlength="${column.maxLength}"` : '';
-      this.input = $(`<textarea class="textarea" ${maxLength}>${this.originalValue}</textarea>`).appendTo(container);
+      this.input = $(`<textarea class="textarea">${this.originalValue}</textarea>`).appendTo(container);
       const editorOptions = column.editorOptions ? column.editorOptions : {};
       // disable the characterCounter by default
       if (!('characterCounter' in editorOptions)) {
@@ -136,7 +135,7 @@ const editors = {
       }
       this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
 
-      this.input.on('click.textareaeditor', function(e) {
+      this.input.on('click.textareaeditor', function (e) {
         e.stopPropagation();
       });
 
@@ -158,7 +157,7 @@ const editors = {
     };
 
     this.focus = function () {
-      this.input.focus().select();;
+      this.input.focus().select();
     };
 
     this.destroy = function () {
