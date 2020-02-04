@@ -68,6 +68,12 @@ const DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(it
   return dataset;
 };
 
+/*
+ * Provides a method for highlighting or calling out the matching search term
+ * within rendered filter results.  Note that this method will not be run by the
+ * Autocomplete if the component is configured with an external `displayResultsCallback` method
+ * for handling the display of filter results.
+ */
 const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
   let targetProp = item;
   let hasAlias = false;
@@ -273,7 +279,11 @@ Autocomplete.prototype = {
           if (result.highlightTarget) {
             filterOpts.alias = result.highlightTarget;
           }
-          result = self.settings.highlightCallback(result, filterOpts);
+          // Only render highlight results if we don't do this manually
+          // in another component's rendering method.
+          if (!self.settings.displayResultsCallback) {
+            result = self.settings.highlightCallback(result, filterOpts);
+          }
         }
 
         modifiedFilterResults.push(result);
@@ -287,7 +297,7 @@ Autocomplete.prototype = {
     if (typeof this.settings.displayResultsCallback === 'function') {
       this.settings.displayResultsCallback(modifiedFilterResults, () => {
         self.element.trigger('listopen', [modifiedFilterResults]);
-      });
+      }, term);
       return;
     }
 

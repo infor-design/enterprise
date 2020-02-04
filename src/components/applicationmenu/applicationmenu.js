@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle, prefer-arrow-callback */
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { Environment as env } from '../../utils/environment';
 import { breakpoints } from '../../utils/breakpoints';
 import { Locale } from '../locale/locale';
@@ -21,6 +22,7 @@ const COMPONENT_NAME = 'applicationmenu';
  * 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
  * @param {boolean} [settings.dismissOnClickMobile=false] If true, causes a clicked menu option to dismiss on click when the responsive view is shown.
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
+ * @param {boolean} [settings.filterMode='contains'] corresponds to a ListFilter component's `filterMode` for matching results.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
@@ -28,6 +30,7 @@ const APPLICATIONMENU_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   dismissOnClickMobile: false,
   filterable: false,
+  filterMode: 'contains',
   openOnLarge: false,
   triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
@@ -136,11 +139,12 @@ ApplicationMenu.prototype = {
       const self = this;
       this.searchfield.searchfield({
         clearable: true,
+        filterMode: this.settings.filterMode,
         source(term, done, args) {
           done(term, self.accordion.data('accordion').toData(true, true), args);
         },
         searchableTextCallback(item) {
-          return item.text || '';
+          return item.text || item.contentText || '';
         },
         resultIteratorCallback(item) {
           item.highlightTarget = 'text';
@@ -151,8 +155,8 @@ ApplicationMenu.prototype = {
             self.accordionAPI.unfilter();
           }
         },
-        displayResultsCallback(results, done) {
-          return self.filterResultsCallback(results, done);
+        displayResultsCallback(results, done, term) {
+          return self.filterResultsCallback(results, done, term);
         }
       });
 
@@ -607,8 +611,9 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {array} results list of items that passed the filtering process
+   * @param {array} results list of items that passed the filtering process.
    * @param {function} done method to be called when the display of filtered items completes.
+   * @param {string} term the filter term.
    * @returns {void}
    */
   filterResultsCallback(results, done) {
@@ -618,8 +623,8 @@ ApplicationMenu.prototype = {
       return;
     }
 
-    const headers = $(results.map(item => item.element));
-    this.accordionAPI.filter(headers, true);
+    const targets = $(results.map(item => item.element));
+    this.accordionAPI.filter(targets, true);
 
     this.element.triggerHandler('filtered', [results]);
     done();
