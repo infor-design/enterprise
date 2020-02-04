@@ -149,6 +149,8 @@
     }
 
     .buttons {
+      line-height: normal;
+      max-height: 35px;
       position: absolute;
       right: 10px;
       top: 7px;
@@ -270,8 +272,6 @@
 
       &:hover:not(.is-disabled):not(.is-selected),
       &:focus:not(.is-disabled):not(.is-selected), {
-        background-color: $swaplist-bg-color-hover;
-
         .handle {
           color: $swaplist-text-color;
           display: inline-block;
@@ -336,9 +336,9 @@
       top: 4px;
     }
 
-    .buttons {
-      top: -3px;
-    }
+    // .buttons {
+    //   top: -3px;
+    // }
   }
 }
 
