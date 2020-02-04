@@ -590,7 +590,7 @@ Accordion.prototype = {
 
       if (isContentArea) {
         elemData.content = `${$el.html()}`;
-        elemData.contentText = `${$el.text().trim().replace(/\n|\s{2,}/g, '')}`;
+        elemData.contentText = `${$el.text().trim().replace(/\n|\s{2,}/g, ' ')}`;
       } else {
         elemData.text = $el.children('a, span').text().trim();
       }
