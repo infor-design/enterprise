@@ -1967,6 +1967,8 @@ Dropdown.prototype = {
     parentScroll = modalScroll.length ? modalScroll : parentScroll;
     parentScroll.on('scroll.dropdown', scrollDocument);
 
+    $('.datagrid-wrapper').on('scroll.dropdown', scrollDocument);
+
     $('body').on('resize.dropdown', () => {
       self.position();
 
@@ -2262,6 +2264,7 @@ Dropdown.prototype = {
     parentScroll = this.element.closest('.scrollable-y').length ? this.element.closest('.scrollable-y') : parentScroll;
     parentScroll = modalScroll.length ? modalScroll : parentScroll;
     parentScroll.off('scroll.dropdown');
+    $('.datagrid-wrapper').off('scroll.dropdown');
 
     $('body').off('resize.dropdown');
     $(window).off('orientationchange.dropdown');

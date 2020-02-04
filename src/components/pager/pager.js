@@ -138,7 +138,7 @@ Pager.prototype = {
     } else if (ds && ds.length) {
       total = ds.length;
       if (this.isFilteredClientside) {
-        const filteredDs = ds.filter(i => !i.isFiltered);
+        const filteredDs = ds.filter(i => !i._isFilteredOut);
         total = filteredDs.length;
       }
     }
