@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Rating example-index tests', () => {
+describe('Rating example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/rating/example-index?layout=nofrills');
   });

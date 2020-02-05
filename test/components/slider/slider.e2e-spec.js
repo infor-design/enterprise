@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Slider example-index tests', () => { //eslint-disable-line
+describe('Slider example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/slider/example-index?layout=nofrills');
   });
@@ -26,7 +26,7 @@ fdescribe('Slider example-index tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Slider Vertical tests', () => { //eslint-disable-line
+describe('Slider Vertical tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/slider/example-vertical?layout=nofrills');
   });
@@ -48,7 +48,7 @@ fdescribe('Slider Vertical tests', () => { //eslint-disable-line
 });
 
 
-fdescribe('Slider short tests', () => { //eslint-disable-line
+describe('Slider short tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/slider/example-short?layout=nofrills');
   });
