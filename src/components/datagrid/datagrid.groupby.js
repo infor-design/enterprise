@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { utils } from '../../utils/utils';
 import { numberUtils } from '../../utils/number';
 
@@ -143,7 +144,7 @@ aggregators.aggregate = function (items, columns) {
       const field = columns[i].field;
 
       self.sum = function (sum, node) {
-        if (node.isFiltered) { // If excluded / filtered out.
+        if (node._isFilteredOut) { // If excluded / filtered out.
           return sum;
         }
 

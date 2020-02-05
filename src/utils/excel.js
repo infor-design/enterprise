@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
 import { Editors } from '../components/datagrid/datagrid.editors';
@@ -190,7 +191,7 @@ excel.appendRows = function (dataset, table, self) {
   const body = table.querySelector('tbody');
   body.innerHTML = '';
   const appendRow = function (d, i) {
-    if (!d.isFiltered) {
+    if (!d._isFilteredOut) {
       const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
       const tr = document.createElement('tr');
       tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
