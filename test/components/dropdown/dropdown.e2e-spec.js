@@ -628,3 +628,29 @@ describe('Dropdown badge tests', () => {
     });
   }
 });
+
+fdescribe('Dropdown selectValue() tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-setvalue?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should change its display value when its internal value changes (should not visually regress)', async () => {
+      const dropdownEl = element(by.css('div.dropdown'));
+      const updateBtnEl = element(by.css('#update-btn'));
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      // click the button to change the value of the Dropdown
+      await updateBtnEl.click();
+
+      // the update should occur and change to "Option Three"
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-selectvalue')).toEqual(0);
+    });
+  }
+});
