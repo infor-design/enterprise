@@ -1832,6 +1832,10 @@ PopupMenu.prototype = {
         self.close();
       });
 
+      $('.datagrid-wrapper').on('scroll.popupmenu', () => {
+        self.close();
+      });
+
       $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
         const delay = self.isInViewport(self.element[0]) ? 0 : 150;
         setTimeout(() => {
@@ -2276,6 +2280,7 @@ PopupMenu.prototype = {
   detach() {
     $(document).off(`touchend.popupmenu.${this.id} click.popupmenu.${this.id} keydown.popupmenu`);
     $(window).off('scroll.popupmenu orientationchange.popupmenu');
+    $('.datagrid-wrapper').off('scroll.popupmenu');
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
 

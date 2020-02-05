@@ -156,7 +156,7 @@ describe('Datagrid Filter API', () => {
 
     expect(usedFilter).toEqual([]);
 
-    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
+    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206', filterType: 'Text' }];
     datagridObj.setFilterConditions(filter);
     usedFilter = datagridObj.filterConditions();
 
@@ -254,5 +254,17 @@ describe('Datagrid Filter API', () => {
 
     expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(7);
     expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(5);
+  });
+
+  it('Should be able get the dataset with no added fields', () => {
+    let usedFilter = datagridObj.filterConditions();
+
+    expect(usedFilter).toEqual([]);
+
+    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
+    datagridObj.setFilterConditions(filter);
+    usedFilter = datagridObj.filterConditions();
+
+    expect(datagridObj.getDataset()[0]._isFilteredOut).toEqual(undefined); //eslint-disable-line
   });
 });

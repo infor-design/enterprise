@@ -579,6 +579,10 @@ const Locale = {  // eslint-disable-line
       pattern = cal.dateFormat[options.date];
     }
 
+    if (typeof options === 'string' && options !== '') {
+      pattern = options;
+    }
+
     if (!pattern) {
       pattern = cal.dateFormat.short;
     }
@@ -939,6 +943,9 @@ const Locale = {  // eslint-disable-line
     const isUTC = (dateString.toLowerCase().indexOf('z') > -1);
     let i;
     let l;
+    const hasDot = (dateFormat.match(/M/g) || []).length === 3 && thisLocaleCalendar &&
+      thisLocaleCalendar.months && thisLocaleCalendar.months.abbreviated &&
+        thisLocaleCalendar.months.abbreviated.filter(v => /\./.test(v)).length;
 
     if (isDateTime) {
       // Remove Timezone
@@ -949,8 +956,9 @@ const Locale = {  // eslint-disable-line
       dateFormat = dateFormat.replace(' zzzz', '').replace(' zz', '');
 
       // Replace [space & colon & dot] with "/"
-      dateFormat = dateFormat.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
-      dateString = dateString.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
+      const regex = hasDot ? /[T\s:-]/g : /[T\s:.-]/g;
+      dateFormat = dateFormat.replace(regex, '/').replace(/z/i, '');
+      dateString = dateString.replace(regex, '/').replace(/z/i, '');
     }
 
     // Remove spanish de
@@ -975,8 +983,9 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') !== -1) {
-      dateFormat = dateFormat.replace(/[\s:.]/g, '/');
-      dateString = dateString.replace(/[\s:.]/g, '/');
+      const regex = hasDot ? /[\s:]/g : /[\s:.]/g;
+      dateFormat = dateFormat.replace(regex, '/');
+      dateString = dateString.replace(regex, '/');
     }
 
     // Extra Check incase month has spaces
