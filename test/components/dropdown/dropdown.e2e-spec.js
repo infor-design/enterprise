@@ -629,7 +629,7 @@ describe('Dropdown badge tests', () => {
   }
 });
 
-fdescribe('Dropdown selectValue() tests', () => {
+describe('Dropdown selectValue() tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-setvalue?layout=nofrills');
   });
