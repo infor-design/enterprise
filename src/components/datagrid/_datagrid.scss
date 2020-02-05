@@ -2085,6 +2085,7 @@ $datagrid-short-row-height: 25px;
       textarea {
         border: 0;
         height: inherit;
+        margin-bottom: -9px;
         width: inherit;
 
         &:focus {

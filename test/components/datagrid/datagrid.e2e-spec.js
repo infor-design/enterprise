@@ -1214,7 +1214,7 @@ describe('Datagrid Date default values', () => {
   });
 });
 
-describe('Datagrid Align Header Text Tests', () => {
+fdescribe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
 

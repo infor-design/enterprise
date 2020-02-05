@@ -127,7 +127,9 @@ const editors = {
     this.init = function () {
       container.addClass('datagrid-textarea-cell-wrapper');
       const autogrowStartHeight = container.get(0).scrollHeight;
-      this.input = $(`<textarea class="textarea">${this.originalValue}</textarea>`).appendTo(container);
+      const style = column.editorOptions && column.editorOptions.minHeight ?
+        `style="min-height: ${column.editorOptions.minHeight}px"` : '';
+      this.input = $(`<textarea ${style} class="textarea">${this.originalValue}</textarea>`).appendTo(container);
       const editorOptions = column.editorOptions ? column.editorOptions : {};
       // disable the characterCounter by default
       if (!('characterCounter' in editorOptions)) {
@@ -135,7 +137,7 @@ const editors = {
       }
       this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
 
-      this.input.on('click.textareaeditor', function (e) {
+      this.input.on('click.textareaeditor', (e) => {
         e.stopPropagation();
       });
 
