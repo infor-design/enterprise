@@ -274,9 +274,13 @@ SearchField.prototype = {
     }
 
     this.checkContents();
-    if (this.settings.collapseSize) {
-      this.wrapper[0].classList.add('has-custom-collapse-size');
+
+    // Add/remove custom collapse CSS identifier
+    let collapseSizeMethod = 'remove';
+    if (this.settings.collapsible && this.settings.collapseSize) {
+      collapseSizeMethod = 'add';
     }
+    this.wrapper[0].classList[collapseSizeMethod]('has-custom-collapse-size');
 
     // Label for toolbar-inlined searchfields needs to be inside the
     // wrapper to help with positioning.
@@ -1885,7 +1889,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   setInitalWidth() {
-    if (this.shouldBeFullWidth() || !this.hasText) {
+    if (!this.settings.collapsible || this.shouldBeFullWidth() || !this.hasText) {
       return;
     }
 
