@@ -2424,6 +2424,10 @@ $datagrid-short-row-height: 25px;
 
         .icon {
           opacity: 1;
+
+          &:hover {
+            color: $datagrid-sort-icon-hover-color;
+          }
         }
       }
     }
