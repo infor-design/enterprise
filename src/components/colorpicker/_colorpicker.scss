@@ -75,7 +75,7 @@
 
     .icon:not(.icon-error),
     .icon:hover {
-      color: $trigger-disabled-color !important;
+      color: $input-color-disabled-border !important;
       cursor: default;
     }
   }

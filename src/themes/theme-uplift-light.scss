@@ -17,7 +17,9 @@
 // Uplift Light Overrides
 $header-bg-color: $theme-color-brand-primary-base;
 $subhead-bg-color: $theme-color-brand-primary-alt;
-$disabled-color: $theme-color-brand-secondary-lighter;
+$disabled-color: $theme-color-palette-slate-30;
+$label-disabled-color: $input-color-disabled-border;
+$input-disabled-color: $input-color-disabled-font;
 
 $body-color-primary-background: $theme-color-palette-white;
 $drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);

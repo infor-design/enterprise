@@ -500,7 +500,7 @@ span.required::after {
     resize: none;
   }
 
-  textarea {
+  textarea:not(.editable) {
     font-size: $input-size-compact-font-size;
     min-height: $textarea-size-compact-height;
     padding: $input-size-compact-padding;
