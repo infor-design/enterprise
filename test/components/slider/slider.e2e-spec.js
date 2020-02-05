@@ -47,7 +47,6 @@ describe('Slider Vertical tests', () => { //eslint-disable-line
   }
 });
 
-
 describe('Slider short tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/slider/example-short?layout=nofrills');
