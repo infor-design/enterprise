@@ -39,12 +39,13 @@ describe('TimePicker API', () => {
     expect(timepickerObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should open timepicker', () => {
+  it('Should open timepicker', (done) => {
     timepickerObj.openTimePopup();
 
     setTimeout(() => {
       expect(timepickerObj.isOpen()).toBeTruthy();
       expect(document.body.querySelector('.timepicker.is-open')).toBeTruthy();
+      done();
     }, 300);
   });
 
