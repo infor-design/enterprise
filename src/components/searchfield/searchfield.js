@@ -1906,6 +1906,9 @@ SearchField.prototype = {
     }
 
     if (isNaN(size)) {
+      if (this.wrapper[0]) {
+        this.wrapper[0].style.width = '';
+      }
       return;
     }
 
@@ -1966,6 +1969,9 @@ SearchField.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
+      if (settings.collapseSize === undefined) {
+        this.settings.collapseSize = settings.collapseSize;
+      }
     }
     this.teardown().init();
   },
