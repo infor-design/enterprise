@@ -16,6 +16,7 @@
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
 - `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
 - `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
+- `[Datagrid]` Fixed a bug where if a filter row column is frozen the mask and editor options would not be applied. ([#2553](https://github.com/infor-design/enterprise-ng/issues/2553))
 - `[Datagrid]` Fixed hover color should not be similar to alternate rows when hovering in uplift high contrast. ([#3338](https://github.com/infor-design/enterprise/issues/3338))
 - `[Datagrid]` Fixed a demo app issue filtering decimal fields in some examples. ([#3351](https://github.com/infor-design/enterprise/issues/3351))
 - `[Datagrid]` Fixed an issue that the filter row type dropdowns did not close when the grid is scrolled. ([#3216](https://github.com/infor-design/enterprise/issues/3216))
