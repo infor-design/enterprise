@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Color tests', () => {
+describe('Color tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/colors/example-index?layout=nofrills');
   });
@@ -32,7 +32,7 @@ fdescribe('Color tests', () => {
   }
 });
 
-fdescribe('Color uplift tests', () => {
+describe('Color uplift tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/colors/example-index?theme=uplift&layout=nofrills');
   });
