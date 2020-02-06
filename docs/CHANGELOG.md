@@ -28,6 +28,7 @@
 - `[Datagrid]` Added a `filterType` option to the filter event data so the type can be determined. ([#826](https://github.com/infor-design/enterprise/issues/826))
 - `[Datagrid]` Add options to `toolbar.filterRow` so that instead of true/false you can set `showFilter, clearFilter, runFilter` independently. ([#1479](https://github.com/infor-design/enterprise/issues/1479))
 - `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
+- `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))
 - `[Icons]` Fixed color inconsistencies of the icons when the fields are in readonly state. ([#3176](https://github.com/infor-design/enterprise/issues/3176))
 - `[Module Tabs]` Fixed color tab indicator and small gap below when selected/opened for all color variations in uplift theme. ([#3312](https://github.com/infor-design/enterprise/issues/3312))
 - `[Input]` Added the ability to line up data labels with inputs by adding class `field-height` to the `data` element and placing it in a responsive grid. ([#987](https://github.com/infor-design/enterprise/issues/987))
