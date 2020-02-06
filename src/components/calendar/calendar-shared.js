@@ -20,7 +20,8 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   ));
   event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
   event.daysUntil = event.starts ? dateUtils.dateDiff(new Date(event.starts), new Date()) : 0;
-  event.durationHours = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends), true);
+  const diff = (new Date(event.ends) - new Date(event.starts)) / (1000 * 60 * 60);
+  event.durationHours = diff > 0 && diff < 0.5 ? 1 : Math.round(diff);
   event.isDays = true;
 
   if (event.isAllDay === undefined) {
@@ -81,7 +82,90 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     event.isDays = false;
     delete event.duration;
   }
+
+  // Duration in time
+  if (event.starts && event.ends) {
+    const parseDateOpts = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
+    const parseDate = dtStr => Locale.parseDate(dtStr, parseDateOpts);
+    const diffInSeconds = this.timeDiffInSeconds(parseDate(event.starts), parseDate(event.ends));
+    event.durationInTime = this.timeBySeconds(diffInSeconds);
+  } else if (event.durationInTime) {
+    delete event.durationInTime;
+  }
+
   return event;
+};
+
+/**
+ * Get difference between two dates in seconds.
+ * @private
+ * @param {number} starts The starts date
+ * @param {number} ends The ends date
+ * @returns {number} The calculated difference in seconds.
+ */
+calendarShared.timeDiffInSeconds = function timeDiffInSeconds(starts, ends) {
+  const diff = Math.abs(ends.getTime() - starts.getTime()); // in miliseconds
+  return Math.ceil(diff / 1000); // in seconds
+};
+
+/**
+ * Get time object, days, hours, minutes and seconds by given total seconds.
+ * @private
+ * @param {number} seconds The total seconds
+ * @returns {object} The time with hours and minutes.
+ */
+calendarShared.timeBySeconds = function timeBySeconds(seconds) {
+  seconds = Number(seconds);
+  return {
+    days: Math.floor(seconds / (3600 * 24)),
+    hours: Math.floor(seconds % (3600 * 24) / 3600),
+    minutes: Math.floor(seconds % 3600 / 60),
+    seconds: Math.floor(seconds % 60)
+  };
+};
+
+/**
+ * Formate the time string for hours and minutes to given event data.
+ * @private
+ * @param {object} event The event data
+ * @param {object} locale The locale instance to use
+ * @param {object} language The language instance to use
+ * @returns {void}
+ */
+calendarShared.formateTimeString = function formateTimeString(event, locale, language) {
+  if (event.durationInTime) {
+    const translate = str => Locale.translate(str, { locale: locale.name, language });
+    const d = event.durationInTime;
+    let text = '';
+    if (d.days) {
+      const label = translate(d.days > 1 ? 'Days' : 'Day');
+      text += `${d.days} ${label}`;
+    }
+    if (d.hours) {
+      const label = translate(d.hours > 1 ? 'Hours' : 'Hour');
+      if (d.days) {
+        text += `${d.minutes || d.seconds ? ', ' : ` ${translate('And')} `}`;
+      }
+      text += `${d.hours} ${label}`;
+    }
+    if (d.minutes) {
+      const label = translate(d.minutes > 1 ? 'Minutes' : 'Minute');
+      if (d.days || d.hours) {
+        text += `${d.seconds ? ', ' : ` ${translate('And')} `}`;
+      }
+      text += `${d.minutes} ${label}`;
+    }
+    if (d.seconds) {
+      const label = translate(d.seconds > 1 ? 'Seconds' : 'Second');
+      text += `${d.days || d.hours || d.minutes ? ` ${translate('And')} ` : ''}`;
+      text += `${d.seconds} ${label}`;
+    }
+    if (text !== '') {
+      event.duration = '';
+      event.durationUnits = '';
+      event.durationHours = text;
+    }
+  }
 };
 
 /**
