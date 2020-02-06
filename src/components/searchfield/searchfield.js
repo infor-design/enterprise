@@ -1969,7 +1969,9 @@ SearchField.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
-      if (settings.collapseSize === undefined) {
+
+      // `utils.mergeSettings` misses passing the empty `collapseSize` property, so we need to check for it
+      if (Object.prototype.hasOwnProperty.call(settings, 'collapseSize') && settings.collapseSize === undefined) {
         this.settings.collapseSize = settings.collapseSize;
       }
     }
