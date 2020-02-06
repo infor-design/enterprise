@@ -2078,15 +2078,19 @@ $datagrid-short-row-height: 25px;
       // Text Area
       textarea {
         border: 0;
-        min-height: 0;
-        padding: 5px 0 0;
-        position: absolute;
+        height: inherit;
+        margin-bottom: -9px;
         width: inherit;
 
         &:focus {
           box-shadow: none;
           outline: none;
         }
+      }
+
+      .datagrid-textarea-cell-wrapper {
+        padding: 0;
+        position: inherit;
       }
 
       .icon {
@@ -2895,13 +2899,16 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
+    margin-top: -8px;
     min-height: $datagrid-medium-row-height + 2;
   }
 }
 
 .short-rowheight {
   .datagrid-multiline-text {
+    margin-bottom: -4px;
     min-height: $datagrid-short-row-height + 6;
+    padding: 0 20px;
   }
 }
 
