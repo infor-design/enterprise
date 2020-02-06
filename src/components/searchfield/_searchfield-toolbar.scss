@@ -30,7 +30,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     color: $searchfield-text-color;
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
-    height: 100%;
     outline: 0;
     padding-left: 34px;
     padding-right: 0;
@@ -46,6 +45,12 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &:not(.is-open):not(.non-collapsible) {
+    .searchfield {
+      height: 100%;
+    }
+  }
+
   // To correctly size the toolbar searchfield when it's not open, account for
   // missing text height.  The padding values should equal to `1px` taller on each side
   // than the standard input field padding.  The "closed" state also shifts the visual
@@ -58,6 +63,18 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon:not(.close) {
       top: 10px;
+    }
+  }
+
+  &.non-collapsible {
+    .searchfield {
+      padding-bottom: 7px;
+      padding-top: 11px;
+    }
+
+    .icon:not(.close) {
+      height: 14px;
+      top: 12px;
     }
   }
 
@@ -172,13 +189,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &.non-collapsible {
-    .icon:not(.close) {
-      height: 14px;
-      top: 10px;
-    }
-  }
-
   &.is-open {
     .searchfield,
     .btn {
@@ -191,7 +201,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
-      height: 34px; // Unable to use token here. need to use the soho height
       padding-right: 34px;
       text-transform: none;
 
@@ -221,6 +230,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       height: 14px;
       top: 10px;
+    }
+
+    &:not(.non-collapsible) {
+      .searchfield {
+        height: 35px; // Unable to use token here. need to use the soho height
+      }
     }
 
     &.alternate {
@@ -653,13 +668,14 @@ $toolbarsearchfield-category-empty-width: 51px;
 // Help out firefox a bit
 html.is-firefox {
   .toolbar-searchfield-wrapper {
-    &:not(.is-open) {
+    &:not(.is-open):not(.non-collapsible) {
       .icon:not(.close) {
         top: 8px;
       }
     }
 
-    &.is-open {
+    &.is-open,
+    &.non-collapsible {
       .searchfield {
         padding-bottom: 6px;
         padding-top: 10px;
