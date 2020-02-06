@@ -59,6 +59,14 @@
   }
 }
 
+.form-layout-compact {
+  .object-count {
+    .xl-text {
+      font-size: $theme-size-font-px-40;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .instance-count {

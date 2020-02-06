@@ -47,7 +47,7 @@ $font-color-extrahighcontrast: $theme-color-palette-white;
 $font-color-highcontrast: $theme-color-palette-slate-10;
 $font-color: $theme-color-palette-slate-20;
 $font-color-lowcontrast: $theme-color-palette-slate-30;
-$label-disabled-color: $theme-color-palette-slate-40;
+$label-disabled-color: $input-color-disabled-border;
 $disabled-color: $theme-color-palette-slate-50;
 $signin-title-color: $theme-color-palette-slate-10;
 
@@ -175,7 +175,6 @@ $trigger-icon-fill-light-color: $theme-color-palette-slate-40;
 $trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
 $listview-bg-color: $theme-color-palette-slate-90;

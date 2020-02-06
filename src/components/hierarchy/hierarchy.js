@@ -933,7 +933,7 @@ Hierarchy.prototype = {
     setTimeout(() => {
       const actionButton = $(`#btn-${xssUtils.stripTags(data.id)}`);
       if (actionButton.length !== 0) {
-        actionButton.hideFocus().popupmenu();
+        actionButton.hideFocus().popupmenu({ attachToBody: false });
       }
     }, 1);
 

@@ -135,7 +135,7 @@
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -176,10 +176,11 @@
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
 
     .hyperlink {
       color: $hyperlink-color;
+      font-size: $input-size-regular-font-size !important;
     }
   }
 
@@ -227,7 +228,7 @@
     @include rem(margin-left, 2rem);
 
     color: $input-color;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     list-style: disc;
 
     li {
@@ -269,7 +270,7 @@
 
   .hyperlink {
     cursor: auto;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     position: static;
     text-decoration: none;
 
@@ -434,8 +435,8 @@
     }
 
     .html-icon {
-      margin-left: -18px;
-      width: 85px;
+      margin-left: 1px;
+      width: 55px;
     }
 
     .visual-icon {
@@ -604,7 +605,7 @@
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -617,7 +618,7 @@
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     font-weight: $theme-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
@@ -683,12 +684,20 @@
 
 .editor-placeholder::after {
   content: attr(data-placeholder);
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   font-weight: 100;
   left: 10px;
   margin-top: -38px;
   position: absolute;
   white-space: pre;
+}
+
+// Compact Mode
+.field-short,
+.form-layout-compact .field {
+  .editor {
+    height: 220px;
+  }
 }
 
 // Adjust fontpicker element aligment only on Firefox
