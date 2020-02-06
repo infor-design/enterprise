@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="six columns">
+    <p>This Searchfield should not collapse.  This test demonstrates a bug that used to exist, where setting `collapsible: false` and `collapseSize: [number]` would cause a Searchfield to incorrectly collapse.</p>
+    <p>Github Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise-ng/issues/719" target="_blank">NG#719</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h3>Useful Toolbar</h3>
+      </div>
+      <div class="toolbar-section search">
+        <label for="useful-toolbar-search" class="audible">Search</label>
+        <input data-init="false" class="searchfield" placeholder="Useful Search" id="useful-toolbar-search" value="Awesome Sauce"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  // Calculates the size of the Searchfield's closed state based on the
+  // length of the current search term.
+  function calculateSize(api) {
+    var charWidth = 10;
+    var frontPadding = 64;
+    var buttonSize = 0;
+    var contents = api.element.val();
+
+    if ((api.categoryButton instanceof $) && api.categoryButton.length) {
+      const buttonStyle = window.getComputedStyle(api.categoryButton[0]);
+      const buttonWidth = api.categoryButton.width();
+      const buttonBorder = parseInt(buttonStyle.borderLeftWidth, 10) * 2;
+      const buttonPadding = parseInt(buttonStyle.paddingLeft, 10) +
+        parseInt(buttonStyle.paddingRight, 10);
+
+      buttonSize += (buttonWidth + buttonBorder + buttonPadding + 4);
+    }
+
+    // Can't be bigger than 300px.
+    var maxSize = 300;
+    var targetSize = (buttonSize > 0 ? buttonSize : frontPadding) + (charWidth * contents.length);
+
+    return targetSize < maxSize ? targetSize : maxSize;
+  }
+
+  var regularSearchElem = $('#useful-toolbar-search');
+  regularSearchElem.searchfield({
+    clearable: true,
+    collapsible: false,
+    collapseSize: calculateSize
+  });
+</script>

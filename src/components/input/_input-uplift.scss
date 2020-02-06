@@ -12,10 +12,10 @@
 
 label.required:not(.inline) .required-asterisk,
 .label.required:not(.inline) .required-asterisk,
-label.required:not(.inline):not(.accessible)::after,
-.label.required:not(.inline):not(.accessible)::after,
-label.required .label-text:not(.accessible)::after,
-.label.required .label-text:not(.accessible)::after {
+label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
+.label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
+label.required .label-text:not(.accessible):not(.checkbox-label)::after,
+.label.required .label-text:not(.accessible):not(.checkbox-label)::after {
   font-size: $theme-size-font-md !important;
   top: 3px !important;
 }
@@ -37,5 +37,10 @@ span.required::after {
 .error-message {
   .icon {
     height: 15px;
+    width: 15px;
+  }
+
+  .message-text {
+    padding-left: 21px;
   }
 }

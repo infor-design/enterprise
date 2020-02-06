@@ -31,8 +31,10 @@
   // missing text height.  The padding values should equal to `1px` taller on each side
   // than the standard input field padding.  The "closed" state also shifts the visual
   // location of the text/icon to better align it with other toolbar buttons.
-  &:not(.is-open) {
+  &:not(.is-open),
+  &.non-collapsible {
     .searchfield {
+      height: auto;
       padding-bottom: 6px;
       padding-top: 7px;
     }
@@ -62,10 +64,11 @@ html.is-firefox {
   }
 
   .toolbar-searchfield-wrapper {
-    &:not(.is-open) {
+    &:not(.is-open):not(.non-collapsible) {
       .searchfield {
+        height: 35px;
         padding-bottom: 5px;
-        padding-top: 11px;
+        padding-top: 7px;
       }
 
       .icon:not(.close) {
@@ -79,6 +82,15 @@ html.is-firefox {
 
     > .icon {
       top: 12px;
+    }
+
+    &.is-open,
+    &.non-collapsible {
+      .searchfield {
+        height: 35px;
+        padding-bottom: 6px;
+        padding-top: 6px;
+      }
     }
   }
 }

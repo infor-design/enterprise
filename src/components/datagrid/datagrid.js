@@ -1633,7 +1633,7 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.find('.datagrid-header tr:last th').each(function () {
+    this.element.find('.datagrid-header tr:not(.datagrid-header-groups) th').each(function () {
       const col = self.columnById($(this).attr('data-column-id'))[0];
       const elem = $(this);
 

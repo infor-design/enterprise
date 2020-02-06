@@ -322,6 +322,10 @@ describe('Datagrid filter tests', () => {
     expect(await element(by.css('#datagrid .datagrid-wrapper:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
   });
 
+  it('Should render editors in the filter row when frozen', async () => {
+    expect(await element(by.css('#example-filter-datagrid-1-header-filter-1 + .trigger')).isPresent()).toBeTruthy();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
