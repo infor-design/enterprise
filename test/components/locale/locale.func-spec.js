@@ -56,7 +56,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => { //eslint-disable-line
+fdescribe('Locale API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
@@ -1402,6 +1402,21 @@ describe('Locale API', () => { //eslint-disable-line
         expect(Locale.currentLocale.name).toEqual('en-US');
         done();
       });
+    });
+  });
+
+  it('Should be possible to set the language to nb', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nb').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
     });
   });
 

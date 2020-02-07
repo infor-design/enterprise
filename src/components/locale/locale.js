@@ -205,7 +205,7 @@ const Locale = {  // eslint-disable-line
     let correctLanguage = this.defaultLocales.filter(a => a.lang === lang);
 
     if (correctLanguage && correctLanguage[0]) {
-      return lang;
+      return this.remapLanguage(lang);
     }
 
     correctLanguage = this.remapLanguage(lang);
