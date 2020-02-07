@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Flex toobar ajax tests', () => {
+describe('Flex toobar ajax tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbar-flex/example-more-actions-ajax?layout=nofrills');
 

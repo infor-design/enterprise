@@ -6,7 +6,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Listview example-singleselect tests', () => {
+describe('Listview example-singleselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-singleselect');
     const listviewEl = await element(by.css('#period-end li'));
@@ -88,7 +88,7 @@ fdescribe('Listview example-singleselect tests', () => {
   });
 });
 
-fdescribe('Listview example-multiselect tests', () => {
+describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-multiselect');
     const listviewEl = await element.all(by.css('#multiselect-listview li')).first();
