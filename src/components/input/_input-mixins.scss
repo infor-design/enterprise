@@ -58,11 +58,11 @@
   }
 
   &.error {
-    border-color: $error-color;
+    border-color: $error-border-color;
 
     &:focus {
       // Needed for printing
-      border-color: $error-color !important;
+      border-color: $error-border-color !important;
       box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
     }

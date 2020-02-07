@@ -205,6 +205,7 @@ $input-readonly-color: $input-color-readonly-font;
 
 //States
 $error-color: $theme-color-status-danger;
+$error-border-color: $theme-color-status-danger;
 $error-color-transparent: rgba($theme-color-status-danger, 0.3);
 $error-focus-box-shadow:  0 0 4px 2px $error-color-transparent;
 $alert-color: $theme-color-status-warning;
@@ -351,6 +352,9 @@ $colorpicker-checkmark-one-color: $theme-color-palette-graphite-50;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
 $colorpicker-readonly-icon-color: $theme-color-palette-graphite-30;
 
+// Color Palette Background
+$color-border-color: rgba(0, 0, 0, 0.2);
+
 // Fileupload
 $fileupload-primary-color: $theme-color-font-base;
 $fileupload-secondary-color: $theme-color-palette-graphite-60;
@@ -482,6 +486,7 @@ $modal-btn-hover-color: $theme-color-font-base;
 $modal-btn-primary-color: $theme-color-brand-primary-alt;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-80;
 $modal-btn-primary-disabled-color: $theme-color-brand-primary-alt;
+$modal-btn-primary-disabled-opacity:  0.5;
 $modal-btn-disabled-color: $theme-color-palette-graphite-60;
 $modal-btn-disabled-opacity: 0.5;
 $modal-color: $theme-color-palette-graphite-60;
