@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Form Tests', () => {
+fdescribe('Form Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on compound fields', async () => {
       await utils.setPage('/components/form/test-compound-checkboxes-alignment?layout=nofrills');
