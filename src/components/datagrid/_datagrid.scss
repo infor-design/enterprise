@@ -441,9 +441,9 @@ $datagrid-short-row-height: 25px;
 
       .handle,
       .is-draggable-target {
-        @include font-size(22);
-
+        font-size: 24px;
         height: $datagrid-short-header-height;
+        margin-top: -1px;
         padding: 0 0 0 2px;
       }
 
@@ -547,9 +547,10 @@ $datagrid-short-row-height: 25px;
 
       .handle,
       .is-draggable-target {
-        font-size: 2.3em;
+        font-size: 2em;
         height: $datagrid-medium-header-height;
-        padding: 0 0 0 5px;
+        margin-top: -1px;
+        padding: 0 0 0 4px;
         width: 16px;
       }
 
@@ -3874,14 +3875,14 @@ html[dir='rtl'] {
   .has-draggable-columns {
     th {
       .handle {
-        padding: 6px 0 0 7px;
+        padding: 4px 0 0 5px;
       }
     }
 
     &.short-rowheight {
       th {
         .handle {
-          padding: 3px 0 0 1.5px;
+          padding: 3px 0 0 2px;
         }
       }
     }
@@ -3889,7 +3890,7 @@ html[dir='rtl'] {
     &.medium-rowheight {
       th {
         .handle {
-          padding: 3px 0 0 3px;
+          padding: 4px 0 0 3px;
         }
       }
     }
@@ -4180,7 +4181,13 @@ html[dir='rtl'] {
 
 // IE 11 Hacks
 .ie11 {
-  .datagrid-header th {
-    z-index: auto;
+  .datagrid-header {
+    .datagrid-filter-wrapper input {
+      padding: 0 5px;
+    }
+
+    th {
+      z-index: auto;
+    }
   }
 }
