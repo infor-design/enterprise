@@ -6,7 +6,8 @@
 
 ### v4.26.0 Features
 
-- `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#397](https://github.com/infor-design/design-system/issues/397))
+- `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
+- `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
 - `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
 
 ### v4.26.0 Fixes
