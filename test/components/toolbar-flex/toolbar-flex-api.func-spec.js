@@ -360,8 +360,10 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       setTimeout(() => {
         firstMenuEntry.click();
 
-        expect(menuButtonSpyEvent).toHaveBeenTriggered();
-        done();
+        setTimeout(() => {
+          expect(menuButtonSpyEvent).toHaveBeenTriggered();
+          done();
+        }, 300);
       }, 300);
     });
 
