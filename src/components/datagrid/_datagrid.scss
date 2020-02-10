@@ -269,7 +269,7 @@ $datagrid-short-row-height: 25px;
       }
     }
 
-    tr.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
+    tr.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly):not(.error) {
       background-color: $datagrid-list-row-hover-color;
 
       .is-readonly {
@@ -884,14 +884,8 @@ $datagrid-short-row-height: 25px;
     }
 
     .lookup-wrapper {
-      padding-left: 14px !important;
+      padding-left: 0 !important;
       padding-top: 2px !important;
-
-      .trigger {
-        margin-left: -8px !important;
-        margin-top: -4px !important;
-        overflow: visible;
-      }
 
       .align-text-right {
         + .trigger {
@@ -1387,7 +1381,7 @@ $datagrid-short-row-height: 25px;
     }
 
     // Hover States
-    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
+    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -2084,15 +2078,19 @@ $datagrid-short-row-height: 25px;
       // Text Area
       textarea {
         border: 0;
-        min-height: 0;
-        padding: 5px 0 0;
-        position: absolute;
+        height: inherit;
+        margin-bottom: -9px;
         width: inherit;
 
         &:focus {
           box-shadow: none;
           outline: none;
         }
+      }
+
+      .datagrid-textarea-cell-wrapper {
+        padding: 0;
+        position: inherit;
       }
 
       .icon {
@@ -2901,13 +2899,16 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
+    margin-top: -8px;
     min-height: $datagrid-medium-row-height + 2;
   }
 }
 
 .short-rowheight {
   .datagrid-multiline-text {
+    margin-bottom: -4px;
     min-height: $datagrid-short-row-height + 6;
+    padding: 0 20px;
   }
 }
 

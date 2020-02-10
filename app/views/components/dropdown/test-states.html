@@ -42,15 +42,18 @@
          Locale.set('en-US').done(function () {
 
             $('#enable').on('click', function () {
+               $('.field').removeClass('is-disabled');
                $('#test-dropdown').enable();
             });
 
             $('#readonly').on('click', function () {
-               $('#test-dropdown').readonly();
+               $('.field').removeClass('is-disabled');
+                $('#test-dropdown').readonly();
             });
 
             $('#disable').on('click', function () {
-               $('#test-dropdown').disable();
+               $('.field').addClass('is-disabled');
+              $('#test-dropdown').disable();
             });
 
             $('#updated').on('click', function () {

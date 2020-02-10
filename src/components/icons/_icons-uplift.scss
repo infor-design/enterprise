@@ -30,11 +30,12 @@
   }
 }
 
-label.inline .checkbox ~ .label-text,
-.checkbox-label {
-  line-height: 15px;
+.icon-dirty.dirty-checkbox.is-checked {
+  top: 2px;
 }
 
-.icon-dirty.dirty-checkbox.is-checked {
-  top: 3px;
+.is-firefox {
+  .icon-dirty.dirty-checkbox.is-checked {
+    top: 2px !important;
+  }
 }

@@ -48,7 +48,7 @@
   // Allows fileupload to be readonly without textarea readonly styling
   input {
     &.fileupload-background-transparent {
-      background-color: transparent;
+      background-color: $input-color-initial-background;
       color: $input-color;
       padding-right: 42px;
       text-overflow: ellipsis;

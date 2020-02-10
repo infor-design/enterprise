@@ -682,6 +682,10 @@
       font-size: $theme-size-font-base;
       -webkit-text-size-adjust: 100%;
     }
+
+    &.filtered {
+      display: none;
+    }
   }
 
   @include left-align-cascade-styles-pane(20px, 40px, 40px);

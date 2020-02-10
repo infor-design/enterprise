@@ -186,7 +186,6 @@ $trigger-icon-fill-light-color: $theme-color-palette-slate-40;
 $trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
 $listview-bg-color: $theme-color-palette-slate-70;
@@ -261,6 +260,9 @@ $datepicker-readonly-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
+
+// Color Palette Background
+$color-border-color: rgba(255, 255, 255, 0.2);
 
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
@@ -403,6 +405,8 @@ $modal-btn-primary-color: $theme-color-palette-azure-40;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-30;
 $modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
+$modal-btn-primary-disabled-color: $theme-color-palette-slate-50;
+$modal-btn-primary-disabled-opacity: 1;
 $modal-primary-color: $theme-color-palette-white;
 $modal-secondary-color: $theme-color-palette-slate-30;
 

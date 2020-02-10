@@ -47,7 +47,7 @@ $font-color-extrahighcontrast: $theme-color-palette-white;
 $font-color-highcontrast: $theme-color-palette-slate-10;
 $font-color: $theme-color-palette-slate-20;
 $font-color-lowcontrast: $theme-color-palette-slate-30;
-$label-disabled-color: $theme-color-palette-slate-40;
+$label-disabled-color: $input-color-disabled-border;
 $disabled-color: $theme-color-palette-slate-50;
 $signin-title-color: $theme-color-palette-slate-10;
 
@@ -157,7 +157,8 @@ $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
-$error-color: $theme-color-status-danger;
+$error-color: $theme-color-palette-ruby-50;
+$error-border-color: $theme-color-palette-ruby-50;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $theme-color-status-danger;
 $dirty-icon-fill: $theme-color-status-caution;
@@ -175,7 +176,6 @@ $trigger-icon-fill-light-color: $theme-color-palette-slate-40;
 $trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
 $listview-bg-color: $theme-color-palette-slate-90;
@@ -219,6 +219,9 @@ $toolbar-separator-color: $theme-color-palette-slate-50;
 
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $theme-color-palette-slate-30;
+
+// Color Palette Background
+$color-border-color: rgba(255, 255, 255, 0.2);
 
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
@@ -381,8 +384,8 @@ $slider-readonly-range-color: $theme-color-palette-graphite-70;
 $slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.4);
 
 // Modal
-$modal-bg-color: $theme-color-palette-slate-70;
-$modal-border-color: $theme-color-palette-slate-50;
+$modal-bg-color: $theme-color-palette-slate-80;
+$modal-border-color: $theme-color-palette-slate-60;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $theme-color-palette-slate-30;
 $modal-color: $theme-color-palette-white;
@@ -390,6 +393,8 @@ $modal-btn-border-color: $theme-color-palette-slate-50;
 $modal-btn-hover-color: $theme-color-palette-white;
 $modal-btn-primary-color: $theme-color-palette-azure-40;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-30;
+$modal-btn-primary-disabled-color: $theme-color-palette-slate-50;
+$modal-btn-primary-disabled-opacity: 1;
 $modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
 $modal-primary-color: $theme-color-palette-white;

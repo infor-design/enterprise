@@ -402,7 +402,7 @@ Editor.prototype = {
     if (this.settings.useFlexToolbar) {
       sectionCss = 'toolbar-section ';
       moreButtonHTML = `<div class="toolbar-section more">
-        <button class="btn-actions">
+        <button class="btn-actions btn-editor">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
@@ -790,51 +790,51 @@ Editor.prototype = {
   buttonTemplate(btnType) {
     const buttonLabels = this.getButtonLabels(this.settings.buttonLabels);
     const buttonTemplates = {
-      bold: `<button type="button" class="btn" title="${Locale.translate('ToggleBold')}" data-action="bold" data-element="b">${buttonLabels.bold}</button>`,
+      bold: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleBold')}" data-action="bold" data-element="b">${buttonLabels.bold}</button>`,
 
-      italic: `<button type="button" class="btn" title="${Locale.translate('ToggleItalic')}" data-action="italic" data-element="i">${buttonLabels.italic}</button>`,
+      italic: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleItalic')}" data-action="italic" data-element="i">${buttonLabels.italic}</button>`,
 
-      underline: `<button type="button" class="btn underline" title="${Locale.translate('ToggleUnderline')}" data-action="underline" data-element="u">${buttonLabels.underline}</button>`,
+      underline: `<button type="button" class="btn btn-editor underline" title="${Locale.translate('ToggleUnderline')}" data-action="underline" data-element="u">${buttonLabels.underline}</button>`,
 
-      strikethrough: `<button type="button" class="btn" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
+      strikethrough: `<button type="button" class="btn btn-editor" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
 
-      foreColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
+      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
 
-      backColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
+      backColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
 
-      superscript: `<button type="button" class="btn" title="${Locale.translate('Superscript')}" data-action="superscript" data-element="sup">${buttonLabels.superscript}</button>`,
+      superscript: `<button type="button" class="btn btn-editor" title="${Locale.translate('Superscript')}" data-action="superscript" data-element="sup">${buttonLabels.superscript}</button>`,
 
-      subscript: `<button type="button" class="btn" title="${Locale.translate('Subscript')}" data-action="subscript" data-element="sub">${buttonLabels.subscript}</button>`,
+      subscript: `<button type="button" class="btn btn-editor" title="${Locale.translate('Subscript')}" data-action="subscript" data-element="sub">${buttonLabels.subscript}</button>`,
 
       separator: '<div class="separator"></div>',
 
-      anchor: `<button type="button" class="btn" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
+      anchor: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
 
-      image: `<button type="button" class="btn" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
+      image: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
 
-      header1: `<button type="button" class="btn" title="${Locale.translate('ToggleH3')}" data-action="append-${this.settings.firstHeader}" data-element="${this.settings.firstHeader}">${buttonLabels.header1}</button>`,
+      header1: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleH3')}" data-action="append-${this.settings.firstHeader}" data-element="${this.settings.firstHeader}">${buttonLabels.header1}</button>`,
 
-      header2: `<button type="button" class="btn" title="${Locale.translate('ToggleH4')}" data-action="append-${this.settings.secondHeader}" data-element="${this.settings.secondHeader}">${buttonLabels.header2}</button>`,
+      header2: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleH4')}" data-action="append-${this.settings.secondHeader}" data-element="${this.settings.secondHeader}">${buttonLabels.header2}</button>`,
 
-      quote: `<button type="button" class="btn" title="${Locale.translate('Blockquote')}" data-action="append-blockquote" data-element="blockquote">${buttonLabels.quote}</button>`,
+      quote: `<button type="button" class="btn btn-editor" title="${Locale.translate('Blockquote')}" data-action="append-blockquote" data-element="blockquote">${buttonLabels.quote}</button>`,
 
-      orderedlist: `<button type="button" class="btn" title="${Locale.translate('OrderedList')}" data-action="insertorderedlist" data-element="ol">${buttonLabels.orderedlist}</button>`,
+      orderedlist: `<button type="button" class="btn btn-editor" title="${Locale.translate('OrderedList')}" data-action="insertorderedlist" data-element="ol">${buttonLabels.orderedlist}</button>`,
 
-      unorderedlist: `<button type="button" class="btn" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
+      unorderedlist: `<button type="button" class="btn btn-editor" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
 
-      fontPicker: `<button type="button" class="btn fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
+      fontPicker: `<button type="button" class="btn btn-editor fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
 
-      justifyLeft: `<button type="button" class="btn" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
+      justifyLeft: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
 
-      justifyCenter: `<button type="button" class="btn" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
+      justifyCenter: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
 
-      justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
+      justifyRight: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
 
-      clearFormatting: `<button type="button" class="btn" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
+      clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
-      source: `<button type="button" class="btn" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
+      source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
-      visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
+      visual: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
     };
     return buttonTemplates[btnType] || false;
   },

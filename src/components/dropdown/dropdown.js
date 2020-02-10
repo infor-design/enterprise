@@ -2680,6 +2680,7 @@ Dropdown.prototype = {
     }
 
     this.select(option[0]);
+    this.updated();
   },
 
   /**
@@ -2711,6 +2712,7 @@ Dropdown.prototype = {
     }
 
     this.deselect(option[0]);
+    this.updated();
   },
 
   /**

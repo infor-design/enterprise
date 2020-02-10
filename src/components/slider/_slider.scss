@@ -5,7 +5,7 @@
 // Ranges are styled similarly to their pseudo-markup in size.
 input[type='range'] {
   height: 4px;
-  margin: 20px 4% 35px;
+  margin: 25px 5px 50px;
   position: relative;
   visibility: hidden;
   width: 92%;
@@ -324,6 +324,22 @@ input[type='range'] {
 
   &.is-dragging {
     @include css3(transition, none);
+  }
+}
+
+// Compact Mode
+.field-short,
+.form-layout-compact .field {
+  input[type='range'] {
+    margin: 15px 4% 25px;
+  }
+
+  .slider-wrapper {
+    &:not(.vertical) {
+      height: 4px;
+      margin: 15px 4% 25px;
+      width: 92%;
+    }
   }
 }
 
