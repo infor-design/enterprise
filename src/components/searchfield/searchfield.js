@@ -35,7 +35,8 @@ const SEARCHFIELD_DEFAULTS = {
   source: undefined,
   template: undefined,
   clearable: false,
-  collapsible: SEARCHFIELD_COLLAPSE_MODES[0]
+  collapsible: SEARCHFIELD_COLLAPSE_MODES[0],
+  collapseSize: undefined
 };
 
 // Used throughout:
@@ -63,6 +64,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @param {boolean} [settings.collapsible = true] If "true", allows the field to expand/collapse on larger breakpoints when
  * focused/blurred respectively
  * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
+ * @param {number|function} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.  If defined as a function, gets a reference to this API as its primary argument, and returns a number.
  */
 function SearchField(element, settings) {
   this.element = $(element);
@@ -273,10 +275,18 @@ SearchField.prototype = {
 
     this.checkContents();
 
+    // Add/remove custom collapse CSS identifier
+    let collapseSizeMethod = 'remove';
+    if (this.settings.collapsible && this.settings.collapseSize) {
+      collapseSizeMethod = 'add';
+    }
+    this.wrapper[0].classList[collapseSizeMethod]('has-custom-collapse-size');
+
     // Label for toolbar-inlined searchfields needs to be inside the
     // wrapper to help with positioning.
     if (this.toolbarParent) {
       this.label.prependTo(this.wrapper);
+      this.setInitalWidth();
     }
 
     const customClasses = ['context', 'alternate'];
@@ -412,7 +422,7 @@ SearchField.prototype = {
       if (!this.goButton || !this.goButton.length) {
         this.goButton = $(`
           <button class="btn-secondary go-button">
-            <span>${this.settings.goButtonCopy || Locale.translate('Go')}</span>
+            <span>${this.settings.goButtonCopy || Locale.translate('Go', { showBrackets: false })}</span>
           </button>
         `);
       }
@@ -425,6 +435,7 @@ SearchField.prototype = {
 
     if (this.settings.clearable) {
       this.element.clearable();
+      this.wrapper.addClass('has-close-icon-button');
       this.xButton = this.wrapper.children('.icon.close');
     }
 
@@ -494,6 +505,8 @@ SearchField.prototype = {
         this.wrapper[0].classList.remove('is-open');
       }
 
+      this.setInitalWidth();
+
       return;
     }
 
@@ -510,6 +523,8 @@ SearchField.prototype = {
     if (this.isExpanded) {
       this.collapse();
     }
+
+    this.setInitalWidth();
   },
 
   /**
@@ -673,49 +688,6 @@ SearchField.prototype = {
   },
 
   /**
-  * Fires when the searchfield is focused.
-  * @event focusin
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  * /
-  /**
-  * Fires when a key is pressed inside of the searchfield.
-  * @event keydown
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  *  Fires when a `collapse` event is triggered externally on the searchfield.
-  * @event collapse
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  *  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
-  * @event beforeopen
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  * Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
-  * @event navigate
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-  * Fires when a `keydown` event is triggered at the `document` level.
-  * @event keydown
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  */
-  /**
-   * Fires when a `resize` event is triggered at the `body` level.
-   * @event resize
-   * @memberof ToolbarSearchfield
-   * @property {object} event - The jquery event object
-   */
-
-  /**
    * Sets up the event-listening structure for this component instance.
    * @private
    * @returns {this} component instance
@@ -832,7 +804,7 @@ SearchField.prototype = {
     }
 
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    self.element.on(`populated.${this.id}`, (e, items) => {
+    self.element.on(`beforepopulated.${this.id}`, (e, items) => {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -1004,11 +976,6 @@ SearchField.prototype = {
    */
   handleBlur() {
     const self = this;
-
-    if (env.os.name === 'ios') {
-      $('head').triggerHandler('disable-zoom');
-    }
-
     self.handleSafeBlur();
   },
 
@@ -1385,28 +1352,12 @@ SearchField.prototype = {
   },
 
   /**
+   * @deprecated as of v4.26.0
    * @private
    * @returns {void}
    */
   setClosedWidth() {
-    let closedWidth = 0;
-
-    // If the searchfield category button exists, change the width of the
-    // input field on the inside to provide space for the (variable) size of the currently-selected
-    // category (or categories)
-    if ((this.categoryButton instanceof $) && this.categoryButton.length) {
-      const buttonStyle = window.getComputedStyle(this.categoryButton[0]);
-      const buttonWidth = this.categoryButton.width();
-      const buttonBorder = parseInt(buttonStyle.borderLeftWidth, 10) * 2;
-      const buttonPadding = parseInt(buttonStyle.paddingLeft, 10) +
-        parseInt(buttonStyle.paddingRight, 10);
-
-      closedWidth += (buttonWidth + buttonBorder + buttonPadding + 4);
-    }
-
-    if (this.wrapper[0]) {
-      this.wrapper[0].style.width = `${closedWidth}px`;
-    }
+    return this.setInitalWidth();
   },
 
   /**
@@ -1541,6 +1492,13 @@ SearchField.prototype = {
    * @param  {object} anchor the link object
    */
   handleCategorySelected(e, anchor) {
+    /**
+     * Fires when the searchfield has become collapsed.
+     * @event selected
+     * @memberof SearchField
+     * @type {object}
+     * @property {object} event - The jquery event object
+     */
     this.element.trigger('selected', [anchor]);
 
     // Only change the text and searchfield size if we can
@@ -1719,6 +1677,9 @@ SearchField.prototype = {
         self.appendToParent();
       }
 
+      self.wrapper.removeAttr('style');
+      self.input.removeAttribute('style');
+
       // Re-adjust the size of the buttonset element if the expanded searchfield would be
       // too large to fit.
       let buttonsetWidth = 0;
@@ -1751,6 +1712,13 @@ SearchField.prototype = {
         eventArgs.push(containerSizeSetters);
       }
 
+      /**
+       * Fires before the searchfield is expanded.
+       * @event beforeexpand
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       */
       self.element.trigger('beforeexpand');
       $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
 
@@ -1759,7 +1727,16 @@ SearchField.prototype = {
         updateCallback() {}, // TODO: make this work without an empty function
         timeoutCallback() {
           $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+
+          /**
+           * Fires when the searchfield has become expanded.
+           * @event expanded
+           * @memberof SearchField
+           * @type {object}
+           * @property {object} event - The jquery event object
+           */
           self.element.trigger('expanded');
+
           delete self.isExpanding;
           self.isExpanded = true;
 
@@ -1788,10 +1765,15 @@ SearchField.prototype = {
 
       self.isCollapsing = true;
 
+      self.wrapper.removeAttr('style');
+
       // Puts the input wrapper back where it should be if it's been moved due to small form factors.
       self.appendToButtonset();
 
       self.checkContents();
+      if (self.toolbarParent) {
+        self.setInitalWidth();
+      }
 
       self.clearResponsiveState();
 
@@ -1803,18 +1785,18 @@ SearchField.prototype = {
         self.wrapper[0].classList.remove('has-focus');
       }
 
-      self.wrapper.removeAttr('style');
-      self.input.removeAttribute('style');
-
       if (self.categoryButton && self.categoryButton.length) {
         self.categoryButton.data('popupmenu').close(false, true);
       }
 
+      /**
+       * Fires before the searchfield is collapsed.
+       * @event beforecollapse
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       */
       self.element.trigger('beforecollapse');
-
-      if (env.os.name === 'ios') {
-        $('head').triggerHandler('enable-zoom');
-      }
 
       delete self.isExpanded;
       delete self.isExpanding;
@@ -1825,6 +1807,14 @@ SearchField.prototype = {
         timeoutCallback() {
           delete self.isCollapsing;
           $(self.toolbarParent).triggerHandler('recalculate-buttons');
+
+          /**
+           * Fires when the searchfield has become collapsed.
+           * @event collapsed
+           * @memberof SearchField
+           * @type {object}
+           * @property {object} event - The jquery event object
+           */
           self.element.trigger('collapsed');
           resolve();
         }
@@ -1863,8 +1853,24 @@ SearchField.prototype = {
 
     // Collapse followed by a special event trigger (gets picked up by Flex Toolbar)
     this.collapse().then(() => {
+      /**
+       * Fires when the searchfield has become collapsed.
+       * @event collapsed-responsive
+       * @memberof SearchField
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {number} dir - The direction in which the Flex Toolbar has navigated (can be 0 to stay, or 1 to navigate forward)
+       */
       self.wrapper.trigger('collapsed-responsive', [dir]);
     });
+  },
+
+  /**
+   * @returns {boolean} whether or not the Searchfield contains a valid value.
+   */
+  get hasText() {
+    const value = !this.input.value ? '' : this.input.value.trim();
+    return value !== '';
   },
 
   /**
@@ -1874,12 +1880,42 @@ SearchField.prototype = {
    * @returns {void}
    */
   checkContents() {
-    let textMethod = 'remove';
-    const value = !this.input.value ? '' : this.input.value.trim();
-    if (value !== '') {
-      textMethod = 'add';
+    return this.wrapper[0].classList[this.hasText ? 'add' : 'remove']('has-text');
+  },
+
+  /**
+   * Sets the width of the Searchfield when it closes.
+   * @private
+   * @returns {void}
+   */
+  setInitalWidth() {
+    if (!this.settings.collapsible || this.shouldBeFullWidth() || !this.hasText) {
+      return;
     }
-    this.wrapper[0].classList[textMethod]('has-text');
+
+    // If collapsing with a search term present,
+    // shrink the unfocused state to a custom-defined width instead of the default "button" size.
+    // If a function is provided instead of a number, the function should eventually return a number.
+    let size;
+    if (this.settings.collapseSize) {
+      if (typeof this.settings.collapseSize === 'function') {
+        size = this.settings.collapseSize(this);
+      } else {
+        size = parseInt(this.settings.collapseSize, 10);
+      }
+    }
+
+    if (isNaN(size)) {
+      if (this.wrapper[0]) {
+        this.wrapper[0].style.width = '';
+      }
+      return;
+    }
+
+    // this.wrapper.outerWidth(size);
+    if (this.wrapper[0]) {
+      this.wrapper[0].style.width = `${size}px`;
+    }
   },
 
   /**
@@ -1899,7 +1935,7 @@ SearchField.prototype = {
     const separator = $('<li class="separator" role="presentation"></li>').appendTo(list);
     const more = $('<li role="presentation"></li>').appendTo(list);
     this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>')
-      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumeric(val)}"</span>`)
+      .html(`<span>${Locale.translate('AllResults')} "${xssUtils.ensureAlphaNumericWithSpaces(val)}"</span>`)
       .appendTo(more);
 
     if (this.autocomplete.maxWidth) {
@@ -1920,7 +1956,8 @@ SearchField.prototype = {
 
     const none = $('<li role="presentation" class="is-placeholder"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" disabled="disabled" tabindex="-1" role="menuitem" aria-disabled="true"></a>')
+      .html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**
@@ -1932,6 +1969,11 @@ SearchField.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+      // `utils.mergeSettings` misses passing the empty `collapseSize` property, so we need to check for it
+      if (Object.prototype.hasOwnProperty.call(settings, 'collapseSize') && settings.collapseSize === undefined) {
+        this.settings.collapseSize = settings.collapseSize;
+      }
     }
     this.teardown().init();
   },

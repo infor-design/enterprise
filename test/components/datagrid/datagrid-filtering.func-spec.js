@@ -5,8 +5,10 @@ import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data');
+const originalGroupingData = require('../../../app/data/accounts');
 
 let data = [];
+let groupingData = [];
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
@@ -27,6 +29,16 @@ columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent'
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', reorderable: false, filterType: 'Checkbox', formatter: Formatters.Checkbox });
+
+// Define Grouping Columns for the Grid.
+const groupingColumns = [];
+groupingColumns.push({ id: 'id', name: 'Customer Id', field: 'id', filterType: 'text' });
+groupingColumns.push({ id: 'type', name: 'Type', field: 'type', filterType: 'text' });
+groupingColumns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, filterType: 'text' });
+groupingColumns.push({ id: 'firstname', name: 'First Name', field: 'firstname', filterType: 'text' });
+groupingColumns.push({ id: 'lastname', name: 'Last Name', field: 'lastname', filterType: 'text' });
+groupingColumns.push({ id: 'phone', name: 'Phone', field: 'phone', filterType: 'text' });
+groupingColumns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', filterType: 'text' });
 
 describe('Datagrid Filter API', () => {
   const Locale = window.Soho.Locale;
@@ -144,7 +156,7 @@ describe('Datagrid Filter API', () => {
 
     expect(usedFilter).toEqual([]);
 
-    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
+    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206', filterType: 'Text' }];
     datagridObj.setFilterConditions(filter);
     usedFilter = datagridObj.filterConditions();
 
@@ -215,5 +227,44 @@ describe('Datagrid Filter API', () => {
     expect(document.body.querySelectorAll('tbody tr').length).toEqual(7);
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+  });
+
+  it('Should be able to filter and sort with grouping', () => {
+    datagridObj.destroy();
+    groupingData = JSON.parse(JSON.stringify(originalGroupingData));
+    datagridObj = new Datagrid(datagridEl, {
+      columns: groupingColumns,
+      dataset: groupingData,
+      filterable: true,
+      groupable: { fields: ['type'], expanded: true, aggregator: 'sum' },
+      toolbar: { title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false }
+    });
+
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(16);
+    expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(7);
+
+    let filter = [];
+    filter = [{ columnId: 'location', operator: 'contains', value: 'USA' }];
+    datagridObj.applyFilter(filter);
+
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(5);
+
+    datagridObj.setSortColumn('location', true);
+
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(5);
+  });
+
+  it('Should be able get the dataset with no added fields', () => {
+    let usedFilter = datagridObj.filterConditions();
+
+    expect(usedFilter).toEqual([]);
+
+    const filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
+    datagridObj.setFilterConditions(filter);
+    usedFilter = datagridObj.filterConditions();
+
+    expect(datagridObj.getDataset()[0]._isFilteredOut).toEqual(undefined); //eslint-disable-line
   });
 });

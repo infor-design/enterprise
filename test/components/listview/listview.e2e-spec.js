@@ -91,9 +91,9 @@ describe('Listview example-singleselect tests', () => {
 describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-multiselect');
-    const listviewEl = await element(by.css('#multiselect-listview li'));
+    const listviewEl = await element.all(by.css('#multiselect-listview li')).first();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(listviewEl), config.waitsFor);
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -307,9 +307,8 @@ describe('Listview example-search tests', () => {
 describe('Listview example-paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-paging');
-    const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview ul li:last-child'))), config.waitsFor);
   });
 
   if (!utils.isIE()) {
@@ -462,7 +461,7 @@ describe('Listview server-side indeterminate paging tests', () => {
 describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/test-remove-clear');
-    const listviewMultiSelectEl = await element(by.css('#multiselect-listview li'));
+    const listviewMultiSelectEl = await element.all(by.css('#multiselect-listview li')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
   });
@@ -497,9 +496,8 @@ describe('Listview remove-clear tests', () => {
 describe('Listview example-header-totals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/listview/example-header-totals');
-    const listviewButtonToggleEl = await element(by.css('.listview-header button'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewButtonToggleEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview-footer'))), config.waitsFor);
   });
 
   if (!utils.isIE()) {
@@ -532,16 +530,16 @@ describe('Listview inside of List/Detail Pattern', () => {
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeTruthy();
   });
 });
 
@@ -559,9 +557,9 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
     expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 19');
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeTruthy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
@@ -569,7 +567,39 @@ describe('Listview with indeterminate paging inside of List/Detail Pattern', () 
     expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
     expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 20');
     expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 39');
-    expect(await element(by.css('.pager-toolbar .pager-prev a')).getAttribute('disabled')).toBeFalsy();
-    expect(await element(by.css('.pager-toolbar .pager-next a')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
+    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
   });
+});
+
+describe('Listview flex card empty tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/listview/test-empty-message-flex-container?layout=nofrills');
+    const emptyMessage = await element(by.css('.empty-message'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(emptyMessage), config.waitsFor);
+  });
+
+  it('should toggle empty message', async () => {
+    expect(await element(by.css('.empty-message')).getText()).toEqual('No Stock Found');
+    await element(by.id('btn2')).click();
+
+    expect(await element(by.css('.empty-message')).isPresent()).toBeFalsy();
+    expect(await element.all(by.css('.listview li')).first().isPresent()).toBeTruthy();
+    await element(by.id('btn1')).click();
+
+    expect(await element(by.css('.empty-message')).isPresent()).toBeTruthy();
+    expect(await element.all(by.css('.listview li')).first().isPresent()).toBeFalsy();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on empty message in the card', async () => {
+      const container = await element(by.css('.container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(container, 'listview-flex-card')).toEqual(0);
+    });
+  }
 });

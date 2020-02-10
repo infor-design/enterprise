@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="twelve columns">
+    <button id="show-message" class="btn-secondary" type="button">Show Message</button>
+  </div>
+</div>
+
+<script>
+$('#show-message').on('click.test', function () {
+    var opts = $(this).attr('data-message');
+
+    opts = {
+      title: '&lt;script&gt;alert(&quot;menuXSS&quot;)&lt;/script&gt;',
+      buttons: [{
+          id: 'id-cancel',
+          text: 'Cancel',
+          click: function(e, modal) {
+            modal.close();
+          },
+          isLink: true,
+          isDefault: true
+        },{
+          text: 'Remove',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }]
+    };
+
+    $('body').message(opts)
+    .on('beforeopen', function () {
+      console.log('beforeOpen');
+      //return false;
+    })
+    .on('open', function () {
+      console.log('open');
+    })
+    .on('beforeclose', function () {
+      console.log('beforeclose');
+      //return false;
+    })
+    .on('close', function () {
+      console.log('close');
+    })
+    .on('afterclose', function () {
+      console.log('afterclose');
+    });
+});
+</script>

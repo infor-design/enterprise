@@ -120,10 +120,12 @@
   }
 
   li {
+    background-color: $listview-bg-color;
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
+    position: relative;
 
     &:hover {
       background-color: $listview-hover-bg-color;
@@ -131,7 +133,7 @@
     }
 
     &:focus {
-      border-color: $theme-color-brand-primary-base !important;
+      border-color: $theme-color-brand-primary-lighter !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
@@ -217,7 +219,7 @@
 
   &.disable-hover {
     li:hover {
-      background-color: transparent;
+      background-color: $listview-hover-bg-color;
     }
   }
 
@@ -267,8 +269,8 @@
       top: 4px;
 
       .icon {
-        left: initial;
-        top: initial;
+        left: unset;
+        top: unset;
       }
     }
   }
@@ -345,14 +347,12 @@
 
     color: $listview-disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $listview-disabled-color;
 
     * {
       @include unselectable;
 
       color: $listview-disabled-color;
       cursor: default;
-      -webkit-text-fill-color: $listview-disabled-color;
     }
 
     &:hover {
@@ -622,9 +622,9 @@
     width: 100%;
 
     &[disabled] {
+      background-color: $listview-search-disabled-bg-color;
       color: $listview-search-disabled-color;
       opacity: $listview-search-disabled-opacity;
-      -webkit-text-fill-color: $listview-search-disabled-color;
 
       &:hover {
         border-color: $listview-search-disabled-border-color;
@@ -810,7 +810,7 @@ html[dir='rtl'] {
 
     .icon.close {
       left: 12px !important;
-      right: initial !important;
+      right: unset !important;
     }
 
   }

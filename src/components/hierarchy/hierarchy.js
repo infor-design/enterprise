@@ -83,6 +83,7 @@ Hierarchy.prototype = {
 
     // Warn about deprecated settings
     if (s.paging) {
+      // eslint-disable-next-line no-console
       console.warn(`
       Hierarchy,
       WARNING: Paging setting will be deprecated.
@@ -92,6 +93,7 @@ Hierarchy.prototype = {
     }
 
     if (s.mobileView) {
+      // eslint-disable-next-line no-console
       console.warn(`
       Hierarchy,
       WARNING: MobileView setting will be deprecated.
@@ -931,7 +933,7 @@ Hierarchy.prototype = {
     setTimeout(() => {
       const actionButton = $(`#btn-${xssUtils.stripTags(data.id)}`);
       if (actionButton.length !== 0) {
-        actionButton.hideFocus().popupmenu();
+        actionButton.hideFocus().popupmenu({ attachToBody: false });
       }
     }, 1);
 

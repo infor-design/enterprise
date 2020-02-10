@@ -1,5 +1,6 @@
 import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
 import { ToolbarFlexItem } from '../../../src/components/toolbar-flex/toolbar-flex.item';
+import { cleanup } from '../../helpers/func-utils';
 
 const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -7,33 +8,28 @@ const svg = require('../../../src/components/icons/svg.html');
 let toolbarEl;
 let toolbarAPI;
 let rowEl;
-let svgEl;
 
-describe('Flex Toolbar', () => {
+describe('Flex Toolbar', () => { //eslint-disable-line
   beforeEach(() => {
     toolbarEl = null;
     toolbarAPI = null;
-    svgEl = null;
     rowEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', toolbarFavorButtonsetHTML);
 
     rowEl = document.body.querySelector('.row');
-    svgEl = document.body.querySelector('.svg-icons');
     toolbarEl = document.body.querySelector('.flex-toolbar');
     toolbarAPI = new ToolbarFlex(toolbarEl);
   });
 
   afterEach(() => {
     toolbarAPI.destroy();
-    rowEl.parentNode.removeChild(rowEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const popupmenuEl = document.body.querySelector('.popupmenu');
-    if (popupmenuEl) {
-      popupmenuEl.parentNode.removeChild(popupmenuEl);
-    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('Should be invoked', () => {
@@ -109,7 +105,7 @@ describe('Flex Toolbar', () => {
       expect(overflow[0]).toEqual(jasmine.any(ToolbarFlexItem));
       expect(overflow[0].overflowed).toBeTruthy();
       done();
-    }, 350);
+    }, 500);
   });
 
   it('Can programmatically navigate toolbar items', () => {
@@ -332,62 +328,74 @@ describe('Flex Toolbar', () => {
         const textButton = toolbarAPI.items[0];
 
         expect(textButton.overflowed).toBeFalsy();
-      }, 300);
+      }, 500);
 
       setTimeout(() => {
         const secondIconButton = toolbarAPI.items[2];
 
         expect(secondIconButton.overflowed).toBeTruthy();
         done();
-      }, 300);
+      }, 500);
     });
   });
 
   describe('Item selected events', () => {
-    it('Should trigger "selected" event for a normal button', () => {
+    it('Should trigger "selected" event for a normal button', (done) => {
       const button = toolbarAPI.items[0].element;
       const buttonSpyEvent = spyOnEvent('div.buttonset button:first-child', 'selected');
 
       button.click();
-
-      expect(buttonSpyEvent).toHaveBeenTriggered();
+      setTimeout(() => {
+        expect(buttonSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 300);
     });
 
-    it('Should trigger "selected" event for a menu button', () => {
+    it('Should trigger "selected" event for a menu button', (done) => {
       const menuButton = toolbarAPI.items[1];
       const menuButtonSpyEvent = spyOnEvent('button#menu-button', 'selected');
-      const firstMenuEntry = document.body.querySelector('button#menu-button + div ul li a');
+      const firstMenuEntry = document.body.querySelector('ul#popupmenu-1 li a');
 
       menuButton.componentAPI.open();
-      firstMenuEntry.click();
+      setTimeout(() => {
+        firstMenuEntry.click();
 
-      expect(menuButtonSpyEvent).toHaveBeenTriggered();
+        setTimeout(() => {
+          expect(menuButtonSpyEvent).toHaveBeenTriggered();
+          done();
+        }, 300);
+      }, 300);
     });
 
-    it('Should trigger "selected" event for overflow menu', () => {
+    it('Should trigger "selected" event for overflow menu', (done) => {
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const firstMoreMenuEntry = document.body.querySelector('button.btn-actions + div ul li:nth-child(5) a');
+      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(5) a');
 
       moreMenuButton.componentAPI.open();
-      firstMoreMenuEntry.click();
+      setTimeout(() => {
+        firstMoreMenuEntry.click();
 
-      expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 500);
     });
 
-    it('Should trigger "selected" event for menu button in the overflow menu', () => {
+    it('Should trigger "selected" event for menu button in the overflow menu', (done) => {
       rowEl.style.width = '700px';
       const moreMenuButton = toolbarAPI.items[5];
       const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const overflowedMenuButton = document.body.querySelector('button.btn-actions + div ul li:nth-child(2)');
-      const firstMoreMenuEntry = document.body.querySelector('button.btn-actions + div ul li:nth-child(2) a#item-one');
+      const overflowedMenuButton = document.body.querySelector('ul#popupmenu-2 li:nth-child(2)');
+      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(2) a#item-one');
 
       moreMenuButton.componentAPI.open();
-      $(overflowedMenuButton).trigger('mouseover');
+      setTimeout(() => {
+        $(overflowedMenuButton).trigger('mouseover');
+        firstMoreMenuEntry.click();
 
-      firstMoreMenuEntry.click();
-
-      expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        expect(moreActionsSpyEvent).toHaveBeenTriggered();
+        done();
+      }, 500);
     });
   });
 });

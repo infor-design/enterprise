@@ -1,0 +1,27 @@
+<div class="full-height full-width">
+  <div class="week-view" data-init="false">
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
+  var events = [];
+
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+      $('.week-view').weekview({
+        locale: null,
+        showAllDay: false,
+        showViewChanger: false,
+        showTimeLine: false,
+        firstDayOfWeek: 1
+      });
+    });
+  });
+});
+</script>

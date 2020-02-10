@@ -147,14 +147,14 @@ Personalize.prototype = {
 
     // Force to be light text on custom colors { color: ['soho', 'uplift'] }
     const forceToBeLightTextOn = {
-      amber: ['#db7726', '#9b3300'],
-      amethyst: ['#9279a6', '#7834dd'],
-      azure: ['#2578a9', '#0563c2'],
-      emerald: ['#56932e', '#0a834b'],
-      graphite: ['#5c5c5c', '#808080'],
-      ruby: ['#941e1e', '#7b0f11'],
-      slate: ['#50535a', '#98949e'],
-      turquoise: ['#206b62', '#248b8f']
+      amber: ['#db7726', '#bb5500'], // amber 09
+      amethyst: ['#9279a6', '#7834dd'], // amethyst 06
+      azure: ['#2578a9', '#0563c2'], // azure 07/08
+      emerald: ['#56932e', '#1f9254'], // emerald 08
+      graphite: ['#5c5c5c', '#808080'], // graphite 06
+      ruby: ['#941e1e', '#7b0f11'], // ruby 09
+      slate: ['#50535a', '#98949e'], // slate 06
+      turquoise: ['#206b62', '#297b7b'] // turquoise 09
     };
     let foundColor = false;
     let isDark = `${colors.header || defaultColors.header}`.toLowerCase();
@@ -342,6 +342,7 @@ Personalize.prototype = {
     newCss.on('load', () => {
       originalCss.remove();
       self.unBlockUi();
+      self.triggerEvent(incomingTheme);
     }).on('error', () => {
       self.unBlockUi();
     });
@@ -362,20 +363,6 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
-
-    /**
-    * Fires after the theme is changed
-    * @event themechanged
-    * @memberof Personalize
-    * @property {object} event - The jquery event object
-    * @property {object} args - The event args
-    * @property {string} args.theme - The theme id changed to.
-    */
-    this.element.triggerHandler('themechanged', {
-      colors: this.settings.colors.header ||
-        this.settings.colors || theme.themeColors().brand.primary.alt.value,
-      theme: incomingTheme || 'theme-soho-light'
-    });
   },
 
   /**
@@ -410,12 +397,36 @@ Personalize.prototype = {
   },
 
   /**
+   * Trigger the change events.
+   * @private
+   * @param {string} incomingTheme Represents the file name of a color
+   * @returns {void}
+   */
+  triggerEvent(incomingTheme) {
+    /**
+    * Fires after the theme is changed
+    * @event themechanged
+    * @memberof Personalize
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event args
+    * @property {string} args.theme - The theme id changed to.
+    */
+    this.element.triggerHandler('themechanged', {
+      colors: this.settings.colors.header ||
+        this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      theme: incomingTheme || 'theme-soho-light'
+    });
+    $('body').trigger('resize');
+  },
+
+  /**
    * Removes a temporary page overlay built by `blockUi()`
    * @private
    * @returns {void}
    */
   unBlockUi() {
     const self = this;
+
     if (!self.settings.blockUI || !self.pageOverlay) {
       return;
     }

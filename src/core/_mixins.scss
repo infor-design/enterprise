@@ -233,11 +233,9 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 @mixin placeholder {
   color: $input-placeholder-color;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   font-weight: $theme-number-font-weight-base;
-  line-height: 16px;
   opacity: 1;
-  -webkit-text-fill-color: $input-placeholder-color;
 }
 
 // Wrap longer word
@@ -338,4 +336,8 @@ $box-shadow-off-color: rgba(0, 0, 0, 0);
 
 @mixin drawer-box-shadow() {
   @include css3(box-shadow, 0 0 20px 1px $box-shadow-on-color);
+}
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
 }

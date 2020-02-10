@@ -18,7 +18,8 @@ const TOAST_DEFAULTS = {
   timeout: 6000,
   allowLink: false,
   draggable: false,
-  savePosition: false
+  savePosition: false,
+  uniqueId: null
 };
 
 /**
@@ -38,6 +39,7 @@ const TOAST_DEFAULTS = {
  * @param {boolean} [settings.allowLink = false] if true, allows user to put links in the toast message.
  * @param {boolean} [settings.draggable = false] if true, allows user to drag/drop the toast container.
  * @param {boolean} [settings.savePosition] Save positon to local storage.
+ * @param {string} [settings.uniqueId] A uniqueId to save positon to local storage, so same saved positon can be use for whole app.
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -65,12 +67,15 @@ Toast.prototype = {
    */
   show() {
     const self = this;
-    const s = self.settings;
+    const s = this.settings;
     const maxHideTime = parseFloat(math.convertDelayToFPS(s.timeout));
-    const message = s.allowLink ? xssUtils.stripTags(s.message, '<a>') : xssUtils.stripHTML(s.message);
+    const message = s.allowLink ? xssUtils.stripTags(s.message, '<a><br><p>') : xssUtils.stripHTML(s.message);
     let isPausePlay = false;
     let percentage = 100;
-    let container = $('#toast-container');
+
+    this.uniqueId = s.uniqueid ? this.generateUniqueId('usersettings-position') : '';
+
+    let container = $(`#toast-container${this.uniqueId}`);
     const toast = $(`
       <div class="toast">
         <span class="toast-title">${xssUtils.stripHTML(s.title)}</span>
@@ -85,7 +90,7 @@ Toast.prototype = {
     const progress = $('<div class="toast-progress"></div>');
 
     if (!container.length) {
-      container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
+      container = $(`<div id="toast-container${this.uniqueId}" class="toast-container" aria-relevant="additions" aria-live="polite"></div>`).appendTo('body');
     }
 
     container
@@ -261,7 +266,7 @@ Toast.prototype = {
     const doc = $(document);
     doc
       .off('mouseup.toast').on('mouseup.toast', (e) => {
-        if ($('#toast-container .toast').length === 1) {
+        if ($(`#toast-container${this.uniqueId} .toast`).length === 1) {
           const dragApi = container.data('drag');
           if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
             const args = { dragApi, x: e.pageX, y: e.pageY };
@@ -272,7 +277,7 @@ Toast.prototype = {
         }
       })
       .off('touchend.toast').on('touchend.toast', (e) => {
-        if ($('#toast-container .toast').length === 1) {
+        if ($(`#toast-container${this.uniqueId} .toast`).length === 1) {
           const dragApi = container.data('drag');
           if (dragApi && typeof dragApi.getElementsFromPoint === 'function') {
             const orig = e.originalEvent;
@@ -302,7 +307,7 @@ Toast.prototype = {
     }
 
     // Save position to local storage
-    localStorage[this.uniqueId('usersettings-position')] = JSON.stringify(pos);
+    localStorage[this.uniqueId] = JSON.stringify(pos);
 
     /**
     * Fires after settings are changed in some way
@@ -326,7 +331,7 @@ Toast.prototype = {
       return null;
     }
 
-    const lsPosition = localStorage[this.uniqueId('usersettings-position')];
+    const lsPosition = localStorage[this.uniqueId];
     return lsPosition ? JSON.parse(lsPosition) : null;
   },
 
@@ -353,15 +358,9 @@ Toast.prototype = {
   * @param {object} suffix Add this string to make the id more unique
   * @returns {string} The unique id.
   */
-  uniqueId(suffix) {
+  generateUniqueId(suffix) {
     suffix = (suffix === undefined || suffix === null) ? '' : suffix;
-    const uniqueid = `toast-${window.location.pathname.split('/').pop()
-      .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-      .replace(/[^-\w]+/g, '')
-      .replace(/\./g, '-')
-      .replace(/ /g, '-')
-      .replace(/%20/g, '-')}-${suffix}`;
-
+    const uniqueid = `toast-${this.settings.uniqueid || ''}-${suffix}`;
     return uniqueid.replace(/--/g, '-').replace(/-$/g, '');
   },
 
@@ -403,7 +402,7 @@ Toast.prototype = {
   remove(toast) {
     const removeCallback = () => {
       toast.remove();
-      const canDestroy = !$('#toast-container .toast').length;
+      const canDestroy = !$(`#toast-container${this.uniqueId} .toast`).length;
       if (canDestroy) {
         this.destroy();
       }
@@ -444,7 +443,7 @@ Toast.prototype = {
    * @returns {void}
    */
   destroy() {
-    const container = $('#toast-container');
+    const container = $(`#toast-container${this.uniqueId}`);
     if (container[0]) {
       const toasts = [].slice.call(container[0].querySelectorAll('.toast'));
       toasts.forEach((toast) => {
@@ -454,6 +453,7 @@ Toast.prototype = {
     }
     $(document).off('keydown.toast keyup.toast mouseup.toast touchend.toast');
     container.remove();
+    delete this.uniqueId;
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

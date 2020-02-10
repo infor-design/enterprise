@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -567,11 +568,24 @@ SwapList.prototype = {
   setSelectionsItems(container) {
     container = this.isjQuery(container) ? container : $(container, this.element);
     const nodes = $('.listview li', container);
-    const dataList = this.getDataList(container);
+    const containerAPI = container.find('.listview').data('listview');
+    let dataList = this.getDataList(container);
+    let isFiltered = false;
+
+    if (containerAPI && containerAPI.filteredDataset) {
+      dataList = [...containerAPI.filteredDataset];
+      isFiltered = true;
+    }
 
     for (let i = 0, l = nodes.length; i < l; i++) {
-      if ($(nodes[i]).is('.is-selected')) {
-        this.selections.itemsData.push(dataList[i]);
+      const li = $(nodes[i]);
+      const itemData = dataList[i];
+      if (isFiltered) {
+        itemData.node = li;
+        delete itemData._isFilteredOut;
+      }
+      if (li.is('.is-selected')) {
+        this.selections.itemsData.push(itemData);
       }
     }
   },
@@ -739,7 +753,7 @@ SwapList.prototype = {
       this.updateAttributes($('.listview', this.selections.droptarget));
       if (this.selections.items.length) {
         this.selections.move = $.extend(true, this.selections.move, {
-          to: this.getContainer(this.selections.itemsData)
+          to: this.getContainer([{ node: this.selections.droptarget.find('li:first') }])
         });
         /**
         * Fires when any bucket has its content changed.

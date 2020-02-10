@@ -30,10 +30,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     color: $searchfield-text-color;
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
-    height: 34px;
     outline: 0;
     padding-left: 34px;
-    padding-right: 34px;
+    padding-right: 0;
     text-overflow: ellipsis;
     width: 100%;
 
@@ -43,6 +42,39 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-placeholder-text-color;
       font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
+    }
+  }
+
+  &:not(.is-open):not(.non-collapsible) {
+    .searchfield {
+      height: 100%;
+    }
+  }
+
+  // To correctly size the toolbar searchfield when it's not open, account for
+  // missing text height.  The padding values should equal to `1px` taller on each side
+  // than the standard input field padding.  The "closed" state also shifts the visual
+  // location of the text/icon to better align it with other toolbar buttons.
+  &:not(.is-open) {
+    .searchfield {
+      padding-bottom: 7px;
+      padding-top: 11px;
+    }
+
+    .icon:not(.close) {
+      top: 10px;
+    }
+  }
+
+  &.non-collapsible {
+    .searchfield {
+      padding-bottom: 7px;
+      padding-top: 11px;
+    }
+
+    .icon:not(.close) {
+      height: 14px;
+      top: 12px;
     }
   }
 
@@ -78,9 +110,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &:not(.close) {
-      @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
-      top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
-      left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+      @include transition(height 300ms $cubic-ease,
+      top 300ms $cubic-ease,
+      left 300ms $cubic-ease);
 
       height: 18px;
       top: 8px;
@@ -157,13 +189,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &.non-collapsible {
-    .icon:not(.close) {
-      height: 14px;
-      top: 10px;
-    }
-  }
-
   &.is-open {
     .searchfield,
     .btn {
@@ -176,6 +201,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
+      padding-right: 34px;
       text-transform: none;
 
       &::-webkit-input-placeholder {
@@ -204,6 +230,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       height: 14px;
       top: 10px;
+    }
+
+    &:not(.non-collapsible) {
+      .searchfield {
+        height: 35px; // Unable to use token here. need to use the soho height
+      }
     }
 
     &.alternate {
@@ -236,9 +268,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
+    /* stylelint-disable */
+    // Ignored due to out-of-order properties that need to be in this order for proper cascade.
     .btn,
     .collapse-button {
       background-color: rgba($searchfield-bg-color, 1);
+      border-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
@@ -246,9 +281,11 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield,
       .btn {
         background-color: rgba($searchfield-alt-bg-color, 1);
+        border-color: rgba($searchfield-alt-bg-color, 1);
         border-bottom-color: rgba($searchfield-alt-border-color, 1);
       }
     }
+    /* stylelint-enable */
   }
 
   &.has-focus {
@@ -274,6 +311,16 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-text {
     width: $toolbarsearchfield-filled-out-width;
 
+    .icon {
+      &.close {
+        color: $searchfield-text-color;
+      }
+    }
+
+    &.has-custom-collapse-size {
+      width: 0;
+    }
+
     &.active {
       width: $toolbarsearchfield-max-width;
     }
@@ -288,6 +335,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.has-text {
       width: $toolbarsearchfield-filled-out-width;
+
+      &.has-custom-collapse-size {
+        width: 0;
+      }
 
       &.active {
         width: $toolbarsearchfield-max-width;
@@ -614,6 +665,25 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 }
 
+// Help out firefox a bit
+html.is-firefox {
+  .toolbar-searchfield-wrapper {
+    &:not(.is-open):not(.non-collapsible) {
+      .icon:not(.close) {
+        top: 8px;
+      }
+    }
+
+    &.is-open,
+    &.non-collapsible {
+      .searchfield {
+        padding-bottom: 6px;
+        padding-top: 10px;
+      }
+    }
+  }
+}
+
 // For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
 @media (min-width: $breakpoint-phone-to-tablet) {
   .toolbar-searchfield-wrapper.non-collapsible {
@@ -653,6 +723,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.has-text {
       width: $toolbarsearchfield-max-width;
+
+      &.has-custom-collapse-size {
+        width: 0;
+      }
 
       &.active {
         width: $toolbarsearchfield-max-width;
@@ -766,6 +840,8 @@ html[dir='rtl'] {
 
     .searchfield {
       border-color: transparent;
+      padding-left: 0;
+      padding-right: 34px;
     }
 
     .btn,
@@ -780,6 +856,12 @@ html[dir='rtl'] {
         .collapse-button {
           border-bottom-color: rgba($searchfield-border-color, 1);
         }
+      }
+    }
+
+    &.is-open {
+      .searchfield {
+        padding-left: 34px;
       }
     }
   }
@@ -848,7 +930,7 @@ html[dir='rtl'] {
       &.has-go-button {
         > .icon {
           &.close {
-            right: 60px;
+            right: 50px;
           }
         }
 

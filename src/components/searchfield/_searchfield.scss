@@ -52,14 +52,6 @@
     }
   }
 
-  &:not(.toolbar-searchfield-wrapper):hover {
-    input:not([disabled]):not(:focus) {
-      + .icon {
-        color: $button-color-tertiary-hover-font;
-      }
-    }
-  }
-
   .icon-dropdown {
     margin-left: 5px;
   }
@@ -70,6 +62,16 @@
 
     @include transition(background-color 300ms $cubic-ease,
     border-color 300ms $cubic-ease);
+  }
+
+  // This rule will only work when searchfield is clearable.
+  &.has-close-icon-button {
+    .searchfield {
+      overflow: hidden;
+      padding-right: 28px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -455,6 +457,7 @@ html[dir='rtl'] {
 
         .searchfield {
           border-left: 1px solid $input-color-initial-border;
+          padding-bottom: 7px;
         }
       }
     }

@@ -9,7 +9,29 @@ demo:
     slug: example-classes?colors=7025B6
 ---
 
-## Code Example
+## Themes
+
+IDS Enterprise has currently 2 themes and 3 theme variations in each theme. The two themes are known as Subtle (formerly Soho) and Vibrant (formerly Uplift). Combined with the 3 variants in each theme there are six options:
+
+1. Subtle (aka Soho) - Light
+1. Subtle (aka Soho) - Dark
+1. Subtle (aka Soho) - Contrast
+1. Vibrant (aka Uplift) - Light
+1. Vibrant (aka Uplift) - Dark
+1. Vibrant (aka Uplift) - Contrast
+
+The Vibrant Dark and Vibrant Contrast are still considered beta at this time as they may have minor issues. The Vibrant theme has more rich color and deeper depth in elements like cards and lists. It also has a different set of icons. The themes are found either in the npm package or the dist folder if downloading the release directly.
+
+To use each theme you need to:
+
+1. Import the correct style stylesheet which would be one of `theme-soho-contrast.css`, `theme-soho-dark.css`, `theme-soho-light.css`, `theme-uplift-contrast.css`, `theme-uplift-dark.css`, `theme-uplift-light.css` . The files `light-theme.css`, `high-contrast-theme.css` and `dark-theme.css` are there for backwards compatibility and will later be removed. We will later rename these to the new names Subtle and Vibrant.
+2. Add the correct SVG Block Element to the top of the page document (`theme-uplift-svg.html` or `theme-uplift-svg.html`). The file `svg.html` is there for backwards compatibility and will later be removed.
+
+It's also possible to get information about the themes from the theme api For info on that see the [theme api]( ./theme)
+
+## Personalization
+
+It is also possible to personalize the colors of a a page or app. This means passing a color in and certain aspects of the page will be colorized according to that theme. We provide the personalize api for this functionality.
 
 The minimum option needed for personalize is a single color which will be the header color. The rest of the colors will be calculated as percents of the source color. For example the sub header is 20% of the main color. Add the class is-personalizable so that certain element will get the personalization color when the api is set. Any page in the sample app that supports personalization can be viewed in a specific color by passing `?color=7025B6` where the color is the hex for the main color.
 
@@ -39,12 +61,12 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 
 ## Supported Personalization Components
 
-Only a subset of components support personalization. These are:
+Only a subset of components support personalization:
 
+- [Headers and Subheaders]( ./header) - Each gets a contrasting back color and all elements in it are reflected.
 - [Module Tabs]( ./tabs-module) - The tabs and sub tabs and states.
 - [Accordion]( ./accordion) - The selection states.
 - Builder Pattern - The headers and subheaders.
-- [Headers and Subheaders]( ./header) - Each gets a contrasting back color and all elements in it are reflected.
 - [Hero Widget]( ./homepage) - Gets a contrasting back color.
 - [Application Menu]( ./applicationmenu) - Gets contrasting back colors for the sections and all elements in it are reflected.
 

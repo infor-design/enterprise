@@ -1,0 +1,65 @@
+
+<div class="row">
+  <div class="two columns">
+    <div class="field">
+      <div id="example-1" class="chart-container"></div>
+    </div>
+    <div class="field-short field-short-stacked">
+      <div id="example-2" class="chart-container"></div>
+    </div>
+  </div>
+
+  <div class="two columns">
+    <form class="form">
+      <div class="field">
+        <div id="example-3" class="chart-container"></div>
+      </div>
+    </form>
+    <form class="form-layout-compact">
+      <div class="field">
+        <div id="example-4" class="chart-container"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset1 = [{
+      data: [{
+        name: {text: 'Regular (Field)'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+    $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'});
+
+    var dataset2 = [{
+      data: [{
+        name: {text: 'Short (Field)'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+    $('#example-2').chart({dataset: dataset2, type: 'targeted-achievement'});
+
+    var dataset3 = [{
+      data: [{
+        name: {text: 'Regular (Form)'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+    $('#example-3').chart({dataset: dataset3, type: 'targeted-achievement'});
+
+    var dataset4 = [{
+      data: [{
+        name: {text: 'Short (Form)'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+    $('#example-4').chart({dataset: dataset4, type: 'targeted-achievement'});
+  });
+</script>

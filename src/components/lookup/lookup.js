@@ -1,4 +1,4 @@
-/* eslint-disable no-continue: "off, no-underscore-dangle */
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
@@ -51,7 +51,7 @@ const LOOKUP_DEFAULTS = {
   autoWidth: false,
   clickArguments: {},
   delimiter: ',',
-  minWidth: 400
+  minWidth: null
 };
 
 function Lookup(element, settings) {
@@ -137,6 +137,10 @@ Lookup.prototype = {
 
     if (this.settings.autoWidth) {
       this.applyAutoWidth();
+    }
+
+    if (!this.minWidth) {
+      this.settings.minWidth = this.settings.options && this.settings.options.paging ? 482 : 400;
     }
 
     // Add Masking to show the #
@@ -731,7 +735,7 @@ Lookup.prototype = {
   },
 
   /**
-   * apply the min width setting to the datagrid.
+   * Apply the min width setting to the datagrid.
    * @private
    * @param {jquery[]} lookupGrid jQuery wrapped element
    * @returns {jquery[]} grid jQuery wrapped element with the css applied
@@ -744,6 +748,7 @@ Lookup.prototype = {
     // check that the minWidth is less than the windows width, so
     // that the control remains responsive
     if ($(window).width() > this.settings.minWidth) {
+      this.modal.element.addClass('has-minwidth');
       const minWidth = `${this.settings.minWidth}px`;
       lookupGrid.css({
         'min-width': minWidth

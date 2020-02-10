@@ -1,14 +1,14 @@
 .card,
 .widget {
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px $cardlist-box-shadow-color;
 }
 
 .card-header,
 .widget-header {
   border-bottom: none;
   height: 34px;
-  line-height: unset;
+  line-height: normal;
 
   .card-title,
   .widget-title {
@@ -24,12 +24,16 @@
   .widget-group-action {
     border-top: 1px solid $listview-border-color;
   }
+
+  .listview li:first-child {
+    border-top: 1px solid $listview-border-color;
+  }
 }
 
 .card-header,
 .widget-header {
   margin: 8px 2px 8px 20px;
-  padding: unset;
+  padding: 0;
 
   &:not(.has-toolbar) {
     > .btn-actions {

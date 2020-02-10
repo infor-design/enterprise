@@ -20,12 +20,10 @@
   }
 
   .label-line {
-    color: none;
     stroke-width: 2px;
   }
 
   polyline {
-    color: none;
     shape-rendering: crispEdges;
     stroke: $chart-font-color;
     stroke-width: 1px;
@@ -96,14 +94,6 @@
   b {
     display: block;
     text-align: center;
-  }
-}
-
-// Slight Nudge
-@include respond-to(phone) {
-  .chart-pie.has-right-legend .chart-legend {
-    margin: 0;
-    width: 27%;
   }
 }
 

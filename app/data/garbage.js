@@ -7,7 +7,7 @@ module.exports = (req, res) => {
   const garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck', 'stuff'];
 
   function randomSeed() {
-    return (Math.random() * (10 - 1) + 1) > 8;
+    return ((Math.random() * (10 - 1)) + 1) > 8;
   }
 
   function getWord() {
@@ -43,7 +43,7 @@ module.exports = (req, res) => {
       type = req.query.return;
     }
 
-    if (req.query.paragraphs && !isNaN(req.query.paragraphs)) {
+    if (req.query.paragraphs && !isNaN(req.query.paragraphs)) { //eslint-disable-line
       paragraphs = parseInt(req.query.paragraphs, 10);
     }
   }

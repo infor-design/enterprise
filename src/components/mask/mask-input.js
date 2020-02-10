@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'mask';
  * @param {number} [settings.patternOptions.decimalLimit] [number masks only] defines the number of characters allowed after the decimal point.
  * @param {number} [settings.patternOptions.integerLimit] [number masks only] defines the number of characters allowed before the decimal point.
  * @param {boolean} [settings.patternOptions.allowNegative] [number masks only] allows a number to be negative (adds/retains a "minus" symbol at the beginning of the value)
- * @param {boolean} [settings.patternOptions.allowLeadingZeroes] [number masks only] allows a zero be placed before a decimal or other numbers.
+ * @param {boolean} [settings.patternOptions.allowLeadingZeros] [number masks only] allows a zero be placed before a decimal or other numbers.
  * @param {string} [settings.placeholderChar='_'] If using the `settings.guide`, will be used as the placeholder
  *  for characters that are not yet typed.
  * @param {function} [settings.pipe] provides a way of adjusting the masked content, caret position,
@@ -58,7 +58,7 @@ const DEFAULT_MASK_INPUT_OPTIONS = {
   guide: false,
   keepCharacterPositions: false,
   maskAPI: MaskAPI,
-  locale: '',
+  locale: null,
   pattern: undefined,
   patternOptions: {},
   placeholderChar: '_',
@@ -76,6 +76,13 @@ function MaskInput(element, settings) {
 }
 
 MaskInput.prototype = {
+
+  /**
+   * @returns {string} representing the Masked HTMLInputElement's type
+   */
+  get type() {
+    return this.element.type;
+  },
 
   /**
    * Initialization/things that need to be called on `updated()` in addition to initialization
@@ -168,6 +175,12 @@ MaskInput.prototype = {
   handleEvents() {
     const self = this;
 
+    // On change event
+    this.changeEventHandler = function () {
+      self.hasTriggeredChangeEvent = true;
+    };
+    this.element.addEventListener('change', this.changeEventHandler);
+
     // Store an initial value on focus
     this.focusEventHandler = function () {
       self.state.initialValue = self.element.value;
@@ -175,13 +188,19 @@ MaskInput.prototype = {
     this.element.addEventListener('focus', this.focusEventHandler);
 
     // Handle all masking on the `input` event
-    this.inputEventHandler = function () {
-      return self.process();
+    this.inputEventHandler = function (e) {
+      self.hasTriggeredChangeEvent = false;
+      return self.process(e);
     };
     this.element.addEventListener('input', this.inputEventHandler);
 
     // Remove an initial value from the state object on blur
     this.blurEventHandler = function (e) {
+      if (this.processingJustHappenedOnInput === true) {
+        e.preventDefault();
+        return false;
+      }
+
       // Handle mask processing on blur, if settings allow.  Otherwise, return out.
       if (self.settings.processOnBlur) {
         if (self.element.readOnly) {
@@ -192,13 +211,14 @@ MaskInput.prototype = {
         // in IE11 or Edge, change event doesn't fire for some unknown reason.
         // Added this for backwards compatility with this OS/Browser combo.
         // See http://jira.infor.com/browse/SOHO-6895
-        if (self._hasChangedValue() && self._isEdgeIE()) {
+        if (self._hasChangedValue() && (self._isEdgeIE() || !self.hasTriggeredChangeEvent)) {
           $(self.element).trigger('change');
+          self.hasTriggeredChangeEvent = true;
         }
       }
 
       delete self.state.initialValue;
-      return self.process();
+      return self.process(e);
     };
     this.element.addEventListener('blur', this.blurEventHandler);
 
@@ -207,9 +227,10 @@ MaskInput.prototype = {
 
   /**
    * Main Process for conforming a mask against the API.
+   * @param {jQuery.Event} e the input/blur event
    * @returns {boolean} whether or not the mask process was successful
    */
-  process() {
+  process(e) {
     // If no pattern's defined, act as if no mask component is present.
     if (!this.settings.pattern) {
       return true;
@@ -218,23 +239,53 @@ MaskInput.prototype = {
     // Get a reference to the desired Mask API (by default, the one setup
     // during Soho initialization).
     const api = this.mask;
+    const patternOptions = this.settings.patternOptions || {};
+
+    let definedDecimal = '.';
+    if (this.locale && this.locale.data && this.locale.data.numbers &&
+      this.locale.data.numbers.decimal) {
+      definedDecimal = this.locale.data.numbers.decimal;
+    }
+    if (patternOptions.symbols && patternOptions.symbols.decimal) {
+      definedDecimal = patternOptions.symbols.decimal;
+    }
+
     if (!api.pattern) {
       api.configure({
         pattern: this.settings.pattern,
-        patternOptions: this.settings.patternOptions
+        patternOptions
       });
     }
 
     // Get all necessary bits of data from the input field.
     let rawValue = this.element.value;
+    let numberInputCorrections = false;
 
-    // Don't continue if there was no change to the input field's value
+    if (e && e.type === 'input') {
+      // Number input fields operate differently than text-based input fields.
+      // If we're using a number input and the rawValue detected is empty, but the field contents are not,
+      // it's possible that a double decimal has been entered and not properly detected
+      // at the time the input event occurred.
+      if (e.inputType === 'insertText') {
+        if (rawValue === '') {
+          rawValue = this.state.previousMaskResult;
+          numberInputCorrections = true;
+        } else if (e.data === definedDecimal && rawValue.indexOf(definedDecimal) > -1) {
+          numberInputCorrections = true;
+        }
+      }
+    }
+
     if (rawValue === this.state.previousMaskResult) {
+      if (numberInputCorrections) {
+        this.element.value = '';
+        this.element.value = `${rawValue}`;
+      }
       return false;
     }
 
-    let posBegin = this.element.selectionStart;
-    let posEnd = this.element.selectionEnd;
+    let posBegin = this.element.selectionStart || 0;
+    let posEnd = this.element.selectionEnd || 0;
 
     // On Android, the first character inserted into a field is automatically
     // selected when it shouldn't be. This snippet fixes that problem.
@@ -276,7 +327,6 @@ MaskInput.prototype = {
 
     // Use the piped value, if applicable.
     let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
-    const patternOptions = this.settings.patternOptions;
     if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
       finalValue += this.settings.patternOptions.suffix;
     }
@@ -309,12 +359,18 @@ MaskInput.prototype = {
     this.state.previousPlaceholder = processed.placeholder;
 
     // Set state of the input field
-    this.element.value = finalValue;
+    if (env.browser.name === 'firefox') {
+      if (this.element.value !== finalValue) {
+        this.element.value = finalValue;
+      }
+    } else {
+      this.element.value = finalValue;
+    }
     utils.safeSetSelection(this.element, processed.caretPos);
 
     // Return out if there was no visible change in the conformed result
     // (causes state not to change, events not to fire)
-    if (previousValue !== finalValue) {
+    if (previousValue === finalValue) {
       return false;
     }
 
@@ -591,6 +647,11 @@ MaskInput.prototype = {
     if (this.blurEventHandler) {
       this.element.removeEventListener('blur', this.blurEventHandler);
       delete this.blurEventHandler;
+    }
+
+    if (this.changeEventHandler) {
+      this.element.removeEventListener('change', this.changeEventHandler);
+      delete this.changeEventHandler;
     }
 
     return this;

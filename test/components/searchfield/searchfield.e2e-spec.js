@@ -94,10 +94,7 @@ describe('Searchfield go-button tests', () => {
   });
 
   it('fires a callback action when the Go Button is clicked', async () => {
-    const searchfieldInputEl = await element(by.id(searchfieldId));
-    await searchfieldInputEl.click();
-    await browser.driver.switchTo().activeElement().clear();
-    await searchfieldInputEl.sendKeys('Nice Button');
+    await element(by.id(searchfieldId)).sendKeys('Nice Button');
 
     const searchfieldGoButtonEl = await element(by.css(`#${searchfieldGoButtonId}`));
     await searchfieldGoButtonEl.click();
@@ -105,7 +102,7 @@ describe('Searchfield go-button tests', () => {
     const toastMessageSelector = '.toast-message';
     const toastMessageEl = await element(by.css(toastMessageSelector));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(toastMessageEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(toastMessageEl), config.waitsFor);
 
     expect(await element(by.css(toastMessageSelector)).getText())
       .toEqual('The searchfield\'s current value is "Nice Button".');
@@ -169,3 +166,59 @@ describe('Searchfield full-text category with go button tests', () => {
       .toEqual('Animals , Baby , Clothing , Images , Places');
   });
 });
+
+if (utils.isChrome() && utils.isCI()) {
+  describe('Searchfield `collapseSize` tests', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+    });
+
+    it('Should not visual regress on test-configure-close-size', async () => {
+      expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
+    });
+  });
+
+  describe('Searchfield placement tests', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/searchfield/test-place-on-bottom.html?layout=nofrills');
+      await browser.driver
+        .wait(protractor.ExpectedConditions
+          .presenceOf(element(by.id('searchfield-template'))), config.waitsFor);
+    });
+
+    it('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
+      // shrink the page to check ajax menu button in the overflow
+      const windowSize = await browser.driver.manage().window().getSize();
+      browser.driver.manage().window().setSize(640, 480);
+      await browser.driver.sleep(config.sleep);
+
+      const searchfieldInputEl = await element(by.id('searchfield-template'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+      await searchfieldInputEl.clear();
+      await searchfieldInputEl.sendKeys('n');
+      await browser.driver.sleep(config.sleep);
+
+      // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
+      await browser.executeScript('document.activeElement.blur();').then(async () => {
+        expect(await browser.protractorImageComparison
+          .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
+      });
+
+      await searchfieldInputEl.sendKeys('ew');
+      await browser.driver.sleep(config.sleep);
+
+      // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
+      await browser.executeScript('document.activeElement.blur();').then(async () => {
+        expect(await browser.protractorImageComparison
+          .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
+      });
+
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  });
+}

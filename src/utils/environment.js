@@ -28,9 +28,15 @@ const Environment = {
    */
   set() {
     $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
+
+    // Set the viewport meta tag to limit scaling
+    this.viewport = document.querySelector('meta[name=viewport]');
+    if (this.viewport) {
+      this.viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
+    }
+
     this.addBrowserClasses();
     this.addGlobalResize();
-    this.addGlobalEvents();
     this.addDeviceSpecs();
   },
 
@@ -48,6 +54,24 @@ const Environment = {
         ua.indexOf('Android') === -1) {
       cssClasses += 'is-safari ';
       this.browser.name = 'safari';
+    }
+
+    this.browser.isWKWebView = function () {
+      return false;
+    };
+
+    if (navigator.platform.substr(0, 2) === 'iP') {
+      const lte9 = /constructor/i.test(window.HTMLElement);
+      const idb = !!window.indexedDB;
+
+      if ((window.webkit && window.webkit.messageHandlers) || !lte9 || idb) {
+        // WKWebView
+        this.browser.name = 'wkwebview';
+        cssClasses += 'is-safari is-wkwebview ';
+        this.browser.isWKWebView = function () {
+          return true;
+        };
+      }
     }
 
     if (ua.indexOf('Chrome') !== -1) {
@@ -132,6 +156,7 @@ const Environment = {
     let nameOffset;
     let verOffset;
     let ix;
+    let browserVersionName = '';
 
     if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
       browser = 'Opera';
@@ -152,12 +177,19 @@ const Environment = {
     } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
       browser = 'Chrome';
       version = nUAgent.substring(verOffset + 7);
+      if (nUAgent.indexOf('Edg') > -1) {
+        browserVersionName = 'Microsoft Edge';
+      }
     } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
       browser = 'Safari';
       version = nUAgent.substring(verOffset + 7);
       if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
         version = nUAgent.substring(verOffset + 8);
       }
+    } else if (this.browser.isWKWebView()) { //eslint-disable-line
+      browser = `WKWebView`; //eslint-disable-line
+      version = '';
+      majorVersion = '';
     } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
       browser = 'Firefox';
       version = nUAgent.substring(verOffset + 8);
@@ -233,11 +265,12 @@ const Environment = {
 
     this.devicespecs = {
       currentBrowser: browser,
-      browserVersion: version,
+      browserVersion: version.trim(),
       browserMajorVersion: majorVersion,
       isMobile: mobile,
       os,
-      currentOSVersion: osVersion
+      currentOSVersion: osVersion,
+      browserVersionName
     };
   },
 
@@ -256,75 +289,6 @@ const Environment = {
   },
 
   /**
-   * Sets up global UI-specific event handlers
-   * @returns {void}
-   */
-  addGlobalEvents() {
-    const self = this;
-
-    this.globalMouseActive = 0;
-    this.globalTouchActive = 0;
-
-    // Detect mouse/touch events on the body to help scrolling detection along
-    $('body')
-      .on(`mousedown.${UTIL_NAME}`, () => {
-        ++this.globalMouseActive;
-      })
-      .on(`mouseup.${UTIL_NAME}`, () => {
-        --this.globalMouseActive;
-      })
-      .on(`touchstart.${UTIL_NAME}`, () => {
-        ++this.globalTouchActive;
-      })
-      .on(`touchend.${UTIL_NAME}`, () => {
-        --this.globalTouchActive;
-      });
-
-    // On iOS, it's possible to scroll the body tag even if there's a `no-scroll` class attached
-    // This listener persists and will prevent scrolling on the body tag in the event of a `no-scroll`
-    // class, only in iOS environments
-    $(window).on(`scroll.${UTIL_NAME}`, (e) => {
-      if (self.os.name !== 'ios' || document.body.className.indexOf('no-scroll') === -1) {
-        return true;
-      }
-
-      // If a mouse button or touch is still active, continue as normal
-      if (this.globalTouchActive || this.globalMouseActive) {
-        return true;
-      }
-
-      e.preventDefault();
-      if (document.body.scrollTop > 0) {
-        document.body.scrollTop = 0;
-      }
-      return false;
-    });
-
-    // Prevent zooming on inputs/textareas' `focusin`/`focusout` events.
-    // Some components like Dropdown have this feature built in on their specified elements.
-    // This particular setup prevents zooming on input fields not tied to a component wrapper.
-    $('body').on(`focusin.${UTIL_NAME}`, 'input, textarea', (e) => {
-      const target = e.target;
-      if (target.className.indexOf('dropdown-search') > -1) {
-        return;
-      }
-
-      if (self.os.name === 'ios') {
-        $('head').triggerHandler('disable-zoom');
-      }
-    }).on(`focusout.${UTIL_NAME}`, 'input, textarea', (e) => {
-      const target = e.target;
-      if (target.className.indexOf('dropdown-search') > -1) {
-        return;
-      }
-
-      if (self.os.name === 'ios') {
-        $('head').triggerHandler('enable-zoom');
-      }
-    });
-  },
-
-  /**
    * Tears down global UI-specific event handlers
    * @returns {void}
    */
@@ -339,10 +303,24 @@ const Environment = {
 };
 
 /**
+ * @returns {boolean} whether or not the current browser is MS Edge
+ */
+Environment.browser.isEdge = function () {
+  return Environment.browser.name === 'edge';
+};
+
+/**
  * @returns {boolean} whether or not the current browser is IE11
  */
 Environment.browser.isIE11 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is Safari and includes wkWebView as safari
+ */
+Environment.browser.isSafari = function () {
+  return Environment.browser.name === 'safari' || Environment.browser.name === 'wkwebview';
 };
 
 /**

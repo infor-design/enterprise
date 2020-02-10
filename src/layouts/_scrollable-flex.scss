@@ -123,4 +123,11 @@
     height: calc(100% - 50px);
   }
 
+  &.card .empty-message {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    vertical-align: top;
+  }
 }

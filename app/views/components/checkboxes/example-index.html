@@ -14,7 +14,7 @@
 
         <div class="field">
           <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" />
-          <label for="checkbox3" class="checkbox-label" >Dirty tracking</label>
+          <label for="checkbox3" class="checkbox-label" checked>Dirty tracking</label>
         </div>
 
         <div class="field">
@@ -31,6 +31,22 @@
           <input type="checkbox" aria-checked="mixed" class="checkbox partial" checked="true" id="checkbox8"/>
           <label for="checkbox8" class="checkbox-label"><span class="audible">Partial (not accessible)</span>Partial</label>
         </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox error"  id="checkbox9"/>
+          <label for="checkbox9" class="checkbox-label">Error</label>
+        </div>
+
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox10" id="checkbox10" data-validate="required"/>
+        <label for="checkbox10" class="checkbox-label">Required<span class="required" aria-hidden="true"></span></label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox11" id="checkbox11" data-validate="required"/>
+        <label for="checkbox11" class="checkbox-label required">Required (No indicator)</label>
+      </div>
     </form>
 
   </div>

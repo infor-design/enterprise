@@ -1,6 +1,7 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -10,7 +11,6 @@ let data = [];
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 
 // Define Columns for the Grid.
@@ -30,17 +30,15 @@ const rowTemplate = `<div class="datagrid-cell-layout"><div class="img-placehold
   <span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>
   <a class="hyperlink" href="https://design.infor.com/" target="_blank" >Read more</a>`;
 
-describe('Datagrid API', () => {
+describe('Datagrid API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
     datagridEl = null;
-    svgEl = null;
     datagridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datagridHTML);
     datagridEl = document.body.querySelector('#datagrid');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.set('en-US');
     data = JSON.parse(JSON.stringify(originalData));
@@ -50,11 +48,13 @@ describe('Datagrid API', () => {
 
   afterEach(() => {
     datagridObj.destroy();
-    datagridEl.parentNode.removeChild(datagridEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '#datagrid-script',
+      '.svg-icons',
+      '.row',
+      '#tooltip',
+      '.grid-tooltip'
+    ]);
   });
 
   it('Should be defined as an object', () => {
@@ -209,7 +209,7 @@ describe('Datagrid API', () => {
       columns: newColumns,
       enableTooltips: true
     });
-    let th = document.body.querySelector('.datagrid-header thead th[data-column-id="orderDate"]');
+    let th = document.body.querySelector('.datagrid-header th[data-column-id="orderDate"]');
     let el = th.querySelector('.datagrid-column-wrapper');
     $(el).trigger('mouseover');
 
@@ -220,7 +220,7 @@ describe('Datagrid API', () => {
 
       newColumns[6].width = 200;
       datagridObj.updateColumns(newColumns);
-      th = document.body.querySelector('.datagrid-header thead th[data-column-id="orderDate"]');
+      th = document.body.querySelector('.datagrid-header th[data-column-id="orderDate"]');
       const td = document.body.querySelector('tbody tr[aria-rowindex="2"] td[aria-colindex="2"]');
       $(td).trigger('click');
 
@@ -230,7 +230,7 @@ describe('Datagrid API', () => {
       expect(document.body.querySelector('.grid-tooltip.is-hidden')).toBeTruthy();
 
       setTimeout(() => {
-        th = document.body.querySelector('.datagrid-header thead th[data-column-id="orderDate"]');
+        th = document.body.querySelector('.datagrid-header th[data-column-id="orderDate"]');
         el = th.querySelector('.datagrid-column-wrapper');
         $(el).trigger('mouseover');
 
@@ -289,7 +289,7 @@ describe('Datagrid API', () => {
     expect(idx).toEqual(2);
   });
 
-  it('Should be able to check if a cell is editable', () => {
+  it('Should be able to check if a cell is editable', (done) => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, {
       dataset: data,
@@ -298,30 +298,33 @@ describe('Datagrid API', () => {
       isRowDisabled: a => a === 5
     });
 
-    // Test Column readonly property
-    let isEditable = datagridObj.isCellEditable(0, 2);
+    setTimeout(() => {
+      // Test Column readonly property
+      let isEditable = datagridObj.isCellEditable(0, 2);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
 
-    // Test column with editor
-    isEditable = datagridObj.isCellEditable(0, 1);
+      // Test column with editor
+      isEditable = datagridObj.isCellEditable(0, 1);
 
-    expect(isEditable).toEqual(true);
+      expect(isEditable).toEqual(true);
 
-    // Test column with nothing specified
-    isEditable = datagridObj.isCellEditable(0, 0);
+      // Test column with nothing specified
+      isEditable = datagridObj.isCellEditable(0, 0);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
 
-    // Test column with isEditable function specified
-    isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
+      // Test column with isEditable function specified
+      isEditable = datagridObj.isCellEditable(0, datagridObj.columnIdxById('phone'));
 
-    expect(isEditable).toEqual(true);
+      expect(isEditable).toEqual(true);
 
-    // Test column with isDisabled function specified
-    isEditable = datagridObj.isCellEditable(0, 5);
+      // Test column with isDisabled function specified
+      isEditable = datagridObj.isCellEditable(0, 5);
 
-    expect(isEditable).toEqual(false);
+      expect(isEditable).toEqual(false);
+      done();
+    });
   });
 
   it('Should be able to validate required on a cell', (done) => {
@@ -677,9 +680,9 @@ describe('Datagrid API', () => {
     const end = new Date().getTime();
     const result = (end - start) / 1000; // seconds
 
-    expect(result).toBeLessThan(0.65);
+    expect(result).toBeLessThan(1);
     expect(table[0].querySelectorAll('tr').length).toEqual(2000);
-    expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td>1</td><td>T100</td><td><b>sku #9000001-237</b></td><td>Compressor</td><td>Assemble Paint</td><td>1</td><td>true</td><td>210.99</td><td>0.1</td><td>OK</td><td>2018-08-07T06:00:00.000Z</td><td>Action</td></tr>');
+    expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td>1</td><td>T100</td><td>#9000001-237</td><td>Compressor</td><td>Assemble Paint</td><td>1</td><td>true</td><td>210.99</td><td>0.1</td><td>OK</td><td>2018-08-07T06:00:00.000Z</td><td>Action</td></tr>');
   });
 
   it('Should be able to do performance check for cleanExtra in excel', () => {
@@ -700,7 +703,17 @@ describe('Datagrid API', () => {
     const result = (end - start) / 1000; // seconds
 
     expect(result).toBeLessThan(4.5);
-    expect(table[0].querySelectorAll('tr').length).toEqual(2000);
-    expect(table[0].querySelector('tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" role="presentation" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
+    expect(table[0].querySelectorAll('tbody tr').length).toEqual(2000);
+    expect(table[0].querySelector('tbody tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" role="presentation" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
+  });
+
+  it('Should update paging settings', () => {
+    datagridObj.destroy();
+    datagridObj = new Datagrid(datagridEl, { dataset: data, columns, paging: true, pagesize: 3 });
+
+    expect(document.body.querySelector('.pager-toolbar')).toBeTruthy();
+    datagridObj.updated({ paging: false });
+
+    expect(document.body.querySelector('.pager-toolbar')).toBeFalsy();
   });
 });

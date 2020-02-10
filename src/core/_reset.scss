@@ -134,3 +134,10 @@ button {
   border: 0;
   padding: 0;
 }
+
+// Fix the way some browsers apply webkit text fill by default, so we
+// don't have to keep overriding it everwhere.
+// Skip IE so it doesn't cause errors due to not being supported.
+html:not(.ie):not(.is-safari) {
+  -webkit-text-fill-color: unset;
+}

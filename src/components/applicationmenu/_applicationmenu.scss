@@ -1,6 +1,12 @@
 // Application Menu
 //================================================== //
 
+@import '../accordion/accordion';
+
+body.is-open-touch {
+  overflow: hidden;
+}
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
@@ -173,6 +179,14 @@
       box-shadow: none !important;
     }
 
+    .searchfield {
+      padding-left: 53px;
+      padding-right: 34px;
+    }
+
+    .icon:not(.close):not(.icon-error) {
+      left: 18px;
+    }
   }
 
   .searchfield,
@@ -192,29 +206,28 @@
 
   .searchfield {
     color: $application-menu-searchfield-text-color;
-    padding-left: 53px;
-    width: auto;
+    display: block;
 
     &::placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: $application-menu-searchfield-placeholder-color;
     }
 
     &::-webkit-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: $application-menu-searchfield-placeholder-color;
     }
 
     &::-moz-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: $application-menu-searchfield-placeholder-color;
       opacity: 1;
     }
 
     &:-ms-input-placeholder {
-      color: lighten($application-menu-searchfield-placeholder-color, 20%);
+      color: $application-menu-searchfield-placeholder-color;
     }
   }
 
   .accordion-static-panel {
-    background-color: $theme-color-palette-slate-70;
+    background-color: $accordion-static-panel-bg-color;
     border-bottom-color: $theme-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
@@ -230,6 +243,7 @@
 
     .btn-menu {
       margin-top: -5px;
+      text-align: left;
 
       span {
         color: inherit;
@@ -425,6 +439,13 @@
       text-align: right;
     }
   }
+
+  &.has-menu-footer {
+    .accordion,
+    .searchfield-wrapper + .accordion {
+      min-height: auto;
+    }
+  }
 }
 
 // Container Class for wrapping internal content in NG
@@ -432,6 +453,17 @@
   display: inherit;
   flex-direction: inherit;
   height: inherit;
+}
+
+// Ie11
+.ie11 {
+  .application-menu {
+    &.has-menu-footer {
+      &.has-scrollbar {
+        overflow-y: scroll;
+      }
+    }
+  }
 }
 
 // Generic CSS Class that allows block-level elements like "divs" to become "clickable" on iOS 8 and up
@@ -480,11 +512,11 @@ html[dir='rtl'] {
     background-color: $theme-color-palette-slate-80;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
-    left: initial;
+    left: unset;
     right: -$application-menu-width;
 
     &.is-open {
-      left: initial;
+      left: unset;
       right: 0;
     }
 
@@ -494,17 +526,12 @@ html[dir='rtl'] {
           left: auto;
           right: 18px;
         }
-
-        &.close {
-          left: 45px;
-          right: auto;
-        }
       }
-    }
 
-    .searchfield {
-      padding-left: 34px;
-      padding-right: 53px;
+      .searchfield {
+        padding-left: 34px;
+        padding-right: 53px;
+      }
     }
 
     .accordion {
@@ -523,7 +550,7 @@ html[dir='rtl'] {
 
     + .page-container {
       left: 0;
-      right: initial;
+      right: unset;
     }
 
     .btn-menu {

@@ -47,7 +47,7 @@ describe('Kitchen-sink tests', () => {
       await highContrastItem.click();
       await browser.driver.sleep(config.sleep);
 
-      const upliftItem = await element.all(by.cssContainingText('.popupmenu.is-open li', 'Uplift')).get(1);
+      const upliftItem = await element.all(by.cssContainingText('.popupmenu.is-open li', 'Vibrant')).get(1);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(upliftItem), config.waitsFor);
       await upliftItem.click();

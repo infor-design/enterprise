@@ -86,7 +86,6 @@ input::-webkit-inner-spin-button {
     border-color: $input-color-disabled-border;
     color: $disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $disabled-color;
   }
 }
 
@@ -105,7 +104,7 @@ input::-webkit-inner-spin-button {
   }
 
   &.error .spinbox-control {
-    border-color: $error-color;
+    border-color: $error-color !important;
     color: $error-color;
   }
 
@@ -129,7 +128,6 @@ input::-webkit-inner-spin-button {
         border-color: $input-color-disabled-border;
         color: $disabled-color;
         cursor: default;
-        -webkit-text-fill-color: $disabled-color;
       }
     }
 
@@ -141,7 +139,6 @@ input::-webkit-inner-spin-button {
       border-color: $input-color-disabled-border;
       color: $disabled-color;
       cursor: default;
-      -webkit-text-fill-color: $disabled-color;
     }
   }
 
@@ -150,7 +147,6 @@ input::-webkit-inner-spin-button {
       background-color: $input-color-readonly-background;
       color: $input-readonly-color;
       cursor: default;
-      -webkit-text-fill-color: $input-readonly-color;
     }
   }
 
@@ -159,8 +155,62 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// Various sizes
+.spinbox-sm,
+.spinbox-mm,
+.spinbox-md,
+.spinbox-lg {
+  input {
+    width: calc(100% - 66px) !important;
+  }
+}
+
+.spinbox-xs {
+  width: 75px;
+
+  input {
+    width: calc(100% - 50px) !important;
+  }
+
+  .spinbox-control {
+    padding: 7px 3px;
+    width: 25px;
+  }
+}
+
+.spinbox-sm {
+  width: 150px;
+}
+
+.spinbox-mm {
+  width: 226px;
+}
+
+.spinbox-md {
+  width: 300px;
+}
+
+.spinbox-lg {
+  width: 400px;
+}
+
+// When on smaller form factors make 400px fields go down to medium size.
+// Matches similar rules on the standard input fields.
+@include respond-to(phone) {
+  .spinbox-lg,
+  .field-short .spinbox-lg,
+  .form-layout-compact .field .spinbox-lg {
+    width: 300px;
+  }
+}
+
 // Short Fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
+  input.spinbox {
+    width: 100px;
+  }
+
   .spinbox-wrapper {
     margin-bottom: 0;
   }
@@ -175,28 +225,6 @@ input::-webkit-inner-spin-button {
     height: inherit;
     padding: 4px 7px;
     width: 25px;
-  }
-}
-
-.field .spinbox {
-  width: calc(100% - 66px);
-}
-
-// Override for iOS to correctly align ".spinbox" as child of  ".field-short"
-.ios {
-  .field-short {
-    .spinbox {
-      padding-top: 6px;
-    }
-  }
-}
-
-// Override for IE to correctly align ".spinbox" as child of  ".field-short"
-.ie {
-  .field-short {
-    .spinbox {
-      height: 25px;
-    }
   }
 }
 
@@ -255,7 +283,8 @@ html[dir='rtl'] {
   }
 
   &:not(.ie11) {
-    .field-short {
+    .field-short,
+    .form-layout-compact .field {
       .spinbox-control {
         padding: 3px 7px 4px;
       }
@@ -263,9 +292,10 @@ html[dir='rtl'] {
   }
 
   &.is-firefox {
-    .field-short {
-      .spinbox {
-        padding: 5px 4px 4px;
+    .field-short,
+    .form-layout-compact .field {
+      .spinbox-control {
+        padding: 3px 7px 5px;
       }
     }
   }
@@ -273,7 +303,8 @@ html[dir='rtl'] {
 
 // Ie11
 .ie11 {
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .spinbox-control {
       height: 25px;
     }

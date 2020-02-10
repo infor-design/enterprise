@@ -1,27 +1,27 @@
 const extend = require('extend');
 const utils = require('./utils');
+const customIconsRoute = require('./routes/custom-icons');
 
 // Object with settings that gets stringify
 const SohoConfig = {};
 
 class CustomOptions {
   constructor(req, res) {
-    const _canChangeLayout = utils.canChangeLayout(req, res);
-    const _opts = {};
+    const canChangeLayout = utils.canChangeLayout(req, res);
+    const customOpts = {};
 
-    this.setOption = function(optionName, value) {
-      if (optionName === 'layout' && _canChangeLayout) {
-        _opts.layout = value;
-        _opts.forceLayout = true;
-
+    this.setOption = function (optionName, value) {
+      if (optionName === 'layout' && canChangeLayout) {
+        customOpts.layout = value;
+        customOpts.forceLayout = true;
       } else if (optionName !== 'layout') {
-        _opts[optionName] = value;
+        customOpts[optionName] = value;
       }
-    }
+    };
 
-    this.getOptions = function() {
-      return _opts;
-    }
+    this.getOptions = function () {
+      return customOpts;
+    };
   }
 }
 
@@ -29,6 +29,12 @@ class CustomOptions {
 module.exports = function customRouteOptions(req, res) {
   const customOpts = new CustomOptions(req, res);
   const url = req.originalUrl;
+
+  // All routes will require a minified `sohoxi.js` and locale cultures,
+  // if the query param was previously set.
+  if (res.opts.minify) {
+    SohoConfig.minifyCultures = true;
+  }
 
   // All patterns will use the "empty" layout
   if (url.match(/patterns\//)) {
@@ -77,7 +83,7 @@ module.exports = function customRouteOptions(req, res) {
 
   // Icons
   if (url.match(/icons\/example-index/) || url.match(/icons\/example-extended/) || url.match(/icons\/example-empty/)) {
-    const html = require('./routes/custom-icons')(url, res.opts.theme.name);
+    const html = customIconsRoute(url, res.opts.theme.name);
     customOpts.setOption('iconHtml', html);
   }
 

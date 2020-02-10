@@ -1,5 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
+
 import { Locale } from '../locale/locale';
 import { Validation } from './validation';
 
@@ -167,7 +169,7 @@ Validator.prototype = {
     });
 
     // Link on to the current object and perform validation.
-    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], input[type=file]').each(function () {
+    this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=file]').each(function () {
       const field = $(this);
       const eventAttr = field.attr('data-validation-events');
       const events = self.extractEvents(eventAttr || 'blur.validate change.validate keyup.validate');
@@ -896,6 +898,9 @@ Validator.prototype = {
     rule.icon = rule.icon || validationType.icon;
 
     let markup;
+    const icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      `${validationType.type}-alert` : `${validationType.type}`;
+
     if (rule.type === 'icon') {
       markup = '' +
         `<div class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
@@ -908,7 +913,7 @@ Validator.prototype = {
     } else {
       markup = '' +
         `<div class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
-          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon: validationType.type })}
+          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
           </pre>
@@ -1129,6 +1134,7 @@ Validator.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
+    this.init();
   }
 
 };

@@ -1,93 +1,790 @@
 // Uplift Application Menu
 //================================================== //
 
+@import '../accordion/accordion-mixins';
+
 .application-menu {
-  background-color: $theme-color-palette-slate-90;
+  background-color: $uplift-appmenu-main-bg-color;
 
   .searchfield-wrapper {
-    background-color: $theme-color-palette-slate-100;
-    border-radius: 6px;
+    background-color: $uplift-acc-expanded-bg-color;
+    border-radius: $uplift-acc-border-radius;
     margin: 0 $theme-number-spacing-base;
     width: calc(100% - calc(#{$theme-number-spacing-base} * 2));
-  }
 
-  .application-menu-header button:hover,
-  .application-menu-footer button:hover {
-    background-color: $theme-color-palette-slate-100;
-  }
+    .searchfield {
+      height: 40px;
 
-  .btn-icon {
-    font-size: unset;
-  }
+      &::placeholder {
+        color: $uplift-appmenu-searchfield-placeholder-color;
+        opacity: 1;
+      }
 
-  .application-menu-header {
-    .name-xl {
-      font-size: $theme-size-font-md;
-      font-weight: $theme-number-font-weight-bold;
-      padding-top: calc(#{$theme-number-spacing-base} * 2);
-    }
+      &::-webkit-input-placeholder {
+        color: $uplift-appmenu-searchfield-placeholder-color;
+        opacity: 1;
+      }
 
-    button.application-menu-switcher-trigger {
-      margin: 0 8px 0 0;
+      &::-moz-placeholder {
+        color: $uplift-appmenu-searchfield-placeholder-color;
+        opacity: 1;
+      }
 
-      > * {
-        vertical-align: bottom;
+      &:-ms-input-placeholder {
+        color: $uplift-appmenu-searchfield-placeholder-color;
+        opacity: 1;
       }
     }
-  }
 
-  .application-menu-switcher-panel {
-    background-color: $theme-color-palette-slate-100;
+    > .icon {
+      top: 13px;
+    }
 
-    .accordion.panel.inverse {
-      background-color: $theme-color-palette-slate-100;
-
-      .accordion-header {
-        border-color: $theme-color-palette-slate-100;
-      }
-
-      .accordion-header:hover {
-        background-color: $theme-color-palette-black;
-      }
+    &:first-child {
+      margin-top: 10px;
     }
   }
 
   .application-menu-header,
   .application-menu-footer {
-    background-color: $theme-color-palette-slate-90;
+    padding: 10px 0;
 
+    button {
+      .icon {
+        color: $uplift-acc-header-text-color;
+      }
+
+      &:hover {
+        background-color: $uplift-appmenu-hover-bg-color;
+      }
+    }
   }
 
-  .accordion {
-    margin: calc(#{$theme-number-spacing-base} * 1);
-    width: unset;
+  .accordion-static-panel {
+    .btn-menu {
+      span {
+        max-width: 150px;
+      }
+
+      svg {
+        margin-top: -10px;
+      }
+    }
+  }
+
+  .application-menu-header {
+    .icon.avatar {
+      left: 29px;
+      top: 0;
+    }
+
+    .name-xl {
+      font-size: $theme-size-font-md;
+      font-weight: $theme-number-font-weight-bold;
+      padding-left: 29px;
+      padding-top: calc(#{$theme-number-spacing-base} * 2);
+    }
+
+    button.application-menu-switcher-trigger {
+      margin: 0 8px;
+      max-width: 72%;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      > span {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .application-menu-footer {
+    .application-menu-toolbar {
+      padding: 10px 0 10px 19px;
+    }
+  }
+
+  .application-menu-switcher-panel {
+    background-color: $uplift-appmenu-footer-bg-color;
+
+    .accordion.panel.inverse {
+      background-color: $uplift-appmenu-footer-bg-color;
+
+      .accordion-header {
+        border-radius: $uplift-acc-border-radius;
+
+        &.is-selected {
+          background-color: $uplift-appmenu-selected-bg-color;
+        }
+      }
+
+      .accordion-header:hover {
+        background-color: $uplift-appmenu-hover-bg-color;
+      }
+    }
+  }
+
+  .application-menu-header {
+    background-color: $uplift-appmenu-header-bg-color;
+  }
+
+  .application-menu-footer {
+    background-color: $uplift-appmenu-footer-bg-color;
+  }
+
+  // NOTE: panelled accordion is used inside of the app menu,
+  // so all internal accordion styles have to override this rule.
+  .accordion.panel.inverse {
+    background-color: transparent;
+    padding: calc(#{$theme-number-spacing-base} * 1);
+    width: auto;
 
     .accordion-header {
-      border-radius: 6px;
+      @include transition(border-color 300ms $cubic-ease, padding 300ms $cubic-ease, margin 300ms $cubic-ease);
+
+      border-bottom-color: transparent;
+      border-radius: $uplift-acc-border-radius;
+      color: $uplift-acc-header-text-color;
+      height: auto;
+
+      .btn,
+      .btn-expander {
+        color: inherit;
+        top: auto;
+
+        &:focus:not(.hide-focus) {
+          border-color: $uplift-appmenu-selected-border-color;
+          box-shadow: none;
+        }
+      }
+
+      .icon {
+        color: inherit;
+        top: auto;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-header-text-color;
+          }
+        }
+      }
+
+      &:hover {
+        background-color: $uplift-appmenu-hover-bg-color;
+        color: $uplift-acc-header-selected-text-color;
+      }
+
+      &.is-focused:not(.hide-focus) {
+        border-color: $uplift-appmenu-selected-border-color;
+        box-shadow: none;
+      }
+
+      &.is-selected {
+        background-color: $uplift-appmenu-selected-bg-color;
+        color: $uplift-acc-header-selected-text-color;
+
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-header-selected-text-color;
+          }
+        }
+      }
     }
 
-    > .accordion-header > a > span {
-      font-weight: $theme-number-font-weight-bold;
+    // Top level rules
+    > .accordion-header {
+      > a {
+        padding-bottom: 7px;
+        padding-top: 9px;
+      }
+
+      &.is-selected {
+        border-bottom-color: transparent;
+
+        &:hover {
+          border-bottom-color: transparent;
+        }
+
+        &.is-focused {
+          border-bottom-color: $uplift-appmenu-selected-border-color;
+        }
+
+        > a > span {
+          font-weight: $theme-number-font-weight-bold;
+        }
+      }
+
+      &.is-expanded {
+        background-color: $uplift-acc-expanded-bg-color;
+        border-radius: 0;
+        margin: 10px -10px 0;
+        padding: 10px;
+        position: relative;
+
+        &:not(.is-focused),
+        &:not(.is-selected) {
+          border-bottom-color: transparent;
+        }
+
+        // Shared pseudo-element for hovering/focusing/selecting this particular level
+        &:hover,
+        &.is-focused,
+        &.is-selected {
+          > a {
+            // allows the text inside the pseudo to be placed in front.
+            position: relative;
+          }
+
+          &::before {
+            border: 1px solid transparent;
+            border-radius: $uplift-acc-border-radius;
+            content: ' ';
+            display: block;
+            height: calc(100% - 22px);
+            position: absolute;
+            width: calc(100% - 20px);
+          }
+
+          z-index: 0;
+        }
+
+        &.is-focused {
+          background-color: $uplift-acc-expanded-bg-color;
+          border-color: transparent;
+
+          &::before {
+            border-color: $uplift-appmenu-selected-border-color;
+          }
+        }
+
+        &.is-selected {
+          background-color: $uplift-acc-expanded-bg-color;
+          border-bottom-color: transparent;
+          border-top-color: transparent;
+
+          &::before {
+            background-color: $uplift-appmenu-selected-bg-color;
+            border-color: $uplift-appmenu-selected-bg-color;
+          }
+        }
+
+        &:hover {
+          background-color: $uplift-acc-expanded-bg-color;
+
+          &::before {
+            background-color: $uplift-appmenu-hover-bg-color;
+            border-color: $uplift-appmenu-hover-bg-color;
+          }
+        }
+
+        + .accordion-pane:not(.all-children-filtered) {
+          background-color: $uplift-acc-expanded-bg-color;
+
+          .accordion-header {
+            border-radius: $uplift-acc-border-radius;
+
+            &:not(.is-selected):not(.is-focused) {
+              border-color: transparent;
+            }
+          }
+
+          .accordion-pane {
+            background: transparent;
+          }
+        }
+      }
+
+      + .accordion-header {
+        margin-top: 4px;
+      }
+
+      .accordion-pane {
+        background-color: transparent;
+      }
+
+      &.filtered {
+        + .accordion-pane {
+          background-color: $uplift-acc-expanded-bg-color;
+        }
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header > a {
-      letter-spacing: 0.2px;
+    > .accordion-pane {
+      padding: 0;
+      position: relative;
+
+      &.is-expanded {
+        margin: 0 -10px;
+        padding: 0 10px 10px;
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header.is-selected {
-      background-color: unset;
+    // Visible accordion panes force a border to show up on the next
+    // accordion header for visual separation
+    .accordion-pane {
+      background-color: transparent;
+
+      .accordion-header {
+        border-bottom-color: transparent;
+        color: $uplift-acc-subheader-text-color;
+
+        a {
+          font-size: 14px;
+          padding-bottom: 7px;
+          padding-top: 11px;
+        }
+
+        .btn,
+        .btn-expander {
+          height: 25px;
+          width: 25px;
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              left: 4px;
+              top: 11px;
+              width: 15px;
+            }
+          }
+        }
+
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            background-color: $uplift-acc-subheader-text-color;
+          }
+        }
+
+        &:hover {
+          color: $uplift-acc-header-selected-text-color;
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              background-color: $uplift-acc-header-selected-text-color;
+            }
+          }
+        }
+
+        &.is-selected {
+          color: $uplift-acc-header-selected-text-color;
+
+          > a > span {
+            font-weight: $theme-number-font-weight-bold;
+          }
+
+          .icon.plus-minus {
+            &::before,
+            &::after {
+              background-color: $uplift-acc-header-selected-text-color;
+            }
+          }
+        }
+
+        &.list-item {
+          &::before {
+            color: inherit;
+            font-size: 0.8rem;
+            padding-right: 12px;
+          }
+        }
+
+        &:not(.has-chevron) {
+          .icon.chevron {
+            left: -5px;
+            width: 13px;
+          }
+        }
+      }
+
+      &.is-expanded {
+        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-content {
+          border-top-color: transparent;
+        }
+      }
     }
 
-    &.has-icons .accordion-pane .accordion-header.is-selected > a {
-      letter-spacing: 0;
+    // Round the borders of 2nd-level accordion headers in some special cases
+    > .accordion-pane {
+      + .accordion-header {
+        margin-top: 4px;
+      }
     }
 
-    .accordion-pane .accordion-header.is-selected > a > span {
-      font-weight: $theme-number-font-weight-bold;
+    // Change some letter spacing on lower-level icon app menus
+    &.has-icons {
+      .accordion-pane {
+        .accordion-header {
+          > a {
+            letter-spacing: 0.2px;
+          }
+
+          &.is-selected {
+            > a {
+              letter-spacing: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+html.is-firefox {
+
+  // Reset the Searchfield Wrapper height on Firefox
+  .application-menu {
+    .searchfield-wrapper {
+      height: auto;
+
+      > .icon {
+        top: 14px;
+      }
+    }
+  }
+
+  // Reset this from the Soho theme (not needed in Uplift)
+  &.is-mac {
+    .application-menu {
+      .application-menu-switcher-trigger {
+        padding-top: 0;
+
+        > span {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .application-menu {
+    background-color: $uplift-appmenu-main-bg-color;
+
+    .application-menu-header {
+      .application-menu-switcher-trigger {
+        float: left;
+      }
+
+      .icon.avatar {
+        left: 0;
+        right: 29px;
+      }
+
+      .name-xl {
+        padding-left: 0;
+        padding-right: 29px;
+      }
     }
 
-    &.panel.inverse .accordion-header:hover {
-      background-color: $theme-color-palette-slate-100;
+    .searchfield-wrapper {
+      .icon:not(.close) {
+        right: 8px;
+      }
+    }
+
+    .accordion.panel.inverse {
+      .accordion-pane {
+        .accordion-header {
+          &:not(.has-chevron) {
+            .icon.chevron {
+              left: auto;
+              right: -5px;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              font-size: 1.2rem;
+              padding-left: 8px;
+              padding-right: 28px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Application Menu's Accordion alignment rules
+//================================================== //
+
+.application-menu {
+
+  // Level 1 Pane
+  .accordion-pane {
+    @include left-align-cascade-styles-pane(21px, 46px, 21px);
+
+    // Level 2 Header
+    .accordion-header {
+      @include left-align-cascade-styles-header(20px, 18px, 49px, 26px);
+    }
+
+    // Level 2 Pane
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(47px, 72px, 47px);
+
+      // Level 3 Header
+      .accordion-header {
+        @include left-align-cascade-styles-header(40px, 44px, 72px, 52px);
+      }
+
+      // Level 3 Pane
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(73px, 97px, 73px);
+
+        // Level 4 Header
+        .accordion-header {
+          @include left-align-cascade-styles-header(59px, 69px, 97px, 77px);
+        }
+
+        // Level 4 Pane
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(98px, 122px, 98px);
+
+          // Level 5 Header
+          .accordion-header {
+            @include left-align-cascade-styles-header(78px, 94px, 122px, 102px);
+          }
+
+          // Level 5 Pane
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(122px, 150px, 122px);
+
+            // Level 6 Header
+            .accordion-header {
+              @include left-align-cascade-styles-header(122px, 122px, 150px, 130px);
+
+              &.no-icon {
+                > a {
+                  padding-left: 150px;
+                }
+              }
+            }
+
+            // Level 6 Pane
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(127px, 177px, 151px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .accordion.has-icons {
+    .accordion-header {
+      > a {
+        padding-left: 54px;
+      }
+
+      > .icon + a {
+        padding-left: 0;
+      }
+    }
+
+    // Level 1 Pane
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(55px, 78px, 56px);
+
+      .accordion-header {
+        @include left-align-cascade-styles-header(54px, 50px, 78px, 58px);
+      }
+
+      // Level 2 Pane
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(55px, 103px, 78px);
+
+        // Level 3 Header
+        .accordion-header {
+          @include left-align-cascade-styles-header(59px, 74px, 102px, 82px);
+        }
+
+        // Level 3 Pane
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(79px, 127px, 103px);
+
+          // Level 4 Header
+          .accordion-header {
+            @include left-align-cascade-styles-header(59px, 99px, 127px, 107px);
+          }
+
+          // Level 4 Pane
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(104px, 152px, 128px);
+
+            // Level 5 Header
+            .accordion-header {
+              @include left-align-cascade-styles-header(78px, 124px, 152px, 132px);
+            }
+
+            // Level 5 Pane
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(130px, 150px, 153px);
+
+              // Level 6 Header
+              .accordion-header {
+                @include left-align-cascade-styles-header(122px, 152px, 180px, 160px);
+
+                &.no-icon {
+                  > a {
+                    padding-left: 182px;
+                  }
+                }
+              }
+
+              // Level 6 Pane
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(158px, 182px, 122px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .application-menu {
+
+    // Level 1 Pane
+    .accordion-pane {
+      @include right-align-cascade-styles-pane(21px, 46px, 21px);
+
+      // Level 2 Header
+      .accordion-header {
+        @include right-align-cascade-styles-header(20px, 18px, 49px, 26px);
+      }
+
+      // Level 2 Pane
+      .accordion-pane {
+        @include right-align-cascade-styles-pane(47px, 72px, 47px);
+
+        // Level 3 Header
+        .accordion-header {
+          @include right-align-cascade-styles-header(40px, 44px, 72px, 52px);
+        }
+
+        // Level 3 Pane
+        .accordion-pane {
+          @include right-align-cascade-styles-pane(73px, 97px, 73px);
+
+          // Level 4 Header
+          .accordion-header {
+            @include right-align-cascade-styles-header(59px, 69px, 97px, 77px);
+          }
+
+          // Level 4 Pane
+          .accordion-pane {
+            @include right-align-cascade-styles-pane(98px, 122px, 98px);
+
+            // Level 5 Header
+            .accordion-header {
+              @include right-align-cascade-styles-header(78px, 94px, 122px, 102px);
+            }
+
+            // Level 5 Pane
+            .accordion-pane {
+              @include right-align-cascade-styles-pane(122px, 150px, 122px);
+
+              // Level 6 Header
+              .accordion-header {
+                @include right-align-cascade-styles-header(122px, 122px, 150px, 130px);
+
+                &.no-icon {
+                  > a {
+                    padding-right: 150px;
+                  }
+                }
+              }
+
+              // Level 6 Pane
+              .accordion-pane {
+                @include right-align-cascade-styles-pane(127px, 177px, 151px);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .accordion.has-icons {
+      .accordion-header {
+        > a {
+          padding-right: 54px;
+        }
+
+        > .icon + a {
+          padding-right: 0;
+        }
+      }
+
+      // Level 1 Pane
+      .accordion-pane {
+        @include right-align-cascade-styles-pane(55px, 78px, 56px);
+
+        .accordion-header {
+          @include right-align-cascade-styles-header(54px, 50px, 78px, 58px);
+        }
+
+        // Level 2 Pane
+        .accordion-pane {
+          @include right-align-cascade-styles-pane(55px, 103px, 78px);
+
+          // Level 3 Header
+          .accordion-header {
+            @include right-align-cascade-styles-header(59px, 74px, 102px, 82px);
+          }
+
+          // Level 3 Pane
+          .accordion-pane {
+            @include right-align-cascade-styles-pane(79px, 127px, 103px);
+
+            // Level 4 Header
+            .accordion-header {
+              @include right-align-cascade-styles-header(59px, 99px, 127px, 107px);
+            }
+
+            // Level 4 Pane
+            .accordion-pane {
+              @include right-align-cascade-styles-pane(104px, 152px, 128px);
+
+              // Level 5 Header
+              .accordion-header {
+                @include right-align-cascade-styles-header(78px, 124px, 152px, 132px);
+              }
+
+              // Level 5 Pane
+              .accordion-pane {
+                @include right-align-cascade-styles-pane(130px, 150px, 153px);
+
+                // Level 6 Header
+                .accordion-header {
+                  @include right-align-cascade-styles-header(122px, 152px, 180px, 160px);
+
+                  &.no-icon {
+                    > a {
+                      padding-right: 182px;
+                    }
+                  }
+                }
+
+                // Level 6 Pane
+                .accordion-pane {
+                  @include right-align-cascade-styles-pane(158px, 182px, 122px);
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

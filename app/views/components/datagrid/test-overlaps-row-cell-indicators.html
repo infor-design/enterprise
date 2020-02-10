@@ -14,6 +14,9 @@
         <button type="button" id="add-row-bottom" class="btn">
           <span>Add Row (bottom)</span>
         </button>
+        <button type="button" id="dirty-rows" class="btn">
+          <span>Dirty Rows</span>
+        </button>
       </div>
     </div>
 
@@ -68,7 +71,7 @@
               columns: lookupColumns,
               dataset: lookupData,
               selectable: 'single', //multiselect or single
-              toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: true, actions: true, views: true , rowHeight: true}
+              toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
             }
           };
 
@@ -134,9 +137,14 @@
         $('#add-row-top').on('click', function () {
           gridApi.addRow({ productName: '', productId: '0' });
         });
-        
+
         $('#add-row-bottom').on('click', function () {
           gridApi.addRow({ productName: '', productId: '0' }, 'bottom');
+        });
+
+        $('#dirty-rows').on('click', function () {
+          var dirtyRows = gridApi.dirtyRows();
+          console.log('Number of Dirty Rows: ' + dirtyRows.length);
         });
     });
   });

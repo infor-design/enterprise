@@ -9,10 +9,8 @@
   }
 
   [class*='btn'] {
-    font-size: unset;
-    height: 20px;
-    min-height: 0;
-    top: 1px;
+    margin-top: 4px;
+    min-height: 24px;
 
     &:first-child {
       margin-left: $theme-number-spacing-base;
@@ -21,27 +19,43 @@
     &[data-element='foreColor'] .icon,
     &[data-element='foreColor'] .icon {
       margin-right: 4px;
-      margin-top: unset;
+      margin-top: auto;
     }
 
     &[data-element='u'] .icon {
-      height: 18px;
+      height: 17px;
       margin-top: 1px;
     }
 
     &[data-element='h3'],
     &[data-element='h4'] {
       margin-right: $theme-number-spacing-base;
+      min-width: 32px;
 
       .icon {
-        margin-left: unset;
+        margin-left: auto;
         width: 30px;
       }
     }
 
+    &[data-action='insertunorderedlist'] {
+      .icon {
+        left: 8px;
+        position: relative;
+      }
+    }
+
+    &[data-action='visual'] {
+      .visual-icon {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
     .html-icon {
-      margin-left: unset;
-      width: 60px;
+      margin-left: 3px;
+      margin-right: 2px;
+      width: 45px;
     }
   }
 }
@@ -50,16 +64,19 @@
   top: 61px;
 }
 
+.is-safari {
+  .flex-toolbar.formatter-toolbar {
+    > * {
+      display: unset;
+    }
+  }
+}
+
 // IE/Edge have different icon alignments
 .ie-edge {
   .toolbar.formatter-toolbar,
   .flex-toolbar.formatter-toolbar {
     [class*='btn'] {
-      .icon {
-        margin-left: -2px;
-        margin-top: -5px;
-      }
-
       &[data-action='visual'] {
         width: 85px;
       }

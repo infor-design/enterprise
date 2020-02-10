@@ -134,12 +134,12 @@ svg.icon-dirty,
 
 .icon-dirtyerror,
 .icon-error,
-.icon-error-solid {
+.icon-error-alert {
   color: $theme-color-status-danger !important;
 }
 
 .icon-success,
-.icon-success-solid {
+.icon-success-alert {
   color: $success-icon-fill !important;
 }
 
@@ -149,25 +149,20 @@ svg.icon-dirty,
 }
 
 .icon-alert,
-.icon-alert-solid {
+.icon-alert-alert {
   color: $theme-color-status-warning !important;
 }
 
-.icon-solid-bgrnd {
-  color: $theme-color-palette-white;
+.icon-pending {
+  color: $theme-color-status-warning !important;
 }
 
-.icon-pending {
-  background: $theme-color-status-caution !important;
-  border: 2px solid $theme-color-status-caution;
-  border-radius: 50%;
-  color: $theme-color-palette-white !important;
-  height: 18px;
-  width: 18px;
+.icon-pending-alert {
+  color: $theme-color-status-warning !important;
 }
 
 .icon-info,
-.icon-info-solid {
+.icon-info-alert {
   color: $info-icon-fill !important;
 }
 
@@ -221,7 +216,7 @@ svg.icon-logo {
     &.is-checked {
       border-width: 4px;
       left: 1px;
-      top: 0;
+      top: 1px;
       z-index: 2;
     }
   }
@@ -233,13 +228,13 @@ svg.icon-logo {
     margin-top: 8px;
 
     &.dirty-checkbox {
-      left: -4px;
+      left: 0;
       margin-top: inherit;
       top: 1px;
 
       &.is-checked {
-        // left: -4px;
-        top: 0;
+        left: 0;
+        top: 1px;
       }
     }
   }
@@ -650,37 +645,4 @@ html[dir='rtl'] {
     margin: 1px 1px 0 0;
   }
 
-}
-
-// Empty State Widget Icons
-// NOTE: These styles also live inside of "<project root>/svg/icons-empty.svg"
-//================================================== //
-
-.icon-empty-state {
-  color: $theme-color-brand-primary-base; // Themable Empty Icons
-  display: inline-block;
-  fill: $theme-color-brand-primary-base; // Themable Empty Icons
-  height: 65px;
-  position: relative;
-  width: 65px;
-}
-
-.is-graphite.icon-empty-state {
-  color: $icon-empty-bg-color; // Grey Scale icon
-}
-
-// color defs
-
-.icon-empty-offset-color {
-  opacity: 0.4;
-}
-
-.icon-empty-center-color {
-  color: $theme-color-palette-white;
-}
-
-.space-icons {
-  svg {
-    margin-right: 20px;
-  }
 }

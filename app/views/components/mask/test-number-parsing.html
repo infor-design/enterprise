@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="number-field">Number Field</label>
+      <input id="number-field" />
+    </div>
+
+    <div class="field">
+      <label for="parsed-number-field">Parsed Number result</label>
+      <input id="parsed-number-field" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function(locale, args) {
+    const numberInfo = Locale.currentLocale.data.numbers;
+
+    $('#number-field').mask({
+      process       : 'number',
+      patternOptions: {
+        allowDecimal           : true,
+        allowNegative          : false,
+        allowThousandsSeparator: true,
+        decimalLimit           : 2,
+        integerLimit           : 12,
+        symbols                : {
+          decimal  : numberInfo.decimal,
+          negative : numberInfo.minusSign,
+          thousands: numberInfo.group
+        }
+      }
+    })
+    .on('change', function() {
+      var value = $('#number-field').val();
+
+      // transform
+      var nbr = Soho.Locale.parseNumber(value);
+      $('#parsed-number-field').val(nbr);
+
+      $('body').toast({
+        title: 'Change Event Fired!',
+        message: 'Parsed Number: <b>'+ nbr +'</b>'
+      });
+    });
+  });
+</script>

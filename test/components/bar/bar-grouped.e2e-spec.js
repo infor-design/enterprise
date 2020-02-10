@@ -38,9 +38,9 @@ describe('Grouped Bar Chart example-index tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleepLonger);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-index')).toEqual(0);
     });
   }
 });
@@ -59,7 +59,7 @@ describe('Grouped Bar formatter tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-formatter')).toEqual(0);
     });
   }
 });
@@ -76,9 +76,9 @@ describe('Grouped Bar many groups tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleepLonger);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-many-groups')).toBeLessThan(1);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-grouped-many-groups')).toEqual(0);
     });
   }
 });
@@ -109,6 +109,7 @@ describe('Grouped Bar Chart example-selected tests', () => {
   });
 
   it('Should be highlighted when selected', async () => {
+    await browser.driver.sleep(config.sleep);
     const fGroupEl = await element.all(by.css('.group .series-group')).get(0);
 
     expect(await fGroupEl.getAttribute('class')).toContain('is-selected');

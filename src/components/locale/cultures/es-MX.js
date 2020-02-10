@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise, no-undef */
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('es-MX', {
   // layout/language
@@ -22,6 +20,7 @@ Soho.Locale.addCulture('es-MX', {
       month: 'dd de MMMM',
       year: 'MMMM de yyyy',
       timestamp: 'H:mm:ss',
+      hour: 'H:mm',
       datetime: 'dd/MM/yyyy H:mm',
       timezone: 'dd/MM/yyyy H:mm zz',
       timezoneLong: 'dd/MM/yyyy H:mm zzzz'
@@ -40,7 +39,8 @@ Soho.Locale.addCulture('es-MX', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['a.m.', 'p.m.']
+    dayPeriods: ['a.m.', 'p.m.'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '$',
@@ -49,6 +49,8 @@ Soho.Locale.addCulture('es-MX', {
   numbers: {
     percentSign: '%',
     percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',

@@ -5,12 +5,17 @@
 import { Environment as env } from '../../utils/environment';
 import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
+import { FontPickerStyle } from '../fontpicker/fontpicker';
 import { Locale } from '../locale/locale';
+import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 
 const COMPONENT_NAME = 'editor';
+
+const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'code'];
 
 /**
 * The Editor Component displays and edits markdown.
@@ -34,6 +39,7 @@ const COMPONENT_NAME = 'editor';
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 * @param {function} [settings.showHtmlView = false] If set to true, editor should be displayed in HTML view initialy.
 * @param {function} [settings.preview = false] If set to true, editor should be displayed in preview mode with noneditable content.
+* @param {string} [settings.paragraphSeparator = 'p'] Only can use 'p'|'br'|'div', If set to anything else will not run `defaultParagraphSeparator` execCommand.
 * @param {boolean} [settings.useFlexToolbar = false] if set to true, renders the toolbar as flex toolbar.
 * @param {boolean} [settings.useSourceFormatter = false] true will format the html content in source mode.
 * @param {boolean} [settings.formatterTabsize = 4] number of spaces can use for indentation.
@@ -41,7 +47,7 @@ const COMPONENT_NAME = 'editor';
 const EDITOR_DEFAULTS = {
   buttons: {
     editor: [
-      'header1', 'header2',
+      'fontPicker',
       'separator', 'bold', 'italic', 'underline', 'strikethrough',
       'separator', 'foreColor', 'backColor',
       'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
@@ -60,19 +66,34 @@ const EDITOR_DEFAULTS = {
     source: []
   },
   delay: 200,
-  firstHeader: 'h3',
-  secondHeader: 'h4',
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'SameWindow'|'NewWindow'| any string value
-  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false },
-  image: { url: 'https://imgplaceholder.com/250x250/368AC0/ffffff/fa-image' },
+  anchor: {
+    url: 'http://www.example.com',
+    class: 'hyperlink',
+    target: 'NewWindow',
+    isClickable: false,
+    showIsClickable: false
+  },
+  image: {
+    url: '/images/placeholder-80x80.png'
+  },
   onLinkClick: null,
   showHtmlView: false,
   preview: false,
+  paragraphSeparator: 'p',
   useFlexToolbar: false,
   useSourceFormatter: false,
-  formatterTabsize: 4
+  formatterTabsize: 4,
+  fontpickerSettings: {
+    popupmenuSettings: {
+      showArrow: false,
+      offset: {
+        y: 0
+      }
+    }
+  }
 };
 
 function Editor(element, settings) {
@@ -99,18 +120,10 @@ Editor.prototype = {
   },
 
   init() {
-    const s = this.settings;
-    this.isIe = env.browser.name === 'ie';
-    this.isIeEdge = env.browser.name === 'edge';
-    this.isIe11 = this.isIe && env.browser.version === '11';
-    this.isMac = env.os.name === 'Mac OS X';
-    this.isFirefox = env.browser.name === 'firefox';
-    this.textarea = null;
-
-    this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
     this.id = `${utils.uniqueId(this.element, 'editor')}-id`;
-
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
+
+    this.label = this.element.prevAll('.label').first();
 
     // Preview mode
     if (!this.previewRendered && (this.element.hasClass('is-preview') || this.settings.preview)) {
@@ -122,6 +135,7 @@ Editor.prototype = {
       return;
     }
 
+    const s = this.settings;
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);
     s.image = $.extend({}, EDITOR_DEFAULTS.image, s.image);
 
@@ -142,6 +156,49 @@ Editor.prototype = {
       }
     });
 
+    // Convert legacy header settings into Fontpicker settings
+    if (this.settings.firstHeader || this.settings.secondHeader) {
+      if (!Array.isArray(this.settings.fontpickerSettings.styles)) {
+        this.settings.fontpickerSettings.styles = [];
+      }
+      if (!this.settings.fontpickerSettings.styles.length) {
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyDefault', 'Default'));
+      }
+      if (this.settings.firstHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`firstHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader1', 'Header 1', this.settings.firstHeader));
+        delete this.settings.firstHeader;
+      }
+      if (this.settings.secondHeader) {
+        warnAboutDeprecation('`fontpickerSettings.styles` setting', '`secondHeader` setting', 'Editor Component');
+        this.settings.fontpickerSettings.styles.push(new FontPickerStyle('legacyHeader2', 'Header 2', this.settings.secondHeader));
+        delete this.settings.secondHeader;
+      }
+    }
+
+    if (s.buttons && s.buttons.editor) {
+      let foundOldSettings = false;
+      const styles = [new FontPickerStyle('default', 'Default', 'p')];
+
+      const headers = s.buttons.editor.filter(el => el.substr(0, 6) === 'header');
+
+      for (let i = 0; i < headers.length; i++) {
+        const hLevel = headers[i].substr(6, 1);
+        foundOldSettings = true;
+        styles.push(new FontPickerStyle(`header${hLevel}`, `Header ${hLevel}`, `h${hLevel}`));
+      }
+      if (foundOldSettings) {
+        s.buttons.editor = s.buttons.editor.filter(el => el.substr(0, 6) !== 'header');
+        s.fontpickerSettings = { styles };
+      }
+      if (s.buttons.editor[0] === 'seperator') {
+        s.buttons.editor.splice(0, 1);
+      }
+      if (foundOldSettings) {
+        s.buttons.editor = ['fontPicker'].concat(s.buttons.editor);
+      }
+    }
+
     if (!s.anchor.defaultTarget) {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
         s.anchor.defaultTarget = s.anchor.target;
@@ -152,6 +209,12 @@ Editor.prototype = {
     }
 
     this.setup();
+
+    // Set default paragraph separator
+    if (typeof s.paragraphSeparator === 'string' && /^(p|br|div)$/.test(s.paragraphSeparator)) {
+      document.execCommand('defaultParagraphSeparator', false, s.paragraphSeparator);
+    }
+
     if (this.element.hasClass('is-readonly')) {
       this.readonly();
     }
@@ -192,7 +255,7 @@ Editor.prototype = {
     this.initTextarea();
 
     this.bindParagraphCreation().bindTab();
-    this.initToolbar()
+    this.createToolbar()
       .bindButtons()
       .bindModals()
       .bindAnchorPreview();
@@ -279,15 +342,6 @@ Editor.prototype = {
     return this;
   },
 
-  initToolbar() {
-    if (this.toolbar) {
-      return this;
-    }
-
-    this.createToolbar();
-    return this;
-  },
-
   // Set excluded buttons
   setExcludedButtons() {
     const excludeButtons = (elements, toExclude) => {
@@ -328,7 +382,15 @@ Editor.prototype = {
     return setButtons();
   },
 
+  /**
+   * @private
+   * @returns {this} component instance
+   */
   createToolbar() {
+    if (this.toolbar) {
+      return this;
+    }
+
     const toolbarCssClasses = [
       this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar',
       'editor-toolbar',
@@ -340,7 +402,7 @@ Editor.prototype = {
     if (this.settings.useFlexToolbar) {
       sectionCss = 'toolbar-section ';
       moreButtonHTML = `<div class="toolbar-section more">
-        <button class="btn-actions">
+        <button class="btn-actions btn-editor">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
@@ -371,13 +433,35 @@ Editor.prototype = {
         this.element.prev() : this.element);
     }
 
+    // Invoke Fontpicker, if applicable
+    const fpElement = this.toolbar.find('[data-action="fontStyle"]').first();
+    if (fpElement && fpElement.length) {
+      fpElement.fontpicker(this.settings.fontpickerSettings);
+      this.fontPickerElem = fpElement;
+    }
+
     // Invoke Colorpicker, if applicable
     const cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
-    cpElements.colorpicker({ placeIn: 'editor' });
+    cpElements.colorpicker({
+      placeIn: 'editor',
+      popupmenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
     $('.trigger', cpElements).off('click.colorpicker');
 
     // Invoke the (Flex?) Toolbar
-    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']();
+    this.toolbar[this.settings.useFlexToolbar ? 'toolbarflex' : 'toolbar']({
+      moreMenuSettings: {
+        offset: {
+          y: 0
+        },
+        showArrow: false
+      }
+    });
 
     // Invoke Tooltips
     this.toolbar.find('button[title]').tooltip();
@@ -394,7 +478,7 @@ Editor.prototype = {
 
     // Rebind everything to the new element
     this.setupTextareaEvents();
-    this.initToolbar();
+    this.createToolbar();
     this.bindButtons().bindModals().bindAnchorPreview();
     this.bindSelect().bindPaste().setupKeyboardEvents();
     this.toolbar.find('button').button();
@@ -444,7 +528,6 @@ Editor.prototype = {
   },
 
   setupKeyboardEvents() {
-    const self = this;
     const currentElement = this.getCurrentElement();
     const keys = {
       b: 66, // {Ctrl + B} bold
@@ -539,7 +622,7 @@ Editor.prototype = {
     // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
     this.element.on('mousedown.editor', 'a', function (e) {
       const href = $(this).attr('href');
-      if (!self.isFirefox && ((self.isMac && e.metaKey) || (!self.isMac && e.ctrlKey))) {
+      if (env.browser.name !== 'firefox' && (env.os.name === 'Mac OS X' && (e.metaKey || e.ctrlKey))) {
         window.open(href, '_blank');
         e.preventDefault();
       }
@@ -707,49 +790,51 @@ Editor.prototype = {
   buttonTemplate(btnType) {
     const buttonLabels = this.getButtonLabels(this.settings.buttonLabels);
     const buttonTemplates = {
-      bold: `<button type="button" class="btn" title="${Locale.translate('ToggleBold')}" data-action="bold" data-element="b">${buttonLabels.bold}</button>`,
+      bold: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleBold')}" data-action="bold" data-element="b">${buttonLabels.bold}</button>`,
 
-      italic: `<button type="button" class="btn" title="${Locale.translate('ToggleItalic')}" data-action="italic" data-element="i">${buttonLabels.italic}</button>`,
+      italic: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleItalic')}" data-action="italic" data-element="i">${buttonLabels.italic}</button>`,
 
-      underline: `<button type="button" class="btn underline" title="${Locale.translate('ToggleUnderline')}" data-action="underline" data-element="u">${buttonLabels.underline}</button>`,
+      underline: `<button type="button" class="btn btn-editor underline" title="${Locale.translate('ToggleUnderline')}" data-action="underline" data-element="u">${buttonLabels.underline}</button>`,
 
-      strikethrough: `<button type="button" class="btn" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
+      strikethrough: `<button type="button" class="btn btn-editor" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
 
-      foreColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
+      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
 
-      backColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
+      backColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
 
-      superscript: `<button type="button" class="btn" title="${Locale.translate('Superscript')}" data-action="superscript" data-element="sup">${buttonLabels.superscript}</button>`,
+      superscript: `<button type="button" class="btn btn-editor" title="${Locale.translate('Superscript')}" data-action="superscript" data-element="sup">${buttonLabels.superscript}</button>`,
 
-      subscript: `<button type="button" class="btn" title="${Locale.translate('Subscript')}" data-action="subscript" data-element="sub">${buttonLabels.subscript}</button>`,
+      subscript: `<button type="button" class="btn btn-editor" title="${Locale.translate('Subscript')}" data-action="subscript" data-element="sub">${buttonLabels.subscript}</button>`,
 
       separator: '<div class="separator"></div>',
 
-      anchor: `<button type="button" class="btn" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
+      anchor: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
 
-      image: `<button type="button" class="btn" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
+      image: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
 
-      header1: `<button type="button" class="btn" title="${Locale.translate('ToggleH3')}" data-action="append-${this.settings.firstHeader}" data-element="${this.settings.firstHeader}">${buttonLabels.header1}</button>`,
+      header1: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleH3')}" data-action="append-${this.settings.firstHeader}" data-element="${this.settings.firstHeader}">${buttonLabels.header1}</button>`,
 
-      header2: `<button type="button" class="btn" title="${Locale.translate('ToggleH4')}" data-action="append-${this.settings.secondHeader}" data-element="${this.settings.secondHeader}">${buttonLabels.header2}</button>`,
+      header2: `<button type="button" class="btn btn-editor" title="${Locale.translate('ToggleH4')}" data-action="append-${this.settings.secondHeader}" data-element="${this.settings.secondHeader}">${buttonLabels.header2}</button>`,
 
-      quote: `<button type="button" class="btn" title="${Locale.translate('Blockquote')}" data-action="append-blockquote" data-element="blockquote">${buttonLabels.quote}</button>`,
+      quote: `<button type="button" class="btn btn-editor" title="${Locale.translate('Blockquote')}" data-action="append-blockquote" data-element="blockquote">${buttonLabels.quote}</button>`,
 
-      orderedlist: `<button type="button" class="btn" title="${Locale.translate('OrderedList')}" data-action="insertorderedlist" data-element="ol">${buttonLabels.orderedlist}</button>`,
+      orderedlist: `<button type="button" class="btn btn-editor" title="${Locale.translate('OrderedList')}" data-action="insertorderedlist" data-element="ol">${buttonLabels.orderedlist}</button>`,
 
-      unorderedlist: `<button type="button" class="btn" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
+      unorderedlist: `<button type="button" class="btn btn-editor" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
 
-      justifyLeft: `<button type="button" class="btn" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
+      fontPicker: `<button type="button" class="btn btn-editor fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
 
-      justifyCenter: `<button type="button" class="btn" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
+      justifyLeft: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
 
-      justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
+      justifyCenter: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
 
-      clearFormatting: `<button type="button" class="btn" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
+      justifyRight: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
 
-      source: `<button type="button" class="btn" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
+      clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
-      visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
+      source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
+
+      visual: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
     };
     return buttonTemplates[btnType] || false;
   },
@@ -781,7 +866,7 @@ Editor.prototype = {
       justifyLeft: this.getIcon('JustifyLeft', 'left-text-align'),
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
-      clearFormatting: this.getIcon('clearFormatting', 'clear-formatting'),
+      clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
     };
@@ -810,17 +895,19 @@ Editor.prototype = {
   bindButtons() {
     const self = this;
 
-    this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
-      const btn = $(this);
-      const action = btn.attr('data-action');
+    function editorButtonActionHandler(e, item) {
+      const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
       if (btn.is('.btn-actions')) {
         return;
       }
 
+      const action = btn.attr('data-action');
+      const currentElem = self.getCurrentElement();
+
       e.preventDefault();
-      self.getCurrentElement().focus();
+      currentElem.focus();
 
       if (self.selection === undefined) {
         self.checkSelection();
@@ -834,18 +921,39 @@ Editor.prototype = {
         self.execAction(action, e);
       }
 
-      if (self.isIe || self.isIeEdge) {
-        self.getCurrentElement().trigger('change');
+      if (env.browser.name === 'ie' || env.browser.isEdge()) {
+        currentElem.trigger('change');
       }
 
-      return false;
-    });
+      if (btn[0].classList.contains('longpress-target')) {
+        return false;
+      }
+    }
+
+    // Most components work fine with the `selected` event on the toolbars.
+    // Colorpicker components aren't "triggered" by a selected event, so they work
+    // off of the click event.
+    if (this.settings.useFlexToolbar) {
+      this.toolbar.on('selected.editor', editorButtonActionHandler);
+      this.toolbar.on('click.editor', '.colorpicker-editor-button', editorButtonActionHandler);
+    } else {
+      this.toolbar.on('click.editor', 'button', editorButtonActionHandler);
+    }
+
+    if (this.fontPickerElem) {
+      this.fontPickerElem.on('font-selected', (e, fontPickerStyle) => {
+        this.execFormatBlock(fontPickerStyle.tagName);
+      });
+    }
 
     return this;
   },
 
   bindModals() {
     const self = this;
+    const modalSettings = {
+      noRefocus: true
+    };
 
     this.modals = {
       url: this.createURLModal(),
@@ -854,7 +962,7 @@ Editor.prototype = {
 
     $(`[name="em-target-${this.id}"]`).dropdown();
 
-    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal()
+    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal(modalSettings)
       .on('beforeopen', function () {
         self.savedSelection = self.saveSelection();
 
@@ -1071,7 +1179,7 @@ Editor.prototype = {
       let rangeStr;
       let rangeImg;
 
-      if (!this.selection.isCollapsed || this.isIe11) {
+      if (!this.selection.isCollapsed || env.browser.isIE11()) {
         // get example from: http://jsfiddle.net/jwvha/1/
         // and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
         if (window.getSelection) {
@@ -1242,11 +1350,14 @@ Editor.prototype = {
     if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
       this.colorpickerButtonState('backColor');
     }
+    if (this.fontPickerElem) {
+      this.checkButtonState('fontStyle');
+    }
 
     let parentNode = this.getSelectedParentElement();
 
     while (parentNode.tagName !== undefined &&
-      this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+      EDITOR_PARENT_ELEMENTS.indexOf(parentNode.tagName.toLowerCase) === -1) {
       this.activateButton(parentNode.tagName.toLowerCase());
 
       // we can abort the search upwards if we leave the contentEditable element
@@ -1262,6 +1373,29 @@ Editor.prototype = {
       return;
     }
 
+    // 'fontStyle' type notifies the FontPicker component if the current selection doesn't match.
+    if (this.fontPickerElem && command === 'fontStyle') {
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      const fontpickerSupportedTags = fontpickerAPI.supportedTagNames;
+
+      const selectedElem = this.getSelectionParentElement();
+      const searchElems = $(selectedElem).add($(selectedElem).parentsUntil(this.element));
+      let targetElemTag;
+      let fontStyle;
+
+      for (let i = 0; i < searchElems.length && fontStyle === undefined; i++) {
+        targetElemTag = searchElems[i].tagName.toLowerCase();
+        if (fontpickerSupportedTags.indexOf(targetElemTag) > -1) {
+          fontStyle = fontpickerAPI.getStyleByTagName(targetElemTag);
+          fontpickerAPI.select(fontStyle, true);
+          break;
+        }
+      }
+
+      return;
+    }
+
+    // Standard Button State Check
     if (document.queryCommandState(command)) {
       this.toolbar.find(`[data-action="${command}"]`).addClass('is-active');
     } else {
@@ -1367,7 +1501,7 @@ Editor.prototype = {
       if (clipboardData && clipboardData.types) {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
-            (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
+            (types.indexOf && types.indexOf('text/html') !== -1) || env.browser.isEdge()) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
         if (types instanceof DOMStringList && types.contains('text/plain')) {
@@ -1393,7 +1527,7 @@ Editor.prototype = {
         }
       }
 
-      self.pastedData = self.isIe11 ?
+      self.pastedData = env.browser.isIE11() ?
         pastedData : self.getCleanedHtml(pastedData);
 
       /**
@@ -1407,7 +1541,7 @@ Editor.prototype = {
       */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
-          if (!self.isIe11 && !self.isIeEdge) {
+          if (!env.browser.isIE11() && !env.browser.isEdge()) {
             e.preventDefault();
           }
 
@@ -1430,7 +1564,7 @@ Editor.prototype = {
         self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
       });
-      if (!self.isIe11) {
+      if (!env.browser.isIE11()) {
         return false;
       }
     };
@@ -1453,7 +1587,7 @@ Editor.prototype = {
         range = sel.getRangeAt(0);
         range.deleteContents();
 
-        if (self.isIe11) {
+        if (env.browser.isIE11()) {
           html = templIE11;
         }
 
@@ -1483,7 +1617,7 @@ Editor.prototype = {
         }
 
         // IE 11
-        if (self.isIe11) {
+        if (env.browser.isIE11()) {
           let maxRun = 50;
           const deferredIE11 = $.Deferred();
 
@@ -1676,7 +1810,7 @@ Editor.prototype = {
   },
 
   bindWindowActions() {
-    const editorContainer = this.element.closest('.editor-container');
+    const editorContainer = this.container;
     const currentElement = this.getCurrentElement();
     const self = this;
 
@@ -1687,7 +1821,7 @@ Editor.prototype = {
         this.mousedown = true;
       })
       .on('focus.editor', () => {
-        if (this.isFirefox && !this.mousedown && this.element === currentElement) {
+        if (env.browser.name === 'firefox' && !this.mousedown && this.element === currentElement) {
           this.setFocus();
         }
       })
@@ -1707,22 +1841,36 @@ Editor.prototype = {
         }
       });
 
-    editorContainer
-      .on('focus.editor', '.editor, .editor-source', function () {
-        const elem = $(this);
+    // Handle visual styles at the container level on blur/focus
+    function containerFocusHandler() {
+      const elem = $(this);
 
-        editorContainer.addClass('is-active');
-        setTimeout(() => {
-          if (elem.hasClass('error')) {
-            editorContainer.parent().find('.editor-toolbar').addClass('error');
-            editorContainer.parent().find('.editor-source').addClass('error');
-          }
-        }, 100);
+      editorContainer.addClass('is-active');
+      setTimeout(() => {
+        if (elem.hasClass('error')) {
+          editorContainer.parent().find('.editor-toolbar').addClass('error');
+          editorContainer.parent().find('.editor-source').addClass('error');
+        }
+      }, 100);
+    }
+    function containerBlurHandler() {
+      editorContainer.removeClass('is-active');
+      editorContainer.parent().find('.editor-toolbar').removeClass('error');
+      editorContainer.parent().find('.editor-source').removeClass('error');
+    }
+
+    this.container
+      .on(`focusin.${COMPONENT_NAME}`, '.editor, .editor-source', containerFocusHandler)
+      .on(`focusout.${COMPONENT_NAME}`, '.editor, .editor-source', containerBlurHandler);
+
+    this.container
+      .on(`mouseenter.${COMPONENT_NAME}`, () => {
+        if (!this.element.hasClass('error')) {
+          this.container.addClass('is-hover');
+        }
       })
-      .on('blur.editor', '.editor, .editor-source', () => {
-        editorContainer.removeClass('is-active');
-        editorContainer.parent().find('.editor-toolbar').removeClass('error');
-        editorContainer.parent().find('.editor-source').removeClass('error');
+      .on(`mouseleave.${COMPONENT_NAME}`, () => {
+        this.container.removeClass('is-hover');
       });
 
     if (self.settings.onLinkClick) {
@@ -1735,14 +1883,10 @@ Editor.prototype = {
     }
 
     // Attach Label
-    const label = this.element.prevAll('.label');
-    for (let i = 0, l = label.length; i < l; i++) {
-      label[i].style.cursor = 'default';
-    }
-    label.on('click.editor', () => {
+    this.label.on('click.editor', () => {
       currentElement.focus();
     });
-    currentElement.attr('aria-label', label.text());
+    currentElement.attr('aria-label', this.label.text());
     return this;
   },
 
@@ -1903,12 +2047,15 @@ Editor.prototype = {
     // Preview Mode
     const doPreviewMode = (res) => {
       let content = res || this.textarea.val();
+      content = xssUtils.sanitizeHTML(content);
+      content = this.getCleanedHtml(content);
+
       this.element.empty().removeClass('source-view-active hidden');
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
       this.switchToolbars();
       setTimeout(() => {
-        this.element.html(xssUtils.sanitizeHTML(content));
+        this.element.html(content);
         content = this.element.html();
         /**
          * Fires after preview mode activated.
@@ -2022,13 +2169,13 @@ Editor.prototype = {
         p.innerHTML = elem.innerHTML;
         parent.replaceChild(p, elem);
       };
-      if (this.parentElements.indexOf(parentTag) > -1) {
+      if (EDITOR_PARENT_ELEMENTS.indexOf(parentTag) > -1) {
         if (parentTag !== 'p') {
           document.execCommand('removeFormat', false, null);
           replaceTag(parentEl);
         }
       } else {
-        this.parentElements.forEach((el) => {
+        EDITOR_PARENT_ELEMENTS.forEach((el) => {
           if (el !== 'p') {
             const nodes = [].slice.call(parentEl.querySelectorAll(el));
             nodes.forEach(node => replaceTag(node));
@@ -2081,8 +2228,12 @@ Editor.prototype = {
       } else if (/ul|ol/.test(parentTag)) {
         normalizeList(parentEl);
       } else {
-        const lists = [].slice.call(parentEl.parentNode.querySelectorAll('ul, ol'));
-        lists.forEach(list => normalizeList(list));
+        const setEl = () => ($(parentEl).closest('.editor').length ? parentEl.parentNode : null);
+        const elem = parentEl.classList.contains('editor') ? parentEl : setEl();
+        if (elem) {
+          const lists = [].slice.call(elem.querySelectorAll('ul, ol'));
+          lists.forEach(list => normalizeList(list));
+        }
       }
     };
 
@@ -2090,7 +2241,7 @@ Editor.prototype = {
     const containsNodeInSelection = (node) => {
       const sel = window.getSelection();
       let r = false;
-      if (this.isIe11) {
+      if (env.browser.isIE11()) {
         const rangeAt = sel.getRangeAt(0);
         const range = document.createRange();
         range.selectNode(node);
@@ -2184,7 +2335,7 @@ Editor.prototype = {
     // Set selection color checkmark in picker popup
     // by adding/updating ['data-value'] attribute
     if (cpApi) {
-      if (this.isFirefox && action === 'backColor') {
+      if (env.browser.name === 'firefox' && action === 'backColor') {
         color = $(window.getSelection().focusNode.parentNode).css('background-color');
       }
       // IE-11 queryCommandValue returns the as decimal
@@ -2220,7 +2371,7 @@ Editor.prototype = {
 
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
-      if (this.isIe || action === 'foreColor') {
+      if (env.browser.name === 'ie' || action === 'foreColor') {
         if (value) {
           document.execCommand(action, false, value);
         } else {
@@ -2264,7 +2415,17 @@ Editor.prototype = {
     cpApi.toggleList();
   },
 
+  /**
+   * Formats the currently-selected block of content in the editor with a predefined HTML element
+   * and style, if applicable.
+   * @param {string} el, the desired block-level element with which to wrap the current block.
+   * @returns {void|boolean} same return value as [`document.execCommand()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+   */
   execFormatBlock(el) {
+    if (!this.selection || !(this.selection instanceof Selection)) {
+      return;
+    }
+
     const selectionData = this.getSelectionData(this.selection.anchorNode);
     // FF handles blockquote differently on formatBlock
     // allowing nesting, we need to use outdent
@@ -2280,7 +2441,7 @@ Editor.prototype = {
     // blockquote needs to be called as indent
     // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
     // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-    if (this.isIe) {
+    if (env.browser.name === 'ie') {
       if (el === 'blockquote') {
         return document.execCommand('indent', false, el);
       }
@@ -2298,7 +2459,7 @@ Editor.prototype = {
       tagName = el.tagName.toLowerCase();
     }
 
-    while (el && this.parentElements.indexOf(tagName) === -1) {
+    while (el && EDITOR_PARENT_ELEMENTS.indexOf(tagName) === -1) {
       el = el.parentNode;
       if (el && el.tagName) {
         tagName = el.tagName.toLowerCase();
@@ -2312,7 +2473,7 @@ Editor.prototype = {
     let parentNode = node.parentNode;
     let tagName = parentNode.tagName.toLowerCase();
 
-    while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
+    while (EDITOR_PARENT_ELEMENTS.indexOf(tagName) === -1 && tagName !== 'div') {
       if (tagName === 'li') {
         return true;
       }
@@ -2333,19 +2494,26 @@ Editor.prototype = {
     this.element = checkJQ(this.element);
     this.textarea = checkJQ(this.textarea);
 
-    const toolbarApi = this.toolbar.data('toolbar');
+    const toolbarApi = this.toolbar.data('toolbar') || this.toolbar.data('toolbar-flex');
     if (toolbarApi) {
       toolbarApi.destroy();
     }
 
-    const tooltips = this.toolbar.find('button');
-    for (let i = 0, l = tooltips.length; i < l; i++) {
-      const tooltip = $(tooltips[i]).data('tooltip');
+    // Cleanup buttons
+    const buttons = this.toolbar.find('button');
+    for (let i = 0, l = buttons.length; i < l; i++) {
+      const tooltip = $(buttons[i]).data('tooltip');
       if (tooltip && typeof tooltip.destroy === 'function') {
         tooltip.destroy();
       }
+
+      const button = $(buttons[i]).data('button');
+      if (button && typeof button.destroy === 'function') {
+        button.destroy();
+      }
     }
 
+    // Cleanup pickers
     const colorpickers = $('[data-action="foreColor"], [data-action="backColor"]', this.element);
     for (let i = 0, l = colorpickers.length; i < l; i++) {
       const colorpicker = $(colorpickers[i]).data('colorpicker');
@@ -2354,14 +2522,44 @@ Editor.prototype = {
       }
     }
 
-    this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
+    if (this.fontPickerElem) {
+      this.fontPickerElem.off(`font-selected.${COMPONENT_NAME}`);
+      const fontpickerAPI = this.fontPickerElem.data('fontpicker');
+      if (fontpickerAPI) {
+        fontpickerAPI.destroy();
+      }
+      delete this.fontPickerElem;
+    }
+
+    // Unbind/Remove Toolbar Component (generically)
+    this.toolbar.off([
+      `click.${COMPONENT_NAME}`,
+      `selected.${COMPONENT_NAME}`
+    ].join(' '));
     this.toolbar.remove();
-    this.toolbar = undefined;
-    this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
-    this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
+    delete this.toolbar;
+
+    // Remove events that could be bound to either:
+    // - the WYSIWYG editor
+    // - the source code view
+    const boundEventNames = [
+      'blur',
+      'DOMNodeInserted',
+      'focus',
+      `input.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
+      `keypress.${COMPONENT_NAME}`,
+      `keyup.${COMPONENT_NAME}`,
+      `mouseup.${COMPONENT_NAME}`,
+      `mousedown.${COMPONENT_NAME}`,
+      `paste.${COMPONENT_NAME}`
+    ].join(' ');
+
+    this.element.off(boundEventNames);
+    this.textarea.off(boundEventNames);
     this.element.prev('.label').off('click.editor');
 
-    this.element.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
+    this.container.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
 
     let state = this.colorpickerButtonState('foreColor');
     let cpBtn = state.cpBtn;
@@ -2371,19 +2569,25 @@ Editor.prototype = {
     cpBtn = state.cpBtn;
     cpBtn.off('selected.editor');
 
+    delete this.pasteWrapper;
+    delete this.pasteWrapperHtml;
+    delete this.selectionHandler;
+
     $(window).off('resize.editor');
 
     if (this.modals) {
-      for (let i = 0, l = this.modals.length; i < l; i++) {
-        const modal = $(this.modals[i]);
+      const modalTypes = Object.keys(this.modals);
+      for (let i = 0, l = modalTypes.length; i < l; i++) {
+        const modal = $(`#modal-${modalTypes[i]}-${this.id}`);
         const modalApi = modal.data('modal');
         modal.off('beforeclose.editor close.editor open.editor beforeopen.editor');
         if (modalApi && typeof modalApi.destroy === 'function') {
           modalApi.destroy();
         }
+        modal.remove();
       }
     }
-    this.modals = {};
+    delete this.modals;
 
     this.element.trigger('destroy.toolbar.editor');
   },
@@ -2485,20 +2689,51 @@ Editor.prototype = {
   },
 
   teardown() {
-    this.element.attr('contenteditable', 'false');
-    this.element.off('input.editor keyup.editor');
-    $('html').off('mouseup.editor');
-
     this.destroyToolbar();
+
+    // Cleanup Source View elements and events
     if (this.sourceView) {
       this.sourceView.off('.editor');
       this.sourceView.remove();
-      this.sourceView = null;
+      delete this.sourceView;
     }
 
-    if ($('[data-editor="true"]').length === 1) {
-      $(`#modal-url-${this.id}, #modal-image-${this.id}`).remove();
+    delete this.textarea;
+    if (this.lineNumbers) {
+      delete this.lineNumbers;
     }
+    if (this.selection) {
+      delete this.selection;
+    }
+    if (this.selectionRange) {
+      delete this.selectionRange;
+    }
+
+    // Cleanup container
+    this.container.off([
+      `focusin.${COMPONENT_NAME}`,
+      `focusout.${COMPONENT_NAME}`,
+      `mouseneter.${COMPONENT_NAME}`,
+      `mouseleave.${COMPONENT_NAME}`,
+      `input.${COMPONENT_NAME}`,
+      `keyup.${COMPONENT_NAME}`
+    ].join(' '));
+    this.container.removeClass('editor-container');
+    delete this.container;
+
+    // Cleanup label
+    this.label.off(`click.${COMPONENT_NAME}`);
+    delete this.label;
+
+    // Cleanup Editor Element
+    this.element.attr('contenteditable', 'false');
+    this.element.off([
+      `mousedown.${COMPONENT_NAME}`,
+      `updated.${COMPONENT_NAME}`
+    ].join(' '));
+
+    delete this.id;
+    delete this.isActive;
 
     return this;
   },
@@ -2586,7 +2821,7 @@ Editor.prototype = {
 
   // Called whenever a paste event has occured
   onPasteTriggered() {
-    if (!this.isFirefox && document.addEventListener) {
+    if (env.browser.name !== 'firefox' && document.addEventListener) {
       document.addEventListener('paste', (e) => {
         if (typeof e.clipboardData !== 'undefined') {
           const copiedData = e.clipboardData.items[0]; // Get the clipboard data

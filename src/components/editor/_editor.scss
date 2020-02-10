@@ -2,14 +2,21 @@
 //================================================== //
 
 .editor-container {
+  .label {
+    cursor: default;
+  }
+
+  &.is-hover:not(.is-readonly):not(.is-disabled) {
+    .editor,
+    .toolbar {
+      border-color: $editor-hover-border-color;
+    }
+  }
+
   &.is-readonly,
   &.is-disabled {
     .editor {
       border-top: 1px solid $editor-border-color;
-    }
-
-    &.editor-container:hover .editor:not(.error) {
-      border-color: $editor-hover-border-color;
     }
 
     .editor-toolbar {
@@ -51,22 +58,8 @@
     margin-bottom: 0;
     z-index: 20;
 
-    [class^='btn'] {
+    [class*='btn'] {
       border-radius: 2px;
-    }
-  }
-
-  &:hover {
-    .toolbar,
-    .flex-toolbar {
-      .formatter-toolbar:not(.error) {
-        border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
-      }
-    }
-
-    .editor:not(.error),
-    .editor-source:not(.error) {
-      border-color: transparent $editor-hover-border-color $editor-hover-border-color;
     }
   }
 
@@ -75,15 +68,11 @@
     .toolbar,
     .flex-toolbar {
       &.formatter-toolbar {
-        border-left-color: $editor-focus-border-color;
-        border-right-color: $editor-focus-border-color;
-        border-top-color: $editor-focus-border-color;
+        border-color: $editor-focus-border-color;
         box-shadow: $editor-top-focus-box-shadow; //-2px -2px 3px 0px rgba(54, 138, 192, 0.3);
 
         &.error {
-          border-left-color: $error-color;
-          border-right-color: $error-color;
-          border-top-color: $error-color;
+          border-color: $error-color;
         }
       }
     }
@@ -146,7 +135,7 @@
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -165,29 +154,72 @@
     }
   }
 
-  // Element Style
+  p {
+    margin-bottom: 15px;
+  }
+
+  ul,
+  ol {
+    margin-bottom: 10px;
+  }
+
+  blockquote {
+    margin-bottom: 15px;
+  }
+}
+
+// Element Styles in both the editor, and the corresponding
+// FontPicker component, if applicable.
+.editor,
+.fontpicker-menu {
   p {
     @include rem(line-height, 2.2rem);
 
     color: $editor-color;
-    font-size: $theme-size-font-base;
-    margin-bottom: 15px;
+    font-size: $input-size-regular-font-size;
 
     .hyperlink {
       color: $hyperlink-color;
+      font-size: $input-size-regular-font-size !important;
     }
   }
 
-  h3 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $editor-color;
-    font-size: $theme-size-font-xl;
     line-height: normal;
+
+    .hyperlink {
+      font-size: inherit;
+    }
+  }
+
+  h1 {
+    font-size: $theme-size-font-px-40;
+  }
+
+  h2 {
+    font-size: $theme-size-font-px-32;
+  }
+
+  h3 {
+    font-size: $theme-size-font-px-28;
   }
 
   h4 {
-    color: $editor-color;
-    font-size: $theme-size-font-lg;
-    line-height: normal;
+    font-size: $theme-size-font-px-24;
+  }
+
+  h5 {
+    font-size: $theme-size-font-px-20;
+  }
+
+  h6 {
+    font-size: $theme-size-font-px-16;
   }
 
   ul,
@@ -196,9 +228,8 @@
     @include rem(margin-left, 2rem);
 
     color: $input-color;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     list-style: disc;
-    margin-bottom: 10px;
 
     li {
       line-height: inherit;
@@ -224,7 +255,6 @@
 
     border-left: 3px solid $editor-blockquote-color;
     line-height: 22px;
-    margin-bottom: 15px;
     margin-left: 7px;
     padding-left: 15px;
   }
@@ -240,7 +270,7 @@
 
   .hyperlink {
     cursor: auto;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     position: static;
     text-decoration: none;
 
@@ -264,7 +294,7 @@
     width: 100%;
   }
 
-  [class^='btn'] {
+  [class*='btn'] {
     margin-top: 6px;
   }
 
@@ -276,7 +306,7 @@
 }
 
 .flex-toolbar.formatter-toolbar {
-  height: 32px;
+  height: 34px;
 
   .buttonset {
     height: auto;
@@ -284,21 +314,25 @@
   }
 }
 
-// Toolbar
+// Both Toolbars
 .toolbar.formatter-toolbar,
 .flex-toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
-  border-bottom-color: none;
+  border-bottom-color: $editor-toolbar-bottom-border-color !important;
   border-radius: 2px 2px 0 0;
   margin-bottom: -1px;
   padding: 0;
   text-align: left;
 
   .buttonset {
-    [class^='btn'] {
+    [class*='btn'] {
       &:first-child {
         margin-left: 16px;
+
+        &.fontpicker {
+          margin-left: 5px;
+        }
       }
     }
   }
@@ -325,14 +359,14 @@
     }
   }
 
-  [class^='btn'] {
+  [class*='btn'] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     color: $editor-btn-color;
     height: 20px;
     line-height: normal;
     min-width: 18px;
-    padding: 0 !important; //overrides some media queries
+    padding: 0;
     text-align: left;
 
     span:not(.audible) {
@@ -358,7 +392,9 @@
     }
 
     &:focus:not(.hide-focus),
-    &.is-active:not(.error) {
+    &.is-active:not(.error),
+    &.is-open,
+    &.is-open:hover {
       color: $editor-btn-active-color;
 
       span {
@@ -399,8 +435,8 @@
     }
 
     .html-icon {
-      margin-left: -18px;
-      width: 85px;
+      margin-left: 1px;
+      width: 55px;
     }
 
     .visual-icon {
@@ -517,13 +553,46 @@
       margin-left: 4px;
       margin-right: 16px;
     }
-  }
 
+    &.fontpicker {
+      padding: 0 10px;
+
+      span {
+        display: inline-block;
+        max-width: 100px;
+        width: 100px;
+      }
+    }
+  }
+}
+
+// Standard Toolbar-specific styles
+.toolbar.formatter-toolbar {
   .separator {
     height: 18px;
     margin: 1px 15px 0 3px;
   }
+}
 
+// Flex Toolbar-specific styles
+.flex-toolbar.formatter-toolbar {
+  .toolbar-section.more {
+    .btn-actions {
+      height: 23px;
+      margin-right: 15px;
+      min-height: 23px;
+      width: 23px;
+
+      > .icon {
+        left: 2px;
+      }
+    }
+  }
+
+  .separator {
+    height: 20px;
+    margin: -3px 15px 0 3px;
+  }
 }
 
 .is-disabled .editor-toolbar {
@@ -536,7 +605,7 @@
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -549,7 +618,7 @@
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     font-weight: $theme-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
@@ -615,12 +684,33 @@
 
 .editor-placeholder::after {
   content: attr(data-placeholder);
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   font-weight: 100;
   left: 10px;
   margin-top: -38px;
   position: absolute;
   white-space: pre;
+}
+
+// Compact Mode
+.field-short,
+.form-layout-compact .field {
+  .editor {
+    height: 220px;
+  }
+}
+
+// Adjust fontpicker element aligment only on Firefox
+html.is-firefox {
+  .flex-toolbar.formatter-toolbar {
+    .fontpicker {
+      span {
+        display: inline-block;
+        padding-top: 2px;
+        vertical-align: baseline;
+      }
+    }
+  }
 }
 
 // RTL Styles
@@ -629,6 +719,24 @@ html[dir='rtl'] {
     .editor[data-error-type='tooltip'] {
       ~ .icon-error {
         left: 40px;
+      }
+    }
+  }
+
+  .toolbar,
+  .flex-toolbar {
+    &.formatter-toolbar {
+      .buttonset {
+        [class*='btn'] {
+          &:first-child {
+            margin-left: auto;
+            margin-right: 16px;
+
+            &.fontpicker {
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
   }

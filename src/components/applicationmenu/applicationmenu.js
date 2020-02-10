@@ -21,6 +21,7 @@ const COMPONENT_NAME = 'applicationmenu';
  * 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
  * @param {boolean} [settings.dismissOnClickMobile=false] If true, causes a clicked menu option to dismiss on click when the responsive view is shown.
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
+ * @param {boolean} [settings.filterMode='contains'] corresponds to a ListFilter component's `filterMode` for matching results.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
@@ -28,6 +29,7 @@ const APPLICATIONMENU_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   dismissOnClickMobile: false,
   filterable: false,
+  filterMode: 'contains',
   openOnLarge: false,
   triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
@@ -43,6 +45,16 @@ function ApplicationMenu(element, settings) {
 
 // Plugin Methods
 ApplicationMenu.prototype = {
+
+  /**
+   * @returns {SearchField|undefined} an IDS SearchField API, if one exists.
+   */
+  get searchfieldAPI() {
+    if (!this.searchfield || !this.searchfield.length) {
+      return undefined;
+    }
+    return this.searchfield.data('searchfield');
+  },
 
   /**
    * Initialize the plugin.
@@ -62,6 +74,10 @@ ApplicationMenu.prototype = {
   setup() {
     this.hasTrigger = false;
     this.isAnimating = false;
+
+    if (this.element.find('.application-menu-footer').length) {
+      this.element.addClass('has-menu-footer');
+    }
 
     if (!this.hasTriggers()) {
       this.triggers = $();
@@ -122,22 +138,29 @@ ApplicationMenu.prototype = {
       const self = this;
       this.searchfield.searchfield({
         clearable: true,
+        filterMode: this.settings.filterMode,
         source(term, done, args) {
           done(term, self.accordion.data('accordion').toData(true, true), args);
         },
         searchableTextCallback(item) {
-          return item.text || '';
+          return item.text || item.contentText || '';
         },
         resultIteratorCallback(item) {
           item.highlightTarget = 'text';
           return item;
         },
         clearResultsCallback() {
-          self.accordionAPI.unfilter();
+          if (self.searchfieldAPI && !self.searchfieldAPI.isFocused) {
+            self.accordionAPI.unfilter();
+          }
         },
-        displayResultsCallback(results, done) {
-          return self.filterResultsCallback(results, done);
+        displayResultsCallback(results, done, term) {
+          return self.filterResultsCallback(results, done, term);
         }
+      });
+
+      this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
+        self.accordionAPI.unfilter();
       });
     }
 
@@ -305,6 +328,24 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * Toggle scroll css class on ie11.
+   * @private
+   * @returns {void}
+   */
+  toggleScrollClass() {
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      const el = this.element[0];
+      if (el && el.classList.contains('has-menu-footer')) {
+        if (el.scrollHeight > el.clientHeight) {
+          el.classList.add('has-scrollbar');
+        } else {
+          el.classList.remove('has-scrollbar');
+        }
+      }
+    }
+  },
+
+  /**
    * Checks the window size against the defined breakpoint.
    * @private
    * @returns {boolean} whether or not the window size is larger than the
@@ -402,6 +443,7 @@ ApplicationMenu.prototype = {
         $('body').triggerHandler('resize');
       }
 
+      self.toggleScrollClass();
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
     }
@@ -429,6 +471,9 @@ ApplicationMenu.prototype = {
       // eslint-disable-next-line
       this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
+      if (env.features.touch) {
+        $('body').addClass('is-open-touch');
+      }
     }
 
     if (breakpoints.isBelow(this.settings.breakpoint)) {
@@ -521,6 +566,10 @@ ApplicationMenu.prototype = {
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
     $(document).off('click.applicationmenu');
+
+    if (env.features.touch) {
+      $('body').removeClass('is-open-touch');
+    }
   },
 
   /**
@@ -561,8 +610,9 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {array} results list of items that passed the filtering process
+   * @param {array} results list of items that passed the filtering process.
    * @param {function} done method to be called when the display of filtered items completes.
+   * @param {string} term the filter term.
    * @returns {void}
    */
   filterResultsCallback(results, done) {
@@ -572,8 +622,8 @@ ApplicationMenu.prototype = {
       return;
     }
 
-    const headers = $(results.map(item => item.element));
-    this.accordionAPI.filter(headers, true);
+    const targets = $(results.map(item => item.element));
+    this.accordionAPI.filter(targets, true);
 
     this.element.triggerHandler('filtered', [results]);
     done();
@@ -600,16 +650,14 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {jQuery} anchor the anchor being checked
    * @returns {void}
    */
-  handleDismissOnClick(anchor) {
+  handleDismissOnClick() {
     if (!this.settings.dismissOnClickMobile) {
       return;
     }
 
     this.userOpened = false;
-    $(anchor).blur();
     if (this.isLargerThanBreakpoint()) {
       return;
     }
@@ -649,9 +697,28 @@ ApplicationMenu.prototype = {
 
     $(window).off('scroll.applicationmenu');
     $('body').off('resize.applicationmenu');
-    $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu');
+    $(document).off([
+      'click.applicationmenu',
+      'open-applicationmenu',
+      'close-applicationmenu',
+      'dismiss-applicationmenu',
+      'keydown.applicationmenu'
+    ].join(' '));
+
+    this.element.find('.expandable-area').off([
+      'beforeexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
+    this.accordion.off([
+      'blur.applicationmenu',
+      'selected.applicationmenu',
+      'followlink.applicationmenu',
+      'afterexpand.applicationmenu',
+      'aftercollapse.applicationmenu'
+    ].join(' '));
+
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -660,11 +727,17 @@ ApplicationMenu.prototype = {
     }
 
     if (this.switcherPanel) {
-      this.switcherPanel.off('beforeexpand.applicationmenu aftercollapse.applicationmenu');
+      this.switcherPanel.off([
+        'beforeexpand.applicationmenu',
+        'aftercollapse.applicationmenu'
+      ].join(' '));
     }
 
     if (this.searchfield && this.searchfield.length) {
-      this.searchfield.off('input.applicationmenu');
+      this.searchfield.off([
+        'input.applicationmenu',
+        `cleared.${COMPONENT_NAME}`
+      ].join(' '));
       const sfAPI = this.searchfield.data('searchfield');
       if (sfAPI) {
         sfAPI.destroy();
@@ -721,19 +794,33 @@ ApplicationMenu.prototype = {
       self.updated();
     });
 
+    // Fix: ie11 scrollbar causing to not calculate right height
+    if (env.browser.name === 'ie' && env.browser.version === '11') {
+      self.element.find('.expandable-area')
+        .on('beforeexpand.applicationmenu', () => {
+          self.element[0].classList.remove('has-scrollbar');
+        })
+        .on('aftercollapse.applicationmenu', () => {
+          self.toggleScrollClass();
+        });
+    }
+
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
-    }).on('selected.applicationmenu', (e, header) => {
-      const a = $(header).children('a');
-      self.handleDismissOnClick(a);
-    }).on('followlink.applicationmenu', (e, anchor) => {
-      self.handleDismissOnClick(anchor);
+    }).on('selected.applicationmenu', () => {
+      self.handleDismissOnClick();
+    }).on('followlink.applicationmenu', () => {
+      self.handleDismissOnClick();
+    }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
+      self.toggleScrollClass();
     });
 
     $(document).on('open-applicationmenu', () => {
       self.openMenu(undefined, true);
     }).on('close-applicationmenu', () => {
       self.closeMenu();
+    }).on('dismiss-applicationmenu', () => {
+      self.handleDismissOnClick();
     });
 
     $(window).on('scroll.applicationmenu', () => {
@@ -742,6 +829,7 @@ ApplicationMenu.prototype = {
 
     $('body').on('resize.applicationmenu', () => {
       self.testWidth();
+      self.toggleScrollClass();
     });
 
     if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {

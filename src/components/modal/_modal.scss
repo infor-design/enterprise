@@ -3,14 +3,18 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal-wrapper {
-  display: table;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  justify-content: center;
   margin: 0 auto;
-  //overflow: hidden;
+  width: 100%;
 }
 
 .modal-page-container {
   height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
   width: 100%;
@@ -19,8 +23,8 @@
 .modal {
   @include css3(transform, scale(0.9, 0.9));
   @include css3(transition, opacity 0.2s, transform 0.2s);
-  //Added after size calc bottom: 0;
-  display: table-cell;
+  //Added after size calc
+  bottom: 0;
   height: auto;
   max-height: 90%;
   max-width: 90%;
@@ -58,7 +62,7 @@
     }
 
     textarea {
-      width: 300px;
+      max-width: 300px;
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
@@ -198,6 +202,27 @@
   .busy.overlay {
     background-color: $modal-bg-color;
   }
+
+  // Creates the full size "sheet" effect
+  // See infor-design/enterprise#2433 for more info.
+  &.display-fullsize {
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+
+    .modal-content {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin: 0;
+    }
+
+    .modal-body-wrapper {
+      flex-grow: 1;
+    }
+  }
 }
 
 .overlay {
@@ -214,9 +239,31 @@
   z-index: 1000;
 }
 
-.modal-engaged .overlay {
-  opacity: 0.7;
-  visibility: visible;
+// Body tag is notified when a modal is present in the page.
+body.modal-engaged {
+  .overlay {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+// iOS has lots of issues regarding scrolling of elements that are
+// technically "behind" the modal.  This CSS, as well as some JS in the Modal component,
+// seek to stop scrolling behind the in-focus modal element.
+.ios {
+  body.modal-engaged {
+    -webkit-overflow-scrolling: auto;
+
+    .page-container.scrollable,
+    .page-container.scrollable-x,
+    .page-container.scrollable-y {
+      pointer-events: none;
+    }
+
+    .modal-body-wrapper {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 }
 
 .modal-header {
@@ -299,7 +346,6 @@
 
   .modal-body-wrapper {
     overflow: auto;
-    -webkit-overflow-scrolling: auto;
     padding: 0 20px;
 
     .field:last-child {
@@ -327,12 +373,8 @@
 
   > .btn-close {
     position: absolute;
-    right: 0;
-    top: 0;
-
-    .icon {
-      width: 16px;
-    }
+    right: 10px;
+    top: 14px;
   }
 
   .message {
@@ -378,7 +420,6 @@
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
   margin-top: 20px;
-  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
     @include css3(transition, color 0.3s ease 0s);
@@ -391,13 +432,14 @@
     float: left;
     font-size: $theme-size-font-base;
     font-weight: $theme-number-font-weight-bold;
-    height: 46px;
-    line-height: 46px; // Used same value as height to get accurate measurement of vertical height
+    height: 49px;
+    line-height: 49px;
     margin-right: 0;
+    min-width: 0;
     overflow: hidden;
     position: relative;
     text-align: center;
-    width: 100%;// [50px-4px] Keep smaller 4px for border to show around on focus
+    width: 100%;
 
     &:hover {
       color: $modal-btn-hover-color;
@@ -421,7 +463,7 @@
       text-decoration: none;
 
       &.btn-modal-primary {
-        color: rgba($modal-btn-primary-disabled-color, $modal-btn-disabled-opacity);
+        color: rgba($modal-btn-primary-disabled-color, $modal-btn-primary-disabled-opacity);
       }
     }
 
@@ -443,11 +485,28 @@
   }
 }
 
-// Fix scrollbar in IE on single-line Message Modals
-.ie {
-  .modal-content {
-    .modal-body-wrapper {
-      padding: 2px 20px;
+// Message specific styles
+.message {
+  .modal-body-wrapper {
+    padding: 5px 20px;
+  }
+}
+
+// IE-specific adjustments
+html.ie {
+  .modal {
+    &.full-width {
+      margin: 0;
+    }
+  }
+}
+
+// iOS specific adjustments
+html.ios {
+  .has-modal-open {
+    [aria-hidden='true'],
+    [aria-hidden='true'] * {
+      overflow: hidden;
     }
   }
 }
@@ -462,8 +521,15 @@ html[dir='rtl'] {
       &:nth-child(1) {
         border-left: 1px solid $modal-btn-border-color;
       }
-    }
 
+      &:last-child {
+        border-left-color: transparent;
+
+        &:focus {
+          border-left-color: $input-color-focus-border;
+        }
+      }
+    }
   }
 
   .modal-content {
@@ -496,7 +562,7 @@ html[dir='rtl'] {
     }
 
     .btn-close {
-      left: 0;
+      left: 10px;
       right: auto;
     }
   }

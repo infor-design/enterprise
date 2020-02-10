@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'radar';
 const RADAR_DEFAULTS = {
   dataset: [],
   redrawOnResize: true,
-  margin: { top: 50, right: 0, bottom: 50, left: 0 },
+  margin: { top: 0, right: 0, bottom: 0, left: 0 },
   levels: 4,
   maxValue: 0,
   labelFactor: 1.27,
@@ -105,6 +105,7 @@ Radar.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
 
     this
@@ -154,25 +155,32 @@ Radar.prototype = {
    */
   updateData(data) {
     const self = this;
+    const s = this.settings;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
-    const settings = self.settings;
-    const dims = {
-      // Width of the circle
-      w: parseInt(this.element.parent().width(), 10),
-      // Height of the circle && 60px on top and bottom for labels
-      h: parseInt(this.element.parent().height() - 115, 10),
-    };
 
-    if (settings.legendPlacement === 'right') {
-      dims.w *= 0.75;
-    }
+    // Add css class to container
     this.element.addClass('chart-radar');
 
     // Handle Empty Data Set
     if (data.length === 0) {
-      self.element.emptymessage(self.settings.emptyMessage);
+      self.element.emptymessage(s.emptyMessage);
       return;
     }
+
+    // Set dimensions
+    const parent = this.element.parent();
+    const dims = {
+      w: parent.width(),
+      h: parent.height(),
+      extra: 0.957 // approximate calc
+    };
+    if (s.legendPlacement === 'right') {
+      dims.w *= 0.75;
+    }
+    dims.transform = {
+      x: (dims.w / 2) + ((s.margin.left + s.margin.right) / 2),
+      y: ((dims.h / 2) * dims.extra) + ((s.margin.top + s.margin.bottom) / 2)
+    };
 
     // Get the name text from given data
     const getNameText = (d) => {
@@ -189,20 +197,14 @@ Radar.prototype = {
     };
 
     let tooltipInterval;
-    const colors = d3.scaleOrdinal(self.settings.colors);
+    const colors = d3.scaleOrdinal(s.colors);
 
     // If the supplied maxValue is smaller than the actual one, replace by the max in the data
-    const maxValue = Math.max(settings.maxValue, d3.max(data, i => d3.max(i.data.map(o => o.value))));  //eslint-disable-line
-
+    const maxValue = Math.max(s.maxValue, d3.max(data, i => d3.max(i.data.map(o => o.value))));
     const allAxes = data[0].data.map(d => getNameText(d)); // Map the names to the axes
     const total = allAxes.length; // The number of different axes
-    let radius = Math.min(dims.w / 2, dims.h / 2); // Radius of the outermost circle
     const angleSlice = Math.PI * 2 / total; // The width in radians of each 'slice'
-
-    if (dims.w <= 328) {
-      const extra = dims.w < 225 ? 75 : 50; // Reduce the size of the radar
-      radius = Math.min((dims.w - extra) / 2, (dims.h - extra) / 2);
-    }
+    const radius = Math.min(dims.w / 3, dims.h / 3) * dims.extra; // Radius of the outermost circle
 
     // Create the Scale for the radius
     const rScale = d3.scaleLinear()
@@ -216,18 +218,18 @@ Radar.prototype = {
 
     // Initiate the radar chart SVG
     const svg = d3.select(elem).append('svg')
-      .attr('width', dims.w + settings.margin.left + settings.margin.right)
-      .attr('height', dims.h + settings.margin.top + settings.margin.bottom)
+      .attr('width', dims.w + s.margin.left + s.margin.right)
+      .attr('height', dims.h + s.margin.top + s.margin.bottom)
       .attr('class', 'chart-radar');
 
     this.svg = svg; // Pointer for selection states
 
     // Append a g element
     const g = svg.append('g')
-      .attr('transform', `translate(${dims.w / 2 + settings.margin.left},${dims.h / 2 + settings.margin.top})`);
+      .attr('transform', `translate(${dims.transform.x},${dims.transform.y})`);
 
     // Filter for the outside glow effect
-    if (settings.opacityCircles > 0) {
+    if (s.opacityCircles > 0) {
       const filter = g.append('defs').append('filter').attr('id', 'glow');
       filter.append('feGaussianBlur').attr('stdDeviation', '2.5').attr('result', 'coloredBlur');
       const feMerge = filter.append('feMerge');
@@ -242,22 +244,22 @@ Radar.prototype = {
 
     // Draw the background circles
     axisGrid.selectAll('.levels')
-      .data(d3.range(1, (settings.levels + 1)).reverse())
+      .data(d3.range(1, (s.levels + 1)).reverse())
       .enter()
       .append('circle')
       .attr('class', 'chart-radar-grid-circle')
-      .attr('r', d => radius / settings.levels * d)
-      .style('fill-opacity', settings.opacityCircles)
-      .style('filter', settings.opacityCircles > 0 ? 'url(#glow)' : '');
+      .attr('r', d => radius / s.levels * d)
+      .style('fill-opacity', s.opacityCircles)
+      .style('filter', s.opacityCircles > 0 ? 'url(#glow)' : '');
 
     // Text indicating at what % each level is
-    if (this.settings.showAxisLabels) {
+    if (s.showAxisLabels) {
       axisGrid.selectAll('.axis-label')
-        .data(d3.range(1, (settings.levels + 1)).reverse())
+        .data(d3.range(1, (s.levels + 1)).reverse())
         .enter().append('text')
         .attr('class', 'axis-label')
         .attr('x', 4)
-        .attr('y', d => -d * radius / settings.levels)
+        .attr('y', d => -d * radius / s.levels)
         .attr('dy', '0.4em')
         .style('font-size', theme.uplift ? '12px' : '10px')
         .attr('fill', '#737373')
@@ -265,10 +267,10 @@ Radar.prototype = {
           let text = '';
           const roundedVal = Math.round(maxValue * 10) / 10;
 
-          if (settings.axisFormatter.indexOf('%') > -1) {
-            text = d3.format(settings.axisFormatter)(roundedVal * d / settings.levels);
+          if (s.axisFormatter.indexOf('%') > -1) {
+            text = d3.format(s.axisFormatter)(roundedVal * d / s.levels);
           } else {
-            text = d3.format(settings.axisFormatter)(d / settings.levels);
+            text = d3.format(s.axisFormatter)(d / s.levels);
           }
 
           return text;
@@ -285,7 +287,7 @@ Radar.prototype = {
       .attr('class', 'axis');
 
     // Append the cross lines
-    if (this.settings.showCrosslines) {
+    if (s.showCrosslines) {
       axis.append('line')
         .attr('x1', 0)
         .attr('y1', 0)
@@ -301,15 +303,15 @@ Radar.prototype = {
       .style('font-size', theme.uplift ? '14px' : '12px')
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em')
-      .attr('x', (d, i) => rScale(maxValue * settings.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
-      .attr('y', (d, i) => rScale(maxValue * settings.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
+      .attr('x', (d, i) => rScale(maxValue * s.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('y', (d, i) => rScale(maxValue * s.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
       .text(d => d);
 
     this.element[dims.w < 420 ? 'addClass' : 'removeClass']('is-small');
 
     if (dims.w > 456) {
       svg.selectAll('.chart-radar-axis-wrapper .axis .legend').each(function () {
-        charts.wrap(d3.select(this), settings.wrapWidth, settings.labelFactor);
+        charts.wrap(d3.select(this), s.wrapWidth, s.labelFactor);
       });
     }
 
@@ -320,7 +322,7 @@ Radar.prototype = {
       .radius(d => rScale(d.value))
       .angle((d, i) => i * angleSlice);
 
-    if (settings.roundStrokes) {
+    if (s.roundStrokes) {
       radarLine.curve(d3.curveCardinalClosed);
     }
 
@@ -336,8 +338,8 @@ Radar.prototype = {
       .attr('class', 'chart-radar-area')
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
-      .style('fill-opacity', settings.opacityArea)
-      .on('click', function (d, i) {
+      .style('fill-opacity', s.opacityArea)
+      .on(`click.${self.namespace}`, function (d, i) {
         // Handle Click to select
         clearTimeout(tooltipInterval);
 
@@ -349,7 +351,7 @@ Radar.prototype = {
         if (!isSelected) {
           svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
           selectElem.classed('is-selected', true).classed('is-not-selected', false);
-          selectElem.style('fill-opacity', self.settings.opacityArea);
+          selectElem.style('fill-opacity', s.opacityArea);
         }
 
         const triggerData = {
@@ -378,23 +380,26 @@ Radar.prototype = {
         self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
 
         charts.selected = !isSelected ? triggerData : [];
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Create the outlines
     blobWrapper.append('path')
       .attr('class', 'chart-radar-stroke')
       .attr('d', d => radarLine(d))
-      .style('stroke-width', `${settings.strokeWidth}px`)
+      .style('stroke-width', `${s.strokeWidth}px`)
       .style('stroke', (d, i) => colors(i))
       .style('fill', 'none')
-      .style('filter', settings.opacityCircles > 0 ? 'url(#glow)' : '');
+      .style('filter', s.opacityCircles > 0 ? 'url(#glow)' : '');
 
     // Append the circles
     blobWrapper.selectAll('.chart-radar-circle')
       .data(d => d)
       .enter().append('circle')
       .attr('class', 'chart-radar-circle')
-      .attr('r', settings.dotRadius)
+      .attr('r', s.dotRadius)
       .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', function () {
@@ -413,18 +418,18 @@ Radar.prototype = {
       .data(d => d)
       .enter().append('circle')
       .attr('class', 'radar-invisible-circle')
-      .attr('r', settings.dotRadius * 1.5)
+      .attr('r', s.dotRadius * 1.5)
       .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', 'none')
       .style('pointer-events', 'all')
-      .on('mouseenter', function (d) {
-        if (!settings.showTooltips) {
+      .on(`mouseenter.${self.namespace}`, function (d) {
+        if (!s.showTooltips) {
           return;
         }
 
         const offset = $(this).offset();
-        let content = charts.formatToSettings(d, self.settings.tooltip);
+        let content = charts.formatToSettings(d, s.tooltip);
 
         if (content.indexOf('<b>') === -1) {
           content = content.replace('(', '<b>');
@@ -450,30 +455,33 @@ Radar.prototype = {
           charts.showTooltip(x, y, content, 'top');
         }, 300);
       })
-      .on('mouseleave', () => {
+      .on(`mouseleave.${self.namespace}`, () => {
         clearTimeout(tooltipInterval);
         charts.hideTooltip();
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Add tooltip object
-    if (settings.showTooltips) {
+    if (s.showTooltips) {
       charts.appendTooltip('is-pie');
     }
 
-    if (settings.showLegend) {
-      if (settings.legendPlacement) {
-        this.element.addClass(`has-${settings.legendPlacement}-legend`);
+    if (s.showLegend) {
+      if (s.legendPlacement) {
+        this.element.addClass(`has-${s.legendPlacement}-legend`);
       }
 
-      const series = self.settings.dataset.map((d, i) => ({
+      const series = s.dataset.map((d, i) => ({
         name: d.name,
         display: 'twocolumn',
-        placement: self.settings.legendPlacement,
+        placement: s.legendPlacement,
         color: colors(i)
       }));
 
-      this.settings.svg = self.svg;
-      charts.addLegend(series, 'pie', this.settings, this.element);
+      s.svg = self.svg;
+      charts.addLegend(series, 'pie', s, this.element);
     }
   },
 
@@ -491,21 +499,21 @@ Radar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -550,7 +558,7 @@ Radar.prototype = {
     });
 
     if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-      selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+      selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), arcIndex);
     }
   },
 
@@ -608,9 +616,19 @@ Radar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.chart-radar-area').off(events(['click', 'contextmenu']));
+      this.element.find('.radar-invisible-circle')
+        .off(events(['mouseenter', 'mouseleave', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -619,11 +637,13 @@ Radar.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('radar-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'radar');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('radar-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'radar');
+    }
   }
 };
 

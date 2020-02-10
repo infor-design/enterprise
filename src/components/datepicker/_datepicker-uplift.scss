@@ -9,40 +9,16 @@
   }
 }
 
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .datepicker {
     + .icon {
-      margin-top: 8px;
+      margin-top: 6px;
     }
   }
 }
 
-// Firefox needs some help
-html.is-firefox {
-  .datepicker {
-    + .icon,
-    + .tooltip-description + .icon {
-      margin-top: 9px;
-    }
-  }
-}
-
-html[dir='rtl'] {
-  .field-short {
-    .datepicker {
-      + .icon {
-        margin-top: 6px;
-      }
-    }
-  }
-
-  &.is-firefox {
-    .field-short {
-      .datepicker {
-        + .icon {
-          margin-top: 8px;
-        }
-      }
-    }
-  }
+.calendar-toolbar .toolbar-section .btn-monthyear-pane {
+  font-size: 2rem !important;
+  top: -1px;
 }

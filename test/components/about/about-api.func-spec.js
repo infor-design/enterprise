@@ -57,7 +57,7 @@ describe('About API', () => {
     setTimeout(() => {
       expect(document.body.querySelector('#about-modal + .modal-page-container')).toBeVisible();
       done();
-    }, 300);
+    }, 600);
   });
 
   it('Should fire close', (done) => {
@@ -74,6 +74,6 @@ describe('About API', () => {
 
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 400);
+    }, 650);
   });
 });

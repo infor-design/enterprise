@@ -65,6 +65,8 @@ demo:
 
 The best way to force items to always exist inside of the "more actions" menu is to create those items inside of a pre-defined "more actions" menu in your application's HTML markup.  While it's possible to create extra buttons inside of the "buttonset" container that sit beyond the `maxVisibleButtons` setting, a change of settings on the toolbar element can cause those buttons to appear/disappear unexpectedly.
 
+If you want to have no action button (button with three dots) visible in the toolbar then add a `no-actions-button` class to the toolbar element.
+
 ## Accessibility
 
 - The toolbar automatically appends the WAI-ARIA role "toolbar" to its base element.

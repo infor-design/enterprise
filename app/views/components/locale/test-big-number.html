@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="fieldset-title">Locale - Number Groupsize</h1>
+
+  <div id="output" class="card">
+      <div class="row top-padding">
+      </div>
+    </div>
+
+    <script>
+      $('body').on('initialized', function() {
+        var output = $('#output');
+        var append = function (value) {
+          output.append('<div class="row"><div class="twelve columns">' + value + '</div></div>');
+        };
+
+        var num = "123456789012.123456"
+        append(Locale.formatNumber(num, {
+          style: "decimal",
+          round: true,
+          minimumFractionDigits: 7,
+          maximumFractionDigits: 7
+        }));
+
+        var dec = "123456789012.123456"
+        var num = parseFloat(dec)
+        append(Locale.formatNumber(num, {
+          style: "decimal",
+          round: true,
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6
+        }));
+
+        var dec = "123456789012.123456"
+        var num = parseFloat(dec)
+        append(Locale.formatNumber(num, {
+          style: "decimal",
+          round: true,
+          minimumFractionDigits: 5,
+          maximumFractionDigits: 5
+        }));
+
+        var dec = "123456789012345678.123456"
+        var num = parseFloat(dec)
+        append(Locale.formatNumber(num, {
+          style: "decimal",
+          round: true,
+          minimumFractionDigits: 5,
+          maximumFractionDigits: 5
+        }));
+      });
+    </script>
+  </div>
+</div>

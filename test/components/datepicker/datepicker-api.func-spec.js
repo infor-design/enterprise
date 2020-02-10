@@ -131,7 +131,7 @@ describe('DatePicker API', () => {
 
     expect(todayDate.toString()).toEqual(testDate.toString());
 
-    const converted = datepickerAPI.conversions.fromGregorian(testDate);
+    const converted = Locale.gregorianToUmalqura(testDate);
 
     expect(datepickerEl.value).toEqual(`${converted[0]}/${(`${converted[1] + 1}`).padStart(2, '0')}/${(`${converted[2]}`).padStart(2, '0')} 12:00 ص`);
   });
@@ -158,7 +158,7 @@ describe('DatePicker API', () => {
 
     expect(todayDate.toString()).toEqual(testDate.toString());
 
-    const converted = datepickerAPI.conversions.fromGregorian(testDate);
+    const converted = Locale.gregorianToUmalqura(testDate);
 
     let hours = testDate.getHours();
     let minutes = testDate.getMinutes();
@@ -238,15 +238,15 @@ describe('DatePicker API', () => {
 
       const monthSpan = document.body.querySelector('span.month');
 
-      expect(monthSpan.innerHTML).toEqual('April ');
+      expect(monthSpan.innerHTML).toEqual('April');
       expect(prevButton.disabled).toEqual(true);
       expect(nextButton.disabled).toEqual(false);
       nextButton.click();
 
-      expect(monthSpan.innerHTML).toEqual('May ');
+      expect(monthSpan.innerHTML.trim()).toEqual('May');
       nextButton.click();
 
-      expect(monthSpan.innerHTML).toEqual('June ');
+      expect(monthSpan.innerHTML.trim()).toEqual('June');
       expect(prevButton.disabled).toEqual(false);
       expect(nextButton.disabled).toEqual(true);
       done();
@@ -343,7 +343,7 @@ describe('DatePicker API', () => {
 
     setTimeout(() => {
       expect(document.body.querySelectorAll('.monthview-header span')[0].textContent).toEqual('2018年 ');
-      expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual('6月 ');
+      expect(document.body.querySelectorAll('.monthview-header span')[1].textContent).toEqual('6月');
       done();
     }, 100);
   });
@@ -389,7 +389,7 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.querySelector('button.btn-monthyear-pane').innerText).toEqual('June 2018');
+      expect(document.querySelector('button.btn-monthyear-pane').innerText).toEqual('June2018');
       expect(document.querySelectorAll('.monthview-monthyear-pane').length).toEqual(1);
       done();
     }, 100);

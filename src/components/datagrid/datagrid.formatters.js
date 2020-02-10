@@ -109,7 +109,7 @@ const formatters = {
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
-  Time(row, cell, value, col) {
+  Time(row, cell, value, col, isReturnValue) {
     let formatted = ((value === null || value === undefined) ? '' : value);
     const localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat.short : null);
     const localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
@@ -146,7 +146,7 @@ const formatters = {
     // Remove extra space in begining
     formatted = formatted.replace(/^\s/, '');
 
-    if (!col.editor) {
+    if (!col.editor || isReturnValue === true) {
       return formatted;
     }
     return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'clock', classes: ['icon-clock'] })}`;
@@ -327,8 +327,8 @@ const formatters = {
   Actions(row, cell, value, col) {
     // Render an Action Formatter
     return (
-      `<button type="button" class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="${col.menuId} +'">
-        <span class="audible">${col.title}</span>
+      `<button type="button" class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="${col.menuId}">
+        <span class="audible">${col.title || Locale.translate('More')}</span>
         ${$.createIcon({ icon: 'more' })}
       </button>`
     );
@@ -438,23 +438,22 @@ const formatters = {
       api.settings.treeDepth[row].depth : 0;
 
     // When use filter then
-    // If (settings.allowChildExpandOnMatch === false) and only parent node got match
-    // then make expand/collapse button to be collapsed and disabled
+    // If (settings.allowChildExpandOnMatch === false) and only parent node has a match
+    // then make expand/collapse button collapsed and disabled
     const isExpandedBtnDisabled = item && item.isAllChildrenFiltered;
     const expandedBtnDisabledHtml = isExpandedBtnDisabled ? ' disabled' : '';
     if (isOpen && isExpandedBtnDisabled) {
       isOpen = false;
     }
-    if (item && typeof item.isAllChildrenFiltered !== 'undefined') {
-      // Remove key after use to reset
-      delete item.isAllChildrenFiltered;
-    }
 
-    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
+    // Tabsize as button width (+/-)
+    const tabsize = api.settings.rowHeight === 'short' ? 22 : 30;
+
+    const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? ` <span>${value}</span>` : '')}`;
-    const node = ` <span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth))}px` : '')}"` : '')}>${value}</span>`;
+    const node = ` <span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth))}px` : '')}"` : '')}>${value}</span>`;
 
     return (item && item[col.children ? col.children : 'children'] ? button : node);
   },
@@ -668,7 +667,6 @@ const formatters = {
     let text = `${perc}%`;
     const ranges = formatters.ClassRange(row, cell, perc, col);
     const target = col.target;
-    let isWhite = perc > 60;
 
     if (col.text) {
       text = col.text;
@@ -681,14 +679,13 @@ const formatters = {
       text = text.replace('<%percent%>', perc);
 
       col.showPercentText = true;
-      isWhite = perc > 75;
     }
 
     const barClass = (col.ranges && ranges.classes ? ranges.classes : 'primary');
     return `<div class="total bar chart-completion-target chart-targeted-achievement">
               <div class="target remaining bar" style="width: ${(target || 0)}%;"></div>
               <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
-              ${(col.showPercentText ? `<div class="chart-targeted-text l-center" ${(isWhite ? 'style="color: white"' : '')}>${text}</div>
+              ${(col.showPercentText ? `<div class="chart-targeted-text l-center">${text}</div>
             </div>` : `<div class="audible">${perc}%</div>`)}`;
   }
 
@@ -699,7 +696,6 @@ const formatters = {
   // Process Indicator
   // File Upload (Simple)
   // Menu Button
-  // Color Picker (Low)
   // Radio
 };
 

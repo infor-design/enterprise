@@ -16,7 +16,6 @@
 
 // Override Config
 //================================================== //
-
 // Form Background Color
 $header-bg-color: $theme-color-palette-azure-90;
 $subhead-bg-color: $theme-color-palette-azure-80;
@@ -120,17 +119,33 @@ $tooltip-error-color: $theme-color-palette-white;
 // Badges
 $badge-neutral-color: $theme-color-palette-black;
 $badge-neutral-bg-color: $theme-color-palette-graphite-40;
-$badge-neutral-hover-bg-color: $theme-color-palette-graphite-50;
+$badge-neutral-hover-bg-color: $theme-color-palette-white;
+$badge-neutral-hover-border-color: $theme-color-palette-black;
 $badge-secondary-color: $theme-color-palette-black;
-$badge-secondary-bg-color: $theme-color-palette-graphite-20;
+$badge-secondary-bg-color: $theme-color-palette-graphite-30;
 $badge-secondary-border-color: $theme-color-palette-graphite-60;
+$badge-secondary-hover-bg-color: $theme-color-palette-white;
+$badge-secondary-disabled-border-color: $theme-color-palette-graphite-50;
 $badge-error-color: $theme-color-palette-white;
+$badge-error-icon-color: $theme-color-palette-white;
+$badge-error-hover-bg-color: $theme-color-palette-ruby-40;
+$badge-error-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-alert-color: $theme-color-palette-white;
+$badge-alert-icon-color: $theme-color-palette-white;
+$badge-alert-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-good-color: $theme-color-palette-white;
+$badge-good-icon-color: $theme-color-palette-white;
+$badge-good-hover-icon-color: $theme-color-palette-graphite-40;
+$badge-good-hover-bg-color: $theme-color-palette-emerald-30;
 $badge-info-color: $theme-color-palette-white;
+$badge-info-icon-color: $theme-color-palette-white;
+$badge-info-hover-icon-color: $theme-color-palette-graphite-40;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $theme-color-palette-graphite-90;
 $badge-neutral-hover-icon-color: $theme-color-palette-graphite-60;
+$badge-disabled-text-color: $theme-color-palette-slate-60;
+$badge-disabled-icon-color: $theme-color-palette-slate-60;
+$badge-disabled-bg-color: $theme-color-palette-graphite-30;
 
 .tag,
 .badge {
@@ -144,7 +159,7 @@ $popupmenu-bg-color: $theme-color-palette-white;
 $popupmenu-border-color: $theme-color-palette-graphite-60;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $theme-color-palette-graphite-70;
-$popupmenu-hover-color: $theme-color-brand-secondary-alt;
+$popupmenu-hover-color: $theme-color-palette-graphite-30;
 $popupmenu-checked-color: $theme-color-palette-azure-90;
 $popupmenu-checked-color-inverse: $theme-color-brand-primary-base;
 
@@ -160,7 +175,7 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 
 // Input Fields
 $input-color: $input-color-initial-font;
-$input-disabled-color: $input-color-disabled-font;
+$input-disabled-color: $theme-color-palette-graphite-80;
 $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
@@ -171,7 +186,7 @@ $alert-color: $theme-color-palette-amber-100;
 $success-color: $theme-color-status-success;
 $info-color: $theme-color-brand-primary-base;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
-$dirty-icon-fill: $theme-color-status-caution;
+$dirty-icon-fill: $theme-color-palette-amber-50;
 $success-icon-fill: $theme-color-status-success;
 $info-icon-fill: $theme-color-palette-azure-80;
 $selected-bg-color: rgba($theme-color-brand-primary-base, 0.3);
@@ -186,12 +201,11 @@ $trigger-icon-fill-light-color: $theme-color-palette-graphite-80;
 $trigger-hover-color: $theme-color-palette-graphite-60;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-brand-secondary-alt;
 
 //List View
 $listview-bg-color: $inverse-color;
 $listview-bg-color-alternate: $theme-color-palette-graphite-20;
-$listview-hover-bg-color: $theme-color-brand-secondary-alt;
+$listview-hover-bg-color: $theme-color-palette-graphite-30;
 $listview-border-color: $theme-color-palette-graphite-60;
 $listview-color: $theme-color-palette-black;
 $listview-secondary-color: $theme-color-palette-graphite-90;
@@ -249,21 +263,22 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
+$dropdown-readonly-icon-color: $theme-color-palette-graphite-50;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
 $datepicker-icon-active-color: $theme-color-palette-azure-90;
-// $datepicker-alternate-month-color: rgba($theme-color-palette-graphite-60, 0.5);
 $datepicker-alternate-month-color: $theme-color-palette-graphite-50;
 $datepicker-day-color: $theme-color-palette-black;
 $datepicker-focus-border-color: $theme-color-brand-primary-alt;
 $datepicker-selected-bg-color: $theme-color-brand-primary-base;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $theme-color-palette-black;
-$datepicker-hover-bg-color: $theme-color-brand-secondary-alt;
+$datepicker-hover-bg-color: $theme-color-palette-graphite-30;
 $datepicker-disabled-border-color: $theme-color-brand-secondary-alt;
-$datepicker-disabled-bg-color: $input-color-readonly-background;
+$datepicker-disabled-bg-color: $theme-color-palette-graphite-20;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
+$datepicker-readonly-icon-color: $theme-color-palette-graphite-50;
 
 .calendar-table .is-today {
   text-decoration: underline;
@@ -273,11 +288,15 @@ $datepicker-disabled-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
 
+// Color Palette Background
+$color-border-color: rgba(0, 0, 0, 0.2);
+
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-60;
 $colorpicker-checkmark-one-color: $theme-color-palette-black;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
+$colorpicker-readonly-icon-color: $theme-color-palette-graphite-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-graphite-50;
@@ -351,6 +370,7 @@ $editor-focus-border-color: $input-color-focus-border;
 $editor-line-number-color: $theme-color-palette-graphite-50;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $theme-color-palette-graphite-20;
+$editor-toolbar-bottom-border-color: $theme-color-palette-graphite-30;
 $editor-middle-border-color: $theme-color-palette-graphite-60;
 $editor-btn-color: $theme-color-palette-graphite-90;
 $editor-btn-hover-color: $theme-color-palette-graphite-50;
@@ -524,8 +544,10 @@ $datagrid-row-icon-color: $theme-color-palette-graphite-90;
 
 $datagrid-alternate-bg-color: $theme-color-palette-graphite-30;
 $datagrid-alternate-row-hover-color: $theme-color-brand-secondary-alt;
-$datagrid-list-header-bg-color: $theme-color-brand-secondary-alt;
-
+$datagrid-list-header-bg-color:  $theme-color-palette-graphite-30;
+$datagrid-list-group-header-bg-color: $theme-color-palette-graphite-40;
+$datagrid-list-group-header-border-color: $theme-color-palette-graphite-30;
+$datagrid-list-header-active-color: $theme-color-palette-graphite-40;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(80, 83, 90, 0.4);
 $datagrid-list-header-border-color: transparent;
@@ -537,7 +559,6 @@ $datagrid-list-sort-icon-hover-color: $theme-color-palette-graphite-60;
 $datagrid-header-focus-bg-color: $theme-color-palette-graphite-80;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $theme-color-palette-slate-50;
-$datagrid-list-header-active-color: $theme-color-palette-graphite-50;
 $datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
 $datagrid-filter-border-color: $theme-color-palette-slate-60;
@@ -584,13 +605,13 @@ $progress-border-color: $theme-color-palette-graphite-60;
 $progress-bar-bg-color: $theme-color-palette-azure-90;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: #767676;
+$chart-progressbar-bg-color: $theme-color-palette-graphite-40;
 $chart-progressbar-bg-color-dark: $theme-color-palette-graphite-50;
 $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $theme-color-palette-graphite-50;
 $chart-progressbar-primary-fill: $theme-color-brand-primary-base;
 $chart-progressbar-dark-fill: $theme-color-palette-graphite-80;
-$chart-targeted-achievement-bg-color: $theme-color-brand-secondary-alt;
+$chart-targeted-achievement-bg-color: $theme-color-palette-graphite-40;
 
 //Timeline
 $timeline-indicator-color: $theme-color-palette-graphite-50;
@@ -640,7 +661,7 @@ $searchfield-card-text-color: $font-color;
 $searchfield-header-bg-color: $theme-color-palette-graphite-80;
 $searchfield-header-border-color: $theme-color-palette-graphite-90;
 $searchfield-header-text-color: $theme-color-palette-white;
-$searchfield-header-placeholder-text-color: $theme-color-palette-graphite-30;
+$searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
 $searchfield-header-icon-color: $header-button-color;
 
 //Image Border Color
@@ -737,6 +758,7 @@ $treemap-title-color: $theme-color-palette-white;
 $calendar-bg-color: $theme-color-palette-graphite-10;
 $calendar-event-color: $theme-color-palette-graphite-100;
 $calendar-line-color: $theme-color-palette-graphite-90;
+$calendar-line-color-light: $theme-color-palette-graphite-30;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $theme-color-palette-graphite-30;
 $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);

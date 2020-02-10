@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'colorpicker';
  * @param {boolean} [settings.colorOnly=false] If true the field will be shrunk to only show the color portion.
  * @param {boolean} [settings.clearable=true] If true will add clearable option.
  * @param {string} [settings.clearableText] The text to show in tooltip.
+ * @param {object} [settings.popupmenuSettings] optional Popupmenu settings that will supersede the defaults.
  */
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
@@ -126,6 +127,7 @@ const COLORPICKER_DEFAULTS = {
   colorOnly: false,
   clearable: true,
   clearableText: null,
+  popupmenuSettings: {}
 };
 
 function ColorPicker(element, settings) {
@@ -285,7 +287,7 @@ ColorPicker.prototype = {
     if (this.element[0].style && this.element[0].style.width) {
       const w = parseInt(this.element[0].style.width, 10);
       this.container.css({ width: w });
-      this.element.css({ width: ((w - 2) - this.swatch.width()) });
+      this.element.css({ width: ((w - 4) - this.swatch.width()) });
     }
   },
   /**
@@ -337,7 +339,7 @@ ColorPicker.prototype = {
     // Append Color Menu
     menu = this.updateColorMenu();
 
-    const popupmenuOpts = {
+    const popupmenuOpts = utils.extend({}, {
       ariaListbox: true,
       menuId: 'colorpicker-menu',
       trigger: 'immediate',
@@ -352,7 +354,7 @@ ColorPicker.prototype = {
         x: 0,
         y: 10
       }
-    };
+    }, this.settings.popupmenuSettings);
 
     // Show Menu
     this.element

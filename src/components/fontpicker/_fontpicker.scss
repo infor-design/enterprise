@@ -1,0 +1,34 @@
+// Fontpicker Component
+// ==============================================
+
+// Overwrites the default Popupmenu styles
+.fontpicker-menu {
+  li {
+    a {
+      align-items: center;
+      display: flex;
+      line-height: normal;
+      padding: 7px 10px;
+    }
+  }
+}
+
+.btn.fontpicker {
+  .icon-dropdown {
+    position: absolute;
+    right: 0;
+    top: 1px;
+  }
+}
+
+html[dir='rtl'] {
+  .btn.fontpicker {
+    text-align: right;
+
+    .icon-dropdown {
+      left: 0;
+      right: auto;
+      top: 2px;
+    }
+  }
+}

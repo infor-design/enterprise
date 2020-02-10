@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="accordion-header is-expanded">
-        <a href="#"><span data-translate="text">UpComingEvent</span></a>
+        <a href="#"><span data-translate="text">UpComing</span></a>
       </div>
       <div class="accordion-pane">
         <div class="calendar-upcoming-events accordion-content">
@@ -18,6 +18,8 @@
     </div>
   </div>
   <div class="calendar-monthview">
+  </div>
+  <div class="calendar-weekview">
   </div>
   <div class="calendar-event-details">
   </div>
@@ -28,6 +30,8 @@
     $('.calendar').calendar({
       month: 7,
       year: 2018,
+      iconTooltip: 'status',
+      eventTooltip: 'comments',
       onRenderMonth: function (ui, response, args) {
         // Get both event types and events for the month (eventTypes can be passed initially)
         const events = $.get('{{basepath}}api/events');
@@ -39,6 +43,8 @@
           }, 500); //slow it down a bit more
         });
       }
+    }).on('contextmenu', function (e, args) {
+      console.log('contextmenu fired', args);
     });
   });
 </script>

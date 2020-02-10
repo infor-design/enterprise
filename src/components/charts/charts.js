@@ -118,6 +118,31 @@ charts.removeTooltip = function removeTooltip() {
  */
 charts.colorRange = () => {
   const palette = theme.themeColors().palette;
+  if (theme.uplift) {
+    return [
+      palette.azure['80'].value,
+      palette.turquoise['40'].value,
+      palette.amethyst['60'].value,
+      palette.graphite['40'].value,
+      palette.amber['40'].value,
+      palette.emerald['70'].value,
+      palette.ruby['60'].value,
+      palette.azure['30'].value,
+      palette.amber['70'].value,
+      palette.graphite['60'].value,
+      palette.turquoise['60'].value,
+      palette.emerald['90'].value,
+      palette.amethyst['30'].value,
+      palette.azure['50'].value,
+      palette.ruby['30'].value,
+      palette.amethyst['80'].value,
+      palette.emerald['30'].value,
+      palette.turquoise['80'].value,
+      palette.graphite['20'].value,
+      palette.amber['90'].value
+    ];
+  }
+
   return [
     palette.azure['70'].value,
     palette.turquoise['30'].value,
@@ -138,22 +163,20 @@ charts.colorRange = () => {
     palette.turquoise['50'].value,
     palette.amber['70'].value,
     palette.graphite['20'].value,
-    palette.azure['20'].value,
-    palette.emerald['100'].value,
-    palette.amethyst['20'].value
+    palette.azure['20'].value
   ];
 };
 
-charts.colorNameRange = ['azure07', 'turquoise03', 'amethyst03', 'graphite06', 'amber05', 'emerald06', 'ruby06',
-  'azure03', 'amber09', 'turquoise08', 'ruby02', 'graphite05', 'emerald05', 'amethyst03',
-  'azure05', 'amethyst08', 'emerald03', 'turquoise06', 'amber07', 'graphite02'];
-
-/**
- * The colors as an array for placement
- * @param {number} idx The color index
- * @returns {function} A d3 range of colors.
- */
-charts.colorNames = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorNameRange) : [];
+charts.colorNameRange = () => {
+  if (theme.uplift) {
+    return ['azure08', 'turquoise04', 'amethyst06', 'graphite04', 'amber04', 'emerald07', 'ruby06',
+      'azure03', 'amber07', 'graphite06', 'turquoise06', 'emerald09', 'amethyst03',
+      'azure05', 'ruby03', 'amethyst08', 'emerald03', 'turquoise08', 'graphite02', 'amber09'];
+  }
+  return ['azure07', 'turquoise03', 'amethyst03', 'graphite06', 'amber05', 'emerald06', 'ruby06',
+    'azure03', 'amber09', 'turquoise08', 'ruby02', 'graphite05', 'emerald05', 'amethyst03',
+    'azure05', 'amethyst08', 'emerald03', 'turquoise06', 'amber07', 'graphite02'];
+};
 
 /**
  * Calculate and return the correct color to use. Fx
@@ -195,7 +218,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
     return themeColors[i];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
-    return theme.themeColors().palette.azure['80'].value;
+    return themeColors[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
     return themeColors[i];
@@ -231,13 +254,13 @@ charts.chartColorName = function chartColor(i, chartType, data) {
 
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    return this.colorNameRange[i];
+    return this.colorNameRange()[i];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
-    return 'azure08';
+    return this.colorNameRange()[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return this.colorNames(i);
+    return this.colorNameRange()[i];
   }
 
   return '';
@@ -454,7 +477,7 @@ charts.handleElementClick = function (line, series, settings) {
   if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
-    selector.on('click').call(selector.node(), selector.datum(), idx, true);
+    selector.dispatch('click');
   }
 
   if (elem.selectionObj) {
@@ -583,8 +606,8 @@ charts.setSelectedElement = function (o) {
           }
 
           if (isBar) {
-            if (thisData[0][o.i]) {
-              thisData = thisData[0][o.i];
+            if (thisData[i][o.i]) {
+              thisData = thisData[i][o.i];
             }
 
             if (thisData[o.i] && thisData[o.i][i]) {
@@ -594,9 +617,13 @@ charts.setSelectedElement = function (o) {
             if (thisData[i] && thisData[i][o.i]) {
               thisData = thisData[i][o.i];
             }
+          } else if (isStacked && !isSingle) {
+            if (thisData[thisGroupId] && thisData[thisGroupId].data[i]) {
+              thisData = thisData[thisGroupId].data[i];
+            }
           } else {
-            if (thisData[0].data[o.i]) {
-              thisData = thisData[0].data[o.i];
+            if (thisData[i].data[o.i]) {
+              thisData = thisData[i].data[o.i];
             }
 
             if (thisData[o.i] && thisData[o.i].data[i]) {

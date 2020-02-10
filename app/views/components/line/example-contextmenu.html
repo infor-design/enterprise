@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Line Chart Title</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul id="action-popupmenu" class="popupmenu">
+  <li><a href="#" class="action-1">Action One</a></li>
+  <li><a href="#" class="action-2">Action Two</a></li>
+  <li><a href="#" class="action-3">Action Three</a></li>
+</ul>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 1211,
+        depth: 4
+      }, {
+        name: 'Feb',
+        value: 1111
+      }, {
+        name: 'Mar',
+        value: 1411
+      }, {
+        name: 'Apr',
+        value: 1011
+      }, {
+        name: 'May',
+        value: 1411
+      }, {
+        name: 'Jun',
+        value: 8111
+      }],
+      name: 'Component A',
+      legendShortName: 'Comp A',
+      legendAbbrName: 'A'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 2211
+      }, {
+        name: 'Feb',
+        value: 2111
+      }, {
+        name: 'Mar',
+        value: 2411
+      }, {
+        name: 'Apr',
+        value: 2011
+      }, {
+        name: 'May',
+        value: 2411
+      }, {
+        name: 'Jun',
+        value: 2811
+      }],
+      name: 'Component B',
+      legendShortName: 'Comp B',
+      legendAbbrName: 'A'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 3211
+      }, {
+        name: 'Feb',
+        value: 3111
+      }, {
+        name: 'Mar',
+        value: 3411
+      }, {
+        name: 'Apr',
+        value: 3011
+      }, {
+        name: 'May',
+        value: 3411
+      }, {
+        name: 'Jun',
+        value: 3811
+      }],
+      name: 'Component C',
+      legendShortName: 'Comp C',
+      legendAbbrName: 'C'
+    }];
+
+    // Element
+    var elem = $('#line-example');
+
+    // Show Popupmenu
+    function showPopupmenu (e) {
+      elem.popupmenu({ trigger: 'immediate', menu: 'action-popupmenu', eventObj: e })
+        .off('selected').on('selected', function (e, anchor) {
+          console.log('selected:', anchor[0]);
+        });
+    }
+
+    // Invoke
+    elem.chart({ type: 'line', dataset: dataset });
+
+    // Bind Contextmenu
+    elem.on('contextmenu', function(e, el, d) {
+      if (el) {
+        console.log('Contextmenu:', { element: el, data: d });
+        showPopupmenu(e);
+      }
+    });
+
+  });
+</script>

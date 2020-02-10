@@ -19,9 +19,7 @@ const clickTabTest = async (index) => {
 describe('Tabs vertical click example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-vertical/example-independent-scrolling');
-    const tabsEl = await element(by.id('tabs-vertical'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -56,7 +54,6 @@ describe('Tabs vertical click example-index tests', () => {
     await clickTabTest('2');
     await clickTabTest('0');
     await browser.executeScript('document.querySelector("#test-info p:last-child").scrollIntoView()');
-    await browser.driver.sleep(config.sleep);
     const lastParagraph = await element(by.css('#test-info p:last-child'));
     const posLastParagraph = await lastParagraph.getLocation();
 
@@ -100,6 +97,7 @@ describe('Tabs vertical click example-responsive tests', () => {
 
     expect(await element(by.className('tab-container')).getAttribute('class')).not.toContain('is-in-responsive-mode');
     expect(await element(by.className('tab-container')).getAttribute('class')).toContain('vertical');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });
 

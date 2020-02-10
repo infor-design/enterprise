@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'pie';
  * @param {object} [settings] The component settings.
  * @param {array} [settings.dataset] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isDonut=false] If true it renders as a donut chart.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page. There is tooltip values provided.
+ * @param {boolean} [settings.redrawOnResize=true]  If set to false the component will not redraw when the page or parent is resized. There is tooltip values provided.
   It will not be shown. If you still want lines at the lower breakpoint you can set this to true
  * @param {boolean} [settings.hideCenterLabel=false] If false the center label will not be shown.
  * @param {boolean} [settings.showLines=true] If false connector lines wont be shown
@@ -96,6 +96,7 @@ Pie.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
     this.isFirefox = env.browser.name === 'firefox';
 
@@ -154,6 +155,12 @@ Pie.prototype = {
       height: h,
       width: w
     };
+
+    if ((this.settings.lines.show === 'label' && this.settings.legendPlacement === 'bottom')
+      || (this.settings.lines.show === 'label' && this.settings.showLegend === 'false')) {
+      self.mainGroup
+        .attr('transform', `translate(${dims.width * 0.67777}, ${dims.height / 2})`);
+    }
 
     if (self.settings.legendPlacement === 'right') {
       dims.width = w * 0.75;
@@ -357,11 +364,11 @@ Pie.prototype = {
         return charts.chartColor(i, 'pie', d.data);
       })
       .attr('class', 'slice')
-      .on('contextmenu', function (d) {
-        // Handle Right Click Menu
-        charts.triggerContextMenu(self.element, d3.select(this).select('path').nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+        // charts.triggerContextMenu(self.element, d3.select(this).select('path').nodes()[0], d);
       })
-      .on('click', function (d, i) {
+      .on(`click.${self.namespace}`, function (d, i) {
         clearTimeout(tooltipInterval);
         // Handle Click to select
         const isSelected = this && d3.select(this).classed('is-selected');
@@ -392,7 +399,7 @@ Pie.prototype = {
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, i]);
         }
       })
-      .on('mouseenter', function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (d, i) {
         if (!self.settings.showTooltips) {
           return;
         }
@@ -467,7 +474,7 @@ Pie.prototype = {
           show();
         }, 300);
       })
-      .on('mouseleave', function () {
+      .on(`mouseleave.${self.namespace}`, function () {
         clearTimeout(tooltipInterval);
         charts.hideTooltip();
       })
@@ -509,7 +516,7 @@ Pie.prototype = {
         .append('text')
         .attr('dy', '.35em')
         .text(function (d) {
-          return charts.formatToSettings(d, self.settings.lines);
+          return isMobile ? d.data.shortName : charts.formatToSettings(d, self.settings.lines);
         })
         .merge(text)
         .transition()
@@ -599,6 +606,7 @@ Pie.prototype = {
    * @returns {void}
    */
   setInitialSelected() {
+    const self = this;
     let selected = 0;
     let selector;
 
@@ -610,7 +618,7 @@ Pie.prototype = {
       if (d.data.selected && selected < 1) {
         selected++;
         selector = d3.select(this);
-        selector.on('click').call(selector.node(), selector.datum(), i);
+        selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), i);
       }
     });
   },
@@ -621,21 +629,21 @@ Pie.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -683,7 +691,7 @@ Pie.prototype = {
     });
 
     if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-      selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+      selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), arcIndex);
     }
   },
 
@@ -791,9 +799,18 @@ Pie.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.slice')
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -812,11 +829,13 @@ Pie.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('pie-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('pie-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

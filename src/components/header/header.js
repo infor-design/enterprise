@@ -424,6 +424,10 @@ Header.prototype = {
         self.drillup(viewTitle);
       });
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updatePageChanger();
+    });
+
     // Events for the title button.  e.preventDefault(); stops Application Menu
     // functionality while drilled
     this.handleTitleButtonEvents();
@@ -502,8 +506,14 @@ Header.prototype = {
    * @returns {void}
    */
   initPageChanger() {
-    const changer = this.element.find('.page-changer');
-    const colorArea = changer.next().find('li.personalization-colors');
+    this.changer = this.element.find('.page-changer');
+    if (!this.changer.length) {
+      return;
+    }
+
+    const api = this.changer.data('popupmenu');
+    const menu = api.menu;
+    const colorArea = menu.find('li.personalization-colors');
 
     if (colorArea.length > 0) {
       const colors = theme.personalizationColors();
@@ -517,13 +527,13 @@ Header.prototype = {
       colorArea.replaceWith(colorsHtml);
     }
 
-    changer.on('selected.header', (e, link) => {
+    this.changer.on('selected.header', (e, link) => {
       // Change Theme with Variant
       const themeNameAttr = link.attr('data-theme-name');
       const themeVariantAttr = link.attr('data-theme-variant');
       if (themeNameAttr || themeVariantAttr) {
-        const name = changer.next().find('.is-checked a[data-theme-name]').attr('data-theme-name');
-        const variant = changer.next().find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
+        const name = menu.find('.is-checked a[data-theme-name]').attr('data-theme-name');
+        const variant = menu.find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
         if (name && variant) {
           personalization.setTheme(`${name}-${variant}`);
         }
@@ -551,10 +561,10 @@ Header.prototype = {
     const currentTheme = theme.currentTheme;
     if (currentTheme.id !== 'theme-soho-light') {
       const themeParts = currentTheme.id.split('-');
-      this.element.find('[data-theme-name]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
-      this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-name]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-variant]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
     }
 
     if (personalization.settings.colors) {
@@ -563,8 +573,25 @@ Header.prototype = {
         personalization.settings.colors;
       colors = colors.replace('#', '');
 
-      this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
-      this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-rgbcolor]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+    }
+  },
+
+  /**
+   * Sets up the page changer after changing theme.
+   * @private
+   * @returns {void}
+   */
+  updatePageChanger() {
+    const api = this.changer.data('popupmenu');
+    const menu = api.menu;
+    const tags = menu.find('[data-rgbcolor]');
+    const colors = theme.personalizationColors();
+    const keys = Object.keys(colors);
+
+    for (let i = 0; i < tags.length; i++) {
+      tags[i].setAttribute('data-rgbcolor', colors[keys[i]].value);
     }
   },
 
@@ -820,8 +847,12 @@ Header.prototype = {
 
     this.toolbarAPI.teardown();
 
-    this.titlePopup.data('popupmenu').destroy();
-    this.titlePopup.data('button').destroy();
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('popupmenu').destroy();
+    }
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('button').destroy();
+    }
     this.titlePopupMenu.remove();
     this.titlePopup.children('h1').detach().insertBefore(self.titlePopup);
     this.titlePopup.remove();
@@ -855,6 +886,8 @@ Header.prototype = {
       `drillup.${COMPONENT_NAME}`,
     ].join(' '));
 
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
+
     return this;
   },
 
@@ -882,6 +915,15 @@ Header.prototype = {
     this.unbind();
     if (this.hasTitleButton) {
       this.toolbarElem.removeClass('has-title-button');
+    }
+
+    if (this.changer) {
+      const api = this.changer.data('popupmenu');
+      if (api && typeof api.destroy === 'function') {
+        api.destroy();
+      }
+      this.changer.remove();
+      delete this.changer;
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);

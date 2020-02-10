@@ -1,10 +1,9 @@
 import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { dateUtils } from '../../utils/date';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
-import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../mask/mask-input.jquery';
@@ -35,7 +34,7 @@ const COMPONENT_NAME = 'datepicker';
  *  rounds the minutes value to the nearest interval when the field is blurred.
  * @param {string} [settings.dateFormat='locale'] Defaults to current locale but can be
  * @param {string} [settings.placeholder=false] Text to show in input element while empty.
- * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
+ * @param {number} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
@@ -72,12 +71,16 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.range.selectForward=false] Range only in forward direction.
  * @param {boolean} [settings.range.selectBackward=false] Range only in backward direction.
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
+ * @param {boolean} [settings.range.selectWeek=false] If true will act as a week picker.
  * @param {string} [settings.calendarName] The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
- * @param {boolean} [settings.autoSize=false] If true the field will be sized to the width of the date.
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
+ * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -89,7 +92,7 @@ const DATEPICKER_DEFAULTS = {
   roundToInterval: undefined,
   dateFormat: 'locale', // or can be a specific format
   placeholder: false,
-  firstDayOfWeek: null,
+  firstDayOfWeek: 0,
   disable: {
     dates: [],
     minDate: '',
@@ -104,10 +107,9 @@ const DATEPICKER_DEFAULTS = {
   yearsAhead: 5,
   yearsBack: 4,
   legend: [
-    // Legend Build up example
-    // Color in level 6 - http://usmvvwdev53:424/controls/colors
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    // Legend Build up exampleazure07
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
   range: {
     useRange: false, // true - if datepicker using range dates
@@ -118,13 +120,17 @@ const DATEPICKER_DEFAULTS = {
     maxDays: 0, // Maximum days
     selectForward: false, // Only in forward direction
     selectBackward: false, // Only in backward direction
-    includeDisabled: false // if true range will include disable dates in it
+    includeDisabled: false, // if true range will include disable dates in it
+    selectWeek: false // if true will act as a week picker
   },
   calendarName: null,
-  locale: '',
+  locale: null,
+  language: null,
   useUTC: false,
-  autoSize: false,
-  hideButtons: false
+  hideButtons: false,
+  showToday: true,
+  onOpenCalendar: null,
+  isMonthPicker: false
 };
 
 function DatePicker(element, settings) {
@@ -157,18 +163,30 @@ DatePicker.prototype = {
     this.element.attr('autocomplete', 'off');
 
     // Append a trigger button
-    this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+    if (this.element.next().is('svg')) {
+      this.trigger = this.element.next();
+    } else {
+      this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+    }
 
     // Hide icon if datepicker input is hidden
     if (this.element.hasClass('hidden')) {
       this.trigger.addClass('hidden');
     }
 
+    // Enable classes and settings for week selection
+    if (this.settings.range.selectWeek) {
+      this.settings.selectForward = true;
+      this.settings.minDays = 6;
+      this.settings.maxDays = 7;
+    }
+
     // Set the current calendar
     this.setLocale();
     this.addAria();
-    this.setCurrentCalendar();
-    this.setSize();
+    if (!this.settings.locale && !this.settings.language) {
+      this.setCurrentCalendar();
+    }
   },
 
   /**
@@ -177,13 +195,53 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setLocale() {
+    const s = this.settings;
     this.locale = Locale.currentLocale;
-    if (this.settings.locale) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.setCurrentCalendar();
+
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
+    }
+
+    if (s.locale) {
+      Locale.getLocale(s.locale).done((locale) => {
+        const similarApi = this.getSimilarApi('locale', locale);
+        similarApi.forEach((api) => {
+          api.locale = Locale.cultures[locale];
+          api.language = this.settings.language || api.locale.language;
+          api.setCurrentCalendar();
+        });
       });
     }
+    if (s.language) {
+      Locale.getLocale(s.language).done(() => {
+        const similarApi = this.getSimilarApi('language', s.language);
+        similarApi.forEach((api) => {
+          api.language = s.language;
+        });
+      });
+    }
+  },
+
+  /**
+   * Get list of similar api elements.
+   * @private
+   * @param {string} key to check
+   * @param {string} value to check
+   * @returns {array} list of api elements
+   */
+  getSimilarApi(key, value) {
+    const elems = [].slice.call(document.querySelectorAll('.datepicker'));
+    const similarApi = [];
+    elems.forEach((node) => {
+      const datepickerApi = $(node).data('datepicker');
+      if (datepickerApi && datepickerApi.settings[key] === value) {
+        similarApi.push(datepickerApi);
+      }
+    });
+    return similarApi;
   },
 
   /**
@@ -194,26 +252,11 @@ DatePicker.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
     this.mask();
-  },
-
-  /**
-   * Set size attribute based on current contents
-   * @private
-   * @returns {void}
-   */
-  setSize() {
-    if (!this.settings.autoSize) {
-      return;
-    }
-    const elem = this.element[0];
-    const padding = 45;
-    elem.classList.add('input-auto');
-    elem.style.width = `${stringUtils.textWidth(elem.value, 16) + padding}px`;
   },
 
   /**
@@ -223,7 +266,7 @@ DatePicker.prototype = {
    */
   addAria() {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('PressDown', this.locale.name)}</span>`);
+    this.label.append(`<span class="audible">${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}</span>`);
   },
 
   /**
@@ -275,7 +318,7 @@ DatePicker.prototype = {
 
         // Tab closes Date Picker and goes to next field on the modal
         if (key === 9) {
-          if (s.range.useRange && $(e.target).is('.next')) {
+          if (s.range.useRange && $(e.target).is('.next') && !s.range.selectWeek) {
             this.calendarAPI.days.find('td:visible:last').attr('tabindex', 0).focus();
           } else {
             this.containFocus(e);
@@ -465,16 +508,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Open the calendar popup.
-   * This method is slated to be removed in a future v4.15.0 or v5.0.0.
-   * @deprecated as of v4.9.0. Please use `openCalendar()` instead.
-   * @returns {void}
-   */
-  open() {
-    return deprecateMethod(this.openCalendar, this.open).apply(this);
-  },
-
-  /**
    * Open the calendar in a popup
    * @private
    * @returns {void}
@@ -498,27 +531,26 @@ DatePicker.prototype = {
     */
     this.element.addClass('is-active is-open').trigger('listopened');
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
+    const clearButton = `<button type="button" class="is-cancel btn-tertiary">
+      ${Locale.translate(this.settings.isMonthPicker ? 'Cancel' : 'Clear', { locale: this.locale.name, language: this.language })}
+    </button>`;
+    const applyButton = ` <button type="button" class="is-select btn-primary">
+      ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
+    </button>`;
+
     this.footer = $('' +
       `<div class="popup-footer">
-        <button type="button" class="is-cancel btn-tertiary">
-          ${Locale.translate('Clear', this.locale.name)}
-        </button>
-        <button type="button" class="is-today btn-tertiary">
-          ${Locale.translate('Today', this.locale.name)}
-        </button>
-        <button type="button" class="is-select btn-primary">
-          ${Locale.translate('Select', this.locale.name)}
-        </button>
+        ${this.isRTL ? applyButton + clearButton : clearButton + applyButton}
       </div>`);
 
     if (s.hideDays) {
       this.footer = $('' +
         `<div class="popup-footer">
           <button type="button" class="is-cancel btn-tertiary">
-            ${Locale.translate('Clear', this.locale.name)}
+            ${Locale.translate('Clear', { locale: this.locale.name, language: this.language })}
           </button>
           <button type="button" class="is-select-month btn-primary">
-            ${Locale.translate('Select', this.locale.name)}
+            ${Locale.translate('Apply', { locale: this.locale.name, language: this.language })}
           </button>
         </div>`);
     }
@@ -588,7 +620,7 @@ DatePicker.prototype = {
     this.todayDay = this.todayDate.getDate();
 
     if (this.isIslamic) {
-      this.todayDateIslamic = this.conversions.fromGregorian(this.todayDate);
+      this.todayDateIslamic = Locale.gregorianToUmalqura(this.todayDate);
       this.todayYear = this.todayDateIslamic[0];
       this.todayMonth = this.todayDateIslamic[1];
       this.todayDay = this.todayDateIslamic[2];
@@ -598,15 +630,17 @@ DatePicker.prototype = {
     this.settings.year = this.currentYear;
     if (this.isIslamic) {
       this.settings.activeDateIslamic = this.activeDate instanceof Date ?
-        this.conversions.fromGregorian(this.activeDate) : this.activeDate;
+        Locale.gregorianToUmalqura(this.activeDate) : this.activeDate;
     }
 
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
+      this.settings.month = this.settings.activeDate.getMonth();
+      this.settings.year = this.settings.activeDate.getFullYear();
 
       if (this.isIslamic) {
-        this.settings.activeDateIslamic = this.conversions.fromGregorian(this.settings.activeDate);
+        this.settings.activeDateIslamic = Locale.gregorianToUmalqura(this.settings.activeDate);
       }
     } else {
       this.settings.activeDate = this.currentDate || this.todayDate;
@@ -619,7 +653,24 @@ DatePicker.prototype = {
     // Handle day change
     this.settings.onSelected = (node, args) => {
       this.currentDate = new Date(args.year, args.month, args.day);
-      if (self.settings.range.useRange && self.settings.range.first) {
+
+      if (self.settings.range.useRange && self.settings.range.first &&
+        self.settings.range.selectWeek) {
+        const first = dateUtils.firstDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+        const last = dateUtils.lastDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+        self.settings.range.first = {};
+        self.settings.range.second = undefined;
+
+        self.setWeekRange(
+          { day: first.getDate(), month: first.getMonth(), year: first.getFullYear() },
+          { day: last.getDate(), month: last.getMonth(), year: last.getFullYear() }
+        );
+        self.closeCalendar();
+        self.element.focus();
+        return;
+      }
+      if (self.settings.range.useRange && self.settings.range.first &&
+        !self.settings.range.selectWeek) {
         return;
       }
       self.insertDate(this.currentDate);
@@ -629,6 +680,27 @@ DatePicker.prototype = {
         self.element.focus();
       }
     };
+
+    if (this.settings.range.useRange && this.settings.range.selectWeek) {
+      this.settings.onKeyDown = (args) => {
+        if (args.key === 37 || args.key === 39) {
+          return false;
+        }
+        if (args.key === 38 || args.key === 40) { // up and down a week
+          // TODO - Later if this is really needed.
+          return false;
+        }
+        if (args.key === 13) { // select a week
+          // TODO - Later if this is really needed.
+          return false;
+        }
+        return true;
+      };
+    }
+
+    if (!this.settings.language) {
+      this.settings.language = this.language;
+    }
 
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
@@ -666,7 +738,7 @@ DatePicker.prototype = {
       placement: 'bottom',
       popover: true,
       trigger: 'immediate',
-      extraClass: 'monthview-popup',
+      extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
       tooltipElement: '#monthview-popup',
       initializeContent: false
     };
@@ -674,10 +746,6 @@ DatePicker.prototype = {
     this.trigger.popover(popoverOpts)
       .off('show.datepicker')
       .on('show.datepicker', () => {
-        if (env.os.name === 'ios') {
-          $('head').triggerHandler('disable-zoom');
-        }
-
         // Horizontal view on mobile
         if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
@@ -702,15 +770,20 @@ DatePicker.prototype = {
           });
           this.popup.find('.btn-monthyear-pane').button();
         }
+
+        // Add range selection for each week
+        if (this.settings.range.selectWeek) {
+          const tableBody = this.popup.find('tbody');
+          this.popup.find('.monthview-table tr')
+            .hover((e) => {
+              const tr = $(e.currentTarget);
+              tableBody.find('td').removeClass('is-selected range-selection end-date');
+              tr.find('td').addClass('range-selection');
+            });
+        }
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
-        if (env.os.name === 'ios') {
-          this.trigger.one('hide', () => {
-            $('head').triggerHandler('enable-zoom');
-          });
-        }
-
         this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });
@@ -732,8 +805,15 @@ DatePicker.prototype = {
       if (td.hasClass('is-disabled')) {
         self.calendarAPI.activeTabindex(td, true);
       } else {
-        if (s.range.useRange && (!s.range.first || s.range.second)) {
+        if (s.range.useRange && (!s.range.first || s.range.second) && !s.range.selectWeek) {
           self.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+        }
+        if (s.range.useRange && s.range.selectWeek) {
+          const first = self.calendarAPI.getCellDate(self.calendar.find('td.range-selection').first());
+          const last = self.calendarAPI.getCellDate(self.calendar.find('td.range-selection').last());
+
+          self.setWeekRange(first, last);
+          return;
         }
         if (!s.range.useRange) {
           self.calendarAPI.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
@@ -764,8 +844,10 @@ DatePicker.prototype = {
         * @memberof DatePicker
         * @property {object} event - The jquery event object
         */
-        self.element.val('').trigger('change').trigger('input');
-        self.currentDate = null;
+        if (!self.settings.isMonthPicker) {
+          self.element.val('').trigger('change').trigger('input');
+          self.currentDate = null;
+        }
         self.closeCalendar();
       }
 
@@ -776,17 +858,18 @@ DatePicker.prototype = {
       if (btn.hasClass('is-select-month') || btn.hasClass('is-select-month-pane')) {
         const year = parseInt(self.calendarAPI.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
         const month = parseInt(self.calendarAPI.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
+        const day = 1;
 
-        self.currentDate = new Date(year, month, 1);
+        self.currentDate = new Date(year, month, day);
 
         if (self.isIslamic) {
           self.currentDateIslamic[0] = year;
           self.currentDateIslamic[1] = month;
-          self.currentDateIslamic[2] = 1;
+          self.currentDateIslamic[2] = day;
           self.currentYear = year;
           self.currentMonth = month;
-          self.currentDay = 1;
-          self.currentDate = self.conversions.toGregorian(year, month, 1);
+          self.currentDay = day;
+          self.currentDate = Locale.umalquraToGregorian(year, month, day);
         }
 
         if (s.range.useRange) {
@@ -797,19 +880,6 @@ DatePicker.prototype = {
         }
         if (btn.hasClass('is-select-month-pane')) {
           self.calendarAPI.showMonth(month, year);
-        }
-      }
-
-      if (btn.hasClass('is-today')) {
-        if (s.range.useRange) {
-          self.setToday(true);
-          if (!s.range.second || (s.range.second && !s.range.second.date)) {
-            e.preventDefault();
-            return;
-          }
-        } else {
-          self.setToday();
-          self.closeCalendar();
         }
       }
 
@@ -837,6 +907,20 @@ DatePicker.prototype = {
         self.calendarAPI.monthYearPane.data('expandablearea').close();
       }
     });
+
+    this.popup.off('click.datepicker-today').on('click.datepicker-today', '.hyperlink.today', (e) => {
+      e.preventDefault();
+      if (s.range.useRange) {
+        self.setToday(true);
+        if (!s.range.second || (s.range.second && !s.range.second.date)) {
+          e.preventDefault();
+        }
+      } else {
+        self.setToday();
+        self.closeCalendar();
+      }
+    });
+
     setTimeout(() => {
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
@@ -865,10 +949,25 @@ DatePicker.prototype = {
       self.currentYear = year;
       self.currentMonth = month;
       self.currentDay = day;
-      self.currentDate = self.conversions.toGregorian(year, month, day);
+      self.currentDate = Locale.umalquraToGregorian(year, month, day);
     }
 
     self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
+  },
+
+  /**
+   * Inserts a week range in the field.
+   * @private
+   * @param {object} first The first range object.
+   * @param {object} last The last range object.
+   * @returns {void}
+   */
+  setWeekRange(first, last) {
+    const s = this.settings;
+    s.range.first.date = new Date(first.year, first.month, first.day);
+    s.range.second = undefined;
+    this.setValue(new Date(last.year, last.month, last.day));
+    this.calendarAPI.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
   },
 
   /**
@@ -945,8 +1044,15 @@ DatePicker.prototype = {
       // Pre selection compleated now show the calendar
       this.popup.removeClass('is-hidden');
     }
-    this.calendarAPI.activeTabindex(this.calendar.find('td.is-selected'), true);
     this.calendarAPI.datepickerApi = this;
+
+    if (s.range.useRange && s.range.selectWeek) {
+      const tr = this.calendar.find('td.is-selected').first().parent();
+      this.calendar.find('td[tabindex]').removeAttr('tabindex');
+      tr.attr('tabindex', '0').focus();
+      return;
+    }
+    this.calendarAPI.activeTabindex(this.calendar.find('td.is-selected'), true);
   },
 
   /**
@@ -1046,7 +1152,7 @@ DatePicker.prototype = {
 
     if (date instanceof Array) {
       this.currentIslamicDate = date;
-      this.currentDate = this.conversions.toGregorian(date[0], date[1], date[2]);
+      this.currentDate = Locale.umalquraToGregorian(date[0], date[1], date[2]);
     }
 
     if (s.range.useRange) {
@@ -1071,8 +1177,6 @@ DatePicker.prototype = {
         this.element.trigger('change').trigger('input');
       }
     }
-
-    this.setSize();
   },
 
   /**
@@ -1355,12 +1459,31 @@ DatePicker.prototype = {
         pattern: this.pattern,
         locale: this.locale.name
       });
-      gregorianValue = this.conversions.toGregorian(
-        islamicValue[0],
-        islamicValue[1],
-        islamicValue[2]
-      );
+      if (islamicValue instanceof Date) {
+        gregorianValue = Locale.umalquraToGregorian(
+          islamicValue.getFullYear(),
+          islamicValue.getMonth(),
+          islamicValue.getDate()
+        );
+      } else if (islamicValue instanceof Array) {
+        gregorianValue = Locale.umalquraToGregorian(
+          islamicValue[0],
+          islamicValue[1],
+          islamicValue[2]
+        );
+      }
     }
+    const getSelectedDay = () => {
+      let day = (new Date()).getDate();
+      if (this.calendarAPI) {
+        const selected = this.calendarAPI.dayMap.filter(d => d.elem.is('.is-selected'));
+        if (selected.length) {
+          day = parseInt(selected[0].key.substr(6), 10);
+        }
+      }
+      return day;
+    };
+    const selectedDay = getSelectedDay();
 
     this.currentDate = gregorianValue || new Date();
     if (typeof this.currentDate === 'string') {
@@ -1369,6 +1492,9 @@ DatePicker.prototype = {
         locale: this.locale.name,
         calendarName: this.settings.calendarName
       }, false);
+      if (this.pattern && this.pattern.indexOf('d') === -1) {
+        this.currentDate.setDate(selectedDay);
+      }
     }
 
     if (this.currentDate === undefined) {
@@ -1380,10 +1506,11 @@ DatePicker.prototype = {
     }
 
     if (this.isIslamic) {
-      this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+      this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
+      this.currentIslamicDate = this.currentDateIslamic;
     } else {
       this.currentDate = this.currentDate || new Date();
       this.currentMonth = this.currentDate.getMonth();
@@ -1401,11 +1528,15 @@ DatePicker.prototype = {
     }, isStrict);
 
     if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
-      self.setValue(Locale.parseDate(self.element.val().trim(), {
+      const thisParseDate = Locale.parseDate(self.element.val().trim(), {
         pattern: self.pattern,
         locale: this.locale.name,
         calendarName: this.settings.calendarName
-      }, false));
+      }, false);
+      if (self.pattern && self.pattern.indexOf('d') === -1) {
+        thisParseDate.setDate(selectedDay);
+      }
+      self.setValue(thisParseDate);
     }
 
     if (s.range.useRange && s.range.first && s.range.first.date && s.range.second) {
@@ -1480,7 +1611,7 @@ DatePicker.prototype = {
     }
 
     if (this.isIslamic) {
-      const islamicDateParts = this.conversions.fromGregorian(this.currentDate);
+      const islamicDateParts = Locale.gregorianToUmalqura(this.currentDate);
       this.currentDateIslamic = islamicDateParts;
     }
 
@@ -1636,7 +1767,6 @@ DatePicker.prototype = {
 
     this.element.off('blur.datepicker');
     this.trigger.remove();
-    this.element.attr('data-mask', '');
     this.element.removeAttr('placeholder');
     if (this.calendarAPI) {
       this.calendarAPI.destroy();
@@ -1653,11 +1783,14 @@ DatePicker.prototype = {
     if (maskApi) {
       maskApi.destroy();
     }
+    this.element.removeAttr('data-mask');
+    this.element.removeData('mask');
 
     this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 
     if (this.addedValidation) {
       this.element.removeAttr('data-validate').removeData('validate validationEvents');
+      delete this.addedValidation;
     }
 
     return this;

@@ -24,6 +24,34 @@
     border-bottom: 1px solid $contextual-panel-border-color;
     height: 50px;
     padding: 0;
+
+    .flex-toolbar {
+      .toolbar-section {
+        &.title {
+          padding-left: 15px;
+
+          span {
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            white-space: nowrap;
+
+            @media (min-width: $breakpoint-big-phone + 1) {
+              width: 150px;
+            }
+
+            @media (min-width: $breakpoint-phablet + 1) {
+              width: 250px;
+            }
+
+            @media (max-width: $breakpoint-big-phone) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
   }
 
   .flex-toolbar {
@@ -52,6 +80,24 @@
     .has-close-button {
       display: inline-block;
       width: calc(100% - 105px);
+    }
+
+    .buttonset {
+      button[class^='btn'] {
+        color: $contextual-panel-button-color;
+
+        &:hover {
+          color: $contextual-panel-hover-icon-color;
+
+          .icon {
+            color: $contextual-panel-hover-icon-color;
+          }
+        }
+
+        .icon {
+          color: $contextual-panel-icon-color;
+        }
+      }
     }
   }
 
@@ -118,6 +164,17 @@ html[dir='rtl'] {
         > *:last-child {
           margin-left: 0;
           margin-right: auto;
+        }
+      }
+    }
+
+    .modal-header {
+      .flex-toolbar {
+        .toolbar-section {
+          &.title {
+            padding-left: 0;
+            padding-right: 15px;
+          }
         }
       }
     }

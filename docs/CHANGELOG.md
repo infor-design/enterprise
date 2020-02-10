@@ -1,15 +1,342 @@
 # What's New with Enterprise
 
+## v4.26.0
+
+### v4.26.0 Deprecation
+
+### v4.26.0 Features
+
+- `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#397](https://github.com/infor-design/design-system/issues/397))
+- `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
+
+### v4.26.0 Fixes
+
+- `[Application Menu]` Fixed bugs with filtering where it was not possible to have the filter match text within content areas, as well as general expand/collapse bugs with filtering. ([#3131](https://github.com/infor-design/enterprise/issues/3131))
+- `[Application Menu]` Fixed overlap button when label is too long, and aligned dropdown icon in application menu uplift theme. ([#3133](https://github.com/infor-design/enterprise/issues/3133))
+- `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
+- `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
+- `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
+- `[Colors]` Fixed an incorrect ruby06 color, and made the background change on theme change now (again). ([#3448](https://github.com/infor-design/enterprise/issues/3448))
+- `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
+- `[Datagrid]` Fixed a bug where if a filter row column is frozen the mask and editor options would not be applied. ([#2553](https://github.com/infor-design/enterprise-ng/issues/2553))
+- `[Datagrid]` Fixed hover color should not be similar to alternate rows when hovering in uplift high contrast. ([#3338](https://github.com/infor-design/enterprise/issues/3338))
+- `[Datagrid]` Fixed a demo app issue filtering decimal fields in some examples. ([#3351](https://github.com/infor-design/enterprise/issues/3351))
+- `[Datagrid]` Fixed an issue that the filter row type dropdowns did not close when the grid is scrolled. ([#3216](https://github.com/infor-design/enterprise/issues/3216))
+- `[Datagrid]` Added an example showing the configuration needed to filter date time fields on just dates without the time part. ([#2865](https://github.com/infor-design/enterprise/issues/2865))
+- `[Datagrid]` Changed the isFilter added value to datasets to a more unique value to avoid clashes. ([#2668](https://github.com/infor-design/enterprise/issues/2668))
+- `[Datagrid]` Added a `getDataset` method that will return the current dataset without any added properties. ([#2668](https://github.com/infor-design/enterprise/issues/2668))
+- `[Datagrid]` Fixed an issue that when reordering filter columns the filter values would disappear. ([#2565](https://github.com/infor-design/enterprise/issues/2565))
+- `[Datagrid]` Fixed an issue that dropdown lists in filter rows did not close when scrolling. ([#2056](https://github.com/infor-design/enterprise/issues/2565))
+- `[Datagrid]` Added a `filterType` option to the filter event data so the type can be determined. ([#826](https://github.com/infor-design/enterprise/issues/826))
+- `[Datagrid]` Add options to `toolbar.filterRow` so that instead of true/false you can set `showFilter, clearFilter, runFilter` independently. ([#1479](https://github.com/infor-design/enterprise/issues/1479))
+- `[Datagrid]` Added fixes to improve the usage of the textarea editor. ([#3417](https://github.com/infor-design/enterprise/issues/3417))
+- `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
+- `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
+- `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
+- `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))
+- `[Icons]` Fixed color inconsistencies of the icons when the fields are in readonly state. ([#3176](https://github.com/infor-design/enterprise/issues/3176))
+- `[Input]` Added the ability to line up data labels with inputs by adding class `field-height` to the `data` element and placing it in a responsive grid. ([#987](https://github.com/infor-design/enterprise/issues/987))
+- `[Input]` Added the ability to use standalone required spans, this will help on responsive fields if they are cut off. ([#3115](https://github.com/infor-design/enterprise/issues/3115))
+- `[Input/Forms]` Added the ability to add a class to rows to align the fields on the bottom, this will line up fields if they have wrapping labels or long labels with required fields. To enable this add class `flex-align-bottom` to the grid `row`. ([#443](https://github.com/infor-design/enterprise/issues/443))
+- `[Locale]` Fixed an issue where formatDate() method was not working for es-419. ([#3363](https://github.com/infor-design/enterprise/issues/3363))
+- `[Module Tabs]` Fixed color tab indicator and small gap below when selected/opened for all color variations in uplift theme. ([#3312](https://github.com/infor-design/enterprise/issues/3312))
+- `[Modal]` Fixed colors in dark mode for the primary disabled button and error and background contrast. ([#2754](https://github.com/infor-design/enterprise/issues/2754))
+- `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
+- `[Popupmenu]` Fixed an issue where list separators were disappearing when reduced the browser zoom level e.g. 70-80%. ([#3407](https://github.com/infor-design/enterprise/issues/3407))
+- `[Radar Chart]` Fixed an issue where labels was cut off for some screen sizes. ([#3320](https://github.com/infor-design/enterprise/issues/3320))
+- `[Searchfield]` Fixed a bug where changing filter results while the autocomplete is open may result in the menu being positioned incorrectly. ([#3243](https://github.com/infor-design/enterprise/issues/3243))
+- `[Searchfield]` Fixed a bug in Toolbar Searchfields where a component configured with `collapsible: false` and `collapseSize` defined, the searchfield would incorrectly collapse. ([NG#719](https://github.com/infor-design/enterprise-ng/issues/719))
+- `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
+- `[Swaplist]` Fixed an issue where top buttons were not aligned in Firefox. ([#3425](https://github.com/infor-design/enterprise/issues/3425))
+- `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not typechecking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
+- `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
+- `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
+
+## v4.25.1
+
+### v4.25.1 Fixes
+
+- `[Datagrid]` Fixed a bug where if there was an editor datagrid might error when loading. ([#3313](https://github.com/infor-design/enterprise/issues/3313))
+- `[Mask]` Fixed a bug where leading zeroes were not possible to apply against Number Masks on standard input fields that also handled formatting for thousands separators. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
+- `[General]` Improved the colors of windows chrome custom scrollbars in uplift themes. ([#3413](https://github.com/infor-design/enterprise/issues/3413))
+
+## v4.25.0
+
+### v4.25.0 Features
+
+- `[Fields]` Added a form level class to toggle all fields in the form to a more compact (shorter) mode called `form-layout-compact`. Added and fixed existing components so that there is now the option to have more compact forms by using shorter fields. ([#3249](https://github.com/infor-design/enterprise/issues/3249))
+- `[Tag]` Added a new style for linkable tags that will work for default, info, good, error, alert, and neutral styles. ([#3113](https://github.com/infor-design/enterprise/issues/3113))
+- `[Multiselect]` Added Tag Display as a new style for interacting with selected results in Multiselect components. ([#3114](https://github.com/infor-design/enterprise/issues/3114))
+- `[Popdown]` Added support for tabbing into and exit out of it. ([#3218](https://github.com/infor-design/enterprise/issues/3218))
+- `[Colors]` Updated design system tokens to new colors for uplift and did a pass on all three theme variants. This impacts and improves many internal colors in components and charts. ([#3007](https://github.com/infor-design/enterprise/issues/3007))
+
+### v4.25.0 Fixes
+
+- `[About]` Added further indication for Microsoft Edge Chrome next to the underlying chrome version. ([#3073](https://github.com/infor-design/enterprise/issues/3073))
+- `[About]` Fixed a bug where the browser language was shown as the locale name, we now show browser language and IDs language and locale separate. ([#2913](https://github.com/infor-design/enterprise/issues/2913))
+- `[About]` Fixed a bug where the OS version was duplicated. ([#1650](https://github.com/infor-design/enterprise/issues/1650))
+- `[Accordion]` Fixed inconsistency style of focus element after clicking on a certain accordion header. ([#3082](https://github.com/infor-design/enterprise/issues/3082))
+- `[Accordion]` Fixed an issue that when all panes are expanded then they could no longer be closed. ([#701](https://github.com/infor-design/enterprise-ng/issues/3217))
+- `[Application Menu]` Fixed minor usability issues when attempting to filter on application menus, display of hidden filtered children, and filtering reset when a Searchfield is blurred. ([#3285](https://github.com/infor-design/enterprise/issues/3285))
+- `[Application Menu]` Fixed incorrect font-size/padding around list item headers' bullet points. ([#3364](https://github.com/infor-design/enterprise/issues/3364))
+- `[Application Menu]` Tweaked some font colors on the Vibrant theme. ([#3400](https://github.com/infor-design/enterprise/issues/3400))
+- `[Autocomplete]` Fixed an issue where selected event was not firing when its parent is partly overflowing. ([#3072](https://github.com/infor-design/enterprise/issues/3072))
+- `[Calendar]` Fixed an issue setting the legend checked elements to false in the api. ([#3170](https://github.com/infor-design/enterprise/issues/3170))
+- `[Datagrid]` Fixed an issue where the data after commit edit was not in sync for tree. ([#659](https://github.com/infor-design/enterprise-ng/issues/659))
+- `[Datagrid]` Fixed an issue where the add row or load new data for grouping was not working. ([#2801](https://github.com/infor-design/enterprise/issues/2801))
+- `[Datagrid]` Fixed an issue where time picker filter trigger icon and text was overlapping. ([#3062](https://github.com/infor-design/enterprise/issues/3062))
+- `[Datagrid]` Fixed a bug where floating point math would cause the grouping sum aggregator to round incorrectly. ([#3233](https://github.com/infor-design/enterprise/issues/3233))
+- `[Datagrid]` Fixed style issues in all theme and theme variants when using the list style including grouped headers and states. ([#3265](https://github.com/infor-design/enterprise/issues/3265))
+- `[Datagrid]` Fixed issues with the stretch columns minimum width. ([#3308](https://github.com/infor-design/enterprise/issues/3308))
+- `[Datagrid]` Fixed an issue where converting circular structure to JSON was throwing an error. ([#3309](https://github.com/infor-design/enterprise/issues/3309))
+- `[Datagrid]` Fixed an issue where focus in date picker field was not aligning. ([#3350](https://github.com/infor-design/enterprise/issues/3350))
+- `[Datagrid]` Added fixes for editing lookup fields, fixed the styling of the lookup editor and improved padding, also fixed the sort indicator color. ([#3160](https://github.com/infor-design/enterprise/issues/3160))
+- `[Datagrid]` Fixed a bug that made selecting blank items in lists in a dropdown not possible. ([#3313](https://github.com/infor-design/enterprise/issues/3313))
+- `[Editor]` Fixed an issue where line spacing was inconsistent. ([#3335](https://github.com/infor-design/enterprise/issues/3335))
+- `[General]` Added detection for wkWebView which is paired with safari. This caused issues with all black text as this browser had previously been unknown. ([#3336](https://github.com/infor-design/enterprise/issues/3336))
+- `[Homepage]` Fixed an issue where the DOM order was not working for triple width widgets. ([#3101](https://github.com/infor-design/enterprise/issues/3101))
+- `[Locale]` Fixed an issue where enter all digits was not working for fr-FR. ([#3217](https://github.com/infor-design/enterprise/issues/3217))
+- `[Locale]` Added the ability to set a 5 digit language (`fr-FR` and `fr-CA` vs `fr`) and added separate strings for `fr-CA` vs `fr-FR`. ([#3245](https://github.com/infor-design/enterprise/issues/3245))
+- `[Locale]` Changed incorrect Chinese locale year formats to the correct format as noted by translators. For example `2019年 12月`. ([#3081](https://github.com/infor-design/enterprise/issues/3081))
+- `[Locale]` Corrected and added the firstDayofWeek setting for every locale. ([#3060](https://github.com/infor-design/enterprise/issues/3060))
+- `[Mask]` Fixed an issue when applying Masks to input fields configured for numbers, where errors would be thrown when the Mask attempted to overwrite the input field value. ([#3315](https://github.com/infor-design/enterprise/issues/3315))
+- `[Modal]` Fixed an issue where the returns focus to button after closing was not working. ([#3166](https://github.com/infor-design/enterprise/issues/3166))
+- `[Multiselect]` Adjusted the placeholder color as it was too dark. ([#3276](https://github.com/infor-design/enterprise/issues/3276))
+- `[Pie]` Fixed cut off line labels when something other than value is used. ([#3143](https://github.com/infor-design/enterprise/issues/3143))
+- `[Popupmenu]` Switched the `attachToBody` setting to be true by default. ([#3331](https://github.com/infor-design/enterprise/issues/3331))
+- `[Searchfield]` Fixed an issue where multiselect items' checkboxes and text were misaligned in RTL mode. ([#1811](https://github.com/infor-design/enterprise/issues/1811))
+- `[Searchfield]` Fixed placeholder text alignment issues on Vibrant theme in Firefox. ([#3055](https://github.com/infor-design/enterprise/issues/3055))
+- `[Scrollbar]` Fixed styles for windows chrome to work with all themes. ([#3172](https://github.com/infor-design/enterprise/issues/3172))
+- `[Searchfield]` Fixed an overlapping text in searchfield when close icon button is showed. ([#3135](https://github.com/infor-design/enterprise/issues/3135))
+- `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
+
+(47 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 96, 980 Functional Tests, 1196 e2e Test)
+
+## v4.24.0
+
+### v4.24.0 Important Changes
+
+- `[Icons]` Reversed a change in previous versions to make alert icons all have a white background as this caused issues. Concerning alert icons there are now the following `icon-[name]` - which will have transparent background, in Uplift these are linear in style, in soho these are solid in style. We also add a `icon-[name]-alert` for alert icons with a white background. If you need a white background you can use these otherwise we have restored the functionality from the 4.21 version, you might need a white background in calendar icons. Also the pending icon is fixed and now orange. ([#3052](https://github.com/infor-design/enterprise/issues/3052))
+- `[Datagrid]` Changed the way tables are rendered to avoid gaps at the end of the grid and fix the sizes so they work in resize. This is done by using css position: sticky for headers. It has a few consequences. The spaceColumn option which was never completed was removed. The stretchColumn option is still working but is less important now and defaults to no stretch. IE 11 will now no longer support sticky headers because it does not support css position sticky, so it will degrade in functionality. This improves all issues with columns getting out of alignment. ([#2825](https://github.com/infor-design/enterprise/issues/2825))
+
+### v4.24.0 Deprecation
+
+### v4.24.0 Features
+
+- `[Datagrid]` Added support to get only changed values as return array for get modified rows method. ([#2958](https://github.com/infor-design/enterprise/issues/2958))
+- `[Editor]` Replaced the `h3` and `h4` buttons with a more robust Fontpicker component. ([#2722](https://github.com/infor-design/enterprise/issues/2722))
+- `[Spinbox]` Standardized Spinbox field sizes to match other input field sizes, added responsive form (fluid) functionality for Spinbox, and reworked the standard size of the Spinbox to match other form fields. ([#1344](https://github.com/infor-design/enterprise/issues/1344))
+
+### v4.24.0 Fixes
+
+- `[All]` Removed the property `-webkit-text-fill-color` from usage throughout out our codebase, except for one rule that changes it to `unset` if it's present. ([#3041](https://github.com/infor-design/enterprise/issues/3041))
+- `[Application Menu]` Fixed issue in application menu where scrollbar is visible even if it's not needed in uplift theme. ([#3134](https://github.com/infor-design/enterprise/issues/3134))
+- `[Datagrid]` Fixed an issue where the hide pager on one page setting was not working correctly when applying a filter. ([#2676](https://github.com/infor-design/enterprise/issues/2676))
+- `[Datagrid]` Fixed an issue where if the grid is initialized with an empty array then updateColumns is used the resetColumns function failed. ([#690](https://github.com/infor-design/enterprise-ng/issues/690))
+- `[Datagrid]` Fixed an issue where the dirty cell indicator was not updating after remove row. ([#2960](https://github.com/infor-design/enterprise/issues/2960))
+- `[Datagrid]` Fixed an issue where the method getModifiedRows was not working, it had duplicate entries for the same row. ([#2908](https://github.com/infor-design/enterprise/issues/2908))
+- `[Datagrid]` Fixed an issue where the personalized columns were not working when toggle columns and drag drop. ([#3004](https://github.com/infor-design/enterprise/issues/3004))
+- `[Datagrid]` Fixed an issue where the grouping filter was not working after do sort. ([#3012](https://github.com/infor-design/enterprise/issues/3012))
+- `[Datagrid]` Fixed an issue where the editable single column was not working. ([#3023](https://github.com/infor-design/enterprise/issues/3023))
+- `[Datagrid]` Fixed an issue where when hovering a parent row the same row index in the child row will show the hover state. ([#2227](https://github.com/infor-design/enterprise/issues/2227))
+- `[Datagrid]` Fixed an issue where the focus state for action button formatter was not working correctly. ([#3006](https://github.com/infor-design/enterprise/issues/3006))
+- `[Datagrid]` Fixed an issue where the personalization dialog was not centered on IE 11. ([#3175](https://github.com/infor-design/enterprise/issues/3175))
+- `[Datagrid]` Fixed an issue finally so that all columns will always align and will never come out of alignment. ([#2835](https://github.com/infor-design/enterprise/issues/2835))
+- `[Datagrid]` Fixed an issue where in some cases when there is no data you could not scroll right. ([#2363](https://github.com/infor-design/enterprise/issues/2363))
+- `[Datagrid]` Fixed an issue where in some cases where you could not scroll right over the empty message. ([#2864](https://github.com/infor-design/enterprise/issues/2864))
+- `[Datagrid]` Fixed an issue where the IOS text would appear very large on group headers. ([#2224](https://github.com/infor-design/enterprise/issues/2224))
+- `[Datagrid]` Fixed an issue where in some cases where if you have one column and are in edit mode resizing the page behaved strangely. ([#3193](https://github.com/infor-design/enterprise/issues/3193))
+- `[Datagrid]` Changed the rendering of columns so that there will never be a gap on the left side, changed the default of stretchColumn to null which will fill. ([#1818](https://github.com/infor-design/enterprise/issues/1818))
+- `[Datagrid]` Fixed an issue that hyperlinks in the datagrid would redirect. ([#3207](https://github.com/infor-design/enterprise/issues/3207))
+- `[Datagrid]` Changed the behavior of column resizing to use "fit" during resize, which means adgecent columns only will be resized. ([#605](https://github.com/infor-design/enterprise/issues/605))
+- `[Datagrid]` Fixed an issue that resizing the last column would create a gap. ([#1671](https://github.com/infor-design/enterprise/issues/1671))
+- `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
+- `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
+- `[Datepicker]` Fixed an issue where the calendar layout was not working on ie11. ([#3226](https://github.com/infor-design/enterprise/issues/3226))
+- `[Dropdown]` Fix a bug where a dropdown in a datagrid cell would sometimes not display the correct value when selected. ([#2919](https://github.com/infor-design/enterprise/issues/2919))
+- `[Dropdown]` Fix a layout issue in RTL on the badges example. ([#3150](https://github.com/infor-design/enterprise/issues/3150))
+- `[Editor]` Corrected CSP errors and broken images in the Editor Preview when inserting the default image. ([#2937](https://github.com/infor-design/enterprise/issues/2937))
+- `[Editor]` Fixes issues with Editors configured to use Flex Toolbar, where toolbar buttons were not properly triggering selected events, and overflowed items were not triggering editor actions as expected. ([#2938](https://github.com/infor-design/enterprise/issues/2938))
+- `[Editor]` The Editor now uses the same routine for stripping disallowed tags and attributes from pasted content when it transitions from the Source View to the Preview. This makes it impossible to paste/type HTML tags containing a `style` property with CSS rules that are not allowed to be applied to inline Editor elements, such as `font-family`. ([#2987](https://github.com/infor-design/enterprise/issues/2987))
+- `[Editor]` Fixed a problem in Safari that would cause scrolling to occur inside Flex Toolbars unexpectedly. ([#3033](https://github.com/infor-design/enterprise/issues/3033))
+- `[Editor]` Fixed many memory leaks related to view swapping and `destroy()` in the Editor. ([#3112](https://github.com/infor-design/enterprise/issues/3112))
+- `[EmptyMessage]` Added a fix so that click will only fire on the button part of the empty message. ([#3139](https://github.com/infor-design/enterprise/issues/3139))
+- `[Header]` Update the header placeholder text color to match better. ([#3040](https://github.com/infor-design/enterprise/issues/3040))
+- `[Locale]` Fixed a problem in fi-FI where some date formats where incorrect with one digit days. ([#3019](https://github.com/infor-design/enterprise/issues/3019))
+- `[Locale]` Added new conversion methods for gregorian to umalqura dates and vice versa with Locale. The fromGregorian and togregorian methods were in two separate locations ar-SA and ar-EG. These new methods gregorianToUmalqura and umalquraToGregorian now moved to to one location in locale and removed the maxDate on them. ([#3051](https://github.com/infor-design/enterprise/issues/3051))
+- `[Locale]` Fixed an issue when formatting with `SSS` in the format string, the leading zeros were incorrectly removed from the millisecond output. ([#2696](https://github.com/infor-design/enterprise/issues/2696))
+- `[Locale/Datagrid]` Fixed an issue in the datagrid/locale that meant if a string is provided in the current locale for a number it wont parse correctly if the decimal format is a `,` (such as nl-NL). ([#3165](https://github.com/infor-design/enterprise/issues/3165))
+- `[Locale]` Fixed an issue when loading en-XX locales where some data may be mixed with en-US. ([#3208](https://github.com/infor-design/enterprise/issues/3208))
+- `[Mask]` Fixed a Safari bug where certain masked values would not trigger a "change" event on the input field. ([#3002](https://github.com/infor-design/enterprise/issues/3002))
+- `[Modal]` Added a new setting `overlayOpacity` that give the user to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
+- `[Popover]` Fixed an issue where the content was disappearing when change themes on IE11. ([#2954](https://github.com/infor-design/enterprise/issues/2954))
+- `[Progress]` Added the ability to init the progress and update it to zero, this was previously not working. ([#3020](https://github.com/infor-design/enterprise/issues/3020))
+- `[Sparkline Chart]` Fixed an issue where an error was thrown while a sparkline chart was present during a theme chnage. ([#3159](https://github.com/infor-design/enterprise/issues/3159))
+- `[Tabs Module]` Fixed missing ellipsis and spacing issue on mobile view in searchfield of tabs module when resizing the browser. ([#2940](https://github.com/infor-design/enterprise/issues/2940))
+- `[Toast]` Fixed an issue where the saved position was not working for whole app. ([#3025](https://github.com/infor-design/enterprise/issues/3025))
+- `[Tree]` Fixed an issue where the nodes were not rendering. ([#3194](https://github.com/infor-design/enterprise/issues/3194))
+
+### v4.24.0 Chores & Maintenance
+
+- `[Demoapp]` Allow the query params that affect theming/personalization (theme/variant/colors) to be appended/adjusted on the browser's URL without affecting other query parameters, or adding unnecessary paramters that weren't changed.
+- `[Toolbar Searchfield]` Increased the amount of text shown when the Searchfield is not expanded, and appears similar to a button.  Also modified some styles in all themes to make alignment of the text better between the Searchfield and buttons when the Searchfield is not expanded. ([#2944](https://github.com/infor-design/enterprise/issues/2944))
+
+(74 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 85, 974 Functional Tests, 1191 e2e Test)
+
+## v4.23.0
+
+### v4.23.0 Deprecation
+
+- `[Icons]` We added per theme empty state icons for both uplift (vibrant) and soho (subtle) themes. Because of this `svg-empty.html` is now deprecated. Please use the theme based files `theme-soho-svg-empty.html` and `theme-uplift-svg-empty.html`. ([#426](https://github.com/infor-design/design-system/issues/426))
+
+### v4.23.0 Features
+
+- `[Accordion]` Added a new setting `expanderDisplay` that can display all expander button icons in the classic style, or with all "chevron" or "plus-minus"-style icons.  Deprecated the legacy `displayChevron` setting in favor of this change. ([#2900](https://github.com/infor-design/enterprise/issues/2900))
+- `[Calendar / Day View]` A new component Week View was created, you can configure it to show a single day as well, or several days so we now have a day view. ([#2780](https://github.com/infor-design/enterprise/issues/2780))
+- `[Calendar / Week View]` A new component Week View was added. You can show events in a series of days. This is also integrated into view switcher in the calendar component. ([#1757](https://github.com/infor-design/enterprise/issues/1757))
+- `[Empty Messages]` Added a new icon `empty-no-users`. ([#3046](https://github.com/infor-design/enterprise/issues/3046))
+- `[Locale]` Added updated translation files for 16 in house languages. ([#3049](https://github.com/infor-design/enterprise/issues/3049))
+- `[Modal]` Added a new setting `overlayOpacity` that gives the developer ability to control the opacity level of the modal/message dialog overlay. ([#2975](https://github.com/infor-design/enterprise/issues/2975))
+
+### v4.23.0 Fixes
+
+- `[Accordion]` Fixed the font color when hovered on uplift high contrast. ([#3042](https://github.com/infor-design/enterprise/issues/3042))
+- `[Autocomplete]` Fixed memory leaks by preventing re-rendering of an open autocomplete list from attaching new events, adding multiple `aria-polite` elements, etc. ([#2888](https://github.com/infor-design/enterprise/issues/2888))
+- `[Calendar]` Pass calendar tooltip settings down to week-view component. ([#3179](https://github.com/infor-design/enterprise/issues/3179))
+- `[Calendar]` Fixed disabled legend label color on vibrant/uplift with dark Variant theme. ([#2965](https://github.com/infor-design/enterprise/issues/2965))
+- `[Calendar]` Fixed missing arrow and scrolling issues in the event popup. ([#2962](https://github.com/infor-design/enterprise/issues/2962))
+- `[Contextual Action Panel]` Fixed an issue where the CAP close but beforeclose event not fired. ([#2826](https://github.com/infor-design/enterprise/issues/2826))
+- `[Context Menu]` Fixed a placement bug that would cut the size of the menu to an unusable size in small viewport displays. ([#2899](https://github.com/infor-design/enterprise/issues/2899))
+- `[Contextual Action Panel]` Fixed placement of `(X)` close button on both standard and Flex toolbars when using the `showCloseBtn` setting. ([#2834](https://github.com/infor-design/enterprise/issues/2834))
+- `[Datagrid]` Fixed column headers font color in uplift high contrast. ([#2830](https://github.com/infor-design/enterprise/issues/2830))
+- `[Datagrid]` Fixed an issue where the tree children expand and collapse was not working. ([#633](https://github.com/infor-design/enterprise-ng/issues/633))
+- `[Datagrid]` Fixed an issue where the pager was not updating with updated method. ([#2759](https://github.com/infor-design/enterprise/issues/2759))
+- `[Datagrid]` Fixed an issue where the browser contextmenu was not showing by default. ([#2842](https://github.com/infor-design/enterprise/issues/2842))
+- `[Datagrid]` Fixed an issue where string include zeroes not working with text filter. ([#2854](https://github.com/infor-design/enterprise/issues/2854))
+- `[Datagrid]` Fixed an issue where the select all button for multiselect grouping was not working. ([#2895](https://github.com/infor-design/enterprise/issues/2895))
+- `[Datagrid]` Fixed an issue where the select children for tree was not working. ([#2961](https://github.com/infor-design/enterprise/issues/2961))
+- `[Datepicker]` Fixed an issue where the selected date was getting cleared and creating js error after changing month or year in Umalqura date and Calendar. ([#3093](https://github.com/infor-design/enterprise/issues/3093))
+- `[Datepicker]` Fixed an issue where the validation after body re-initialize was not working. ([#2410](https://github.com/infor-design/enterprise/issues/2410))
+- `[Datepicker]` Fixed an issue where the islamic-umalqura calendar was not working, when used with user vs settings locale and translate data was not loading from parent locale. ([#2878](https://github.com/infor-design/enterprise/issues/2878))
+- `[Datepicker]` Fixed layout issues in RTL mode, also the buttons are switched the to the opposite side now. ([#3068](https://github.com/infor-design/enterprise/issues/3068))
+- `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
+- `[Dropdown]` Fixed an issue where the placeholder was incorrectly renders when initially set selected item. ([#2870](https://github.com/infor-design/enterprise/issues/2870))
+- `[Dropdown]` Fixed placement logic when dropdowns flip, as well as a visual bug with checkmark/icon placement on some browsers. ([#3058](https://github.com/infor-design/enterprise/issues/3058))
+- `[Dropdown]` Fixed an issue where it was possible to inject xss when clearing the typehead. ([#650](https://github.com/infor-design/enterprise-ng/issues/650))
+- `[Field Filter]` Fixed an issues where the icons are not vertically centered, and layout issues when opening the dropdown in a smaller height browser. ([#2951](https://github.com/infor-design/enterprise/issues/2951))
+- `[Header]` Fixed an iOS bug where the theme switcher wasn't working after Popupmenu lifecycle changes. ([#2986](https://github.com/infor-design/enterprise/issues/2986))
+- `[Header Tabs]` Added a more distinct style to selected header tabs. ([infor-design/design-system#422](https://github.com/infor-design/design-system/issues/422))
+- `[Hierarchy]` Fixed the border color on hierarchy cards. ([#423](https://github.com/infor-design/design-system/issues/423))
+- `[Locale]` Fixed an issue where the parseDate method was not working for leap year. ([#2737](https://github.com/infor-design/enterprise/issues/2737))
+- `[Locale]` Fixed an issue where some culture files does not have a name property in the calendar. ([#2880](https://github.com/infor-design/enterprise/issues/2880))
+- `[Locale]` Fixed an issue where cultures with a group of space was not parsing correctly. ([#2959](https://github.com/infor-design/enterprise/issues/2959))
+- `[Locale]` Fixed a problem loading nb-NO locale where it would fail to find translations and possibly error. ([#3035](https://github.com/infor-design/enterprise/issues/3035))
+- `[Lookup]` Fixed missing X button in searchfield on a mobile viewport. ([#2948](https://github.com/infor-design/enterprise/issues/2948))
+- `[Message]` Fixed an issue with an extra scroll bar, updated padding. ([#2964](https://github.com/infor-design/enterprise/issues/2964))
+- `[Modal]` Fixed a layout issue when using 2 or more buttons on some smaller devices. ([#3014](https://github.com/infor-design/enterprise/issues/3014))
+- `[Monthview]` Fixed an issue that the month/year text will reset when pressing cancel. ([#3080](https://github.com/infor-design/enterprise/issues/3080))
+- `[Monthview]` Fixed a layout issue on the header in IE 11. ([#2862](https://github.com/infor-design/enterprise/issues/2862))
+- `[Pie]` Fixed an issue where legends in pie chart gets cut off on mobile view. ([#902](https://github.com/infor-design/enterprise/issues/902))
+- `[Popupmenu]` In mobile settings (specifically iOS), input fields will now allow for text input when also being assigned a context menu. ([#2613](https://github.com/infor-design/enterprise/issues/2613))
+- `[Popupmenu]` Fixed an issue where the destroy event was bubbling up to other parent components. ([#2809](https://github.com/infor-design/enterprise/issues/2809))
+- `[Popupmenu]` Fixed an issue where checkable menu items were not causing a popupmenu list to become properly formatted to fit the checkmarks when generated as part of a Flex Toolbar.  Also reworked the selection system to better handle selectable sections. ([#2989](https://github.com/infor-design/enterprise/issues/2809))
+- `[Toolbar]` Fixed a bug where the dropdown/toolbar menu is being cut off on iOS device. ([#2800](https://github.com/infor-design/enterprise/issues/2800))
+- `[Tooltip]` Fixed a personalization bug on Dark Themes where text colors were sometimes illegible when using certain color configurations. ([#3011](https://github.com/infor-design/enterprise/issues/3011))
+
+### v4.23.0 Chores & Maintenance
+
+- `[Build System]` Created separate sets linting rules for demoapp, source code, and tests, as well as a base set of rules for all environments. ([#2662](https://github.com/infor-design/enterprise/issues/2662))
+
+(70 Issues Solved this release, Backlog Enterprise 378, Backlog Ng 82, 939 Functional Tests, 1136 e2e Test)
+
+## v4.22.0
+
+### v4.22.0 Deprecation
+
+- `[Icons]` The alert icons now all have a white background allowing them to appear on colored areas. There was previously a special `-solid` version of the icons created that is now not needed, if you used the `icon-<name>-solid` icon change it to just `icon-<name>`. ([#396](https://github.com/infor-design/design-system/issues/396))
+
+### v4.22.0 Features
+
+- `[Build]` Replaced UglifyES in the minification script with Terser ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Build]` Added the Locale culture files to the minification script. `.min.js` versions of each locale are now available in the `dist/` folder. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Calendar / Weekview]` Added a new week-view component that can be used standalone and ability switch to calendar week view in calendar. ([#1757](https://github.com/infor-design/enterprise/issues/1757))
+- `[Application Menu]` Improved design of the App Menu Accordion's hierarchy, among other visual improvements, in the Uplift theme. ([#2739](https://github.com/infor-design/enterprise/issues/2739))
+- `[Calendar]` Fixed layout issues in uplift theme. ([#2907](https://github.com/infor-design/enterprise/issues/2907))
+- `[Charts]` Added support for context menu event with charts. ([#2699](https://github.com/infor-design/enterprise/issues/2699))
+- `[Checkboxes]` Fixed layout issues when in grid rows. ([#2907](https://github.com/infor-design/enterprise/issues/2907))
+- `[Contextual Action Panel]` Added support for passing in a full range of settings to the underlying Modal component API. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
+- `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
+- `[Locale]` Added support for fetching minified culture files. ([#2660](https://github.com/infor-design/enterprise/issues/2660))
+- `[Locale]` Added new translations for missing entries. ([#2896](https://github.com/infor-design/enterprise/issues/2896))
+- `[Locale]` Fixed a bug that the language would reset when opening some components if a seperate language is used. ([#2982](https://github.com/infor-design/enterprise/issues/2982))
+- `[Modal]` Added support for a "fullsize" sheet display at all times, or simply beneath the responsive breakpoint. ([#2433](https://github.com/infor-design/enterprise/issues/2433))
+- `[Tabs-Vertical]` Added the ability to personalize Vertical Tabs in accordance with theming. ([#2824](https://github.com/infor-design/enterprise/issues/2824))
+- `[Wizard]` Added support for short labels. If short labels not supplied it will add ellipsis to text and tooltip. ([#2604](https://github.com/infor-design/enterprise/issues/2604))
+
+### v4.22.0 Fixes
+
+- `[Accordion]` Fixed a Safari bug where accordion headers would not lose focus when another accordion header was clicked. ([#2851](https://github.com/infor-design/enterprise/issues/2851))
+- `[Application Menu]` Fixed an issue where footer toolbar area was overlapping to menu content. ([#2552](https://github.com/infor-design/enterprise/issues/2552))
+- `[Application Menu]` Fixed an issue where tooltip was showing white text on white background which makes text to be unreadable. ([#2811](https://github.com/infor-design/enterprise/issues/2811))
+- `[Application Menu]` Fixed a bug where application menus were not dismissed when clicking directly on Popupmenu triggers in a mobile setting. ([#2831](https://github.com/infor-design/enterprise/issues/2831))
+- `[Application Menu]` Fixed an issue on mobile where the body was scroll bouncing when dragging/scrolling in the app menu. ([#2434](https://github.com/infor-design/enterprise/issues/2434))
+- `[Bar Chart]` Fixed an issue where labels were overwritten when use more then one chart on page. ([#2723](https://github.com/infor-design/enterprise/issues/2723))
+- `[Buttons]` Adjust the contrast of buttons (tertiary) on uplift theme. ([#396](https://github.com/infor-design/design-system/issues/396))
+- `[Calendar]` Fixed an issue where the upcoming event description was overlapping the upcoming duration when text is too long, adjust width of spinbox count and fixed alignment of all day checkbox in uplift light theme. ([#2778](https://github.com/infor-design/enterprise/issues/2778))
+- `[Datagrid]` Fixed an issue where if you have duplicate Id's the columns many become misaligned. ([#2687](https://github.com/infor-design/enterprise/issues/2687))
+- `[Datagrid]` Made the text all white on the targeted achievement formatter. ([#2730](https://github.com/infor-design/enterprise/issues/2730))
+- `[Datagrid]` Fixed keyword search so that it will again work with client side paging. ([#2797](https://github.com/infor-design/enterprise/issues/2797))
+- `[Datagrid]` Fixed an issue where the header and cells do not align perfectly. ([#2849](https://github.com/infor-design/enterprise/issues/2849))
+- `[Datagrid]` Fixed an issue where actions menu was not opening after reload the data. ([#2876](https://github.com/infor-design/enterprise/issues/2876))
+- `[Datepicker]` Moved the today button to the datepicker header and adding a setting to hide it if wanted. ([#2704](https://github.com/infor-design/enterprise/issues/2704))
+- `[FieldSet]` Fixed an issue where the fieldset text in chart completion overlap when resizing the browser. ([#2610](https://github.com/infor-design/enterprise/issues/2610))
+- `[Datepicker]` Fixed a bug in datepicker where the destroy method does not readd the masking functionality. [2832](https://github.com/infor-design/enterprise/issues/2832))
+- `[Field Options]` Fixed an issue where the option menu is misaligned in full length input field in uplift theme. ([#2765](https://github.com/infor-design/enterprise/issues/2765))
+- `[Icons]` Added and updated the following icons: icon-new, icon-calculator, icon-save-new, icon-doc-check. ([#391](https://github.com/infor-design/design-system/issues/391))
+- `[Icons]` Added and updated the following icons: icon-bed, icon-user-clock, icon-phone-filled, icon-phone-empty. ([#419](https://github.com/infor-design/design-system/issues/419))
+- `[Listview]` Fixed an issue where empty message would not be centered if the listview in a flex container. ([#2716](https://github.com/infor-design/enterprise/issues/2716))
+- `[Locale/Initialize]` Fixed an issue where opening some components like Contextual Action Panel would change the current locale because it calls initialize when it loads. ([#2873](https://github.com/infor-design/enterprise/issues/2873))
+- `[Mask]` Added an example showing how to user percent format with the locale. ([#434](https://github.com/infor-design/enterprise/issues/434))
+- `[Modal]` Fixed an issue where encoded html would not be recoded on the title. ([#246](https://github.com/infor-design/enterprise/issues/246))
+- `[Modal]` Fixed an issue where the page content behind the modal is still scrollable while the modal window is open on iOS devices. ([#2678](https://github.com/infor-design/enterprise/issues/2678))
+- `[Popupmenu]` Prevent popupmenus from closing after exit and reentry to the popupmenu submenu structure. ([#2702](https://github.com/infor-design/enterprise/issues/2702))
+- `[Swaplist]` Fixed an issue where passed data for searched items were not syncing for beforeswap event. ([#2819](https://github.com/infor-design/enterprise/issues/2819))
+- `[Tabs]` Add more padding to the count styles. ([#2744](https://github.com/infor-design/enterprise/issues/2744))
+- `[Tabs]` Fixed the disabled tab color. ([#396](https://github.com/infor-design/design-system/issues/396))
+- `[Tabs-Module]` Fixed styling and appearance issues on an example page demonstrating the Go Button alongside a Searchfield with Categories. ([#2745](https://github.com/infor-design/enterprise/issues/2745))
+- `[Tabs-Multi]` Fixed an issue where tooltip was not showing when hovering a tab with cut-off text. ([#2747](https://github.com/infor-design/enterprise/issues/2747))
+- `[Toolbar Flex]` Fixed a bug in toolbar flex where the title is getting truncated even if there's enough space for it. ([#2810](https://github.com/infor-design/enterprise/issues/2810))
+- `[Validation]` Fixed an issue where if the mask is set to use a time other than the default time for the locale, this was not taken into account in validation. ([#2821](https://github.com/infor-design/enterprise/issues/2821))
+
+### v4.22.0 Chores & Maintenance
+
+- `[Demo App]` Changed the theme switch to call the page refresh. ([#2743](https://github.com/infor-design/enterprise/issues/2743))
+- `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
+
+(53 Issues Solved this release, Backlog Enterprise 342, Backlog Ng 81, 892 Functional Tests, 909 e2e Test)
+
 ## v4.21.0
+
+### v4.21.0 Deprecation
+
+- `[Icons]` Removed the hardcoded red color of the `icon-flag` so it can be used as a normal icon. If red is desired please add an additional class of `icon-flag icon-error`. ([#2548](https://github.com/infor-design/enterprise/issues/2548))
 
 ### v4.21.0 Features
 
+- `[Calendar]` Added the ability to show tooltip on event and event icon and the ability to fire a context menu event. ([#2518](https://github.com/infor-design/enterprise/issues/2518))
+- `[Datagrid]` Added the ability to use frozen columns with tree grid. ([#2102](https://github.com/infor-design/enterprise/issues/2102))
+- `[Datagrid]` Added support for a fixed row size, this can be used in some cases like frozen columns where rows may have a different size than the three row heights (normal, short, medium). ([#2101](https://github.com/infor-design/enterprise/issues/2101))
+- `[Datagrid]` Added filter row editor options to api setting. ([#2648](https://github.com/infor-design/enterprise/issues/2648))
+- `[Datagrid]` Fixed an issue that alert text is cut off when using the textEllipsis option. ([#2773](https://github.com/infor-design/enterprise/issues/2773))
 - `[Editor]` Added events to trigger on view change. ([#2430](https://github.com/infor-design/enterprise/issues/2430))
 - `[Homepage]` Added a parameter to the `resize` event that provides metadata about the Homepage's state, including a calculated container height. ([#2446](https://github.com/infor-design/enterprise/issues/2446))
+- `[Locale]` Added support for big numbers (18.6) to formatNumber and parseNumber. ([#1800](https://github.com/infor-design/enterprise/issues/1800))
 
 ### v4.21.0 Fixes
 
 - `[Application Menu]` Fixed an indentation issue with child elements in an accordion in the Angular application (enterprise-ng). ([#2616](https://github.com/infor-design/enterprise/issues/2616))
+- `[AppMenu/Accordion]` Improved performance on Angular by not calling siftFor on the app menu build. ([#2767](https://github.com/infor-design/enterprise/issues/2767))
+- `[AppMenu/Accordion]` Fixed a bug where the busy indicator would immediately close. ([#2767](https://github.com/infor-design/enterprise/issues/2767))
 - `[Button]` Fixed an issue where updated method was not teardown and re-init. ([#2304](https://github.com/infor-design/enterprise/issues/2304))
 - `[Circle Pager]` Fixed a bug where it was not showing on mobile view. ([#2589](https://github.com/infor-design/enterprise/issues/2589))
 - `[Contextual Action Panel]` Fixed an issue where if the title is longer, there will be an overflow causing a white space on the right on mobile view. ([#2605](https://github.com/infor-design/enterprise/issues/2605))
@@ -21,19 +348,37 @@
 - `[Datagrid]` Fixed an issue where dirty and row status on the same cell would cause a UI issue. ([#2641](https://github.com/infor-design/enterprise/issues/2641))
 - `[Datagrid]` Changed the onKeyDown callback to fire on any key. ([#536](https://github.com/infor-design/enterprise-ng/issues/536))
 - `[Datagrid]` Added a more descriptive aria-label to checkboxes if the required descriptors exist. ([#2031](https://github.com/infor-design/enterprise-ng/issues/2031))
+- `[Datagrid]` Added an announcement of the selection state of a row. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
+- `[Datagrid]` Fixed filtering on time columns when time is a string. ([#2535](https://github.com/infor-design/enterprise/issues/2535))
+- `[Datagrid]` Fixed icon layout issues on the filter row in medium rowHeight mode. ([#2709](https://github.com/infor-design/enterprise/issues/2709))
+- `[Datagrid]` Fixed an issue where short row height was misaligning in Uplift theme. ([#2717](https://github.com/infor-design/enterprise/issues/2717))
+- `[Datagrid]` Fixed an issue where new row and dirty cell were not working when combined. ([#2729](https://github.com/infor-design/enterprise/issues/2729))
 - `[Dropdown]` Fixed an issue where tooltip on all browsers and ellipsis on firefox, ie11 was not showing with long text after update. ([#2534](https://github.com/infor-design/enterprise/issues/2534))
+- `[Editor]` Fixed an issue where clear formatting was causing to break while switch mode on Firefox. ([#2424](https://github.com/infor-design/enterprise/issues/2424))
+- `[Empty Message]` Fixed padding and alignment issues, the icon is now centered better. ([#2424](https://github.com/infor-design/enterprise/issues/2733))
 - `[Fileupload Advanced]` Added custom errors example page. ([#2620](https://github.com/infor-design/enterprise/issues/2620))
+- `[Flex Toolbar]` Fixed a lifecycle problem that was preventing Menu Buttons with a `removeOnDestroy` setting from opening. ([#2664](https://github.com/infor-design/enterprise/issues/2664))
 - `[Homepage]` Fixed an issue where dynamically added widget was not positioning correctly. ([#2425](https://github.com/infor-design/enterprise/issues/2425))
+- `[Icons]` Fixed an issue with partially invisible empty messages in uplift theme. ([#2474](https://github.com/infor-design/enterprise/issues/2474))
+- `[Icons (Component)]` Fixed a bug where it was possible to store a full base-tag prefixed URL in the `use` setting, which shouldn't be possible. ([PR#2738](https://github.com/infor-design/enterprise/pull/2738))
 - `[Locale]` Fixed a bug where getCulturePath does not work if the sohoxi.js file name has a hash part. ([#2637](https://github.com/infor-design/enterprise/issues/2637))
 - `[Locale]` Fixed a bug found when using NG8 that the default us locale causes issues. It is now an official requirement that you set a locale for all components that require locale information. ([#2640](https://github.com/infor-design/enterprise/issues/2640))
+- `[Locale]` Fixed an occurrence where an nonstandard locale filename was not correctly processed. ([#2684](https://github.com/infor-design/enterprise/issues/2684))
 - `[Lookup]` Fixed memory leak issues after destroy. ([#2494](https://github.com/infor-design/enterprise/issues/2494))
 - `[Modal]` Fixed memory leak issues after destroy. ([#2497](https://github.com/infor-design/enterprise/issues/2497))
+- `[Popupmenu]` Fixed DOM leak where many arrows could be inserted in the DOM. ([#568](https://github.com/infor-design/enterprise-ng/issues/568))
+- `[Pager]` Fixed a bug where clicking disabled buttons caused a refresh of the page in NG. ([#2170](https://github.com/infor-design/enterprise/issues/2170))
 - `[Slider]` Updated the color variant logic to match new uplift theming. ([#2647](https://github.com/infor-design/enterprise/issues/2647))
+- `[Tabs]` Fixed a memory leak caused by removing a tab. ([#2686](https://github.com/infor-design/enterprise/issues/2686))
 - `[Toast]` Fixed memory leak issues after destroy. ([#2634](https://github.com/infor-design/enterprise/issues/2634))
+- `[Toolbar]` Fixed the conditions for when `noSearchfieldReinvoke` destroys an inner Searchfield that's been previously invoked. ([PR#2738](https://github.com/infor-design/enterprise/pull/2738))
+- `[Uplift Theme]` Various improvements to the Dark/Contrast variants, with a focus on passing WCAG ([#2541](https://github.com/infor-design/enterprise/issues/2541)) ([#2588](https://github.com/infor-design/enterprise/issues/2588))
 
 ### v4.21.0 Chores & Maintenance
 
 - `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
+
+(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 880 e2e Test)
 
 ## v4.20.0
 
@@ -49,12 +394,12 @@
 
 - `[Datagrid]` Added support to resize column widths after a value change via the stretchColumnOnChange setting. ([#2174](https://github.com/infor-design/enterprise/issues/2174))
 - `[Datagrid]` Added a Sort Function to the datagrid column to allow the value to be formatted for the sort. ([#2274](https://github.com/infor-design/enterprise/issues/2274)))
-- `[Datagrid]` Added placeholder functionality to Lookup, Dropdown, and Decimal Formatrers. ([#2408](https://github.com/infor-design/enterprise/issues/2408)))
+- `[Datagrid]` Added placeholder functionality to Lookup, Dropdown, and Decimal Formatters. ([#2408](https://github.com/infor-design/enterprise/issues/2408)))
 - `[Datagrid]` Added support to restrict the size of a column with minWidth and maxWidth setting on the column. ([#2313](https://github.com/infor-design/enterprise/issues/2313))
 - `[Datagrid]` Automatically remove nonVisibleCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Fixed header alignment with textOverflow ellipsis setting. ([#2351](https://github.com/infor-design/enterprise/issues/2351))
 - `[Datagrid]` Fixed an issue where code-block editor focus was not working. ([#526](https://github.com/infor-design/enterprise-ng/issues/526))
-- `[Datagrid]` Automatically remove nonVisibelCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
+- `[Datagrid]` Automatically remove nonVisibleCellError when a row is removed. ([#2436](https://github.com/infor-design/enterprise/issues/2436))
 - `[Datagrid]` Add a fix to show ellipsis text on lookups in the datagrid filter. ([#2122](https://github.com/infor-design/enterprise/issues/2122))
 - `[Datagrid]` Made grouping work better with editable, including fixes to addRow, removeRow, messages, and dirty indication. ([#1851](https://github.com/infor-design/enterprise/issues/1851))
 - `[Datagrid]` Changed the beforeCommitCellEdit event into a function on the column that is synchronous. ([#2442](https://github.com/infor-design/enterprise/issues/2442))
@@ -153,6 +498,7 @@
 - `[Tabs]` Added the select method inside the hide method to ensure proper focusing of the selected tab. ([#2346](https://github.com/infor-design/enterprise/issues/2346))
 - `[Tabs]` Added an independent count for adding new tabs and their associated IDs to prevent duplication. ([#2345](https://github.com/infor-design/enterprise/issues/2345))
 - `[Toolbar]` Fixed memory leaks. ([#2496](https://github.com/infor-design/enterprise/issues/2496))
+- `[Toolbar]` Fixed an issue where `noSearchfieldReinvoke` was not being respected during the teardown method, causing lifecycle issues in Angular. ([#2691](https://github.com/infor-design/enterprise/issues/2691))
 - `[Toolbar Flex]` Removed a 100% height on the toolbar which caused issues when nested in some situations. ([#474](https://github.com/infor-design/enterprise-ng/issues/474))
 - `[Listview]` Fixed search to work when not using templates. ([#466](https://github.com/infor-design/enterprise-ng/issues/466))
 
@@ -265,7 +611,7 @@
 - `[Popupmenu]` Fixed an issue where disabled submenus were opening on mouseover. ([#1863](https://github.com/infor-design/enterprise/issues/1863))
 - `[Radios]` Fixed an issue where in `RTL` the radio seems visually separate from it's label. ([#2096](https://github.com/infor-design/enterprise/issues/2096))
 - `[Summary Form]` Updated to improve readability. ([#1765](https://github.com/infor-design/enterprise/issues/1765))
--- `[Targeted Achievement]` Updated to work in uplift theme. ([#2220](https://github.com/infor-design/enterprise/issues/2220))
+- `[Targeted Achievement]` Updated to work in uplift theme. ([#2220](https://github.com/infor-design/enterprise/issues/2220))
 - `[Timepicker]` Fixed an issue where AM/PM dropdown tooltip was displaying on android devices. ([#1446](https://github.com/infor-design/enterprise/issues/1446))
 - `[Timepicker]` Fixed an issue where dropdown popup was out of position on android devices. ([#2021](https://github.com/infor-design/enterprise/issues/2021))
 - `[Timepicker]` Updated the Swedish translation for Set Time. ([#2153](https://github.com/infor-design/enterprise/issues/2153))
@@ -436,7 +782,6 @@
 - `[Css/Sass]` Replaced font-size numerical declarations with their ids-identity token counterpart. ([#1640](https://github.com/infor-design/enterprise/issues/1640))
 - `[Demoapp]` Removed query parameter for changing fonts. ([#1747](https://github.com/infor-design/enterprise/issues/1747))
 - `[Build]` Added a process to notify developers that things are being deprecated or going away. Documented the current deprecations in this system and made [notes for developers](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md#deprecations). ([#1747](https://github.com/infor-design/enterprise/issues/1747))
-- `[Veracode]` Made additional fixes and mitigated in veracode. ([#1723](https://github.com/infor-design/enterprise/issues/1723))
 
 (30 Issues Solved this release, Backlog Enterprise 224, Backlog Ng 59, 785 Functional Tests, 793 e2e Test)
 
@@ -692,7 +1037,6 @@
 - `[General]` Cleaned up some of the sample pages start at A, making sure examples work and tests are covered for better QA (on going). ([#1136](https://github.com/infor-design/enterprise/issues/1136))
 - `[General]` Upgraded to ids-identity 2.0.x ([#1062](https://github.com/infor-design/enterprise/issues/1062))
 - `[General]` Cleanup missing files in the directory listings. ([#985](https://github.com/infor-design/enterprise/issues/985))
-- `[Demo App]` Removed response headers for less Veracode errors. ([#959](https://github.com/infor-design/enterprise/issues/959))
 - `[Angular 1.0]` We removed the angular 1.0 directives from the code and examples. These are no longer being updated. You can still use older versions of this or move on to Angular 7.x ([#1136](https://github.com/infor-design/enterprise/issues/1136))
 - `[Uplift]` Included the uplift theme again as alpha for testing. It will show with a watermark and is only available via the personalize api or url params in the demo app. ([#1224](https://github.com/infor-design/enterprise/issues/1224))
 
@@ -707,7 +1051,7 @@
 
 - `[General]` The ability to make custom/smaller builds has further been improved. We improved the component matching, made it possible to run the tests on only included components, fixed the banner, and improved the terminal functionality. Also removed/deprecated the older mapping tool. ([#417](https://github.com/infor-design/enterprise/issues/417))
 - `[Message]` Added the ability to have different types (Info, Confirm, Error, Alert). ([#963](https://github.com/infor-design/enterprise/issues/963))
-- `[General]` Further fixes to pass veracode scans. Now passing conditionally. ([#683](https://github.com/infor-design/enterprise/issues/683))
+- `[General]` Further fixes to for xss issues. ([#683](https://github.com/infor-design/enterprise/issues/683))
 - `[Pager]` Made it possible to use the pager as a standalone component. ([#250](https://github.com/infor-design/enterprise/issues/250))
 - `[Editor]` Added a clear formatting button. ([#473](https://github.com/infor-design/enterprise/issues/473))
 - `[Datepicker]` Added an option to show the time as current time instead of midnight. ([#889](https://github.com/infor-design/enterprise/issues/889))
@@ -813,7 +1157,6 @@
 
 ### v4.10.0 Features
 
-- `[General]` Changed the code to pass Veracode scans. The IDS components now pass ISO at 86 rating. The rest of the flaws are mitigated with fixes such as stripping tags. As a result we went fairly aggressive with what we strip. If teams are doing something special we don't have tests for there is potential for customizations being stripped. ([#256](https://github.com/infor-design/enterprise/issues/256))
 - `[Tooltips]` Will now activate on longpress on mobile devices. ([#400](https://github.com/infor-design/enterprise/issues/400))
 - `[Contextmenu]` Will now activate on longpress on mobile devices (except when on inputs). ([#245](https://github.com/infor-design/enterprise/issues/245))
 - `[Locale]` Added support for zh-Hant and zh-Hans. ([#397](https://github.com/infor-design/enterprise/issues/397))

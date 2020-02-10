@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise, no-undef */
-
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('en-US', {
   // layout/language
@@ -22,6 +20,7 @@ Soho.Locale.addCulture('en-US', {
       month: 'MMMM d',
       year: 'MMMM yyyy',
       timestamp: 'h:mm:ss a',
+      hour: 'h:mm a',
       datetime: 'M/d/yyyy h:mm a',
       timezone: 'M/d/yyyy h:mm a zz',
       timezoneLong: 'M/d/yyyy h:mm a zzzz'
@@ -40,7 +39,8 @@ Soho.Locale.addCulture('en-US', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 0 // Starts on Sunday
   }],
 
   // numbers/currencyFormats-numberSystem-latn/standard
@@ -50,6 +50,8 @@ Soho.Locale.addCulture('en-US', {
   numbers: {
     percentSign: '%',
     percentFormat: '### %',
+    percentSuffix: ' %',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '.',
     group: ',',
@@ -68,6 +70,7 @@ Soho.Locale.addCulture('en-US', {
     Alert: { id: 'Alert', value: 'Alert', comment: 'Alert' },
     AlertOnPage: { id: 'AlertOnPage', value: 'Alert message(s) on page', comment: 'Alert message(s) on page n' },
     All: { id: 'All', value: 'All', comment: 'All items in the context of a filter' },
+    AllDay: { id: 'AllDay', value: 'All Day', comment: 'Label for an event which lasts all day' },
     AllResults: { id: 'AllResults', value: 'All Results For', comment: 'Search Results Text' },
     AligntoBottom: { id: 'AligntoBottom', value: 'Align Bottom', comment: 'Align to Bottom tooltip' },
     AlignCenterHorizontally: { id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip' },
@@ -86,6 +89,7 @@ Soho.Locale.addCulture('en-US', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Bookmark this', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Breadcrumb', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Browser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Browser Language', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Bulleted list', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Camera', comment: 'Camera tooltip' },
@@ -99,8 +103,6 @@ Soho.Locale.addCulture('en-US', {
     ChangeView: { id: 'ChangeView', value: 'Change View', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Checkbox', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Checked', comment: 'Checked tooltip' },
-    ChooseA: { id: 'ChooseA', value: 'Choose a ', comment: 'Audible tooltip for choosing a thing in a list.' },
-    ChooseAn: { id: 'ChooseAn', value: 'Choose an ', comment: 'Audible tooltip for choosing an item in a list.' },
     Clear: { id: 'Clear', value: 'Clear', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Clear Filter', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Clear Formatting', comment: 'Clear the formatting in editor' },
@@ -123,6 +125,7 @@ Soho.Locale.addCulture('en-US', {
     Contains: { id: 'Contains', value: 'Contains', comment: 'Contains in icons for filtering' },
     CssClass: { id: 'CssClass', value: 'Css Class', comment: 'Label for entering a Css Class name' },
     Cut: { id: 'Cut', value: 'Cut', comment: 'Cut tooltip' },
+    Dark: { id: 'Dark', value: 'Dark', comment: 'The name of one of the application theme variants.' },
     Date: { id: 'Date', value: 'Date', comment: 'Describes filtering by a date data type' },
     Day: { id: 'Day', value: 'Day', comment: 'Shows view with day events' },
     Days: { id: 'Days', value: 'Days ', comment: 'Show how many days until an event' },
@@ -172,6 +175,8 @@ Soho.Locale.addCulture('en-US', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'First Page', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal Text', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Header {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'From', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full View', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Go Forward', comment: 'Move Page / object this direction' },
@@ -190,6 +195,7 @@ Soho.Locale.addCulture('en-US', {
     Hours: { id: 'Hours', value: 'Hours', comment: 'the hour portion of a time (plural)' },
     HeadingThree: { id: 'HeadingThree', value: 'Heading Three', comment: 'Heading Three tooltip' },
     HeadingFour: { id: 'HeadingFour', value: 'Heading Four', comment: 'Heading Four tooltip' },
+    HighContrast: { id: 'HighContrast', value: 'High Contrast', comment: 'The name of a theme variant' },
     Highest: { id: 'Highest', value: 'Highest', comment: 'Highest Four tooltip' },
     Home: { id: 'Home', value: 'Home', comment: 'Home tooltip' },
     HtmlView: { id: 'HtmlView', value: 'Html View', comment: 'Html View tooltip' },
@@ -215,12 +221,14 @@ Soho.Locale.addCulture('en-US', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Align Left', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Align Right', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Keyword', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Language', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Launch', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Last Page', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Left', comment: 'Left tooltip' },
     Legend: { id: 'Legend', value: 'Legend', comment: 'As in a chart legend' },
     LessOrEquals: { id: 'LessOrEquals', value: 'Less Than Or Equals', comment: 'Less Than Or Equals in icons for filtering' },
     LessThan: { id: 'LessThan', value: 'Less Than', comment: 'Less Than in icons for filtering' },
+    Light: { id: 'Light', value: 'Light', comment: 'The name of one of the application theme variants.' },
     Link: { id: 'Link', value: 'Link', comment: 'Link - as in hyperlink - icon tooltop' },
     Load: { id: 'Load', value: 'Load', comment: 'Load icon tooltip' },
     Loading: { id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading' },
@@ -352,7 +360,10 @@ Soho.Locale.addCulture('en-US', {
     SortZtoA: { id: 'SortZtoA', value: 'Sort Descending', comment: 'Sort Z to A in icons for filtering' },
     SortDown: { id: 'SortDown', value: 'Sort Down', comment: 'Sort Down tooltip' },
     SortUp: { id: 'SortUp', value: 'Sort Up', comment: 'Sort Up tooltip' },
+    Submit: { id: 'Submit', value: 'Submit', comment: 'Submit on a modal dialog' },
+    Subject: { id: 'Subject', value: 'Subject', comment: 'The subject of an calendar event.' },
     Subscript: { id: 'Subscript', value: 'Subscript', comment: 'Turn on and off Subscript text in text editor (like word)' },
+    Subtle: { id: 'Subtle', value: 'Subtle', comment: 'The title of one of the application themes.' },
     Superscript: { id: 'Superscript', value: 'Superscript', comment: 'Turn on and off Superscript text in text editor (like word)' },
     Tabs: { id: 'Tabs', value: 'Tabs...', comment: 'Used in the Tabs Control\'s more menu, preceeded by a number that describes how many tabs are in the spillover menu' },
     Tack: { id: 'Tack', value: 'Pin', comment: 'Pin an object' },
@@ -366,6 +377,7 @@ Soho.Locale.addCulture('en-US', {
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Cancel uploading this file', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Close this error', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload' },
+    Time: { id: 'Time', value: 'Time', comment: 'The time part of a date.' },
     Timer: { id: 'Timer', value: 'Timer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'To', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Today', comment: 'refering to today on a calendar' },
@@ -381,6 +393,7 @@ Soho.Locale.addCulture('en-US', {
     TreeCollapse: { id: 'TreeCollapse', value: 'Collapse Tree', comment: 'Tree Collapse tooltip' },
     TreeExpand: { id: 'TreeExpand', value: 'Expand Tree', comment: 'Tree Expand tooltip' },
     Turquoise: { id: 'Turquoise', value: 'Turquoise', comment: 'Color in our color pallette' },
+    Type: { id: 'Type', value: 'Type', comment: 'The type of event.' },
     TypeToFilter: { id: 'TypeToFilter', value: 'Type to filter', comment: 'Screen reader hit for screen reader users.' },
     Up: { id: 'Up', value: 'Up', comment: 'Up tooltip' },
     UpComing: { id: 'UpComing', value: 'Upcoming', comment: 'List of upcoming things (general)' },
@@ -403,6 +416,7 @@ Soho.Locale.addCulture('en-US', {
     UserProfile: { id: 'UserProfile', value: 'User Profile', comment: 'User Profile tooltip' },
     Version: { id: 'Version', value: 'IDS Version', comment: 'Version of IDS' },
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip' },
+    Vibrant: { id: 'Vibrant', value: 'Vibrant', comment: 'The title of one of the application themes.' },
     ViewSource: { id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor' },
     ViewVisual: { id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor' },
     Week: { id: 'Week', value: 'Week', comment: 'Shows a view of the current weeks events' },

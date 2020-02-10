@@ -1,0 +1,23 @@
+//  Form Layouts
+//================================================== //
+.form-responsive .compound-field .checkbox-label {
+  margin-top: 0 !important;
+}
+
+.column .field > .checkbox-label.top-margin,
+.columns .field > .checkbox-label.top-margin {
+  margin-top: 39px !important;
+}
+
+@include respond-to(phone) {
+  .column .field > .checkbox-label.top-margin,
+  .columns .field > .checkbox-label.top-margin {
+    margin-bottom: 5px !important;
+    margin-top: 0 !important;
+  }
+
+  .column .field-checkbox span.label,
+  .columns .field-checkbox span.label {
+    margin-top: -29px !important;
+  }
+}

@@ -36,3 +36,47 @@ describe('Message tests', () => {
     expect(['hide-focus', 'btn-modal', 'btn-modal hide-focus']).toContain(await modalButtonEl.getAttribute('class'));
   });
 });
+
+describe('Message xss tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/message/test-escaped-title');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show encoded text in the title', async () => {
+    const buttonEl = await element(by.id('show-message'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.message.modal'))), config.waitsFor);
+
+    expect(await element(by.css('.message.modal .modal-title')).getText()).toEqual('<script>alert("menuXSS")</script>');
+  });
+});
+
+describe('Message overlay opacity tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/message/test-overlay-opacity');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to set overlay opacity to 10%', async () => {
+    const overlayEl = await element(by.css('.overlay'));
+    const btnEl = await element(by.id('opacity-10'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(btnEl), config.waitsFor);
+    await btnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+
+    expect(await overlayEl.getCssValue('opacity')).toBe('0.1');
+  });
+});

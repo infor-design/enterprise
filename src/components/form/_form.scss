@@ -1,62 +1,134 @@
 //  Form Layouts
 //================================================== //
 
-.form-responsive {
-  input,
-  textarea {
-    width: 100%;
-  }
-
-  .colorpicker-container {
-    position: relative;
-    width: 100% !important;
-
-    .colorpicker {
-      width: auto !important;
+.page-container,
+.container {
+  .form-responsive {
+    input,
+    textarea {
+      width: 100%;
     }
 
-    .trigger {
-      position: absolute;
-      right: 0;
+    .colorpicker-container {
+      position: relative;
+      width: 100%;
+
+      .colorpicker {
+        width: auto;
+      }
+
+      .trigger {
+        position: absolute;
+        right: 0;
+      }
+    }
+
+    .dropdown-wrapper {
+      width: 100%;
+
+      div.dropdown,
+      div.multiselect {
+        width: inherit;
+      }
+    }
+
+    .field .checkbox-label,
+    .field .checkbox > label {
+      margin-top: 30px;
+    }
+
+    .checkbox-group-label + .compound-field {
+      .field .checkbox-label,
+      .field .checkbox > label {
+        margin-top: 0;
+      }
+
+      .field.field-checkbox {
+        margin-bottom: 0;
+      }
+    }
+
+    .field-checkbox {
+      text-align: left;
+    }
+
+    .lookup-wrapper {
+      width: 100%;
+    }
+
+    .label,
+    label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .row.flex-align-bottom,
+    &.row.flex-align-bottom {
+      .label,
+      label:not(.checkbox-label) {
+        overflow: visible;
+        white-space: normal;
+      }
+    }
+
+    .row.no-bottom-margin {
+      margin-bottom: 0;
+    }
+
+    .spinbox-wrapper {
+      width: 100%;
+
+      input {
+        width: calc(100% - 66px);
+      }
     }
   }
-
-  .dropdown-wrapper {
-    width: 100%;
-
-    div.dropdown,
-    div.multiselect {
-      width: inherit;
-    }
-  }
-
-  .field .checkbox-label,
-  .field .checkbox > label {
-    margin-top: 30px;
-  }
-
-  .field-checkbox {
-    text-align: left;
-  }
-
-  .lookup-wrapper {
-    width: 100%;
-  }
-
-  .label,
-  label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
 }
 
 @media (max-width: $breakpoint-phone-to-tablet + 1) {
-  .form-responsive {
-    .field .checkbox-label,
-    .field .checkbox > label {
-      margin-top: -10px;
+  .page-container,
+  .container {
+    .form-responsive {
+      .field .checkbox-label,
+      .field .checkbox > label {
+        margin-bottom: 13px;
+        margin-top: -1px;
+      }
+    }
+  }
+
+  .form-responsive .checkbox-group-label + .compound-field .field .checkbox-label {
+    margin-bottom: 0;
+  }
+}
+
+// Setup specific widths for modals/CAPs with a responsive form
+.modal {
+  &.display-fullsize {
+    .form-responsive {
+      input,
+      textarea {
+        max-width: none;
+        width: 100%;
+      }
+
+      .colorpicker-container {
+        width: 100%;
+
+        .colorpicker {
+          width: auto;
+        }
+      }
+
+      .dropdown-wrapper {
+        width: 100%;
+
+        div.dropdown,
+        div.multiselect {
+          width: inherit;
+        }
+      }
     }
   }
 }

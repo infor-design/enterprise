@@ -4,8 +4,8 @@
   <span id="tag-error" class="tag error"><span class="audible">Error</span>Delayed</span>
   <span id="tag-open-order" class="tag good">Open Order</span>
   <span id="tag-help-order" class="tag alert"><span class="audible">Alert</span>Help Order</span>
-  <a id="tag-clickable" href="#" class="tag is-clickable">#Clickable</a>
-  <a id="tag-dismissible" href="#" class="tag is-dismissible">#Dismissible</a>
+  <a id="tag-linkable" href="#" class="tag is-linkable">#Clickable</a>
+  <span id="tag-dismissible" href="#" class="tag is-dismissible">#Dismissible</span>
 </div>
 
 <div class="tag-list">
@@ -36,7 +36,7 @@
       output.prepend(msg('After Remove: '+ tempID));
     });
 
-    $('.is-clickable').on('click', function(e) {
+    $('.is-linkable').on('click', function(e) {
       output.prepend(msg('Tag Clicked: '+ this.id));
       e.preventDefault();
     });

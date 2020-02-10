@@ -1,0 +1,144 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p>
+      <strong>Date:</strong> Used date for conversions<br />
+      <strong>fromGregorianOld:</strong> Used old method for conversions from `src/components/locale/cultures/ar-SA.js`<br />
+      <strong>gregorianToUmalqura:</strong> Used new method from `src/components/locale/locale.js`<br />
+      <strong>umalquraToGregorian:</strong> Used new method from `src/components/locale/locale.js`<br /><br />
+      <strong>statsUmalqura:</strong> Compare `fromGregorianOld` and `gregorianToUmalqura` are same or not<br />
+      <strong>statusGregorian:</strong> Compare `Date` and `umalquraToGregorian` are same or not
+    </p>
+    <br /><hr />
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+    <div id="loading-text" class="list-title">Loading...</div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var gridElem = $('#datagrid');
+    var islamic = { locale: 'ar-SA' };
+    Soho.Locale.appendLocaleScript(islamic.locale, false);
+
+    // Set islamic locale
+    function setIslamic() {
+      var deferred = $.Deferred();
+      setTimeout(function() {
+        islamic.calendar = Soho.Locale.cultures[islamic.locale].calendars[0];
+        islamic.conversions = islamic.calendar.conversions;
+        deferred.resolve();
+      }, 100);
+      return deferred.promise();
+    }
+
+    // Format date
+    function formatDate(date) {
+      return Soho.Locale.formatDate(date, { pattern: 'MM/dd/yyyy' });
+    }
+
+    // Add days
+    function addDays(date, day) {
+      return new Date(date.getTime() + day * 24 * 60 * 60 * 1000);
+    }
+
+    // Get dates
+    function getDates(start, end) {
+      start = start || new Date();
+      start.setHours(0, 0, 0, 0);
+
+      end = end || addDays(start, 1);
+      end.setHours(0, 0, 0, 0);
+
+      var dates = [];
+      var days = parseInt((end.getTime() - start.getTime()) / (1000 * 3600 * 24), 10);
+      for (var i = 0; i <= days; i++) {
+        var d1 = addDays(start, i);
+        var d2 = islamic.conversions.fromGregorian(d1);
+        var d3 = Soho.Locale.gregorianToUmalqura(d1);
+        // d3 = Soho.Locale.objDateToArray(d3);
+
+        var d4 = Soho.Locale.umalquraToGregorian(d3[0], d3[1], d3[2]);
+        // d4 = Soho.Locale.objDateToArray(d4);
+
+        dates.push({
+          date: d1,
+          fromGregorianOld: d2, // Previous method, will remove some point
+          gregorianToUmalqura: d3,
+          umalquraToGregorian: d4
+        });
+      }
+      return dates;
+    }
+
+    // Display output
+    function show(dates) {
+      if (dates) {
+        var data = [];
+        var columns = [];
+        var statuses = [
+          { value: true, classes: 'success', text: 'Success'},
+          { value: false, classes: 'error', text: 'Error' }
+        ];
+
+        // Set data
+        for (var i = 0, l = dates.length; i < l; i++) {
+          var d = dates[i];
+          var d1 = formatDate(d.date);
+          var d2 = formatDate(d.fromGregorianOld);
+          var d3 = formatDate(d.gregorianToUmalqura);
+          var d4 = formatDate(d.umalquraToGregorian);
+          var statusGregorian = d1 !== '' && d1 === d4;
+          var statsUmalqura = d2 !== '' && d2 === d3;
+
+          data.push({
+            id: i + 1,
+            date: d1,
+            fromGregorianOld: d2,
+            gregorianToUmalqura: d3,
+            umalquraToGregorian: d4,
+            statusGregorian: statusGregorian,
+            statsUmalqura: statsUmalqura
+          });
+        }
+
+        // Set columns
+        columns.push({ id: 'date', name: 'Date', field: 'date' });
+        columns.push({ id: 'fromGregorianOld', name: 'fromGregorianOld', field: 'fromGregorianOld' });
+        columns.push({ id: 'gregorianToUmalqura', name: 'gregorianToUmalqura', field: 'gregorianToUmalqura' });
+        columns.push({ id: 'umalquraToGregorian', name: 'umalquraToGregorian', field: 'umalquraToGregorian' });
+        columns.push({ id: 'statsUmalqura', name: 'statsUmalqura', field: 'statsUmalqura', formatter: Formatters.Alert, ranges: statuses });
+        columns.push({ id: 'statusGregorian', name: 'statusGregorian', field: 'statusGregorian', formatter: Formatters.Alert, ranges: statuses });
+
+        // Invoke grid
+        gridElem.datagrid({
+          columns: columns,
+          dataset: data,
+          paging: true,
+          pagesize: 10,
+          emptyMessage: { title: Locale.translate('NoData'), info: Locale.translate('NoData'), icon: 'icon-empty-no-data' },
+          toolbar: { title: 'Gregorian and Umalqura Dates', results: true, actions: true, rowHeight: true }
+        });
+      }
+    }
+
+    // Hide loading text
+    gridElem.one('rendered', function() {
+      $('#loading-text').addClass('hidden');
+    });
+
+    // initialize
+    setIslamic().done(function() {
+      var start = new Date(1901, 0, 1);
+      var end = new Date(1901, 11, 31);
+
+      var dates = getDates(start, end);
+
+      show(dates);
+    });
+
+  });
+</script>

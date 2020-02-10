@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'bar';
  * @param {boolean} [settings.isGrouped=false] If true its a grouped bar chart
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
  * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
- * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {boolean} [settings.redrawOnResize=true]  If set to false the component will not redraw when the page or parent is resized.
  * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
  * @param {string} [settings.format=true] The d3 axis format
  * @param {string} [settings.tooltip=null] A tooltip for the whole chart
@@ -83,6 +83,7 @@ Bar.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
     this
       .build()
@@ -424,7 +425,7 @@ Bar.prototype = {
         ((((totalGroupArea - totalHeight) / 2) + (d.gindex * maxBarHeight)) + (d.index * gap))))
       .attr('height', () => (self.settings.isStacked ? (yScale.bandwidth()) : maxBarHeight))
       .attr('width', 0) // Animated in later
-      .on('mouseenter', function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (d, i) {
         let j;
         let l;
         let hexColor;
@@ -603,7 +604,7 @@ Bar.prototype = {
           }
         }
       })
-      .on('mouseleave', () => {
+      .on(`mouseleave.${self.namespace}`, () => {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
@@ -631,6 +632,9 @@ Bar.prototype = {
         if (isSelected) {
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
         }
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Adjust the labels
@@ -720,7 +724,7 @@ Bar.prototype = {
       return;
     }
 
-    const elems = document.querySelectorAll('.bar-chart .axis.y .tick text');
+    const elems = this.element[0].querySelectorAll('.bar-chart .axis.y .tick text');
     const dataset = this.settings.dataset;
     for (let i = 0; i < dataset.length; i++) {
       const values = Object.keys(dataset[i]).map(e => dataset[i][e]);
@@ -812,21 +816,21 @@ Bar.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -904,9 +908,18 @@ Bar.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.group .series-group .bar')
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -915,11 +928,13 @@ Bar.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('bar-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('bar-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

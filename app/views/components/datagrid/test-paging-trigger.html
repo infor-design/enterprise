@@ -64,8 +64,7 @@
           }
 
           $.getJSON(url, function(res) {
-            // In this example we know the total records count, but in landmark
-            // we don't. So spoofing what landmark does here by setting firstPage and
+            // We dont know the total records count, so spoofing this here by setting firstPage and
             // lastPage to be solely responsible for determining if we can next/prev/first/last.
             //req.total = 10000;
             req.firstPage = req.activePage === 1;
@@ -75,7 +74,7 @@
 
           //Get Page Based on info in Req, return results into response;
         },
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: true, actions: true, views: true, rowHeight: true}
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true, rowHeight: true}
       }).data('datagrid');
 
       // `filtered`    - we have a search form that can be used in place of a filter bar

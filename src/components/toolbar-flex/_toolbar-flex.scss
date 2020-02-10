@@ -52,26 +52,6 @@
       display: inline;
     }
 
-    span {
-      display: inline-block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      vertical-align: middle;
-      white-space: nowrap;
-
-      @media (min-width: $breakpoint-big-phone - 1) and (max-width: $breakpoint-wide-tablet) {
-        width: 150px;
-      }
-
-      @media (min-width: $breakpoint-wide-tablet + 1) {
-        width: 250px;
-      }
-
-      @media (max-width: $breakpoint-big-phone) {
-        display: none;
-      }
-    }
-
     .page-title,
     .section-title {
       display: block;

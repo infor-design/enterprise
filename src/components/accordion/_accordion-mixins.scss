@@ -1,0 +1,98 @@
+// Accordion Mixins
+//================================================== //
+
+// Left-to-Right
+//================================================== //
+@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+  > a {
+    padding-left: $a-padding;
+  }
+
+  > .icon,
+  > [class^='btn'] {
+    margin-left: $icon-margin;
+
+    + a {
+      padding-left: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+
+  &.list-item {
+    &::before {
+      padding-left: $li-padding;
+    }
+
+    a {
+      padding-left: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+}
+
+@mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
+  .accordion-content {
+    padding-left: $leftPadding;
+  }
+
+  &.has-icons {
+    .accordion-header.no-icon > a {
+      padding-left: $iconLinkPadding;
+    }
+
+    .accordion-content {
+      padding-left: $iconContentPadding;
+    }
+  }
+}
+
+// Right-To-Left
+//================================================== //
+@mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+  > a {
+    padding-left: 0;
+    padding-right: $a-padding;
+  }
+
+  > .icon,
+  > [class^='btn'] {
+    margin-left: auto;
+    margin-right: $icon-margin;
+
+    + a {
+      padding-right: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+
+  &.list-item {
+    &::before {
+      padding-left: 0;
+      padding-right: $li-padding;
+    }
+
+    a {
+      padding-right: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+}
+
+@mixin right-align-cascade-styles-pane($rightPadding, $iconLinkPadding, $iconContentPadding) {
+  .accordion-content {
+    padding-left: 0;
+    padding-right: $rightPadding;
+  }
+
+  &.has-icons {
+    .accordion-header.no-icon > a {
+      padding-left: 0;
+      padding-right: $iconLinkPadding;
+    }
+
+    .accordion-content {
+      padding-left: 0;
+      padding-right: $iconContentPadding;
+    }
+  }
+}

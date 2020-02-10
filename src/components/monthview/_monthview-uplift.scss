@@ -1,14 +1,8 @@
 // Uplift Monthview
 //================================================== //
 
-.monthview-header {
-  .month,
-  .year {
-    font-size: 2.4rem;
-  }
-
-  .btn-monthyear-pane {
-    font-size: 2.4rem;
-    padding: 0 4px 1px 7px;
-  }
+.monthview-popup.popover .hyperlink.today {
+  font-size: 1.4rem;
+  font-weight: 400;
+  top: -1px;
 }

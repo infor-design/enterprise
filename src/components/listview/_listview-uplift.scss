@@ -1,0 +1,52 @@
+// Uplift Listview
+//================================================== //
+
+.listview-search {
+  .searchfield {
+    border-top-color: $listview-border-color;
+  }
+
+  .searchfield-wrapper {
+    height: 40px;
+
+    .icon:not(.close):not(.icon-error) {
+      left: 18px;
+      top: 14px;
+    }
+
+    &.is-hovered {
+      .searchfield {
+        &[disabled] {
+          border-top-color: $listview-border-color;
+
+          &:hover {
+            border-top-color: $listview-border-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Firefox/Safari icon placement adjustments
+html.is-safari,
+html.is-firefox {
+  .listview-search {
+    .searchfield-wrapper {
+      .icon:not(.close):not(.icon-error) {
+        top: 12px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .listview-search {
+    .searchfield-wrapper {
+      .icon:not(.close):not(.icon-error) {
+        left: auto;
+        right: 18px;
+      }
+    }
+  }
+}

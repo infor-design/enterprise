@@ -6,7 +6,6 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../button/button.jquery';
 import '../mask/mask-input.jquery';
-import '../zoom/zoom.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
@@ -54,13 +53,25 @@ Spinbox.prototype = {
   },
 
   /**
+   * @returns {boolean} "true" if this spinbox is inside a wrapper.
+   */
+  get isWrapped() {
+    return this.element.parent().is('.spinbox-wrapper');
+  },
+
+  /**
+   * @returns {boolean} "true" if this spinbox is part of an inline label.
+   */
+  get isInlineLabel() {
+    return this.element.parent().is('.inline');
+  },
+
+  /**
    * @private
    */
   init() {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
-    this.isInlineLabel = this.element.parent().is('.inline');
-    this.isWrapped = this.element.parent().is('.spinbox-wrapper');
 
     this
       .setInitialValue()
@@ -153,22 +164,33 @@ Spinbox.prototype = {
 
     if (this.isWrapped) {
       this.buttons = {
-        down: this.element.parent().find('.down').button(),
-        up: this.element.parent().find('.up').button()
+        down: this.element.parent().find('.down'),
+        up: this.element.parent().find('.up')
       };
+    }
 
-      if (this.isTouch) {
-        this.buttons.down.attr('aria-hidden', 'true');
-        this.buttons.up.attr('aria-hidden', 'true');
+    if (!this.buttons.up.length) {
+      this.buttons.up = $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control up">+</span>`).insertAfter(this.element);
+      this.buttons.up.button();
+    }
+
+    if (!this.buttons.down.length) {
+      this.buttons.down = $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control down">-</span>`).insertBefore(this.element);
+      this.buttons.down.button();
+    }
+
+    const sizes = ['input-xs', 'input-sm', 'input-mm', 'input-md', 'input-lg'];
+    const elemClasses = this.element[0].className;
+    sizes.forEach((size) => {
+      if (elemClasses.indexOf(size) > -1) {
+        const spinboxSize = size.replace('input', 'spinbox');
+        if (this.isWrapped) {
+          this.element.parent('.spinbox-wrapper').addClass(spinboxSize);
+        } else if (this.isInlineLabel) {
+          this.inlineLabel.addClass(spinboxSize);
+        }
       }
-    }
-
-    if (!this.buttons) {
-      this.buttons = {
-        down: $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control down">-</span>`).insertBefore(this.element).button(),
-        up: $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control up">+</span>`).insertAfter(this.element).button()
-      };
-    }
+    });
 
     // Figure out minimum/maximum and data-masking attributes.  The user can provide the spinbox
     // plugin either the min/max or the mask, and the plugin will automatically figure out how to
@@ -313,7 +335,7 @@ Spinbox.prototype = {
       this.decreaseValue();
     }
 
-    this.safeFocus();
+    this.element.focus();
   },
 
   /**
@@ -594,23 +616,6 @@ Spinbox.prototype = {
   },
 
   /**
-   * Focuses the main input field without a mobile zoom.
-   * @returns {void}
-   */
-  safeFocus() {
-    const isMobile = env.os.name === 'ios' || env.os.name === 'android';
-    if (isMobile) {
-      $('head').triggerHandler('disable-zoom');
-    }
-
-    this.element.focus();
-
-    if (isMobile) {
-      $('head').triggerHandler('enable-zoom');
-    }
-  },
-
-  /**
    * Enables the Spinbox
    * @returns {void}
    */
@@ -790,7 +795,7 @@ Spinbox.prototype = {
         $(document).one('mouseup', () => {
           self.disableLongPress(e, self);
           preventClick = false;
-          self.safeFocus();
+          self.element.focus();
         });
       }
     });

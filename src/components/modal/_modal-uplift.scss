@@ -6,3 +6,19 @@
     line-height: normal;
   }
 }
+
+.modal-content {
+  > .btn-close {
+    right: 11px;
+    top: 15px;
+  }
+}
+
+html[dir='rtl'] {
+  .modal-content {
+    > .btn-close {
+      left: 11px;
+      right: auto;
+    }
+  }
+}

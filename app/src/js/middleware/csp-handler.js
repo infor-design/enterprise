@@ -5,7 +5,14 @@ function addNonceToScript(html, nonce) {
   if (!html || !html.length) {
     return '';
   }
-  return html.replace(/<script/ig, `<script nonce="${nonce}"`);
+  let nonced = html.replace(/<script no-nonce>/ig, '<scriptno-nonce>');
+  nonced = nonced.replace(/&lt;script/ig, '<scriptno-nonce-lt');
+  nonced = nonced.replace(/<script>/ig, `<script nonce="${nonce}">`);
+  nonced = nonced.replace(/<script id/ig, `<script nonce="${nonce}" id`);
+  nonced = nonced.replace(/<script src/ig, `<script nonce="${nonce}" src`);
+  nonced = nonced.replace(/<scriptno-nonce>/ig, '<script>');
+  nonced = nonced.replace(/<scriptno-nonce-lt/ig, '&lt;script');
+  return nonced;
 }
 
 function addNonceToStyle(html, nonce) {
@@ -72,7 +79,6 @@ module.exports = function () {
             'http://*.infor.com',
             'https://*.infor.com',
             'https://randomuser.me',
-            'http://placehold.it',
             'http://lorempixel.com',
             'https://imgplaceholder.com',
             'http://squizlabs.github.io'

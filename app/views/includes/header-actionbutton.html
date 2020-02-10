@@ -1,6 +1,6 @@
 <!-- included in all "header-*.html" templates -->
 <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}more">
-  <button class="btn-actions page-changer" type="button" title="More">
+  <button id="header-more-actions" class="btn-actions page-changer" type="button" title="More">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
       <use xlink:href="#icon-more"></use>
     </svg>
@@ -10,16 +10,16 @@
     <li>
       <a href="#">Theme</a>
       <ul class="popupmenu">
-        <li class="is-selectable is-checked"><a href="#" data-theme-name="theme-soho">Soho</a></li>
-        <li class="is-selectable"><a href="#" data-theme-name="theme-uplift">Uplift</a></li>
+        <li class="is-selectable is-checked"><a href="#" data-theme-name="theme-soho" data-translate="text">Subtle</a></li>
+        <li class="is-selectable"><a href="#" data-theme-name="theme-uplift" data-translate="text">Vibrant</a></li>
       </ul>
     </li>
     <li>
       <a href="#">Variant</a>
       <ul class="popupmenu">
-        <li class="is-selectable is-checked"><a href="#" data-theme-variant="light">Light</a></li>
-        <li class="is-selectable"><a href="#" data-theme-variant="dark">Dark</a></li>
-        <li class="is-selectable"><a href="#" data-theme-variant="contrast">High Contrast</a></li>
+        <li class="is-selectable is-checked"><a href="#" data-theme-variant="light" data-translate="text">Light</a></li>
+        <li class="is-selectable"><a href="#" data-theme-variant="dark" data-translate="text">Dark</a></li>
+        <li class="is-selectable"><a href="#" data-theme-variant="contrast" data-translate="text">HighContrast</a></li>
       </ul>
     </li>
     <li>

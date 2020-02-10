@@ -1,4 +1,5 @@
 import * as debug from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
@@ -21,7 +22,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.trigger='click']  Action on which to trigger a menu can be: click, rightClick, immediate ect.
  * @param {boolean} [settings.autoFocus=true]  If false the focus will not focus the first list element. (At the cost of accessibility).
  * @param {boolean} [settings.mouseFocus=true]  If false the focus will not highlight the first list element. (At the cost of accessibility).
- * @param {boolean} [settings.attachToBody=false]  If true the menu will be moved out to the body. To be used in certin overflow situations.
+ * @param {boolean} [settings.attachToBody=true]  If true the menu will be moved out to the body. If false, the menu HTML will remain adjacent to its trigger button. To be used in certin overflow situations.
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
@@ -45,7 +46,7 @@ const POPUPMENU_DEFAULTS = {
   trigger: 'click',
   autoFocus: true,
   mouseFocus: true,
-  attachToBody: false,
+  attachToBody: true,
   removeOnDestroy: false,
   beforeOpen: null,
   ariaListbox: false,
@@ -63,7 +64,8 @@ const POPUPMENU_DEFAULTS = {
     y: 0
   },
   predefined: $(),
-  duplicateMenu: null
+  duplicateMenu: null,
+  stretchToWidestMenuItem: false
 };
 
 function PopupMenu(element, settings) {
@@ -142,6 +144,47 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Set original dom position containment for given menu in case need to move
+   * @private
+   * @param {jQuery[]} menu the menu object
+   * @returns {void}
+   */
+  setMenuOrgContainment(menu) {
+    if (!menu || !menu.length) {
+      return;
+    }
+    const parent = menu.parent();
+    if (!parent.is('body')) {
+      this.menuOrgContainment = { parent, index: parent.children().index(menu) };
+    }
+  },
+
+  /**
+   * Insert the given element to arbitrarily based on containment with parent and index
+   * @private
+   * @param {jQuery[]} elem the element to insert
+   * @param {object} containment the original dom position containment
+   * @returns {void}
+   */
+  insertAtContainment(elem, containment) {
+    const isEl = el => el && el.length;
+    containment = containment || this.menuOrgContainment || {};
+    if (isEl(elem) && isEl(containment.parent)) {
+      let index = containment.index;
+      const parent = containment.parent;
+      const lastIndex = parent.children().length;
+      if (index < 0) {
+        index = Math.max(0, lastIndex + 1 + index);
+      }
+      if (index < lastIndex) {
+        parent.children().eq(index).before(elem);
+      } else {
+        parent.append(elem);
+      }
+    }
+  },
+
+  /**
    * Add markip including Aria
    * @private
    * @returns {void}
@@ -151,38 +194,41 @@ PopupMenu.prototype = {
     let duplicateMenu;
     let triggerId;
 
-    switch (typeof this.settings.menu) {
-      case 'string': // ID Selector
-        id = this.settings.menu;
-        this.menu = $(`#${this.settings.menu}`);
+    if (!this.menu || !this.menu.length) {
+      switch (typeof this.settings.menu) {
+        case 'string': // ID Selector
+          id = this.settings.menu;
+          this.menu = $(`#${this.settings.menu}`);
 
-        // duplicate menu if shared by multiple triggers
-        if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
-          this.menu.data('trigger', this.element);
-          triggerId = this.menu.data('trigger')[0].id;
-          duplicateMenu = this.menu.clone();
-          duplicateMenu.detach().appendTo('body');
+          // duplicate menu if shared by multiple triggers
+          if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+            this.menu.data('trigger', this.element);
+            triggerId = this.menu.data('trigger')[0].id;
+            duplicateMenu = this.menu.clone();
+            this.setMenuOrgContainment(duplicateMenu);
+            duplicateMenu.detach().appendTo('body');
 
-          // add data-id attr to menus
-          duplicateMenu.attr('data-trigger', triggerId);
-          this.menu.attr('data-trigger', triggerId);
-        }
-        break;
-      case 'object': // jQuery Object
-        if (this.settings.menu === null) {
-          this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
-        } else {
-          this.menu = $(this.settings.menu);
-        }
+            // add data-id attr to menus
+            duplicateMenu.attr('data-trigger', triggerId);
+            this.menu.attr('data-trigger', triggerId);
+          }
+          break;
+        case 'object': // jQuery Object
+          if (this.settings.menu === null) {
+            this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
+          } else {
+            this.menu = $(this.settings.menu);
+          }
 
-        id = this.menu.attr('id');
-        if (!id || id === '') {
-          this.menu.attr('id', `popupmenu-${this.id}`);
           id = this.menu.attr('id');
-        }
-        break;
-      default:
-        break;
+          if (!id || id === '') {
+            this.menu.attr('id', `popupmenu-${this.id}`);
+            id = this.menu.attr('id');
+          }
+          break;
+        default:
+          break;
+      }
     }
 
     // If markup already exists for the wrapper, use that instead of rebuilding.
@@ -208,6 +254,7 @@ PopupMenu.prototype = {
     // to prevent containment issues. (Now a Preference)
     if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
       this.originalParent = this.menu.prev();
+      this.setMenuOrgContainment(this.menu);
       this.menu.detach().appendTo('body');
       if (this.settings.duplicateMenu) {
         this.menu.attr('id', `${this.settings.menu}-original`);
@@ -224,7 +271,8 @@ PopupMenu.prototype = {
 
     this.wrapper = this.menu.parent('.popupmenu-wrapper');
     if (!this.wrapper.length) {
-      this.wrapper = this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+      this.wrapper = this.menu.parent('.popupmenu-wrapper');
     }
 
     // Invoke all icons as icons
@@ -254,25 +302,43 @@ PopupMenu.prototype = {
       }
     });
 
-    // If the trigger element is a button with no border append arrow markup
+    // Some popupmenu components will contain an arrow that points to their
+    // triggering element, or a child of that element.
+    let doSetArrow = false;
     const containerClass = this.element.parent().attr('class');
-    if ((this.element.hasClass('btn-menu') ||
-        this.element.hasClass('btn-actions') ||
-        this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
-        this.settings.menu === 'colorpicker-menu' ||
-        this.element.closest('.toolbar').length > 0 ||
-        this.element.closest('.masthead').length > 0 ||
-        this.element.is('.searchfield-category-button') ||
-        (containerClass && containerClass.indexOf('more') >= 0) ||
-        containerClass && containerClass.indexOf('btn-group') >= 0) || this.settings.showArrow) {
+
+    // `true` setting takes precedent over all else
+    if (this.settings.showArrow === true) {
+      doSetArrow = false;
+    } else if (this.settings.showArrow === null) {
+      const closestToolbar = this.element.closest('.toolbar');
+      const closestMasthead = this.element.closest('.masthead');
+
+      if ((this.element.hasClass('btn-menu') ||
+          this.element.hasClass('btn-actions') ||
+          this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
+          (closestToolbar.length > 0 && !closestToolbar.is('.formatter-toolbar')) ||
+          closestMasthead.length > 0 ||
+          (this.settings.menu === 'colorpicker-menu') ||
+          this.element.is('.searchfield-category-button') ||
+          (containerClass && containerClass.indexOf('more') >= 0) ||
+          containerClass && containerClass.indexOf('btn-group') >= 0)) {
+        doSetArrow = true;
+      }
+    }
+
+    if (doSetArrow) {
       const arrow = $('<div class="arrow"></div>');
       const wrapper = this.menu.parent('.popupmenu-wrapper');
 
-      wrapper.addClass('bottom').append(arrow);
+      if (wrapper.find('.arrow').length === 0) {
+        wrapper.addClass('bottom').append(arrow);
+      }
     }
 
     // If inside of a ".field-short" container, make smaller
-    const addFieldShort = this.element.closest('.field-short').length;
+    const addFieldShort = this.element.closest('.field-short').length > 0 ||
+          this.element.closest('.form-layout-compact').length > 0;
     this.menu[addFieldShort ? 'addClass' : 'removeClass']('popupmenu-short');
 
     // If button is part of a header/masthead or a container using the "alternate"
@@ -290,6 +356,18 @@ PopupMenu.prototype = {
     // Unhide the menu markup, if hidden
     if (this.menu.is('.hidden')) {
       this.menu.removeClass('hidden');
+    }
+
+    // If `settings.stretchToWidestMenuItem` is true, the trigger element will be sized
+    // to match the size of the menu's largest item.
+    if (this.settings.stretchToWidestMenuItem) {
+      const btnStyle = window.getComputedStyle(this.element[0]);
+      let padding = 0;
+      if (btnStyle && btnStyle.getPropertyValue('padding-left')) {
+        padding = parseInt(btnStyle.getPropertyValue('padding-left'), 10) + parseInt(btnStyle.getPropertyValue('padding-right'), 10);
+      }
+
+      this.element.width(parseInt(this.getMaxMenuWidth(), 10) - padding);
     }
   },
 
@@ -338,8 +416,10 @@ PopupMenu.prototype = {
       if (settings.heading) {
         headingText += `<li class="heading">${settings.heading}</li>`;
       }
-      if (settings.nextSectionSelect === 'single' || settings.nextSectionSelect === 'multiple') {
-        sectionSelectClass = ` ${settings.nextSectionSelect}`;
+      if (settings.nextSectionSelect === 'single') {
+        sectionSelectClass = ' single-selectable-section';
+      } else if (settings.nextSectionSelect === 'multiple') {
+        sectionSelectClass = ' multi-selectable-section';
       }
 
       return stringUtils.stripWhitespace(`
@@ -420,7 +500,7 @@ PopupMenu.prototype = {
       </svg>`;
     }
 
-    return stringUtils.stripWhitespace(`<li${id} class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
+    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
       <a${id} href="#">${icon}<span>${settings.text}</span>
         ${ddicon}
       </a>
@@ -441,6 +521,7 @@ PopupMenu.prototype = {
   toData(settings) {
     let data = {};
     const menu = [];
+    const self = this;
 
     settings = settings || {};
 
@@ -455,19 +536,16 @@ PopupMenu.prototype = {
       settings.contextElement = settings.contextElement.children('ul');
     }
 
-    const menuId = `${settings.contextElement.attr('id')}`;
-    if (menuId) {
-      data.menuId = menuId;
+    const idAttr = settings.contextElement.attr('id');
+    if (idAttr && idAttr.length) {
+      data.menuId = `${idAttr}`;
     }
 
     const hasIcons = settings.contextElement.hasClass('has-icons');
     data.hasIcons = hasIcons;
 
-    if (settings.noMenuWrap) {
-      data = menu;
-    } else {
-      data.menu = menu;
-    }
+    let singleSelectable;
+    let multiSelectable;
 
     function decodeListItem(item) {
       const li = $(item);
@@ -483,9 +561,11 @@ PopupMenu.prototype = {
         liData.separator = true;
 
         if (li.hasClass('single-selectable-section')) {
+          singleSelectable = true;
           liData.nextSectionSelect = 'single';
         }
         if (li.hasClass('multi-selectable-section')) {
+          multiSelectable = true;
           liData.nextSectionSelect = 'multiple';
         }
 
@@ -513,10 +593,26 @@ PopupMenu.prototype = {
         liData.icon = icon[0].querySelector('use').getAttribute('xlink:href').replace('#icon-', '');
       }
 
-      if (li.hasClass('is-selectable')) {
+      const notGloballySelectable = !singleSelectable && !multiSelectable;
+      const noSelectableSections = !self.hasSelectableSeparator(li);
+
+      /*
+      // Determine single/multi-select
+      if (li.hasClass('is-selectable') || li.hasClass('is-checked')) {
         liData.selectable = 'single';
       } else if (li.hasClass('is-multiselectable')) {
         liData.selectable = 'multiple';
+      }
+      */
+
+      // If selection isn't contained to a header, set it for the entire menu
+      if (liData.selectable && notGloballySelectable && noSelectableSections) {
+        if (liData.selectable === 'single') {
+          singleSelectable = true;
+        } else if (liData.selectable === 'multiple') {
+          multiSelectable = true;
+        }
+        data.selectable = liData.selectable;
       }
 
       const submenu = li.find('.popupmenu');
@@ -542,6 +638,12 @@ PopupMenu.prototype = {
       }
       menu.push(liData);
     });
+
+    if (settings.noMenuWrap) {
+      data = menu;
+    } else {
+      data.menu = menu;
+    }
 
     return data;
   },
@@ -592,7 +694,7 @@ PopupMenu.prototype = {
           a.removeAttribute('disabled');
         }
 
-        // Checks for existing menus, and if present, apply a `.popupmenu` class automatically.
+        // Checks for existing menus, and if present, apply a `popupmenu` class automatically.
         if (submenu instanceof HTMLElement) {
           submenu.classList.add('popupmenu');
         }
@@ -622,6 +724,15 @@ PopupMenu.prototype = {
         if (DOM.hasClass(li, 'is-checked')) {
           a.setAttribute('role', 'menuitemcheckbox');
           a.setAttribute('aria-checked', true);
+
+          // Make all adjacent items selectable.
+          if (!self.hasSelectableSeparator(li)) {
+            let selectableClassName = 'is-selectable';
+            if (self.menu.is('.is-multiselectable')) {
+              selectableClassName = 'is-multiselectable';
+            }
+            self.getAdjacentSelectables(li).addClass(selectableClassName);
+          }
         }
 
         // is-not-checked
@@ -704,13 +815,17 @@ PopupMenu.prototype = {
       itemIcon.remove();
     }
 
-    // TODO: Submenus
-    // Build so the submenu data structure is used to rerun this method against each submenu item.
+    // Refresh a menu item's submenu, if applicable.
     if (data.submenu) {
-      const submenuItems = item.querySelector('.popupmenu').children;
-      for (let i = 0; i < data.submenu.length; i++) {
-        data.submenu[i].isSubmenuItem = true;
-        this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
+      item.classList.add('submenu');
+      const submenuContainer = item.querySelector('.popupmenu');
+      if (submenuContainer) {
+        // Simply update the menu item's children
+        const submenuItems = submenuContainer.children;
+        for (let j = 0; j < data.submenu.length; j++) {
+          data.submenu[j].isSubmenuItem = true;
+          this.refreshMenuItem(submenuItems.item(j), data.submenu[j], callback);
+        }
       }
     }
 
@@ -766,8 +881,6 @@ PopupMenu.prototype = {
     }
 
     function contextMenuHandler(e, isLeftClick) {
-      e.preventDefault();
-
       if (self.keydownThenClick) {
         delete self.keydownThenClick;
         return;
@@ -811,7 +924,8 @@ PopupMenu.prototype = {
           this.element
             .on('touchstart.popupmenu', (e) => {
               // iOS needs this prevented to prevent its own longpress feature in Safari
-              if (env.os.name === 'ios') {
+              // NOTE: this should not interfere with normal text input on form fields.
+              if (env.os.name === 'ios' && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
               }
               $(e.target)
@@ -1140,7 +1254,7 @@ PopupMenu.prototype = {
     const href = anchor.attr('href');
     let selectionResult = [anchor];
 
-    if (!e && !anchor) {
+    if (!e && !anchor || !anchor.length) {
       return false;
     }
 
@@ -1159,7 +1273,7 @@ PopupMenu.prototype = {
       e.preventDefault();
     }
 
-    if (this.isInSelectableSection(anchor) || this.menu.hasClass('is-selectable') || this.menu.hasClass('is-multiselectable')) {
+    if (this.isSelectable(anchor.parent())) {
       selectionResult = this.select(anchor);
     }
 
@@ -1532,6 +1646,35 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Gets the width of the menu
+   * @returns {number} representing the width of the largest menu item.
+   */
+  getMaxMenuWidth() {
+    if (!(this.menu instanceof $)) {
+      return 0;
+    }
+
+    const wasOriginallyClosed = !this.isOpen;
+    if (wasOriginallyClosed) {
+      this.wrapper.css({
+        left: '-999999px'
+      });
+      this.menu.addClass('is-open');
+    }
+
+    const width = this.menu.width();
+
+    if (wasOriginallyClosed) {
+      this.wrapper.css({
+        left: ''
+      });
+      this.menu.removeClass('is-open');
+    }
+
+    return width;
+  },
+
+  /**
    * Opens the popupmenu, including repopulating data and setting up visual delays, if necessary.
    * @param {jQuery.Event} e the event that caused the menu to open
    * @param {boolean} ajaxReturn set to true if the open routine should not include a source call
@@ -1540,6 +1683,12 @@ PopupMenu.prototype = {
    */
   open(e, ajaxReturn, useDelay) {
     const self = this;
+
+    // If no top-level menu is present, don't open at all and act like a button.
+    if (!this.menu || !this.menu.length) {
+      return;
+    }
+
     /**
      * Fires before open.
      *
@@ -1604,6 +1753,13 @@ PopupMenu.prototype = {
       if (dropDownApi) {
         dropDownApi.closeList('cancel');
       }
+    }
+
+    // Close Application Menu, if applicable
+    const openAppMenu = document.querySelector('.application-menu.is-open');
+    if (openAppMenu instanceof HTMLElement &&
+      (!openAppMenu.contains(this.element[0]) && !openAppMenu.contains(this.menu[0]))) {
+      $(document).triggerHandler('dismiss-applicationmenu');
     }
 
     this.element.addClass('is-open');
@@ -1676,8 +1832,15 @@ PopupMenu.prototype = {
         self.close();
       });
 
-      $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
+      $('.datagrid-wrapper').on('scroll.popupmenu', () => {
         self.close();
+      });
+
+      $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
+        const delay = self.isInViewport(self.element[0]) ? 0 : 150;
+        setTimeout(() => {
+          self.close();
+        }, delay);
       });
 
       /**
@@ -1711,21 +1874,23 @@ PopupMenu.prototype = {
     let tracker = 0;
     let startY;
     let menuToClose;
-    let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
     self.menu.on('mouseenter.popupmenu touchend.popupmenu', '.submenu:not(.is-disabled)', function (thisE) {
-      const menuitem = $(this);
-      startY = thisE.pageX;
+      if (!$(thisE.target).hasClass('popupmenu')) {
+        const menuitem = $(this);
 
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        self.openSubmenu(menuitem);
-      }, 300);
+        startY = thisE.pageX;
 
-      $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
-        tracker = documentE.pageX;
-      });
+        clearTimeout(self.submenuOpenTimeout);
+        self.submenuOpenTimeout = setTimeout(() => {
+          self.openSubmenu(menuitem);
+        }, 300);
+
+        $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
+          tracker = documentE.pageX;
+        });
+      }
     }).on('mouseleave.popupmenu', '.submenu', function () {
       $(document).off(`mousemove.popupmenu.${this.id}`);
 
@@ -1745,7 +1910,8 @@ PopupMenu.prototype = {
         menuToClose.parent().parent().removeClass('is-submenu-open');
         menuToClose = null;
       }
-      clearTimeout(timeout);
+
+      clearTimeout(self.submenuOpenTimeout);
     });
 
     if (self.settings.autoFocus) {
@@ -1769,6 +1935,19 @@ PopupMenu.prototype = {
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
     }
+  },
+
+  /**
+   * Checks if given element is all in viewport
+   * @private
+   * @param {HTMLElement} elem an HTML element to check
+   * @returns {boolean} true if given element is all in viewport
+   */
+  isInViewport(elem) {
+    const b = elem.getBoundingClientRect();
+    return b.top > 0 && b.left > 0 &&
+      b.bottom < (window.innerHeight || document.documentElement.clientHeight) &&
+      b.right < (window.innerWidth || document.documentElement.clientWidth);
   },
 
   /**
@@ -1975,14 +2154,14 @@ PopupMenu.prototype = {
     const returnObj = [anchor];
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
-    if (singleMenu || singleSection) {
+    if (parent.hasClass('is-selectable') || singleMenu || singleSection) {
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
       returnObj.push('selected');
       return returnObj;
     }
 
-    if (multipleMenu || multipleSection) {
+    if (parent.hasClass('is-multiselectable') || multipleMenu || multipleSection) {
       if (parent.hasClass('is-checked')) {
         parent.removeClass('is-checked');
         returnObj.push('deselected');
@@ -2009,17 +2188,69 @@ PopupMenu.prototype = {
   },
 
   /**
+   * Checks if a list item is selectable, single or multi.
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {boolean} whether or not the element is selectable
+   */
+  isSelectable(li) {
+    return $(li).is('.is-selectable, .is-multiselectable') ||
+      this.hasSelectableSeparator(li) ||
+      this.menu.hasClass('is-selectable') ||
+      this.menu.hasClass('is-multiselectable');
+  },
+
+  /**
+   * @private
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {jQuery[]} element representing a menu item's adjacent selectable header, if applicable.
+   */
+  getSelectableSeparator(li) {
+    return $(li).prevAll('.separator.single-selectable-section, .separator.multi-selectable-section').first();
+  },
+
+  /**
+   * @private
+   * @param {HTMLElement} li an HTML List Item to check
+   * @returns {boolean} whether or not a menu item has an adjacent selectable header.
+   */
+  hasSelectableSeparator(li) {
+    const sep = this.getSelectableSeparator(li);
+    return (sep && sep.length);
+  },
+
+  /**
+   * Gets references to the adjacent menu items in a selectable section
+   * If there are no selectable sections defined, consider the entire menu
+   * as selectable (not including submenu items)
+   * @param {HTMLElement} li the list item being checked.
+   * @returns {jQuery[]} elements inside the selectable section.
+   */
+  getAdjacentSelectables(li) {
+    const sep = this.getSelectableSeparator(li);
+    const exclusions = ':not(.heading):not(.separator):not(.submenu)';
+
+    if (!sep || !sep.length) {
+      return $(li).parent().children(`li${exclusions}`);
+    }
+    return $(sep).nextUntil('.separator').filter(exclusions);
+  },
+
+  /**
    * Determines whether or not an anchor resides inside of a selectable Popupmenu section.
+   * @private
+   * @deprecated as of v4.24.x. Use `hasSelectableSeparator()` instead.
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected.
    */
   isInSelectableSection(anchor) {
+    warnAboutDeprecation('hasSelectableSeparator()', 'isInSelectableSection()');
     const separator = anchor.parent().prevAll().filter('.separator').first();
     return (separator.hasClass('multi-selectable-section') || separator.hasClass('single-selectable-section'));
   },
 
   /**
    * Determines whether or not an anchor resides inside of a single-selectable Popupmenu section.
+   * @private
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected
    *  within a single-selectable section.
@@ -2031,6 +2262,7 @@ PopupMenu.prototype = {
 
   /**
    * Determines whether or not an anchor resides inside of a multi-selectable Popupmenu section.
+   * @private
    * @param {jQuery[]} anchor the anchor tag being checked.
    * @returns {jQuery[]} elements inside the top-level menu that are selected
    *  within a multi-selectable section.
@@ -2048,10 +2280,13 @@ PopupMenu.prototype = {
   detach() {
     $(document).off(`touchend.popupmenu.${this.id} click.popupmenu.${this.id} keydown.popupmenu`);
     $(window).off('scroll.popupmenu orientationchange.popupmenu');
+    $('.datagrid-wrapper').off('scroll.popupmenu');
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
 
-    this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    if (this.menu && this.menu.length) {
+      this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+    }
 
     $('iframe').each(function () {
       const frame = $(this);
@@ -2074,7 +2309,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu.add(this.element).hasClass('is-open')) {
+    if (!this.menu || !this.menu.add(this.element).hasClass('is-open')) {
       return;
     }
 
@@ -2097,8 +2332,13 @@ PopupMenu.prototype = {
       .off([
         'mouseenter.popupmenu',
         'mouseleave.popupmenu'
-      ].join(' '))
-      .removeClass('is-submenu-open');
+      ].join(' '));
+    this.menu.find('.is-submenu-open').removeClass('is-submenu-open');
+
+    if (this.submenuOpenTimeout) {
+      clearTimeout(this.submenuOpenTimeout);
+      delete this.submenuOpenTimeout;
+    }
 
     if (menu[0]) {
       menu[0].style.left = '';
@@ -2187,6 +2427,13 @@ PopupMenu.prototype = {
     const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
 
+    function unwrapPopup(menu) {
+      const thisWrapper = menu.parent();
+      if (thisWrapper.is('.popupmenu-wrapper, .wrapper')) {
+        menu.unwrap();
+      }
+    }
+
     if (this.ajaxContent) {
       this.ajaxContent.off().remove();
     }
@@ -2202,24 +2449,23 @@ PopupMenu.prototype = {
 
     this.menu.off('dragstart.popupmenu');
 
-    // TODO: Fix when we have time - shouldn't be referencing other controls here
-    let insertTarget = this.element;
-    const searchfield = this.element.parent().children('.searchfield');
-
-    if (searchfield.length) {
-      insertTarget = searchfield.first();
-    }
-    if (this.settings.attachToBody && insertTarget) {
+    // Remove the wrapper, if applicable
+    if (!this.preExistingWrapper && this.menu.parent().is('.popupmenu-wrapper')) {
       this.menu.unwrap();
-
-      if (this.settings.removeOnDestroy) {
-        this.menu.off().remove();
-      }
-    }
-    if (this.menu && insertTarget && !this.settings.attachToBody) {
-      this.menu.insertAfter(insertTarget);
     }
 
+    // Place the menu back where it came from while cleaning up.
+    // Get an accurate target to place the menu back where it came from
+    const searchfield = this.element.parent().children('.searchfield');
+    if (searchfield.length) {
+      this.menu.insertAfter(searchfield.first());
+    } else if (this.menuOrgContainment) {
+      this.insertAtContainment(this.menu);
+    } else {
+      this.menu.insertAfter(this.element);
+    }
+
+    // Cleanup menu items
     this.menu.find('.submenu').children('a').each((i, item) => {
       const spantext = $(item).find('span').text();
       const text = spantext || $(item).text();
@@ -2228,25 +2474,19 @@ PopupMenu.prototype = {
     });
     this.menu.find('.submenu').removeClass('submenu');
 
-    function unwrapPopup(menu) {
-      const thisWrapper = menu.parent();
-      if (thisWrapper.is('.popupmenu-wrapper, .wrapper')) {
-        menu.unwrap();
-      }
-    }
-
-    // Unwrap submenus
+    // Unwrap submenus, if applicable
     this.menu.find('.popupmenu').each(function () {
       unwrapPopup($(this));
     });
 
+    // Finish cleaning up after the wrapper
     if (self.wrapperPlace) {
       self.wrapperPlace.destroy();
       delete self.wrapperPlace;
     }
     wrapper.off().remove();
 
-    if (this.menu[0]) {
+    if (this.menu && this.menu.length && this.menu.data('trigger')) {
       $.removeData(this.menu[0], 'trigger');
     }
 
@@ -2276,9 +2516,20 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   destroy() {
+    if (!this.menu) {
+      return;
+    }
+
     this.close();
     this.teardown();
-    this.menu.trigger('destroy');
+
+    // In some cases, the menu needs to be completely removed on `destroy`.
+    this.menu.triggerHandler('destroy');
+    if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
+      this.menu.off().remove();
+      delete this.menu;
+    }
+
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

@@ -29,14 +29,16 @@ module.exports = function (app, defaults) {
     }
 
     // Sets a simulated response delay for API Calls
-    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) {
+    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) { //eslint-disable-line
       res.opts.delay = req.query.delay;
     }
 
     // Uses the minified version of the Soho library instead of the uncompressed version
+    // NOTE: see the `app/src/js/custom-route-options.js` middleware for where this
+    // setting is translated into `window.SohoConfig`.
     if (req.query.minify && req.query.minify.length > 0) {
       res.opts.minify = true;
-      logger('info', 'Using the minified version of "sohoxi.js"');
+      logger('info', 'Using the minified version of "sohoxi.js" and culture files');
     }
 
     // Uses Flex Toolbars in headers

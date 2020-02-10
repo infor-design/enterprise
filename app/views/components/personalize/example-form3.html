@@ -12,84 +12,25 @@
     </div>
   </header>
 
-  <section id="maincontent" class="page-container scrollable" role="main">
+  <section id="maincontent" role="main">
     <div class="is-personalizable">
       <section class="personalize-header">
-        <div class="content">
-          <div class="row no-bottom-margin small-bottom-padding">
-            <div class="one-third column">
-              <img class="image-round" src="/images/10.jpg" alt="Photo of Evyn"/>
-              <br />
-              <button type="button" class="btn-icon personalize-actionable">
-                <span>Email</span>
-                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                  <use xlink:href="#icon-mail"></use>
-                </svg>
-              </button>
-              <button type="button" class="btn-icon personalize-actionable">
-                <span>Phone</span>
-                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                  <use xlink:href="#icon-phone"></use>
-                </svg>
-              </button>
-              <button type="button" class="btn-icon personalize-actionable">
-                <span>Website</span>
-                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                  <use xlink:href="#icon-url"></use>
-                </svg>
-              </button>
-              <button type="button" class="btn-icon personalize-actionable">
-                <span>Stuff</span>
-                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-                  <use xlink:href="#icon-user"></use>
-                </svg>
-              </button>
-            </div>
-
-            <div class="one-third column">
-              <div class="field less-margin">
-                <label class="label personalize-text">Item</label>
-                <p class="personalize-text data">2000 LGE Incorporated</p>
-              </div>
-              <div class="field less-margin">
-                <label class="label personalize-text">Vendor</label>
-                <p class="personalize-text data">116</p>
-              </div>
-              <div class="field less-margin">
-                <label class="label personalize-text">Purchase Order Total</label>
-                <a class="hyperlink personalize-actionable" href="#">$1,056</a>
-              </div>
-            </div>
-
-            <div class="three columns">
-              <div class="field less-margin">
-                <label  class="label personalize-text">Purchase Order Date</label>
-                <p class="personalize-text data">7/14/2006</p>
-             </div>
-              <div class="field less-margin">
-                <label class="label personalize-text">Purchase Order</label>
-                <p class="personalize-text data">1096</p>
-              </div>
-
-              <div class="field less-margin">
-                <div id="progress-chart" class="chart-container personalize-chart-targeted"></div>
-              </div>
-
-            </div>
-
-          </div>
+        <div class="full-width compound-field">
+          &nbsp;
+          &nbsp;
+          &nbsp;
         </div>
       </section>
     </div>
     <section>
-      <div class="tab-container header-tabs is-personalizable personalize-header">
+      <div class="tab-container is-personalizable horizontal header-tabs">
         <div class="tab-list-container scrollable-y">
           <ul class="tab-list">
             <li class="tab is-selected"><a id="detail" href="#composite-form-detail">Detail</a></li>
             <li class="tab"><a id="options" href="#composite-form-options">Options</a></li>
             <li class="tab"><a id="quantity-detail" href="#composite-form-quantity-detail">Quantity Detail</a></li>
-            <li class="tab"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
-            <li class="tab"><a id="messages" href="#composite-form-messages">Messages</a></li>
+            <li class="tab is-disabled"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
+            <li class="tab is-disabled"><a id="messages" href="#composite-form-messages">Messages</a></li>
             <li class="tab"><a id="add-on-changes" href="#composite-form-addon-changes">Add-On Changes</a></li>
             <li class="tab"><a id="sources" href="#composite-form-sources">Sources</a></li>
           </ul>
@@ -215,19 +156,3 @@
   </section>
 
 </div>
-
-<script>
-  $('body').on('initialized', function () {
-    var progressChartData = [{
-      data: [{
-        name: {text: 'good'},
-        info: {value: '13h'},
-        completed: {value: 13, color: 'good'},
-      }]
-    }];
-
-    var $progressChart = $('#progress-chart');
-    $progressChart.chart({dataset: progressChartData, type: 'targeted-achievement'});
-    $progressChart.addMessage({ message:'You have an Alert!', type:'info', inline:true });
-  });
-</script>

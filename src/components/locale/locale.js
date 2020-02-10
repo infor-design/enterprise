@@ -1,11 +1,20 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
 import { Environment as env } from '../../utils/environment';
+import { numberUtils } from '../../utils/number';
+import { stringUtils } from '../../utils/string';
+import { ummalquraData } from './info/umalqura-data';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
 // culture files. This allows manually setting the directory for the culture files.
 let existingCulturePath = '';
-if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPath === 'string') {
-  existingCulturePath = window.SohoConfig.culturesPath;
+let minifyCultures = false;
+if (typeof window.SohoConfig === 'object') {
+  if (typeof window.SohoConfig.culturesPath === 'string') {
+    existingCulturePath = window.SohoConfig.culturesPath;
+  }
+  if (typeof window.SohoConfig.minifyCultures === 'boolean') {
+    minifyCultures = window.SohoConfig.minifyCultures;
+  }
 }
 
 /**
@@ -18,6 +27,7 @@ if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPa
 * @param {string} currentLocale  The Currently Set Locale
 * @param {object} cultures  Contains all currently-stored cultures.
 * @param {string} culturesPath  the web-server's path to culture files.
+* @param {boolean} minify if true, adds a `.min.js` suffix to the culture's filename.
 */
 const Locale = {  // eslint-disable-line
 
@@ -52,7 +62,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lt', default: 'lt-LT' },
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
-    { lang: 'nb', default: 'nb-NO' },
+    { lang: 'nb', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
@@ -74,7 +84,9 @@ const Locale = {  // eslint-disable-line
     'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
+  translatedLocales: ['fr-CA', 'fr-FR'],
   defaultLocale: 'en-US',
+  minify: minifyCultures,
 
   /**
    * Sets the current lang tag in the Html element
@@ -109,7 +121,7 @@ const Locale = {  // eslint-disable-line
   getCulturesPath() {
     if (!this.culturesPath) {
       const scripts = document.getElementsByTagName('script');
-      const partialPathRegexp = /sohoxi(.min){0,1}(.{0,1}[a-z0-9]*).js/;
+      const partialPathRegexp = /sohoxi(.min){0,1}(.{0,1}[a-z0-9]*)\.js/;
 
       for (let i = 0; i < scripts.length; i++) {
         let src = scripts[i].src;
@@ -197,8 +209,6 @@ const Locale = {  // eslint-disable-line
     }
 
     correctLanguage = this.remapLanguage(lang);
-
-    correctLanguage = this.defaultLocale.substr(0, 2);
     return correctLanguage;
   },
 
@@ -245,8 +255,40 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+      this.languages[locale] = {
+        name: locale,
+        direction: data.direction || (langData ? langData.direction : ''),
+        nativeName: data.nativeName || (langData ? langData.nativeName : ''),
+        messages: data.messages || (langData ? langData.messages : {})
+      };
+    } else if (!this.languages[lang] && !data.messages) {
+      const parentLocale = this.parentLocale(locale);
+      if (parentLocale.default && parentLocale.default !== locale &&
+        !this.cultures[parentLocale.default]) {
+        this.appendLocaleScript(parentLocale.default);
+      }
     }
   },
+
+  /**
+   * Find the parent locale (meaning shared translations), if it exists.
+   * @private
+   * @param {string} locale The locale we are checking.
+   * @returns {string} The parent locale.
+   */
+  parentLocale(locale) {
+    const lang = locale.substr(0, 2);
+    const match = this.defaultLocales.filter(a => a.lang === lang);
+    const parentLocale = match[0] || [{ default: 'en-US' }];
+
+    // fr-FR and fr-CA are different / do not have a default
+    if (this.translatedLocales.indexOf(locale) > -1) {
+      return { lang: 'fr', default: 'fr-CA' };
+    }
+    return parentLocale;
+  },
+
+  appendedLocales: [],
 
   /**
    * Append the local script to the page.
@@ -254,11 +296,24 @@ const Locale = {  // eslint-disable-line
    * @param {string} locale The locale name to append.
    * @param {boolean} isCurrent If we should set this as the current locale
    * @param {string} parentLocale If we should resolve the promise base on locale
+   * @param {string} filename Optional parameter to load locale with different filename
    * @returns {void}
    */
-  appendLocaleScript(locale, isCurrent, parentLocale) {
+  appendLocaleScript(locale, isCurrent, parentLocale, filename) {
     const script = document.createElement('script');
-    script.src = `${this.getCulturesPath() + locale}.js`;
+    const min = this.minify ? '.min' : '';
+    script.async = false;
+
+    if (this.appendedLocales.indexOf(locale) > -1) {
+      return;
+    }
+    this.appendedLocales.push(locale);
+
+    if (!filename) {
+      script.src = `${this.getCulturesPath() + locale}${min}.js`;
+    } else {
+      script.src = `${this.getCulturesPath() + filename}${min}.js`;
+    }
 
     script.onload = () => {
       if (isCurrent && !parentLocale) {
@@ -269,6 +324,10 @@ const Locale = {  // eslint-disable-line
         this.setCurrentLocale(locale, this.cultures[locale]);
         this.setCurrentLocale(parentLocale, this.cultures[parentLocale]);
         this.dff[parentLocale].resolve(parentLocale);
+      }
+      if (parentLocale && this.dff[locale] && this.cultures[locale]) {
+        this.setCurrentLocale(locale, this.cultures[locale]);
+        this.dff[locale].resolve(locale);
       }
       if (!isCurrent && !parentLocale && this.dff[locale]) {
         this.dff[locale].resolve(locale);
@@ -303,21 +362,19 @@ const Locale = {  // eslint-disable-line
       return this.dff.promise();
     }
 
-    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      this.appendLocaleScript('en-US', false);
+    if (!this.cultures['en-US']) {
+      this.appendLocaleScript('en-US', locale === 'en-US');
     }
 
-    const lang = locale.split('-')[0];
     let hasParentLocale = false;
-    const match = this.defaultLocales.filter(a => a.lang === lang);
-    const parentLocale = match[0] || [{ default: 'en-US' }];
+    const parentLocale = this.parentLocale(locale);
     if (parentLocale.default && parentLocale.default !== locale &&
       !this.cultures[parentLocale.default]) {
       hasParentLocale = true;
     }
 
     if (!hasParentLocale && locale && !this.cultures[locale] &&
-      this.currentLocale.name !== locale) {
+      this.currentLocale.name !== locale && locale !== 'en-US') {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
       this.appendLocaleScript(locale, true);
@@ -325,7 +382,9 @@ const Locale = {  // eslint-disable-line
 
     // Also load the default locale for that locale
     if (hasParentLocale) {
-      this.appendLocaleScript(parentLocale.default, false, locale);
+      if (parentLocale.default !== 'en-US') {
+        this.appendLocaleScript(parentLocale.default, false);
+      }
       this.appendLocaleScript(locale, false, parentLocale.default);
     }
 
@@ -345,10 +404,10 @@ const Locale = {  // eslint-disable-line
   /**
    * Loads the locale without setting it.
    * @param {string} locale The locale to fetch and set.
+   * @param {string} filename Optional Locale's filename if different from default.
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
-  getLocale(locale) {
-    const self = this;
+  getLocale(locale, filename) {
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -362,14 +421,14 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript('en-US', false);
     }
 
-    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
-      this.appendLocaleScript(locale, false);
+    if (locale && !this.cultures[locale] && this.currentLocale.name !== locale && locale !== 'en-US') {
+      this.appendLocaleScript(locale, false, false, filename);
     }
 
-    if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
+    if (locale && this.currentLocale.data && this.currentLocale.dataName === locale) {
       this.dff[locale].resolve(locale);
     }
-    if (self.cultures[locale] && this.cultureInHead()) {
+    if (this.cultures[locale] && this.cultureInHead()) {
       this.dff[locale].resolve(locale);
     }
 
@@ -424,9 +483,26 @@ const Locale = {  // eslint-disable-line
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
-      this.currentLanguage = this.languages[lang];
-      if (this.currentLanguage) {
+      this.currentLanguage = {};
+      this.currentLanguage.name = lang;
+
+      if (this.languages[lang]) {
+        this.currentLanguage = this.languages[lang];
         this.updateLanguageTag(name);
+      }
+
+      if (this.translatedLocales.indexOf(name) > -1) {
+        this.languages[lang].direction = data.direction;
+        this.languages[lang].messages = data.messages;
+        this.languages[lang].name = lang;
+        this.languages[lang].nativeName = data.nativeName;
+
+        this.languages[name] = {
+          direction: data.direction,
+          messages: data.messages,
+          name,
+          nativeName: data.nativeName
+        };
       }
     }
   },
@@ -503,6 +579,10 @@ const Locale = {  // eslint-disable-line
       pattern = cal.dateFormat[options.date];
     }
 
+    if (typeof options === 'string' && options !== '') {
+      pattern = options;
+    }
+
     if (!pattern) {
       pattern = cal.dateFormat.short;
     }
@@ -518,12 +598,12 @@ const Locale = {  // eslint-disable-line
 
     if (cal && cal.conversions) {
       if (options.fromGregorian) {
-        const islamicParts = cal.conversions.fromGregorian(value);
+        const islamicParts = this.gregorianToUmalqura(value);
         day = islamicParts[2];
         month = islamicParts[1];
         year = islamicParts[0];
       } else if (options.toGregorian) {
-        const gregorianDate = cal.conversions.toGregorian(year, month, day);
+        const gregorianDate = this.umalquraToGregorian(year, month, day);
         day = gregorianDate.getDate();
         month = gregorianDate.getMonth();
         year = gregorianDate.getFullYear();
@@ -546,7 +626,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('y', year);
 
     // Time
-    const showDayPeriods = ret.indexOf(' a') > -1;
+    const showDayPeriods = ret.indexOf(' a') > -1 || ret.indexOf('a') === 0;
 
     if (showDayPeriods && hours === 0) {
       ret = ret.replace('hh', 12);
@@ -559,7 +639,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('H', hours);
     ret = ret.replace('mm', this.pad(mins, 2));
     ret = ret.replace('ss', this.pad(seconds, 2));
-    ret = ret.replace('SSS', this.pad(millis, 0));
+    ret = ret.replace('SSS', this.pad(millis, 3));
 
     // months
     ret = ret.replace('MMMM', cal ? cal.months.wide[month] : null); // full
@@ -570,14 +650,23 @@ const Locale = {  // eslint-disable-line
     }
 
     // PM
-    if (cal) {
+    if (showDayPeriods && cal) {
       ret = ret.replace(' a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      if (ret.indexOf('a') === 0) {
+        ret = ret.replace('a', ` ${hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]}`);
+      }
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
     }
 
     // Day of Week
     if (cal) {
       ret = ret.replace('EEEE', cal.days.wide[dayOfWeek]); // Day of Week
+    }
+    if (cal) {
+      ret = ret.replace('EEE', cal.days.abbreviated[dayOfWeek]); // Day of Week
+    }
+    if (cal) {
+      ret = ret.replace('EE', cal.days.narrow[dayOfWeek]); // Day of Week
     }
     ret = ret.replace('nnnnn', 'de');
     ret = ret.replace('nnnn', 'ngày');
@@ -595,6 +684,72 @@ const Locale = {  // eslint-disable-line
     }
 
     return ret.trim();
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} hour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHour(hour, options) {
+    let timeSeparator = this.calendar().dateFormat.timeSeparator;
+    let locale = this.currentLocale.name;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      timeSeparator = options.timeSeparator || this.calendar(locale).dateFormat.timeSeparator;
+    }
+    if (typeof hour === 'string' && hour.indexOf(timeSeparator) === -1) {
+      timeSeparator = ':';
+    }
+
+    const date = new Date();
+    if (typeof hour === 'number') {
+      const split = hour.toString().split('.');
+      date.setHours(split[0]);
+      date.setMinutes(split[1] ? (parseFloat(`0.${split[1]}`) * 60) : 0);
+    } else {
+      const parts = hour.split(timeSeparator);
+      date.setHours(parts[0]);
+      date.setMinutes(parts[1] || 0);
+    }
+    return this.formatDate(date, { date: 'hour' });
+  },
+
+  /**
+  * Formats a number into the locales hour format.
+  * @param {number} startHour The hours to show in the current locale.
+  * @param {number} endHour The hours to show in the current locale.
+  * @param {object} options Additional date formatting settings.
+  * @returns {string} the hours in either 24 h or 12 h format
+  */
+  formatHourRange(startHour, endHour, options) {
+    let locale = this.currentLocale.name;
+    let dayPeriods = this.calendar(locale).dayPeriods;
+    let removePeriod = false;
+    if (typeof options === 'object') {
+      locale = options.locale || locale;
+      dayPeriods = this.calendar(locale).dayPeriods;
+    }
+    let range = `${Locale.formatHour(startHour, options)} - ${Locale.formatHour(endHour, options)}`;
+
+    if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
+      removePeriod = true;
+    }
+
+    if (stringUtils.count(range, dayPeriods[0]) > 1) {
+      range = range.replace(dayPeriods[0], '');
+    }
+
+    if (stringUtils.count(range, dayPeriods[1]) > 1) {
+      range = range.replace(` ${dayPeriods[1]}`, '');
+    }
+
+    range = range.replace('  ', ' ');
+    if (removePeriod) {
+      range = range.replace(':00 -', ' -');
+    }
+    return range;
   },
 
   /**
@@ -664,13 +819,35 @@ const Locale = {  // eslint-disable-line
   * @param {number} number The number to convert
   * @param {string} locale The number to convert
   * @param {object} options The number to convert
+  * @param {string} groupSeparator If provided will replace with browser default character
   * @returns {string} The converted number.
   */
-  toLocaleString(number, locale, options) {
+  toLocaleString(number, locale, options, groupSeparator) {
     if (typeof number !== 'number') {
       return '';
     }
-    return number.toLocaleString(locale || Locale.currentLocale.name, options || undefined);
+    const args = { locale: locale || Locale.currentLocale.name, options: options || undefined };
+    let n = number.toLocaleString(args.locale, args.options);
+    if (!(/undefined|null/.test(typeof groupSeparator))) {
+      const gSeparator = this.getSeparator(args.locale, 'group');
+      n = n.replace(new RegExp(gSeparator, 'g'), groupSeparator.toString());
+    }
+    return n;
+  },
+
+  /**
+  * Find browser default separator for given locale
+  * @private
+  * @param {string} locale The locale
+  * @param {string} separatorType The separator type be found `group`|`decimal`
+  * @returns {string} The browser default separator character
+  */
+  getSeparator(locale, separatorType) {
+    const number = 1000.1;
+    return Intl.NumberFormat(locale)
+      .formatToParts(number)
+      .find(part => part.type === separatorType)
+      .value;
   },
 
   /**
@@ -766,6 +943,9 @@ const Locale = {  // eslint-disable-line
     const isUTC = (dateString.toLowerCase().indexOf('z') > -1);
     let i;
     let l;
+    const hasDot = (dateFormat.match(/M/g) || []).length === 3 && thisLocaleCalendar &&
+      thisLocaleCalendar.months && thisLocaleCalendar.months.abbreviated &&
+        thisLocaleCalendar.months.abbreviated.filter(v => /\./.test(v)).length;
 
     if (isDateTime) {
       // Remove Timezone
@@ -776,13 +956,18 @@ const Locale = {  // eslint-disable-line
       dateFormat = dateFormat.replace(' zzzz', '').replace(' zz', '');
 
       // Replace [space & colon & dot] with "/"
-      dateFormat = dateFormat.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
-      dateString = dateString.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
+      const regex = hasDot ? /[T\s:-]/g : /[T\s:.-]/g;
+      dateFormat = dateFormat.replace(regex, '/').replace(/z/i, '');
+      dateString = dateString.replace(regex, '/').replace(/z/i, '');
     }
 
     // Remove spanish de
     dateFormat = dateFormat.replace(' de ', ' ');
     dateString = dateString.replace(' de ', ' ');
+
+    // Remove commas
+    dateFormat = dateFormat.replace(',', '');
+    dateString = dateString.replace(',', '');
 
     if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
       dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
@@ -798,8 +983,9 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') !== -1) {
-      dateFormat = dateFormat.replace(/[\s:.]/g, '/');
-      dateString = dateString.replace(/[\s:.]/g, '/');
+      const regex = hasDot ? /[\s:]/g : /[\s:.]/g;
+      dateFormat = dateFormat.replace(regex, '/');
+      dateString = dateString.replace(regex, '/');
     }
 
     // Extra Check incase month has spaces
@@ -1010,9 +1196,20 @@ const Locale = {  // eslint-disable-line
       }
     }
 
+    const isLeap = y => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
+    const closestLeap = (y) => {
+      let closestLeapYear = typeof y === 'number' && !isNaN(y) ? y : (new Date()).getFullYear();
+      for (let i2 = 0; i2 < 4; i2++) {
+        if (isLeap(closestLeapYear)) {
+          break;
+        }
+        closestLeapYear--;
+      }
+      return closestLeapYear;
+    };
+
     dateObj.return = undefined;
-    dateObj.leapYear = ((dateObj.year % 4 === 0) &&
-      (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
+    dateObj.leapYear = isLeap(dateObj.year);
 
     if ((isDateTime && !dateObj.h && !dateObj.mm)) {
       return undefined;
@@ -1027,7 +1224,8 @@ const Locale = {  // eslint-disable-line
         }
       }
       if (dateObj.isUndefindedYear) {
-        dateObj.year = (new Date()).getFullYear();
+        const isFeb29 = parseInt(dateObj.day, 10) === 29 && parseInt(dateObj.month, 10) === 1;
+        dateObj.year = isFeb29 ? closestLeap() : (new Date()).getFullYear();
       } else {
         delete dateObj.year;
       }
@@ -1176,7 +1374,12 @@ const Locale = {  // eslint-disable-line
     let languageData = this.currentLanguage;
     if (options && options.locale) {
       const lang = options.locale.split('-')[0];
-      return this.languages[lang];
+      languageData = this.languages[lang];
+    }
+    if (options && options.locale
+      && this.currentLanguage.name !== this.currentLocale.name.substr(0, 2)
+      && this.languages[this.currentLanguage.name]) {
+      languageData = this.languages[this.currentLanguage.name];
     }
     if (options && options.language && this.languages[options.language]) {
       languageData = this.languages[options.language];
@@ -1227,10 +1430,11 @@ const Locale = {  // eslint-disable-line
     }
 
     if (typeof number === 'string') {
-      if (decimal !== '.') {
-        number = number.replace(decimal, '.');
-      }
       number = Locale.parseNumber(number);
+    }
+
+    if (number.toString().indexOf('e') > -1) {
+      number = number.toFixed(maximumFractionDigits + 1);
     }
 
     if (options && options.style === 'percent') {
@@ -1289,23 +1493,6 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Return the number of decimal places in a number
-   * @private
-   * @param  {number} number The starting number.
-   * @returns {number} The number of decimal places.
-   */
-  decimalPlaces(number) {
-    if (Math.floor(number) === number) {
-      return 0;
-    }
-
-    if (number.toString().indexOf('.') === -1) {
-      return 0;
-    }
-    return number.toString().split('.')[1].length || 0;
-  },
-
-  /**
    * Expand the number to the groupsize.
    * @private
    * @param  {string} numberString The number to expand
@@ -1349,46 +1536,29 @@ const Locale = {  // eslint-disable-line
    * @param  {number} minDigits Minimum number of digits to show on the decimal portion.
    * @param  {number} maxDigits Maximum number of digits to show on the decimal portion.
    * @param  {boolean} round If true round, if false truncate.
-   * @returns {number} The updated number.
+   * @returns {string} The updated number as a string.
    */
   truncateDecimals(number, minDigits, maxDigits, round) {
-    let multiplier = Math.pow(10, maxDigits);
-    let adjustedNum = number * multiplier;
-    let truncatedNum;
-
-    // Round Decimals
-    const decimals = this.decimalPlaces(number);
-
-    // Handle larger numbers
-    if (number.toString().length - decimals - 1 >= 10 ||
-      (decimals === minDigits && decimals === maxDigits) || (decimals < maxDigits)) {
-      multiplier = Math.pow(100, maxDigits);
-      adjustedNum = number * multiplier;
+    let processed = number;
+    if (round) {
+      processed = numberUtils.round(number, maxDigits);
+    } else {
+      processed = numberUtils.truncate(number, maxDigits);
     }
 
-    truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
-
-    if (round && decimals >= maxDigits && adjustedNum > 0) {
-      truncatedNum = Math.round(adjustedNum);
+    // Add zeros
+    const actualDecimals = numberUtils.decimalPlaces(processed);
+    if (actualDecimals < minDigits) {
+      processed = processed.toString() + new Array(minDigits - actualDecimals + 1).join('0');
     }
-
-    if (round && decimals <= maxDigits && decimals > 0) {
-      truncatedNum = Math.round(adjustedNum);
-    }
-
-    if (decimals < maxDigits && decimals > 0) {
-      truncatedNum = Math.floor(adjustedNum);
-      maxDigits = Math.max(decimals, minDigits);
-    }
-
-    return (truncatedNum / multiplier).toFixed(maxDigits);
+    return processed.toString();
   },
 
   /**
    * Takes a formatted number string and returns back real number object.
    * @param {string} input  The source number (as a string).
    * @param {object} options  Any special options to pass in such as the locale.
-   * @returns {number} the number as an actual Number type.
+   * @returns {number} The number as an actual Number type unless the number is a big int (19 significant digits), in this case a string will be returned
    */
   parseNumber(input, options) {
     const localeData = this.useLocale(options);
@@ -1410,14 +1580,15 @@ const Locale = {  // eslint-disable-line
     const percentSign = numSettings ? numSettings.percentSign : '%';
     const currencySign = localeData.currencySign || '$';
 
-    numString = numString.replace(new RegExp(`\\${group}`, 'g'), '');
+    const exp = (group === ' ') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
+    numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
     numString = numString.replace(currencySign, '');
     numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
-    return parseFloat(numString);
+    return numString.length >= 19 ? numString : parseFloat(numString);
   },
 
   /**
@@ -1618,6 +1789,115 @@ const Locale = {  // eslint-disable-line
     }
 
     return words.join(' ');
+  },
+
+  /**
+   * Convert gregorian to umalqura date.
+   * @param {object} date the date
+   * @returns {array} year, month, day, hours, minutes, seconds, milliseconds
+   */
+  gregorianToUmalqura(date) {
+    // fromGregorian
+    // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
+    if (typeof date.getMonth !== 'function') {
+      return null;
+    }
+
+    const getJd = (year, month, day) => {
+      if (year < 0) {
+        year++;
+      }
+      if (month < 3) {
+        month += 12;
+        year--;
+      }
+      const a = Math.floor(year / 100);
+      const b = 2 - a + Math.floor(a / 4);
+      return Math.floor(365.25 * (year + 4716)) +
+        Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+    };
+    const jd = getJd(date.getFullYear(), date.getMonth() + 1, date.getDate());
+
+    const julianToUmalqura = (julianDate) => {
+      const mcjdn = julianDate - 2400000 + 0.5;
+      let index = 0;
+      for (let i = 0; i < ummalquraData.length; i++) {
+        if (ummalquraData[i] > mcjdn) {
+          break;
+        }
+        index++;
+      }
+      const lunation = index + 15292;
+      const ii = Math.floor((lunation - 1) / 12);
+      const year = ii + 1;
+      const month = lunation - 12 * ii;
+      const day = mcjdn - ummalquraData[index - 1] + 1;
+      return { year, month: month - 1, day };
+    };
+    const umalquraDate = julianToUmalqura(jd);
+
+    return [
+      umalquraDate.year,
+      umalquraDate.month,
+      umalquraDate.day,
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    ];
+  },
+
+  /**
+   * Convert umalqura to gregorian date.
+   * @param {number} year the year
+   * @param {number} month the month
+   * @param {number} day the day
+   * @returns {obgect} the date
+   */
+  umalquraToGregorian(year, month, day) {
+    // toGregorian
+    // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
+    const isNumber = n => typeof n === 'number' && !isNaN(n);
+    if (!isNumber(year) || !isNumber(month) || !isNumber(day)) {
+      return null;
+    }
+
+    const getJd = (y, m, d) => {
+      const index = (12 * (y - 1)) + m - 15292;
+      const mcjdn = d + ummalquraData[index - 1] - 1;
+      return mcjdn + 2400000 - 0.5;
+    };
+    const jd = getJd(year, month + 1, day);
+
+    const julianToGregorian = (julianDate) => {
+      const z = Math.floor(julianDate + 0.5);
+      let a = Math.floor((z - 1867216.25) / 36524.25);
+      a = z + 1 + a - Math.floor(a / 4);
+      const b = a + 1524;
+      const c = Math.floor((b - 122.1) / 365.25);
+      const d = Math.floor(365.25 * c);
+      const e = Math.floor((b - d) / 30.6001);
+      const gday = b - d - Math.floor(e * 30.6001);
+      const gmonth = e - (e > 13.5 ? 13 : 1);
+      let gyear = c - (gmonth > 2.5 ? 4716 : 4715);
+      // No zero year
+      if (gyear <= 0) {
+        gyear--;
+      }
+      return { year: gyear, month: gmonth - 1, day: gday };
+    };
+    const gregorianDateObj = julianToGregorian(jd);
+
+    const gregorianDate = new Date(
+      gregorianDateObj.year,
+      gregorianDateObj.month,
+      gregorianDateObj.day,
+      0,
+      0,
+      0,
+      0
+    );
+    return gregorianDate;
   },
 
   /**

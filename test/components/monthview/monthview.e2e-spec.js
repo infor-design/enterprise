@@ -22,26 +22,26 @@ describe('MonthView index tests', () => {
     expect(await nextButton.getText()).toEqual('Next Month');
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should be able to change month to previous', async () => {
     const prevButton = await element(by.css('button.prev'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await prevButton.click();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() - 1);
 
-    expect(await element(by.id('monthview-datepicker-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
 });
@@ -206,15 +206,6 @@ describe('MonthView disable day tests', () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleepLonger);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'monthview-weekends')).toBeLessThan(0.2);
-    });
-  }
 });
 
 describe('MonthView disable month selection tests', () => {
@@ -262,5 +253,47 @@ describe('MonthView disable month selection tests', () => {
 
     expect(await nextButton.getAttribute('disabled')).toBeFalsy();
     expect(await prevButton.getAttribute('disabled')).toBeTruthy();
+  });
+});
+
+describe('MonthView specific locale tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/monthview/test-specific-locale');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  it('Should render a specific locale', async () => {
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('maj 2019');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('søn');
+  });
+});
+
+describe('MonthView specific language tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/monthview/test-specific-locale-lang');
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  it('Should render a specific locale and language', async () => {
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('oktober 2019');
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('søn');
   });
 });

@@ -54,6 +54,10 @@
       height: calc(100% - 35px);
     }
   }
+
+  .datagrid-container.has-toolbar.paginated {
+    height: calc(100% - 90px);
+  }
 }
 
 .full-height-toolbar {

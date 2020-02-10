@@ -57,9 +57,52 @@ describe('Personalization tests', () => {
   });
 });
 
+describe('Personalization classes tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/example-classes.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-classes')).toEqual(0);
+    });
+  }
+});
+
+describe('Personalization classes short tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/test-classes-short.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-classes-short')).toEqual(0);
+    });
+  }
+});
+
 describe('Personalization example-tabs tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
+    await browser.driver.sleep(config.sleepShort);
   });
 
   it('Should not have errors', async () => {
@@ -80,6 +123,48 @@ describe('Personalization example-tabs tests', () => {
 
 describe('Personalization form tests', () => {
   beforeEach(async () => {
+    await utils.setPage('/components/personalize/example-form.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form')).toEqual(0);
+    });
+  }
+});
+
+describe('Personalization form short tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/test-form-short.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form-short')).toEqual(0);
+    });
+  }
+});
+
+describe('Personalization form2 tests', () => {
+  beforeEach(async () => {
     await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
   });
 
@@ -94,14 +179,14 @@ describe('Personalization form tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form-tabs')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form2-tabs')).toEqual(0);
     });
   }
 });
 
-describe('Personalization alternate form tests', () => {
+describe('Personalization form 2 tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-form3.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -115,7 +200,28 @@ describe('Personalization alternate form tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form-alt-tabs')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form2')).toEqual(0);
+    });
+  }
+});
+
+describe('Personalization form 2 short tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/personalize/test-form2-short.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('personalize-form2-short')).toEqual(0);
     });
   }
 });

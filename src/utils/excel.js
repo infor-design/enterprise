@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
 import { Editors } from '../components/datagrid/datagrid.editors';
@@ -190,7 +191,7 @@ excel.appendRows = function (dataset, table, self) {
   const body = table.querySelector('tbody');
   body.innerHTML = '';
   const appendRow = function (d, i) {
-    if (!d.isFiltered) {
+    if (!d._isFilteredOut) {
       const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
       const tr = document.createElement('tr');
       tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
@@ -342,11 +343,37 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
  * Export the grid contents to csv
  * @param {string} fileName The desired export filename in the download.
  * @param {string} customDs An optional customized version of the data to use.
- * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
+ * @param {string|object} sep (optional) If user's machine is configured for a locale with alternate default seperator.
+ * The char double quote `"` is not allowed to be use as seperator char
+ * Can use as custom string `sep=;` or `;` will add to first line and use `;` as seperator
+ * @param {boolean} [sep.firstLine=true] if false will not added to first line `sep=<separator.char>`
+ * @param {string} [sep.char=','] custom separator char
  * @param {string} self The grid api to use (if customDs is not used)
  * @returns {void}
  */
-excel.exportToCsv = function (fileName, customDs, separator = 'sep=,', self) {
+excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
+  const isObject = v => (v && typeof v === 'object' && v.constructor === Object);
+  const isFalse = v => /^(false|0+|null)$/gi.test(v);
+
+  // Set Separator
+  const separator = { firstLine: true, char: ',' };
+  if (sep !== 'sep=,' && !isFalse(sep)) {
+    const setChar = char => (char !== '"' ? char : separator.char);
+    if (isObject(sep)) {
+      separator.firstLine = !isFalse(sep.firstLine);
+      if (typeof sep.char === 'string' && sep.char.length === 1 && !isFalse(sep.char)) {
+        separator.char = setChar(sep.char);
+      }
+    } else if (typeof sep === 'string') {
+      if (sep.length === 1 && !isFalse(sep)) {
+        separator.char = setChar(sep);
+      } else if (/^sep=.$/.test(sep)) {
+        const char = sep.replace('sep=', '');
+        separator.char = !isFalse(char) ? setChar(char) : separator.char;
+      }
+    }
+  }
+
   const formatCsv = function (table) {
     const csv = [];
     const rows = [].slice.call(table[0].querySelectorAll('tr'));
@@ -354,9 +381,11 @@ excel.exportToCsv = function (fileName, customDs, separator = 'sep=,', self) {
       const rowContent = [];
       const cols = [].slice.call(row.querySelectorAll('td, th'));
       cols.forEach(col => rowContent.push(col.textContent.replace(/\r?\n|\r/g, '').replace(/"/g, '""').trim()));
-      csv.push(rowContent.join('","'));
+      csv.push(rowContent.join(`"${separator.char}"`));
     });
-    csv.unshift([`${separator}`]);
+    if (separator.firstLine) {
+      csv.unshift([`sep=${separator.char}`]);
+    }
     return `"${csv.join('"\n"')}"`;
   };
 

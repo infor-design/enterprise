@@ -13,12 +13,14 @@
     cursor: pointer;
     display: inline-block;
 
-    > a {
+    > .btn-icon {
       border: 1px solid transparent;
       border-radius: 2px;
       color: $pager-text-color;
       cursor: pointer;
+      height: 28px;
       margin: 0 2px;
+      min-height: 28px;
       outline: none;
       padding: 5px;
       position: static;
@@ -45,9 +47,31 @@
       }
     }
 
+    &.pager-prev,
+    &.pager-first,
+    &.pager-last,
+    &.pager-next {
+      > .btn-icon {
+        margin-top: -1px;
+        min-width: 34px;
+        width: 34px;
+
+        .icon {
+          margin-top: -2px;
+        }
+      }
+    }
+
     &.pager-no {
+      > .btn-icon {
+        font-weight: $theme-number-font-weight-base;
+        margin-top: -1px;
+        min-width: 19px;
+        width: auto;
+      }
+
       &:hover {
-        > a {
+        > .btn-icon {
           border-bottom: 1px solid $pager-text-color;
 
           &[disabled] {
@@ -58,13 +82,13 @@
     }
 
     &.selected {
-      > a {
+      > .btn-icon {
         color: $pager-selected-color;
         font-weight: $theme-number-font-weight-bold;
       }
 
       &:hover {
-        > a {
+        > .btn-icon {
           border-bottom: 1px solid $pager-text-color;
 
           &:focus {
@@ -75,7 +99,7 @@
     }
 
     &:not(.selected) {
-      a:not([disabled]) {
+      .btn-icon:not([disabled]) {
         &:active,
         &:hover {
           svg {
@@ -104,7 +128,7 @@
     top: 4px;
   }
 
-  a {
+  .btn-icon {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
     border-radius: 20px;
     overflow: hidden;  // Makes the round ripple-effect pressed state work
@@ -184,7 +208,7 @@ li + .pager-count {
     .pager-toolbar > li {
       vertical-align: middle;
 
-      > a {
+      > .btn-icon {
         display: inline-block;
 
         svg {
@@ -192,12 +216,28 @@ li + .pager-count {
         }
       }
 
-      &.pager-prev a,
-      &.pager-first a,
-      &.pager-last a,
-      &.pager-next a {
-        svg {
-          top: 2px;
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next {
+        .btn-icon {
+          margin-top: 3px;
+
+          svg {
+            top: 2px;
+          }
+        }
+      }
+
+      &.pager-no {
+        .btn-icon {
+          margin-top: 4px;
+        }
+      }
+
+      &.pager-count {
+        label {
+          margin-top: 2px;
         }
       }
     }
@@ -222,17 +262,53 @@ li + .pager-count {
     height: 30px;
 
     > li {
-      > a {
+      > .btn-icon {
         height: 30px;
         margin: 0;
         padding: 5px 7px;
       }
 
       &.pager-prev,
-      &.pager-next {
-        > a {
-          height: 29px;
-          padding: 5px;
+      &.pager-first,
+      &.pager-last,
+      &.pager-next,
+      &.pager-no {
+        > .btn-icon {
+          height: 28px;
+          margin-top: -1px;
+        }
+      }
+    }
+  }
+}
+
+.is-firefox {
+  .pager-toolbar {
+    > li {
+      &.pager-prev,
+      &.pager-first,
+      &.pager-last,
+      &.pager-next,
+      &.pager-no {
+        > .btn-icon {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .card,
+  .widget {
+    &.card .card-footer .pager-toolbar {
+      > li {
+        &.pager-prev,
+        &.pager-first,
+        &.pager-last,
+        &.pager-next,
+        &.pager-no {
+          > .btn-icon {
+            margin-top: 0;
+          }
         }
       }
     }

@@ -1,18 +1,20 @@
 <style id="special-test-rules">
   .green {
-    background-color: #d5f6c0;
+    background-color: #d5f6c0 !important;
+    box-shadow: none !important;
   }
 
   .green .arrow::after {
     border-right-color: #d5f6c0 !important;
   }
 
-  .white-text {
-    color: #000;
+  .white-text,
+  .white-text p {
+    color: #000000 !important;
   }
 </style>
 
-<div class="row">
+<div class="row top-padding">
   <div class="six columns">
     <h2>Popover Test: Extra CSS Class</h2>
     <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5942" target=_"blank">Related JIRA Ticket</a>.  This demonstrates adding extra CSS classes to the tooltip markup by passing a setting through its constructor, `extraClass`.</p>
@@ -26,9 +28,6 @@
       <button id="tooltip-btn" class="btn-secondary">
         <span>Click Me</span>
       </button>
-      <div id="popover-contents" class="hidden">
-        <p>Purchase <strong>2</strong> more to save!</p>
-      </div>
     </div>
   </div>
 </div>
@@ -36,7 +35,7 @@
 <script>
   var POPOVER_OPTIONS = {
     trigger: 'immediate',
-    content: $('#popover-contents'),
+    content: '<div id="popover-contents" class="hidden"><p>Purchase <strong>2</strong> more to save!</p></div>',
     extraClass: 'green white-text',
     placement: 'right',
     popover: true,

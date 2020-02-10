@@ -2,16 +2,20 @@ import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { theme } from '../theme/theme';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
+import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
 
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
+  language: null,
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
+  day: new Date().getDate(),
   activeDate: null,
   activeDateIslamic: null,
   isPopup: false,
@@ -26,10 +30,10 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   legend: [
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
-  hideDays: false,
+  hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
   yearsBack: 4,
@@ -45,7 +49,11 @@ const COMPONENT_NAME_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   selectable: true,
-  onSelected: null
+  onSelected: null,
+  onKeyDown: null,
+  showToday: true,
+  onChangeView: null,
+  isMonthPicker: false
 };
 
 /**
@@ -54,12 +62,15 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} element The plugin element for the constuctor
  * @param {object} [settings] The settings element.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
+ * @param {number} [settings.day] The initial selected day to show.
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
+ * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
@@ -96,7 +107,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
  * @param {boolean} [settings.selectable=false] If true the month days can be clicked to select
- * @param {boolean} [settings.onSelected=false] Call back that fires when a month day is clicked.
+ * @param {boolean} [settings.onSelected=false] Callback that fires when a month day is clicked.
+ * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
+ * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -123,9 +137,18 @@ MonthView.prototype = {
    * @returns {void}
    */
   setLocale() {
+    if (this.settings.language) {
+      Locale.getLocale(this.settings.language);
+      this.language = this.settings.language;
+    } else {
+      this.language = Locale.currentLanguage.name;
+    }
+
     if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
       Locale.getLocale(this.settings.locale).done((locale) => {
         this.locale = Locale.cultures[locale];
+        this.language = this.settings.language || this.locale.language;
+        this.settings.language = this.language;
         this.setCurrentCalendar();
         this.build().handleEvents();
       });
@@ -159,34 +182,14 @@ MonthView.prototype = {
     this.prevButton = '' +
       `<button type="button" class="btn-icon prev">
         ${$.createIcon('caret-left')}
-        <span>${Locale.translate('PreviousMonth', { locale: this.locale.name })}</span>
+        <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
     this.nextButton = '' +
       `<button type="button" class="btn-icon next">
         ${$.createIcon('caret-right')}
-        <span>${Locale.translate('NextMonth', { locale: this.locale.name })}</span>
+        <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
 
-    let monthYearPaneButton = `<button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
-        <span class="month">november</span>
-        <span class="year">2015</span>
-        <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-        <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
-        </svg>
-      </button>`;
-
-    if (this.settings.hideDays) {
-      monthYearPaneButton = '';
-    }
-
-    this.header = $('' +
-      `<div class="monthview-header">
-        ${this.settings.showMonthYearPicker ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
-        ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-      </div>`);
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
@@ -264,18 +267,11 @@ MonthView.prototype = {
     }
 
     // Reconfigure the header
+    this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
     if (this.settings.headerStyle === 'full') {
-      this.header = $('' +
-        `<div class="monthview-header full">
-          ${(this.isRTL ? this.nextButton + this.prevButton : this.prevButton + this.nextButton)}
-          <span class="monthview-datepicker">
-            <span class="hidden month"></span><span class="hidden year"></span>
-            <input aria-label="${Locale.translate('Today', { locale: this.locale.name })}" id="monthview-datepicker-field" readonly data-init="false" class="datepicker" name="monthview-datepicker-field" type="text"/>
-          </span>
-          <a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name })}</a>
-        </div>`);
       this.monthPicker = this.header.find('#monthview-datepicker-field');
-      this.todayLink = this.header.find('.hyperlink.today');
+    } else if (this.settings.showToday) {
+      this.header.find('.btn-icon.prev').before(`<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>`);
     }
 
     this.showMonth(this.settings.month, this.settings.year);
@@ -288,16 +284,21 @@ MonthView.prototype = {
     // Add Legend
     this.addLegend();
 
-    if (this.settings.headerStyle === 'full') {
-      this.monthPicker.datepicker({
-        autoSize: true,
-        dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
-        locale: this.settings.locale,
-        showMonthYearPicker: true,
-        onOpenCalendar: () => this.currentDate
-      });
-      this.header.find('button, a').hideFocus();
-    }
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+      onOpenCalendar: () => this.currentDate,
+      locale: this.settings.locale,
+      language: this.settings.language,
+      year: this.currentYear,
+      month: this.currentMonth,
+      showToday: this.settings.showToday,
+      isMonthPicker: this.settings.headerStyle === 'full',
+      isAlternate: this.settings.headerStyle !== 'full',
+      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.settings.onChangeView
+    });
 
     this.handleEvents();
     return this;
@@ -311,7 +312,7 @@ MonthView.prototype = {
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
-    this.isRTL = this.locale.direction === 'right-to-left';
+    this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
   },
 
@@ -336,14 +337,14 @@ MonthView.prototype = {
     if (this.isIslamic) {
       if (!s.activeDateIslamic) {
         const gregorianDate = new Date();
-        this.todayDateIslamic = this.conversions.fromGregorian(gregorianDate);
+        this.todayDateIslamic = Locale.gregorianToUmalqura(gregorianDate);
         s.activeDateIslamic = [];
         s.activeDateIslamic[0] = this.todayDateIslamic[0];
         s.activeDateIslamic[1] = this.todayDateIslamic[1];
         s.activeDateIslamic[2] = this.todayDateIslamic[2];
         year = s.activeDateIslamic[0];
         month = s.activeDateIslamic[1];
-        elementDate = this.conversions.fromGregorian(now);
+        elementDate = Locale.gregorianToUmalqura(now);
       } else {
         elementDate = s.activeDateIslamic;
       }
@@ -358,6 +359,8 @@ MonthView.prototype = {
       month = 0;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
     if (month < 0) {
@@ -365,9 +368,14 @@ MonthView.prototype = {
       month = 11;
       this.currentMonth = month;
       this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
     }
 
-    this.currentDay = this.currentDay || now.getDate();
+    this.currentDay = this.currentDay || this.settings.day;
+    if (!this.currentCalendar || !this.currentCalendar.days) {
+      this.currentCalendar = Locale.calendar();
+    }
 
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
@@ -405,14 +413,8 @@ MonthView.prototype = {
       this.header.find('.year').insertBefore(this.header.find('.month'));
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.val(Locale.formatDate(new Date(year, month, 1), { date: 'year', locale: this.locale.name }));
-      this.monthPicker.prev('.year').text(year);
-      this.monthPicker.prev().prev('.month').text(month);
-
-      if (this.monthPicker.data('datepicker')) {
-        this.monthPicker.data('datepicker').setSize();
-      }
+    if (s.headerStyle === 'full' && this.calendarToolbarAPI) {
+      this.calendarToolbarAPI.setInternalDate(new Date(year, month, 1));
     }
 
     this.appendMonthYearPicker(month, year);
@@ -428,6 +430,13 @@ MonthView.prototype = {
     let exYear;
     let exMonth;
     let exDay;
+    let foundSelected = false;
+
+    // Set selected state
+    const setSelected = (el, isFound) => {
+      foundSelected = isFound;
+      el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+    };
 
     this.dayMap = [];
     this.days.find('td').each(function (i) {
@@ -455,19 +464,17 @@ MonthView.prototype = {
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
           if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
-            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+            setSelected(th, true);
           }
         } else {
           const tHours = elementDate.getHours();
           const tMinutes = elementDate.getMinutes();
           const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+          const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
-          const newDate = (new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds, 0);
-
-          if (newDate === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
-            th
-              .addClass(`is-selected${(s.range.useRange ? ' range' : '')}`)
-              .attr('aria-selected', 'true').attr('tabindex', '0');
+          const newDate = setHours(new Date(year, month, dayCnt));
+          if (newDate === setHours(elementDate) || newDate === setHours(self.currentDate)) {
+            setSelected(th, true);
           }
         }
 
@@ -512,6 +519,17 @@ MonthView.prototype = {
       }
     });
 
+    if (!foundSelected && !s.range.useRange) {
+      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(
+        year,
+        month,
+        this.settings.day
+      ));
+      if (firstDay.length) {
+        setSelected(firstDay[0].elem, false);
+      }
+    }
+
     // Hide 6th Row if all disabled
     const row = this.days.find('tr').eq(5);
     if (row.find('td.alternate').length === 7) {
@@ -523,7 +541,7 @@ MonthView.prototype = {
     if (!this.currentDate) {
       if (this.isIslamic) {
         this.currentIslamicDate = [this.currentYear, this.currentMonth, this.currentDay];
-        this.currentDate = this.conversions.toGregorian(
+        this.currentDate = Locale.umalquraToGregorian(
           this.currentYear,
           this.currentMonth,
           this.currentDay
@@ -536,21 +554,13 @@ MonthView.prototype = {
     this.setRangeSelection();
     this.validatePrevNext();
 
-    // Select the same day as last month
+    // Allow focus on the same day as last month
     if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
       this.element.find('td[tabindex]').removeAttr('tabindex');
       this.element
         .find('td:not(.alternate) .day-text')
-        .filter(function () {
-          let currentDay = self.currentDay;
-          if (s.activeDate) {
-            currentDay = s.activeDate.getDate();
-            self.currentDay = currentDay;
-          }
-          return parseInt($(this).text(), 10) === parseInt(currentDay, 10);
-        })
+        .first()
         .closest('td')
-        .addClass('is-selected')
         .attr('tabindex', '0');
     }
 
@@ -599,14 +609,14 @@ MonthView.prototype = {
 
     const wideMonths = this.currentCalendar.months.wide;
     wideMonths.map(function (monthMap, i) { // eslint-disable-line
-      monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a ${(i === month ? 'tabindex="0" ' : 'tabindex="-1" ')}data-month="${i}">${monthMap}</a></li>`;
+      monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" ${(i === month ? 'tabindex="0" ' : 'tabindex="-1" ')}data-month="${i}">${monthMap}</a></li>`;
     });
     monthList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
     let yearList = '<ul class="picklist is-year">';
-    yearList += '<li class="picklist-item up"><a tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-up"></use></svg></a></li>';
+    yearList += '<li class="picklist-item up"><a href="#" tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-up"></use></svg></a></li>';
 
     for (let i = this.settings.yearsBack; i >= 1; i--) {
       years.push(parseInt(year, 10) - i);
@@ -618,7 +628,7 @@ MonthView.prototype = {
 
     // eslint-disable-next-line
     years.map(function (yearMap) {
-      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
+      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
     });
     yearList += '<li class="picklist-item down"><a tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg></a></li>';
     yearList += '</ul>';
@@ -638,7 +648,7 @@ MonthView.prototype = {
    */
   firstDayOfMonth(year, month) {
     if (this.isIslamic) {
-      const firstDay = this.conversions.toGregorian(year, month, 1);
+      const firstDay = Locale.umalquraToGregorian(year, month, 1);
       return (firstDay === null ? 1 : firstDay.getDay());
     }
     return (new Date(year, month, 1)).getDay();
@@ -716,7 +726,12 @@ MonthView.prototype = {
     const s = this.settings;
     const min = (new Date(s.disable.minDate)).setHours(0, 0, 0, 0);
     const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
-    let d2 = new Date(year, month, date);
+    let d2 = this.isIslamic ?
+      Locale.umalquraToGregorian(year, month, date) : new Date(year, month, date);
+
+    if (!d2) {
+      return false;
+    }
 
     // dayOfWeek
     if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
@@ -783,12 +798,16 @@ MonthView.prototype = {
       return;
     }
 
-    const hex = this.getLegendColor(year, month, date);
-
+    let hex = this.getLegendColor(year, month, date);
     elem[0].style.backgroundColor = '';
     elem.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
       // set color on elem at .3 of provided color as per design
       elem.addClass('is-colored');
       elem[0].style.backgroundColor = colorUtils.hexToRgba(hex, 0.3);
@@ -801,10 +820,12 @@ MonthView.prototype = {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
+        thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
       }).on('mouseleave.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';
+        thisElem.find('.day-text')[0].style.backgroundColor = '';
       });
     }
   },
@@ -916,14 +937,16 @@ MonthView.prototype = {
         });
     }
 
-    if (s.headerStyle === 'full' && this.monthPicker) {
-      this.monthPicker.off('change.monthview').on('change.monthview', function () {
-        const picker = $(this).data('datepicker');
-        self.selectDay(picker.currentDate, false, true);
-      });
-
-      this.todayLink.off('click.monthview').on('click.monthview', () => {
-        this.selectToday();
+    if (this.calendarToolbarEl) {
+      this.calendarToolbarEl.off('change-date.monthview').on('change-date.monthview', (e, args) => {
+        if (args.isToday && this.settings.isPopup) {
+          return;
+        }
+        if (args.isToday) {
+          this.setToday();
+          return;
+        }
+        this.selectDay(args.selectedDate, false, true);
       });
     }
 
@@ -1046,6 +1069,13 @@ MonthView.prototype = {
       .off('click.picklist-month')
       .on('click.picklist-month', '.picklist.is-month li', (e) => {
         setMonthYearPane(e.target, 'is-month');
+        e.preventDefault();
+      });
+
+    this.monthYearPane
+      .off('click.picklist-month-a')
+      .on('click.picklist-month-a', '.picklist.is-month li a', (e) => {
+        e.preventDefault();
       });
 
     this.monthYearPane
@@ -1061,6 +1091,13 @@ MonthView.prototype = {
         }
 
         setMonthYearPane(e.target, 'is-year');
+        e.preventDefault();
+      });
+
+    this.monthYearPane
+      .off('click.picklist-year-a')
+      .on('click.picklist-year-a', '.picklist.is-year li a', (e) => {
+        e.preventDefault();
       });
 
     // Handle behaviors when expanding and collapsing like disabling buttons and setting height
@@ -1072,10 +1109,9 @@ MonthView.prototype = {
         // Set the height
         this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height() - 55); // 45 is the footer height
         // Rename some buttons
-        this.element.find('.is-today').hide();
-        this.element.find('.popup-footer').addClass('is-half');
+        this.element.find('.hyperlink.today').hide();
         this.element.find('.is-select').removeClass('is-select').addClass('is-select-month-pane');
-        this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel'));
+        this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel', { locale: this.locale.name, language: this.language }));
       }
       // Focus the month
       setTimeout(() => {
@@ -1090,10 +1126,9 @@ MonthView.prototype = {
       if (!s.hideDays) {
         this.element.find('.btn-icon').removeAttr('disabled');
         this.element.find('td.is-selected').attr('tabindex', '0');
-        this.element.find('.is-today').show();
-        this.element.find('.popup-footer').removeClass('is-half');
+        this.element.find('.hyperlink.today').show();
         this.element.find('.is-select-month-pane').addClass('is-select').removeClass('is-select-month-pane');
-        this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear'));
+        this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear', { locale: this.locale.name, language: this.language }));
       }
     });
 
@@ -1156,7 +1191,7 @@ MonthView.prototype = {
   */
   selectDay(date, closePopup, insertDate) {
     if (this.isIslamic && typeof date !== 'string') {
-      this.currentIslamicDate = this.currentCalendar.conversions.fromGregorian(date);
+      this.currentIslamicDate = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
         this.currentIslamicDate[0],
         this.currentIslamicDate[1],
@@ -1179,7 +1214,7 @@ MonthView.prototype = {
 
     if (this.isIslamic) {
       this.currentIslamicDate = date;
-      this.currentDate = this.conversions.toGregorian(year, month, day);
+      this.currentDate = Locale.umalquraToGregorian(year, month, day);
     } else {
       this.currentDate = new Date(year, month, day);
     }
@@ -1226,7 +1261,7 @@ MonthView.prototype = {
   /**
    * Select todays date visually.
    */
-  selectToday() {
+  setToday() {
     this.selectDay(new Date(), false, true);
   },
 
@@ -1254,6 +1289,15 @@ MonthView.prototype = {
           this.datepickerApi.resetRange({ isData: true });
         }
       };
+
+      if (this.settings.onKeyDown) {
+        const callbackResult = this.settings.onKeyDown({ e, key, cell, node: this.element });
+        if (callbackResult === false) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }
 
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
@@ -1421,7 +1465,7 @@ MonthView.prototype = {
 
         this.currentDate = firstDay;
         if (this.isIslamic) {
-          this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+          this.currentIslamicDate = Locale.gregorianToUmalqura(this.currentDate);
         }
         this.selectDay(this.currentDate, false, false);
       }
@@ -1446,7 +1490,7 @@ MonthView.prototype = {
 
         this.currentDate = lastDay;
         if (this.isIslamic) {
-          this.currentIslamicDate = this.conversions.fromGregorian(this.currentDate);
+          this.currentIslamicDate = Locale.gregorianToUmalqura(this.currentDate);
         }
         this.selectDay(this.currentDate, false, false);
       }
@@ -1463,7 +1507,7 @@ MonthView.prototype = {
             this.datepickerApi.closeCalendar();
           }
         } else {
-          this.selectToday();
+          this.setToday();
         }
         handled = true;
       }
@@ -1482,7 +1526,7 @@ MonthView.prototype = {
 
         if (this.isIslamic) {
           this.currentIslamicDate = [d.year, d.month, d.day];
-          this.currentDate = this.conversions.toGregorian(
+          this.currentDate = Locale.umalquraToGregorian(
             this.currentIslamicDate[0],
             this.currentIslamicDate[1],
             this.currentIslamicDate[2]
@@ -1554,9 +1598,17 @@ MonthView.prototype = {
 
     for (let i = 0; i < s.legend.length; i++) {
       const series = s.legend[i];
+      let hex = series.color;
+
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
+
       const item = '' +
         `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(series.color, 0.3)}"></span>
+          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
 
@@ -1811,7 +1863,7 @@ MonthView.prototype = {
    */
   updated() {
     return this
-      .destroy()
+      .teardown()
       .init();
   },
 
@@ -1838,8 +1890,10 @@ MonthView.prototype = {
    */
   destroy() {
     this.teardown();
-    this.element.empty();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.element) {
+      this.element.empty();
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
     return this;
   }
 };

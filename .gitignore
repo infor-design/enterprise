@@ -21,6 +21,7 @@ views/docs
 # Packages #
 ############
 node_modules/
+private/
 
 # Misc #
 ########
@@ -52,6 +53,6 @@ xunit.xml
 ##############
 ids-enterprise/
 package-lock.json
-src/components/emptymessage/svg-empty.html
+src/components/emptymessage/*svg-empty.html
 src/components/icons/*svg.html
 yarn.lock

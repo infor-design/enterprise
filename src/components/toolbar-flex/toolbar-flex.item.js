@@ -54,7 +54,8 @@ const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
   readOnly: false,
   hidden: false,
-  componentSettings: undefined
+  componentSettings: undefined,
+  allowTabs: false
 };
 
 /**
@@ -103,6 +104,11 @@ ToolbarFlexItem.prototype = {
    * @property {HTMLElement} toolbar the parent toolbar's base element.
    */
   type: undefined,
+
+  /**
+   * @property {boolean} a different type to check if the object is a ToolbarFlexItem.
+   */
+  isToolbarFlexItem: true,
 
   /**
    * @private
@@ -377,7 +383,7 @@ ToolbarFlexItem.prototype = {
 
       if (this.focused) {
         this.toolbarAPI.focusedItem = this;
-        this.toolbarAPI.navigate(-1, undefined, true);
+        this.toolbarAPI.navigate(-1, undefined);
       }
       return;
     }
@@ -450,7 +456,9 @@ ToolbarFlexItem.prototype = {
       $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
 
-    $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));
+    if (!this.settings.allowTabs) {
+      $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));
+    }
   },
 
   /**
@@ -489,8 +497,10 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   render() {
+    // eslint-disable-next-line
     this.disabled = this.disabled;
     if (this.hasReadOnly) {
+      // eslint-disable-next-line
       this.readonly = this.readonly;
     }
 
@@ -537,8 +547,23 @@ ToolbarFlexItem.prototype = {
 
     this.teardownPredefinedItems();
 
-    // Add Toolbar Items
+    // Get Popupmenu data equivalent of the current set of Toolbar items.
+    // Menu item data is scrubbed for IDs that would otherwise be duplicated
+    function removeMenuIds(item, isSubmenu) {
+      if (item.menuId) {
+        delete item.menuId;
+      }
+      const menuTarget = isSubmenu ? 'submenu' : 'menu';
+      if (Array.isArray(item[menuTarget])) {
+        item[menuTarget].forEach((subitem) => {
+          removeMenuIds(subitem, true);
+        });
+      }
+    }
     const data = this.toolbarAPI.toPopupmenuData();
+    removeMenuIds(data);
+
+    // Add Toolbar Items as predefined items to the Popupmenu.
     const menuItems = $(menuAPI.renderItem(data));
     this.predefinedItems = menuItems;
     this.linkToolbarItems(data);
@@ -563,15 +588,16 @@ ToolbarFlexItem.prototype = {
       return;
     }
 
-    this.hasNoOverflowedItems = true;
-
     const menuAPI = this.componentAPI;
-    if (!menuAPI || !this.toolbarAPI) {
+    if (!menuAPI || !this.toolbarAPI || menuAPI.isOpen) {
       return;
     }
 
+    this.hasNoOverflowedItems = true;
+
     // If there are toolbar items, but no predefined items, render the more-actions menu
-    if ((!this.predefinedItems || !this.predefinedItems.length) && this.toolbarAPI.items.length) {
+    if ((!menuAPI.settings.beforeOpen && (!this.predefinedItems || !this.predefinedItems.length))
+      && this.toolbarAPI.items.length) {
       this.renderMoreActionsMenu();
     }
 
@@ -607,6 +633,10 @@ ToolbarFlexItem.prototype = {
 
       const itemData = item.toPopupmenuData();
       itemData.overflowed = item.overflowed;
+
+      if (itemData.id) {
+        delete itemData.id;
+      }
 
       menuAPI.refreshMenuItem(item.actionButtonLink, itemData, itemRefreshCallback);
     });
@@ -742,9 +772,19 @@ ToolbarFlexItem.prototype = {
     // Add links to the menubutton's menu item elements to the Popupmenu data
     if (this.type === 'menubutton') {
       const menuElem = this.componentAPI.menu;
-      const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
-      itemData.id = this.componentAPI.element[0].id;
-      itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
+      if (!menuElem.length) {
+        // Act as if this menubutton is simply empty.
+        itemData.submenu = [];
+      } else {
+        // Get a data representation of the existing menu content
+        const originalSubmenuData = this.componentAPI.toData({ noMenuWrap: true });
+        const targetId = this.componentAPI.element[0].id;
+        if (targetId) {
+          // NOTE: don't pass the same ID here, which would cause duplicates
+          itemData.id = `${this.toolbarAPI.uniqueId}-${targetId}`;
+        }
+        itemData.submenu = addMenuElementLinks(menuElem[0], originalSubmenuData);
+      }
     }
 
     return itemData;

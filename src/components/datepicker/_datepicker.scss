@@ -84,7 +84,7 @@
 
   &[readonly] {
     + .icon {
-      color: $trigger-icon-fill-color;
+      color: $datepicker-readonly-icon-color;
       cursor: default;
     }
   }
@@ -94,6 +94,19 @@
 .monthview-popup.popover {
   max-width: inherit;
 
+  // Week picker adjustments
+  &.is-range-week {
+    .monthview td .day-text {
+      transition: none;
+    }
+
+    tr:focus {
+      border-radius: 50px;
+      box-shadow: 0 0 0 1px $input-color-focus-border;
+      outline: none;
+    }
+  }
+
   .tooltip-content {
     padding: 0;
   }
@@ -101,29 +114,29 @@
   .popup-footer {
     button {
       background-color: transparent;
-      width: 33.33%;
+      width: 50%;
 
-      // Fixes cut off focus state on the middle button
-      &:nth-child(1) {
-        margin-right: -1px;
+      &.btn-primary:focus {
+        box-shadow: 0 0 0 0 $body-color-primary-background, 0 0 0 1px $button-color-primary-initial-background, $focus-box-shadow;
       }
     }
+  }
 
-    &.is-half button {
-      width: 50%;
-    }
+  .time-parts {
+    padding: 10px;
   }
 }
 
 // Short fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .datepicker {
     padding-right: 24px;
 
     + .icon {
-      height: 13px;
-      margin-left: -22px;
-      margin-top: 6px;
+      margin-left: -21px;
+      margin-top: 5px;
+      width: 14px;
     }
   }
 }
@@ -131,10 +144,9 @@
 // RTL Styles
 html[dir='rtl'] {
   .datepicker {
-    + .icon,
-    + .tooltip-description + .icon {
-      margin-left: inherit;
-      margin-right: -28px;
+    + .icon {
+      margin-left: -23px;
+      margin-right: -26px;
     }
 
     + .icon + .icon-error {
@@ -149,7 +161,8 @@ html[dir='rtl'] {
   }
 
   // Short fields
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .datepicker {
       padding-left: 24px;
       padding-right: 2px;
@@ -160,35 +173,25 @@ html[dir='rtl'] {
       }
     }
   }
-}
 
-// IE Hack
-.ie11 {
-  .datepicker + .icon {
-    background-color: rgba($theme-color-palette-white, 0);
-  }
-
-  .is-monthyear {
-    .month,
-    .year {
-      line-height: normal;
-      position: relative;
-      top: 7px;
+  .monthview-popup .calendar-toolbar {
+    button.prev {
+      margin-left: -6px;
     }
 
-    .monthview-header {
-      margin-bottom: -8px;
-      margin-top: 12px;
+    button.next {
+      margin-left: 5px;
+    }
 
-      button {
-        top: 4px;
-      }
+    &.is-alternate .today {
+      left: 0;
     }
   }
 }
 
+// TODO
 .ie-edge {
   .monthview .btn-monthyear-pane {
-    margin-left: 10px;
+    margin-left: 8px;
   }
 }

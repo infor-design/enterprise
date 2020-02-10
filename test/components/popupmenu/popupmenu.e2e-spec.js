@@ -17,7 +17,7 @@ describe('Contextmenu index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should open on click and close on click out', async () => {
+  it('Should open on click and close on click out', async () => { //eslint-disable-line
     let input = await element(by.id('input-menu2'));
     await browser.actions().mouseMove(input).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
@@ -28,7 +28,7 @@ describe('Contextmenu index tests', () => {
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).toContain('is-open');
 
     input = await element(by.id('input-menu'));
-    await input.click();
+    await element.all(by.css('label[for="input-menu"]')).click();
     await input.sendKeys(protractor.Key.TAB);
 
     await browser.driver
@@ -121,7 +121,7 @@ describe('Popupmenu example-selectable tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-focused');
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toContain('is-focused');
     });
 
     it('Should select last item on spacebar, arrowing down', async () => {
@@ -137,7 +137,7 @@ describe('Popupmenu example-selectable tests', () => {
       // Re-open menu so we can see the checked item
       await element(by.id('single-select-popupmenu-trigger')).click();
 
-      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toEqual('is-checked');
+      expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toContain('is-checked');
     });
   }
 });
@@ -155,11 +155,11 @@ describe('Popupmenu missing submenu tests', () => {
   it('Should have no errors when hovering an item with a submenu', async () => {
     await element(by.id('open-me')).click();
 
-    const popupmenuElem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open'));
+    const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(popupmenuElem), config.waitsFor);
 
-    const thirdItem = await element(by.css('#open-me + .popupmenu-wrapper > .popupmenu.is-open > li.submenu'));
+    const thirdItem = await element(by.css('ul.popupmenu.is-open'));
     await browser.actions().mouseMove(thirdItem).perform();
     await browser.driver.sleep(config.sleep);
 
@@ -200,8 +200,8 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
-      expect(await firstItem.getAttribute('class')).toEqual('is-checked');
+      expect(await lastItem.getAttribute('class')).toContain('is-checked');
+      expect(await firstItem.getAttribute('class')).toContain('is-checked');
     });
 
     it('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
@@ -218,11 +218,11 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
-      expect(await firstItem.getAttribute('class')).toEqual('is-checked');
+      expect(await lastItem.getAttribute('class')).toContain('is-checked');
+      expect(await firstItem.getAttribute('class')).toContain('is-checked');
       await element.all(by.css('.popupmenu.is-open li a')).last().sendKeys(protractor.Key.SPACE);
 
-      expect(await lastItem.getAttribute('class')).not.toEqual('is-focused is-checked');
+      expect(await lastItem.getAttribute('class')).not.toContain('is-checked');
     });
   }
 });
@@ -288,4 +288,41 @@ describe('Contextmenu immediate tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tree-popupmenu'))), config.waitsFor);
   });
+});
+
+describe('Contextmenu Placement Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextmenu/example-page-rightclick');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (!utils.isBS()) {
+    it('Should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(640, 296);
+
+      // Popupmenu width is about 230px, so provide coords that would
+      // otherwise push it offscreen
+      const targetMouseCoords = {
+        x: 500,
+        y: 100
+      };
+
+      // Move the mouse to an area near the right edge of the page and click
+      await browser.actions().mouseMove(targetMouseCoords).perform();
+      await browser.actions().click(protractor.Button.RIGHT).perform();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+      expect(await element(by.id('action-popupmenu')).getSize()).toEqual(jasmine.objectContaining({
+        height: 266
+      }));
+
+      // Reset to the original viewport size
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
 });

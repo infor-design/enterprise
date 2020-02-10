@@ -1,4 +1,3 @@
-/* eslint-disable jasmine/no-focused-tests */
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
@@ -113,7 +112,7 @@ describe('Datagrid Paging API', () => {
         expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
         expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
 
-        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
         const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
         buttonElNext.click();
 
@@ -126,7 +125,7 @@ describe('Datagrid Paging API', () => {
           expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
           expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
 
-          const buttonElPrev = document.body.querySelector('li.pager-prev a');
+          const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
           const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
           buttonElPrev.click();
 
@@ -332,7 +331,7 @@ describe('Datagrid Paging API', () => {
       datagridObj = new Datagrid(datagridEl, options);
 
       setTimeout(() => {
-        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
         const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
         buttonElNext.click();
 
@@ -343,7 +342,7 @@ describe('Datagrid Paging API', () => {
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
 
-          const buttonElFirst = document.body.querySelector('li.pager-first a');
+          const buttonElFirst = document.body.querySelector('li.pager-first .btn-icon');
           const buttonClickSpyFirst = spyOnEvent(buttonElFirst, 'click.button');
           buttonElFirst.click();
 
@@ -382,7 +381,7 @@ describe('Datagrid Paging API', () => {
       // and the paging bar is rendered
       setTimeout(() => {
         // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-last a');
+        const buttonEl = document.body.querySelector('li.pager-last .btn-icon');
         const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
         buttonEl.click();
 
@@ -422,7 +421,7 @@ describe('Datagrid Paging API', () => {
       // and the paging bar is rendered
       setTimeout(() => {
         // get first button and click it
-        const buttonEl = document.body.querySelector('li.pager-next a');
+        const buttonEl = document.body.querySelector('li.pager-next .btn-icon');
         const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
         buttonEl.click();
 
@@ -447,7 +446,7 @@ describe('Datagrid Paging API', () => {
       datagridObj = new Datagrid(datagridEl, options);
 
       setTimeout(() => {
-        const buttonElNext = document.body.querySelector('li.pager-next a');
+        const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
         const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
         buttonElNext.click();
 
@@ -458,7 +457,7 @@ describe('Datagrid Paging API', () => {
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
 
-          const buttonElPrev = document.body.querySelector('li.pager-prev a');
+          const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
           const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
           buttonElPrev.click();
 
@@ -499,7 +498,7 @@ describe('Datagrid Paging API', () => {
           expect(rowactivatedSpy).toHaveBeenTriggered();
           expect(row.classList.contains('is-rowactivated')).toBeTruthy();
 
-          const buttonEl = document.body.querySelector('li.pager-next a');
+          const buttonEl = document.body.querySelector('li.pager-next .btn-icon');
           const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
           buttonEl.click();
 

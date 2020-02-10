@@ -25,19 +25,19 @@ This example shows how to place several objects inside a block grid. The block g
 ```html
 <div class="row blockgrid l-center">
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+    <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+    <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+    <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+    <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/ffffff"/>
+    <img alt="Placeholder Image" src="{{basepath}}images/placeholder-200x200.png"/>
   </div>
 </div>
 ```

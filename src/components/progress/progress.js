@@ -9,6 +9,7 @@ const COMPONENT_NAME = 'progress';
 
 // Default Progress Options
 const PROGRESS_DEFAULTS = {
+  value: 0
 };
 
 /**
@@ -17,6 +18,7 @@ const PROGRESS_DEFAULTS = {
 * @constructor
 * @param {jQuery[]|HTMLElement} element The component element.
 * @param {object} [settings] The component settings.
+* @param {string|number} [settings.value] The value to set.
 */
 function Progress(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PROGRESS_DEFAULTS);
@@ -33,14 +35,16 @@ Progress.prototype = {
   /**
    * Init this component.
    * @private
+   * @returns {object} The object for chaining.
    */
   init() {
-    this.update();
+    this.update(this.settings.value || this.element.attr('data-value'));
 
     this.element.off('updated.progress').on('updated.progress', (e) => {
       e.stopPropagation();
       this.update();
     });
+    return this;
   },
 
   /**
@@ -63,9 +67,11 @@ Progress.prototype = {
   /**
    * Unbind all events.
    * @private
+   * @returns {object} The object for chaining.
    */
   unbind() {
     this.element.off('updated.progress');
+    return this;
   },
 
   /**
@@ -73,16 +79,10 @@ Progress.prototype = {
   * @param {string} value  The percent value to use to fill. 0-100
   * @returns {void}
   */
-  update(value) {
-    let perc = this.element.attr('data-value');
-
-    if (value) {
-      perc = value;
-      this.element.attr('data-value', value);
-    }
-
-    this.element[0].style.width = `${perc}%`;
-    this.updateAria(perc);
+  update(value = 0) {
+    this.element.attr('data-value', value);
+    this.element[0].style.width = `${value.toString()}%`;
+    this.updateAria(value);
   },
 
   /**
@@ -91,8 +91,8 @@ Progress.prototype = {
    * @returns {object} The api
    */
   updated(settings) {
-    if (typeof settings !== 'undefined') {
-      this.settings = utils.mergeSettings(this.element, settings, PROGRESS_DEFAULTS);
+    if (typeof settings !== 'undefined' && settings.value) {
+      this.settings.value = settings.value;
     }
     return this
       .unbind()

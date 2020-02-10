@@ -68,6 +68,12 @@ const DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(it
   return dataset;
 };
 
+/*
+ * Provides a method for highlighting or calling out the matching search term
+ * within rendered filter results.  Note that this method will not be run by the
+ * Autocomplete if the component is configured with an external `displayResultsCallback` method
+ * for handling the display of filter results.
+ */
 const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
   let targetProp = item;
   let hasAlias = false;
@@ -273,7 +279,11 @@ Autocomplete.prototype = {
           if (result.highlightTarget) {
             filterOpts.alias = result.highlightTarget;
           }
-          result = self.settings.highlightCallback(result, filterOpts);
+          // Only render highlight results if we don't do this manually
+          // in another component's rendering method.
+          if (!self.settings.displayResultsCallback) {
+            result = self.settings.highlightCallback(result, filterOpts);
+          }
         }
 
         modifiedFilterResults.push(result);
@@ -287,7 +297,7 @@ Autocomplete.prototype = {
     if (typeof this.settings.displayResultsCallback === 'function') {
       this.settings.displayResultsCallback(modifiedFilterResults, () => {
         self.element.trigger('listopen', [modifiedFilterResults]);
-      });
+      }, term);
       return;
     }
 
@@ -296,6 +306,23 @@ Autocomplete.prototype = {
 
   handleListResults(term, items, filterResult) {
     const self = this;
+
+    filterResult.forEach((dataset) => {
+      if (typeof Tmpl !== 'undefined') {
+        const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
+        DOM.append(self.list, renderedTmpl, '*');
+      }
+    });
+
+    /**
+     * Fires before the menu DOM is populated with the filter results.
+     *
+     * @event beforepopulated
+     * @memberof Autocomplete
+     * @param {object} event - The jquery event object
+     * @param {object} filterResult - The results of the filtering
+     */
+    this.element.trigger('beforepopulated', [filterResult]);
 
     const afterPlaceCallback = function (placementObj) {
       if (placementObj.wasFlipped === true) {
@@ -320,18 +347,18 @@ Autocomplete.prototype = {
       }
     };
 
-    filterResult.forEach((dataset) => {
-      if (typeof Tmpl !== 'undefined') {
-        const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
-        DOM.append(self.list, renderedTmpl, '*');
+    if (!this.previouslyOpened) {
+      this.element.addClass('is-open')
+        .popupmenu(popupOpts)
+        .one('close.autocomplete', () => {
+          self.closeList(true);
+        });
+    } else {
+      const popupmenuAPI = this.element.data('popupmenu');
+      if (popupmenuAPI) {
+        popupmenuAPI.position();
       }
-    });
-
-    this.element.addClass('is-open')
-      .popupmenu(popupOpts)
-      .one('close.autocomplete', () => {
-        self.closeList(true);
-      });
+    }
 
     // Adjust the widths of the LIs to the longest
     const lis = self.list.find('li');
@@ -360,28 +387,30 @@ Autocomplete.prototype = {
     */
     this.element.trigger('populated', [filterResult]).focus();
 
-    // Overrides the 'click' listener attached by the Popupmenu plugin
-    self.list
-      .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
-        self.select(e);
-      })
-      .on(`focusout.${COMPONENT_NAME}`, () => {
-        self.checkActiveElement();
+    if (!this.previouslyOpened) {
+      // Overrides the 'click' listener attached by the Popupmenu plugin
+      self.list
+        .on(`touchend.${COMPONENT_NAME} click.${COMPONENT_NAME}`, 'a', (e) => {
+          self.select(e);
+        })
+        .on(`focusout.${COMPONENT_NAME}`, () => {
+          self.checkActiveElement();
+        });
+
+      // Highlight anchors on focus
+      const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
+        self.highlight($(this), all);
       });
 
-    // Highlight anchors on focus
-    const all = self.list.find('a').on(`focus.${COMPONENT_NAME} touchend.${COMPONENT_NAME}`, function () {
-      self.highlight($(this), all);
-    });
+      if (this.settings.offset) {
+        const domListParent = this.list.parent()[0];
 
-    if (this.settings.offset) {
-      const domListParent = this.list.parent()[0];
-
-      if (this.settings.offset.left) {
-        domListParent.style.left = `${parseInt(domListParent.style.left, 10) + this.settings.offset.left}px`;
-      }
-      if (this.settings.offset.top) {
-        domListParent.style.top = `${parseInt(domListParent.style.top, 10) + this.settings.offset.top}px`;
+        if (this.settings.offset.left) {
+          domListParent.style.left = `${parseInt(domListParent.style.left, 10) + this.settings.offset.left}px`;
+        }
+        if (this.settings.offset.top) {
+          domListParent.style.top = `${parseInt(domListParent.style.top, 10) + this.settings.offset.top}px`;
+        }
       }
     }
 
@@ -390,16 +419,23 @@ Autocomplete.prototype = {
     // added and will remove soon popup close that includes aria-live="polite"
     // which have the first suggested item automatically announced when it
     // appears without moving focus.
+    const previousLiveMessages = document.querySelectorAll('#ac-is-arialive');
+    if (previousLiveMessages) {
+      previousLiveMessages.forEach((messageElem) => {
+        messageElem.parentNode.removeChild(messageElem);
+      });
+    }
+
     DOM.append(
       self.list.parent('.popupmenu-wrapper'),
-      `${'' +
-        '<span id="ac-is-arialive" aria-live="polite" class="audible">'}${
+      `<span id="ac-is-arialive" aria-live="polite" class="audible">${
         $.trim(this.list.find('>li:first-child').text())
       }</span>`,
       '<div><span><a><small><img><svg><i><b><use><br><strong><em>'
     );
 
     this.noSelect = true;
+    this.previouslyOpened = true;
     this.element.trigger('listopen', [filterResult]);
   },
 
@@ -430,6 +466,7 @@ Autocomplete.prototype = {
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
     this.element.add(this.list).removeClass('is-open is-ontop');
+    delete this.previouslyOpened;
   },
 
   listIsOpen() {

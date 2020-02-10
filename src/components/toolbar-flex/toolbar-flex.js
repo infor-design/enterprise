@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { log } from '../../utils/debug';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
@@ -14,14 +15,18 @@ const COMPONENT_NAME = 'toolbar-flex';
  * @namespace
  */
 const TOOLBAR_FLEX_DEFAULTS = {
-  // ajax function to be called before the more menu is opened
-  beforeMoreMenuOpen: null
+  allowTabs: false,
+  beforeMoreMenuOpen: null,
+  moreMenuSettings: {},
 };
 
 /**
  * @constructor
  * @param {HTMLElement} element the base element
  * @param {object} [settings] incoming settings
+ * @param {function} [settings.beforeMoreMenuOpen=null] Ajax function to be called before the more menu is opened
+ * @param {boolean} [settings.allowTabs] Allows tab to navigate the toolbar
+ * @param {object} [settings.moreMenuSettings] if defined on a toolbar containing a More Actions menu, this will pass settings into this toolbar's More Actions menu
  */
 function ToolbarFlex(element, settings) {
   this.element = element;
@@ -46,15 +51,25 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   init() {
+    this.uniqueId = utils.uniqueId(this.element);
     this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
-      const itemComponentSettings = {};
-      if ($(item).hasClass('btn-actions') && !!this.settings.beforeMoreMenuOpen) {
-        itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
+      let itemComponentSettings = {};
+      const isActionButton = $(item).hasClass('btn-actions');
+
+      if (isActionButton) {
+        itemComponentSettings = this.settings.moreMenuSettings || itemComponentSettings;
+
+        if (this.settings.beforeMoreMenuOpen) {
+          warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
+          itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
+        }
       }
+
       $(item).toolbarflexitem({
         toolbarAPI: this,
-        componentSettings: itemComponentSettings
+        componentSettings: itemComponentSettings,
+        allowTabs: this.settings.allowTabs
       });
       return $(item).data('toolbarflexitem');
     });
@@ -64,17 +79,20 @@ ToolbarFlex.prototype = {
     }
 
     // Check for a focused item
-    this.items.forEach((item) => {
-      if (item.focused) {
-        if (this.focusedItem === undefined) {
-          this.focusedItem = item;
-        } else {
-          item.focused = false;
+    if (!this.settings.allowTabs) {
+      this.items.forEach((item) => {
+        if (item.focused) {
+          if (this.focusedItem === undefined) {
+            this.focusedItem = item;
+          } else {
+            item.focused = false;
+          }
         }
+      });
+
+      if (!this.focusedItem) {
+        this.focusedItem = this.items[0];
       }
-    });
-    if (!this.focusedItem) {
-      this.focusedItem = this.items[0];
     }
 
     this.render();
@@ -96,14 +114,16 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    this.keydownListener = this.handleKeydown.bind(this);
-    this.element.addEventListener('keydown', this.keydownListener);
+    if (!this.settings.allowTabs) {
+      this.keydownListener = this.handleKeydown.bind(this);
+      this.element.addEventListener('keydown', this.keydownListener);
 
-    this.keyupListener = this.handleKeyup.bind(this);
-    this.element.addEventListener('keyup', this.keyupListener);
+      this.keyupListener = this.handleKeyup.bind(this);
+      this.element.addEventListener('keyup', this.keyupListener);
 
-    this.clickListener = this.handleClick.bind(this);
-    this.element.addEventListener('click', this.clickListener);
+      this.clickListener = this.handleClick.bind(this);
+      this.element.addEventListener('click', this.clickListener);
+    }
 
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
       log('dir', args);
@@ -283,7 +303,7 @@ ToolbarFlex.prototype = {
    * @returns {ToolbarFlexItem} an instance of a Toolbar item
    */
   getItemFromElement(element) {
-    if (element instanceof ToolbarFlexItem) {
+    if (element instanceof ToolbarFlexItem || element.isToolbarFlexItem) {
       return element;
     }
 
@@ -487,12 +507,17 @@ ToolbarFlex.prototype = {
       noMenuWrap: true
     };
 
-    let hasIcons = false;
-
     function getItemData(item) {
       const itemData = item.toPopupmenuData();
-      if (itemData && itemData.icon) {
-        hasIcons = true;
+
+      if (itemData) {
+        // Pass along some properties to the top level data object
+        if (itemData.icon) {
+          data.hasIcons = true;
+        }
+        if (itemData.selectable) {
+          data.selectable = itemData.selectable;
+        }
       }
       return itemData;
     }
@@ -503,8 +528,6 @@ ToolbarFlex.prototype = {
       }
       return true;
     }).map(item => getItemData(item));
-
-    data.hasIcons = hasIcons;
 
     return data;
   },
@@ -533,6 +556,35 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * Detects whether or not a toolbar item is currently overflowed.
+   * @param {ToolbarFlexItem|jQuery[]|HTMLElement} item the Toolbar Item or Element to check for overlflow.
+   * @returns {boolean} whether or not the item is overflowed.
+   */
+  isItemOverflowed(item) {
+    if (!item) {
+      return false;
+    }
+
+    // If we get an HTMLElement or jQuery object, rzesolve the ToolbarFlex Item
+    // from either of those, if applicable. Otherwise, it's not overflowed.
+    let targetItem;
+    if (item instanceof HTMLElement || item instanceof $) {
+      targetItem = $(item).data('toolbarflexitem');
+      if (!targetItem) {
+        return false;
+      }
+      item = targetItem;
+    }
+
+    // If this item isn't inside this toolbar, it's definitely not overflowed.
+    if (this.items.indexOf(item) < 0) {
+      return false;
+    }
+
+    return item.overflowed;
+  },
+
+  /**
    * @param {object} [settings] incoming settings
    * @returns {void}
    */
@@ -549,9 +601,11 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   teardown() {
-    this.element.removeEventListener('keydown', this.keydownListener);
-    this.element.removeEventListener('keyup', this.keyupListener);
-    this.element.removeEventListener('click', this.clickListener);
+    if (!this.settings.allowTabs) {
+      this.element.removeEventListener('keydown', this.keydownListener);
+      this.element.removeEventListener('keyup', this.keyupListener);
+      this.element.removeEventListener('click', this.clickListener);
+    }
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
     $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);

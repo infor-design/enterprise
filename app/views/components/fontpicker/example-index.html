@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="six columns">
+
+    <button id="fontpicker" class="btn-tertiary fontpicker">
+      <span>Fontpicker</span>
+    </button>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    $('#fontpicker').fontpicker();
+  });
+
+  $('#fontpicker').on('font-selected.test', function (e, fontPickerStyle) {
+    $('body').toast({
+      title: 'Font Changed!',
+      message: 'FontPicker style has changed to <b>"'+ fontPickerStyle.displayName +'"</b>'
+    });
+  });
+</script>

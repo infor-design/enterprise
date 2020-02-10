@@ -118,15 +118,29 @@ $badge-neutral-color: $theme-color-palette-white;
 $badge-neutral-bg-color: $theme-color-palette-slate-60;
 $badge-neutral-hover-bg-color: $theme-color-palette-slate-50;
 $badge-secondary-color: $theme-color-palette-white;
-$badge-secondary-bg-color: $theme-color-palette-slate-70;
+$badge-secondary-bg-color: $theme-color-palette-slate-90;
 $badge-secondary-border-color: $theme-color-palette-slate-50;
+$badge-secondary-icon-color: $theme-color-palette-white;
+$badge-secondary-hover-bg-color: $theme-color-palette-slate-70;
+$badge-secondary-hover-border-color: $theme-color-palette-graphite-40;
+$badge-secondary-hover-icon-color: $theme-color-palette-graphite-20;
 $badge-error-color: $theme-color-palette-white;
+$badge-error-icon-color: $theme-color-palette-slate-20;
+$badge-error-hover-icon-color: $theme-color-palette-white;
 $badge-alert-color: $theme-color-palette-graphite-100;
+$badge-alert-icon-color: $theme-color-palette-graphite-80;
+$badge-alert-hover-icon-color: $theme-color-palette-graphite-100;
 $badge-good-color: $theme-color-palette-graphite-100;
+$badge-good-icon-color: $theme-color-palette-graphite-80;
+$badge-good-hover-icon-color: $theme-color-palette-graphite-100;
 $badge-info-color: $theme-color-palette-white;
+$badge-info-icon-color: $theme-color-palette-slate-20;
+$badge-info-hover-icon-color: $theme-color-palette-white;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $theme-color-palette-slate-30;
 $badge-neutral-hover-icon-color: $theme-color-palette-white;
+$badge-disabled-text-color: $theme-color-palette-slate-30;
+$badge-disabled-bg-color: $theme-color-palette-graphite-70;
 
 // Popup Menu
 $popupmenu-color: $theme-color-palette-white;
@@ -136,7 +150,7 @@ $popupmenu-bg-color: $theme-color-palette-slate-70;
 $popupmenu-border-color: $theme-color-palette-slate-50;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $theme-color-brand-primary-base;
-$popupmenu-hover-color: $theme-color-palette-slate-60;
+$popupmenu-hover-color: $theme-color-palette-slate-50;
 $popupmenu-checked-color-inverse: $theme-color-brand-primary-base;
 
 // Secondary With Border
@@ -172,7 +186,6 @@ $trigger-icon-fill-light-color: $theme-color-palette-slate-40;
 $trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
 $listview-bg-color: $theme-color-palette-slate-70;
@@ -182,7 +195,7 @@ $listview-border-color: $theme-color-palette-slate-50;
 $listview-color: $inverse-color;
 $listview-secondary-color: $theme-color-palette-slate-30;
 $listview-tertiary-color: $theme-color-palette-slate-40;
-$listview-disabled-color: $theme-color-palette-slate-40;
+$listview-disabled-color: $input-disabled-color;
 $listview-selected-text-color: $theme-color-palette-white;
 $listview-header-bg-color: $theme-color-palette-slate-60;
 $listview-header-color: $theme-color-palette-white;
@@ -226,6 +239,7 @@ $contextual-panel-seperator-bg-color: $theme-color-palette-slate-30;
 $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-50;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -238,17 +252,22 @@ $datepicker-today-color: $inverse-color;
 $datepicker-hover-bg-color: $theme-color-palette-slate-60;
 $datepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $datepicker-disabled-border-color: $theme-color-palette-slate-50;
-$datepicker-disabled-bg-color: rgba($theme-color-palette-slate-60, 0.5);
+$datepicker-disabled-bg-color: $theme-color-palette-slate-60;
 $datepicker-disabled-color: $theme-color-palette-slate-40;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Time Picker
 $timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
 
+// Color Palette Background
+$color-border-color: rgba(255, 255, 255, 0.2);
+
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
 $colorpicker-swatch-border-color: $theme-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-slate-50;
@@ -336,10 +355,11 @@ $editor-focus-border-color: $theme-color-brand-primary-base;
 $editor-line-number-color: $theme-color-palette-slate-40;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $theme-color-palette-slate-60;
+$editor-toolbar-bottom-border-color: $theme-color-palette-graphite-70;
 $editor-middle-border-color: $theme-color-palette-slate-40;
 $editor-btn-color: $theme-color-palette-slate-30;
 $editor-btn-hover-color: $theme-color-palette-white;
-$editor-btn-active-color: $theme-color-brand-primary-base;
+$editor-btn-active-color: $theme-color-brand-primary-lighter;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $theme-color-palette-slate-40;
@@ -385,6 +405,8 @@ $modal-btn-primary-color: $theme-color-palette-azure-40;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-30;
 $modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
+$modal-btn-primary-disabled-color: $theme-color-palette-slate-50;
+$modal-btn-primary-disabled-opacity: 1;
 $modal-primary-color: $theme-color-palette-white;
 $modal-secondary-color: $theme-color-palette-slate-30;
 
@@ -506,8 +528,9 @@ $datagrid-row-icon-color: $theme-color-palette-slate-30;
 $datagrid-header-focus-bg-color: $theme-color-brand-primary-base;
 $datagrid-alternate-bg-color: #414348;
 $datagrid-alternate-row-hover-color: $theme-color-palette-slate-60;
-$datagrid-list-header-bg-color: $theme-color-palette-slate-90;
-
+$datagrid-list-header-bg-color: $theme-color-palette-slate-70;
+$datagrid-list-group-header-bg-color: $theme-color-palette-slate-90;
+$datagrid-list-group-header-border-color: $theme-color-palette-graphite-70;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-list-header-border-color: $theme-color-palette-slate-50;
@@ -569,7 +592,7 @@ $chart-progressbar-completed-fill: $theme-color-palette-emerald-80;
 $chart-progressbar-target-fill: $theme-color-palette-slate-60;
 $chart-progressbar-primary-fill: $theme-color-brand-primary-base;
 $chart-progressbar-dark-fill: $theme-color-brand-primary-base;
-$chart-targeted-achievement-bg-color: $theme-color-palette-slate-50;
+$chart-targeted-achievement-bg-color: $theme-color-palette-slate-40;
 
 // Timeline
 $timeline-indicator-color: $theme-color-palette-slate-30;
@@ -619,7 +642,7 @@ $searchfield-card-text-color: $font-color;
 $searchfield-header-bg-color: $theme-color-palette-slate-80;
 $searchfield-header-border-color: $theme-color-palette-slate-70;
 $searchfield-header-text-color: $theme-color-palette-white;
-$searchfield-header-placeholder-text-color: $theme-color-palette-slate-40;
+$searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
 $searchfield-header-icon-color: $header-button-color;
 
 // Image Border Color
@@ -710,11 +733,16 @@ $treemap-title-color: $theme-color-palette-slate-100;
 $calendar-bg-color: $panel-bg-color;
 $calendar-event-color: $theme-color-palette-slate-100;
 $calendar-line-color: $theme-color-palette-slate-50;
+$calendar-line-color-light: $theme-color-palette-slate-60;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $theme-color-palette-slate-80;
 $calendar-hover-bg-color: rgba(49, 50, 54, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-slate-80;
 $calendar-disabled-color: $theme-color-palette-slate-40;
+
+// Builder
+$builder-actions-bg-color: $panel-bg-color;
+$builder-sidebar-bg-color: $panel-bg-color;
 
 // Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {

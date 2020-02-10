@@ -114,8 +114,10 @@ function ValidationRules() {
 
         let dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short;
 
+        let dtApi = null;
         if (field && field.data('datepicker')) {
-          dateFormat = field.data('datepicker').pattern;
+          dtApi = field.data('datepicker');
+          dateFormat = dtApi.pattern;
         }
 
         const isStrict = !(
@@ -125,6 +127,13 @@ function ValidationRules() {
           dateFormat === 'MMMM d' ||
           dateFormat === 'yyyy'
         );
+        if (dtApi) {
+          dateFormat = {
+            locale: dtApi.locale.name,
+            pattern: dateFormat,
+            calendarName: dtApi.currentCalendar.name
+          };
+        }
         const parsedDate = Locale.parseDate(value, dateFormat, isStrict);
         return !(((parsedDate === undefined) && value !== ''));
       },
@@ -166,7 +175,20 @@ function ValidationRules() {
             const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
             format += ` ${timeFormat}`;
           }
+          if (datepickerApi && datepickerApi.isIslamic) {
+            format = {
+              pattern: datepickerApi.pattern,
+              locale: datepickerApi.locale.name
+            };
+          }
           dateObj = Locale.parseDate(dateObj, format);
+        }
+        if (datepickerApi && datepickerApi.isIslamic && dateObj instanceof Date) {
+          dateObj = Locale.umalquraToGregorian(
+            dateObj.getFullYear(),
+            dateObj.getMonth(),
+            dateObj.getDate()
+          );
         }
         let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 
@@ -345,10 +367,18 @@ function ValidationRules() {
         this.message = Locale.translate('InvalidTime');
         const timepicker = field && field.data('timepicker');
         const timepickerSettings = timepicker ? field.data('timepicker').settings : {};
-        const pattern = timepickerSettings && timepickerSettings.timeFormat ?
+        let pattern = timepickerSettings && timepickerSettings.timeFormat ?
           timepickerSettings.timeFormat :
           Locale.calendar().timeFormat;
-        const is24Hour = (pattern.match('HH') || []).length > 0;
+
+        if (field.attr('data-options') && (timepickerSettings && !timepickerSettings.timeFormat)) {
+          const settings = JSON.parse(field.attr('data-options'));
+          if (settings.patternOptions && settings.patternOptions.format) {
+            pattern = settings.patternOptions.format;
+          }
+        }
+
+        const is24Hour = (pattern.match('HH') || pattern.match('H') || []).length > 0;
         const maxHours = is24Hour ? 24 : 12;
         const sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator);
         let valueHours = 0;

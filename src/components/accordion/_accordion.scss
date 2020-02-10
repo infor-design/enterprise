@@ -1,48 +1,8 @@
 // New Accordion Style
 //========================================================
 
-@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
-  > a {
-    padding-left: $a-padding;
-  }
-
-  > .icon,
-  > [class^='btn'] {
-    margin-left: $icon-margin;
-
-    + a {
-      padding-left: 0;
-      width: calc(100% - #{$width});
-    }
-  }
-
-  &.list-item {
-    &::before {
-      padding-left: $li-padding;
-    }
-
-    a {
-      padding-left: 0;
-      width: calc(100% - #{$width});
-    }
-  }
-}
-
-@mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
-  .accordion-content {
-    padding-left: $leftPadding;
-  }
-
-  &.has-icons {
-    .accordion-header.no-icon > a {
-      padding-left: $iconLinkPadding;
-    }
-
-    .accordion-content {
-      padding-left: $iconContentPadding;
-    }
-  }
-}
+@import 'accordion-mixins';
+@import '../button/button-chevron';
 
 /* stylelint-disable max-nesting-depth,selector-max-compound-selectors */
 
@@ -179,7 +139,7 @@
   &.panel {
     background-color: $accordion-bg-color;
     border-color: $accordion-panel-border-color;
-    border-right-color: $accordion-toplevel-border-color;
+    border-right-color: $accordion-panel-border-color;
 
     .accordion-header {
       border-bottom-color: $accordion-panel-border-color;
@@ -202,6 +162,10 @@
 
         > .icon {
           color: $accordion-selected-text-color;
+
+          .chevron {
+            top: -1px;
+          }
         }
 
         > [class^='btn'] {
@@ -234,23 +198,21 @@
         }
       }
 
-      &.has-filtered-children,
-      &.has-filtered-children.is-focused,
-      &.has-filtered-children.is-selected {
-        background-color: $accordion-header-filtered-children-background-color;
+      &.filtered.has-filtered-children {
+        &:not(:hover):not(.is-selected) {
+          > a {
+            color: $accordion-filtered-text-color;
+          }
 
-        > a {
-          color: $accordion-filtered-text-color !important;
-        }
+          > .icon {
+            color: $accordion-filtered-text-color;
+          }
 
-        > .icon {
-          color: $accordion-filtered-text-color !important;
-        }
-
-        > .btn > .icon {
-          &::before,
-          &::after {
-            background-color: $accordion-filtered-text-color !important;
+          > .btn > .icon {
+            &::before,
+            &::after {
+              background-color: $accordion-filtered-text-color;
+            }
           }
         }
       }
@@ -258,16 +220,38 @@
       &:last-child {
         border-bottom-color: transparent;
       }
+
+      .btn {
+        top: -1px;
+      }
+
+      .icon {
+        top: -3px;
+
+        &.chevron {
+          top: 1px;
+
+          &.active {
+            top: 0;
+          }
+        }
+      }
     }
 
     .accordion-pane {
       background-color: $accordion-pane-bg-color;
 
-      // Visible accordion panes force a border to show up on the next accordion header for visual separation
+      // Visible accordion panes force a border to show up on the next
+      // accordion header for visual separation
       &.is-expanded {
-        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-header,
         + .accordion-content {
           border-top-color: $accordion-alternate-border-color;
+
+          &.is-focused,
+          &.is-selected {
+            border-top-color: transparent;
+          }
         }
       }
 
@@ -417,9 +401,16 @@
 
         // Visible accordion panes force a border to show up on the next accordion header for visual separation
         &.is-expanded {
-          + .accordion-header:not(.is-focused):not(.is-selected),
+          + .accordion-header,
           + .accordion-content {
             border-top-color: $accordion-inverse-border-color;
+          }
+
+          + .accordion-header {
+            &.is-focused,
+            &.is-selected {
+              border-top-color: transparent;
+            }
           }
         }
 
@@ -443,12 +434,6 @@
             .icon {
               color: $accordion-selected-text-color;
             }
-          }
-
-          &.has-filtered-children,
-          &.has-filtered-children.is-focused,
-          &.has-filtered-children.is-selected {
-            background-color: transparent;
           }
         }
 
@@ -524,6 +509,10 @@
 
     > span {
       display: inline-block; // to allow offsetWidth
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
     }
   }
 
@@ -662,17 +651,26 @@
 .accordion-pane {
   @include transition(padding 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-  height: 0;
+  display: block;
   overflow: hidden;
   padding: 0;
+
+  &:not(.is-expanded) {
+    height: 0;
+  }
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {
     padding: 0;
 
-    + .accordion-header:not(.is-focused):not(.is-selected),
+    + .accordion-header,
     + .accordion-content {
       border-top-color: $accordion-border-color;
+
+      &.is-focused,
+      &.is-selected {
+        border-top-color: transparent;
+      }
     }
   }
 
@@ -683,6 +681,10 @@
     p {
       font-size: $theme-size-font-base;
       -webkit-text-size-adjust: 100%;
+    }
+
+    &.filtered {
+      display: none;
     }
   }
 
@@ -772,7 +774,16 @@
 
     &.is-disabled {
       background-color: $accordion-disabled-pane-bg-color !important;
-      border-bottom-color: $accordion-disabled-pane-bg-color !important;
+    }
+
+    // Subheaders can now have chevrons as of v4.23.x
+    &:not(.has-chevron) {
+      .icon.chevron {
+        height: 16px;
+        left: -8px;
+        top: -1px;
+        width: 16px;
+      }
     }
   }
 
@@ -829,6 +840,19 @@
 
 .accordion-content {
   padding: 15px 0 15px 20px;
+}
+
+// Slight adjustment to padding/placement of icons on JP styles.
+// JP fonts have different character spacing/padding requirements.
+// See Github: infor-design/enterprise#3364
+html[lang='ja-JP'] {
+  .accordion-pane {
+    .accordion-header.list-item {
+      &::before {
+        font-size: 0.8rem;
+      }
+    }
+  }
 }
 
 // RTL Styles
@@ -1390,6 +1414,7 @@ html[dir='rtl'] {
 .tooltip {
   &.tooltip-accordion-style {
     background-color: $theme-color-palette-white;
+    color: $theme-color-palette-black;
 
     .arrow {
       display: none;

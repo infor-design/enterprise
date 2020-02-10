@@ -478,10 +478,19 @@ Tooltip.prototype = {
 
     this.tooltip[0].setAttribute('class', classes);
 
+    const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length && this.settings.trigger === 'hover';
+
     if (typeof content === 'string') {
       content = $(content);
       contentArea.html(content);
       contentArea.find('.hidden').removeClass('hidden');
+    } else if (useHtml) {
+      const clone = content[0].cloneNode(true);
+      const id = clone.id;
+      if (id) {
+        clone.id = `${id}-${this.uniqueId}`;
+      }
+      contentArea.html(clone.outerHTML);
     } else {
       contentArea.html(content);
     }
@@ -496,7 +505,10 @@ Tooltip.prototype = {
       this.settings.placementOpts.parent = this.element;
     }
 
-    content[0].classList.remove('hidden');
+    if (!useHtml) {
+      content[0].classList.remove('hidden');
+    }
+
     contentArea[0].firstElementChild.classList.remove('hidden');
 
     const parentWidth = this.settings.placementOpts.parent.width();
@@ -693,7 +705,7 @@ Tooltip.prototype = {
         self.hide();
       });
 
-      self.element.closest('.datagrid-body').on('scroll.tooltip', () => {
+      self.element.closest('.datagrid-wrapper').on('scroll.tooltip', () => {
         self.hide();
       });
 

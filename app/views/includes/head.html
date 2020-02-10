@@ -20,7 +20,7 @@
   <script src="{{basepath}}js/promise-polyfill.js"></script>
 
   {{#SohoConfig}}
-  <script type="text/javascript">
+  <script>
     window.SohoConfig = JSON.parse('{{{SohoConfig}}}');
   </script>
   {{/SohoConfig}}
@@ -41,7 +41,8 @@
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
   <script>
     var colors;
-    var theme = 'theme-{{theme.name}}-{{theme.variant}}';
+    var longThemeName = 'theme-{{theme.name}}-{{theme.variant}}';
+    var shortThemeName = '{{theme.name}}';
     var blockUI = '{{layout}}'.indexOf('embedded') > -1 ? false : true;
 
     {{#colors}}
@@ -58,12 +59,117 @@
     {{/colors}}
 
     // If Initialize isnt called need to defer this
-    $('html')
-      .personalize({colors: colors, theme: theme, blockUI: blockUI})
-      .on('colorschanged themechanged', function (e, a) {
-        const parts = a.theme.split('-');
-        var pageUrl = '?theme=' + parts[1] + '&variant=' + parts[2] + '&colors=' + a.colors.replace('#', '');
+    var handleUrl = function(a, eventType) {
+      if (!a) {
+        return;
+      }
+
+      // Reset event type if it doesn't match up
+      var eventTypes = ['theme', 'color'];
+      if (eventType && eventTypes.indexOf(eventType) === -1) {
+        eventType === undefined;
+      }
+
+      // Setup theme if applicable
+      var queryParams = [];
+      var hasTheme = false;
+      var themeStringParts = [];
+      if ((eventType && eventType !== 'color')) {
+        hasTheme = typeof a.theme === 'string';
+        themeStringParts = a.theme.split('-');
+        queryParams.push('theme=' + themeStringParts[1]);
+        queryParams.push('variant=' + themeStringParts[2]);
+      }
+
+      // Setup color if applicable
+      var hasColor = false;
+      if (eventType && eventType !== 'theme') {
+        if (typeof a.colors === 'string') {
+          hasColor = true;
+          queryParams.push('colors=' + a.colors.replace('#', ''));
+        } else if (a.colors && typeof a.colors.header === 'string') {
+          hasColor = true;
+          queryParams.push('colors=' + a.colors.header.replace('#', ''));
+        }
+      }
+
+      function stringifyParams(theseParams) {
+        var str = '';
+        theseParams.forEach(function (param) {
+          var and = '';
+          if (queryParams[0] !== param) {
+            and = '&';
+          }
+          str += and + param;
+        });
+        return str;
+      }
+
+      // Used for filtering out existing theme-related parameters from a
+      // @param {string} queryString the URL string
+      // @returns {array} of existing Parameters in string form.
+      // Example: [`locale=ar-EG`, `useFlexToolbar=true`]
+      function existingThemeParamFilter(queryString) {
+        var existingParams = window.location.search
+          .replace('?', '')
+          .split('&');
+        existingParams = existingParams.filter(function (param) {
+          if (!param || param.length < 1) {
+            return false;
+          }
+          if (hasTheme && param.indexOf('theme=') > -1) {
+            return false;
+          }
+          if (hasTheme && param.indexOf('variant=') > -1) {
+            return false;
+          }
+          if (hasColor && param.indexOf('colors=') > -1) {
+            return false;
+          }
+          return true;
+        });
+        return existingParams;
+      }
+
+      if (queryParams.length) {
+        // Persist existing additional params.
+        // Also, overwrite existing color/theme/variant values if they've been added above.
+        queryParams = queryParams.concat(existingThemeParamFilter(window.location.search));
+
+        // Update URL in the browser window
+        var pageUrl = '?' + stringifyParams(queryParams);
         window.history.pushState('', '', pageUrl);
+      }
+    };
+
+    $('html')
+      .personalize({
+        colors: colors,
+        theme: longThemeName,
+        blockUI: blockUI
+      })
+      .on('colorschanged', function (e, a) {
+        handleUrl(a, 'color');
+      })
+      .on('themechanged', function (e, a) {
+        const parts = a.theme.split('-');
+        handleUrl(a, 'theme');
+
+        if (parts[1] !== shortThemeName) {
+          shortThemeName = parts[1];
+
+          $.get('/api/icons?theme=' + shortThemeName, function(htmlStr) {
+            htmlStr = htmlStr.replace('</div>', '');
+            htmlStr = htmlStr.replace('<div class="svg-icons">', '');
+            $('div.svg-icons').empty().append(htmlStr);
+          },'html');
+
+          $.get('/api/icons-empty?theme=' + shortThemeName, function(htmlStr) {
+            htmlStr = htmlStr.replace('</div>', '');
+            htmlStr = htmlStr.replace('<div class="svg-icons-empty">', '');
+            $('div.svg-icons-empty').empty().append(htmlStr);
+          },'html');
+        }
       });
   </script>
 

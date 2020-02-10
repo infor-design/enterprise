@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Leading Zeroes in Number Masks</h2>
+
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-3800" target="_blank">Related JIRA Ticket</a>.  It should be possible to correctly handle positive numbers with decimals inside of numeric Mask-controlled input fields.  Using either of the two input fields below, entering "12345600" with negative or positive values should result in a correctly-masked value.</p>
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2 class="fieldset-title">Text Inputs</h2>
+
+    <div class="field">
+      <label for="test1">Number Mask on Text Input (Standard)</label>
+      <input type="text" id="test1" data-mask data-options="{ process: 'number', patternOptions: { allowDecimal: true, allowThousandsSeparator: true, integerLimit: 7, decimalLimit: 3 }}" placeholder="#,###,###.000" />
+    </div>
+
+    <div class="field">
+      <label for="test2">Number Mask on Text Input with Leading Zeroes</label>
+      <input type="text" id="test2" data-mask data-options="{ process: 'number', patternOptions: { allowLeadingZeros: true, allowDecimal: true, allowThousandsSeparator: true, integerLimit: 7, decimalLimit: 3 }}" placeholder="#,###,###.000" />
+    </div>
+
+    <div class="field">
+      <label for="test3">Negative Number Mask on Text Input with Leading Zeroes</label>
+      <input type="text" id="test3" data-mask data-options="{ process: 'number', patternOptions: { allowLeadingZeros: true, allowDecimal: true, allowNegative: true, allowThousandsSeparator: true, integerLimit: 7, decimalLimit: 3 }}" placeholder="-#,###,###.000" />
+    </div>
+  </div>
+  <div class="six columns">
+    <h2 class="fieldset-title">Number Inputs</h2>
+
+    <div class="field">
+      <label for="test4">Number Mask on Number Input (Standard)</label>
+      <input type="number" id="test4" data-mask data-options="{ process: 'number', patternOptions: { allowDecimal: true, allowThousandsSeparator: false, integerLimit: 7, decimalLimit: 3 }}" placeholder="#######.000" step="0.001"/>
+    </div>
+
+    <div class="field">
+      <label for="test5">Number Mask on Number Input with Leading Zeroes</label>
+      <input type="number" id="test5" data-mask data-options="{ process: 'number', patternOptions: { allowLeadingZeros: true, allowDecimal: true, allowThousandsSeparator: false, integerLimit: 7, decimalLimit: 3 }}" placeholder="#######.000" step="0.001" />
+    </div>
+
+    <div class="field">
+      <label for="test6">Negative Number Mask on Number Input with Leading Zeroes</label>
+      <input type="number" id="test6" data-mask data-options="{ process: 'number', patternOptions: { allowLeadingZeros: true, allowDecimal: true, allowThousandsSeparator: false, allowNegative: true, integerLimit: 7, decimalLimit: 3 }}" placeholder="-#######.000" step="0.001" />
+    </div>
+  </div>
+</div>

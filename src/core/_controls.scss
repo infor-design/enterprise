@@ -16,6 +16,7 @@
 @import '../components/input/input';
 @import '../components/skiplink/skiplink';
 @import '../components/switch/switch';
+@import '../components/tag/tag';
 
 // Mid-level ====/
 @import '../components/about/about';
@@ -35,6 +36,7 @@
 @import '../components/field-options/field-options';
 @import '../components/fieldset/fieldset';
 @import '../components/fileupload/fileupload';
+@import '../components/fontpicker/fontpicker';
 @import '../components/header/header';
 @import '../components/hierarchy/hierarchy';
 @import '../components/listbuilder/listbuilder';
@@ -69,12 +71,14 @@
 
 // Complex ====/
 @import '../components/calendar/calendar';
+@import '../components/calendar-toolbar/calendar-toolbar';
 @import '../components/compositeform/compositeform';
 @import '../components/contextualactionpanel/contextualactionpanel';
 @import '../components/datagrid/datagrid';
 @import '../components/editor/editor';
 @import '../components/form-compact/form-compact';
 @import '../components/monthview/monthview';
+@import '../components/week-view/week-view';
 @import '../components/notification/notification';
 
 // Charts ====/

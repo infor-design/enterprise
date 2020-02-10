@@ -10,35 +10,50 @@
 
 <script>
 $('body').on('initialized', function () {
+  var initCharts = function () {
+    var palette = Soho.theme.themeColors().palette;
+    //Example 1
+    var dataset1 = [{
+        data: [
+          {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
+            tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
+        ],
+        barColors: [
+          palette.turquoise[Soho.theme.uplift ? '20': '10'].value,
+          palette.turquoise[Soho.theme.uplift ? '30': '30'].value,
+          palette.turquoise[Soho.theme.uplift ? '60': '50'].value,
+          palette.turquoise[Soho.theme.uplift ? '80': '70'].value,
+          palette.turquoise[Soho.theme.uplift ? '100': '90'].value
+        ],
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
 
-  var palette = Soho.theme.themeColors().palette;
-  //Example 1
-  var dataset1 = [{
-      data: [
-        {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
-          tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
-      ],
-      barColors: [palette.turquoise['10'].value, palette.turquoise['30'].value, palette.turquoise['50'].value, palette.turquoise['70'].value, palette.turquoise['90'].value],
-      lineColors: ['#000000', '#000000', '#000000'],
-      markerColors: ['#000000']
-    }];
+    $('#bullet-example1').chart({type: 'bullet', dataset: dataset1})
+      .on('selected', function(e, ui, data) {
+        console.log(e, ui, data);
+      });
 
-  $('#bullet-example1').chart({type: 'bullet', dataset: dataset1})
-    .on('selected', function(e, ui, data) {
-      console.log(e, ui, data);
-    });
+     //Example 2
+     var dataset2 = [{
+        data: [
+          {'title': 'Profit', 'subtitle': '%', 'ranges': [20,25,30], 'measures': [17,21], 'markers': [26]}
+        ],
+        barColors: [
+          palette.azure[Soho.theme.uplift ? '30': '20'].value,
+          palette.azure[Soho.theme.uplift ? '50': '40'].value,
+          palette.azure[Soho.theme.uplift ? '70': '60'].value
+        ],
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
 
-   //Example 2
-   var dataset2 = [{
-      data: [
-        {'title': 'Profit', 'subtitle': '%', 'ranges': [20,25,30], 'measures': [17,21], 'markers': [26]}
-      ],
-      barColors: [palette.azure['20'].value, palette.azure['40'].value, palette.azure['60'].value],
-      lineColors: ['#000000', '#000000', '#000000'],
-      markerColors: ['#000000']
-    }];
+    $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
+  };
 
-   $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
-
+  $('html').on(`themechanged.${this.namespace}`, () => {
+    initCharts();
+  });
+  initCharts();
 });
 </script>

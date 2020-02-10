@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
@@ -44,6 +45,7 @@ const COMPONENT_NAME = 'listview';
  * @param {object} [settings.listFilterSettings=null] If defined as an object, passes settings into the internal ListFilter component
  * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
  * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
+ * @param {object} [settings.initializeContents=false] If true the initializer will be run on all internal contents.
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -67,7 +69,8 @@ const LISTVIEW_DEFAULTS = {
     showFirstButton: false,
     showLastButton: false
   },
-  searchTermMinSize: 1
+  searchTermMinSize: 1,
+  initializeContents: false
 };
 
 function ListView(element, settings) {
@@ -314,8 +317,15 @@ ListView.prototype = {
         totals
       });
 
+      if (this.element.parent().is('.scrollable-flex-content')) {
+        this.element.parent().find('.empty-message').remove();
+      }
+
       if (displayedDataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
+      } else if (self.emptyMessageContainer && this.element.parent().is('.scrollable-flex-content')) {
+        this.element.empty();
+        DOM.append(this.element.parent(), this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
       } else if (self.emptyMessageContainer) {
         this.element.empty();
         DOM.append(this.element, this.emptyMessageContainer[0].outerHTML, '<div><svg><use><span><b>');
@@ -382,7 +392,7 @@ ListView.prototype = {
         const n = firstRecordIdx + i;
         if (n < self.settings.dataset.length) {
           const data = self.settings.dataset[n];
-          item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+          item.css('display', (data._isFilteredOut === undefined || data._isFilteredOut) ? '' : 'none');
         }
       } else {
         item.css('display', '');
@@ -403,7 +413,9 @@ ListView.prototype = {
     });
 
     // Invoke all elements within the list view
-    this.element.find('ul').initialize();
+    if (self.settings.initializeContents) {
+      this.element.find('ul').initialize();
+    }
 
     /**
      * Fires after the listbox is fully rendered.
@@ -696,7 +708,7 @@ ListView.prototype = {
 
     // Reset filter status
     this.settings.dataset.forEach((item) => {
-      item.isFiltered = false;
+      item._isFilteredOut = false;
     });
 
     // Filter the results and highlight things
@@ -707,7 +719,7 @@ ListView.prototype = {
     pagingInfo.filteredTotal = results.length;
     pagingInfo.searchActivePage = 1;
     results.forEach((result) => {
-      result.isFiltered = true;
+      result._isFilteredOut = true;
     });
 
     this.filteredDataset = results;
@@ -735,7 +747,7 @@ ListView.prototype = {
 
     // reset filter status
     this.settings.dataset.forEach((item) => {
-      delete item.isFiltered;
+      delete item._isFilteredOut;
     });
 
     if (this.filteredDataset) {
@@ -1276,7 +1288,7 @@ ListView.prototype = {
     this.element.off('click.listview', 'li, tr, input[checkbox]');
     this.element.off('keydown.listview', 'li, tr, a');
     this.element.off('focus.listview', 'li, tbody tr');
-    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview updated.listview').empty();
+    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview updated.listview').empty();
 
     if (this.filteredDataset) {
       delete this.filteredDataset;

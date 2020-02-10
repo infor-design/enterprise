@@ -4,8 +4,32 @@
 .icon {
   fill: transparent;
   width: 18px; // Normalize against `height: 18px`;
+
+  &.icon-empty-state {
+    fill: $theme-color-brand-primary-base;
+    width: 65px;
+  }
 }
 
 .icon.app-header span:not(.audible) {
   height: 1px;
+}
+
+// Psuedo-element Icons
+//================================================== //
+
+.icon.plus-minus {
+  &::before,
+  &::after {
+    border-radius: 0;
+    content: '';
+    height: 1px;
+    left: 0.65em;
+    top: 1.4em;
+    width: 16px;
+  }
+}
+
+.icon-dirty.dirty-checkbox.is-checked {
+  top: 3px;
 }

@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="date-field0" class="label">en-US</label>
+      <input id="date-field0" />
+    </div>
+    <div class="field">
+      <label for="date-field1" class="label">en-GB</label>
+      <input id="date-field1" />
+    </div>
+    <div class="field">
+      <label for="date-field2" class="label">es-US</label>
+      <input id="date-field2" />
+    </div>
+    <div class="field">
+      <label for="date-field3" class="label">da-DK</label>
+      <input id="date-field3" />
+    </div>
+    <div class="field">
+      <label for="date-field4" class="label">pt-BR</label>
+      <input id="date-field4" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var locale = 'en-US';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLocale, Soho.Locale.currentLanguage);
+      const val = Soho.Locale.formatDate(new Date(2019, 11, 5), { date: 'medium' });
+      $('#date-field0').val(val);
+      $('#date-field0').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.medium + ')');
+    });
+
+    var locale = 'en-GB';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLocale, Soho.Locale.currentLanguage);
+    	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
+      $('#date-field1').val(val);
+      $('#date-field1').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
+    });
+
+    var locale = 'es-US';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLanguage, Soho.Locale.currentLanguage.name);
+    	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
+      $('#date-field2').val(val);
+      $('#date-field2').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
+    });
+
+    var locale = 'da-DK';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLanguage, Soho.Locale.currentLanguage.name);
+    	const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
+      $('#date-field3').val(val);
+      $('#date-field3').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
+    });
+
+    var locale = 'pt-BR';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLocale, Soho.Locale.currentLanguage);
+      const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
+      $('#date-field4').val(val);
+      $('#date-field4').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
+    });
+  });
+</script>

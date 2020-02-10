@@ -1,5 +1,9 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { warnAboutDeprecation } from '../../utils/deprecated';
+import { Locale } from '../locale/locale';
+
+import '../icons/icons.jquery';
 
 const COMPONENT_NAME = 'contextualactionpanel';
 
@@ -8,29 +12,78 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @class ContextualActionPanel
 * @param {string} element The component element.
 * @param {string} settings The component settings.
-* @param {string} [settings.id = `contextual-action-modal-cnt`]
-* The id to use for the CAP, or defaults to generated.
-* @param {array} [settings.buttons = null] A list of buttons that will sit in the toolbar's Buttonset area.
-* @param {string} [settings.title = 'Contextual Action Panel'] String that sits in the toolbar's title field.
-* @param {content} [settings.content = null] Pass content through to CAP.
+* @param {jQuery|string} [settings.content = null] Pass content through to CAP.
 * @param {boolean} [settings.initializeContent = true] Initialize content before opening with defaults.
-* @param {string} [settings.trigger = 'click'] Can be 'click' or 'immediate'.
-* @param {boolean} [settings.centerTitle = false] If true the title will be centered.
-* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
+* @param {string} [settings.title = 'Contextual Action Panel'] String that sits in the toolbar's title field.
+* @param {object} [settings.modalSettings = {}] an object containing settings for the internal Modal component.
+* @param {array} [settings.modalSettings.buttons = null] A list of buttons that will sit in the toolbar's Buttonset area.
+* @param {boolean} [settings.modalSettings.centerTitle = false] If true the title will be centered.
+* @param {string} [settings.modalSettings.id = `contextual-action-modal-[number]`] The id to use for the CAP, or defaults to generated.
+* @param {boolean} [settings.modalSettings.showCloseBtn = false] if true, displays a "close (X)" button in the button row that cancels the CAP's Modal action.
+* @param {string} [settings.modalSettings.trigger = 'click'] Can be 'click' or 'immediate'.
+* @param {boolean} [settings.modalSettings.useFlexToolbar = false] If true the new flex toolbar will be used (For CAP)
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
-  id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
-  buttons: null,
-  title: 'Contextual Action Panel', //
-  content: null, //
+  content: null,
   initializeContent: true, // initialize content before opening
-  trigger: 'click',
-  showCloseButton: false,
-  centerTitle: false
+  title: 'Contextual Action Panel',
+  modalSettings: {
+    buttons: null,
+    centerTitle: false,
+    id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
+    showCloseBtn: false,
+    trigger: 'click',
+    useFlexToolbar: false
+  }
 };
+
+// List of settings that used to reside directly underneath the `defaults`, but have
+// been re-located to `settings.modalSettings` as of v4.22.x.
+// See `infor-design/enterprise#2433` for more information.
+// TODO: find a way to normalize CAP's `content` setting with Modal's.  For some reason,
+// they are different and have been that way for some time.
+const CONTEXTUAL_MODAL_SETTINGS = [
+  'buttons',
+  'centerTitle',
+  'id',
+  'showCloseButton',
+  'trigger',
+  'useFlexToolbar',
+];
+
+// Handles the conversion of legacy CAP settings to `modalSettings` setting.
+function handleLegacyCAPSettings(settings) {
+  // Some settings are renamed to match their Modal counterparts
+  const conversionMap = {
+    showCloseButton: 'showCloseBtn'
+  };
+
+  CONTEXTUAL_MODAL_SETTINGS.forEach((setting) => {
+    if ([null, undefined].indexOf(settings[setting]) === -1) {
+      let targetSettingName = setting;
+
+      if (!settings.modalSettings) {
+        settings.modalSettings = {};
+      }
+      if (conversionMap[setting]) {
+        // Convert a differently-named setting to the correct name
+        targetSettingName = conversionMap[setting];
+        settings.modalSettings[targetSettingName] = settings[setting];
+      } else {
+        // Simply append the actual setting
+        settings.modalSettings[setting] = settings[setting];
+      }
+      delete settings[setting];
+      warnAboutDeprecation(`settings.modalSettings.${targetSettingName}`, `settings.${setting}`);
+    }
+  });
+
+  return settings;
+}
 
 function ContextualActionPanel(element, settings) {
   this.settings = utils.mergeSettings(element, settings, CONTEXTUALACTIONPANEL_DEFAULTS);
+  this.settings = handleLegacyCAPSettings(this.settings);
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -69,13 +122,12 @@ ContextualActionPanel.prototype = {
   * @returns {object} The Api for chaining.
   */
   setup() {
-    this.panel = this.element.next('.contextual-action-panel');
-
+    let existingPanel = this.element.next('.contextual-action-panel');
     const dataModal = this.element.data('modal');
     const setPanel = (id) => {
       const panelFromID = $(`#${id}`);
       if (panelFromID.length) {
-        this.panel = panelFromID;
+        existingPanel = panelFromID;
       }
     };
     if (typeof dataModal === 'string') {
@@ -86,13 +138,14 @@ ContextualActionPanel.prototype = {
 
     // Handle case with popup triggered from a menu
     if (this.element.closest('.popupmenu').length === 1) {
-      this.panel = this.element.closest('.popupmenu').next('.contextual-action-panel');
+      existingPanel = this.element.closest('.popupmenu').next('.contextual-action-panel');
     }
 
-    if (this.panel[0]) {
-      this.panel[0].style.display = 'none';
+    if (existingPanel[0]) {
+      existingPanel[0].style.display = 'none';
+      existingPanel.addClass('is-animating');
+      this.panel = existingPanel;
     }
-    this.panel.addClass('is-animating');
 
     return this;
   },
@@ -104,30 +157,31 @@ ContextualActionPanel.prototype = {
   */
   build() {
     const self = this;
+    const modalContent = this.settings.content;
 
     // Build the Content if it's not present
-    if (this.panel.length === 0) {
-      if (this.settings.content instanceof jQuery) {
-        if (this.settings.content.is('.contextual-action-panel')) {
-          this.panel = this.settings.content;
+    if (!this.panel || !this.panel.length) {
+      if (modalContent instanceof jQuery) {
+        if (modalContent.is('.contextual-action-panel')) {
+          this.panel = modalContent;
         } else {
-          this.settings.content.wrap('<div class="contextual-action-panel"></div>');
-          this.panel = this.settings.content.parent();
+          modalContent.wrap('<div class="contextual-action-panel"></div>');
+          this.panel = modalContent.parent();
         }
 
         this.panel.addClass('modal').appendTo('body');
 
-        if (this.settings.content.is('iframe')) {
-          this.settings.content.ready(() => {
+        if (modalContent.is('iframe')) {
+          modalContent.ready(() => {
             self.completeBuild();
-            self.settings.content.show();
+            modalContent.show();
           });
           return self;
         }
-        this.settings.content.show();
+        modalContent.show();
       } else {
-        this.panel = $(`<div class="contextual-action-panel">${this.settings.content}</div>`).appendTo('body');
-        this.panel.addClass('modal').attr('id', this.settings.id);
+        this.panel = $(`<div class="contextual-action-panel">${modalContent}</div>`).appendTo('body');
+        this.panel.addClass('modal').attr('id', this.settings.modalSettings.id);
       }
     }
 
@@ -183,15 +237,15 @@ ContextualActionPanel.prototype = {
     }
     if (!this.toolbar.length) {
       predefined = false;
-      if (this.settings.buttons) {
-        this.settings.buttons.forEach((button) => {
+      if (this.settings.modalSettings.buttons) {
+        this.settings.modalSettings.buttons.forEach((button) => {
           if (button.type === 'input') {
             hasSearchfield = true;
           }
         });
       }
 
-      if (this.settings.title && this.settings.centerTitle) {
+      if (this.settings.title && this.settings.modalSettings.centerTitle) {
         const toolbarSearchfieldSection = hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
         const toolbarHTML = `<div class="flex-toolbar">
           <div class="toolbar-section static"></div>
@@ -204,11 +258,11 @@ ContextualActionPanel.prototype = {
 
         this.toolbar = $(toolbarHTML);
       } else if (!buttonset.length) {
-        const toolbarCSSClass = this.settings.useFlexToolbar ? 'flex-toolbar' : 'toolbar';
-        const toolbarTitleSection = this.settings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.settings.title}</h2></div>` : '';
-        const toolbarButtonsetCSSClass = this.settings.useFlexToolbar ? 'toolbar-section buttonset' : 'buttonset';
+        const toolbarCSSClass = this.settings.modalSettings.useFlexToolbar ? 'flex-toolbar' : 'toolbar';
+        const toolbarTitleSection = this.settings.modalSettings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.settings.title}</h2></div>` : '';
+        const toolbarButtonsetCSSClass = this.settings.modalSettings.useFlexToolbar ? 'toolbar-section buttonset' : 'buttonset';
         const toolbarButtonsetSection = `<div class="${toolbarButtonsetCSSClass}"></div>`;
-        const toolbarSearchfieldSection = this.settings.useFlexToolbar && hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
+        const toolbarSearchfieldSection = this.settings.modalSettings.useFlexToolbar && hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
         const toolbarHTML = `<div class="${toolbarCSSClass}">
           ${toolbarTitleSection}
           ${toolbarSearchfieldSection}
@@ -226,14 +280,14 @@ ContextualActionPanel.prototype = {
     // Only add certain elements if a Toolbar was generated with JS-options
     // and not by HTML markup.
     if (!predefined) {
-      if (!buttonset || !buttonset.length && !this.settings.centerTitle) {
+      if (!buttonset || !buttonset.length && !this.settings.modalSettings.centerTitle) {
         buttonset = $('<div class="toolbar-section buttonset"></div>');
         buttonset.appendTo(this.toolbar);
       }
 
       let toolbarTitle = this.toolbar.find('.title');
       if (!toolbarTitle.length) {
-        const centerTextCSS = this.settings.centerTitle ? ' center-text' : '';
+        const centerTextCSS = this.settings.modalSettings.centerTitle ? ' center-text' : '';
         toolbarTitle = $(`
           <div class="toolbar-section title${centerTextCSS}">
             <h2>${this.settings.title}</h2>
@@ -262,38 +316,32 @@ ContextualActionPanel.prototype = {
       this.panel.detach().appendTo('body');
     }
 
-    this.element.attr('data-modal', this.settings.id);
+    this.element.attr('data-modal', this.settings.modalSettings.id);
     if (!this.panel.attr('id')) {
-      this.panel.attr('id', this.settings.id);
+      this.panel.attr('id', this.settings.modalSettings.id);
     }
 
-    this.panel.modal({
-      buttons: this.settings.buttons,
-      centerTitle: this.settings.centerTitle,
-      useFlexToolbar: this.settings.useFlexToolbar,
-      trigger: (this.settings.trigger ? this.settings.trigger : 'click')
-    });
+    // Invoke the underlying Modal API
+    this.panel.modal(this.settings.modalSettings);
 
     this.buttons = this.panel.find('.buttonset').children('button');
 
     this.closeButton = this.panel.find('.modal-header').find('.btn-close, [name="close"], button.close-button');
-    if (!predefined && this.settings.showCloseButton && !this.closeButton.length) {
+    if (this.settings.modalSettings.showCloseBtn && !this.closeButton.length) {
+      const closeText = Locale.translate('Close');
       this.closeButton = $(`
-        <button class="btn-close" type="button">
-          <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-close"></use>
-          </svg>
-          <span>Close</span>
+        <button class="btn-close" type="button" title="${closeText}">
+          ${$.createIcon('close')}
+          <span class="audible">${closeText}</span>
         </button>
       `);
 
-      if (!this.settings.useFlexToolbar) {
-        const CAPToolbarButton = $('<div class="close-button"></div>').append(this.closeButton);
-        this.header.append(CAPToolbarButton);
+      if (!this.settings.modalSettings.useFlexToolbar) {
+        buttonset.append(this.closeButton);
       } else {
         const standaloneSection = $('<div class="toolbar-section static"></div>').append(this.closeButton);
         const more = this.toolbar.find('.toolbar-section.more');
-        standaloneSection.after(more.length ? more : buttonset);
+        standaloneSection.insertAfter(more.length ? more : buttonset);
       }
     }
 
@@ -332,10 +380,6 @@ ContextualActionPanel.prototype = {
       .on('open.contextualactionpanel', (e) => {
         passEvent(e);
         self.panel.removeClass('is-animating');
-      })
-      .off('beforeclose.contextualactionpanel')
-      .on('beforeclose.contextualactionpanel', () => {
-        self.panel.addClass('is-animating');
       })
       .off('close.contextualactionpanel')
       .on('close.contextualactionpanel', (e) => {
@@ -445,7 +489,7 @@ ContextualActionPanel.prototype = {
   */
   close() {
     let destroy;
-    if (this.settings.trigger === 'immediate') {
+    if (this.settings.modalSettings.trigger === 'immediate') {
       destroy = true;
     }
 
@@ -481,10 +525,11 @@ ContextualActionPanel.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    this.settings = handleLegacyCAPSettings(this.settings);
     this.setup();
 
     if (this.modalAPI) {
-      this.modalAPI.updated(settings);
+      this.modalAPI.updated(this.settings.modalSettings);
     }
     return this;
   },

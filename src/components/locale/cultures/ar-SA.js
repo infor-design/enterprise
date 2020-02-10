@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise, no-undef */
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('ar-SA', {
   // layout/language
@@ -22,6 +21,7 @@ Soho.Locale.addCulture('ar-SA', {
         month: 'dd MMMM',
         year: 'MMMM yyyy',
         timestamp: 'h:mm:ss a',
+        hour: 'h:mm a',
         datetime: 'yyyy/MM/dd h:mm a',
         timezone: 'yyyy/MM/dd h:mm a zz',
         timezoneLong: 'yyyy/MM/dd h:mm a zzzz'
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('ar-SA', {
       },
       timeFormat: 'h:mm a',
       dayPeriods: ['ص', 'م'],
-      firstDayofWeek: 6, // Starts on Sat
+      firstDayofWeek: 0, // Starts on Sun
       conversions: {
         yearInfo: [
           [746, -2198707200000],
@@ -277,7 +277,8 @@ Soho.Locale.addCulture('ar-SA', {
       // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
       // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
+      dayPeriods: ['ص', 'م'],
+      firstDayofWeek: 0 // Starts on Sun
     }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '﷼',
@@ -286,6 +287,8 @@ Soho.Locale.addCulture('ar-SA', {
   numbers: {
     percentSign: '٪',
     percentFormat: '### ٪',
+    percentSuffix: ' ٪',
+    percentPrefix: '',
     minusSign: '-',
     decimal: '٫',
     group: '٬',

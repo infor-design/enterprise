@@ -27,6 +27,13 @@
   }
 }
 
+// Resize the "x" in the close button back to Soho-style sizes
+.btn-close {
+  > .icon {
+    width: 14px;
+  }
+}
+
 // IE11's `middle`, `sub`, and `text-bottom` alignments don't jive
 // well with our iconography.
 .ie11 {
@@ -34,13 +41,6 @@
     > .icon {
       vertical-align: -20%;
     }
-  }
-}
-
-// Reset specific line height on Mac Firefox from the standard component
-.is-mac.is-firefox {
-  .field-short [class*='btn'] {
-    line-height: normal;
   }
 }
 
@@ -55,14 +55,21 @@
   }
 }
 
-.field-short [class*='btn'] {
-  min-height: 25px;
+.field-short [class*='btn']:not(.btn-editor),
+.form-layout-compact .field [class*='btn']:not(.btn-editor) {
+  min-height: $button-size-compact-height;
+
+  > .icon + span:not(.audible):not(:empty) {
+    padding: 0;
+  }
 
   > .icon {
     vertical-align: sub;
 
     &:not(.icon-dropdown) {
-      height: 18px;
+      height: 16px;
+      position: relative;
+      top: -2px;
       vertical-align: sub;
 
       + span:not(.audible) {

@@ -3,6 +3,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
+import { warnAboutDeprecation } from '../../utils/deprecated';
 
 // jQuery components
 import '../icons/icons.jquery';
@@ -11,6 +12,12 @@ import '../../utils/behaviors';
 
 // Component Name
 const COMPONENT_NAME = 'accordion';
+
+// Expander Button Display Modes
+// In some cases, expander buttons can be all "plus-minus" icons, or all "chevron" icons.
+// "Classic" is the original mode, with Chevrons at the top level, and Plus-minus style on all subheaders.
+// "Plus-minus" mode is the replacement setting for the deprecated setting `displayChevron`
+const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
 
 /**
  * The Accordion is a grouped set of collapsible panels used to navigate sections of
@@ -21,24 +28,40 @@ const COMPONENT_NAME = 'accordion';
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
- * time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
- * @param {string} [settings.displayChevron=true]  Displays a "Chevron" icon that sits off to the right-most
+ * time. If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
+ * @param {boolean} [settings.displayChevron=true] (deprecated in v4.23.0) Displays a "Chevron" icon that sits off to the right-most
+ * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.  Use `settings.expanderDisplay` instead.
  * @param {boolean} [settings.enableTooltips=true] If false, does not run logic to apply tooltips to elements with truncated text.
- * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
+ * @param {string} [settings.expanderDisplay='classic'] Changes the iconography used in accordion header expander buttons. By default, top level expanders will be chevrons, and sub-header expanders will be "plus-minus" style.  This setting can also be "plus-minus" or "chevron" to force the same icons throughout the accordion.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
-  displayChevron: true,
+  expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
   rerouteOnLinkClick: true,
   source: null
 };
 
+// Handles the conversion of deprecated settings to current settings
+function handleDeprecatedSettings(settings) {
+  if (settings.displayChevron !== undefined) {
+    warnAboutDeprecation('expanderDisplay setting', 'displayChevron setting');
+    if (settings.displayChevron === false) {
+      settings.expanderDisplay = expanderDisplayModes[1]; // plus-minus
+    } else {
+      settings.expanderDisplay = expanderDisplayModes[0]; // classic
+    }
+    delete settings.displayChevron;
+  }
+  return settings;
+}
+
 function Accordion(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, ACCORDION_DEFAULTS);
+  this.settings = handleDeprecatedSettings(this.settings);
 
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -74,6 +97,7 @@ Accordion.prototype = {
   build(headers, noFilterReset) {
     let anchors;
     let panes;
+    let contentAreas;
     const self = this;
     let isGlobalBuild = true;
 
@@ -81,18 +105,22 @@ Accordion.prototype = {
       this.headers = this.element.find('.accordion-header');
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
-      anchors = headers.children('a');
+      anchors = this.anchors;
       this.panes = headers.next('.accordion-pane');
-      panes = headers.next('.accordion-pane');
+      panes = this.panes;
+      this.contentAreas = panes.children('.accordion-content');
+      contentAreas = this.contentAreas;
     } else {
       anchors = headers.children('a');
       panes = headers.next('.accordion-pane');
+      contentAreas = panes.children('.accordion-content');
       isGlobalBuild = false;
 
       // update internal refs
       this.headers = this.headers.add(headers);
       this.anchors = this.anchors.add(anchors);
       this.panes = this.panes.add(panes);
+      this.contentAreas = this.contentAreas.add(contentAreas);
     }
 
     let headersHaveIcons = false;
@@ -152,7 +180,7 @@ Accordion.prototype = {
         expander = $('<button class="btn" type="button"></button>');
 
         let method = 'insertBefore';
-        if (self.settings.displayChevron && isTopLevel) {
+        if (self.settings.expanderDisplay !== 'plus-minus' && isTopLevel) {
           header.addClass('has-chevron');
           method = 'insertAfter';
         }
@@ -164,13 +192,14 @@ Accordion.prototype = {
       expander.hideFocus();
 
       // If Chevrons are turned off and an icon is present, it becomes the expander
-      if (outerIcon.length && !self.settings.displayChevron) {
+      if (outerIcon.length && (self.settings.expanderDisplay === 'plus-minus')) {
         outerIcon.appendTo(expander);
       }
 
       let expanderIcon = expander.children('.icon, .svg, .plus-minus');
       if (!expanderIcon.length) {
-        if (self.settings.displayChevron && isTopLevel) {
+        if ((self.settings.expanderDisplay === 'classic' && isTopLevel) ||
+          self.settings.expanderDisplay === 'chevron') {
           expanderIcon = $.createIconElement({ icon: 'caret-down', classes: ['chevron'] });
         } else {
           const isActive = self.isExpanded(header) ? ' active' : '';
@@ -188,7 +217,8 @@ Accordion.prototype = {
       expanderIcon.attr(expanderIconOpts);
 
       // Move around the Expander depending on whether or not it's a chevron
-      if (expanderIcon.is('.chevron')) {
+      // ONLY do this if the chevron is top-level.
+      if (expanderIcon.is('.chevron') && isTopLevel) {
         header.addClass('has-chevron');
         expander.insertAfter(header.children('a'));
       } else {
@@ -198,7 +228,7 @@ Accordion.prototype = {
 
       // Double check to see if we have left-aligned expanders or icons present,
       // so we can add classes that do alignment
-      if (!self.settings.displayChevron && isTopLevel) {
+      if (self.settings.expanderDisplay === 'plus-minus' && isTopLevel) {
         headersHaveIcons = true;
       }
       checkIfIcons();
@@ -214,19 +244,6 @@ Accordion.prototype = {
     if (headersHaveIcons) {
       this.element.addClass('has-icons');
     }
-
-    // Setup correct ARIA for accordion panes, and auto-collapse them
-    panes.each(function addPaneARIA() {
-      const pane = $(this);
-      const header = pane.prev('.accordion-header');
-
-      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
-
-      if (!self.isExpanded(header)) {
-        pane.data('ignore-animation-once', true);
-        self.collapse(header);
-      }
-    });
 
     // Expand to the current accordion header if we find one that's selected
     if (isGlobalBuild && !this.element.data('updating')) {
@@ -245,6 +262,39 @@ Accordion.prototype = {
       this.select(targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
+
+    panes.each(function addPaneARIA() {
+      const pane = $(this);
+      const header = pane.prev('.accordion-header');
+
+      // Setup correct ARIA for accordion panes
+      header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
+
+      // double-check the contents of the pane. If all children are filtered out,
+      // label this at the top level
+      const children = pane.children();
+      let allChildrenFiltered = true;
+      children.each((i, child) => {
+        if ($(child).is('.accordion-header, .accordion-content') && !$(child).hasClass('filtered')) {
+          allChildrenFiltered = false;
+        }
+      });
+      pane[allChildrenFiltered ? 'addClass' : 'removeClass']('all-children-filtered');
+
+      if (allChildrenFiltered) {
+        pane.data('ignore-animation-once', true);
+        self.collapse(header, false);
+      }
+
+      // Preset the "expand/collase" on initial render, if applicable
+      if (!noFilterReset) {
+        let heightAttr = '0px';
+        if (self.isExpanded(header)) {
+          heightAttr = 'auto';
+        }
+        pane.attr('style', `height: ${heightAttr}`);
+      }
+    });
 
     // Retain an internal storage of available filtered accordion headers.
     if (!noFilterReset) {
@@ -345,6 +395,7 @@ Accordion.prototype = {
     // If it's not a real link, try and toggle an expansion pane.
     if (pane.length) {
       self.toggle(header);
+      self.focusOriginalType(header);
       return true;
     }
 
@@ -357,7 +408,8 @@ Accordion.prototype = {
         self.element.trigger('drilldown', [header[0]]);
       }
     } else {
-      anchor.focus();
+      self.orignalSelection = anchor;
+      self.focusOriginalType(header);
     }
 
     /**
@@ -422,7 +474,7 @@ Accordion.prototype = {
     if (pane.length) {
       this.toggle(header);
       this.select(header);
-      expander.focus();
+      this.focusOriginalType(header);
       return;
     }
 
@@ -518,64 +570,68 @@ Accordion.prototype = {
     const data = [];
     const topHeaders = this.element.children('.accordion-header');
 
-    function buildHeaderJSON(el, index, parentNesting, parentArr) {
+    function buildElementJSON(el, index, parentNesting, parentArr) {
       const $el = $(el);
       const pane = $(el).next('.accordion-pane');
-      const headerData = {
-        text: $(el).children('a, span').text().trim(),
-        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`
+      const isContentArea = el.classList.contains('accordion-content');
+
+      const elemData = {
+        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`,
+        type: isContentArea ? 'content' : 'header'
       };
 
+      if (addElementReference) {
+        elemData.element = el;
+      }
+
       if (el.getAttribute('id')) {
-        headerData.id = el.getAttribute('id');
+        elemData.id = el.getAttribute('id');
+      }
+
+      if (isContentArea) {
+        elemData.content = `${$el.html()}`;
+        elemData.contentText = `${$el.text().trim().replace(/\n|\s{2,}/g, ' ')}`;
+      } else {
+        elemData.text = $el.children('a, span').text().trim();
       }
 
       const icon = $el.children('.icon');
       if (icon.length) {
-        headerData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
+        elemData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
           icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
           '';
       }
 
-      if (addElementReference) {
-        headerData.element = el;
-      }
-
       if ($el.hasClass('is-disabled')) {
-        headerData.disabled = true;
+        elemData.disabled = true;
       }
 
       if (pane.length) {
-        const content = pane.children('.accordion-content');
-        const subheaders = pane.children('.accordion-header');
-        const subheaderData = [];
+        const subElems = pane.children('.accordion-header, .accordion-content');
+        const subElementData = [];
 
-        if (content.length) {
-          headerData.content = `${content.html()}`;
-        }
-
-        if (subheaders.length) {
+        if (subElems.length) {
           // Normally this will nest.
           // If "flatten" is true, don't nest and add straight to the parent array.
-          let targetArray = subheaderData;
+          let targetArray = subElementData;
           if (flatten) {
             targetArray = parentArr;
           }
 
-          subheaders.each((j, subitem) => {
-            buildHeaderJSON(subitem, j, headerData.index, targetArray);
+          subElems.each((j, subitem) => {
+            buildElementJSON(subitem, j, elemData.index, targetArray);
           });
 
-          headerData.children = subheaderData;
+          elemData.children = subElementData;
         }
       }
 
-      parentArr.push(headerData);
+      parentArr.push(elemData);
     }
 
     // Start traversing the accordion
     topHeaders.each((i, item) => {
-      buildHeaderJSON(item, i, undefined, data);
+      buildElementJSON(item, i, undefined, data);
     });
 
     return data;
@@ -713,7 +769,7 @@ Accordion.prototype = {
     }
 
     const self = this;
-    const pane = header.next('.accordion-pane');
+    let pane = header.next('.accordion-pane');
     const a = header.children('a');
     const dfd = $.Deferred();
 
@@ -723,6 +779,13 @@ Accordion.prototype = {
     }
 
     function continueExpand() {
+      // Don't try to expand any further if this header has no associated accordion pane.
+      // NOTE: We re-check for the pane's existence here because it may have been loaded via AJAX.
+      pane = header.next('.accordion-pane');
+      if (!pane || !pane.length) {
+        return dfd.reject();
+      }
+
       // Change the expander button into "collapse" mode
       const expander = header.children('.btn');
       if (expander.length) {
@@ -753,7 +816,8 @@ Accordion.prototype = {
         }
       });
 
-      pane.addClass('is-expanded');
+      header.add(pane).addClass('is-expanded');
+      header.children('a').attr('aria-expanded', 'true');
 
       /**
       * Fires when expanding a pane is initiated.
@@ -777,7 +841,6 @@ Accordion.prototype = {
         if (e) {
           e.stopPropagation();
         }
-        header.children('a').attr('aria-expanded', 'true');
         pane.triggerHandler('afterexpand', [a]);
         self.element.trigger('afterexpand', [a]);
         $.when(...expandDfds, ...collapseDfds).done(() => {
@@ -786,13 +849,9 @@ Accordion.prototype = {
       }
 
       if (pane.hasClass('no-transition')) {
-        for (let i = 0; i < pane.length; i++) {
-          pane[i].style.display = 'block';
-          pane[i].style.height = 'auto';
-        }
         handleAfterExpand();
       } else {
-        pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
+        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
       }
     }
 
@@ -835,10 +894,11 @@ Accordion.prototype = {
   /**
   * Collapse the given Panel on the Accordion.
   * @param {object} header The jquery header element.
+  * @param {boolean} closeChildren If true closeChildren elements that may be on the page. Skip for performance.
   * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
-  collapse(header) {
+  collapse(header, closeChildren = true) {
     if (!header || !header.length) {
       return;
     }
@@ -860,8 +920,12 @@ Accordion.prototype = {
       expander.children('.audible').text(Locale.translate('Expand'));
     }
 
-    pane.removeClass('is-expanded').closeChildren();
+    header.add(pane).removeClass('is-expanded');
     a.attr('aria-expanded', 'false');
+
+    if (closeChildren) {
+      pane.closeChildren();
+    }
 
     /**
     *  Fires when collapsed a pane is initiated.
@@ -884,8 +948,6 @@ Accordion.prototype = {
       if (e) {
         e.stopPropagation();
       }
-      pane[0].style.display = 'none';
-      pane[0].style.height = '0px';
       pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
       dfd.resolve();
@@ -1169,69 +1231,75 @@ Accordion.prototype = {
   },
 
   /**
-  * Selects an Accordion Header, then focuses either an expander button or an anchor.
+  * Focuses an accordion header by either its anchor, or its optional expander button.
   * Governed by the property "this.originalSelection".
   * @param {object} header - a jQuery object containing an Accordion header.
   * @returns {void}
   */
   focusOriginalType(header) {
-    // this.select(header.children('a'));
+    const btns = header.children('[class*="btn"]');
+    this.headers.not(header).removeClass('is-focused');
 
-    if (this.originalSelection.is('.btn') && header.children('.btn').length) {
-      header.children('.btn').focus();
+    if (this.originalSelection.is('[class*="btn"]') && btns.length) {
+      btns.first()[0].focus();
     } else {
-      header.children('a').focus();
+      header.children('a')[0].focus();
+      header.addClass('is-focused').removeClass('hide-focus');
     }
   },
 
   /**
-   * @param {jQuery[]} headers element references representing accordion headers.
-   * @param {boolean} [doReset] if defined, causes the filtering system to reset.
+   * @param {jQuery[]} targets element references representing accordion headers.
    */
-  filter(headers, doReset) {
-    if (!headers || !headers.length) {
+  filter(targets) {
+    if (!targets || !targets.length) {
       return;
     }
 
     const self = this;
 
-    if (doReset) {
-      const collapsePromise = this.collapseAll();
-      this.headers.removeClass('filtered has-filtered-children hide-focus');
-
-      $.when(collapsePromise).then(() => {
-        this.currentlyFiltered = $();
-        this.build(undefined, true);
-        this.filter(headers);
-      });
-      return;
-    }
+    // Reset all the things
+    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.panes.removeClass('all-children-filtered no-transition');
+    this.contentAreas.removeClass('filtered');
+    this.currentlyFiltered = $();
 
     // If headers are included in the currentlyFiltered storage, removes the ones that
     // have previously been filtered
-    const toFilter = headers.not(this.currentlyFiltered);
-    let panes = toFilter.next('.accordion-pane');
+    const toFilter = targets.not(this.currentlyFiltered);
 
     // Store a list of all modified parent headers
     let allParentHeaders = $();
+    const allContentAreas = $();
 
     // Perform filtering
-    this.headers.not(toFilter).addClass('filtered');
-    toFilter.each((i, header) => {
-      const parentPanes = $(header).parents('.accordion-pane');
-      if (parentPanes.length) {
-        panes = panes.add(parentPanes.filter((j, item) => panes.index(item) === -1));
-        // only add headers that weren't already in the collection
-        const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+    this.headers.add(this.contentAreas).not(toFilter).addClass('filtered');
+    toFilter.each((i, target) => {
+      const isContentArea = $(target).is('.accordion-content');
+      const allParentPanes = $(target).parents('.accordion-pane');
+
+      // Handle Content Areas
+      if (isContentArea) {
+        allContentAreas.push($(target));
+        const thisParentPane = $(allParentPanes[0]);
+        const thisParentHeader = thisParentPane.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+        if (thisParentHeader.length) {
+          allParentHeaders = allParentHeaders.add(thisParentHeader);
+        }
+      }
+
+      // Handle Labeling of Parent Headers
+      if (allParentPanes.length) {
+        const parentHeaders = allParentPanes.prev('.accordion-header').filter((j, item) => allParentPanes.index(item) === -1);
         allParentHeaders = allParentHeaders.add(parentHeaders);
       }
     });
 
     allParentHeaders.addClass('has-filtered-children');
-    const expandPromise = this.expand(allParentHeaders.add(panes.prev('.accordion-header')), true);
+    const expandPromise = this.expand(allParentHeaders, true);
 
     $.when(expandPromise).done(() => {
-      this.currentlyFiltered = this.currentlyFiltered.add(toFilter);
+      this.currentlyFiltered = toFilter;
       self.build(undefined, true);
     });
   },
@@ -1253,7 +1321,11 @@ Accordion.prototype = {
     // Store a list of all modified parent headers
     let allParentHeaders = $();
 
-    this.headers.removeClass('filtered');
+    // Reset all the things
+    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.panes.removeClass('all-children-filtered no-transition');
+    this.contentAreas.removeClass('filtered');
+
     headers.each((i, header) => {
       const parentPanes = $(header).parents('.accordion-pane');
       if (parentPanes.length) {
@@ -1271,7 +1343,6 @@ Accordion.prototype = {
 
     $.when(collapseDfds).done(() => {
       this.currentlyFiltered = this.currentlyFiltered.not(headers);
-      this.build(undefined, true);
     });
   },
 
@@ -1309,6 +1380,7 @@ Accordion.prototype = {
 
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = handleDeprecatedSettings(this.settings);
     }
 
     let currentFocus = $(document.activeElement);
@@ -1353,41 +1425,48 @@ Accordion.prototype = {
       headerElems = this.headers;
       globalEventTeardown = true;
     }
-    const anchors = headerElems.find('a');
 
-    headerElems
-      .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
-      .each(function () {
-        const header = $(this);
-        const icon = header.children('.icon');
+    if (headerElems && headerElems.length) {
+      headerElems
+        .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
+        .each(function () {
+          const header = $(this);
+          const icon = header.children('.icon');
 
-        const hideFocus = header.data('hidefocus');
-        if (hideFocus) {
-          hideFocus.destroy();
-        }
-
-        if (icon.length) {
-          const iconAPI = icon.data('icon');
-          if (iconAPI) {
-            iconAPI.destroy();
+          const hideFocus = header.data('hidefocus');
+          if (hideFocus) {
+            hideFocus.destroy();
           }
-        }
 
-        const expander = header.data('addedExpander');
-        if (expander) {
-          expander.remove();
-          $.removeData(this, 'addedExpander');
-        }
-      });
+          if (icon.length) {
+            const iconAPI = icon.data('icon');
+            if (iconAPI) {
+              iconAPI.destroy();
+            }
+          }
 
-    anchors.off('touchend.accordion keydown.accordion click.accordion');
+          const expander = header.data('addedExpander');
+          if (expander) {
+            expander.remove();
+            $.removeData(this, 'addedExpander');
+          }
+        });
 
-    headerElems.children('[class^="btn"]')
-      .off('touchend.accordion click.accordion keydown.accordion');
+      const anchors = headerElems.not('.accordion-content').find('a');
+      anchors.off('touchend.accordion keydown.accordion click.accordion');
+
+      headerElems.children('[class^="btn"]')
+        .off('touchend.accordion click.accordion keydown.accordion');
+    }
 
     if (globalEventTeardown) {
       this.element.off('updated.accordion selected.accordion');
     }
+
+    delete this.anchors;
+    delete this.headers;
+    delete this.panes;
+    delete this.contentAreas;
 
     return this;
   },
@@ -1452,6 +1531,7 @@ Accordion.prototype = {
         self.originalSelection = target;
       }
 
+      headerElems.not($(this)).removeClass('is-focused');
       if (target.is(':not(.btn)')) {
         $(this).addClass('is-focused').removeClass('hide-focus');
       }
@@ -1545,7 +1625,9 @@ Accordion.prototype = {
 
     // Handle tooltip to show
     const handleShow = (elem) => {
+      elem.style.width = 'auto';
       if (elem.offsetWidth > (elem.parentElement.offsetWidth - parseInt($(elem).parent().css('padding-left'), 10))) {
+        elem.style.width = '';
         tooltipTimer = setTimeout(() => {
           $(elem).tooltip({
             trigger: 'immediate',
@@ -1558,7 +1640,9 @@ Accordion.prototype = {
 
     // Handle tooltip to hide
     const handleHide = (elem) => {
+      elem.style.width = 'auto';
       if (elem.offsetWidth > (elem.parentElement.offsetWidth - parseInt($(elem).parent().css('padding-left'), 10))) {
+        elem.style.width = '';
         self.hideTooltip();
         clearTimeout(tooltipTimer);
       }

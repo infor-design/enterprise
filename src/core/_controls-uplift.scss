@@ -16,11 +16,15 @@
 @import '../components/button/button-uplift';
 @import '../components/counts/counts';
 @import '../components/form/form';
+@import '../components/form/form-uplift';
 @import '../components/hyperlinks/hyperlinks';
 @import '../components/input/input';
 @import '../components/input/input-uplift';
 @import '../components/skiplink/skiplink';
 @import '../components/switch/switch';
+@import '../components/radios/radios-uplift';
+@import '../components/tag/tag';
+@import '../components/tag/tag-uplift';
 
 // Mid-level ====/
 @import '../components/about/about';
@@ -42,6 +46,8 @@
 @import '../components/datepicker/datepicker-uplift';
 @import '../components/dropdown/dropdown';
 @import '../components/dropdown/dropdown-uplift';
+@import '../components/emptymessage/emptymessage';
+@import '../components/emptymessage/emptymessage-uplift';
 @import '../components/expandablearea/expandablearea';
 @import '../components/field-filter/field-filter';
 @import '../components/field-filter/field-filter-uplift';
@@ -51,11 +57,15 @@
 @import '../components/fieldset/fieldset-uplift';
 @import '../components/fileupload/fileupload';
 @import '../components/fileupload/fileupload-uplift';
+@import '../components/fontpicker/fontpicker';
+@import '../components/fontpicker/fontpicker-uplift';
 @import '../components/header/header';
 @import '../components/header/header-uplift';
 @import '../components/hierarchy/hierarchy';
+@import '../components/hierarchy/hierarchy-uplift';
 @import '../components/listbuilder/listbuilder';
 @import '../components/listview/listview';
+@import '../components/listview/listview-uplift';
 @import '../components/lookup/lookup';
 @import '../components/lookup/lookup-uplift';
 @import '../components/mask/mask';
@@ -74,12 +84,13 @@
 @import '../components/progress/progress';
 @import '../components/rating/rating';
 @import '../components/searchfield/searchfield';
-@import '../components/searchfield/searchfield-uplift';
 @import '../components/searchfield/searchfield-toolbar';
+@import '../components/searchfield/searchfield-uplift';
 @import '../components/slider/slider';
 @import '../components/spinbox/spinbox';
 @import '../components/spinbox/spinbox-uplift';
 @import '../components/splitter/splitter';
+@import '../components/splitter/splitter-uplift';
 @import '../components/swaplist/swaplist';
 @import '../components/swaplist/swaplist-uplift';
 @import '../components/tabs/tabs';
@@ -89,9 +100,12 @@
 @import '../components/timepicker/timepicker';
 @import '../components/timepicker/timepicker-uplift';
 @import '../components/toast/toast';
+@import '../components/toast/toast-uplift';
 @import '../components/toolbar-flex/toolbar-flex';
 @import '../components/toolbar-flex/toolbar-flex-searchfield';
+@import '../components/toolbar-flex/toolbar-flex-searchfield-uplift';
 @import '../components/toolbar/toolbar';
+@import '../components/toolbar/toolbar-uplift';
 @import '../components/tooltip/tooltip';
 @import '../components/tooltip/tooltip-uplift';
 @import '../components/tree/tree';
@@ -99,6 +113,9 @@
 
 // Complex ====/
 @import '../components/calendar/calendar';
+@import '../components/calendar-toolbar/calendar-toolbar';
+@import '../components/calendar-toolbar/calendar-toolbar-uplift';
+@import '../components/calendar/calendar-uplift';
 @import '../components/compositeform/compositeform';
 @import '../components/contextualactionpanel/contextualactionpanel';
 @import '../components/datagrid/datagrid';
@@ -109,6 +126,8 @@
 @import '../components/form-compact/form-compact-uplift';
 @import '../components/monthview/monthview';
 @import '../components/monthview/monthview-uplift';
+@import '../components/week-view/week-view';
+@import '../components/week-view/week-view-uplift';
 @import '../components/notification/notification';
 
 // Charts ====/

@@ -291,19 +291,20 @@
 }
 
 .chart-targeted-achievement {
-  .label {
-    font-size: $theme-size-font-base;
-    margin-top: 2px;
-  }
+  color: $label-color;
+  display: block;
+  font-size: $label-size-regular-font-size;
 
   .bar {
     background-color: $chart-targeted-achievement-bg-color;
+    border-radius: 2px;
     cursor: default;
-    height: 25px !important;
+    height: $input-size-compact-height !important;
+    margin-top: -2px;
 
     &.completed {
       margin-bottom: 5px;
-      margin-top: -25px;
+      margin-top: -($input-size-compact-height);
       max-width: 100%;
     }
   }
@@ -333,7 +334,7 @@
       color: $font-color !important;
       font-size: $theme-size-font-base;
       font-weight: $theme-number-font-weight-base;
-      right: unset;
+      right: auto;
       top: 20px;
     }
   }

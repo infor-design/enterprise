@@ -3,7 +3,6 @@ const csp = require('express-csp');
 const express = require('express');
 const csrf = require('csurf');
 const session = require('express-session');
-const extend = require('extend'); // equivalent of $.extend()
 const mmm = require('mmm');
 const path = require('path');
 const utils = require('./src/js/utils');
@@ -95,7 +94,7 @@ app.use(require('./src/js/middleware/info-handler')(app));
 
 app.use(router);
 
-const customRoutes = require('./src/js/routes/customRoutes');
+const customRoutes = require('./src/js/routes/custom-routes');
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
 

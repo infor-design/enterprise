@@ -52,8 +52,9 @@
     color: $toast-header-color;
     display: block;
     font-weight: $theme-number-font-weight-bold;
-    margin-right: 20px;
+    margin-right: 25px;
     margin-top: 19px;
+    z-index: -1;
   }
 
   .toast-message {
@@ -159,13 +160,13 @@ html[dir='rtl'] {
   .toast {
     .toast-title {
       margin-left: 20px;
-      margin-right: initial;
+      margin-right: 0;
     }
 
     .toast-message {
       margin-bottom: 17px;
       padding-left: 20px;
-      padding-right: initial;
+      padding-right: 0;
     }
 
     .btn-close {

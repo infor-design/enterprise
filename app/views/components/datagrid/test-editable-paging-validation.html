@@ -12,7 +12,7 @@
         </button>
       </div>
     </div>
-  
+
     <div id="datagrid">
 
     </div>
@@ -88,11 +88,7 @@
             });
 
             $('#datagrid').on('page', function(e, pi) {
-              var gridApi = $(this).data('datagrid');	              
-              if (pi && pi.type === 'afterpaging') {
-                gridApi.validateAll();
-                return;
-              }
+              var gridApi = $(this).data('datagrid');
               var self = $(this).data('datagrid');
               if (pi && pi.type === 'next' || pi.type === 'prev') {
                 var offet = pi.pagesize;
@@ -101,7 +97,7 @@
                 }
                 self.tableBody.find('tr').toArray().forEach(function (visibleRow) {
                   var row = self.dataRowIndex($(visibleRow));
-                  for (let i = 0; i < self.settings.columns.length; i++) {
+                  for (var i = 0; i < self.settings.columns.length; i++) {
                     self.validateCell(row, i);
                     if ((row - offet) >= 0 && (row - offet) < self.settings.dataset.length) {
                       self.validateCell(row - offet, i);
@@ -112,14 +108,14 @@
                 self.validateAll();
               }
             });
-            
+
             //Add Code for Add and icon-delete
             $('#remove-btn').on('click', function () {
               $('#datagrid').data('datagrid').removeSelected();
             });
         });
-        
-        
+
+
 
   });
 

@@ -1,6 +1,8 @@
 // Expandable Area
 //================================================== //
 
+@import '../button/button-chevron';
+
 .expandable-area {
 
   //Header Area
@@ -204,6 +206,6 @@
 
 .full-width .column:first-child,
 .full-width .columns:first-child {
-  // fixes an issue on http://localhost:4000/examples/landmark/search-form
+  // fixes an issue on search-forms
   padding-left: 20px !important;
 }

@@ -242,11 +242,9 @@ describe('Dropdown example-index tests', () => {
 
     dropdownEl = await element(by.css('div.dropdown'));
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
   });
@@ -263,14 +261,12 @@ describe('Dropdown example-ajax tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await dropdownEl.click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       const dropdownSearchEl = await element(by.id('dropdown-search'));
       await dropdownSearchEl.click();
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.className('is-focused')).getText()).toEqual('American Samoa');
     });
@@ -284,12 +280,10 @@ describe('Dropdown example-no-search-lsf tests', () => {
 
   it('Should select a Dropdown item when keying on a closed Dropdown component', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     await dropdownPseudoEl.sendKeys('r');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'R - Rocket Raccoon'), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('R - Rocket Raccoon');
   });
@@ -468,7 +462,31 @@ describe('Dropdown placeholder tests', () => {
   });
 
   it('Show a placeholder', async () => {
-    expect(await element.all(by.css('[data-placeholder-text]')).first().isDisplayed()).toBeTruthy();
+    const selector = 'div.dropdown [data-placeholder-text]';
+    const placeholderEl = await element(by.css(selector));
+
+    expect(await element.all(by.css(selector)).count()).toEqual(1);
+    expect(await placeholderEl.isDisplayed()).toBeTruthy();
+    expect(await placeholderEl.getAttribute('data-placeholder-text')).toEqual('Select a State');
+  });
+});
+
+describe('Dropdown placeholder with initially selected tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-placeholder-initial-selected');
+
+    const dropdownEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+  });
+
+  it('Should not show a placeholder', async () => {
+    const selector = 'div.dropdown [data-placeholder-text]';
+    const placeholderEl = await element(by.css(selector));
+
+    expect(await element.all(by.css(selector)).count()).toEqual(1);
+    expect(await placeholderEl.isDisplayed()).toBeTruthy();
+    expect(await placeholderEl.getAttribute('data-placeholder-text')).toEqual('');
   });
 });
 
@@ -511,8 +529,128 @@ describe('Dropdown xss tests', () => {
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
 
-    expect(await element(by.id('states')).getAttribute('value')).toEqual('<script nonce=');
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
     await browser.driver.sleep(config.sleep);
     await utils.checkForErrors();
   });
+
+  it('Should not inject scripts on reset list', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('x');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
+    await utils.checkForErrors();
+    await browser.driver.sleep(config.sleep);
+
+    await searchEl.sendKeys(protractor.Key.BACK_SPACE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('list-option-0')).getText()).toEqual('Hello');
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
+    expect(await element(by.id('list-option-2')).getText()).toEqual('World');
+
+    await utils.checkForErrors();
+  });
+
+  it('Should not get confused filtering with encoding', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('l');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('<script>window.alert(\'dropdown xss\')</script>XSS');
+    await utils.checkForErrors();
+  });
+
+  it('Should filter on &', async () => { //eslint-disable-line
+    const dropdownEl = await element(by.css('#states2 + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys('&');
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    expect(await element(by.id('list-option-1')).getText()).toEqual('Hello 0 1 2 & Hello 3 4 5');
+    await utils.checkForErrors();
+  });
+});
+
+describe('Dropdown badge tests', () => {
+  it('Should not error on left to right', async () => {
+    await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
+    await utils.checkForErrors();
+  });
+
+  it('Should not error on right to left', async () => {
+    await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should look good on left to right', async () => {
+      await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
+      const dropdownEl = element(by.css('div.dropdown'));
+      const dropdownElList = element(by.id('dropdown-list'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-badges-init')).toEqual(0);
+      await clickOnDropdown();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-badges-open')).toEqual(0);
+    });
+
+    it('Should look good on right to left', async () => {
+      await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
+      const dropdownEl = element(by.css('div.dropdown'));
+      const dropdownElList = element(by.id('dropdown-list'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-badges-init-rtl')).toEqual(0);
+      await clickOnDropdown();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownElList), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-badges-open-rtl')).toEqual(0);
+    });
+  }
+});
+
+describe('Dropdown selectValue() tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-setvalue?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should change its display value when its internal value changes (should not visually regress)', async () => {
+      const dropdownEl = element(by.css('div.dropdown'));
+      const updateBtnEl = element(by.css('#update-btn'));
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+      // click the button to change the value of the Dropdown
+      await updateBtnEl.click();
+
+      // the update should occur and change to "Option Three"
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-selectvalue')).toEqual(0);
+    });
+  }
 });

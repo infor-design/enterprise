@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="six columns">
+    <h2 class="fieldset-title">Editor with Complex Fontpicker</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <span class="label">Comments</span>
+      <div data-init="false" class="editor" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments">
+        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
+        <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    const FontPickerStyle = Soho.components.FontPickerStyle;
+    const translate = Soho.Locale.translate;
+
+    $('#editor1').editor({
+      fontpickerSettings: {
+        styles: [
+          new FontPickerStyle('normal', Soho.Locale.translate('FontPickerNormal'), 'p'),
+          new FontPickerStyle('header1', Soho.Locale.translate('FontPickerHeader').replace('{0}', '1'), 'h1'),
+          new FontPickerStyle('header2', Soho.Locale.translate('FontPickerHeader').replace('{0}', '2'), 'h2'),
+          new FontPickerStyle('header3', Soho.Locale.translate('FontPickerHeader').replace('{0}', '3'), 'h3'),
+          new FontPickerStyle('header4', Soho.Locale.translate('FontPickerHeader').replace('{0}', '4'), 'h4'),
+          new FontPickerStyle('header5', Soho.Locale.translate('FontPickerHeader').replace('{0}', '5'), 'h5'),
+          new FontPickerStyle('header6', Soho.Locale.translate('FontPickerHeader').replace('{0}', '6'), 'h6'),
+          new FontPickerStyle('blockquote', Soho.Locale.translate('Blockquote'), 'blockquote')
+        ]
+      }
+    });
+  });
+</script>

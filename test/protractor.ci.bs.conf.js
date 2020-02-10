@@ -2,29 +2,28 @@
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
-const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
+const group = process.env.GROUP;
+const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS, group || 'all');
 
 const theme = process.env.ENTERPRISE_THEME || 'soho'
-const variant = process.env.ENTERPRISE_VARIANT || 'light'
-let browserstackBuildID = `${Date.now()} : ${theme} theme : ${variant} variant : ci:bs e2e`;
+let browserstackBuildID = `${Date.now()} : ${theme} theme : ci:bs e2e`;
 
 if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: : ${variant} variant: ci:bs e2e`;
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ci:bs e2e : group ${group}`;
 }
 
 process.env.isBrowserStack = true;
 
 exports.config = {
   params: {
-    theme,
-    variant
+    theme
   },
   allScriptsTimeout: 12000,
   logLevel: 'INFO',
   specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'http://master-enterprise.demo.design.infor.com',
+  baseUrl: 'http://master-enterprise.demo.design.infor.com/',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 10000,
     showColors: true,
@@ -46,15 +45,20 @@ exports.config = {
     },
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: true,
+    shardTestFiles: false,
     maxInstances: 3
   },
   multiCapabilities: [
     {
-      browserName: 'chrome',
-      resolution: '1280x800',
-      os_version: '10',
-      os: 'Windows'
+      'os' : 'OS X',
+      'os_version' : 'Mojave',
+      'browserName' : 'Chrome',
+      'browser_version' : '78.0',
+      'browserstack.local' : 'false',
+      'browserstack.video' : 'false',
+      'browserstack.timezone' : 'New_York',
+      'browserstack.selenium_version' : '3.5.2',
+      'browserstack.seleniumLogs' : 'false'
     }
   ],
   onPrepare: () => {

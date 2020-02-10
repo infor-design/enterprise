@@ -12,8 +12,8 @@
     top: 12px;
 
     &.close {
-      right: 8px;
-      top: 13px;
+      right: 9px;
+      top: 12px;
     }
   }
 
@@ -26,10 +26,33 @@
   }
 }
 
+.toolbar-searchfield-wrapper {
+  // To correctly size the toolbar searchfield when it's not open, account for
+  // missing text height.  The padding values should equal to `1px` taller on each side
+  // than the standard input field padding.  The "closed" state also shifts the visual
+  // location of the text/icon to better align it with other toolbar buttons.
+  &:not(.is-open),
+  &.non-collapsible {
+    .searchfield {
+      height: auto;
+      padding-bottom: 6px;
+      padding-top: 7px;
+    }
+
+    .icon.close {
+      top: 12px;
+    }
+  }
+}
+
 // Firefox needs some help
 html.is-firefox {
   .searchfield-wrapper {
     height: 34px;
+
+    &.toolbar-searchfield-wrapper {
+      height: 36px;
+    }
 
     > .icon {
       top: 10px;
@@ -37,6 +60,37 @@ html.is-firefox {
 
     .searchfield-category-button {
       height: inherit;
+    }
+  }
+
+  .toolbar-searchfield-wrapper {
+    &:not(.is-open):not(.non-collapsible) {
+      .searchfield {
+        height: 35px;
+        padding-bottom: 5px;
+        padding-top: 7px;
+      }
+
+      .icon:not(.close) {
+        top: 12px;
+      }
+
+      .icon.close {
+        top: 12px;
+      }
+    }
+
+    > .icon {
+      top: 12px;
+    }
+
+    &.is-open,
+    &.non-collapsible {
+      .searchfield {
+        height: 35px;
+        padding-bottom: 6px;
+        padding-top: 6px;
+      }
     }
   }
 }
@@ -53,6 +107,14 @@ html[dir='rtl'] {
     .searchfield-category-button {
       height: 39px;
     }
+
+    &:not(.toolbar-searchfield-wrapper):not(.context) {
+      &.has-categories {
+        .searchfield {
+          padding-bottom: 8px;
+        }
+      }
+    }
   }
 
   &.is-firefox {
@@ -61,10 +123,6 @@ html[dir='rtl'] {
         &.close {
           top: 10px;
         }
-      }
-
-      .searchfield-category-button {
-        height: inherit;
       }
     }
   }

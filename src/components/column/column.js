@@ -24,7 +24,7 @@ const COMPONENT_NAME = 'column';
 * @param {boolean} [settings.isStacked = false] Set to true if its a stacked column chart
 * @param {boolean} [settings.showLegend = true] If false the legend will not be shown.
 * @param {boolean|string} [settings.animate = true] true|false - will do or not do the animation. 'initial' will do only first time the animation.
-* @param {boolean} [settings.redrawOnResize = true] If true, the component will not resize when resizing the page.
+* @param {boolean} [settings.redrawOnResize = true]  If set to false the component will not redraw when the page or parent is resized.
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
@@ -73,6 +73,7 @@ Column.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
 
     this
@@ -439,7 +440,7 @@ Column.prototype = {
         callback();
       } else {
         n = transition.size();
-        transition.on('end', function () {
+        transition.on(`end.${self.namespace}`, function () {
           n--;
           if (n === 0) {
             callback();
@@ -659,7 +660,7 @@ Column.prototype = {
     });
 
     (isPositiveNegative ? pnBars : bars)
-      .on('mouseenter', function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (d, i) {
         let x;
         let y;  //eslint-disable-line
         let j;
@@ -859,13 +860,13 @@ Column.prototype = {
       })
 
       // Mouseleave
-      .on('mouseleave', function () {
+      .on(`mouseleave.${self.namespace}`, function () {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
 
       // Click
-      .on('click', function (d, i, clickedLegend) {
+      .on(`click.${self.namespace}`, function (d, i, clickedLegend) {
         const isTargetBar = this && d3.select(this).classed('target-bar');
         let isSelected = this && d3.select(this).classed('is-selected');
         const thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
@@ -909,7 +910,7 @@ Column.prototype = {
       })
 
       // Contextmenu
-      .on('contextmenu', function (d) {
+      .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
@@ -1062,7 +1063,7 @@ Column.prototype = {
             $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
           }
         } else {
-          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+          selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
         }
       }
     };
@@ -1134,7 +1135,7 @@ Column.prototype = {
           $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
         }
       } else {
-        selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
       }
     }
   },
@@ -1145,21 +1146,21 @@ Column.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${this.namespace}`, () => {
       this.updated();
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
       });
     }
 
-    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
     return this;
@@ -1235,9 +1236,19 @@ Column.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
-    $('body').off(`resize.${COMPONENT_NAME}`);
-    $('html').off(`themechanged.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.target-bartext, .bartext').off(`end.${self.namespace}`);
+      this.element.find('.bar, .target-bar')
+        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -1246,11 +1257,13 @@ Column.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.empty().removeClass('column-chart');
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('column-chart');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

@@ -1,0 +1,106 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <button type="button" id="trigger-1" class="btn-secondary">
+      Open Contextual Action Panel
+    </button>
+    <div id="panel-1" style="display: none">
+      <div class="toolbar">
+        <div class="title" data-translate="text">Notes</div>
+        <div class="buttonset">
+          <button class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-save"></use>
+            </svg>
+            <span data-translate="text">Save</span>
+          </button>
+          <div class="separator"></div>
+          <button name="close" class="btn" type="button">
+            <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-close"></use>
+            </svg>
+            <span data-translate="text">Close</span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+
+          <div class="field">
+            <label for="image" data-translate="text">Image</label>
+            <select id="image" name="image" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="leave" data-translate="text">AdministrativeLeave</label>
+            <select id="leave" name="leave" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="keyword" data-translate="text">Keyword</label>
+            <select id="keyword" name="keyword" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="notes" data-translate="text">Notes</label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+
+        </div>
+        <div class="six columns">
+
+          <div class="field">
+            <label for="range" data-translate="text">Range</label>
+            <select id="range" name="range" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="roles" data-translate="text">Roles</label>
+            <select id="roles" name="roles" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="issue-method" data-translate="text">ShowEvent</label>
+            <select id="issue-method" name="issue-method" class="dropdown">
+            </select>
+          </div>
+
+          <div class="field">
+            <input type="checkbox" id="po-box" name="po-box" class="checkbox" checked/>
+            <label for="po-box" class="checkbox-label" data-translate="text">RequestTimeOff</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  var openPanel = function () {
+    $('body').contextualactionpanel({
+      title: 'Localized Panel',
+      content: $('#panel-1'),
+      modalSettings: { trigger: 'immediate' }
+    }).off('open.test').on('open.test', function () {
+      $('#notes').text(
+        'Locale: ' + Locale.currentLocale.name + '\r\n' +
+        'Lang: ' + Locale.currentLanguage.name +'\r\n' +
+        'Number: ' + Locale.formatDate(new Date(2019, 10, 10)) +'\r\n' +
+        'Date: ' + Locale.formatNumber(1000) +'\r\n'
+      );
+    });
+  };
+
+  $('#trigger-1').on('click', function () {
+    openPanel();
+  });
+
+</script>

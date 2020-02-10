@@ -4,19 +4,12 @@
 .summary-form {
   .field {
     width: 100%;
-
-    &:last-child {
-      margin-bottom: -20px;
-    }
   }
 
   .label {
     color: $label-color;
     display: block;
-    font-size: $theme-size-font-sm;
-    margin: 0;
     max-width: 300px;
-    padding-bottom: 0.3rem;
     vertical-align: top;
   }
 
@@ -28,12 +21,14 @@
   }
 
   .data {
-    color: $font-color-extrahighcontrast;
+    color: $input-color;
     display: block;
-    font-size: $theme-size-font-base;
+    font-size: $input-size-regular-font-size;
     font-weight: $theme-number-font-weight-bold;
-    line-height: 2rem;
-    margin-bottom: 2rem;
+    height: $input-size-regular-font-size;
+    padding: $input-size-regular-padding;
+    padding-left: 0;
+    padding-right: 0;
 
     &.cozy {
       line-height: 1rem;
@@ -44,6 +39,25 @@
   i {
     color: $font-color-extrahighcontrast;
     font-style: normal;
+  }
+}
+
+// More compact version
+.form-layout-compact {
+  fieldset > legend,
+  .fieldset > legend {
+    padding-bottom: 12px;
+  }
+
+  .row fieldset:not(.radio-group):nth-child(n + 2),
+  .row .fieldset:not(.radio-group):nth-child(n + 2) {
+    margin-top: 20px;
+  }
+
+  .fieldset-title,
+  .section-title {
+    padding-bottom: 12px;
+    padding-top: 20px;
   }
 }
 

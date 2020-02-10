@@ -10,7 +10,7 @@ describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-index?layout=nofrills');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -20,9 +20,9 @@ describe('Bar Chart example-index tests', () => {
   it('Should have names for the graphs', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.axis.y .tick text'))), config.waitsFor);
-    const namesEl = await element.all(by.css('.axis.y .tick text')).count();
+    await browser.driver.sleep(config.sleep);
 
-    expect(await namesEl).toBe(3);
+    expect(await element.all(by.css('.axis.y .tick text')).count()).toBe(3);
   });
 
   it('Should have greyed out bars when not selected', async () => {
@@ -91,7 +91,7 @@ describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/example-colors?layout=nofrills');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -203,4 +203,34 @@ describe('Bar Chart axis formatter tests', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-formatter')).toEqual(0);
     });
   }
+});
+
+describe('Bar Chart several on page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/bar/test-several-on-page?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.axis.y .tick text'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not overwritten labels', async () => {
+    const checkText = async (svgId, tickNum, text) => {
+      expect(await element.all(by.css(`${svgId} .axis.y .tick text`)).get(tickNum).getText()).toEqual(text);
+    };
+
+    expect(await element.all(by.css('.bar-chart svg')).count()).toBe(2);
+    expect(await element.all(by.css('#bar-example1 .axis.y .tick text')).count()).toBe(3);
+    expect(await element.all(by.css('#bar-example2 .axis.y .tick text')).count()).toBe(3);
+
+    await checkText('#bar-example1', 0, 'Category A');
+    await checkText('#bar-example1', 1, 'Category B');
+    await checkText('#bar-example1', 2, 'Category C');
+
+    await checkText('#bar-example2', 0, 'Category D');
+    await checkText('#bar-example2', 1, 'Category E');
+    await checkText('#bar-example2', 2, 'Category F');
+  });
 });

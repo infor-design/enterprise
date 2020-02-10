@@ -31,7 +31,7 @@
   }
 
   &.is-clickable {
-    pointer-events: initial;
+    pointer-events: auto;
   }
 
   &.top .arrow::after {
@@ -97,7 +97,6 @@
   p {
     color: $tooltip-color;
     font-size: $theme-size-font-sm;
-    -webkit-text-fill-color: $tooltip-color;
     word-break: normal;
     word-wrap: break-word;
   }
@@ -166,6 +165,7 @@
       border-bottom-color: $popover-arrow-border-color;
       left: calc(50% - 12px);
       top: -12px;
+      z-index: -1;
     }
 
     .arrow::after {

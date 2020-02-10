@@ -58,15 +58,15 @@ describe('Lookup example tests', () => {
     await element.all(by.className('trigger')).first().click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
 
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
     await browser.driver.sleep(config.sleep);
     await element.all(by.className('trigger')).first().click();
     await browser.driver.sleep(config.sleep);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2241202');
   });
@@ -87,7 +87,7 @@ describe('Lookup example tests', () => {
     await element.all(by.className('trigger')).first().click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
@@ -102,7 +102,7 @@ describe('Lookup example tests', () => {
       const modalEl = await element(by.className('modal'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toBeLessThan(0.2);
+      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
     });
   }
 });
@@ -168,19 +168,19 @@ describe('Lookup multiselect tests', () => {
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
-    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(0);
-    const checkboxTd = await element(by.css('#lookup-datagrid .datagrid-body tr:nth-child(1) .datagrid-checkbox'));
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.is-selected')).count()).toEqual(0);
+    const checkboxTd = await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 
-    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(1);
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.is-selected')).count()).toEqual(1);
     await element(by.id('modal-button-1')).click();
     await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
 
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
-    expect(await element.all(by.css('#lookup-datagrid .datagrid-body tr.is-selected')).count()).toEqual(0);
+    expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.is-selected')).count()).toEqual(0);
   });
 });
 
@@ -191,14 +191,15 @@ describe('Lookup filtering tests', () => {
 
   it('should apply a filter', async () => {
     await element(by.css('#product-lookup + .trigger')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
-    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
+    expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(7);
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys('I L');
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(1);
+    expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(1);
   });
 
   it('should reset filter on close', async () => {
@@ -207,13 +208,13 @@ describe('Lookup filtering tests', () => {
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys('I L');
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(1);
+    expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(1);
     await element(by.css('#modal-button-2')).click();
     await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
     await element(by.css('#product-lookup + .trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
-    expect(await element.all(by.css('.datagrid-body .datagrid-row')).count()).toEqual(7);
+    expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(7);
   });
 });
 
@@ -314,8 +315,8 @@ describe('Lookup multiselect serverside paging tests', () => {
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('datagrid-cell-wrapper'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     await element(by.css('.btn-modal-primary')).click();
 
@@ -328,8 +329,8 @@ describe('Lookup multiselect serverside paging tests', () => {
 
     await buttonEl.click();
     await browser.driver.sleep(301);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     await browser.driver.sleep(301);
     await element(by.className('pager-next')).click();
@@ -337,8 +338,8 @@ describe('Lookup multiselect serverside paging tests', () => {
 
     expect(await element(by.name('pager-pageno')).getAttribute('value')).toEqual('2');
 
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     await element(by.css('.btn-modal-primary')).click();
 
@@ -358,16 +359,17 @@ describe('Lookup custom matching tests', () => {
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
     await browser.driver.sleep(301);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+    await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
     await buttonEl.click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(3) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('2342203|Compressor');
   });
@@ -386,18 +388,20 @@ describe('Lookup modal tests', () => {
     await element(by.css('#modal-1-text .trigger')).click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     const lookupEl = await element(by.id('product-lookup'));
 
-    await browser.driver.sleep(301);
+    await browser.driver.sleep(config.sleep);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2142201|Compressor');
+
+    await browser.driver.sleep(config.sleep);
     await element(by.css('#modal-1-text .trigger')).click();
 
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
-    await browser.driver.sleep(301);
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await lookupEl.getAttribute('value')).toEqual('2241202|Different Compressor');
   });
@@ -415,8 +419,8 @@ describe('Lookup single select serverside tests', () => {
     await element(by.id('product-lookup1')).element(by.xpath('..')).element(by.className('trigger')).click();
     await browser.driver.sleep(1300);
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)'))), config.waitsFor);
-    await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)'))), config.waitsFor);
+    await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214220');
   });
@@ -428,28 +432,58 @@ describe('Lookup single select serverside tests', () => {
       await browser.driver.sleep(1000);
 
       await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
-      await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(1) td:nth-child(1)')).click();
+      await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
       expect(await lookupEl.getAttribute('value')).toEqual('214220');
 
-      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
       await browser.driver.sleep(301);
       await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
       await browser.driver.sleep(1000);
 
-      await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)'))), config.waitsFor);
-      await element(by.css('#lookup-datagrid .datagrid-body tbody tr:nth-child(2) td:nth-child(1)')).click();
+      await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)'))), config.waitsFor);
+      await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
       expect(await lookupEl.getAttribute('value')).toEqual('214221');
 
-      await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.overlay'))), config.waitsFor);
+      await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.modal-wrapper'))), config.waitsFor);
       await browser.driver.sleep(301);
       await element(by.id('product-lookup2')).element(by.xpath('..')).element(by.className('trigger')).click();
       await browser.driver.sleep(1000);
 
       await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
 
-      expect(await element.all(by.css('#lookup-datagrid .datagrid-body tbody tr.datagrid-row.is-selected')).count()).toEqual(1);
+      expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.datagrid-row.is-selected')).count()).toEqual(1);
+    });
+  }
+});
+
+describe('Lookup minWidth tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/lookup/example-minwidth');
+  });
+
+  it('Should open the lookup with min width', async () => {
+    const buttonEl = await element.all(by.className('trigger')).last();
+    await buttonEl.click();
+
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const buttonEl = await element.all(by.className('trigger')).last();
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+
+      const modalEl = await element(by.className('modal'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-min-width')).toEqual(0);
     });
   }
 });

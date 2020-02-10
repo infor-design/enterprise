@@ -3,6 +3,7 @@
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -12,7 +13,7 @@ const COMPONENT_NAME = 'sparkline';
 // The Component Defaults
 const SPARKLINE_DEFAULTS = {
   dataset: [],
-  colors: ['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8'],
+  colors: null,
   isDots: false,
   isPeakDot: false,
   isMinMax: false,
@@ -49,6 +50,15 @@ Sparkline.prototype = {
    * @returns {object} The sparkline prototype for chaining.
    */
   init() {
+    if (!this.settings.colors) {
+      const palette = theme.themeColors().palette;
+      this.settings.colors = [];
+      this.settings.colors[0] = palette.azure[theme.uplift ? '80' : '70'].value;
+      this.settings.colors[1] = palette.graphite['40'].value;
+      this.settings.colors[2] = palette.graphite['30'].value;
+      this.settings.colors[3] = palette.graphite['20'].value;
+    }
+    this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.sparklineColors = d3.scaleOrdinal().range(this.settings.colors);
 
     return this
@@ -131,13 +141,13 @@ Sparkline.prototype = {
         .append('rect')
         .attr('width', maxWidth)
         .attr('height', bot)
-        .style('fill', '#d8d8d8')
-        .on('mouseenter', function () {
+        .style('opacity', '0.06')
+        .on(`mouseenter.${self.namespace}`, function () {
           const rect = this.getBoundingClientRect();
           let content = '<p class="sparkline-tooltip">' + // eslint-disable-line
-            Locale.translate('Median') + '<b>' + median + '</b><br>' +
-            Locale.translate('Range') + '<b>' + range + '</b>' +
-            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') +'<b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
+            Locale.translate('Median') + ': <b>' + median + '</b><br>' +
+            Locale.translate('Range') + ': <b>' + range + '</b>' +
+            (self.settings.isPeakDot ? '<br>' + Locale.translate('Peak') + ': <b>'+ max +'</b>' : '') + '</p>'; // eslint-disable-line
 
           const show = function () {
             const size = charts.tooltipSize(content);
@@ -174,7 +184,7 @@ Sparkline.prototype = {
             show();
           }
         })
-        .on('mouseleave', () => {
+        .on(`mouseleave.${self.namespace}`, () => {
           clearInterval(tooltipIntervalMedianRange);
           charts.hideTooltip();
         });
@@ -220,7 +230,7 @@ Sparkline.prototype = {
       .style('cursor', 'pointer')
       .attr('cx', (d, m) => x(m))
       .attr('cy', d => y(d))
-      .on('mouseenter', function (d) {
+      .on(`mouseenter.${self.namespace}`, function (d) {
         const rect = this.getBoundingClientRect();
         let content = `<p>${chartData[0].name ? `${chartData[0].name}<br> ${
           (self.settings.isMinMax && max === d) ? `${Locale.translate('Highest')}: ` :
@@ -265,11 +275,24 @@ Sparkline.prototype = {
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
             self.settings.isMinMax && min === d) ? (dotsize + 2) : (dotsize + 1));
       })
-      .on('mouseleave', function (d) {
+      .on(`mouseleave.${self.namespace}`, function (d) {
         clearInterval(tooltipIntervalDots);
         charts.hideTooltip();
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
             self.settings.isMinMax && min === d) ? (dotsize + 1) : dotsize);
+      })
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        const data = { value: d, name: (chartData[0].name || '') };
+        if (self.settings.isMinMax && max === d) {
+          data.highest = true;
+        }
+        if (self.settings.isMinMax && min === d) {
+          data.lowest = true;
+        }
+        if (self.settings.isPeakDot && max === d) {
+          data.peak = true;
+        }
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], data);
       });
 
     /**
@@ -301,11 +324,44 @@ Sparkline.prototype = {
    * @private
    */
   handleEvents() {
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
+    this.element.on(`updated.${COMPONENT_NAME}`, (e, settings) => {
+      this.updated(settings);
+    });
+
+    if (this.settings.redrawOnResize) {
+      $('body').on(`resize.${this.namespace}`, () => {
+        this.handleResize();
+      });
+
+      this.element.on(`resize.${this.namespace}`, () => {
+        this.handleResize();
+      });
+    }
+
+    $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
     });
 
     return this;
+  },
+
+  /*
+   * Handles resizing a chart.
+   * @private
+   * @returns {void}
+   */
+  handleResize() {
+    if (this.width === this.element.width()) {
+      return;
+    }
+
+    this.width = this.element.width();
+
+    if (!this.element.is(':visible')) {
+      return;
+    }
+
+    this.updated();
   },
 
   /**
@@ -314,9 +370,9 @@ Sparkline.prototype = {
    * @returns {object} The api for chaining.
    */
   updated(settings) {
-    const type = settings.type || this.settings.type;
-    this.settings = settings;
-    this.settings.type = type;
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
     this.element.empty();
 
     return this
@@ -330,7 +386,19 @@ Sparkline.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
+    const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
+
+    if (this.element) {
+      this.element.find('.medianrange').off(events(['mouseenter', 'mouseleave']));
+      this.element.find('.point')
+        .off(events(['mouseenter', 'mouseleave', 'contextmenu']));
+
+      this.element.off(events(['updated', 'resize']));
+    }
+    $('body').off(`resize.${this.namespace}`);
+    $('html').off(`themechanged.${this.namespace}`);
+
+    delete this.namespace;
     return this;
   },
 
@@ -339,10 +407,13 @@ Sparkline.prototype = {
    * @returns {void}
    */
   destroy() {
-    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
-    $.removeData(this.element[0], 'chart');
+    charts.removeTooltip();
+    if (this.element) {
+      this.element.empty().removeClass('sparkline');
+      $.removeData(this.element[0], COMPONENT_NAME);
+      $.removeData(this.element[0], 'chart');
+    }
   }
 };
 

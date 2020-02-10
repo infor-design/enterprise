@@ -15,20 +15,13 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $theme-color-palette-slate-100;
-$subhead-bg-color: $theme-color-palette-slate-60;
-$header-border-color: $theme-color-palette-slate-100;
-$header-button-color: rgba($theme-color-palette-white, 0.7);
-$header-button-focus-color: rgba($theme-color-palette-white, 1);
-$header-button-hover-color: rgba($theme-color-palette-white, 1);
-$header-button-disabled-color: rgba($theme-color-palette-white, 0.3);
-$header-disabled-color: $theme-color-palette-slate-50;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
+$header-bg-color: $theme-color-brand-primary-base;
+$subhead-bg-color: $theme-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $theme-color-palette-slate-80;
-$panel-bg-color: $theme-color-palette-slate-70;
-$panel-border-color: $theme-color-palette-slate-50;
-$drop-shadow-depth: rgba(0, 0, 0, 0.4);
+$panel-bg-color: $theme-color-palette-slate-100;
+$panel-border-color: $theme-color-palette-slate-70;
+$drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba(141, 201, 230, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
@@ -54,7 +47,7 @@ $font-color-extrahighcontrast: $theme-color-palette-white;
 $font-color-highcontrast: $theme-color-palette-slate-10;
 $font-color: $theme-color-palette-slate-20;
 $font-color-lowcontrast: $theme-color-palette-slate-30;
-$label-disabled-color: $theme-color-palette-slate-40;
+$label-disabled-color: $input-color-disabled-border;
 $disabled-color: $theme-color-palette-slate-50;
 $signin-title-color: $theme-color-palette-slate-10;
 
@@ -84,8 +77,8 @@ $circlepager-disable-hover-border-color: $theme-color-palette-slate-50;
 $circlepager-disable-focus-border-color: $theme-color-palette-slate-50;
 
 // Popovers
-$popover-bg-color: $theme-color-palette-slate-70;
-$popover-border-color: $theme-color-palette-slate-50;
+$popover-bg-color: $theme-color-palette-slate-80;
+$popover-border-color: $theme-color-palette-slate-60;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-arrow-border-color: $theme-color-palette-slate-50;
 $popover-color: $font-color;
@@ -112,15 +105,28 @@ $tooltip-error-color: $theme-color-palette-white;
 
 // Badges
 $badge-neutral-color: $theme-color-palette-white;
+$badge-neutral-icon-color: $theme-color-palette-white;
 $badge-neutral-bg-color: $theme-color-palette-slate-60;
-$badge-neutral-hover-bg-color: $theme-color-palette-slate-50;
+$badge-neutral-hover-bg-color: $theme-color-palette-slate-100;
 $badge-secondary-color: $theme-color-palette-white;
 $badge-secondary-bg-color: $theme-color-palette-slate-70;
 $badge-secondary-border-color: $theme-color-palette-slate-50;
+$badge-secondary-icon-color: $theme-color-palette-white;
+$badge-secondary-hover-bg-color: $theme-color-palette-slate-100;
+$badge-secondary-hover-border-color: $theme-color-palette-graphite-40;
+$badge-secondary-hover-icon-color: $theme-color-palette-graphite-20;
 $badge-error-color: $theme-color-palette-white;
+$badge-error-icon-color: $theme-color-palette-slate-30;
+$badge-error-hover-icon-color: $theme-color-palette-white;
 $badge-alert-color: $theme-color-palette-graphite-100;
+$badge-alert-icon-color: $theme-color-palette-graphite-60;
+$badge-alert-hover-icon-color: $theme-color-palette-graphite-100;
 $badge-good-color: $theme-color-palette-graphite-100;
+$badge-good-icon-color: $theme-color-palette-graphite-60;
+$badge-good-hover-icon-color: $theme-color-palette-graphite-100;
 $badge-info-color: $theme-color-palette-white;
+$badge-info-icon-color: $theme-color-palette-slate-30;
+$badge-info-hover-icon-color: $theme-color-palette-white;
 $badge-info-bg-color: $theme-color-brand-primary-base;
 $badge-neutral-icon-color: $theme-color-palette-slate-30;
 $badge-neutral-hover-icon-color: $theme-color-palette-white;
@@ -133,7 +139,7 @@ $popupmenu-bg-color: $theme-color-palette-slate-70;
 $popupmenu-border-color: $theme-color-palette-slate-50;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $theme-color-brand-primary-base;
-$popupmenu-hover-color: $theme-color-palette-slate-60;
+$popupmenu-hover-color: $theme-color-palette-slate-80;
 $popupmenu-checked-color-inverse: $theme-color-brand-primary-base;
 
 // Secondary With Border
@@ -151,7 +157,8 @@ $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
-$error-color: $theme-color-status-danger;
+$error-color: $theme-color-palette-ruby-50;
+$error-border-color: $theme-color-palette-ruby-50;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $theme-color-status-danger;
 $dirty-icon-fill: $theme-color-status-caution;
@@ -169,17 +176,16 @@ $trigger-icon-fill-light-color: $theme-color-palette-slate-40;
 $trigger-hover-color: $theme-color-palette-white;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-palette-slate-40;
 
 // List View
-$listview-bg-color: $theme-color-palette-slate-70;
-$listview-bg-color-alternate: $theme-color-palette-slate-80;
-$listview-hover-bg-color: $theme-color-palette-slate-60;
-$listview-border-color: $theme-color-palette-slate-50;
+$listview-bg-color: $theme-color-palette-slate-90;
+$listview-bg-color-alternate: $theme-color-palette-slate-100;
+$listview-hover-bg-color: $theme-color-palette-slate-80;
+$listview-border-color: $theme-color-palette-slate-70;
 $listview-color: $inverse-color;
 $listview-secondary-color: $theme-color-palette-slate-30;
 $listview-tertiary-color: $theme-color-palette-slate-40;
-$listview-disabled-color: $theme-color-palette-slate-40;
+$listview-disabled-color: $input-disabled-color;
 $listview-selected-text-color: $theme-color-palette-white;
 $listview-header-bg-color: $theme-color-palette-slate-60;
 $listview-header-color: $theme-color-palette-white;
@@ -212,7 +218,15 @@ $toolbar-standalone-disabled-color: $theme-color-palette-slate-30;
 $toolbar-separator-color: $theme-color-palette-slate-50;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $theme-color-palette-slate-40;
+$formatter-toolbar-separator-color: $theme-color-palette-slate-30;
+
+// Color Palette Background
+$color-border-color: rgba(255, 255, 255, 0.2);
+
+// Color Picker
+$colorpicker-initial-bg-color: $theme-color-palette-slate-40;
+$colorpicker-swatch-border-color: $theme-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-60;
 
 // Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
@@ -223,6 +237,7 @@ $contextual-panel-seperator-bg-color: $theme-color-palette-slate-30;
 $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-50;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-60;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -232,20 +247,15 @@ $datepicker-focus-border-color: $theme-color-brand-primary-base;
 $datepicker-selected-bg-color: $theme-color-brand-primary-base;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
-$datepicker-hover-bg-color: $theme-color-palette-slate-60;
-$datepicker-disabled-icon-color: $theme-color-palette-slate-50;
-$datepicker-disabled-border-color: $theme-color-palette-slate-50;
-$datepicker-disabled-bg-color: rgba($theme-color-palette-slate-60, 0.5);
-$datepicker-disabled-color: $theme-color-palette-slate-40;
+$datepicker-hover-bg-color: $theme-color-palette-slate-70;
+$datepicker-disabled-bg-color: $theme-color-palette-slate-70;
+$datepicker-disabled-color: $theme-color-palette-slate-10;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-60;
 
 // Time Picker
 $timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
-
-// Color Picker
-$colorpicker-initial-bg-color: $theme-color-palette-slate-40;
-$colorpicker-swatch-border-color: $theme-color-palette-slate-50;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-slate-50;
@@ -301,21 +311,23 @@ $expandable-area-border-color: $theme-color-palette-slate-50;
 $expandable-area-title-color: $theme-color-palette-white;
 
 // Cardlist
-$cardlist-bg-color: $theme-color-palette-slate-70;
-$cardlist-border-color: $theme-color-palette-slate-50;
+$cardlist-bg-color: $theme-color-palette-slate-90;
+$cardlist-border-color: $theme-color-palette-slate-70;
 $cardlist-header-color: $theme-color-palette-white;
 $cardlist-actions-color: $theme-color-palette-slate-30;
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.7);
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
+$checkbox-color-disabled-font: $input-color-disabled-font;
 
 // Switch
 $radio-checked-color: $theme-color-brand-primary-base;
 $switch-checked-bg-color: $theme-color-palette-azure-30;
-$switch-unchecked-bg-color: $theme-color-palette-slate-50;
-$switch-unchecked-bar-color: $theme-color-palette-slate-30;
-$switch-unchecked-border-color: $theme-color-palette-slate-60;
+$switch-unchecked-bg-color:  $theme-color-palette-white;
+$switch-unchecked-bar-color: $theme-color-palette-slate-40;
+$switch-unchecked-border-color: $theme-color-palette-white;
 $switch-unchecked-color: $theme-color-palette-slate-50;
 $switch-unchecked-pressed-bg-color: $theme-color-palette-slate-40;
 $switch-disabled-border-color: $theme-color-palette-slate-60;
@@ -327,16 +339,17 @@ $switch-hover-box-shadow: 0 2px 5px $drop-shadow-depth;
 
 // Editor
 $editor-bg-color: transparent;
-$editor-border-color: $theme-color-palette-slate-40;
-$editor-hover-border-color: $theme-color-palette-slate-20;
+$editor-border-color: $input-color-initial-border;
+$editor-hover-border-color: $theme-color-palette-white;
 $editor-focus-border-color: $theme-color-brand-primary-base;
 $editor-line-number-color: $theme-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $theme-color-palette-slate-60;
+$editor-toolbar-bg-color: $theme-color-palette-slate-70;
+$editor-toolbar-bottom-border-color: $theme-color-palette-slate-80;
 $editor-middle-border-color: $theme-color-palette-slate-40;
 $editor-btn-color: $theme-color-palette-slate-30;
 $editor-btn-hover-color: $theme-color-palette-white;
-$editor-btn-active-color: $theme-color-brand-primary-base;
+$editor-btn-active-color: $theme-color-brand-primary-lighter;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $theme-color-palette-slate-40;
@@ -348,7 +361,7 @@ $radio-checked-bg-color: $radio-color-checked-initial-background;
 $radio-disabled-checked-bg-color: $radio-color-checked-disabled-background;
 
 // Pager
-$pager-text-color: $theme-color-brand-primary-base;
+$pager-text-color: $theme-color-brand-primary-lighter;
 $pager-selected-color: $font-color-extrahighcontrast;
 $pager-focus-border-color: $input-color-focus-border;
 $pager-hover-color: $font-color-extrahighcontrast;
@@ -371,8 +384,8 @@ $slider-readonly-range-color: $theme-color-palette-graphite-70;
 $slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.4);
 
 // Modal
-$modal-bg-color: $theme-color-palette-slate-70;
-$modal-border-color: $theme-color-palette-slate-50;
+$modal-bg-color: $theme-color-palette-slate-80;
+$modal-border-color: $theme-color-palette-slate-60;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $theme-color-palette-slate-30;
 $modal-color: $theme-color-palette-white;
@@ -380,6 +393,8 @@ $modal-btn-border-color: $theme-color-palette-slate-50;
 $modal-btn-hover-color: $theme-color-palette-white;
 $modal-btn-primary-color: $theme-color-palette-azure-40;
 $modal-btn-primary-hover-color: $theme-color-palette-azure-30;
+$modal-btn-primary-disabled-color: $theme-color-palette-slate-50;
+$modal-btn-primary-disabled-opacity: 1;
 $modal-btn-disabled-color: $theme-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
 $modal-primary-color: $theme-color-palette-white;
@@ -398,6 +413,7 @@ $accordion-hover-border-color: $theme-color-palette-white;
 $accordion-hover-text-color: $theme-color-palette-white;
 
 $accordion-panel-border-color: $theme-color-palette-slate-90;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $accordion-alternate-bg-color: $theme-color-palette-slate-90;
 $accordion-alternate-border-color: $theme-color-palette-slate-100;
@@ -445,7 +461,7 @@ $rating-hover-color: $theme-color-brand-primary-base;
 
 // Tabs
 $tab-text-color: $theme-color-palette-slate-20;
-$tab-selected-color: $theme-color-brand-primary-base;
+$tab-selected-color: $theme-color-brand-primary-lighter;
 $tab-border-color: $theme-color-palette-slate-70;
 $tab-hover-color: $font-color-extrahighcontrast;
 
@@ -476,14 +492,14 @@ $chart-arc-stroke: $theme-color-palette-slate-70;
 // DataGrid
 $datagrid-border-color: $theme-color-palette-slate-50;
 $datagrid-header-color: $theme-color-palette-slate-100;
-$datagrid-header-bg-color: $theme-color-palette-slate-50;
+$datagrid-header-bg-color: $theme-color-palette-slate-30;
 $datagrid-nested-header-bg-color: $theme-color-palette-slate-40;
-$datagrid-nested-header-border-color: $theme-color-palette-slate-70;
+$datagrid-nested-header-border-color: $theme-color-palette-slate-60;
 $datagrid-header-border-color: $theme-color-palette-slate-70;
 $datagrid-header-hover-color: $theme-color-palette-slate-20;
 $datagrid-header-active-color: $theme-color-palette-slate-40;
 $datagrid-header-checkbox-border-color: $theme-color-palette-slate-90;
-$datagrid-sort-icon-color: $theme-color-palette-slate-60;
+$datagrid-sort-icon-color: $theme-color-palette-slate-40;
 $datagrid-sort-icon-sorted-color: $theme-color-palette-slate-100;
 $datagrid-required-icon-color: $theme-color-palette-slate-100;
 
@@ -492,19 +508,20 @@ $datagrid-cell-bg-color: $body-color-primary-background;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
 $datagrid-cell-readonly-bg-color: $theme-color-palette-slate-70;
 $datagrid-cell-readonly-color: $theme-color-palette-white;
-$datagrid-cell-border-color: $theme-color-palette-slate-80;
+$datagrid-cell-border-color: $theme-color-palette-slate-70;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;
 $datagrid-row-selected-color-dark: #3e586c;
-$datagrid-row-hover-color: $theme-color-palette-slate-70;
+$datagrid-row-hover-color: $theme-color-palette-slate-80;
 $datagrid-row-icon-color: $theme-color-palette-slate-30;
 
 $datagrid-header-focus-bg-color: $theme-color-brand-primary-base;
 $datagrid-alternate-bg-color: #414348;
 $datagrid-alternate-row-hover-color: $theme-color-palette-slate-60;
-$datagrid-list-header-bg-color: $theme-color-palette-slate-90;
-
+$datagrid-list-header-bg-color: $theme-color-palette-slate-80;
+$datagrid-list-group-header-bg-color: $theme-color-palette-black;
+$datagrid-list-group-header-border-color: $theme-color-palette-slate-80;
 $datagrid-list-header-focus-border-color: $theme-color-brand-primary-base;
 $datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-list-header-border-color: $theme-color-palette-slate-50;
@@ -516,7 +533,7 @@ $datagrid-list-sort-icon-hover-color: $theme-color-palette-slate-10;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $theme-color-palette-white;
 $datagrid-list-header-checkbox-border-color: $theme-color-palette-slate-50;
-$datagrid-list-header-active-color: $theme-color-palette-slate-100;
+$datagrid-list-header-active-color: $theme-color-palette-black;
 $datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
 $datagrid-filter-border-color: $theme-color-palette-slate-70;
@@ -560,7 +577,7 @@ $tree-hover-color: $theme-color-palette-white;
 $tree-hover-icon-color: $theme-color-palette-white;
 
 // Chart Progress Bar
-$chart-progressbar-bg-color: $theme-color-palette-slate-40;
+$chart-progressbar-bg-color: $theme-color-palette-slate-50;
 $chart-progressbar-bg-color-dark: $theme-color-palette-slate-20;
 $chart-progressbar-completed-fill: $theme-color-palette-emerald-80;
 $chart-progressbar-target-fill: $theme-color-palette-slate-60;
@@ -583,6 +600,9 @@ $wizard-disabled-color: $theme-color-palette-slate-40;
 $wizard-active-color: $theme-color-brand-primary-base;
 $wizard-active-text-color: $theme-color-palette-azure-40;
 $wizard-focus-box-shadow: 0 0 0 1px $theme-color-brand-primary-base;
+
+$wizard-toolbar-bg-color: $theme-color-palette-slate-90;
+$wizard-toolbar-border-color: $theme-color-palette-slate-70;
 
 // Themable Variables in config.scss
 $hierarchy-line-color: $theme-color-palette-slate-40;
@@ -616,7 +636,7 @@ $searchfield-card-text-color: $font-color;
 $searchfield-header-bg-color: $theme-color-palette-slate-80;
 $searchfield-header-border-color: $theme-color-palette-slate-70;
 $searchfield-header-text-color: $theme-color-palette-white;
-$searchfield-header-placeholder-text-color: $theme-color-palette-slate-40;
+$searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
 $searchfield-header-icon-color: $header-button-color;
 
 // Image Border Color
@@ -631,7 +651,10 @@ $toast-text-color: $theme-color-palette-white;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 // Builder Pattern
-$builder-header-bg-color: $theme-color-palette-slate-80;
+$builder-header-bg-color: $theme-color-palette-slate-90;
+$builder-actions-bg-color: $theme-color-palette-slate-100;
+$builder-sidebar-bg-color: $theme-color-palette-slate-90;
+$builder-border-color: $theme-color-palette-slate-80;
 
 // About
 $about-header-color: $theme-color-palette-white;
@@ -706,38 +729,64 @@ $treemap-title-color: $theme-color-palette-slate-100;
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-event-color: $theme-color-palette-slate-100;
-$calendar-line-color: $theme-color-palette-slate-50;
+$calendar-line-color: $theme-color-palette-slate-70;
+$calendar-line-color-light: $theme-color-palette-graphite-70;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
 $calendar-selected-bg-color: $theme-color-palette-slate-80;
 $calendar-hover-bg-color: rgba(49, 50, 54, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-slate-80;
 $calendar-disabled-color: $theme-color-palette-slate-40;
 
+// Uplift-only Variables
+$uplift-acc-border-radius: 6px;
+$uplift-acc-header-text-color: $theme-color-palette-slate-20;
+$uplift-acc-header-selected-text-color: $theme-color-palette-white;
+
+$uplift-acc-subheader-text-color: $theme-color-palette-slate-20;
+
+$uplift-acc-expanded-bg-color: $theme-color-palette-slate-100;
+
+$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-50;
+
+$uplift-appmenu-main-bg-color: $theme-color-palette-black;
+$uplift-appmenu-header-bg-color: $theme-color-palette-black;
+$uplift-appmenu-footer-bg-color: $theme-color-palette-black;
+
+$uplift-appmenu-hover-bg-color: $theme-color-palette-slate-80;
+$uplift-appmenu-selected-bg-color: $theme-color-palette-slate-70;
+$uplift-appmenu-selected-border-color: $theme-color-palette-white;
+
 // Core Uplift Components
 @import '../core/controls-uplift';
-
-// Temporary Banner - Remove this when not beta.
-body::before {
-  background: $theme-color-status-base;
-  bottom: 12px;
-  color: $theme-color-palette-white;
-  content: 'beta';
-  font-size: 13px;
-  font-weight: 900;
-  height: 25px;
-  left: -25px;
-  line-height: 27px;
-  position: fixed;
-  text-align: center;
-  text-transform: uppercase;
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  width: 100px;
-  z-index: 1000;
-}
 
 // Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $theme-color-palette-slate-40;
+}
+
+html.is-chrome:not(.is-mac) {
+  ::-webkit-scrollbar-track {
+    background-color: $body-color-primary-background;
+    border-left: 1px solid $theme-color-palette-slate-60;
+    border-top: 1px solid $theme-color-palette-slate-60;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: $body-color-primary-background;
+  }
+
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    height: 8px;
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $theme-color-palette-slate-50;
+    border-radius: 10px;
+
+    &:hover {
+      background: $theme-color-palette-slate-40;
+    }
+  }
 }

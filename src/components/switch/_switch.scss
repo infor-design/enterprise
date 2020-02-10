@@ -8,7 +8,7 @@
 
   // Text Label
   label {
-    color: $font-color-extrahighcontrast;
+    color: $label-color;
     display: inline-block;
     font-size: $theme-size-font-base;
     padding-left: 42px;
@@ -33,7 +33,7 @@
 
       cursor: pointer;
       line-height: 16px;
-      margin-bottom: 14px;
+      margin-bottom: ($form-size-field-regular-margin-bottom / 2 ) + 2;
       position: relative;
 
       &:hover {
@@ -139,7 +139,18 @@
 
 }
 
-//Rule to remove bottom padding on modal if its the last element.
+.form-layout-compact {
+  .switch {
+    input:empty ~ .label-text,
+    input:empty ~ label {
+      font-size: $input-size-compact-font-size;
+      margin-bottom: ($form-size-field-compact-margin-bottom / 2) + 2;
+      padding-left: 38px;
+    }
+  }
+}
+
+// Rule to remove bottom padding on modal if its the last element.
 .modal-body-wrapper .switch:last-child {
   margin-bottom: 0;
 }
@@ -176,7 +187,7 @@ html[dir='rtl'] {
       }
     }
 
-    //Checked Styling - Toggle Handle
+    // Checked Styling - Toggle Handle
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
       left: auto;

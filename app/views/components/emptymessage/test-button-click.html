@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="four columns">
+    <div class="card is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Projects</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div id="empty-message">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#empty-message').emptymessage({
+      title: 'No Data Available',
+      icon: 'icon-empty-no-data',
+      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.',
+      button: {
+        id: 'test',
+        text: 'Retry',
+        click: function() {
+          $('body').toast({title: 'Button Clicked', message: 'The button click event works.'});
+        }
+      }
+    });
+  });
+</script>

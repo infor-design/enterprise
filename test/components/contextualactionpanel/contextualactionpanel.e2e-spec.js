@@ -16,14 +16,14 @@ describe('CAP jquery context tests', () => {
 
   it('Should open popup on click', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
   });
 
   it('Should not overflow buttons uneccessarily', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#modal-button-1')).isDisplayed()).toBe(true);
     expect(await element(by.css('#modal-button-3')).isDisplayed()).toBe(true);
@@ -37,21 +37,21 @@ describe('CAP jquery context tests no-flex', () => {
 
   it('Should open popup on click no-flex', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
   });
 
   it('Should not overflow buttons uneccessarily no-flex', async () => {
     await element(by.id('js-contextual-panel')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#modal-button-1')).isDisplayed()).toBe(true);
     expect(await element(by.css('#modal-button-3')).isDisplayed()).toBe(true);
   });
 });
 
-describe('ContextualActionPanel example-index tests', () => {
+describe('Contextual Action Panel example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-index?layout=nofrills');
   });
@@ -62,26 +62,117 @@ describe('ContextualActionPanel example-index tests', () => {
       await actionButtonEl.click();
 
       const panelEl = await element(by.className('modal'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-index')).toEqual(0);
     });
   }
 });
 
-describe('ContextualActionPanel example-workspace tests', () => {
+describe('Contextual Action Panel example-workspace tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/example-workspaces.html');
   });
 
-  it('Should not have errrors', async () => {
+  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   it('Should open popup on click', async () => {
     await element(by.id('workspace-cap')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "always" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-always.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    xit('always should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(1200, 800);
+      await element(by.id('trigger-1')).click();
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toEqual(0);
+    });
+  }
+
+  it('should always show the CAP as a full screen sheet', async () => {
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Contextual Action Panel "responsive" fullsize tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-fullsize-responsive.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    xit('responsive should not visual regress', async () => {
+      await browser.driver.manage().window().setSize(766, 600);
+      await element(by.id('trigger-1')).click();
+      await browser.driver.sleep(config.sleep);
+      const panelEl = await element(by.css('#panel-1'));
+
+      expect(await browser.protractorImageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toEqual(0);
+    });
+  }
+
+  it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#panel-1')).getAttribute('class')).not.toContain('display-fullsize');
+
+    // Resize the page
+    await browser.driver.manage().window().setSize(766, 600);
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1.display-fullsize')).isDisplayed()).toBe(true);
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+});
+
+describe('Contextual Action Panel Locale Tests', () => {
+  it('should show the CAP in de-DE locale', async () => {
+    await utils.setPage('/components/contextualactionpanel/test-locale?locale=de-DE');
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    const value = await element(by.id('notes')).getAttribute('value');
+
+    expect(value.replace(/[\s\r\n]+/g, '')).toEqual('Locale:de-DELang:deNumber:10.11.2019Date:1.000,00');
+    await utils.checkForErrors();
+  });
+
+  it('should show the CAP in default locale', async () => {
+    await utils.setPage('/components/contextualactionpanel/test-locale');
+    await element(by.id('trigger-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
+    const value = await element(by.id('notes')).getAttribute('value');
+
+    expect(value.replace(/[\s\r\n]+/g, '')).toEqual('Locale:en-USLang:enNumber:11/10/2019Date:1,000.00');
+    await utils.checkForErrors();
   });
 });

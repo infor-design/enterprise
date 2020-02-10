@@ -1,0 +1,26 @@
+//* Calendar Uplift
+//================================================== *
+
+// Reduce the font size from being too large (calendar/example-index)
+.calendar-event-details .accordion-header a {
+  @include font-size(20);
+}
+
+.calendar-toolbar .datepicker + .icon {
+  top: 1px;
+}
+
+.calendar {
+  .calendar-upcoming-event .calendar-upcoming-status-text:empty + .calendar-upcoming-duration {
+    top: -24px;
+  }
+
+  .calendar-event .calendar-event-content {
+    padding: 1px 5px;
+  }
+}
+
+.calendar-event .calendar-event-icon .icon {
+  height: 10px;
+  top: 1px;
+}
