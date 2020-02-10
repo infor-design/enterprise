@@ -313,8 +313,10 @@ WeekView.prototype = {
     const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
     for (let i = 0; i < dayHourContainers.length; i++) {
       const tdEl = dayHourContainers[i];
-      const hour = tdEl.parentNode.getAttribute('data-hour');
-      const startsHere = parseFloat(hour, 10) === event.startsHour;
+      const hour = parseFloat(tdEl.parentNode.getAttribute('data-hour'), 10);
+      const rStartsHour = Math.round(event.startsHour);
+      const isUp = rStartsHour > event.startsHour;
+      const startsHere = isUp ? hour === (rStartsHour - 0.5) : hour === rStartsHour;
 
       if (startsHere) {
         let duration = event.endsHour - event.startsHour;
@@ -345,6 +347,16 @@ WeekView.prototype = {
 
         if (duration < 0.25) {
           duration = 0.25;
+        }
+
+        // Set css top property if there extra starting time
+        if (event.startsHour > hour) {
+          const unit = 0.016666666666666784; // unit for one minute
+          const extra = event.startsHour - hour; // extract extra minutes
+          const height = tdEl.parentNode.offsetHeight; // container height
+
+          // calculate top value
+          node.style.top = `${(extra / unit) * (height / 30)}px`; // 30-minutes each row
         }
 
         // Add one per half hour + 1 px for each border crossed
