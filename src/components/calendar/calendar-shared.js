@@ -18,10 +18,30 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     new Date(event.starts),
     false
   ));
+
+  // Get today's date and convert to UTC
+  const today = new Date();
+  const dateTodayUTC = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+
+  // Get event start date and convert to UTC
+  const eventStart = new Date(event.starts);
+  const eventStartUTC = Date.UTC(
+    eventStart.getUTCFullYear(),
+    eventStart.getUTCMonth(), eventStart.getUTCDate()
+  );
+
+  const eventStartFormatted = `${eventStart.getDate()}-${eventStart.getMonth() + 1}-${eventStart.getFullYear()}`;
+  const todayFormatted = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+
   event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
-  event.daysUntil = event.starts ? dateUtils.dateDiff(new Date(event.starts), new Date()) : 0;
+  event.daysUntil = event.starts ? dateUtils.dateDiff(eventStartUTC, dateTodayUTC) : 0;
   event.durationHours = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends), true);
   event.isDays = true;
+
+  // Condition to not display in the upcoming events section
+  if (dateTodayUTC > eventStartUTC && eventStartFormatted !== todayFormatted) {
+    event.daysUntil = 1; 
+  }
 
   if (event.isAllDay === undefined) {
     event.isAllDay = true;
