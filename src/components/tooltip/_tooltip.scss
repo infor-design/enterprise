@@ -16,7 +16,6 @@
   padding: 1px;
   pointer-events: none;
   position: absolute;
-  text-align: left;
   top: -9999px;
   transition: opacity 0.4s ease;
   white-space: normal;
@@ -445,17 +444,19 @@
 }
 
 html[dir='rtl'] {
-  .popover,
-  .tooltip {
-    left: 9999px;
-    text-align: right;
-  }
-
   .tooltip {
     .icon {
       + p {
         margin-left: inherit;
         margin-right: 2px;
+      }
+    }
+  }
+
+  .popover {
+    .tooltip-content {
+      p {
+        text-align: right;
       }
     }
   }
