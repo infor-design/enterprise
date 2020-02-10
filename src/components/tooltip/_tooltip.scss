@@ -245,13 +245,6 @@
       padding: 15px 5px 7px 15px;
     }
 
-    .modal-buttonset {
-      background-color: $popover-alternate-title-bg-color;
-      margin: 20px 0 0 -20px;
-      position: absolute;
-      width: calc(100% - 2px);
-    }
-
     th {
       color: $popover-alternate-subheader-color;
       font-size: $theme-size-font-sm;
@@ -347,6 +340,13 @@
   &.graphite {
     background-color: $theme-color-palette-graphite-60;
   }
+}
+
+.modal-buttonset {
+  background-color: $popover-alternate-title-bg-color;
+  margin: 20px 0 0 -20px;
+  position: absolute;
+  width: calc(100% - 2px);
 }
 
 .tooltip-content {
@@ -457,6 +457,17 @@ html[dir='rtl'] {
     .tooltip-content {
       p {
         text-align: right;
+      }
+    }
+
+    .modal-buttonset {
+      right: 1px;
+    }
+
+    &.alternate {
+      .tooltip-title {
+        padding-left: 5px;
+        padding-right: 15px;
       }
     }
   }

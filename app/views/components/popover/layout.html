@@ -1,0 +1,53 @@
+{{> includes/head}}
+
+<style id="popover-layout-styles">
+  .demo-popover {
+    align-items: middle;
+    display: flex;
+    justify-content: space-between;
+    margin: 7px auto;
+  }
+
+  .demo-popover .btn-primary {
+    align-self: center;
+    margin-left: 65px;
+    max-height: 34px;
+  }
+
+  .demo-popover table th,
+  .demo-popover table td {
+    padding: 4px;
+  }
+
+  html[dir='rtl'] .demo-popover .btn-primary {
+    margin-left: 0;
+    margin-right: 65px;
+  }
+
+  @media (max-width: 676px) {
+    .demo-popover .btn-primary {
+      margin-left: 10px !important;
+    }
+
+    html[dir='rtl'] .demo-popover .btn-primary {
+      margin-right: 10px !important;
+    }
+  }
+</style>
+
+<body class="no-scroll busy-loading-locale">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  {{> includes/applicationmenu}}
+  <div class="page-container no-scroll">
+    {{> includes/header}}
+    <section id="maincontent" class="page-container scrollable" role="main">
+      {{> content}}
+    </section>
+  </div>
+
+  {{> includes/footer}}
+
+</body>
+</html>
