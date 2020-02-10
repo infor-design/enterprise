@@ -63,6 +63,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
     { lang: 'nb', default: 'no-NO' },
+    { lang: 'nn', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
@@ -81,10 +82,10 @@ const Locale = {  // eslint-disable-line
   supportedLocales: ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
     'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-419', 'es-MX',
     'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
-    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO', 'nn-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
-  translatedLocales: ['fr-CA', 'fr-FR'],
+  translatedLocales: ['fr-CA', 'fr-FR', 'pl-PL', 'pt-PT'],
   defaultLocale: 'en-US',
   minify: minifyCultures,
 
@@ -229,7 +230,7 @@ const Locale = {  // eslint-disable-line
       correctLanguage = 'he';
     }
     // Another special case
-    if (lang === 'nb') {
+    if (lang === 'nb' || lang === 'nn') {
       correctLanguage = 'no';
     }
     return correctLanguage;

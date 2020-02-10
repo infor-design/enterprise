@@ -27,13 +27,13 @@ Soho.Locale.addCulture('ru-RU', {
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
-      wide: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+      wide: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
       abbreviated: ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
       narrow: ['В', 'П', 'В', 'С', 'Ч', 'П', 'С']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+      wide: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
       abbreviated: ['Я', 'Ф', 'М', 'А', 'М', 'И', 'И', 'А', 'С', 'О', 'Н', 'Д']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
@@ -88,6 +88,7 @@ Soho.Locale.addCulture('ru-RU', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Добавить в закладки', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Навигатор', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Браузер', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Язык браузера', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Маркированный список', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Календарь', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Камера', comment: 'Camera tooltip' },
@@ -173,6 +174,8 @@ Soho.Locale.addCulture('ru-RU', {
     Filter: { id: 'Filter', value: 'Фильтр', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Первая страница', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Папка', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Обычный текст', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Заголовок {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'От', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Полный режим', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Вперед', comment: 'Move Page / object this direction' },
@@ -217,6 +220,7 @@ Soho.Locale.addCulture('ru-RU', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Выровнять по левому краю', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Выровнять по правому краю', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Ключевое слово', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Язык', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Запуск', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Последняя страница', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Влево', comment: 'Left tooltip' },

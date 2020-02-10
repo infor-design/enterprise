@@ -1420,6 +1420,21 @@ fdescribe('Locale API', () => { //eslint-disable-line
     });
   });
 
+  it('Should be possible to set the language to nn', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nn').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
   it('Should be possible to extend the language strings for a locale', (done) => {
     Locale.set('it-lT').done(() => {
       const myStrings = {
