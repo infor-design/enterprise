@@ -31,7 +31,7 @@
 - `[Datagrid]` Add options to `toolbar.filterRow` so that instead of true/false you can set `showFilter, clearFilter, runFilter` independently. ([#1479](https://github.com/infor-design/enterprise/issues/1479))
 - `[Datagrid]` Added fixes to improve the usage of the textarea editor. ([#3417](https://github.com/infor-design/enterprise/issues/3417))
 - `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
-- `[Fileupload]` Fixed an issue where tabbing out was causing to modal dialog disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
+- `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 - `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
 - `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))
 - `[Icons]` Fixed color inconsistencies of the icons when the fields are in readonly state. ([#3176](https://github.com/infor-design/enterprise/issues/3176))
