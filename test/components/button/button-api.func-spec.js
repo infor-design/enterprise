@@ -36,7 +36,7 @@ describe('Button API', () => {
     expect(buttonAPI).toEqual(jasmine.any(Object));
   });
 
-  it('Should destroy button', (done) => {
+  it('can be destroyed', (done) => {
     const spyEvent = spyOnEvent(buttonEl, 'click.button');
     buttonAPI.destroy();
     buttonEl.click();
@@ -48,7 +48,7 @@ describe('Button API', () => {
     expect($(buttonEl).data('button')).toBeFalsy();
   });
 
-  it('Should set settings', () => {
+  it('has default settings', () => {
     const settings = {
       replaceText: false,
       toggleOffIcon: null,
@@ -59,7 +59,7 @@ describe('Button API', () => {
     expect(buttonAPI.settings).toEqual(settings);
   });
 
-  it('Should update settings via parameter', () => {
+  it('can update settings via the `updated()` method', () => {
     const settings = {
       replaceText: true,
       toggleOffIcon: null,
@@ -71,7 +71,7 @@ describe('Button API', () => {
     expect(buttonAPI.settings.replaceText).toEqual(settings.replaceText);
   });
 
-  it('Should update menu icon setting via parameter', () => {
+  it('should properly update the `hideMenuArrow` setting via the `updated()` method', () => {
     const settings = {
       replaceText: false,
       toggleOffIcon: null,
@@ -83,7 +83,7 @@ describe('Button API', () => {
     expect(buttonAPI.settings.hideMenuArrow).toEqual(settings.hideMenuArrow);
   });
 
-  it('Should remove menu icon if hideMenuArrow set to true', () => {
+  it('should remove menu icon if hideMenuArrow set to true', () => {
     const elem = buttonAPI.element[0];
     buttonAPI.updated({ hideMenuArrow: true });
 
