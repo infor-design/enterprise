@@ -541,7 +541,7 @@ Calendar.prototype = {
     const self = this;
 
     // Check for events starting on this day , or only on this day.
-    const startDate = new Date(event.starts);
+    const startDate = Locale.newDateObj(event.starts);
     const startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
@@ -549,7 +549,7 @@ Calendar.prototype = {
     );
 
     // Check for events extending onto this day
-    const endDate = new Date(event.ends);
+    const endDate = Locale.newDateObj(event.ends);
     const endKey = stringUtils.padDate(
       endDate.getFullYear(),
       endDate.getMonth(),
