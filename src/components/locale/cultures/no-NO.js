@@ -11,16 +11,16 @@ Soho.Locale.addCulture('no-NO', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: ':', // Infered
-      timeSeparator: '.',
+      separator: '.', // Infered
+      timeSeparator: ':',
       short: 'dd.MM.yyyy', // use four digit year
       medium: 'd. MMM yyyy',
       long: 'd. MMMM yyyy',
       full: 'EEEE d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH.mm.ss',
-      hour: 'HH.mm',
+      timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',
       timezone: 'dd.MM.yyyy HH:mm zz',
       timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
