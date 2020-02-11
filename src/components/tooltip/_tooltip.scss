@@ -20,6 +20,13 @@
   transition: opacity 0.4s ease;
   white-space: normal;
   z-index: 5010;
+
+  .modal-buttonset {
+    background-color: $popover-alternate-title-bg-color;
+    margin: 20px 0 0 -20px;
+    position: absolute;
+    width: calc(100% - 2px);
+  }
 }
 
 .tooltip {
@@ -340,13 +347,6 @@
   &.graphite {
     background-color: $theme-color-palette-graphite-60;
   }
-}
-
-.modal-buttonset {
-  background-color: $popover-alternate-title-bg-color;
-  margin: 20px 0 0 -20px;
-  position: absolute;
-  width: calc(100% - 2px);
 }
 
 .tooltip-content {
