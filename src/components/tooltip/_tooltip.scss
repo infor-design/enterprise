@@ -20,13 +20,6 @@
   transition: opacity 0.4s ease;
   white-space: normal;
   z-index: 5010;
-
-  .modal-buttonset {
-    background-color: $popover-alternate-title-bg-color;
-    margin: 20px 0 0 -20px;
-    position: absolute;
-    width: calc(100% - 2px);
-  }
 }
 
 .tooltip {
@@ -368,8 +361,16 @@
   }
 }
 
-.popover-content {
+.popover-content,
+.popover-content-area {
   margin-left: 0;
+
+  .modal-buttonset {
+    background-color: $popover-alternate-title-bg-color;
+    margin: 20px 0 0 -20px;
+    position: absolute;
+    width: calc(100% - 2px);
+  }
 }
 
 .arrow,
@@ -460,10 +461,6 @@ html[dir='rtl'] {
       }
     }
 
-    .modal-buttonset {
-      right: 1px;
-    }
-
     &.alternate {
       .tooltip-title {
         padding-left: 5px;
@@ -479,9 +476,13 @@ html[dir='rtl'] {
     }
   }
 
-  .popover-content {
+  .popover-content,
+  .popover-content-area {
     margin-left: inherit;
     margin-right: 0;
-  }
 
+    .modal-buttonset {
+      right: 1px;
+    }
+  }
 }
