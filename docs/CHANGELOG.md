@@ -17,6 +17,7 @@
 - `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
 - `[Calendar]` Fixed issue where on month view in events info `Date` and `Duration` fields were not working with some events and `Duration` field. Now `Duration` field support `Days, Hours and Minutes` text. ([#2777](https://github.com/infor-design/enterprise/issues/2777))
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
+- `[Calendar]` Fixed a calendar event where the start date today is not displaying as upcoming event in different timezone. ([#2776](https://github.com/infor-design/enterprise/issues/2776))
 - `[Calendar]` Fixed an issue where any event was not rendering in day and week view. ([#3222](https://github.com/infor-design/enterprise/issues/3222))
 - `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
 - `[Colors]` Fixed an incorrect ruby06 color, and made the background change on theme change now (again). ([#3448](https://github.com/infor-design/enterprise/issues/3448))
