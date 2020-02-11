@@ -778,7 +778,7 @@ describe('Datepicker Timeformat Tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${testDate.getMonth() + 1}/${testDate.getDate()} 00:00`);
+    expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${(testDate.getFullYear())} 12:00 AM`);
   });
 
   it('Should set locale time to midnight when selected ', async () => {
