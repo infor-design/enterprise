@@ -272,7 +272,7 @@ describe('Calendar specific locale', () => {
   });
 });
 
-fdescribe('Calendar specific locale and language', () => { //eslint-disable-line
+describe('Calendar specific locale and language', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/calendar/test-specific-lang');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
