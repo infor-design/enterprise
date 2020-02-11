@@ -25,7 +25,7 @@ describe('Popover Index Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       await element(by.id('popover-trigger')).click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popover'))), config.waitsFor);
