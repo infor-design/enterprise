@@ -213,6 +213,11 @@ DatePicker.prototype = {
           api.language = this.settings.language || api.locale.language;
           api.setCurrentCalendar();
         });
+        if (similarApi.length === 0) {
+          this.locale = Locale.cultures[locale];
+          this.language = this.settings.language || this.locale.language;
+          this.setCurrentCalendar();
+        }
       });
     }
     if (s.language) {
@@ -251,7 +256,7 @@ DatePicker.prototype = {
    */
   setCurrentCalendar() {
     this.currentCalendar = Locale.calendar(
-      this.locale.name,
+      this.settings.locale || this.locale.name,
       this.settings.language,
       this.settings.calendarName
     );

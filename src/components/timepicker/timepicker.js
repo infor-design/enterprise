@@ -77,11 +77,12 @@ TimePicker.prototype = {
     const localeDf = Locale.getLocale(this.settings.locale);
     $.when(localeDf, languageDf).done((locale, lang) => {
       this.locale = Locale.cultures[locale] || Locale.currentLocale;
-      this.language = lang || this.settings.language || this.locale.language;
+      this.language = lang || this.settings.language || this.locale.language || null;
       this.settings.language = this.language;
       this.setCurrentCalendar();
       this.build().handleEvents();
     });
+    return this;
   },
 
   /**
