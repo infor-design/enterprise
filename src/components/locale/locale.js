@@ -2,6 +2,7 @@
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
 import { stringUtils } from '../../utils/string';
+import { utils } from '../../utils/utils';
 import { ummalquraData } from './info/umalqura-data';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
@@ -1363,6 +1364,14 @@ const Locale = {  // eslint-disable-line
     if (options && options.locale && this.cultures[options.locale]) {
       localeData = this.cultures[options.locale];
     }
+    if (options && options.language && this.languages[options.language]) {
+      const newData = utils.extend(true, {}, this.currentLocale.data);
+      newData.calendars[0] = this.calendar(
+        options.locale || this.currentLocale.name,
+        options.language
+      );
+      return newData;
+    }
     if (!localeData.numbers) {
       localeData.numbers = this.numbers();
     }
@@ -1678,38 +1687,38 @@ const Locale = {  // eslint-disable-line
       }
     }
 
-    if (calendars[0] && lang && locale.substr(0, 2) !== lang) {
+    if (!calendars[0]) {
+      // Defaults to en-US
+      return {
+        dateFormat: {
+          separator: '/',
+          timeSeparator: ':',
+          short: 'M/d/yyyy',
+          medium: 'MMM d, yyyy',
+          long: 'MMMM d, yyyy',
+          full: 'EEEE, MMMM d, y',
+          month: 'MMMM d',
+          year: 'MMMM yyyy',
+          timestamp: 'h:mm:ss a',
+          datetime: 'M/d/yyyy h:mm a'
+        },
+        timeFormat: 'HH:mm:ss',
+        dayPeriods: ['AM', 'PM']
+      };
+    }
+    const calendar = utils.extend({}, calendars[0]);
+
+    if (lang && locale.substr(0, 2) !== lang) {
       const defaultLocale = this.defaultLocales.filter(a => a.lang === lang);
 
       if (defaultLocale[0]) {
         const culture = this.cultures[defaultLocale[0].default];
-        calendars[0].days = culture.calendars[0].days;
-        calendars[0].months = culture.calendars[0].months;
-        calendars[0].dayPeriods = culture.calendars[0].dayPeriods;
+        calendar.days = culture.calendars[0].days;
+        calendar.months = culture.calendars[0].months;
+        calendar.dayPeriods = culture.calendars[0].dayPeriods;
       }
     }
-
-    if (calendars[0]) {
-      return calendars[0];
-    }
-
-    // Defaults to en-US
-    return {
-      dateFormat: {
-        separator: '/',
-        timeSeparator: ':',
-        short: 'M/d/yyyy',
-        medium: 'MMM d, yyyy',
-        long: 'MMMM d, yyyy',
-        full: 'EEEE, MMMM d, y',
-        month: 'MMMM d',
-        year: 'MMMM yyyy',
-        timestamp: 'h:mm:ss a',
-        datetime: 'M/d/yyyy h:mm a'
-      },
-      timeFormat: 'HH:mm:ss',
-      dayPeriods: ['AM', 'PM']
-    };
+    return calendar;
   },
 
   /**

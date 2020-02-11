@@ -1736,6 +1736,31 @@ fdescribe('Locale API', () => { //eslint-disable-line
     });
   });
 
+  it('Should be able to format a date in a a non current language', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.calendar().dateFormat.short).toEqual('M/d/yyyy');
+
+    Locale.getLocale('nl').done(() => {
+      expect(Locale.calendar('en-US', 'nl').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'short', language: 'nl' })).toEqual('6/8/2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'nl' })).toEqual('jun 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'nl' })).toEqual('juni 8, 2019');
+      Locale.calendar();
+
+      expect(Locale.currentLocale.name).toEqual('en-US');
+    });
+    Locale.getLocale('hi').done(() => {
+      expect(Locale.calendar('en-US', 'hi').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'short', language: 'hi' })).toEqual('6/8/2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'hi' })).toEqual('जू 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'hi' })).toEqual('जून 8, 2019');
+      Locale.calendar();
+
+      done();
+    });
+  });
+
   it('Should be able to parse a date in a non current locale', (done) => {
     Locale.set('en-US');
     Locale.getLocale('es-ES').done(() => {

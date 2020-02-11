@@ -164,7 +164,10 @@ CalendarToolbar.prototype = {
     this.currentDay = date.getDate();
     this.currentDate = date;
 
-    this.monthPicker.text(Locale.formatDate(new Date(this.currentYear, this.currentMonth, this.currentDay), { date: 'year', locale: this.locale.name }));
+    this.monthPicker.text(Locale.formatDate(
+      new Date(this.currentYear, this.currentMonth, this.currentDay),
+      { date: 'year', locale: this.locale.name, language: this.settings.language }
+    ));
     if (!this.currentCalendar || !this.currentCalendar.months) {
       this.currentCalendar = Locale.calendar(
         this.locale.name,
