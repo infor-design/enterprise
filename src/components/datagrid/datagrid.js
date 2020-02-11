@@ -5993,8 +5993,10 @@ Datagrid.prototype = {
           self.columnWidth(col, j);
         }
 
-        const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-        currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+        if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
+          const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+          currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+        }
       });
     }
 
