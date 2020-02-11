@@ -409,6 +409,10 @@ const Locale = {  // eslint-disable-line
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   getLocale(locale, filename) {
+    if (!locale) {
+      return null;
+    }
+
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -1647,13 +1651,18 @@ const Locale = {  // eslint-disable-line
    * Shortcut function to get 'first' calendar
    * @private
    * @param {string} locale The locale to use
+   * @param {string} lang The translations of the calendar items
    * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data.
    */
-  calendar(locale, name) {
+  calendar(locale, lang, name) {
     let calendars = [];
     if (this.currentLocale.data.calendars && !locale) {
       calendars = this.currentLocale.data.calendars;
+    }
+
+    if (lang && lang.length > 2) {
+      lang = lang.substr(0, 2);
     }
 
     if (locale && this.cultures[locale]) {
@@ -1666,6 +1675,17 @@ const Locale = {  // eslint-disable-line
         if (cal.name === name) {
           return cal;
         }
+      }
+    }
+
+    if (calendars[0] && lang && locale.substr(0, 2) !== lang) {
+      const defaultLocale = this.defaultLocales.filter(a => a.lang === lang);
+
+      if (defaultLocale[0]) {
+        const culture = this.cultures[defaultLocale[0].default];
+        calendars[0].days = culture.calendars[0].days;
+        calendars[0].months = culture.calendars[0].months;
+        calendars[0].dayPeriods = culture.calendars[0].dayPeriods;
       }
     }
 

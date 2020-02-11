@@ -245,12 +245,16 @@ DatePicker.prototype = {
   },
 
   /**
-   *  Sets current calendar information.
+   * Sets current calendar information.
    * @private
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -405,10 +409,12 @@ DatePicker.prototype = {
     if (typeof Locale === 'object' && this.settings.calendarName) {
       localeDateFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).dateFormat;
       localeTimeFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).timeFormat;
     }

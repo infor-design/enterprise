@@ -12,6 +12,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
+ * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale's language will be used.
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
@@ -127,8 +128,13 @@ CalendarToolbar.prototype = {
 
     // Setup the datepicker
     this.monthPicker = this.element.find('#monthview-datepicker-field').datepicker({
-      dateFormat: Locale.calendar(this.locale.name).dateFormat.year,
+      dateFormat: Locale.calendar(
+        this.locale.name,
+        this.settings.language,
+        this.settings.calendarName
+      ).dateFormat.year,
       locale: this.settings.locale,
+      language: this.settings.language,
       onOpenCalendar: this.settings.onOpenCalendar,
       isMonthPicker: this.settings.isMonthPicker,
       showToday: this.settings.showToday
@@ -160,7 +166,11 @@ CalendarToolbar.prototype = {
 
     this.monthPicker.text(Locale.formatDate(new Date(this.currentYear, this.currentMonth, this.currentDay), { date: 'year', locale: this.locale.name }));
     if (!this.currentCalendar || !this.currentCalendar.months) {
-      this.currentCalendar = Locale.calendar();
+      this.currentCalendar = Locale.calendar(
+        this.locale.name,
+        this.settings.language,
+        this.settings.calendarName
+      );
     }
 
     const monthName = this.currentCalendar.months ? this.currentCalendar.months.wide[this.currentMonth] : '';
@@ -185,7 +195,11 @@ CalendarToolbar.prototype = {
    * @returns {this} Rhe object for chaining
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     return this;

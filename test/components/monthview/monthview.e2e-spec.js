@@ -279,7 +279,7 @@ describe('MonthView specific locale tests', () => {
 
 describe('MonthView specific language tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/test-specific-locale-lang');
+    await utils.setPage('/components/monthview/test-specific-lang');
     await browser.driver.sleep(config.sleep);
   });
 
@@ -291,9 +291,9 @@ describe('MonthView specific language tests', () => {
   it('Should render a specific locale and language', async () => {
     await browser.driver.sleep(config.sleepLonger);
 
-    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('oktober 2019');
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('Juli 2020');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Heute');
-    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
-    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('søn');
+    expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('Mo');
+    expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('So');
   });
 });
