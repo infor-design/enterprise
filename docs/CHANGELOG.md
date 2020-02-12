@@ -40,6 +40,7 @@
 - `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 - `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
 - `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))
+- `[Forms]` Fixed an issue where radio group was overlapping fields. ([#3466](https://github.com/infor-design/enterprise/issues/3466))
 - `[Icons]` Fixed color inconsistencies of the icons when the fields are in readonly state. ([#3176](https://github.com/infor-design/enterprise/issues/3176))
 - `[Input]` Added the ability to line up data labels with inputs by adding class `field-height` to the `data` element and placing it in a responsive grid. ([#987](https://github.com/infor-design/enterprise/issues/987))
 - `[Input]` Added the ability to use standalone required spans, this will help on responsive fields if they are cut off. ([#3115](https://github.com/infor-design/enterprise/issues/3115))
