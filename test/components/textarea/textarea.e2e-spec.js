@@ -8,7 +8,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Textarea example-index tests', () => {
+describe('Textarea example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-index');
   });
@@ -129,7 +129,7 @@ fdescribe('Textarea example-index tests', () => {
   });
 });
 
-fdescribe('Textarea size tests', () => {
+describe('Textarea size tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-sizes');
   });
@@ -160,7 +160,7 @@ fdescribe('Textarea size tests', () => {
   });
 });
 
-fdescribe('Textarea auto grow tests', () => {
+describe('Textarea auto grow tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-autogrow');
   });
@@ -191,7 +191,7 @@ fdescribe('Textarea auto grow tests', () => {
   });
 });
 
-fdescribe('Textarea Modal Tests', () => {
+describe('Textarea Modal Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/test-modal');
   });
@@ -214,7 +214,7 @@ fdescribe('Textarea Modal Tests', () => {
   });
 });
 
-fdescribe('Textarea Rows Tests', () => {
+describe('Textarea Rows Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/test-rows?layout=nofrills');
   });
