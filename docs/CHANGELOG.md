@@ -26,6 +26,7 @@
 - `[Datagrid]` Fixed a bug where if a filter row column is frozen the mask and editor options would not be applied. ([#2553](https://github.com/infor-design/enterprise-ng/issues/2553))
 - `[Datagrid]` Fixed hover color should not be similar to alternate rows when hovering in uplift high contrast. ([#3338](https://github.com/infor-design/enterprise/issues/3338))
 - `[Datagrid]` Fixed a demo app issue filtering decimal fields in some examples. ([#3351](https://github.com/infor-design/enterprise/issues/3351))
+- `[Datagrid]` Fixed an issue where some columns were disappear after resizing the browser or after changing themes. ([#3434](https://github.com/infor-design/enterprise/issues/3434))
 - `[Datagrid]` Fixed an issue that the filter row type dropdowns did not close when the grid is scrolled. ([#3216](https://github.com/infor-design/enterprise/issues/3216))
 - `[Datagrid]` Added an example showing the configuration needed to filter date time fields on just dates without the time part. ([#2865](https://github.com/infor-design/enterprise/issues/2865))
 - `[Datagrid]` Changed the isFilter added value to datasets to a more unique value to avoid clashes. ([#2668](https://github.com/infor-design/enterprise/issues/2668))
