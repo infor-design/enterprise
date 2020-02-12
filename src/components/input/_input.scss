@@ -381,11 +381,14 @@ span.required::after {
 }
 
 // Error States
-.error,
+.error {
+  color: $error-color;
+}
+
 .error-message,
 .error-message p,
 .popover .error-message p {
-  color: $error-color;
+  color: $error-text-color;
 }
 
 .error::-webkit-input-placeholder {
