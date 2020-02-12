@@ -1,6 +1,5 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 
 // Name of this component
@@ -9,8 +8,6 @@ const COMPONENT_NAME = 'textarea';
 // Component Options
 const TEXTAREA_DEFAULTS = {
   autoGrow: false,
-  autoGrowAnimate: true,
-  autoGrowAnimateSpeed: 200,
   autoGrowMaxHeight: null,
   characterCounter: true,
   maxLength: null,
@@ -25,8 +22,6 @@ const TEXTAREA_DEFAULTS = {
 * @param {object} element The component element.
 * @param {object} [settings] The component settings.
 * @param {boolean} [settings.autoGrow = false] Will automatically expand the textarea to fit the contents when typing.
-* @param {boolean} [settings.autoGrowAnimate  = true] Will animate the textarea grow.
-* @param {number} [settings.autoGrowAnimateSpeed = 200] The speed of the animation.
 * @param {number} [settings.autoGrowMaxHeight = null] The Max Height of the textarea when autoGrow is enabled.
 * @param {boolean} [settings.characterCounter = true] Displays a counter that counts down from the maximum.
 * @param {boolean} [settings.maxLength = number] Maximum characters allowed in textarea.
@@ -74,11 +69,7 @@ Textarea.prototype = {
       this.settings.autoGrow = true;
     }
 
-    if (this.settings.autoGrow && this.element.length) {
-      this.element.css('overflow', 'hidden');
-      this.handleResize(this);
-    }
-
+    this.setupAutoGrow();
     this.handleEvents();
     this.updateCounter();
   },
@@ -137,66 +128,48 @@ Textarea.prototype = {
   },
 
   /**
-  * Resizes the texarea based on the content.
+  * Setup the auto grow functionality.
   * @private
-  * @param {obkect} self The textaarea api
-  * @param {event} e The resive event object
   */
-  handleResize(self, e) {
-    const value = self.element.val();
-    const oldHeight = self.element.innerHeight();
-    let newHeight = self.element.get(0).scrollHeight;
-    const minHeight = self.element.data('autogrow-start-height') || 0;
-    const maxHeight = self.settings.autoGrowMaxHeight || 0;
-    let clone;
+  setupAutoGrow() {
+    if (this.settings.autoGrow && this.element.length) {
+      const elem = this.element[0];
+
+      if (this.settings.autoGrowMaxHeight) {
+        elem.style.maxHeight = `${this.settings.autoGrowMaxHeight}px`;
+      }
+
+      elem.style.overflow = 'hidden';
+      this.autoGrow();
+    }
+  },
+
+  /**
+  * Activate the auto grow functionality from a change.
+  * @private
+  */
+  autoGrow() {
+    if (!this.settings.autoGrow) {
+      return;
+    }
+
+    const elem = this.element[0];
+    const oldHeight = elem.offSetHeight;
+    const maxHeight = this.settings.autoGrowMaxHeight || 0;
+    let newHeight = elem.scrollHeight;
 
     if (maxHeight > 0 && maxHeight < newHeight) {
       newHeight = maxHeight;
-      self.element.css('overflow', '');
+      elem.style.overflow = '';
       if (oldHeight === newHeight) {
         return;
       }
     } else {
-      self.element.css('overflow', 'hidden');
+      elem.style.overflow = 'hidden';
     }
 
-    if (oldHeight < newHeight) {
-      self.scrollTop = 0;
-
-      if (self.settings.autoGrowAnimate && newHeight !== maxHeight) {
-        self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
-      } else {
-        self.element.innerHeight(newHeight);
-      }
-    } else if (!e || e.which === 8 || e.which === 46 || (e.ctrlKey && e.which === 88)) {
-      if (oldHeight > minHeight) {
-        clone = self.element.clone()
-          .addClass('clone')
-          .css({ position: 'absolute', zIndex: -10, height: '' })
-          .val(xssUtils.sanitizeHTML(value));
-
-        self.element.after(clone);
-        do {
-          newHeight = clone[0].scrollHeight - 1;
-          clone.innerHeight(newHeight);
-        } while (newHeight === clone[0].scrollHeight);
-
-        newHeight++;
-        clone.remove();
-
-        if (newHeight < minHeight) {
-          newHeight = minHeight;
-        }
-
-        if (oldHeight > newHeight && self.settings.autoGrowAnimate) {
-          self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
-        } else {
-          self.element.innerHeight(newHeight);
-        }
-      } else {
-        self.element.innerHeight(minHeight);
-      }
-    }
+    elem.style.height = '5px';
+    elem.style.height = `${elem.scrollHeight + 2}px`;
   },
 
   /**
@@ -311,7 +284,7 @@ Textarea.prototype = {
     if (this.counter && this.counter.length) {
       this.counter.remove();
     }
-    this.element.off('keyup.textarea, focus.textarea, updated.dropdown, keypress.textarea, blur.textarea');
+    this.element.off();
   },
 
   /**
@@ -320,49 +293,53 @@ Textarea.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on('keyup.textarea', (e) => {
-      const value = self.element.val();
-      const isExtraLinebreaks = self.isChrome || self.isSafari;
-      const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
-      const max = self.getMaxLength();
+    this.element
+      .on('keyup.textarea', (e) => {
+        const value = self.element.val();
+        const isExtraLinebreaks = self.isChrome || self.isSafari;
+        const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+        const max = self.getMaxLength();
 
-      self.updateCounter();
-
-      if (length >= max) {
-        e.preventDefault();
-        return false;
-      }
-
-      if (self.settings.autoGrow) {
-        self.handleResize(self, e);
-      }
-
-      return true;
-    }).on('focus.textarea', () => {
-      if (self.counter) {
-        self.counter.addClass('focus');
-      }
-    }).on('updated.dropdown', () => {
-      self.updated();
-    }).on('keypress.textarea', function (e) {
-      const value = self.element.val();
-      const isExtraLinebreaks = self.isChrome || self.isSafari;
-      const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
-      const max = self.getMaxLength();
-
-      if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
         self.updateCounter();
-        return;
-      }
 
-      if (!self.isPrintable(e.which, e.shiftKey)) {
-        return;
-      }
+        if (length >= max) {
+          e.preventDefault();
+          return false;
+        }
 
-      if (length >= max && !self.isSelected(this)) {
-        e.preventDefault();
-      }
-    })
+        if (self.settings.autoGrow) {
+          self.autoGrow();
+        }
+
+        return true;
+      })
+      .on('focus.textarea', () => {
+        if (self.counter) {
+          self.counter.addClass('focus');
+        }
+      })
+      .on('updated.textarea', () => {
+        self.updated();
+      })
+      .on('keypress.textarea', function (e) {
+        const value = self.element.val();
+        const isExtraLinebreaks = self.isChrome || self.isSafari;
+        const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+        const max = self.getMaxLength();
+
+        if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
+          self.updateCounter();
+          return;
+        }
+
+        if (!self.isPrintable(e.which, e.shiftKey)) {
+          return;
+        }
+
+        if (length >= max && !self.isSelected(this)) {
+          e.preventDefault();
+        }
+      })
       .on('blur.textarea', () => {
         self.updateCounter();
         if (self.counter) {

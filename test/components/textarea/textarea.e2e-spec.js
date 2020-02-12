@@ -8,7 +8,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Textarea example-index tests', () => {
+fdescribe('Textarea example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-index');
   });
@@ -129,7 +129,7 @@ describe('Textarea example-index tests', () => {
   });
 });
 
-describe('Textarea size tests', () => {
+fdescribe('Textarea size tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-sizes');
   });
@@ -160,7 +160,7 @@ describe('Textarea size tests', () => {
   });
 });
 
-describe('Textarea auto grow tests', () => {
+fdescribe('Textarea auto grow tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-autogrow');
   });
@@ -191,7 +191,7 @@ describe('Textarea auto grow tests', () => {
   });
 });
 
-describe('Textarea Modal Tests', () => {
+fdescribe('Textarea Modal Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/test-modal');
   });
@@ -212,4 +212,19 @@ describe('Textarea Modal Tests', () => {
     expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toBe('TestTest');
     expect(await element(by.id('modal-1')).isDisplayed()).toBeTruthy();
   });
+});
+
+fdescribe('Textarea Rows Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/textarea/test-rows?layout=nofrills');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'textarea-rows')).toEqual(0);
+    });
+  }
 });
