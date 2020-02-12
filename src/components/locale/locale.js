@@ -536,14 +536,8 @@ const Locale = {  // eslint-disable-line
     }
 
     // Convert if a timezone string.
-    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('Z') > -1) {
-      const tDate1 = new Date(value);
-      value = tDate1;
-    }
-
-    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('T') > -1) {
-      const tDate1 = new Date(value);
-      value = tDate1;
+    if (typeof value === 'string' && /T|Z/g.test(value)) {
+      value = this.newDateObj(value);
     }
 
     // Convert if a string..
@@ -690,6 +684,23 @@ const Locale = {  // eslint-disable-line
     }
 
     return ret.trim();
+  },
+
+  /**
+   * Get date object by given date string.
+   * @private
+   * @param {string} dateStr The date string
+   * @returns {object} The date object.
+   */
+  newDateObj(dateStr) {
+    let date = new Date(dateStr);
+    // Safari was not render the right date/time with timezone string
+    if (env.browser.name === 'safari' && typeof dateStr === 'string' && /T|Z/g.test(dateStr)) {
+      let arr = dateStr.replace(/Z/, '').replace(/T|:/g, '-').split('-');
+      arr = arr.map((x, i) => +(i === 1 ? x - 1 : x));
+      date = new Date(...arr);
+    }
+    return date;
   },
 
   /**

@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { dateUtils } from '../../utils/date';
 
@@ -18,10 +19,31 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     new Date(event.starts),
     false
   ));
+
+  // Get today's date and convert to UTC
+  const today = new Date();
+  const dateTodayUTC = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+
+  // Get event start date and convert to UTC
+  const eventStart = new Date(event.starts);
+  const eventStartUTC = Date.UTC(
+    eventStart.getUTCFullYear(),
+    eventStart.getUTCMonth(), eventStart.getUTCDate()
+  );
+
+  const eventStartFormatted = `${eventStart.getDate()}-${eventStart.getMonth() + 1}-${eventStart.getFullYear()}`;
+  const todayFormatted = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+
   event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
-  event.daysUntil = event.starts ? dateUtils.dateDiff(new Date(event.starts), new Date()) : 0;
-  event.durationHours = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends), true);
+  event.daysUntil = event.starts ? dateUtils.dateDiff(eventStartUTC, dateTodayUTC) : 0;
+  const diff = (new Date(event.ends) - new Date(event.starts)) / (1000 * 60 * 60);
+  event.durationHours = diff > 0 && diff < 0.5 ? 1 : Math.round(diff);
   event.isDays = true;
+
+  // Condition to not display in the upcoming events section
+  if (dateTodayUTC > eventStartUTC && eventStartFormatted !== todayFormatted) {
+    event.daysUntil = 1;
+  }
 
   if (event.isAllDay === undefined) {
     event.isAllDay = true;
@@ -81,7 +103,90 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     event.isDays = false;
     delete event.duration;
   }
+
+  // Duration in time
+  if (event.starts && event.ends) {
+    const parseDateOpts = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
+    const parseDate = dtStr => Locale.parseDate(dtStr, parseDateOpts);
+    const diffInSeconds = this.timeDiffInSeconds(parseDate(event.starts), parseDate(event.ends));
+    event.durationInTime = this.timeBySeconds(diffInSeconds);
+  } else if (event.durationInTime) {
+    delete event.durationInTime;
+  }
+
   return event;
+};
+
+/**
+ * Get difference between two dates in seconds.
+ * @private
+ * @param {number} starts The starts date
+ * @param {number} ends The ends date
+ * @returns {number} The calculated difference in seconds.
+ */
+calendarShared.timeDiffInSeconds = function timeDiffInSeconds(starts, ends) {
+  const diff = Math.abs(ends.getTime() - starts.getTime()); // in miliseconds
+  return Math.ceil(diff / 1000); // in seconds
+};
+
+/**
+ * Get time object, days, hours, minutes and seconds by given total seconds.
+ * @private
+ * @param {number} seconds The total seconds
+ * @returns {object} The time with hours and minutes.
+ */
+calendarShared.timeBySeconds = function timeBySeconds(seconds) {
+  seconds = Number(seconds);
+  return {
+    days: Math.floor(seconds / (3600 * 24)),
+    hours: Math.floor(seconds % (3600 * 24) / 3600),
+    minutes: Math.floor(seconds % 3600 / 60),
+    seconds: Math.floor(seconds % 60)
+  };
+};
+
+/**
+ * Formate the time string for hours and minutes to given event data.
+ * @private
+ * @param {object} event The event data
+ * @param {object} locale The locale instance to use
+ * @param {object} language The language instance to use
+ * @returns {void}
+ */
+calendarShared.formateTimeString = function formateTimeString(event, locale, language) {
+  if (event.durationInTime) {
+    const translate = str => Locale.translate(str, { locale: locale.name, language });
+    const d = event.durationInTime;
+    let text = '';
+    if (d.days) {
+      const label = translate(d.days > 1 ? 'Days' : 'Day');
+      text += `${d.days} ${label}`;
+    }
+    if (d.hours) {
+      const label = translate(d.hours > 1 ? 'Hours' : 'Hour');
+      if (d.days) {
+        text += `${d.minutes || d.seconds ? ', ' : ` ${translate('And')} `}`;
+      }
+      text += `${d.hours} ${label}`;
+    }
+    if (d.minutes) {
+      const label = translate(d.minutes > 1 ? 'Minutes' : 'Minute');
+      if (d.days || d.hours) {
+        text += `${d.seconds ? ', ' : ` ${translate('And')} `}`;
+      }
+      text += `${d.minutes} ${label}`;
+    }
+    if (d.seconds) {
+      const label = translate(d.seconds > 1 ? 'Seconds' : 'Second');
+      text += `${d.days || d.hours || d.minutes ? ` ${translate('And')} ` : ''}`;
+      text += `${d.seconds} ${label}`;
+    }
+    if (text !== '') {
+      event.duration = '';
+      event.durationUnits = '';
+      event.durationHours = text;
+    }
+  }
 };
 
 /**
@@ -123,13 +228,16 @@ calendarShared.cleanEventData = function cleanEventData(
   events,
   eventTypes,
 ) {
+  const formatDateOptions = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
+  const formatDate = d => Locale.formatDate(d, formatDateOptions);
+  const parseDate = (d, opt) => Locale.parseDate(d, $.extend(true, { locale: locale.name }, opt));
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
   let startDate = currentDate;
   let endDate = currentDate;
 
   if (event.startsLocale && event.endsLocale) {
-    startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
-    endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+    startDate = new Date(parseDate(event.startsLocale));
+    endDate = new Date(parseDate(event.endsLocale));
   }
 
   if (typeof event.starts === 'string' && !event.startsLocale) {
@@ -149,19 +257,19 @@ calendarShared.cleanEventData = function cleanEventData(
 
   if (isAllDay) {
     startDate.setHours(0, 0, 0, 0);
-    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.starts = formatDate(new Date(startDate));
     endDate.setHours(23, 59, 59, 999);
-    event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.ends = formatDate(new Date(endDate));
     event.duration = event.starts === event.ends ? 1 : null;
     event.isAllDay = true;
   } else {
     if (startDate === endDate) {
       endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.ends = formatDate(env.browser.name === 'safari' ? endDate : endDate.toISOString());
       event.duration = null;
     } else if (event.endsHourLocale && event.startsHourLocale) {
-      const startsHours = Locale.parseDate(event.startsHourLocale, { date: 'hour', locale: locale.name });
-      const endsHours = Locale.parseDate(event.endsHourLocale, { date: 'hour', locale: locale.name });
+      const startsHours = parseDate(event.startsHourLocale, { date: 'hour' });
+      const endsHours = parseDate(event.endsHourLocale, { date: 'hour' });
       startDate.setHours(
         startsHours.getHours(),
         startsHours.getMinutes(),
@@ -174,13 +282,18 @@ calendarShared.cleanEventData = function cleanEventData(
         endsHours.getSeconds(),
         endsHours.getMilliseconds()
       );
-      event.starts = Locale.formatDate(startDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      if (env.browser.name === 'safari') {
+        event.starts = formatDate(startDate);
+        event.ends = formatDate(endDate);
+      } else {
+        event.starts = formatDate(startDate.toISOString());
+        event.ends = formatDate(endDate.toISOString());
+      }
       event.duration = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends));
     } else {
-      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.ends = formatDate(new Date(endDate));
     }
-    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.starts = formatDate(new Date(startDate));
     event.isAllDay = false;
   }
 
@@ -199,9 +312,7 @@ calendarShared.cleanEventData = function cleanEventData(
   }
 
   if (event.id === undefined && addPlaceholder) {
-    const lastId = events.length === 0
-      ? 0
-      : parseInt(events[events.length - 1].id, 10);
+    const lastId = events.length === 0 ? 0 : parseInt(events[events.length - 1].id, 10);
     event.id = (lastId + 1).toString();
   }
 

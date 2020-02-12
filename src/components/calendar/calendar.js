@@ -378,7 +378,11 @@ Calendar.prototype = {
     if (!this.eventDetailsContainer) {
       return;
     }
-    this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer, count > 1);
+    const thisEvent = $.extend(true, {}, eventData[0]);
+    if (thisEvent.durationHours && !thisEvent.isDays) {
+      calendarShared.formateTimeString(thisEvent, this.locale, this.language);
+    }
+    this.renderTmpl(thisEvent, this.settings.template, this.eventDetailsContainer, count > 1);
 
     const api = $(this.eventDetailsContainer).data('accordion');
     if (api) {
@@ -521,7 +525,7 @@ Calendar.prototype = {
     const self = this;
 
     // Check for events starting on this day , or only on this day.
-    const startDate = new Date(event.starts);
+    const startDate = Locale.newDateObj(event.starts);
     const startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
@@ -529,7 +533,7 @@ Calendar.prototype = {
     );
 
     // Check for events extending onto this day
-    const endDate = new Date(event.ends);
+    const endDate = Locale.newDateObj(event.ends);
     const endKey = stringUtils.padDate(
       endDate.getFullYear(),
       endDate.getMonth(),

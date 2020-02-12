@@ -139,7 +139,7 @@ Textarea.prototype = {
   /**
   * Resizes the texarea based on the content.
   * @private
-  * @param {obkect} self The textaarea api
+  * @param {object} self The textaarea api
   * @param {event} e The resive event object
   */
   handleResize(self, e) {

@@ -31,5 +31,11 @@
 }
 
 .icon-dirty.dirty-checkbox.is-checked {
-  top: 3px;
+  top: 2px;
+}
+
+.is-firefox {
+  .icon-dirty.dirty-checkbox.is-checked {
+    top: 2px !important;
+  }
 }
