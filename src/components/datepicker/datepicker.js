@@ -608,6 +608,7 @@ DatePicker.prototype = {
 
       timeOptions.parentElement = this.timepickerContainer;
       timeOptions.locale = this.settings.locale;
+      timeOptions.language = this.settings.language;
       this.time = this.getTimeString(this.currentDate, this.show24Hours);
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('.dropdown').dropdown();

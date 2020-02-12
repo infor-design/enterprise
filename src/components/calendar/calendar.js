@@ -1218,7 +1218,8 @@ Calendar.prototype = {
       keepOpen: true,
       extraClass: 'calendar-popup',
       tooltipElement: '#calendar-popup',
-      headerClass: event.color
+      headerClass: event.color,
+      initializeContent: false
     };
 
     eventTarget
@@ -1253,7 +1254,7 @@ Calendar.prototype = {
         });
 
         // Wire the correct type selector
-        elem.find('#type').val(event.type).trigger('updated');
+        elem.find('#type').val(event.type).dropdown();
 
         // Wire the correct comments
         elem.find('#comments').val(event.comments);
@@ -1267,6 +1268,19 @@ Calendar.prototype = {
           if (popupApi) {
             popupApi.hide(true);
           }
+        });
+
+        // Init the contents
+        elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('[data-translate="text"]').each((i, item) => {
+          const obj = $(item);
+          obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+            showAsUndefined: false,
+            showBrackets: false,
+            language: this.settings.language,
+            locale: this.settings.locale
+          }));
         });
       });
 
