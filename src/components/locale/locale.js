@@ -1627,6 +1627,9 @@ const Locale = {  // eslint-disable-line
     const languageData = this.useLanguage(options);
     let showAsUndefined = false;
     let showBrackets = true;
+    if (key === '&nsbp;') {
+      return '';
+    }
     if (typeof options === 'boolean') {
       showAsUndefined = options;
     }
