@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Color tests', () => {
+fdescribe('Color tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/colors/example-index?layout=nofrills');
   });
