@@ -1,3 +1,4 @@
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { dateUtils } from '../../utils/date';
 
@@ -227,13 +228,16 @@ calendarShared.cleanEventData = function cleanEventData(
   events,
   eventTypes,
 ) {
+  const formatDateOptions = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
+  const formatDate = d => Locale.formatDate(d, formatDateOptions);
+  const parseDate = (d, opt) => Locale.parseDate(d, $.extend(true, { locale: locale.name }, opt));
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
   let startDate = currentDate;
   let endDate = currentDate;
 
   if (event.startsLocale && event.endsLocale) {
-    startDate = new Date(Locale.parseDate(event.startsLocale, { locale: locale.name }));
-    endDate = new Date(Locale.parseDate(event.endsLocale, { locale: locale.name }));
+    startDate = new Date(parseDate(event.startsLocale));
+    endDate = new Date(parseDate(event.endsLocale));
   }
 
   if (typeof event.starts === 'string' && !event.startsLocale) {
@@ -253,19 +257,19 @@ calendarShared.cleanEventData = function cleanEventData(
 
   if (isAllDay) {
     startDate.setHours(0, 0, 0, 0);
-    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.starts = formatDate(new Date(startDate));
     endDate.setHours(23, 59, 59, 999);
-    event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.ends = formatDate(new Date(endDate));
     event.duration = event.starts === event.ends ? 1 : null;
     event.isAllDay = true;
   } else {
     if (startDate === endDate) {
       endDate.setHours(endDate.getHours() + parseInt(event.durationHours, 10));
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.ends = formatDate(env.browser.name === 'safari' ? endDate : endDate.toISOString());
       event.duration = null;
     } else if (event.endsHourLocale && event.startsHourLocale) {
-      const startsHours = Locale.parseDate(event.startsHourLocale, { date: 'hour', locale: locale.name });
-      const endsHours = Locale.parseDate(event.endsHourLocale, { date: 'hour', locale: locale.name });
+      const startsHours = parseDate(event.startsHourLocale, { date: 'hour' });
+      const endsHours = parseDate(event.endsHourLocale, { date: 'hour' });
       startDate.setHours(
         startsHours.getHours(),
         startsHours.getMinutes(),
@@ -278,13 +282,18 @@ calendarShared.cleanEventData = function cleanEventData(
         endsHours.getSeconds(),
         endsHours.getMilliseconds()
       );
-      event.starts = Locale.formatDate(startDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
-      event.ends = Locale.formatDate(endDate.toISOString(), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      if (env.browser.name === 'safari') {
+        event.starts = formatDate(startDate);
+        event.ends = formatDate(endDate);
+      } else {
+        event.starts = formatDate(startDate.toISOString());
+        event.ends = formatDate(endDate.toISOString());
+      }
       event.duration = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends));
     } else {
-      event.ends = Locale.formatDate(new Date(endDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+      event.ends = formatDate(new Date(endDate));
     }
-    event.starts = Locale.formatDate(new Date(startDate), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
+    event.starts = formatDate(new Date(startDate));
     event.isAllDay = false;
   }
 
@@ -303,9 +312,7 @@ calendarShared.cleanEventData = function cleanEventData(
   }
 
   if (event.id === undefined && addPlaceholder) {
-    const lastId = events.length === 0
-      ? 0
-      : parseInt(events[events.length - 1].id, 10);
+    const lastId = events.length === 0 ? 0 : parseInt(events[events.length - 1].id, 10);
     event.id = (lastId + 1).toString();
   }
 
