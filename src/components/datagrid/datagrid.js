@@ -3914,6 +3914,7 @@ Datagrid.prototype = {
     if (self.settings.rowTemplate) {
       const tmpl = self.settings.rowTemplate;
       const item = rowData;
+      const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
 
       if (Tmpl && item) {
@@ -3922,27 +3923,33 @@ Datagrid.prototype = {
 
       if (this.hasLeftPane) {
         containerHtml.left += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsLeft}">
-          <div class="datagrid-row-detail"><div style="height: ${self.settings.rowTemplateHeight || '107'}px"></div></div>
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
       containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
         <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
-        containerHtml.right += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
     }
 
     if (self.settings.expandableRow) {
       if (this.hasLeftPane) {
-        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">` +
-          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-          '</td></tr>';
+        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">` +
-        '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-        '</td></tr>';
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+        </td></tr>`;
+      if (this.hasRightPane) {
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
+      }
     }
 
     // Render Tree Children
@@ -10097,7 +10104,8 @@ Datagrid.prototype = {
 
     if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
       // collapse any other expandable rows
-      const prevExpandRow = self.tableBody.find('tr.is-expanded');
+      const tableBody = self.tableBody.add(self.tableBodyLeft).add(self.tableBodyRight);
+      const prevExpandRow = tableBody.find('tr.is-expanded');
       const prevExpandButton = prevExpandRow.prev().find('.datagrid-expand-btn');
       const parentRow = prevExpandRow.prev();
       const parentRowIdx = self.actualRowNode(parentRow);
