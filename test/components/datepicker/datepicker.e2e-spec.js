@@ -778,7 +778,7 @@ describe('Datepicker Timeformat Tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${testDate.getMonth() + 1}/${testDate.getDate()} 00:00`);
+    expect(await element(by.id('dp1')).getAttribute('value')).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${(testDate.getFullYear())} 12:00 AM`);
   });
 
   it('Should set locale time to midnight when selected ', async () => {
@@ -1278,7 +1278,7 @@ describe('Datepicker Body Re Initialize Tests', () => {
   });
 });
 
-describe('Datepicker specific locale/language tests', () => {
+describe('Datepicker specific locale/language tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
   });
@@ -1326,5 +1326,19 @@ describe('Datepicker specific locale/language tests', () => {
     testDate.setSeconds(0);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}.${(testDate.getMonth() + 1).toString().padStart(2, '0')}.${testDate.getFullYear()}`);
+  });
+});
+
+describe('Datepicker specific language tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-specific-lang');
+  });
+
+  it('Should be able to different language and locale', async () => {
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Hoy');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toEqual('Febrero 2020');
+    expect(await element(by.css('.monthview-table thead th:first-child')).getText()).toEqual('L');
   });
 });

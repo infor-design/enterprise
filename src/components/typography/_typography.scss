@@ -171,7 +171,7 @@ label,
   display: block;
   font-size: $label-size-regular-font-size;
   margin: $label-size-regular-margin;
-  min-height: 13px; //prevents need to use &nbsp; for blank labels
+  min-height: 14px; //prevents need to use &nbsp; for blank labels
 }
 
 .is-disabled.label,

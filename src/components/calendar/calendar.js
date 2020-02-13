@@ -95,8 +95,7 @@ Calendar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    return this
-      .build();
+    return this.setLocaleThenBuild();
   },
 
   /**
@@ -105,15 +104,6 @@ Calendar.prototype = {
    * @private
    */
   build() {
-    this.setLocale();
-    if (this.rendered ||
-      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
-      this.rendered = false;
-      return this;
-    }
-
-    this.rendered = true;
-
     this
       .setCurrentCalendar()
       .renderEventTypes()
@@ -129,24 +119,16 @@ Calendar.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language);
-      this.language = this.settings.language;
-    } else {
-      this.language = Locale.currentLanguage.name;
-    }
-
-    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.setCurrentCalendar();
-        this.build();
-      });
-    } else if (!this.settings.locale) {
-      this.locale = Locale.currentLocale;
-    }
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language;
+      this.settings.language = this.language;
+      this.setCurrentCalendar();
+      this.build().handleEvents();
+    });
     return this;
   },
 
@@ -204,6 +186,7 @@ Calendar.prototype = {
       onSelected: this.settings.onSelected,
       selectable: true,
       locale: this.settings.locale,
+      language: this.settings.language,
       month: this.settings.month,
       year: this.settings.year,
       day: this.settings.day,
@@ -253,6 +236,7 @@ Calendar.prototype = {
 
     this.weekView = new WeekView(this.weekViewContainer, {
       locale: this.settings.locale,
+      language: this.settings.language,
       startDate,
       endDate,
       eventTypes: this.settings.eventTypes,
@@ -1234,7 +1218,8 @@ Calendar.prototype = {
       keepOpen: true,
       extraClass: 'calendar-popup',
       tooltipElement: '#calendar-popup',
-      headerClass: event.color
+      headerClass: event.color,
+      initializeContent: false
     };
 
     eventTarget
@@ -1269,7 +1254,7 @@ Calendar.prototype = {
         });
 
         // Wire the correct type selector
-        elem.find('#type').val(event.type).trigger('updated');
+        elem.find('#type').val(event.type).dropdown();
 
         // Wire the correct comments
         elem.find('#comments').val(event.comments);
@@ -1283,6 +1268,19 @@ Calendar.prototype = {
           if (popupApi) {
             popupApi.hide(true);
           }
+        });
+
+        // Init the contents
+        elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('[data-translate="text"]').each((i, item) => {
+          const obj = $(item);
+          obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+            showAsUndefined: false,
+            showBrackets: false,
+            language: this.settings.language,
+            locale: this.settings.locale
+          }));
         });
       });
 

@@ -81,7 +81,7 @@ WeekView.prototype = {
       this.settings.endDate = dateUtils.lastDayOfWeek(new Date(), this.settings.firstDayOfWeek);
     }
 
-    return this.build();
+    return this.setLocaleThenBuild();
   },
 
   /**
@@ -89,25 +89,17 @@ WeekView.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language);
-      this.language = this.settings.language;
-    } else {
-      this.language = Locale.currentLanguage.name;
-    }
-
-    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.setCurrentCalendar();
-        this.build().handleEvents();
-      });
-    } else if (!this.settings.locale) {
-      this.locale = Locale.currentLocale;
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language;
+      this.settings.language = this.language;
       this.setCurrentCalendar();
-    }
+      this.build();
+    });
+    return this;
   },
 
   /**
@@ -116,7 +108,11 @@ WeekView.prototype = {
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -129,15 +125,6 @@ WeekView.prototype = {
    * @returns {object} The WeekView prototype, useful for chaining.
    */
   build() {
-    this.setLocale();
-    if (this.rendered ||
-      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
-      // Defer loading
-      this.rendered = false;
-      return this;
-    }
-
-    this.rendered = true;
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
@@ -614,6 +601,7 @@ WeekView.prototype = {
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
       onOpenCalendar: () => this.settings.startDate,
       locale: this.settings.locale,
+      language: this.settings.language,
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,

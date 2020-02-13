@@ -1440,6 +1440,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
+describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-dup-ids')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid checkbox disabled editor tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');

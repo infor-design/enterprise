@@ -2,6 +2,7 @@
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
 import { stringUtils } from '../../utils/string';
+import { utils } from '../../utils/utils';
 import { ummalquraData } from './info/umalqura-data';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
@@ -63,6 +64,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
     { lang: 'nb', default: 'no-NO' },
+    { lang: 'nn', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
@@ -81,10 +83,10 @@ const Locale = {  // eslint-disable-line
   supportedLocales: ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
     'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-419', 'es-MX',
     'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
-    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO', 'nn-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
-  translatedLocales: ['fr-CA', 'fr-FR'],
+  translatedLocales: ['fr-CA', 'fr-FR', 'pl-PL', 'pt-PT'],
   defaultLocale: 'en-US',
   minify: minifyCultures,
 
@@ -205,7 +207,7 @@ const Locale = {  // eslint-disable-line
     let correctLanguage = this.defaultLocales.filter(a => a.lang === lang);
 
     if (correctLanguage && correctLanguage[0]) {
-      return lang;
+      return this.remapLanguage(lang);
     }
 
     correctLanguage = this.remapLanguage(lang);
@@ -229,7 +231,7 @@ const Locale = {  // eslint-disable-line
       correctLanguage = 'he';
     }
     // Another special case
-    if (lang === 'nb') {
+    if (lang === 'nb' || lang === 'nn') {
       correctLanguage = 'no';
     }
     return correctLanguage;
@@ -408,6 +410,10 @@ const Locale = {  // eslint-disable-line
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   getLocale(locale, filename) {
+    if (!locale) {
+      return null;
+    }
+
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -1369,6 +1375,14 @@ const Locale = {  // eslint-disable-line
     if (options && options.locale && this.cultures[options.locale]) {
       localeData = this.cultures[options.locale];
     }
+    if (options && options.language && this.languages[options.language]) {
+      const newData = utils.extend(true, {}, this.currentLocale.data);
+      newData.calendars[0] = this.calendar(
+        options.locale || this.currentLocale.name,
+        options.language
+      );
+      return newData;
+    }
     if (!localeData.numbers) {
       localeData.numbers = this.numbers();
     }
@@ -1613,6 +1627,9 @@ const Locale = {  // eslint-disable-line
     const languageData = this.useLanguage(options);
     let showAsUndefined = false;
     let showBrackets = true;
+    if (key === '&nsbp;') {
+      return '';
+    }
     if (typeof options === 'boolean') {
       showAsUndefined = options;
     }
@@ -1657,13 +1674,18 @@ const Locale = {  // eslint-disable-line
    * Shortcut function to get 'first' calendar
    * @private
    * @param {string} locale The locale to use
+   * @param {string} lang The translations of the calendar items
    * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data.
    */
-  calendar(locale, name) {
+  calendar(locale, lang, name) {
     let calendars = [];
     if (this.currentLocale.data.calendars && !locale) {
       calendars = this.currentLocale.data.calendars;
+    }
+
+    if (lang && lang.length > 2) {
+      lang = lang.substr(0, 2);
     }
 
     if (locale && this.cultures[locale]) {
@@ -1679,27 +1701,38 @@ const Locale = {  // eslint-disable-line
       }
     }
 
-    if (calendars[0]) {
-      return calendars[0];
+    if (!calendars[0]) {
+      // Defaults to en-US
+      return {
+        dateFormat: {
+          separator: '/',
+          timeSeparator: ':',
+          short: 'M/d/yyyy',
+          medium: 'MMM d, yyyy',
+          long: 'MMMM d, yyyy',
+          full: 'EEEE, MMMM d, y',
+          month: 'MMMM d',
+          year: 'MMMM yyyy',
+          timestamp: 'h:mm:ss a',
+          datetime: 'M/d/yyyy h:mm a'
+        },
+        timeFormat: 'HH:mm:ss',
+        dayPeriods: ['AM', 'PM']
+      };
     }
+    const calendar = utils.extend({}, calendars[0]);
 
-    // Defaults to en-US
-    return {
-      dateFormat: {
-        separator: '/',
-        timeSeparator: ':',
-        short: 'M/d/yyyy',
-        medium: 'MMM d, yyyy',
-        long: 'MMMM d, yyyy',
-        full: 'EEEE, MMMM d, y',
-        month: 'MMMM d',
-        year: 'MMMM yyyy',
-        timestamp: 'h:mm:ss a',
-        datetime: 'M/d/yyyy h:mm a'
-      },
-      timeFormat: 'HH:mm:ss',
-      dayPeriods: ['AM', 'PM']
-    };
+    if (lang && locale.substr(0, 2) !== lang) {
+      const defaultLocale = this.defaultLocales.filter(a => a.lang === lang);
+
+      if (defaultLocale[0]) {
+        const culture = this.cultures[defaultLocale[0].default];
+        calendar.days = culture.calendars[0].days;
+        calendar.months = culture.calendars[0].months;
+        calendar.dayPeriods = culture.calendars[0].dayPeriods;
+      }
+    }
+    return calendar;
   },
 
   /**
