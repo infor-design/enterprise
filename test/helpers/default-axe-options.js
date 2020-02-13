@@ -6,5 +6,9 @@ module.exports = [
   {
     id: 'region',
     enabled: false
+  },
+  {
+    id: 'page-has-heading-one',
+    enabled: false
   }
 ];

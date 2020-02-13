@@ -1,0 +1,155 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="show">Show Modal</button>
+
+    <div id="modal" class="modal">
+       <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title" >Add Comment</h1>
+          </div>
+
+          <div class="modal-body-wrapper">
+            <div class="modal-body">
+              <div class="field">
+                <label for="context-type1">Type</label>
+                <select class="dropdown" id="context-type1" name="type1">
+                  <option value="1">Context #1</option>
+                  <option value="2">Context #2</option>
+                  <option value="3">Context #3</option>
+                  <option value="4">Context #4</option>
+                  <option value="5">Context #5</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="context-name1" class="required">Name</label>
+                <input id="context-name1" aria-required="true" name="context-name1" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc1" class="required">Page Title</label>
+                <textarea id="context-desc1" aria-required="true" name="context-desc1" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-type2">Type</label>
+                <select class="dropdown" id="context-type2" name="type2">
+                  <option value="1">Context #1</option>
+                  <option value="2">Context #2</option>
+                  <option value="3">Context #3</option>
+                  <option value="4">Context #4</option>
+                  <option value="5">Context #5</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="context-name2" class="required">Name</label>
+                <input id="context-name2" aria-required="true" name="context-name2" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc2" class="required">Page Title</label>
+                <textarea id="context-desc2" aria-required="true" name="context-desc2" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-type3">Type</label>
+                <select class="dropdown" id="context-type3" name="type3">
+                  <option value="1">Context #1</option>
+                  <option value="2">Context #2</option>
+                  <option value="3">Context #3</option>
+                  <option value="4">Context #4</option>
+                  <option value="5">Context #5</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="context-name4" class="required">Name</label>
+                <input id="context-name4" aria-required="true" name="context-name4" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc4" class="required">Page Title</label>
+                <textarea id="context-desc4" aria-required="true" name="context-desc4" maxlength="50"></textarea>
+              </div>
+
+
+              <div class="field">
+                <label for="context-name5" class="required">Name</label>
+                <input id="context-name5" aria-required="true" name="context-name5" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc5" class="required">Page Title</label>
+                <textarea id="context-desc5" aria-required="true" name="context-desc5" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-name6" class="required">Name</label>
+                <input id="context-name6" aria-required="true" name="context-name6" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc6" class="required">Page Title</label>
+                <textarea id="context-desc6" aria-required="true" name="context-desc6" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-name7" class="required">Name</label>
+                <input id="context-name7" aria-required="true" name="context-name7" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc7" class="required">Page Title</label>
+                <textarea id="context-desc7" aria-required="true" name="context-desc7" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-name8" class="required">Name</label>
+                <input id="context-name8" aria-required="true" name="context-name8" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc8" class="required">Page Title</label>
+                <textarea id="context-desc8" aria-required="true" name="context-desc8" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="context-name9" class="required">Name</label>
+                <input id="context-name9" aria-required="true" name="context-name9" type="text"/>
+              </div>
+
+              <div class="field">
+                <label for="context-desc9" class="required">Page Title</label>
+                <textarea id="context-desc9" aria-required="true" name="context-desc9" maxlength="50"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="fileupload">Upload a File</label>
+                <input type="file" class="fileupload" id="fileupload" name="fileupload">
+              </div>
+
+              <div class="modal-buttonset">
+                <button type="button" class="btn-modal">Cancel</button>
+                <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#show').on('click', function () {
+
+    $('body').modal({
+      content: $('#modal')
+    });
+
+  });
+</script>

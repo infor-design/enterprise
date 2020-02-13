@@ -345,7 +345,7 @@
     "subject": "Standup Meeting",
     "comments": "Weekly standup call",
     "status": "Recurring",
-    "icon": "icon-load-alert",
+    "icon": "icon-load",
     "starts": "2019-09-22T08:00:00.000",
     "ends": "2019-09-22T08:30:00.000",
     "type": "team",

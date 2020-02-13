@@ -272,9 +272,9 @@ describe('Calendar specific locale', () => {
   });
 });
 
-describe('Calendar specific locale and language', () => {
+describe('Calendar specific locale and language', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/calendar/test-specific-locale-lang');
+    await utils.setPage('/components/calendar/test-specific-lang');
     const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateField), config.waitsFor);
@@ -282,6 +282,10 @@ describe('Calendar specific locale and language', () => {
 
   it('Should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('Mayo 2020');
+    expect(await element(by.css('.calendar-event-types label:first-of-type')).getText()).toEqual('Tiempo libre opcional');
+    expect(await element(by.css('.calendar-monthview thead th:first-child')).getText()).toEqual('Lun.');
+
     await utils.checkForErrors();
   });
 });

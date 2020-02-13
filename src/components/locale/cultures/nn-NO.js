@@ -1,9 +1,9 @@
 // Get Latest from http://www.unicode.org/Public/cldr/25/
-Soho.Locale.addCulture('nb-NO', {
+Soho.Locale.addCulture('nn-NO', {
   // layout/language
-  language: 'nb',
-  englishName: 'Norwegian, Bokmål (Norway)',
-  nativeName: 'norsk, bokmål (Norge)',
+  language: 'no',
+  englishName: 'Norwegian, New Norwegian (Norway)',
+  nativeName: 'Norsk, Nynorsk (Norge)',
   // layout/orientation/@characters
   direction: 'left-to-right',
   // ca-gregorian
@@ -19,7 +19,7 @@ Soho.Locale.addCulture('nb-NO', {
       full: 'EEEE d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH:mm:ss',
+      timestamp: 'HH.mm.ss',
       hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',
       timezone: 'dd.MM.yyyy HH:mm zz',

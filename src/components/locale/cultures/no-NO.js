@@ -11,16 +11,16 @@ Soho.Locale.addCulture('no-NO', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: ':', // Infered
-      timeSeparator: '.',
+      separator: '.', // Infered
+      timeSeparator: ':',
       short: 'dd.MM.yyyy', // use four digit year
       medium: 'd. MMM yyyy',
       long: 'd. MMMM yyyy',
       full: 'EEEE d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
-      timestamp: 'HH.mm.ss',
-      hour: 'HH.mm',
+      timestamp: 'HH:mm:ss',
+      hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',
       timezone: 'dd.MM.yyyy HH:mm zz',
       timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
@@ -88,6 +88,7 @@ Soho.Locale.addCulture('no-NO', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Bokmerk denne', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Søkebane', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Nettleser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Nettleserspråk', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Punktliste', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Kalender', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -173,6 +174,8 @@ Soho.Locale.addCulture('no-NO', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Først side', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Mappe', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal tekst', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Topptekst {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Fra', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full visning', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Gå fremover', comment: 'Move Page / object this direction' },
@@ -217,6 +220,7 @@ Soho.Locale.addCulture('no-NO', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Venstrejuster', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Høyrejuster', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Nøkkelord', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Språk', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Start', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Siste side', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Venstre', comment: 'Left tooltip' },

@@ -213,3 +213,18 @@ describe('Textarea Modal Tests', () => {
     expect(await element(by.id('modal-1')).isDisplayed()).toBeTruthy();
   });
 });
+
+describe('Textarea Rows Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/textarea/test-rows?layout=nofrills');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'textarea-rows')).toEqual(0);
+    });
+  }
+});

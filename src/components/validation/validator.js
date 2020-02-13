@@ -426,11 +426,21 @@ Validator.prototype = {
   setIconOnParent(field, type) {
     const errorIcon = $.createIcon({ classes: [`icon-${type}`], icon: type });
     const parent = field.closest('.tab-panel, .expandable-pane');
+    const flexRow = field.closest('.row.flex-align-bottom');
     let iconTarget = parent.attr('id');
     let parentContainer = field.closest('.tab-container, .tab-panel-container, .expandable-area');
     let iconContainer;
     let dropdown;
     let dropdownParent;
+
+    // Flex Row
+    if (flexRow && flexRow.length) {
+      if ($(`.${type}`, flexRow).length) {
+        flexRow.addClass('has-messages');
+      } else {
+        flexRow.removeClass('has-messages');
+      }
+    }
 
     // Tabs
     if (parentContainer.is('.tab-panel-container')) {
