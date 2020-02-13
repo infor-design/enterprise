@@ -198,6 +198,10 @@ textarea {
   @include input-style();
 }
 
+textarea[rows] {
+  height: auto;
+}
+
 // Element with input "like" style borders
 .input-style {
   background-color: $input-color-initial-background;
