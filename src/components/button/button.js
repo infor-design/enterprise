@@ -10,8 +10,17 @@ import '../tooltip/tooltip.jquery';
 // The name of this component.
 const COMPONENT_NAME = 'button';
 
+// Styles of Buttons
+const buttonStyles = ['btn', 'btn-primary', 'btn-secondary', 'btn-tertiary', 'btn-destructive'];
+
+// Types of Buttons
+const buttonTypes = ['default', 'btn-icon', 'btn-menu', 'btn-actions', 'btn-toggle', 'icon-favorite'];
+
+// Pressable Button Types (has on/off state)
+const pressableTypes = ['icon-favorite', 'btn-toggle'];
+
 /**
- * Soho Button Element
+ * IDS Button Component
  * @class Button
  * @param {string} element The component element.
  * @param {string} [settings] The component settings.
@@ -23,7 +32,8 @@ const BUTTON_DEFAULTS = {
   toggleOnIcon: null,
   toggleOffIcon: null,
   hideMenuArrow: null,
-  replaceText: false
+  replaceText: false,
+  ripple: true
 };
 
 function Button(element, settings) {
@@ -36,17 +46,146 @@ function Button(element, settings) {
 
 // Plugin Methods
 Button.prototype = {
+
+  /**
+   * @returns {Tooltip} component instance, if applicable
+   */
+  get tooltipAPI() {
+    return this.element.data('tooltip');
+  },
+
+  /**
+   * @returns {HTMLElement} a reference to this button's icon element
+   */
+  get icon() {
+    return this.element[0].querySelector('svg:not(.ripple-effect):not(.icon-dropdown)');
+  },
+
+  /**
+   * @returns {boolean} whether or not this component is currently disabled
+   */
+  get disabled() {
+    return this.element[0].disabled;
+  },
+
+  /**
+   * @param {boolean} val the value
+   * @returns {void}
+   */
+  set disabled(val) {
+    const trueVal = (val === true);
+    this.settings.disabled = trueVal;
+    this.element[0].disabled = trueVal;
+    this.element[0].classList[trueVal ? 'add' : 'remove']('is-disabled');
+  },
+
+  /**
+   * Initializes the Button Component
+   * @returns {void}
+   */
   init() {
-    const self = this;
+    this.getSettingsFromElement();
+    this.render();
+  },
 
-    this.isTouch = env.features.touch;
-    this.isSafari = $('html').is('.is-safari');
-    this.isFirefox = $('html').is('.is-firefox');
+  /**
+   * Animates the button's ripple effects directly with Javascript,
+   * for browsers that don't support CSS-based animation.
+   * @private
+   * @param {jQuery[]} el the ripple-effect element
+   * @returns {void}
+   */
+  animateWithJS(el) {
+    const scale = 200;
+    const elStyle = el[0].style;
+    const xPos = `${parseFloat(elStyle.left) - (scale / 2)}px`;
+    const yPos = `${parseFloat(elStyle.top) - (scale / 2)}px`;
 
-    if (this.element.hasClass('no-ripple')) {
+    el[0].style.opacity = '0.4';
+    el.animate({
+      opacity: 0,
+      left: xPos,
+      top: yPos,
+      width: scale,
+      height: scale
+    }, 1000);
+  },
+
+  /**
+   * @param {jQuery.Event} [e] incoming event object used for positioning.  If not provided,
+   * the coordinates for the placement of the ripple will be at the center of the element.
+   * @returns {void}
+   */
+  createRipple(e) {
+    if (this.disabled) {
       return;
     }
 
+    if (e) {
+      // (!env.features.touch && e && e.which && e.which !== 1)
+      // (env.features.touch && e.type !== 'touchstart')
+      if ((e.which !== undefined && e.which !== 1) || ['click', 'touchstart'].indexOf(e.type) === -1) {
+        return;
+      }
+    }
+
+    // Remove any previously-added ripple animations
+    $('svg.ripple-effect', this.element).remove();
+
+    const btnOffset = this.element.offset();
+    let xPos;
+    let yPos;
+
+    // Derive X/Y coordinates from input events
+    if (e) {
+      if (!env.features.touch) {
+        // Standard Mouse Click
+        xPos = e.pageX - btnOffset.left;
+        yPos = e.pageY - btnOffset.top;
+      } else {
+        // Use the `touchstart` event. Make sure the user is using only one finger and then get the touch position relative
+        // to the ripple wrapper
+        e = e.originalEvent;
+        if (e && e.touches && e.touches.length === 1) {
+          xPos = e.touches[0].pageX - btnOffset.left;
+          yPos = e.touches[0].pageY - btnOffset.top;
+        }
+      }
+    }
+
+    // If values have not been defined, simply set them to the center of the element.
+    xPos = (xPos < 0) ? this.element.outerWidth() / 2 : xPos;
+    yPos = (yPos < 0) ? this.element.outerHeight() / 2 : yPos;
+
+    // Create/place the ripple effect
+    const ripple = $(`<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation">
+      <circle r="0" class="ripple-circle"></circle>
+    </svg>`);
+    ripple[0].style.left = `${xPos}px`;
+    ripple[0].style.top = `${yPos}px`;
+    this.element.prepend(ripple);
+
+    // Start the JS Animation Loop if IE9
+    // Or Safari/Firefox has bug with combination like: animation, overflow, position,
+    // border-radius etc.)
+    if (!$.fn.cssPropSupport('animation') || env.browser.isSafari && !env.features.touch || env.browser.name === 'firefox') {
+      ripple.removeClass('is-animation');
+      this.animateWithJS(ripple);
+    } else {
+      const elem = $('svg.ripple-effect', this.element);
+      elem.addClass('is-animation');
+    }
+
+    setTimeout(() => {
+      ripple.remove();
+    }, 1000);
+  },
+
+  /**
+   * Renders the contents of the button
+   * @returns {void}
+   */
+  render() {
     if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon') && !this.element.hasClass('btn-actions')) {
       let ddIcon = this.element.children('svg.icon');
       const use = ddIcon.find('use');
@@ -76,118 +215,203 @@ Button.prototype = {
       }
     }
 
-    if (this.element.hasClass('btn-toggle') || this.element.hasClass('icon-favorite')) {
-      this.element.on('click.favorite', function () {
-        const elem = $(this);
-        const svg = elem.find('svg:not(.ripple-effect)');
-        const isPressed = elem.attr('aria-pressed') === 'true';
-
-        elem.attr('aria-pressed', isPressed ? 'false' : 'true');
-        if (self.settings.toggleOffIcon && self.settings.toggleOnIcon) {
-          svg.changeIcon(isPressed ? self.settings.toggleOffIcon : self.settings.toggleOnIcon);
-        } else {
-          elem.toggleClass('is-pressed');
-        }
-
-        if (elem.hasClass('icon-favorite') && !elem.hasClass('btn-toggle') && svg.find('use').attr('xlink:href') === '#icon-star-filled') {
-          svg.changeIcon('star-outlined');
-        } else if (elem.hasClass('icon-favorite') && !elem.hasClass('btn-toggle')) {
-          svg.changeIcon('star-filled');
-        }
+    // Sets up click-to-toggle events on pressable button types (favorite, toggle)
+    if (pressableTypes.indexOf(this.settings.type) > -1) {
+      this.element.on('click.favorite', () => {
+        this.toggle();
       });
 
-      if (!this.element.attr('aria-pressed')) {
-        this.element.attr('aria-pressed', 'false');
-      }
+      // Casuses the `set pressed()` property to rerender the button state
+      // eslint-disable-next-line
+      this.pressed = this.pressed;
     }
 
     // Standalone action buttons need a "More Actions" tooltip.
     // This is handled internally on most components that implement an action button.
-    if (this.element.hasClass('btn-actions') && (!this.element.parents('.field').length && !this.element.parents('.toolbar').length)) {
-      if (!this.element.data('tooltip')) {
-        this.element.attr('title', Locale.translate('More')).tooltip({
-          content: Locale.translate('More')
-        });
+    if (this.element.hasClass('btn-actions')) {
+      if ((!this.element.parents('.field').length && !this.element.parents('.toolbar').length)) {
+        if (!this.tooltipAPI) {
+          const moreText = Locale.translate('More');
+          this.element.attr('title', moreText).tooltip({
+            content: moreText
+          });
+        }
       }
     }
 
     this.element.hideFocus();
 
-    this.element
-      .on('touchstart.button click.button', function (e) {
-        if ((self.element.attr('disabled')) || self.element.is('.is-disabled') || (!self.isTouch && e.which !== 1) ||
-          ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
-          return;
-        }
-
-        const element = $(this);
-        const btnOffset = element.offset();
-        let xPos = e.pageX - btnOffset.left;
-        let yPos = e.pageY - btnOffset.top;
-        const ripple = $('<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation"><circle r="0" class="ripple-circle"></circle></svg>');
-
-        if (self.isTouch) {
-          // Make sure the user is using only one finger and then get the touch position relative
-          // to the ripple wrapper
-          e = e.originalEvent;
-          if (e && e.touches && e.touches.length === 1) {
-            xPos = e.touches[0].pageX - btnOffset.left;
-            yPos = e.touches[0].pageY - btnOffset.top;
-          }
-        }
-
-        // Using keyboard to click
-        xPos = (xPos < 0) ? self.element.outerWidth() / 2 : xPos;
-        yPos = (yPos < 0) ? self.element.outerHeight() / 2 : yPos;
-
-        $('svg.ripple-effect', element).remove();
-        ripple[0].style.left = `${xPos}px`;
-        ripple[0].style.top = `${yPos}px`;
-        element.prepend(ripple);
-
-        // Start the JS Animation Loop if IE9
-        // Or Safari/Firefox has bug with combination like: animation, overflow, position,
-        // border-radius etc.)
-        if (!$.fn.cssPropSupport('animation') || self.isSafari && !env.features.touch || self.isFirefox) {
-          ripple.removeClass('is-animation');
-          self.animateWithJS(ripple);
-        } else {
-          const elem = $('svg.ripple-effect', element);
-          elem.addClass('is-animation');
-        }
-
-        setTimeout(() => {
-          ripple.remove();
-        }, 1000);
+    if (this.settings.ripple) {
+      this.element.on('touchstart.button click.button', (e) => {
+        this.createRipple(e);
       });
+    } else {
+      this.element[0].classList.add('no-ripple');
+    }
   },
 
-  // Browsers that don't support CSS-based animation can still show the animation
-  animateWithJS(el) {
-    const scale = 200;
-    const elStyle = el[0].style;
-    const xPos = `${parseFloat(elStyle.left) - (scale / 2)}px`;
-    const yPos = `${parseFloat(elStyle.top) - (scale / 2)}px`;
+  /**
+   * Backwards compatability method for buttons that were previously defined by markup.
+   * This will take an existing DOM element representing a button, and rectify internal settings
+   * to match the element's state.
+   * @private
+   * @returns {void}
+   */
+  getSettingsFromElement() {
+    const elementSettings = {};
 
-    el[0].style.opacity = '0.4';
-    el.animate({
-      opacity: 0,
-      left: xPos,
-      top: yPos,
-      width: scale,
-      height: scale
-    }, 1000);
+    // Button Style
+    const elemClasses = this.element[0].className || '';
+    buttonStyles.forEach((style) => {
+      if (elemClasses.indexOf(style) > -1) {
+        elementSettings.style = style;
+      }
+    });
+
+    // Button Type
+    buttonTypes.forEach((type) => {
+      if (type !== 'default' && elemClasses.indexOf(type) > -1) { // ignore the `default` type classname
+        elementSettings.type = type;
+      }
+    });
+
+    // Disabled State
+    elementSettings.disabled = this.disabled;
+
+    // If the button type is pressable, get current state and the icons
+    const ariaPressedAttr = this.element[0].getAttribute('aria-pressed');
+    if (ariaPressedAttr !== undefined) {
+      elementSettings.pressed = ariaPressedAttr === true;
+      if (elementSettings.type === 'icon-favorite') {
+        elementSettings.toggleOnIcon = 'icon-star-filled';
+        elementSettings.toggleOffIcon = 'icon-star-outlined';
+      }
+    }
+
+    // ID Attribute
+    const idAttr = this.element[0].id;
+    if (typeof idAttr === 'string' && idAttr.length) {
+      elementSettings.id = idAttr;
+    }
+
+    // Title Attribute
+    const titleAttr = this.element[0].title;
+    if (typeof titleAttr === 'string' && titleAttr.length) {
+      elementSettings.title = titleAttr;
+    }
+
+    // Ripple Effect
+    if (elemClasses.indexOf('no-ripple') > -1) {
+      elementSettings.ripple = false;
+    }
+
+    // Text Content
+    const textContent = this.element[0].innerText;
+    if (typeof textContent === 'string' && textContent.length) {
+      elementSettings.text = textContent.trim();
+    }
+
+    // Audible Text Content
+    const audibleTextElem = this.element[0].querySelector('span.audible');
+    if (audibleTextElem) {
+      elementSettings.audible = true;
+    }
+
+    // Pass all settings onto the `settings` object
+    Object.keys(elementSettings).forEach((setting) => {
+      this.settings[setting] = elementSettings[setting];
+    });
+  },
+
+  /**
+   * Provides a JSON-compatible data representation of this button component for use with
+   * higher-level components.
+   * @param {boolean} addContextElement if true, adds a reference to this button element to the return data (NOT JSON-compatible).
+   * @returns {object} JSON-compatible representation of this button's configuration.
+   */
+  toData(addContextElement) {
+    const ret = {};
+
+    Object.keys(this.settings).forEach((setting) => {
+      ret[setting] = this.settings[setting];
+    });
+
+    ret.pressed = this.pressed;
+
+    if (addContextElement) {
+      ret.element = this.element[0];
+    }
+
+    return ret;
+  },
+
+  /**
+   * @returns {boolean} whether or not this is a valid toggle button in a pressed state.
+   */
+  get pressed() {
+    if (pressableTypes.indexOf(this.settings.type) === -1) {
+      return false;
+    }
+    return this.element[0].getAttribute('aria-pressed') === 'true';
+  },
+
+  /**
+   * On a Toggle or Favorite button, sets the current pressed state.
+   * @param {boolean} val whether or not to set a "pressed" state on this valid toggle button.
+   * @returns {void}
+   */
+  set pressed(val) {
+    const trueVal = (val === true);
+    const hasPressedIcons = (this.settings.toggleOffIcon && this.settings.toggleOnIcon);
+    const iconElem = $(this.icon);
+
+    this.element[0].setAttributeNS(null, 'aria-pressed', 'x');
+    this.element[0].setAttributeNS(null, 'aria-pressed', trueVal);
+    this.element[0].classList[trueVal ? 'add' : 'remove']('is-pressed');
+
+    // Change the icon
+    let icon;
+    switch (this.settings.type) {
+      case 'icon-favorite':
+        icon = trueVal ? 'icon-star-filled' : 'icon-star-outlined';
+        break;
+      case 'btn-toggle':
+        if (hasPressedIcons) {
+          icon = trueVal ? this.settings.toggleOnIcon : this.settings.toggleOffIcon;
+        }
+        break;
+      default:
+        break;
+    }
+
+    if (iconElem.length === 0 || typeof icon !== 'string') {
+      return;
+    }
+
+    iconElem.changeIcon(icon);
+    utils.fixSVGIcons(iconElem);
+  },
+
+  /**
+   * Toggles the current state of an icon button.
+   * @returns {void}
+   */
+  toggle() {
+    this.pressed = !this.pressed;
   },
 
   /**
    * Removes bound events and generated markup from this component
    * @private
-   * @returns {object} The api.
+   * @returns {Button} This component's API.
    */
   teardown() {
-    this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
+    this.element.off([
+      `click.${COMPONENT_NAME}`,
+      `touchstart.${COMPONENT_NAME}`
+    ].join(' '));
 
-    const tooltipApi = this.element.data('tooltip');
+    const tooltipApi = this.tooltipAPI;
     if (this.element.hasClass('btn-actions') && tooltipApi) {
       tooltipApi.destroy();
     }
@@ -201,16 +425,16 @@ Button.prototype = {
 
   /**
    * Update the component with new settings.
-   * @param  {object} settings The settings you would like to modify.
-   * @returns {object} The api.
+   * @param {object} settings The settings you would like to modify.
+   * @returns {Button} This component's API.
    */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
-      this
-        .teardown()
-        .init();
     }
+
+    this.teardown();
+    this.render();
     return this;
   },
 
@@ -239,4 +463,4 @@ Button.prototype = {
   */
 };
 
-export { Button, COMPONENT_NAME };
+export { Button, BUTTON_DEFAULTS, COMPONENT_NAME };
