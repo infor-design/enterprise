@@ -29,8 +29,6 @@ describe('Textarea API', () => {
   it('Should set settings', () => {
     const settings = {
       autoGrow: false,
-      autoGrowAnimate: true,
-      autoGrowAnimateSpeed: 200,
       autoGrowMaxHeight: null,
       characterCounter: true,
       maxLength: null,
@@ -45,8 +43,6 @@ describe('Textarea API', () => {
   it('Should update set settings via parameter', () => {
     const settings = {
       autoGrow: false,
-      autoGrowAnimate: true,
-      autoGrowAnimateSpeed: 200,
       autoGrowMaxHeight: null,
       characterCounter: true,
       maxLength: null,

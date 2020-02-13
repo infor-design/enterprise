@@ -43,8 +43,8 @@ $('body').one('initialized', function () {
       events = res;
       $('.calendar').calendar({
         month: 4,
-        year: 2019,
-        locale: 'de-DE',
+        year: 2020,
+        locale: 'da-DK',
         language: 'es',
         eventTypes: eventTypes,
         events: events,
@@ -54,6 +54,66 @@ $('body').one('initialized', function () {
         menuId: 'calendar-actions-menu'
       });
     });
+  });
+
+  $('#actions').on('selected', function(e, args) {
+    var action = args[0].getAttribute('data-action');
+    var api = $('.calendar').data('calendar');
+    var selectedDate = api.getDayEvents();
+    var events = api.settings.events;
+    var defaultHours = 8;
+    var startDate = new Date(selectedDate.date);
+    var endDate = new Date(selectedDate.date);
+    var isAllDay = true;
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(startDate.getHours() + defaultHours);
+    // To default all day use
+    if (isAllDay) {
+      endDate.setHours(23, 59, 59, 999);
+    }
+
+    if (action === 'add-api') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'team',
+        isAllDay: isAllDay
+      };
+      api.addEvent(newEvent);
+    }
+
+    if (action === 'add-modal') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        title: 'Request Time Off',
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'dto',
+        isAllDay: isAllDay
+      };
+
+      var done = function(elem, event) {
+        // Collect the data and popuplate the event object
+        var inputs = elem.querySelectorAll('input, textarea, select');
+        for (var i = 0; i < inputs.length; i++) {
+          newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+        }
+
+        api.addEvent(newEvent);
+        return;
+      };
+
+      api.showEventModal(newEvent, done);
+    }
+
+    if (action === 'clear') {
+      api.clearEvents(selectedDate.date);
+    }
   });
 });
 </script>
@@ -163,7 +223,7 @@ $('body').one('initialized', function () {
     </div>
     <div class="six columns">
       <div class="field">
-        <label for="startsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
+        <label for="startsHourLocale" class="label"><span class="audible">Time</span></label>
         <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
       </div>
     </div>
@@ -177,7 +237,7 @@ $('body').one('initialized', function () {
     </div>
     <div class="six columns">
       <div class="field">
-        <label for="endsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
+        <label for="endsHourLocale" class="label"><span class="audible">Time</span></label>
         <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
       </div>
     </div>

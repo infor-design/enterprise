@@ -46,6 +46,11 @@
 - `[Input]` Added the ability to use standalone required spans, this will help on responsive fields if they are cut off. ([#3115](https://github.com/infor-design/enterprise/issues/3115))
 - `[Input/Forms]` Added the ability to add a class to rows to align the fields on the bottom, this will line up fields if they have wrapping labels or long labels with required fields. To enable this add class `flex-align-bottom` to the grid `row`. ([#443](https://github.com/infor-design/enterprise/issues/443))
 - `[Locale]` Fixed an issue where formatDate() method was not working for es-419. ([#3363](https://github.com/infor-design/enterprise/issues/3363))
+- `[Locale]` Fixed an issue where setting language to `nb` would error. ([#3455](https://github.com/infor-design/enterprise/issues/3455))
+- `[Locale]` Fixed incorrect time separators in the no, nn, and nn locales. ([#3468](https://github.com/infor-design/enterprise/issues/3468))
+- `[Locale]` Added further separation of language from formatting in date oriented components (calendar, datepicker, timepicker ect). [3244](https://github.com/infor-design/enterprise/issues/3244))
+- `[Locale]` Added support for `nn` locale and language, but this will change to no language as only this is translated as its the same. ([#3455](https://github.com/infor-design/enterprise/issues/3455))
+- `[Locale]` Correct the month names in Russian locale and capitalized the day names. ([#3464](https://github.com/infor-design/enterprise/issues/3464))
 - `[Module Tabs]` Fixed color tab indicator and small gap below when selected/opened for all color variations in uplift theme. ([#3312](https://github.com/infor-design/enterprise/issues/3312))
 - `[Modal]` Fixed colors in dark mode for the primary disabled button and error and background contrast. ([#2754](https://github.com/infor-design/enterprise/issues/2754))
 - `[Pie]` Fixed an issue where initial selection was getting error. ([#3157](https://github.com/infor-design/enterprise/issues/3157))
@@ -56,8 +61,16 @@
 - `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
 - `[Swaplist]` Fixed an issue where top buttons were not aligned in Firefox. ([#3425](https://github.com/infor-design/enterprise/issues/3425))
 - `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not typechecking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
+- `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not type-checking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
+- `[Textarea]` Fixed an issue where using `rows` stopped working, and fixed the autoGrow option to work better. ([#3471](https://github.com/infor-design/enterprise/issues/3471))
 - `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
+
+## v4.25.2
+
+### v4.25.2 Fixes
+
+- `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 
 ## v4.25.1
 
