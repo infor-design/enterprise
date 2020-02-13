@@ -31,6 +31,15 @@ html.is-firefox {
       margin-top: 8px;
     }
   }
+
+  .form-layout-compact {
+    .timepicker {
+      + .icon,
+      + .tooltip-description + .icon {
+        margin-top: 9px !important;
+      }
+    }
+  }
 }
 
 html[dir='rtl'] {

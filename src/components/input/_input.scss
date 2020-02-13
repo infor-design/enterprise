@@ -505,8 +505,9 @@ span.required::after {
 
   textarea:not(.editable) {
     font-size: $input-size-compact-font-size;
+    line-height: 1.6rem;
     min-height: $textarea-size-compact-height;
-    padding: $input-size-compact-padding;
+    padding: 5px;
   }
 
   &:last-child:not(:only-child) {
@@ -540,6 +541,15 @@ span.required::after {
 
   :-ms-input-placeholder {
     font-size: $input-size-compact-font-size;
+  }
+}
+
+.is-firefox {
+  .field-short,
+  .form-layout-compact .field {
+    input:not(.spinbox) {
+      padding-top: 2px;
+    }
   }
 }
 
