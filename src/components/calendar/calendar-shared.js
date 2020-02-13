@@ -1,6 +1,7 @@
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { dateUtils } from '../../utils/date';
+import { utils } from '../../utils/utils';
 
 const calendarShared = {};
 
@@ -13,6 +14,11 @@ const calendarShared = {};
 * @returns {object} The event object with stuff added.
 */
 calendarShared.addCalculatedFields = function addCalculatedFields(event, locale, language, eventTypes) { //eslint-disable-line
+  const formatDate = (d, o) => Locale.formatDate(d, utils.extend(true, { locale: locale.name }, o));
+  const parseDateOpts = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
+  const parseDate = dtStr => Locale.parseDate(dtStr, parseDateOpts);
+  const translate = str => Locale.translate(str, { locale: locale.name, language });
+
   event.color = this.getEventTypeColor(event.type, eventTypes);
   event.duration = Math.abs(dateUtils.dateDiff(
     new Date(event.ends),
@@ -34,7 +40,7 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   const eventStartFormatted = `${eventStart.getDate()}-${eventStart.getMonth() + 1}-${eventStart.getFullYear()}`;
   const todayFormatted = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
 
-  event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
+  event.durationUnits = translate(event.duration > 1 ? 'Days' : 'Day');
   event.daysUntil = event.starts ? dateUtils.dateDiff(eventStartUTC, dateTodayUTC) : 0;
   const diff = (new Date(event.ends) - new Date(event.starts)) / (1000 * 60 * 60);
   event.durationHours = diff > 0 && diff < 0.5 ? 1 : Math.round(diff);
@@ -52,23 +58,19 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   if (event.durationHours < 24) {
     event.isDays = false;
     event.isAllDay = false;
-    event.durationUnits = event.durationHours > 1 ? Locale.translate('Hours', { locale: locale.name, language }) : Locale.translate('Hour', { locale: locale.name, language });
+    event.durationUnits = translate(event.durationHours > 1 ? 'Hours' : 'Hour');
   }
   if (event.isAllDay.toString() === 'true') {
+    const dayDiff = (d1, d2) => Math.abs(Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+    event.duration = dayDiff(new Date(event.starts), new Date(event.ends)) || 1;
+    event.durationUnits = translate(event.duration > 1 ? 'Days' : 'Day');
     event.isDays = true;
     delete event.durationHours;
-    event.durationUnits = event.duration > 1 ? Locale.translate('Days', { locale: locale.name, language }) : Locale.translate('Day', { locale: locale.name, language });
-    event.duration = dateUtils.dateDiff(new Date(event.starts), new Date(event.ends));
-  }
-  if (event.duration === 0 && event.isAllDay.toString() === 'true') {
-    event.isDays = true;
-    event.duration = 1;
-    event.durationUnits = Locale.translate('Day', { locale: locale.name, language });
   }
   if (event.starts) {
-    const startsLocale = Locale.parseDate(event.starts, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
-    event.startsLocale = Locale.formatDate(startsLocale, { locale: locale.name });
-    event.startsHourLocale = Locale.formatDate(startsLocale, { date: 'hour', locale: locale.name });
+    const startsLocale = parseDate(event.starts);
+    event.startsLocale = formatDate(startsLocale);
+    event.startsHourLocale = formatDate(startsLocale, { date: 'hour' });
 
     if (Array.isArray(startsLocale)) {
       event.startsHour = parseFloat(startsLocale[3] +
@@ -79,9 +81,9 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
     }
   }
   if (event.ends) {
-    const endsLocale = Locale.parseDate(event.ends, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name });
-    event.endsLocale = Locale.formatDate(endsLocale, { locale: locale.name });
-    event.endsHourLocale = Locale.formatDate(endsLocale, { date: 'hour', locale: locale.name });
+    const endsLocale = parseDate(event.ends);
+    event.endsLocale = formatDate(endsLocale);
+    event.endsHourLocale = formatDate(endsLocale, { date: 'hour' });
 
     if (Array.isArray(endsLocale)) {
       event.endsHour = parseFloat(endsLocale[3] +
@@ -99,15 +101,13 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
 
   if (!event.isAllDay && event.durationHours >= 24) {
     event.isAllDay = false;
-    event.durationUnits = Locale.translate('Hours', { locale: locale.name, language });
+    event.durationUnits = translate('Hours');
     event.isDays = false;
     delete event.duration;
   }
 
   // Duration in time
   if (event.starts && event.ends) {
-    const parseDateOpts = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
-    const parseDate = dtStr => Locale.parseDate(dtStr, parseDateOpts);
     const diffInSeconds = this.timeDiffInSeconds(parseDate(event.starts), parseDate(event.ends));
     event.durationInTime = this.timeBySeconds(diffInSeconds);
   } else if (event.durationInTime) {
@@ -230,7 +230,7 @@ calendarShared.cleanEventData = function cleanEventData(
 ) {
   const formatDateOptions = { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS', locale: locale.name };
   const formatDate = d => Locale.formatDate(d, formatDateOptions);
-  const parseDate = (d, opt) => Locale.parseDate(d, $.extend(true, { locale: locale.name }, opt));
+  const parseDate = (d, o) => Locale.parseDate(d, utils.extend(true, { locale: locale.name }, o));
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
   let startDate = currentDate;
   let endDate = currentDate;
