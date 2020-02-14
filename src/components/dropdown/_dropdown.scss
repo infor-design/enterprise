@@ -684,6 +684,7 @@ input.dropdown.error:focus {
 .form-layout-compact .field {
   .dropdown-wrapper {
     margin-bottom: 0;
+    vertical-align: top;
   }
 
   .dropdown {
@@ -1078,6 +1079,13 @@ div.dropdown-xs,
         top: 4px;
       }
     }
+  }
+}
+
+// for safari
+.is-safari {
+  .dropdown-list.dropdown-short.multiple li a {
+    padding-left: 32px;
   }
 }
 
