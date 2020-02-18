@@ -48,7 +48,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       frozenColumns: {
         left: [],
         right: [],
-        expandableRowToAll: true
+        expandRowAcrossAllCells: true
       },
       dataset: data,
       columnReorder: false,

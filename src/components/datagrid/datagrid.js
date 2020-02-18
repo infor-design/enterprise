@@ -43,7 +43,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
  * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
- * @param {boolean}  [settings.frozenColumns.expandableRowToAll=true] expand the expandable row to all columns
+ * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] expand the expandable row to all columns
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
@@ -138,7 +138,7 @@ const DATAGRID_DEFAULTS = {
   frozenColumns: {
     left: [],
     right: [],
-    expandableRowToAll: true
+    expandRowAcrossAllCells: true
   },
   dataset: [],
   columnReorder: false, // Allow Column reorder
@@ -214,8 +214,8 @@ function Datagrid(element, settings) {
   if (settings.dataset) {
     this.settings.dataset = settings.dataset;
   }
-  if (typeof this.settings.frozenColumns.expandableRowToAll === 'undefined') {
-    this.settings.frozenColumns.expandableRowToAll = DATAGRID_DEFAULTS.frozenColumns.expandableRowToAll; // eslint-disable-line
+  if (typeof this.settings.frozenColumns.expandRowAcrossAllCells === 'undefined') {
+    this.settings.frozenColumns.expandRowAcrossAllCells = DATAGRID_DEFAULTS.frozenColumns.expandRowAcrossAllCells; // eslint-disable-line
   }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -10189,8 +10189,8 @@ Datagrid.prototype = {
       } else {
         detail.animateOpen();
       }
-      if (self.settings.frozenColumns.expandableRowToAll) {
-        self.frozenExpandableRowToAll();
+      if (self.settings.frozenColumns.expandRowAcrossAllCells) {
+        self.frozenExpandRowAcrossAllCells();
       }
     }
   },
@@ -10200,7 +10200,7 @@ Datagrid.prototype = {
    * @private
    * @returns {void}
    */
-  frozenExpandableRowToAll() {
+  frozenExpandRowAcrossAllCells() {
     if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
       // Selector
       const selector = { row: '.datagrid-expandable-row.is-expanded' };
