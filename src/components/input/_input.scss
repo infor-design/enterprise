@@ -198,6 +198,10 @@ textarea {
   @include input-style();
 }
 
+textarea[rows] {
+  height: auto;
+}
+
 // Element with input "like" style borders
 .input-style {
   background-color: $input-color-initial-background;
@@ -381,11 +385,14 @@ span.required::after {
 }
 
 // Error States
-.error,
+.error {
+  color: $error-color;
+}
+
 .error-message,
 .error-message p,
 .popover .error-message p {
-  color: $error-color;
+  color: $error-text-color;
 }
 
 .error::-webkit-input-placeholder {

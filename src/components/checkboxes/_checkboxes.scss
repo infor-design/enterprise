@@ -209,7 +209,11 @@ label.inline .checkbox ~ .label-text,
   label.inline .checkbox ~ .label-text,
   .checkbox-label {
     display: inline-block;
-    line-height: 19px;
+    line-height: 17px;
+  }
+
+  .field-checkbox .icon-dirty {
+    left: 0;
   }
 }
 

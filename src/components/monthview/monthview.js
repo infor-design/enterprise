@@ -127,8 +127,7 @@ MonthView.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    // Do initialization. Build or Events ect
-    return this.build();
+    return this.setLocaleThenBuild();
   },
 
   /**
@@ -136,25 +135,16 @@ MonthView.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language);
-      this.language = this.settings.language;
-    } else {
-      this.language = Locale.currentLanguage.name;
-    }
-
-    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.settings.language = this.language;
-        this.setCurrentCalendar();
-        this.build().handleEvents();
-      });
-    } else if (!this.settings.locale) {
-      this.locale = Locale.currentLocale;
-    }
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language;
+      this.settings.language = this.language;
+      this.setCurrentCalendar();
+      this.build().handleEvents();
+    });
   },
 
   /**
@@ -167,15 +157,6 @@ MonthView.prototype = {
       this.settings.showMonthYearPicker = false;
     }
 
-    this.setLocale();
-    if (this.rendered ||
-      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
-      // Defer loading
-      this.rendered = false;
-      return this;
-    }
-
-    this.rendered = true;
     this.setCurrentCalendar();
 
     // Calendar Html in Popups
@@ -310,7 +291,11 @@ MonthView.prototype = {
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -374,7 +359,11 @@ MonthView.prototype = {
 
     this.currentDay = this.currentDay || this.settings.day;
     if (!this.currentCalendar || !this.currentCalendar.days) {
-      this.currentCalendar = Locale.calendar();
+      this.currentCalendar = Locale.calendar(
+        this.locale.name,
+        this.language,
+        this.settings.calendarName
+      );
     }
 
     let days = this.currentCalendar.days.narrow;

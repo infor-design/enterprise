@@ -25,13 +25,6 @@
       columns = [],
       data = [];
 
-    var customFormatter = function (row, cell, value, col, item) {
-      return '<div class="custom-card">'+
-          '<h3 style="position: relative;top: 10px;">' + value + '</h3>'+
-          '<span>' + item.activity + '</span>';
-    };
-
-
     // Define Columns for the Grid.
     columns.push({
       id: 'selectionCheckbox',
@@ -40,17 +33,6 @@
       width: 50,
       formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
-    });
-
-    columns.push({
-      id: 'productDesc',
-      filterType: 'text',
-      name: 'Product Desc',
-      sortable: false,
-      hideable: false,
-      field: 'productName',
-      formatter: Soho.Formatters.Template,
-      template: '<p class="datagrid-row-heading">{{productId}}</p><p class="datagrid-row-subheading">{{productName}}</p>'
     });
 
     columns.push({

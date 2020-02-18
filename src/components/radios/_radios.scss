@@ -382,7 +382,7 @@ html[dir='rtl'] {
 .form-layout-compact .field {
   .radio-group legend {
     font-size: $input-size-compact-font-size;
-    padding-bottom: 20px;
+    padding-bottom: 20px !important;
   }
 
   .radio-group {
