@@ -274,10 +274,24 @@ Place.prototype = {
     }
 
     const self = this;
-    const parentRect = DOM.getDimensions(placementObj.parent[0]);
-    const elRect = DOM.getDimensions(this.element[0]);
     const container = this.getContainer(placementObj);
     const containerIsBody = container.length && container[0] === document.body;
+    let containerRect;
+
+    // If this tooltip is confined to a container, in some situtions we need to make sure
+    // the placed element is within the browser viewport before we attempt to get its
+    // dimensions. This simply puts the element within the viewport boundary beforehand
+    // for accurate measurements.
+    if (container.length) {
+      containerRect = DOM.getDimensions(container[0]);
+      this.element.css({
+        left: `${containerRect.left}px`,
+        top: `${containerRect.right}px`
+      });
+    }
+
+    const parentRect = DOM.getDimensions(placementObj.parent[0]);
+    const elRect = DOM.getDimensions(this.element[0]);
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
     // Firefox $('body').scrollTop() will always return zero.
     const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
