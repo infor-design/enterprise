@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'place';
@@ -282,7 +283,8 @@ Place.prototype = {
     // the placed element is within the browser viewport before we attempt to get its
     // dimensions. This simply puts the element within the viewport boundary beforehand
     // for accurate measurements.
-    if (container.length) {
+    // See Github infor-design/enterprise#3119
+    if (env.rtl && container.length) {
       containerRect = DOM.getDimensions(container[0]);
       this.element.css({
         left: `${containerRect.left}px`,
@@ -924,7 +926,7 @@ Place.prototype = {
     // }
 
     // Flip the arrow if we're in RTL mode
-    if (this.isRTL && isXCoord) {
+    if (env.rtl && isXCoord) {
       const opposite = dir === 'right' ? 'left' : 'right';
       element.removeClass('right left').addClass(opposite);
     }
