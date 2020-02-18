@@ -19,11 +19,11 @@ Soho.Locale.addCulture('zh-CN', {
       full: 'yyyy年M月d日EEEE',
       month: 'M月d日',
       year: 'yyyy年 M月',
-      timestamp: 'HH:mm:ss',
-      hour: 'HH:mm',
-      datetime: 'yyyy/M/d ah:mm',
-      timezone: 'yyyy/M/d ah:mm zz',
-      timezoneLong: 'yyyy/M/d ah:mm zzzz'
+      timestamp: 'HH:mm:ss a',
+      hour: 'HH:mm a',
+      datetime: 'yyyy/M/d h:mm',
+      timezone: 'yyyy/M/d h:mm zz',
+      timezoneLong: 'yyyy/M/d h:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('zh-CN', {
       abbreviated: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'ah:mm',
+    timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['上午', '下午'],
     firstDayofWeek: 0 // Starts on Sun

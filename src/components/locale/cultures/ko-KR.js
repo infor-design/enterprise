@@ -11,19 +11,19 @@ Soho.Locale.addCulture('ko-KR', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '. ', // Infered
+      separator: '-', // Infered
       timeSeparator: ':',
-      short: 'yyyy-MM-dd', // Uses custom format
-      medium: 'yyyy-MM-dd',
+      short: 'MM-d-yyyy', // Uses custom format
+      medium: 'MM-d-yyyy',
       long: 'yyyy년 M월 d일',
       full: 'yyyy년 M월 d일 EEEE',
       month: 'M월 d일',
       year: 'yyyy년 M월',
       timestamp: 'a h:mm:ss',
-      hour: 'a h:mm',
-      datetime: 'yyyy-MM-dd a h:mm',
-      timezone: 'yyyy-MM-dd a h:mm zz',
-      timezoneLong: 'yyyy-MM-dd a h:mm zzzz'
+      hour: 'h:mm a',
+      datetime: 'MM-d-yyyy h:mm a',
+      timezone: 'MM-d-yyyy h:mm a',
+      timezoneLong: 'MM-d-yyyy h:mm a'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -37,7 +37,7 @@ Soho.Locale.addCulture('ko-KR', {
       abbreviated: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'a h:mm',
+    timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['오전', '오후'],
     firstDayofWeek: 0 // Starts on Sun
