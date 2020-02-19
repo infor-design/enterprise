@@ -11,19 +11,19 @@ Soho.Locale.addCulture('ko-KR', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '-', // Infered
+      separator: '. ', // Infered
       timeSeparator: ':',
-      short: 'MM-d-yyyy', // Uses custom format
-      medium: 'MM-d-yyyy',
+      short: 'yyyy-MM-dd', // Uses custom format
+      medium: 'yyyy-MM-dd',
       long: 'yyyy년 M월 d일',
       full: 'yyyy년 M월 d일 EEEE',
       month: 'M월 d일',
       year: 'yyyy년 M월',
       timestamp: 'a h:mm:ss',
       hour: 'h:mm a',
-      datetime: 'MM-d-yyyy h:mm a',
-      timezone: 'MM-d-yyyy h:mm a',
-      timezoneLong: 'MM-d-yyyy h:mm a'
+      datetime: 'yyyy-MM-dd h:mm a',
+      timezone: 'yyyy-MM-dd h:mm a zz',
+      timezoneLong: 'yyyy-MM-dd h:mm a zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
