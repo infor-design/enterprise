@@ -21,7 +21,13 @@ const Environment = {
   os: {},
   devicespecs: {},
 
-  rtl: $('html').attr('dir') === 'rtl',
+  /**
+   * @returns {boolean} true if the page locale is currently read Right-To-Left instead
+   * of the default Left-to-Right.
+   */
+  get rtl() {
+    return $('html').attr('dir') === 'rtl';
+  },
 
   /**
    * Builds run-time environment settings
