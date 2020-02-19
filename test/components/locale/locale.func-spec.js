@@ -429,20 +429,20 @@ describe('Locale API', () => { //eslint-disable-line
   it('Should format hours in ko-KR', () => {
     Locale.set('ko-KR');
 
-    expect(Locale.formatHour(0)).toEqual('오전 12:00');
-    expect(Locale.formatHour('0:30')).toEqual('오전 12:30');
-    expect(Locale.formatHour(5)).toEqual('오전 5:00');
-    expect(Locale.formatHour('5:30')).toEqual('오전 5:30');
-    expect(Locale.formatHour(10)).toEqual('오전 10:00');
-    expect(Locale.formatHour('10:30')).toEqual('오전 10:30');
-    expect(Locale.formatHour(12)).toEqual('오후 12:00');
-    expect(Locale.formatHour('12:30')).toEqual('오후 12:30');
-    expect(Locale.formatHour(15)).toEqual('오후 3:00');
-    expect(Locale.formatHour('15:30')).toEqual('오후 3:30');
-    expect(Locale.formatHour(20)).toEqual('오후 8:00');
-    expect(Locale.formatHour('20:30')).toEqual('오후 8:30');
-    expect(Locale.formatHour(24)).toEqual('오전 12:00');
-    expect(Locale.formatHour('24:30')).toEqual('오전 12:30');
+    expect(Locale.formatHour(0)).toEqual('12:00 오전');
+    expect(Locale.formatHour('0:30')).toEqual('12:30 오전');
+    expect(Locale.formatHour(5)).toEqual('5:00 오전');
+    expect(Locale.formatHour('5:30')).toEqual('5:30 오전');
+    expect(Locale.formatHour(10)).toEqual('10:00 오전');
+    expect(Locale.formatHour('10:30')).toEqual('10:30 오전');
+    expect(Locale.formatHour(12)).toEqual('12:00 오후');
+    expect(Locale.formatHour('12:30')).toEqual('12:30 오후');
+    expect(Locale.formatHour(15)).toEqual('3:00 오후');
+    expect(Locale.formatHour('15:30')).toEqual('3:30 오후');
+    expect(Locale.formatHour(20)).toEqual('8:00 오후');
+    expect(Locale.formatHour('20:30')).toEqual('8:30 오후');
+    expect(Locale.formatHour(24)).toEqual('12:00 오전');
+    expect(Locale.formatHour('24:30')).toEqual('12:30 오전');
 
     Locale.set('en-US');
   });
