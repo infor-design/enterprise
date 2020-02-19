@@ -179,8 +179,40 @@ $datagrid-short-row-height: 25px;
       border-right-color: transparent;
     }
 
-    &.right td {
-      border-left: 1px solid $datagrid-cell-border-color;
+    &.left {
+      .datagrid-expandable-row.is-expanded.is-expanded-frozen > td {
+        border-right-color: transparent;
+      }
+    }
+
+    &.right {
+      td {
+        border-left: 1px solid $datagrid-cell-border-color;
+      }
+
+      .datagrid-expandable-row.is-expanded.is-expanded-frozen > td {
+        border-left-color: transparent;
+      }
+    }
+
+    &.center {
+      .datagrid-expandable-row.is-expanded.is-expanded-frozen > td {
+        .datagrid-row-detail {
+          .datagrid-row-detail-padding {
+            left: 0;
+            position: absolute;
+            transition: opacity 0.3s ease-out;
+
+            .datagrid-cell-layout:last-of-type {
+              padding-right: 0;
+
+              .datagrid-wrapped-text {
+                max-width: 100%;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
