@@ -4037,9 +4037,22 @@ html[dir='rtl'] {
 
 }
 
-// Modal Lists
-.modal table {
-  width: auto;
+// Modal
+.modal {
+  &.datagrid-columns-dialog {
+    .listview-search.alternate-bg .searchfield-wrapper {
+      background-color: $listview-bg-color;
+    }
+
+    .listview.alternate-bg {
+      background-color: $listview-bg-color;
+    }
+  }
+
+  // Modal Lists
+  table {
+    width: auto;
+  }
 }
 
 // Popup Adjustments
