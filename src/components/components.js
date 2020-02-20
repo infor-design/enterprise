@@ -3,6 +3,7 @@
 
 // Foundational ====/
 export { Button } from './button/button';
+export { ButtonSet } from './button/button.set';
 export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
 export { ListFilter } from './listfilter/listfilter';

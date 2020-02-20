@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../icons/icons.jquery';
@@ -29,6 +30,8 @@ const pressableTypes = ['icon-favorite', 'btn-toggle'];
  * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
  */
 const BUTTON_DEFAULTS = {
+  style: buttonStyles[0],
+  type: buttonTypes[0],
   toggleOnIcon: null,
   toggleOffIcon: null,
   hideMenuArrow: null,
@@ -186,6 +189,75 @@ Button.prototype = {
    * @returns {void}
    */
   render() {
+    const elemClasses = this.element[0].classList;
+    if (buttonStyles.indexOf(this.settings.style) > -1) {
+      elemClasses.add(this.settings.style);
+    }
+
+    if (buttonTypes.indexOf(this.settings.type) > 0) {
+      elemClasses.add(this.settings.type);
+    }
+
+    if (typeof this.settings.cssClass === 'string') {
+      this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
+    }
+
+    const audibleTextBtnTypes = ['btn-icon', 'btn-actions'];
+
+    // Handle the rendering of the text span.
+    // Some buttons are "simpler" and directly inline the text inside the button tag.
+    // Others wrap the text in a span, usually when there are multiple elements inside the button.
+    let textSpan = this.element[0].querySelector('span');
+    const hasPrexistingSpan = textSpan instanceof HTMLElement;
+    if (!hasPrexistingSpan) {
+      textSpan = this.element;
+    }
+    const currentTextContent = xssUtils.stripHTML(this.settings.text || $(textSpan).text().trim());
+    if (!hasPrexistingSpan) {
+      this.element[0].innerText = '';
+      textSpan = document.createElement('span');
+      this.element.append($(textSpan));
+
+      if (this.settings.audible || audibleTextBtnTypes.indexOf(this.settings.type) > -1) {
+        textSpan.classList.add('audible');
+      }
+    }
+    textSpan.innerText = currentTextContent;
+
+    // Setup Icons, if applicable
+    let iconElem = this.icon;
+    let targetIcon;
+    if (this.settings.icon) {
+      targetIcon = this.settings.icon;
+    } else if (this.settings.type === 'btn-toggle') {
+      if (this.pressed) {
+        targetIcon = this.settings.toggleOnIcon;
+      } else {
+        targetIcon = this.settings.toggleOffIcon;
+      }
+    } else if (this.settings.type === 'icon-favorite') {
+      if (this.pressed) {
+        targetIcon = 'icon-star-filled';
+      } else {
+        targetIcon = 'icon-star-outlined';
+      }
+    } else if (this.settings.type === 'btn-actions') {
+      targetIcon = 'icon-more';
+    } else if (iconElem) {
+      iconElem.parentNode.remove(iconElem);
+    }
+    if (targetIcon) {
+      targetIcon = xssUtils.stripHTML(targetIcon);
+      if (!(iconElem instanceof SVGElement) && !(iconElem instanceof HTMLElement)) {
+        iconElem = $.createIconElement({ icon: targetIcon.replace('icon-', '') });
+        this.element.prepend($(iconElem));
+      } else {
+        iconElem.querySelector('use').setAttribute('xlink:href', `#${targetIcon}`);
+      }
+    }
+
+    // Add the Dropdown Arrow Icon to the button for Menu Buttons,
+    // excluding icon menu buttons and action buttons
     if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon') && !this.element.hasClass('btn-actions')) {
       let ddIcon = this.element.children('svg.icon');
       const use = ddIcon.find('use');
@@ -239,14 +311,17 @@ Button.prototype = {
       }
     }
 
-    this.element.hideFocus();
-
+    // Hide/Show Ripple Effect
+    elemClasses[this.settings.ripple ? 'add' : 'remove']('no-ripple');
     if (this.settings.ripple) {
       this.element.on('touchstart.button click.button', (e) => {
         this.createRipple(e);
       });
-    } else {
-      this.element[0].classList.add('no-ripple');
+    }
+
+    // Hide Focus API
+    if (this.element.data('hidefocus') === 'undefined') {
+      this.element.hideFocus();
     }
   },
 
