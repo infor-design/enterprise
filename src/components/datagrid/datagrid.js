@@ -10171,15 +10171,88 @@ Datagrid.prototype = {
           if (markup) {
             detail.find('.datagrid-row-detail-padding').empty().append(markup);
           }
+          self.adjustExpandRowHeight(detail);
           detail.animateOpen();
         };
 
         self.settings.onExpandRow(eventData[0], response);
       } else {
+        self.adjustExpandRowHeight(detail);
         detail.animateOpen();
       }
+
+      // Expandable row for frozen columns expand across all cells
       if (self.settings.frozenColumns.expandRowAcrossAllCells) {
         self.frozenExpandRowAcrossAllCells();
+      } else if (this.settings.frozenColumns.left.length ||
+        this.settings.frozenColumns.right.length) {
+        $('html')
+          .off(`themechanged.${COMPONENT_NAME}`)
+          .on(`themechanged.${COMPONENT_NAME}`, () => {
+            const elms = {
+              left: detail.eq(0)[0],
+              center: detail.eq(1)[0],
+              right: detail.eq(2)[0]
+            };
+            self.frozenExpandRowSetHeight(elms);
+          });
+      }
+    }
+  },
+
+  /**
+   * Adjust height to expandable row for frozen columns
+   * @private
+   * @param {jQuery[]} expandRowElms The expandable row elements
+   * @returns {void}
+   */
+  adjustExpandRowHeight(expandRowElms) {
+    if (expandRowElms.length) {
+      if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+        const elms = {
+          left: expandRowElms.eq(0)[0].children[0],
+          center: expandRowElms.eq(1)[0],
+          right: expandRowElms.eq(2)[0].children[0]
+        };
+        let height = 0;
+        if (elms.center) {
+          elms.center.style.height = 'auto';
+          height = elms.center.offsetHeight;
+          elms.center.style.height = '';
+        }
+        if (height) {
+          if (elms.left) {
+            elms.left.style.height = `${height}px`;
+          }
+          if (elms.right) {
+            elms.right.style.height = `${height}px`;
+          }
+        }
+      }
+    }
+  },
+
+  /**
+   * Set height to expandable row for frozen columns
+   * @private
+   * @param {object} elms The expandable row `.detail` elements
+   * @returns {void}
+   */
+  frozenExpandRowSetHeight(elms) {
+    if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+      let height = 0;
+      if (elms && elms.center) {
+        elms.padding = elms.center.querySelector('.datagrid-row-detail-padding');
+        height = elms.padding.offsetHeight;
+      }
+      if (height) {
+        elms.center.style.height = `${height}px`;
+        if (elms.left) {
+          elms.left.style.height = `${height}px`;
+        }
+        if (elms.right) {
+          elms.right.style.height = `${height}px`;
+        }
       }
     }
   },
@@ -10196,46 +10269,35 @@ Datagrid.prototype = {
       selector.detail = `${selector.row} > td .datagrid-row-detail`;
       selector.padding = `${selector.detail} .datagrid-row-detail-padding`;
 
+      const table = {
+        left: this.tableBodyLeft ? this.tableBodyLeft[0] : null,
+        center: this.tableBody ? this.tableBody[0] : null,
+        right: this.tableBodyRight ? this.tableBodyRight[0] : null
+      };
+
       // Elements
       const elms = {
         rows: {
-          left: this.tableBodyLeft[0].querySelector(selector.row),
-          center: this.tableBody[0].querySelector(selector.row),
-          right: this.tableBodyRight[0].querySelector(selector.row)
+          left: table.left ? table.left.querySelector(selector.row) : null,
+          center: table.center ? table.center.querySelector(selector.row) : null,
+          right: table.right ? table.right.querySelector(selector.row) : null
         },
         details: {
-          left: this.tableBodyLeft[0].querySelector(selector.detail),
-          center: this.tableBody[0].querySelector(selector.detail),
-          right: this.tableBodyRight[0].querySelector(selector.detail)
+          left: table.left ? table.left.querySelector(selector.detail) : null,
+          center: table.center ? table.center.querySelector(selector.detail) : null,
+          right: table.right ? table.right.querySelector(selector.detail) : null
         },
         padding: this.tableBody[0].querySelector(selector.padding)
       };
 
-      // Set height
-      const setHeight = () => {
-        let height = 0;
-        if (elms && elms.padding) {
-          height = elms.padding.offsetHeight;
-        }
-        if (height) {
-          elms.details.center.style.height = `${height}px`;
-          if (elms.details && elms.details.left) {
-            elms.details.left.style.height = `${height}px`;
-          }
-          if (elms.details && elms.details.right) {
-            elms.details.right.style.height = `${height}px`;
-          }
-        }
-      };
-
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
-        const rec = {
+        const rect = {
           container: this.element[0].getBoundingClientRect(),
           elem: elms.details.center.getBoundingClientRect()
         };
-        const top = `${rec.elem.top - rec.container.top}px`;
-        const width = `${rec.container.top.width}px`;
+        const top = `${rect.elem.top - rect.container.top}px`;
+        const width = `${rect.container.top.width}px`;
 
         elms.padding.style.opacity = '0';
         if (elms.rows.left) {
@@ -10252,11 +10314,11 @@ Datagrid.prototype = {
                 elms.rows.center.classList.add(cssClass);
                 elms.padding.style.width = width;
                 elms.padding.style.top = top;
-                setHeight();
+                this.frozenExpandRowSetHeight(elms.details);
                 elms.padding.style.opacity = '';
 
                 $(window).on('resize.datagrid.expandedfrozen', () => {
-                  setHeight();
+                  this.frozenExpandRowSetHeight(elms.details);
                 });
               }, 10);
             }
@@ -11039,6 +11101,8 @@ Datagrid.prototype = {
   destroy() {
     // Remove grid tooltip
     this.removeTooltip();
+
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
 
     // Unbind context menu events
     this.element.add(this.element.find('*'))
