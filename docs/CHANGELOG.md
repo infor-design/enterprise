@@ -6,6 +6,7 @@
 
 ### v4.26.0 Features
 
+- `[Datagrid]` Added support for expandable row to expand across all frozen columns, and fixed span layout issues on the right side frozen columns. ([#2867](https://github.com/infor-design/enterprise/issues/2867))
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
 - `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
 - `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
@@ -39,6 +40,7 @@
 - `[Datagrid]` Added fixes to improve the usage of the textarea editor. ([#3417](https://github.com/infor-design/enterprise/issues/3417))
 - `[Datepicker]` Fixed korean locale date format that makes it invalid after selecting date on datepicker field. ([#3470](https://github.com/infor-design/enterprise/issues/3470))
 - `[Datepicker]` Fixed chinese locale date format that makes it invalid after selecting date on datepicker field([#3473](https://github.com/infor-design/enterprise/issues/3473))
+- `[Datagrid]` Fixed an issue where reset to default was not working properly. ([#3487](https://github.com/infor-design/enterprise/issues/3487))
 - `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
 - `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 - `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
@@ -63,9 +65,9 @@
 - `[Searchfield]` Fixed a bug in Toolbar Searchfields where a component configured with `collapsible: false` and `collapseSize` defined, the searchfield would incorrectly collapse. ([NG#719](https://github.com/infor-design/enterprise-ng/issues/719))
 - `[Splitter]` Fixed an issue in the destroy function where the expand button was not removed. ([#3371](https://github.com/infor-design/enterprise/issues/3371))
 - `[Swaplist]` Fixed an issue where top buttons were not aligned in Firefox. ([#3425](https://github.com/infor-design/enterprise/issues/3425))
-- `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not typechecking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
-- `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not type-checking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
 - `[Textarea]` Fixed an issue where using `rows` stopped working, and fixed the autoGrow option to work better. ([#3471](https://github.com/infor-design/enterprise/issues/3471))
+- `[Toolbar]` Fixed an issue where some `destroy()` methods being called in `teardown()` were not type-checking for the `destroy()` method, and sometimes would incorrectly try to call this on an object or data property defined as `button`. ([#3449](https://github.com/infor-design/enterprise/issues/3449))
+- `[Tooltip/Popover]` Fixed incorrect placement when in RTL modes, as well as some broken styles on the RTL Popover. ([#3119](https://github.com/infor-design/enterprise/issues/3119))
 - `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
 

@@ -77,7 +77,10 @@
       title: 'Enter your name',
       content: 'Enter your name',
       trigger: 'hover',
-      parentElement: $('#fbutton').parent()
+      parentElement: $('#fbutton').parent(),
+      placementOpts: {
+        y: 30
+      }
     });
 
     $('#credit-card').tooltip({
@@ -103,6 +106,10 @@
     $('.editor').tooltip({
       content: 'Enter some rich text',
       trigger: 'hover',
+      parentElement: $('.editor-container'),
+      placementOpts: {
+        y: 0
+      }
     });
   });
 

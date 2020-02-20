@@ -43,6 +43,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
  * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
+ * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] Expand the expandable across all frozen columns.
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
@@ -136,7 +137,8 @@ const DATAGRID_DEFAULTS = {
   columns: [],
   frozenColumns: {
     left: [],
-    right: []
+    right: [],
+    expandRowAcrossAllCells: true
   },
   dataset: [],
   columnReorder: false, // Allow Column reorder
@@ -211,6 +213,9 @@ function Datagrid(element, settings) {
   this.element = $(element);
   if (settings.dataset) {
     this.settings.dataset = settings.dataset;
+  }
+  if (typeof this.settings.frozenColumns.expandRowAcrossAllCells === 'undefined') {
+    this.settings.frozenColumns.expandRowAcrossAllCells = DATAGRID_DEFAULTS.frozenColumns.expandRowAcrossAllCells; // eslint-disable-line
   }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -1000,7 +1005,7 @@ Datagrid.prototype = {
   updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
-      this.originalColGroups = this.deepCopy(colGroups);
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     if (this.settings.groupable) {
@@ -1094,7 +1099,7 @@ Datagrid.prototype = {
     }
 
     if (!this.originalColGroups) {
-      this.originalColGroups = this.deepCopy(colGroups);
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     const groups = colGroups.map(group => parseInt(group.colspan, 10));
@@ -4816,22 +4821,11 @@ Datagrid.prototype = {
   },
 
   /**
-   * Create deep copy for given array.
-   * @private
-   * @param  {array} arr The array to be copied.
-   * @returns {array} The copied array.
-   */
-  deepCopy(arr) {
-    const copy = items => items.map(item => (Array.isArray(item) ? copy(item) : item));
-    return copy(arr || []);
-  },
-
-  /**
    * Set the original column which may later be reloaded.
    * @private
    */
   setOriginalColumns() {
-    this.originalColumns = this.deepCopy(this.settings.columns);
+    this.originalColumns = utils.deepCopy(this.settings.columns);
   },
 
   /**
@@ -10183,6 +10177,106 @@ Datagrid.prototype = {
         self.settings.onExpandRow(eventData[0], response);
       } else {
         detail.animateOpen();
+      }
+      if (self.settings.frozenColumns.expandRowAcrossAllCells) {
+        self.frozenExpandRowAcrossAllCells();
+      }
+    }
+  },
+
+  /**
+   * Expand the expandable row to all columns for frozen
+   * @private
+   * @returns {void}
+   */
+  frozenExpandRowAcrossAllCells() {
+    if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+      // Selector
+      const selector = { row: '.datagrid-expandable-row.is-expanded' };
+      selector.detail = `${selector.row} > td .datagrid-row-detail`;
+      selector.padding = `${selector.detail} .datagrid-row-detail-padding`;
+
+      // Elements
+      const elms = {
+        rows: {
+          left: this.tableBodyLeft[0].querySelector(selector.row),
+          center: this.tableBody[0].querySelector(selector.row),
+          right: this.tableBodyRight[0].querySelector(selector.row)
+        },
+        details: {
+          left: this.tableBodyLeft[0].querySelector(selector.detail),
+          center: this.tableBody[0].querySelector(selector.detail),
+          right: this.tableBodyRight[0].querySelector(selector.detail)
+        },
+        padding: this.tableBody[0].querySelector(selector.padding)
+      };
+
+      // Set height
+      const setHeight = () => {
+        let height = 0;
+        if (elms && elms.padding) {
+          height = elms.padding.offsetHeight;
+        }
+        if (height) {
+          elms.details.center.style.height = `${height}px`;
+          if (elms.details && elms.details.left) {
+            elms.details.left.style.height = `${height}px`;
+          }
+          if (elms.details && elms.details.right) {
+            elms.details.right.style.height = `${height}px`;
+          }
+        }
+      };
+
+      if (elms.padding && (elms.details.left || elms.details.right)) {
+        const cssClass = 'is-expanded-frozen';
+        const rec = {
+          container: this.element[0].getBoundingClientRect(),
+          elem: elms.details.center.getBoundingClientRect()
+        };
+        const top = `${rec.elem.top - rec.container.top}px`;
+        const width = `${rec.container.top.width}px`;
+
+        elms.padding.style.opacity = '0';
+        if (elms.rows.left) {
+          elms.rows.left.classList.add(cssClass);
+        }
+        if (elms.rows.right) {
+          elms.rows.right.classList.add(cssClass);
+        }
+
+        $(elms.details.center)
+          .one('animateopencomplete.datagrid.expandedfrozen', () => {
+            if (elms.details.left || elms.details.right) {
+              setTimeout(() => {
+                elms.rows.center.classList.add(cssClass);
+                elms.padding.style.width = width;
+                elms.padding.style.top = top;
+                setHeight();
+                elms.padding.style.opacity = '';
+
+                $(window).on('resize.datagrid.expandedfrozen', () => {
+                  setHeight();
+                });
+              }, 10);
+            }
+          })
+          .one('animateclosedstart.datagrid.expandedfrozen', () => {
+            $(window).off('resize.datagrid.expandedfrozen');
+            elms.padding.style.opacity = '0';
+            elms.padding.style.width = '';
+            elms.padding.style.top = '';
+            elms.rows.center.classList.remove(cssClass);
+            if (elms.rows.left) {
+              elms.rows.left.classList.remove(cssClass);
+            }
+            if (elms.rows.right) {
+              elms.rows.right.classList.remove(cssClass);
+            }
+          })
+          .one('animateclosedcomplete.datagrid.expandedfrozen', () => {
+            elms.padding.style.opacity = '';
+          });
       }
     }
   },
