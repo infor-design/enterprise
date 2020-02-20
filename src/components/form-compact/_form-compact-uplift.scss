@@ -19,20 +19,6 @@
       padding: 0 8px 4px;
     }
   }
-
-  // FileUploader has different field heights depending on browser/font
-  .fileuploader {
-    max-height: 25px;
-  }
-}
-
-// Reset the rule governing IE11 fileuploader max-height
-html.ie11:not([dir='rtl']) {
-  .form-compact {
-    .fileuploader {
-      max-height: 28px;
-    }
-  }
 }
 
 html[dir='rtl'] {
@@ -48,10 +34,12 @@ html[dir='rtl'] {
       input:not(.radio) {
         padding: 0 8px 7px;
       }
+    }
 
-      .fileuploader {
-        max-height: 29px;
-      }
+    input.checkbox:checked + label::after,
+    input.checkbox:checked + input[type='hidden'] + label::after,
+    span.checkbox > input:checked + label::after {
+      top: 15px;
     }
   }
 
@@ -69,10 +57,12 @@ html[dir='rtl'] {
         input:not(.radio) {
           padding: 3px 8px 8px;
         }
+      }
 
-        .fileuploader {
-          max-height: 31px;
-        }
+      input.checkbox:checked + label::after,
+      input.checkbox:checked + input[type='hidden'] + label::after,
+      span.checkbox > input:checked + label::after {
+        top: 16px;
       }
     }
   }
