@@ -95,6 +95,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       virtualized: false,
       virtualRowBuffer: 10,
       rowReorder: false,
+      resizeMode: 'flex',
       showDirty: false,
       showSelectAllCheckBox: true,
       allowOneExpandedRow: true,
