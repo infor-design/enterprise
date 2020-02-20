@@ -55,6 +55,7 @@ import './scrollaction/scrollaction.jquery';
 import './stepchart/stepchart.jquery';
 import './tabs/tabs.jquery';
 import './tag/tag.jquery';
+import './tag/tag.list.jquery';
 import './textarea/textarea.jquery';
 import './timepicker/timepicker.jquery';
 import './toast/toast.jquery';

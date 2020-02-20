@@ -39,7 +39,8 @@ Soho.Locale.addCulture('he-IL', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['לפנה״צ', 'אחה״צ']
+    dayPeriods: ['לפנה״צ', 'אחה״צ'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₪',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('he-IL', {
     BookmarkThis: { id: 'BookmarkThis', value: 'סמן את זה בסימנייה', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'סימני דרך', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'דפדפן', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'שפת הדפדפן', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'רשימה עם תבליטים', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'לוח שנה', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'מצלמה', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('he-IL', {
     Filter: { id: 'Filter', value: 'סנן', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'דף ראשון', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'תיקייה', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'טקסט רגיל', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'כותרת {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'מ', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'תצוגה מלאה', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'עבור קדימה', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('he-IL', {
     JustifyLeft: { id: 'JustifyLeft', value: 'ישר לשמאל', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'ישר לימין', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'מילת מפתח', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'שפה', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'הפעל', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'דף אחרון', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'שמאל', comment: 'Left tooltip' },

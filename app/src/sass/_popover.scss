@@ -1,0 +1,34 @@
+// Demo Styles for test Popover component
+// ================================================
+.demo-popover {
+  align-items: middle;
+  display: flex;
+  justify-content: space-between;
+  margin: 7px auto;
+}
+
+.demo-popover .btn-primary {
+  align-self: center;
+  margin-left: 65px;
+  max-height: 34px;
+}
+
+.demo-popover table th,
+.demo-popover table td {
+  padding: 4px;
+}
+
+html[dir='rtl'] .demo-popover .btn-primary {
+  margin-left: 0;
+  margin-right: 65px;
+}
+
+@media (max-width: 676px) {
+  .demo-popover .btn-primary {
+    margin-left: 10px !important;
+  }
+
+  html[dir='rtl'] .demo-popover .btn-primary {
+    margin-right: 10px !important;
+  }
+}

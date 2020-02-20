@@ -39,7 +39,8 @@ Soho.Locale.addCulture('cs-CZ', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'Kč',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('cs-CZ', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Přidat záložku', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Drobeček', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Prohlížeč', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Jazyk prohlížeče', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Odrážkový seznam', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Kalendář', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('cs-CZ', {
     Filter: { id: 'Filter', value: 'Filtr', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'První stránka', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Složka', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normální text', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Záhlaví {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Zdroj', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Plné zobrazení', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Přejít vpřed', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('cs-CZ', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Zarovnat doleva', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Zarovnat doprava', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Klíčové slovo', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Jazyk', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Spustit', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Poslední stránka', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Vlevo', comment: 'Left tooltip' },

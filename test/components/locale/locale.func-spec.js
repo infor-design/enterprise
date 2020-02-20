@@ -46,6 +46,7 @@ require('../../../src/components/locale/cultures/ro-RO.js');
 require('../../../src/components/locale/cultures/ru-RU.js');
 require('../../../src/components/locale/cultures/sl-SI.js');
 require('../../../src/components/locale/cultures/sv-SE.js');
+require('../../../src/components/locale/cultures/sk-SK.js');
 require('../../../src/components/locale/cultures/th-TH.js');
 require('../../../src/components/locale/cultures/tr-TR.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
@@ -55,7 +56,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => {
+describe('Locale API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
@@ -247,6 +248,27 @@ describe('Locale API', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
+  });
+
+  it('Should format datetime in es-419', () => {
+    Locale.set('es-419');
+
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'short' })).toEqual('10/11/2018');
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'medium' })).toEqual('10 nov. 2018');
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'long' })).toEqual('10 de noviembre de 2018');
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'full' })).toEqual('sábado, 10 de noviembre de 2018');
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'month' })).toEqual('10 de noviembre');
+    expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('noviembre de 2018');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timestamp' })).toEqual('14:15:12');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'hour' })).toEqual('14:15');
+    expect(Locale.formatDate('10 nov. 2018 14:15', { date: 'datetime' })).toEqual('10 nov. 2018 14:15');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezone' })).toEqual('10 nov. 2018 14:15 GT-');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' })).toEqual('10 nov. 2018 14:15 hora estándar oriental');
+    expect(Locale.formatDate(new Date(2018, 10, 10), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 00:00');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 14:15');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy h:mm a')).toEqual('10 nov. 2018 2:15 p.m.');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy hh:mm a')).toEqual('10 nov. 2018 02:15 p.m.');
+    expect(Locale.formatDate('10 nov. 2018 14:15', Locale.calendar().dateFormat.datetime)).toEqual('10 nov. 2018 14:15');
   });
 
   it('Should format year in da-DK', () => {
@@ -1283,6 +1305,13 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
+  it('Should format dates in Slovak', () => {
+    Locale.set('sk-SK');
+
+    expect(Locale.formatDate(new Date(2019, 7, 15), { pattern: Locale.currentLocale.data.calendars[0].dateFormat.full })).toEqual('štvrtok 15. augusta 2019');
+    expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. augusta 2019');
+  });
+
   it('Should format dates with long timezones', () => {
     Locale.set('en-US');
 
@@ -1373,6 +1402,36 @@ describe('Locale API', () => {
         expect(Locale.currentLocale.name).toEqual('en-US');
         done();
       });
+    });
+  });
+
+  it('Should be possible to set the language to nb', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nb').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
+  it('Should be possible to set the language to nn', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nn').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
     });
   });
 
@@ -1677,6 +1736,24 @@ describe('Locale API', () => {
     });
   });
 
+  it('Should be able to format a date in a a non current language', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.calendar().dateFormat.short).toEqual('M/d/yyyy');
+
+    Locale.getLocale('nl').done(() => {
+      expect(Locale.calendar('en-US', 'nl').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'nl' })).toEqual('jun 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'nl' })).toEqual('juni 8, 2019');
+    });
+    Locale.getLocale('hi').done(() => {
+      expect(Locale.calendar('en-US', 'hi').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'hi' })).toEqual('जू 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'hi' })).toEqual('जून 8, 2019');
+      done();
+    });
+  });
+
   it('Should be able to parse a date in a non current locale', (done) => {
     Locale.set('en-US');
     Locale.getLocale('es-ES').done(() => {
@@ -1826,5 +1903,76 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('no-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
     expect(Locale.translate('Required')).toEqual('Obligatorisk');
+  });
+
+  it('Should provide a different fr-CA and fr-FR', () => {
+    Locale.set('fr-FR');
+
+    expect(Locale.currentLocale.name).toEqual('fr-FR');
+    expect(Locale.currentLanguage.name).toEqual('fr');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Retrier les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionnez un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profile utilisateur');
+
+    Locale.set('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('fr-CA');
+    expect(Locale.currentLanguage.name).toEqual('fr');
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+  });
+
+  it('Should be able to set language to full code', () => {
+    Locale.set('en-US');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('en-US');
+    expect(Locale.currentLanguage.name).toEqual('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+
+    Locale.setLanguage('de-DE');
+
+    expect(Locale.translate('AddComments')).toEqual('Anmerkungen hinzufügen');
+    expect(Locale.translate('ReorderRows')).toEqual('Zeilen neu anordnen');
+    expect(Locale.translate('SelectDay')).toEqual('Tag auswählen');
+    expect(Locale.translate('UserProfile')).toEqual('Benutzerprofil');
+  });
+
+  it('Should be able to set language to full code from a similar language', () => {
+    Locale.set('fr-FR');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.currentLocale.name).toEqual('fr-FR');
+    expect(Locale.currentLanguage.name).toEqual('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
+    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
+    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+  });
+
+  it('Should be able to switch language', () => {
+    Locale.set('en-US');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+
+    Locale.setLanguage('fr-FR');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
+    Locale.setLanguage('fr-CA');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
+    Locale.setLanguage('fr-FR');
+
+    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
   });
 });

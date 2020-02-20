@@ -41,7 +41,7 @@ FileUpload.prototype = {
 
     this.fileInput = hasInlineLabel ? elem.find('input') : elem;
 
-    elem.closest('.field').addClass('field-fileupload');
+    elem.closest('.field, .field-short').addClass('field-fileupload');
 
     // append markup
     let id = elem.find('input').attr('name');
@@ -53,7 +53,7 @@ FileUpload.prototype = {
     elemClass = elemClass ? ` ${elemClass}` : '';
 
     const instructions = Locale.translate('FileUpload');
-    let label = $(`<label for="${id}-filename">${elem.text()} <span class="audible">${instructions}</span></label>`);
+    const label = $(`<label for="${id}-filename">${elem.text()} <span class="audible">${instructions}</span></label>`);
     const shadowField = $(`<input readonly id="${id}-filename" class="fileupload-background-transparent${elemClass}" type="text">`);
     const svg = `<span class="trigger" tabindex="-1">${$.createIcon('folder')}</span>`;
     const svgClose = `<span class="trigger-close" tabindex="-1">${$.createIcon('close')}</span>`;
@@ -66,16 +66,12 @@ FileUpload.prototype = {
         orgLabel = elem.parent().prev('label');
       }
 
-      label = $(`<label for="${(elem.attr('id') || elem.attr('name'))}-filename">${orgLabel.text()}</label>`);
-      elem.before(label, shadowField);
-      this.fileInput.after(svgClose);
-      this.fileInput.after(svg);
-      orgLabel.addClass('audible').append(`<span class="audible">${instructions}</span>`);
-    } else {
-      elem.before(label, shadowField);
-      this.fileInput.after(svgClose);
-      this.fileInput.after(svg);
+      label.html(`${orgLabel.text()} <span class="audible">${instructions}</span>`);
+      orgLabel.addClass('audible').add(this.fileInput).attr('tabindex', '-1');
     }
+
+    elem.before(label, shadowField);
+    this.fileInput.after(svg, svgClose);
 
     // if there is a value attribute, then this will be used as the current value since unable to set files[0].name
     // move it to the text input and remove it off the file input
@@ -148,7 +144,7 @@ FileUpload.prototype = {
       if (this.files.length > 0) {
         self.textInput.val(this.files[0].name).trigger('change');
         self.svgClose.show().addClass('is-visible');
-      } else {
+      } else if (!self.clearing) {
         self.clearUploadFile();
       }
     });
@@ -176,9 +172,11 @@ FileUpload.prototype = {
   * Clear the Input Upload File
   */
   clearUploadFile() {
+    this.clearing = true;
     this.fileInput.add(this.textInput).val('');
     this.svgClose.hide().removeClass('is-visible');
     this.fileInput.triggerHandler('change');
+    this.clearing = false;
   },
 
   // Unbind all events

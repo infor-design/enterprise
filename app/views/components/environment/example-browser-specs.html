@@ -1,0 +1,28 @@
+<section id="environment-container"></section>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    var html = '';
+    var env = Soho.env.browser;
+    let keys = Object.keys(env);
+
+    html += '<div class="row" style="margin-top: 20px;"><div class="six columns">';
+
+    html += '<p>Soho.env.browser.name: <b>'+ Soho.env.browser.name + '</b> </p>';
+    html += '<p>Soho.env.browser.isEdge(): <b>'+ Soho.env.browser.isEdge() + '</b> </p>';
+    html += '<p>Soho.env.browser.isIE11(): <b>'+ Soho.env.browser.isIE11() + '</b></p>';
+    html += '<p>Soho.env.browser.isIE10(): <b>'+ Soho.env.browser.isIE10() + '</b></p>';
+    html += '<p>Soho.env.browser.isIE10(): <b>'+ Soho.env.browser.isIE10() + '</b></p>';
+    html += '<p>Soho.env.browser.isWKWebView(): <b>'+ Soho.env.browser.isWKWebView() + '</b> </p>';
+
+    html += '<p>Soho.env.devicespecs.currentBrowser: <b>'+ Soho.env.devicespecs.currentBrowser + '</b> </p>';
+    html += '<p>Soho.env.devicespecs.browserVersion: <b>'+ Soho.env.devicespecs.browserVersion + '</b> </p>';
+    html += '<p>Soho.env.devicespecs.browserMajorVersion: <b>'+ Soho.env.devicespecs.browserMajorVersion + '</b> </p>';
+    html += '<p>Soho.env.devicespecs.isMobile: <b>'+ Soho.env.devicespecs.isMobile + '</b> </p>';
+    html += '<p>Soho.env.devicespecs.os: <b>'+ Soho.env.devicespecs.os + '</b> </p>';
+    html += '<p>Soho.env.devicespecs.currentOSVersion: <b>'+ Soho.env.devicespecs.currentOSVersion + '</b> </p>';
+
+    html += '</div></div>';
+    $('#environment-container').html(Soho.xss.stripTags(html, '<div><p><b><i><span><a>'));
+  });
+</script>

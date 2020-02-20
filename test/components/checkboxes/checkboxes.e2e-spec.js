@@ -26,6 +26,23 @@ describe('Checkbox example-index tests', () => {
   }
 });
 
+describe('Checkbox Uplift tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/checkboxes/example-index?theme=uplift&layout=nofrills');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkScreen('checkboxes-uplift')).toEqual(0);
+    });
+  }
+});
+
 describe('Checkbox group tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/checkboxes/example-checkbox-groups?layout=nofrills');

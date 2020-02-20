@@ -579,20 +579,23 @@ a.btn-close {
 }
 
 // Short field buttons
-.field-short {
-  [class*='btn'] {
-    height: 25px;
+.field-short,
+.form-layout-compact .field {
+  [class*='btn']:not(.btn-editor) {
+    height: $button-size-compact-height;
     margin-bottom: 10px;
+    min-height: $button-size-compact-height;
     min-width: 0;
 
     > .icon:not(.icon-dropdown) {
       height: 14px;
       margin: 0;
+      margin-top: -2px;
       vertical-align: middle;
 
       + span:not(.audible) {
         display: inline-block;
-        padding: 0 4px 0 0;
+        padding: 0 4px 1px 0;
       }
     }
   }
@@ -724,9 +727,18 @@ html[lang^='fr-'] {
 }
 
 .is-mac.is-firefox {
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     [class^='btn'] {
-      line-height: 25px;
+      line-height: $button-size-compact-height;
+
+      > .icon:not(.icon-dropdown) {
+        margin-top: -7px;
+      }
+
+      > .icon:not(.icon-dropdown) + span:not(.audible) {
+        padding: 0 4px 7px 0;
+      }
     }
   }
 }

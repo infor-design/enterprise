@@ -48,6 +48,7 @@
   border: 1px solid $input-color-initial-border;
   border-radius: 2px;
   display: inline-block;
+  height: $input-size-regular-height;
   overflow: hidden;
   width: 150px;
 
@@ -74,7 +75,7 @@
 
     .icon:not(.icon-error),
     .icon:hover {
-      color: $trigger-disabled-color !important;
+      color: $input-color-disabled-border !important;
       cursor: default;
     }
   }
@@ -93,7 +94,7 @@
 
   &.is-readonly {
     background-color: $input-color-readonly-background;
-    border-color: $input-color-readonly-border;
+    border-color: $input-color-readonly-border !important;
 
     &.is-not-editable {
       background-color: $input-color-initial-background;
@@ -117,10 +118,13 @@
       border-color: $input-color-focus-border !important;
     }
 
-    .icon:not(.icon-error),
-    .icon:hover {
-      color: $trigger-disabled-color;
+    .icon:not(.icon-error) {
+      color: $colorpicker-readonly-icon-color;
       cursor: default;
+
+      &:hover {
+        color: $colorpicker-readonly-icon-color;
+      }
     }
   }
 
@@ -140,7 +144,7 @@
   .icon:not(.icon-error) {
     color: $trigger-icon-fill-color;
     height: 16px;
-    left: 9px;
+    left: 10px;
     position: relative;
     top: 9px;
     width: 16px;
@@ -159,12 +163,12 @@
     background-color: $colorpicker-initial-bg-color;
     border-radius: 2px;
     display: inline-block;
-    height: 32px;
+    height: $input-size-regular-height - 0.4;
     left: 1px;
     position: relative;
     top: 1px;
     vertical-align: top;
-    width: 32px;
+    width: $input-size-regular-height - 0.4;
 
     // Trigger Button
     .icon:not(.icon-error) {
@@ -192,7 +196,7 @@
   .colorpicker {
     border: 0;
     max-height: 34px;
-    padding: 9px 0 8px 10px;
+    padding: 7px 0 10px 10px;
     text-overflow: ellipsis;
     width: 90px; //Small Size
 
@@ -215,22 +219,10 @@
   }
 }
 
-@include respond-to(phablet) {
-  .colorpicker-container {
-    width: 100% !important;
-  }
-
-  .colorpicker-container input {
-    width: calc(100% - 64px) !important;
-  }
-}
-
 .popupmenu.colorpicker {
-  margin-left: -33px;
-  max-width: 340px;
-  min-height: 50px;
-  min-width: 200px;
-  padding: 18px;
+  margin-left: 0;
+  padding: 10px 0 10px 10px;
+  width: 322px;
 
   li {
     display: inline-block;
@@ -314,24 +306,30 @@
 }
 
 // Short Fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .colorpicker-container {
+    height: $input-size-compact-height;
     width: inherit;
 
+    .colorpicker {
+      width: 128px;
+    }
+
     .trigger {
-      height: 22px;
-      margin-left: -22px;
-      width: 22px;
+      height: $input-size-compact-height - 0.4;
+      margin-left: -($input-size-compact-height - 0.4);
+      width: $input-size-compact-height - 0.4;
 
       .icon:not(.icon-error) {
-        left: 5px;
+        left: 4px;
         top: 5px;
       }
     }
 
     .swatch {
-      height: 22px;
-      width: 22px;
+      height: $input-size-compact-height - 0.4;
+      width: $input-size-compact-height - 0.4;
 
       &.is-empty,
       &.is-invalid {
@@ -340,9 +338,10 @@
     }
 
     .colorpicker {
-      height: inherit;
-      line-height: 14px;
-      padding: 5px 21px 5px 5px;
+      height: $input-size-compact-height - 0.2;
+      line-height: $input-size-compact-height - 0.4;
+      padding: $input-size-compact-padding;
+      padding-right: $input-size-compact-height - 1;
     }
   }
 }
@@ -363,7 +362,7 @@
 html[dir='rtl'] {
   .colorpicker-container {
     .colorpicker {
-      padding: 9px 10px 8px 0;
+      padding: 7px 10px 8px 0;
     }
 
     .swatch {
@@ -371,8 +370,9 @@ html[dir='rtl'] {
       right: 1px;
     }
 
-    .icon {
-      left: 0;
+    .trigger .icon {
+      left: -6px;
+      top: 8px;
     }
 
     .icon-dirty {
@@ -380,19 +380,22 @@ html[dir='rtl'] {
     }
   }
 
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .colorpicker-container {
       .trigger {
-        left: 22px;
+        left: $input-size-compact-height - 0.2;
         position: relative;
 
         .icon:not(.icon-error) {
-          left: 0;
+          left: -3px;
         }
       }
 
       .colorpicker {
         padding: 5px 5px 5px 21px;
+        padding: $input-size-compact-padding;
+        padding-left: $input-size-compact-height - 1;
       }
     }
   }

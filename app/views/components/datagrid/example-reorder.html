@@ -8,8 +8,7 @@
   toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
 
 <script>
-  $(function() {
-
+  $('body').one('initialized', function () {
     var grid,
       columns = [],
       data = [];
@@ -45,16 +44,17 @@
           pagesizes: [5, 10, 15],
           filterable: true,
           saveColumns: false,  //deprecated
-          saveUserSettings: {columns: true,
-                             rowHeight: true,
-                             sortOrder: true,
-                             pagesize: true,
-                             filter: true},
-          toolbar: {title: 'Compressors', actions: true, results: true, personalize: true, filterRow: true, results: true, resetLayout: true}
+          saveUserSettings: {
+            columns: true,
+            rowHeight: true,
+            sortOrder: true,
+            pagesize: true,
+            filter: true
+          },
+          toolbar: {title: 'Compressors', actions: true, results: true, personalize: true, filterRow: true, results: true, rowHeight: true, resetLayout: true}
         }).on('settingschanged', function (e, args) {
           console.log('Settings Changed', args);
         });
-
     });
  });
 </script>

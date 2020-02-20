@@ -39,7 +39,8 @@ Soho.Locale.addCulture('hi-IN', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['पूर्व', 'अपर']
+    dayPeriods: ['पूर्व', 'अपर'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₹',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('hi-IN', {
     BookmarkThis: { id: 'BookmarkThis', value: 'यह बुकमार्क करें', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'ब्रेडक्रम्ब', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'ब्राउज़र', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'ब्राउज़र भाषा', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'बुलेटेड सूची', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'कैलेंडर', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'कैमरा', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('hi-IN', {
     Filter: { id: 'Filter', value: 'फ़िल्टर करें', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'प्रथम पृष्ठ', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'फ़ोल्डर', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'सामान्य पाठ', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'शीर्षलेख {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'से', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'फ़ुल दृश्य', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'आगे जाएँ', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('hi-IN', {
     JustifyLeft: { id: 'JustifyLeft', value: 'बाएँ में संरेखित करें', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'दाईं में संरेखित करें', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'खोजशब्द', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'भाषा', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'प्रारंभ करें', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'अंतिम पृष्ठ', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'बाएँ', comment: 'Left tooltip' },

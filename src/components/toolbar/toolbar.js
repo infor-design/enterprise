@@ -1464,12 +1464,12 @@ Toolbar.prototype = {
 
     this.items.each((i, item) => {
       const tooltipAPI = $(item).data('tooltip');
-      if (tooltipAPI) {
+      if (tooltipAPI && typeof tooltipAPI.destroy === 'function') {
         tooltipAPI.destroy();
       }
 
       const buttonAPI = $(item).data('button');
-      if (buttonAPI) {
+      if (buttonAPI && typeof buttonAPI.destroy === 'function') {
         buttonAPI.destroy();
       }
 
@@ -1489,7 +1489,7 @@ Toolbar.prototype = {
 
     if (this.title && this.title.length) {
       const dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
-      if (dataTooltip) {
+      if (dataTooltip && typeof dataTooltip.destroy === 'function') {
         dataTooltip.destroy();
       }
 
@@ -1507,7 +1507,8 @@ Toolbar.prototype = {
       // one update cycle, or until the setting is reset to `true`.
       if (!this.settings.noSearchfieldReinvoke && !this.keepSearchfield) {
         const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
-        if (searchFields.data('searchfield')) {
+        const searchFieldAPI = searchFields.data('searchfield');
+        if (searchFieldAPI && typeof searchFieldAPI.destroy === 'function') {
           searchFields.data('searchfield').destroy();
         }
       } else if (this.keepSearchfield) {

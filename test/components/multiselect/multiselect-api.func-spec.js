@@ -1,7 +1,7 @@
 import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 import { cleanup } from '../../helpers/func-utils';
 
-const multiSelectHTML = require('../../../app/views/components/multiselect/example-index.html');
+const multiSelectHTML = require('../../../app/views/components/multiselect/_samples-standard.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let multiSelectEl;
@@ -20,7 +20,7 @@ describe('MultiSelect API', () => {
 
   afterEach(() => {
     multiSelectObj.destroy();
-    cleanup(['.multiselect', '.dropdown', '.svg-icons', '#dropdown-list', '.row', 'select']);
+    cleanup(['.multiselect', '.dropdown', '.svg-icons', '#dropdown-list', '.field', '.row', 'select']);
   });
 
   it('Should be defined on jQuery object', () => {

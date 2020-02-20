@@ -15,9 +15,9 @@
 
 .inline .radio ~ .label-text,
 .radio + label {
-  color: $checkbox-color-unchecked-initial-font;
+  color: $label-color;
   cursor: pointer;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   line-height: 24px;
   margin-bottom: 6px;
   outline: none;
@@ -34,7 +34,7 @@
   content: '';
   height: 14px;
   margin-left: -25px;
-  margin-top: 4px;
+  margin-top: 3px;
   position: absolute;
   width: 14px;
 }
@@ -58,7 +58,6 @@
   &.radio-label:first-of-type {
     margin-top: 4px;
   }
-
 }
 
 .inline .radio ~ .label-text::after,
@@ -70,7 +69,7 @@
   height: 4px;
   left: 5px;
   position: absolute;
-  top: 8px;
+  top: 7px;
   transition: all 0.2s ease 0s;
   width: 4px;
 }
@@ -163,8 +162,8 @@
 
   legend {
     color: $label-color;
-    font-size: $theme-size-font-sm;
-    padding-bottom: 5px;
+    font-size: $input-size-regular-font-size;
+    padding-bottom: 5px !important;
   }
 
   &.is-disabled,
@@ -174,8 +173,7 @@
     }
   }
 
-  .field,
-  .field-short {
+  .field {
     margin-bottom: 0;
   }
 
@@ -183,13 +181,22 @@
     margin-top: 20px;
   }
 
-  + .field-short {
-    margin-top: 10px;
-  }
-
   .icon-dirty {
     left: -1px;
     margin-top: 1px;
+  }
+}
+
+.field {
+  .radio-group {
+    margin-bottom: -13px;
+  }
+}
+
+.field-short,
+.form-layout-compact .field {
+  .radio-group {
+    margin-bottom: -6px;
   }
 }
 
@@ -223,7 +230,7 @@
       margin-bottom: 2.3em;
 
       .in-label {
-        font-size: $theme-size-font-base;
+        font-size: $label-size-regular-font-size;
         line-height: 25px;
         margin-top: -10px;
       }
@@ -299,27 +306,33 @@ html[dir='rtl'] {
 
   .inline .radio ~ .label-text,
   .radio + label {
-    padding-right: 36px;
-  }
-
-  // Short Fields
-  .field-short {
-    .inline .radio ~ .label-text,
-    .radio + label {
-      padding-right: 36px;
-    }
+    padding-right: 27px;
   }
 
   .inline .radio ~ .label-text::before,
   .radio + label::before {
     margin-left: inherit;
-    margin-right: -33px;
+    margin-right: -27px;
   }
 
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: 0.53em;
+    right: 4px;
+  }
+
+  // Adjust the label padding for RTL in short mode
+  .field-short,
+  .form-layout-compact .field {
+    .inline .radio ~ .label-text,
+    .radio + label {
+      padding-right: 24px;
+    }
+
+    .inline .radio ~ .label-text::before,
+    .radio + label::before {
+      margin-right: -24px;
+    }
   }
 
   // Radio Section
@@ -362,26 +375,63 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Short Fields
-.field-short {
-  .inline .radio ~ .label-text,
-  .radio + label {
-    margin-bottom: 0;
-    margin-top: 0;
+.field-short,
+.form-layout-compact .field {
+  .radio-group legend {
+    font-size: $input-size-compact-font-size;
+    padding-bottom: 20px !important;
   }
 
-  .radio-label {
+  .radio-group {
+    margin-bottom: -10px;
+  }
+
+  .inline .radio ~ .label-text,
+  .radio + label {
+    margin-top: -14px;
+    padding-left: 20px;
+    padding-top: 5px !important;
+    text-align: initial;
     width: auto;
   }
 
   .inline .radio ~ .label-text::after,
   .radio + label::after {
-    top: 13px;
+    left: 4px;
+    top: 12px;
   }
 
+  .inline .radio ~ .label-text::before,
+  .radio + label::before {
+    margin-left: -20px;
+  }
+
+  .inline .radio ~ .label-text.radio-label:first-of-type,
+  .radio-label.radio-label:first-of-type {
+    margin-top: -22px;
+  }
+}
+
+.field-short,
+.form-layout-compact .field {
+  > .radio-label.radio-label:first-of-type {
+    margin-top: -23px;
+  }
+}
+
+.radio-group,
+.form-layout-compact .field .radio-group {
+  .field-short:first-of-type {
+    margin-bottom: 8px;
+    margin-top: 19px;
+  }
+
+  .field-short {
+    margin-bottom: 8px;
+  }
 }
 
 // Error States

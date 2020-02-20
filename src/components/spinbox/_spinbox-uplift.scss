@@ -20,36 +20,21 @@ input.spinbox,
   }
 }
 
-.field-short {
+.field-short,
+.form-layout-compact .field {
+  .spinbox {
+    padding: 4px;
+  }
+
   .spinbox-wrapper {
-    height: auto;
+    height: 28px;
   }
 
   .spinbox-control {
-    padding: 4px 10px;
+    padding: 2px 8px;
 
     &.down {
-      padding: 3px 10px 5px;
-    }
-  }
-}
-
-.is-firefox {
-  .spinbox-wrapper {
-    height: 36px;
-  }
-
-  .field-short {
-    .spinbox {
-      padding: 4px;
-    }
-  }
-}
-
-html:not(.is-firefox) {
-  .field-short {
-    .spinbox-control {
-      padding: 3px 10px;
+      padding: 1px 10px 0;
     }
   }
 }
@@ -63,9 +48,10 @@ html[dir='rtl'] {
     }
   }
 
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .spinbox {
-      padding: 4px;
+      padding: 4px 5px;
     }
 
     .spinbox-control {
@@ -78,7 +64,8 @@ html[dir='rtl'] {
   }
 
   &.is-firefox {
-    .field-short {
+    .field-short,
+    .form-layout-compact .field {
       .spinbox {
         padding: 4px;
       }
@@ -86,7 +73,8 @@ html[dir='rtl'] {
   }
 
   &:not(.ie11) {
-    .field-short {
+    .field-short,
+    .form-layout-compact .field {
       .spinbox-control {
         padding: 4px 7px;
       }

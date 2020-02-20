@@ -178,10 +178,6 @@
 
       li {
         border-color: transparent;
-
-        &:not(.is-selected):hover {
-          background-color: $listview-full-width-hover-color;
-        }
       }
     }
 
@@ -463,7 +459,7 @@ body.modal-engaged {
       text-decoration: none;
 
       &.btn-modal-primary {
-        color: rgba($modal-btn-primary-disabled-color, $modal-btn-disabled-opacity);
+        color: rgba($modal-btn-primary-disabled-color, $modal-btn-primary-disabled-opacity);
       }
     }
 
@@ -521,8 +517,15 @@ html[dir='rtl'] {
       &:nth-child(1) {
         border-left: 1px solid $modal-btn-border-color;
       }
-    }
 
+      &:last-child {
+        border-left-color: transparent;
+
+        &:focus {
+          border-left-color: $input-color-focus-border;
+        }
+      }
+    }
   }
 
   .modal-content {

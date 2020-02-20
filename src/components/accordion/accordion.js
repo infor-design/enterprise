@@ -97,6 +97,7 @@ Accordion.prototype = {
   build(headers, noFilterReset) {
     let anchors;
     let panes;
+    let contentAreas;
     const self = this;
     let isGlobalBuild = true;
 
@@ -104,18 +105,22 @@ Accordion.prototype = {
       this.headers = this.element.find('.accordion-header');
       headers = this.element.find('.accordion-header');
       this.anchors = headers.children('a');
-      anchors = headers.children('a');
+      anchors = this.anchors;
       this.panes = headers.next('.accordion-pane');
-      panes = headers.next('.accordion-pane');
+      panes = this.panes;
+      this.contentAreas = panes.children('.accordion-content');
+      contentAreas = this.contentAreas;
     } else {
       anchors = headers.children('a');
       panes = headers.next('.accordion-pane');
+      contentAreas = panes.children('.accordion-content');
       isGlobalBuild = false;
 
       // update internal refs
       this.headers = this.headers.add(headers);
       this.anchors = this.anchors.add(anchors);
       this.panes = this.panes.add(panes);
+      this.contentAreas = this.contentAreas.add(contentAreas);
     }
 
     let headersHaveIcons = false;
@@ -258,11 +263,11 @@ Accordion.prototype = {
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
 
-    // Setup correct ARIA for accordion panes, and auto-collapse them
     panes.each(function addPaneARIA() {
       const pane = $(this);
       const header = pane.prev('.accordion-header');
 
+      // Setup correct ARIA for accordion panes
       header.children('a').attr({ 'aria-haspopup': 'true', role: 'button' });
 
       // double-check the contents of the pane. If all children are filtered out,
@@ -270,15 +275,24 @@ Accordion.prototype = {
       const children = pane.children();
       let allChildrenFiltered = true;
       children.each((i, child) => {
-        if ($(child).is('.accordion-header') && !$(child).hasClass('filtered')) {
+        if ($(child).is('.accordion-header, .accordion-content') && !$(child).hasClass('filtered')) {
           allChildrenFiltered = false;
         }
       });
       pane[allChildrenFiltered ? 'addClass' : 'removeClass']('all-children-filtered');
 
-      if (!self.isExpanded(header)) {
+      if (allChildrenFiltered) {
         pane.data('ignore-animation-once', true);
         self.collapse(header, false);
+      }
+
+      // Preset the "expand/collase" on initial render, if applicable
+      if (!noFilterReset) {
+        let heightAttr = '0px';
+        if (self.isExpanded(header)) {
+          heightAttr = 'auto';
+        }
+        pane.attr('style', `height: ${heightAttr}`);
       }
     });
 
@@ -556,64 +570,68 @@ Accordion.prototype = {
     const data = [];
     const topHeaders = this.element.children('.accordion-header');
 
-    function buildHeaderJSON(el, index, parentNesting, parentArr) {
+    function buildElementJSON(el, index, parentNesting, parentArr) {
       const $el = $(el);
       const pane = $(el).next('.accordion-pane');
-      const headerData = {
-        text: $(el).children('a, span').text().trim(),
-        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`
+      const isContentArea = el.classList.contains('accordion-content');
+
+      const elemData = {
+        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`,
+        type: isContentArea ? 'content' : 'header'
       };
 
+      if (addElementReference) {
+        elemData.element = el;
+      }
+
       if (el.getAttribute('id')) {
-        headerData.id = el.getAttribute('id');
+        elemData.id = el.getAttribute('id');
+      }
+
+      if (isContentArea) {
+        elemData.content = `${$el.html()}`;
+        elemData.contentText = `${$el.text().trim().replace(/\n|\s{2,}/g, ' ')}`;
+      } else {
+        elemData.text = $el.children('a, span').text().trim();
       }
 
       const icon = $el.children('.icon');
       if (icon.length) {
-        headerData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
+        elemData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
           icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
           '';
       }
 
-      if (addElementReference) {
-        headerData.element = el;
-      }
-
       if ($el.hasClass('is-disabled')) {
-        headerData.disabled = true;
+        elemData.disabled = true;
       }
 
       if (pane.length) {
-        const content = pane.children('.accordion-content');
-        const subheaders = pane.children('.accordion-header');
-        const subheaderData = [];
+        const subElems = pane.children('.accordion-header, .accordion-content');
+        const subElementData = [];
 
-        if (content.length) {
-          headerData.content = `${content.html()}`;
-        }
-
-        if (subheaders.length) {
+        if (subElems.length) {
           // Normally this will nest.
           // If "flatten" is true, don't nest and add straight to the parent array.
-          let targetArray = subheaderData;
+          let targetArray = subElementData;
           if (flatten) {
             targetArray = parentArr;
           }
 
-          subheaders.each((j, subitem) => {
-            buildHeaderJSON(subitem, j, headerData.index, targetArray);
+          subElems.each((j, subitem) => {
+            buildElementJSON(subitem, j, elemData.index, targetArray);
           });
 
-          headerData.children = subheaderData;
+          elemData.children = subElementData;
         }
       }
 
-      parentArr.push(headerData);
+      parentArr.push(elemData);
     }
 
     // Start traversing the accordion
     topHeaders.each((i, item) => {
-      buildHeaderJSON(item, i, undefined, data);
+      buildElementJSON(item, i, undefined, data);
     });
 
     return data;
@@ -1231,51 +1249,57 @@ Accordion.prototype = {
   },
 
   /**
-   * @param {jQuery[]} headers element references representing accordion headers.
-   * @param {boolean} [doReset] if defined, causes the filtering system to reset.
+   * @param {jQuery[]} targets element references representing accordion headers.
    */
-  filter(headers, doReset) {
-    if (!headers || !headers.length) {
+  filter(targets) {
+    if (!targets || !targets.length) {
       return;
     }
 
     const self = this;
 
-    if (doReset) {
-      this.headers.removeClass('filtered has-filtered-children hide-focus is-expanded');
-      this.panes.removeClass('all-children-filtered is-expanded').removeAttr('style');
-
-      this.currentlyFiltered = $();
-      this.build(undefined, true);
-      this.filter(headers);
-      return;
-    }
+    // Reset all the things
+    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.panes.removeClass('all-children-filtered no-transition');
+    this.contentAreas.removeClass('filtered');
+    this.currentlyFiltered = $();
 
     // If headers are included in the currentlyFiltered storage, removes the ones that
     // have previously been filtered
-    const toFilter = headers.not(this.currentlyFiltered);
-    let panes = toFilter.next('.accordion-pane');
+    const toFilter = targets.not(this.currentlyFiltered);
 
     // Store a list of all modified parent headers
     let allParentHeaders = $();
+    const allContentAreas = $();
 
     // Perform filtering
-    this.headers.not(toFilter).addClass('filtered');
-    toFilter.each((i, header) => {
-      const parentPanes = $(header).parents('.accordion-pane');
-      if (parentPanes.length) {
-        panes = panes.add(parentPanes.filter((j, item) => panes.index(item) === -1));
-        // only add headers that weren't already in the collection
-        const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+    this.headers.add(this.contentAreas).not(toFilter).addClass('filtered');
+    toFilter.each((i, target) => {
+      const isContentArea = $(target).is('.accordion-content');
+      const allParentPanes = $(target).parents('.accordion-pane');
+
+      // Handle Content Areas
+      if (isContentArea) {
+        allContentAreas.push($(target));
+        const thisParentPane = $(allParentPanes[0]);
+        const thisParentHeader = thisParentPane.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+        if (thisParentHeader.length) {
+          allParentHeaders = allParentHeaders.add(thisParentHeader);
+        }
+      }
+
+      // Handle Labeling of Parent Headers
+      if (allParentPanes.length) {
+        const parentHeaders = allParentPanes.prev('.accordion-header').filter((j, item) => allParentPanes.index(item) === -1);
         allParentHeaders = allParentHeaders.add(parentHeaders);
       }
     });
 
     allParentHeaders.addClass('has-filtered-children');
-    const expandPromise = this.expand(allParentHeaders.add(panes.prev('.accordion-header')), true);
+    const expandPromise = this.expand(allParentHeaders, true);
 
     $.when(expandPromise).done(() => {
-      this.currentlyFiltered = this.currentlyFiltered.add(toFilter);
+      this.currentlyFiltered = toFilter;
       self.build(undefined, true);
     });
   },
@@ -1297,7 +1321,11 @@ Accordion.prototype = {
     // Store a list of all modified parent headers
     let allParentHeaders = $();
 
-    this.headers.removeClass('filtered');
+    // Reset all the things
+    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.panes.removeClass('all-children-filtered no-transition');
+    this.contentAreas.removeClass('filtered');
+
     headers.each((i, header) => {
       const parentPanes = $(header).parents('.accordion-pane');
       if (parentPanes.length) {
@@ -1315,7 +1343,6 @@ Accordion.prototype = {
 
     $.when(collapseDfds).done(() => {
       this.currentlyFiltered = this.currentlyFiltered.not(headers);
-      this.build(undefined, true);
     });
   },
 
@@ -1398,41 +1425,48 @@ Accordion.prototype = {
       headerElems = this.headers;
       globalEventTeardown = true;
     }
-    const anchors = headerElems.find('a');
 
-    headerElems
-      .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
-      .each(function () {
-        const header = $(this);
-        const icon = header.children('.icon');
+    if (headerElems && headerElems.length) {
+      headerElems
+        .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
+        .each(function () {
+          const header = $(this);
+          const icon = header.children('.icon');
 
-        const hideFocus = header.data('hidefocus');
-        if (hideFocus) {
-          hideFocus.destroy();
-        }
-
-        if (icon.length) {
-          const iconAPI = icon.data('icon');
-          if (iconAPI) {
-            iconAPI.destroy();
+          const hideFocus = header.data('hidefocus');
+          if (hideFocus) {
+            hideFocus.destroy();
           }
-        }
 
-        const expander = header.data('addedExpander');
-        if (expander) {
-          expander.remove();
-          $.removeData(this, 'addedExpander');
-        }
-      });
+          if (icon.length) {
+            const iconAPI = icon.data('icon');
+            if (iconAPI) {
+              iconAPI.destroy();
+            }
+          }
 
-    anchors.off('touchend.accordion keydown.accordion click.accordion');
+          const expander = header.data('addedExpander');
+          if (expander) {
+            expander.remove();
+            $.removeData(this, 'addedExpander');
+          }
+        });
 
-    headerElems.children('[class^="btn"]')
-      .off('touchend.accordion click.accordion keydown.accordion');
+      const anchors = headerElems.not('.accordion-content').find('a');
+      anchors.off('touchend.accordion keydown.accordion click.accordion');
+
+      headerElems.children('[class^="btn"]')
+        .off('touchend.accordion click.accordion keydown.accordion');
+    }
 
     if (globalEventTeardown) {
       this.element.off('updated.accordion selected.accordion');
     }
+
+    delete this.anchors;
+    delete this.headers;
+    delete this.panes;
+    delete this.contentAreas;
 
     return this;
   },

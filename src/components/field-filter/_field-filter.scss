@@ -6,100 +6,112 @@ $dd-width: 55px;
   @return calc(#{$width} - #{$dd-width});
 }
 
-.field.fieldfilter-wrapper {
-  white-space: nowrap;
+.field,
+.field-short {
+  &.fieldfilter-wrapper {
+    white-space: nowrap;
 
-  div:first-of-type {
-    margin-right: -1px;
-    vertical-align: top;
+    div:first-of-type {
+      margin-right: -1px;
+      vertical-align: top;
 
-    div.dropdown {
-      border-radius: 2px 0 0 2px;
-      border-right-color: $fieldfilter-border-side-color;
-      text-overflow: inherit;
-      width: $dd-width;
+      div.dropdown {
+        border-radius: 2px 0 0 2px;
+        border-right-color: $fieldfilter-border-side-color;
+        text-overflow: inherit;
+        width: $dd-width;
 
-      span {
-        position: static;
-      }
+        span {
+          position: static;
+        }
 
-      > .listoption-icon {
-        height: 14px;
-      }
+        > .listoption-icon {
+          height: 14px;
+        }
 
-      &.is-open {
-        + .ffdropdown-icon {
-          opacity: 0;
+        &.is-open {
+          + .ffdropdown-icon {
+            opacity: 0;
+          }
         }
       }
     }
-  }
 
-  .icon-dirty {
-    left: $dd-width + 2px;
-  }
-
-  .icon-success {
-    vertical-align: top;
-  }
-
-  .field-filter {
-    border-radius: 0 2px 2px 0;
-    max-width: $field-md;
-    width: el-width($field-md);
-
-    &.timepicker,
-    &.datepicker {
-      width: el-width($datepicker-default-width);
+    .icon-dirty {
+      left: $dd-width + 2px;
     }
 
-    &.input-xs {
+    .icon-success {
+      vertical-align: top;
+    }
+
+    .field-filter {
+      border-radius: 0 2px 2px 0;
+      max-width: $field-md;
+      width: el-width($field-md);
+
+      &.timepicker,
+      &.datepicker {
+        width: el-width($datepicker-default-width);
+      }
+
+      &.input-xs {
+        width: el-width($field-xs);
+      }
+
+      &.input-sm {
+        width: el-width($field-sm);
+      }
+
+      &.input-mm {
+        width: el-width($field-mm);
+      }
+
+      &.input-md {
+        width: el-width($field-md);
+      }
+
+      &.input-lg {
+        width: el-width($field-lg);
+      }
+
+      &.input-full {
+        width: el-width(100%);
+      }
+    }
+
+    .dropdown-xs {
       width: el-width($field-xs);
     }
 
-    &.input-sm {
+    .dropdown-sm {
       width: el-width($field-sm);
     }
 
-    &.input-mm {
+    .dropdown-mm {
       width: el-width($field-mm);
     }
 
-    &.input-md {
+    .dropdown-md {
       width: el-width($field-md);
     }
 
-    &.input-lg {
+    .dropdown-lg {
       width: el-width($field-lg);
     }
 
-    &.input-full {
+    .dropdown-full {
       width: el-width(100%);
     }
   }
+}
 
-  .dropdown-xs {
-    width: el-width($field-xs);
-  }
-
-  .dropdown-sm {
-    width: el-width($field-sm);
-  }
-
-  .dropdown-mm {
-    width: el-width($field-mm);
-  }
-
-  .dropdown-md {
-    width: el-width($field-md);
-  }
-
-  .dropdown-lg {
-    width: el-width($field-lg);
-  }
-
-  .dropdown-full {
-    width: el-width(100%);
+.field-short,
+.form-layout-compact .field {
+  &.fieldfilter-wrapper {
+    div:first-of-type div.dropdown {
+      width: 45px;
+    }
   }
 }
 
@@ -122,9 +134,12 @@ $dd-width: 55px;
 
 // Firefox
 .is-firefox {
-  .field.fieldfilter-wrapper {
-    div:first-of-type {
-      height: 34px;
+  .field,
+  .field-short {
+    &.fieldfilter-wrapper {
+      div:first-of-type {
+        height: 34px;
+      }
     }
   }
 }
@@ -140,21 +155,24 @@ $dd-width: 55px;
 
 // RTL Styles ******************************************************************
 html[dir='rtl'] {
-  .field.fieldfilter-wrapper {
-    div:first-of-type {
-      margin-left: -1px;
-      margin-right: inherit;
+  .field,
+  .field-short {
+    &.fieldfilter-wrapper {
+      div:first-of-type {
+        margin-left: -1px;
+        margin-right: inherit;
 
-      div.dropdown {
-        border-left-color: $fieldfilter-border-side-color;
-        border-radius: 0 2px 2px 0;
-        border-right-color: $input-color-initial-border;
-        padding-top: 8px;
+        div.dropdown {
+          border-left-color: $fieldfilter-border-side-color;
+          border-radius: 0 2px 2px 0;
+          border-right-color: $input-color-initial-border;
+          padding-top: 8px;
+        }
       }
-    }
 
-    .field-filter {
-      border-radius: 2px 0 0 2px;
+      .field-filter {
+        border-radius: 2px 0 0 2px;
+      }
     }
   }
 
@@ -177,6 +195,12 @@ html[dir='rtl'] {
   .field.fieldfilter-wrapper .field-filter.input-md,
   .field.fieldfilter-wrapper .field-filter.colorpicker-input-md,
   .field.fieldfilter-wrapper select.field-filter.dropdown + .dropdown-wrapper {
+    width: calc(300px - 75px);
+  }
+
+  .field-short.fieldfilter-wrapper .field-filter.input-md,
+  .field-short.fieldfilter-wrapper .field-filter.colorpicker-input-md,
+  .field-short.fieldfilter-wrapper select.field-filter.dropdown + .dropdown-wrapper {
     width: calc(300px - 75px);
   }
 }

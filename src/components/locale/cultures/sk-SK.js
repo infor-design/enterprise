@@ -39,7 +39,8 @@ Soho.Locale.addCulture('sk-SK', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'Sk',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('sk-SK', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Označiť záložkou', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Popis cesty', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Prehliadač', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Jazyk prehliadača', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Zoznam s odrážkami', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Kalendár', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('sk-SK', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Prvá strana', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Priečinok', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Bežný text', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Hlavička {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Od', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Úplné zobrazenie', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Dopredu', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('sk-SK', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Zarovnať vľavo', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Zarovnať vpravo', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Kľúčové slovo', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Jazyk', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Spustiť', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Posledná strana', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Vľavo', comment: 'Left tooltip' },

@@ -89,16 +89,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-// Modify the control size on `.spinbox-xs` classes
-.spinbox-xs {
-  .spinbox-control {
-    &.down,
-    &.up {
-      padding: 7px 3px;
-    }
-  }
-}
-
 // Everything inside the spinbox wrapper is vertically-aligned middle.
 .spinbox-wrapper {
   display: inline-block;
@@ -114,7 +104,7 @@ input::-webkit-inner-spin-button {
   }
 
   &.error .spinbox-control {
-    border-color: $error-color;
+    border-color: $error-color !important;
     color: $error-color;
   }
 
@@ -171,7 +161,7 @@ input::-webkit-inner-spin-button {
 .spinbox-md,
 .spinbox-lg {
   input {
-    width: calc(100% - 66px);
+    width: calc(100% - 66px) !important;
   }
 }
 
@@ -179,12 +169,12 @@ input::-webkit-inner-spin-button {
   width: 75px;
 
   input {
-    width: calc(100% - 36px);
+    width: calc(100% - 50px) !important;
   }
 
   .spinbox-control {
     padding: 7px 3px;
-    width: 18px;
+    width: 25px;
   }
 }
 
@@ -208,13 +198,19 @@ input::-webkit-inner-spin-button {
 // Matches similar rules on the standard input fields.
 @include respond-to(phone) {
   .spinbox-lg,
-  .field-short .spinbox-lg {
+  .field-short .spinbox-lg,
+  .form-layout-compact .field .spinbox-lg {
     width: 300px;
   }
 }
 
 // Short Fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
+  input.spinbox {
+    width: 100px;
+  }
+
   .spinbox-wrapper {
     margin-bottom: 0;
   }
@@ -229,24 +225,6 @@ input::-webkit-inner-spin-button {
     height: inherit;
     padding: 4px 7px;
     width: 25px;
-  }
-}
-
-// Override for iOS to correctly align ".spinbox" as child of  ".field-short"
-.ios {
-  .field-short {
-    .spinbox {
-      padding-top: 6px;
-    }
-  }
-}
-
-// Override for IE to correctly align ".spinbox" as child of  ".field-short"
-.ie {
-  .field-short {
-    .spinbox {
-      height: 25px;
-    }
   }
 }
 
@@ -305,7 +283,8 @@ html[dir='rtl'] {
   }
 
   &:not(.ie11) {
-    .field-short {
+    .field-short,
+    .form-layout-compact .field {
       .spinbox-control {
         padding: 3px 7px 4px;
       }
@@ -313,9 +292,10 @@ html[dir='rtl'] {
   }
 
   &.is-firefox {
-    .field-short {
-      .spinbox {
-        padding: 5px 4px 4px;
+    .field-short,
+    .form-layout-compact .field {
+      .spinbox-control {
+        padding: 3px 7px 5px;
       }
     }
   }
@@ -323,7 +303,8 @@ html[dir='rtl'] {
 
 // Ie11
 .ie11 {
-  .field-short {
+  .field-short,
+  .form-layout-compact .field {
     .spinbox-control {
       height: 25px;
     }

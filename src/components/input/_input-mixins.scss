@@ -13,8 +13,9 @@
   color: $input-color;
   display: inline-block;
   font-size: $theme-size-font-base;
+  height: $input-size-regular-height;
   max-width: 100%;
-  padding: $input-size-padding-y 10px;
+  padding: $input-size-regular-padding;
   resize: none;
   text-align: left;
   width: 300px;
@@ -57,11 +58,11 @@
   }
 
   &.error {
-    border-color: $error-color;
+    border-color: $error-border-color;
 
     &:focus {
       // Needed for printing
-      border-color: $error-color !important;
+      border-color: $error-border-color !important;
       box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
     }

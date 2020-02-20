@@ -18,7 +18,7 @@ Soho.Locale.addCulture('zh-CN', {
       long: 'yyyy年M月d日',
       full: 'yyyy年M月d日EEEE',
       month: 'M月d日',
-      year: 'yyyy年M',
+      year: 'yyyy年 M月',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'yyyy/M/d ah:mm',
@@ -33,13 +33,14 @@ Soho.Locale.addCulture('zh-CN', {
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-      abbreviated: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+      wide: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      abbreviated: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'ah:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['上午', '下午']
+    dayPeriods: ['上午', '下午'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '¥',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('zh-CN', {
     BookmarkThis: { id: 'BookmarkThis', value: '加为书签', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: '痕迹', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: '浏览器', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: '浏览器语言', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: '项目符号列表', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: '日历', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: '相机', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('zh-CN', {
     Filter: { id: 'Filter', value: '筛选器', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: '第一页', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: '文件夹', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: '正常文本', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: '标题{0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: '自', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: '完整视图', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: '前进', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('zh-CN', {
     JustifyLeft: { id: 'JustifyLeft', value: '左对齐', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: '右对齐', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: '关键字', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: '语言', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: '启动', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: '最后一页', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: '左', comment: 'Left tooltip' },

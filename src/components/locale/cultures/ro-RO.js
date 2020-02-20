@@ -39,7 +39,8 @@ Soho.Locale.addCulture('ro-RO', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['a.m.', 'p.m.']
+    dayPeriods: ['a.m.', 'p.m.'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'LEI',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('ro-RO', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Marcați acesta (aceasta)', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Marcaj traseu navigare', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Browser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Limbă browser', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Listă marcată', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Aparat foto', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('ro-RO', {
     Filter: { id: 'Filter', value: 'Filtru', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Prima pagină', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Text normal', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Antet {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'De la', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Vizualizare completă', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Înainte', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('ro-RO', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Aliniere la stânga', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Aliniere la dreapta', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Cuvânt cheie', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Limbă', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Lansare', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Ultima pagină', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Stânga', comment: 'Left tooltip' },

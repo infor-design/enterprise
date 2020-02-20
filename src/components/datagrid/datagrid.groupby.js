@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import { utils } from '../../utils/utils';
+import { numberUtils } from '../../utils/number';
 
 /**
 * An api for grouping data by a given field (s)
@@ -142,7 +144,7 @@ aggregators.aggregate = function (items, columns) {
       const field = columns[i].field;
 
       self.sum = function (sum, node) {
-        if (node.isFiltered) { // If excluded / filtered out.
+        if (node._isFilteredOut) { // If excluded / filtered out.
           return sum;
         }
 
@@ -153,7 +155,11 @@ aggregators.aggregate = function (items, columns) {
         } else {
           value = node[field];
         }
-        return sum + Number(value);
+
+        value = Number(value);
+        const valuePlaces = numberUtils.decimalPlaces(value);
+        const sumPlaces = numberUtils.decimalPlaces(sum);
+        return Number((sum + value).toFixed(Math.max(valuePlaces, sumPlaces)));
       };
 
       const total = items.reduce(self[columns[i].aggregator], 0);

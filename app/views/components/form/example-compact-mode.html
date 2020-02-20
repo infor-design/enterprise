@@ -1,0 +1,297 @@
+<form id="example-stacked-form" class="form-layout-compact">
+  <div class="row small-top-padding">
+    <div class="twelve columns">
+      <div class="flex-toolbar">
+        <div class="toolbar-section title">
+          <h2>Shorter Input Field Sizes</h2>
+        </div>
+
+        <div class="toolbar-section buttonset">
+          <button class="btn btn-toggle is-selected is-pressed" type="button" id="toggle-compact">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-change-row-line-height"></use>
+            </svg>
+            <span>Compact Mode</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row small-top-padding">
+    <div class="six columns">
+
+      <div class="field">
+        <div id="example-1" class="chart-container input-size"></div>
+      </div>
+
+      <div class="field">
+        <label for="example-text">Regular Text</label>
+        <input type="text" id="example-text" name="example-text" value="Text"/>
+      </div>
+
+      <div class="field">
+        <label for="example-text-placeholder">Regular Placeholder</label>
+        <input type="text" id="example-text-placeholder" name="example-text-placeholder" placeholder="Useful Info"/>
+      </div>
+
+      <div class="field">
+        <label for="example-text-validation" class="required">Validation</label>
+        <input type="text" class="required" id="example-text-validation" name="example-text-validation" aria-required="true" data-validate="required"/>
+      </div>
+
+      <div class="field">
+        <label for="example-autocomplete">Autocomplete</label>
+          <input type="text" autocomplete="off" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete"/>
+      </div>
+
+      <div class="field">
+        <label for="example-password">Password</label>
+        <input type="password" id="example-password" name="example-password" value="123"/>
+      </div>
+
+      <div class="field">
+        <label for="example-dropdown" class="label">Dropdown</label>
+        <select id="example-dropdown" name="example-dropdown" class="dropdown">
+          <option value="AL">Alabama</option>
+          <option value="CA">California</option>
+          <option value="DE">Delaware</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="KS">Kansas</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="NE">Nebraska</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="example-colorpicker">Color Picker</label>
+        <input class="colorpicker"name="example-colorpicker" id="example-colorpicker" type="text" />
+      </div>
+
+      <div class="field">
+        <label for="example-datepicker" class="label">Date Picker</label>
+        <input id="example-datepicker" class="datepicker" name="example-datepicker" type="text"/>
+      </div>
+
+      <div class="field">
+        <label for="example-spinbox">Spinbox</label>
+        <input id="example-spinbox" name="regular-spinbox" type="text" class="spinbox" data-options="{min: 0, max: 10}"/>
+      </div>
+
+      <div class="field">
+        <label for="example-timepicker" class="label">Time Picker</label>
+        <input id="example-timepicker" class="timepicker" name="example-timepicker" type="text"/>
+      </div>
+
+      <div class="field">
+        <label for="example-lookup" class="label required">Lookup</label>
+        <input id="example-lookup" class="lookup" name="example-lookup" type="text"/>
+      </div>
+
+      <div class="field">
+        <label for="example-fileupload">File Upload</label>
+        <input type="file" class="fileupload" id="example-fileupload" name="fileupload"/>
+      </div>
+
+     <div class="field">
+        <input type="checkbox" class="checkbox" checked id="example-stacked-remember"/>
+        <label for="example-stacked-remember" class="checkbox-label">Checkbox</label>
+      </div>
+
+      <div class="field">
+        <fieldset class="radio-group">
+          <legend>Radio Group</legend>
+          <input type="radio" class="radio" name="options-1" id="option-1-1" value="option-1-1" />
+          <label for="option-1-1" class="radio-label">Option one</label>
+          <br/>
+          <input type="radio" class="radio" name="options-1" id="option-1-2" value="option-1-2" checked="true" />
+          <label for="option-1-2"  class="radio-label">Option two</label>
+          <br/>
+          <input type="radio" class="radio" name="options-1" id="option-1-3" value="option-1-3" />
+          <label for="option-1-3" class="radio-label">Option three</label>
+          <br/>
+          <input type="radio" class="radio" name="options-1" id="option-1-4" value="option-1-4" disabled="true" />
+          <label for="option-1-4" class="radio-label">Option four</label>
+        </fieldset>
+      </div>
+
+      <div class="field">
+        <a class="hyperlink hide-focus" href="#">Normal Hyperlink</a>
+      </div>
+
+      <div class="field">
+        <label for="example-textarea">Textarea</label>
+        <textarea id="example-textarea" class="textarea" maxlength="90" name="description-max">Line One</textarea>
+      </div>
+
+      <div class="field">
+        <button class="btn-primary" type="button">Primary Form Button</button>
+      </div>
+    </div>
+    <div class="six columns">
+
+      <div class="field-short field-stacked">
+        <div id="example-2" class="chart-container input-size"></div>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-text-short">Regular Text</label>
+        <input type="text" id="example-text-short" name="example-text-short" value="Text"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-text-placeholder-short">Regular Placeholder</label>
+        <input type="text" id="example-text-placeholder-short" name="example-text-placeholder-short" placeholder="Useful Info"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-text-validation-stacked" class="required">Validation</label>
+        <input type="text" class="required" id="example-text-validation-stacked" name="example-text-validation-stacked" aria-required="true" data-validate="required"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-autocomplete-short">Autocomplete</label>
+        <input type="text" autocomplete="off" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete-short"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-password-short">Password</label>
+        <input type="password" id="example-password-short" name="example-password-short" value="123"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-dropdown-short" class="label">State</label>
+        <select id="example-dropdown-short" name="example-dropdown-short" class="dropdown">
+          <option value="AL">Alabama</option>
+          <option value="CA">California</option>
+          <option value="DE">Delaware</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="KS">Kansas</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="NE">Nebraska</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+        </select>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-colorpicker-short">Color Picker</label>
+        <input class="colorpicker"name="example-colorpicker-short" id="example-colorpicker-short" type="text" />
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-datepicker-short" class="label">Date Picker</label>
+        <input id="example-datepicker-short" class="datepicker" name="example-datepicker-short" type="text"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-spinbox-short">Spinbox</label>
+        <input id="example-spinbox-short" name="regular-spinbox" type="text" class="spinbox" data-options="{min: 0, max: 10}"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-timepicker-short" class="label">Time Picker</label>
+        <input id="example-timepicker-short" class="timepicker" name="example-timepicker-short" type="text"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-lookup-short" class="label required">Lookup</label>
+        <input id="example-lookup-short" class="lookup" name="example-lookup-short" type="text"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="examplefileupload-short">Short Size</label>
+        <input type="file" class="fileupload" id="examplefileupload-short" name="fileupload"/>
+      </div>
+
+      <div class="field-short field-stacked">
+        <input type="checkbox" class="checkbox" checked id="example-stacked-remember-short"/>
+        <label for="example-stacked-remember-short" class="checkbox-label">Checkbox</label>
+      </div>
+
+      <div class="field-short field-stacked">
+        <fieldset class="radio-group">
+          <legend>Radio Group</legend>
+          <input type="radio" class="radio" name="options-2" id="option-2-1" value="option-2-1" />
+          <label for="option-2-1" class="radio-label">Option one</label>
+          <br/>
+          <input type="radio" class="radio" name="options-2" id="option-2-2" value="option-2-2" checked="true" />
+          <label for="option-2-2" class="radio-label">Option two</label>
+          <br/>
+          <input type="radio" class="radio" name="options-2" id="option-2-3" value="option-2-3" />
+          <label for="option-2-3" class="radio-label">Option three</label>
+          <br/>
+          <input type="radio" class="radio" name="options-2" id="option-2-4" value="option-2-4" disabled="true" />
+          <label for="option-2-4" class="radio-label">Option four</label>
+        </fieldset>
+      </div>
+
+      <div class="field-short field-stacked">
+        <a class="hyperlink hide-focus" href="#">Normal Hyperlink</a>
+      </div>
+
+      <div class="field-short field-stacked">
+        <label for="example-textarea-stacked">Textarea</label>
+        <textarea id="example-textarea-stacked" class="textarea" maxlength="90" name="description-max">Line One</textarea>
+      </div>
+
+      <div class="field-short field-stacked">
+        <button class="btn-primary" type="button">Primary Form Button</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script id="script-toggle-compact">
+  $('#toggle-compact').on('click', function() {
+    var className = 'form-layout-compact';
+    var hasClass = $('form').hasClass(className);
+    if (hasClass) {
+      $('form').removeClass(className);
+    } else {
+      $('form').addClass(className);
+    }
+  });
+</script>
+
+<script id="init-targeted">
+  $('body').on('initialized', function () {
+
+    var dataset1 = [{
+      data: [{
+        name: {text: 'Targeted Achievement Chart'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+
+    $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'});
+    $('#example-2').chart({dataset: dataset1, type: 'targeted-achievement'});
+  });
+</script>

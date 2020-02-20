@@ -10,6 +10,15 @@ $gutter-neg-size: -20px;
 //$breakpoint-tablet-to-desktop: 1160px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
+  &.flex-align-bottom {
+    &.has-messages {
+      // align-items: center;
+      input:not(.error) {
+        margin-bottom: 22px;
+      }
+    }
+  }
+
   clear: both;
   font-size: $theme-size-font-sm;
   margin: 0 auto;
@@ -40,6 +49,10 @@ $gutter-neg-size: -20px;
 
   &.top-padding {
     padding-top: 30px;
+  }
+
+  &.small-top-padding {
+    padding-top: 10px;
   }
 
   &.no-top-padding {
@@ -135,7 +148,6 @@ $gutter-neg-size: -20px;
       width: calc(100% - 10px);
     }
   }
-
 }
 
 .row::after {
@@ -167,6 +179,15 @@ $gutter-neg-size: -20px;
       label {
         text-align: left;
       }
+    }
+  }
+
+  &.flex-align-center {
+    align-self: center;
+
+    .field .checkbox-label {
+      margin-top: ($input-size-compact-height / 2) + 0.4 !important;
+      overflow: visible;
     }
   }
 
@@ -276,7 +297,6 @@ $gutter-neg-size: -20px;
     .columns {
       margin-left: 0;
       width: 100% !important;
-
     }
   }
 }
@@ -285,11 +305,22 @@ $gutter-neg-size: -20px;
 @media (min-width: $breakpoint-phone-to-tablet) {
   .row {
     padding-right: 20px;
+
+    &.flex-align-bottom {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .column,
   .columns {
     padding: 0;
+  }
+
+  .column .field-flex input,
+  .columns .field-flex input {
+    width: 100%;
   }
 
   .one.column,

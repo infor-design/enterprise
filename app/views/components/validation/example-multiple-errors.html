@@ -1,4 +1,5 @@
 <div class="row">
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   <div class="twelve columns">
 
     <div class="field">
@@ -23,6 +24,11 @@
         <option value="RI">Rhode Island</option>
         <option value="SC">South Carolina</option>
       </select>
+    </div>
+
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="checkbox1"  id="checkbox1" data-validate="required"/>
+      <label for="checkbox1" class="checkbox-label">Checkbox<span class="required" aria-hidden="true"></span></label>
     </div>
 
     <div class="field">
@@ -78,40 +84,58 @@
     $('#states')
     .removeError()
     .addError({ message: 'Dropdown is in Error.', inline: true })
+
+    $('#checkbox1')
+    .removeError()
+    .addError({ message: 'Checkbox is in Error.', inline: true })
   });
 
   $('#hide').on('click', function () {
     console.log(['Username data-errormessage =', $('#username-display').data('data-errormessage') ]);
     console.log(['States data-errormessage =', $('#states').data('data-errormessage') ]);
+    console.log(['Checkbox data-errormessage =', $('#checkbox1').data('data-errormessage') ]);
+    console.log(['Text data-errormessage =', $('#text').data('data-errormessage') ]);
 
-    console.log(['Username .getErrorMessage() =', $('#username-display').getErrorMessage() ]);
-    console.log(['States .getErrorMessage() =', $('#states').getErrorMessage() ]);
+    console.log(['Username .getMessage() =', $('#username-display').getMessage() ]);
+    console.log(['States .getMessage() =', $('#states').getMessage() ]);
+    console.log(['Checkbox .getMessage() =', $('#checkbox1').getMessage() ]);
+    console.log(['Text .getMessage() =', $('#text').getMessage() ]);
 
     // only remove the error if it exists
-    if ($('#username-display').getErrorMessage().length > 0) {
+    if ($('#username-display').getMessage().length > 0) {
       $('#username-display').removeError();
     }
 
     // only remove the error if it exists
-    if ($('#states').getErrorMessage()) {
+    if ($('#states').getMessage()) {
       $('#states').removeError();
+    }
+
+    // only remove the error if it exists
+    if ($('#checkbox1').getMessage()) {
+      $('#checkbox1').removeError();
+    }
+
+    // only remove the error if it exists
+    if ($('#text').getMessage()) {
+      $('#text').removeError();
     }
   });
 
   $('#goto').button().on('click', function () {
-    if ($('#username-display').getErrorMessage().length > 0) {
-      // should scroll the element into view at the bottom of the view port
+    if ($('#username-display').getMessage().length > 0) {
       $('#username-display').scrollIntoView(false);
-    } else if ($('#states').getErrorMessage().length > 0) {
+    } else if ($('#states').getMessage().length > 0) {
       // should scroll the element into view at the top of the view port
       $('#states').scrollIntoView(true);
-    } else if ($('#text').getErrorMessage().length > 0) {
-      // since the parameter is not boolean, the default of true should occur
-      $('#text').scrollIntoView('stringvalue');
+    } else if ($('#text').getMessage().length > 0) {
+      $('#text').scrollIntoView(false);
+    } else if ($('#checkbox1').getMessage().length > 0) {
+      $('#checkbox1').scrollIntoView(true);
     }
   });
 
-  $("#states, #username-display").on('valid error', function (event, validation) {
+  $("#states, #username-display, #checkbox1, #text").on('valid error', function (event, validation) {
     console.log([event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
   });
 </script>

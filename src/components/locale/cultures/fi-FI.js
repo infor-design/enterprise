@@ -39,7 +39,8 @@ Soho.Locale.addCulture('fi-FI', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H.mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['ap.', 'ip.']
+    dayPeriods: ['ap.', 'ip.'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '€',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('fi-FI', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Tallenna tämä kirjanmerkkeihin', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Navigointipolku', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Selain', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Selaimen kieli', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Luettelomerkeillä varustettu luettelo', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Kalenteri', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('fi-FI', {
     Filter: { id: 'Filter', value: 'Suodatin', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Ensimmäinen sivu', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Kansio', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normaali teksti', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Ylätunniste {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Alkaen', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Koko näytön näkymä', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Siirry eteenpäin', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('fi-FI', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Tasaa vasemmalle', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Tasaa oikealle', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Avainsana', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Kieli', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Käynnistä', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Viimeinen sivu', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Vasen', comment: 'Left tooltip' },

@@ -21,7 +21,13 @@ const Environment = {
   os: {},
   devicespecs: {},
 
-  rtl: $('html').attr('dir') === 'rtl',
+  /**
+   * @returns {boolean} true if the page locale is currently read Right-To-Left instead
+   * of the default Left-to-Right.
+   */
+  get rtl() {
+    return $('html').attr('dir') === 'rtl';
+  },
 
   /**
    * Builds run-time environment settings
@@ -54,6 +60,24 @@ const Environment = {
         ua.indexOf('Android') === -1) {
       cssClasses += 'is-safari ';
       this.browser.name = 'safari';
+    }
+
+    this.browser.isWKWebView = function () {
+      return false;
+    };
+
+    if (navigator.platform.substr(0, 2) === 'iP') {
+      const lte9 = /constructor/i.test(window.HTMLElement);
+      const idb = !!window.indexedDB;
+
+      if ((window.webkit && window.webkit.messageHandlers) || !lte9 || idb) {
+        // WKWebView
+        this.browser.name = 'wkwebview';
+        cssClasses += 'is-safari is-wkwebview ';
+        this.browser.isWKWebView = function () {
+          return true;
+        };
+      }
     }
 
     if (ua.indexOf('Chrome') !== -1) {
@@ -138,6 +162,7 @@ const Environment = {
     let nameOffset;
     let verOffset;
     let ix;
+    let browserVersionName = '';
 
     if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
       browser = 'Opera';
@@ -158,12 +183,19 @@ const Environment = {
     } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
       browser = 'Chrome';
       version = nUAgent.substring(verOffset + 7);
+      if (nUAgent.indexOf('Edg') > -1) {
+        browserVersionName = 'Microsoft Edge';
+      }
     } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
       browser = 'Safari';
       version = nUAgent.substring(verOffset + 7);
       if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
         version = nUAgent.substring(verOffset + 8);
       }
+    } else if (this.browser.isWKWebView()) { //eslint-disable-line
+      browser = `WKWebView`; //eslint-disable-line
+      version = '';
+      majorVersion = '';
     } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
       browser = 'Firefox';
       version = nUAgent.substring(verOffset + 8);
@@ -239,11 +271,12 @@ const Environment = {
 
     this.devicespecs = {
       currentBrowser: browser,
-      browserVersion: version,
+      browserVersion: version.trim(),
       browserMajorVersion: majorVersion,
       isMobile: mobile,
       os,
-      currentOSVersion: osVersion
+      currentOSVersion: osVersion,
+      browserVersionName
     };
   },
 
@@ -287,6 +320,13 @@ Environment.browser.isEdge = function () {
  */
 Environment.browser.isIE11 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
+ * @returns {boolean} whether or not the current browser is Safari and includes wkWebView as safari
+ */
+Environment.browser.isSafari = function () {
+  return Environment.browser.name === 'safari' || Environment.browser.name === 'wkwebview';
 };
 
 /**

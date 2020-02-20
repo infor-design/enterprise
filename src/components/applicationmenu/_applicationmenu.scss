@@ -227,7 +227,7 @@ body.is-open-touch {
   }
 
   .accordion-static-panel {
-    background-color: $theme-color-palette-slate-70;
+    background-color: $accordion-static-panel-bg-color;
     border-bottom-color: $theme-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
@@ -243,6 +243,7 @@ body.is-open-touch {
 
     .btn-menu {
       margin-top: -5px;
+      text-align: left;
 
       span {
         color: inherit;

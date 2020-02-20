@@ -29,49 +29,62 @@
 }
 
 // Palette Shapes
+.palette-grid {
+  display: table;
+  padding: 30px 20px 20px;
+  width: 100%;
+
+  .palette-label-column {
+    text-transform: lowercase;
+    width: 30px;
+
+    .palette-color {
+      border: none;
+    }
+  }
+
+  .palette-label-column:last-child {
+    width: 100px;
+  }
+}
+
 .palette-column {
   @include antialiased();
 
-  display: inline-block;
-  font-size: $theme-size-font-base;
-  margin: 10px;
-  padding-top: 15px;
+  display: table-cell;
+  font-size: $theme-size-font-md;
   text-align: center;
   text-transform: uppercase;
   vertical-align: top;
-  width: 120px;
 
   .palette-color {
-    height: 34px;
-    line-height: 36px;
+    border: 1px solid $color-border-color;
+    font-size: $theme-size-font-sm;
+    height: 55px;
+    margin: 10px;
+    margin-bottom: 40px;
+    width: auto;
   }
 
-  .dark-color {
-    color: $theme-color-palette-black;
-  }
-
+  .dark-color,
   .light-color {
-    color: $theme-color-palette-white;
+    left: 5px;
+    position: relative;
+    top: 60px;
   }
 
   .palette-label {
     @include antialiased();
 
-    color: $font-color;
     display: block;
     font-size: 1.6rem;
-    padding-bottom: 15px;
-    text-align: left;
+    text-align: center;
     text-transform: none;
   }
 
   .palette-number {
-    float: left;
-    margin-left: 15px;
     position: relative;
-    top: 10px;
-    vertical-align: middle;
-    width: 10px;
+    top: 32%;
   }
 
   .palette-hex {

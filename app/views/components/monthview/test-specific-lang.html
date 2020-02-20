@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.monthview').monthview({
+      locale: 'da-DK',
+      language: 'de',
+      month: 6,
+      year: 2020
+    });
+  });
+</script>

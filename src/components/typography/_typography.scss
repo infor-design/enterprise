@@ -169,9 +169,9 @@ label,
 .label {
   color: $label-color;
   display: block;
-  font-size: $theme-size-font-sm;
-  margin-bottom: 8px;
-  min-height: 13px; //prevents need to use &nbsp; for blank labels
+  font-size: $label-size-regular-font-size;
+  margin: $label-size-regular-margin;
+  min-height: 14px; //prevents need to use &nbsp; for blank labels
 }
 
 .is-disabled.label,
@@ -344,6 +344,13 @@ small,
   }
 }
 
+.form-layout-compact {
+  .field-flex [class*='btn'] {
+    margin-bottom: 0 !important;
+  }
+}
+
+// Tighter field-flex
 .field-flex-sm {
   align-items: center;
   display: flex;
@@ -352,8 +359,8 @@ small,
   .data-description {
     flex-basis: auto;
     line-height: 34px;
-    overflow: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
@@ -385,8 +392,23 @@ small,
 .label + .data {
   color: $font-color-extrahighcontrast;
 
+  &.field-height {
+    display: inline-block;
+    font-size: $input-size-regular-font-size;
+    height: $input-size-regular-height;
+    line-height: $input-size-regular-height;
+  }
+
   &.is-placeholder {
     color: $input-placeholder-color;
+  }
+}
+
+.form-layout-compact {
+  .label + .data.field-height {
+    font-size: $input-size-compact-font-size !important;
+    height: $input-size-compact-height !important;
+    line-height: $input-size-compact-height !important;
   }
 }
 

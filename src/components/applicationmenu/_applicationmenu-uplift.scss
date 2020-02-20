@@ -27,7 +27,6 @@
 
       &::-moz-placeholder {
         color: $uplift-appmenu-searchfield-placeholder-color;
-        line-height: normal;
         opacity: 1;
       }
 
@@ -39,6 +38,10 @@
 
     > .icon {
       top: 13px;
+    }
+
+    &:first-child {
+      margin-top: 10px;
     }
   }
 
@@ -57,8 +60,16 @@
     }
   }
 
-  .btn-icon {
-    font-size: normal;
+  .accordion-static-panel {
+    .btn-menu {
+      span {
+        max-width: 150px;
+      }
+
+      svg {
+        margin-top: -10px;
+      }
+    }
   }
 
   .application-menu-header {
@@ -133,6 +144,7 @@
       @include transition(border-color 300ms $cubic-ease, padding 300ms $cubic-ease, margin 300ms $cubic-ease);
 
       border-bottom-color: transparent;
+      border-radius: $uplift-acc-border-radius;
       color: $uplift-acc-header-text-color;
       height: auto;
 
@@ -184,8 +196,6 @@
 
     // Top level rules
     > .accordion-header {
-      border-radius: $uplift-acc-border-radius;
-
       > a {
         padding-bottom: 7px;
         padding-top: 9px;
@@ -272,9 +282,6 @@
 
         + .accordion-pane:not(.all-children-filtered) {
           background-color: $uplift-acc-expanded-bg-color;
-          margin: 0 -10px;
-          padding: 0 10px 10px;
-          position: relative;
 
           .accordion-header {
             border-radius: $uplift-acc-border-radius;
@@ -294,16 +301,32 @@
         margin-top: 4px;
       }
 
+      .accordion-pane {
+        background-color: transparent;
+      }
+
       &.filtered {
         + .accordion-pane {
-          display: none;
+          background-color: $uplift-acc-expanded-bg-color;
         }
+      }
+    }
+
+    > .accordion-pane {
+      padding: 0;
+      position: relative;
+
+      &.is-expanded {
+        margin: 0 -10px;
+        padding: 0 10px 10px;
       }
     }
 
     // Visible accordion panes force a border to show up on the next
     // accordion header for visual separation
     .accordion-pane {
+      background-color: transparent;
+
       .accordion-header {
         border-bottom-color: transparent;
         color: $uplift-acc-subheader-text-color;
@@ -364,7 +387,9 @@
 
         &.list-item {
           &::before {
-            font-size: 1rem;
+            color: inherit;
+            font-size: 0.8rem;
+            padding-right: 12px;
           }
         }
 
@@ -466,10 +491,20 @@ html[dir='rtl'] {
 
     .accordion.panel.inverse {
       .accordion-pane {
-        .accordion-header:not(.has-chevron) {
-          .icon.chevron {
-            left: auto;
-            right: -5px;
+        .accordion-header {
+          &:not(.has-chevron) {
+            .icon.chevron {
+              left: auto;
+              right: -5px;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              font-size: 1.2rem;
+              padding-left: 8px;
+              padding-right: 28px;
+            }
           }
         }
       }

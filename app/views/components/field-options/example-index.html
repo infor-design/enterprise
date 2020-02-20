@@ -1,374 +1,355 @@
+<form id="example-stacked-form">
+  <div class="row small-top-padding">
+    <div class="twelve columns">
+      <div class="flex-toolbar">
+        <div class="toolbar-section title">
+        </div>
 
-<div class="row">
-  <div class="one-half column">
-
-    <div class="field">
-      <label for="example-textfield">Text Field</label>
-      <input type="text" class="field-options" aria-required="true" name="example-textfield" id="example-textfield"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-dropdown" class="label">Dropdown</label>
-      <select name="example-dropdown" class="dropdown field-options" id="example-dropdown">
-        <option value="AL">Alabama</option>
-        <option value="AK">Alaska</option>
-        <option value="AZ">Arizona</option>
-      </select>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-multiselect" class="label">Multiselect (Max 2)</label>
-      <select name="example-multiselect" class="multiselect field-options" data-maxselected="2" id="example-multiselect" multiple="true">
-        <option value="AL">Alabama</option>
-        <option value="AK">Alaska</option>
-        <option value="AZ">Arizona</option>
-      </select>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-autocomplete">Autocomplete</label>
-      <input type="text" autocomplete="off" class="autocomplete field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-fileupload">Fileupload</label>
-      <input type="file" class="fileupload field-options" name="example-fileupload" id="example-fileupload"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-lookup" class="label">Lookup</label>
-      <input data-init="false" class="lookup field-options" name="example-lookup" type="text" id="example-lookup"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-datepicker" class="label">Date Picker</label>
-      <input class="datepicker field-options" name="example-datepicker" type="text" id="example-datepicker"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-       <label for="example-timepicker" class="label">Time Picker</label>
-       <input class="timepicker field-options" name="example-timepicker" type="text" id="example-timepicker"/>
-
-       <button class="btn-actions btn-menu" type="button">
-          <span class="audible">Actions for Item Description</span>
-          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-             <use xlink:href="#icon-more"/>
-          </svg>
-       </button>
-       <ul class="popupmenu">
-          <li><a href="#">Show History</a></li>
-          <li><a href="#">Edit Record</a></li>
-       </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-spinbox">Spinbox</label>
-      <input name="example-spinbox" type="text" class="spinbox field-options"  id="example-spinbox"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-colorpicker">Color Picker</label>
-      <input class="colorpicker field-options" type="text" name="example-colorpicker" id="example-colorpicker"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <fieldset class="radio-group">
-      <legend>Select delivery method</legend>
-
-      <div class="field-options">
-        <input type="radio" class="radio" name="options" id="option1" value="option1" />
-        <label for="option1" class="radio-label">Option one</label>
-        <br/>
-        <input type="radio" class="radio" name="options" id="option2" value="option1" checked="true" />
-        <label for="option2"  class="radio-label">Option two</label>
-        <br/>
-        <input type="radio" class="radio" name="options" id="option3" value="option3" />
-        <label for="option3" class="radio-label">Option three</label>
-        <br/>
-        <input type="radio" class="radio" name="options" id="option4" value="delivery" disabled="true" />
-        <label for="option4" class="radio-label">Option four</label>
+        <div class="toolbar-section buttonset">
+          <button class="btn btn-toggle" type="button" id="toggle-compact">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-change-row-line-height"></use>
+            </svg>
+            <span>Compact Mode</span>
+          </button>
+        </div>
       </div>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </fieldset>
-
-    <span class="checkbox-group-label">Checkbox</span>
-
-    <div class="field">
-      <input type="checkbox" class="checkbox field-options" id="checkbox-field-1"/>
-      <label for="checkbox-field-1" class="checkbox-label">Field Checkbox 1</label>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
     </div>
-    <div class="field">
-      <input type="checkbox" class="checkbox field-options" id="checkbox-field-2"/>
-      <label for="checkbox-field-2" class="checkbox-label">Field Checkbox 2</label>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-    <div class="field">
-      <input type="checkbox" class="checkbox field-options" id="checkbox-field-3"/>
-      <label for="checkbox-field-3" class="checkbox-label">Field Checkbox 3</label>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <br/>
-    <div class="field is-disabled">
-      <label for="example-disabled-textfield">Disabled</label>
-      <input class="field-options" type="text" disabled="true" value="Field not editable" name="example-disabled-textfield" id="example-disabled-textfield"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-readonly-textfield">Readonly</label>
-      <input class="field-options" type="text" readonly="true" value="02006" name="example-readonly-textfield" id="example-readonly-textfield"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="compound-field">
-
-      <div class="field">
-        <label for="input-cost">Cost</label>
-        <input type="text" class="input-xs field-options" id="input-cost" name="input-cost"/>
-
-        <button class="btn-actions btn-menu" type="button">
-          <span class="audible">Actions for Item Description</span>
-          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-            <use xlink:href="#icon-more"/>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Show History</a></li>
-          <li><a href="#">Edit Record</a></li>
-        </ul>
-
-      </div>
-
-      <div class="field">
-        <label for="input-quantity">Quantity</label>
-        <input type="text" class="input-xs field-options" id="input-quantity" name="input-quantity"/>
-
-        <button class="btn-actions btn-menu" type="button">
-          <span class="audible">Actions for Item Description</span>
-          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-            <use xlink:href="#icon-more"/>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Show History</a></li>
-          <li><a href="#">Edit Record</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="field">
-      <label for="example-clearable">Clearable Input</label>
-      <input type="text" class="field-options" data-clearable="true" name="example-clearable" id="example-clearable"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-searchfield-clearable">Clearable Searchfield</label>
-      <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" type="text" class="searchfield field-options" name="example-searchfield-clearable" id="example-searchfield-clearable"/>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
-    <div class="field">
-      <label for="example-textarea">Textarea</label>
-      <textarea class="textarea field-options" placeholder="Type your notes here..." name="example-textarea" id="example-textarea"></textarea>
-
-      <button class="btn-actions btn-menu" type="button">
-        <span class="audible">Actions for Item Description</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use xlink:href="#icon-more"/>
-        </svg>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Show History</a></li>
-        <li><a href="#">Edit Record</a></li>
-      </ul>
-    </div>
-
   </div>
-</div>
 
-<script>
+  <div class="row no-top-padding">
+    <div class="one-half column">
+      <div class="field">
+        <label for="example-textfield">Text Field</label>
+        <input type="text" class="field-options" aria-required="true" name="example-textfield" id="example-textfield"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-dropdown" class="label">Dropdown</label>
+        <select name="example-dropdown" class="dropdown field-options" id="example-dropdown">
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+        </select>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-multiselect" class="label">Multiselect (Max 2)</label>
+        <select name="example-multiselect" class="multiselect field-options" data-maxselected="2" id="example-multiselect" multiple="true">
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+        </select>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-autocomplete">Autocomplete</label>
+        <input type="text" autocomplete="off" class="autocomplete field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-fileupload">Fileupload</label>
+        <input type="file" class="fileupload field-options" name="example-fileupload" id="example-fileupload"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-lookup" class="label">Lookup</label>
+        <input data-init="false" class="lookup field-options" name="example-lookup" type="text" id="example-lookup"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-datepicker" class="label">Date Picker</label>
+        <input class="datepicker field-options" name="example-datepicker" type="text" id="example-datepicker"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+         <label for="example-timepicker" class="label">Time Picker</label>
+         <input class="timepicker field-options" name="example-timepicker" type="text" id="example-timepicker"/>
+
+         <button class="btn-actions btn-menu" type="button">
+            <span class="audible">Actions for Item Description</span>
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+               <use xlink:href="#icon-more"/>
+            </svg>
+         </button>
+         <ul class="popupmenu">
+            <li><a href="#">Show History</a></li>
+            <li><a href="#">Edit Record</a></li>
+         </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-spinbox">Spinbox</label>
+        <input name="example-spinbox" type="text" class="spinbox field-options"  id="example-spinbox"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-colorpicker">Color Picker</label>
+        <input class="colorpicker field-options" type="text" name="example-colorpicker" id="example-colorpicker"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <fieldset class="radio-group">
+        <legend>Select delivery method</legend>
+
+        <div class="field-options">
+          <input type="radio" class="radio" name="options" id="option1" value="option1" />
+          <label for="option1" class="radio-label">Option one</label>
+          <br/>
+          <input type="radio" class="radio" name="options" id="option2" value="option1" checked="true" />
+          <label for="option2"  class="radio-label">Option two</label>
+          <br/>
+          <input type="radio" class="radio" name="options" id="option3" value="option3" />
+          <label for="option3" class="radio-label">Option three</label>
+          <br/>
+          <input type="radio" class="radio" name="options" id="option4" value="delivery" disabled="true" />
+          <label for="option4" class="radio-label">Option four</label>
+        </div>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </fieldset>
+
+      <span class="checkbox-group-label">Checkbox</span>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox field-options" id="checkbox-field-1"/>
+        <label for="checkbox-field-1" class="checkbox-label">Field Checkbox 1</label>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox field-options" id="checkbox-field-2"/>
+        <label for="checkbox-field-2" class="checkbox-label">Field Checkbox 2</label>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox field-options" id="checkbox-field-3"/>
+        <label for="checkbox-field-3" class="checkbox-label">Field Checkbox 3</label>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <br/>
+      <div class="field is-disabled">
+        <label for="example-disabled-textfield">Disabled</label>
+        <input class="field-options" type="text" disabled="true" value="Field not editable" name="example-disabled-textfield" id="example-disabled-textfield"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-readonly-textfield">Readonly</label>
+        <input class="field-options" type="text" readonly="true" value="02006" name="example-readonly-textfield" id="example-readonly-textfield"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-clearable">Clearable Input</label>
+        <input type="text" class="field-options" data-clearable="true" name="example-clearable" id="example-clearable"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-searchfield-clearable">Clearable Searchfield</label>
+        <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" type="text" class="searchfield field-options" name="example-searchfield-clearable" id="example-searchfield-clearable"/>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label for="example-textarea">Textarea</label>
+        <textarea class="textarea field-options" placeholder="Type your notes here..." name="example-textarea" id="example-textarea"></textarea>
+
+        <button class="btn-actions btn-menu" type="button">
+          <span class="audible">Actions for Item Description</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use xlink:href="#icon-more"/>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Show History</a></li>
+          <li><a href="#">Edit Record</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<script id="create-field-options">
   var grid,
     columns = [],
     data = [];
@@ -412,4 +393,16 @@
     }
   }).fieldoptions();
 
+</script>
+
+<script id="script-toggle-compact">
+  $('#toggle-compact').on('click', function() {
+    var className = 'form-layout-compact';
+    var hasClass = $('form').hasClass(className);
+    if (hasClass) {
+      $('form').removeClass(className);
+    } else {
+      $('form').addClass(className);
+    }
+  });
 </script>

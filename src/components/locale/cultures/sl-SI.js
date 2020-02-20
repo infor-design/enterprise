@@ -2,8 +2,8 @@
 Soho.Locale.addCulture('sl-SI', {
   // layout/language
   language: 'sl',
-  englishName: 'Slovenian (Slovenia)!!!',
-  nativeName: 'slovenski (Slovenija)!!!',
+  englishName: 'Slovenian (Slovenia)',
+  nativeName: 'slovenski (Slovenija)',
   // layout/orientation/@characters
   direction: 'left-to-right',
   // ca-gregorian
@@ -39,7 +39,8 @@ Soho.Locale.addCulture('sl-SI', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['dop.', 'pop.']
+    dayPeriods: ['dop.', 'pop.'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'Sk',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('sl-SI', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Ustvari zaznamek', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Sledenje poti', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Brskalnik', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Jezik brskalnika', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Označen seznam', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Koledar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Fotoaparat', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('sl-SI', {
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Prva stran', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Mapa', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Običajno besedilo', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Glava {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Iz', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Celotni pogled', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Pojdi naprej', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('sl-SI', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Poravnaj levo', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Poravnaj desno', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Ključna beseda', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Jezik', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Zaženi', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Zadnja stran', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Levo', comment: 'Left tooltip' },

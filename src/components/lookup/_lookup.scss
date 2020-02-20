@@ -75,11 +75,6 @@
   }
 }
 
-.ie9 .lookup-wrapper .trigger,
-.ie10 .lookup-wrapper .trigger {
-  background-color: rgba($theme-color-palette-white, 0);
-}
-
 .lookup-modal {
   .modal-content .modal-body-wrapper {
     margin-bottom: 20px;
@@ -176,7 +171,7 @@
       box-shadow: none;
     }
 
-    &:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
+    &:hover:not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly) {
       background-color: $datagrid-row-hover-color;
     }
   }
@@ -206,7 +201,8 @@
 }
 
 // Short fields
-.field-short {
+.field-short,
+.form-layout-compact .field {
   .lookup-wrapper {
     margin-bottom: 0;
 
@@ -216,10 +212,10 @@
       width: 18px;
 
       .icon {
-        height: 14px;
-        right: 0;
+        height: 16px;
+        right: 2px;
         top: 6px;
-        width: 18px;
+        width: 16px;
       }
 
       + .icon {
@@ -250,16 +246,18 @@ html[dir='rtl'] {
     }
   }
 
-  .field-short .lookup-wrapper .trigger {
-    margin-left: 0;
-    margin-right: -20px;
+  .field-short,
+  .form-layout-compact .field {
+    .lookup-wrapper .trigger {
+      margin-left: 0;
+      margin-right: -20px;
 
-    .icon {
-      height: 14px;
-      left: 0;
-      right: auto;
-      top: 3px;
-      width: 18px;
+      .icon {
+        height: 15px;
+        left: 2px;
+        right: auto;
+        top: 6px;
+      }
     }
   }
 

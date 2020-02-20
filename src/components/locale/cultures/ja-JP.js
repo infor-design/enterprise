@@ -39,7 +39,8 @@ Soho.Locale.addCulture('ja-JP', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['午前', '午後']
+    dayPeriods: ['午前', '午後'],
+    firstDayofWeek: 0 // Starts on Sun
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '¥',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('ja-JP', {
     BookmarkThis: { id: 'BookmarkThis', value: 'これをブックマーク', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: '階層リンク', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'ブラウザー', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'ブラウザーの言語', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: '箇条書き', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'カレンダー', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'カメラ', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('ja-JP', {
     Filter: { id: 'Filter', value: 'フィルター', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: '最初のページ', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'フォルダー', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: '標準テキスト', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'ヘッダー {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: '開始', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: '全画面表示', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: '次に進む', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('ja-JP', {
     JustifyLeft: { id: 'JustifyLeft', value: '左揃え', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: '右揃え', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'キーワード', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: '言語', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: '起動', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: '最後のページ', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: '左', comment: 'Left tooltip' },

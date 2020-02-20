@@ -232,6 +232,16 @@ In order to do this we clean the folders, update chrome and do a fresh `npm i`.
   npm i
   ```
 
+This is good step to follow if you see an error similar to this one when running the test suite:
+
+  ```sh
+  [10:06:14] I/launcher - Running 1 instances of WebDriver
+  [10:06:14] I/direct - Using ChromeDriver directly...
+  [10:06:14] E/runner - Unable to start a WebDriver session.
+  [10:06:14] E/launcher - Error: SessionNotCreatedError: session not created: This version of ChromeDriver only supports Chrome version 80
+  (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Linux 4.19.76-linuxkit x86_64)
+  ```
+
 #### Updating the docker image
 
 1. Make sure you sign up for docker and are adding to the [IDS Community](https://hub.docker.com/u/infords).
@@ -374,7 +384,7 @@ cp <CONTAINER_ID>:/home/travis/enterprise/test/baseline/<name-of-test-file.png> 
 For example:
 
 ```sh
-docker cp 91085d589653:/root/enterprise/test/.tmp/diff /Users/tmcconechy/dev/diff
+docker cp ab2c46e49db9:/root/enterprise/test/.tmp/diff /Users/tmcconechy/dev/diff
 ```
 
 Or copy them all to your local directory for inspection.

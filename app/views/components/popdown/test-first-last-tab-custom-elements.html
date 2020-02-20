@@ -1,0 +1,125 @@
+<style>
+  #popdown-example-trigger span:first-child:after {
+    content: '•';
+    color: #5C5C5C;
+    font-size: 18px;
+    padding-left: 5px;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+  }
+
+  #popdown-example-trigger {
+    border: 1px black solid;
+    width: 90px;
+    height: 34px;
+    line-height: 27px;
+  }
+
+  #popdown-example-trigger:focus {
+    border: solid 1px #368ac0;
+    box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
+    outline: none;
+  }
+
+  #popdown-example-trigger span {
+    position: relative;
+    top: 4px;
+    font-size: 1.4rem;
+  }
+
+  #popdown-example-trigger span:first-child {
+    margin-left: 5px;
+  }
+
+  #popdown-example-trigger span:last-of-type {
+    right: 5px;
+  }
+
+  #popdown-example-contents .field {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  #popdown-example-contents .field:first-child {
+    margin-top: 5px;
+  }
+</style>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <h2>Popdown Example: Tabbing into and out from a popdown (custom function).</h2>
+    <p>
+      1. When compound field opens, the first input in the popdown should be focused.<br/>
+      2. Shift + Tab on first input in the popdown should close the popdown and focus to previous element (Date Field).<br/>
+      3. Tab on last input in the popdown should close the popdown and focus to next element (Another Field).
+    </p>
+    <hr/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date-field-normal" class="label">Date Field</label>
+      <input id="date-field-normal" class="datepicker" name="date-field" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="popdown-example-trigger">Compound Field, mouse click or tab into</label>
+      <div id="popdown-example-trigger" data-popdown="true" data-init="false" tabindex="0">
+        <span class="data" id="first-name-span">Joe</span>
+        <span class="data" id="last-name-span">Smith</span>
+      </div>
+      <div class="popdown hidden" id="popdown-example-contents">
+        <div class="field">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" name="first-name"/>
+        </div>
+        <div class="field">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" name="last-name"/>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="another-field">Another Field</label>
+      <input type="text" id="another-field" name="another-field" placeholder="This Is Here"/>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+    // An example for custom function to fire on tab or shift-tab for the first/last given element in popdown.
+    function customFirstLastTabAction(args) {
+      // console.log(args);
+      const focusable = $(document).find(':focusable');
+      let index = focusable.index(args.self.trigger);
+      if (args.e.shiftKey) {
+        index = ((index - 1) < 0 ? -1 : (index - 1));
+      } else {
+        index = ((index + 1) >= focusable.length ? -1 : (index + 1));
+      }
+      if (index !== -1) {
+        focusable.eq(index).focus();
+      }
+      args.self.close();
+    }
+
+    // Invoke the popdown
+    $('#popdown-example-trigger').popdown({
+      keepOpen: true,
+      autoFocus: true,
+      toggleOnFocus: true,
+      firstLastTab: {
+        first: '#first-name',
+        last: '#last-name',
+        callback: customFirstLastTabAction
+      }
+    });
+  });
+
+</script>

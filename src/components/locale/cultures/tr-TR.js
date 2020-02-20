@@ -39,7 +39,8 @@ Soho.Locale.addCulture('tr-TR', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['ÖÖ', 'ÖS']
+    dayPeriods: ['ÖÖ', 'ÖS'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '₤',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('tr-TR', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Buna yer işareti ekle', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'İçerik haritası', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Tarayıcı', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Tarayıcı Dili', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Madde işaretli liste', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Takvim', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('tr-TR', {
     Filter: { id: 'Filter', value: 'Filtrele', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Birinci Sayfa', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Klasör', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal Metin', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Üstbilgi {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Başlangıç', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Tam Görünüm', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'İleri Git', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('tr-TR', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Sola Hizala', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Sağa Hizala', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Anahtar Sözcük', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Dil', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Başlat', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Son Sayfa', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Sol', comment: 'Left tooltip' },

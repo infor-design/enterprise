@@ -28,7 +28,8 @@ html {
 
 label,
 .label {
-  color: $theme-color-font-base;
+  color: $theme-color-font-muted;
+  min-height: 19px; //prevents need to use &nbsp; for blank labels
 }
 
 .fieldset-title,

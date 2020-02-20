@@ -2,6 +2,7 @@ import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
+import { theme } from '../theme/theme';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
 import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
@@ -29,8 +30,8 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   legend: [
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
   hideDays: false, // TODO
   showMonthYearPicker: true,
@@ -126,8 +127,7 @@ MonthView.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    // Do initialization. Build or Events ect
-    return this.build();
+    return this.setLocaleThenBuild();
   },
 
   /**
@@ -135,25 +135,16 @@ MonthView.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language);
-      this.language = this.settings.language;
-    } else {
-      this.language = Locale.currentLanguage.name;
-    }
-
-    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.settings.language = this.language;
-        this.setCurrentCalendar();
-        this.build().handleEvents();
-      });
-    } else if (!this.settings.locale) {
-      this.locale = Locale.currentLocale;
-    }
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language;
+      this.settings.language = this.language;
+      this.setCurrentCalendar();
+      this.build().handleEvents();
+    });
   },
 
   /**
@@ -166,15 +157,6 @@ MonthView.prototype = {
       this.settings.showMonthYearPicker = false;
     }
 
-    this.setLocale();
-    if (this.rendered ||
-      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
-      // Defer loading
-      this.rendered = false;
-      return this;
-    }
-
-    this.rendered = true;
     this.setCurrentCalendar();
 
     // Calendar Html in Popups
@@ -309,7 +291,11 @@ MonthView.prototype = {
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -373,7 +359,11 @@ MonthView.prototype = {
 
     this.currentDay = this.currentDay || this.settings.day;
     if (!this.currentCalendar || !this.currentCalendar.days) {
-      this.currentCalendar = Locale.calendar();
+      this.currentCalendar = Locale.calendar(
+        this.locale.name,
+        this.language,
+        this.settings.calendarName
+      );
     }
 
     let days = this.currentCalendar.days.narrow;
@@ -797,12 +787,16 @@ MonthView.prototype = {
       return;
     }
 
-    const hex = this.getLegendColor(year, month, date);
-
+    let hex = this.getLegendColor(year, month, date);
     elem[0].style.backgroundColor = '';
     elem.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
       // set color on elem at .3 of provided color as per design
       elem.addClass('is-colored');
       elem[0].style.backgroundColor = colorUtils.hexToRgba(hex, 0.3);
@@ -815,10 +809,12 @@ MonthView.prototype = {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
+        thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
       }).on('mouseleave.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';
+        thisElem.find('.day-text')[0].style.backgroundColor = '';
       });
     }
   },
@@ -1591,9 +1587,17 @@ MonthView.prototype = {
 
     for (let i = 0; i < s.legend.length; i++) {
       const series = s.legend[i];
+      let hex = series.color;
+
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
+      }
+
       const item = '' +
         `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(series.color, 0.3)}"></span>
+          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
 
@@ -1875,8 +1879,10 @@ MonthView.prototype = {
    */
   destroy() {
     this.teardown();
-    this.element.empty();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.element) {
+      this.element.empty();
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
     return this;
   }
 };

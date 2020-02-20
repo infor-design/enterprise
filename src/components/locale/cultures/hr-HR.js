@@ -39,7 +39,8 @@ Soho.Locale.addCulture('hr-HR', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: 'kn',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('hr-HR', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Dodaju knjižnu oznaku', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Hijerarhijska navigacija', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Preglednik', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Jezik preglednika', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Popis s grafičkim oznakama', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Kalendar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Kamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('hr-HR', {
     Filter: { id: 'Filter', value: 'Filtar', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Prva stranica', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Mapa', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Normalni tekst', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Zaglavlje {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Od', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Potpuni prikaz', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Idi naprijed', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('hr-HR', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Poravnaj slijeva', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Poravnaj zdesna', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Ključna riječ', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Jezik', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Pokreni', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Posljednja stranica', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Lijevo', comment: 'Left tooltip' },

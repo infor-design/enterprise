@@ -44,6 +44,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
  * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
+ * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] Expand the expandable across all frozen columns.
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
@@ -141,7 +142,8 @@ const DATAGRID_DEFAULTS = {
   columns: [],
   frozenColumns: {
     left: [],
-    right: []
+    right: [],
+    expandRowAcrossAllCells: true
   },
   dataset: [],
   columnReorder: false, // Allow Column reorder
@@ -218,6 +220,9 @@ function Datagrid(element, settings) {
   if (settings.dataset) {
     this.settings.dataset = settings.dataset;
   }
+  if (typeof this.settings.frozenColumns.expandRowAcrossAllCells === 'undefined') {
+    this.settings.frozenColumns.expandRowAcrossAllCells = DATAGRID_DEFAULTS.frozenColumns.expandRowAcrossAllCells; // eslint-disable-line
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -272,6 +277,8 @@ Datagrid.prototype = {
     this.canvas = null;
     this.totalWidths = { left: 0, center: 0, right: 0 };
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.editor = null; // Current Cell Editor thats in Use
     this.activeCell = { node: null, cell: null, row: null }; // Current Active Cell
     this.dontSyncUi = false;
@@ -438,6 +445,11 @@ Datagrid.prototype = {
     self.renderRows();
     self.renderHeader();
 
+    if (this.stretchColumnDiff < 0) {
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
+    }
+
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
       self.checkEmptyMessage();
@@ -463,42 +475,86 @@ Datagrid.prototype = {
     let args;
     let rowNode;
 
+    // Get first or last index of matching key/value
+    function getIndexByKey(array, key, value, isReverse) {
+      for (let i = 0, l = array.length; i < l; i++) {
+        const idx = isReverse ? ((l - 1) - i) : i;
+        if (array[idx][key] === value) {
+          return idx;
+        }
+      }
+      return -1;
+    }
+
     if (!location || location === 'top') {
       location = 'top';
       isTop = true;
     }
+
     // Add row status
-    data.rowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    const newRowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+
+    data = data || {};
+    data.rowStatus = data.rowStatus || newRowStatus;
+
     this.saveDirtyRows();
 
-    // Add to array
-    const appendArray = this.settings.groupable &&
-      this.originalDataset ? this.originalDataset : this.settings.dataset;
+    let dataset = this.settings.dataset;
 
-    if (typeof location === 'string') {
-      appendArray[isTop ? 'unshift' : 'push'](data);
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+      let targetIndex = -1;
+      if (typeof location === 'string') {
+        const field = this.settings.groupable.fields[0];
+        const idx = getIndexByKey(dataset, field, data[field], !isTop);
+        targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
+        dataset.splice(targetIndex, 0, data);
+        row = targetIndex;
+      } else {
+        dataset.splice(location, 0, data);
+        row = location;
+      }
+    } else if (typeof location === 'string') {
+      dataset[isTop ? 'unshift' : 'push'](data);
+      row = isTop ? row : dataset.length - 1;
     } else {
-      appendArray.splice(location, 0, data);
+      dataset.splice(location, 0, data);
+      row = location;
     }
 
     this.restoreDirtyRows();
     this.setRowGrouping();
-    this.pagerRefresh(location);
-    this.syncSelectedRowsIdx();
+
+    if (!this.settings.groupable) {
+      this.pagerRefresh(location);
+    }
+
+    // Update selected
+    this._selectedRows.forEach((selected) => {
+      if (typeof selected.pagingIdx !== 'undefined' && selected.pagingIdx >= row) {
+        selected.idx++;
+        selected.pagingIdx++;
+      }
+    });
 
     // Add to ui
     this.clearCache();
     this.renderRows();
+
+    if (this.settings.groupable) {
+      rowNode = this.dataRowNode(row);
+      row = this.visualRowIndex(rowNode);
+    }
 
     // Sync with others
     this.syncSelectedUI();
 
     // Set active and fire handler
     setTimeout(() => {
-      row = isTop ? row : self.settings.dataset.length - 1;
       self.setActiveCell(row, cell);
-
-      rowNode = self.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
+      if (!this.settings.groupable) {
+        rowNode = this.visualRowNode(row);
+      }
       args = { row, cell, target: rowNode, value: data, oldValue: {} };
 
       /**
@@ -540,8 +596,8 @@ Datagrid.prototype = {
       pagingInfo.pagesize = this.settings.pagesize;
     }
     if (savePage) {
-      pagingInfo.activePage = this.settings.pagesize * this.pager.activePage >
-        this.settings.dataset.length ? 1 : this.pager.activePage;
+      pagingInfo.activePage = this.settings.pagesize * this.pagerAPI.activePage >
+        this.settings.dataset.length ? 1 : this.pagerAPI.activePage;
     }
     this.renderPager(pagingInfo, true);
   },
@@ -816,6 +872,15 @@ Datagrid.prototype = {
       }
     }
 
+    // Clear groupable
+    if (this.settings.groupable &&
+      this.settings.dataset[0] &&
+      !this.settings.dataset[0].values) {
+      this._selectedRows = [];
+      this.originalDataset = null;
+      this.clearDirty();
+    }
+
     // Update Paging and Clear Rows
     this.setTreeDepth();
     if (this.settings.source) {
@@ -946,7 +1011,7 @@ Datagrid.prototype = {
   updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
-      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     if (this.settings.groupable) {
@@ -1040,7 +1105,7 @@ Datagrid.prototype = {
     }
 
     if (!this.originalColGroups) {
-      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     const groups = colGroups.map(group => parseInt(group.colspan, 10));
@@ -1579,7 +1644,7 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.find('.datagrid-header tr:last th').each(function () {
+    this.element.find('.datagrid-header tr:not(.datagrid-header-groups) th').each(function () {
       const col = self.columnById($(this).attr('data-column-id'))[0];
       const elem = $(this);
 
@@ -2122,10 +2187,10 @@ Datagrid.prototype = {
               isFiltered = !checkRow(childNode);
             }
 
-            childNode.isFiltered = !checkRow(childNode);
+            childNode._isFilteredOut = !checkRow(childNode);
 
-            if (parentNode && !childNode.isFiltered) {
-              parentNode.isFiltered = false;
+            if (parentNode && !childNode._isFilteredOut) {
+              parentNode._isFilteredOut = false;
             }
 
             if (childNode.children && childNode.children.length) {
@@ -2141,26 +2206,26 @@ Datagrid.prototype = {
             checkChildNodes(dataset[i].children);
           }
 
-          dataset[i].isFiltered = isFiltered;
+          dataset[i]._isFilteredOut = isFiltered;
         }
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
           for (i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
             isFiltered = !checkRow(this.settings.dataset[i].values[i2]);
-            this.settings.dataset[i].values[i2].isFiltered = isFiltered;
+            this.settings.dataset[i].values[i2]._isFilteredOut = isFiltered;
 
             if (!isFiltered) {
               isGroupFiltered = false;
             }
           }
 
-          this.settings.dataset[i].isFiltered = isGroupFiltered;
+          this.settings.dataset[i]._isFilteredOut = isGroupFiltered;
         }
       } else {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           isFiltered = !checkRow(this.settings.dataset[i]);
-          this.settings.dataset[i].isFiltered = isFiltered;
+          this.settings.dataset[i]._isFilteredOut = isFiltered;
         }
       }
     }
@@ -2251,15 +2316,15 @@ Datagrid.prototype = {
           const childrenLen = children ? children.length : 0;
 
           if (childrenLen) {
-            if (!node.isFiltered) {
+            if (!node._isFilteredOut) {
               if (s.allowChildExpandOnMatch) {
                 for (let i2 = 0; i2 < childrenLen; i2++) {
-                  children[i2].isFiltered = false;
+                  children[i2]._isFilteredOut = false;
                 }
               } else {
                 let isAllChildrenFiltered = true;
                 for (let i2 = 0; i2 < childrenLen; i2++) {
-                  if (!children[i2].isFiltered) {
+                  if (!children[i2]._isFilteredOut) {
                     isAllChildrenFiltered = false;
                   }
                 }
@@ -2382,9 +2447,10 @@ Datagrid.prototype = {
     }
 
     const filterExpr = [];
+    const self = this;
 
     // Create an array of objects with: field, id, filterType, operator, value
-    this.element.find('th').each(function () {
+    this.element.find('th.is-filterable').each(function () {
       const rowElem = $(this);
       const btn = rowElem.find('.btn-filter');
       const input = rowElem.find('input, select');
@@ -2436,6 +2502,10 @@ Datagrid.prototype = {
         condition.innerHTML = input[0].innerHTML;
       }
 
+      const column = self.columnById(condition.columnId);
+      if (column && column[0]) {
+        condition.filterType = column[0].filterType;
+      }
       filterExpr.push(condition);
     });
 
@@ -2997,7 +3067,7 @@ Datagrid.prototype = {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
         if (activePage === 1 && (i - this.filteredCount) >= s.pagesize) {
-          if (!s.dataset[i].isFiltered) {
+          if (!s.dataset[i]._isFilteredOut) {
             this.recordCount++;
           } else {
             this.filteredCount++;
@@ -3007,7 +3077,7 @@ Datagrid.prototype = {
 
         if (activePage > 1 && !((i - this.filteredCount) >= s.pagesize * (activePage - 1) &&
           (i - this.filteredCount) < s.pagesize * activePage)) {
-          if (!s.dataset[i].isFiltered) {
+          if (!s.dataset[i]._isFilteredOut) {
             if (this.filteredCount) {
               this.recordCount++;
             }
@@ -3026,7 +3096,7 @@ Datagrid.prototype = {
       }
 
       // Exclude Filtered Rows
-      if ((!s.treeGrid && s.dataset[i]).isFiltered) {
+      if ((!s.treeGrid && s.dataset[i])._isFilteredOut) {
         this.filteredCount++;
         continue; //eslint-disable-line
       }
@@ -3038,7 +3108,7 @@ Datagrid.prototype = {
           const thisLength = s.dataset[i].values.length;
           let thisFilterCount = 0;
           for (let k = 0; k < thisLength; k++) {
-            if (s.dataset[i].values[k].isFiltered) {
+            if (s.dataset[i].values[k]._isFilteredOut) {
               thisFilterCount++;
             }
           }
@@ -3088,7 +3158,7 @@ Datagrid.prototype = {
 
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
-          if (!s.dataset[i].values[k].isFiltered) {
+          if (!s.dataset[i].values[k]._isFilteredOut) {
             const rowHtml = self.rowHtml(
               s.dataset[i].values[k],
               this.recordCount,
@@ -3274,7 +3344,9 @@ Datagrid.prototype = {
     self.setAlternateRowShading();
     self.createDraggableRows();
 
-    if (self.activeCell.isFocused) {
+    const focusedEl = document.activeElement;
+    if (self.activeCell.isFocused &&
+        (!focusedEl || (focusedEl && focusedEl.tagName.toLowerCase() === 'body'))) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
 
@@ -3297,6 +3369,11 @@ Datagrid.prototype = {
       self.settings.allowSelectAcrossPages === null) {
       self.syncSelectedRows();
       self.syncSelectedUI();
+    }
+
+    if (this.stretchColumnDiff < 0) {
+      const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+      currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     /**
@@ -3573,7 +3650,7 @@ Datagrid.prototype = {
           if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
             isHidden = true;
           } else {
-            isHidden = rowData.isFiltered;
+            isHidden = rowData._isFilteredOut;
           }
 
           depth = treeDepthItem.depth;
@@ -3652,7 +3729,7 @@ Datagrid.prototype = {
       }${isRowDisabled ? ' aria-disabled="true"' : ''
       }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
         isHidden ? ' is-hidden' : ''}${
-        rowData.isFiltered ? ' is-filtered' : ''
+        rowData._isFilteredOut ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
       }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
@@ -3692,6 +3769,15 @@ Datagrid.prototype = {
 
       if (formatted.indexOf('trigger') > -1) {
         cssClass += ' datagrid-trigger-cell';
+      }
+
+      if (formatted.indexOf('trigger') === -1 && col && col.editor) {
+        const editorName = this.getEditorName(col.editor);
+
+        if (['colorpicker', 'dropdown', 'time', 'lookup', 'date']
+          .indexOf(editorName) >= 0) {
+          cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
+        }
       }
 
       if (col.editor && this.settings.editable) {
@@ -3839,6 +3925,7 @@ Datagrid.prototype = {
     if (self.settings.rowTemplate) {
       const tmpl = self.settings.rowTemplate;
       const item = rowData;
+      const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
 
       if (Tmpl && item) {
@@ -3847,27 +3934,33 @@ Datagrid.prototype = {
 
       if (this.hasLeftPane) {
         containerHtml.left += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsLeft}">
-          <div class="datagrid-row-detail"><div style="height: ${self.settings.rowTemplateHeight || '107'}px"></div></div>
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
       containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
         <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
-        containerHtml.right += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
     }
 
     if (self.settings.expandableRow) {
       if (this.hasLeftPane) {
-        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">` +
-          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-          '</td></tr>';
+        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">` +
-        '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-        '</td></tr>';
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+        </td></tr>`;
+      if (this.hasRightPane) {
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
+      }
     }
 
     // Render Tree Children
@@ -3891,6 +3984,28 @@ Datagrid.prototype = {
     }
 
     return containerHtml;
+  },
+
+  /**
+   * Return the name of the editor.
+   * @private
+   * @param  {object} editor The editor to check
+   * @returns {string} The editors name
+   */
+  getEditorName(editor) {
+    if (!editor) {
+      return '';
+    }
+
+    let editorName = editor.name;
+    // In IE functions do not have names
+    if (!(function f() {}).name) {
+      const getFnName = function getFnName(fn) {
+        return (fn.toString().match(/function (.+?)\(/)||[,''])[1]; //eslint-disable-line
+      };
+      editorName = getFnName(editor);
+    }
+    return editorName ? editorName.toLowerCase() : '';
   },
 
   /**
@@ -4114,6 +4229,8 @@ Datagrid.prototype = {
     this.elemWidth = 0;
     this.lastColumn = null;
     this.stretchColumnWidth = 0;
+    this.stretchColumnDiff = 0;
+    this.stretchColumnIdx = -1;
     this.fixColumnIds();
   },
 
@@ -4133,6 +4250,27 @@ Datagrid.prototype = {
         }
       }
     }
+  },
+
+  /**
+   * Return the index of the stretch column
+   * @returns {number} The index of the stretch column
+   */
+  getStretchColumnIdx() {
+    const self = this;
+    let stretchColumnIdx = self.stretchColumnIdx;
+
+    if (stretchColumnIdx === -1 && self.settings.stretchColumn !== 'last') {
+      self.headerNodes().each(function (i) {
+        const col = $(this);
+
+        if (col.attr('data-column-id') === self.settings.stretchColumn) {
+          stretchColumnIdx = i;
+        }
+      });
+    }
+
+    return stretchColumnIdx;
   },
 
   /**
@@ -4272,7 +4410,8 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
-      return ' style="max-width: 99%"';
+      this.stretchColumnWidth = colWidth;
+      return ' style="width: 99%"';
     }
 
     // For the last column stretch it if it doesnt fit the area
@@ -4286,7 +4425,7 @@ Datagrid.prototype = {
       }
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
-        this.stretchColumnWidth += diff;
+        this.stretchColumnDiff = diff;
       }
 
       if (this.hasLeftPane) {
@@ -4544,7 +4683,7 @@ Datagrid.prototype = {
     let rowData = data;
 
     if (!rowData) {
-      rowData = s.treeGrid ? s.treeDepth[idx].node : this.getDataset()[idx];
+      rowData = s.treeGrid ? s.treeDepth[idx].node : this.getActiveDataset()[idx];
     }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
@@ -4569,8 +4708,11 @@ Datagrid.prototype = {
       columnGroups = null;
     }
 
+    let conditions = [];
+    if (this.settings.filterable && this.filterRowRendered) {
+      conditions = this.filterConditions();
+    }
     this.settings.columns = columns;
-    this.setOriginalColumns();
 
     if (columnGroups) {
       this.settings.columnGroups = columnGroups;
@@ -4589,6 +4731,10 @@ Datagrid.prototype = {
     */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
     this.saveUserSettings();
+
+    if (this.settings.filterable && this.filterRowRendered) {
+      this.setFilterConditions(conditions);
+    }
   },
 
   /**
@@ -4684,7 +4830,7 @@ Datagrid.prototype = {
    * @private
    */
   setOriginalColumns() {
-    this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
+    this.originalColumns = utils.deepCopy(this.settings.columns);
   },
 
   /**
@@ -5277,14 +5423,15 @@ Datagrid.prototype = {
         // Setup enforcement for column or default min and max widths
         const minWidth = column.minWidth || 12;
         const maxWidth = column.maxWidth || 1000;
+
         const node = self.currentHeader;
         const idx = node.index();
-
         this.dragging = true;
         const left = ui.left + 5;
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         const currentColWidth = parseInt(self.currentHeader.width(), 10);
         let cssWidth = parseInt(currentCol.style.width || currentColWidth, 10);
+
         // Convert from percentage
         if (currentCol.style.width.indexOf('%') > -1) {
           cssWidth = currentColWidth;
@@ -5301,6 +5448,7 @@ Datagrid.prototype = {
           return;
         }
 
+        console.log(widthToSet, cssWidth);
         if (widthToSet === cssWidth) {
           return;
         }
@@ -5863,6 +6011,19 @@ Datagrid.prototype = {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
       });
+      $(window).on('resize.datagrid', () => {
+        let j = 0;
+        this.clearCache();
+        for (j = 0; j < self.settings.columns.length; j++) {
+          const col = self.settings.columns[j];
+          self.columnWidth(col, j);
+        }
+
+        if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
+          const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+          currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+        }
+      });
     }
 
     /**
@@ -6213,17 +6374,34 @@ Datagrid.prototype = {
       if (this.settings.toolbar.rowHeight) {
         menu.append(`${'<li class="separator single-selectable-section"></li>' +
           '<li class="heading">'}${Locale.translate('RowHeight')}</li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'short' ? ' is-checked' : ''}"><a data-option="row-short">${Locale.translate('Short')}</a></li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'medium' ? ' is-checked' : ''}"><a data-option="row-medium">${Locale.translate('Medium')}</a></li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
+          `<li class="is-selectable${this.settings.rowHeight === 'short' ? ' is-checked' : ''}"><a href="#" data-option="row-short">${Locale.translate('Short')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'medium' ? ' is-checked' : ''}"><a href="#" data-option="row-medium">${Locale.translate('Medium')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a href="#" data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
       }
 
-      if (this.settings.toolbar.filterRow) {
+      if (this.settings.toolbar.filterRow === true) {
         menu.append(`${'<li class="separator"></li>' +
           '<li class="heading">'}${Locale.translate('Filter')}</li>` +
-          `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>` +
-          `<li class="is-indented"><a data-option="run-filter">${Locale.translate('RunFilter')}</a></li>` +
-          `<li class="is-indented"><a data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`);
+          `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a href="#" data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>` +
+          `<li class="is-indented"><a href="#" data-option="run-filter">${Locale.translate('RunFilter')}</a></li>` +
+          `<li class="is-indented"><a href="#" data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`);
+      }
+
+      if (typeof this.settings.toolbar.filterRow === 'object') {
+        let filterOptions = '<li class="separator"></li>';
+
+        if (this.settings.toolbar.filterRow.showFilter) {
+          filterOptions += `<li class="${this.settings.filterable ? 'is-checked ' : ''}is-toggleable"><a href="#" data-option="show-filter-row">${Locale.translate('ShowFilterRow')}</a></li>`;
+        }
+
+        if (this.settings.toolbar.filterRow.runFilter && !this.settings.filterWhenTyping) {
+          filterOptions += `<li class="is-indented"><a href="#" data-option="run-filter">${Locale.translate('RunFilter')}</a></li>`;
+        }
+
+        if (this.settings.toolbar.filterRow.clearFilter) {
+          filterOptions += `<li class="is-indented"><a href="#" data-option="clear-filter">${Locale.translate('ClearFilter')}</a></li>`;
+        }
+        menu.append(filterOptions);
       }
 
       if (this.settings.toolbar.actions) {
@@ -6471,13 +6649,13 @@ Datagrid.prototype = {
       dataset = self.settings.treeDepth;
       for (i = 0, len = dataset.length; i < len; i++) {
         isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node, i);
-        dataset[i].node.isFiltered = isFiltered;
+        dataset[i].node._isFilteredOut = isFiltered;
       }
     } else {
       dataset = self.settings.dataset;
       for (i = 0, len = dataset.length; i < len; i++) {
         isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i], i);
-        dataset[i].isFiltered = isFiltered;
+        dataset[i]._isFilteredOut = isFiltered;
       }
     }
   },
@@ -6543,7 +6721,7 @@ Datagrid.prototype = {
    * @private
    * @returns {array} The dataset to use.
    */
-  getDataset() {
+  getActiveDataset() {
     const s = this.settings;
     let dataset = s.treeGrid ? s.treeDepth : s.dataset;
     if (s.groupable) {
@@ -6553,18 +6731,31 @@ Datagrid.prototype = {
   },
 
   /**
+   * Return the current data and remove any adding properties.
+   * @returns {array} The current dataset.
+   */
+  getDataset() {
+    const dataset = this.settings.dataset;
+
+    return dataset.map((item) => {
+      delete item._isFilteredOut;
+      return item;
+    });
+  },
+
+  /**
   * Select all rows. If serverside paging, this will be only the current page.
   * For client side paging, all rows across all pages are selected.
   */
   selectAllRows() {
     const rows = [];
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
-        if (!dataset[i].isFiltered) {
+        if (!dataset[i]._isFilteredOut) {
           rows.push(idx);
         }
       } else {
@@ -6721,6 +6912,9 @@ Datagrid.prototype = {
       }
       if (selectedIndex !== -1) {
         this.unselectRow(selectedIndex, true, true);
+        if (!rowNode.length && this._selectedRows.length > 0) {
+          this._selectedRows.pop();
+        }
       }
     }
 
@@ -6809,7 +7003,10 @@ Datagrid.prototype = {
             idx: rowData.idx,
             data: rowData,
             elem: rowNode,
-            group: s.dataset[self.groupArray[row].group]
+            group: s.dataset[self.groupArray[row].group],
+            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+            pagingIdx: dataRowIndex,
+            pagesize: self.settings.pagesize
           });
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
@@ -6905,31 +7102,38 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRows() {
+    const s = this.settings;
+    const dataset = s.groupable && this.originalDataset ? this.originalDataset : s.dataset;
     let idx = null;
+
+    const selectNode = (i) => {
+      const elem = s.groupable ? this.dataRowNode(idx) : this.visualRowNode(idx);
+      if (elem[0]) {
+        this._selectedRows[i].elem = elem;
+        this.selectNode(elem, idx, dataset[idx], true);
+      }
+    };
 
     for (let i = 0; i < this._selectedRows.length; i++) {
       if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
         idx = this._selectedRows[i].idx;
-        const elem = this.visualRowNode(idx);
-        if (elem[0]) {
-          this._selectedRows[i].elem = elem;
-          this.selectNode(elem, idx, this.settings.dataset[idx], true);
-        }
-      }
-      // Check for rows that changed page
-      idx = this._selectedRows[i].pagingIdx;
-      if (this._selectedRows[i].pagesize !== this.settings.pagesize && this.settings.dataset[idx]) {
-        this.selectNode(this.visualRowNode(idx), idx, this.settings.dataset[idx], true);
-        this._selectedRows[i].pagesize = this.settings.pagesize;
-        this._selectedRows[i].idx = idx;
-        this._selectedRows[i].page = this.pagerAPI.activePage;
+        selectNode(i);
       }
 
-      if (this._selectedRows[i].pagesize !== this.settings.pagesize &&
-        !this.settings.dataset[idx]) {
-        this._selectedRows[i].idx = idx % this.settings.pagesize;
-        this._selectedRows[i].page = Math.round(idx / this.settings.pagesize) + 1;
-        this._selectedRows[i].pagesize = this.settings.pagesize;
+      // Check for rows that changed page
+      if (this._selectedRows[i].pagesize !== s.pagesize && !s.groupable) {
+        idx = this._selectedRows[i].pagingIdx;
+
+        if (s.dataset[idx]) {
+          selectNode(i);
+          this._selectedRows[i].idx = idx;
+          this._selectedRows[i].page = this.pagerAPI.activePage;
+          this._selectedRows[i].pagesize = s.pagesize;
+        } else {
+          this._selectedRows[i].idx = idx % s.pagesize;
+          this._selectedRows[i].page = Math.round(idx / s.pagesize) + 1;
+          this._selectedRows[i].pagesize = s.pagesize;
+        }
       }
     }
   },
@@ -6971,22 +7175,35 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRowsIdx() {
-    if (this._selectedRows.length === 0 || this.settings.dataset.length === 0) {
+    const dataset = this.settings.groupable && this.originalDataset ?
+      this.originalDataset : this.settings.dataset;
+    if (this._selectedRows.length === 0 || dataset.length === 0) {
       return;
     }
     this._selectedRows = [];
 
-    for (let i = 0; i < this.settings.dataset.length; i++) {
-      if (this.settings.dataset[i]._selected) {
-        const calculatePagerInfo = this.calculatePagerInfo(i);
-        this._selectedRows.push({
+    for (let i = 0; i < dataset.length; i++) {
+      if (dataset[i]._selected) {
+        const selectedRow = {
           idx: i,
-          data: this.settings.dataset[i],
+          data: dataset[i],
           elem: this.dataRowNode(i),
-          page: calculatePagerInfo.page,
           pagingIdx: i,
           pagesize: this.settings.pagesize
-        });
+        };
+        if (this.settings.groupable) {
+          const rowNode = this.rowNodesByDataIndex(i);
+          if (rowNode.length) {
+            const row = this.actualPagingRowIndex(this.actualRowIndex(rowNode));
+            const group = this.groupArray[row].group;
+            selectedRow.group = this.settings.dataset[group];
+            selectedRow.page = this.calculatePagerInfo(group).page;
+          }
+        } else {
+          selectedRow.page = this.calculatePagerInfo(i).page;
+        }
+
+        this._selectedRows.push(selectedRow);
       }
     }
   },
@@ -6997,13 +7214,13 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedUI() {
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
     let rows = dataset;
 
     if (this.filterRowRendered) {
       rows = [];
       for (let i = 0, l = dataset.length; i < l; i++) {
-        if (!dataset[i].isFiltered) {
+        if (!dataset[i]._isFilteredOut) {
           rows.push(i);
         }
       }
@@ -7528,7 +7745,7 @@ Datagrid.prototype = {
     const isSingle = s.selectable === 'single';
     const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
     const isSiblings = s.selectable === 'siblings';
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
 
     if (typeof row === 'number') {
       row = [row];
@@ -7585,7 +7802,7 @@ Datagrid.prototype = {
    */
   findRowsByValue(fieldName, value) {
     const s = this.settings;
-    const dataset = this.getDataset();
+    const dataset = this.getActiveDataset();
     let idx = -1;
     const matchedRows = [];
     for (let i = 0, data; i < dataset.length; i++) {
@@ -7614,7 +7831,7 @@ Datagrid.prototype = {
   * @param {object} tooltip The information for the message/tooltip
   */
   rowStatus(idx, status, tooltip) {
-    const arrayToUse = this.getDataset();
+    const arrayToUse = this.getActiveDataset();
 
     if (!status) {
       delete arrayToUse[idx].rowStatus;
@@ -8233,9 +8450,10 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ? this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
+    const idx = this.settings.treeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
       this.dataRowIndex(thisRow);
-    const rowData = this.rowData(this.dataRowIndex(thisRow));
+    const rowData = this.rowData(idx);
 
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
@@ -8310,7 +8528,7 @@ Datagrid.prototype = {
     if (this.settings.showDirty) {
       let originalVal = cellValue;
 
-      if (originalVal === '' && /checkbox|favorite/i.test(this.editor.name)) {
+      if (originalVal === '' && /checkbox|favorite/i.test(this.getEditorName(this.editor))) {
         originalVal = false;
       }
 
@@ -8366,8 +8584,9 @@ Datagrid.prototype = {
     const input = this.editor.input;
     let newValue;
     let cellNode;
-    const isEditor = this.editor.name === 'editor';
-    const isFileupload = this.editor.name === 'fileupload';
+    const editorName = this.getEditorName(this.editor);
+    const isEditor = editorName === 'editor';
+    const isFileupload = editorName === 'fileupload';
     const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox, .colorpicker'));
 
     // Editor.getValue
@@ -8404,7 +8623,7 @@ Datagrid.prototype = {
     const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
-      this.getDataset()[dataRowIndex];
+      this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
 
     if (col.beforeCommitCellEdit && !isCallback) {
@@ -9106,7 +9325,10 @@ Datagrid.prototype = {
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
-    let dataRowIndex = this.dataRowIndex(rowNodes);
+    let dataRowIndex = isTreeGrid ?
+      this.actualPagingRowIndex(this.actualRowIndex(rowNodes)) :
+      this.dataRowIndex(rowNodes);
+
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
@@ -9230,7 +9452,9 @@ Datagrid.prototype = {
       if (col.minWidth && newWidth > col.maxWidth) {
         newWidth = col.maxWidth;
       }
-      if (newWidth > 0) {
+      if (newWidth > 0 && ((newWidth - this.stretchColumnWidth) > this.stretchColumnDiff)) {
+        this.stretchColumnWidth = newWidth;
+        this.stretchColumnDiff = 0;
         this.setColumnWidth(col.id, newWidth, true);
       }
     }
@@ -9904,7 +10128,8 @@ Datagrid.prototype = {
 
     if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
       // collapse any other expandable rows
-      const prevExpandRow = self.tableBody.find('tr.is-expanded');
+      const tableBody = self.tableBody.add(self.tableBodyLeft).add(self.tableBodyRight);
+      const prevExpandRow = tableBody.find('tr.is-expanded');
       const prevExpandButton = prevExpandRow.prev().find('.datagrid-expand-btn');
       const parentRow = prevExpandRow.prev();
       const parentRowIdx = self.actualRowNode(parentRow);
@@ -9982,6 +10207,106 @@ Datagrid.prototype = {
         self.settings.onExpandRow(eventData[0], response);
       } else {
         detail.animateOpen();
+      }
+      if (self.settings.frozenColumns.expandRowAcrossAllCells) {
+        self.frozenExpandRowAcrossAllCells();
+      }
+    }
+  },
+
+  /**
+   * Expand the expandable row to all columns for frozen
+   * @private
+   * @returns {void}
+   */
+  frozenExpandRowAcrossAllCells() {
+    if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+      // Selector
+      const selector = { row: '.datagrid-expandable-row.is-expanded' };
+      selector.detail = `${selector.row} > td .datagrid-row-detail`;
+      selector.padding = `${selector.detail} .datagrid-row-detail-padding`;
+
+      // Elements
+      const elms = {
+        rows: {
+          left: this.tableBodyLeft[0].querySelector(selector.row),
+          center: this.tableBody[0].querySelector(selector.row),
+          right: this.tableBodyRight[0].querySelector(selector.row)
+        },
+        details: {
+          left: this.tableBodyLeft[0].querySelector(selector.detail),
+          center: this.tableBody[0].querySelector(selector.detail),
+          right: this.tableBodyRight[0].querySelector(selector.detail)
+        },
+        padding: this.tableBody[0].querySelector(selector.padding)
+      };
+
+      // Set height
+      const setHeight = () => {
+        let height = 0;
+        if (elms && elms.padding) {
+          height = elms.padding.offsetHeight;
+        }
+        if (height) {
+          elms.details.center.style.height = `${height}px`;
+          if (elms.details && elms.details.left) {
+            elms.details.left.style.height = `${height}px`;
+          }
+          if (elms.details && elms.details.right) {
+            elms.details.right.style.height = `${height}px`;
+          }
+        }
+      };
+
+      if (elms.padding && (elms.details.left || elms.details.right)) {
+        const cssClass = 'is-expanded-frozen';
+        const rec = {
+          container: this.element[0].getBoundingClientRect(),
+          elem: elms.details.center.getBoundingClientRect()
+        };
+        const top = `${rec.elem.top - rec.container.top}px`;
+        const width = `${rec.container.top.width}px`;
+
+        elms.padding.style.opacity = '0';
+        if (elms.rows.left) {
+          elms.rows.left.classList.add(cssClass);
+        }
+        if (elms.rows.right) {
+          elms.rows.right.classList.add(cssClass);
+        }
+
+        $(elms.details.center)
+          .one('animateopencomplete.datagrid.expandedfrozen', () => {
+            if (elms.details.left || elms.details.right) {
+              setTimeout(() => {
+                elms.rows.center.classList.add(cssClass);
+                elms.padding.style.width = width;
+                elms.padding.style.top = top;
+                setHeight();
+                elms.padding.style.opacity = '';
+
+                $(window).on('resize.datagrid.expandedfrozen', () => {
+                  setHeight();
+                });
+              }, 10);
+            }
+          })
+          .one('animateclosedstart.datagrid.expandedfrozen', () => {
+            $(window).off('resize.datagrid.expandedfrozen');
+            elms.padding.style.opacity = '0';
+            elms.padding.style.width = '';
+            elms.padding.style.top = '';
+            elms.rows.center.classList.remove(cssClass);
+            if (elms.rows.left) {
+              elms.rows.left.classList.remove(cssClass);
+            }
+            if (elms.rows.right) {
+              elms.rows.right.classList.remove(cssClass);
+            }
+          })
+          .one('animateclosedcomplete.datagrid.expandedfrozen', () => {
+            elms.padding.style.opacity = '';
+          });
       }
     }
   },
@@ -10138,7 +10463,10 @@ Datagrid.prototype = {
    */
   saveDirtyRows() {
     const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+    }
     if (s.showDirty && !this.settings.source && this.dirtyArray && this.dirtyArray.length) {
       for (let i = 0, l = dataset.length; i < l; i++) {
         if (typeof this.dirtyArray[i] !== 'undefined') {
@@ -10156,7 +10484,10 @@ Datagrid.prototype = {
   */
   restoreDirtyRows() {
     const s = this.settings;
-    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    if (this.settings.groupable) {
+      dataset = this.originalDataset || dataset;
+    }
     if (s.showDirty && this.dirtyArray && this.dirtyArray.length) {
       const changes = [];
       for (let i = 0, l = dataset.length; i < l; i++) {
@@ -10779,6 +11110,7 @@ Datagrid.prototype = {
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid');
     $(window).off('orientationchange.datagrid');
+    $(window).off('resize.datagrid');
     return this;
   },
 

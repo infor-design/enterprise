@@ -95,8 +95,7 @@ Calendar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
-    return this
-      .build();
+    return this.setLocaleThenBuild();
   },
 
   /**
@@ -105,15 +104,6 @@ Calendar.prototype = {
    * @private
    */
   build() {
-    this.setLocale();
-    if (this.rendered ||
-      (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale))) {
-      this.rendered = false;
-      return this;
-    }
-
-    this.rendered = true;
-
     this
       .setCurrentCalendar()
       .renderEventTypes()
@@ -129,24 +119,16 @@ Calendar.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language);
-      this.language = this.settings.language;
-    } else {
-      this.language = Locale.currentLanguage.name;
-    }
-
-    if (this.settings.locale && (!this.locale || this.locale.name !== this.settings.locale)) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.setCurrentCalendar();
-        this.build();
-      });
-    } else if (!this.settings.locale) {
-      this.locale = Locale.currentLocale;
-    }
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language;
+      this.settings.language = this.language;
+      this.setCurrentCalendar();
+      this.build().handleEvents();
+    });
     return this;
   },
 
@@ -174,7 +156,7 @@ Calendar.prototype = {
     let eventTypeMarkup = '';
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
-      eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" checked="${eventType.checked ? 'true' : 'false'}" ${eventType.disabled ? 'disabled="true"' : ''} />
+      eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
         <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
     }
     this.eventTypeContainer.innerHTML = eventTypeMarkup;
@@ -204,6 +186,7 @@ Calendar.prototype = {
       onSelected: this.settings.onSelected,
       selectable: true,
       locale: this.settings.locale,
+      language: this.settings.language,
       month: this.settings.month,
       year: this.settings.year,
       day: this.settings.day,
@@ -253,6 +236,7 @@ Calendar.prototype = {
 
     this.weekView = new WeekView(this.weekViewContainer, {
       locale: this.settings.locale,
+      language: this.settings.language,
       startDate,
       endDate,
       eventTypes: this.settings.eventTypes,
@@ -288,8 +272,9 @@ Calendar.prototype = {
       return;
     }
 
-    let startDate = new Date(this.currentDate());
-    let endDate = new Date(this.currentDate());
+    const currentDate = this.currentDate();
+    let startDate = new Date(currentDate);
+    let endDate = new Date(currentDate);
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
@@ -313,6 +298,8 @@ Calendar.prototype = {
         this.weekView.showWeek(startDate, endDate);
         this.weekView.calendarToolbarAPI.setViewChangerValue(this.activeView);
         this.clearEventDetails();
+        this.monthView.selectDay(currentDate, false, true);
+        this.weekView.selectHeader(currentDate);
         break;
       case 'month':
         this.monthViewContainer.classList.remove('hidden');
@@ -320,7 +307,7 @@ Calendar.prototype = {
         this.activeView = 'month';
         this.monthView.showMonth(this.settings.month, this.settings.year);
         this.monthView.calendarToolbarAPI.setViewChangerValue(this.activeView);
-        this.monthView.selectDay(this.currentDate(), false, true);
+        this.monthView.selectDay(currentDate, false, true);
         break;
       default:
     }
@@ -391,7 +378,11 @@ Calendar.prototype = {
     if (!this.eventDetailsContainer) {
       return;
     }
-    this.renderTmpl(eventData[0], this.settings.template, this.eventDetailsContainer, count > 1);
+    const thisEvent = $.extend(true, {}, eventData[0]);
+    if (thisEvent.durationHours && !thisEvent.isDays) {
+      calendarShared.formateTimeString(thisEvent, this.locale, this.language);
+    }
+    this.renderTmpl(thisEvent, this.settings.template, this.eventDetailsContainer, count > 1);
 
     const api = $(this.eventDetailsContainer).data('accordion');
     if (api) {
@@ -534,7 +525,7 @@ Calendar.prototype = {
     const self = this;
 
     // Check for events starting on this day , or only on this day.
-    const startDate = new Date(event.starts);
+    const startDate = Locale.newDateObj(event.starts);
     const startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
@@ -542,7 +533,7 @@ Calendar.prototype = {
     );
 
     // Check for events extending onto this day
-    const endDate = new Date(event.ends);
+    const endDate = Locale.newDateObj(event.ends);
     const endKey = stringUtils.padDate(
       endDate.getFullYear(),
       endDate.getMonth(),
@@ -628,20 +619,27 @@ Calendar.prototype = {
 
     if (eventCnt >= 2) {
       const moreSpan = container.querySelector('.calendar-event-more');
-      const moreText = Locale.translate('More', { locale: this.locale.name, language: this.language }).replace('...', '');
+      const setMoreSpan = (elem, count) => {
+        elem.setAttribute('data-count', count);
+        // Wrap text in extra span here, so link should not expand more than text, because `more span` is styled as block level element
+        elem.innerHTML = `<span>+ ${count} ${Locale.translate('More', { locale: this.locale.name, language: this.language }).replace('...', '')}</span>`;
+      };
       if (!moreSpan) {
         node = document.createElement('span');
         DOM.addClass(node, 'calendar-event-more');
-        node.innerHTML = `+ 1 ${moreText}`;
-        node.setAttribute('data-count', 1);
+        setMoreSpan(node, 1);
         container.querySelector('.day-container').appendChild(node);
+        // Switch to day view on click
+        $(container)
+          .off(`click.${COMPONENT_NAME}`)
+          .on(`click.${COMPONENT_NAME}`, '.calendar-event-more span', () => {
+            const thisDate = this.monthView.dayMap[idx].key;
+            this.monthView.selectDay(thisDate, false, true);
+            this.changeView('day');
+          });
       } else {
-        let cnt = moreSpan.getAttribute('data-count');
-        cnt++;
-        moreSpan.setAttribute('data-count', cnt);
-        moreSpan.innerHTML = `+ ${cnt} ${moreText}`;
+        setMoreSpan(moreSpan, parseInt(moreSpan.getAttribute('data-count'), 10) + 1);
       }
-
       return this;
     }
 
@@ -875,11 +873,11 @@ Calendar.prototype = {
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
+      const key = e.currentTarget.getAttribute('data-key');
       // throw this case out or you can click the wrong day
-      if (this.isSwitchingMonth || this.modalVisible()) {
+      if (!key || this.isSwitchingMonth || this.modalVisible()) {
         return;
       }
-      const key = e.currentTarget.getAttribute('data-key');
       const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
 
       const eventData = utils.extend({ }, this.settings.newEventDefaults);
@@ -1220,7 +1218,8 @@ Calendar.prototype = {
       keepOpen: true,
       extraClass: 'calendar-popup',
       tooltipElement: '#calendar-popup',
-      headerClass: event.color
+      headerClass: event.color,
+      initializeContent: false
     };
 
     eventTarget
@@ -1255,7 +1254,7 @@ Calendar.prototype = {
         });
 
         // Wire the correct type selector
-        elem.find('#type').val(event.type).trigger('updated');
+        elem.find('#type').val(event.type).dropdown();
 
         // Wire the correct comments
         elem.find('#comments').val(event.comments);
@@ -1269,6 +1268,19 @@ Calendar.prototype = {
           if (popupApi) {
             popupApi.hide(true);
           }
+        });
+
+        // Init the contents
+        elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('[data-translate="text"]').each((i, item) => {
+          const obj = $(item);
+          obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+            showAsUndefined: false,
+            showBrackets: false,
+            language: this.settings.language,
+            locale: this.settings.locale
+          }));
         });
       });
 

@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'bullet';
  */
 const BULLET_DEFAULTS = {
   dataset: [],
-  animate: true,
+  animate: false,
   redrawOnResize: true
 };
 
@@ -100,7 +100,7 @@ Bullet.prototype = {
     }
 
     for (let i = 0; i < chartData.data.length; i++) {
-      const duration = this.settings.animate ? 600 : 0;
+      const duration = this.settings.animate ? 400 : 0;
       const barHeight = 20;
       const self = this;
       const rowData = chartData.data[i];

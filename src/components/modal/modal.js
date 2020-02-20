@@ -44,6 +44,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
 * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
 * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
+* @param {htmlObject|jqueryObject|srting} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -62,7 +63,8 @@ const MODAL_DEFAULTS = {
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
   breakpoint: 'phone-to-tablet',
   overlayOpacity: 0.7,
-  noRefocus: false
+  noRefocus: false,
+  triggerButton: null
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -180,7 +182,8 @@ Modal.prototype = {
       this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
     }
 
-    this.oldActive = this.trigger;
+    this.oldActive = this.settings.triggerButton ?
+      this.useJqEl(this.settings.triggerButton) : this.trigger;
 
     if (this.settings.trigger === 'click' && !this.isAttachedToBody) {
       this.trigger.on(`click.${self.namespace}`, (e) => {
@@ -608,7 +611,9 @@ Modal.prototype = {
       delete this.busyIndicator;
     }
 
-    if (!this.trigger || this.trigger.length === 0) {
+    if (this.settings.triggerButton) {
+      this.oldActive = this.useJqEl(this.settings.triggerButton);
+    } else if (!this.trigger || this.trigger.length === 0 || this.trigger.is('body')) {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
     }
 
@@ -1069,9 +1074,11 @@ Modal.prototype = {
 
     // Restore focus
     if (!this.settings.noRefocus) {
+      if (!this.oldActive && this.settings.triggerButton) {
+        this.oldActive = this.useJqEl(this.settings.triggerButton);
+      }
       if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
         this.oldActive.focus();
-        this.oldActive = null;
       } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
         this.trigger.focus();
       }
@@ -1100,6 +1107,15 @@ Modal.prototype = {
     renderLoop.register(afterCloseTimer);
 
     return false;
+  },
+
+  /**
+   * Use input as jquery element
+   * @param {htmlObject|jqueryObject|srting} option This option can be html or jquery object or query selector as string
+   * @returns {object} The jquery element.
+   */
+  useJqEl(option) {
+    return option instanceof jQuery ? option : $(option);
   },
 
   /**

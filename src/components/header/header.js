@@ -424,6 +424,10 @@ Header.prototype = {
         self.drillup(viewTitle);
       });
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.updatePageChanger();
+    });
+
     // Events for the title button.  e.preventDefault(); stops Application Menu
     // functionality while drilled
     this.handleTitleButtonEvents();
@@ -557,10 +561,10 @@ Header.prototype = {
     const currentTheme = theme.currentTheme;
     if (currentTheme.id !== 'theme-soho-light') {
       const themeParts = currentTheme.id.split('-');
-      this.element.find('[data-theme-name]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
-      this.element.find('[data-theme-variant]').parent().removeClass('is-checked');
-      this.element.find(`[data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-name]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-variant]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
     }
 
     if (personalization.settings.colors) {
@@ -569,8 +573,25 @@ Header.prototype = {
         personalization.settings.colors;
       colors = colors.replace('#', '');
 
-      this.element.find('[data-rgbcolor]').parent().removeClass('is-checked');
-      this.element.find(`[data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-rgbcolor]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
+    }
+  },
+
+  /**
+   * Sets up the page changer after changing theme.
+   * @private
+   * @returns {void}
+   */
+  updatePageChanger() {
+    const api = this.changer.data('popupmenu');
+    const menu = api.menu;
+    const tags = menu.find('[data-rgbcolor]');
+    const colors = theme.personalizationColors();
+    const keys = Object.keys(colors);
+
+    for (let i = 0; i < tags.length; i++) {
+      tags[i].setAttribute('data-rgbcolor', colors[keys[i]].value);
     }
   },
 
@@ -826,8 +847,12 @@ Header.prototype = {
 
     this.toolbarAPI.teardown();
 
-    this.titlePopup.data('popupmenu').destroy();
-    this.titlePopup.data('button').destroy();
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('popupmenu').destroy();
+    }
+    if (this.titlePopup.data('popupmenu')) {
+      this.titlePopup.data('button').destroy();
+    }
     this.titlePopupMenu.remove();
     this.titlePopup.children('h1').detach().insertBefore(self.titlePopup);
     this.titlePopup.remove();
@@ -860,6 +885,8 @@ Header.prototype = {
       `drilldown.${COMPONENT_NAME}`,
       `drillup.${COMPONENT_NAME}`,
     ].join(' '));
+
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
 
     return this;
   },

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
@@ -391,7 +392,7 @@ ListView.prototype = {
         const n = firstRecordIdx + i;
         if (n < self.settings.dataset.length) {
           const data = self.settings.dataset[n];
-          item.css('display', (data.isFiltered === undefined || data.isFiltered) ? '' : 'none');
+          item.css('display', (data._isFilteredOut === undefined || data._isFilteredOut) ? '' : 'none');
         }
       } else {
         item.css('display', '');
@@ -707,7 +708,7 @@ ListView.prototype = {
 
     // Reset filter status
     this.settings.dataset.forEach((item) => {
-      item.isFiltered = false;
+      item._isFilteredOut = false;
     });
 
     // Filter the results and highlight things
@@ -718,7 +719,7 @@ ListView.prototype = {
     pagingInfo.filteredTotal = results.length;
     pagingInfo.searchActivePage = 1;
     results.forEach((result) => {
-      result.isFiltered = true;
+      result._isFilteredOut = true;
     });
 
     this.filteredDataset = results;
@@ -746,7 +747,7 @@ ListView.prototype = {
 
     // reset filter status
     this.settings.dataset.forEach((item) => {
-      delete item.isFiltered;
+      delete item._isFilteredOut;
     });
 
     if (this.filteredDataset) {

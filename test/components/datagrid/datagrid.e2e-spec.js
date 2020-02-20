@@ -322,12 +322,47 @@ describe('Datagrid filter tests', () => {
     expect(await element(by.css('#datagrid .datagrid-wrapper:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
   });
 
+  it('Should render editors in the filter row when frozen', async () => {
+    expect(await element(by.css('#example-filter-datagrid-1-header-filter-1 + .trigger')).isPresent()).toBeTruthy();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid filter alternate row tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row')).count()).toEqual(8);
+
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).clear();
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).sendKeys('22');
+    await element(by.id('test-filter-alternate-row-shading-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row')).count()).toEqual(6);
+    expect(await element.all(by.css('.datagrid-wrapper .datagrid-row.alt-shading')).count()).toEqual(3);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-alt-row-shading')).toEqual(0);
     });
   }
 });
@@ -1169,7 +1204,7 @@ describe('Datagrid Date default values', () => {
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -1348,6 +1383,25 @@ describe('Datagrid single select tests', () => {
   });
 });
 
+describe('Datagrid summary row tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-summary-row');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should add up rows', async () => {
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(4)')).getText()).toEqual('72.48');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(5)')).getText()).toEqual('100 %');
+  });
+});
+
 describe('Datagrid Client Side Filter and Sort Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
@@ -1384,6 +1438,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
   });
+});
+
+describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-dup-ids')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid checkbox disabled editor tests', () => {
@@ -3239,7 +3316,7 @@ describe('Datagrid update column and reset tests', () => {
     expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
     await element(by.id('reset')).click();
 
-    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(8);
+    expect(await element.all(by.css('#datagrid tbody tr:nth-child(1) td')).count()).toEqual(1);
     await utils.checkForErrors();
   });
 });

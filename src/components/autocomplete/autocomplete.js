@@ -68,6 +68,12 @@ const DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(it
   return dataset;
 };
 
+/*
+ * Provides a method for highlighting or calling out the matching search term
+ * within rendered filter results.  Note that this method will not be run by the
+ * Autocomplete if the component is configured with an external `displayResultsCallback` method
+ * for handling the display of filter results.
+ */
 const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
   let targetProp = item;
   let hasAlias = false;
@@ -273,7 +279,11 @@ Autocomplete.prototype = {
           if (result.highlightTarget) {
             filterOpts.alias = result.highlightTarget;
           }
-          result = self.settings.highlightCallback(result, filterOpts);
+          // Only render highlight results if we don't do this manually
+          // in another component's rendering method.
+          if (!self.settings.displayResultsCallback) {
+            result = self.settings.highlightCallback(result, filterOpts);
+          }
         }
 
         modifiedFilterResults.push(result);
@@ -287,7 +297,7 @@ Autocomplete.prototype = {
     if (typeof this.settings.displayResultsCallback === 'function') {
       this.settings.displayResultsCallback(modifiedFilterResults, () => {
         self.element.trigger('listopen', [modifiedFilterResults]);
-      });
+      }, term);
       return;
     }
 
@@ -304,35 +314,50 @@ Autocomplete.prototype = {
       }
     });
 
+    /**
+     * Fires before the menu DOM is populated with the filter results.
+     *
+     * @event beforepopulated
+     * @memberof Autocomplete
+     * @param {object} event - The jquery event object
+     * @param {object} filterResult - The results of the filtering
+     */
+    this.element.trigger('beforepopulated', [filterResult]);
+
+    const afterPlaceCallback = function (placementObj) {
+      if (placementObj.wasFlipped === true) {
+        self.list.add(self.element).addClass('is-ontop');
+        placementObj.y += 1;
+      }
+      return placementObj;
+    };
+
+    const popupOpts = {
+      menuId: 'autocomplete-list',
+      ariaListbox: true,
+      mouseFocus: false,
+      trigger: 'immediate',
+      attachToBody: true,
+      autoFocus: false,
+      returnFocus: false,
+      triggerSelect: false,
+      placementOpts: {
+        parent: this.element,
+        callback: afterPlaceCallback
+      }
+    };
+
     if (!this.previouslyOpened) {
-      const afterPlaceCallback = function (placementObj) {
-        if (placementObj.wasFlipped === true) {
-          self.list.add(self.element).addClass('is-ontop');
-          placementObj.y += 1;
-        }
-        return placementObj;
-      };
-
-      const popupOpts = {
-        menuId: 'autocomplete-list',
-        ariaListbox: true,
-        mouseFocus: false,
-        trigger: 'immediate',
-        attachToBody: true,
-        autoFocus: false,
-        returnFocus: false,
-        triggerSelect: false,
-        placementOpts: {
-          parent: this.element,
-          callback: afterPlaceCallback
-        }
-      };
-
       this.element.addClass('is-open')
         .popupmenu(popupOpts)
         .one('close.autocomplete', () => {
           self.closeList(true);
         });
+    } else {
+      const popupmenuAPI = this.element.data('popupmenu');
+      if (popupmenuAPI) {
+        popupmenuAPI.position();
+      }
     }
 
     // Adjust the widths of the LIs to the longest

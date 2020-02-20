@@ -39,7 +39,8 @@ Soho.Locale.addCulture('en-US', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 0 // Starts on Sunday
   }],
 
   // numbers/currencyFormats-numberSystem-latn/standard
@@ -76,6 +77,7 @@ Soho.Locale.addCulture('en-US', {
     Amber: { id: 'Amber', value: 'Amber', comment: 'Color in our color pallette' },
     Amethyst: { id: 'Amethyst', value: 'Amethyst', comment: 'Color in our color pallette' },
     Apply: { id: 'Apply', value: 'Apply', comment: 'Text in a button to apply an action' },
+    And: { id: 'And', value: 'and', comment: 'Text use in calendar' },
     AppMenuTriggerText: { id: 'AppMenuTriggerText', value: 'Menu', comment: 'Text in a special Module Tab used to trigger an Application Menu open or closed' },
     Attach: { id: 'Attach', value: 'Attach', comment: 'Attach' },
     Available: { id: 'Available', value: 'Available', comment: 'Button tooltip used in a list of movable items' },
@@ -88,6 +90,7 @@ Soho.Locale.addCulture('en-US', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Bookmark this', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Breadcrumb', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Browser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Browser Language', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Bulleted list', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Camera', comment: 'Camera tooltip' },
@@ -219,6 +222,7 @@ Soho.Locale.addCulture('en-US', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Align Left', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Align Right', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Keyword', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Language', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Launch', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Last Page', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Left', comment: 'Left tooltip' },
@@ -241,6 +245,7 @@ Soho.Locale.addCulture('en-US', {
     Medium: { id: 'Medium', value: 'Medium', comment: 'Describes a Medium sized Row Height in a grid/list' },
     Menu: { id: 'Menu', value: 'Menu', comment: 'Menu tooltip' },
     MingleShare: { id: 'MingleShare', value: 'Share with Ming.le', comment: 'Share the contextual object/action in the mingle system' },
+    Minute: { id: 'Minute', value: 'Minute', comment: 'Text use in calendar' },
     Minutes: { id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time' },
     Minimize: { id: 'Minimize', value: 'Minimize', comment: 'Minimize tooltip' },
     Minus: { id: 'Minus', value: 'Minus', comment: 'Minus tooltip' },
@@ -322,6 +327,7 @@ Soho.Locale.addCulture('en-US', {
     SaveCurrentView: { id: 'SaveCurrentView', value: 'Save Current View', comment: 'Datagrids contain view sets. This menu option saves them' },
     SavedViews: { id: 'SavedViews', value: 'Saved Views', comment: 'Label for a list of Views' },
     Schedule: { id: 'Schedule', value: 'Schedule', comment: 'Shows a schedule view' },
+    Second: { id: 'Second', value: 'Second', comment: 'Test use in calendar' },
     Seconds: { id: 'Seconds', value: 'Seconds', comment: 'the seconds portion of a time' },
     Search: { id: 'Search', value: 'Search', comment: 'Search tooltip' },
     SearchColumnName: { id: 'SearchColumnName', value: 'Search for a column name', comment: 'Search for a datagrid column by name' },

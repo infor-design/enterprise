@@ -320,6 +320,9 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
+  // Tag List
+  ['taglist', '.tag-list'],
+
   // Form Compact Component
   ['formcompact', '.form-compact-container', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
@@ -339,6 +342,7 @@ const PLUGIN_MAPPINGS = [
   ['texttranslations', '[data-translate="text"]', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
       const obj = $(item);
+      obj.attr('data-translate-key', obj.text());
       obj.text(Locale.translate(obj.text(), true));
     });
   }],

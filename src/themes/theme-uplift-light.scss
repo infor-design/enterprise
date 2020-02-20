@@ -15,6 +15,12 @@
 @import '../core/config';
 
 // Uplift Light Overrides
+$header-bg-color: $theme-color-brand-primary-base;
+$subhead-bg-color: $theme-color-brand-primary-alt;
+$disabled-color: $theme-color-palette-slate-30;
+$label-disabled-color: $input-color-disabled-border;
+$input-disabled-color: $input-color-disabled-font;
+
 $body-color-primary-background: $theme-color-palette-white;
 $drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);
 
@@ -23,6 +29,7 @@ $accordion-inverse-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
 $accordion-inverse-border-color:  $theme-color-palette-slate-90;
 $accordion-inverse-text-color: $theme-color-palette-white;
+$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
 
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
@@ -31,14 +38,14 @@ $masthead-border-color: $theme-color-palette-slate-90;
 
 $datagrid-header-bg-color:  $theme-color-palette-graphite-80;
 $datagrid-list-header-color: $theme-color-font-base;
-$datagrid-list-header-bg-color: $theme-color-palette-white;
+$datagrid-list-header-bg-color: $theme-color-palette-graphite-10;
+$datagrid-list-group-header-bg-color: $theme-color-palette-graphite-20;
+$datagrid-list-group-header-border-color: $theme-color-palette-graphite-10;
 $datagrid-list-header-active-color: $theme-color-palette-graphite-20;
 $datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
+$datagrid-sort-icon-color: $theme-color-palette-slate-50;
 $listview-border-color: $theme-color-palette-slate-20;
 $panel-border-color: $theme-color-palette-graphite-30;
-
-// Tabs
-$tab-text-color: $theme-color-palette-graphite-70;
 
 // Calendar
 $calendar-bg-color: $panel-bg-color;
@@ -51,16 +58,31 @@ $calendar-hover-bg-color: rgba(240, 240, 240, 0.5);
 $calendar-disabled-bg-color: $theme-color-palette-graphite-20;
 $calendar-disabled-color: $theme-color-brand-secondary-contrast;
 
+// Color Picker
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Color Palette Background
+$color-border-color: rgba(0, 0, 0, 0.2);
+
+// Date Picker
+$datepicker-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Dropdown
+$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Tabs
+$tab-text-color: $theme-color-palette-graphite-70;
+
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $theme-color-palette-slate-40;
+$uplift-acc-header-text-color: $theme-color-palette-slate-20;
 $uplift-acc-header-selected-text-color: $theme-color-palette-white;
 
-$uplift-acc-subheader-text-color: $theme-color-palette-slate-50;
+$uplift-acc-subheader-text-color: $theme-color-palette-slate-20;
 
 $uplift-acc-expanded-bg-color: $theme-color-palette-black;
 
-$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-70;
+$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-60;
 
 $uplift-appmenu-main-bg-color: $theme-color-palette-slate-100;
 $uplift-appmenu-header-bg-color: $theme-color-palette-slate-100;
@@ -68,15 +90,19 @@ $uplift-appmenu-footer-bg-color: $theme-color-palette-slate-100;
 
 $uplift-appmenu-hover-bg-color: $theme-color-palette-slate-90;
 $uplift-appmenu-selected-bg-color: $theme-color-palette-slate-80;
-$uplift-appmenu-selected-border-color: $theme-color-palette-slate-80;
+$uplift-appmenu-selected-border-color: $theme-color-brand-primary-alt;
 
 // Core Uplift Controls
 @import '../core/controls-uplift';
 
 html.is-chrome:not(.is-mac) {
   ::-webkit-scrollbar-track {
-    background-color: $theme-color-body-base;
-    border-left: 1px solid $theme-color-brand-secondary-lighter;
+    background-color: $body-color-primary-background;
+    border: 1px solid $theme-color-palette-slate-10;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: $body-color-primary-background;
   }
 
   ::-webkit-scrollbar {
@@ -86,11 +112,11 @@ html.is-chrome:not(.is-mac) {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $theme-color-brand-secondary-base;
+    background: $theme-color-palette-slate-20;
     border-radius: 10px;
 
     &:hover {
-      background: $theme-color-brand-secondary-alt;
+      background: $theme-color-palette-slate-30;
     }
   }
 }

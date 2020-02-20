@@ -1,4 +1,5 @@
 import { SearchField } from '../../../src/components/searchfield/searchfield';
+import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/example-index.html');
 const svgHTML = require('../../../src/components/icons/svg.html');
@@ -6,21 +7,15 @@ const data = require('../../../app/data/states-all.json');
 
 let searchfieldInputEl;
 let searchfieldAPI;
-let svgEl;
-let rowEl;
 
 describe('Searchfield API', () => {
   beforeEach(() => {
     searchfieldInputEl = null;
     searchfieldAPI = null;
-    svgEl = null;
-    rowEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', exampleHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
-    rowEl = document.body.querySelector('.row');
     searchfieldInputEl = document.body.querySelector('.searchfield');
     searchfieldInputEl.removeAttribute('data-options');
     searchfieldInputEl.classList.add('no-init');
@@ -31,10 +26,15 @@ describe('Searchfield API', () => {
   });
 
   afterEach(() => {
-    searchfieldAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    searchfieldInputEl.parentNode.removeChild(searchfieldInputEl);
-    rowEl.parentNode.removeChild(rowEl);
+    if (searchfieldAPI) {
+      searchfieldAPI.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.searchfield-wrapper',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('can be invoked', () => {

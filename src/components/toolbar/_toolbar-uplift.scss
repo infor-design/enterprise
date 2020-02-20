@@ -1,0 +1,14 @@
+// Toolbars - Uplift overrides
+//================================================== */
+
+// Styles for regular toolbar only
+.toolbar {
+  .title {
+    @include font-size(18);
+  }
+
+  .datagrid-result-count,
+  .datagrid-group-count {
+    @include font-size(18);
+  }
+}

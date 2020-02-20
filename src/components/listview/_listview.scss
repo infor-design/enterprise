@@ -120,10 +120,12 @@
   }
 
   li {
+    background-color: $listview-bg-color;
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
+    position: relative;
 
     &:hover {
       background-color: $listview-hover-bg-color;
@@ -217,7 +219,7 @@
 
   &.disable-hover {
     li:hover {
-      background-color: transparent;
+      background-color: $listview-hover-bg-color;
     }
   }
 

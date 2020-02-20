@@ -146,7 +146,7 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 }
 
 .module-tabs.is-personalizable .tab:hover {
-  background-color: ${colors.hover} !important;
+  background-color: ${colors.darker} !important;
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
@@ -423,7 +423,7 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.dark} !important;
 }
 
 .is-personalizable .personalize-subheader {

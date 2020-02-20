@@ -9,7 +9,9 @@
 </div>
 
 <script id="test-script">
-  $('#fontpicker').fontpicker();
+  $('body').on('initialized', function() {
+    $('#fontpicker').fontpicker();
+  });
 
   $('#fontpicker').on('font-selected.test', function (e, fontPickerStyle) {
     $('body').toast({

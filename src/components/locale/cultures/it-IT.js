@@ -39,7 +39,8 @@ Soho.Locale.addCulture('it-IT', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-    dayPeriods: ['AM', 'PM']
+    dayPeriods: ['AM', 'PM'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '€',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('it-IT', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Aggiungi ai segnalibri', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Breadcrumb', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Browser', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Lingua del browser', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Elenco puntato', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendario', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Fotocamera', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('it-IT', {
     Filter: { id: 'Filter', value: 'Filtro', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Prima pagina', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Cartella', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Testo normale', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Intestazione {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'Da', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Visualizzazione a schermo intero', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Vai avanti', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('it-IT', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Allinea a sinistra', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Allinea a destra', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Parola chiave', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Lingua', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Avvia', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Ultima pagina', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Sinistra', comment: 'Left tooltip' },

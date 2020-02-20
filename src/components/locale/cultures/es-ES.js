@@ -39,7 +39,8 @@ Soho.Locale.addCulture('es-ES', {
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
     timeFormat: 'H:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
-    dayPeriods: ['a.m.', 'p.m.']
+    dayPeriods: ['a.m.', 'p.m.'],
+    firstDayofWeek: 1 // Starts on Mon
   }],
   // numbers/currencyFormats-numberSystem-latn/standard
   currencySign: '€',
@@ -87,6 +88,7 @@ Soho.Locale.addCulture('es-ES', {
     BookmarkThis: { id: 'BookmarkThis', value: 'Señalar con marcador', comment: 'Bookmark an element' },
     Breadcrumb: { id: 'Breadcrumb', value: 'Ruta de navegación', comment: 'Text describing the Breadcrumb' },
     Browser: { id: 'Browser', value: 'Explorador', comment: 'As in a Web Browser' },
+    BrowserLanguage: { id: 'BrowserLanguage', value: 'Idioma del explorador', comment: 'Language in the current Web Browser' },
     BulletedList: { id: 'BulletedList', value: 'Lista de viñetas', comment: 'Bulleted List tooltip' },
     Calendar: { id: 'Calendar', value: 'Calendario', comment: 'Inline Text for the title of the Calendar control' },
     Camera: { id: 'Camera', value: 'Cámara', comment: 'Camera tooltip' },
@@ -172,6 +174,8 @@ Soho.Locale.addCulture('es-ES', {
     Filter: { id: 'Filter', value: 'Filtro', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Primera página', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Carpeta', comment: 'Folder tooltip' },
+    FontPickerNormal: { id: 'FontPickerNormal', value: 'Texto normal', comment: 'Description of default text style on Fontpicker components' },
+    FontPickerHeader: { id: 'FontPickerHeader', value: 'Encabezado {0}', comment: 'Description of header text style on Fontpicker components' },
     From: { id: 'From', value: 'De', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Vista completa', comment: 'Full View tooltip' },
     GoForward: { id: 'GoForward', value: 'Avanzar', comment: 'Move Page / object this direction' },
@@ -216,6 +220,7 @@ Soho.Locale.addCulture('es-ES', {
     JustifyLeft: { id: 'JustifyLeft', value: 'Alinear a la izquierda', comment: 'justify text to left in the editor' },
     JustifyRight: { id: 'JustifyRight', value: 'Alinear a la derecha', comment: 'justify text to right in the editor' },
     Keyword: { id: 'Keyword', value: 'Palabra clave', comment: 'Describes filtering by a keyword search' },
+    Language: { id: 'Language', value: 'Idioma', comment: 'The currently used Language' },
     Launch: { id: 'Launch', value: 'Iniciar', comment: 'Launch' },
     LastPage: { id: 'LastPage', value: 'Última página', comment: 'Last Page tooltip' },
     Left: { id: 'Left', value: 'Izquierda', comment: 'Left tooltip' },

@@ -2,6 +2,7 @@
 import { Environment as env } from '../../utils/environment';
 import { numberUtils } from '../../utils/number';
 import { stringUtils } from '../../utils/string';
+import { utils } from '../../utils/utils';
 import { ummalquraData } from './info/umalqura-data';
 
 // If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
@@ -63,6 +64,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'lv', default: 'lv-LV' },
     { lang: 'ms', default: 'ms-bn' },
     { lang: 'nb', default: 'no-NO' },
+    { lang: 'nn', default: 'no-NO' },
     { lang: 'nl', default: 'nl-NL' },
     { lang: 'no', default: 'no-NO' },
     { lang: 'pl', default: 'pl-PL' },
@@ -81,9 +83,10 @@ const Locale = {  // eslint-disable-line
   supportedLocales: ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
     'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-419', 'es-MX',
     'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
-    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+    'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO', 'nn-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
+  translatedLocales: ['fr-CA', 'fr-FR', 'pl-PL', 'pt-PT'],
   defaultLocale: 'en-US',
   minify: minifyCultures,
 
@@ -204,12 +207,10 @@ const Locale = {  // eslint-disable-line
     let correctLanguage = this.defaultLocales.filter(a => a.lang === lang);
 
     if (correctLanguage && correctLanguage[0]) {
-      return lang;
+      return this.remapLanguage(lang);
     }
 
     correctLanguage = this.remapLanguage(lang);
-
-    correctLanguage = this.defaultLocale.substr(0, 2);
     return correctLanguage;
   },
 
@@ -230,7 +231,7 @@ const Locale = {  // eslint-disable-line
       correctLanguage = 'he';
     }
     // Another special case
-    if (lang === 'nb') {
+    if (lang === 'nb' || lang === 'nn') {
       correctLanguage = 'no';
     }
     return correctLanguage;
@@ -256,14 +257,37 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
+      this.languages[locale] = {
+        name: locale,
+        direction: data.direction || (langData ? langData.direction : ''),
+        nativeName: data.nativeName || (langData ? langData.nativeName : ''),
+        messages: data.messages || (langData ? langData.messages : {})
+      };
     } else if (!this.languages[lang] && !data.messages) {
-      const match = this.defaultLocales.filter(a => a.lang === lang);
-      const parentLocale = match[0] || [{ default: 'en-US' }];
+      const parentLocale = this.parentLocale(locale);
       if (parentLocale.default && parentLocale.default !== locale &&
         !this.cultures[parentLocale.default]) {
         this.appendLocaleScript(parentLocale.default);
       }
     }
+  },
+
+  /**
+   * Find the parent locale (meaning shared translations), if it exists.
+   * @private
+   * @param {string} locale The locale we are checking.
+   * @returns {string} The parent locale.
+   */
+  parentLocale(locale) {
+    const lang = locale.substr(0, 2);
+    const match = this.defaultLocales.filter(a => a.lang === lang);
+    const parentLocale = match[0] || [{ default: 'en-US' }];
+
+    // fr-FR and fr-CA are different / do not have a default
+    if (this.translatedLocales.indexOf(locale) > -1) {
+      return { lang: 'fr', default: 'fr-CA' };
+    }
+    return parentLocale;
   },
 
   appendedLocales: [],
@@ -344,10 +368,8 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript('en-US', locale === 'en-US');
     }
 
-    const lang = locale.split('-')[0];
     let hasParentLocale = false;
-    const match = this.defaultLocales.filter(a => a.lang === lang);
-    const parentLocale = match[0] || [{ default: 'en-US' }];
+    const parentLocale = this.parentLocale(locale);
     if (parentLocale.default && parentLocale.default !== locale &&
       !this.cultures[parentLocale.default]) {
       hasParentLocale = true;
@@ -388,6 +410,10 @@ const Locale = {  // eslint-disable-line
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   getLocale(locale, filename) {
+    if (!locale) {
+      return null;
+    }
+
     locale = this.correctLocale(locale);
     this.dff[locale] = $.Deferred();
 
@@ -470,6 +496,20 @@ const Locale = {  // eslint-disable-line
         this.currentLanguage = this.languages[lang];
         this.updateLanguageTag(name);
       }
+
+      if (this.translatedLocales.indexOf(name) > -1) {
+        this.languages[lang].direction = data.direction;
+        this.languages[lang].messages = data.messages;
+        this.languages[lang].name = lang;
+        this.languages[lang].nativeName = data.nativeName;
+
+        this.languages[name] = {
+          direction: data.direction,
+          messages: data.messages,
+          name,
+          nativeName: data.nativeName
+        };
+      }
     }
   },
 
@@ -496,14 +536,8 @@ const Locale = {  // eslint-disable-line
     }
 
     // Convert if a timezone string.
-    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('Z') > -1) {
-      const tDate1 = new Date(value);
-      value = tDate1;
-    }
-
-    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('T') > -1) {
-      const tDate1 = new Date(value);
-      value = tDate1;
+    if (typeof value === 'string' && /T|Z/g.test(value)) {
+      value = this.newDateObj(value);
     }
 
     // Convert if a string..
@@ -543,6 +577,10 @@ const Locale = {  // eslint-disable-line
 
     if (options.date) {
       pattern = cal.dateFormat[options.date];
+    }
+
+    if (typeof options === 'string' && options !== '') {
+      pattern = options;
     }
 
     if (!pattern) {
@@ -646,6 +684,23 @@ const Locale = {  // eslint-disable-line
     }
 
     return ret.trim();
+  },
+
+  /**
+   * Get date object by given date string.
+   * @private
+   * @param {string} dateStr The date string
+   * @returns {object} The date object.
+   */
+  newDateObj(dateStr) {
+    let date = new Date(dateStr);
+    // Safari was not render the right date/time with timezone string
+    if (env.browser.name === 'safari' && typeof dateStr === 'string' && /T|Z/g.test(dateStr)) {
+      let arr = dateStr.replace(/Z/, '').replace(/T|:/g, '-').split('-');
+      arr = arr.map((x, i) => +(i === 1 ? x - 1 : x));
+      date = new Date(...arr);
+    }
+    return date;
   },
 
   /**
@@ -781,13 +836,35 @@ const Locale = {  // eslint-disable-line
   * @param {number} number The number to convert
   * @param {string} locale The number to convert
   * @param {object} options The number to convert
+  * @param {string} groupSeparator If provided will replace with browser default character
   * @returns {string} The converted number.
   */
-  toLocaleString(number, locale, options) {
+  toLocaleString(number, locale, options, groupSeparator) {
     if (typeof number !== 'number') {
       return '';
     }
-    return number.toLocaleString(locale || Locale.currentLocale.name, options || undefined);
+    const args = { locale: locale || Locale.currentLocale.name, options: options || undefined };
+    let n = number.toLocaleString(args.locale, args.options);
+    if (!(/undefined|null/.test(typeof groupSeparator))) {
+      const gSeparator = this.getSeparator(args.locale, 'group');
+      n = n.replace(new RegExp(gSeparator, 'g'), groupSeparator.toString());
+    }
+    return n;
+  },
+
+  /**
+  * Find browser default separator for given locale
+  * @private
+  * @param {string} locale The locale
+  * @param {string} separatorType The separator type be found `group`|`decimal`
+  * @returns {string} The browser default separator character
+  */
+  getSeparator(locale, separatorType) {
+    const number = 1000.1;
+    return Intl.NumberFormat(locale)
+      .formatToParts(number)
+      .find(part => part.type === separatorType)
+      .value;
   },
 
   /**
@@ -883,6 +960,9 @@ const Locale = {  // eslint-disable-line
     const isUTC = (dateString.toLowerCase().indexOf('z') > -1);
     let i;
     let l;
+    const hasDot = (dateFormat.match(/M/g) || []).length === 3 && thisLocaleCalendar &&
+      thisLocaleCalendar.months && thisLocaleCalendar.months.abbreviated &&
+        thisLocaleCalendar.months.abbreviated.filter(v => /\./.test(v)).length;
 
     if (isDateTime) {
       // Remove Timezone
@@ -893,13 +973,18 @@ const Locale = {  // eslint-disable-line
       dateFormat = dateFormat.replace(' zzzz', '').replace(' zz', '');
 
       // Replace [space & colon & dot] with "/"
-      dateFormat = dateFormat.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
-      dateString = dateString.replace(/[T\s:.-]/g, '/').replace(/z/i, '');
+      const regex = hasDot ? /[T\s:-]/g : /[T\s:.-]/g;
+      dateFormat = dateFormat.replace(regex, '/').replace(/z/i, '');
+      dateString = dateString.replace(regex, '/').replace(/z/i, '');
     }
 
     // Remove spanish de
     dateFormat = dateFormat.replace(' de ', ' ');
     dateString = dateString.replace(' de ', ' ');
+
+    // Remove commas
+    dateFormat = dateFormat.replace(',', '');
+    dateString = dateString.replace(',', '');
 
     if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
       dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
@@ -915,8 +1000,9 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') !== -1) {
-      dateFormat = dateFormat.replace(/[\s:.]/g, '/');
-      dateString = dateString.replace(/[\s:.]/g, '/');
+      const regex = hasDot ? /[\s:]/g : /[\s:.]/g;
+      dateFormat = dateFormat.replace(regex, '/');
+      dateString = dateString.replace(regex, '/');
     }
 
     // Extra Check incase month has spaces
@@ -1289,6 +1375,14 @@ const Locale = {  // eslint-disable-line
     if (options && options.locale && this.cultures[options.locale]) {
       localeData = this.cultures[options.locale];
     }
+    if (options && options.language && this.languages[options.language]) {
+      const newData = utils.extend(true, {}, this.currentLocale.data);
+      newData.calendars[0] = this.calendar(
+        options.locale || this.currentLocale.name,
+        options.language
+      );
+      return newData;
+    }
     if (!localeData.numbers) {
       localeData.numbers = this.numbers();
     }
@@ -1533,6 +1627,9 @@ const Locale = {  // eslint-disable-line
     const languageData = this.useLanguage(options);
     let showAsUndefined = false;
     let showBrackets = true;
+    if (key === '&nsbp;') {
+      return '';
+    }
     if (typeof options === 'boolean') {
       showAsUndefined = options;
     }
@@ -1577,13 +1674,18 @@ const Locale = {  // eslint-disable-line
    * Shortcut function to get 'first' calendar
    * @private
    * @param {string} locale The locale to use
+   * @param {string} lang The translations of the calendar items
    * @param {string} name the name of the calendar (fx: "gregorian", "islamic-umalqura")
    * @returns {object} containing calendar data.
    */
-  calendar(locale, name) {
+  calendar(locale, lang, name) {
     let calendars = [];
     if (this.currentLocale.data.calendars && !locale) {
       calendars = this.currentLocale.data.calendars;
+    }
+
+    if (lang && lang.length > 2) {
+      lang = lang.substr(0, 2);
     }
 
     if (locale && this.cultures[locale]) {
@@ -1599,27 +1701,38 @@ const Locale = {  // eslint-disable-line
       }
     }
 
-    if (calendars[0]) {
-      return calendars[0];
+    if (!calendars[0]) {
+      // Defaults to en-US
+      return {
+        dateFormat: {
+          separator: '/',
+          timeSeparator: ':',
+          short: 'M/d/yyyy',
+          medium: 'MMM d, yyyy',
+          long: 'MMMM d, yyyy',
+          full: 'EEEE, MMMM d, y',
+          month: 'MMMM d',
+          year: 'MMMM yyyy',
+          timestamp: 'h:mm:ss a',
+          datetime: 'M/d/yyyy h:mm a'
+        },
+        timeFormat: 'HH:mm:ss',
+        dayPeriods: ['AM', 'PM']
+      };
     }
+    const calendar = utils.extend({}, calendars[0]);
 
-    // Defaults to en-US
-    return {
-      dateFormat: {
-        separator: '/',
-        timeSeparator: ':',
-        short: 'M/d/yyyy',
-        medium: 'MMM d, yyyy',
-        long: 'MMMM d, yyyy',
-        full: 'EEEE, MMMM d, y',
-        month: 'MMMM d',
-        year: 'MMMM yyyy',
-        timestamp: 'h:mm:ss a',
-        datetime: 'M/d/yyyy h:mm a'
-      },
-      timeFormat: 'HH:mm:ss',
-      dayPeriods: ['AM', 'PM']
-    };
+    if (lang && locale.substr(0, 2) !== lang) {
+      const defaultLocale = this.defaultLocales.filter(a => a.lang === lang);
+
+      if (defaultLocale[0]) {
+        const culture = this.cultures[defaultLocale[0].default];
+        calendar.days = culture.calendars[0].days;
+        calendar.months = culture.calendars[0].months;
+        calendar.dayPeriods = culture.calendars[0].dayPeriods;
+      }
+    }
+    return calendar;
   },
 
   /**
@@ -1777,6 +1890,7 @@ const Locale = {  // eslint-disable-line
       date.getMilliseconds()
     ];
   },
+
   /**
    * Convert umalqura to gregorian date.
    * @param {number} year the year
@@ -1818,12 +1932,15 @@ const Locale = {  // eslint-disable-line
     };
     const gregorianDateObj = julianToGregorian(jd);
 
-    const gregorianDate = new Date();
-    gregorianDate.setFullYear(gregorianDateObj.year);
-    gregorianDate.setMonth(gregorianDateObj.month);
-    gregorianDate.setDate(gregorianDateObj.day);
-    gregorianDate.setHours(0, 0, 0, 0);
-
+    const gregorianDate = new Date(
+      gregorianDateObj.year,
+      gregorianDateObj.month,
+      gregorianDateObj.day,
+      0,
+      0,
+      0,
+      0
+    );
     return gregorianDate;
   },
 

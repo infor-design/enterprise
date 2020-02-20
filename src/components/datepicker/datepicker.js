@@ -107,10 +107,9 @@ const DATEPICKER_DEFAULTS = {
   yearsAhead: 5,
   yearsBack: 4,
   legend: [
-    // Legend Build up example
-    // Color in level 6 - http://usmvvwdev53:424/controls/colors
-    { name: 'Public Holiday', color: '#76B051', dates: [] },
-    { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
+    // Legend Build up exampleazure07
+    { name: 'Public Holiday', color: 'azure06', dates: [] },
+    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
   ],
   range: {
     useRange: false, // true - if datepicker using range dates
@@ -214,6 +213,11 @@ DatePicker.prototype = {
           api.language = this.settings.language || api.locale.language;
           api.setCurrentCalendar();
         });
+        if (similarApi.length === 0) {
+          this.locale = Locale.cultures[locale];
+          this.language = this.settings.language || this.locale.language;
+          this.setCurrentCalendar();
+        }
       });
     }
     if (s.language) {
@@ -246,12 +250,16 @@ DatePicker.prototype = {
   },
 
   /**
-   *  Sets current calendar information.
+   * Sets current calendar information.
    * @private
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.settings.locale || this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -406,10 +414,12 @@ DatePicker.prototype = {
     if (typeof Locale === 'object' && this.settings.calendarName) {
       localeDateFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).dateFormat;
       localeTimeFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).timeFormat;
     }
@@ -598,6 +608,7 @@ DatePicker.prototype = {
 
       timeOptions.parentElement = this.timepickerContainer;
       timeOptions.locale = this.settings.locale;
+      timeOptions.language = this.settings.language;
       this.time = this.getTimeString(this.currentDate, this.show24Hours);
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('.dropdown').dropdown();
@@ -859,7 +870,7 @@ DatePicker.prototype = {
       if (btn.hasClass('is-select-month') || btn.hasClass('is-select-month-pane')) {
         const year = parseInt(self.calendarAPI.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
         const month = parseInt(self.calendarAPI.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
-        const day = self.calendarAPI.currentDay || 1;
+        const day = 1;
 
         self.currentDate = new Date(year, month, day);
 

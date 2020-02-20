@@ -5,10 +5,24 @@ label.inline:not(.checkbox-label) .checkbox ~ .label-text {
   margin: 0 auto 5px -5px;
 }
 
-label.inline .checkbox:disabled ~ .label-text,
-input.checkbox:disabled + label,
-input.checkbox:disabled + input[type='hidden'] + label,
-span.checkbox > input:disabled + label {
-  color: $checkbox-color-disabled-font;
-  cursor: default;
+label.inline .checkbox ~ .label-text,
+.checkbox-label {
+  line-height: 16px;
+
+  span {
+    line-height: inherit;
+  }
+}
+
+.checkbox-label.required::after {
+  font-size: 2.2rem;
+}
+
+// Dirty Checkbox
+.compound-field {
+  > .field.field-checkbox {
+    .dirty-checkbox {
+      margin: 11px 0 0 -1px;
+    }
+  }
 }

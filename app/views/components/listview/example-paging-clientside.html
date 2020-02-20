@@ -59,6 +59,16 @@
   });
 </script>
 
+<style id="test-style">
+  .listview .badge {
+    min-width: 80px;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 13px);
+    text-align: center;
+  }
+</style>
+
 {{={{{ }}}=}}
 <script id="project-tmpl" type="text/html">
   <ul>
@@ -72,7 +82,7 @@
         <p class="listview-heading">{{name}}</p>
         <p class="listview-subheading">{{client}}</p>
         {{#status}}
-        <span class="tag {{status.color}}" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
+        <span class="badge {{status.color}}">
           {{status.name}}
         </span>
         {{/status}}

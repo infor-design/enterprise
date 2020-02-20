@@ -99,7 +99,7 @@ FieldFilter.prototype = {
       const ffId = `${id}-ff`;
 
       // Set Field
-      this.field = this.element.closest('.field');
+      this.field = this.element.closest('.field, .field-short');
 
       // RTL list x-position
       const isRTL = Locale.isRTL();
@@ -218,7 +218,8 @@ FieldFilter.prototype = {
     this.ffdropdown
       .on(`listopened.${COMPONENT_NAME}`, () => {
         // drowpdownWidth - border (52)
-        $('#dropdown-list ul').width(this.element.outerWidth() + 52);
+        const extra = this.field.is('.field-short') ? 42 : 52;
+        $('#dropdown-list ul').width(this.element.outerWidth() + extra);
       })
       .on(`selected.${COMPONENT_NAME}`, (e, args) => {
         /**

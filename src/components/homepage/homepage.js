@@ -273,7 +273,8 @@ Homepage.prototype = {
     // Max sized columns brings to top
     if (this.settings.columns > 1) {
       for (let i = 0, j = 0, w = 0, l = this.blocks.length; i < l; i++) {
-        if (this.blocks[i].w >= this.settings.columns && i && w) {
+        if (this.blocks[i].w >= this.settings.columns && i &&
+          w && (w <= (this.settings.columns / 2))) {
           this.arrayIndexMove(this.blocks, i, j);
         }
         w += this.blocks[i].w;

@@ -125,7 +125,21 @@ const editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<textarea class="textarea"></textarea>').appendTo(container);
+      container.addClass('datagrid-textarea-cell-wrapper');
+      const autogrowStartHeight = container.get(0).scrollHeight;
+      const style = column.editorOptions && column.editorOptions.minHeight ?
+        `style="min-height: ${column.editorOptions.minHeight}px"` : '';
+      this.input = $(`<textarea ${style} class="textarea">${this.originalValue}</textarea>`).appendTo(container);
+      const editorOptions = column.editorOptions ? column.editorOptions : {};
+      // disable the characterCounter by default
+      if (!('characterCounter' in editorOptions)) {
+        editorOptions.characterCounter = false;
+      }
+      this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
+
+      this.input.on('click.textareaeditor', (e) => {
+        e.stopPropagation();
+      });
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -145,11 +159,13 @@ const editors = {
     };
 
     this.focus = function () {
-      this.input.focus();
+      this.input.focus().select();
     };
 
     this.destroy = function () {
+      container.removeClass('datagrid-textarea-cell-wrapper');
       setTimeout(() => {
+        this.input.off('click.textareaeditor');
         this.input.remove();
       }, 0);
     };
@@ -428,9 +444,6 @@ const editors = {
       const selected = this.input.find(':selected');
       let val = selected.attr('value');
       const dataType = selected.attr('data-type');
-      if (!val && this.input.find('option[selected]').length > 0) {
-        val = this.input.find('option[selected]').attr('value');
-      }
 
       // For non-string option values (number, boolean, etc.),
       // convert string attr value to proper type

@@ -61,6 +61,7 @@ var modals = {
   };
 
   $('#add-context').on('click', function () {
+		$(this).focus();
     setModal(modals[this.id]);
   });
 

@@ -56,18 +56,25 @@
   .calendar-event-types {
     margin-bottom: -3px;
     margin-right: 5px;
+
+    .checkbox-label {
+      margin: $label-size-regular-margin;
+    }
   }
 
   .calendar-event-more {
     @include font-size(11);
 
     color: $font-color-extrahighcontrast;
-    cursor: pointer;
     display: block;
     height: 18px;
     margin: 4px 10px;
     text-align: left;
     width: auto;
+
+    span {
+      cursor: pointer;
+    }
   }
 
   // The upcoming event details section

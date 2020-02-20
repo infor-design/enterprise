@@ -215,7 +215,7 @@ svg.icon-logo {
   &.dirty-checkbox {
     &.is-checked {
       border-width: 4px;
-      left: 1px;
+      left: 0;
       top: 0;
       z-index: 2;
     }
@@ -228,13 +228,13 @@ svg.icon-logo {
     margin-top: 8px;
 
     &.dirty-checkbox {
-      left: -4px;
+      left: 0;
       margin-top: inherit;
       top: 1px;
 
       &.is-checked {
-        // left: -4px;
-        top: 0;
+        left: 0;
+        top: 1px;
       }
     }
   }
@@ -645,4 +645,11 @@ html[dir='rtl'] {
     margin: 1px 1px 0 0;
   }
 
+}
+
+.is-firefox {
+  .icon-dirty.dirty-checkbox.is-checked {
+    left: 0;
+    top: 0;
+  }
 }

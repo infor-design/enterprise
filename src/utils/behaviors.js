@@ -17,7 +17,7 @@ HideFocus.prototype = {
       this.element = element;
     }
 
-    const $el = $(element);
+    const $el = $(this.element);
     let isClick = false;
     let isFocused = false;
     let labelClicked = false;

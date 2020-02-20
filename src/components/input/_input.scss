@@ -6,9 +6,9 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
-  color: $checkbox-color-unchecked-initial-font;
+  color: $label-color;
   display: inline-block;
-  font-size: $theme-size-font-base;
+  font-size: $input-size-regular-font-size;
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -70,7 +70,7 @@
 }
 
 .field {
-  margin-bottom: 20px;
+  margin-bottom: $form-size-field-regular-margin-bottom;
   position: relative;
 
   &.less-margin {
@@ -101,8 +101,8 @@
   }
 
   > .textarea-wordcount {
-    color: $font-color-muted;
-    margin-bottom: 14px;
+    color: $label-color;
+    margin-bottom: 0;
   }
 
   &.field-radio {
@@ -115,7 +115,7 @@
   }
 
   &.field-checkbox {
-    margin-bottom: 12px;
+    margin-bottom: $form-size-field-regular-margin-bottom - 8;
 
     .inline-checkbox .label-text {
       margin-bottom: 1px !important;
@@ -123,7 +123,7 @@
   }
 
   .field:not(.field-checkbox) + &.field-checkbox {
-    margin-bottom: 17px;
+    margin-bottom: $form-size-field-regular-margin-bottom;
   }
 
   &.l-pull-left {
@@ -132,6 +132,15 @@
 
   &.top-padding {
     margin-top: 3rem;
+  }
+}
+
+.field-short,
+.form-layout-compact .field {
+  > .textarea-wordcount {
+    color: $label-color;
+    font-size: $label-size-compact-font-size - 0.1;
+    margin-bottom: 0;
   }
 }
 
@@ -189,6 +198,10 @@ textarea {
   @include input-style();
 }
 
+textarea[rows] {
+  height: auto;
+}
+
 // Element with input "like" style borders
 .input-style {
   background-color: $input-color-initial-background;
@@ -225,7 +238,7 @@ textarea {
 textarea {
   @include rem(line-height, 2rem);
 
-  min-height: 90px;
+  min-height: $textarea-size-regular-height;
   overflow: auto;
   padding: 10px;
   width: $textarea-size;
@@ -310,7 +323,7 @@ textarea {
 label,
 .label {
   &.required {
-    &:not(.inline) {
+    &:not(.inline):not(.checkbox-label) {
       &:not(.accessible)::after {
         @include required-indicator($is-content: true);
       }
@@ -330,7 +343,10 @@ label,
       }
     }
   }
+}
 
+span.required::after {
+  @include required-indicator($is-content: true);
 }
 
 // Placeholder - Inline help
@@ -369,11 +385,14 @@ label,
 }
 
 // Error States
-.error,
+.error {
+  color: $error-color;
+}
+
 .error-message,
 .error-message p,
 .popover .error-message p {
-  color: $error-color;
+  color: $error-text-color;
 }
 
 .error::-webkit-input-placeholder {
@@ -474,32 +493,86 @@ label,
 }
 
 // Shorter/Legacy Inputs
-.field-short {
+.field-short,
+.form-layout-compact .field {
   font-size: 0;
-  margin-bottom: 10px;
+  margin-bottom: $form-size-field-compact-margin-bottom;
   position: relative;
+
+  input {
+    font-size: $input-size-compact-font-size;
+    height: $input-size-compact-height;
+    margin-bottom: 0;
+    padding: $input-size-compact-padding;
+    resize: none;
+  }
+
+  textarea:not(.editable) {
+    font-size: $input-size-compact-font-size;
+    line-height: 1.6rem;
+    min-height: $textarea-size-compact-height;
+    padding: 5px;
+  }
 
   &:last-child:not(:only-child) {
     margin-bottom: 0;
   }
 
+  .error-message .message-text {
+    font-size: $label-size-compact-font-size;
+  }
+
+  .icon-error,
+  .icon-success {
+    height: 14px;
+    margin-left: -1px;
+    top: auto;
+    width: 18px;
+  }
+
+  .icon-error.lower-opacity {
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  ::-webkit-input-placeholder {
+    font-size: $input-size-compact-font-size;
+  }
+
+  ::-moz-placeholder {
+    font-size: $input-size-compact-font-size;
+  }
+
+  :-ms-input-placeholder {
+    font-size: $input-size-compact-font-size;
+  }
+}
+
+.is-firefox {
+  .field-short,
+  .form-layout-compact .field {
+    input:not(.spinbox) {
+      padding-top: 2px;
+    }
+  }
+}
+
+.field-short {
   input {
-    font-size: $theme-size-font-sm;
-    margin-bottom: 0;
-    padding: 5px;
-    resize: none;
     text-align: left;
     width: $field-sm;
+  }
 
-    &::-webkit-input-placeholder,
-    &::-moz-placeholder,
-    &:-ms-input-placeholder {
-      font-size: $theme-size-font-sm;
-    }
+  .icon-error,
+  .icon-success {
+    margin-left: -27px;
+    margin-top: 6px;
+    top: auto;
   }
 
   label {
     display: inline-block;
+    font-size: $label-size-compact-font-size;
     padding-right: 10px;
     padding-top: 5px;
     text-align: right;
@@ -510,52 +583,104 @@ label,
       left: $field-sm;
     }
   }
+}
 
-  .icon-error,
-  .icon-success {
-    height: 14px;
-    margin-left: -27px;
-    margin-top: 6px;
-    top: auto;
-    width: 18px;
+// Field stacked optionally stacks the label
+.field-stacked {
+  label:not(.radio-label) {
+    display: block;
+    padding-right: 0;
+    padding-top: 0 !important;
+    text-align: initial;
+    vertical-align: initial;
+    width: auto;
+
+    ~ .error-message {
+      left: 0;
+    }
   }
 
-  .icon-error.lower-opacity {
-    opacity: 0.3;
-    z-index: -1;
+  .datepicker,
+  .timepicker {
+    width: 150px;
+  }
+
+  input {
+    width: 300px;
+  }
+}
+
+// Sets fields to compact at the form level
+.form-layout-compact {
+  .field {
+    margin-bottom: $form-size-field-compact-margin-bottom;
+  }
+
+  label,
+  .label {
+    font-size: $label-size-compact-font-size;
+    margin: $label-size-compact-margin;
+  }
+
+  label.inline .checkbox ~ .label-text,
+  .checkbox-label {
+    line-height: $label-size-compact-font-size;
+  }
+
+  .field.field-checkbox {
+    margin-bottom: $form-size-field-compact-margin-bottom;
+  }
+
+  .field:not(.field-checkbox) + .field.field-checkbox {
+    margin-bottom: $form-size-field-compact-margin-bottom - 2;
+  }
+}
+
+.field-short {
+  margin-bottom: $form-size-field-compact-margin-bottom;
+
+  label,
+  .label {
+    font-size: $label-size-compact-font-size;
+    margin: $label-size-compact-margin;
   }
 }
 
 // Field Sizes
 .input-lg,
 .colorpicker-container .input-lg.colorpicker,
-.field-short .input-lg {
+.field-short .input-lg,
+.form-layout-compact .field .input-lg {
   width: $field-lg;
 }
 
 .input-md,
 .colorpicker-container .input-md.colorpicker,
 .input-md.datepicker,
-.field-short .input-md {  //Default
+.field-short .input-md,
+.form-layout-compact .field .input-md {
   width: $field-md;
 }
 
 .input-mm,
 .colorpicker-container .input-mm.colorpicker,
 .input-mm.datepicker,
-.field-short .input-mm {  //Default
+.field-short .input-mm,
+.form-layout-compact .field .input-mm {
   width: $field-mm;
 }
 
 .input-sm,
 .colorpicker-container .input-sm.colorpicker,
-.field-short .input-sm {
+.field-short .input-sm,
+.form-layout-compact .field .input-sm {
   width: $field-sm;
 }
 
 .input-xs,
 .colorpicker-container .input-xs.colorpicker,
-.field-short .input-xs {
+.field-short .input-xs,
+.form-layout-compact .field .input-xs {
   width: $field-xs;
 }
 
@@ -563,7 +688,7 @@ label,
   width: $field-full;
 }
 
-//Info Field
+// Info Field
 .field-info {
   $this-icon-width: 15px;
 
@@ -602,7 +727,7 @@ label,
   }
 }
 
-//Error Field
+// Error Field
 .error-message {
   $this-icon-width: 14px;
 
@@ -625,7 +750,7 @@ label,
   }
 
   .message-text {
-    font-size: inherit;
+    font-size: $label-size-regular-font-size;
     line-height: 15px;
     max-width: 280px;
     padding-left: $this-icon-width + 5;
@@ -692,7 +817,7 @@ label,
   }
 }
 
-//Information Field
+// Information Field
 .custom-icon-message,
 .info-message {
   $this-icon-width: 14px;
@@ -849,10 +974,20 @@ html[dir='rtl'] {
     }
   }
 
-  .field .checkbox-label,
-  .field .checkbox > label {
-    margin-left: inherit;
-    margin-right: -5px;
+  .field-short label ~ .error-message {
+    left: initial;
+    right: 150px;
+  }
+
+  .field-short.field-stacked label ~ .error-message {
+    right: initial;
+  }
+
+  // Field stacked optionally stacks the label
+  .field-short.field-stacked {
+    label:not(.radio-label) {
+      text-align: right;
+    }
   }
 
   input,
@@ -900,18 +1035,10 @@ html[dir='rtl'] {
       width: 18px;
     }
 
-    label {
+    label:not(.radio-label) {
       padding-left: 10px;
       padding-right: inherit;
       text-align: left;
-
-      ~ .error-message {
-        .icon,
-        .message-text {
-          left: auto;
-          right: $field-sm;
-        }
-      }
     }
   }
 
@@ -933,7 +1060,7 @@ html[dir='rtl'] {
   }
 }
 
-//When on smaller form factors make 400px fields go down to medium size
+// When on smaller form factors make 400px fields go down to medium size
 @include respond-to(phone) {
   .input-lg,
   .field-short .input-lg {
