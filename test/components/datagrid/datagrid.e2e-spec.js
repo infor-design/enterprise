@@ -336,6 +336,32 @@ describe('Datagrid filter tests', () => {
   }
 });
 
+fdescribe('Datagrid filter RTL tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+      await browser.driver.sleep(config.sleepShort);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid filter alternate row tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
