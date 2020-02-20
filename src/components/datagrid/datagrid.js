@@ -5448,7 +5448,6 @@ Datagrid.prototype = {
           return;
         }
 
-        console.log(widthToSet, cssWidth);
         if (widthToSet === cssWidth) {
           return;
         }
