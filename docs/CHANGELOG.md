@@ -23,6 +23,7 @@
 - `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
 - `[Colors]` Fixed an incorrect ruby06 color, and made the background change on theme change now (again). ([#3448](https://github.com/infor-design/enterprise/issues/3448))
 - `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
+- `[Datagrid]` Fixed RTL issues in the filter row. ([#3517](https://github.com/infor-design/enterprise/issues/3517))
 - `[Datagrid]` Improved the column resize behavior in speed and usability with the cursor being more accurate during resize. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
 - `[Datagrid]` Improved the column resize behavior to work much better in RTL mode. ([#1924](https://github.com/infor-design/enterprise/issues/1924))
 - `[Datagrid]` Fixed a bug where if a filter row column is frozen the mask and editor options would not be applied. ([#2553](https://github.com/infor-design/enterprise-ng/issues/2553))
