@@ -122,6 +122,7 @@ Soho.Locale.addCulture('en-US', {
     Completed: { id: 'Completed', value: 'Completed', comment: 'Text For a Completed Status' },
     Confirm: { id: 'Confirm', value: 'Confirm', comment: 'Confirm tooltip' },
     ConfirmOnPage: { id: 'ConfirmOnPage', value: 'Confirm message(s) on page', comment: 'Confirm message(s) on page n' },
+    Contrast: { id: 'Contrast', value: 'Contrast', comment: 'Name of the high contrast theme' },
     CookiesEnabled: { id: 'CookiesEnabled', value: 'Cookies Enabled', comment: 'Returns if browser cookies are enabled or not.' },
     Contains: { id: 'Contains', value: 'Contains', comment: 'Contains in icons for filtering' },
     CssClass: { id: 'CssClass', value: 'Css Class', comment: 'Label for entering a Css Class name' },
