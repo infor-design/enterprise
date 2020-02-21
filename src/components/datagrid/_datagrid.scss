@@ -454,7 +454,7 @@ $datagrid-short-row-height: 25px;
     &.has-filterable-columns {
       .is-filterable th,
       .is-filterable .datagrid-column-wrapper {
-        height: 28px;
+        height: $datagrid-short-header-height;
       }
     }
 
@@ -627,7 +627,7 @@ $datagrid-short-row-height: 25px;
 
     .is-filterable {
       .datagrid-filter-wrapper {
-        height: 23px;
+        height: 24px;
         margin-bottom: 3px;
         top: -5px;
 
