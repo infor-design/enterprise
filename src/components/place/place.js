@@ -908,7 +908,6 @@ Place.prototype = {
     let target = placementObj.parent;
     const arrow = element.find('div.arrow');
     const dir = placementObj.placement;
-    const isXCoord = ['left', 'right'].indexOf(dir) > -1;
     let targetRect = {};
     const elementRect = element[0].getBoundingClientRect();
     let arrowRect = {};
@@ -921,15 +920,7 @@ Place.prototype = {
 
     arrow[0].removeAttribute('style');
 
-    // if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
     element.removeClass('top right bottom left').addClass(dir);
-    // }
-
-    // Flip the arrow if we're in RTL mode
-    if (env.rtl && isXCoord) {
-      const opposite = dir === 'right' ? 'left' : 'right';
-      element.removeClass('right left').addClass(opposite);
-    }
 
     // Custom target for some scenarios
     if (target.is('.colorpicker')) {
