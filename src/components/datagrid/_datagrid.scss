@@ -1694,6 +1694,7 @@ $datagrid-short-row-height: 25px;
     outline: none;
     overflow: hidden;
     text-overflow: ellipsis;
+    -webkit-text-size-adjust: none; //Prevent huge text on IOS
     white-space: nowrap;
 
     &:focus,
