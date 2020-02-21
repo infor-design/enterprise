@@ -114,6 +114,8 @@ Soho.Locale.addCulture('en-US', {
     Copy: { id: 'Copy', value: 'Copy', comment: 'Copy tooltip' },
     Collapse: { id: 'Collapse', value: 'Collapse', comment: 'Collapse / close a tree/submenu' },
     CollapseAppTray: { id: 'CollapseAppTray', value: 'Collapse App Tray', comment: 'Collapse App Tray tooltip' },
+    Color: { id: 'Color', value: 'Color', comment: 'Color' },
+    Colors: { id: 'Colors', value: 'Colors', comment: 'Color (plural)' },
     Columns: { id: 'Columns', value: 'Columns', comment: 'Columns tooltip' },
     Comments: { id: 'Comments', value: 'Comments', comment: 'Comments on an form' },
     CompanyHoliday: { id: 'CompanyHoliday', value: 'Company Holiday', comment: 'A holiday provided by work.' },
