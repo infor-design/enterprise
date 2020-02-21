@@ -1,6 +1,10 @@
 // Uplift Field Options
 //================================================== */
 
+.field-options.input-full {
+  max-width: calc(100% - 42px);
+}
+
 .field.is-fieldoptions {
   .btn-actions:not(.is-checkbox) {
     left: -12px;
