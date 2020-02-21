@@ -240,13 +240,6 @@
   }
 
   // =============================================
-  // Form-Compact File Uploader Styles
-  // =============================================
-  .fileuploader {
-    max-height: 29px;
-  }
-
-  // =============================================
   // Form-Compact Checkbox Styles
   // =============================================
   .field.field-checkbox {
@@ -372,11 +365,6 @@
     textarea {
       line-height: normal;
     }
-
-    // `input[type="file"]` is taller in Firefox.
-    .fileuploader {
-      max-height: 28px;
-    }
   }
 }
 
@@ -388,15 +376,6 @@
       &.form-section-header {
         padding: 16px 8px 15px;
       }
-    }
-  }
-}
-
-// `input[type="file"]` is taller in IE11.
-.ie11 {
-  .form-compact {
-    .fileuploader {
-      max-height: 29px;
     }
   }
 }
@@ -456,12 +435,6 @@ html[dir='rtl'] {
       }
     }
 
-    // Font family changes on RTL affect the height of the FileUploader.
-    .fileuploader {
-      line-height: normal;
-      max-height: 30px;
-    }
-
     // Reverse padding on radios
     .radio-label {
       padding-left: 0;
@@ -479,7 +452,7 @@ html[dir='rtl'] {
 
     // Checkboxes
     .checkbox-label {
-      padding-right: 41px;
+      padding-right: 41px !important;
     }
 
     input.checkbox:checked,
@@ -494,23 +467,6 @@ html[dir='rtl'] {
     label.inline .checkbox:checked ~ .label-text::after {
       left: auto;
       right: 22px;
-    }
-  }
-
-  // Fix the FileUploader styles
-  &.ie11 {
-    .form-compact {
-      .fileuploader {
-        max-height: 28px;
-      }
-    }
-  }
-
-  &.is-firefox {
-    .form-compact {
-      .fileuploader {
-        max-height: 32px;
-      }
     }
   }
 }
