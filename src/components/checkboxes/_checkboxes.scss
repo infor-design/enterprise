@@ -211,9 +211,13 @@ label.inline .checkbox ~ .label-text,
     display: inline-block;
     line-height: 17px;
   }
+}
 
+.ios,
+.is-firefox {
   .field-checkbox .icon-dirty {
-    left: 0;
+    left: 2px;
+    top: 1px;
   }
 }
 
