@@ -10239,17 +10239,17 @@ Datagrid.prototype = {
     if (expandRowElms.length) {
       if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
         const elms = {
-          left: expandRowElms.eq(0)[0].children[0],
+          left: expandRowElms.eq(0)[0] ? expandRowElms.eq(0)[0].children[0] : null,
           center: expandRowElms.eq(1)[0],
-          right: expandRowElms.eq(2)[0].children[0]
+          right: expandRowElms.eq(2)[0] ? expandRowElms.eq(2)[0].children[0] : null
         };
         let height = 0;
         if (elms.center) {
           elms.center.style.height = 'auto';
-          height = elms.center.offsetHeight;
+          height = elms.center.offsetHeight - 1;
           elms.center.style.height = '';
         }
-        if (height) {
+        if (height > 0) {
           if (elms.left) {
             elms.left.style.height = `${height}px`;
           }
