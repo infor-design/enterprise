@@ -908,7 +908,6 @@ Place.prototype = {
     let target = placementObj.parent;
     const arrow = element.find('div.arrow');
     const dir = placementObj.placement;
-    const isXCoord = ['left', 'right'].indexOf(dir) > -1;
     let targetRect = {};
     const elementRect = element[0].getBoundingClientRect();
     let arrowRect = {};
