@@ -2,11 +2,10 @@
 
 ## v4.26.0
 
-### v4.26.0 Deprecation
-
 ### v4.26.0 Features
 
 - `[Datagrid]` Added support for expandable row to expand across all frozen columns, and fixed span layout issues on the right side frozen columns. ([#2867](https://github.com/infor-design/enterprise/issues/2867))
+- `[Datagrid]` Added a new `resizeMode` option that allows you to pick between `flex` and `fit`. `flex` will resize columns independently shifting other columns to fit the table layout if needed. `fit` will resize using the neighbor's column width. This is possible more useful when you have less columns. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
 - `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
 - `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
@@ -24,6 +23,8 @@
 - `[Calendar]` Fixed an issue where date selection was not persist when switching from month view to week view to day view. ([#3319](https://github.com/infor-design/enterprise/issues/3319))
 - `[Colors]` Fixed an incorrect ruby06 color, and made the background change on theme change now (again). ([#3448](https://github.com/infor-design/enterprise/issues/3448))
 - `[Datagrid]` Fixed an issue where focus on reload data was forced to be on active cell. ([#358](https://github.com/infor-design/enterprise-ng/issues/358))
+- `[Datagrid]` Improved the column resize behavior in speed and usability with the cursor being more accurate during resize. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
+- `[Datagrid]` Improved the column resize behavior to work much better in RTL mode. ([#1924](https://github.com/infor-design/enterprise/issues/1924))
 - `[Datagrid]` Fixed a bug where if a filter row column is frozen the mask and editor options would not be applied. ([#2553](https://github.com/infor-design/enterprise-ng/issues/2553))
 - `[Datagrid]` Fixed an issue where when using rowTemplate/expandableRows and frozenColumns on both sides the right side did not render properly. ([#2867](https://github.com/infor-design/enterprise/issues/2867))
 - `[Datagrid]` Fixed an issue where height was not aligning to expandable row for frozen columns. ([#3516](https://github.com/infor-design/enterprise/issues/3516))

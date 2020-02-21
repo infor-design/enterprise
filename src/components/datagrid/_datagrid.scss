@@ -3438,6 +3438,10 @@ html[dir='rtl'] {
       border-right: 1px solid $datagrid-header-border-color;
     }
 
+    th:first-child {
+      border-right-color: transparent;
+    }
+
     td:last-child {
       border-right: 1px solid $datagrid-cell-border-color;
     }
@@ -3673,7 +3677,7 @@ html[dir='rtl'] {
         .sort-indicator {
           margin: auto 3px 0;
           position: absolute;
-          right: 0;
+          right: -7px;
           top: 3px;
         }
       }

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { keyboard } from '../../utils/keyboard';
 import { theme } from '../theme/theme';
 import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
@@ -91,7 +92,11 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.disableClientSort=false] Disable Sort Logic client side and let your server do it
  * @param {string}   [settings.resultsText=null] Can provide a custom function to adjust results text on the toolbar
  * @param {boolean}  [settings.showFilterTotal=true] Paging results display filter count, change to false to not show filtered count
- * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires rowReorder formatter
+ * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires a rowReorder formatter column.
+ * @param {boolean}  [settings.resizeMode='flex'] Changes the column resize behavior.
+ * `flex` will resize columns independently shifting other columns to fit the table layout if needed.
+ * `fit` will resize using the neighbours column width. This is more useful with less columns.
+ * If holding the Shift key you can use one of the other modes while dragging as a user.
  * @param {boolean}  [settings.showDirty=false]  If true the dirty indicator will be shown on the rows
  * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
  * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
@@ -189,6 +194,7 @@ const DATAGRID_DEFAULTS = {
   virtualRowBuffer: 10, // how many extra rows top and bottom to allow as a buffer
   rowReorder: false, // Allows you to reorder rows. Requires rowReorder formatter
   showDirty: false,
+  resizeMode: 'flex',
   showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
   allowOneExpandedRow: true, // Only allows one expandable row at a time
   enableTooltips: false, // Process tooltip logic at a cost of performance
@@ -4248,8 +4254,7 @@ Datagrid.prototype = {
 
   /**
    * Return the index of the stretch column
-   * @private
-   * @returns {number}
+   * @returns {number} The index of the stretch column
    */
   getStretchColumnIdx() {
     const self = this;
@@ -5387,30 +5392,31 @@ Datagrid.prototype = {
 
     this.element.find('table').before(this.resizeHandle);
 
-    let columnId;
-    let draggingLeft;
-    let startingLeft;
     let column;
+    let columnId;
+    let widthToSet;
+    let nextWidthToSet;
+    let nextColumnId;
+    let usingShiftKey = false;
 
-    this.resizeHandle.drag({ axis: 'x', containment: this.element })
-      .on('dragstart.datagrid', (e, ui) => {
+    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+      .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
         }
 
         self.dragging = true;
+        usingShiftKey = false;
 
         columnId = self.currentHeader.attr('data-column-id');
         column = self.columnById(columnId)[0];
-
-        startingLeft = ui.left;
 
         if (self.isEllipsisActiveHeader(column)) {
           self.currentHeader[0].classList.add('is-ellipsis-active');
         }
       })
       .on('drag.datagrid', (e, ui) => {
-        if (!self.currentHeader || !column || this.settings.dataset.length === 0) {
+        if (!self.currentHeader) {
           return;
         }
 
@@ -5418,71 +5424,89 @@ Datagrid.prototype = {
         const minWidth = column.minWidth || 12;
         const maxWidth = column.maxWidth || 1000;
 
-        // Find how for to move each adjacent column
-        draggingLeft = ui.left;
-        const diff = startingLeft - draggingLeft;
         const node = self.currentHeader;
         const idx = node.index();
-        const nextIdx = idx + 1;
-
-        // Find how the adjacent column
+        this.dragging = true;
+        const left = ui.left + 5;
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-        const currentColWidth = parseInt(currentCol.style.width, 10);
-        const nextCol = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        let nextColWidth = 12;
-        let nextMinWidth = 12;
-        let nextMaxWidth = 1000;
-        if (nextCol) {
-          nextColWidth = parseInt(nextCol.style.width, 10);
-          nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
-          nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
-        }
+        const currentColWidth = parseInt(self.currentHeader.width(), 10);
+        let cssWidth = parseInt(currentCol.style.width || currentColWidth, 10);
 
-        // Calculate
-        const width = currentColWidth - diff;
-        const nextWidth = nextColWidth + diff;
+        // Convert from percentage
+        if (currentCol.style.width.indexOf('%') > -1) {
+          cssWidth = currentColWidth;
+        }
+        const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
+        const offsetLeft = parseFloat(self.currentHeader.offset().left);
+        const leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
-        if (width < minWidth || width > maxWidth
-          || nextWidth < nextMinWidth || nextWidth > nextMaxWidth) {
+        widthToSet = cssWidth - diff;
+        if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
           return;
         }
 
-        // Update the DOM
-        if (nextCol && nextCol.style.width.indexOf('%') === -1) {
-          nextCol.style.width = (`${nextWidth}px`);
+        if (widthToSet === cssWidth) {
+          return;
         }
-        if (currentCol.style.width.indexOf('%') === -1) {
-          currentCol.style.width = (`${width}px`);
+
+        currentCol.style.width = (`${widthToSet}px`);
+
+        if (keyboard.pressedKeys.get('Shift')) {
+          usingShiftKey = true;
         }
-        // Two percentage fields
-        if (nextCol && nextCol.style.width.indexOf('%') !== -1 && currentCol.style.width.indexOf('%') !== -1) {
-          nextCol.style.width = (`${nextWidth}px`);
-          currentCol.style.width = (`${width}px`);
+
+        if ((this.settings.resizeMode === 'fit' && !usingShiftKey) ||
+          (this.settings.resizeMode === 'flex' && usingShiftKey)) {
+          const nextIdx = Locale.isRTL() ? idx + 1 : idx - 1;
+          const nextColSettings = self.settings.columns[nextIdx];
+          if (!nextColSettings) {
+            return;
+          }
+          const nextMinWidth = nextColSettings.minWidth || 12;
+          const nextMaxWidth = nextColSettings.maxWidth || 1000;
+          const nextColumn = Locale.isRTL() ?
+            DOM.getPreviousSibling(self.currentHeader, ':not(.is-hidden)') :
+            DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
+
+          nextColumnId = nextColumn.getAttribute('data-column-id');
+          const nextCol = Locale.isRTL() ?
+            DOM.getPreviousSibling(currentCol, ':not(.is-hidden)') :
+            DOM.getNextSibling(currentCol, ':not(.is-hidden)');
+
+          const nextColWidth = parseInt(nextColumn.offsetWidth, 10);
+          let nextCssWidth = parseInt(nextCol.style.width || nextColWidth, 10);
+          // Convert from percentage
+          if (nextCol.style.width.indexOf('%') > -1) {
+            nextCssWidth = nextColWidth;
+          }
+          nextWidthToSet = nextCssWidth + diff;
+
+          if (nextWidthToSet < nextMinWidth || nextWidthToSet > nextMaxWidth) {
+            self.resizeHandle.css('cursor', 'inherit');
+            return;
+          }
+
+          if (nextWidthToSet === nextCssWidth || !nextCol) {
+            return;
+          }
+
+          nextCol.style.width = (`${nextWidthToSet}px`);
         }
-        startingLeft = ui.left;
       })
       .on('dragend.datagrid', () => {
-        self.dragging = false;
-        const node = self.currentHeader;
-        const idx = node.index();
+        this.dragging = false;
+        if (self.isEllipsisActiveHeader(column)) {
+          self.activeEllipsisHeader(self.currentHeader[0]);
+        }
 
-        if (self.settings.stretchColumn === 'last') {
-          // Find how the adjacent column
-          const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-          const currentColWidth = parseInt(currentCol.style.width, 10);
-          const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
-          const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-          const nextColWidth = parseInt(nextColGroup.style.width, 10);
+        self.setColumnWidth(columnId, widthToSet);
 
-          self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
-          if (nextCol) {
-            self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
-          }
-          if (self.isEllipsisActiveHeader(column)) {
-            self.activeEllipsisHeader(self.currentHeader[0]);
-          }
+        if (nextColumnId && ((this.settings.resizeMode === 'fit' && !usingShiftKey) ||
+          (this.settings.resizeMode === 'flex' && usingShiftKey))) {
+          self.setColumnWidth(nextColumnId, nextWidthToSet);
         }
       });
   },
@@ -6083,16 +6107,21 @@ Datagrid.prototype = {
         const rightEdge = leftEdge + self.currentHeader.outerWidth();
         const alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX);
         let leftPos = 0;
-        leftPos = (alignToLeft ? (rightEdge - 6) : (leftEdge - 6));
+        leftPos = (alignToLeft ? (rightEdge - 5) : (leftEdge - 5));
+        const idx = self.currentHeader.parent().find('th:visible').index(self.currentHeader);
 
         // Ignore First Column and last column
-        if ((self.currentHeader.index() === 0 && !alignToLeft) ||
-          (self.currentHeader.index() === self.visibleColumns().length)) {
+        if ((idx === 0 && (Locale.isRTL() ? alignToLeft : !alignToLeft)) ||
+          (idx === self.visibleColumns().length)) {
           leftPos = '-999';
         }
 
-        if (!alignToLeft) {
+        if (!Locale.isRTL() && !alignToLeft) {
           self.currentHeader = self.currentHeader.prevAll(':visible').not('.is-hidden').first();
+        }
+
+        if (Locale.isRTL() && !alignToLeft) {
+          self.currentHeader = self.currentHeader.nextAll(':visible').not('.is-hidden').first();
         }
 
         if (!self.currentHeader.hasClass('is-resizable')) {
