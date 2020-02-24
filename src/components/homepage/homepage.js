@@ -162,7 +162,7 @@ Homepage.prototype = {
             this.refresh(false);
           }, 10);
         });
-        card.on('dragover', () => {
+        card.on('dragenter', () => {
           if (!this.dragging) {
             // Allow for animation to finish before triggering another movement, see setTimeout below
             this.dragging = true;
@@ -174,7 +174,7 @@ Homepage.prototype = {
               this.placeholder.insertBefore(card);
             }
             // Allow for animation to finish before triggering another movement
-            setTimeout(()=>this.dragging = false, this.timeout);
+            setTimeout(()=>this.dragging = false, 400);
             this.refresh(true);
           }
         });
