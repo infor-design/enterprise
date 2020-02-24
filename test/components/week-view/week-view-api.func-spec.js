@@ -56,7 +56,6 @@ describe('WeekView API', () => {
   it('Should render the weekview', () => {
     expect(weekViewAPI.currentCalendar.name).toEqual('gregorian');
     expect(weekViewAPI.locale.name).toEqual('en-US');
-    expect(weekViewAPI.language).toEqual('en');
     expect(document.body.querySelectorAll('.week-view tr').length).toEqual(21);
     expect(document.body.querySelectorAll('.week-view th').length).toEqual(8);
   });

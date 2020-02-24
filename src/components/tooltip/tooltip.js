@@ -223,7 +223,7 @@ Tooltip.prototype = {
     function showOnTimer() {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        if (self.element.is(':visible')) {
+        if (self.element.is(':visible') || self.element.is('.dropdown, .multiselect')) {
           self.show();
         }
       }, delay);

@@ -11,7 +11,12 @@ $gutter-neg-size: -20px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
   &.flex-align-bottom {
-    align-items: flex-end;
+    &.has-messages {
+      // align-items: center;
+      input:not(.error) {
+        margin-bottom: 22px;
+      }
+    }
   }
 
   clear: both;
@@ -299,10 +304,13 @@ $gutter-neg-size: -20px;
 // For tabledevices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
   .row {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
     padding-right: 20px;
+
+    &.flex-align-bottom {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .column,

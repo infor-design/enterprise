@@ -16,7 +16,6 @@
   padding: 1px;
   pointer-events: none;
   position: absolute;
-  text-align: left;
   top: -9999px;
   transition: opacity 0.4s ease;
   white-space: normal;
@@ -246,13 +245,6 @@
       padding: 15px 5px 7px 15px;
     }
 
-    .modal-buttonset {
-      background-color: $popover-alternate-title-bg-color;
-      margin: 20px 0 0 -20px;
-      position: absolute;
-      width: calc(100% - 2px);
-    }
-
     th {
       color: $popover-alternate-subheader-color;
       font-size: $theme-size-font-sm;
@@ -369,8 +361,16 @@
   }
 }
 
-.popover-content {
+.popover-content,
+.popover-content-area {
   margin-left: 0;
+
+  .modal-buttonset {
+    background-color: $popover-alternate-title-bg-color;
+    margin: 20px 0 0 -20px;
+    position: absolute;
+    width: calc(100% - 2px);
+  }
 }
 
 .arrow,
@@ -448,7 +448,6 @@ html[dir='rtl'] {
   .popover,
   .tooltip {
     left: 9999px;
-    text-align: right;
   }
 
   .tooltip {
@@ -460,6 +459,21 @@ html[dir='rtl'] {
     }
   }
 
+  .popover {
+    .tooltip-content {
+      p {
+        text-align: right;
+      }
+    }
+
+    &.alternate {
+      .tooltip-title {
+        padding-left: 5px;
+        padding-right: 15px;
+      }
+    }
+  }
+
   .tooltip-content {
     p {
       margin-left: inherit;
@@ -467,9 +481,13 @@ html[dir='rtl'] {
     }
   }
 
-  .popover-content {
+  .popover-content,
+  .popover-content-area {
     margin-left: inherit;
     margin-right: 0;
-  }
 
+    .modal-buttonset {
+      right: 1px;
+    }
+  }
 }

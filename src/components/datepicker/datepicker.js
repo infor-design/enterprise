@@ -213,6 +213,11 @@ DatePicker.prototype = {
           api.language = this.settings.language || api.locale.language;
           api.setCurrentCalendar();
         });
+        if (similarApi.length === 0) {
+          this.locale = Locale.cultures[locale];
+          this.language = this.settings.language || this.locale.language;
+          this.setCurrentCalendar();
+        }
       });
     }
     if (s.language) {
@@ -245,12 +250,16 @@ DatePicker.prototype = {
   },
 
   /**
-   *  Sets current calendar information.
+   * Sets current calendar information.
    * @private
    * @returns {void}
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.settings.locale || this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
@@ -405,10 +414,12 @@ DatePicker.prototype = {
     if (typeof Locale === 'object' && this.settings.calendarName) {
       localeDateFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).dateFormat;
       localeTimeFormat = Locale.calendar(
         this.settings.locale,
+        this.settings.language,
         this.settings.calendarName
       ).timeFormat;
     }
@@ -597,6 +608,7 @@ DatePicker.prototype = {
 
       timeOptions.parentElement = this.timepickerContainer;
       timeOptions.locale = this.settings.locale;
+      timeOptions.language = this.settings.language;
       this.time = this.getTimeString(this.currentDate, this.show24Hours);
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('.dropdown').dropdown();

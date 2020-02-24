@@ -64,10 +64,7 @@ TimePicker.prototype = {
    * @returns {void}
    */
   init() {
-    this.setLocale();
-    if (!this.settings.locale) {
-      this.setCurrentCalendar().build();
-    }
+    this.setLocaleThenBuild();
   },
 
   /**
@@ -75,20 +72,17 @@ TimePicker.prototype = {
    * @private
    * @returns {void}
    */
-  setLocale() {
-    this.locale = Locale.currentLocale;
-    if (this.settings.locale) {
-      Locale.getLocale(this.settings.locale).done((locale) => {
-        this.locale = Locale.cultures[locale];
-        this.language = this.settings.language || this.locale.language;
-        this.setCurrentCalendar();
-      });
-    }
-    if (this.settings.language) {
-      Locale.getLocale(this.settings.language).done(() => {
-        this.language = this.settings.language;
-      });
-    }
+  setLocaleThenBuild() {
+    const languageDf = Locale.getLocale(this.settings.language);
+    const localeDf = Locale.getLocale(this.settings.locale);
+    $.when(localeDf, languageDf).done((locale, lang) => {
+      this.locale = Locale.cultures[locale] || Locale.currentLocale;
+      this.language = lang || this.settings.language || this.locale.language || null;
+      this.settings.language = this.language;
+      this.setCurrentCalendar();
+      this.build().handleEvents();
+    });
+    return this;
   },
 
   /**
@@ -97,7 +91,11 @@ TimePicker.prototype = {
    * @returns {object} The api object for chaining.
    */
   setCurrentCalendar() {
-    this.currentCalendar = Locale.calendar(this.locale.name, this.settings.calendarName);
+    this.currentCalendar = Locale.calendar(
+      this.locale.name,
+      this.settings.language,
+      this.settings.calendarName
+    );
     if (this.settings.timeFormat === undefined) {
       this.settings.timeFormat = this.currentCalendar.timeFormat || 'h:mm a';
     }

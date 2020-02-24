@@ -44,3 +44,12 @@ span.required::after {
     padding-left: 21px;
   }
 }
+
+.is-firefox {
+  .field-short,
+  .form-layout-compact .field {
+    input:not(.spinbox) {
+      padding-top: 0;
+    }
+  }
+}

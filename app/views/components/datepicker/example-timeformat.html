@@ -21,8 +21,8 @@
 <script>
 $('body').on('initialized', function () {
   $('#dp1').datepicker({
-    dateFormat: 'yyyy/M/d',
-    timeFormat: 'HH:mm',
+    dateFormat: Soho.Locale.calendar().dateFormat['short'],
+    timeFormat: Soho.Locale.calendar().dateFormat['hour'],
     showTime: true
   });
 

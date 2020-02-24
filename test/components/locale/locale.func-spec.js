@@ -1405,6 +1405,36 @@ describe('Locale API', () => { //eslint-disable-line
     });
   });
 
+  it('Should be possible to set the language to nb', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nb').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
+  it('Should be possible to set the language to nn', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.translate('Actions')).toEqual('Actions');
+    expect(Locale.currentLanguage.name).toEqual('en');
+    expect(Locale.currentLocale.name).toEqual('en-US');
+
+    Locale.setLanguage('nn').done(() => {
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.currentLanguage.name).toEqual('no');
+      expect(Locale.currentLocale.name).toEqual('en-US');
+      done();
+    });
+  });
+
   it('Should be possible to extend the language strings for a locale', (done) => {
     Locale.set('it-lT').done(() => {
       const myStrings = {
@@ -1702,6 +1732,24 @@ describe('Locale API', () => { //eslint-disable-line
       expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'short', locale: 'hi-IN' })).toEqual('08-06-2019');
       expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', locale: 'hi-IN' })).toEqual('8 जू 2019');
       expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', locale: 'hi-IN' })).toEqual('8 जून 2019');
+      done();
+    });
+  });
+
+  it('Should be able to format a date in a a non current language', (done) => {
+    Locale.set('en-US');
+
+    expect(Locale.calendar().dateFormat.short).toEqual('M/d/yyyy');
+
+    Locale.getLocale('nl').done(() => {
+      expect(Locale.calendar('en-US', 'nl').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'nl' })).toEqual('jun 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'nl' })).toEqual('juni 8, 2019');
+    });
+    Locale.getLocale('hi').done(() => {
+      expect(Locale.calendar('en-US', 'hi').dateFormat.short).toEqual('M/d/yyyy');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'medium', language: 'hi' })).toEqual('जू 8, 2019');
+      expect(Locale.formatDate(new Date(2019, 5, 8), { date: 'long', language: 'hi' })).toEqual('जून 8, 2019');
       done();
     });
   });

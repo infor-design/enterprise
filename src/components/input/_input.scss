@@ -198,6 +198,10 @@ textarea {
   @include input-style();
 }
 
+textarea[rows] {
+  height: auto;
+}
+
 // Element with input "like" style borders
 .input-style {
   background-color: $input-color-initial-background;
@@ -381,11 +385,14 @@ span.required::after {
 }
 
 // Error States
-.error,
+.error {
+  color: $error-color;
+}
+
 .error-message,
 .error-message p,
 .popover .error-message p {
-  color: $error-color;
+  color: $error-text-color;
 }
 
 .error::-webkit-input-placeholder {
@@ -502,8 +509,9 @@ span.required::after {
 
   textarea:not(.editable) {
     font-size: $input-size-compact-font-size;
+    line-height: 1.6rem;
     min-height: $textarea-size-compact-height;
-    padding: $input-size-compact-padding;
+    padding: 5px;
   }
 
   &:last-child:not(:only-child) {
@@ -537,6 +545,15 @@ span.required::after {
 
   :-ms-input-placeholder {
     font-size: $input-size-compact-font-size;
+  }
+}
+
+.is-firefox {
+  .field-short,
+  .form-layout-compact .field {
+    input:not(.spinbox) {
+      padding-top: 2px;
+    }
   }
 }
 

@@ -336,6 +336,32 @@ describe('Datagrid filter tests', () => {
   }
 });
 
+describe('Datagrid filter RTL tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+      await browser.driver.sleep(config.sleepShort);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid filter alternate row tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
@@ -1420,6 +1446,20 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
   });
 
+  it('Should toggle sort indicator if set initially', async () => {
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-asc');
+    await element(by.css('#datagrid thead th:nth-child(3) .datagrid-header-text')).click();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getText()).toEqual('Product Name');
+    await browser.driver.sleep(350);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-desc');
+    await element(by.css('#datagrid thead th:nth-child(3) .datagrid-header-text')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+
   it('Should retain filter criteria', async () => {
     await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
 
@@ -1438,6 +1478,29 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     expect(await element(by.css('#datagrid thead th:nth-child(2) input')).getAttribute('value')).toEqual('22');
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
   });
+});
+
+describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-dup-ids')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid checkbox disabled editor tests', () => {

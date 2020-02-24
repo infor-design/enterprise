@@ -178,10 +178,6 @@
 
       li {
         border-color: transparent;
-
-        &:not(.is-selected):hover {
-          background-color: $listview-full-width-hover-color;
-        }
       }
     }
 

@@ -1,6 +1,10 @@
 // Uplift Field Options
 //================================================== */
 
+.field-options.input-full {
+  max-width: calc(100% - 42px);
+}
+
 .field.is-fieldoptions {
   .btn-actions:not(.is-checkbox) {
     left: -12px;
@@ -55,14 +59,9 @@
 
   [data-clearable='true'] + .icon.close {
     left: -8px;
-    margin-left: -18px;
+    margin-left: -18px !important;
     right: auto;
     top: -2px;
-  }
-
-  [data-clearable='true'] ~ .icon.close.is-empty ~ .btn-actions,
-  [data-clearable='true'] ~ .icon.close.is-empty ~ .btn-actions {
-    left: -4px !important;
   }
 
   .searchfield-wrapper {
@@ -74,15 +73,14 @@
 
   .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) .btn-actions,
   .searchfield-wrapper .btn-actions {
-    left: -9px;
+    left: -9px !important;
+    top: 0;
   }
 
   .searchfield-wrapper.has-close-icon-button .searchfield {
-    padding-left: 25px;
-
     ~ .icon.close {
-      right: 48px;
-      top: 8px;
+      right: 50px;
+      top: 12px;
     }
   }
 
@@ -91,6 +89,16 @@
       left: auto;
       margin-left: -9px;
       top: calc(50% - 2px);
+    }
+  }
+
+  .fileupload {
+    ~ .trigger-close:not(.is-visible) ~ .btn-actions {
+      left: -12px !important;
+    }
+
+    ~ .trigger-close.is-visible ~ .btn-actions {
+      left: 17px !important;
     }
   }
 }
@@ -103,7 +111,7 @@
   margin-left: -8px;
 
   + .btn-actions {
-    left: -12px !important;
+    left: -10px !important;
   }
 }
 
@@ -123,7 +131,7 @@
 .is-firefox {
   .field.is-fieldoptions {
     .btn-actions:not(.is-checkbox) {
-      width: 35px;
+      width: 38px;
     }
 
     .dropdown,
@@ -132,6 +140,64 @@
         top: 2px;
       }
     }
+
+    .spinbox-wrapper {
+      .btn-actions {
+        left: -9px !important;
+        width: 38px !important;
+      }
+    }
+
+    .colorpicker-container ~ .btn-actions {
+      left: -12px !important;
+      top: -13px !important;
+    }
+  }
+
+  .field-short.is-fieldoptions,
+  .form-layout-compact .field.is-fieldoptions {
+    .btn-actions:not(.is-checkbox) {
+      top: 5px !important;
+      width: 28px;
+
+      .icon {
+        top: -5px;
+      }
+    }
+
+    .dropdown ~ .btn-actions,
+    .multiselect ~ .btn-actions {
+      top: 3px !important;
+    }
+
+    .spinbox-wrapper .btn-actions {
+      width: 28px !important;
+    }
+
+    .colorpicker-container ~ .btn-actions {
+      top: -5px !important;
+    }
+
+    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
+      top: 4px !important;
+    }
+
+    [data-clearable='true'] + .icon.close ~ .btn-actions {
+      top: 5px !important;
+    }
+
+    .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) > .icon:not(.close):not(.icon-error),
+    .searchfield-wrapper > .icon:not(.close):not(.icon-error) {
+      top: 9px;
+    }
+
+    .textarea ~ .btn-actions:not(.is-checkbox) {
+      top: calc(50% - 0) !important;
+    }
+  }
+
+  .form-layout-compact .compound-field .field.is-fieldoptions:first-child input[type='text'] ~ .btn-actions:not(.is-checkbox) {
+    top: 4px !important;
   }
 }
 
@@ -139,13 +205,13 @@
 .field-short.is-fieldoptions,
 .form-layout-compact .field.is-fieldoptions {
   .btn-actions:not(.is-checkbox) {
-    left: -4px;
+    left: -4px !important;
     top: 1px;
   }
 
   .dropdown ~ .btn-actions,
   .multiselect ~ .btn-actions {
-    top: 6px;
+    top: 3px;
   }
 
   .spinbox-wrapper .btn-actions {
@@ -176,14 +242,31 @@
 
   .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) .btn-actions,
   .searchfield-wrapper .btn-actions {
-    left: -4px;
+    left: -4px !important;
+  }
+
+  .searchfield-wrapper.has-close-icon-button .searchfield {
+    ~ .icon.close {
+      right: 48px;
+      top: 8px;
+    }
   }
 
   .textarea ~ .btn-actions,
   .textarea ~ .btn-actions {
-    left: auto;
+    left: auto !important;
     margin-left: -4px;
     top: calc(50% - 2px);
+  }
+
+  .fileupload {
+    ~ .trigger-close:not(.is-visible) ~ .btn-actions {
+      left: -4px !important;
+    }
+
+    ~ .trigger-close.is-visible ~ .btn-actions {
+      left: 25px !important;
+    }
   }
 }
 
@@ -203,5 +286,17 @@
 
   .compound-field .field.is-fieldoptions input[type='text'] ~ .btn-actions:not(.is-checkbox) {
     left: -4px;
+  }
+}
+
+// Safari
+.is-safari {
+  .field-options {
+    &.timepicker,
+    &.datepicker {
+      ~ .btn-actions {
+        left: -9px;
+      }
+    }
   }
 }
