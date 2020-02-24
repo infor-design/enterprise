@@ -14,6 +14,7 @@ const COMPONENT_NAME = 'homepage';
 * @param {object} [settings] The component settings.
 * @param {boolean} [settings.animate] Disable animation during resize
 * @param {number} [settings.columns] Display in 3 (default) or 4 column layout
+* @param {boolean} [settings.editable] Allows rearranging and resizing of cards
 * @param {string} [settings.easing]
 * @param {number} [settings.gutterSize]
 * @param {number} [settings.widgetWidth]
@@ -23,6 +24,7 @@ const COMPONENT_NAME = 'homepage';
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
+  editable: true,
   easing: 'blockslide', // Private
   gutterSize: 20, // Private
   widgetWidth: 360, // Private
@@ -32,7 +34,9 @@ const HOMEPAGE_DEFAULTS = {
 
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
-
+  this.editing = true; // Private
+  this.dragging = false; // Private
+  this.placeholder = $(document.createElement("div")).addClass('placeholder widget');
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -85,6 +89,7 @@ Homepage.prototype = {
     this.isTransitionsSupports = this.supportsTransitions();
     this.initHeroWidget();
     this.handleEvents();
+    this.initEdit();
 
     // Initial Sizing
     this.resize(this, false);
@@ -126,6 +131,82 @@ Homepage.prototype = {
   initRowsAndCols() {
     this.rowsAndCols = [];// Keeping all blocks as rows and columns
     this.initColumns();
+  },
+
+  /**
+   * Initialize placeholder and drag event listeners.
+   * @private
+   * @returns {void}
+   */
+  initEdit() {
+    const cards = this.element.find('.card, .widget');
+    cards.each((index, element) => {
+      const card = $(element);
+      if (this.editing) {
+        card.attr('draggable', true);
+        // Remove any previous drag listeners
+        card.off('dragstart dragenter dragend');
+        card.on('dragstart', () => {
+          // SetTimeout is for chrome bug discussed here:
+          // https://stackoverflow.com/questions/14203734/dragend-dragenter-and-dragleave-firing-off-immediately-when-i-drag
+          setTimeout(() => {
+            card.addClass('dragging');
+            let classes = card.attr("class").split(" ");
+            // Make the placeholder have the same height/width classes as the card it's replacing
+            let width = classes.filter((currentClass) => currentClass.includes("width"))[0];
+            let height = classes.filter((currentClass) => currentClass.includes("height"))[0];
+            this.placeholder.addClass(width);
+            this.placeholder.addClass(height);
+            card.insertBefore(this.placeholder);
+            card.detach();
+            this.refresh(false);
+          }, 10);
+        });
+        card.on('dragover', () => {
+          if (!this.dragging) {
+            // Allow for animation to finish before triggering another movement, see setTimeout below
+            this.dragging = true;
+            if (this.placeholder.index() < (card.index())) {
+              this.placeholder.remove();
+              this.placeholder.insertAfter(card);
+            } else {
+              this.placeholder.remove();
+              this.placeholder.insertBefore(card);
+            }
+            // Allow for animation to finish before triggering another movement
+            setTimeout(()=>this.dragging = false, this.timeout);
+            this.refresh(true);
+          }
+        });
+        card.on('dragend', () => {
+          card.removeClass('dragging');
+          let classes = card.attr("class").split(" ");
+          let width = classes.filter((currentClass) => currentClass.includes("width"))[0];
+          let height = classes.filter((currentClass) => currentClass.includes("height"))[0];
+          this.placeholder.removeClass(width);
+          this.placeholder.removeClass(height);
+          card.insertAfter(this.placeholder);
+          this.placeholder.remove();
+          this.refresh(false);
+        });
+      } else {
+        card.attr('draggable', false);
+        card.off('dragstart dragenter dragend');
+        card.removeClass('dragging');
+      }
+    })
+  },
+
+  /**
+   * Toggle editing the order and sizes of cards/widgets.
+   * @public
+   * @returns {void}
+   */
+  toggleEdit() {
+    if (this.editable) {
+      this.editing = !this.editing;
+      this.refresh(false);
+    }
   },
 
   /**
@@ -267,7 +348,10 @@ Homepage.prototype = {
         w = 1;
       }
 
-      this.blocks.push({ w, h, elem: card, text: card.text() });
+      // Card being dragged is detached from DOM and temporarily replaced by placeholder.
+      if (!card.hasClass('dragging')) { 
+        this.blocks.push({ w, h, elem: card, text: card.text() });
+      }
     }
 
     // Max sized columns brings to top

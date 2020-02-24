@@ -34,6 +34,12 @@
     margin-left: -500px;
     position: absolute;
   }
+
+  .card.placeholder,
+  .widget.placeholder {
+    border: 1px dashed #bdbdbd;
+    background-color: rgba($color: #ffffff, $alpha: 0.0);
+  }
 }
 
 .header + .homepage,
