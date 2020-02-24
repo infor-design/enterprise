@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.27.0
+
+### v4.27.0 Fixes
+
+- `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
+
 ## v4.26.0
 
 ### v4.26.0 Features
