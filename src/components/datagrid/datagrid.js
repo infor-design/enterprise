@@ -10621,6 +10621,12 @@ Datagrid.prototype = {
       return;
     }
 
+    this.sortColumn = {
+      sortId: id,
+      sortAsc: ascending,
+      sortField: (this.columnById(id)[0] ? this.columnById(id)[0].field : id)
+    };
+
     // Set Visual Indicator
     this.element.find('.is-sorted-asc, .is-sorted-desc')
       .removeClass('is-sorted-asc is-sorted-desc')

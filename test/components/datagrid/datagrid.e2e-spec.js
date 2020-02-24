@@ -1446,6 +1446,20 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
     expect(await element(by.css('#datagrid thead th:nth-child(2)')).getAttribute('class')).toContain('is-sorted-asc');
   });
 
+  it('Should toggle sort indicator if set initially', async () => {
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-asc');
+    await element(by.css('#datagrid thead th:nth-child(3) .datagrid-header-text')).click();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getText()).toEqual('Product Name');
+    await browser.driver.sleep(350);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-desc');
+    await element(by.css('#datagrid thead th:nth-child(3) .datagrid-header-text')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element(by.css('#datagrid thead th:nth-child(3)')).getAttribute('class')).toContain('is-sorted-asc');
+  });
+
   it('Should retain filter criteria', async () => {
     await element(by.css('#datagrid thead th:nth-child(2) input')).sendKeys('22');
 
