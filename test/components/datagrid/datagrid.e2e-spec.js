@@ -1740,7 +1740,7 @@ describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   }
 });
 
-describe('Datagrid Expandable Row with multiselect', () => {e
+describe('Datagrid Expandable Row with multiselect', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-expandable-row-multiselect');
 
