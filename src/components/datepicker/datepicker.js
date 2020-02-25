@@ -1209,19 +1209,21 @@ DatePicker.prototype = {
     let handled = false;
 
     // Closed calendar
-    if (!this.isOpen() && !isSingleDate) {
-      handled = true;
-      const d = date || new Date();
-      this.currentMonth = d.getMonth();
-      this.currentYear = d.getFullYear();
-      this.currentDay = d.getDate();
-      this.currentDate = d;
+    if (!this.isOpen()) {
+      if (!isSingleDate) {
+        handled = true;
+        const d = date || new Date();
+        this.currentMonth = d.getMonth();
+        this.currentYear = d.getFullYear();
+        this.currentDay = d.getDate();
+        this.currentDate = d;
 
-      s.range.first = s.range.first || {};
-      s.range.second = s.range.second || {};
-      s.range.first.date = d;
-      s.range.second.date = d;
-      value = this.getRangeValue();
+        s.range.first = s.range.first || {};
+        s.range.second = s.range.second || {};
+        s.range.first.date = d;
+        s.range.second.date = d;
+        value = this.getRangeValue();
+      }
     } else {
       // Opened calendar
       const label = labelDate(date);
@@ -1382,6 +1384,8 @@ DatePicker.prototype = {
       field.dates = alignDates(field.value.split(s.range.separator));
     } else if (!field.isEmpty && field.value.indexOf(s.range.separator.slice(0, -1)) > -1) {
       field.dates = field.value.split(s.range.separator.slice(0, -1));
+    } else if (!field.isEmpty && field.value.indexOf(s.range.separator) === -1) {
+      field.dates = [formatDate(field.value)];
     }
 
     // Start/End dates
