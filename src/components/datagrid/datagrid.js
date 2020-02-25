@@ -925,7 +925,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
-      //this.clearCache();
+      this.clearCache();
       this.renderRows();
     }
 
