@@ -153,14 +153,14 @@ Homepage.prototype = {
             card.addClass('dragging');
             let classes = card.attr("class").split(" ");
             // Make the placeholder have the same height/width classes as the card it's replacing
-            let width = classes.filter((currentClass) => currentClass.includes("width"))[0];
-            let height = classes.filter((currentClass) => currentClass.includes("height"))[0];
+            let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
+            let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
             this.placeholder.addClass(width);
             this.placeholder.addClass(height);
             card.insertBefore(this.placeholder);
             card.detach();
             this.refresh(false);
-          }, 10);
+          }, 0);
         });
         card.on('dragenter', () => {
           if (!this.dragging) {
@@ -174,15 +174,15 @@ Homepage.prototype = {
               this.placeholder.insertBefore(card);
             }
             // Allow for animation to finish before triggering another movement
-            setTimeout(()=>this.dragging = false, 400);
+            setTimeout(() => { this.dragging = false; }, 400);
             this.refresh(true);
           }
         });
         card.on('dragend', () => {
           card.removeClass('dragging');
           let classes = card.attr("class").split(" ");
-          let width = classes.filter((currentClass) => currentClass.includes("width"))[0];
-          let height = classes.filter((currentClass) => currentClass.includes("height"))[0];
+          let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
+          let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
           this.placeholder.removeClass(width);
           this.placeholder.removeClass(height);
           card.insertAfter(this.placeholder);
@@ -349,7 +349,7 @@ Homepage.prototype = {
       }
 
       // Card being dragged is detached from DOM and temporarily replaced by placeholder.
-      if (!card.hasClass('dragging')) { 
+      if (!card.hasClass('dragging')) {
         this.blocks.push({ w, h, elem: card, text: card.text() });
       }
     }
