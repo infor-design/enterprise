@@ -1694,7 +1694,7 @@ describe('Datagrid onKeyDown Tests', () => {
   });
 });
 
-describe('Datagrid Header Alignment With Ellipsis', () => {
+describe('Datagrid Header Alignment with Ellipsis', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
 
@@ -1717,7 +1717,7 @@ describe('Datagrid Header Alignment With Ellipsis', () => {
   }
 });
 
-describe('Datagrid Header Alignment With Ellipsis and Sorting', () => {
+describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-sort-indicator?layout=nofrills');
 
@@ -1738,6 +1738,47 @@ describe('Datagrid Header Alignment With Ellipsis and Sorting', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-ellipsis-sort')).toEqual(0);
     });
   }
+});
+
+describe('Datagrid Expandable Row with multiselect', () => {e
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-expandable-row-multiselect');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should work with shift key', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
+
+    const elem = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(9) td:nth-child(1)'));
+
+    // Simulate Shift + Click
+    await browser.actions().sendKeys(protractor.Key.SHIFT).perform().then(async () => {
+      await elem.click();
+
+      expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(4);
+      // Release the shift key by toggling it
+      await browser.actions().sendKeys(protractor.Key.SHIFT).perform();
+    });
+  });
+
+  it('Should work with click key', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
+
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(9) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+  });
 });
 
 describe('Datagrid Empty Card Scrolling', () => {
