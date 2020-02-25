@@ -53,7 +53,7 @@ $font-color-extrahighcontrast: $theme-color-palette-graphite-100;
 $font-color-highcontrast: $theme-color-palette-graphite-100;
 $font-color: $theme-color-palette-graphite-90;
 $font-color-lowcontrast: $theme-color-palette-graphite-70;
-$label-disabled-color: $theme-color-palette-graphite-50;
+$label-disabled-color: $input-color-disabled-border;
 $disabled-color: $theme-color-palette-graphite-50;
 $signin-title-color: $theme-color-palette-slate-100;
 
@@ -201,7 +201,6 @@ $trigger-icon-fill-light-color: $theme-color-palette-graphite-80;
 $trigger-hover-color: $theme-color-palette-graphite-60;
 $trigger-active-color: $theme-color-brand-primary-base;
 $trigger-focus-color: $theme-color-brand-primary-base;
-$trigger-disabled-color: $theme-color-brand-secondary-alt;
 
 //List View
 $listview-bg-color: $theme-color-palette-white;
@@ -289,6 +288,9 @@ $datepicker-readonly-icon-color: $theme-color-palette-slate-30;
 //Time Picker
 $timepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
+
+// Color Palette Background
+$color-border-color: rgba(0, 0, 0, 0.2);
 
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;

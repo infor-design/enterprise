@@ -1,0 +1,21 @@
+<div class="full-height full-width">
+  <div class="week-view" data-init="false">
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+  $('.week-view').weekview({
+    locale: 'da-DK',
+    language: 'de',
+    startDate: new Date(2020, 4, 1, 0, 0, 0, 0),
+    endDate: new Date(2020, 4, 7, 23, 59, 59, 59),
+    showAllDay: true,
+    showTimeLine: false,
+    startHour: 8,
+    endHour: 17,
+    eventTypes: [],
+    events:  [],
+  });
+});
+</script>

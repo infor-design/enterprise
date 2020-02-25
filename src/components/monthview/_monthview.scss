@@ -22,6 +22,8 @@
       min-width: 225px;
 
       .picklist-section {
+        float: none !important;
+
         &.is-month::after,
         &.is-year {
           display: none;
@@ -523,7 +525,6 @@
   &.is-fullsize {
     &.monthview {
       border: 1px solid  $calendar-line-color;
-      margin-right: -1px;
       overflow-x: hidden;
       overflow-y: auto;
 

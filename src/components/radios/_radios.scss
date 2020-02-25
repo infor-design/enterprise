@@ -163,7 +163,7 @@
   legend {
     color: $label-color;
     font-size: $input-size-regular-font-size;
-    padding-bottom: 5px;
+    padding-bottom: 5px !important;
   }
 
   &.is-disabled,
@@ -382,7 +382,7 @@ html[dir='rtl'] {
 .form-layout-compact .field {
   .radio-group legend {
     font-size: $input-size-compact-font-size;
-    padding-bottom: 20px;
+    padding-bottom: 20px !important;
   }
 
   .radio-group {

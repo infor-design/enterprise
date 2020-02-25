@@ -101,3 +101,20 @@
   cursor: default;
   opacity: 0.4 !important;
 }
+
+// Compact versions
+.form-layout-compact {
+  &.personalize-header.form-layout-compact {
+    .row.top-padding {
+      padding-top: 15px;
+    }
+
+    .row:last-child {
+      padding-bottom: 15px;
+    }
+
+    .small-bottom-padding {
+      padding-bottom: 5px !important;
+    }
+  }
+}

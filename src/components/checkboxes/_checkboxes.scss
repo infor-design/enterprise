@@ -209,7 +209,15 @@ label.inline .checkbox ~ .label-text,
   label.inline .checkbox ~ .label-text,
   .checkbox-label {
     display: inline-block;
-    line-height: 19px;
+    line-height: 17px;
+  }
+}
+
+.ios,
+.is-firefox {
+  .field-checkbox .icon-dirty {
+    left: 2px;
+    top: 1px;
   }
 }
 
@@ -429,11 +437,11 @@ html[dir='rtl'] {
   }
 }
 
-//Dirty Checkbox
+// Dirty Checkbox
 .compound-field {
   > .field.field-checkbox {
     .dirty-checkbox {
-      margin: 1px 0 0 2px;
+      margin: 10px 0 0 -1px;
     }
   }
 }

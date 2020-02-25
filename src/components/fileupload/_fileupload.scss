@@ -17,7 +17,7 @@
 
     &.trigger-close {
       display: none;
-      margin-left: -46px;
+      margin-left: -43px;
     }
 
     .icon {
@@ -25,7 +25,7 @@
       height: 14px;
       top: 2px;
       vertical-align: baseline;
-      width: 14px;
+      width: 15px;
     }
 
     &:hover {
@@ -48,7 +48,7 @@
   // Allows fileupload to be readonly without textarea readonly styling
   input {
     &.fileupload-background-transparent {
-      background-color: transparent;
+      background-color: $input-color-initial-background;
       color: $input-color;
       padding-right: 42px;
       text-overflow: ellipsis;
@@ -417,8 +417,14 @@
   }
 }
 
-// OVERWRITES
+// Overides
 //================================================== //
+.form-layout-compact {
+  .field-fileupload .trigger .icon,
+  .field-fileupload .trigger-close .icon {
+    top: 3px;
+  }
+}
 
 // RTL Styles
 html[dir='rtl'] {

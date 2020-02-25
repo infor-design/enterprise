@@ -75,7 +75,7 @@
 
     .icon:not(.icon-error),
     .icon:hover {
-      color: $trigger-disabled-color !important;
+      color: $input-color-disabled-border !important;
       cursor: default;
     }
   }
@@ -220,11 +220,9 @@
 }
 
 .popupmenu.colorpicker {
-  margin-left: -33px;
-  max-width: 340px;
-  min-height: 50px;
-  min-width: 200px;
-  padding: 18px;
+  margin-left: 0;
+  padding: 10px 0 10px 10px;
+  width: 322px;
 
   li {
     display: inline-block;
@@ -320,7 +318,7 @@
 
     .trigger {
       height: $input-size-compact-height - 0.4;
-      margin-left: -($input-size-compact-height - 0.2);
+      margin-left: -($input-size-compact-height - 0.4);
       width: $input-size-compact-height - 0.4;
 
       .icon:not(.icon-error) {

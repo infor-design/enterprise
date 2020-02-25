@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'place';
@@ -274,10 +275,25 @@ Place.prototype = {
     }
 
     const self = this;
-    const parentRect = DOM.getDimensions(placementObj.parent[0]);
-    const elRect = DOM.getDimensions(this.element[0]);
     const container = this.getContainer(placementObj);
     const containerIsBody = container.length && container[0] === document.body;
+    let containerRect;
+
+    // If this tooltip is confined to a container, in some situtions we need to make sure
+    // the placed element is within the browser viewport before we attempt to get its
+    // dimensions. This simply puts the element within the viewport boundary beforehand
+    // for accurate measurements.
+    // See Github infor-design/enterprise#3119
+    if (env.rtl && container.length) {
+      containerRect = DOM.getDimensions(container[0]);
+      this.element.css({
+        left: `${containerRect.left}px`,
+        top: `${containerRect.right}px`
+      });
+    }
+
+    const parentRect = DOM.getDimensions(placementObj.parent[0]);
+    const elRect = DOM.getDimensions(this.element[0]);
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
     // Firefox $('body').scrollTop() will always return zero.
     const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
@@ -892,7 +908,6 @@ Place.prototype = {
     let target = placementObj.parent;
     const arrow = element.find('div.arrow');
     const dir = placementObj.placement;
-    const isXCoord = ['left', 'right'].indexOf(dir) > -1;
     let targetRect = {};
     const elementRect = element[0].getBoundingClientRect();
     let arrowRect = {};
@@ -905,15 +920,7 @@ Place.prototype = {
 
     arrow[0].removeAttribute('style');
 
-    // if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
     element.removeClass('top right bottom left').addClass(dir);
-    // }
-
-    // Flip the arrow if we're in RTL mode
-    if (this.isRTL && isXCoord) {
-      const opposite = dir === 'right' ? 'left' : 'right';
-      element.removeClass('right left').addClass(opposite);
-    }
 
     // Custom target for some scenarios
     if (target.is('.colorpicker')) {

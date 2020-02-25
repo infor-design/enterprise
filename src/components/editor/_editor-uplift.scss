@@ -9,7 +9,6 @@
   }
 
   [class*='btn'] {
-    font-size: normal;
     margin-top: 4px;
     min-height: 24px;
 
@@ -54,7 +53,8 @@
     }
 
     .html-icon {
-      margin-left: auto;
+      margin-left: 3px;
+      margin-right: 2px;
       width: 45px;
     }
   }

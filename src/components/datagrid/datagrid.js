@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { keyboard } from '../../utils/keyboard';
 import { theme } from '../theme/theme';
 import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
@@ -43,6 +44,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
  * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
+ * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] Expand the expandable across all frozen columns.
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
@@ -90,7 +92,11 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.disableClientSort=false] Disable Sort Logic client side and let your server do it
  * @param {string}   [settings.resultsText=null] Can provide a custom function to adjust results text on the toolbar
  * @param {boolean}  [settings.showFilterTotal=true] Paging results display filter count, change to false to not show filtered count
- * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires rowReorder formatter
+ * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires a rowReorder formatter column.
+ * @param {boolean}  [settings.resizeMode='flex'] Changes the column resize behavior.
+ * `flex` will resize columns independently shifting other columns to fit the table layout if needed.
+ * `fit` will resize using the neighbours column width. This is more useful with less columns.
+ * If holding the Shift key you can use one of the other modes while dragging as a user.
  * @param {boolean}  [settings.showDirty=false]  If true the dirty indicator will be shown on the rows
  * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
  * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
@@ -136,7 +142,8 @@ const DATAGRID_DEFAULTS = {
   columns: [],
   frozenColumns: {
     left: [],
-    right: []
+    right: [],
+    expandRowAcrossAllCells: true
   },
   dataset: [],
   columnReorder: false, // Allow Column reorder
@@ -187,6 +194,7 @@ const DATAGRID_DEFAULTS = {
   virtualRowBuffer: 10, // how many extra rows top and bottom to allow as a buffer
   rowReorder: false, // Allows you to reorder rows. Requires rowReorder formatter
   showDirty: false,
+  resizeMode: 'flex',
   showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
   allowOneExpandedRow: true, // Only allows one expandable row at a time
   enableTooltips: false, // Process tooltip logic at a cost of performance
@@ -211,6 +219,9 @@ function Datagrid(element, settings) {
   this.element = $(element);
   if (settings.dataset) {
     this.settings.dataset = settings.dataset;
+  }
+  if (typeof this.settings.frozenColumns.expandRowAcrossAllCells === 'undefined') {
+    this.settings.frozenColumns.expandRowAcrossAllCells = DATAGRID_DEFAULTS.frozenColumns.expandRowAcrossAllCells; // eslint-disable-line
   }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -1000,7 +1011,7 @@ Datagrid.prototype = {
   updateColumnGroup() {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
-      this.originalColGroups = this.deepCopy(colGroups);
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     if (this.settings.groupable) {
@@ -1094,7 +1105,7 @@ Datagrid.prototype = {
     }
 
     if (!this.originalColGroups) {
-      this.originalColGroups = this.deepCopy(colGroups);
+      this.originalColGroups = utils.deepCopy(colGroups);
     }
 
     const groups = colGroups.map(group => parseInt(group.colspan, 10));
@@ -1633,7 +1644,7 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.find('.datagrid-header tr:last th').each(function () {
+    this.element.find('.datagrid-header tr:not(.datagrid-header-groups) th').each(function () {
       const col = self.columnById($(this).attr('data-column-id'))[0];
       const elem = $(this);
 
@@ -3914,6 +3925,7 @@ Datagrid.prototype = {
     if (self.settings.rowTemplate) {
       const tmpl = self.settings.rowTemplate;
       const item = rowData;
+      const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
 
       if (Tmpl && item) {
@@ -3922,27 +3934,33 @@ Datagrid.prototype = {
 
       if (this.hasLeftPane) {
         containerHtml.left += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsLeft}">
-          <div class="datagrid-row-detail"><div style="height: ${self.settings.rowTemplateHeight || '107'}px"></div></div>
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
       containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
         <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
-        containerHtml.right += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
     }
 
     if (self.settings.expandableRow) {
       if (this.hasLeftPane) {
-        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">` +
-          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-          '</td></tr>';
+        containerHtml.left += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsLeft}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">` +
-        '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
-        '</td></tr>';
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+        </td></tr>`;
+      if (this.hasRightPane) {
+        containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
+          <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>
+          </td></tr>`;
+      }
     }
 
     // Render Tree Children
@@ -4236,8 +4254,7 @@ Datagrid.prototype = {
 
   /**
    * Return the index of the stretch column
-   * @private
-   * @returns {number}
+   * @returns {number} The index of the stretch column
    */
   getStretchColumnIdx() {
     const self = this;
@@ -4809,22 +4826,11 @@ Datagrid.prototype = {
   },
 
   /**
-   * Create deep copy for given array.
-   * @private
-   * @param  {array} arr The array to be copied.
-   * @returns {array} The copied array.
-   */
-  deepCopy(arr) {
-    const copy = items => items.map(item => (Array.isArray(item) ? copy(item) : item));
-    return copy(arr || []);
-  },
-
-  /**
    * Set the original column which may later be reloaded.
    * @private
    */
   setOriginalColumns() {
-    this.originalColumns = this.deepCopy(this.settings.columns);
+    this.originalColumns = utils.deepCopy(this.settings.columns);
   },
 
   /**
@@ -5386,30 +5392,31 @@ Datagrid.prototype = {
 
     this.element.find('table').before(this.resizeHandle);
 
-    let columnId;
-    let draggingLeft;
-    let startingLeft;
     let column;
+    let columnId;
+    let widthToSet;
+    let nextWidthToSet;
+    let nextColumnId;
+    let usingShiftKey = false;
 
-    this.resizeHandle.drag({ axis: 'x', containment: this.element })
-      .on('dragstart.datagrid', (e, ui) => {
+    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+      .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
         }
 
         self.dragging = true;
+        usingShiftKey = false;
 
         columnId = self.currentHeader.attr('data-column-id');
         column = self.columnById(columnId)[0];
-
-        startingLeft = ui.left;
 
         if (self.isEllipsisActiveHeader(column)) {
           self.currentHeader[0].classList.add('is-ellipsis-active');
         }
       })
       .on('drag.datagrid', (e, ui) => {
-        if (!self.currentHeader || !column || this.settings.dataset.length === 0) {
+        if (!self.currentHeader) {
           return;
         }
 
@@ -5417,71 +5424,89 @@ Datagrid.prototype = {
         const minWidth = column.minWidth || 12;
         const maxWidth = column.maxWidth || 1000;
 
-        // Find how for to move each adjacent column
-        draggingLeft = ui.left;
-        const diff = startingLeft - draggingLeft;
         const node = self.currentHeader;
         const idx = node.index();
-        const nextIdx = idx + 1;
-
-        // Find how the adjacent column
+        this.dragging = true;
+        const left = ui.left + 5;
         const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-        const currentColWidth = parseInt(currentCol.style.width, 10);
-        const nextCol = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-        let nextColWidth = 12;
-        let nextMinWidth = 12;
-        let nextMaxWidth = 1000;
-        if (nextCol) {
-          nextColWidth = parseInt(nextCol.style.width, 10);
-          nextMinWidth = self.settings.columns[nextIdx].minWidth || 12;
-          nextMaxWidth = self.settings.columns[nextIdx].maxWidth || 1000;
-        }
+        const currentColWidth = parseInt(self.currentHeader.width(), 10);
+        let cssWidth = parseInt(currentCol.style.width || currentColWidth, 10);
 
-        // Calculate
-        const width = currentColWidth - diff;
-        const nextWidth = nextColWidth + diff;
+        // Convert from percentage
+        if (currentCol.style.width.indexOf('%') > -1) {
+          cssWidth = currentColWidth;
+        }
+        const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
+        const offsetLeft = parseFloat(self.currentHeader.offset().left);
+        const leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
-        if (width < minWidth || width > maxWidth
-          || nextWidth < nextMinWidth || nextWidth > nextMaxWidth) {
+        widthToSet = cssWidth - diff;
+        if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
           return;
         }
 
-        // Update the DOM
-        if (nextCol && nextCol.style.width.indexOf('%') === -1) {
-          nextCol.style.width = (`${nextWidth}px`);
+        if (widthToSet === cssWidth) {
+          return;
         }
-        if (currentCol.style.width.indexOf('%') === -1) {
-          currentCol.style.width = (`${width}px`);
+
+        currentCol.style.width = (`${widthToSet}px`);
+
+        if (keyboard.pressedKeys.get('Shift')) {
+          usingShiftKey = true;
         }
-        // Two percentage fields
-        if (nextCol && nextCol.style.width.indexOf('%') !== -1 && currentCol.style.width.indexOf('%') !== -1) {
-          nextCol.style.width = (`${nextWidth}px`);
-          currentCol.style.width = (`${width}px`);
+
+        if ((this.settings.resizeMode === 'fit' && !usingShiftKey) ||
+          (this.settings.resizeMode === 'flex' && usingShiftKey)) {
+          const nextIdx = Locale.isRTL() ? idx + 1 : idx - 1;
+          const nextColSettings = self.settings.columns[nextIdx];
+          if (!nextColSettings) {
+            return;
+          }
+          const nextMinWidth = nextColSettings.minWidth || 12;
+          const nextMaxWidth = nextColSettings.maxWidth || 1000;
+          const nextColumn = Locale.isRTL() ?
+            DOM.getPreviousSibling(self.currentHeader, ':not(.is-hidden)') :
+            DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
+
+          nextColumnId = nextColumn.getAttribute('data-column-id');
+          const nextCol = Locale.isRTL() ?
+            DOM.getPreviousSibling(currentCol, ':not(.is-hidden)') :
+            DOM.getNextSibling(currentCol, ':not(.is-hidden)');
+
+          const nextColWidth = parseInt(nextColumn.offsetWidth, 10);
+          let nextCssWidth = parseInt(nextCol.style.width || nextColWidth, 10);
+          // Convert from percentage
+          if (nextCol.style.width.indexOf('%') > -1) {
+            nextCssWidth = nextColWidth;
+          }
+          nextWidthToSet = nextCssWidth + diff;
+
+          if (nextWidthToSet < nextMinWidth || nextWidthToSet > nextMaxWidth) {
+            self.resizeHandle.css('cursor', 'inherit');
+            return;
+          }
+
+          if (nextWidthToSet === nextCssWidth || !nextCol) {
+            return;
+          }
+
+          nextCol.style.width = (`${nextWidthToSet}px`);
         }
-        startingLeft = ui.left;
       })
       .on('dragend.datagrid', () => {
-        self.dragging = false;
-        const node = self.currentHeader;
-        const idx = node.index();
+        this.dragging = false;
+        if (self.isEllipsisActiveHeader(column)) {
+          self.activeEllipsisHeader(self.currentHeader[0]);
+        }
 
-        if (self.settings.stretchColumn === 'last') {
-          // Find how the adjacent column
-          const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-          const currentColWidth = parseInt(currentCol.style.width, 10);
-          const nextCol = DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
-          const nextColGroup = DOM.getNextSibling(currentCol, ':not(.is-hidden)');
-          const nextColWidth = parseInt(nextColGroup.style.width, 10);
+        self.setColumnWidth(columnId, widthToSet);
 
-          self.setColumnWidth(self.currentHeader.attr('data-column-id'), currentColWidth);
-          if (nextCol) {
-            self.setColumnWidth(nextCol.getAttribute('data-column-id'), nextColWidth);
-          }
-          if (self.isEllipsisActiveHeader(column)) {
-            self.activeEllipsisHeader(self.currentHeader[0]);
-          }
+        if (nextColumnId && ((this.settings.resizeMode === 'fit' && !usingShiftKey) ||
+          (this.settings.resizeMode === 'flex' && usingShiftKey))) {
+          self.setColumnWidth(nextColumnId, nextWidthToSet);
         }
       });
   },
@@ -5993,8 +6018,10 @@ Datagrid.prototype = {
           self.columnWidth(col, j);
         }
 
-        const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-        currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+        if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
+          const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
+          currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+        }
       });
     }
 
@@ -6080,16 +6107,21 @@ Datagrid.prototype = {
         const rightEdge = leftEdge + self.currentHeader.outerWidth();
         const alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX);
         let leftPos = 0;
-        leftPos = (alignToLeft ? (rightEdge - 6) : (leftEdge - 6));
+        leftPos = (alignToLeft ? (rightEdge - 5) : (leftEdge - 5));
+        const idx = self.currentHeader.parent().find('th:visible').index(self.currentHeader);
 
         // Ignore First Column and last column
-        if ((self.currentHeader.index() === 0 && !alignToLeft) ||
-          (self.currentHeader.index() === self.visibleColumns().length)) {
+        if ((idx === 0 && (Locale.isRTL() ? alignToLeft : !alignToLeft)) ||
+          (idx === self.visibleColumns().length)) {
           leftPos = '-999';
         }
 
-        if (!alignToLeft) {
+        if (!Locale.isRTL() && !alignToLeft) {
           self.currentHeader = self.currentHeader.prevAll(':visible').not('.is-hidden').first();
+        }
+
+        if (Locale.isRTL() && !alignToLeft) {
+          self.currentHeader = self.currentHeader.nextAll(':visible').not('.is-hidden').first();
         }
 
         if (!self.currentHeader.hasClass('is-resizable')) {
@@ -10095,7 +10127,8 @@ Datagrid.prototype = {
 
     if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
       // collapse any other expandable rows
-      const prevExpandRow = self.tableBody.find('tr.is-expanded');
+      const tableBody = self.tableBody.add(self.tableBodyLeft).add(self.tableBodyRight);
+      const prevExpandRow = tableBody.find('tr.is-expanded');
       const prevExpandButton = prevExpandRow.prev().find('.datagrid-expand-btn');
       const parentRow = prevExpandRow.prev();
       const parentRowIdx = self.actualRowNode(parentRow);
@@ -10167,12 +10200,174 @@ Datagrid.prototype = {
           if (markup) {
             detail.find('.datagrid-row-detail-padding').empty().append(markup);
           }
+          self.adjustExpandRowHeight(detail);
           detail.animateOpen();
         };
 
         self.settings.onExpandRow(eventData[0], response);
       } else {
+        self.adjustExpandRowHeight(detail);
         detail.animateOpen();
+      }
+
+      // Expandable row for frozen columns expand across all cells
+      if (self.settings.frozenColumns.expandRowAcrossAllCells) {
+        self.frozenExpandRowAcrossAllCells();
+      } else if (this.settings.frozenColumns.left.length ||
+        this.settings.frozenColumns.right.length) {
+        $('html')
+          .off(`themechanged.${COMPONENT_NAME}`)
+          .on(`themechanged.${COMPONENT_NAME}`, () => {
+            const elms = {
+              left: detail.eq(0)[0],
+              center: detail.eq(1)[0],
+              right: detail.eq(2)[0]
+            };
+            self.frozenExpandRowSetHeight(elms);
+          });
+      }
+    }
+  },
+
+  /**
+   * Adjust height to expandable row for frozen columns
+   * @private
+   * @param {jQuery[]} expandRowElms The expandable row elements
+   * @returns {void}
+   */
+  adjustExpandRowHeight(expandRowElms) {
+    if (expandRowElms.length) {
+      if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+        const elms = {
+          left: expandRowElms.eq(0)[0] ? expandRowElms.eq(0)[0].children[0] : null,
+          center: expandRowElms.eq(1)[0],
+          right: expandRowElms.eq(2)[0] ? expandRowElms.eq(2)[0].children[0] : null
+        };
+        let height = 0;
+        if (elms.center) {
+          elms.center.style.height = 'auto';
+          height = elms.center.offsetHeight - 1;
+          elms.center.style.height = '';
+        }
+        if (height > 0) {
+          if (elms.left) {
+            elms.left.style.height = `${height}px`;
+          }
+          if (elms.right) {
+            elms.right.style.height = `${height}px`;
+          }
+        }
+      }
+    }
+  },
+
+  /**
+   * Set height to expandable row for frozen columns
+   * @private
+   * @param {object} elms The expandable row `.detail` elements
+   * @returns {void}
+   */
+  frozenExpandRowSetHeight(elms) {
+    if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+      let height = 0;
+      if (elms && elms.center) {
+        elms.padding = elms.center.querySelector('.datagrid-row-detail-padding');
+        height = elms.padding.offsetHeight;
+      }
+      if (height) {
+        elms.center.style.height = `${height}px`;
+        if (elms.left) {
+          elms.left.style.height = `${height}px`;
+        }
+        if (elms.right) {
+          elms.right.style.height = `${height}px`;
+        }
+      }
+    }
+  },
+
+  /**
+   * Expand the expandable row to all columns for frozen
+   * @private
+   * @returns {void}
+   */
+  frozenExpandRowAcrossAllCells() {
+    if (this.settings.frozenColumns.left.length || this.settings.frozenColumns.right.length) {
+      // Selector
+      const selector = { row: '.datagrid-expandable-row.is-expanded' };
+      selector.detail = `${selector.row} > td .datagrid-row-detail`;
+      selector.padding = `${selector.detail} .datagrid-row-detail-padding`;
+
+      const table = {
+        left: this.tableBodyLeft ? this.tableBodyLeft[0] : null,
+        center: this.tableBody ? this.tableBody[0] : null,
+        right: this.tableBodyRight ? this.tableBodyRight[0] : null
+      };
+
+      // Elements
+      const elms = {
+        rows: {
+          left: table.left ? table.left.querySelector(selector.row) : null,
+          center: table.center ? table.center.querySelector(selector.row) : null,
+          right: table.right ? table.right.querySelector(selector.row) : null
+        },
+        details: {
+          left: table.left ? table.left.querySelector(selector.detail) : null,
+          center: table.center ? table.center.querySelector(selector.detail) : null,
+          right: table.right ? table.right.querySelector(selector.detail) : null
+        },
+        padding: this.tableBody[0].querySelector(selector.padding)
+      };
+
+      if (elms.padding && (elms.details.left || elms.details.right)) {
+        const cssClass = 'is-expanded-frozen';
+        const rect = {
+          container: this.element[0].getBoundingClientRect(),
+          elem: elms.details.center.getBoundingClientRect()
+        };
+        const top = `${rect.elem.top - rect.container.top}px`;
+        const width = `${rect.container.top.width}px`;
+
+        elms.padding.style.opacity = '0';
+        if (elms.rows.left) {
+          elms.rows.left.classList.add(cssClass);
+        }
+        if (elms.rows.right) {
+          elms.rows.right.classList.add(cssClass);
+        }
+
+        $(elms.details.center)
+          .one('animateopencomplete.datagrid.expandedfrozen', () => {
+            if (elms.details.left || elms.details.right) {
+              setTimeout(() => {
+                elms.rows.center.classList.add(cssClass);
+                elms.padding.style.width = width;
+                elms.padding.style.top = top;
+                this.frozenExpandRowSetHeight(elms.details);
+                elms.padding.style.opacity = '';
+
+                $(window).on('resize.datagrid.expandedfrozen', () => {
+                  this.frozenExpandRowSetHeight(elms.details);
+                });
+              }, 10);
+            }
+          })
+          .one('animateclosedstart.datagrid.expandedfrozen', () => {
+            $(window).off('resize.datagrid.expandedfrozen');
+            elms.padding.style.opacity = '0';
+            elms.padding.style.width = '';
+            elms.padding.style.top = '';
+            elms.rows.center.classList.remove(cssClass);
+            if (elms.rows.left) {
+              elms.rows.left.classList.remove(cssClass);
+            }
+            if (elms.rows.right) {
+              elms.rows.right.classList.remove(cssClass);
+            }
+          })
+          .one('animateclosedcomplete.datagrid.expandedfrozen', () => {
+            elms.padding.style.opacity = '';
+          });
       }
     }
   },
@@ -10425,6 +10620,12 @@ Datagrid.prototype = {
     if (!this.headerRow) {
       return;
     }
+
+    this.sortColumn = {
+      sortId: id,
+      sortAsc: ascending,
+      sortField: (this.columnById(id)[0] ? this.columnById(id)[0].field : id)
+    };
 
     // Set Visual Indicator
     this.element.find('.is-sorted-asc, .is-sorted-desc')
@@ -10935,6 +11136,8 @@ Datagrid.prototype = {
   destroy() {
     // Remove grid tooltip
     this.removeTooltip();
+
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
 
     // Unbind context menu events
     this.element.add(this.element.find('*'))

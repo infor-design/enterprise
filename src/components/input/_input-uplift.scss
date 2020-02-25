@@ -3,8 +3,6 @@
 
 .field {
   .btn-actions {
-    font-size: normal;
-
     .icon {
       height: 18px;
       width: 18px;
@@ -14,12 +12,12 @@
 
 label.required:not(.inline) .required-asterisk,
 .label.required:not(.inline) .required-asterisk,
-label.required:not(.inline):not(.accessible)::after,
-.label.required:not(.inline):not(.accessible)::after,
-label.required .label-text:not(.accessible)::after,
-.label.required .label-text:not(.accessible)::after {
-  font-size: $theme-size-font-md;
-  top: 3px;
+label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
+.label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
+label.required .label-text:not(.accessible):not(.checkbox-label)::after,
+.label.required .label-text:not(.accessible):not(.checkbox-label)::after {
+  font-size: $theme-size-font-md !important;
+  top: 3px !important;
 }
 
 span.required::after {
@@ -39,5 +37,19 @@ span.required::after {
 .error-message {
   .icon {
     height: 15px;
+    width: 15px;
+  }
+
+  .message-text {
+    padding-left: 21px;
+  }
+}
+
+.is-firefox {
+  .field-short,
+  .form-layout-compact .field {
+    input:not(.spinbox) {
+      padding-top: 0;
+    }
   }
 }

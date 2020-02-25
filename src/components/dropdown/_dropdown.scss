@@ -146,7 +146,7 @@ div.multiselect {
     .icon,
     + .icon {
       background-color: $input-color-disabled-background;
-      color: $trigger-disabled-color;
+      color: $input-color-disabled-border;
       cursor: default;
     }
   }
@@ -684,6 +684,7 @@ input.dropdown.error:focus {
 .form-layout-compact .field {
   .dropdown-wrapper {
     margin-bottom: 0;
+    vertical-align: top;
   }
 
   .dropdown {
@@ -1081,6 +1082,13 @@ div.dropdown-xs,
   }
 }
 
+// for safari
+.is-safari {
+  .dropdown-list.dropdown-short.multiple li a {
+    padding-left: 32px;
+  }
+}
+
 // for android
 .android {
   .dropdown-list {
@@ -1172,7 +1180,7 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -20px;
+        margin-right: -23px;
       }
     }
 

@@ -360,9 +360,11 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       setTimeout(() => {
         firstMenuEntry.click();
 
-        expect(menuButtonSpyEvent).toHaveBeenTriggered();
-        done();
-      }, 300);
+        setTimeout(() => {
+          expect(menuButtonSpyEvent).toHaveBeenTriggered();
+          done();
+        }, 400);
+      }, 400);
     });
 
     it('Should trigger "selected" event for overflow menu', (done) => {

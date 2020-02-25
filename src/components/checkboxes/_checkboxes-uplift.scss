@@ -4,3 +4,25 @@
 label.inline:not(.checkbox-label) .checkbox ~ .label-text {
   margin: 0 auto 5px -5px;
 }
+
+label.inline .checkbox ~ .label-text,
+.checkbox-label {
+  line-height: 16px;
+
+  span {
+    line-height: inherit;
+  }
+}
+
+.checkbox-label.required::after {
+  font-size: 2.2rem;
+}
+
+// Dirty Checkbox
+.compound-field {
+  > .field.field-checkbox {
+    .dirty-checkbox {
+      margin: 11px 0 0 -1px;
+    }
+  }
+}

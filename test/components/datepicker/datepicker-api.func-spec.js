@@ -294,7 +294,7 @@ describe('DatePicker API', () => {
         { name: 'Weekends', color: '#EFA836', dayOfWeek: [0, 6] },
         { name: 'Other', color: '#B94E4E', dates: ['1/18/2017', '1/19/2017'] },
         { name: 'Half Days', color: '#9279A6', dates: ['1/21/2017', '1/22/2017'] },
-        { name: 'Full Days', color: '#368AC0', dates: ['1/24/2017', '1/25/2017'] }
+        { name: 'Full Days', color: '#2578A9', dates: ['1/24/2017', '1/25/2017'] }
       ]
     });
 
