@@ -58,6 +58,19 @@ Button.prototype = {
   },
 
   /**
+   * @returns {ButtonSet|undefined} parent ButtonSet component instance, if applicable
+   */
+  get buttonsetAPI() {
+    const container = this.element.parents('.buttonset, .modal-buttonset');
+    let api;
+
+    if (container.length) {
+      api = container.data('buttonset');
+    }
+    return api;
+  },
+
+  /**
    * @returns {HTMLElement} a reference to this button's icon element
    */
   get icon() {
@@ -190,14 +203,23 @@ Button.prototype = {
    */
   render() {
     const elemClasses = this.element[0].classList;
+    // Style = "primary/secondary/tertiary" hierarchy/context
     if (buttonStyles.indexOf(this.settings.style) > -1) {
       elemClasses.add(this.settings.style);
     }
-
+    // Type = "function"
     if (buttonTypes.indexOf(this.settings.type) > 0) {
       elemClasses.add(this.settings.type);
     }
 
+    // If this is a modal button, add special classes in some cases
+    const buttonsetAPI = this.buttonsetAPI;
+    if (buttonsetAPI && buttonsetAPI.settings.style === 'modal') {
+      elemClasses[this.settings.style === 'btn-primary' ? 'add' : 'remove']('btn-modal-primary');
+      elemClasses[this.settings.style === 'btn-secondary' ? 'add' : 'remove']('btn-modal-secondary');
+    }
+
+    // Add extra, user-defined CSS classes, if applicable
     if (typeof this.settings.cssClass === 'string') {
       this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
     }

@@ -21,7 +21,11 @@ const BUTTONSET_DEFAULTS = {
 };
 
 function ButtonSet(element, settings) {
-  this.element = $(element);
+  if (!(element instanceof HTMLElement)) {
+    throw new Error('ButtonSet component needs an HTMLElement as a base element.');
+  }
+
+  this.element = element;
   this.settings = utils.mergeSettings(element, settings, BUTTONSET_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -57,7 +61,23 @@ ButtonSet.prototype = {
    * @returns {void}
    */
   render() {
-    this.element.addClass('buttonset');
+    const elemClasses = this.element.classList;
+    const cssClassMap = {
+      default: 'buttonset',
+      modal: 'modal-buttonset',
+      cap: 'cap-buttonset'
+    };
+
+    // Remove all classes except for the correct one.
+    Object.keys(cssClassMap).forEach((style) => {
+      const cssClass = cssClassMap[style];
+      if (this.settings.style !== style) {
+        elemClasses.remove(cssClass);
+      }
+    });
+    elemClasses.add(cssClassMap[this.settings.style]);
+
+    // Render all established buttons
     this.buttons.forEach((buttonAPI) => {
       buttonAPI.render();
     });
@@ -88,7 +108,7 @@ ButtonSet.prototype = {
     // Add the new button to the page
     const $buttonElem = $(buttonElem);
     if (doAddDOM || !didExist) {
-      this.element.append($buttonElem);
+      $(this.element).append($buttonElem);
     }
 
     // Invoke
@@ -119,7 +139,7 @@ ButtonSet.prototype = {
         elem = buttonAPI;
       } else if (typeof buttonAPI === 'string') {
         // Assume it's an ID String
-        elem = this.element.find(`#${buttonAPI.replace('#', '')}`);
+        elem = $(this.element).find(`#${buttonAPI.replace('#', '')}`);
       }
 
       $elem = $(elem);
@@ -176,7 +196,7 @@ ButtonSet.prototype = {
    * @returns {ButtonSet} This component's API.
    */
   teardown(doRemoveDOM) {
-    this.buttons.each((buttonAPI) => {
+    this.buttons.forEach((buttonAPI) => {
       this.remove(buttonAPI, doRemoveDOM);
     });
     return this;
@@ -189,7 +209,7 @@ ButtonSet.prototype = {
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
     this.teardown();
@@ -203,7 +223,7 @@ ButtonSet.prototype = {
   */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element, COMPONENT_NAME);
   },
 };
 

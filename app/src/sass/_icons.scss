@@ -6,3 +6,26 @@
   display: inline-block;
   margin: 10px;
 }
+
+// Some demo icons are hidden
+.demo-icon-empty {
+  color: $theme-color-brand-secondary-alt;
+}
+
+// Show a slightly-different icon colors when empty
+div.dropdown,
+div.multiselect,
+.dropdown-list {
+  > .listoption-icon,
+  li > .listoption-icon {
+    &.demo-icon-empty {
+      color: $theme-color-brand-secondary-alt;
+    }
+  }
+
+  li.is-focused:not(.is-disabled) {
+    > .listoption-icon.demo-icon-empty {
+      color: $theme-color-brand-secondary-alt;
+    }
+  }
+}
