@@ -1559,20 +1559,21 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+      const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
-      const popupmenu = $(this).data('popupmenu');
+      const popupmenu = filterBtn.data('popupmenu');
 
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
-          const menu = $(this).next('.popupmenu-wrapper');
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
+          const menu = filterBtn.next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
           self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', (e, anchor) => {
-            const rowElem = anchor.closest('th[role="columnheader"]');
+          .on('selected.datagrid-filter', () => {
+            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
             // Set datepicker with range/single date

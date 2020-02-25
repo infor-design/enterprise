@@ -251,7 +251,22 @@ function ValidationRules() {
               check = false;
             }
           };
-          if (parts.length === 2) {
+          if (value.indexOf(api.pattern) > -1) {
+            if (parts.length === 1) {
+              checkRule('date', parts[0]);
+            } else if (parts.length === 2) {
+              const part = parts[0] === api.pattern ? 1 : 0;
+              checkRule('date', parts[part]);
+              if (check) {
+                checkRule('availableDate', parts[part]);
+              }
+            }
+          } else if (parts.length === 1) {
+            checkRule('date', parts[0]);
+            if (check) {
+              checkRule('availableDate', parts[0]);
+            }
+          } else if (parts.length === 2) {
             checkRule('date', parts[0]);
             if (check) {
               checkRule('date', parts[1]);
