@@ -9,6 +9,7 @@
   $('body').one('initialized', function () {
 
       var grid,
+        centerWidth = null,
         columns = [],
         data = [];
 
@@ -28,6 +29,7 @@
       columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
 
@@ -41,9 +43,18 @@
         dataset: data
       });
 
-      $('#datagrid').on('afterrender', function() {
+      $('#datagrid').on('afterrender', function(e) {
         var gridAPI = $(this).data('datagrid');
-        console.log(gridAPI.totalWidths);
+        if (centerWidth === null) {
+          centerWidth = gridAPI.totalWidths.center;
+          console.log(`Capture initial center Width: ${gridAPI.totalWidths.center}`);
+        }
+        
+        if (centerWidth !== gridAPI.totalWidths.center) {
+          console.log(`center Width is different form initial value: ${gridAPI.totalWidths.center}`);
+        }
+        
+        
       });
 });
 
