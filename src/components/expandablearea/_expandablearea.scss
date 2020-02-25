@@ -56,6 +56,12 @@
       margin-bottom: 0;
     }
 
+    .side-padding .column:first-child,
+    .side-padding .columns:first-child {
+      // fixes an issue on search-forms
+      padding-left: 20px;
+    }
+
     .columns {
       margin-left: 0;
       padding: 0;
@@ -204,8 +210,3 @@
   }
 }
 
-.full-width .column:first-child,
-.full-width .columns:first-child {
-  // fixes an issue on search-forms
-  padding-left: 20px !important;
-}
