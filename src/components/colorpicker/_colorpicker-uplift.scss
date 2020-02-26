@@ -2,10 +2,6 @@
   margin-left: -12px;
   margin-top: -2px;
 
-  .icon {
-    left: 14px;
-  }
-
   .colorpicker {
     width: 126px;
   }
@@ -28,5 +24,11 @@ html[dir='rtl'] {
       left: -3px;
       top: 10px;
     }
+  }
+}
+
+.modal-body {
+  .colorpicker-container .trigger {
+    margin-top: 0;
   }
 }
