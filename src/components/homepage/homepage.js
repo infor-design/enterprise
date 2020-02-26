@@ -139,62 +139,52 @@ Homepage.prototype = {
    * @returns {void}
    */
   initEdit() {
-    const cards = this.element.find('.card, .widget');
-    cards.each((index, element) => {
-      const card = $(element);
-      if (this.editing) {
-        card.attr('draggable', true);
-        // Remove any previous drag listeners
-        card.off('dragstart dragenter dragend');
-        card.on('dragstart', () => {
+    const homepage = this;
+    if (homepage.editing) {
+      const cards = homepage.element.find('.card, .widget');
+      cards.attr('draggable', true);
+      cards
+        .on('dragstart', function () {
+          const card = $(this);
           // SetTimeout is for chrome bug discussed here:
           // https://stackoverflow.com/questions/14203734/dragend-dragenter-and-dragleave-firing-off-immediately-when-i-drag
           setTimeout(() => {
-            card.addClass('dragging');
             let classes = card.attr("class").split(" ");
             // Make the placeholder have the same height/width classes as the card it's replacing
             let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
             let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
-            this.placeholder.addClass(width);
-            this.placeholder.addClass(height);
-            card.insertBefore(this.placeholder);
+            homepage.placeholder.addClass(width);
+            homepage.placeholder.addClass(height);
+            homepage.placeholder.insertBefore(card);
             card.detach();
-            this.refresh(false);
+            homepage.refresh(false);
           }, 0);
-        });
-        card.on('dragenter', () => {
-          if (!this.dragging) {
+        }).on('dragenter', function () {
+          const card = $(this);
+          if (!homepage.dragging) {
             // Allow for animation to finish before triggering another movement, see setTimeout below
-            this.dragging = true;
-            if (this.placeholder.index() < (card.index())) {
-              this.placeholder.remove();
-              this.placeholder.insertAfter(card);
+            homepage.dragging = true;
+            if (homepage.placeholder.index() < (card.index())) {
+              homepage.placeholder.insertAfter(card);
             } else {
-              this.placeholder.remove();
-              this.placeholder.insertBefore(card);
+              homepage.placeholder.insertBefore(card);
             }
             // Allow for animation to finish before triggering another movement
-            setTimeout(() => { this.dragging = false; }, 400);
-            this.refresh(true);
+            setTimeout(() => { homepage.dragging = false; }, 400);
+            homepage.refresh(true);
           }
-        });
-        card.on('dragend', () => {
-          card.removeClass('dragging');
+        }).on('dragend', function () {
+          const card = $(this);
           let classes = card.attr("class").split(" ");
           let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
           let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
-          this.placeholder.removeClass(width);
-          this.placeholder.removeClass(height);
-          card.insertAfter(this.placeholder);
-          this.placeholder.remove();
-          this.refresh(false);
+          homepage.placeholder.removeClass(width);
+          homepage.placeholder.removeClass(height);
+          card.insertAfter(homepage.placeholder);
+          homepage.placeholder.remove();
+          homepage.refresh(false);
         });
-      } else {
-        card.attr('draggable', false);
-        card.off('dragstart dragenter dragend');
-        card.removeClass('dragging');
-      }
-    })
+    }
   },
 
   /**
@@ -349,7 +339,7 @@ Homepage.prototype = {
       }
 
       // Card being dragged is detached from DOM and temporarily replaced by placeholder.
-      if (!card.hasClass('dragging')) {
+      if (!card.hasClass('is-dragging')) {
         this.blocks.push({ w, h, elem: card, text: card.text() });
       }
     }
