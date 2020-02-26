@@ -5915,7 +5915,7 @@ Datagrid.prototype = {
         // Then Activate
         if (!canSelect) {
           if (e.shiftKey && self.activatedRow().length) {
-            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').attr('aria-rowindex') - 1]);
             e.preventDefault();
           }
 
@@ -5924,7 +5924,7 @@ Datagrid.prototype = {
       }
 
       if (canSelect && isMultiple && e.shiftKey) {
-        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
+        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
@@ -8226,7 +8226,7 @@ Datagrid.prototype = {
         }
 
         if (isMultiple && e.shiftKey) {
-          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
+          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
         }
@@ -10216,7 +10216,7 @@ Datagrid.prototype = {
       const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
       self.element.triggerHandler('expandrow', eventData);
 
-      if (self.settings.allowOneExpandedRow) {
+      if (self.settings.allowOneExpandedRow && this.settings.selectable !== 'multiple') {
         rowElement.addClass('is-rowactivated');
       }
 

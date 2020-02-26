@@ -622,6 +622,7 @@ Spinbox.prototype = {
   enable() {
     this.element.prop('disabled', false);
     this.element.parent('.spinbox-wrapper').removeClass('is-disabled is-readonly');
+    this.element.prop('readonly', false);
   },
 
   /**
