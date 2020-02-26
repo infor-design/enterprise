@@ -9,8 +9,52 @@
 
   .card,
   .widget {
+    &:nth-child(1) {
+      border-radius: 6px 0 0 6px;
+      box-shadow: -1px 0 8px -1px $cardlist-box-shadow-color;
+    }
+
+    &:nth-child(2) {
+      border-radius: 0 6px 6px 0;
+      box-shadow: 1px 0 8px -1px $cardlist-box-shadow-color;
+    }
+
     .buttons {
       top: auto;
+    }
+
+    .card-content .listview,
+    .widget-content .listview {
+      li:first-child {
+        border-top-color: transparent;
+      }
+    }
+  }
+
+  &.one-third {
+    .card,
+    .widget {
+      &:nth-child(2) {
+        border-radius: 0;
+      }
+
+      &:nth-child(3) {
+        border-radius: 0 6px 6px 0;
+        box-shadow: 1px 0 8px -1px $cardlist-box-shadow-color;
+      }
+    }
+
+    @include respond-to(phone) {
+      .card,
+      .widget {
+        &:nth-child(2) {
+          border-radius: 0 6px 0 0;
+        }
+
+        &:nth-child(3) {
+          border-radius: 0 0 6px;
+        }
+      }
     }
   }
 }
