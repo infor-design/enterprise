@@ -160,7 +160,7 @@ DatePicker.prototype = {
       this.element.closest('.field').addClass('is-disabled');
     }
 
-    this.element.attr('autocomplete', 'off');
+    this.element.attr('autocomplete', 'false');
 
     // Append a trigger button
     if (this.element.next().is('svg')) {

@@ -167,7 +167,7 @@ Lookup.prototype = {
 
     this.addAria();
 
-    if (lookup.attr('autocomplete') === undefined) lookup.attr('autocomplete', 'off');
+    if (lookup.attr('autocomplete') === undefined) lookup.attr('autocomplete', 'false');
   },
 
   /**

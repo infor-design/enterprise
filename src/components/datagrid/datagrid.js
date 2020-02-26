@@ -3211,6 +3211,7 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
       this.recordCount++;
+      this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
         rowStatusTooltip = true;
@@ -8095,6 +8096,29 @@ Datagrid.prototype = {
             }
           }
 
+          if (cell === -1 && !self.settings.actionableMode) {
+            return;
+          }
+
+          if (cell === -1 && self.settings.actionableMode) {
+            row--;
+            cell = lastCell;
+
+            if (row === -1) {
+              return;
+            }
+          }
+
+          if (cell === lastCell && lastCell === self.activeCell.cell &&
+            self.settings.actionableMode) {
+            row++;
+            cell = 0;
+
+            if (row === self.visibleRowCount) {
+              return;
+            }
+          }
+
           if (cell instanceof jQuery) {
             self.setActiveCell(cell);
           } else {
@@ -8107,6 +8131,7 @@ Datagrid.prototype = {
               self.quickEditMode = true;
             }
           }
+
           self.quickEditMode = false;
           handled = true;
         }
