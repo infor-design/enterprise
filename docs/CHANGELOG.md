@@ -4,6 +4,7 @@
 
 ### v4.27.0 Fixes
 
+- `[Colorpicker]` Fixed the dropdown icon position is too close to the right edge of the field. ([#3508](https://github.com/infor-design/enterprise/issues/3508))
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
 - `[Datagrid]` Fixed a bug when setting the UI indicator with `setSortIndicator` then it would take two clicks to sort the inverse direction. ([#3391](https://github.com/infor-design/enterprise/issues/3391))
 - `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
