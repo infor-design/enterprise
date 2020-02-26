@@ -252,7 +252,7 @@ SearchField.prototype = {
     }
 
     // Prevent browser typahead
-    this.element.attr('autocomplete', 'false');
+    this.element.attr('autocomplete', 'off');
 
     // Setup ARIA
     let label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
