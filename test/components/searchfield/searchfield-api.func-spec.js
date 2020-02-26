@@ -42,7 +42,7 @@ describe('Searchfield API', () => {
   });
 
   it('renders attributes', () => {
-    expect(searchfieldInputEl.getAttribute('autocomplete')).toBe('false');
+    expect(searchfieldInputEl.getAttribute('autocomplete')).toBe('off');
   });
 
   it('can use a placeholder attribute as an `aria-label` attribute if one is defined', () => {
