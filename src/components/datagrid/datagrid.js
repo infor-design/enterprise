@@ -925,6 +925,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
+      this.clearCache();
       this.renderRows();
     }
 
@@ -4410,6 +4411,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
       this.stretchColumnWidth = colWidth;
       return ' style="width: 99%"';
     }
