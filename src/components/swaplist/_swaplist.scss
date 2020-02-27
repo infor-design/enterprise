@@ -27,6 +27,7 @@
     border-color: $swaplist-border-color-card;
     border-left-width: 0;
     float: left;
+    overflow: hidden;
     width: 50%;
 
     &:first-child {
@@ -37,113 +38,117 @@
       width: 100%;
     }
 
-    .card-header .btn {
-      background-color: transparent;
-      border: 0;
-      color: $swaplist-icon-color;
-      line-height: normal;
-      margin: 0;
-      min-width: 0;
-      padding: 0;
-      width: 35px;
+    .card-header {
+      border-bottom: none;
 
-      &::after,
-      &::before {
-        background: $swaplist-icon-color; //border color
-        content: '';
-        display: inline-block;
-        left: 9px;
-        position: absolute;
-        top: 8px;
-      }
-
-      &::after { //border left and right
-        box-shadow:
-          0 6px 0 $swaplist-icon-color,
-          0 12px 0 $swaplist-icon-color,
-          16px 0 0 $swaplist-icon-color,
-          16px 6px 0 $swaplist-icon-color,
-          16px 12px 0 $swaplist-icon-color;
-        height: 5px;
-        width: 2px;
-      }
-
-      &::before { //border top and bottom
-        box-shadow: 13px 0 0 $swaplist-icon-color,
-          0 16px 0 $swaplist-icon-color,
-          13px 16px 0 $swaplist-icon-color;
-        height: 2px;
-        width: 5px;
-      }
-
-      &:hover,
-      &:focus:not(.hide-focus):not(.is-disabled) {
-        &::after,
-        &::before {
-          background: $swaplist-icon-color-hover; //border color
-        }
-
-        &::after {
-          box-shadow: 0 6px 0 $swaplist-icon-color-hover,
-            0 12px 0 $swaplist-icon-color-hover,
-            16px 0 0 $swaplist-icon-color-hover,
-            16px 6px 0 $swaplist-icon-color-hover,
-            16px 12px 0 $swaplist-icon-color-hover;
-        }
-
-        &::before {
-          box-shadow: 13px 0 0 $swaplist-icon-color-hover,
-            0 16px 0 $swaplist-icon-color-hover,
-            13px 16px 0 $swaplist-icon-color-hover;
-        }
-
-        .icon {
-          color: $swaplist-icon-svg-color-hover;
-        }
-      }
-
-      &:focus:not(.hide-focus):not(.is-disabled) {
-        box-shadow: 0 0 0 1px $swaplist-border-color-hover, $focus-box-shadow;
-      }
-
-      &[disabled] {
-        &::after,
-        &::before {
-          background: $swaplist-icon-color-disabled;
-        }
-      }
-
-      &[disabled] {
-        &::after {
-          box-shadow:
-            0 6px 0 $swaplist-icon-color-disabled,
-            0 12px 0 $swaplist-icon-color-disabled,
-            16px 0 0 $swaplist-icon-color-disabled,
-            16px 6px 0 $swaplist-icon-color-disabled,
-            16px 12px 0 $swaplist-icon-color-disabled;
-        }
-      }
-
-      &[disabled] {
-        &::before {
-          box-shadow: 13px 0 0 $swaplist-icon-color-disabled,
-            0 16px 0 $swaplist-icon-color-disabled,
-            13px 16px 0 $swaplist-icon-color-disabled;
-        }
-      }
-
-      .icon {
-        color: $swaplist-icon-svg-color;
-        left: 13px;
+      .btn {
+        background-color: transparent;
+        border: 0;
+        color: $swaplist-icon-color;
+        line-height: normal;
         margin: 0;
-        position: absolute;
-        top: 8px;
-        width: 10px;
-      }
+        min-width: 0;
+        padding: 0;
+        width: 35px;
 
-      &[disabled] {
+        &::after,
+        &::before {
+          background: $swaplist-icon-color; //border color
+          content: '';
+          display: inline-block;
+          left: 9px;
+          position: absolute;
+          top: 8px;
+        }
+
+        &::after { //border left and right
+          box-shadow:
+            0 6px 0 $swaplist-icon-color,
+            0 12px 0 $swaplist-icon-color,
+            16px 0 0 $swaplist-icon-color,
+            16px 6px 0 $swaplist-icon-color,
+            16px 12px 0 $swaplist-icon-color;
+          height: 5px;
+          width: 2px;
+        }
+
+        &::before { //border top and bottom
+          box-shadow: 13px 0 0 $swaplist-icon-color,
+            0 16px 0 $swaplist-icon-color,
+            13px 16px 0 $swaplist-icon-color;
+          height: 2px;
+          width: 5px;
+        }
+
+        &:hover,
+        &:focus:not(.hide-focus):not(.is-disabled) {
+          &::after,
+          &::before {
+            background: $swaplist-icon-color-hover; //border color
+          }
+
+          &::after {
+            box-shadow: 0 6px 0 $swaplist-icon-color-hover,
+              0 12px 0 $swaplist-icon-color-hover,
+              16px 0 0 $swaplist-icon-color-hover,
+              16px 6px 0 $swaplist-icon-color-hover,
+              16px 12px 0 $swaplist-icon-color-hover;
+          }
+
+          &::before {
+            box-shadow: 13px 0 0 $swaplist-icon-color-hover,
+              0 16px 0 $swaplist-icon-color-hover,
+              13px 16px 0 $swaplist-icon-color-hover;
+          }
+
+          .icon {
+            color: $swaplist-icon-svg-color-hover;
+          }
+        }
+
+        &:focus:not(.hide-focus):not(.is-disabled) {
+          box-shadow: 0 0 0 1px $swaplist-border-color-hover, $focus-box-shadow;
+        }
+
+        &[disabled] {
+          &::after,
+          &::before {
+            background: $swaplist-icon-color-disabled;
+          }
+        }
+
+        &[disabled] {
+          &::after {
+            box-shadow:
+              0 6px 0 $swaplist-icon-color-disabled,
+              0 12px 0 $swaplist-icon-color-disabled,
+              16px 0 0 $swaplist-icon-color-disabled,
+              16px 6px 0 $swaplist-icon-color-disabled,
+              16px 12px 0 $swaplist-icon-color-disabled;
+          }
+        }
+
+        &[disabled] {
+          &::before {
+            box-shadow: 13px 0 0 $swaplist-icon-color-disabled,
+              0 16px 0 $swaplist-icon-color-disabled,
+              13px 16px 0 $swaplist-icon-color-disabled;
+          }
+        }
+
         .icon {
-          color: $swaplist-icon-svg-color-disabled;
+          color: $swaplist-icon-svg-color;
+          left: 13px;
+          margin: 0;
+          position: absolute;
+          top: 8px;
+          width: 10px;
+        }
+
+        &[disabled] {
+          .icon {
+            color: $swaplist-icon-svg-color-disabled;
+          }
         }
       }
     }
@@ -207,8 +212,8 @@
           }
 
           .card-content {
-            height: 130px;
-            min-height: 130px;
+            height: 140px;
+            min-height: 140px;
           }
         }
 
@@ -229,9 +234,12 @@
   }
 
   .is-multiselect {
+    background-color: $listview-bg-color;
+    border-top: thin solid $swaplist-border-color-card;
+
     ul {
       min-height: 100%;
-      padding: 5px 0;
+      padding: 0 0 5px;
 
       &.is-not-droppable {
         li {

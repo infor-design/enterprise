@@ -56,6 +56,34 @@ describe('Spinbox API', () => {
     expect(spinboxAPI.isDisabled()).toBeFalsy();
   });
 
+  it('Should handle toggling readonly', () => {
+    spinboxAPI.readonly();
+
+    expect(document.body.querySelector('.spinbox[readonly]')).toBeTruthy();
+    expect(document.body.querySelector('.spinbox-wrapper.is-readonly')).toBeTruthy();
+    expect(spinboxAPI.isDisabled()).toBeFalsy();
+
+    spinboxAPI.enable();
+
+    expect(document.body.querySelector('.spinbox[readonly]')).toBeFalsy();
+    expect(document.body.querySelector('.spinbox-wrapper.is-readonly')).toBeFalsy();
+    expect(spinboxAPI.isDisabled()).toBeFalsy();
+  });
+
+  it('Should handle toggling disabled', () => {
+    spinboxAPI.disable();
+
+    expect(document.body.querySelector('.spinbox[disabled]')).toBeTruthy();
+    expect(document.body.querySelector('.spinbox-wrapper.is-disabled')).toBeTruthy();
+    expect(spinboxAPI.isDisabled()).toBeTruthy();
+
+    spinboxAPI.enable();
+
+    expect(document.body.querySelector('.spinbox[disabled]')).toBeFalsy();
+    expect(document.body.querySelector('.spinbox-wrapper.is-disabled')).toBeFalsy();
+    expect(spinboxAPI.isDisabled()).toBeFalsy();
+  });
+
   it('Can be destroyed', () => {
     spinboxAPI.destroy();
 
