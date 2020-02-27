@@ -925,6 +925,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
+      this.clearCache();
       this.renderRows();
     }
 
@@ -4410,6 +4411,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
       this.stretchColumnWidth = colWidth;
       return ' style="width: 99%"';
     }
@@ -5914,7 +5916,7 @@ Datagrid.prototype = {
         // Then Activate
         if (!canSelect) {
           if (e.shiftKey && self.activatedRow().length) {
-            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').attr('aria-rowindex') - 1]);
             e.preventDefault();
           }
 
@@ -5923,7 +5925,7 @@ Datagrid.prototype = {
       }
 
       if (canSelect && isMultiple && e.shiftKey) {
-        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
+        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
@@ -6491,7 +6493,11 @@ Datagrid.prototype = {
    * @Returns {string} The current row height
    */
   rowHeight(height) {
+    const args = [];
     if (height) {
+      if (this.settings.rowHeight !== height) {
+        args.push({ before: this.settings.rowHeight, after: height });
+      }
       this.settings.rowHeight = height;
     }
 
@@ -6508,6 +6514,10 @@ Datagrid.prototype = {
 
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+
+    if (args.length) {
+      this.element.triggerHandler('rowheightchanged', args);
+    }
 
     return this.settings.rowHeight;
   },
@@ -8201,7 +8211,7 @@ Datagrid.prototype = {
         }
 
         if (isMultiple && e.shiftKey) {
-          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
+          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
         }
@@ -10191,7 +10201,7 @@ Datagrid.prototype = {
       const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
       self.element.triggerHandler('expandrow', eventData);
 
-      if (self.settings.allowOneExpandedRow) {
+      if (self.settings.allowOneExpandedRow && this.settings.selectable !== 'multiple') {
         rowElement.addClass('is-rowactivated');
       }
 
@@ -10213,18 +10223,19 @@ Datagrid.prototype = {
       // Expandable row for frozen columns expand across all cells
       if (self.settings.frozenColumns.expandRowAcrossAllCells) {
         self.frozenExpandRowAcrossAllCells();
-      } else if (this.settings.frozenColumns.left.length ||
-        this.settings.frozenColumns.right.length) {
-        $('html')
-          .off(`themechanged.${COMPONENT_NAME}`)
-          .on(`themechanged.${COMPONENT_NAME}`, () => {
-            const elms = {
-              left: detail.eq(0)[0],
-              center: detail.eq(1)[0],
-              right: detail.eq(2)[0]
-            };
-            self.frozenExpandRowSetHeight(elms);
-          });
+      }
+      if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
+        const elms = { left: detail.eq(0)[0], center: detail.eq(1)[0], right: detail.eq(2)[0] };
+        const changedEventStr = {
+          theme: `themechanged.${COMPONENT_NAME}`,
+          rowheight: `rowheightchanged.${COMPONENT_NAME}`
+        };
+        $('html').off(changedEventStr.theme).on(changedEventStr.theme, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
+        self.element.off(changedEventStr.rowheight).on(changedEventStr.rowheight, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
       }
     }
   },
@@ -10282,6 +10293,14 @@ Datagrid.prototype = {
         if (elms.right) {
           elms.right.style.height = `${height}px`;
         }
+        if (this.settings.frozenColumns.expandRowAcrossAllCells) {
+          const rect = {
+            container: this.element[0].getBoundingClientRect(),
+            centerEl: elms.center.getBoundingClientRect()
+          };
+          const top = `${rect.centerEl.top - rect.container.top}px`;
+          elms.padding.style.top = top;
+        }
       }
     }
   },
@@ -10321,13 +10340,6 @@ Datagrid.prototype = {
 
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
-        const rect = {
-          container: this.element[0].getBoundingClientRect(),
-          elem: elms.details.center.getBoundingClientRect()
-        };
-        const top = `${rect.elem.top - rect.container.top}px`;
-        const width = `${rect.container.top.width}px`;
-
         elms.padding.style.opacity = '0';
         if (elms.rows.left) {
           elms.rows.left.classList.add(cssClass);
@@ -10341,8 +10353,6 @@ Datagrid.prototype = {
             if (elms.details.left || elms.details.right) {
               setTimeout(() => {
                 elms.rows.center.classList.add(cssClass);
-                elms.padding.style.width = width;
-                elms.padding.style.top = top;
                 this.frozenExpandRowSetHeight(elms.details);
                 elms.padding.style.opacity = '';
 
@@ -10355,7 +10365,6 @@ Datagrid.prototype = {
           .one('animateclosedstart.datagrid.expandedfrozen', () => {
             $(window).off('resize.datagrid.expandedfrozen');
             elms.padding.style.opacity = '0';
-            elms.padding.style.width = '';
             elms.padding.style.top = '';
             elms.rows.center.classList.remove(cssClass);
             if (elms.rows.left) {
