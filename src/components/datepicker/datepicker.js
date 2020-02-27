@@ -859,6 +859,7 @@ DatePicker.prototype = {
         if (!self.settings.isMonthPicker) {
           self.element.val('').trigger('change').trigger('input');
           self.currentDate = null;
+          self.clearRangeDates();
         }
         self.closeCalendar();
       }
@@ -937,6 +938,22 @@ DatePicker.prototype = {
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
     }, 50);
+  },
+
+  /**
+   * Clear the dates in settings range object.
+   * @private
+   * @returns {void}
+   */
+  clearRangeDates() {
+    const s = this.settings;
+    if (s.range.useRange) {
+      s.range.start = DATEPICKER_DEFAULTS.range.start;
+      s.range.end = DATEPICKER_DEFAULTS.range.end;
+      if (s.range.data) {
+        delete s.range.data;
+      }
+    }
   },
 
   /**
@@ -1268,8 +1285,11 @@ DatePicker.prototype = {
         this.currentDate = date;
         // minDays
         if (s.range.minDays > 0) {
-          if (time.date > time.firstdate && time.date < time.min.aftertime) {
+          if (time.date >= time.firstdate && time.date < time.min.aftertime) {
             date = time.min.after;
+            if (time.date === time.firstdate) {
+              time.date = date.getTime();
+            }
           } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
             date = time.min.before;
           }
@@ -1781,7 +1801,7 @@ DatePicker.prototype = {
       this.closeCalendar();
     }
 
-    this.element.off('blur.datepicker');
+    this.element.off('blur.datepicker change.datepicker-rangeclear keyup.datepicker-rangeclear');
     this.trigger.remove();
     this.element.removeAttr('placeholder');
     if (this.calendarAPI) {
@@ -1847,6 +1867,13 @@ DatePicker.prototype = {
     self.element.on('blur.datepicker', () => {
       if (self.element.val().trim() !== '') {
         self.setValueFromField();
+      }
+    });
+
+    // Clear setting range dates
+    this.element.on('change.datepicker-rangeclear keyup.datepicker-rangeclear', () => {
+      if (!this.isOpen() && this.element.val().trim() === '') {
+        self.clearRangeDates();
       }
     });
 
