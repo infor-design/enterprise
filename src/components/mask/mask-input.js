@@ -331,6 +331,11 @@ MaskInput.prototype = {
       finalValue += this.settings.patternOptions.suffix;
     }
 
+    if (opts.patternOptions && opts.patternOptions.delimeter &&
+      finalValue && finalValue !== rawValue) {
+      rawValue = finalValue;
+    }
+
     // Setup values for getting corrected caret position
     // TODO: Improve this by eliminating the need for an extra settings object.
     const adjustCaretOpts = {

@@ -1958,6 +1958,8 @@ Datagrid.prototype = {
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
+        let rangeSeparator = null;
+        let rangeValues = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -2061,9 +2063,13 @@ Datagrid.prototype = {
             const input = self.element.find(`.datagrid-header th:eq(${cell}) .datagrid-filter-wrapper input`);
             const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
+              rangeSeparator = datepickerApi.settings.range.separator;
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
                 values = getValues(rowValue, rangeData.start);
+              } else if (rangeSeparator && conditionValue.indexOf(rangeSeparator) > -1) {
+                rangeValues = conditionValue.split(rangeSeparator);
+                values = getValues(rowValue, rangeValues[0]);
               }
             }
           } else {
@@ -2129,6 +2135,14 @@ Datagrid.prototype = {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
               isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+            } else if (rangeValues) {
+              let d1 = Locale.parseDate(rangeValues[0], conditions[i].format);
+              let d2 = Locale.parseDate(rangeValues[1], conditions[i].format);
+              if (d1 && d2) {
+                d1 = d1.getTime();
+                d2 = d2.getTime();
+                isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+              }
             }
             break;
           case 'less-than':

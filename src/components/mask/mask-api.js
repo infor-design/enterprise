@@ -122,6 +122,11 @@ MaskAPI.prototype = {
       return processResult;
     }
 
+    if (opts.patternOptions && opts.patternOptions.delimeter &&
+      processResult.conformedValue && processResult.conformedValue !== rawValue) {
+      processResult.caretPos = processResult.conformedValue.length;
+    }
+
     // Handle the optional "pipe" cleanup method, if applicable.
     if (typeof opts.pipe === 'function') {
       let pipeResult = {};
