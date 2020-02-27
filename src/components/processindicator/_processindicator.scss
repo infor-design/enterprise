@@ -285,7 +285,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   .indicator {
     &.more-info {
       &::before {
-        top: 0.25em;
+        top: 0.3em;
       }
     }
 
@@ -293,6 +293,13 @@ $indicator-current-size: ($indicator-size * 1.6);
       &::before,
       &::after {
         width: ($indicator-size * 0.82);
+      }
+
+      &.current {
+        &::before,
+        &::after {
+          top: 0.95em;
+        }
       }
     }
 
@@ -307,13 +314,70 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 .is-safari {
   .indicator {
-    &.time-out {
+    &.current {
+      height: 2.02em;
+      width: 2.02em;
+    }
+
+    &.more-info {
       &::before {
-        left: 0.37em;
+        left: 0.01em;
+      }
+    }
+
+    &.time-out {
+      &::after {
+        left: 0.9em;
+      }
+    }
+  }
+}
+
+.ie,
+.ie11 {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            width: ($indicator-size * 0.78);
+          }
+
+          &.current {
+            &::before,
+            &::after {
+              left: 0.51em;
+              top: 0.95em;
+            }
+          }
+        }
+      }
+    }
+
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          left: 0.15em;
+          top: 0.55em;
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.53em;
+            top: 0.93em;
+          }
+        }
       }
 
-      &::after {
-        left: 0.97em;
+      &.more-info {
+        &.current {
+          &::before {
+            left: 0.03em;
+          }
+        }
       }
     }
   }
