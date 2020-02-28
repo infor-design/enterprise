@@ -7,6 +7,7 @@
 - `[Colorpicker]` Fixed the dropdown icon position is too close to the right edge of the field. ([#3508](https://github.com/infor-design/enterprise/issues/3508))
 - `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
+- `[Datagrid]` Fixed a focus trap issue when using actionable mode, tab will now move up and down rows. ([#2399](https://github.com/infor-design/enterprise/issues/2399))
 - `[Datagrid]` Fixed a bug when setting the UI indicator with `setSortIndicator` then it would take two clicks to sort the inverse direction. ([#3391](https://github.com/infor-design/enterprise/issues/3391))
 - `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
 - `[Datagrid]` Fixed a bug when combining multiselect and expandable rows. If using the shift key to select multiple rows the selection would include incorrect rows. ([#2302](https://github.com/infor-design/enterprise/issues/2302))
