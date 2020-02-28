@@ -1709,6 +1709,13 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setTime(date) {
+    const hasPopup = this.popup !== undefined;
+    if (!hasPopup) {
+      if (!this.settings.useCurrentTime) {
+        date.setHours(0, 0, 0, 0);
+      }
+      return date;
+    }
     let hours = this.popup.find('.dropdown.hours').val();
     const minutes = this.popup.find('.dropdown.minutes').val();
     const seconds = this.isSeconds ? this.popup.find('.dropdown.seconds').val() : 0;
