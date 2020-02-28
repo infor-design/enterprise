@@ -871,17 +871,23 @@ Bar.prototype = {
    * @returns {void}
    */
   handleResize() {
-    if (this.width === this.element.width()) {
-      return;
+    const resize = () => {
+      if (this.width === this.element.width()) {
+        return;
+      }
+      this.width = this.element.width();
+      if (!this.element.is(':visible')) {
+        return;
+      }
+      this.updated();
+    };
+    // Waiting to complete the animatin on some elements
+    const waitingElems = $('.homepage');
+    if (waitingElems.length) {
+      setTimeout(() => resize(), 300);
+    } else {
+      resize();
     }
-
-    this.width = this.element.width();
-
-    if (!this.element.is(':visible')) {
-      return;
-    }
-
-    this.updated();
   },
 
   /**
