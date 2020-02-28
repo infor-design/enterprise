@@ -1578,20 +1578,21 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+      const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
-      const popupmenu = $(this).data('popupmenu');
+      const popupmenu = filterBtn.data('popupmenu');
 
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
-          const menu = $(this).next('.popupmenu-wrapper');
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
+          const menu = filterBtn.next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
           self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', (e, anchor) => {
-            const rowElem = anchor.closest('th[role="columnheader"]');
+          .on('selected.datagrid-filter', () => {
+            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
             // Set datepicker with range/single date
@@ -1957,6 +1958,8 @@ Datagrid.prototype = {
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
+        let rangeSeparator = null;
+        let rangeValues = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -2060,9 +2063,13 @@ Datagrid.prototype = {
             const input = self.element.find(`.datagrid-header th:eq(${cell}) .datagrid-filter-wrapper input`);
             const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
+              rangeSeparator = datepickerApi.settings.range.separator;
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
                 values = getValues(rowValue, rangeData.start);
+              } else if (rangeSeparator && conditionValue.indexOf(rangeSeparator) > -1) {
+                rangeValues = conditionValue.split(rangeSeparator);
+                values = getValues(rowValue, rangeValues[0]);
               }
             }
           } else {
@@ -2128,6 +2135,14 @@ Datagrid.prototype = {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
               isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+            } else if (rangeValues) {
+              let d1 = Locale.parseDate(rangeValues[0], conditions[i].format);
+              let d2 = Locale.parseDate(rangeValues[1], conditions[i].format);
+              if (d1 && d2) {
+                d1 = d1.getTime();
+                d2 = d2.getTime();
+                isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+              }
             }
             break;
           case 'less-than':
