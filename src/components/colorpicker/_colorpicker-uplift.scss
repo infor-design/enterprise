@@ -1,9 +1,9 @@
 .colorpicker-container .trigger {
-  margin-left: -12px;
+  margin-left: -7px;
   margin-top: -2px;
 
   .icon {
-    left: 14px;
+    left: 8px;
   }
 
   .colorpicker {
@@ -28,5 +28,11 @@ html[dir='rtl'] {
       left: -3px;
       top: 10px;
     }
+  }
+}
+
+.modal-body {
+  .colorpicker-container .trigger {
+    margin-top: 1px;
   }
 }
