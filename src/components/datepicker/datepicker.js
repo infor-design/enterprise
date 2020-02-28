@@ -1710,7 +1710,7 @@ DatePicker.prototype = {
    */
   setTime(date) {
     const hasPopup = this.popup !== undefined;
-    if (!hasPopup) {
+    if (!this.timepicker || !hasPopup) {
       if (!this.settings.useCurrentTime) {
         date.setHours(0, 0, 0, 0);
       }
