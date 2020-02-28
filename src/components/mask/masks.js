@@ -339,9 +339,10 @@ masks.dateMask = function dateMask(rawValue, options) {
 
   let mask = [];
   const digitRegex = masks.DIGITS_REGEX;
-  const format = options.format;
+  let format = options.format;
   const splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, ''));
   const splitterRegex = new RegExp(`[${splitterStr}]+`);
+  format = format.replace('ah', 'ah');
   const formatArray = format.split(/[^dMyHhmsa]+/);
   const rawValueArray = rawValue.split(splitterRegex);
   const maxValue = DATE_MAX_VALUES;
@@ -350,9 +351,30 @@ masks.dateMask = function dateMask(rawValue, options) {
     const value = maxValue[part];
     let size;
 
-    if (part === 'a') {
+    if (part === 'a' || part === 'ah') {
       // Match the day period
-      mask.push(/[aApP]/, /[Mm]/);
+      if (Locale.calendar()) {
+        const am = Locale.calendar().dayPeriods[0];
+        const pm = Locale.calendar().dayPeriods[1];
+        const apRegex = [];
+
+        for (let j = 0; j < am.length; j++) {
+          if (am[j].toLowerCase() === pm[j].toLowerCase()) {
+            apRegex.push(am[j].toLowerCase());
+          } else {
+            apRegex.push(am[j].toLowerCase() + pm[j].toLowerCase());
+          }
+        }
+
+        for (let k = 0; k < apRegex.length; k++) {
+          mask.push(new RegExp(`[${apRegex[k]}]`, 'i'));
+        }
+      } else {
+        mask.push(/[aApP]/, /[Mm]/);
+      }
+      if (part === 'ah') {
+        mask = mask.concat(getRegexForPart(99, 'digits'));
+      }
     } else if (!value) {
       mask = mask.concat(getRegexForPart(part, 'alphas'));
     } else if (rawValueArray[i]) {

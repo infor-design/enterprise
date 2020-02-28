@@ -288,6 +288,26 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
   });
 
+  it('Should parse am/pm in Korean', () => {
+    Locale.set('ko-KO');
+
+    expect(Locale.parseDate('2020-02-26 오전 12:00', { pattern: 'yyyy-MM-dd a h:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 0, 0, 0).getTime());
+
+    expect(Locale.parseDate('2020-02-26 오후 12:00', { pattern: 'yyyy-MM-dd a h:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
+  });
+
+  it('Should parse am/pm in zh-TW', () => {
+    Locale.set('zh-TW');
+
+    expect(Locale.parseDate('2020/2/26 上午12:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 0, 0, 0).getTime());
+
+    expect(Locale.parseDate('2020-02-26 下午12:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
+  });
+
   it('Should format en-US dates', () => {
     Locale.set('en-US');
     // Note date is year, month, day

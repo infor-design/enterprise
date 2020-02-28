@@ -982,6 +982,10 @@ const Locale = {  // eslint-disable-line
     dateFormat = dateFormat.replace(' de ', ' ');
     dateString = dateString.replace(' de ', ' ');
 
+    // Fix ah
+    dateFormat = dateFormat.replace('/ah/', '/a/h/');
+    dateString = dateString.replace('午', '午/');
+
     // Remove commas
     dateFormat = dateFormat.replace(',', '');
     dateString = dateString.replace(',', '');
@@ -1072,6 +1076,7 @@ const Locale = {  // eslint-disable-line
     const month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM', 'MMMM');
     const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
     let hasDays = false;
+    let hasAmFirst = false;
 
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
@@ -1144,27 +1149,26 @@ const Locale = {  // eslint-disable-line
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
           }
-          dateObj.h = value;
+          dateObj.h = hasAmFirst ? dateObj.h : value;
           break;
         case 'hh':
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
           }
-          dateObj.h = value.length === 1 ? `0${value}` : value;
+          dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
         case 'H':
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
-          dateObj.h = value;
+          dateObj.h = hasAmFirst ? dateObj.h : value;
           break;
         case 'HH':
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
-          dateObj.h = value.length === 1 ? `0${value}` : value;
+          dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
-
         case 'ss':
           if (numberValue < 0 || numberValue > 60) {
             dateObj.ss = 0;
@@ -1172,11 +1176,9 @@ const Locale = {  // eslint-disable-line
           }
           dateObj.ss = value;
           break;
-
         case 'SSS':
           dateObj.ms = value;
           break;
-
         case 'mm':
           if (numberValue < 0 || numberValue > 60) {
             dateObj.mm = 0;
@@ -1184,12 +1186,16 @@ const Locale = {  // eslint-disable-line
           }
           dateObj.mm = value;
           break;
-
         case 'a':
           if ((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
            (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
             dateObj.a = 'AM';
 
+            if (!dateObj.h && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
+              // in a few cases am/pm is before hours
+              dateObj.h = dateStringParts[i + 1];
+              hasAmFirst = true;
+            }
             if (dateObj.h) {
               if (dateObj.h === 12 || dateObj.h === '12') {
                 dateObj.h = 0;

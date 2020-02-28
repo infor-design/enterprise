@@ -41,18 +41,4 @@ describe('Searchfield Events', () => {
       '.popupmenu-wrapper'
     ]);
   });
-
-  xit('triggers a `selected` event on the searchfield element when a category is selected', (done) => {
-    const spyEvent = spyOnEvent($(searchfieldInputEl), 'selected');
-    const popupmenuAPI = searchfieldAPI.categoryButton.data('popupmenu');
-
-    popupmenuAPI.open();
-    setTimeout(() => {
-      const selectItem = document.body.querySelector('ul#popupmenu-1 li:nth-child(2) a');
-      $(selectItem).trigger('click');
-
-      expect(spyEvent).toHaveBeenTriggered();
-      done();
-    }, 300);
-  });
 });
