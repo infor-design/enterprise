@@ -925,6 +925,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
+      this.clearCache();
       this.renderRows();
     }
 
@@ -1577,20 +1578,21 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+      const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
-      const popupmenu = $(this).data('popupmenu');
+      const popupmenu = filterBtn.data('popupmenu');
 
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
-          const menu = $(this).next('.popupmenu-wrapper');
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
+          const menu = filterBtn.next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
           self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', (e, anchor) => {
-            const rowElem = anchor.closest('th[role="columnheader"]');
+          .on('selected.datagrid-filter', () => {
+            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
             // Set datepicker with range/single date
@@ -1956,6 +1958,8 @@ Datagrid.prototype = {
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
+        let rangeSeparator = null;
+        let rangeValues = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -2059,9 +2063,13 @@ Datagrid.prototype = {
             const input = self.element.find(`.datagrid-header th:eq(${cell}) .datagrid-filter-wrapper input`);
             const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
+              rangeSeparator = datepickerApi.settings.range.separator;
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
                 values = getValues(rowValue, rangeData.start);
+              } else if (rangeSeparator && conditionValue.indexOf(rangeSeparator) > -1) {
+                rangeValues = conditionValue.split(rangeSeparator);
+                values = getValues(rowValue, rangeValues[0]);
               }
             }
           } else {
@@ -2127,6 +2135,14 @@ Datagrid.prototype = {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
               isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+            } else if (rangeValues) {
+              let d1 = Locale.parseDate(rangeValues[0], conditions[i].format);
+              let d2 = Locale.parseDate(rangeValues[1], conditions[i].format);
+              if (d1 && d2) {
+                d1 = d1.getTime();
+                d2 = d2.getTime();
+                isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+              }
             }
             break;
           case 'less-than':
@@ -3211,6 +3227,7 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
       this.recordCount++;
+      this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
         rowStatusTooltip = true;
@@ -4410,6 +4427,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
       this.stretchColumnWidth = colWidth;
       return ' style="width: 99%"';
     }
@@ -6491,7 +6509,11 @@ Datagrid.prototype = {
    * @Returns {string} The current row height
    */
   rowHeight(height) {
+    const args = [];
     if (height) {
+      if (this.settings.rowHeight !== height) {
+        args.push({ before: this.settings.rowHeight, after: height });
+      }
       this.settings.rowHeight = height;
     }
 
@@ -6508,6 +6530,10 @@ Datagrid.prototype = {
 
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+
+    if (args.length) {
+      this.element.triggerHandler('rowheightchanged', args);
+    }
 
     return this.settings.rowHeight;
   },
@@ -8095,6 +8121,29 @@ Datagrid.prototype = {
             }
           }
 
+          if (cell === -1 && !self.settings.actionableMode) {
+            return;
+          }
+
+          if (cell === -1 && self.settings.actionableMode) {
+            row--;
+            cell = lastCell;
+
+            if (row === -1) {
+              return;
+            }
+          }
+
+          if (cell === lastCell && lastCell === self.activeCell.cell &&
+            self.settings.actionableMode) {
+            row++;
+            cell = 0;
+
+            if (row === self.visibleRowCount) {
+              return;
+            }
+          }
+
           if (cell instanceof jQuery) {
             self.setActiveCell(cell);
           } else {
@@ -8107,6 +8156,7 @@ Datagrid.prototype = {
               self.quickEditMode = true;
             }
           }
+
           self.quickEditMode = false;
           handled = true;
         }
@@ -10213,18 +10263,19 @@ Datagrid.prototype = {
       // Expandable row for frozen columns expand across all cells
       if (self.settings.frozenColumns.expandRowAcrossAllCells) {
         self.frozenExpandRowAcrossAllCells();
-      } else if (this.settings.frozenColumns.left.length ||
-        this.settings.frozenColumns.right.length) {
-        $('html')
-          .off(`themechanged.${COMPONENT_NAME}`)
-          .on(`themechanged.${COMPONENT_NAME}`, () => {
-            const elms = {
-              left: detail.eq(0)[0],
-              center: detail.eq(1)[0],
-              right: detail.eq(2)[0]
-            };
-            self.frozenExpandRowSetHeight(elms);
-          });
+      }
+      if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
+        const elms = { left: detail.eq(0)[0], center: detail.eq(1)[0], right: detail.eq(2)[0] };
+        const changedEventStr = {
+          theme: `themechanged.${COMPONENT_NAME}`,
+          rowheight: `rowheightchanged.${COMPONENT_NAME}`
+        };
+        $('html').off(changedEventStr.theme).on(changedEventStr.theme, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
+        self.element.off(changedEventStr.rowheight).on(changedEventStr.rowheight, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
       }
     }
   },
@@ -10282,6 +10333,14 @@ Datagrid.prototype = {
         if (elms.right) {
           elms.right.style.height = `${height}px`;
         }
+        if (this.settings.frozenColumns.expandRowAcrossAllCells) {
+          const rect = {
+            container: this.element[0].getBoundingClientRect(),
+            centerEl: elms.center.getBoundingClientRect()
+          };
+          const top = `${rect.centerEl.top - rect.container.top}px`;
+          elms.padding.style.top = top;
+        }
       }
     }
   },
@@ -10321,13 +10380,6 @@ Datagrid.prototype = {
 
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
-        const rect = {
-          container: this.element[0].getBoundingClientRect(),
-          elem: elms.details.center.getBoundingClientRect()
-        };
-        const top = `${rect.elem.top - rect.container.top}px`;
-        const width = `${rect.container.top.width}px`;
-
         elms.padding.style.opacity = '0';
         if (elms.rows.left) {
           elms.rows.left.classList.add(cssClass);
@@ -10341,8 +10393,6 @@ Datagrid.prototype = {
             if (elms.details.left || elms.details.right) {
               setTimeout(() => {
                 elms.rows.center.classList.add(cssClass);
-                elms.padding.style.width = width;
-                elms.padding.style.top = top;
                 this.frozenExpandRowSetHeight(elms.details);
                 elms.padding.style.opacity = '';
 
@@ -10355,7 +10405,6 @@ Datagrid.prototype = {
           .one('animateclosedstart.datagrid.expandedfrozen', () => {
             $(window).off('resize.datagrid.expandedfrozen');
             elms.padding.style.opacity = '0';
-            elms.padding.style.width = '';
             elms.padding.style.top = '';
             elms.rows.center.classList.remove(cssClass);
             if (elms.rows.left) {
