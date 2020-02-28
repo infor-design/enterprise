@@ -122,7 +122,7 @@ Bar.prototype = {
     let maxTextWidth;
     let yMap;
     let isGrouped;
-    let legendMap;
+    let legendMap = [];
     let gindex;
     let totalBarsInGroup;
     let totalGroupArea;
@@ -134,6 +134,7 @@ Bar.prototype = {
     const tooltipDataCache = [];
     const tooltipData = self.settings.tooltip;
 
+    let barSpace = 0;
     let maxBarHeight = 30;
     const legendHeight = 30;
     const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
@@ -149,6 +150,10 @@ Bar.prototype = {
       right: 30,
       bottom: dataset.length === 1 ? 5 : 30
     };
+    if (self.settings.isGrouped && dataset.length === 1) {
+      margins.bottom = 30;
+      barSpace = 2;
+    }
 
     this.element.addClass('bar-chart');
     if (this.settings.isGrouped) {
@@ -383,7 +388,7 @@ Bar.prototype = {
       .attr('class', 'series-group')
       .attr('data-group-id', (d, i) => i);
 
-    self.settings.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !self.settings.isStacked);
+    self.settings.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !self.settings.isStacked) || (self.settings.isGrouped && dataset.length === 1);
     self.settings.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && self.settings.isStacked);
 
     groups.selectAll('rect')
@@ -409,7 +414,7 @@ Bar.prototype = {
           return `url(#${dataset[0][i].pattern})`;
         } else if (self.settings.isStacked && series[d.index].pattern) {
           return `url(#${series[d.index].pattern})`;
-        } else if (!self.settings.isStacked && legendMap[i].pattern) {
+        } else if (!self.settings.isStacked && legendMap[i] && legendMap[i].pattern) {
           return `url(#${legendMap[i].pattern})`;
         }
         return '';
@@ -422,7 +427,7 @@ Bar.prototype = {
           xScale(d.x0) + 1 : xScale(0) + 1;
       })
       .attr('y', d => (self.settings.isStacked ? yScale(d.y) :
-        ((((totalGroupArea - totalHeight) / 2) + (d.gindex * maxBarHeight)) + (d.index * gap))))
+        ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
       .attr('height', () => (self.settings.isStacked ? (yScale.bandwidth()) : maxBarHeight))
       .attr('width', 0) // Animated in later
       .on(`mouseenter.${self.namespace}`, function (d, i) {
