@@ -4,6 +4,7 @@
 
 ### v4.25.3 Fixes
 
+- `[Bar]` Fixed an error rendering charts with only one dataset point. ([#3505](https://github.com/infor-design/enterprise/issues/3505))
 - `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
 - `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
