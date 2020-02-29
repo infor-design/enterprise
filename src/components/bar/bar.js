@@ -881,9 +881,8 @@ Bar.prototype = {
       }
       this.updated();
     };
-    // Waiting to complete the animatin on some elements
-    const waitingElems = $('.homepage');
-    if (waitingElems.length) {
+    // Waiting to complete the animatin on widget
+    if (this.element.closest('.homepage').length) {
       setTimeout(() => resize(), 300);
     } else {
       resize();
