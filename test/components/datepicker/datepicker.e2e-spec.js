@@ -1278,7 +1278,7 @@ describe('Datepicker Body Re Initialize Tests', () => {
   });
 });
 
-describe('Datepicker specific locale/language tests', () => { //eslint-disable-line
+describe('Datepicker specific locale/language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
   });
@@ -1329,7 +1329,7 @@ describe('Datepicker specific locale/language tests', () => { //eslint-disable-l
   });
 });
 
-describe('Datepicker specific language tests', () => { //eslint-disable-line
+describe('Datepicker specific language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-specific-lang');
   });
