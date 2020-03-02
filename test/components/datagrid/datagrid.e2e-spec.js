@@ -709,7 +709,7 @@ describe('Datagrid grouping totals tests', () => {
   }
 });
 
-fdescribe('Datagrid index tests', () => {
+describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
