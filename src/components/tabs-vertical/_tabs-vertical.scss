@@ -83,6 +83,23 @@
   }
 }
 
+.tab-panel-container {
+  height: 100%;
+
+  .tab-panel {
+    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    p:last-child {
+      @media (max-width: $breakpoint-phone-to-tablet - 1) {
+        padding-bottom: 50px;
+      }
+    }
+  }
+}
+
 .tab-container.vertical {
   background-color: $vertical-tab-panel-bg-color;
   display: inline-block;
@@ -220,8 +237,8 @@
     }
 
     + .tab-panel-container > .tab-panel {
-      margin: 30px;
-      padding-top: 0;
+      margin-top: 30px;
+      padding: 0 15px 0 15px;
     }
   }
 }
