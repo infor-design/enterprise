@@ -107,7 +107,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
     const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
     await element(by.css(selector)).click();
 
-    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(4);
+    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(5);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-2'))), config.waitsFor);
 
