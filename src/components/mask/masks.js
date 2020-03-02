@@ -359,10 +359,10 @@ masks.dateMask = function dateMask(rawValue, options) {
         const apRegex = [];
 
         for (let j = 0; j < am.length; j++) {
-          if (am[j].toLowerCase() === pm[j].toLowerCase()) {
+          if (am[j] && pm[j] && am[j].toLowerCase() === pm[j].toLowerCase()) {
             apRegex.push(am[j].toLowerCase());
           } else {
-            apRegex.push(am[j].toLowerCase() + pm[j].toLowerCase());
+            apRegex.push(am[j].toLowerCase() + (pm[j] ? pm[j].toLowerCase() : ''));
           }
         }
 

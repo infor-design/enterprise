@@ -1538,6 +1538,7 @@ DatePicker.prototype = {
     const selectedDay = getSelectedDay();
 
     this.currentDate = gregorianValue || new Date();
+
     if (typeof this.currentDate === 'string') {
       this.currentDate = Locale.parseDate(this.currentDate, {
         pattern: this.pattern,
@@ -1573,13 +1574,20 @@ DatePicker.prototype = {
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
     const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' || dateFormat === 'MMMM');
+    const fieldValueTrimmed = self.element.val().trim();
 
-    if (self.element.val().trim() !== '' && !s.range.useRange) {
-      const parsedDate = Locale.parseDate(self.element.val().trim(), {
+    if (fieldValueTrimmed !== '' && !s.range.useRange) {
+      const parsedDate = Locale.parseDate(fieldValueTrimmed, {
         pattern: self.pattern,
         locale: this.locale.name,
         calendarName: this.settings.calendarName
       }, isStrict);
+
+      const hours = parsedDate.getHours();
+      if (hours < 12 &&
+        self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
+        parsedDate.setHours(hours + 12);
+      }
       if (self.pattern && self.pattern.indexOf('d') === -1) {
         parsedDate.setDate(selectedDay);
       }
