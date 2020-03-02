@@ -4244,7 +4244,6 @@ Datagrid.prototype = {
     this.totalWidths.center = 0;
     this.totalWidths.right = 0;
     this.elemWidth = 0;
-    this.lastColumn = null;
     this.stretchColumnWidth = 0;
     this.stretchColumnDiff = 0;
     this.stretchColumnIdx = -1;
@@ -5417,7 +5416,7 @@ Datagrid.prototype = {
     let nextColumnId;
     let usingShiftKey = false;
 
-    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+    this.resizeHandle.drag({ axis: 'x' })
       .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
