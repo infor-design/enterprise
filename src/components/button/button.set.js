@@ -12,11 +12,12 @@ import './button.jquery';
 const COMPONENT_NAME = 'buttonset';
 
 // Styles of Buttonset
-const BUTTONSET_STYLES = ['default', 'modal', 'cap'];
+const BUTTONSET_STYLES = ['default', 'modal'];
 
 // Default Buttonset Styles
 const BUTTONSET_DEFAULTS = {
   buttons: [],
+  detectHTMLButtons: false,
   style: BUTTONSET_STYLES[0]
 };
 
@@ -51,6 +52,13 @@ ButtonSet.prototype = {
     if (!this.buttons || !doAdd) {
       this.reset();
     }
+
+    // If no/empty array is provided, try to detect pre-defined HTML buttons before rendering.
+    if (!Array.isArray(this.settings.buttons) || !this.settings.buttons.length) {
+      this.detectHTMLButtons();
+      return;
+    }
+
     this.settings.buttons.forEach((buttonJSON) => {
       this.add(buttonJSON);
     });
@@ -64,8 +72,7 @@ ButtonSet.prototype = {
     const elemClasses = this.element.classList;
     const cssClassMap = {
       default: 'buttonset',
-      modal: 'modal-buttonset',
-      cap: 'cap-buttonset'
+      modal: 'modal-buttonset'
     };
 
     // Remove all classes except for the correct one.
@@ -93,16 +100,15 @@ ButtonSet.prototype = {
       throw new Error('Settings object is required to add a new button to the ButtonSet');
     }
 
-    const buttonId = xssUtils.stripHTML(settings.id);
     let buttonElem = settings.element;
-    let didExist = true;
-
-    if (!(buttonElem instanceof HTMLElement) || (typeof buttonId !== 'string') || buttonId.length === 0) {
-      didExist = false;
+    const didExist = buttonElem instanceof HTMLElement;
+    if (!didExist) {
       buttonElem = document.createElement('button');
-      if (buttonId) {
-        buttonElem.id = buttonId;
-      }
+    }
+
+    const buttonId = xssUtils.stripHTML(settings.id);
+    if (typeof buttonId === 'string' && buttonId.length > 0) {
+      buttonElem.id = buttonId;
     }
 
     // Add the new button to the page
@@ -133,7 +139,7 @@ ButtonSet.prototype = {
     let $elem;
 
     // Detect the type we're working with
-    if (!(buttonAPI instanceof Button)) {
+    if (!(buttonAPI !== undefined && typeof buttonAPI.destroy === 'function')) {
       if (buttonAPI instanceof HTMLElement) {
         // Assume it's an Element
         elem = buttonAPI;
@@ -144,7 +150,7 @@ ButtonSet.prototype = {
 
       $elem = $(elem);
       buttonAPI = $(elem).data('button');
-      if (!(buttonAPI instanceof Button)) {
+      if (!(buttonAPI !== undefined && typeof buttonAPI.destroy === 'function')) {
         throw new Error('The provided Button API did not match a button existing in this ButtonSet.');
       }
     } else {
@@ -175,6 +181,32 @@ ButtonSet.prototype = {
    */
   reset() {
     this.buttons = [];
+  },
+
+  /**
+   * Populates the `settings.buttons` array with the current set of rendered buttons
+   * @returns {void}
+   */
+  detectHTMLButtons() {
+    if (!this.settings.detectHTMLButtons) {
+      return;
+    }
+
+    this.reset();
+
+    // HTML Buttons
+    const htmlButtons = utils.getArrayFromList(this.element.querySelectorAll('button')) || [];
+    htmlButtons.forEach((button) => {
+      let api = $(button).data('button');
+      if (!api) {
+        $(button).button();
+        api = $(button).data('button');
+      }
+
+      const data = api.getSettingsFromElement(true);
+      data.element = button;
+      this.add(data);
+    });
   },
 
   /**

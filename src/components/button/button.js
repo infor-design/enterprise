@@ -12,10 +12,25 @@ import '../tooltip/tooltip.jquery';
 const COMPONENT_NAME = 'button';
 
 // Styles of Buttons
-const buttonStyles = ['btn', 'btn-primary', 'btn-secondary', 'btn-tertiary', 'btn-destructive'];
+const buttonStyles = [
+  'btn',
+  'btn-primary',
+  'btn-secondary',
+  'btn-tertiary',
+  'btn-destructive'
+];
 
 // Types of Buttons
-const buttonTypes = ['default', 'btn-icon', 'btn-menu', 'btn-actions', 'btn-toggle', 'icon-favorite'];
+const buttonTypes = [
+  'default',
+  'btn-icon',
+  'btn-menu',
+  'btn-actions',
+  'btn-toggle',
+  'icon-favorite',
+  'btn-editor',
+  'input'
+];
 
 // Pressable Button Types (has on/off state)
 const pressableTypes = ['icon-favorite', 'btn-toggle'];
@@ -36,7 +51,8 @@ const BUTTON_DEFAULTS = {
   toggleOffIcon: null,
   hideMenuArrow: null,
   replaceText: false,
-  ripple: true
+  ripple: true,
+  validate: false
 };
 
 function Button(element, settings) {
@@ -212,11 +228,33 @@ Button.prototype = {
       elemClasses.add(this.settings.type);
     }
 
-    // If this is a modal button, add special classes in some cases
+    // If this is a modal button, normalize CSS classes that are specific
+    // to modal buttons.
     const buttonsetAPI = this.buttonsetAPI;
+    let removeModalClasses = true;
     if (buttonsetAPI && buttonsetAPI.settings.style === 'modal') {
-      elemClasses[this.settings.style === 'btn-primary' ? 'add' : 'remove']('btn-modal-primary');
-      elemClasses[this.settings.style === 'btn-secondary' ? 'add' : 'remove']('btn-modal-secondary');
+      removeModalClasses = false;
+
+      // btn
+      const btnClasses = ['btn', 'btn-modal'];
+      if (btnClasses.indexOf(this.settings.style) > -1) {
+        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn');
+        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-modal');
+      }
+
+      // btn-primary
+      const btnPrimaryClasses = ['btn-primary', 'btn-modal-primary'];
+      if (btnPrimaryClasses.indexOf(this.settings.style) > -1) {
+        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn-primary');
+        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-primary-modal');
+      }
+
+      // btn-secondary
+      const btnSecondaryClasses = ['btn-secondary', 'btn-modal-secondary'];
+      if (btnSecondaryClasses.indexOf(this.settings.style) > -1) {
+        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn-secondary');
+        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-secondary-modal');
+      }
     }
 
     // Add extra, user-defined CSS classes, if applicable
@@ -265,10 +303,9 @@ Button.prototype = {
       }
     } else if (this.settings.type === 'btn-actions') {
       targetIcon = 'icon-more';
-    } else if (iconElem) {
-      iconElem.parentNode.remove(iconElem);
     }
-    if (targetIcon) {
+
+    if (targetIcon && ['btn-toggle', 'icon-favorite'].indexOf(this.settings.type) > -1) {
       targetIcon = xssUtils.stripHTML(targetIcon);
       if (!(iconElem instanceof SVGElement) && !(iconElem instanceof HTMLElement)) {
         iconElem = $.createIconElement({ icon: targetIcon.replace('icon-', '') });
@@ -351,10 +388,10 @@ Button.prototype = {
    * Backwards compatability method for buttons that were previously defined by markup.
    * This will take an existing DOM element representing a button, and rectify internal settings
    * to match the element's state.
-   * @private
-   * @returns {void}
+   * @param {boolean} [dontStoreSettings=false] if true, will not store the current settings internally while running.
+   * @returns {object} containing a JSON-friendly representation of this element's current state
    */
-  getSettingsFromElement() {
+  getSettingsFromElement(dontStoreSettings = false) {
     const elementSettings = {};
 
     // Button Style
@@ -415,9 +452,13 @@ Button.prototype = {
     }
 
     // Pass all settings onto the `settings` object
-    Object.keys(elementSettings).forEach((setting) => {
-      this.settings[setting] = elementSettings[setting];
-    });
+    if (!dontStoreSettings) {
+      Object.keys(elementSettings).forEach((setting) => {
+        this.settings[setting] = elementSettings[setting];
+      });
+    }
+
+    return elementSettings;
   },
 
   /**
