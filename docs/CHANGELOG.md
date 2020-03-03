@@ -4,11 +4,20 @@
 
 ### v4.27.0 Fixes
 
+- `[Bar Chart]` Fixed an issue where chart was not resizing on homepage widget resize. ([#2669](https://github.com/infor-design/enterprise/issues/2669))
+- `[Colorpicker]` Fixed the dropdown icon position is too close to the right edge of the field. ([#3508](https://github.com/infor-design/enterprise/issues/3508))
+- `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
+- `[Datagrid]` Fixed a focus trap issue when using actionable mode, tab will now move up and down rows. ([#2399](https://github.com/infor-design/enterprise/issues/2399))
 - `[Datagrid]` Fixed a bug when setting the UI indicator with `setSortIndicator` then it would take two clicks to sort the inverse direction. ([#3391](https://github.com/infor-design/enterprise/issues/3391))
-- `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
+- `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
 - `[Datagrid]` Fixed a bug when combining multiselect and expandable rows. If using the shift key to select multiple rows the selection would include incorrect rows. ([#2302](https://github.com/infor-design/enterprise/issues/2302))
+- `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
+- `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
+- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
+- `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
 - `[Masthead]` Fixed layout and color issues in uplift theme. ([#3526](https://github.com/infor-design/enterprise/issues/3526))
+- `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
 - `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Spinbox]` Corrected an issue in the enable method, where it did not fully remove the readonly state. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Swaplist]` Fixed an issue where lists were overlapping on uplift theme. ([#3452](https://github.com/infor-design/enterprise/issues/3452))
@@ -87,6 +96,18 @@
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
 
 (78 Issues Solved this release, Backlog Enterprise 336, Backlog Ng 77, 989 Functional Tests, 1246 e2e Test)
+
+## v4.25.3
+
+### v4.25.3 Fixes
+
+- `[Bar]` Fixed an error rendering charts with only one dataset point. ([#3505](https://github.com/infor-design/enterprise/issues/3505))
+- `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
+- `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
+- `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
+- `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
+- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
+- `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
 
 ## v4.25.2
 
