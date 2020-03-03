@@ -153,7 +153,7 @@ Splitter.prototype = {
 
     this.splitTo(w, parentHeight);
 
-    if (w <= 10) {
+    if (w <= 10 && this.splitterCollapseButton) {
       this.splitterCollapseButton.removeClass('rotate');
     }
 
@@ -163,7 +163,7 @@ Splitter.prototype = {
     this.element.drag({
       axis: s.axis,
       containment: s.containment || s.axis === 'x' ? 'document' : 'parent',
-      containmentOffset: { left: 20, top: 0 }
+      containmentOffset: { left: 0, top: 0 }
     }).on('dragstart.splitter', () => {
       const iframes = $('iframe');
       self.documentWidth = $(document).width();
