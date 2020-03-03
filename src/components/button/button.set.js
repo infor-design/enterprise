@@ -2,9 +2,6 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 
-// Components
-import { Button } from './button';
-
 // jQuery Components
 import './button.jquery';
 

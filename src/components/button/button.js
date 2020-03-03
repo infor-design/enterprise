@@ -267,22 +267,27 @@ Button.prototype = {
     // Handle the rendering of the text span.
     // Some buttons are "simpler" and directly inline the text inside the button tag.
     // Others wrap the text in a span, usually when there are multiple elements inside the button.
-    let textSpan = this.element[0].querySelector('span');
-    const hasPrexistingSpan = textSpan instanceof HTMLElement;
-    if (!hasPrexistingSpan) {
-      textSpan = this.element;
-    }
-    const currentTextContent = xssUtils.stripHTML(this.settings.text || $(textSpan).text().trim());
-    if (!hasPrexistingSpan) {
-      this.element[0].innerText = '';
-      textSpan = document.createElement('span');
-      this.element.append($(textSpan));
-
-      if (this.settings.audible || audibleTextBtnTypes.indexOf(this.settings.type) > -1) {
-        textSpan.classList.add('audible');
+    if (this.settings.text) {
+      let textSpan = this.element[0].querySelector('span');
+      const hasPrexistingSpan = textSpan instanceof HTMLElement;
+      if (!hasPrexistingSpan) {
+        textSpan = this.element;
       }
+
+      let currentTextContent = this.settings.text || $(textSpan).text().trim();
+      currentTextContent = xssUtils.stripHTML(currentTextContent);
+
+      if (!hasPrexistingSpan) {
+        this.element[0].innerText = '';
+        textSpan = document.createElement('span');
+        this.element.append($(textSpan));
+
+        if (this.settings.audible || audibleTextBtnTypes.indexOf(this.settings.type) > -1) {
+          textSpan.classList.add('audible');
+        }
+      }
+      textSpan.innerText = currentTextContent;
     }
-    textSpan.innerText = currentTextContent;
 
     // Setup Icons, if applicable
     let iconElem = this.icon;
@@ -305,7 +310,8 @@ Button.prototype = {
       targetIcon = 'icon-more';
     }
 
-    if (targetIcon && ['btn-toggle', 'icon-favorite'].indexOf(this.settings.type) > -1) {
+    // if (targetIcon && ['btn-toggle', 'icon-favorite'].indexOf(this.settings.type) > -1) {
+    if (targetIcon) {
       targetIcon = xssUtils.stripHTML(targetIcon);
       if (!(iconElem instanceof SVGElement) && !(iconElem instanceof HTMLElement)) {
         iconElem = $.createIconElement({ icon: targetIcon.replace('icon-', '') });
@@ -440,10 +446,12 @@ Button.prototype = {
     }
 
     // Text Content
+    /*
     const textContent = this.element[0].innerText;
     if (typeof textContent === 'string' && textContent.length) {
       elementSettings.text = textContent.trim();
     }
+    */
 
     // Audible Text Content
     const audibleTextElem = this.element[0].querySelector('span.audible');
