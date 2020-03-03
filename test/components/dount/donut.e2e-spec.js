@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Donut Chart tests', () => {
+describe('Donut Chart tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/donut/example-index?layout=nofrills');
   });

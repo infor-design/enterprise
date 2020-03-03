@@ -2189,7 +2189,7 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
-fdescribe('Datagrid filter lookup custom click function tests', () => {
+describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function?layout=nofrills');
 
