@@ -87,6 +87,10 @@
     &:last-child .checkbox-label {
       margin-bottom: 1px;
     }
+
+    .error-message {
+      display: block !important;
+    }
   }
 
   .field:last-child input:not(.spinbox):not(.colorpicker):not(.searchfield),
@@ -213,6 +217,12 @@
       flex-direction: column;
       height: 100%;
       margin: 0;
+
+      .modal-header {
+        .modal-title {
+          width: 100%;
+        }
+      }
     }
 
     .modal-body-wrapper {
@@ -281,7 +291,11 @@ body.modal-engaged {
     font-size: $theme-size-font-lg;
     font-weight: $theme-number-font-weight-base;
     -webkit-margin-after: 0;
+    overflow: hidden;
     text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
 
     > * {
       vertical-align: middle;
@@ -414,8 +428,10 @@ body.modal-engaged {
 //Toolbar Buttons
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
+  bottom: 0;
   height: 50px;
-  margin-top: 20px;
+  position: relative;
+  width: 100%;
 
   button {
     @include css3(transition, color 0.3s ease 0s);
