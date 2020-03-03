@@ -20,6 +20,7 @@
 - `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Spinbox]` Corrected an issue in the enable method, where it did not fully remove the readonly state. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Swaplist]` Fixed an issue where lists were overlapping on uplift theme. ([#3452](https://github.com/infor-design/enterprise/issues/3452))
+- `[Tabs]` Fixed the position of error icon too close to the border on focus state. ([#3544](https://github.com/infor-design/enterprise/issues/3544))
 - `[Tabs-Vertical]` Fixed an issue where the content cannot scroll on mobile view. ([#3542](https://github.com/infor-design/enterprise/issues/3542))
 
 ## v4.26.0
