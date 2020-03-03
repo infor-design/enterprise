@@ -175,8 +175,6 @@ Homepage.prototype = {
         }).on('dragend.card', function () {
           const card = $(this);
           const cardOver = $(cards).has('.drop-indicator');
-          let ci = card.index();
-          let coi = cardOver.index();
           if (card.index() < cardOver.index()) {
             card.insertAfter(cardOver);
           } else {
