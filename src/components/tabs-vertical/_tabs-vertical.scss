@@ -84,7 +84,7 @@
 }
 
 .tab-panel-container {
-  height: 100%;
+  height: 96%;
 
   .tab-panel {
     @media (max-width: $breakpoint-phone-to-tablet - 1) {
@@ -94,7 +94,7 @@
 
     p:last-child {
       @media (max-width: $breakpoint-phone-to-tablet - 1) {
-        padding-bottom: 50px;
+        padding-bottom: 10px;
       }
     }
   }
