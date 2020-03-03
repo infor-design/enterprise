@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('WeekView index tests', () => {
+fdescribe('WeekView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-index?layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));

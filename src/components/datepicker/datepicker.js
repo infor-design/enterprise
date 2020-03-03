@@ -1583,7 +1583,7 @@ DatePicker.prototype = {
         calendarName: this.settings.calendarName
       }, isStrict);
 
-      const hours = parsedDate.getHours();
+      const hours = parsedDate ? parsedDate.getHours() : 0;
       if (hours < 12 &&
         self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
         parsedDate.setHours(hours + 12);
