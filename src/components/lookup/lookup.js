@@ -635,7 +635,7 @@ Lookup.prototype = {
       }
 
       if (typeof this.settings.match !== 'function' &&
-        data[i][field].toString() === value.toString()) {
+        data[i][field]?.toString() === value?.toString()) {
         isMatch = true;
       }
 
