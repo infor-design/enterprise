@@ -20,7 +20,7 @@
     width: 360px;
 
     &:last-child::after {
-      content: '';
+      content: "";
       display: inline-block;
       height: 20px;
       position: absolute;
@@ -35,10 +35,27 @@
     position: absolute;
   }
 
-  .card.placeholder,
-  .widget.placeholder {
-    border: 1px dashed #bdbdbd;
-    background-color: rgba($color: #ffffff, $alpha: 0.0);
+  .drop-indicator {
+    height: 100%;
+    width: 6px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+  }
+
+  .drop-indicator .edge {
+    background-color: rgb(37, 120, 169);
+    width: 6px;
+    border-radius: 3px;
+    flex: 0 0 6px;
+  }
+
+  .drop-indicator .line {
+    background-color: rgb(37, 120, 169);
+    width: 2px;
+    flex: 1 0 auto;
   }
 }
 
@@ -250,7 +267,7 @@
           @include font-size(20);
 
           color: $panel-border-color;
-          content: '\2758';
+          content: "\2758";
           display: inline-block;
           margin-right: 2px;
           padding-top: 2px;
@@ -277,14 +294,13 @@
 
       &::after,
       &::before {
-        content: '';
+        content: "";
         display: table;
       }
 
       &::after {
         clear: both;
       }
-
     }
   }
 }
@@ -322,7 +338,7 @@
 }
 
 // RTL Styles
-html[dir='rtl'] {
+html[dir="rtl"] {
   .hero-widget {
     .hero-header,
     .hero-content,

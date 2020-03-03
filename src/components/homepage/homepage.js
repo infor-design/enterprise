@@ -36,7 +36,6 @@ function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
   this.editing = true; // Private
   this.dragging = false; // Private
-  this.placeholder = $(document.createElement("div")).addClass('placeholder widget');
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -77,7 +76,8 @@ Homepage.prototype = {
       rows,
       cols,
       containerHeight: getContainerHeight(),
-      matrix: this.rowsAndCols
+      matrix: this.rowsAndCols,
+      editmode: this.editing
     };
   },
 
@@ -134,7 +134,7 @@ Homepage.prototype = {
   },
 
   /**
-   * Initialize placeholder and drag event listeners.
+   * Initialize guide and drag event listeners.
    * @private
    * @returns {void}
    */
@@ -143,45 +143,47 @@ Homepage.prototype = {
     if (homepage.editing) {
       const cards = homepage.element.find('.card, .widget');
       cards.attr('draggable', true);
+      homepage.guide = $("<div>").addClass("drop-indicator").append(`
+      <div class="edge"></div>
+      <div class="line"></div>
+      <div class="edge"></div>
+      `);
+
       cards
-        .on('dragstart', function () {
+        .on('dragstart.card', function () {
           const card = $(this);
-          // SetTimeout is for chrome bug discussed here:
-          // https://stackoverflow.com/questions/14203734/dragend-dragenter-and-dragleave-firing-off-immediately-when-i-drag
-          setTimeout(() => {
-            let classes = card.attr("class").split(" ");
-            // Make the placeholder have the same height/width classes as the card it's replacing
-            let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
-            let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
-            homepage.placeholder.addClass(width);
-            homepage.placeholder.addClass(height);
-            homepage.placeholder.insertBefore(card);
-            card.detach();
-            homepage.refresh(false);
-          }, 0);
-        }).on('dragenter', function () {
+          card.addClass('is-dragging');
+        }).on('dragenter.card', function (event) {
+          event.preventDefault();
           const card = $(this);
-          if (!homepage.dragging) {
-            // Allow for animation to finish before triggering another movement, see setTimeout below
-            homepage.dragging = true;
-            if (homepage.placeholder.index() < (card.index())) {
-              homepage.placeholder.insertAfter(card);
-            } else {
-              homepage.placeholder.insertBefore(card);
-            }
-            // Allow for animation to finish before triggering another movement
-            setTimeout(() => { homepage.dragging = false; }, 400);
-            homepage.refresh(true);
+          let draggingCard = $('.is-dragging');
+
+          // Ignore intial trigger when current card is dragging over itself
+          if(card.is(draggingCard) && $('.drop-indicator').length === 0){
+            return;
           }
-        }).on('dragend', function () {
+
+          if (draggingCard.index() < card.index()) {
+            homepage.guide.css("right", "-14px");
+            homepage.guide.css("left", "");
+          } else {
+            homepage.guide.css("left", "-14px");
+            homepage.guide.css("right", "");
+          }
+          card.append(homepage.guide)
+          homepage.refresh(false);
+        }).on('dragend.card', function () {
           const card = $(this);
-          let classes = card.attr("class").split(" ");
-          let width = classes.filter((currentClass) => currentClass.indexOf("width") >= 0)[0];
-          let height = classes.filter((currentClass) => currentClass.indexOf("height") >= 0)[0];
-          homepage.placeholder.removeClass(width);
-          homepage.placeholder.removeClass(height);
-          card.insertAfter(homepage.placeholder);
-          homepage.placeholder.remove();
+          const cardOver = $(cards).has('.drop-indicator');
+          let ci = card.index();
+          let coi = cardOver.index();
+          if (card.index() < cardOver.index()) {
+            card.insertAfter(cardOver);
+          } else {
+            card.insertBefore(cardOver);
+          }
+          card.removeClass('is-dragging');
+          homepage.guide.remove();
           homepage.refresh(false);
         });
     }
@@ -338,10 +340,7 @@ Homepage.prototype = {
         w = 1;
       }
 
-      // Card being dragged is detached from DOM and temporarily replaced by placeholder.
-      if (!card.hasClass('is-dragging')) {
-        this.blocks.push({ w, h, elem: card, text: card.text() });
-      }
+      this.blocks.push({ w, h, elem: card, text: card.text() });
     }
 
     // Max sized columns brings to top
