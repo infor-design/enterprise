@@ -143,6 +143,7 @@ Homepage.prototype = {
     if (homepage.editing) {
       const cards = homepage.element.find('.card, .widget');
       cards.attr('draggable', true);
+      cards.css('cursor', 'move');
       homepage.guide = $("<div>").addClass("drop-indicator").append(`
       <div class="edge"></div>
       <div class="line"></div>
@@ -159,7 +160,7 @@ Homepage.prototype = {
           let draggingCard = $('.is-dragging');
 
           // Ignore intial trigger when current card is dragging over itself
-          if(card.is(draggingCard) && $('.drop-indicator').length === 0){
+          if (card.is(draggingCard) && $('.drop-indicator').length === 0) {
             return;
           }
 
@@ -184,6 +185,10 @@ Homepage.prototype = {
           homepage.guide.remove();
           homepage.refresh(false);
         });
+    } else {
+      const cards = homepage.element.find('.card, .widget');
+      cards.attr('draggable', false);
+      cards.css('cursor', 'auto');
     }
   },
 
