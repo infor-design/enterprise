@@ -16,6 +16,9 @@
       <div class="field">
         <input type="checkbox" class="checkbox" id="btn-audible" />
         <label for="btn-audible" class="checkbox-label">Make Text Audible</label>
+        <br />
+        <input type="checkbox" class="checkbox" id="btn-disabled" />
+        <label for="btn-disabled" class="checkbox-label">Disabled</label>
       </div>
       <div class="field">
         <label for="btn-style">Button Style</label>
@@ -111,6 +114,11 @@
     }
   }
 
+  function setDisabled() {
+    var disabled = $('#btn-disabled').prop('checked');
+    newSettings.disabled = disabled;
+  }
+
   function setStyle() {
     var style = $('#btn-style').val();
     if (style && style.length) {
@@ -176,6 +184,7 @@
   // Gets all the control values
   function getSettings() {
     setId();
+    setDisabled();
     setText();
     setStyle();
     setType();
@@ -257,6 +266,11 @@
   // Set the text to audible/not audible only
   $('#btn-audible').on('change.test', function () {
     setAudible();
+  });
+
+  // Set the button's disabled state
+  $('#btn-disabled').on('change.test', function () {
+    setDisabled();
   });
 
   // Set the Button Style (Dropdown)

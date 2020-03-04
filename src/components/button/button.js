@@ -266,6 +266,7 @@ Button.prototype = {
     // Handle a one-time `disabled` setting, if defined.
     if (this.settings.disabled) {
       this.disabled = this.settings.disabled === true;
+      delete this.settings.disabled;
     }
 
     const audibleTextBtnTypes = ['btn-icon', 'btn-actions'];
@@ -421,8 +422,10 @@ Button.prototype = {
       }
     });
 
-    // Disabled State
-    elementSettings.disabled = this.disabled;
+    // Disabled State (only if it hasn't been pre-set via JS settings)
+    if (!this.settings.disabled) {
+      elementSettings.disabled = this.disabled;
+    }
 
     // If the button type is pressable, get current state and the icons
     const ariaPressedAttr = this.element[0].getAttribute('aria-pressed');
