@@ -1584,7 +1584,7 @@ DatePicker.prototype = {
       }, isStrict);
 
       const hours = parsedDate ? parsedDate.getHours() : 0;
-      if (hours < 12 &&
+      if (parsedDate && hours < 12 &&
         self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
         parsedDate.setHours(hours + 12);
       }
