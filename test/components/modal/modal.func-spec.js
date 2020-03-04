@@ -1,4 +1,4 @@
-import { Modal, MODAL_DEFAULTS } from '../../../src/components/modal/modal';
+import { Modal } from '../../../src/components/modal/modal';
 import { cleanup } from '../../helpers/func-utils';
 
 const svg = require('../../../src/components/icons/svg.html');
@@ -58,7 +58,6 @@ const standardButtonsDef = [
 ];
 
 let modalPanelEl;
-let modalTriggerEl;
 let modalAPI;
 
 describe('Modal API', () => {
@@ -68,7 +67,6 @@ describe('Modal API', () => {
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
     document.body.insertAdjacentHTML('afterbegin', modalPanelHTML);
-    modalTriggerEl = document.querySelector('#modal-trigger');
     modalPanelEl = document.querySelector('#modal-panel');
   });
 
@@ -81,6 +79,7 @@ describe('Modal API', () => {
       '.row',
       '#modal-trigger',
       '#modal-panel',
+      '.modal-container',
       '.modal'
     ]);
   });
@@ -100,7 +99,6 @@ describe('Modal API', () => {
     modalAPI.open();
 
     setTimeout(() => {
-      debugger;
       expect(document.body.classList.contains('modal-engaged')).toBeTruthy();
       expect(modalAPI.element[0].getAttribute('aria-modal')).toBeTruthy();
       done();
@@ -124,17 +122,19 @@ describe('Modal API', () => {
       buttons: standardButtonsDef
     });
 
-    // Disable
     const buttonsetEl = modalAPI.buttonsetAPI.element;
+    const buttons = modalAPI.buttonsetAPI.buttons;
+
+    // Disable
     modalAPI.buttonsetAPI.disabled = true;
-    let enabledButtons = modalAPI.buttonsetAPI.buttons.filter(buttonAPI => buttonAPI.disabled === false);
+    let enabledButtons = buttons.filter(buttonAPI => buttonAPI.disabled === false);
 
     expect(buttonsetEl.classList.contains('is-disabled')).toBeTruthy();
     expect(enabledButtons.length).toEqual(0);
 
     // Enable
     modalAPI.buttonsetAPI.disabled = false;
-    enabledButtons = modalAPI.buttonsetAPI.buttons.filter(buttonAPI => buttonAPI.disabled === false);
+    enabledButtons = buttons.filter(buttonAPI => buttonAPI.disabled === false);
 
     expect(buttonsetEl.classList.contains('is-disabled')).toBeFalsy();
     expect(enabledButtons.length).toEqual(5);

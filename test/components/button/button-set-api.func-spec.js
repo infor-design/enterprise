@@ -1,5 +1,4 @@
-import { Button, BUTTON_DEFAULTS } from '../../../src/components/button/button';
-import { ButtonSet, BUTTONSET_DEFAULTS } from '../../../src/components/button/button.set';
+import { ButtonSet } from '../../../src/components/button/button.set';
 import { cleanup } from '../../helpers/func-utils';
 
 const svg = require('../../../src/components/icons/svg.html');
