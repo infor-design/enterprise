@@ -13,6 +13,7 @@ const COMPONENT_NAME = 'button';
 
 // Styles of Buttons
 const buttonStyles = [
+  'default',
   'btn',
   'btn-primary',
   'btn-secondary',
@@ -220,7 +221,7 @@ Button.prototype = {
   render() {
     const elemClasses = this.element[0].classList;
     // Style = "primary/secondary/tertiary" hierarchy/context
-    if (buttonStyles.indexOf(this.settings.style) > -1) {
+    if (buttonStyles.indexOf(this.settings.style) > 0) {
       elemClasses.add(this.settings.style);
     }
     // Type = "function"
@@ -406,16 +407,16 @@ Button.prototype = {
     const elementSettings = {};
 
     // Button Style
-    const elemClasses = this.element[0].className || '';
+    const elemClasses = this.element[0].classList || '';
     buttonStyles.forEach((style) => {
-      if (elemClasses.indexOf(style) > -1) {
+      if (style !== 'default' && elemClasses.contains(style)) {
         elementSettings.style = style;
       }
     });
 
     // Button Type
     buttonTypes.forEach((type) => {
-      if (type !== 'default' && elemClasses.indexOf(type) > -1) { // ignore the `default` type classname
+      if (type !== 'default' && elemClasses.contains(type)) { // ignore the `default` type classname
         elementSettings.type = type;
       }
     });
@@ -446,17 +447,9 @@ Button.prototype = {
     }
 
     // Ripple Effect
-    if (elemClasses.indexOf('no-ripple') > -1) {
+    if (elemClasses.contains('no-ripple')) {
       elementSettings.ripple = false;
     }
-
-    // Text Content
-    /*
-    const textContent = this.element[0].innerText;
-    if (typeof textContent === 'string' && textContent.length) {
-      elementSettings.text = textContent.trim();
-    }
-    */
 
     // Audible Text Content
     const audibleTextElem = this.element[0].querySelector('span.audible');

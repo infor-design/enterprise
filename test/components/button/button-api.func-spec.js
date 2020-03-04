@@ -1,3 +1,4 @@
+import extend from 'extend';
 import { Button, BUTTON_DEFAULTS } from '../../../src/components/button/button';
 import { cleanup } from '../../helpers/func-utils';
 
@@ -59,7 +60,9 @@ describe('Button API', () => {
   });
 
   it('has default settings', () => {
-    expect(buttonAPI.settings).toEqual(jasmine.objectContaining(BUTTON_DEFAULTS));
+    const expectedSettings = extend({}, BUTTON_DEFAULTS, { style: 'btn' });
+
+    expect(buttonAPI.settings).toEqual(jasmine.objectContaining(expectedSettings));
   });
 
   it('can update settings via the `updated()` method', () => {

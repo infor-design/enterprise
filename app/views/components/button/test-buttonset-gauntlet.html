@@ -20,7 +20,8 @@
       <div class="field">
         <label for="btn-style">Button Style</label>
         <select id="btn-style" class="dropdown">
-          <option value="btn" selected>Default (btn)</option>
+          <option value="default" disabled>Default (none)</option>
+          <option value="btn" selected>Standard Button (btn)</option>
           <option value="btn-primary">Primary (btn-primary)</option>
           <option value="btn-secondary">Secondary (btn-secondary)</option>
           <option value="btn-tertiary">Tertiary (btn-tertiary)</option>
@@ -75,6 +76,7 @@
 
 <script id="test-script">
   var autoIconTypes = ['btn-toggle', 'btn-actions', 'icon-favorite'];
+  var defaultStyleTypes = ['btn-icon', 'btn-menu', 'btn-actions', 'btn-toggle'];
   var toggleIconsRollout = $('.toggle-icons-rollout');
   var standardIconsRollout = $('.standard-icons-rollout');
   var idCount = 0;
@@ -219,16 +221,26 @@
 
     // If explicitly choosing an icon button, you MUST have an icon.
     var isIconBtn = (val === 'btn-icon');
-    var firstOpt = $('#btn-icon-def').find('option:first-child');
-    firstOpt.prop('disabled', isIconBtn);
-    if (isIconBtn && firstOpt.prop('checked')) {
-      firstOpt.next().prop('checked', true);
+    var firstIconOpt = $('#btn-icon-def').find('option:first-child');
+    firstIconOpt.prop('disabled', isIconBtn);
+    if (isIconBtn && firstIconOpt.prop('selected')) {
+      firstIconOpt.prop('selected', false);
+      firstIconOpt.next().prop('selected', true);
     }
 
     // On an "actions" button, there's always an `#icon-more`, so there's no way to turn icons off.
     var isActionBtn = (val === 'btn-actions');
     var isAudibleBtn = $('#btn-audible');
     isAudibleBtn.prop('disabled', isActionBtn);
+
+    // Disable the `default` Button Type if no styled button "type" is selected.
+    var isStyledType = defaultStyleTypes.indexOf(val) > -1;
+    var firstStyleOpt = $('#btn-style').find('option:first-child');
+    firstStyleOpt.prop('disabled', !isStyledType);
+    if (isStyledType && firstStyleOpt.prop('selected')) {
+      firstStyleOpt.prop('selected', false);
+      firstStyleOpt.next().prop('selected', true);
+    }
   }
   setPageState();
 
@@ -250,6 +262,7 @@
   // Set the Button Style (Dropdown)
   $('#btn-style').on('change.test', function (e) {
     setStyle();
+    setPageState();
   });
 
   // Set the Button Type (Dropdown)
