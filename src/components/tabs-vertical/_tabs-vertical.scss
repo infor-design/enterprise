@@ -68,6 +68,16 @@
   }
 }
 
+.header {
+  + .page-container {
+    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+      height: calc(100% - 50px);
+      margin-top: 0;
+      position: relative;
+    }
+  }
+}
+
 .tab-list-info {
   @include font-size(20);
 
@@ -84,7 +94,7 @@
 }
 
 .tab-panel-container {
-  height: 96%;
+  height: inherit;
 
   .tab-panel {
     @media (max-width: $breakpoint-phone-to-tablet - 1) {
