@@ -369,8 +369,10 @@
           }
 
           .icon-error {
-            right: -3px;
-            top: 14px;
+            margin-left: 0;
+            position: relative;
+            right: 4px;
+            top: 0;
           }
         }
       }
