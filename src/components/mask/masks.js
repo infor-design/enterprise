@@ -339,7 +339,7 @@ masks.dateMask = function dateMask(rawValue, options) {
 
   let mask = [];
   const digitRegex = masks.DIGITS_REGEX;
-  let format = options.format;
+  const format = options.format;
   const splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, ''));
   const splitterRegex = new RegExp(`[${splitterStr}]+`);
   const formatArray = format.split(/[^dMyHhmsa]+/);

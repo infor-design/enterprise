@@ -70,6 +70,7 @@ FileUploadAdvanced.prototype = {
   init() {
     this.build();
     this.handleEvents();
+    return this;
   },
 
   /**
@@ -571,6 +572,7 @@ FileUploadAdvanced.prototype = {
     this.dropArea.off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
     $(document).off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
     $('.action', this.element).off('click.fileuploadadvanced');
+    return this;
   },
 
   /**
