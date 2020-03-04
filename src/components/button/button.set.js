@@ -33,6 +33,21 @@ function ButtonSet(element, settings) {
 ButtonSet.prototype = {
 
   /**
+   * @param {boolean} val whether or not the Buttonset is disabled.
+   * @returns {void}
+   */
+  set disabled(val) {
+    val = val === true;
+
+    this.element.classList[val ? 'add' : 'remove']('is-disabled');
+    if (this.buttons) {
+      this.buttons.forEach((buttonAPI) => {
+        buttonAPI.disabled = val;
+      });
+    }
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -178,6 +193,15 @@ ButtonSet.prototype = {
    */
   reset() {
     this.buttons = [];
+  },
+
+  /**
+   * Returns a ButtonSet API in a specified place in the buttons array.
+   * @param {number} idx index to target
+   * @returns {Button|undefined} Button API at this particular buttonset index
+   */
+  at(idx = -1) {
+    return this.buttons[idx];
   },
 
   /**
