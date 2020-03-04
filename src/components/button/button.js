@@ -391,7 +391,7 @@ Button.prototype = {
     }
 
     // Hide Focus API
-    if (this.element.data('hidefocus') === 'undefined') {
+    if (!this.element.data('hidefocus')) {
       this.element.hideFocus();
     }
   },
