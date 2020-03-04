@@ -577,6 +577,10 @@ Modal.prototype = {
         btn.addClass('btn-modal');
       }
 
+      if (props.disabled) {
+        btn[0].disabled = props.disabled === true;
+      }
+
       if (props.audible) {
         span.addClass('audible');
       }

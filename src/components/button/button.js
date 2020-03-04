@@ -262,6 +262,11 @@ Button.prototype = {
       this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
     }
 
+    // Handle a one-time `disabled` setting, if defined.
+    if (this.settings.disabled) {
+      this.disabled = this.settings.disabled === true;
+    }
+
     const audibleTextBtnTypes = ['btn-icon', 'btn-actions'];
 
     // Handle the rendering of the text span.
