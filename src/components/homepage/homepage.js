@@ -35,7 +35,6 @@ const HOMEPAGE_DEFAULTS = {
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
   this.editing = true; // Private
-  this.dragging = false; // Private
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -144,6 +143,7 @@ Homepage.prototype = {
       const cards = homepage.element.find('.card, .widget');
       cards.attr('draggable', true);
       cards.css('cursor', 'move');
+
       homepage.guide = $("<div>").addClass("drop-indicator").append(`
       <div class="edge"></div>
       <div class="line"></div>
@@ -151,10 +151,93 @@ Homepage.prototype = {
       `);
 
       cards
+        .on('mouseenter.card', function () {
+          const card = $(this);
+          const eastHandle = $("<div>").addClass("ui-resizable-handle ui-resizable-e")
+            .drag({ axis: 'x' })
+            .on('dragstart.handle', (event) => {
+              event.preventDefault();
+              card.addClass("ui-resize-passive");
+              card.css({ borderColor: '#078cd9', opacity: 0.9, zIndex: 90 });
+              $(window)
+                .on('mousemove.handle', (event) => {
+                  let width = event.clientX - card.offset().left;
+                  if (width < homepage.settings.widgetWidth / 2) {
+                    eastHandle.css({ left: homepage.settings.widgetWidth / 2 });
+                  } else {
+                    card.width(width);
+                  }
+                })
+                .on('mouseup.handle', (event) => {
+                  card.removeClass("ui-resize-passive");
+                  card.css({ zIndex: 'auto' });
+                  $(window)
+                    .off('mousemove.handle')
+                    .off('mouseup.handle');
+
+                  card.removeClass("double-width triple-width quad-width");
+                  const widthUnits = card.width() / homepage.settings.widgetWidth;
+                  if (widthUnits > 3.5) {
+                    card.addClass("quad-width");
+                  } else if (widthUnits > 2.5) {
+                    card.addClass("triple-width");
+                  } else if (widthUnits > 1.5) {
+                    card.addClass("double-width");
+                  }
+
+                  $(".ui-resizable-handle").remove();
+                  card.css({ borderColor: '#bdbdbd', opacity: 1, width: "" });
+                  homepage.refresh(false);
+                })
+            })
+          const southHandle = $("<div>").addClass("ui-resizable-handle ui-resizable-s")
+            .drag({ axis: 'y' })
+            .on('dragstart.handle', (event) => {
+              event.preventDefault();
+              card.addClass("ui-resize-passive");
+              card.css({ borderColor: '#078cd9', opacity: 0.9, zIndex: 90 });
+              $(window)
+                .on('mousemove.handle', (event) => {
+                  let height = event.clientY - card.offset().top;
+                  if (height < homepage.settings.widgetHeight) {
+                    southHandle.css({ top: homepage.settings.widgetHeight });
+                  } else {
+                    card.height(height);
+                  }
+                })
+                .on('mouseup.handle', (event) => {
+                  card.removeClass("ui-resize-passive");
+                  card.css({ zIndex: 'auto' });
+                  $(window)
+                    .off('mousemove.handle')
+                    .off('mouseup.handle');
+
+                  card.removeClass("double-height");
+                  const heightUnits = card.height() / homepage.settings.widgetHeight;
+                  if (heightUnits > 1.5) {
+                    card.addClass("double-height");
+                  }
+
+                  $(".ui-resizable-handle").remove();
+                  card.css({borderColor: '#bdbdbd', opacity: 1, height: "" });
+                  homepage.refresh(false);
+                })
+            });
+          if(card.has(".ui-resizable-handle").length === 0){
+            card.append(eastHandle, southHandle);
+          }
+        })
+        .on('mouseleave.card', function () {
+          const card = $(this);
+          if (!card.hasClass("ui-resize-passive")) {
+            $(".ui-resizable-handle").remove();
+          }
+        })
         .on('dragstart.card', function () {
           const card = $(this);
           card.addClass('is-dragging');
-        }).on('dragenter.card', function (event) {
+        })
+        .on('dragenter.card', function (event) {
           event.preventDefault();
           const card = $(this);
           let draggingCard = $('.is-dragging');
@@ -173,7 +256,8 @@ Homepage.prototype = {
           }
           card.append(homepage.guide)
           homepage.refresh(false);
-        }).on('dragend.card', function () {
+        })
+        .on('dragend.card', function () {
           const card = $(this);
           const cardOver = $(cards).has('.drop-indicator');
           if (card.index() < cardOver.index()) {
@@ -193,17 +277,18 @@ Homepage.prototype = {
   },
 
   /**
-   * Toggle editing the order and sizes of cards/widgets.
+   * Set edit for rearranging/reordering cards.
    * @public
+   * @param {boolean} editing
    * @returns {void}
    */
-  toggleEdit() {
-    if (this.editable) {
-      this.editing = !this.editing;
+  setEdit(value) {
+    if (this.editable && value !== undefined) {
+      this.editing = value;
       this.refresh(false);
     }
   },
-
+  
   /**
    * Get availability where we can fit this given block.
    * @private
@@ -464,7 +549,7 @@ Homepage.prototype = {
       const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
       const pos = { left, top };
 
-      if (animate) {
+      if (animate && !this.editing) {
         const easing = self.settings.easing;
         const blockslide = [0.09, 0.11, 0.24, 0.91];
 
@@ -482,6 +567,9 @@ Homepage.prototype = {
           block.elem.animate(pos, self.settings.timeout, easing);
         }
       } else {
+        if (self.isTransitionsSupports) {
+          self.applyCubicBezier(block.elem, null);
+        }
         block.elem[0].style.left = `${pos.left}px`;
         block.elem[0].style.top = `${pos.top}px`;
       }
@@ -511,7 +599,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   applyCubicBezier(el, cubicBezier) {
-    const value = `all .3s cubic-bezier(${cubicBezier})`;
+    const value = cubicBezier ? `all .3s cubic-bezier(${cubicBezier})` : 'none';
     el[0].style['-webkit-transition'] = value;
     el[0].style['-moz-transition'] = value;
     el[0].style['-ms-transition'] = value;
