@@ -78,9 +78,11 @@ ButtonSet.prototype = {
 
   /**
    * Draws the entire buttonset.
+   * @param {boolean} [ignoreChildren=false] if true, only renders the top-level Buttonset and leaves.
+   * the child buttons alone (assuming the `render` step on buttons is manually called later).
    * @returns {void}
    */
-  render() {
+  render(ignoreChildren = false) {
     const elemClasses = this.element.classList;
     const cssClassMap = {
       default: 'buttonset',
@@ -97,9 +99,11 @@ ButtonSet.prototype = {
     elemClasses.add(cssClassMap[this.settings.style]);
 
     // Render all established buttons
-    this.buttons.forEach((buttonAPI) => {
-      buttonAPI.render();
-    });
+    if (!ignoreChildren) {
+      this.buttons.forEach((buttonAPI) => {
+        buttonAPI.render();
+      });
+    }
   },
 
   /**
@@ -130,6 +134,7 @@ ButtonSet.prototype = {
     }
 
     // Invoke
+    settings.buttonsetAPI = this;
     $buttonElem.button(settings);
     const buttonAPI = $buttonElem.data('button');
 
@@ -261,12 +266,24 @@ ButtonSet.prototype = {
    * @returns {ButtonSet} This component's API.
    */
   updated(settings) {
+    const prevButtons = this.settings.buttons;
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
-    this.teardown();
-    this.init();
+    // Only teardown/re-init the buttons if the incoming buttons array is defined,
+    // and different than the ones that have already been defined.  Otherwise,
+    // simply re-render what's there.
+    if (Array.isArray(settings.buttons) && prevButtons !== settings.buttons) {
+      this.teardown();
+      this.init();
+    } else {
+      this.render(true);
+      this.buttons.forEach((buttonAPI) => {
+        buttonAPI.updated();
+      });
+    }
+
     return this;
   },
 

@@ -75,19 +75,6 @@ Button.prototype = {
   },
 
   /**
-   * @returns {ButtonSet|undefined} parent ButtonSet component instance, if applicable
-   */
-  get buttonsetAPI() {
-    const container = this.element.parents('.buttonset, .modal-buttonset');
-    let api;
-
-    if (container.length) {
-      api = container.data('buttonset');
-    }
-    return api;
-  },
-
-  /**
    * @returns {HTMLElement} a reference to this button's icon element
    */
   get icon() {
@@ -117,6 +104,12 @@ Button.prototype = {
    * @returns {void}
    */
   init() {
+    if (this.settings.buttonsetAPI !== undefined &&
+      typeof this.settings.buttonsetAPI.render === 'function') {
+      this.buttonsetAPI = this.settings.buttonsetAPI;
+      delete this.settings.buttonsetAPI;
+    }
+
     this.getSettingsFromElement();
     this.render();
   },
@@ -232,30 +225,41 @@ Button.prototype = {
     // If this is a modal button, normalize CSS classes that are specific
     // to modal buttons.
     const buttonsetAPI = this.buttonsetAPI;
-    let removeModalClasses = true;
-    if (buttonsetAPI && buttonsetAPI.settings.style === 'modal') {
-      removeModalClasses = false;
+    let switchModalClasses = false;
+    if (buttonsetAPI) {
+      if (buttonsetAPI.settings.style === 'modal') {
+        switchModalClasses = true;
+      }
 
       // btn
-      const btnClasses = ['btn', 'btn-modal'];
+      const btnClasses = ['default', 'btn', 'btn-modal'];
       if (btnClasses.indexOf(this.settings.style) > -1) {
-        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn');
-        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-modal');
+        elemClasses[!switchModalClasses ? 'add' : 'remove']('btn');
+        elemClasses[switchModalClasses ? 'add' : 'remove']('btn-modal');
       }
 
       // btn-primary
       const btnPrimaryClasses = ['btn-primary', 'btn-modal-primary'];
       if (btnPrimaryClasses.indexOf(this.settings.style) > -1) {
-        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn-primary');
-        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-primary-modal');
+        elemClasses[!switchModalClasses ? 'add' : 'remove']('btn-primary');
+        elemClasses[switchModalClasses ? 'add' : 'remove']('btn-modal-primary');
       }
 
       // btn-secondary
       const btnSecondaryClasses = ['btn-secondary', 'btn-modal-secondary'];
       if (btnSecondaryClasses.indexOf(this.settings.style) > -1) {
-        elemClasses[!removeModalClasses ? 'add' : 'remove']('btn-secondary');
-        elemClasses[removeModalClasses ? 'add' : 'remove']('btn-secondary-modal');
+        elemClasses[!switchModalClasses ? 'add' : 'remove']('btn-secondary');
+        elemClasses[switchModalClasses ? 'add' : 'remove']('btn-modal-secondary');
       }
+    }
+
+    // Backwards-compatibility with a legacy Modal setting.
+    // `isDefault` is equivalent to setting a `btn-modal-primary` class.
+    if (this.settings.isDefault) {
+      this.settings.style = 'btn-primary';
+      elemClasses.remove('btn-primary');
+      elemClasses.add('btn-modal-primary');
+      delete this.settings.isDefault;
     }
 
     // Add extra, user-defined CSS classes, if applicable
@@ -401,11 +405,25 @@ Button.prototype = {
    * Backwards compatability method for buttons that were previously defined by markup.
    * This will take an existing DOM element representing a button, and rectify internal settings
    * to match the element's state.
+   * NOTE: When actually storing settings, the lifecycle of the Button component is specifically designed
+   * for this method to run ONE time, at the beginning of its creation.  It should not run every time `updated()` occurs.
+   * To detect current settings without overwriting them, use a true `dontStoreSettings` argument.
    * @param {boolean} [dontStoreSettings=false] if true, will not store the current settings internally while running.
    * @returns {object} containing a JSON-friendly representation of this element's current state
    */
   getSettingsFromElement(dontStoreSettings = false) {
     const elementSettings = {};
+
+    // Setup link between this button instance and a parent buttonset component, if applicable.
+    // NOTE this is not done with a getter because of the need to access it during the render step.
+    const container = this.element.parents('.buttonset, .modal-buttonset');
+    let buttonsetAPI;
+    if (container.length) {
+      buttonsetAPI = container.data('buttonset');
+      if (buttonsetAPI) {
+        this.buttonsetAPI = buttonsetAPI;
+      }
+    }
 
     // Button Style
     const elemClasses = this.element[0].classList || '';
@@ -414,6 +432,20 @@ Button.prototype = {
         elementSettings.style = style;
       }
     });
+
+    // In the case of Modal buttons, account for differences in naming convention on buttons
+    if (this.buttonsetAPI && this.buttonsetAPI.settings.style === 'modal') {
+      const modalBtnMappings = {
+        'btn-modal': 'btn',
+        'btn-modal-primary': 'btn-primary',
+        'btn-modal-secondary': 'btn-secondary'
+      };
+      Object.keys(modalBtnMappings).forEach((modalBtnStyle) => {
+        if (elemClasses.contains(modalBtnStyle)) {
+          elementSettings.style = modalBtnMappings[modalBtnStyle];
+        }
+      });
+    }
 
     // Button Type
     buttonTypes.forEach((type) => {
@@ -567,6 +599,7 @@ Button.prototype = {
     if (hidefocusApi) {
       hidefocusApi.destroy();
     }
+
     return this;
   },
 
@@ -591,6 +624,13 @@ Button.prototype = {
   */
   destroy() {
     this.teardown();
+
+    // Delete the link to a parent buttonset
+    const buttonsetAPI = this.buttonsetAPI;
+    if (buttonsetAPI) {
+      delete this.buttonsetAPI;
+    }
+
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
