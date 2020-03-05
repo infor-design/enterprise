@@ -1224,6 +1224,38 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
   });
 });
 
+fdescribe('Datagrid Row Row Reorder', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show on hover', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await browser.actions()
+        .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Date default values', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');
