@@ -139,7 +139,7 @@ const PLUGIN_MAPPINGS = [
     '.btn-secondary-border'
   ].join(', '), function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
-      const parents = $(item).parentsUntil('.modal');
+      const parents = $(item).parents('.modal');
       if (parents.length) {
         return;
       }
