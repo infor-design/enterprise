@@ -2,6 +2,10 @@
 
 ## v4.27.0
 
+### v4.27.0 Features
+
+- `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
+
 ### v4.27.0 Fixes
 
 - `[Bar Chart]` Fixed an issue where chart was not resizing on homepage widget resize. ([#2669](https://github.com/infor-design/enterprise/issues/2669))
