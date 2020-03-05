@@ -25,6 +25,7 @@ const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
   editable: true,
+  editing = false, // Private
   easing: 'blockslide', // Private
   gutterSize: 20, // Private
   widgetWidth: 360, // Private
@@ -34,7 +35,6 @@ const HOMEPAGE_DEFAULTS = {
 
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
-  this.editing = true; // Private
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
