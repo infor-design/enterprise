@@ -257,6 +257,7 @@ Personalize.prototype = {
     this.element.triggerHandler('colorschanged', {
       colors: this.settings.colors.header ||
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      isDefault: false,
       theme: this.currentTheme || 'theme-soho-light'
     });
     return this;
@@ -271,6 +272,11 @@ Personalize.prototype = {
     if (sheet) {
       sheet.parentNode.removeChild(sheet);
     }
+    this.element.triggerHandler('colorschanged', {
+      colors: theme.themeColors().brand.primary.alt.value,
+      isDefault: true,
+      theme: this.currentTheme || 'theme-soho-light'
+    });
   },
 
   /**
