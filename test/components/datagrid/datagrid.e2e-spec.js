@@ -1224,7 +1224,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
   });
 });
 
-fdescribe('Datagrid Row Row Reorder', () => { //eslint-disable-line
+describe('Datagrid Row Row Reorder', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
 
@@ -1251,7 +1251,7 @@ fdescribe('Datagrid Row Row Reorder', () => { //eslint-disable-line
       await browser.actions()
         .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-row-reorder')).toEqual(0);
     });
   }
 });
