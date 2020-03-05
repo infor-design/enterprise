@@ -207,8 +207,12 @@
 .page-container > .tab-panel,
 .page-container > .tab-panel-container > .tab-panel {
   height: 0;
-  padding-top: 0;
+  padding-top: 30px;
   width: 0;
+
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    padding-top: 0;
+  }
 
   &.can-show {
     height: 100%;
@@ -369,8 +373,10 @@
           }
 
           .icon-error {
-            right: -3px;
-            top: 14px;
+            margin-left: 0;
+            position: relative;
+            right: 4px;
+            top: 0;
           }
         }
       }

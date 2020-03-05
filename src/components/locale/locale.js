@@ -1377,11 +1377,13 @@ const Locale = {  // eslint-disable-line
     }
     if (options && options.language && this.languages[options.language]) {
       const newData = utils.extend(true, {}, this.currentLocale.data);
-      newData.calendars[0] = this.calendar(
-        options.locale || this.currentLocale.name,
-        options.language
-      );
-      return newData;
+      if (newData.calendars) {
+        newData.calendars[0] = this.calendar(
+          options.locale || this.currentLocale.name,
+          options.language
+        );
+        return newData;
+      }
     }
     if (!localeData.numbers) {
       localeData.numbers = this.numbers();
