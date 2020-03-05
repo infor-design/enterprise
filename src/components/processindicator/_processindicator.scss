@@ -250,6 +250,12 @@ $indicator-current-size: ($indicator-size * 1.6);
           width: ($indicator-size * 0.82);
         }
       }
+
+      &.more-info {
+        &::before {
+          right: 0.05em;
+        }
+      }
     }
   }
 }
@@ -328,6 +334,22 @@ $indicator-current-size: ($indicator-size * 1.6);
     &.time-out {
       &::after {
         left: 0.9em;
+      }
+    }
+  }
+}
+
+.ios {
+  &.iphone {
+    &.is-safari {
+      .process-indicator {
+        .indicator {
+          &.more-info {
+            &::before {
+              top: 0.05em;
+            }
+          }
+        }
       }
     }
   }
