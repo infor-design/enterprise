@@ -158,7 +158,7 @@ Homepage.prototype = {
             .on('dragstart.handle', (event) => {
               event.preventDefault();
               card.addClass("ui-resize-passive");
-              card.css({ borderColor: '#078cd9', opacity: 0.9, zIndex: 90 });
+              card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
                 .on('mousemove.handle', (event) => {
                   let width = event.clientX - card.offset().left;
@@ -186,7 +186,7 @@ Homepage.prototype = {
                   }
 
                   $(".ui-resizable-handle").remove();
-                  card.css({ borderColor: '#bdbdbd', opacity: 1, width: "" });
+                  card.css({ opacity: 1, width: "" });
                   homepage.refresh(false);
                 })
             })
@@ -195,7 +195,7 @@ Homepage.prototype = {
             .on('dragstart.handle', (event) => {
               event.preventDefault();
               card.addClass("ui-resize-passive");
-              card.css({ borderColor: '#078cd9', opacity: 0.9, zIndex: 90 });
+              card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
                 .on('mousemove.handle', (event) => {
                   let height = event.clientY - card.offset().top;
@@ -219,19 +219,21 @@ Homepage.prototype = {
                   }
 
                   $(".ui-resizable-handle").remove();
-                  card.css({borderColor: '#bdbdbd', opacity: 1, height: "" });
+                  card.css({ opacity: 1, height: "" });
                   homepage.refresh(false);
                 })
             });
           if(card.has(".ui-resizable-handle").length === 0){
             card.append(eastHandle, southHandle);
           }
+          card.css({border: '1px solid #078cd9'});
         })
         .on('mouseleave.card', function () {
           const card = $(this);
           if (!card.hasClass("ui-resize-passive")) {
             $(".ui-resizable-handle").remove();
           }
+          card.css({border: '1px solid #bdbdbd'});
         })
         .on('dragstart.card', function () {
           const card = $(this);
