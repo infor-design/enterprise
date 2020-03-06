@@ -25,7 +25,7 @@ const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
   editable: true,
-  editing = false, // Private
+  editing: false, // Private
   easing: 'blockslide', // Private
   gutterSize: 20, // Private
   widgetWidth: 360, // Private
