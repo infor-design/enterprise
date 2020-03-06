@@ -493,7 +493,7 @@ Modal.prototype = {
 
         // Handle Validation
         if (settingsJSON.validate) {
-          btn.element.classList.add('no-validation');
+          btn.element[0].classList.add('no-validation');
         }
       }
 
