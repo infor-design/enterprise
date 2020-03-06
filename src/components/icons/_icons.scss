@@ -124,12 +124,14 @@ svg.icon-dirty,
     vertical-align: middle;
   }
 
+  /*
   .icon + span {
     display: inline-block;
     padding-left: 5px;
     vertical-align: middle;
     width: calc(100% - 27px);
   }
+  */
 }
 
 .icon-dirtyerror,
@@ -577,10 +579,12 @@ svg.icon-dirty {
 // RTL Styles
 html[dir='rtl'] {
   .field {
+    /*
     .icon + span {
       padding-left: 0;
       padding-right: 5px;
     }
+    */
 
     .icon-error,
     .icon-success,
