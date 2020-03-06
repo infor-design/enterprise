@@ -2,9 +2,9 @@
 
 ## v4.27.0
 
-### v4.27.0 Code Updates / Breaking Changes
+### v4.27.0 Important Changes
 
-- `[Hierarchy]` Removing the following options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
+- `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
 
 ### v4.27.0 Fixes
 
