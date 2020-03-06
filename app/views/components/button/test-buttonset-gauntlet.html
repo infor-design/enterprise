@@ -137,9 +137,12 @@
   }
 
   function setButtonsetStyle() {
+    var style = $('[name="buttonset-style"]:checked').val();
     buttonsetAPI.updated({
-      style: $('[name="buttonset-style"]:checked').val()
+      style: style
     });
+
+    handleButtonWidths();
   }
 
   function setId() {
@@ -220,6 +223,29 @@
     newSettings.audible = val;
   }
 
+  // For Modal Buttons, simulates the "sizing" that would happen in an actual modal
+  function adjustBtnWidths(btns) {
+    var btnPercentageWidth = 100 / btns.length;
+    btns.forEach(function (btn) {
+      btn.element[0].style.width = '' + btnPercentageWidth + '%';
+    });
+  }
+
+  function resetBtnWidths(btns) {
+    btns.forEach(function (btn) {
+      btn.element[0].style.width = '';
+    });
+  }
+
+  function handleButtonWidths() {
+    var style = $('[name="buttonset-style"]:checked').val();
+    if (style === 'modal') {
+      adjustBtnWidths(buttonsetAPI.buttons);
+    } else {
+      resetBtnWidths(buttonsetAPI.buttons);
+    }
+  }
+
   // Gets all the control values
   function getSettings() {
     setId();
@@ -252,6 +278,8 @@
 
     // Set current number of buttons
     btnCount.text(buttonsetAPI.buttons.length);
+
+    handleButtonWidths();
 
     // Disable the Toggle Button definitions if we're not working with a Toggle Button
     var isToggleBtn = (val === 'btn-toggle');
