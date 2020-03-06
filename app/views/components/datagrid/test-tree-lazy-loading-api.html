@@ -32,7 +32,7 @@
         onExpandChildren: function (args) {
           console.log(args);
 
-          const someData = [{
+          var someData = [{
             id: 215,
             escalated: 0,
             taskName: 'Follow up action with Residental Housing',
@@ -41,7 +41,7 @@
             time: '22:10 PM'
           }];
           var deferred = $.Deferred();
-          setTimeout(function() {
+          setTimeout(function () {
             args.grid.addChildren(args.row, someData);
             deferred.resolve();
           }, 1000);
