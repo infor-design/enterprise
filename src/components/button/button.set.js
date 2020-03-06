@@ -179,6 +179,9 @@ ButtonSet.prototype = {
     if (doRemoveDOM) {
       $elem.remove();
     }
+
+    // Remove the API from the buttons array
+    this.buttons = this.buttons.filter(item => item !== buttonAPI);
   },
 
   /**
@@ -211,6 +214,7 @@ ButtonSet.prototype = {
 
   /**
    * Populates the `settings.buttons` array with the current set of rendered buttons
+   * @private
    * @returns {void}
    */
   detectHTMLButtons() {
@@ -254,9 +258,8 @@ ButtonSet.prototype = {
    * @returns {ButtonSet} This component's API.
    */
   teardown(doRemoveDOM) {
-    this.buttons.forEach((buttonAPI) => {
-      this.remove(buttonAPI, doRemoveDOM);
-    });
+    this.removeAll(doRemoveDOM);
+    this.reset();
     return this;
   },
 
@@ -275,7 +278,8 @@ ButtonSet.prototype = {
     // and different than the ones that have already been defined.  Otherwise,
     // simply re-render what's there.
     if (Array.isArray(settings.buttons) && prevButtons !== settings.buttons) {
-      this.teardown();
+      this.settings.buttons = settings.buttons;
+      this.teardown(true);
       this.init();
     } else {
       this.render(true);
@@ -292,7 +296,7 @@ ButtonSet.prototype = {
   * @returns {void}
   */
   destroy() {
-    this.teardown();
+    this.teardown(true);
     $.removeData(this.element, COMPONENT_NAME);
   },
 };

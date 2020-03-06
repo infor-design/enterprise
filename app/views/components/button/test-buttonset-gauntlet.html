@@ -1,5 +1,7 @@
 <div class="row">
   <div class="six columns">
+    <p>Current Button Count: <span id="button-count">0</span></p>
+    <p></p>
     <form id="gauntlet-controls" action="#" method="post">
       <fieldset class="radio-group">
         <legend>Buttonset Style:</legend>
@@ -13,12 +15,15 @@
         <label for="btn-text">Button's Text</label>
         <input id="btn-text" />
       </div>
-      <div class="field">
-        <input type="checkbox" class="checkbox" id="btn-audible" />
-        <label for="btn-audible" class="checkbox-label">Make Text Audible</label>
-        <br />
-        <input type="checkbox" class="checkbox" id="btn-disabled" />
-        <label for="btn-disabled" class="checkbox-label">Disabled</label>
+      <div class="checkbox-group">
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" id="btn-audible" />
+          <label for="btn-audible" class="checkbox-label">Make Text Audible</label>
+        </div>
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" id="btn-disabled" />
+          <label for="btn-disabled" class="checkbox-label">Disabled</label>
+        </div>
       </div>
       <div class="field">
         <label for="btn-style">Button Style</label>
@@ -80,21 +85,55 @@
 <script id="test-script">
   var autoIconTypes = ['btn-toggle', 'btn-actions', 'icon-favorite'];
   var defaultStyleTypes = ['btn-icon', 'btn-menu', 'btn-actions', 'btn-toggle'];
-  var toggleIconsRollout = $('.toggle-icons-rollout');
-  var standardIconsRollout = $('.standard-icons-rollout');
   var idCount = 0;
   var newSettings = {};
 
+  var toggleIconsRollout = $('.toggle-icons-rollout');
+  var standardIconsRollout = $('.standard-icons-rollout');
+  var btnCount = $('#button-count');
+
+  var defaultButtons = [
+    {
+      id: 'btn-0',
+      text: 'Button 0'
+    },
+    {
+      id: 'btn-1',
+      style: 'btn-primary',
+      text: 'Button 1'
+    },
+    {
+      id: 'btn-2',
+      style: 'btn-secondary',
+      text: 'Button 2',
+      icon: 'icon-settings'
+    },
+    {
+      id: 'btn-3',
+      style: 'btn-tertiary',
+      text: 'Button 3',
+      icon: 'icon-mail'
+    },
+    {
+      id: 'btn-4',
+      style: 'btn-destructive',
+      text: 'Button 4'
+    }
+  ];
+
   // Invoke Buttonset
-  $('#buttonset').buttonset();
+  $('#buttonset').buttonset({
+    buttons: defaultButtons
+  });
   var buttonsetAPI = $('#buttonset').data('buttonset');
 
   // Removes all buttons from the buttonset
   function reset() {
-    buttonsetAPI.removeAll();
+    buttonsetAPI.removeAll(true);
 
     idCount = 0;
     newSettings = {};
+    setPageState();
   }
 
   function setButtonsetStyle() {
@@ -194,17 +233,25 @@
   }
 
   // Ignore default submit functionality for this test.
-  $('#gauntlet-controls').on('submit.test', function (e) {
-    e.preventDefault();
-    getSettings();
-    buttonsetAPI.add(newSettings, true);
-    idCount += 1;
-    delete newSettings.id;
-  });
+  $('#gauntlet-controls')
+    .on('reset.test', function (e) {
+      reset();
+    })
+    .on('submit.test', function (e) {
+      e.preventDefault();
+      getSettings();
+      buttonsetAPI.add(newSettings, true);
+      idCount += 1;
+      delete newSettings.id;
+      setPageState();
+    });
 
   // Sets the current state of some of the page controls
   function setPageState() {
     var val = $('#btn-type').val();
+
+    // Set current number of buttons
+    btnCount.text(buttonsetAPI.buttons.length);
 
     // Disable the Toggle Button definitions if we're not working with a Toggle Button
     var isToggleBtn = (val === 'btn-toggle');

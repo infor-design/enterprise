@@ -1,3 +1,5 @@
+import extend from 'extend';
+
 import { ButtonSet } from '../../../src/components/button/button.set';
 import { cleanup } from '../../helpers/func-utils';
 
@@ -27,12 +29,23 @@ const standardButtonsDef = {
       id: 'btn-3',
       style: 'btn-tertiary',
       text: 'Button 3',
-      icon: 'icon-settings'
+      icon: 'icon-mail'
     },
     {
       id: 'btn-4',
       style: 'btn-destructive',
       text: 'Button 4'
+    }
+  ]
+};
+
+const standaloneButtonDef = {
+  buttons: [
+    {
+      id: 'my-button-1',
+      text: 'My Button',
+      icon: 'icon-settings',
+      style: 'btn-secondary'
     }
   ]
 };
@@ -113,5 +126,118 @@ describe('ButtonSet API', () => {
     expect(thirdBtnEl.innerText).toEqual('Button 2');
     expect(icon instanceof SVGElement).toBeTruthy();
     expect(icon.querySelector('use').getAttribute('xlink:href')).toBe('#icon-settings');
+
+    // Disable just this button and check the buttonset status
+    thirdBtnAPI.disabled = true;
+    const enabledButtons = buttonSetAPI.buttons.filter(buttonAPI => buttonAPI.disabled === false);
+
+    expect(thirdBtnEl.disabled).toBeTruthy();
+    expect(thirdBtnEl.classList.contains('is-disabled')).toBeTruthy();
+    expect(enabledButtons.length).toEqual(4);
+  });
+
+  it('can add buttons', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standaloneButtonDef);
+
+    expect(Array.isArray(buttonSetAPI.buttons)).toBeTruthy();
+    expect(buttonSetAPI.buttons.length).toEqual(1);
+
+    buttonSetAPI.add({
+      id: 'my-button-2',
+      text: 'My Other Button',
+      icon: 'icon-mail',
+      style: 'btn-primary'
+    });
+
+    expect(buttonSetAPI.buttons.length).toEqual(2);
+
+    const secondBtn = buttonSetAPI.at(1);
+
+    expect(secondBtn).toBeDefined();
+    expect(secondBtn.element[0].id).toEqual('my-button-2');
+    expect(secondBtn.element[0].classList.contains('btn-primary')).toBeTruthy();
+  });
+
+  it('can remove buttons by ID', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standaloneButtonDef);
+    buttonSetAPI.remove('my-button-1');
+
+    expect(Array.isArray(buttonSetAPI.buttons)).toBeTruthy();
+    expect(buttonSetAPI.buttons.length).toEqual(0);
+  });
+
+  it('can remove buttons by API reference', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standaloneButtonDef);
+    const firstBtn = buttonSetAPI.at(0);
+    buttonSetAPI.remove(firstBtn);
+
+    expect(Array.isArray(buttonSetAPI.buttons)).toBeTruthy();
+    expect(buttonSetAPI.buttons.length).toEqual(0);
+  });
+
+  it('can remove buttons by using their HTMLElement', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standaloneButtonDef);
+    const firstBtn = buttonSetAPI.at(0);
+    buttonSetAPI.remove(firstBtn.element[0]);
+
+    expect(Array.isArray(buttonSetAPI.buttons)).toBeTruthy();
+    expect(buttonSetAPI.buttons.length).toEqual(0);
+  });
+
+  it('can reset and remove all buttons at once', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standardButtonsDef);
+
+    expect(buttonSetAPI.buttons.length).toEqual(5);
+
+    buttonSetAPI.removeAll();
+
+    expect(buttonSetAPI.buttons.length).toEqual(0);
+
+    // By default, the ButtonSet component will leave buttons in the DOM when removing them.
+    // eslint-disable-next-line
+    const buttonElems = Array.from(buttonSetAPI.element.querySelectorAll('button'));
+
+    expect(buttonElems.length).toEqual(5);
+  });
+
+  it('can reset and remove all buttons at once, also removing their DOM elements', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standardButtonsDef);
+
+    expect(buttonSetAPI.buttons.length).toEqual(5);
+
+    buttonSetAPI.removeAll(true);
+    // eslint-disable-next-line
+    const buttonElems = Array.from(buttonSetAPI.element.querySelectorAll('button'));
+
+    expect(buttonSetAPI.buttons.length).toEqual(0);
+    expect(buttonElems.length).toEqual(0);
+  });
+
+  it('can be updated without tearing down existing button components', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standardButtonsDef);
+    const newSettings = {
+      style: 'modal'
+    };
+
+    spyOn(buttonSetAPI, 'teardown');
+    buttonSetAPI.updated(newSettings);
+
+    expect(buttonSetAPI.teardown).not.toHaveBeenCalled();
+    expect(buttonSetAPI.buttons.length).toEqual(5);
+    expect(buttonSetAPI.element.classList.contains('modal-buttonset')).toBeTruthy();
+  });
+
+  it('can be updated with alternate buttons, tearing down the existing button components', () => {
+    buttonSetAPI = new ButtonSet(buttonSetEl, standardButtonsDef);
+    const newSettings = extend({}, standaloneButtonDef, {
+      style: 'modal'
+    });
+
+    spyOn(buttonSetAPI, 'teardown');
+    buttonSetAPI.updated(newSettings);
+
+    expect(buttonSetAPI.teardown).toHaveBeenCalled();
+    expect(buttonSetAPI.buttons.length).toEqual(1);
+    expect(buttonSetAPI.element.classList.contains('modal-buttonset')).toBeTruthy();
   });
 });
