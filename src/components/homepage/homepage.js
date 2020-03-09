@@ -272,7 +272,7 @@ Homepage.prototype = {
     } else {
       cards.attr('draggable', false);
       cards.css('cursor', 'auto');
-      cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card')
+      cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
     }
   },
 
