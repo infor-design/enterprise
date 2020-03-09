@@ -34,8 +34,7 @@ module.exports = {
       await browser.manage().logs().get('browser').then((browserLog) => {
         let errors = 0;
         for (let i = 0; i < browserLog.length; i++) {
-          const type = browserLog[i].level.name;
-          logger(type, browserLog[i].message);
+          logger('error', browserLog[i].message);
           errors++;
         }
         expect(errors).toEqual(0);

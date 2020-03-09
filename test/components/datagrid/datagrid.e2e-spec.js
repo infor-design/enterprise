@@ -2263,7 +2263,8 @@ describe('Datagrid filter lookup custom click function tests', () => {
 
     expect(await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 input')).getAttribute('value')).toEqual('I Love Compressors');
     await browser.driver.sleep(config.sleep);
-    await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-filter-1')).click();
+    await element(by.css('.datagrid-result-count')).click();
+
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
