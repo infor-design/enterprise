@@ -14,7 +14,6 @@ const COMPONENT_NAME = 'homepage';
 * @param {object} [settings] The component settings.
 * @param {boolean} [settings.animate] Disable animation during resize
 * @param {number} [settings.columns] Display in 3 (default) or 4 column layout
-* @param {boolean} [settings.editable] Allows rearranging and resizing of cards
 * @param {string} [settings.easing]
 * @param {number} [settings.gutterSize]
 * @param {number} [settings.widgetWidth]
@@ -24,7 +23,6 @@ const COMPONENT_NAME = 'homepage';
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
-  editable: true,
   editing: false, // Private
   easing: 'blockslide', // Private
   gutterSize: 20, // Private
@@ -76,7 +74,7 @@ Homepage.prototype = {
       cols,
       containerHeight: getContainerHeight(),
       matrix: this.rowsAndCols,
-      editmode: this.editing
+      editing: this.editing
     };
   },
 
@@ -139,101 +137,101 @@ Homepage.prototype = {
    */
   initEdit() {
     const homepage = this;
+    const cards = homepage.element.find('.card, .widget');
     if (homepage.editing) {
-      const cards = homepage.element.find('.card, .widget');
       cards.attr('draggable', true);
       cards.css('cursor', 'move');
 
-      homepage.guide = $("<div>").addClass("drop-indicator").append(`
-      <div class="edge"></div>
-      <div class="line"></div>
-      <div class="edge"></div>
+      homepage.guide = $('<div>').addClass('drop-indicator').append(`
+      <div class='edge'></div>
+      <div class='line'></div>
+      <div class='edge'></div>
       `);
 
       cards
         .on('mouseenter.card', function () {
           const card = $(this);
-          const eastHandle = $("<div>").addClass("ui-resizable-handle ui-resizable-e")
+          const eastHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-e')
             .drag({ axis: 'x' })
-            .on('dragstart.handle', (event) => {
-              event.preventDefault();
-              card.addClass("ui-resize-passive");
+            .on('dragstart.handle', (dragevent) => {
+              dragevent.preventDefault();
+              card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
-                .on('mousemove.handle', (event) => {
-                  let width = event.clientX - card.offset().left;
+                .on('mousemove.handle', (mouseevent) => {
+                  const width = mouseevent.clientX - card.offset().left;
                   if (width < homepage.settings.widgetWidth / 2) {
                     eastHandle.css({ left: homepage.settings.widgetWidth / 2 });
                   } else {
                     card.width(width);
                   }
                 })
-                .on('mouseup.handle', (event) => {
-                  card.removeClass("ui-resize-passive");
+                .on('mouseup.handle', () => {
+                  card.removeClass('ui-resize-passive');
                   card.css({ zIndex: 'auto' });
                   $(window)
                     .off('mousemove.handle')
                     .off('mouseup.handle');
 
-                  card.removeClass("double-width triple-width quad-width");
+                  card.removeClass('double-width triple-width quad-width');
                   const widthUnits = card.width() / homepage.settings.widgetWidth;
                   if (widthUnits > 3.5) {
-                    card.addClass("quad-width");
+                    card.addClass('quad-width');
                   } else if (widthUnits > 2.5) {
-                    card.addClass("triple-width");
+                    card.addClass('triple-width');
                   } else if (widthUnits > 1.5) {
-                    card.addClass("double-width");
+                    card.addClass('double-width');
                   }
 
-                  $(".ui-resizable-handle").remove();
-                  card.css({ opacity: 1, width: "" });
+                  $('.ui-resizable-handle').remove();
+                  card.css({ opacity: 1, width: '' });
                   homepage.refresh(false);
-                })
-            })
-          const southHandle = $("<div>").addClass("ui-resizable-handle ui-resizable-s")
+                });
+            });
+          const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
             .drag({ axis: 'y' })
-            .on('dragstart.handle', (event) => {
-              event.preventDefault();
-              card.addClass("ui-resize-passive");
+            .on('dragstart.handle', (dragevent) => {
+              dragevent.preventDefault();
+              card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
-                .on('mousemove.handle', (event) => {
-                  let height = event.clientY - card.offset().top;
+                .on('mousemove.handle', (mouseevent) => {
+                  const height = mouseevent.clientY - card.offset().top;
                   if (height < homepage.settings.widgetHeight) {
                     southHandle.css({ top: homepage.settings.widgetHeight });
                   } else {
                     card.height(height);
                   }
                 })
-                .on('mouseup.handle', (event) => {
-                  card.removeClass("ui-resize-passive");
+                .on('mouseup.handle', () => {
+                  card.removeClass('ui-resize-passive');
                   card.css({ zIndex: 'auto' });
                   $(window)
                     .off('mousemove.handle')
                     .off('mouseup.handle');
 
-                  card.removeClass("double-height");
+                  card.removeClass('double-height');
                   const heightUnits = card.height() / homepage.settings.widgetHeight;
                   if (heightUnits > 1.5) {
-                    card.addClass("double-height");
+                    card.addClass('double-height');
                   }
 
-                  $(".ui-resizable-handle").remove();
-                  card.css({ opacity: 1, height: "" });
+                  $('.ui-resizable-handle').remove();
+                  card.css({ opacity: 1, height: '' });
                   homepage.refresh(false);
-                })
+                });
             });
-          if(card.has(".ui-resizable-handle").length === 0){
+          if (card.has('.ui-resizable-handle').length === 0) {
             card.append(eastHandle, southHandle);
           }
-          card.css({border: '1px solid #078cd9'});
+          card.css({ border: '1px solid #078cd9' });
         })
         .on('mouseleave.card', function () {
           const card = $(this);
-          if (!card.hasClass("ui-resize-passive")) {
-            $(".ui-resizable-handle").remove();
+          if (!card.hasClass('ui-resize-passive')) {
+            $('.ui-resizable-handle').remove();
           }
-          card.css({border: '1px solid #bdbdbd'});
+          card.css({ border: '1px solid #bdbdbd' });
         })
         .on('dragstart.card', function () {
           const card = $(this);
@@ -242,7 +240,7 @@ Homepage.prototype = {
         .on('dragenter.card', function (event) {
           event.preventDefault();
           const card = $(this);
-          let draggingCard = $('.is-dragging');
+          const draggingCard = $('.is-dragging');
 
           // Ignore intial trigger when current card is dragging over itself
           if (card.is(draggingCard) && $('.drop-indicator').length === 0) {
@@ -250,13 +248,13 @@ Homepage.prototype = {
           }
 
           if (draggingCard.index() < card.index()) {
-            homepage.guide.css("right", "-14px");
-            homepage.guide.css("left", "");
+            homepage.guide.css('right', '-14px');
+            homepage.guide.css('left', '');
           } else {
-            homepage.guide.css("left", "-14px");
-            homepage.guide.css("right", "");
+            homepage.guide.css('left', '-14px');
+            homepage.guide.css('right', '');
           }
-          card.append(homepage.guide)
+          card.append(homepage.guide);
           homepage.refresh(false);
         })
         .on('dragend.card', function () {
@@ -272,25 +270,25 @@ Homepage.prototype = {
           homepage.refresh(false);
         });
     } else {
-      const cards = homepage.element.find('.card, .widget');
       cards.attr('draggable', false);
       cards.css('cursor', 'auto');
+      cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card')
     }
   },
 
   /**
    * Set edit for rearranging/reordering cards.
-   * @public
-   * @param {boolean} editing
+   * @param {boolean} edit mode
    * @returns {void}
    */
-  setEdit(value) {
-    if (this.editable && value !== undefined) {
-      this.editing = value;
+  setEdit(edit) {
+    if (edit !== undefined) {
+      this.editing = edit;
+      this.initEdit();
       this.refresh(false);
     }
   },
-  
+
   /**
    * Get availability where we can fit this given block.
    * @private
