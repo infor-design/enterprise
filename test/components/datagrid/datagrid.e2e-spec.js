@@ -2254,7 +2254,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
     expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
   });
 
-  fit('Should overflow to text ellipsis', async () => {
+  it('Should overflow to text ellipsis', async () => {
     const lookup = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 .trigger'));
     await lookup.click();
     await browser.driver.sleep(config.sleep);
