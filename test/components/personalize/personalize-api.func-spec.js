@@ -78,4 +78,20 @@ describe('Personalize API', () => {
 
     expect(document.documentElement.classList.contains('theme-uplift-dark')).toBeTruthy();
   });
+
+  it('Should fire colorschanged on setColors', () => {
+    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-light' });
+    const spyEvent = spyOnEvent('html', 'colorschanged');
+    personalization.setColors('personalization');
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('Should fire colorschanged on setColorsToDefault', () => {
+    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-light' });
+    const spyEvent = spyOnEvent('html', 'colorschanged');
+    personalization.setColorsToDefault();
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
 });

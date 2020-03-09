@@ -1224,6 +1224,38 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
   });
 });
 
+describe('Datagrid Row Row Reorder', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show on hover', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await browser.actions()
+        .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-row-reorder')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Date default values', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');
@@ -2222,7 +2254,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
     expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
   });
 
-  it('Should overflow to text ellipsis', async () => {
+  fit('Should overflow to text ellipsis', async () => {
     const lookup = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 .trigger'));
     await lookup.click();
     await browser.driver.sleep(config.sleep);

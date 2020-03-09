@@ -68,6 +68,16 @@
   }
 }
 
+.header {
+  + .page-container {
+    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+      height: calc(100% - 50px);
+      margin-top: 0;
+      position: relative;
+    }
+  }
+}
+
 .tab-list-info {
   @include font-size(20);
 
@@ -80,6 +90,23 @@
 
   h2 {
     @include font-size(20);
+  }
+}
+
+.tab-panel-container {
+  height: inherit;
+
+  .tab-panel {
+    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    p:last-child {
+      @media (max-width: $breakpoint-phone-to-tablet - 1) {
+        padding-bottom: 10px;
+      }
+    }
   }
 }
 
@@ -220,8 +247,8 @@
     }
 
     + .tab-panel-container > .tab-panel {
-      margin: 30px;
-      padding-top: 0;
+      margin-top: 30px;
+      padding: 0 15px;
     }
   }
 }

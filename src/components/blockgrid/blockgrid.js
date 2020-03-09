@@ -89,7 +89,7 @@ Blockgrid.prototype = {
       const isCheckbox = target.is('.checkbox-label') || target.is('.checkbox');
 
       setTimeout(() => {
-        self.selectBlock(activeBlock, isCheckbox);
+        self.select(activeBlock, isCheckbox);
       }, 0);
 
       e.stopPropagation();
@@ -112,7 +112,7 @@ Blockgrid.prototype = {
       }
 
       const activeBlock = $(e.target);
-      self.selectBlock(activeBlock, false);
+      self.select(activeBlock, false);
     });
 
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
@@ -300,7 +300,7 @@ Blockgrid.prototype = {
       }
 
       blockelements += `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
-        <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id}"${checked}>
+        <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id || i}"${checked}>
         <label for="checkbox${i}" class="checkbox-label">
           <span class="audible">${selectText}</span>
         </label>
