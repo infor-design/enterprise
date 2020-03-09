@@ -19,6 +19,47 @@
   }
 }
 
+.ie,
+.ie11 {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            left: 0.15em;
+            top: 0.56em;
+          }
+        }
+      }
+    }
+
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          left: 0.13em;
+          top: 0.6em;
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.55em;
+            top: 0.97em;
+          }
+        }
+      }
+
+      &.time-out {
+        &::after {
+          top: 0.65em;
+        }
+      }
+    }
+  }
+}
+
 // Only adjust the placement of the process indicator lines when not on RTL
 html:not([dir='rtl']) {
   .process-indicator {
