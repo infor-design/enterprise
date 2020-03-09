@@ -21,21 +21,47 @@ describe('Editor example-index tests', () => {
     await elem.sendKeys('Test');
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.editor')).getText()).toEqual('Test');
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
     await browser.driver.sleep(config.sleep);
     await element(by.css('button[data-action=source]')).click();
     await browser.driver.sleep(config.sleep);
 
     const sourceElem = await element(by.tagName('textarea'));
-    const testText = await sourceElem.getText();
+    let testText = await sourceElem.getText();
 
-    expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('Test');
+    expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('<p>Test</p>');
 
     await sourceElem.sendKeys('<b>Test</b>');
     await element(by.css('button[data-action=visual]')).click();
     await browser.driver.sleep(config.sleep);
+    testText = await await element(by.css('.editor')).getText();
 
-    expect(await element(by.css('.editor')).getText()).toEqual('TestTest');
+    expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('TestTest');
+  });
+
+  it('Should create p tags when cleared', async () => {
+    const elem = await element(by.css('.editor'));
+
+    await elem.clear();
+    await elem.sendKeys('Test');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
+  });
+
+  it('Should create p tags when cleared in html view', async () => {
+    const elem = await element(by.css('.editor'));
+
+    await element(by.css('button[data-action=source]')).click();
+    await browser.driver.sleep(config.sleep);
+    const sourceElem = await element(by.tagName('textarea'));
+    await sourceElem.clear();
+    await element(by.css('button[data-action=visual]')).click();
+    await browser.driver.sleep(config.sleep);
+    await elem.sendKeys('Test');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -52,7 +78,7 @@ describe('Editor preview mode tests', () => {
     await utils.setPage('/components/editor/example-preview?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('Should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
@@ -77,7 +103,7 @@ describe('Editor dirty tracking tests', () => {
     await utils.setPage('/components/editor/example-dirty-tracking?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('Should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
@@ -96,4 +122,41 @@ describe('Editor dirty tracking tests', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-dirty-tracker')).toEqual(0);
     }
   });
+});
+
+describe('Editor empty tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/test-empty?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {  //eslint-disable-line
+    await utils.checkForErrors();
+  });
+
+  it('Should create p tags when entered from empty', async () => {
+    const elem = await element(by.css('.editor'));
+
+    await elem.sendKeys('This is a test');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>This is a test</p>');
+  });
+});
+
+describe('Editor placeholder tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/test-placeholder?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => { //eslint-disable-line
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visually regress', async () => { //eslint-disable-line
+      const elem = await element(by.css('.editor'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-placeholder')).toEqual(0);
+    });
+  }
 });
