@@ -295,7 +295,7 @@ $swaplist-title-text-color: $theme-color-palette-white;
 $swaplist-text-color: $theme-color-palette-white;
 
 // Mast Head
-$masthead-bg-color: $header-bg-color;
+$masthead-bg-color: $theme-color-palette-slate-100;
 $masthead-border-color: $theme-color-palette-slate-80;
 
 // Icons
@@ -609,7 +609,7 @@ $wizard-toolbar-border-color: $theme-color-palette-slate-70;
 $hierarchy-line-color: $theme-color-palette-slate-40;
 
 // Searchfield Colors
-$searchfield-bg-color: $theme-color-palette-slate-90;
+$searchfield-bg-color: $theme-color-palette-slate-70;
 $searchfield-border-color: $theme-color-palette-slate-100;
 $searchfield-icon-color: $button-color-tertiary-initial-font;
 $searchfield-text-color: $button-color-tertiary-initial-font;

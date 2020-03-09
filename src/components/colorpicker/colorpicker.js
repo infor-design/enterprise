@@ -112,7 +112,7 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '09', value: '134D71' },
     { label: 'Azure', number: '08', value: '1D5F8A' },
     { label: 'Azure', number: '07', value: '2876A8' },
-    { label: 'Azure', number: '06', value: '368AC0' },
+    { label: 'Azure', number: '06', value: '2578A9' },
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
     { label: 'Azure', number: '03', value: '8DC9E6' },

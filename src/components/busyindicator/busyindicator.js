@@ -351,15 +351,18 @@ BusyIndicator.prototype = {
     if (this.blockUI) {
       this.scrollParent = $(this.getScrollParent(this.element[0]));
       const scrollParentHeight = this.scrollParent.length ? this.scrollParent.outerHeight() : 0;
-      if (scrollParentHeight && (scrollParentHeight < this.element.outerHeight())) {
+      if (scrollParentHeight && this.container &&
+          (scrollParentHeight < this.element.outerHeight())) {
         const locTop = (scrollParentHeight / 2) - 58;
         this.container.css({ top: locTop });
 
         this.scrollParent
           .off('scroll.parent.busyindicator')
           .on('scroll.parent.busyindicator', () => {
-            const offset = locTop + this.scrollParent.scrollTop();
-            this.container.css({ top: offset });
+            if (this.container) {
+              const offset = locTop + this.scrollParent.scrollTop();
+              this.container.css({ top: offset });
+            }
           });
       }
     }

@@ -111,6 +111,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {Function} [settings.onExpandChildren=null] A callback function that fires when expanding children with treeGrid.
+ * @param {Function} [settings.onCollapseChildren=null] A callback function that fires when collapseing children with treeGrid.
  * @param {Function} [settings.onKeyDown=null] A callback function that fires when any key is pressed down.
  * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
@@ -208,6 +210,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
+  onExpandChildren: null, // Callback fires when expanding children with treeGrid
+  onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
   searchExpandableRow: true,
@@ -925,6 +929,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
+      this.clearCache();
       this.renderRows();
     }
 
@@ -2589,7 +2594,7 @@ Datagrid.prototype = {
       showTarget = $('.drag-target-arrows', self.element);
     }
 
-    headers.not('[data-reorder="false"]').prepend('</span><span class="handle">&#8286;</span>');
+    headers.not('[data-reorder="false"]').prepend(`</span><span class="handle">${$.createIcon({ icon: 'drag' })}</span>`);
     headers.prepend('<span class="is-draggable-target"></span>');
     headers.last().append('<span class="is-draggable-target last"></span>');
     self.element.addClass('has-draggable-columns');
@@ -2613,7 +2618,12 @@ Datagrid.prototype = {
             clone = thisClone;
 
             clone.removeAttr('id').addClass('is-dragging-clone')
-              .css({ left: pos.left, top: pos.top, height: header.height(), border: 0 });
+              .css({
+                left: !Locale.isRTL() ? pos.left : pos.right - clone.width(),
+                top: pos.top,
+                height: header.height(),
+                border: 0
+              });
 
             $('.is-draggable-target', clone).remove();
 
@@ -2628,10 +2638,13 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('drag.datagrid', (dragEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+            clone[0].style.left = `${parseInt(!Locale.isRTL() ? pos.left : ((pos.left + pos.offset.x) - pos.clone.width()), 10)}px`;
             clone[0].style.top = `${parseInt(pos.top, 10)}px`;
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
 
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             let n = 0;
             let target = null;
             let rect = null;
@@ -2652,7 +2665,7 @@ Datagrid.prototype = {
                   target.el.addClass('is-over');
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
-                  showTarget[0].style.left = `${parseInt(rect.left, 10)}px`;
+                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
                   showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
                 }
               }
@@ -2661,11 +2674,15 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('dragend.datagrid', (dragendEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
-            clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            if (!Locale.isRTL()) {
+              clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+              clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            }
 
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
-
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             const index = self.targetColumn(headerPos);
             const dragApi = header.data('drag');
             const tempArray = [];
@@ -2766,6 +2783,11 @@ Datagrid.prototype = {
       if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
           pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
         idx = target.index;
+
+        // In RTL mode return the first one found. In LTR return the last one found.
+        if (Locale.isRTL()) {
+          return idx;
+        }
       }
     }
     return idx;
@@ -3226,6 +3248,7 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
       this.recordCount++;
+      this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
         rowStatusTooltip = true;
@@ -4424,6 +4447,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
       this.stretchColumnWidth = colWidth;
       return ' style="width: 99%"';
     }
@@ -5928,7 +5952,7 @@ Datagrid.prototype = {
         // Then Activate
         if (!canSelect) {
           if (e.shiftKey && self.activatedRow().length) {
-            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').attr('aria-rowindex') - 1]);
             e.preventDefault();
           }
 
@@ -5937,7 +5961,7 @@ Datagrid.prototype = {
       }
 
       if (canSelect && isMultiple && e.shiftKey) {
-        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
+        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
@@ -8117,6 +8141,29 @@ Datagrid.prototype = {
             }
           }
 
+          if (cell === -1 && !self.settings.actionableMode) {
+            return;
+          }
+
+          if (cell === -1 && self.settings.actionableMode) {
+            row--;
+            cell = lastCell;
+
+            if (row === -1) {
+              return;
+            }
+          }
+
+          if (cell === lastCell && lastCell === self.activeCell.cell &&
+            self.settings.actionableMode) {
+            row++;
+            cell = 0;
+
+            if (row === self.visibleRowCount) {
+              return;
+            }
+          }
+
           if (cell instanceof jQuery) {
             self.setActiveCell(cell);
           } else {
@@ -8129,6 +8176,7 @@ Datagrid.prototype = {
               self.quickEditMode = true;
             }
           }
+
           self.quickEditMode = false;
           handled = true;
         }
@@ -8223,7 +8271,7 @@ Datagrid.prototype = {
         }
 
         if (isMultiple && e.shiftKey) {
-          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
+          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
         }
@@ -10021,6 +10069,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
+    const s = this.settings;
     let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
@@ -10120,8 +10169,28 @@ Datagrid.prototype = {
     * @property {object} args.item The selected row data.
     * @property {array} args.children The selected rows children (tree grid)
     */
-    $.when(self.element.triggerHandler(isExpanded ? 'collapserow' : 'expandrow', args)).done(() => {
-      toggleExpanded();
+    const triggerEvent = isExpanded ? 'collapserow' : 'expandrow';
+    $.when(self.element.triggerHandler(triggerEvent, args)).done((response) => {
+      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+        (typeof v === 'boolean' && v === false) ||
+        (typeof v === 'number' && v === 0));
+      if (!isFalse(response)) {
+        if (typeof s.onExpandChildren === 'function' && !isExpanded) {
+          $.when(s.onExpandChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else if (typeof s.onCollapseChildren === 'function' && isExpanded) {
+          $.when(s.onCollapseChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else {
+          toggleExpanded();
+        }
+      }
     });
   },
 
@@ -10213,7 +10282,7 @@ Datagrid.prototype = {
       const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
       self.element.triggerHandler('expandrow', eventData);
 
-      if (self.settings.allowOneExpandedRow) {
+      if (self.settings.allowOneExpandedRow && this.settings.selectable !== 'multiple') {
         rowElement.addClass('is-rowactivated');
       }
 
@@ -10641,6 +10710,12 @@ Datagrid.prototype = {
     if (!this.headerRow) {
       return;
     }
+
+    this.sortColumn = {
+      sortId: id,
+      sortAsc: ascending,
+      sortField: (this.columnById(id)[0] ? this.columnById(id)[0].field : id)
+    };
 
     // Set Visual Indicator
     this.element.find('.is-sorted-asc, .is-sorted-desc')

@@ -149,7 +149,7 @@ Personalize.prototype = {
     const forceToBeLightTextOn = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
-      azure: ['#2578a9', '#0563c2'], // azure 07/08
+      azure: ['#2578a9', '#0563c2', '368AC0'], // azure 07/08
       emerald: ['#56932e', '#1f9254'], // emerald 08
       graphite: ['#5c5c5c', '#808080'], // graphite 06
       ruby: ['#941e1e', '#7b0f11'], // ruby 09
@@ -257,6 +257,7 @@ Personalize.prototype = {
     this.element.triggerHandler('colorschanged', {
       colors: this.settings.colors.header ||
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
+      isDefault: false,
       theme: this.currentTheme || 'theme-soho-light'
     });
     return this;
@@ -271,6 +272,11 @@ Personalize.prototype = {
     if (sheet) {
       sheet.parentNode.removeChild(sheet);
     }
+    this.element.triggerHandler('colorschanged', {
+      colors: theme.themeColors().brand.primary.alt.value,
+      isDefault: true,
+      theme: this.currentTheme || 'theme-soho-light'
+    });
   },
 
   /**
