@@ -263,7 +263,7 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'hour' })).toEqual('14:15');
     expect(Locale.formatDate('10 nov. 2018 14:15', { date: 'datetime' })).toEqual('10 nov. 2018 14:15');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezone' })).toEqual('10 nov. 2018 14:15 GT-');
-    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' })).toEqual('10 nov. 2018 14:15 hora estándar oriental');
+    expect(['2014-12-31', '10 nov. 2018 14:15 hora estándar oriental', '10 nov. 2018 14:15 hora de verano oriental']).toContain(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' }));
     expect(Locale.formatDate(new Date(2018, 10, 10), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 00:00');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 14:15');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy h:mm a')).toEqual('10 nov. 2018 2:15 p.m.');
@@ -286,6 +286,29 @@ describe('Locale API', () => { //eslint-disable-line
     Locale.set('en-US');
 
     expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
+  });
+
+  it('Should parse am/pm in Korean', () => {
+    Locale.set('ko-KO');
+
+    expect(Locale.parseDate('2020-02-26 오전 12:00', { pattern: 'yyyy-MM-dd a h:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 0, 0, 0).getTime());
+
+    expect(Locale.parseDate('2020-02-26 오후 12:00', { pattern: 'yyyy-MM-dd a h:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
+  });
+
+  it('Should parse am/pm in zh-TW', () => {
+    Locale.set('zh-TW');
+
+    expect(Locale.parseDate('2020/2/26 上午12:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 0, 0, 0).getTime());
+
+    expect(Locale.parseDate('2020-02-26 下午12:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
+      .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
+
+    expect(Locale.parseDate('2020/3/4 下午9:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
+      .toEqual(new Date(2020, 2, 4, 9, 0, 0).getTime());
   });
 
   it('Should format en-US dates', () => {
