@@ -2,7 +2,7 @@
 // Wraps `console.log` so we don't have errors
 // all over the place.
 // ===============================================
-const chalk = require('chalk');
+const chalk = require('chalk'); //eslint-disable-line
 
 const logTypes = [
   'normal', 'timestamp', 'success', 'info', 'error', 'alert', 'skip', 'callout'
@@ -21,32 +21,36 @@ const BEER = '🍻';
 // have some icons in the logs.
 function pad(n) {
   let ret = '';
-  if (isNaN(n)) {
-    n = 0;
+  let j = n;
+  if (isNaN(j)) { //eslint-disable-line
+    j = 0;
   }
-  while (n > 0) {
+  while (j > 0) {
     ret += ' ';
-    --n;
+    --j;
   }
   return ret;
 }
 
 // Simple wrapper for `console.log`
 function logger(type, msg) {
-  if (!type && !msg) {
-    type = logTypes[0];
-    msg = msg || '';
+  let consoleType = type;
+  let consoleMsg = msg;
+
+  if (!consoleType && !msg) {
+    consoleType = logTypes[0];
+    consoleMsg = msg || '';
   }
   if (!msg && msg !== '') {
-    msg = type;
-    type = logTypes[0];
+    consoleMsg = type;
+    consoleType = logTypes[0];
   }
 
   // Console lines can be prefixed with certain icon types or padding.
   // Useful when multiple logger lines are used to display steps in a process.
   // If not needed, simply use `undefined` in the type, or use "normal".
   let prefix = '';
-  switch (type) {
+  switch (consoleType) {
     case 'padded':
       prefix = pad(3);
       break;
@@ -83,7 +87,7 @@ function logger(type, msg) {
 
   if (console) {
     // eslint-disable-next-line
-    console.log(prefix + msg);
+    console.log(prefix + consoleMsg);
   }
 }
 
