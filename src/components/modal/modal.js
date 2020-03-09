@@ -1,5 +1,4 @@
 import * as debug from '../../utils/debug';
-import { Environment as env } from '../../utils/environment';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
