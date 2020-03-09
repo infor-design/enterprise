@@ -137,34 +137,6 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     expect(focusedItem).toEqual(items[1]);
   });
 
-  /*
-   * NOTE: Not sure if this ought to be a functional test... ideally the API should be
-   * tested, but the menu isn't rendered until the Popupmenu opens for the first time.
-   */
-  xit('Links action button list items to toolbar items', (done) => {
-    // Change width of the container to change the overflow scenario.
-    rowEl.style.width = '500px';
-    const items = toolbarAPI.items;
-
-    // Can't check these conditions until after the popupmenu's been opened
-    // and completely rendered.
-    $(items[5].element).on('open.test', () => {
-      // Check `items[1]` which is the menu button
-      expect(items[1].overflowed).toBeTruthy();
-      expect(items[1].actionButtonLink).toBeDefined();
-      expect(items[1].actionButtonLink).toEqual(jasmine.any(HTMLElement));
-
-      const menuItem = items[1].actionButtonLink;
-      const originalButton = $(menuItem).data('original-button');
-
-      expect(originalButton).toEqual(items[1].element);
-      done();
-    });
-
-    // Open the action button popupmenu first
-    items[5].componentAPI.open();
-  });
-
   it('Selects a toolbar item by element reference', () => {
     const items = toolbarAPI.items;
 
