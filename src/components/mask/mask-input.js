@@ -423,7 +423,7 @@ MaskInput.prototype = {
    * @returns {boolean} whether or not the previous mask state matches the current one.
    */
   _hasChangedValue() {
-    if (!this.state || !this.state.previousMaskResult) {
+    if ((!this.state || !this.state.previousMaskResult) && this.state.previousMaskResult !== '') {
       return true;
     }
 

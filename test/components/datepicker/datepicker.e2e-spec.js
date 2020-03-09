@@ -505,6 +505,35 @@ describe('Datepicker Legend Tests', () => {
   }
 });
 
+describe('Datepicker Change Event Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-change-event?layout=nofrills');
+  });
+
+  it('Should not trigger change empty and tab', async () => {
+    await element(by.id('date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(0);
+  });
+
+  it('Should trigger 1 change on key and tab', async () => {
+    await element(by.css('#date-field-1')).clear();
+    await element(by.css('#date-field-1')).sendKeys('5/2/2020');
+    await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
+  it('Should not trigger change two changes on select and tab', async () => {
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+    await element(by.css('#date-field-1')).click();
+    await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+});
+
 describe('Datepicker Destroy Mask Tests', () => {
   beforeEach(async () => {
     const Date = () => {  //eslint-disable-line
