@@ -2,6 +2,10 @@
 
 ## v4.27.0
 
+### v4.27.0 Features
+
+- `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
+
 ### v4.27.0 Important Changes
 
 - `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.

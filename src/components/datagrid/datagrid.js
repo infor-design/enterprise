@@ -111,6 +111,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {Function} [settings.onExpandChildren=null] A callback function that fires when expanding children with treeGrid.
+ * @param {Function} [settings.onCollapseChildren=null] A callback function that fires when collapseing children with treeGrid.
  * @param {Function} [settings.onKeyDown=null] A callback function that fires when any key is pressed down.
  * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
@@ -208,6 +210,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
+  onExpandChildren: null, // Callback fires when expanding children with treeGrid
+  onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
   searchExpandableRow: true,
@@ -10065,6 +10069,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
+    const s = this.settings;
     let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
@@ -10164,8 +10169,28 @@ Datagrid.prototype = {
     * @property {object} args.item The selected row data.
     * @property {array} args.children The selected rows children (tree grid)
     */
-    $.when(self.element.triggerHandler(isExpanded ? 'collapserow' : 'expandrow', args)).done(() => {
-      toggleExpanded();
+    const triggerEvent = isExpanded ? 'collapserow' : 'expandrow';
+    $.when(self.element.triggerHandler(triggerEvent, args)).done((response) => {
+      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+        (typeof v === 'boolean' && v === false) ||
+        (typeof v === 'number' && v === 0));
+      if (!isFalse(response)) {
+        if (typeof s.onExpandChildren === 'function' && !isExpanded) {
+          $.when(s.onExpandChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else if (typeof s.onCollapseChildren === 'function' && isExpanded) {
+          $.when(s.onCollapseChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else {
+          toggleExpanded();
+        }
+      }
     });
   },
 

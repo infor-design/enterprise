@@ -111,6 +111,8 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       onDestroyCell: null,
       onEditCell: null,
       onExpandRow: null,
+      onExpandChildren: null,
+      onCollapseChildren: null,
       onKeyDown: null,
       emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
       searchExpandableRow: true,
