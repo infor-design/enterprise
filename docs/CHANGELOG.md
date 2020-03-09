@@ -2,6 +2,10 @@
 
 ## v4.27.0
 
+### v4.27.0 Important Changes
+
+- `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
+
 ### v4.27.0 Fixes
 
 - `[Bar Chart]` Fixed an issue where chart was not resizing on homepage widget resize. ([#2669](https://github.com/infor-design/enterprise/issues/2669))
