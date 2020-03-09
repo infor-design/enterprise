@@ -507,7 +507,7 @@ Editor.prototype = {
    * Clean up the editor content on change.
    * @private
    */
-  resetEmptyEditor(e) {
+  resetEmptyEditor() {
     this.savedSelection = this.saveSelection();
 
     const sep = this.settings.paragraphSeparator === 'p' ? 'p' : 'div';

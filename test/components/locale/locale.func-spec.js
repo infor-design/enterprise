@@ -263,7 +263,7 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'hour' })).toEqual('14:15');
     expect(Locale.formatDate('10 nov. 2018 14:15', { date: 'datetime' })).toEqual('10 nov. 2018 14:15');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezone' })).toEqual('10 nov. 2018 14:15 GT-');
-    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' })).toEqual('10 nov. 2018 14:15 hora estándar oriental');
+    expect(['10 nov. 2018 14:15 hora estándar oriental', '10 nov. 2018 14:15 hora de verano oriental']).toContain(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' }));
     expect(Locale.formatDate(new Date(2018, 10, 10), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 00:00');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 14:15');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy h:mm a')).toEqual('10 nov. 2018 2:15 p.m.');
