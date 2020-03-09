@@ -792,10 +792,6 @@ Modal.prototype = {
       let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
       thisElem.keepFocus();
 
-      if (env.os.name === 'ios') {
-        $('body').addClass('has-modal-open');
-      }
-
       /**
       * Fires when the modal opens.
       * @event open
@@ -1059,14 +1055,14 @@ Modal.prototype = {
       this.root.attr('aria-hidden', 'true');
     }
 
-    if ($('.modal-page-container').length <= 1) {
+    // Remove the overlay and special body classes if this Modal was the very last one to be closed
+    // (Modals can be nested)
+    const modalContainers = $('.modal-page-container');
+    const visibleModalPageContainers = modalContainers.filter((i, elem) => !$(elem).is('[aria-hidden]'));
+    if (visibleModalPageContainers.length < 1) {
       $('body').removeClass('modal-engaged');
-      $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
-      $('.overlay').remove();
-    }
-
-    if (env.os.name === 'ios') {
-      $('body').removeClass('has-modal-open');
+      modalContainers.not(this.root).removeAttr('aria-hidden');
+      this.overlay.remove();
     }
 
     // Fire Events
