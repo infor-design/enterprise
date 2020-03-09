@@ -353,7 +353,7 @@ BusyIndicator.prototype = {
       const scrollParentHeight = this.scrollParent.length ? this.scrollParent.outerHeight() : 0;
       if (scrollParentHeight && this.container &&
           (scrollParentHeight < this.element.outerHeight())) {
-        const locTop = (scrollParentHeight / 2) - 58;
+        const locTop = ((scrollParentHeight / 2) - 58) + this.scrollParent.scrollTop();
         this.container.css({ top: locTop });
 
         this.scrollParent
