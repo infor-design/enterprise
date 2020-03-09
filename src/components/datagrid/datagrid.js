@@ -2594,7 +2594,7 @@ Datagrid.prototype = {
       showTarget = $('.drag-target-arrows', self.element);
     }
 
-    headers.not('[data-reorder="false"]').prepend('</span><span class="handle">&#8286;</span>');
+    headers.not('[data-reorder="false"]').prepend(`</span><span class="handle">${$.createIcon({ icon: 'drag' })}</span>`);
     headers.prepend('<span class="is-draggable-target"></span>');
     headers.last().append('<span class="is-draggable-target last"></span>');
     self.element.addClass('has-draggable-columns');
@@ -2618,7 +2618,12 @@ Datagrid.prototype = {
             clone = thisClone;
 
             clone.removeAttr('id').addClass('is-dragging-clone')
-              .css({ left: pos.left, top: pos.top, height: header.height(), border: 0 });
+              .css({
+                left: !Locale.isRTL() ? pos.left : pos.right - clone.width(),
+                top: pos.top,
+                height: header.height(),
+                border: 0
+              });
 
             $('.is-draggable-target', clone).remove();
 
@@ -2633,10 +2638,13 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('drag.datagrid', (dragEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+            clone[0].style.left = `${parseInt(!Locale.isRTL() ? pos.left : ((pos.left + pos.offset.x) - pos.clone.width()), 10)}px`;
             clone[0].style.top = `${parseInt(pos.top, 10)}px`;
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
 
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             let n = 0;
             let target = null;
             let rect = null;
@@ -2657,7 +2665,7 @@ Datagrid.prototype = {
                   target.el.addClass('is-over');
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
-                  showTarget[0].style.left = `${parseInt(rect.left, 10)}px`;
+                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
                   showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
                 }
               }
@@ -2666,11 +2674,15 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('dragend.datagrid', (dragendEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
-            clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            if (!Locale.isRTL()) {
+              clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+              clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            }
 
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
-
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             const index = self.targetColumn(headerPos);
             const dragApi = header.data('drag');
             const tempArray = [];
@@ -2771,6 +2783,11 @@ Datagrid.prototype = {
       if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
           pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
         idx = target.index;
+
+        // In RTL mode return the first one found. In LTR return the last one found.
+        if (Locale.isRTL()) {
+          return idx;
+        }
       }
     }
     return idx;

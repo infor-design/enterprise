@@ -144,19 +144,6 @@
   &.medium-rowheight th.text-ellipsis .datagrid-header-text {
     margin: 5px 0 0 !important;
   }
-
-  th .handle {
-    margin-top: -2px;
-  }
-
-  &.short-rowheight th .handle {
-    margin-top: -3px;
-  }
-
-  &.medium-rowheight th .handle {
-    font-size: 1.6em;
-    margin-top: -1px;
-  }
 }
 
 .datagrid.short-rowheight tbody tr td.datagrid-trigger-cell .icon {
