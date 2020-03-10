@@ -573,7 +573,9 @@ ColorPicker.prototype = {
       if (s.clearable) {
         const li = $('<li></li>');
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
-        a.data('label', s.clearableText).data('value', '').tooltip();
+        a.data('label', s.clearableText)
+          .data('value', '000000')
+          .tooltip();
         menu.append(li);
       }
 
