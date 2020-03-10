@@ -79,11 +79,11 @@ describe('Colorpicker example-index tests', () => {
     expect(await element.all(by.className('swatch')).first().getAttribute('style')).toBe('background-color: rgb(137, 137, 137);');
   });
 
-  it('Should pick clear color from picker', async () => {
+  fit('Should pick clear color from picker', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).click();
 
-    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#000000');
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('');
     expect(await element(by.css('.swatch.is-invalid')).isDisplayed()).toBe(true);
   });
 
@@ -103,14 +103,14 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should pick clear color from picker with keypress', async () => {
+  fit('Should pick clear color from picker with keypress', async () => {
     await element(by.id('background-color')).sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
 
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).sendKeys(protractor.Key.SPACE);
 
-    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#000000');
+    expect(await element(by.id('background-color')).getAttribute('value')).toEqual('');
     expect(await element(by.css('.swatch.is-invalid')).isDisplayed()).toBe(true);
   });
 
