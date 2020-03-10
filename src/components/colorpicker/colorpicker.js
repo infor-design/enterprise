@@ -572,8 +572,11 @@ ColorPicker.prototype = {
       // Add clearable swatch to popupmenu
       if (s.clearable) {
         const li = $('<li></li>');
+        const resetColorValue = this.element.attr('data-action') === 'foreColor' ? '000000' : '';
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
-        a.data('label', s.clearableText).data('value', '').tooltip();
+        a.data('label', s.clearableText)
+          .data('value', resetColorValue)
+          .tooltip();
         menu.append(li);
       }
 
