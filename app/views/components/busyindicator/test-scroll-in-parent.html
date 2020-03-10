@@ -11,8 +11,8 @@
       <button class="btn-secondary" id="trigger-busy-complete" type="button">Stop</button>
     </div>
     <br/><br/>
-    <div style="height: 300px; overflow: auto">
-      <div id="standalone-busy" class="busy card top-padding" style="margin-bottom: 0;">
+    <div class="card" style="height: 300px; overflow: auto">
+      <div id="standalone-busy" class="busy" style="margin-bottom: 0;">
         <p>Text 1</p>
         <p>Text 2</p>
         <p>Text 3</p>
@@ -69,17 +69,15 @@
 </div>
 
 <script>
-  $(function(){
+  var busyEl = $('#standalone-busy');
 
-    $('#trigger-busy-start').click(function(e) {
-      e.preventDefault();
-      $('#standalone-busy').trigger('start.busyindicator');
-    });
+  // Start
+  $('#trigger-busy-start').click(function () {
+    busyEl.trigger('start.busyindicator');
+  });
 
-    $('#trigger-busy-complete').click(function(e) {
-      e.preventDefault();
-      $('#standalone-busy').trigger('complete.busyindicator');
-    });
-
+  // Complete
+  $('#trigger-busy-complete').click(function () {
+    busyEl.trigger('complete.busyindicator');
   });
 </script>

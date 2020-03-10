@@ -350,18 +350,17 @@ BusyIndicator.prototype = {
   addScrollParent() {
     if (this.blockUI) {
       this.scrollParent = $(this.getScrollParent(this.element[0]));
-      const scrollParentHeight = this.scrollParent.length ? this.scrollParent.outerHeight() : 0;
-      if (scrollParentHeight && this.container &&
-          (scrollParentHeight < this.element.outerHeight())) {
-        const locTop = ((scrollParentHeight / 2) - 58) + this.scrollParent.scrollTop();
-        this.container.css({ top: locTop });
+      const h = this.scrollParent[0] ? this.scrollParent[0].offsetHeight : 0;
+      if (h && this.container && (h < this.element[0].offsetHeight)) {
+        const loc = ((h / 2) - 58);
+        const setTop = () => (this.container.css({ top: loc + this.scrollParent[0].scrollTop }));
+        setTop();
 
         this.scrollParent
           .off('scroll.parent.busyindicator')
           .on('scroll.parent.busyindicator', () => {
             if (this.container) {
-              const offset = locTop + this.scrollParent.scrollTop();
-              this.container.css({ top: offset });
+              setTop();
             }
           });
       }
