@@ -109,6 +109,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
 
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).sendKeys(protractor.Key.SPACE);
+    await element(by.id('background-color')).sendKeys(protractor.Key.TAB);
 
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('');
     expect(await element(by.css('.swatch.is-invalid')).isDisplayed()).toBe(true);
