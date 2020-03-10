@@ -1057,7 +1057,11 @@ Modal.prototype = {
     // Remove the overlay and special body classes if this Modal was the very last one to be closed
     // (Modals can be nested)
     const modalContainers = $('.modal-page-container');
-    const visibleModalPageContainers = modalContainers.filter((i, elem) => !$(elem).is('[aria-hidden]'));
+    const visibleModalPageContainers = modalContainers.filter((i, elem) => {
+      const ariaHidden = $(elem).is('[aria-hidden]');
+      const displayNone = $(elem).css('display') === 'none';
+      return !ariaHidden && !displayNone;
+    });
     if (visibleModalPageContainers.length < 1) {
       $('body').removeClass('modal-engaged');
       modalContainers.not(this.root).removeAttr('aria-hidden');
