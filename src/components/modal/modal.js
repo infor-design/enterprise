@@ -1062,7 +1062,7 @@ Modal.prototype = {
     if ($('.modal-page-container').length <= 1) {
       $('body').removeClass('modal-engaged');
       $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
-      $('.overlay').remove();
+      $('.overlay:not(.busy)').remove();
     }
 
     if (env.os.name === 'ios') {
