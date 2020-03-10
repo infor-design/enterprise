@@ -516,10 +516,24 @@ describe('Datepicker Change Event Tests', () => {
     expect(await element.all(by.css('#toast-container')).count()).toEqual(0);
   });
 
+  it('Should not trigger change empty and tab with value', async () => {
+    await element(by.id('date-field-2')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(0);
+  });
+
   it('Should trigger 1 change on key and tab', async () => {
     await element(by.css('#date-field-1')).clear();
     await element(by.css('#date-field-1')).sendKeys('5/2/2020');
     await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
+  it('Should trigger 1 change on key and tab with value', async () => {
+    await element(by.css('#date-field-2')).clear();
+    await element(by.css('#date-field-2')).sendKeys('5/2/2020');
+    await element(by.css('#date-field-2')).sendKeys(protractor.Key.TAB);
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });

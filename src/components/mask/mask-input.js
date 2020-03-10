@@ -183,6 +183,7 @@ MaskInput.prototype = {
 
     // Store an initial value on focus
     this.focusEventHandler = function () {
+      self.state.previousMaskResult = self.element.value;
       self.state.initialValue = self.element.value;
     };
     this.element.addEventListener('focus', this.focusEventHandler);

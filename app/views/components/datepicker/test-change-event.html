@@ -7,7 +7,7 @@
 
     <div class="field">
       <label for="date-field-2" class="label">Date Field 2</label>
-      <input id="date-field-2" class="datepicker" name="date-field" type="text"/>
+      <input id="date-field-2" class="datepicker" name="date-field" type="text" value="3/3/2020"/>
     </div>
   </div>
 </div>
@@ -17,7 +17,7 @@
   $('#date-field-1, #date-field-2').on('change', function () {
       $('body').toast({
       title: 'Change Event Fired',
-      message: 'Value is now: "'+ $(this).val() +'"'
+      message: 'Value is now: '+ $(this).val() +''
     });
   });
 </script>
