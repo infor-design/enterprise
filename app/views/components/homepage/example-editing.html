@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <div class="widget double-width">
+      <div class="widget double-width no-remove">
         <div class="widget-header">
           <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 2) - B</h2>
         </div>
@@ -28,10 +28,37 @@
 <script>
   $('body').on('initialized', function () {
     const toggleEdit = $('#toggleEdit');
+    const homepageApi = $('.homepage').data('homepage');
     toggleEdit.on('click', function () {
-      const homepageApi = $('.homepage').data('homepage');
       const editing = homepageApi.state.editing;
       homepageApi.setEdit(!editing);
     });
+    homepageApi.settings.onBeforeRemoveCard = function (card) {
+      var result = new Promise((resolve, reject) => {
+        $('body').message({
+          title: 'Remove this widget?',
+          buttons: [{
+            id: 'id-cancel',
+            text: 'Cancel',
+            click: function (e, modal) {
+              modal.close();
+              reject();
+            },
+            isDefault: true
+          }, {
+            text: 'Remove',
+            click: function (e, modal) {
+              modal.close();
+              resolve();
+            }
+          }]
+        })
+      });
+      return result;
+    }
   });
+  $('.homepage')
+    .on('resizecard', (event, ...data) => console.log("resizecard event: ", data))
+    .on('reordercard', (event, ...data) => console.log("reordercard event: ", data))
+    .on('removecard', (event, ...data) => console.log("removecard event: ", data));
 </script>

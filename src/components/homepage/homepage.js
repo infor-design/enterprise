@@ -74,6 +74,7 @@ Homepage.prototype = {
       cols,
       containerHeight: getContainerHeight(),
       matrix: this.rowsAndCols,
+      blocks: this.blocks,
       editing: this.editing
     };
   },
@@ -148,6 +149,44 @@ Homepage.prototype = {
       <div class='edge'></div>
       `);
 
+
+      cards.each((index, element) => {
+        const card = $(element);
+        const removeButton = $('<button>').addClass('card-remove').append(`
+        <span class="audible">Remove Widget</span>
+          <svg icon="close" soho-icon="" class="icon" aria-hidden="true" focusable="false" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close"></use>
+          </svg>
+        `)
+
+        // Don't add remove button if the card has the 'no-remove' class
+        if (!card.hasClass('no-remove')) {
+          // Remove button should be inserted before the header for proper alignment
+          const header = card.children('.widget-header');
+          removeButton.insertBefore(header)
+            .on('click.card-remove', () => {
+              if (typeof this.settings.onBeforeRemoveCard === 'function') {
+                const result = this.settings.onBeforeRemoveCard(card);
+                if (result && result.then && typeof result.then === 'function') { // A promise is returned
+                  result.then(() => {
+                      homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                      card.remove();
+                      homepage.refresh(false);
+                  })
+                } else if (result) { // Boolean is returned instead of a promise
+                  homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                  card.remove();
+                  homepage.refresh(false);
+                }
+              } else {
+                homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                card.remove();
+                homepage.refresh(false);
+              }
+            });
+        }
+      });
+
       cards
         .on('mouseenter.card', function () {
           const card = $(this);
@@ -186,6 +225,7 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, width: '' });
                   homepage.refresh(false);
+                  homepage.element.triggerHandler('resizecard', [homepage.settings.columns, homepage.state]);
                 });
             });
           const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
@@ -219,6 +259,7 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, height: '' });
                   homepage.refresh(false);
+                  homepage.element.triggerHandler('resizecard', [homepage.settings.columns, homepage.state]);
                 });
             });
           if (card.has('.ui-resizable-handle').length === 0) {
@@ -268,10 +309,12 @@ Homepage.prototype = {
           card.removeClass('is-dragging');
           homepage.guide.remove();
           homepage.refresh(false);
+          homepage.element.triggerHandler('reordercard', [homepage.settings.columns, homepage.state]);
         });
     } else {
       cards.attr('draggable', false);
       cards.css('cursor', 'auto');
+      cards.children('.card-remove').remove();
       cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
     }
   },
