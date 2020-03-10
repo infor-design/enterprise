@@ -438,6 +438,12 @@ div.multiselect {
       bottom: 6px;
       top: auto;
     }
+
+    > .trigger {
+      .icon {
+        top: 9px;
+      }
+    }
   }
 
   &.has-icons {
@@ -1077,6 +1083,14 @@ div.dropdown-xs,
 
       + .icon {
         top: 4px;
+      }
+    }
+  }
+
+  .dropdown-list.is-ontop {
+    > .trigger {
+      .icon {
+        top: 10px;
       }
     }
   }

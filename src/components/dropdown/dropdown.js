@@ -2041,7 +2041,8 @@ Dropdown.prototype = {
       }
 
       if (placementObj.wasFlipped) {
-        adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 5}px`;
+        const adjustedHeight = env.browser.name === 'firefox' ? 39 : 42;
+        adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - adjustedHeight}px`;
 
         if (!self.isShortField) {
           self.list[0].style.top = `${listStyleTop + searchInputHeight + flippedOffset}px`;
