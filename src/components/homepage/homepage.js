@@ -149,7 +149,6 @@ Homepage.prototype = {
       <div class='edge'></div>
       `);
 
-
       cards.each((index, element) => {
         const card = $(element);
         const removeButton = $('<button>').addClass('card-remove').append(`
@@ -157,7 +156,7 @@ Homepage.prototype = {
           <svg icon="close" soho-icon="" class="icon" aria-hidden="true" focusable="false" role="presentation">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close"></use>
           </svg>
-        `)
+        `);
 
         // Don't add remove button if the card has the 'no-remove' class
         if (!card.hasClass('no-remove')) {
@@ -169,10 +168,10 @@ Homepage.prototype = {
                 const result = this.settings.onBeforeRemoveCard(card);
                 if (result && result.then && typeof result.then === 'function') { // A promise is returned
                   result.then(() => {
-                      homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
-                      card.remove();
-                      homepage.refresh(false);
-                  })
+                    homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                    card.remove();
+                    homepage.refresh(false);
+                  });
                 } else if (result) { // Boolean is returned instead of a promise
                   homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
                   card.remove();
