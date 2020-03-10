@@ -20,7 +20,7 @@
     width: 360px;
 
     &:last-child::after {
-      content: "";
+      content: '';
       display: inline-block;
       height: 20px;
       position: absolute;
@@ -70,27 +70,27 @@
   }
 
   .card-remove {
-    position: absolute;
     background: #5c5c5c;
     border-radius: 100%;
-    width: 22px;
     height: 22px;
+    position: absolute;
     right: -16px;
     top: -10px;
-    z-index: 100;
     transition: background-color 0.2s;
+    width: 22px;
+    z-index: 100;
   }
 
   .card-remove svg {
-    width: 12px;
     color: #fff;
     top: 1.5px;
+    width: 12px;
   }
 
   .ui-resizable-handle::before {
     background: #078cd9;
     border-radius: 100%;
-    content: "";
+    content: '';
     display: block;
     height: 12px;
     position: absolute;
@@ -329,7 +329,7 @@
           @include font-size(20);
 
           color: $panel-border-color;
-          content: "\2758";
+          content: '\2758';
           display: inline-block;
           margin-right: 2px;
           padding-top: 2px;
@@ -356,7 +356,7 @@
 
       &::after,
       &::before {
-        content: "";
+        content: '';
         display: table;
       }
 
@@ -400,7 +400,7 @@
 }
 
 // RTL Styles
-html[dir="rtl"] {
+html[dir='rtl'] {
   .hero-widget {
     .hero-header,
     .hero-content,
