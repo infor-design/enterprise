@@ -33,6 +33,7 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 * You should set this to match the structure of the parent page for accessibility
 * @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or
 * h4 element. You should set this to match the structure of the parent page for accessibility
+* @param {string} [settings.placeholder] If set to some text this will be shown as placeholder text in the editor.
 * @param {string} [settings.pasteAsPlainText = false] If true, when you paste into the editor the element will be unformatted to plain text.
 * @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'NewWindow', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'NewWindow' or 'SameWindow', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
 * @param {string} [settings.image = { url: 'https://imgplaceholder.com/250x250/2578A9/ffffff/fa-image' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
@@ -270,20 +271,12 @@ Editor.prototype = {
 
   // Bind Events for the place holder
   setPlaceholders() {
-    this.element
-      .on('blur.editor', () => this.togglePlaceHolder())
-      .on('keypress.editor', () => this.togglePlaceHolder());
-
-    this.togglePlaceHolder();
-    return this;
-  },
-
-  togglePlaceHolder() {
-    if (this.element.text().trim() === '') {
-      this.element.addClass('editor-placeholder');
-    } else {
-      this.element.removeClass('editor-placeholder');
+    if (!this.settings.placeholder) {
+      return this;
     }
+
+    this.element.attr('placeholder', this.settings.placeholder);
+    return this;
   },
 
   // Returns the currently visible element - either the main editor window,
@@ -335,6 +328,13 @@ Editor.prototype = {
           e.preventDefault();
           // If Shift is down, outdent, otherwise indent
           document.execCommand((e.shiftKey ? 'outdent' : 'indent'), e);
+        }
+      }
+
+      if (e.which === 8) {
+        const text = this.element.text().toString().trim().replace(/\s/g, '');
+        if (window.getSelection().toString().trim().replace(/\s/g, '') === text) {
+          this.element.html('');
         }
       }
     });
@@ -494,16 +494,63 @@ Editor.prototype = {
     // fill the text area with any content that may already exist within the editor DIV
     this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
-    self.container.on('input.editor keyup.editor', '.editor', debounce(() => {
-      self.textarea.html(xssUtils.sanitizeHTML(self.element.html().toString()));
-      // setting the value via .val doesn't trigger the change event
+    self.container.on('input.editor keyup.editor', '.editor', debounce((e) => {
+      this.resetEmptyEditor(e);
       self.element.trigger('change');
-    }, 500));
+    }, 300));
 
     this.setupTextareaEvents();
     return this.textarea;
   },
 
+  /**
+   * Clean up the editor content on change.
+   * @private
+   */
+  resetEmptyEditor() {
+    this.savedSelection = this.saveSelection();
+
+    const sep = this.settings.paragraphSeparator === 'p' ? 'p' : 'div';
+    let html = this.element.html().toString().trim();
+
+    // Cleanout browser specific logic to level things
+    html = this.element.html().toString().trim();
+    if (html === '<br>' || html === `<${sep}><br></${sep}>`) {
+      this.element.html('');
+    }
+
+    this.element.contents().filter(function () {
+      return this.nodeType === 3 && this.textContent.trim() !== '';
+    }).wrap(`<${sep}></${sep}>`);
+
+    html = this.element.html().toString().trim();
+    this.textarea.html(xssUtils.sanitizeHTML(html));
+
+    this.restoreSelection(this.savedSelection);
+  },
+
+  /**
+   * Remove whitespace between tags.
+   * @private
+   */
+  removeWhiteSpace() {
+    const html = this.element.html().toString().trim();
+    const count = (str) => {
+      const re = />\s+</g;
+      return ((str || '').match(re) || []).length;
+    };
+
+    // Remove Whitepsace after tags
+    if (count(html) > 0) {
+      this.element.html(html.replace(/>\s+</g, '><'));
+    }
+  },
+
+  /**
+   * Do creation and setup on the editor.
+   * @private
+   * @returns {object} The proto object for chaining.
+   */
   createTextarea() {
     this.sourceView = $('<div></div>').attr({
       class: 'editor-source editable hidden',
@@ -523,10 +570,20 @@ Editor.prototype = {
     return textarea;
   },
 
+  /**
+   * Trigger the click event on the buttons.
+   * @param  {object} e the event data
+   * @param  {object} btn the button types to trigger
+   */
   triggerClick(e, btn) {
     $(`button[data-action="${btn}"]`, this.toolbar).trigger('click.editor');
   },
 
+  /**
+   * Set up keyboard handling.
+   * @private
+   * @returns {object} The proto object for chaining.
+   */
   setupKeyboardEvents() {
     const currentElement = this.getCurrentElement();
     const keys = {
@@ -1051,8 +1108,8 @@ Editor.prototype = {
         </div>
         <div class="modal-body">
           <div class="field">
-            <label for="em-url-${this.id}">${Locale.translate('Url')}</label>
-            <input id="em-url-${this.id}" name="em-url-${this.id}" type="text" value="${s.anchor.url}">
+            <label for="em-url-${this.id}" class="required">${Locale.translate('Url')}</label>
+            <input id="em-url-${this.id}" name="em-url-${this.id}" data-validate="required" type="text" value="${s.anchor.url}">
           </div>
           ${(s.anchor.showIsClickable ? (`<div class="field">
             <input type="checkbox" class="checkbox" id="em-isclickable-${this.id}" name="em-isclickable-${this.id}" checked="${s.anchor.isClickable}">
@@ -1093,10 +1150,10 @@ Editor.prototype = {
         <div class="modal-header">
           <h1 class="modal-title">${Locale.translate('InsertImage')}</h1>
         </div>
-        <div class="modal-body">
+        <div class="modal-body no-scroll">
           <div class="field">
-            <label for="image-${this.id}">${Locale.translate('Url')}</label>
-            <input id="image-${this.id}" name="image-${this.id}" type="text" value="${this.settings.image.url}">
+            <label for="image-${this.id}" class="required">${Locale.translate('Url')}</label>
+            <input id="image-${this.id}" name="image-${this.id}" type="text" data-validate="required" value="${this.settings.image.url}">
           </div>
           <div class="modal-buttonset">
             <button type="button" class="btn-modal btn-cancel">
@@ -1815,17 +1872,6 @@ Editor.prototype = {
     const self = this;
 
     this.element
-    // Work around for Firefox with using keys was not focusing on first child in editor
-    // Firefox behaves differently than other browsers
-      .on('mousedown.editor', () => {
-        this.mousedown = true;
-      })
-      .on('focus.editor', () => {
-        if (env.browser.name === 'firefox' && !this.mousedown && this.element === currentElement) {
-          this.setFocus();
-        }
-      })
-
       // Work around for Chrome's bug wrapping contents in <span>
       // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
       .on('DOMNodeInserted', (e) => {
@@ -2065,6 +2111,7 @@ Editor.prototype = {
          * @property {string} content Additional argument
          */
         this.element.triggerHandler('afterpreviewmode', content);
+        this.element.focus();
       }, 0);
     };
 
@@ -2795,31 +2842,10 @@ Editor.prototype = {
     }
   },
 
-  // Fix to Firefox get focused by keyboard
-  setFocus() {
-    const el = ($.trim(this.element.html()).slice(0, 1) === '<') ?
-      $(':first-child', this.element)[0] : this.element[0];
-
-    window.setTimeout(() => {
-      let sel;
-      let range;
-      if (window.getSelection && document.createRange) {
-        range = document.createRange();
-        range.selectNodeContents(el);
-        range.collapse(true);
-        sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      } else if (document.body.createTextRange) {
-        range = document.body.createTextRange();
-        range.moveToElementText(el);
-        range.collapse(true);
-        range.select();
-      }
-    }, 1);
-  },
-
-  // Called whenever a paste event has occured
+  /**
+   * Called whenever a paste event has occured
+   * @returns {void}
+   */
   onPasteTriggered() {
     if (env.browser.name !== 'firefox' && document.addEventListener) {
       document.addEventListener('paste', (e) => {
@@ -2972,7 +2998,6 @@ Editor.prototype = {
     this.sourceView.find('.line-numbers').empty();
     this.sourceView.find('.textarea-print').empty();
   }
-
 };
 
 /* eslint-enable consistent-return */

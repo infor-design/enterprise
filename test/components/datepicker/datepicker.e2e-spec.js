@@ -697,7 +697,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   }
 });
 
-describe('Datepicker Month Year Changer Year First Tests', () => {
+describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
     const Date = () => {  //eslint-disable-line
@@ -707,7 +707,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
 
   it('Should be able to change month', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await datepickerEl.sendKeys('10/1/2018');
+    await datepickerEl.sendKeys('2018/01/10');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
@@ -725,7 +725,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     const buttonEl = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await buttonEl.click();
 
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual(`${new Date().getFullYear()}/04/01`);
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2018/04/01');
   });
 
   it('Should be able to change year', async () => {
@@ -853,6 +853,63 @@ describe('Datepicker Timeformat Tests', () => {
     const dateDiff = Math.abs(testDate - valueDate); // guarentee its a positive result
 
     expect(dateDiff).toBeLessThanOrEqual(allowedVariance);
+  });
+
+  it('Should work with ko-KO locale', async () => {
+    await utils.setPage('/components/datepicker/example-timeformat?locale=ko-KR');
+    const datepickerEl = await element(by.id('dp2'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getDate().toString().padStart(2, '0')} 오전 12:00`);
+    expect(await element.all(by.css('.error-text')).count()).toEqual(0);
+  });
+
+  it('Should work with zh-TW locale', async () => {
+    await utils.setPage('/components/datepicker/example-timeformat?locale=zh-TW');
+    const datepickerEl = await element(by.id('dp2'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${(testDate.getFullYear())}/${(testDate.getMonth() + 1)}/${testDate.getDate()} 上午12:00`);
+    expect(await element.all(by.css('.error-text')).count()).toEqual(0);
+  });
+
+  it('Should work with hi-IN locale', async () => {
+    await utils.setPage('/components/datepicker/example-timeformat?locale=hi-IN');
+    const datepickerEl = await element(by.id('dp2'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${(testDate.getFullYear())} 12:00 पूर्व`);
+    expect(await element.all(by.css('.error-text')).count()).toEqual(0);
   });
 });
 
@@ -986,7 +1043,7 @@ describe('Datepicker Month Only Picker Tests', () => {
   }
 });
 
-describe('Datepicker Custom Validation Tests', () => {
+describe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-validation');
   });
@@ -1063,6 +1120,33 @@ describe('Datepicker 12hr Time Tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
+    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
+  });
+
+  it('Should keep time', async () => {
+    const datepickerEl = await element(by.id('datetime-field-time'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await browser.driver.sleep(config.sleep);
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+
+    const value = await element(by.id('datetime-field-time')).getAttribute('value');
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const dropdownEl = await element(by.css('#timepicker-period-timepicker-4-id + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await dropdownEl.sendKeys(protractor.Key.SPACE);
+
+    expect(await dropdownEl.getText()).toEqual('PM');
     expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('en-US', { month: 'short' })} ${testDate.getFullYear()} 12:00 AM`);
   });
 });
