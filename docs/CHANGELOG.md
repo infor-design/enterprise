@@ -15,7 +15,7 @@
 - `[Bar Chart]` Fixed an issue where chart was not resizing on homepage widget resize. ([#2669](https://github.com/infor-design/enterprise/issues/2669))
 - `[Blockgrid]` Fixed an issue where there was no index if the data is empty, and removed deprecated internal calls. ([#748](https://github.com/infor-design/enterprise-ng/issues/748))
 - `[Busy Indicator]` Fixed an issue where it throws an error when a display delay, the busy-indicator parent removed and added via ngIf before the busyindicator shown. ([#703](https://github.com/infor-design/enterprise-ng/issues/703))
-- `[Busy Indicator]` Fixed an issue where the overlay was closing after close Modal. ([#3424](https://github.com/infor-design/enterprise/issues/3424))
+- `[Busy Indicator]` Fixed an issue where the overlay would close when closing the Modal. ([#3424](https://github.com/infor-design/enterprise/issues/3424))
 - `[Colorpicker]` Fixed the dropdown icon position is too close to the right edge of the field. ([#3508](https://github.com/infor-design/enterprise/issues/3508))
 - `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
