@@ -52,6 +52,8 @@ describe('Homepage API', () => {
       expect(metadata.containerHeight).toBeDefined();
       expect(metadata.matrix).toBeDefined();
       expect(metadata.rows).toBeDefined();
+      expect(metadata.blocks).toBeDefined();
+      expect(metadata.editing).toBeDefined();
       done();
     }, 0);
   });
@@ -78,5 +80,26 @@ describe('Homepage API', () => {
       expect(metadata.containerHeight).toEqual(1190);
       done();
     }, 0);
+  });
+
+  it('can be initialized with editing enabled', (done) => {
+    homepageEl = document.createElement('div');
+    homepageEl.id = targetId;
+    homepageEl.classList.add('homepage');
+    document.body.appendChild(homepageEl);
+
+    let metadata;
+    hasEventListeners = true;
+    $(`#${targetId}`).on('resize', (e, offsetHeight, data) => {
+      metadata = data;
+    });
+
+    homepageAPI = new Homepage(homepageEl, {editing: true});
+
+    setTimeout(() => {
+      expect(metadata.editing).toEqual(true);
+      done();
+    }, 0);
+
   });
 });

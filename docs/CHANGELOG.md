@@ -2,6 +2,9 @@
 
 ## v4.27.0
 
+### v4.26.0 Features
+- `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
+
 ### v4.27.0 Fixes
 
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))

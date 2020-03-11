@@ -69,6 +69,10 @@ Homepage.prototype = {
       return topGutter + ((settings.gutterSize) + (settings.widgetHeight)) * rows;
     }
 
+    if(this.editing === undefined){
+      this.editing = settings.editing;
+    }
+
     return {
       rows,
       cols,
