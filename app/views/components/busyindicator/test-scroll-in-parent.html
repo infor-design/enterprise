@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Busy Indicator - Standalone Example (scroll-in-parent)</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <button class="btn-secondary" id="trigger-busy-start" type="button">Start</button>
+      <button class="btn-secondary" id="trigger-busy-complete" type="button">Stop</button>
+    </div>
+    <br/><br/>
+    <div class="card" style="height: 300px; overflow: auto">
+      <div id="standalone-busy" class="busy" style="margin-bottom: 0;">
+        <p>Text 1</p>
+        <p>Text 2</p>
+        <p>Text 3</p>
+        <p>Text 4</p>
+        <p>Text 5</p>
+        <p>Text 6</p>
+        <p>Text 7</p>
+        <p>Text 8</p>
+        <p>Text 9</p>
+        <p>Text 10</p>
+        <p>Text 11</p>
+        <p>Text 12</p>
+        <p>Text 13</p>
+        <p>Text 14</p>
+        <p>Text 15</p>
+        <p>Text 16</p>
+        <p>Text 17</p>
+        <p>Text 18</p>
+        <p>Text 19</p>
+        <p>Text 20</p>
+        <p>Text 21</p>
+        <p>Text 22</p>
+        <p>Text 23</p>
+        <p>Text 24</p>
+        <p>Text 25</p>
+        <p>Text 26</p>
+        <p>Text 27</p>
+        <p>Text 28</p>
+        <p>Text 29</p>
+        <p>Text 30</p>
+        <p>Text 31</p>
+        <p>Text 32</p>
+        <p>Text 33</p>
+        <p>Text 34</p>
+        <p>Text 35</p>
+        <p>Text 36</p>
+        <p>Text 37</p>
+        <p>Text 38</p>
+        <p>Text 39</p>
+        <p>Text 40</p>
+        <p>Text 41</p>
+        <p>Text 42</p>
+        <p>Text 43</p>
+        <p>Text 44</p>
+        <p>Text 45</p>
+        <p>Text 46</p>
+        <p>Text 47</p>
+        <p>Text 48</p>
+        <p>Text 49</p>
+        <p>Text 50</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var busyEl = $('#standalone-busy');
+
+  // Start
+  $('#trigger-busy-start').click(function () {
+    busyEl.trigger('start.busyindicator');
+  });
+
+  // Complete
+  $('#trigger-busy-complete').click(function () {
+    busyEl.trigger('complete.busyindicator');
+  });
+</script>

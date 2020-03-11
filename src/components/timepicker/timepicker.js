@@ -274,7 +274,12 @@ TimePicker.prototype = {
    * @returns {boolean} whether or not the time format is 24-hour
    */
   is24HourFormat(value) {
-    if (!value) { value = this.settings.timeFormat; }
+    if (!value) {
+      value = this.settings.timeFormat;
+    }
+    if (!value) {
+      return false;
+    }
     return (value.match('H') || []).length > 0;
   },
 
@@ -492,15 +497,12 @@ TimePicker.prototype = {
       const localeDays = this.currentCalendar.dayPeriods;
       let localeCount = 0;
       const regexDay = new RegExp(self.initValues.period, 'i');
-      let realDayValue = 'AM'; // AM
-
       while (localeCount < 2) {
-        realDayValue = localeCount === 0 ? 'AM' : 'PM'; // ? AM : PM
         selected = '';
         if (regexDay.test(localeDays[localeCount])) {
           selected = ' selected';
         }
-        this.periodSelect.append($(`<option value="${realDayValue}"${selected}>${localeDays[localeCount]}</option>`));
+        this.periodSelect.append($(`<option value="${localeDays[localeCount]}"${selected}>${localeDays[localeCount]}</option>`));
 
         localeCount++;
       }
@@ -722,11 +724,21 @@ TimePicker.prototype = {
     const timeparts = {};
 
     val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
+    val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
+
+    const aLoc = this.currentCalendar.timeFormat.toLowerCase().indexOf('a');
+    const isAmFirst = aLoc !== -1 && (aLoc <
+      this.currentCalendar.timeFormat.toLowerCase().indexOf('h'));
+
+    // If am is before time move it in the array to last
+    if (!this.is24HourFormat() && isAmFirst) {
+      parts = [parts[1], parts[2], parts[0]];
+    }
 
     // Check the last element in the array for a time period, and add it as an array
     // member if necessary
-    if (!this.is24HourFormat()) {
+    if (!this.is24HourFormat() && !isAmFirst) {
       endParts = parts[parts.length - 1].split(' ');
       parts.pop();
       parts = parts.concat(endParts);
@@ -813,6 +825,44 @@ TimePicker.prototype = {
     }
 
     return timeparts;
+  },
+
+  getTimeFromField2(value) {
+    function addLeadingZero(thisValue) {
+      if (!thisValue || isNaN(thisValue)) {
+        return '00';
+      }
+      thisValue = parseInt(thisValue, 10);
+      thisValue = thisValue < 10 ? `0${thisValue}` : thisValue;
+      return thisValue;
+    }
+
+    const self = this;
+    const formatString = self.hasSeconds() ?
+      this.currentCalendar.dateFormat.timestamp :
+      this.currentCalendar.dateFormat.hour;
+    const type = self.hasSeconds() ? 'timestamp' : 'hour';
+
+    const tempDate = Locale.parseDate(value || this.element.val(), { date: type });
+    const defaultHours = '1';
+    let hours = (tempDate ? tempDate.getHours() : defaultHours).toString();
+    const ampm = (hours >= 12 ? this.translateDayPeriod('PM') : this.translateDayPeriod('AM')).toString();
+    if (!this.is24HourFormat() && hours > 12) {
+      hours = (parseInt(hours, 10) - 12).toString();
+    }
+    if (!this.is24HourFormat() && hours === '0') {
+      hours = '12';
+    }
+    const period = formatString.indexOf('a') > -1 ? ampm : undefined;
+    const minutes = tempDate ? tempDate.getMinutes() : '00';
+    const seconds = tempDate ? tempDate.getSeconds() : '00';
+
+    return {
+      hours: addLeadingZero(hours),
+      minutes: addLeadingZero(minutes),
+      seconds: addLeadingZero(seconds),
+      period
+    };
   },
 
   /**

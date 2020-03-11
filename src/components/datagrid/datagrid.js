@@ -111,6 +111,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
  * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {Function} [settings.onExpandChildren=null] A callback function that fires when expanding children with treeGrid.
+ * @param {Function} [settings.onCollapseChildren=null] A callback function that fires when collapseing children with treeGrid.
  * @param {Function} [settings.onKeyDown=null] A callback function that fires when any key is pressed down.
  * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
@@ -208,6 +210,8 @@ const DATAGRID_DEFAULTS = {
   onDestroyCell: null,
   onEditCell: null,
   onExpandRow: null,
+  onExpandChildren: null, // Callback fires when expanding children with treeGrid
+  onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
   searchExpandableRow: true,
@@ -925,6 +929,7 @@ Datagrid.prototype = {
       this.renderRows();
     } else {
       // Filter field is open so do not resize
+      this.clearCache();
       this.renderRows();
     }
 
@@ -1577,20 +1582,21 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+      const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
-      const popupmenu = $(this).data('popupmenu');
+      const popupmenu = filterBtn.data('popupmenu');
 
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
-          const menu = $(this).next('.popupmenu-wrapper');
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
+          const menu = filterBtn.next('.popupmenu-wrapper');
           utils.fixSVGIcons(menu);
           self.hideTooltip();
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', (e, anchor) => {
-            const rowElem = anchor.closest('th[role="columnheader"]');
+          .on('selected.datagrid-filter', () => {
+            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
             // Set datepicker with range/single date
@@ -1956,6 +1962,8 @@ Datagrid.prototype = {
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
         let rangeData = null;
+        let rangeSeparator = null;
+        let rangeValues = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -2059,9 +2067,13 @@ Datagrid.prototype = {
             const input = self.element.find(`.datagrid-header th:eq(${cell}) .datagrid-filter-wrapper input`);
             const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
+              rangeSeparator = datepickerApi.settings.range.separator;
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
                 values = getValues(rowValue, rangeData.start);
+              } else if (rangeSeparator && conditionValue.indexOf(rangeSeparator) > -1) {
+                rangeValues = conditionValue.split(rangeSeparator);
+                values = getValues(rowValue, rangeValues[0]);
               }
             }
           } else {
@@ -2127,6 +2139,14 @@ Datagrid.prototype = {
               const d1 = rangeData.startDate.getTime();
               const d2 = rangeData.endDate.getTime();
               isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+            } else if (rangeValues) {
+              let d1 = Locale.parseDate(rangeValues[0], conditions[i].format);
+              let d2 = Locale.parseDate(rangeValues[1], conditions[i].format);
+              if (d1 && d2) {
+                d1 = d1.getTime();
+                d2 = d2.getTime();
+                isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
+              }
             }
             break;
           case 'less-than':
@@ -2574,7 +2594,7 @@ Datagrid.prototype = {
       showTarget = $('.drag-target-arrows', self.element);
     }
 
-    headers.not('[data-reorder="false"]').prepend('</span><span class="handle">&#8286;</span>');
+    headers.not('[data-reorder="false"]').prepend(`</span><span class="handle">${$.createIcon({ icon: 'drag' })}</span>`);
     headers.prepend('<span class="is-draggable-target"></span>');
     headers.last().append('<span class="is-draggable-target last"></span>');
     self.element.addClass('has-draggable-columns');
@@ -2598,7 +2618,12 @@ Datagrid.prototype = {
             clone = thisClone;
 
             clone.removeAttr('id').addClass('is-dragging-clone')
-              .css({ left: pos.left, top: pos.top, height: header.height(), border: 0 });
+              .css({
+                left: !Locale.isRTL() ? pos.left : pos.right - clone.width(),
+                top: pos.top,
+                height: header.height(),
+                border: 0
+              });
 
             $('.is-draggable-target', clone).remove();
 
@@ -2613,10 +2638,13 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('drag.datagrid', (dragEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+            clone[0].style.left = `${parseInt(!Locale.isRTL() ? pos.left : ((pos.left + pos.offset.x) - pos.clone.width()), 10)}px`;
             clone[0].style.top = `${parseInt(pos.top, 10)}px`;
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
 
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             let n = 0;
             let target = null;
             let rect = null;
@@ -2637,7 +2665,7 @@ Datagrid.prototype = {
                   target.el.addClass('is-over');
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
-                  showTarget[0].style.left = `${parseInt(rect.left, 10)}px`;
+                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
                   showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
                 }
               }
@@ -2646,11 +2674,15 @@ Datagrid.prototype = {
             e.stopImmediatePropagation();
           })
           .on('dragend.datagrid', (dragendEvent, pos) => {
-            clone[0].style.left = `${parseInt(pos.left, 10)}px`;
-            clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            if (!Locale.isRTL()) {
+              clone[0].style.left = `${parseInt(pos.left, 10)}px`;
+              clone[0].style.top = `${parseInt(pos.top, 10)}px`;
+            }
 
             headerPos = { top: (pos.top - offPos.top), left: (pos.left - offPos.left) };
-
+            if (Locale.isRTL()) {
+              headerPos.left = parseInt(clone[0].style.left, 10);
+            }
             const index = self.targetColumn(headerPos);
             const dragApi = header.data('drag');
             const tempArray = [];
@@ -2751,6 +2783,11 @@ Datagrid.prototype = {
       if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
           pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
         idx = target.index;
+
+        // In RTL mode return the first one found. In LTR return the last one found.
+        if (Locale.isRTL()) {
+          return idx;
+        }
       }
     }
     return idx;
@@ -3211,6 +3248,7 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
       this.recordCount++;
+      this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
         rowStatusTooltip = true;
@@ -4227,7 +4265,6 @@ Datagrid.prototype = {
     this.totalWidths.center = 0;
     this.totalWidths.right = 0;
     this.elemWidth = 0;
-    this.lastColumn = null;
     this.stretchColumnWidth = 0;
     this.stretchColumnDiff = 0;
     this.stretchColumnIdx = -1;
@@ -4410,6 +4447,7 @@ Datagrid.prototype = {
 
     if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
       this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
       this.stretchColumnWidth = colWidth;
       return ' style="width: 99%"';
     }
@@ -5399,7 +5437,7 @@ Datagrid.prototype = {
     let nextColumnId;
     let usingShiftKey = false;
 
-    this.resizeHandle.drag({ axis: 'x', containment: 'parent' })
+    this.resizeHandle.drag({ axis: 'x' })
       .on('dragstart.datagrid', () => {
         if (!self.currentHeader) {
           return;
@@ -5914,7 +5952,7 @@ Datagrid.prototype = {
         // Then Activate
         if (!canSelect) {
           if (e.shiftKey && self.activatedRow().length) {
-            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').attr('aria-rowindex') - 1]);
             e.preventDefault();
           }
 
@@ -5923,7 +5961,7 @@ Datagrid.prototype = {
       }
 
       if (canSelect && isMultiple && e.shiftKey) {
-        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
+        self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
@@ -6491,7 +6529,11 @@ Datagrid.prototype = {
    * @Returns {string} The current row height
    */
   rowHeight(height) {
+    const args = [];
     if (height) {
+      if (this.settings.rowHeight !== height) {
+        args.push({ before: this.settings.rowHeight, after: height });
+      }
       this.settings.rowHeight = height;
     }
 
@@ -6508,6 +6550,10 @@ Datagrid.prototype = {
 
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+
+    if (args.length) {
+      this.element.triggerHandler('rowheightchanged', args);
+    }
 
     return this.settings.rowHeight;
   },
@@ -8095,6 +8141,29 @@ Datagrid.prototype = {
             }
           }
 
+          if (cell === -1 && !self.settings.actionableMode) {
+            return;
+          }
+
+          if (cell === -1 && self.settings.actionableMode) {
+            row--;
+            cell = lastCell;
+
+            if (row === -1) {
+              return;
+            }
+          }
+
+          if (cell === lastCell && lastCell === self.activeCell.cell &&
+            self.settings.actionableMode) {
+            row++;
+            cell = 0;
+
+            if (row === self.visibleRowCount) {
+              return;
+            }
+          }
+
           if (cell instanceof jQuery) {
             self.setActiveCell(cell);
           } else {
@@ -8107,6 +8176,7 @@ Datagrid.prototype = {
               self.quickEditMode = true;
             }
           }
+
           self.quickEditMode = false;
           handled = true;
         }
@@ -8201,7 +8271,7 @@ Datagrid.prototype = {
         }
 
         if (isMultiple && e.shiftKey) {
-          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
+          self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
         }
@@ -9999,6 +10069,7 @@ Datagrid.prototype = {
       return;
     }
     const self = this;
+    const s = this.settings;
     let rowElement = this.rowNodes(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
@@ -10098,8 +10169,28 @@ Datagrid.prototype = {
     * @property {object} args.item The selected row data.
     * @property {array} args.children The selected rows children (tree grid)
     */
-    $.when(self.element.triggerHandler(isExpanded ? 'collapserow' : 'expandrow', args)).done(() => {
-      toggleExpanded();
+    const triggerEvent = isExpanded ? 'collapserow' : 'expandrow';
+    $.when(self.element.triggerHandler(triggerEvent, args)).done((response) => {
+      const isFalse = v => ((typeof v === 'string' && v.toLowerCase() === 'false') ||
+        (typeof v === 'boolean' && v === false) ||
+        (typeof v === 'number' && v === 0));
+      if (!isFalse(response)) {
+        if (typeof s.onExpandChildren === 'function' && !isExpanded) {
+          $.when(s.onExpandChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else if (typeof s.onCollapseChildren === 'function' && isExpanded) {
+          $.when(s.onCollapseChildren(args[0])).done((res) => {
+            if (!isFalse(res)) {
+              toggleExpanded();
+            }
+          });
+        } else {
+          toggleExpanded();
+        }
+      }
     });
   },
 
@@ -10191,7 +10282,7 @@ Datagrid.prototype = {
       const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
       self.element.triggerHandler('expandrow', eventData);
 
-      if (self.settings.allowOneExpandedRow) {
+      if (self.settings.allowOneExpandedRow && this.settings.selectable !== 'multiple') {
         rowElement.addClass('is-rowactivated');
       }
 
@@ -10213,18 +10304,19 @@ Datagrid.prototype = {
       // Expandable row for frozen columns expand across all cells
       if (self.settings.frozenColumns.expandRowAcrossAllCells) {
         self.frozenExpandRowAcrossAllCells();
-      } else if (this.settings.frozenColumns.left.length ||
-        this.settings.frozenColumns.right.length) {
-        $('html')
-          .off(`themechanged.${COMPONENT_NAME}`)
-          .on(`themechanged.${COMPONENT_NAME}`, () => {
-            const elms = {
-              left: detail.eq(0)[0],
-              center: detail.eq(1)[0],
-              right: detail.eq(2)[0]
-            };
-            self.frozenExpandRowSetHeight(elms);
-          });
+      }
+      if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
+        const elms = { left: detail.eq(0)[0], center: detail.eq(1)[0], right: detail.eq(2)[0] };
+        const changedEventStr = {
+          theme: `themechanged.${COMPONENT_NAME}`,
+          rowheight: `rowheightchanged.${COMPONENT_NAME}`
+        };
+        $('html').off(changedEventStr.theme).on(changedEventStr.theme, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
+        self.element.off(changedEventStr.rowheight).on(changedEventStr.rowheight, () => {
+          self.frozenExpandRowSetHeight(elms);
+        });
       }
     }
   },
@@ -10282,6 +10374,14 @@ Datagrid.prototype = {
         if (elms.right) {
           elms.right.style.height = `${height}px`;
         }
+        if (this.settings.frozenColumns.expandRowAcrossAllCells) {
+          const rect = {
+            container: this.element[0].getBoundingClientRect(),
+            centerEl: elms.center.getBoundingClientRect()
+          };
+          const top = `${rect.centerEl.top - rect.container.top}px`;
+          elms.padding.style.top = top;
+        }
       }
     }
   },
@@ -10321,13 +10421,6 @@ Datagrid.prototype = {
 
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
-        const rect = {
-          container: this.element[0].getBoundingClientRect(),
-          elem: elms.details.center.getBoundingClientRect()
-        };
-        const top = `${rect.elem.top - rect.container.top}px`;
-        const width = `${rect.container.top.width}px`;
-
         elms.padding.style.opacity = '0';
         if (elms.rows.left) {
           elms.rows.left.classList.add(cssClass);
@@ -10341,8 +10434,6 @@ Datagrid.prototype = {
             if (elms.details.left || elms.details.right) {
               setTimeout(() => {
                 elms.rows.center.classList.add(cssClass);
-                elms.padding.style.width = width;
-                elms.padding.style.top = top;
                 this.frozenExpandRowSetHeight(elms.details);
                 elms.padding.style.opacity = '';
 
@@ -10355,7 +10446,6 @@ Datagrid.prototype = {
           .one('animateclosedstart.datagrid.expandedfrozen', () => {
             $(window).off('resize.datagrid.expandedfrozen');
             elms.padding.style.opacity = '0';
-            elms.padding.style.width = '';
             elms.padding.style.top = '';
             elms.rows.center.classList.remove(cssClass);
             if (elms.rows.left) {

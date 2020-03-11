@@ -28,7 +28,7 @@ describe('Applicationmenu index tests', () => {
       await button.click();
 
       const section = await element(by.css('body.no-scroll'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu')).toEqual(0);
     });

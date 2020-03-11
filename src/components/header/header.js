@@ -528,6 +528,13 @@ Header.prototype = {
     }
 
     this.changer.on('selected.header', (e, link) => {
+      e.preventDefault();
+
+      // handle `ToolbarFlexItem` types
+      if (link !== undefined && !(link instanceof $) && link.element instanceof HTMLElement) {
+        link = $(link.element);
+      }
+
       // Change Theme with Variant
       const themeNameAttr = link.attr('data-theme-name');
       const themeVariantAttr = link.attr('data-theme-variant');

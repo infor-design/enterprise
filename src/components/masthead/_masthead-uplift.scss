@@ -4,3 +4,14 @@
 .masthead-appname {
   @include font-size(14);
 }
+
+.masthead .toolbar .buttonset > *:not(.toolbar-searchfield-wrapper) {
+  height: 26px;
+  margin: 5px;
+  min-height: 26px;
+  padding: 0 5px;
+}
+
+.masthead .toolbar [class*='btn'] > .icon + span + .icon {
+  margin-left: -2px;
+}
