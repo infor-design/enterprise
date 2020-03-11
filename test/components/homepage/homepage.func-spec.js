@@ -102,4 +102,27 @@ describe('Homepage API', () => {
     }, 0);
 
   });
+
+  it('can enable editing mode using setEdit()', (done) => {
+    homepageEl = document.createElement('div');
+    homepageEl.id = targetId;
+    homepageEl.classList.add('homepage');
+    document.body.appendChild(homepageEl);
+
+    let metadata;
+    hasEventListeners = true;
+    $(`#${targetId}`).on('resize', (e, offsetHeight, data) => {
+      metadata = data;
+    });
+
+    homepageAPI = new Homepage(homepageEl, {});
+
+    setTimeout(() => {
+      expect(homepageAPI.state.editing).toEqual(false);
+      homepageAPI.setEdit(true);
+      expect(homepageAPI.state.editing).toEqual(true);
+      done();
+    }, 0);
+
+  });
 });

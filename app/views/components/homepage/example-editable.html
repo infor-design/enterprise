@@ -29,6 +29,7 @@
   $('body').on('initialized', function () {
     const toggleEdit = $('#toggleEdit');
     const homepageApi = $('.homepage').data('homepage');
+    homepageApi.setEdit(true);
     toggleEdit.on('click', function () {
       const editing = homepageApi.state.editing;
       homepageApi.setEdit(!editing);
