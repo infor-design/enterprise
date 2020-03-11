@@ -371,12 +371,6 @@ Accordion.prototype = {
       return false;
     }
 
-    // Stop propagation here because we don't want to bubble up to the Header and
-    // potentially click the it twice
-    if (e) {
-      e.stopPropagation();
-    }
-
     this.closePopups(e);
 
     /**
