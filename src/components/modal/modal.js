@@ -9,6 +9,7 @@ import { Locale } from '../../../src/components/locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
+import '../button/button.set.jquery';
 import '../icons/icons.jquery';
 
 // The name of this component.
@@ -228,7 +229,13 @@ Modal.prototype = {
       return;
     }
 
-    self.addButtons(this.settings.buttons);
+    if (this.isCAP) {
+      this.addButtons(this.settings.buttons);
+    } else {
+      // Adds the modal buttonset, if applicable
+      this.renderButtonset();
+    }
+
     this.element.appendTo('body');
     this.element[0].style.display = 'none';
   },
@@ -312,7 +319,12 @@ Modal.prototype = {
     }
 
     if (!isAppended) {
-      this.addButtons(this.settings.buttons);
+      if (this.isCAP) {
+        this.addButtons(this.settings.buttons);
+      } else {
+        // Adds the modal buttonset, if applicable
+        this.renderButtonset();
+      }
     }
 
     utils.fixSVGIcons(this.element);
@@ -391,6 +403,113 @@ Modal.prototype = {
     }
   },
 
+  /**
+   * Responsible for rendering a Modal Buttonset component
+   * @private
+   * @returns {void}
+   */
+  renderButtonset() {
+    let buttons = this.settings.buttons;
+    const style = 'modal';
+    const targetSettings = { style };
+    const self = this;
+
+    if (!this.buttonsetElem) {
+      let buttonsetElem = this.element.find('.modal-buttonset');
+
+      // If the ButtonSet Element doesn't exist (and it should), create it.
+      if (!buttonsetElem || !buttonsetElem.length) {
+        if (!Array.isArray(buttons) || !buttons.length) {
+          return;
+        }
+
+        const body = this.element.find('.modal-body');
+        const bodywrapper = body.parent();
+        const flexText = this.settings.useFlexToolbar ? 'toolbar-section ' : '';
+        const buttonsetTmpl = `<div class="${flexText}modal-buttonset"></div>`;
+
+        buttonsetElem = $(buttonsetTmpl);
+        buttonsetElem.insertAfter(bodywrapper);
+
+        targetSettings.buttons = buttons;
+      } else {
+        targetSettings.detectHTMLButtons = true;
+      }
+
+      // Render the Buttonset Component
+      this.buttonsetElem = buttonsetElem;
+      buttonsetElem.buttonset(targetSettings);
+      this.buttonsetAPI = buttonsetElem.data('buttonset');
+
+      // Change the buttons JSON used
+      buttons = this.buttonsetAPI.toData().buttons;
+    }
+
+    const buttonAPIs = this.buttonsetAPI.buttons;
+    const $buttons = $();
+    const btnPercentWidth = 100 / buttonAPIs.length;
+
+    // Make modifications to each button
+    buttonAPIs.forEach((btn, i) => {
+      // Handle additional settings provided outside the
+      // button API for modals, if applicable.
+      const settingsJSON = Array.isArray(buttons) && buttons.length ? buttons[i] : undefined;
+      let triggeredFunc = false;
+      if (settingsJSON) {
+        // Set a unique ID attribute if one wasn't predefined.
+        btn.element[0].setAttribute('id', buttons[i].id || utils.uniqueId(btn.element, 'button', 'modal'));
+
+        // Setup a user-defined click handler, if one was provided.
+        // Do not attach this handler in some scenarios.
+        $(btn.element).on(`click.${self.namespace}`, (e) => {
+          const func = settingsJSON.click;
+          if (func) {
+            func.apply(self.element[0], [e, self]);
+            triggeredFunc = true;
+          }
+        });
+
+        // Setup a click handler for specific types of buttons that are valid for
+        // closing this modal instance.
+        const $validCloseBtns = $(btn.element).not([
+          '[data-ng-click]',
+          '[ng-click]',
+          '[onclick]',
+          ':submit',
+          '.btn-menu',
+          '.btn-actions',
+          '.colorpicker',
+          '.fontpicker'
+        ].join(', '));
+        $validCloseBtns.on(`click.${self.namespace}`, (e) => {
+          if (triggeredFunc) {
+            return;
+          }
+          if ($(e.target).is('.btn-cancel')) {
+            self.isCancelled = true;
+          }
+          self.close();
+        });
+
+        // Handle Validation
+        if (settingsJSON.validate) {
+          btn.element[0].classList.add('no-validation');
+        }
+      }
+
+      // In standard Modal mode, size the buttons to fit after rendering.
+      btn.element[0].style.width = `${btnPercentWidth}%`;
+
+      $buttons.add(btn);
+    });
+  },
+
+  /**
+   * Adds buttons to a standard/flex Toolbar component (used in Contextual Action Panels)
+   * @private
+   * @param {array<object>} buttons an incoming array of button definitions.
+   * @returns {void}
+   */
   addButtons(buttons) {
     const self = this;
     const body = this.element.find('.modal-body');
@@ -459,6 +578,10 @@ Modal.prototype = {
         btn.addClass('btn-modal-primary');
       } else {
         btn.addClass('btn-modal');
+      }
+
+      if (props.disabled) {
+        btn[0].disabled = props.disabled === true;
       }
 
       if (props.audible) {
@@ -1161,17 +1284,25 @@ Modal.prototype = {
       $('body').off(`resize.${self.namespace}`);
       $(document).off(`keydown.${self.namespace}`);
 
-      if (self.modalButtons) {
-        self.element.find('button').off(`click.${self.namespace}`);
-      }
-
       if (self.element.find('.detailed-message').length === 1) {
         $('body').off(`resize.${self.namespace}`);
       }
 
       // Properly teardown contexual action panels
       if (self.isCAP && self.capAPI) {
-        self.capAPI.teardown();
+        self.capAPI.destroy();
+      }
+
+      // If a buttonset exists, remove events and destroy completely.
+      if (self.buttonsetAPI) {
+        self.buttonsetAPI.buttons.forEach((button) => {
+          $(button.element).off(`click.${self.namespace}`);
+        });
+
+        self.buttonsetAPI.destroy();
+        self.buttonsetElem.remove();
+        delete self.buttonsetAPI;
+        delete self.buttonsetElem;
       }
 
       self.trigger.off(`click.${self.namespace}`);
@@ -1182,11 +1313,6 @@ Modal.prototype = {
         self.element.closest('.modal-page-container').remove();
       }
       self.element[0].removeAttribute('data-modal');
-
-      $.removeData(self.element[0], COMPONENT_NAME);
-      if (self.isCAP && self.capAPI) {
-        self.capAPI.destroy();
-      }
 
       const destroyTimer = new RenderLoopItem({
         duration: 21, // should match the length of time needed for the overlay to fade out
@@ -1208,6 +1334,8 @@ Modal.prototype = {
         }
       });
       renderLoop.register(destroyTimer);
+
+      $.removeData(self.element[0], COMPONENT_NAME);
     }
 
     if (!this.visible) {
