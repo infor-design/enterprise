@@ -2520,7 +2520,7 @@ describe('Datagrid disable last page', () => {
   });
 
   it('Should be have last and next page disabled', async () => {
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(2);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 
@@ -2542,12 +2542,12 @@ describe('Datagrid paging force disabled', () => {
     await element(by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(4);
 
     await element(by.id('force-enabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 

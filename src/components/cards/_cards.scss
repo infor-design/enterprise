@@ -131,7 +131,7 @@
     }
   }
 
-  [class^='btn'] {
+  [class*='btn'] {
     color: $listview-toolbar-button-text-color;
 
     span {

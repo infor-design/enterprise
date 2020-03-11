@@ -56,7 +56,7 @@ function personalizeStyles(colors) {
 .header.is-personalizable button:not(:disabled):hover,
 .header.is-personalizable button:not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
+.header.is-personalizable .toolbar [class*='btn']:hover:not([disabled]) {
   color: ${colors.contrast} !important;
   opacity: 1;
 }
@@ -585,10 +585,10 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
-.header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus),
-.subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
-.subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
+.header.is-personalizable .toolbar [class*='btn']:focus:not(.hide-focus),
+.header.is-personalizable .flex-toolbar [class*='btn']:focus:not(.hide-focus),
+.subheader.is-personalizable .toolbar [class*='btn']:focus:not(.hide-focus),
+.subheader.is-personalizable .flex-toolbar [class*='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.subtext},
     0 0 2px 1px ${colors.subtext};
