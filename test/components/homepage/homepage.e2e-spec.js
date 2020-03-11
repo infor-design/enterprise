@@ -1,5 +1,3 @@
-import { browser } from "protractor";
-
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
@@ -45,6 +43,7 @@ describe('Homepage example editable tests', () => {
       await browser.driver.sleep(config.sleep);
 
       browser.actions().mouseMove(element(by.css('.widget'))).perform();
+
       expect(await browser.protractorImageComparison.checkScreen('homepage-editable')).toEqual(0);
     });
   }
