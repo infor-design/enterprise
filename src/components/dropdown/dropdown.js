@@ -2049,6 +2049,13 @@ Dropdown.prototype = {
         }
       }
 
+      if (placementObj.wasFlipped === undefined) {
+        if (placementObj.parent.hasClass('error') && placementObj.parent.hasClass('is-open')) {
+          const adjustListHeight = self.list[0].classList.contains('search-mode') ? 0 : 11;
+          self.list[0].style.top = `${listStyleTop + adjustListHeight}px`;
+        }
+      }
+
       if (adjustedUlHeight) {
         self.listUl[0].style.height = adjustedUlHeight;
       }
