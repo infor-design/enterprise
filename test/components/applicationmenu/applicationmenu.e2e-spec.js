@@ -5,12 +5,12 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Applicationmenu index tests', () => {
+describe('Application Menu index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-index');
   });
 
-  it('Should show the app menu', async () => {
+  it('should open when the hamburger button is clicked', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
     await browser.driver.sleep(config.sleepLonger);
@@ -18,12 +18,12 @@ describe('Applicationmenu index tests', () => {
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       const button = await element(by.css('.application-menu-trigger'));
       await button.click();
 
@@ -35,12 +35,12 @@ describe('Applicationmenu index tests', () => {
   }
 });
 
-describe('Applicationmenu filter tests', () => {
+describe('Application Menu filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-filterable');
   });
 
-  it('Should filter', async () => {
+  it('should filter', async () => {
     const button = await element(by.css('#application-menu-searchfield'));
     await button.sendKeys('Role');
     await browser.driver
@@ -50,17 +50,17 @@ describe('Applicationmenu filter tests', () => {
     expect(await element.all(by.css('.accordion-header')).count()).toEqual(19);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
 
-describe('Applicationmenu menubutton tests', () => {
+describe('Application Menu MenuButton tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-menubutton');
   });
 
-  it('Should have a working menu button', async () => {
+  it('should have a working menu button', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.btn-menu')).last()), config.waitsFor);
 
@@ -70,34 +70,34 @@ describe('Applicationmenu menubutton tests', () => {
     expect(await element(by.id('popupmenu-2')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
 
-describe('Applicationmenu open on large tests', () => {
+describe('Application Menu open on large tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-open-on-large');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('application-menu'))), config.waitsFor);
   });
 
-  it('Should have menu open', async () => {
+  it('should be open on intialization', async () => {
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
 
-describe('Applicationmenu container tests', () => {
+describe('Application Menu container tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-container');
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should show the app menu', async () => {
+  it('should display without visual bugs', async () => {
     const button = await element(by.css('.application-menu-trigger'));
     await button.click();
     await browser.driver.sleep(config.sleep);
@@ -110,7 +110,7 @@ describe('Applicationmenu container tests', () => {
   });
 });
 
-describe('Applicationmenu accordion truncated text tooltip tests', () => {
+describe('Application Menu accordion truncated text tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-tooltips');
 
@@ -119,11 +119,11 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(truncatedText), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should show tooltip on truncated text', async () => {
+  it('should show a tooltip on truncated text', async () => {
     await browser.actions().mouseMove(element(by.id('truncated-text'))).perform();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('tooltip'))), config.waitsFor);
@@ -132,21 +132,21 @@ describe('Applicationmenu accordion truncated text tooltip tests', () => {
   });
 });
 
-describe('Applicationmenu personalize tests', () => {
+describe('Application Menu personalize tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should show the app menu', async () => {
+  it('should show the app menu', async () => {
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress on personalize', async () => {
+    it('should not visually regress when personalized', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
       const section = await element(by.css('body.no-scroll'));
@@ -158,22 +158,22 @@ describe('Applicationmenu personalize tests', () => {
   }
 });
 
-describe('Applicationmenu personalize roles tests', () => {
+describe('Application Menu personalize roles tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized-roles.html?colors=390567');
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should show the app menu', async () => {
+  it('should show the app menu', async () => {
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress on personalize roles', async () => {
+    it('should not visually regress on personalize roles', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
       const section = await element(by.css('body.no-scroll'));
@@ -185,21 +185,21 @@ describe('Applicationmenu personalize roles tests', () => {
   }
 });
 
-describe('Applicationmenu personalize roles switcher tests', () => {
+describe('Application Menu personalize roles switcher tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized-role-switcher');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should show the app menu', async () => {
+  it('should show the app menu', async () => {
     expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress on personalize roles switcher', async () => {
+    it('should not visually regress on personalize roles switcher', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
       const section = await element(by.css('body.no-scroll'));
@@ -210,7 +210,7 @@ describe('Applicationmenu personalize roles switcher tests', () => {
     });
   }
 
-  it('Should dismiss the application menu when clicking on a popupmenu trigger', async () => {
+  it('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
     // NOTE: This only happens on mobile, and when `AppliationMenu.settings.dismissOnClickMobile: true;`
     const windowSize = await browser.driver.manage().window().getSize();
 
@@ -232,12 +232,12 @@ describe('Applicationmenu personalize roles switcher tests', () => {
   });
 });
 
-describe('Applicationmenu role switcher tests', () => {
+describe('Application Menu role switcher tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-personalized-role-switcher-long-title');
   });
 
-  it('Should have a working role switcher with long title', async () => {
+  it('should have a working role switcher with long title', async () => {
     const btnSel = '.application-menu-switcher-trigger';
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css(btnSel)).last()), config.waitsFor); // eslint-disable-line
@@ -248,21 +248,21 @@ describe('Applicationmenu role switcher tests', () => {
     expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
 
-describe('Applicationmenu custom search tests', () => {
+describe('Application Menu custom search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-filterable-custom');
   });
 
-  it('Should show the search even though filterable is false', async () => {
+  it('should show the search even though filterable is false', async () => {
     expect(await element(by.css('#application-menu-searchfield')).isPresent()).toBeTruthy();
   });
 
-  it('Should have a search but not filter the menu when filterable is false', async () => {
+  it('should have a search but not filter the menu when filterable is false', async () => {
     const button = await element(by.css('#application-menu-searchfield'));
     await button.sendKeys('Role');
     await browser.driver.sleep(config.sleep);
@@ -270,17 +270,37 @@ describe('Applicationmenu custom search tests', () => {
     expect(await element.all(by.css('.accordion-header.filtered')).count()).toEqual(0);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
 
-describe('Applicationmenu Many Items tests', () => {
+describe('Application Menu Many Items tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-filterable-many-items');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
+  });
+});
+
+describe('Application Menu Event Propagation Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-click-event-propagation');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#application-menu.is-open'))), config.waitsFor);
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('should fire a toast when its accordion headers are clicked', async () => {
+    const thirdHeader = await element(by.css('#application-menu > div > div:nth-child(3)'));
+    await thirdHeader.click();
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('toast-container'))), config.waitsFor);
+
+    expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 });
