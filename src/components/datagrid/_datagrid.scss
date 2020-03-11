@@ -473,10 +473,14 @@ $datagrid-short-row-height: 25px;
 
       .handle,
       .is-draggable-target {
-        font-size: 24px;
         height: $datagrid-short-header-height;
-        margin-top: -1px;
-        padding: 0 0 0 2px;
+
+        .icon {
+          height: 16px !important;
+          left: -2px !important;
+          top: 4px !important;
+          width: 15px !important;
+        }
       }
 
       &.text-ellipsis {
@@ -579,11 +583,12 @@ $datagrid-short-row-height: 25px;
 
       .handle,
       .is-draggable-target {
-        font-size: 2em;
         height: $datagrid-medium-header-height;
-        margin-top: -1px;
-        padding: 0 0 0 4px;
-        width: 16px;
+
+        .icon {
+          left: -2px !important;
+          top: 5px !important;
+        }
       }
 
       &.text-ellipsis {
@@ -836,13 +841,19 @@ $datagrid-short-row-height: 25px;
 
           }
 
+          .dropdown-wrapper {
+            margin-top: 0;
+          }
+
           .dropdown {
-            padding: 2px 15px;
+            height: inherit;
+            padding: 8px 23px 0 14px;
           }
 
           div.dropdown + .icon,
           div.multiselect + .icon {
-            top: 2px;
+            left: auto;
+            top: 4px;
           }
 
         }
@@ -1173,8 +1184,18 @@ $datagrid-short-row-height: 25px;
             height: 25px;
           }
 
+          .dropdown-wrapper {
+            margin-top: 0;
+          }
+
           .dropdown {
-            padding: 2px 20px;
+            height: inherit;
+            margin: 0;
+            padding: 5px 27px 0 9px;
+
+            + .icon {
+              top: 8px;
+            }
           }
 
           .lookup-wrapper {
@@ -2096,12 +2117,17 @@ $datagrid-short-row-height: 25px;
       //Drop Down
       .dropdown {
         border: medium none;
+        height: inherit;
         line-height: normal;
-        padding: 0 30px 0 20px;
+        padding: 4px 30px 5px 19px;
         width: 100%;
 
         &:focus {
           box-shadow: none;
+        }
+
+        + .icon {
+          top: 5px;
         }
       }
 
@@ -3117,7 +3143,7 @@ td .btn-actions {
     }
   }
 
-  //Datagrid Dropdown Editor
+  // Datagrid Dropdown Editor
   &.is-editing {
     padding: 0;
 
@@ -3678,6 +3704,55 @@ html[dir='rtl'] {
     }
   }
 
+  th.is-dragging-clone {
+    .handle {
+      color: $theme-color-palette-white;
+      top: -1px;
+    }
+
+    .datagrid-header-text {
+      top: 13px;
+    }
+
+    .l-right-text .datagrid-header-text {
+      top: 7px;
+    }
+  }
+
+  // Drag handles
+  .has-draggable-columns th .handle,
+  .has-draggable-columns th .is-draggable-target {
+    right: 0;
+
+    .icon {
+      left: 1px;
+    }
+  }
+
+  .has-filterable-columns {
+    th.is-dragging-clone {
+      .handle .icon {
+        top: 7px;
+      }
+
+      .datagrid-header-text {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .has-draggable-columns.short-rowheight {
+    th .handle .icon {
+      left: 5px !important;
+    }
+  }
+
+  .has-draggable-columns.medium-rowheight {
+    th .handle .icon {
+      left: 2px !important;
+    }
+  }
+
   tr .datagrid-alert-text {
     padding-left: 0;
     padding-right: 10px;
@@ -3856,16 +3931,14 @@ html[dir='rtl'] {
     .handle,
     .is-draggable-target {
       display: none;
-      font-size: 3rem;
       height: $datagrid-header-height;
-      margin: 0;
-      padding: 0 0 0 5px;
       position: absolute;
+      top: 0;
 
       &.is-draggable-target {
         &.last {
           left: auto;
-          right: -8px;
+          right: -1px;
         }
 
         &.is-over {
@@ -3874,12 +3947,19 @@ html[dir='rtl'] {
       }
 
       &.handle {
-        color: $datagrid-sort-icon-color;
         cursor: move;
         width: 18px;
         z-index: 1;
 
-        &:hover {
+        .icon {
+          color: $datagrid-sort-icon-color;
+          height: 20px;
+          left: -1px;
+          top: 9px;
+          width: 21px;
+        }
+
+        &:hover .icon {
           color: $datagrid-header-color;
         }
       }
@@ -3902,6 +3982,14 @@ html[dir='rtl'] {
 
       .sort-indicator {
         opacity: 0;
+      }
+
+      .handle {
+        top: 2px;
+      }
+
+      .datagrid-header-text {
+        padding-top: 5px;
       }
     }
 
@@ -3931,8 +4019,48 @@ html[dir='rtl'] {
         }
       }
     }
+
+    &.has-draggable-columns th {
+      .handle .icon,
+      .is-draggable-target.handle .icon {
+        top: 6px;
+      }
+    }
+
+    th.is-dragging-clone {
+      .datagrid-header-text {
+        padding-top: 0;
+      }
+
+      .handle .icon {
+        top: 4px;
+      }
+    }
   }
 
+  &.short-rowheight {
+    th.is-dragging-clone {
+      .datagrid-header-text {
+        padding-top: 0;
+      }
+
+      .handle {
+        top: 0;
+      }
+    }
+  }
+
+  &.medium-rowheight {
+    th.is-dragging-clone {
+      .datagrid-header-text {
+        padding-top: 1px;
+      }
+
+      .handle {
+        top: 0;
+      }
+    }
+  }
 }
 
 // Firefox on Mac only

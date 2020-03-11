@@ -606,10 +606,22 @@ DatePicker.prototype = {
         this.currentDate.setSeconds(0);
       }
 
+      let timeFormat = this.settings.timeFormat ? this.settings.timeFormat : null;
+      if (!timeFormat) {
+        timeFormat = this.isSeconds ?
+          this.currentCalendar.dateFormat.timestamp :
+          this.currentCalendar.dateFormat.hour;
+      }
+
       timeOptions.parentElement = this.timepickerContainer;
       timeOptions.locale = this.settings.locale;
       timeOptions.language = this.settings.language;
-      this.time = this.getTimeString(this.currentDate, this.show24Hours);
+      this.time = Locale.formatDate(this.currentDate, {
+        pattern: timeFormat,
+        locale: this.locale.name,
+        language: this.language
+      });
+
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('.dropdown').dropdown();
 
@@ -859,6 +871,7 @@ DatePicker.prototype = {
         if (!self.settings.isMonthPicker) {
           self.element.val('').trigger('change').trigger('input');
           self.currentDate = null;
+          self.clearRangeDates();
         }
         self.closeCalendar();
       }
@@ -937,6 +950,22 @@ DatePicker.prototype = {
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
     }, 50);
+  },
+
+  /**
+   * Clear the dates in settings range object.
+   * @private
+   * @returns {void}
+   */
+  clearRangeDates() {
+    const s = this.settings;
+    if (s.range.useRange) {
+      s.range.start = DATEPICKER_DEFAULTS.range.start;
+      s.range.end = DATEPICKER_DEFAULTS.range.end;
+      if (s.range.data) {
+        delete s.range.data;
+      }
+    }
   },
 
   /**
@@ -1128,7 +1157,11 @@ DatePicker.prototype = {
     } else {
       if (this.settings.showTime) {
         if (isReset) {
-          this.time = this.getTimeString(date, this.show24Hours);
+          this.time = Locale.formatDate(date, {
+            pattern: this.currentCalendar.dateFormat.hour,
+            locale: this.locale.name,
+            language: this.language
+          });
 
           if (this.settings.roundToInterval) {
             $('#timepicker-minutes').val('');
@@ -1209,19 +1242,21 @@ DatePicker.prototype = {
     let handled = false;
 
     // Closed calendar
-    if (!this.isOpen() && !isSingleDate) {
-      handled = true;
-      const d = date || new Date();
-      this.currentMonth = d.getMonth();
-      this.currentYear = d.getFullYear();
-      this.currentDay = d.getDate();
-      this.currentDate = d;
+    if (!this.isOpen()) {
+      if (!isSingleDate) {
+        handled = true;
+        const d = date || new Date();
+        this.currentMonth = d.getMonth();
+        this.currentYear = d.getFullYear();
+        this.currentDay = d.getDate();
+        this.currentDate = d;
 
-      s.range.first = s.range.first || {};
-      s.range.second = s.range.second || {};
-      s.range.first.date = d;
-      s.range.second.date = d;
-      value = this.getRangeValue();
+        s.range.first = s.range.first || {};
+        s.range.second = s.range.second || {};
+        s.range.first.date = d;
+        s.range.second.date = d;
+        value = this.getRangeValue();
+      }
     } else {
       // Opened calendar
       const label = labelDate(date);
@@ -1266,8 +1301,11 @@ DatePicker.prototype = {
         this.currentDate = date;
         // minDays
         if (s.range.minDays > 0) {
-          if (time.date > time.firstdate && time.date < time.min.aftertime) {
+          if (time.date >= time.firstdate && time.date < time.min.aftertime) {
             date = time.min.after;
+            if (time.date === time.firstdate) {
+              time.date = date.getTime();
+            }
           } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
             date = time.min.before;
           }
@@ -1382,6 +1420,8 @@ DatePicker.prototype = {
       field.dates = alignDates(field.value.split(s.range.separator));
     } else if (!field.isEmpty && field.value.indexOf(s.range.separator.slice(0, -1)) > -1) {
       field.dates = field.value.split(s.range.separator.slice(0, -1));
+    } else if (!field.isEmpty && field.value.indexOf(s.range.separator) === -1) {
+      field.dates = [formatDate(field.value)];
     }
 
     // Start/End dates
@@ -1498,6 +1538,7 @@ DatePicker.prototype = {
     const selectedDay = getSelectedDay();
 
     this.currentDate = gregorianValue || new Date();
+
     if (typeof this.currentDate === 'string') {
       this.currentDate = Locale.parseDate(this.currentDate, {
         pattern: this.pattern,
@@ -1532,23 +1573,27 @@ DatePicker.prototype = {
 
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
-    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
-    const parsedDate = Locale.parseDate(self.element.val().trim(), {
-      pattern: dateFormat,
-      locale: this.locale.name,
-      calendarName: this.settings.calendarName
-    }, isStrict);
+    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' || dateFormat === 'MMMM');
+    const fieldValueTrimmed = self.element.val().trim();
 
-    if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
-      const thisParseDate = Locale.parseDate(self.element.val().trim(), {
+    if (fieldValueTrimmed !== '' && !s.range.useRange) {
+      const parsedDate = Locale.parseDate(fieldValueTrimmed, {
         pattern: self.pattern,
         locale: this.locale.name,
         calendarName: this.settings.calendarName
-      }, false);
-      if (self.pattern && self.pattern.indexOf('d') === -1) {
-        thisParseDate.setDate(selectedDay);
+      }, isStrict);
+
+      const hours = parsedDate ? parsedDate.getHours() : 0;
+      if (parsedDate && hours < 12 &&
+        self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
+        parsedDate.setHours(hours + 12);
       }
-      self.setValue(thisParseDate);
+      if (self.pattern && self.pattern.indexOf('d') === -1) {
+        parsedDate.setDate(selectedDay);
+      }
+      if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
+        self.setValue(parsedDate);
+      }
     }
 
     if (s.range.useRange && s.range.first && s.range.first.date && s.range.second) {
@@ -1605,21 +1650,7 @@ DatePicker.prototype = {
     this.currentDate = new Date();
 
     if (!this.settings.useCurrentTime) {
-      this.currentDate.setHours(0, 0, 0, 0);
-
-      if (this.element.val() !== '') {
-        if (this.timepicker && this.timepicker.hourSelect) {
-          this.currentDate.setHours(this.timepicker.hourSelect.val());
-        }
-
-        if (this.timepicker && this.timepicker.minuteSelect) {
-          this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
-        }
-
-        if (this.timepicker && this.timepicker.secondSelect) {
-          this.currentDate.setSeconds(this.timepicker.secondSelect.val());
-        }
-      }
+      this.currentDate = this.setTime(this.currentDate);
     }
 
     if (this.isIslamic) {
@@ -1686,38 +1717,27 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setTime(date) {
+    const hasPopup = this.popup !== undefined;
+    if (!this.timepicker || !hasPopup) {
+      if (!this.settings.useCurrentTime) {
+        date.setHours(0, 0, 0, 0);
+      }
+      return date;
+    }
     let hours = this.popup.find('.dropdown.hours').val();
     const minutes = this.popup.find('.dropdown.minutes').val();
     const seconds = this.isSeconds ? this.popup.find('.dropdown.seconds').val() : 0;
     const period = this.popup.find('.dropdown.period');
+    const periodValue = period.val();
 
-    hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
-    hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
+    hours = (period.length && periodValue === this.currentCalendar.dayPeriods[1] && hours < 12)
+      ? (parseInt(hours, 10) + 12) : hours;
+    hours = (period.length && (periodValue === this.currentCalendar.dayPeriods[0] ||
+      !periodValue) && parseInt(hours, 10) === 12) ? 0 : hours;
 
     date = new Date(date);
     date.setHours(hours, minutes, seconds);
     return date;
-  },
-
-  /**
-   * Get Time String
-   * @private
-   * @param {object} date .
-   * @param {boolean} isHours24 .
-   * @returns {string} time
-   */
-  getTimeString(date, isHours24) {
-    const twodigit = function (number) {
-      return (number < 10 ? '0' : '') + number;
-    };
-    const d = (date || new Date());
-    const h = d.getHours();
-    const m = twodigit(d.getMinutes());
-    const s = twodigit(d.getSeconds());
-    const h12 = `${(h % 12 || 12)}:${m}${(this.isSeconds ? `:${s}` : '')} ${(h < 12 ? 'AM' : 'PM')}`;
-    const h24 = `${h}:${m} + ${(this.isSeconds ? `:${s}` : '')}`;
-
-    return isHours24 ? h24 : h12;
   },
 
   /**
@@ -1777,7 +1797,7 @@ DatePicker.prototype = {
       this.closeCalendar();
     }
 
-    this.element.off('blur.datepicker');
+    this.element.off('blur.datepicker change.datepicker-rangeclear keyup.datepicker-rangeclear');
     this.trigger.remove();
     this.element.removeAttr('placeholder');
     if (this.calendarAPI) {
@@ -1843,6 +1863,13 @@ DatePicker.prototype = {
     self.element.on('blur.datepicker', () => {
       if (self.element.val().trim() !== '') {
         self.setValueFromField();
+      }
+    });
+
+    // Clear setting range dates
+    this.element.on('change.datepicker-rangeclear keyup.datepicker-rangeclear', () => {
+      if (!this.isOpen() && this.element.val().trim() === '') {
+        self.clearRangeDates();
       }
     });
 
