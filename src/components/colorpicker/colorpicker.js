@@ -230,6 +230,7 @@ ColorPicker.prototype = {
       this.element.parent().addClass('color-only');
     }
 
+    this.element.attr('autocomplete', 'off');
     this.addAria();
   },
 

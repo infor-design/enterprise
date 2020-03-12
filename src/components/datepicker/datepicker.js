@@ -527,6 +527,7 @@ DatePicker.prototype = {
     const self = this;
     const s = this.settings;
     const timeOptions = {};
+    this.lastValue = this.element.val();
 
     if ((this.element.is(':disabled') || this.element.attr('readonly')) && this.element.closest('.monthview').length === 0) {
       return;
@@ -1211,7 +1212,10 @@ DatePicker.prototype = {
       }));
     }
 
-    if (trigger) {
+    const isChanged = this.lastValue !== this.element.val();
+    this.lastValue = this.element.val();
+
+    if (trigger && isChanged) {
       if (s.range.useRange) {
         if (!isTime) {
           this.element
@@ -1861,8 +1865,9 @@ DatePicker.prototype = {
 
     // Fix two digit year for main input element
     self.element.on('blur.datepicker', () => {
-      if (self.element.val().trim() !== '') {
-        self.setValueFromField();
+      this.lastValue = this.element.val();
+      if (this.element.val().trim() !== '') {
+        this.setValueFromField();
       }
     });
 
