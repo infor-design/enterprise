@@ -14,6 +14,7 @@
 
 ### v4.27.0 Fixes
 
+- `[Accordion]` Removed stoppage of event propagation when accordion headers are clicked, in order to allow external click event listeners to propagate. ([ng#321](https://github.com/infor-design/enterprise-ng/issues/321))
 - `[Bar Chart]` Fixed an issue where chart was not resizing on homepage widget resize. ([#2669](https://github.com/infor-design/enterprise/issues/2669))
 - `[Blockgrid]` Fixed an issue where there was no index if the data is empty, and removed deprecated internal calls. ([#748](https://github.com/infor-design/enterprise-ng/issues/748))
 - `[Busy Indicator]` Fixed an issue where it throws an error when a display delay, the busy-indicator parent removed and added via ngIf before the busyindicator shown. ([#703](https://github.com/infor-design/enterprise-ng/issues/703))
