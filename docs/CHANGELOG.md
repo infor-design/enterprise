@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.26.1
+
+### v4.26.1 Fixes
+
+- `[Demo App]` Fixed the embedded layout to show uplift theme. ([#861](https://github.com/infor-design/website/issues/861))
+
 ## v4.26.0
 
 ### v4.26.0 Features
