@@ -773,7 +773,10 @@ DatePicker.prototype = {
         // Horizontal view on mobile
         if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
-          this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
+          this.popup.css({
+            'min-height': `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
+            height: ''
+          });
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
