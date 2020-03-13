@@ -110,6 +110,9 @@ Icon.prototype = {
     if (base.element.length && baseUrl.length) {
       xlinkHref = xlinkHref.replace(baseUrl, '');
     }
+    if (!xlinkHref && useTag.attr('xlink:href')) {
+      xlinkHref = useTag.attr('xlink:href');
+    }
     xlinkHref = xlinkHref.replace('#icon-', '');
     this.settings.use = xlinkHref;
 

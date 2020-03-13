@@ -340,7 +340,11 @@ Button.prototype = {
       let hasIcon = false;
 
       if (ddIcon.length > 0 && use.length >= 1) {
-        hasIcon = use.last().attr('href').indexOf('#icon-dropdown') > -1;
+        let hrefValue = use.last().attr('href');
+        if (!hrefValue && use.last().attr('xlink:href')) {
+          hrefValue = use.last().attr('xlink:href');
+        }
+        hasIcon = hrefValue.indexOf('#icon-dropdown') > -1;
       }
 
       if (!hasIcon) {
