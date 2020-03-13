@@ -210,8 +210,36 @@ div.multiselect {
   }
 }
 
+// Fix Tag icon placement on Mac OSX
+.is-mac {
+  div.dropdown,
+  div.multiselect {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: -2px;
+      }
+    }
+  }
+}
+
 // Fix Tag icon placement on IE/Edge
-html.ie {
+.ie {
+  div.dropdown,
+  div.multiselect {
+    .tag-list {
+      .dismissible-btn,
+      .linkable-btn {
+        .icon {
+          top: -1px;
+        }
+      }
+    }
+  }
+}
+
+.is-safari,
+.ios {
   div.dropdown,
   div.multiselect {
     .tag-list {
