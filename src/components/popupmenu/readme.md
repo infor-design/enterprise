@@ -31,7 +31,7 @@ Here is an example of a menu button using a popupmenu. This is also described on
 <button id="btn-menu" class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
-    <use xlink:href="#icon-dropdown"></use>
+    <use href="#icon-dropdown"></use>
   </svg>
 </button>
 <ul class="popupmenu">
@@ -116,7 +116,7 @@ Or it can be attached on the fly in the page.
   <button id="popupmenu-trigger" class="btn-menu">
     <span>Normal Menu</span>
     <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
-      <use xlink:href="#icon-dropdown"></use>
+      <use href="#icon-dropdown"></use>
     </svg>
   </button>
   <ul class="popupmenu">

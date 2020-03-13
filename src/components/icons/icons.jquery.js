@@ -65,7 +65,7 @@ $.fn.icon = function (settings) {
 
     return [
       `<svg class="${options.classes.join(' ')}" focusable="false" aria-hidden="true" role="presentation">` +
-        `<use xlink:href="#icon-${options.icon}"></use>` +
+        `<use href="#icon-${options.icon}"></use>` +
       '</svg>'
     ].join('');
   };
@@ -86,7 +86,7 @@ $.fn.icon = function (settings) {
     if (!icon) {
       return;
     }
-    $(this).find('use').attr('xlink:href', $.createIconPath({ icon }));
+    $(this).find('use').attr('href', $.createIconPath({ icon }));
   };
 
   $.fn.getIconName = function () {
@@ -94,7 +94,7 @@ $.fn.icon = function (settings) {
     const use = svg.find('use');
 
     if (use.length === 1) {
-      return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-') + 6);
+      return use.attr('href').substr(use.attr('href').indexOf('#icon-') + 6);
     }
     return svg.attr('data-icon');
   };

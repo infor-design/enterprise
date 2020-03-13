@@ -35,7 +35,7 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
           <button class="btn-actions" type="button">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-more"></use>
+              <use href="#icon-more"></use>
             </svg>
           </button>
           <ul class="popupmenu">
@@ -56,7 +56,7 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
           <button class="btn-actions" type="button">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-more"></use>
+              <use href="#icon-more"></use>
             </svg>
           </button>
           <ul class="popupmenu">

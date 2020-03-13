@@ -57,7 +57,7 @@ Notification.prototype = {
 
     const htmlIcon = `
       <svg class="icon notification-icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-${this.settings.type}"></use>
+        <use href="#icon-${this.settings.type}"></use>
       </svg>`;
 
     let htmlText = `<p class="notification-text">${this.settings.message}`;
@@ -71,7 +71,7 @@ Notification.prototype = {
     const htmlButton = `
       <button type="text" class="notification-close">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-close"></use>
+          <use href="#icon-close"></use>
         </svg>
         <span class="audible">${Locale.translate('Close')}</span>
       </button>`;

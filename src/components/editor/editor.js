@@ -404,7 +404,7 @@ Editor.prototype = {
       moreButtonHTML = `<div class="toolbar-section more">
         <button class="btn-actions btn-editor">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-more"></use>
+            <use href="#icon-more"></use>
           </svg>
         </button>
       </div>`;

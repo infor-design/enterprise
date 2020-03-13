@@ -19,7 +19,7 @@ const ICON_DEFAULTS = {
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
  * @param {string} [settings.use = 'user-profile'] the type of icon that will appear.
- *  (gets added to the `<use>` tag's `xlink:href` property)
+ *  (gets added to the `<use>` tag's `href` property)
  * @param {boolean} [settings.focusable = false] whether or not this icon gets a `tabIndex` and
  *  becomes a focusable element on the page.
  */
@@ -70,8 +70,8 @@ Icon.prototype = {
       return this;
     }
 
-    if (use.getAttribute('xlink:href') !== self.getBasedUseTag()) {
-      use.setAttribute('xlink:href', self.getBasedUseTag());
+    if (use.getAttribute('href') !== self.getBasedUseTag()) {
+      use.setAttribute('href', self.getBasedUseTag());
     }
 
     return this;
@@ -87,7 +87,7 @@ Icon.prototype = {
 
   /**
    * Changes this icon instance's `use` setting to match an existing `<use> tag's
-   * `xlink:href` attribute. In the event that a <use> tag pre-exists on an icon,
+   * `href` attribute. In the event that a <use> tag pre-exists on an icon,
    * we want to retain it, and simply replace the settings.
    * @chainable
    * @returns {this} component instance
@@ -104,7 +104,8 @@ Icon.prototype = {
 
     // Store the icon's name under the `use` setting.
     // Strip out all extraneous items including the `base` URL.
-    let xlinkHref = useTag.attr('xlink:href');
+    let xlinkHref = useTag.attr('href');
+
     const baseUrl = base.url;
     if (base.element.length && baseUrl.length) {
       xlinkHref = xlinkHref.replace(baseUrl, '');

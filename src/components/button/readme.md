@@ -40,7 +40,7 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 
 <button type="button" class="btn-tertiary" id="page-button-tertiary">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-    <use xlink:href="#icon-filter"></use>
+    <use href="#icon-filter"></use>
   </svg>
   <span>Action</span>
 </button>
@@ -48,7 +48,7 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 <button type="button" class="btn-icon" disabled id="page-button-icon">
   <span>Date</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-    <use xlink:href="#icon-calendar"></use>
+    <use href="#icon-calendar"></use>
   </svg>
 </button>
 
