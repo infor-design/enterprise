@@ -22,7 +22,7 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 ```html
 <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation">
   <!-- Substitute icon-alert with any of the above icon types -->
-  <use xlink:href="#icon-alert"></use>
+  <use href="#icon-alert"></use>
 </svg>
 <span class="audible">Alert</span>
 

@@ -17,7 +17,7 @@ The masthead can be added to applications when not running inside mingle to add 
     <div class="title">
       <button type="button" id="masthead-icon" class="masthead-icon">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
+          <use href="#icon-logo"></use>
         </svg>
          <span class="audible">Go To Home</span>
       </button>
@@ -28,21 +28,21 @@ The masthead can be added to applications when not running inside mingle to add 
 
       <button type="button" id="show-user" class="btn" title="Show User">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-user"></use>
+          <use href="#icon-user"></use>
         </svg>
         <span class="audible">User</span>
       </button>
 
       <button type="button" id="share" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-mingle-share"></use>
+          <use href="#icon-mingle-share"></use>
         </svg>
         <span class="audible">Share</span>
       </button>
 
       <button type="button" id="bookmark" class="btn btn-menu">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-bookmark-filled"></use>
+          <use href="#icon-bookmark-filled"></use>
         </svg>
         <span class="audible">Bookmark</span>
       </button>
@@ -55,7 +55,7 @@ The masthead can be added to applications when not running inside mingle to add 
 
       <button type="button" id="btn" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-expand-app-tray"></use>
+          <use href="#icon-expand-app-tray"></use>
         </svg>
         <span class="audible">Expand App Tray</span>
       </button>

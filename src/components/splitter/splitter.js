@@ -95,7 +95,7 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
-        this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
+        this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
         this.splitterCollapseButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
           this.splitterCollapseButton.addClass('rotate');

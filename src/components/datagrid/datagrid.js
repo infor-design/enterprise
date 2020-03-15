@@ -1526,7 +1526,7 @@ Datagrid.prototype = {
               }
             }
           }
-          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
 
           break;
         case 'multiselect':
@@ -1540,7 +1540,7 @@ Datagrid.prototype = {
               }
             }
           }
-          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
 
           break;
         case 'time':
@@ -1798,7 +1798,7 @@ Datagrid.prototype = {
     };
     const renderButton = function (defaultValue) {
       return `<button type="button" class="btn-menu btn-filter" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
-      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>${
+      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
@@ -2398,7 +2398,7 @@ Datagrid.prototype = {
       const ul = btn.next();
       const first = ul.find('li:first');
 
-      btn.find('svg:first > use').attr('xlink:href', `#icon-filter-${btn.attr('data-default')}`);
+      btn.find('svg:first > use').attr('href', `#icon-filter-${btn.attr('data-default')}`);
       ul.find('.is-checked').removeClass('is-checked');
       first.addClass('is-checked');
     });
@@ -2449,7 +2449,7 @@ Datagrid.prototype = {
         input.trigger('updated');
       }
 
-      btn.find('svg:first > use').attr('xlink:href', `#icon-filter-${conditions[i].operator}`);
+      btn.find('svg:first > use').attr('href', `#icon-filter-${conditions[i].operator}`);
       ul.find('.is-checked').removeClass('is-checked');
       ul.find(`.${conditions[i].operator}`).addClass('is-checked');
     }
@@ -3745,7 +3745,7 @@ Datagrid.prototype = {
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
       rowStatus.title = (rowData.rowStatus.tooltip !== '') ? ` title="${rowData.rowStatus.tooltip}"` : '';
-      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use href="${rowStatus.icon}"></use></svg>`;
     }
 
     // Run a function that dynamically gets the rowHeight
@@ -9444,7 +9444,7 @@ Datagrid.prototype = {
 
         if (!svg.length) {
           const svgIcon = rowData.rowStatus.icon === 'success' ? '#icon-check' : '#icon-exclamation';
-          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${svgIcon}"></use></svg>`);
+          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use href="${svgIcon}"></use></svg>`);
         }
       }
       if (rowData.rowStatus.tooltip) {

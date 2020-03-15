@@ -11,6 +11,7 @@
 ### v4.27.0 Important Changes
 
 - `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
+- `[Icons]` Changed the svg icons to use `href` instead of deprecated `xlink:href`. This isnt a breaking change either will work but `href` works better with Ivy in Angular. ([#3611](https://github.com/infor-design/enterprise/issues/3611))
 
 ### v4.27.0 Fixes
 

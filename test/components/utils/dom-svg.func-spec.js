@@ -3,7 +3,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 const elemHTML = `<div class="test-container">
   <span class="test-span">test</span>
-  <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg>
+  <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-calendar"></use></svg>
 </div>`;
 
 let svg;

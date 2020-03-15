@@ -125,7 +125,7 @@ describe('ButtonSet API', () => {
     expect(thirdBtnEl.classList.contains('btn-secondary')).toBeTruthy();
     expect(thirdBtnEl.innerText).toEqual('Button 2');
     expect(icon instanceof SVGElement).toBeTruthy();
-    expect(icon.querySelector('use').getAttribute('xlink:href')).toBe('#icon-settings');
+    expect(icon.querySelector('use').getAttribute('href')).toBe('#icon-settings');
 
     // Disable just this button and check the buttonset status
     thirdBtnAPI.disabled = true;

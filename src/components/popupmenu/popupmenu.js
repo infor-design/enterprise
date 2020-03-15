@@ -316,7 +316,7 @@ PopupMenu.prototype = {
 
       if ((this.element.hasClass('btn-menu') ||
           this.element.hasClass('btn-actions') ||
-          this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
+          this.element.hasClass('btn-icon') && this.element.find('use').attr('href') === '#icon-more' ||
           (closestToolbar.length > 0 && !closestToolbar.is('.formatter-toolbar')) ||
           closestMasthead.length > 0 ||
           (this.settings.menu === 'colorpicker-menu') ||
@@ -488,7 +488,7 @@ PopupMenu.prototype = {
 
     if (settings.icon) {
       icon = `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-${settings.icon}"></use>
+        <use href="#icon-${settings.icon}"></use>
       </svg>`;
     }
 
@@ -496,7 +496,7 @@ PopupMenu.prototype = {
       submenuClass += ' submenu';
       submenu += this.renderItem(settings.submenu);
       ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-dropdown"></use>
+        <use href="#icon-dropdown"></use>
       </svg>`;
     }
 
@@ -590,7 +590,7 @@ PopupMenu.prototype = {
       }
 
       if (icon.length && (icon[0] instanceof SVGElement)) {
-        liData.icon = icon[0].querySelector('use').getAttribute('xlink:href').replace('#icon-', '');
+        liData.icon = icon[0].querySelector('use').getAttribute('href').replace('#icon-', '');
       }
 
       const notGloballySelectable = !singleSelectable && !multiSelectable;
@@ -804,10 +804,10 @@ PopupMenu.prototype = {
       // TODO: fragile?
       if (itemIcon) {
         itemIconUse = itemIcon.querySelector('use');
-        if (itemIconUse && itemIconUse.getAttribute('xlink:href').replace('#icon-', '') !== data.icon) {
+        if (itemIconUse && itemIconUse.getAttribute('href').replace('#icon-', '') !== data.icon) {
           itemIcon.remove();
         }
-        itemIconUse.setAttribute('xlink:href', `#icon-${data.icon}`);
+        itemIconUse.setAttribute('href', `#icon-${data.icon}`);
       } else {
         // TODO: Create icon element and append
       }

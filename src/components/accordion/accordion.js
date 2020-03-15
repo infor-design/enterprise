@@ -592,7 +592,7 @@ Accordion.prototype = {
       const icon = $el.children('.icon');
       if (icon.length) {
         elemData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
-          icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
+          icon[0].getElementsByTagName('use')[0].getAttribute('href') :
           '';
       }
 

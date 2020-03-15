@@ -53,7 +53,7 @@ EmptyMessage.prototype = {
     if (opts.icon) {
       $(`<div class="empty-icon">
           <svg class="icon-empty-state is-${this.settings.color}" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#${opts.icon}"></use>
+            <use href="#${opts.icon}"></use>
           </svg></div>`).appendTo(this.element);
     }
 

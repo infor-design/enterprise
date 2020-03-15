@@ -21,7 +21,7 @@ This example shows how to invoke a small sized placeholder image.
 ```html
 <div class="image-sm placeholder">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-insert-image"></use>
+    <use href="#icon-insert-image"></use>
   </svg>
   <span class="audible">Placeholder Image</span>
 </div>

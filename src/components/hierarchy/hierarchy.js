@@ -380,7 +380,7 @@ Hierarchy.prototype = {
       <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
         <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
           ${a.value}
-          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>' : ''}
+          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
         </a>
         ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
           <ul class="popupmenu">
@@ -733,7 +733,7 @@ Hierarchy.prototype = {
         '<div class="back">' +
         '<button type="button" class="btn-icon hide-focus btn-back">' +
         '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-        '<use xlink:href="#icon-caret-left"></use>' +
+        '<use href="#icon-caret-left"></use>' +
         '</svg>' +
         '<span>Back</span>' +
         '</button>' +

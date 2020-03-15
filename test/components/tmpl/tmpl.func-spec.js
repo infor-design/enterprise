@@ -105,7 +105,7 @@ describe('Tmpl API', () => {
 
   it('Should parse expandable row templates', () => {
     const testTempl = `
-      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>
+      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>
       <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>
       <p class="datagrid-row-micro-text">{{{sku}}}</p>
       <span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>
@@ -117,6 +117,6 @@ describe('Tmpl API', () => {
     output = stringUtils.stripWhitespace(output);
 
     expect(output).toEqual(stringUtils.stripWhitespace(`
-      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div><div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p><p class="datagrid-row-micro-text"><b>SKU #9000001-237</b></p><span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span><a class="hyperlink">Read more</a>`));
+      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div><div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p><p class="datagrid-row-micro-text"><b>SKU #9000001-237</b></p><span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span><a class="hyperlink">Read more</a>`));
   });
 });
