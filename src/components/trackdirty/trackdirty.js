@@ -56,8 +56,16 @@ Trackdirty.prototype = {
         const el = element.parent().find('[type="text"]');
         return el.val();
       }
-      default:
+      default: {
+        if (element.is('textarea')) {
+          return element.val().trim()
+            .replace(/\s+/g, ' ')
+            .replace(/<br( \/)?>/g, '<br>\n')
+            .replace(/<\/p> /g, '</p>\n\n')
+            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+        }
         return element.val();
+      }
     }
   },
 

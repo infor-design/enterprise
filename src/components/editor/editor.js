@@ -59,12 +59,20 @@ const EDITOR_DEFAULTS = {
       'separator', 'source'
     ],
     source: [
-      'visual'
+      'fontPicker',
+      'separator', 'bold', 'italic', 'underline', 'strikethrough',
+      'separator', 'foreColor', 'backColor',
+      'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
+      'separator', 'quote', 'orderedlist', 'unorderedlist',
+      'separator', 'anchor',
+      'separator', 'image',
+      'separator', 'clearFormatting',
+      'separator', 'visual'
     ]
   },
   excludeButtons: {
     editor: ['backColor'],
-    source: []
+    source: ['backColor']
   },
   delay: 200,
   placeholder: null,
@@ -413,7 +421,10 @@ Editor.prototype = {
     const btns = this.setExcludedButtons();
     let buttonsHTML = '';
     for (let i = 0, l = btns.length; i < l; i += 1) {
-      const btn = this.buttonTemplate(btns[i]);
+      let btn = this.buttonTemplate(btns[i]);
+      if (btn && this.element.hasClass('source-view-active') && btns[i] !== 'visual') {
+        btn = btn.replace('type="button"', 'type="button" disabled');
+      }
       if (btn) {
         buttonsHTML += btn;
       }
@@ -756,7 +767,7 @@ Editor.prototype = {
       return;
     }
 
-    this.textarea[0].style.height = `${numberList[0].scrollHeight}px`;
+    this.textarea[0].style.height = `${numberList[0].scrollHeight - 13}px`;
   },
 
   wrapTextInTags(insertedText, selectedText, action) {
@@ -1399,13 +1410,18 @@ Editor.prototype = {
     return this;
   },
 
+  /**
+   * Check and set the active states on toolba rbuttons.
+   * @private
+   */
   checkActiveButtons() {
     this.checkButtonState('bold');
     this.checkButtonState('italic');
     this.checkButtonState('underline');
-    this.colorpickerButtonState('foreColor');
+    this.checkButtonState('strikethrough');
+    this.checkColorButtonState('foreColor');
     if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
-      this.colorpickerButtonState('backColor');
+      this.checkColorButtonState('backColor');
     }
     if (this.fontPickerElem) {
       this.checkButtonState('fontStyle');
@@ -2055,7 +2071,7 @@ Editor.prototype = {
       } else if (action === 'image') {
         this.modals.image.data('modal').open();
       } else if (action === 'foreColor' || action === 'backColor') {
-        this.colorpickerActions(action);
+        this.execColorActions(action);
       } else if (action === 'clearFormatting') {
         this.clearFormatting();
       } else if (action === 'source' || action === 'visual') {
@@ -2100,6 +2116,8 @@ Editor.prototype = {
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
       this.switchToolbars();
+      this.textarea.off('input.editor');
+
       setTimeout(() => {
         this.element.html(content);
         content = this.element.html();
@@ -2133,6 +2151,10 @@ Editor.prototype = {
       this.textarea.focus();
       this.switchToolbars();
       content = this.textarea.val();
+      this.textarea.off('input.editor').on('input.editor', () => {
+        this.element.trigger('change');
+      });
+
       /**
        * Fires after source mode activated.
        * @event aftersourcemode
@@ -2371,8 +2393,13 @@ Editor.prototype = {
     return parentEl;
   },
 
-  // Set ['foreColor'|'backColor'] button icon color in toolbar
-  colorpickerButtonState(action) {
+  /**
+   * Get ['foreColor'|'backColor'] button icon color state for the toolbar.
+   * @private
+   * @param  {[type]} action [description]
+   * @returns {object} The button state info.
+   */
+  checkColorButtonState(action) {
     const cpBtn = $(`[data-action="${action}"]`, this.toolbar);
     const cpApi = cpBtn.data('colorpicker');
     const preventColors = ['transparent', '#1a1a1a', '#f0f0f0', '#ffffff', '#313236'];
@@ -2391,14 +2418,18 @@ Editor.prototype = {
       }
       color = color ? cpApi.rgb2hex(color) : '';
       cpBtn.attr('data-value', color)
-        .find('.icon').css('fill', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
+        .find('.icon').css('color', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },
 
-  // Colorpicker actions ['foreColor'|'backColor']
-  colorpickerActions(action) {
-    const state = this.colorpickerButtonState(action);
+  /**
+   * Execute ['foreColor'|'backColor'] button actions.
+   * @private
+   * @param  {[type]} action [description]
+   */
+  execColorActions(action) {
+    const state = this.checkColorButtonState(action);
     const cpBtn = state.cpBtn;
     const cpApi = state.cpApi;
 
@@ -2416,7 +2447,11 @@ Editor.prototype = {
         value = `#${value}`;
       }
 
-      cpBtn.attr('data-value', value).find('.icon').css('fill', value);
+      if (value === '#') {
+        value = ''; // clear format
+      }
+
+      cpBtn.attr('data-value', value).find('.icon').css('color', value);
 
       if (env.browser.name === 'ie' || action === 'foreColor') {
         if (value) {
@@ -2469,6 +2504,10 @@ Editor.prototype = {
    * @returns {void|boolean} same return value as [`document.execCommand()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
    */
   execFormatBlock(el) {
+    if (this.selection === undefined) {
+      this.checkSelection();
+    }
+
     if (!this.selection || !(this.selection instanceof Selection)) {
       return;
     }
@@ -2495,6 +2534,41 @@ Editor.prototype = {
       el = `<${el}>`;
     }
 
+    // Reset some formatting thats not consistent with headers
+    if (document.queryCommandState('bold')) {
+      document.execCommand('bold', false, el);
+    }
+    if (document.queryCommandState('italic')) {
+      document.execCommand('italic', false, el);
+    }
+    if (document.queryCommandState('underline')) {
+      document.execCommand('underline', false, el);
+    }
+    if (document.queryCommandState('strikethrough')) {
+      document.execCommand('strikethrough', false, el);
+    }
+    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
+      document.execCommand('removeFormat', false, 'foreColor');
+      document.execCommand('removeFormat', false, 'backColor');
+    }
+    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ul>') {
+      document.execCommand('insertunorderedlist', false, el);
+      document.execCommand('removeFormat', false, el);
+    }
+    if (this.selection.anchorNode && this.selection.anchorNode.parentNode && this.selection.anchorNode.parentNode.parentElement.nodeName === 'UL') {
+      document.execCommand('insertunorderedlist', false, el);
+      document.execCommand('removeFormat', false, el);
+    }
+    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ol>') {
+      document.execCommand('insertorderedlist', false, el);
+      document.execCommand('removeFormat', false, el);
+    }
+    if (this.selection.anchorNode && this.selection.anchorNode.parentNode && this.selection.anchorNode.parentNode.parentElement.nodeName === 'OL') {
+      document.execCommand('insertorderedlist', false, el);
+      document.execCommand('removeFormat', false, el);
+    }
+
+    this.checkActiveButtons();
     return document.execCommand('formatBlock', false, el);
   },
 
@@ -2608,11 +2682,11 @@ Editor.prototype = {
 
     this.container.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
 
-    let state = this.colorpickerButtonState('foreColor');
+    let state = this.checkColorButtonState('foreColor');
     let cpBtn = state.cpBtn;
     cpBtn.off('selected.editor');
 
-    state = this.colorpickerButtonState('backColor');
+    state = this.checkColorButtonState('backColor');
     cpBtn = state.cpBtn;
     cpBtn.off('selected.editor');
 

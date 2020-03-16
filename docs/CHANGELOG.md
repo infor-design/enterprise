@@ -29,7 +29,13 @@
 - `[Datepicker]` Fixed an issue where dates would be invalid in zh-TW locale. ([#3473](https://github.com/infor-design/enterprise/issues/3473))
 - `[Datepicker]` Fixed an issue where AM/PM could not be set in hi-IN locale. ([#3474](https://github.com/infor-design/enterprise/issues/3474))
 - `[Datepicker]` Fixed an issue where time would be reset to 12:00 AM when setting the time and clicking today. ([#3202](https://github.com/infor-design/enterprise/issues/3202))
-- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
+- `[Editor]` Added ui updates to the toolbar in uplift (vibrant mode) and minor style fixes. ([#3577](https://github.com/infor-design/enterprise/issues/3577))
+- `[Editor]` Fixed a width change when toggle source view when the editor is on a modal, this is also based on UI feedback that the switch was confusing, so we now disable the buttons. ([#3594](https://github.com/infor-design/enterprise/issues/3594))
+- `[Editor]` Fixed an issue where bullet and number lists could not be converted to headings and regular text with the font picker. ([#2679](https://github.com/infor-design/enterprise/issues/2679))
+- `[Editor]` Fixed an issue where some settings like bold and italics would not be reset consistently when applying headings and regular text with the font picker. ([#2256](https://github.com/infor-design/enterprise/issues/2256))
+- `[Editor]` Fixed an issue where the dirty events did not fire changing the source view. ([#3598](https://github.com/infor-design/enterprise/issues/3598))
+- `[Editor]` Adding missing bottom spacing under heading elements. ([#3288](https://github.com/infor-design/enterprise/issues/3288))
+- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
 - `[Masthead]` Fixed layout and color issues in uplift theme. ([#3526](https://github.com/infor-design/enterprise/issues/3526))
 - `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
@@ -39,6 +45,12 @@
 - `[Swaplist]` Fixed an issue where lists were overlapping on uplift theme. ([#3452](https://github.com/infor-design/enterprise/issues/3452))
 - `[Tabs]` Fixed the position of error icon too close to the border on focus state. ([#3544](https://github.com/infor-design/enterprise/issues/3544))
 - `[Tabs-Vertical]` Fixed an issue where the content cannot scroll on mobile view. ([#3542](https://github.com/infor-design/enterprise/issues/3542))
+
+## v4.26.1
+
+### v4.26.1 Fixes
+
+- `[Demo App]` Fixed the embedded layout to show uplift theme. ([#861](https://github.com/infor-design/website/issues/861))
 
 ## v4.26.0
 

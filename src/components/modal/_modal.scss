@@ -75,6 +75,15 @@
       }
     }
 
+    &.editor-container {
+      max-width: 850px;
+      min-width: 850px;
+
+      .editor-source textarea {
+        max-width: inherit;
+      }
+    }
+
     &:first-child .audible ~ input:not(.spinbox):not(.colorpicker),
     &:first-child .audible ~ .searchfield-wrapper {
       margin-top: 4px;

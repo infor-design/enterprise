@@ -64,11 +64,69 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress', async () => {
-      const elem = await element(by.css('.editor'));
+  it('Should remove bold, italics on headers', async () => {
+    const elem = await element(by.css('.editor'));
+    await elem.clear();
+    await elem.sendKeys('test test');
+    await elem.click();
+    await elem.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'));
+    await browser.driver.sleep(config.sleepShort);
 
-      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-index')).toEqual(0);
+    await element(by.css('.fontpicker')).click();
+    await element(by.css('a[data-val="header1"]')).click();
+
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
+  });
+});
+
+fdescribe('Editor visual regression tests', () => { //eslint-disable-line
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visually regress on subtle light', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=soho&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-subtle-light')).toEqual(0);
+    });
+
+    it('Should not visually regress on subtle dark', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=soho&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-subtle-dark')).toEqual(0);
+    });
+
+    it('Should not visually regress on subtle contrast', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=soho&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-subtle-contrast')).toEqual(0);
+    });
+
+    it('Should not visually regress on vibrant light', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=uplift&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-vibrant-light')).toEqual(0);
+    });
+
+    it('Should not visually regress on vibrant dark', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=uplift&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-vibrant-dark')).toEqual(0);
+    });
+
+    it('Should not visually regress on vibrant contrast', async () => {
+      await utils.setPage('/components/editor/example-preview?layout=nofrills&theme=uplift&variant=contrast');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
     });
   }
 });
@@ -122,6 +180,16 @@ describe('Editor dirty tracking tests', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'editor-dirty-tracker')).toEqual(0);
     }
   });
+
+  it('Should render dirty tracker in the source view', async () => {
+    await element(by.css('button[data-action=source]')).click();
+    await element(by.tagName('textarea')).sendKeys('<b>Test</b>');
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+  });
 });
 
 describe('Editor empty tests', () => {
@@ -159,4 +227,22 @@ describe('Editor placeholder tests', () => {
       expect(await browser.protractorImageComparison.checkElement(elem, 'editor-placeholder')).toEqual(0);
     });
   }
+});
+
+describe('Editor modal tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/test-modal?layout=nofrills');
+  });
+
+  it('Should not change size on toggling source', async () => {
+    await element(by.id('show-modal')).click();
+    await browser.driver.sleep(config.sleep);
+    const previewSize = await element(by.css('.editor')).getSize();
+
+    await element(by.css('button[data-action=source]')).click();
+    await browser.driver.sleep(config.sleep);
+    const sourceSize = await element(by.css('.editor-source')).getSize();
+
+    expect(previewSize.width).toEqual(sourceSize.width);
+  });
 });

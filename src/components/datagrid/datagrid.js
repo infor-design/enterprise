@@ -9381,7 +9381,7 @@ Datagrid.prototype = {
    * @param {number} row  The row index.
    * @param {number} cell The cell index.
    * @param {any} value The value to use.
-   * @param {boolean} fromApiCall Us from an api call.
+   * @param {boolean} fromApiCall Comes from an api call.
    * @param {boolean} isInline If the editor is an inline value.
    * @returns {void}
    */
