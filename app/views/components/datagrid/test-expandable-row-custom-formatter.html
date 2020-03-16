@@ -26,9 +26,9 @@
       // Define Columns for the Grid.
       var customErrorFormatter = function(row, cell, value, col, item, api) {
          if (item.status === 'Error') {
-            value = `<svg class="icon datagrid-alert-icon icon-alert" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-alert"></use></svg>
-                     <span>${value}</span>
-                  </svg>`;
+            value = '<svg class="icon datagrid-alert-icon icon-alert" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-alert"></use></svg>' +
+                    '<span>' + value + '</span>' +
+                  '</svg>';
          }
          return Formatters.Expander(row, cell, value, col, item, api);
       };
