@@ -1,0 +1,372 @@
+<div class="row">
+  <div class="six columns">
+    <p>Current Button Count: <span id="button-count">0</span></p>
+    <p></p>
+    <form id="gauntlet-controls" action="#" method="post">
+      <fieldset class="radio-group">
+        <legend>Buttonset Style:</legend>
+        <input type="radio" class="radio" name="buttonset-style" id="buttonset-style-0" value="default" checked/>
+        <label for="buttonset-style-0" class="radio-label">Default</label>
+        <br/>
+        <input type="radio" class="radio" name="buttonset-style" id="buttonset-style-1" value="modal" />
+        <label for="buttonset-style-1" class="radio-label">Modal</label>
+      </fieldset>
+      <div class="field">
+        <label for="btn-text">Button's Text</label>
+        <input id="btn-text" />
+      </div>
+      <div class="checkbox-group">
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" id="btn-audible" />
+          <label for="btn-audible" class="checkbox-label">Make Text Audible</label>
+        </div>
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" id="btn-disabled" />
+          <label for="btn-disabled" class="checkbox-label">Disabled</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="btn-style">Button Style</label>
+        <select id="btn-style" class="dropdown">
+          <option value="default" disabled>Default (none)</option>
+          <option value="btn" selected>Standard Button (btn)</option>
+          <option value="btn-primary">Primary (btn-primary)</option>
+          <option value="btn-secondary">Secondary (btn-secondary)</option>
+          <option value="btn-tertiary">Tertiary (btn-tertiary)</option>
+          <option value="btn-destructive">Destructive (btn-destructive)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="btn-type">Button Type</label>
+        <select id="btn-type" class="dropdown">
+          <option value="default" selected>Default</option>
+          <option value="btn-icon">Icon (btn-icon)</option>
+          <option value="btn-menu">Menu (btn-menu)</option>
+          <option value="btn-actions">Actions (btn-actions)</option>
+          <option value="btn-toggle">Toggle (btn-toggle)</option>
+          <option value="icon-favorite">Favorite (btn-favorite)</option>
+        </select>
+      </div>
+      <div class="field standard-icons-rollout">
+        <label for="btn-icon-def">Pick an icon:</label>
+        <select id="btn-icon-def" class="dropdown">
+          <option value="" data-icon="{ icon: 'empty-circle', class: 'demo-icon-empty' }" selected>No Icon</option>
+          <option value="icon-settings" data-icon="{ icon: 'settings' }">Settings</option>
+          <option value="icon-mail" data-icon="{ icon: 'mail' }">Mail</option>
+          <option value="icon-user-profile" data-icon="{ icon: 'user-profile' }">User Profile</option>
+          <option value="icon-camera" data-icon="{ icon: 'camera' }">Camera</option>
+          <option value="icon-send" data-icon="{ icon: 'send' }">Send (Mail)</option>
+          <option value="icon-notes" data-icon="{ icon: 'notes' }">Notes</option>
+        </select>
+      </div>
+      <div class="field toggle-icons-rollout">
+        <label for="btn-toggle-icon-def">Pick a set of toggle icons:</label>
+        <select id="btn-toggle-icon-def" class="dropdown">
+          <option value="circles" data-icon="{ icon: 'confirm' }">Empty Circle/Confirm</option>
+          <option value="stars" data-icon="{ icon: 'star-filled' }" selected>Stars (Empty/Filled)</option>
+          <option value="hearts" data-icon="{ icon: 'heart-filled' }">Heart (Empty/Filled)</option>
+        </select>
+      </div>
+      <div class="field">
+        <button id="reset" class="btn-secondary" type="reset">
+          <span>Reset</span>
+        </button>
+        <button id="submit" class="btn-primary" type="submit">
+          <span>Submit</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="six columns">
+    <div id="buttonset"></div>
+  </div>
+</div>
+
+<script id="test-script">
+  var autoIconTypes = ['btn-toggle', 'btn-actions', 'icon-favorite'];
+  var defaultStyleTypes = ['btn-icon', 'btn-menu', 'btn-actions', 'btn-toggle'];
+  var idCount = 0;
+  var newSettings = {};
+
+  var toggleIconsRollout = $('.toggle-icons-rollout');
+  var standardIconsRollout = $('.standard-icons-rollout');
+  var btnCount = $('#button-count');
+
+  var defaultButtons = [
+    {
+      id: 'btn-0',
+      text: 'Button 0'
+    },
+    {
+      id: 'btn-1',
+      style: 'btn-primary',
+      text: 'Button 1'
+    },
+    {
+      id: 'btn-2',
+      style: 'btn-secondary',
+      text: 'Button 2',
+      icon: 'icon-settings'
+    },
+    {
+      id: 'btn-3',
+      style: 'btn-tertiary',
+      text: 'Button 3',
+      icon: 'icon-mail'
+    },
+    {
+      id: 'btn-4',
+      style: 'btn-destructive',
+      text: 'Button 4'
+    }
+  ];
+
+  // Invoke Buttonset
+  $('#buttonset').buttonset({
+    buttons: defaultButtons
+  });
+  var buttonsetAPI = $('#buttonset').data('buttonset');
+
+  // Removes all buttons from the buttonset
+  function reset() {
+    buttonsetAPI.removeAll(true);
+
+    idCount = 0;
+    newSettings = {};
+    setPageState();
+  }
+
+  function setButtonsetStyle() {
+    var style = $('[name="buttonset-style"]:checked').val();
+    buttonsetAPI.updated({
+      style: style
+    });
+
+    handleButtonWidths();
+  }
+
+  function setId() {
+    newSettings.id = 'test-btn-' + idCount;
+  }
+
+  function setText() {
+    var text = $('#btn-text').val();
+    if (text && text.length) {
+      newSettings.text = text;
+    }
+  }
+
+  function setDisabled() {
+    var disabled = $('#btn-disabled').prop('checked');
+    newSettings.disabled = disabled;
+  }
+
+  function setStyle() {
+    var style = $('#btn-style').val();
+    if (style && style.length) {
+      newSettings.style = style;
+    }
+  }
+
+  function setType() {
+    var type = $('#btn-type').val();
+    if (type && type.length) {
+      newSettings.type = type;
+    }
+  }
+
+  function setIcon() {
+    if (autoIconTypes.indexOf(newSettings.type) > -1) {
+      if (newSettings.icon) {
+        delete newSettings.icon;
+      }
+      return;
+    }
+    var icon = $('#btn-icon-def').val();
+    if (icon && icon.length) {
+      newSettings.icon = icon;
+    } else {
+      delete newSettings.icon;
+    }
+  }
+
+  function setToggleIcons() {
+    if (newSettings.type !== 'btn-toggle') {
+      return;
+    }
+
+    var val = $('#btn-toggle-icon-def').val();
+    var toggleOnIcon;
+    var toggleOffIcon;
+
+    switch(val) {
+      case 'circles':
+        toggleOnIcon = 'icon-confirm';
+        toggleOffIcon = 'icon-empty-circle';
+        break;
+      case 'hearts':
+        toggleOnIcon = 'heart-filled';
+        toggleOffIcon = 'heart-outlined';
+        break;
+      case 'stars':
+        toggleOnIcon = 'star-filled';
+        toggleOffIcon = 'star-outlined';
+        break;
+    }
+
+    newSettings.toggleOnIcon = toggleOnIcon;
+    newSettings.toggleOffIcon = toggleOffIcon;
+  }
+
+  function setAudible() {
+    var val = $('#btn-audible').prop('checked');
+    newSettings.audible = val;
+  }
+
+  // For Modal Buttons, simulates the "sizing" that would happen in an actual modal
+  function adjustBtnWidths(btns) {
+    var btnPercentageWidth = 100 / btns.length;
+    btns.forEach(function (btn) {
+      btn.element[0].style.width = '' + btnPercentageWidth + '%';
+    });
+  }
+
+  function resetBtnWidths(btns) {
+    btns.forEach(function (btn) {
+      btn.element[0].style.width = '';
+    });
+  }
+
+  function handleButtonWidths() {
+    var style = $('[name="buttonset-style"]:checked').val();
+    if (style === 'modal') {
+      adjustBtnWidths(buttonsetAPI.buttons);
+    } else {
+      resetBtnWidths(buttonsetAPI.buttons);
+    }
+  }
+
+  // Gets all the control values
+  function getSettings() {
+    setId();
+    setDisabled();
+    setText();
+    setStyle();
+    setType();
+    setIcon();
+    setToggleIcons();
+    setAudible();
+  }
+
+  // Ignore default submit functionality for this test.
+  $('#gauntlet-controls')
+    .on('reset.test', function (e) {
+      reset();
+    })
+    .on('submit.test', function (e) {
+      e.preventDefault();
+      getSettings();
+      buttonsetAPI.add(newSettings, true);
+      idCount += 1;
+      delete newSettings.id;
+      setPageState();
+    });
+
+  // Sets the current state of some of the page controls
+  function setPageState() {
+    var val = $('#btn-type').val();
+
+    // Set current number of buttons
+    btnCount.text(buttonsetAPI.buttons.length);
+
+    handleButtonWidths();
+
+    // Disable the Toggle Button definitions if we're not working with a Toggle Button
+    var isToggleBtn = (val === 'btn-toggle');
+    toggleIconsRollout[isToggleBtn ? 'removeClass' : 'addClass']('hidden');
+    toggleIconsRollout.children('input, select').each(function (i, input) {
+      input.disabled = !isToggleBtn;
+      var api = $(input).data('dropdown')
+      if ($(input).is('.dropdown') && api) {
+        api.pseudoElem[isToggleBtn ? 'removeClass' : 'addClass']('is-disabled');
+      }
+    });
+
+    // Disable the Standard Icon Button definitions if the type doesn't support a user-definable 'icon' setting.
+    var cannotHaveIcons = autoIconTypes.indexOf(val) > -1;
+    standardIconsRollout[cannotHaveIcons ? 'addClass' : 'removeClass']('hidden');
+    standardIconsRollout.children('input, select').each(function (i, input) {
+      input.disabled = cannotHaveIcons;
+      var api = $(input).data('dropdown')
+      if ($(input).is('.dropdown') && api) {
+        api.pseudoElem[cannotHaveIcons ? 'addClass' : 'removeClass']('is-disabled');
+      }
+    });
+
+    // If explicitly choosing an icon button, you MUST have an icon.
+    var isIconBtn = (val === 'btn-icon');
+    var firstIconOpt = $('#btn-icon-def').find('option:first-child');
+    firstIconOpt.prop('disabled', isIconBtn);
+    if (isIconBtn && firstIconOpt.prop('selected')) {
+      firstIconOpt.prop('selected', false);
+      firstIconOpt.next().prop('selected', true);
+    }
+
+    // On an "actions" button, there's always an `#icon-more`, so there's no way to turn icons off.
+    var isActionBtn = (val === 'btn-actions');
+    var isAudibleBtn = $('#btn-audible');
+    isAudibleBtn.prop('disabled', isActionBtn);
+
+    // Disable the `default` Button Type if no styled button "type" is selected.
+    var isStyledType = defaultStyleTypes.indexOf(val) > -1;
+    var firstStyleOpt = $('#btn-style').find('option:first-child');
+    firstStyleOpt.prop('disabled', !isStyledType);
+    if (isStyledType && firstStyleOpt.prop('selected')) {
+      firstStyleOpt.prop('selected', false);
+      firstStyleOpt.next().prop('selected', true);
+    }
+  }
+  setPageState();
+
+  // Change the style of the Buttonset itself
+  $('[name="buttonset-style"]').on('change.test', function () {
+    setButtonsetStyle();
+  });
+
+  // Set the Text Value (Input)
+  $('#btn-text').on('input.test blur.test', function () {
+    setText();
+  });
+
+  // Set the text to audible/not audible only
+  $('#btn-audible').on('change.test', function () {
+    setAudible();
+  });
+
+  // Set the button's disabled state
+  $('#btn-disabled').on('change.test', function () {
+    setDisabled();
+  });
+
+  // Set the Button Style (Dropdown)
+  $('#btn-style').on('change.test', function (e) {
+    setStyle();
+    setPageState();
+  });
+
+  // Set the Button Type (Dropdown)
+  $('#btn-type').on('change.test', function (e) {
+    setType();
+    setPageState();
+  });
+
+  // Set the standard icon type
+  $('#btn-icon-def').on('change.test', function (e) {
+    setIcon();
+  });
+
+  // Set the toggle icon type
+  $('#btn-toggle-icon-def').on('change.test', function (e) {
+    setToggleIcons();
+  });
+</script>

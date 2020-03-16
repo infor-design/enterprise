@@ -124,6 +124,7 @@ const PLUGIN_MAPPINGS = [
   ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
 
   // Button with Effects
+  // NOTE: don't invoke buttons inside of modals, wait for the modal to be invoked.
   ['button', [
     '.btn',
     '.btn-toggle',
@@ -136,7 +137,15 @@ const PLUGIN_MAPPINGS = [
     '.btn-menu',
     '.btn-split',
     '.btn-secondary-border'
-  ].join(', ')],
+  ].join(', '), function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      const parents = $(item).parents('.modal');
+      if (parents.length) {
+        return;
+      }
+      $(item).button();
+    });
+  }],
 
   // Hide Focus
   ['hideFocus', 'a.hide-focus, a.tick, .checkbox, .radio, .switch'],

@@ -100,7 +100,7 @@ ExpandableArea.prototype = {
         if (!expander.length) {
           expander = $(`${'<a href="#" target="_self" class="btn-expander">' +
             '<svg class="chevron icon" focusable="false" aria-hidden="true" role="presenation">' +
-              '<use xlink:href="#icon-caret-down"></use>' +
+              '<use href="#icon-caret-down"></use>' +
             '</svg>' +
             '<span class="audible">'}${Locale.translate('ShowMore')}</span>` +
           '</a>').appendTo(instance.header);

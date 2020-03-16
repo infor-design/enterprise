@@ -601,7 +601,7 @@ const formatters = {
       <div class="dropdown-wrapper is-inline">
         <div class="dropdown"><span>${formattedValue}</span></div>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
+          <use href="#icon-dropdown"></use>
         </svg>
       </div>`;
     }

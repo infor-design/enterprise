@@ -30,7 +30,7 @@ Displays one or more selectable values. A user can select exactly one value at a
     <section class="signin" role="main">
 
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
+          <use href="#icon-logo"></use>
         </svg>
 
         <h1>Application Name</h1>

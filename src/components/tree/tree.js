@@ -1221,7 +1221,7 @@ Tree.prototype = {
     this.jsonData.push(data);
 
     if (s.useStepUI) {
-      a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-${data.alertIcon}"></use>`;
+      a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${data.alertIcon}"></use>`;
     }
 
     const isChildren = data.children && Array.isArray(data.children);
@@ -1270,7 +1270,7 @@ Tree.prototype = {
         }
 
         selectHtml += `</select><div class="dropdown-wrapper"><div class="dropdown"><span>${selectedOptionText}`;
-        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
         selectHtml = `<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`;
       }
     }
@@ -1283,7 +1283,7 @@ Tree.prototype = {
           aria-position="${position}"
           aria-setsize="${position}"
           ${a.id + a.href + a.class + a.expanded + a.ariaDisabled + a.alertIconAttr}>
-            <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${a.icon}"></use>
+            <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="${a.icon}"></use>
             </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
         </a>
         ${selectHtml}`;
@@ -1666,7 +1666,7 @@ Tree.prototype = {
 
         selectHtml += `</select><div class="dropdown-wrapper"><div class="dropdown"><span>${selectedOptionText}`;
 
-        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+        selectHtml += '</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
 
         $(`<div class="treeDropdown" style="width: 80px; margin-left: 35px; margin-bottom: -15px">${selectHtml}</div>`).appendTo(li);
 

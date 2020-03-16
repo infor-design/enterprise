@@ -31,7 +31,7 @@ The popupmenu markup follows as per the [popupmenu](./popupmenu):
 <button class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
-    <use xlink:href="#icon-dropdown"></use>
+    <use href="#icon-dropdown"></use>
   </svg>
 </button>
 <ul class="popupmenu">

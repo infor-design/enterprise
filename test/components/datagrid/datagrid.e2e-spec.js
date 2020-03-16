@@ -512,7 +512,7 @@ describe('Datagrid grouping and editing tests', () => {
   it('addRow should work with grouping', async () => {
     await element(by.id('add-btn')).click();
 
-    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('href')).toEqual('#icon-exclamation');
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('17');
   });
 
@@ -521,7 +521,7 @@ describe('Datagrid grouping and editing tests', () => {
     await browser.driver.sleep(config.sleep);
     await element(by.id('alert-btn')).click();
 
-    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('href')).toEqual('#icon-exclamation');
     expect(await element(by.css('tr.rowstatus-row-error')).isPresent()).toBe(true);
   });
 
@@ -2520,7 +2520,7 @@ describe('Datagrid disable last page', () => {
   });
 
   it('Should be have last and next page disabled', async () => {
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(2);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 
@@ -2542,12 +2542,12 @@ describe('Datagrid paging force disabled', () => {
     await element(by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(4);
 
     await element(by.id('force-enabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 
