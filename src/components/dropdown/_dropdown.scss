@@ -977,7 +977,7 @@ div.dropdown-xs,
     .dismissible-btn,
     .linkable-btn {
       .icon {
-        top: 2px;
+        top: 1px;
       }
     }
   }
@@ -1020,6 +1020,32 @@ div.dropdown-xs,
         .dropdown-search {
           padding: 6px 21px 5px 25px;
         }
+      }
+    }
+  }
+}
+
+// On IE11, adjust the placement of icons inside of Multiselect Tags
+.ie {
+  div.dropdown,
+  div.multiselect {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: -1px;
+      }
+    }
+  }
+}
+
+// On Mac OSX Chrome, adjust the placement of icons inside of Multiselect Tags
+.is-mac {
+  div.dropdown,
+  div.multiselect {
+    .dismissible-btn,
+    .linkable-btn {
+      .icon {
+        top: 0;
       }
     }
   }
