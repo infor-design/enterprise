@@ -82,7 +82,7 @@ describe('Editor example-index tests', () => {
 describe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visually regress on subtle light', async () => {
-      await utils.setPage('/components/editor/example-index?theme=soho&variant=contrast&layout=nofrills');
+      await utils.setPage('/components/editor/example-index?theme=soho&variant=light&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
@@ -90,7 +90,7 @@ describe('Editor visual regression tests', () => {
     });
 
     it('Should not visually regress on subtle dark', async () => {
-      await utils.setPage('/components/editor/example-index?theme=soho&variant=contrast&layout=nofrills');
+      await utils.setPage('/components/editor/example-index?theme=soho&variant=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
@@ -106,7 +106,7 @@ describe('Editor visual regression tests', () => {
     });
 
     it('Should not visually regress on vibrant light', async () => {
-      await utils.setPage('/components/editor/example-index?theme=uplift&variant=contrast&layout=nofrills');
+      await utils.setPage('/components/editor/example-index?theme=uplift&variant=light&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
@@ -114,7 +114,7 @@ describe('Editor visual regression tests', () => {
     });
 
     it('Should not visually regress on vibrant dark', async () => {
-      await utils.setPage('/components/editor/example-index?theme=uplift&variant=contrast&layout=nofrills');
+      await utils.setPage('/components/editor/example-index?theme=uplift&variant=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
