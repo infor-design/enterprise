@@ -69,7 +69,7 @@ describe('Popdown first last tab Tests', () => {
   // 1. On open first input should be focused.
   // 2. On first input (Shift + Tab) should close and focus to previous.
   // 3. On last input Tab should close and focus to next.
-  fit('Should let close the popdown and if available focus to prev/next', async () => {
+  it('Should let close the popdown and if available focus to prev/next', async () => {
     const focusedId = () => browser.driver.switchTo().activeElement().getAttribute('id');
     // Tab on date field
     await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
