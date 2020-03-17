@@ -79,7 +79,7 @@ describe('Editor example-index tests', () => {
   });
 });
 
-fdescribe('Editor visual regression tests', () => { //eslint-disable-line
+describe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visually regress on subtle light', async () => {
       await utils.setPage('/components/editor/example-index?theme=soho&variant=contrast&layout=nofrills');
