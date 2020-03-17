@@ -69,7 +69,7 @@ describe('Popdown first last tab Tests', () => {
   // 1. On open first input should be focused.
   // 2. On first input (Shift + Tab) should close and focus to previous.
   // 3. On last input Tab should close and focus to next.
-  it('Should let close the popdown and if available focus to prev/next', async () => {
+  fit('Should let close the popdown and if available focus to prev/next', async () => {
     const focusedId = () => browser.driver.switchTo().activeElement().getAttribute('id');
     // Tab on date field
     await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
@@ -88,7 +88,7 @@ describe('Popdown first last tab Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     // Last input should be focused in popdown.
-    expect(focusedId()).toEqual('last-name');
+    expect(await focusedId()).toEqual('last-name');
 
     // Tab on last input in popdown
     await element(by.css('#last-name')).sendKeys(protractor.Key.TAB);
@@ -98,7 +98,7 @@ describe('Popdown first last tab Tests', () => {
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#first-name')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#last-name')).isDisplayed()).toBeFalsy();
-    expect(focusedId()).toEqual('another-field');
+    expect(await focusedId()).toEqual('another-field');
 
     // Shift + Tab on this next to popdown input (another-field)
     await element(by.css('#another-field'))
@@ -109,7 +109,7 @@ describe('Popdown first last tab Tests', () => {
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
     expect(await element(by.css('#first-name')).isDisplayed()).toBeTruthy();
     expect(await element(by.css('#last-name')).isDisplayed()).toBeTruthy();
-    expect(focusedId()).toEqual('first-name');
+    expect(await focusedId()).toEqual('first-name');
 
     // Shift + Tab on first input in popdown
     await element(by.css('#first-name'))
@@ -120,6 +120,6 @@ describe('Popdown first last tab Tests', () => {
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#first-name')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#last-name')).isDisplayed()).toBeFalsy();
-    expect(focusedId()).toEqual('date-field-normal');
+    expect(await focusedId()).toEqual('date-field-normal');
   });
 });
