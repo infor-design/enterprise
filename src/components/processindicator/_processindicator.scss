@@ -152,7 +152,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       content: '';
       display: inline-block;
       height: 0.15em;
-      left: 0.12em;
+      left: 0.16em;
       position: absolute;
       top: 0.57em;
       width: ($indicator-size * 0.78);
@@ -247,13 +247,21 @@ $indicator-current-size: ($indicator-size * 1.6);
       &.rejected {
         &::before,
         &::after {
+          left: 0.12em;
           width: ($indicator-size * 0.82);
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.5em;
+          }
         }
       }
 
       &.more-info {
         &::before {
-          right: 0.05em;
+          right: 0.02em;
         }
       }
     }
@@ -288,6 +296,18 @@ $indicator-current-size: ($indicator-size * 1.6);
 }
 
 .is-firefox {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.more-info {
+          &::before {
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+
   .indicator {
     &.more-info {
       &::before {
@@ -296,11 +316,6 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
 
     &.rejected {
-      &::before,
-      &::after {
-        width: ($indicator-size * 0.82);
-      }
-
       &.current {
         &::before,
         &::after {
@@ -323,6 +338,13 @@ $indicator-current-size: ($indicator-size * 1.6);
     &.current {
       height: 2.02em;
       width: 2.02em;
+
+      &.rejected {
+        &::before,
+        &::after {
+          width: ($indicator-size * 0.83);
+        }
+      }
     }
 
     &.more-info {
