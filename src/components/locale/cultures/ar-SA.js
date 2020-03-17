@@ -20,6 +20,7 @@ Soho.Locale.addCulture('ar-SA', {
         full: 'EEEE، yyyy MMMM، dd',
         month: 'dd MMMM',
         year: 'MMMM yyyy',
+        dayOfWeek: 'EEE d',
         timestamp: 'h:mm:ss a',
         hour: 'h:mm a',
         datetime: 'yyyy/MM/dd h:mm a',
@@ -260,6 +261,7 @@ Soho.Locale.addCulture('ar-SA', {
         full: 'EEEE، d MMMM، yyyy',
         month: 'dd MMMM',
         year: 'MMMM yyyy',
+        dayOfWeek: 'EEE d',
         timestamp: 'h:mm:ss a',
         datetime: 'd/MM/yyyy h:mm a'
       }, // Infered short + short gregorian/dateTimeFormats

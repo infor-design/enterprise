@@ -19,6 +19,7 @@ Soho.Locale.addCulture('da-DK', {
       full: 'EEEE den d. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH.mm.ss',
       hour: 'HH.mm',
       datetime: 'dd-MM-yyyy HH.mm',

@@ -19,6 +19,7 @@ Soho.Locale.addCulture('pt-PT', {
       full: 'EEEE, d de MMMM de y',
       month: 'd de MMMM',
       year: 'MMMM de yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'dd/MM/yyyy HH:mm',
