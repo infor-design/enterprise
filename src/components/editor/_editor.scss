@@ -473,6 +473,8 @@
     }
 
     &[data-action='visual'] {
+      margin-right: 24px;
+
       span {
         @include font-size(16);
 
