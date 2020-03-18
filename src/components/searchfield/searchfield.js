@@ -393,7 +393,7 @@ SearchField.prototype = {
         this.collapseButton = $(`
           <button class="btn-secondary collapse-button" type="button">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-exit-fullview"></use>
+              <use href="#icon-exit-fullview"></use>
             </svg>
             <span class="audible">${Locale.translate('Collapse')}</span>
           </button>

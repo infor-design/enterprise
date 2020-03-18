@@ -28,7 +28,7 @@
         <label class="audible" for="maincontent">Search for a Customer</label>
         <span class="searchfield-wrapper context">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-search"></use>
+            <use href="#icon-search"></use>
           </svg>
           <input id="maincontent" class="searchfield" placeholder="Search for a customer" autocomplete="off" style="width: 100%;">
         </span>
@@ -144,7 +144,7 @@
             <div class="image-user-status">
               <img class="image-round" src="{{photo}}" alt="Photo of {{firstName}}">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-user-status-{{status}}"></use>
+                <use href="#icon-user-status-{{status}}"></use>
               </svg>
             </div>
             {{/photo}}
@@ -152,7 +152,7 @@
             <div class="image-user-status">
               <div class="image-initials">{{initials}}</div>
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-user-status-{{status}}"></use>
+                  <use href="#icon-user-status-{{status}}"></use>
               </svg>
             </div>
             {{/photo}}
@@ -162,10 +162,10 @@
             <button type="button" class="btn-icon icon-favorite hidden-sm" title="Favorite">
                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 {{#favorite}}
-                <use xlink:href="#icon-star-filled"></use>
+                <use href="#icon-star-filled"></use>
                 {{/favorite}}
                 {{^favorite}}
-                <use xlink:href="#icon-star-outlined"></use>
+                <use href="#icon-star-outlined"></use>
                 {{/favorite}}
                </svg>
                <span class="audible">Favorite</span>
@@ -193,10 +193,10 @@
             <button type="button" class="btn-icon icon-favorite" title="Favorite">
                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 {{#favorite}}
-                <use xlink:href="#icon-star-filled"></use>
+                <use href="#icon-star-filled"></use>
                 {{/favorite}}
                 {{^favorite}}
-                <use xlink:href="#icon-star-outlined"></use>
+                <use href="#icon-star-outlined"></use>
                 {{/favorite}}
                </svg>
                <span class="audible">Favorite</span>

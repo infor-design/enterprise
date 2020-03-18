@@ -33,7 +33,7 @@
     actions.data('tooltip').destroy();
     actions.attr('title', 'Update').tooltip();
     actions.next('.popupmenu-wrapper').remove();
-    actions.find('svg use').attr('xlink:href', '#icon-refresh');
+    actions.find('svg use').attr('href', '#icon-refresh');
     actions.on('click', function () {
       console.log('Calling updated to refresh');
       var settings = {

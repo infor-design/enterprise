@@ -1,5 +1,4 @@
 import * as debug from '../../utils/debug';
-import { Environment as env } from '../../utils/environment';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
@@ -915,10 +914,6 @@ Modal.prototype = {
       let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
       thisElem.keepFocus();
 
-      if (env.os.name === 'ios') {
-        $('body').addClass('has-modal-open');
-      }
-
       /**
       * Fires when the modal opens.
       * @event open
@@ -1182,14 +1177,18 @@ Modal.prototype = {
       this.root.attr('aria-hidden', 'true');
     }
 
-    if ($('.modal-page-container').length <= 1) {
+    // Remove the overlay and special body classes if this Modal was the very last one to be closed
+    // (Modals can be nested)
+    const modalContainers = $('.modal-page-container');
+    const visibleModalPageContainers = modalContainers.filter((i, elem) => {
+      const ariaHidden = $(elem).is('[aria-hidden]');
+      const displayNone = $(elem).css('display') === 'none';
+      return !ariaHidden && !displayNone;
+    });
+    if (visibleModalPageContainers.length < 1) {
       $('body').removeClass('modal-engaged');
-      $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
+      modalContainers.not(this.root).removeAttr('aria-hidden');
       $('.overlay:not(.busy)').remove();
-    }
-
-    if (env.os.name === 'ios') {
-      $('body').removeClass('has-modal-open');
     }
 
     // Fire Events

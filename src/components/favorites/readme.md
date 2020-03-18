@@ -14,7 +14,7 @@ A favorite is a toggle button that is specifically a star. You can set one up us
 ```html
 <button type="button" id="favorite" class="btn-icon icon-favorite" title="Favorite">
    <svg class="icon-test icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-star-filled"></use>
+    <use href="#icon-star-filled"></use>
    </svg>
    <span>Favorite</span>
 </button>

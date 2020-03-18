@@ -960,7 +960,7 @@ const editors = {
       }
 
       this.input.prop('checked', isChecked);
-      this.input.find('use').attr('xlink:href', isChecked ? '#icon-star-filled' : '#icon-star-outlined');
+      this.input.find('use').attr('href', isChecked ? '#icon-star-filled' : '#icon-star-outlined');
     };
 
     this.focus = function () {

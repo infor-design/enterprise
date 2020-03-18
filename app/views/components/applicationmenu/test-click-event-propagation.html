@@ -1,0 +1,84 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  <nav id="application-menu" class="application-menu is-personalizable" data-options="{ 'openOnLarge': true }">
+
+    <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
+
+      <div class="accordion-header is-selected">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-home"></use>
+        </svg>
+        <a href="#"><span>Item One</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-tools"></use>
+        </svg>
+        <a href="#"><span>Item Two</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-columns"></use>
+        </svg>
+        <a href="#"><span>Item Three</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable">
+      <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+      <div class="flex-toolbar">
+        <div class="toolbar-section static">
+          <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+        </div>
+        <div class="toolbar-section title">
+          <h1>Test: Click Event Propagation</h1>
+        </div>
+        <div class="toolbar-section buttonset"></div>
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+    <div class="page-container scrollable" role="main" id="maincontent">
+      <div class="row">
+        <div class="six columns">
+          <p>Related Github Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise-ng/issues/321" target="_blank">NG #321</a></p>
+          <p>The headers inside the application menu on this page should cause a Toast to appear when clicked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{> includes/footer}}
+</body>
+
+<script id="test-script">
+  // Simulates the original test's method of immediately setting up a click listener,
+  // presumably before the component instance has been intialized internally.  This helps demonstrate
+  // that the order in which events are stacked doesn't matter, and all events propagate.
+  $('.accordion-header').on('click.test', function () {
+    const header = $(this);
+    const logEntry = '' + header.text().trim() + ' was clicked!';
+
+    $('body').toast({
+      title: 'It works!',
+      message: logEntry,
+      timeout: 1000
+    });
+  });
+</script>
+
+</html>

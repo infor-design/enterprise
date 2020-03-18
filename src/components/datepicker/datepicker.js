@@ -527,6 +527,7 @@ DatePicker.prototype = {
     const self = this;
     const s = this.settings;
     const timeOptions = {};
+    this.lastValue = this.element.val();
 
     if ((this.element.is(':disabled') || this.element.attr('readonly')) && this.element.closest('.monthview').length === 0) {
       return;
@@ -773,7 +774,11 @@ DatePicker.prototype = {
         // Horizontal view on mobile
         if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
-          this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
+          this.popup.css({
+            'min-height': $('html').hasClass('theme-uplift-light') ? ''
+              : `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
+            height: ''
+          });
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
@@ -1211,7 +1216,10 @@ DatePicker.prototype = {
       }));
     }
 
-    if (trigger) {
+    const isChanged = this.lastValue !== this.element.val();
+    this.lastValue = this.element.val();
+
+    if (trigger && isChanged) {
       if (s.range.useRange) {
         if (!isTime) {
           this.element
@@ -1861,8 +1869,9 @@ DatePicker.prototype = {
 
     // Fix two digit year for main input element
     self.element.on('blur.datepicker', () => {
-      if (self.element.val().trim() !== '') {
-        self.setValueFromField();
+      this.lastValue = this.element.val();
+      if (this.element.val().trim() !== '') {
+        this.setValueFromField();
       }
     });
 

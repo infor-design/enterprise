@@ -1526,7 +1526,7 @@ Datagrid.prototype = {
               }
             }
           }
-          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
 
           break;
         case 'multiselect':
@@ -1540,7 +1540,7 @@ Datagrid.prototype = {
               }
             }
           }
-          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
 
           break;
         case 'time':
@@ -1798,7 +1798,7 @@ Datagrid.prototype = {
     };
     const renderButton = function (defaultValue) {
       return `<button type="button" class="btn-menu btn-filter" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
-      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>${
+      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
@@ -2398,7 +2398,7 @@ Datagrid.prototype = {
       const ul = btn.next();
       const first = ul.find('li:first');
 
-      btn.find('svg:first > use').attr('xlink:href', `#icon-filter-${btn.attr('data-default')}`);
+      btn.find('svg:first > use').attr('href', `#icon-filter-${btn.attr('data-default')}`);
       ul.find('.is-checked').removeClass('is-checked');
       first.addClass('is-checked');
     });
@@ -2449,7 +2449,7 @@ Datagrid.prototype = {
         input.trigger('updated');
       }
 
-      btn.find('svg:first > use').attr('xlink:href', `#icon-filter-${conditions[i].operator}`);
+      btn.find('svg:first > use').attr('href', `#icon-filter-${conditions[i].operator}`);
       ul.find('.is-checked').removeClass('is-checked');
       ul.find(`.${conditions[i].operator}`).addClass('is-checked');
     }
@@ -3745,7 +3745,7 @@ Datagrid.prototype = {
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
       rowStatus.icon = (rowData.rowStatus.icon === 'success') ? '#icon-check' : '#icon-exclamation';
       rowStatus.title = (rowData.rowStatus.tooltip !== '') ? ` title="${rowData.rowStatus.tooltip}"` : '';
-      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use xlink:href="${rowStatus.icon}"></use></svg>`;
+      rowStatus.svg = `<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"${rowStatus.title}><use href="${rowStatus.icon}"></use></svg>`;
     }
 
     // Run a function that dynamically gets the rowHeight
@@ -6631,7 +6631,7 @@ Datagrid.prototype = {
     }
 
     pagingInfo.activePage = this.activePage;
-    this.renderPager(pagingInfo);
+    this.renderPager(pagingInfo, true);
   },
 
   /**
@@ -6948,6 +6948,9 @@ Datagrid.prototype = {
       }
     }
 
+    const isMatch = (i, elem, n) => (n && n.idx === i && n.elem && n.elem.is(elem));
+    const isExists = (i, elem) => (!!(this._selectedRows.filter(n => isMatch(i, elem, n)).length));
+
     if (s.selectable === 'single') {
       let selectedIndex = -1;
       if (this._selectedRows.length > 0) {
@@ -6963,7 +6966,9 @@ Datagrid.prototype = {
       }
     }
 
-    if (!rowNode.hasClass('is-selected')) {
+    const isServerSideMultiSelect = s.source && s.selectable === 'multiple' && s.allowSelectAcrossPages;
+
+    if (!rowNode.hasClass('is-selected') || isServerSideMultiSelect) {
       let rowData;
 
       if (s.treeGrid) {
@@ -6982,7 +6987,7 @@ Datagrid.prototype = {
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
-              if (canAdd) {
+              if (canAdd && !isExists(actualIdx, elem)) {
                 self._selectedRows.push({
                   idx: actualIdx,
                   data,
@@ -7019,7 +7024,7 @@ Datagrid.prototype = {
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
-              if (canAdd) {
+              if (canAdd && !isExists(actualIdx, elem)) {
                 self._selectedRows.push({
                   idx: actualIdx,
                   data,
@@ -7044,15 +7049,17 @@ Datagrid.prototype = {
           }
           const gData = self.groupArray[row];
           rowData = self.settings.dataset[gData.group].values[gData.node];
-          this._selectedRows.push({
-            idx: rowData.idx,
-            data: rowData,
-            elem: rowNode,
-            group: s.dataset[self.groupArray[row].group],
-            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
-            pagingIdx: dataRowIndex,
-            pagesize: self.settings.pagesize
-          });
+          if (!isExists(rowData.idx, rowNode)) {
+            this._selectedRows.push({
+              idx: rowData.idx,
+              data: rowData,
+              elem: rowNode,
+              group: s.dataset[self.groupArray[row].group],
+              page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+              pagingIdx: dataRowIndex,
+              pagesize: self.settings.pagesize
+            });
+          }
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
         self.lastSelectedRow = idx; // Rememeber index to use shift key
@@ -7065,14 +7072,16 @@ Datagrid.prototype = {
           actualIdx = idx;
         }
 
-        this._selectedRows.push({
-          idx: actualIdx,
-          data: rowData,
-          elem: self.visualRowNode(actualIdx),
-          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
-          pagingIdx: idx,
-          pagesize: this.settings.pagesize
-        });
+        if (!isExists(actualIdx, self.visualRowNode(actualIdx))) {
+          this._selectedRows.push({
+            idx: actualIdx,
+            data: rowData,
+            elem: self.visualRowNode(actualIdx),
+            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+            pagingIdx: idx,
+            pagesize: self.settings.pagesize
+          });
+        }
       }
     }
 
@@ -7565,6 +7574,7 @@ Datagrid.prototype = {
     const self = this;
     const s = self.settings;
     const rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
+    const isServerSideMultiSelect = s.source && s.selectable === 'multiple' && s.allowSelectAcrossPages;
     let checkbox = null;
 
     if (!rowNode || idx === undefined) {
@@ -7580,6 +7590,10 @@ Datagrid.prototype = {
         }
         for (let i = 0; i < self._selectedRows.length; i++) {
           if (self._selectedRows[i].idx === selIdx) {
+            if (isServerSideMultiSelect &&
+                self._selectedRows[i].elem && !self._selectedRows[i].elem.is(elem)) {
+              continue;
+            }
             self._selectedRows.splice(i, 1);
             break;
           }
@@ -9444,7 +9458,7 @@ Datagrid.prototype = {
 
         if (!svg.length) {
           const svgIcon = rowData.rowStatus.icon === 'success' ? '#icon-check' : '#icon-exclamation';
-          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="${svgIcon}"></use></svg>`);
+          cellNode.prepend(`<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use href="${svgIcon}"></use></svg>`);
         }
       }
       if (rowData.rowStatus.tooltip) {

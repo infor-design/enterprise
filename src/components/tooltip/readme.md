@@ -67,7 +67,7 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 
 <div id="tooltip-id" class="hidden">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-    <use xlink:href="#icon-compose"/>
+    <use href="#icon-compose"/>
   </svg>
   <p>Add Comment</p>
 </div>

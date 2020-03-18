@@ -750,7 +750,7 @@ ToolbarFlexItem.prototype = {
 
     const icon = this.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
     if (icon) {
-      itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+      itemData.icon = icon.getAttribute('href').replace('#icon-', '');
     }
 
     if (this.type === 'button' || this.type === 'menubutton') {
@@ -819,7 +819,7 @@ ToolbarFlexItem.prototype = {
 
     const icon = this.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
     if (icon) {
-      itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+      itemData.icon = icon.getAttribute('href').replace('#icon-', '');
     }
 
     if (this.type === 'button' || this.type === 'menubutton') {

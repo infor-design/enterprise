@@ -24,7 +24,7 @@ columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent'
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', isEditable: () => {return true}, filterType: 'Text', formatter: Formatters.Text, validate: 'required', required: true, editor: Editors.Input }); //eslint-disable-line
 
-const rowTemplate = `<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>
+const rowTemplate = `<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>
   <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>
   <p class="datagrid-row-micro-text">{{{sku}}}</p>
   <span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>
@@ -105,7 +105,7 @@ describe('Datagrid API', () => { //eslint-disable-line
   it('Should be able to call addRow and removeRow', () => {
     datagridObj.addRow({ productId: 'New', productName: 'New' });
 
-    expect(document.body.querySelector('tr td use').getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(document.body.querySelector('tr td use').getAttribute('href')).toEqual('#icon-exclamation');
     expect(document.body.querySelectorAll('tr').length).toEqual(9);
 
     datagridObj.addRow({ productId: 'New 2', productName: 'New 2' }, 'bottom');
@@ -113,7 +113,7 @@ describe('Datagrid API', () => { //eslint-disable-line
     const nodes = document.body.querySelectorAll('tr');
     const lastRow = nodes[nodes.length - 1];
 
-    expect(lastRow.querySelector('td use').getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(lastRow.querySelector('td use').getAttribute('href')).toEqual('#icon-exclamation');
     expect(document.body.querySelectorAll('tr').length).toEqual(10);
 
     // Cleanup

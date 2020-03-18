@@ -12,7 +12,7 @@ This document describes the process for achieving a high degree of accessibility
 ```javascript
 <button class="btn">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-home"></use>
+    <use href="#icon-home"></use>
   </svg>
   <span class="audible">Home</span>
 </button>

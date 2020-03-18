@@ -122,7 +122,7 @@ describe('Button API', () => {
 // Secondary Button HTML with visible text and an icon
 const textIconBtnHTML = `<button class="btn-secondary" id="secondary-alert">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-settings"></use>
+    <use href="#icon-settings"></use>
   </svg>
   <span>Settings</span>
 </button>`;
@@ -157,14 +157,14 @@ describe('Button API (Icons)', () => {
     const use = icon.querySelector('use');
 
     expect(icon).toBeDefined();
-    expect(use.getAttribute('xlink:href')).toEqual('#icon-settings');
+    expect(use.getAttribute('href')).toEqual('#icon-settings');
   });
 });
 
 // HTML Markup describing a simple Toggle Button
 const toggleBtnHTML = `<button class="btn-toggle">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-heart-outlined"></use>
+    <use href="#icon-heart-outlined"></use>
   </svg>
   <span class="audible">Love</span>
 </button>`;
@@ -200,7 +200,7 @@ describe('Button API (Toggle)', () => {
   it('can become pressed/unpressed', () => {
     buttonAPI.pressed = true;
     let currentIconUse = buttonEl.querySelector('use');
-    let currentIcon = currentIconUse.getAttribute('xlink:href').replace('#', '');
+    let currentIcon = currentIconUse.getAttribute('href').replace('#', '');
 
     expect(buttonAPI.pressed).toEqual(true);
     expect(buttonEl.classList.contains('is-pressed')).toBeTruthy();
@@ -208,7 +208,7 @@ describe('Button API (Toggle)', () => {
 
     buttonAPI.pressed = false;
     currentIconUse = buttonEl.querySelector('use');
-    currentIcon = currentIconUse.getAttribute('xlink:href').replace('#', '');
+    currentIcon = currentIconUse.getAttribute('href').replace('#', '');
 
     expect(buttonAPI.pressed).toEqual(false);
     expect(buttonEl.classList.contains('is-pressed')).toBeFalsy();
@@ -219,7 +219,7 @@ describe('Button API (Toggle)', () => {
 // HTML Markup describing a simple Favorte Button
 const favoriteBtnHTML = `<button class="icon-favorite">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-heart-outlined"></use>
+    <use href="#icon-heart-outlined"></use>
   </svg>
   <span class="audible">Favorite</span>
 </button>`;
@@ -252,7 +252,7 @@ describe('Button API (Favorite)', () => {
   it('can become pressed/unpressed', () => {
     buttonAPI.pressed = true;
     let currentIconUse = buttonEl.querySelector('use');
-    let currentIcon = currentIconUse.getAttribute('xlink:href').replace('#', '');
+    let currentIcon = currentIconUse.getAttribute('href').replace('#', '');
 
     expect(buttonAPI.pressed).toEqual(true);
     expect(buttonEl.classList.contains('is-pressed')).toBeTruthy();
@@ -260,7 +260,7 @@ describe('Button API (Favorite)', () => {
 
     buttonAPI.pressed = false;
     currentIconUse = buttonEl.querySelector('use');
-    currentIcon = currentIconUse.getAttribute('xlink:href').replace('#', '');
+    currentIcon = currentIconUse.getAttribute('href').replace('#', '');
 
     expect(buttonAPI.pressed).toEqual(false);
     expect(buttonEl.classList.contains('is-pressed')).toBeFalsy();

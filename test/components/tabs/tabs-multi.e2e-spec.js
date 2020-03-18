@@ -29,18 +29,6 @@ describe('Tabs Multi tests', () => {
 
       expect(await element(by.id('tooltip')).getAttribute('class')).not.toContain('is-hidden');
       expect(await element(by.id('tooltip')).getText()).toEqual('Contracts (and then a few more Contracts)');
-
-      await browser.actions()
-        .mouseMove(await element(by.id('tabs-one-opportunities-1')))
-        .perform();
-      await browser.driver.sleep(config.sleepShort);
-
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
-      await browser.driver.sleep(config.sleepShort);
-
-      expect(await element(by.id('tooltip')).getAttribute('class')).toContain('is-hidden');
-      expect(await element(by.id('tooltip')).getText()).toEqual('');
     });
   }
 });

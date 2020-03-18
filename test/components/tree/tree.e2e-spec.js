@@ -35,16 +35,16 @@ describe('Tree example-index tests', () => {
 
   it('Should toggle open/close on click', async () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-open');
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-open-folder');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-open-folder');
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).click();
 
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).not.toContain('is-open');
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-closed-folder');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-closed-folder');
     await browser.driver.sleep(config.sleep);
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).click();
 
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-open');
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-open-folder');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-open-folder');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -81,7 +81,7 @@ describe('Tree custom folder icons tests', () => {
   });
 
   it('Should show custom folder icon', async () => {
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-user-folder-open');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-user-folder-open');
   });
 });
 
@@ -91,10 +91,10 @@ describe('Tree plus minus folder icons tests', () => {
   });
 
   it('Should show plus minus folder icon', async () => {
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-plusminus-folder-open');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-plusminus-folder-open');
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
 
-    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('xlink:href')).toContain('#icon-plusminus-folder-closed');
+    expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-plusminus-folder-closed');
   });
 });
 
@@ -290,10 +290,10 @@ describe('Tree custom icon tests', () => {
 
   it('Should display custom icon for leaf node', async () => {
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2)
-      .getAttribute('xlink:href')).toContain('#icon-star-filled');
+      .getAttribute('href')).toContain('#icon-star-filled');
 
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(3)
-      .getAttribute('xlink:href')).toContain('#icon-next-page');
+      .getAttribute('href')).toContain('#icon-next-page');
   });
 });
 

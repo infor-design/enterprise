@@ -31,7 +31,7 @@ You can invoke an empty message manually by adding it in a widget container. Thi
 <div class="card-content">
   <div class="card-empty-icon">
     <svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-empty-new-project"></use>
+      <use href="#icon-empty-new-project"></use>
     </svg>
   </div>
   <div class="card-empty-title">

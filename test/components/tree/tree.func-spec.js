@@ -37,11 +37,11 @@ describe('Tree Methods', () => {
   it('Should sets the correct icon to use on a particular SVG element', () => {
     const svgFirst = treeEl.querySelector('a[role="treeitem"] .icon-tree');
 
-    expect(svgFirst.querySelector('use').getAttribute('xlink:href')).toEqual('#icon-tree-node');
+    expect(svgFirst.querySelector('use').getAttribute('href')).toEqual('#icon-tree-node');
 
     treeObj.setTreeIcon($(svgFirst), 'icon-tree-image');
 
-    expect(svgFirst.querySelector('use').getAttribute('xlink:href')).toEqual('#icon-tree-image');
+    expect(svgFirst.querySelector('use').getAttribute('href')).toEqual('#icon-tree-image');
   });
 
   it('Should expand a collection of tree nodes', () => {
@@ -495,11 +495,11 @@ describe('Tree Methods', () => {
     const link = treeEl.querySelector('a[role="treeitem"]');
     const use = link.querySelector('.icon-tree use');
 
-    expect(use.getAttribute('xlink:href')).toEqual('#icon-tree-node');
+    expect(use.getAttribute('href')).toEqual('#icon-tree-node');
 
     treeObj.updateNode({ node: $(link), icon: 'icon-tree-image' });
 
-    expect(use.getAttribute('xlink:href')).toEqual('#icon-tree-image');
+    expect(use.getAttribute('href')).toEqual('#icon-tree-image');
   });
 
   it('Should update given node badge', () => {
@@ -574,7 +574,7 @@ describe('Tree Methods', () => {
 
   it('Should convert file node to folder type', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
-    let icon = link.querySelector('.icon-tree use').getAttribute('xlink:href');
+    let icon = link.querySelector('.icon-tree use').getAttribute('href');
 
     expect(icon).toEqual('#icon-tree-node');
     expect(link.parentNode.querySelectorAll('ul').length).toEqual(0);
@@ -582,7 +582,7 @@ describe('Tree Methods', () => {
     treeObj.convertFileToFolder($(link));
 
     link = treeEl.querySelector('a[role="treeitem"]');
-    icon = link.querySelector('.icon-tree use').getAttribute('xlink:href');
+    icon = link.querySelector('.icon-tree use').getAttribute('href');
 
     expect(icon).toEqual('#icon-closed-folder');
     expect(link.parentNode.querySelectorAll('ul').length).toEqual(1);
@@ -592,7 +592,7 @@ describe('Tree Methods', () => {
     let firstDir = treeEl.querySelectorAll('li')[2];
     let children = firstDir.querySelectorAll('a[role="treeitem"]');
     let link = firstDir.querySelector('a[role="treeitem"]');
-    let icon = link.querySelector('.icon-tree use').getAttribute('xlink:href');
+    let icon = link.querySelector('.icon-tree use').getAttribute('href');
 
     expect(icon).toEqual('#icon-open-folder');
     expect(children.length).toEqual(7);
@@ -602,7 +602,7 @@ describe('Tree Methods', () => {
     firstDir = treeEl.querySelectorAll('li')[2];
     children = firstDir.querySelectorAll('a[role="treeitem"]');
     link = firstDir.querySelector('a[role="treeitem"]');
-    icon = link.querySelector('.icon-tree use').getAttribute('xlink:href');
+    icon = link.querySelector('.icon-tree use').getAttribute('href');
 
     expect(icon).toEqual('#icon-tree-node');
     expect(children.length).toEqual(1);

@@ -54,7 +54,7 @@ This is a simple configuration.
     <div class="more">
       <button id="btn-more" class="btn-actions" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-more"></use>
+          <use href="#icon-more"></use>
         </svg>
         <span class="audible" data-translate="text">More</span>
       </button>
