@@ -1103,7 +1103,7 @@ Modal.prototype = {
       });
 
     // Cache tab fields and update them if the DOM changes
-    const selector = ':focusable, [contenteditable], iframe';
+    const selector = ':focusable, [contenteditable]';
     let tabbableElements = self.element.find(selector);
     let firstTabbable = tabbableElements.first();
     let lastTabbable = tabbableElements.last();
@@ -1133,6 +1133,15 @@ Modal.prototype = {
           }
         }
       });
+
+    // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
+    // or a wrapping iframe element is clicked.  This will reset the focus.
+    $('body').on(`focusin.${self.namespace}`, (e) => {
+      const focusedIsTabbable = tabbableElements.filter($(e.target));
+      if (!(focusedIsTabbable).length) {
+        firstTabbable.removeClass('hide-focus').focus();
+      }
+    });
   },
 
   /**
@@ -1167,7 +1176,7 @@ Modal.prototype = {
     if (this.mainContent && this.removeNoScroll) {
       this.mainContent.removeClass('no-scroll');
     }
-    $('body').off(`resize.${this.namespace}`);
+    $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
     this.element.removeClass('is-visible');
