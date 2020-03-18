@@ -771,11 +771,7 @@ const editors = {
     };
 
     this.val = function (v) {
-      let fieldValue = this.input.val();
-      if (fieldValue && fieldValue.indexOf('|') > -1) {
-        fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
-      }
-      return v ? this.input.val(v) : fieldValue;
+      return v ? this.input.val(v) : this.input.val();
     };
 
     this.focus = function () {

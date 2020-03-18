@@ -22,6 +22,7 @@
 - `[Busy Indicator]` Fixed an issue where the overlay would close when closing the Modal. ([#3424](https://github.com/infor-design/enterprise/issues/3424))
 - `[Busy Indicator]` Fixed an issue where position was not aligning. ([#3341](https://github.com/infor-design/enterprise/issues/3341))
 - `[Colorpicker]` Fixed the dropdown icon position is too close to the right edge of the field. ([#3508](https://github.com/infor-design/enterprise/issues/3508))
+- `[Datagrid]` Fixed an issue where lookup editor was removing all characters following and including the '|' pipe character. ([#3556](https://github.com/infor-design/enterprise/issues/3556))
 - `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
 - `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
 - `[Datagrid]` Fixed a focus trap issue when using actionable mode, tab will now move up and down rows. ([#2399](https://github.com/infor-design/enterprise/issues/2399))
