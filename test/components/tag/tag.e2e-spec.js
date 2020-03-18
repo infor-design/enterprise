@@ -27,16 +27,16 @@ describe('Tag visual regression tests', () => {
     await utils.setPage('/components/tag/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.tag-list')).get(0)), config.waitsFor);
-    const tagEl = await element(by.css('.tag-list .tag:first-child'));
+    const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-standard')).toEqual(0);
   });
 
-  it('linkable tags should not change', async () => {
+  fit('linkable tags should not change', async () => {
     await utils.setPage('/components/tag/example-linkable');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.tag-list')).get(0)), config.waitsFor);
-    const tagEl = await element(by.css('.tag-list .tag:first-child'));
+    const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-linkable')).toEqual(0);
   });
@@ -54,7 +54,7 @@ describe('Tag visual regression tests', () => {
     await utils.setPage('/components/tag/example-disabled');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tag-list'))), config.waitsFor);
-    const tagEl = await element(by.css('.tag-list .tag:first-child'));
+    const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-disabled')).toEqual(0);
   });
