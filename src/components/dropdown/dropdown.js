@@ -1961,13 +1961,17 @@ Dropdown.prototype = {
       .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
       .on('click.dropdown', clickDocument);
 
-    const modalScroll = $('.modal.is-visible .modal-body-wrapper');
-    let parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
-    parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
-    parentScroll = modalScroll.length ? modalScroll : parentScroll;
-    parentScroll.on('scroll.dropdown', scrollDocument);
-
-    $('.datagrid-wrapper').on('scroll.dropdown', scrollDocument);
+    // When the Dropdown is located within a scrollable section,
+    // the dropdown must close if that section is scrolled.
+    let parentScrollableArea = $('.modal.is-visible .modal-body-wrapper');
+    const subScrollableSection = self.element.closest('.scrollable, .scrollable-x, .scrollable-y', '.datagrid-wrapper');
+    if (subScrollableSection.length) {
+      parentScrollableArea = subScrollableSection;
+    }
+    if (parentScrollableArea.length) {
+      this.parentScrollableArea = parentScrollableArea;
+      this.parentScrollableArea.on('scroll.dropdown', scrollDocument);
+    }
 
     $('body').on('resize.dropdown', () => {
       self.position();
@@ -2010,13 +2014,6 @@ Dropdown.prototype = {
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
 
-      // When flipping, account for borders in the adjusted placement
-      let flippedOffset = 0;
-      if (!env.browser.isIE11()) {
-        flippedOffset = parseInt(listStyle.borderBottomWidth, 10) +
-          parseInt(listStyle.borderTopWidth, 10);
-      }
-
       // Firefox has different alignments without an adjustment:
       let browserOffset = 0;
       if (env.browser.name === 'firefox') {
@@ -2044,7 +2041,7 @@ Dropdown.prototype = {
         adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 5}px`;
 
         if (!self.isShortField) {
-          self.list[0].style.top = `${listStyleTop + searchInputHeight + flippedOffset}px`;
+          self.list[0].style.top = `${listStyleTop}px`;
         }
       }
 
@@ -2259,12 +2256,10 @@ Dropdown.prototype = {
         `touchend.${COMPONENT_NAME}`,
         `touchcancel.${COMPONENT_NAME}`].join(' '));
 
-    const modalScroll = $('.modal.is-visible .modal-body-wrapper');
-    let parentScroll = this.element.closest('.scrollable').length ? this.element.closest('.scrollable') : $(document);
-    parentScroll = this.element.closest('.scrollable-y').length ? this.element.closest('.scrollable-y') : parentScroll;
-    parentScroll = modalScroll.length ? modalScroll : parentScroll;
-    parentScroll.off('scroll.dropdown');
-    $('.datagrid-wrapper').off('scroll.dropdown');
+    if (this.parentScrollableArea) {
+      this.parentScrollableArea.off('scroll.dropdown');
+      delete this.parentScrollableArea;
+    }
 
     $('body').off('resize.dropdown');
     $(window).off('orientationchange.dropdown');

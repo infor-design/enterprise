@@ -245,7 +245,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
       expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(23);
       expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').innerText.substr(0, 10).trim()).toEqual('215');
       done();
-    }, 100);
+    }, 300);
   });
 
   it('Should be able to modify cell by api onCollapseChildren', (done) => {
