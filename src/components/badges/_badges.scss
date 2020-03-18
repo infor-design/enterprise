@@ -48,8 +48,10 @@
 
   [class*='btn'] {
     cursor: pointer;
+    height: auto;
     margin-right: 0;
     min-height: auto;
+    min-width: 0;
 
     > .icon {
       margin-top: auto;
@@ -453,24 +455,24 @@ html.theme-uplift-contrast {
 
 // Bump all icons in tags by 1px on a Mac
 html {
-  &.is-mac,
-  &.is-firefox {
+  &.is-mac {
     .tag,
     .badge {
       button {
         .icon {
-          top: 1px;
+          top: -1px;
         }
       }
     }
   }
 
+  &.is-firefox,
   &.ios {
     .tag,
     .badge {
       button {
         .icon {
-          top: 2px;
+          top: 0;
         }
       }
     }

@@ -159,6 +159,7 @@ describe('Timepicker with seconds example tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
 
     expect(await dropdownEl.getText()).toEqual('03');
     dropdownEl = await element(by.css(ddSelector('minutes')));
@@ -167,6 +168,7 @@ describe('Timepicker with seconds example tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
 
     expect(await dropdownEl.getText()).toEqual('10');
     dropdownEl = await element(by.css(ddSelector('seconds')));
@@ -176,6 +178,7 @@ describe('Timepicker with seconds example tests', () => {
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
 
     expect(await dropdownEl.getText()).toEqual('15');
     dropdownEl = await element(by.css(ddSelector('period')));
@@ -183,9 +186,11 @@ describe('Timepicker with seconds example tests', () => {
     await browser.driver.sleep(config.sleep);
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
     await dropdownEl.sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
 
     expect(await dropdownEl.getText()).toEqual('PM');
     await element(by.css('.set-time')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await timepickerEl.getAttribute('value')).toEqual('03:10:15 PM');
   });
