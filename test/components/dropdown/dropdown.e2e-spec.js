@@ -14,7 +14,7 @@ const clickOnDropdown = async () => {
   await dropdownEl.click();
 };
 
-describe('Dropdown example-index tests', () => {
+fdescribe('Dropdown example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-index');
   });
@@ -581,7 +581,7 @@ describe('Dropdown xss tests', () => {
   });
 });
 
-describe('Dropdown badge tests', () => {
+fdescribe('Dropdown badge tests', () => {
   it('Should not error on left to right', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
     await utils.checkForErrors();

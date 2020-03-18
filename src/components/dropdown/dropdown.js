@@ -2014,13 +2014,6 @@ Dropdown.prototype = {
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
 
-      // When flipping, account for borders in the adjusted placement
-      let flippedOffset = 0;
-      if (!env.browser.isIE11()) {
-        flippedOffset = parseInt(listStyle.borderBottomWidth, 10) +
-          parseInt(listStyle.borderTopWidth, 10);
-      }
-
       // Firefox has different alignments without an adjustment:
       let browserOffset = 0;
       if (env.browser.name === 'firefox') {

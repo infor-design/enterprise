@@ -22,7 +22,7 @@ describe('Tag example-linkable tests', () => {
   });
 });
 
-describe('Tag visual regression tests', () => {
+fdescribe('Tag visual regression tests', () => {
   it('standard tags should not change', async () => {
     await utils.setPage('/components/tag/example-index');
     await browser.driver
