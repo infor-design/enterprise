@@ -2056,7 +2056,7 @@ Dropdown.prototype = {
 
       if (placementObj.wasFlipped === undefined) {
         // This will only apply if the dropdown is inside of the modal
-        if (isDropdownModal.length > 0 && placementObj.parent.hasClass('error')&& placementObj.parent.hasClass('is-open')) {
+        if (isDropdownModal.length > 0 && placementObj.parent.hasClass('error') && placementObj.parent.hasClass('is-open')) {
           const adjustListHeight = self.list[0].classList.contains('search-mode') ? 0 : 11;
           self.list[0].style.top = `${listStyleTop + adjustListHeight}px`;
         }
