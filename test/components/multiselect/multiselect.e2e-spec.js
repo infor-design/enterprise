@@ -90,7 +90,7 @@ describe('Multiselect example-states tests', () => {
   }
 });
 
-fdescribe('Multiselect example-index tests', () => {
+describe('Multiselect example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-index');
   });
