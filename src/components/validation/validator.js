@@ -236,7 +236,6 @@ Validator.prototype = {
         const thisField = $(this);
         const tooltip = thisField.data('tooltip');
 
-        thisField.next('.dropdown-wrapper').next('.error-message').hide();
         if (tooltip && document.activeElement === thisField.data('dropdown').searchInput[0]) {
           tooltip.hide();
         }
@@ -258,7 +257,6 @@ Validator.prototype = {
             .find('.icon-error').data('tooltip');
         }
 
-        thisField.next('.dropdown-wrapper').next('.error-message').show();
         if (tooltip && document.activeElement !== thisField.data('dropdown').searchInput[0]) {
           tooltip.show();
         }
