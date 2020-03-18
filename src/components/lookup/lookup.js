@@ -367,7 +367,7 @@ Lookup.prototype = {
         text: Locale.translate('Apply'),
         click(e, modal) {
           modal.close();
-          self.insertRows(self.grid.selectedRows());
+          self.insertRows();
         },
         isDefault: true
       }];
@@ -455,6 +455,26 @@ Lookup.prototype = {
   },
 
   /**
+   * Take any number of arrays and merges them.
+   * @private
+   * @param {array} args any number of arrays
+   * @returns {array} merged array
+   */
+  doMerge(...args) {
+    const hash = {};
+    const arr = [];
+    for (let i = 0; i < args.length; i++) {
+      for (let j = 0; j < args[i].length; j++) {
+        if (hash[args[i][j]] !== true) {
+          arr[arr.length] = args[i][j];
+          hash[args[i][j]] = true;
+        }
+      }
+    }
+    return arr;
+  },
+
+  /**
    * Overridable Function in which we create the grid on the current UI dialog.
    * @interface
    * @param {jquery[]} grid jQuery wrapped element containing a pre-invoked datagrid instance
@@ -524,7 +544,24 @@ Lookup.prototype = {
       lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
         const fieldVal = self.element.val();
         if (fieldVal) {
-          self.selectGridRows(fieldVal);
+          if (this.initValues) {
+            const isMatch = (node, v) => ((node[this.settings.field] || '').toString() === v.toString());
+            let vaulesToBeSelect = '';
+            const a1 = this.initValues.filter(n => !n.visited).map(n => n.value);
+            const a2 = this.grid._selectedRows.map(n => n.data[this.settings.field]);
+            const a3 = this.doMerge(a1, a2);
+            a3.forEach((v, i) => {
+              vaulesToBeSelect += (i !== 0 ? this.settings.delimiter : '') + v;
+            });
+            this.selectGridRows(vaulesToBeSelect || fieldVal);
+            this.initValues.forEach((n) => {
+              if (!n.visited) {
+                n.visited = !!(this.grid.settings.dataset.filter(node => isMatch(node, n.value)).length); // eslint-disable-line
+              }
+            });
+          } else {
+            this.selectGridRows(fieldVal);
+          }
         }
       });
     }
@@ -546,6 +583,27 @@ Lookup.prototype = {
         }
       });
     }
+
+    // Set init values after render the grid
+    if (this.settings.options.source) {
+      this.grid.element.one('afterrender.lookup', () => {
+        if (!this.initValues || (this.initValues && !this.initValues.length)) {
+          this.initValues = [];
+          const isMatch = (node, v) => ((node[this.settings.field] || '').toString() === v.toString());
+          const fieldVal = this.element.val();
+          if (fieldVal) {
+            const fieldValues = (fieldVal.indexOf(this.settings.delimiter) > 1) ?
+              fieldVal.split(this.settings.delimiter) : [fieldVal];
+            fieldValues.forEach((v) => {
+              this.initValues.push({
+                value: v,
+                visited: !!(this.grid.settings.dataset.filter(node => isMatch(node, v)).length) // eslint-disable-line
+              });
+            });
+          }
+        }
+      });
+    }
   },
 
   /**
@@ -562,9 +620,9 @@ Lookup.prototype = {
     }
 
     if (this.grid && this.settings.options.source) {
-      for (let k = 0; k < this.grid._selectedRows.length; k++) {
-        if (isNaN(this.grid._selectedRows[k].idx)) {
-          this.grid._selectedRows.splice(k, 1);
+      for (let i = (this.grid._selectedRows.length - 1); i > -1; i--) {
+        if (isNaN(this.grid._selectedRows[i].idx)) {
+          this.grid._selectedRows.splice(i, 1);
         }
       }
     }
@@ -678,6 +736,20 @@ Lookup.prototype = {
       if (this.settings.options.dataset && this.settings.options.dataset[idx]) {
         delete this.settings.options.dataset[idx]._selected;
       }
+    }
+
+    // Add unvisited values
+    if (this.initValues) {
+      const initValues = this.initValues.filter(n => !n.visited).map(n => n.value);
+      const data = {};
+      initValues.forEach((v) => {
+        if (value.indexOf(v) === -1) {
+          value += (value !== '' ? this.settings.delimiter : '') + v;
+          data[this.settings.field] = v;
+          this.selectedRows.push({ data });
+        }
+      });
+      delete this.initValues;
     }
 
     /**
