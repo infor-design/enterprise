@@ -2144,12 +2144,14 @@ Editor.prototype = {
       if (this.settings.useSourceFormatter) {
         content = this.formatHtml(content);
       }
+
+      this.element.addClass('source-view-active');
+      this.switchToolbars();
       this.textarea.val(content).focus();
-      this.element.addClass('source-view-active hidden');
       this.sourceView.removeClass('hidden');
+      this.element.addClass('hidden');
       this.adjustSourceLineNumbers();
       this.textarea.focus();
-      this.switchToolbars();
       content = this.textarea.val();
       this.textarea.off('input.editor').on('input.editor', () => {
         this.element.trigger('change');
