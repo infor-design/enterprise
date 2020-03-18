@@ -348,6 +348,7 @@ fdescribe('Multiselect with Tags tests', () => {
     const multiselectStandardEl = await element(by.css('#multi-optgroup-tagged + .dropdown-wrapper div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectStandardEl), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(multiselectStandardEl, 'multiselect-tags-standard')).toEqual(0);
   });
@@ -358,6 +359,7 @@ fdescribe('Multiselect with Tags tests', () => {
     const multiselectDisabledEl = await element(by.css('#multi-disabled-tagged + .dropdown-wrapper div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectDisabledEl), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(multiselectDisabledEl, 'multiselect-tags-disabled')).toEqual(0);
   });

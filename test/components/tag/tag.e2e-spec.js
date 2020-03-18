@@ -23,11 +23,12 @@ describe('Tag example-linkable tests', () => {
 });
 
 describe('Tag visual regression tests', () => {
-  it('standard tags should not change', async () => {
+  fit('standard tags should not change', async () => {
     await utils.setPage('/components/tag/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.tag-list')).get(0)), config.waitsFor);
     const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-standard')).toEqual(0);
   });
@@ -37,24 +38,27 @@ describe('Tag visual regression tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.tag-list')).get(0)), config.waitsFor);
     const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-linkable')).toEqual(0);
   });
 
-  it('dismissible and linkable tags should not change', async () => {
+  fit('dismissible and linkable tags should not change', async () => {
     await utils.setPage('/components/tag/example-dismissible-and-clickable');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tag-list'))), config.waitsFor);
     const tagEl = await element(by.css('.tag-list .tag:first-child'));
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-dismissible-clickable')).toEqual(0);
   });
 
-  it('disabled tags should not change', async () => {
+  fit('disabled tags should not change', async () => {
     await utils.setPage('/components/tag/example-disabled');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tag-list'))), config.waitsFor);
     const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-disabled')).toEqual(0);
   });
