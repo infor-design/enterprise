@@ -341,7 +341,7 @@ describe('Multiselect placeholder tests', () => {
   });
 });
 
-fdescribe('Multiselect with Tags tests', () => {
+describe('Multiselect with Tags tests', () => {
   it('standard example should not visually regress', async () => {
     await utils.setPage('/components/multiselect/example-index');
 
