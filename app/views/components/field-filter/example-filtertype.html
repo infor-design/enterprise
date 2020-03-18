@@ -57,7 +57,7 @@
     var popupmenuHtml = { byIndex: '', byValue: '' };
     var buildPopupmenuHtml = function () {
       var getIcon = function (icon) {
-        iconHtml = '<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-'+ icon +'"></use></svg>';
+        iconHtml = '<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-'+ icon +'"></use></svg>';
         return iconHtml;
       }
       for (var i = 0, l = fieldfilterData.length; i < l; i++) {

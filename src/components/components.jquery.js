@@ -3,6 +3,7 @@
 
 // Foundational ====/
 import './button/button.jquery';
+import './button/button.set.jquery';
 import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
 import './mask/mask-input.jquery';

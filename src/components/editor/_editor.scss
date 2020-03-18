@@ -136,6 +136,8 @@
   color: $editor-color;
   display: block;
   font-size: $input-size-regular-font-size;
+  -webkit-font-smoothing: antialiased;
+  font-weight: $theme-number-font-weight-base;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -143,6 +145,15 @@
   overflow: auto;
   padding: 15px 10px 10px;
   width: 100%;
+
+  &:empty::before {
+    color: $input-placeholder-color;
+    content: attr(placeholder);
+    font-size: $input-size-regular-font-size;
+    margin-top: 0;
+    position: absolute;
+    white-space: pre;
+  }
 
   &.is-disabled {
     background-color: $input-color-disabled-background;
@@ -600,6 +611,11 @@
 }
 
 // Dialog Styling
+.editor-modal-image {
+  .modal-body.no-scroll {
+    padding: 10px;
+  }
+}
 
 .editor-source {
   border: 1px solid;
@@ -662,16 +678,6 @@
   }
 }
 
-//Error Text
-.editor-placeholder {
-  color: $input-placeholder-color;
-
-  &.error {
-    border-color: transparent $error-color $error-color;
-    color: $error-color;
-  }
-}
-
 .editor-toolbar {
   &.error {
     border-color: $error-color $error-color $editor-border-color;
@@ -680,16 +686,6 @@
       border-color: transparent $error-color $error-color;
     }
   }
-}
-
-.editor-placeholder::after {
-  content: attr(data-placeholder);
-  font-size: $input-size-regular-font-size;
-  font-weight: 100;
-  left: 10px;
-  margin-top: -38px;
-  position: absolute;
-  white-space: pre;
 }
 
 // Compact Mode
@@ -702,13 +698,19 @@
 
 // Adjust fontpicker element aligment only on Firefox
 html.is-firefox {
-  .flex-toolbar.formatter-toolbar {
+  .formatter-toolbar {
     .fontpicker {
       span {
         display: inline-block;
         padding-top: 2px;
         vertical-align: baseline;
       }
+    }
+  }
+
+  .toolbar.formatter-toolbar .fontpicker {
+    span {
+      padding-top: 3px !important;
     }
   }
 }

@@ -74,6 +74,9 @@ Drag.prototype = {
       pos.underElements = this.getElementsFromPoint(pos.left, pos.top);
     }
 
+    pos.offset = this.offset;
+    pos.clone = this.clone;
+
     /**
     * Fires after the drag is completed. Use this to remove / set drag feedback off.
     * @event dragend
@@ -197,8 +200,6 @@ Drag.prototype = {
         css.left + elemWidth >= this.constraints.left) {
         css.left = (this.constraints.left - this.obstacle.outerWidth());
       }
-
-      // TODO: Moving Down
     }
 
     const applyCssStyle = function (el, applyCss, prop) {
@@ -213,6 +214,9 @@ Drag.prototype = {
     if (this.settings.underElements) {
       css.underElements = this.getElementsFromPoint(css.left, css.top);
     }
+
+    css.offset = this.offset;
+    css.clone = this.clone;
 
     /**
     * Fires (many times) while dragging is occuring. Use this for DOM feedback but
@@ -309,6 +313,8 @@ Drag.prototype = {
 
         self.originalPos = pos;
         self.element.addClass('is-dragging');
+        pos.offset = self.offset;
+        pos.clone = self.clone;
 
         /**
         * When the dragging is initiated. Use this to customize/style

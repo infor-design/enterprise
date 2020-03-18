@@ -1,19 +1,128 @@
 // Uplift Process Indicator
 //================================================== //
+.process-indicator {
+  .indicator {
+    &.more-info {
+      &::before {
+        top: 0.11em;
+      }
+    }
+  }
 
-.indicator {
-  &.more-info {
-    &::before {
-      top: 0.11em;
+  &.compact {
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          width: ($indicator-size * 0.78);
+        }
+      }
+    }
+  }
+}
+
+.is-safari {
+  .process-indicator {
+    .indicator {
+      &.current {
+        &.rejected {
+          &::before,
+          &::after {
+            width: ($indicator-size * 0.78);
+          }
+        }
+      }
+
+      &.more-info {
+        &::before {
+          left: 0.02em;
+          top: 0.1em;
+        }
+      }
+    }
+
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            width: ($indicator-size * 0.82);
+          }
+        }
+      }
     }
   }
 }
 
 .is-firefox {
-  .indicator {
-    &.more-info {
-      &::before {
-        top: 0.11em;
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            width: ($indicator-size * 0.78);
+          }
+        }
+      }
+    }
+
+    .indicator {
+      &.more-info {
+        &::before {
+          top: 0.11em;
+        }
+      }
+
+      &.rejected {
+        &.current {
+          &::before,
+          &::after {
+            left: 0.52em;
+            top: 0.98em;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ie,
+.ie11 {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            left: 0.15em;
+            top: 0.56em;
+          }
+        }
+      }
+    }
+
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          left: 0.13em;
+          top: 0.6em;
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.55em;
+            top: 0.97em;
+          }
+        }
+      }
+
+      &.time-out {
+        &::after {
+          top: 0.65em;
+        }
       }
     }
   }

@@ -23,7 +23,7 @@ Note that the name should be the same for all stars for it to function correctly
   <input type="radio" class="is-filled" name="rating-name" id="one-star-id1"/>
   <label for="one-star-id1">
     <svg class="icon" focusable="false" aria-hidden="true">
-      <use xlink:href="#icon-star-filled"/>
+      <use href="#icon-star-filled"/>
     </svg>
     <span class="audible">1 out of 5 Stars</span>
   </label>
@@ -31,7 +31,7 @@ Note that the name should be the same for all stars for it to function correctly
   <input type="radio" class="is-filled" name="rating-name" id="two-star-id1"/>
   <label for="two-star-id1">
     <svg class="icon" focusable="false" aria-hidden="true">
-      <use xlink:href="#icon-star-filled"/>
+      <use href="#icon-star-filled"/>
     </svg>
     <span class="audible">2 out of 5 Stars</span>
   </label>
@@ -39,7 +39,7 @@ Note that the name should be the same for all stars for it to function correctly
   <input type="radio" class="is-filled" name="rating-name" id="three-star-id1"/>
   <label for="three-star-id1">
     <svg class="icon" focusable="false" aria-hidden="true">
-      <use xlink:href="#icon-star-filled"/>
+      <use href="#icon-star-filled"/>
     </svg>
     <span class="audible">3 out of 5 Stars</span>
   </label>
@@ -47,7 +47,7 @@ Note that the name should be the same for all stars for it to function correctly
   <input type="radio" class="is-half" checked name="rating-name" id="four-star-id1"/>
   <label for="four-star-id1">
     <svg class="icon" focusable="false" aria-hidden="true">
-      <use xlink:href="#icon-star-half"/>
+      <use href="#icon-star-half"/>
     </svg>
     <span class="audible">4 out of 5 Stars</span>
   </label>
@@ -55,7 +55,7 @@ Note that the name should be the same for all stars for it to function correctly
   <input type="radio" name="rating-name" id="five-star-id1"/>
   <label for="five-star-id1">
     <svg class="icon" focusable="false" aria-hidden="true">
-      <use xlink:href="#icon-star-filled"/>
+      <use href="#icon-star-filled"/>
     </svg>
     <span class="audible">5 out of 5 Stars</span>
   </label>

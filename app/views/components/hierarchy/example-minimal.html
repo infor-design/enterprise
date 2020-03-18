@@ -19,7 +19,7 @@
     console.log(event, eventInfo);
 
     if (eventInfo.data.childrenUrl) {
-      $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
+      $.getJSON('{{basepath}}api/' + eventInfo.data.childrenUrl, function(newData) {
         reload(eventInfo, hierarchyControl, newData);
       });
     }

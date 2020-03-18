@@ -41,14 +41,14 @@ It is required to inline the SVG icons in HTML markup in order to be able to cha
 // As Icon Button
 <button id="calendar" class="btn-icon">
   <svg aria-hidden="true" focusable="false" role="presentation" class="icon">
-     <use xlink:href="#icon-calendar"></use>
+     <use href="#icon-calendar"></use>
    </svg>
    <span class="audible">Calendar</span>
  </button>
 
 // With Button - Just Icon
 <svg aria-hidden="true" focusable="false" role="presentation" class="icon" >
-   <use xlink:href="#icon-calendar"></use>
+   <use href="#icon-calendar"></use>
 </svg>
 ```
 

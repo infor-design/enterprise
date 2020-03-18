@@ -12,7 +12,7 @@
       { 'value' : 'O',  'label' : 'Open Position' }
     ],
     dataset: [],
-    paging: true
+    layout: 'paging'
   };
 
   $.getJSON('{{basepath}}api/orgstructure-paging', function(data) {
@@ -55,7 +55,7 @@
 
     <button class="btn btn-icon" type="button">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-        <use xlink:href="#icon-caret-up"/>
+        <use href="#icon-caret-up"/>
       </svg>
       <span class="audible">Expand/Collapse</span>
     </button>

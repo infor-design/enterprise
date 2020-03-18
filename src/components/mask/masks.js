@@ -350,9 +350,33 @@ masks.dateMask = function dateMask(rawValue, options) {
     const value = maxValue[part];
     let size;
 
-    if (part === 'a') {
+    if (part === 'a' || part === 'ah') {
+      let am = 'AM';
+      let pm = 'PM';
       // Match the day period
-      mask.push(/[aApP]/, /[Mm]/);
+      if (Locale.calendar()) {
+        am = Locale.calendar().dayPeriods[0];
+        pm = Locale.calendar().dayPeriods[1];
+        const apRegex = [];
+
+        for (let j = 0; j < am.length; j++) {
+          if (am[j] && pm[j] && am[j].toLowerCase() === pm[j].toLowerCase()) {
+            apRegex.push(am[j].toLowerCase());
+          } else {
+            apRegex.push(am[j].toLowerCase() + (pm[j] ? pm[j].toLowerCase() : ''));
+          }
+        }
+
+        for (let k = 0; k < apRegex.length; k++) {
+          mask.push(new RegExp(`[${apRegex[k]}]`, 'i'));
+        }
+      } else {
+        mask.push(/[aApP]/, /[Mm]/);
+      }
+      if (part === 'ah') {
+        const hourValue = rawValueArray[i].replace(am, '').replace(pm, '');
+        mask = mask.concat(getRegexForPart(hourValue, 'digits'));
+      }
     } else if (!value) {
       mask = mask.concat(getRegexForPart(part, 'alphas'));
     } else if (rawValueArray[i]) {

@@ -152,10 +152,10 @@ $indicator-current-size: ($indicator-size * 1.6);
       content: '';
       display: inline-block;
       height: 0.15em;
-      left: 0.14em;
+      left: 0.16em;
       position: absolute;
-      top: 0.54em;
-      width: ($indicator-size * 0.82);
+      top: 0.57em;
+      width: ($indicator-size * 0.78);
     }
 
     &::before {
@@ -171,8 +171,8 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       &::before,
       &::after {
-        left: 0.51em;
-        top: 0.93em;
+        left: 0.5em;
+        top: 0.98em;
       }
     }
 
@@ -190,7 +190,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       height: 100%;
       position: relative;
       text-align: center;
-      top: 0.17em;
+      top: 0.18em;
       width: 100%;
 
       @include antialiased();
@@ -209,7 +209,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       border: 0.15em solid $theme-color-palette-white;
       content: '';
       height: 50%;
-      left: 0.37em;
+      left: 0.35em;
       position: absolute;
       top: 0.37em;
       width: 50%;
@@ -241,6 +241,33 @@ $indicator-current-size: ($indicator-size * 1.6);
 
 }
 
+.process-indicator {
+  &.compact {
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          left: 0.12em;
+          width: ($indicator-size * 0.82);
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.5em;
+          }
+        }
+      }
+
+      &.more-info {
+        &::before {
+          right: 0.02em;
+        }
+      }
+    }
+  }
+}
+
 .process-indicator,
 .timeline {
   .heading {
@@ -269,10 +296,132 @@ $indicator-current-size: ($indicator-size * 1.6);
 }
 
 .is-firefox {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.more-info {
+          &::before {
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+
   .indicator {
     &.more-info {
       &::before {
-        top: 0.25em;
+        top: 0.3em;
+      }
+    }
+
+    &.rejected {
+      &.current {
+        &::before,
+        &::after {
+          top: 0.95em;
+        }
+      }
+    }
+
+    &.time-out {
+      &::before {
+        left: 0.4em;
+        top: 0.36em;
+      }
+    }
+  }
+}
+
+.is-safari {
+  .indicator {
+    &.current {
+      height: 2.02em;
+      width: 2.02em;
+
+      &.rejected {
+        &::before,
+        &::after {
+          width: ($indicator-size * 0.83);
+        }
+      }
+    }
+
+    &.more-info {
+      &::before {
+        left: 0.01em;
+      }
+    }
+
+    &.time-out {
+      &::after {
+        left: 0.9em;
+      }
+    }
+  }
+}
+
+.ios {
+  &.iphone {
+    &.is-safari {
+      .process-indicator {
+        .indicator {
+          &.more-info {
+            &::before {
+              top: 0.05em;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ie,
+.ie11 {
+  .process-indicator {
+    &.compact {
+      .indicator {
+        &.rejected {
+          &::before,
+          &::after {
+            width: ($indicator-size * 0.78);
+          }
+
+          &.current {
+            &::before,
+            &::after {
+              left: 0.51em;
+              top: 0.95em;
+            }
+          }
+        }
+      }
+    }
+
+    .indicator {
+      &.rejected {
+        &::before,
+        &::after {
+          left: 0.15em;
+          top: 0.55em;
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.53em;
+            top: 0.93em;
+          }
+        }
+      }
+
+      &.more-info {
+        &.current {
+          &::before {
+            left: 0.03em;
+          }
+        }
       }
     }
   }

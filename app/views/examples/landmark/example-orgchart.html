@@ -26,7 +26,7 @@
     console.log(event, eventInfo);
 
     if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
-      $.getJSON(`{{basepath}}api/${eventInfo.data.childrenUrl}`, function(newData) {
+      $.getJSON('{{basepath}}api/'+ eventInfo.data.childrenUrl, function(newData) {
         reload(eventInfo, hierarchyControl, newData);
       });
     }
@@ -67,7 +67,7 @@
     {{#menu}}
     <button class="btn-actions btn-icon" type="button" data-init="false" id="btn-{{id}}">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-        <use xlink:href="#icon-more"></use>
+        <use href="#icon-more"></use>
       </svg>
       <span class="audible">More Info & Additional Actions</span>
     </button>
@@ -76,7 +76,7 @@
 
     <button class="btn btn-icon" type="button">
       <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-        <use xlink:href="#icon-caret-up"></use>
+        <use href="#icon-caret-up"></use>
       </svg>
       <span class="audible">Expand/Collapse</span>
     </button>

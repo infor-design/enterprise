@@ -11,7 +11,7 @@
         <div class="buttonset">
           <button type="button" class="btn-icon" title="Expand All" id="expand-collapse">
              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                 <use xlink:href="#icon-expand-all"></use>
+                 <use href="#icon-expand-all"></use>
              </svg>
              <span class="audible">Expand All</span>
           </button>
@@ -84,9 +84,9 @@
       api.collapseAll();
     }
 
-    btn.find('use').attr('xlink:href', isExpanded ? '#icon-collapse-all' : '#icon-expand-all');
+    btn.find('use').attr('href', isExpanded ? '#icon-collapse-all' : '#icon-expand-all');
 
-    console.log(btn.find('use').attr('xlink:href'));
+    console.log(btn.find('use').attr('href'));
 
     btn.attr('title', isExpanded ? 'Collapse All' : 'Expand All').trigger('updated');
   });

@@ -24,7 +24,7 @@ Popover components are generally created with a combination of a "trigger" eleme
 <!-- This is the trigger element -->
 <button id="popover-trigger" class="btn-primary">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    <use xlink:href="#icon-duplicate"></use>
+    <use href="#icon-duplicate"></use>
   </svg>
   <span>Hover Me To Show Popover</span>
 </button>

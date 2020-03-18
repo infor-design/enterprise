@@ -371,12 +371,6 @@ Accordion.prototype = {
       return false;
     }
 
-    // Stop propagation here because we don't want to bubble up to the Header and
-    // potentially click the it twice
-    if (e) {
-      e.stopPropagation();
-    }
-
     this.closePopups(e);
 
     /**
@@ -598,7 +592,7 @@ Accordion.prototype = {
       const icon = $el.children('.icon');
       if (icon.length) {
         elemData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
-          icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
+          icon[0].getElementsByTagName('use')[0].getAttribute('href') :
           '';
       }
 

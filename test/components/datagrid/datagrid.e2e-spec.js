@@ -512,7 +512,7 @@ describe('Datagrid grouping and editing tests', () => {
   it('addRow should work with grouping', async () => {
     await element(by.id('add-btn')).click();
 
-    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('href')).toEqual('#icon-exclamation');
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('17');
   });
 
@@ -521,7 +521,7 @@ describe('Datagrid grouping and editing tests', () => {
     await browser.driver.sleep(config.sleep);
     await element(by.id('alert-btn')).click();
 
-    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('xlink:href')).toEqual('#icon-exclamation');
+    expect(await element(by.css('.rowstatus-cell .icon-rowstatus use')).getAttribute('href')).toEqual('#icon-exclamation');
     expect(await element(by.css('tr.rowstatus-row-error')).isPresent()).toBe(true);
   });
 
@@ -1222,6 +1222,38 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
 
     expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
   });
+});
+
+describe('Datagrid Row Row Reorder', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show on hover', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+    expect(await element(by.css('#datagrid thead th:nth-child(2)')).isDisplayed()).toBe(true);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await browser.actions()
+        .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-row-reorder')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid Date default values', () => {
@@ -2231,7 +2263,8 @@ describe('Datagrid filter lookup custom click function tests', () => {
 
     expect(await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 input')).getAttribute('value')).toEqual('I Love Compressors');
     await browser.driver.sleep(config.sleep);
-    await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-filter-1')).click();
+    await element(by.css('.datagrid-result-count')).click();
+
     if (utils.isChrome() && utils.isCI()) {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
@@ -2487,7 +2520,7 @@ describe('Datagrid disable last page', () => {
   });
 
   it('Should be have last and next page disabled', async () => {
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(2);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 
@@ -2509,12 +2542,12 @@ describe('Datagrid paging force disabled', () => {
     await element(by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(4);
 
     await element(by.id('force-enabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar .is-disabled')).count()).toEqual(0);
+    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
   });
 });
 

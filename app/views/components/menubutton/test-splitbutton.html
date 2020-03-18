@@ -22,7 +22,7 @@
 
         <button id="add-row-button" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-add"></use>
+            <use href="#icon-add"></use>
           </svg>
           <span>Add Row</span>
         </button>
@@ -34,7 +34,7 @@
         <button id="split-button-menu-trigger" type="button" class="btn-split-menu btn-menu">
           <span class="audible">Change Default</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-dropdown"></use>
+            <use href="#icon-dropdown"></use>
           </svg>
         </button>
         <ul class="popupmenu is-selectable">
@@ -56,7 +56,7 @@
         <button id="split-button-sort-label-menu-trigger" type="button" class="btn-split-menu btn-menu">
           <span class="audible">Change Sort Order</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-dropdown"></use>
+            <use href="#icon-dropdown"></use>
           </svg>
         </button>
         <ul class="popupmenu is-selectable">
@@ -71,7 +71,7 @@
         -->
         <button id="split-button-sort-icon-action" type="button" class="btn-split-menu btn btn-icon">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
-            <use xlink:href="#icon-sort-up">
+            <use href="#icon-sort-up">
               <span class="audible">Sort Descending</span>
             </use>
           </svg>
@@ -80,7 +80,7 @@
         <button id="split-button-sort-icon-menu-trigger" type="button" class="btn-split-menu btn-menu">
           <span class="audible">Change Sort Order</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-dropdown"></use>
+            <use href="#icon-dropdown"></use>
           </svg>
         </button>
         <ul class="popupmenu is-selectable">
@@ -94,7 +94,7 @@
         -->
         <button id="split-button-sort-icon-label-action" type="button" class="btn-split-menu btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
-            <use xlink:href="#icon-sort-up">
+            <use href="#icon-sort-up">
               <span class="audible">Sort Descending</span>
             </use>
           </svg>
@@ -104,7 +104,7 @@
         <button id="split-button-sort-icon-label-menu-trigger" type="button" class="btn-split-menu btn-menu">
           <span class="audible">Change Sort Order</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-dropdown"></use>
+            <use href="#icon-dropdown"></use>
           </svg>
         </button>
         <ul class="popupmenu is-selectable">
@@ -116,7 +116,7 @@
 
         <button type="button" id="btn-settings" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-settings"></use>
+            <use href="#icon-settings"></use>
           </svg>
           <span>Settings</span>
         </button>
@@ -157,7 +157,7 @@
     var $splitButtonSortLabelMenuTrigger = $('#split-button-sort-label-menu-trigger');
     var isAscending = true;
 
-    $splitButtonSortAction.find('use').attr('xlink:href', '#icon-sort-up');
+    $splitButtonSortAction.find('use').attr('href', '#icon-sort-up');
 
     // Action Button fires the action
     $splitButtonSortAction.on('click', function (e) {
@@ -186,7 +186,7 @@
     // Action Button fires the action
     $splitButtonSortAction.on('click', function (e) {
       isAscending = !isAscending;
-      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+      $(this).find('use').attr('href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
     });
 
     // MenuButton selection changes the default action
@@ -208,7 +208,7 @@
     // Action Button fires the action
     $splitButtonSortAction.on('click', function (e) {
       isAscending = !isAscending;
-      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+      $(this).find('use').attr('href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
     });
 
     // MenuButton selection changes the default action

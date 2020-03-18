@@ -21,11 +21,9 @@ const COMPONENT_NAME = 'hierarchy';
  * @param {array} [settings.dataset=[]] Hierarchical Data to display
  * @param {boolean} [settings.newData=[]] New data to be appended into dataset
  * @param {string} [settings.templateId] Additional product name information to display
- * @param {boolean} [settings.mobileView=false] If true will only show mobile view, default using device info.
  * @param {number} [settings.leafHeight=null] Set the height of the leaf
  * @param {number} [settings.leafWidth=null] Set the width of the leaf
  * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
- * @param {boolean} [settings.paging=false] If true show pagination.
  * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
  * @param {boolean} [settings.layout=string] Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
  * @param {object} [settings.emptyMessage] An optional settings object for the empty message when there is no data.
@@ -40,11 +38,9 @@ const HIERARCHY_DEFAULTS = {
   dataset: [],
   newData: [],
   templateId: '', // Id to the Html Template
-  mobileView: false,
   leafHeight: null,
   leafWidth: null,
   beforeExpand: null,
-  paging: false,
   renderSubLevel: false,
   layout: 'horizontal', // stacked, horizontal, paging, mobile-only
   rootId: null,
@@ -81,27 +77,6 @@ Hierarchy.prototype = {
     // Setup events
     this.handleEvents();
 
-    // Warn about deprecated settings
-    if (s.paging) {
-      // eslint-disable-next-line no-console
-      console.warn(`
-      Hierarchy,
-      WARNING: Paging setting will be deprecated.
-      Date of Message: 02/12/2019
-      Date of deprecation: 05/15/2019.
-      `);
-    }
-
-    if (s.mobileView) {
-      // eslint-disable-next-line no-console
-      console.warn(`
-      Hierarchy,
-      WARNING: MobileView setting will be deprecated.
-      Date of Message: 02/12/2019
-      Date of deprecation: 05/15/2019.
-      `);
-    }
-
     // Safety check, check for data
     if (s.dataset === undefined || s.dataset.length === 0 || !Array.isArray(s.dataset)) {
       this.element.emptymessage(s.emptyMessage);
@@ -133,11 +108,11 @@ Hierarchy.prototype = {
    * @returns {void}
    */
   setLayout(layout) {
-    if (this.settings.paging) {
+    if (this.isPagingLayout()) {
       layout = 'paging';
     }
 
-    if (this.settings.mobileView) {
+    if (this.isMobileOnly()) {
       layout = 'mobile-only';
     }
 
@@ -405,7 +380,7 @@ Hierarchy.prototype = {
       <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
         <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
           ${a.value}
-          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>' : ''}
+          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
         </a>
         ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
           <ul class="popupmenu">
@@ -730,8 +705,8 @@ Hierarchy.prototype = {
     const structure = {
       legend: '<legend><ul></ul></legend>',
       chart: '<ul class="container"><li class="chart"></li></ul>',
-      toplevel: s.paging ? '<ul class="child-nodes"></ul>' : '<ul class="top-level"></ul>',
-      sublevel: s.paging ? '' : '<ul class="sub-level"></ul>'
+      toplevel: this.isPagingLayout() ? '<ul class="child-nodes"></ul>' : '<ul class="top-level"></ul>',
+      sublevel: this.isPagingLayout() ? '' : '<ul class="sub-level"></ul>'
     };
 
     // Append chart structure to hierarchy container
@@ -753,12 +728,12 @@ Hierarchy.prototype = {
     // Create root node
     this.setColor(data);
 
-    if (s.paging && data.parentDataSet) {
+    if (this.isPagingLayout() && data.parentDataSet) {
       const backMarkup = '' +
         '<div class="back">' +
         '<button type="button" class="btn-icon hide-focus btn-back">' +
         '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-        '<use xlink:href="#icon-caret-left"></use>' +
+        '<use href="#icon-caret-left"></use>' +
         '</svg>' +
         '<span>Back</span>' +
         '</button>' +
@@ -838,9 +813,9 @@ Hierarchy.prototype = {
         // If child has no children then render the element in the top level
         // If paging then render all children in the top level
         // If not paging and child has children then render in the sub level
-        if (this.isLeaf(thisChildren[i]) && !s.paging && s.renderSubLevel) {
+        if (this.isLeaf(thisChildren[i]) && !this.isPagingLayout() && s.renderSubLevel) {
           this.createLeaf(data.children[i], $(structure.toplevel));
-        } else if (s.paging) {
+        } else if (this.isPagingLayout()) {
           this.createLeaf(data.children[i], $(structure.toplevel));
         } else {
           this.createLeaf(data.children[i], $(structure.sublevel));
@@ -884,6 +859,22 @@ Hierarchy.prototype = {
     }
 
     /* eslint-enable no-use-before-define */
+  },
+
+  /**
+   * @private
+   * @returns {boolean} true if paging layout
+   */
+  isPagingLayout() {
+    return this.settings.layout && this.settings.layout === 'paging';
+  },
+
+  /**
+   * @private
+   * @returns {boolean} true if mobile only
+   */
+  isMobileOnly() {
+    return this.settings.layout && this.settings.layout === 'mobile-only';
   },
 
   /**
@@ -1139,7 +1130,7 @@ Hierarchy.prototype = {
 
     const s = this.settings;
     const btn = $(leaf).find('.btn');
-    const expandCaret = s.paging ? 'caret-right' : 'caret-up';
+    const expandCaret = this.isPagingLayout() ? 'caret-right' : 'caret-up';
     let data = $(leaf).data();
 
     if (data === undefined && nodeData !== undefined) {
@@ -1184,7 +1175,7 @@ Hierarchy.prototype = {
     }
 
     // Keep reference of the parent dataset for paging
-    if (this.settings.layout === 'paging' || this.settings.paging) {
+    if (this.isPagingLayout()) {
       data.parentDataSet = s.dataset;
     }
 

@@ -101,6 +101,14 @@
     }
   }
 
+  .field:last-child input.error {
+    margin-bottom: 0 !important;
+
+    + .error-message {
+      margin-top: 10px !important;
+    }
+  }
+
   .textarea-wordcount {
     width: auto;
   }
@@ -342,7 +350,7 @@ body.modal-engaged {
 
   .modal-body-wrapper {
     overflow: auto;
-    padding: 0 20px;
+    padding: 5px 20px;
 
     .field:last-child {
       margin-bottom: 0;
@@ -499,7 +507,7 @@ html.ie {
 
 // iOS specific adjustments
 html.ios {
-  .has-modal-open {
+  .modal-engaged {
     [aria-hidden='true'],
     [aria-hidden='true'] * {
       overflow: hidden;
