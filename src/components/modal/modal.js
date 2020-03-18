@@ -1103,7 +1103,7 @@ Modal.prototype = {
       });
 
     // Cache tab fields and update them if the DOM changes
-    const selector = ':focusable, [contenteditable]';
+    const selector = ':focusable, [contenteditable], iframe';
     let tabbableElements = self.element.find(selector);
     let firstTabbable = tabbableElements.first();
     let lastTabbable = tabbableElements.last();
