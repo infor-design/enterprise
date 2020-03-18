@@ -281,6 +281,11 @@ Homepage.prototype = {
           const card = $(this);
           card.addClass('is-dragging');
         })
+        .on('dragover.card', function (event){
+          // For mac chrome/safari to remove animation
+          // https://stackoverflow.com/questions/32206010/disable-animation-for-drag-and-drop-chrome-safari
+          event.preventDefault();
+        })
         .on('dragenter.card', function (event) {
           event.preventDefault();
           const card = $(this);
