@@ -438,6 +438,12 @@ div.multiselect {
       bottom: 6px;
       top: auto;
     }
+
+    > .trigger {
+      .icon {
+        top: 8px;
+      }
+    }
   }
 
   &.has-icons {
@@ -620,7 +626,7 @@ div.multiselect {
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
   color: $dropdown-color-initial-font;
-  padding: 8px 30px 8px 10px;
+  padding: 7px 30px 8px 10px;
   text-overflow: ellipsis;
   width: 100%;
 
@@ -659,6 +665,7 @@ div.multiselect {
 
   .dropdown-search {
     border-bottom: 0;
+    padding: 7px 30px 9px 10px;
   }
 }
 
@@ -1103,6 +1110,14 @@ div.dropdown-xs,
 
       + .icon {
         top: 4px;
+      }
+    }
+  }
+
+  .dropdown-list.is-ontop {
+    > .trigger {
+      .icon {
+        top: 10px;
       }
     }
   }

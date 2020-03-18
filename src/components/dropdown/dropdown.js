@@ -2048,7 +2048,7 @@ Dropdown.prototype = {
         adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 5}px`;
 
         if (!self.isShortField) {
-          self.list[0].style.top = `${listStyleTop + searchInputHeight + flippedOffset}px`;
+          self.list[0].style.top = `${listStyleTop}px`;
         }
       }
 
