@@ -6631,7 +6631,7 @@ Datagrid.prototype = {
     }
 
     pagingInfo.activePage = this.activePage;
-    this.renderPager(pagingInfo);
+    this.renderPager(pagingInfo, true);
   },
 
   /**
@@ -6948,6 +6948,9 @@ Datagrid.prototype = {
       }
     }
 
+    const isMatch = (i, elem, n) => (n && n.idx === i && n.elem && n.elem.is(elem));
+    const isExists = (i, elem) => (!!(this._selectedRows.filter(n => isMatch(i, elem, n)).length));
+
     if (s.selectable === 'single') {
       let selectedIndex = -1;
       if (this._selectedRows.length > 0) {
@@ -6963,7 +6966,9 @@ Datagrid.prototype = {
       }
     }
 
-    if (!rowNode.hasClass('is-selected')) {
+    const isServerSideMultiSelect = s.source && s.selectable === 'multiple' && s.allowSelectAcrossPages;
+
+    if (!rowNode.hasClass('is-selected') || isServerSideMultiSelect) {
       let rowData;
 
       if (s.treeGrid) {
@@ -6982,7 +6987,7 @@ Datagrid.prototype = {
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
-              if (canAdd) {
+              if (canAdd && !isExists(actualIdx, elem)) {
                 self._selectedRows.push({
                   idx: actualIdx,
                   data,
@@ -7019,7 +7024,7 @@ Datagrid.prototype = {
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
               self.selectNode(elem, index, data);
-              if (canAdd) {
+              if (canAdd && !isExists(actualIdx, elem)) {
                 self._selectedRows.push({
                   idx: actualIdx,
                   data,
@@ -7044,15 +7049,17 @@ Datagrid.prototype = {
           }
           const gData = self.groupArray[row];
           rowData = self.settings.dataset[gData.group].values[gData.node];
-          this._selectedRows.push({
-            idx: rowData.idx,
-            data: rowData,
-            elem: rowNode,
-            group: s.dataset[self.groupArray[row].group],
-            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
-            pagingIdx: dataRowIndex,
-            pagesize: self.settings.pagesize
-          });
+          if (!isExists(rowData.idx, rowNode)) {
+            this._selectedRows.push({
+              idx: rowData.idx,
+              data: rowData,
+              elem: rowNode,
+              group: s.dataset[self.groupArray[row].group],
+              page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+              pagingIdx: dataRowIndex,
+              pagesize: self.settings.pagesize
+            });
+          }
         }
         self.selectNode(rowNode, dataRowIndex, rowData);
         self.lastSelectedRow = idx; // Rememeber index to use shift key
@@ -7065,14 +7072,16 @@ Datagrid.prototype = {
           actualIdx = idx;
         }
 
-        this._selectedRows.push({
-          idx: actualIdx,
-          data: rowData,
-          elem: self.visualRowNode(actualIdx),
-          page: this.pagerAPI ? this.pagerAPI.activePage : 1,
-          pagingIdx: idx,
-          pagesize: this.settings.pagesize
-        });
+        if (!isExists(actualIdx, self.visualRowNode(actualIdx))) {
+          this._selectedRows.push({
+            idx: actualIdx,
+            data: rowData,
+            elem: self.visualRowNode(actualIdx),
+            page: self.pagerAPI ? self.pagerAPI.activePage : 1,
+            pagingIdx: idx,
+            pagesize: self.settings.pagesize
+          });
+        }
       }
     }
 
@@ -7565,6 +7574,7 @@ Datagrid.prototype = {
     const self = this;
     const s = self.settings;
     const rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
+    const isServerSideMultiSelect = s.source && s.selectable === 'multiple' && s.allowSelectAcrossPages;
     let checkbox = null;
 
     if (!rowNode || idx === undefined) {
@@ -7580,6 +7590,10 @@ Datagrid.prototype = {
         }
         for (let i = 0; i < self._selectedRows.length; i++) {
           if (self._selectedRows[i].idx === selIdx) {
+            if (isServerSideMultiSelect &&
+                self._selectedRows[i].elem && !self._selectedRows[i].elem.is(elem)) {
+              continue;
+            }
             self._selectedRows.splice(i, 1);
             break;
           }

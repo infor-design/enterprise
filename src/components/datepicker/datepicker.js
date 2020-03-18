@@ -775,7 +775,8 @@ DatePicker.prototype = {
         if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
           this.popup.css({
-            'min-height': `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
+            'min-height': $('html').hasClass('theme-uplift-light') ? ''
+              : `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });
           this.popupClosestScrollable.css('min-height', '375px');

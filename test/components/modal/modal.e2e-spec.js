@@ -283,10 +283,10 @@ describe('Modal Full Content Tests', () => {
     await element.all(by.css('.modal-buttonset button')).first().click();
 
     expect(await element(by.id('modal')).getAttribute('class')).not.toContain('is-visible');
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     await element(by.css('#show')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('modal')).getAttribute('class')).toContain('is-visible');
     await element.all(by.css('.modal-buttonset button')).first().click();
