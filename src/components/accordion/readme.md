@@ -30,7 +30,7 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 <div class="accordion" data-demo-set-links="true">
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-user"></use>
+      <use href="#icon-user"></use>
     </svg>
     <a href="#"><span>Personal</span></a>
   </div>
@@ -45,7 +45,7 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-roles"></use>
+      <use href="#icon-roles"></use>
     </svg>
     <a href="#"><span>Position</span></a>
   </div>
@@ -60,7 +60,7 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-export-spreadsheet"></use>
+      <use href="#icon-export-spreadsheet"></use>
     </svg>
     <a href="#"><span>Financials</span></a>
   </div>
@@ -75,7 +75,7 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-      <use xlink:href="#icon-notes"></use>
+      <use href="#icon-notes"></use>
     </svg>
     <a href="#"><span>Notes</span></a>
   </div>

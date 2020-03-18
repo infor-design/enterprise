@@ -51,7 +51,7 @@ $('body').on('initialized', function () {
     $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
   };
 
-  $('html').on(`themechanged.${this.namespace}`, () => {
+  $('html').on('themechanged', function() {
     initCharts();
   });
   initCharts();

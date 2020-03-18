@@ -144,7 +144,7 @@ aggregators.aggregate = function (items, columns) {
       const field = columns[i].field;
 
       self.sum = function (sum, node) {
-        if (node._isFilteredOut) { // If excluded / filtered out.
+        if (node._isFilteredOut) { // eslint-disable-line
           return sum;
         }
 

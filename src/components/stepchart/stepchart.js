@@ -70,7 +70,7 @@ StepChart.prototype = {
     const container = $('<div class="step-chart-steps"></div>');
     const icon = `
       <svg class="icon {icon-name}" focusable="false" aria-hidden="true" role="presentation">
-        <use xlink:href="#icon-success"></use>
+        <use href="#icon-success"></use>
       </svg>
     `;
 

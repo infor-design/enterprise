@@ -53,7 +53,7 @@ dateUtils.dateDiff = function (first, second, useHours) {
   // Take the difference between the dates and divide by milliseconds per day.
   // Round to nearest whole number to deal with DST.
   const dtoday = new Date();
-  return Math.round((second - first) / (1000 * 60 * 60 * 
+  return Math.round((second - first) / (1000 * 60 * 60 *
     (useHours ? 1 : Math.abs(dtoday.getTimezoneOffset()))));
 };
 

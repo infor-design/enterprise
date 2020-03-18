@@ -649,7 +649,7 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     node.innerHTML = `<div class="calendar-event-content">
-      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use xlink:href="#${event.icon}"></use></svg></span>` : ''}
+      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
       <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
     </div>`;
     container.querySelector('.day-container').appendChild(node);

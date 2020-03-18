@@ -69,10 +69,10 @@ CalendarToolbar.prototype = {
         <span class="month">november</span>
         <span class="year">2019</span>
         <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
+          <use href="#icon-dropdown"></use>
         </svg>
         <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-dropdown"></use>
+          <use href="#icon-dropdown"></use>
         </svg>
       </button>`;
 
@@ -83,11 +83,11 @@ CalendarToolbar.prototype = {
         <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
           <button type="button" class="btn-icon prev">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-left"></use></svg>
             <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
             </button>
           <button type="button" class="btn-icon next">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
               <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
           </button>
         </div>
@@ -96,11 +96,11 @@ CalendarToolbar.prototype = {
       this.element[0].innerHTML = `
         <div class="toolbar-section">
           <button type="button" class="btn-icon prev">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-left"></use></svg>
             <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
             </button>
           <button type="button" class="btn-icon next">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
               <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
           </button>
           <span class="monthview-datepicker">

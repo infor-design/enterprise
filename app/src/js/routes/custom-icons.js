@@ -20,7 +20,7 @@ const hbsTemplate = `
       {{#each cat.icons as |iconName iconKey|}}
         <div class="demo-svg" title="{{iconName}}">
           <svg class="icon {{../../additionalClass}}" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="{{iconName}}"></use>
+            <use href="{{iconName}}"></use>
           </svg>
           <span class="audible">{{iconName}}</span>
         </div>
