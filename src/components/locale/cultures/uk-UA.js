@@ -19,6 +19,7 @@ Soho.Locale.addCulture('uk-UA', {
       full: 'EEEE, d MMMM yyyy р.',
       month: 'd MMMM',
       year: 'MMMM yyyy  р.',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',

@@ -365,9 +365,11 @@ describe('Flex Toolbar', () => { //eslint-disable-line
         $(overflowedMenuButton).trigger('mouseover');
         firstMoreMenuEntry.click();
 
-        expect(moreActionsSpyEvent).toHaveBeenTriggered();
-        done();
-      }, 500);
+        setTimeout(() => {
+          expect(moreActionsSpyEvent).toHaveBeenTriggered();
+          done();
+        }, 300);
+      }, 450);
     });
   });
 });

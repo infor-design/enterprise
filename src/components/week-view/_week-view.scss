@@ -45,6 +45,16 @@ $week-view-cell-height: 25px;
     // Times on the right
     .week-view-header-wrapper {
       padding: 0 5px;
+
+      .week-view-header-day-of-week {
+        display: block;
+        line-height: 2.5rem;
+        text-align: center;
+
+        &.is-emphasis {
+          font-size: 2rem;
+        }
+      }
     }
 
     // All day section
@@ -204,6 +214,18 @@ $week-view-cell-height: 25px;
 
     &.is-ellipsis .calendar-event-content {
       white-space: nowrap;
+    }
+  }
+
+  // Adjust the day Version
+  &.is-day-view {
+    .week-view-header-wrapper {
+      .week-view-header-day-of-week {
+        &.is-emphasis {
+          font-size: 3rem;
+          line-height: 4rem;
+        }
+      }
     }
   }
 }

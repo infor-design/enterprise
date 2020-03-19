@@ -19,6 +19,7 @@ Soho.Locale.addCulture('hu-HU', {
       full: 'yyyy. MMMM d., EEEE',
       month: 'MMMM d.',
       year: 'yyyy. MMMM',
+      dayOfWeek: 'd EEE',
       timestamp: 'H:mm:ss',
       hour: 'H:mm',
       datetime: 'yyyy. MM. dd. H:mm',

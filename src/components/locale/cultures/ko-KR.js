@@ -19,6 +19,7 @@ Soho.Locale.addCulture('ko-KR', {
       full: 'yyyy년 M월 d일 EEEE',
       month: 'M월 d일',
       year: 'yyyy년 M월',
+      dayOfWeek: 'd일 EEE',
       timestamp: 'a h:mm:ss',
       hour: 'a h:mm',
       datetime: 'yyyy-MM-dd a h:mm',

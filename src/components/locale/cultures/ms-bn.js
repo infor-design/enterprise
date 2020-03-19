@@ -19,6 +19,7 @@ Soho.Locale.addCulture('ms-bn', {
       full: 'dd MMMM yyyy',
       month: 'dd MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'd EEE',
       timestamp: 'h:mm:ss a',
       hour: 'h:mm a',
       datetime: 'd/MM/yyyy h:mm',
