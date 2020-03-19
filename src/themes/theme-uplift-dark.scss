@@ -218,9 +218,6 @@ $toolbar-standalone-border-color: $theme-color-palette-slate-50;
 $toolbar-standalone-disabled-color: $theme-color-palette-slate-30;
 $toolbar-separator-color: $theme-color-palette-slate-50;
 
-// Formatter Toolbar
-$formatter-toolbar-separator-color: $theme-color-palette-slate-30;
-
 // Color Palette Background
 $color-border-color: rgba(255, 255, 255, 0.2);
 
@@ -345,15 +342,18 @@ $editor-hover-border-color: $theme-color-palette-white;
 $editor-focus-border-color: $theme-color-brand-primary-base;
 $editor-line-number-color: $theme-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $theme-color-palette-slate-70;
+$editor-toolbar-bg-color: $theme-color-palette-slate-20;
 $editor-toolbar-bottom-border-color: $theme-color-palette-slate-80;
-$editor-middle-border-color: $theme-color-palette-slate-40;
-$editor-btn-color: $theme-color-palette-slate-30;
-$editor-btn-hover-color: $theme-color-palette-white;
+$editor-btn-color: $theme-color-palette-slate-70;
+$editor-btn-hover-color: $theme-color-palette-slate-100;
 $editor-btn-active-color: $theme-color-brand-primary-lighter;
+$editor-btn-disabled-color: $theme-color-palette-graphite-30;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $theme-color-palette-slate-40;
+
+// Formatter Toolbar
+$formatter-toolbar-separator-color: $theme-color-palette-graphite-80;
 
 // Radio Buttons
 $radio-border-hover-color: $radio-color-unchecked-hover-border;
