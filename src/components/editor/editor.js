@@ -92,7 +92,7 @@ const EDITOR_DEFAULTS = {
   showHtmlView: false,
   preview: false,
   paragraphSeparator: 'p',
-  useFlexToolbar: true,
+  useFlexToolbar: false,
   useSourceFormatter: false,
   formatterTabsize: 4,
   fontpickerSettings: {
@@ -506,8 +506,9 @@ Editor.prototype = {
     this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
 
     self.container.on('input.editor keyup.editor', '.editor', debounce((e) => {
+      this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
       this.resetEmptyEditor(e);
-      self.element.trigger('change');
+      this.element.trigger('change');
     }, 300));
 
     this.setupTextareaEvents();

@@ -58,7 +58,7 @@ Trackdirty.prototype = {
       }
       default: {
         if (element.is('textarea')) {
-          return element.val().trim()
+          return element.text().trim()
             .replace(/\s+/g, ' ')
             .replace(/<br( \/)?>/g, '<br>\n')
             .replace(/<\/p> /g, '</p>\n\n')
@@ -231,7 +231,11 @@ Trackdirty.prototype = {
           // so get the elements with the value
           const textArea = field.find('textarea');
           original = textArea.data('original');
-          current = this.valMethod(textArea);
+          if (field.find('.editor-source').is(':visible')) {
+            current = textArea.val();
+          } else {
+            current = textArea.text();
+          }
 
           if (this.isIe || this.isIeEdge) {
             current = input[0].innerHTML;

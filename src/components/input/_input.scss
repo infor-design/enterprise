@@ -359,7 +359,8 @@ span.required::after {
 // Safari requires the `-webkit-text-fill-color` prop, which we
 // don't want to use generally because it conflicts.
 .is-safari {
-  input {
+  input,
+  textarea {
     &[disabled] {
       -webkit-text-fill-color: $input-disabled-color;
     }
