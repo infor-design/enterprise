@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'homepage';
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
+  editing: false, // Private
   easing: 'blockslide', // Private
   gutterSize: 20, // Private
   widgetWidth: 360, // Private
@@ -32,7 +33,6 @@ const HOMEPAGE_DEFAULTS = {
 
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
-
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -69,11 +69,17 @@ Homepage.prototype = {
       return topGutter + ((settings.gutterSize) + (settings.widgetHeight)) * rows;
     }
 
+    if (this.editing === undefined) {
+      this.editing = settings.editing;
+    }
+
     return {
       rows,
       cols,
       containerHeight: getContainerHeight(),
-      matrix: this.rowsAndCols
+      matrix: this.rowsAndCols,
+      blocks: this.blocks,
+      editing: this.editing
     };
   },
 
@@ -85,6 +91,7 @@ Homepage.prototype = {
     this.isTransitionsSupports = this.supportsTransitions();
     this.initHeroWidget();
     this.handleEvents();
+    this.initEdit();
 
     // Initial Sizing
     this.resize(this, false);
@@ -126,6 +133,211 @@ Homepage.prototype = {
   initRowsAndCols() {
     this.rowsAndCols = [];// Keeping all blocks as rows and columns
     this.initColumns();
+  },
+
+  /**
+   * Initialize guide and drag event listeners.
+   * @private
+   * @returns {void}
+   */
+  initEdit() {
+    const homepage = this;
+    const cards = homepage.element.find('.card, .widget');
+    if (homepage.editing) {
+      cards.attr('draggable', true);
+      cards.css('cursor', 'move');
+
+      homepage.guide = $('<div>').addClass('drop-indicator').append(`
+      <div class='edge'></div>
+      <div class='line'></div>
+      <div class='edge'></div>
+      `);
+
+      cards.each((index, element) => {
+        const card = $(element);
+        const removeButton = $('<button>').addClass('card-remove').append(`
+        <span class="audible">Remove Widget</span>
+          <svg icon="close" soho-icon="" class="icon" aria-hidden="true" focusable="false" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close"></use>
+          </svg>
+        `);
+
+        // Don't add remove button if the card has the 'no-remove' class
+        if (!card.hasClass('no-remove')) {
+          // Remove button should be inserted before the header for proper alignment
+          const header = card.children('.widget-header');
+          removeButton.insertBefore(header)
+            .on('click.card-remove', () => {
+              if (typeof this.settings.onBeforeRemoveCard === 'function') {
+                const result = this.settings.onBeforeRemoveCard(card);
+                if (result && result.then && typeof result.then === 'function') { // A promise is returned
+                  result.then(() => {
+                    homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                    card.remove();
+                    homepage.refresh(false);
+                  });
+                } else if (result) { // Boolean is returned instead of a promise
+                  homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                  card.remove();
+                  homepage.refresh(false);
+                }
+              } else {
+                homepage.element.triggerHandler('removecard', [homepage.settings.columns, homepage.state]);
+                card.remove();
+                homepage.refresh(false);
+              }
+            });
+        }
+      });
+
+      cards
+        .on('mouseenter.card', function () {
+          const card = $(this);
+          const eastHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-e')
+            .drag({ axis: 'x' })
+            .on('dragstart.handle', (dragevent) => {
+              dragevent.preventDefault();
+              card.addClass('ui-resize-passive');
+              card.css({ opacity: 0.9, zIndex: 90 });
+              $(window)
+                .on('mousemove.handle', (mouseevent) => {
+                  const width = mouseevent.clientX - card.offset().left;
+                  if (width < homepage.settings.widgetWidth / 2) {
+                    eastHandle.css({ left: homepage.settings.widgetWidth / 2 });
+                  } else {
+                    card.width(width);
+                  }
+                })
+                .on('mouseup.handle', () => {
+                  card.removeClass('ui-resize-passive');
+                  card.css({ zIndex: 'auto' });
+                  $(window)
+                    .off('mousemove.handle')
+                    .off('mouseup.handle');
+
+                  card.removeClass('double-width triple-width quad-width');
+                  const widthUnits = card.width() / homepage.settings.widgetWidth;
+                  if (widthUnits > 3.5) {
+                    card.addClass('quad-width');
+                  } else if (widthUnits > 2.5) {
+                    card.addClass('triple-width');
+                  } else if (widthUnits > 1.5) {
+                    card.addClass('double-width');
+                  }
+
+                  $('.ui-resizable-handle').remove();
+                  card.css({ opacity: 1, width: '' });
+                  homepage.refresh(false);
+                  homepage.element.triggerHandler('resizecard', [homepage.settings.columns, homepage.state]);
+                });
+            });
+          const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
+            .drag({ axis: 'y' })
+            .on('dragstart.handle', (dragevent) => {
+              dragevent.preventDefault();
+              card.addClass('ui-resize-passive');
+              card.css({ opacity: 0.9, zIndex: 90 });
+              $(window)
+                .on('mousemove.handle', (mouseevent) => {
+                  const height = mouseevent.clientY - card.offset().top;
+                  if (height < homepage.settings.widgetHeight) {
+                    southHandle.css({ top: homepage.settings.widgetHeight });
+                  } else {
+                    card.height(height);
+                  }
+                })
+                .on('mouseup.handle', () => {
+                  card.removeClass('ui-resize-passive');
+                  card.css({ zIndex: 'auto' });
+                  $(window)
+                    .off('mousemove.handle')
+                    .off('mouseup.handle');
+
+                  card.removeClass('double-height');
+                  const heightUnits = card.height() / homepage.settings.widgetHeight;
+                  if (heightUnits > 1.5) {
+                    card.addClass('double-height');
+                  }
+
+                  $('.ui-resizable-handle').remove();
+                  card.css({ opacity: 1, height: '' });
+                  homepage.refresh(false);
+                  homepage.element.triggerHandler('resizecard', [homepage.settings.columns, homepage.state]);
+                });
+            });
+          if (card.has('.ui-resizable-handle').length === 0) {
+            card.append(eastHandle, southHandle);
+          }
+          card.css({ border: '1px solid #078cd9' });
+        })
+        .on('mouseleave.card', function () {
+          const card = $(this);
+          if (!card.hasClass('ui-resize-passive')) {
+            $('.ui-resizable-handle').remove();
+          }
+          card.css({ border: '1px solid #bdbdbd' });
+        })
+        .on('dragstart.card', function () {
+          const card = $(this);
+          card.addClass('is-dragging');
+        })
+        .on('dragover.card', function (event) {
+          // For mac chrome/safari to remove animation
+          // https://stackoverflow.com/questions/32206010/disable-animation-for-drag-and-drop-chrome-safari
+          event.preventDefault();
+        })
+        .on('dragenter.card', function (event) {
+          event.preventDefault();
+          const card = $(this);
+          const draggingCard = $('.is-dragging');
+
+          // Ignore intial trigger when current card is dragging over itself
+          if (card.is(draggingCard) && $('.drop-indicator').length === 0) {
+            return;
+          }
+
+          if (draggingCard.index() < card.index()) {
+            homepage.guide.css('right', '-14px');
+            homepage.guide.css('left', '');
+          } else {
+            homepage.guide.css('left', '-14px');
+            homepage.guide.css('right', '');
+          }
+          card.append(homepage.guide);
+          homepage.refresh(false);
+        })
+        .on('dragend.card', function () {
+          const card = $(this);
+          const cardOver = $(cards).has('.drop-indicator');
+          if (card.index() < cardOver.index()) {
+            card.insertAfter(cardOver);
+          } else {
+            card.insertBefore(cardOver);
+          }
+          card.removeClass('is-dragging');
+          homepage.guide.remove();
+          homepage.refresh(false);
+          homepage.element.triggerHandler('reordercard', [homepage.settings.columns, homepage.state]);
+        });
+    } else {
+      cards.attr('draggable', false);
+      cards.css('cursor', 'auto');
+      cards.children('.card-remove').remove();
+      cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
+    }
+  },
+
+  /**
+   * Set edit for rearranging/reordering cards.
+   * @param {boolean} edit mode
+   * @returns {void}
+   */
+  setEdit(edit) {
+    if (edit !== undefined) {
+      this.editing = edit;
+      this.initEdit();
+      this.refresh(false);
+    }
   },
 
   /**
@@ -388,7 +600,7 @@ Homepage.prototype = {
       const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
       const pos = { left, top };
 
-      if (animate) {
+      if (animate && !this.editing) {
         const easing = self.settings.easing;
         const blockslide = [0.09, 0.11, 0.24, 0.91];
 
@@ -406,6 +618,9 @@ Homepage.prototype = {
           block.elem.animate(pos, self.settings.timeout, easing);
         }
       } else {
+        if (self.isTransitionsSupports) {
+          self.applyCubicBezier(block.elem, null);
+        }
         block.elem[0].style.left = `${pos.left}px`;
         block.elem[0].style.top = `${pos.top}px`;
       }
@@ -435,7 +650,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   applyCubicBezier(el, cubicBezier) {
-    const value = `all .3s cubic-bezier(${cubicBezier})`;
+    const value = cubicBezier ? `all .3s cubic-bezier(${cubicBezier})` : 'none';
     el[0].style['-webkit-transition'] = value;
     el[0].style['-moz-transition'] = value;
     el[0].style['-ms-transition'] = value;

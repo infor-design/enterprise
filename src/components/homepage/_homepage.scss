@@ -29,10 +29,95 @@
     }
   }
 
+  .card:hover .card-remove,
+  .widget:hover .card-remove {
+    background: #ec1225;
+  }
+
   > .content {
     left: 50%;
     margin-left: -500px;
     position: absolute;
+  }
+
+  .drop-indicator {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 6px;
+  }
+
+  .drop-indicator .edge {
+    background-color: rgb(37, 120, 169);
+    border-radius: 3px;
+    flex: 0 0 6px;
+    width: 6px;
+  }
+
+  .drop-indicator .line {
+    background-color: rgb(37, 120, 169);
+    flex: 1 0 auto;
+    width: 2px;
+  }
+
+  .ui-resizable-handle {
+    height: 14px;
+    position: absolute;
+    width: 14px;
+  }
+
+  .card-remove {
+    background: #5c5c5c;
+    border-radius: 100%;
+    height: 22px;
+    position: absolute;
+    right: -16px;
+    top: -10px;
+    transition: background-color 0.2s;
+    width: 22px;
+    z-index: 100;
+  }
+
+  .card-remove svg {
+    color: #fff;
+    top: 1.5px;
+    width: 12px;
+  }
+
+  .ui-resizable-handle::before {
+    background: #078cd9;
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 12px;
+    position: absolute;
+    width: 12px;
+  }
+
+  .ui-resizable-s::before {
+    left: 50%;
+  }
+
+  .ui-resizable-e::before {
+    top: 50%;
+  }
+
+  .ui-resizable-e {
+    cursor: ew-resize;
+    height: 100%;
+    right: -8px;
+    top: 0;
+    width: 14px;
+  }
+
+  .ui-resizable-s {
+    bottom: -8px;
+    cursor: ns-resize;
+    height: 14px;
+    width: 100%;
   }
 }
 
@@ -278,7 +363,6 @@
       &::after {
         clear: both;
       }
-
     }
   }
 }
