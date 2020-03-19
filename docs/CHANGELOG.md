@@ -64,6 +64,12 @@
 - `[Tabs-Vertical]` Fixed an issue where the content cannot scroll on mobile view. ([#3542](https://github.com/infor-design/enterprise/issues/3542))
 - `[Tags]` Fixed a regression on Tag Buttons, where they were visually, vertically misaligned with Tag text. ([#3604](https://github.com/infor-design/enterprise/issues/3604))
 
+## v4.26.2
+
+### v4.26.2 Fixes
+
+- `[Textarea]` Fixed missing text in safari on disabled text areas. ([#3638](https://github.com/infor-design/enterprise/issues/3638))
+
 ## v4.26.1
 
 ### v4.26.1 Fixes

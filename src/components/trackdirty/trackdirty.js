@@ -236,6 +236,11 @@ Trackdirty.prototype = {
           } else {
             current = textArea.text();
           }
+          current = current.trim()
+            .replace(/\s+/g, ' ')
+            .replace(/<br( \/)?>/g, '<br>\n')
+            .replace(/<\/p> /g, '</p>\n\n')
+            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
 
           if (this.isIe || this.isIeEdge) {
             current = input[0].innerHTML;
