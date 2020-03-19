@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.26.2
+
+### v4.26.2 Fixes
+
+- `[Textarea]` Fixed missing text in safari on disabled text areas. ([#3638](https://github.com/infor-design/enterprise/issues/3638))
+
 ## v4.26.1
 
 ### v4.26.1 Fixes
