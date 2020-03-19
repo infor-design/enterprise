@@ -25,3 +25,26 @@ describe('Homepage example hero widget tests', () => {
     });
   }
 });
+
+describe('Homepage example editable tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/homepage/example-editable.html');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('body'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      browser.actions().mouseMove(element(by.css('.widget'))).perform();
+
+      expect(await browser.protractorImageComparison.checkScreen('homepage-editable')).toEqual(0);
+    });
+  }
+});

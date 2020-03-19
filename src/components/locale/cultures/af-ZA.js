@@ -19,6 +19,7 @@ Soho.Locale.addCulture('af-ZA', {
       full: 'EEEE dd MMMM yyyy',
       month: 'dd MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'yyyy-MM-dd HH:mm',
@@ -28,7 +29,7 @@ Soho.Locale.addCulture('af-ZA', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['Sondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrydag', 'Saterdag'],
-      abbreviated: ['So', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'sa'],
+      abbreviated: ['So', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Sa'],
       narrow: ['S', 'M', 'D', 'W', 'D', 'V', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide

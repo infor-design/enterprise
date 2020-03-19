@@ -19,6 +19,7 @@ Soho.Locale.addCulture('ru-RU', {
       full: 'EEEE, d MMMM yyyy г.',
       month: 'd MMMM',
       year: 'MMMM yyyy г.',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',

@@ -63,7 +63,7 @@ describe('WeekView API', () => {
   it('Should render a selected day', () => {
     document.querySelector('.hyperlink.today').click();
     const testDate = new Date();
-    const testString = `${testDate.getDate().toString().padStart(2, '0')} ${testDate.toLocaleString('default', { weekday: 'long' })}`;
+    const testString = `${testDate.getDate().toString()}${testDate.toLocaleString('default', { weekday: 'short' })}`;
 
     expect(document.body.querySelector('.week-view-container th .is-today').textContent).toEqual(testString);
   });
@@ -71,8 +71,8 @@ describe('WeekView API', () => {
   it('Should render week start and end day', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll Day');
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 Sunday');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 Saturday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7Sat');
 
     Locale.set('sv-SE');
     Soho.Locale.set('sv-SE'); //eslint-disable-line
@@ -80,8 +80,8 @@ describe('WeekView API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('december 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('TimmeHela dagen');
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 söndag');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 lördag');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1sön');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7lör');
 
     Locale.set('ar-SA');
     Soho.Locale.set('ar-SA'); //eslint-disable-line
@@ -89,19 +89,19 @@ describe('WeekView API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('ساعةطوال اليوم');
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 الأحد');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 السبت');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1الأحد');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7السبت');
   });
 
   it('Should move to next week and back', () => {
     document.body.querySelector('.btn-icon.next').click();
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('07 Saturday');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('13 Friday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('7Sat');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('13Fri');
     document.body.querySelector('.btn-icon.prev').click();
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('01 Sunday');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('07 Saturday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7Sat');
   });
 
   it('Should destroy monthview', () => {
@@ -173,7 +173,7 @@ describe('WeekView API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21 Monday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21Mon');
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(2);
   });
 
@@ -182,7 +182,7 @@ describe('WeekView API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21 Monday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('21Mon');
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(3);
   });
 
@@ -191,8 +191,8 @@ describe('WeekView API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2019');
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('16 Monday');
-    expect(document.body.querySelector('thead tr th:nth-child(15)').textContent.trim()).toEqual('29 Sunday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('16Mon');
+    expect(document.body.querySelector('thead tr th:nth-child(15)').textContent.trim()).toEqual('29Sun');
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(15);
   });
 
@@ -236,8 +236,8 @@ describe('WeekView API', () => {
       firstDayOfWeek: 1
     });
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toContain('Monday');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toContain('Sunday');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toContain('16Mon');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toContain('22Sun');
   });
 
   it('Should be able to hide show all day area', () => {

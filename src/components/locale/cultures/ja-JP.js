@@ -19,6 +19,7 @@ Soho.Locale.addCulture('ja-JP', {
       full: 'yyyy年 M月 d日 EEEE',
       month: 'M月 d日',
       year: 'yyyy年 M月',
+      dayOfWeek: 'd日 EEE',
       timestamp: 'H:mm:ss',
       hour: 'H:mm',
       datetime: 'yyyy/MM/dd H:mm',

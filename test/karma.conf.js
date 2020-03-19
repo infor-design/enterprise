@@ -53,7 +53,8 @@ module.exports = function (config) {
             use: [{
               loader: 'babel-loader',
               options: {
-                presets: ['env']
+                presets: ['@babel/preset-env'],
+                plugins: ['transform-optional-chaining']
               }
             }],
             exclude: /node_modules/

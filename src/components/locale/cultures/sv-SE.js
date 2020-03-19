@@ -19,6 +19,7 @@ Soho.Locale.addCulture('sv-SE', {
       full: 'EEEE d MMMM yyyy',
       month: 'd MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'yyyy-MM-dd HH:mm',

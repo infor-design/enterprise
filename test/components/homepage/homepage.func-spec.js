@@ -52,6 +52,8 @@ describe('Homepage API', () => {
       expect(metadata.containerHeight).toBeDefined();
       expect(metadata.matrix).toBeDefined();
       expect(metadata.rows).toBeDefined();
+      expect(metadata.blocks).toBeDefined();
+      expect(metadata.editing).toBeDefined();
       done();
     }, 0);
   });
@@ -76,6 +78,43 @@ describe('Homepage API', () => {
       expect(metadata.matrix.length).toEqual(4);
       expect(metadata.rows).toEqual(3);
       expect(metadata.containerHeight).toEqual(1190);
+      done();
+    }, 0);
+  });
+
+  it('can be initialized with editing enabled', (done) => {
+    homepageEl = document.createElement('div');
+    homepageEl.id = targetId;
+    homepageEl.classList.add('homepage');
+    document.body.appendChild(homepageEl);
+
+    let metadata;
+    hasEventListeners = true;
+    $(`#${targetId}`).on('resize', (e, offsetHeight, data) => {
+      metadata = data;
+    });
+
+    homepageAPI = new Homepage(homepageEl, { editing: true });
+
+    setTimeout(() => {
+      expect(metadata.editing).toEqual(true);
+      done();
+    }, 0);
+  });
+
+  it('can enable editing mode using setEdit()', (done) => {
+    homepageEl = document.createElement('div');
+    homepageEl.id = targetId;
+    homepageEl.classList.add('homepage');
+    document.body.appendChild(homepageEl);
+
+    homepageAPI = new Homepage(homepageEl, {});
+
+    setTimeout(() => {
+      expect(homepageAPI.state.editing).toEqual(false);
+      homepageAPI.setEdit(true);
+
+      expect(homepageAPI.state.editing).toEqual(true);
       done();
     }, 0);
   });
