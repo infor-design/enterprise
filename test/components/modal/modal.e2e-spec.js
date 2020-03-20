@@ -367,7 +367,7 @@ describe('Modal iframe focus tests', () => {
     await utils.setPage('/components/modal/test-iframe');
 
     // Switch to the iframe
-    await browser.switchTo().frame(element(by.id('maincontent')).getWebElement());
+    await browser.switchTo().frame(await element(by.css('#maincontent')).getWebElement());
 
     const buttonEl = await element(by.id('add-context'));
     await browser.driver
@@ -389,7 +389,7 @@ describe('Modal iframe focus tests', () => {
     // NOTE: directly clicking the element causes "Element click intercepted" errors in Protractor,
     // so we give it arbitrary coordinates instead (which still clicks the overlay).
     // await element(by.className('overlay')).click();
-    await browser.driver.actions().mouseMove({ x: 200, y: 200 }).mouseDown().perform();
+    await browser.driver.actions().mouseMove({ x: 20, y: 150 }).mouseDown().perform();
 
     // Press "Tab" key.  This should NOT cause the "Add Context" button to focus.
     await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
