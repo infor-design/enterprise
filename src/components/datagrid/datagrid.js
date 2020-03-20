@@ -1226,15 +1226,22 @@ Datagrid.prototype = {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        const container = self.getContainer(self.settings.columns[k].id);
+        headerRows[container] += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
         diff = visibleColumnsLen - total;
         const colspanStr = ` colspan="${diff > 0 ? diff : 1}"`;
-        headerRows.center += `<th${colspanStr}></th>`;
+        if (self.hasRightPane) {
+          headerRows.right += `<th${colspanStr}></th>`;
+        } else {
+          headerRows.center += `<th${colspanStr}></th>`;
+        }
       }
+      headerRows.left += '</tr><tr>';
       headerRows.center += '</tr><tr>';
+      headerRows.right += '</tr><tr>';
     } else {
       headerRows.left += '<tr role="row">';
       headerRows.center += '<tr role="row">';
@@ -3247,7 +3254,10 @@ Datagrid.prototype = {
       if (self.hasRightPane && rowHtml.right) {
         tableHtmlRight += rowHtml.right;
       }
-      this.recordCount++;
+
+      if (!s.dataset[i]._isFilteredOut) {
+        this.recordCount++;
+      }
       this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
@@ -4002,7 +4012,7 @@ Datagrid.prototype = {
     }
 
     // Render Tree Children
-    if (rowData.children && !skipChildren) {
+    if (rowData.children && !skipChildren && !rowData._isFilteredOut) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
         const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
@@ -5563,8 +5573,8 @@ Datagrid.prototype = {
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
 
     if (isClientSide || (!totals)) {
-      this.recordCount = self.settings.dataset.length;
-      count = self.settings.dataset.length;
+      count = self.settings.dataset.filter(item => !item._isFilteredOut).length;
+      this.recordCount = count;
     }
 
     if (self.settings.groupable) {
@@ -8053,7 +8063,7 @@ Datagrid.prototype = {
       let cell = self.activeCell.cell;
       const col = self.columnSettings(cell);
       const isGroupRow = rowNode.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
-      const item = self.settings.dataset[self.dataRowIndex(node)];
+      const item = self.settings.dataset[self.dataRowIndex(rowNode)];
       const visibleRows = self.tableBody.find('tr:visible');
       const getVisibleRows = function (index) {
         const visibleRow = visibleRows.filter(`[aria-rowindex="${index + 1}"]`);
