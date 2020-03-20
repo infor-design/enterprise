@@ -644,6 +644,9 @@ MaskInput.prototype = {
    * @returns {this} component instance
    */
   teardown() {
+    if (this.settings.process === 'number') {
+      this.element.classList.remove('is-number-mask');
+    }
     this.element.removeEventListener('focus', this.focusEventHandler);
     delete this.focusEventHandler;
 

@@ -32,8 +32,7 @@ const config = {
       process: commandLineArgs.verbose
     }),
     babel({
-      exclude: 'node_modules/**',
-      plugins: ['external-helpers']
+      exclude: 'node_modules/**'
     }),
     license({
       sourcemap: true,

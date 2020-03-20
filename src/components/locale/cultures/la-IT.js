@@ -19,6 +19,7 @@ Soho.Locale.addCulture('la-IT', {
       full: 'EEEE d MMMM yyyy',
       month: 'd MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'M/d/yyyy HH:mm'

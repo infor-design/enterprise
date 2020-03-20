@@ -452,6 +452,7 @@ WeekView.prototype = {
     this.numberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
     this.dayMap = [];
     this.isDayView = false;
+    this.element.removeClass('is-day-view');
 
     if (this.numberOfDays === 0 || this.numberOfDays === 1) {
       this.element.addClass('is-day-view');
@@ -469,8 +470,11 @@ WeekView.prototype = {
 
     for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) {
       // TODO if this is 'dd EEEE' has wierd overflow
-      const dayOfWeek = Locale.formatDate(day, { pattern: 'dd EEEE', locale: this.locale.name });
-      this.weekHeader += `<th data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}">${dayOfWeek}</div>`;
+      const dayValue = Locale.formatDate(day, { pattern: 'd', locale: this.locale.name });
+      const dayNameValue = Locale.formatDate(day, { pattern: 'EEE', locale: this.locale.name });
+      const dayOfWeekSetting = this.currentCalendar.dateFormat.dayOfWeek;
+      const emphasis = dayOfWeekSetting ? dayOfWeekSetting.split(' ')[0] === 'EEE' : 'd EEE';
+      this.weekHeader += `<th data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}"><span class="week-view-header-day-of-week${emphasis ? '' : ' is-emphasis'}">${emphasis ? dayNameValue : dayValue}</span><span class="week-view-header-day-of-week${emphasis ? ' is-emphasis' : ''}">${emphasis ? dayValue : dayNameValue}</span></div>`;
       if (this.settings.showAllDay) {
         this.weekHeader += '<div class="week-view-all-day-wrapper"></div>';
       }

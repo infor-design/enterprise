@@ -8,6 +8,7 @@
 
   &.is-hover:not(.is-readonly):not(.is-disabled) {
     .editor,
+    .editor-source,
     .toolbar {
       border-color: $editor-hover-border-color;
     }
@@ -49,12 +50,11 @@
   }
 
   .editor-source.hidden + .editor + .error-message {
-    margin-top: -10px;
+    margin-top: -20px;
   }
 
   // Customize the formatter toolbar if it's inside an editor
   .formatter-toolbar {
-    // border-bottom: 1px solid $editor-middle-border-color;
     margin-bottom: 0;
     z-index: 20;
 
@@ -143,7 +143,7 @@
   min-height: 128px;
   outline: none;
   overflow: auto;
-  padding: 15px 10px 10px;
+  padding: 12px;
   width: 100%;
 
   &:empty::before {
@@ -165,7 +165,13 @@
     }
   }
 
-  p {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-bottom: 15px;
   }
 
@@ -381,7 +387,7 @@
     text-align: left;
 
     span:not(.audible) {
-      color: $font-color;
+      color: $editor-btn-color;
       display: inline-block;
 
       &:not(:last-child) {
@@ -402,10 +408,20 @@
       width: 18px;
     }
 
+    &:disabled {
+      .icon {
+        color: $editor-btn-disabled-color;
+      }
+
+      span:not(.audible) {
+        color: $editor-btn-disabled-color;
+      }
+    }
+
     &:focus:not(.hide-focus),
     &.is-active:not(.error),
     &.is-open,
-    &.is-open:hover {
+    &.is-open:hover:not(:disabled) {
       color: $editor-btn-active-color;
 
       span {
@@ -425,7 +441,7 @@
       box-shadow: none;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: transparent;
       border: 1px solid transparent;
       color: $editor-btn-hover-color;
@@ -457,6 +473,8 @@
     }
 
     &[data-action='visual'] {
+      margin-right: 24px;
+
       span {
         @include font-size(16);
 
@@ -581,7 +599,7 @@
 .toolbar.formatter-toolbar {
   .separator {
     height: 18px;
-    margin: 1px 15px 0 3px;
+    margin: 1px 11px 0 3px;
   }
 }
 
@@ -623,7 +641,7 @@
   border-radius: 0 0 2px 2px;
   font-size: $input-size-regular-font-size;
   height: 320px;
-  margin: 0 0 10px;
+  margin: 0 0 20px;
   min-height: 88px;
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;

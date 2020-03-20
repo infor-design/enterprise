@@ -3,8 +3,11 @@
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
 module.exports = {
+  'parser': 'babel-eslint',
+
   'plugins': [
-    'compat'
+    'compat',
+    'babel'
   ],
 
   'env': {
