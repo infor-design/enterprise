@@ -50,6 +50,18 @@
             }
           }
         }
+
+        &.buttonset {
+          @media (max-width: $breakpoint-slim - 25) {
+            width: 100%;
+          }
+        }
+
+        .separator {
+          @media (max-width: $breakpoint-big-phone - 20) {
+            margin: 3px 0 0;
+          }
+        }
       }
     }
   }
@@ -124,9 +136,19 @@
   .close-button {
     display: inline-block;
 
+    @media (max-width: $breakpoint-big-phone - 20) {
+      min-width: 50px;
+    }
+
     .btn {
       margin: 7px 5px 3px 0;
       vertical-align: middle;
+    }
+
+    span {
+      @media (max-width: $breakpoint-big-phone - 20) {
+        display: none;
+      }
     }
   }
 
