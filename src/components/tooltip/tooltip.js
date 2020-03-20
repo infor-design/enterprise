@@ -85,6 +85,20 @@ Tooltip.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the contents of this tooltip/popover currently have focus
+   */
+  get isFocused() {
+    const activeElem = document.activeElement;
+    if (this.activeElement.is($(activeElem))) {
+      return true;
+    }
+    if (this.tooltip && this.tooltip.length && this.tooltip[0].contains(activeElem)) {
+      return true;
+    }
+    return false;
+  },
+
+  /**
    * Initializes the component
    * @private
    * @returns {void}
@@ -148,6 +162,7 @@ Tooltip.prototype = {
     }
 
     this.isRTL = Locale.isRTL();
+    this.element[0].classList.add('has-tooltip');
   },
 
   /**
@@ -206,6 +221,9 @@ Tooltip.prototype = {
       placement: this.settings.placement,
       strategy: 'flip'
     });
+
+    // Attach a reference to this tooltip API to the actual tooltip/popover element
+    $.data(this.tooltip[0], 'tooltip', this);
 
     this.setTargetContainer();
   },
@@ -622,6 +640,8 @@ Tooltip.prototype = {
 
     this.tooltip[0].removeAttribute('style');
     this.tooltip[0].classList.add(this.settings.placement);
+    this.tooltip[0].classList.add('is-open');
+    this.element[0].classList.add('has-open-tooltip');
 
     if (this.settings.isError || this.settings.isErrorColor) {
       this.tooltip[0].classList.add('is-error');
@@ -838,7 +858,9 @@ Tooltip.prototype = {
       return;
     }
 
+    this.element[0].classList.remove('has-open-tooltip');
     this.tooltip[0].classList.remove('is-personalizable');
+    this.tooltip[0].classList.remove('is-open');
     this.tooltip[0].classList.add('is-hidden');
     this.tooltip[0].style.left = '';
     this.tooltip[0].style.top = '';
@@ -921,8 +943,15 @@ Tooltip.prototype = {
       this.hide();
     }
 
-    if (this.tooltip && this.tooltip.data('place')) {
-      this.tooltip.data('place').destroy();
+    if (this.tooltip && this.tooltip.length) {
+      if (this.tooltip.data('place')) {
+        this.tooltip.data('place').destroy();
+      }
+
+      // Remove a link back to this API, if one was generated
+      if (this.tooltip.data('tooltip')) {
+        $.removeData(this.tooltip[0], 'tooltip');
+      }
     }
 
     this.element.off([
@@ -933,6 +962,8 @@ Tooltip.prototype = {
       `updated.${COMPONENT_NAME}`,
       `focus.${COMPONENT_NAME}`,
       `blur.${COMPONENT_NAME}`].join(' '));
+
+    this.element[0].classList.remove('has-tooltip');
 
     this.detachOpenEvents();
 

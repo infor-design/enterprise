@@ -1,0 +1,159 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+			<div class="row">
+				<div class="six columns">
+					<div class="field">
+						<label for="subject">Standard Input</label>
+						<input type="text" id="subject" name="subject" />
+					</div>
+
+		      <div class="field">
+		        <label for="location" class="label">Dropdown</label>
+		        <select id="location" name="location" class="dropdown">
+		          <option value="N">North</option>
+		          <option value="S">South</option>
+		          <option value="E">East</option>
+		          <option value="W">West</option>
+		        </select>
+		      </div>
+
+					<div class="field">
+						<button type="button" id="test" class="btn-menu">
+							<span>Menu Button</span>
+						</button>
+						<ul class="popupmenu is-selectable has-icons">
+							<li><a href="#">Create a form</a></li>
+							<li class="separator"></li>
+							<li><a href="#">Spelling...</a></li>
+							<li><a href="#" disabled aria-disabled="true">Solver...</a></li>
+							<li class="separator"></li>
+							<li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+							<li><a href="#">Notification Rules</a></li>
+							<li><a href="#">Protect Sheet Rules</a></li>
+						</ul>
+					</div>
+
+					<div class="field">
+						<button id="popover-trigger" class="btn-secondary" type="button">
+			        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+			          <use href="#icon-upload"></use>
+			        </svg>
+			        <span>Click To Show Popover</span>
+			      </button>
+					</div>
+
+					<div class="field">
+						<label for="notes-max">Textarea</label>
+						<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+					</div>
+				</div>
+				<div class="six columns">
+					<div class="field">
+			      <label for="searchfield">Search</label>
+			      <input id="searchfield" class="searchfield" placeholder="Type a search term" data-options="{ clearable: true, source: '{{basepath}}api/states?term='  }"/>
+			    </div>
+
+					<div class="field">
+			      <label for="colorpicker">Colorpicker</label>
+			      <input class="colorpicker" id="colorpicker" type="text" />
+			    </div>
+
+					<div class="field">
+						<label for="datepicker" class="label">Datepicker</label>
+						<input id="datepicker" class="datepicker" name="datepicker" type="text"/>
+					</div>
+
+					<div class="field">
+			      <label for="timepicker" class="label">Timepicker</label>
+			      <input id="timepicker" class="timepicker" type="text"/>
+			    </div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Setup popover html -->
+<div id="popover-contents" class="popover-content-area hidden">
+  <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+  <div class="demo-popover">
+    <table role="grid" class="l-pull-left">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Quantity</th>
+          <th scope="col" role="columnheader">Unit Price</th>
+          <th scope="col" role="columnheader">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50</td>
+          <td>$18.00</td>
+          <td><strong>$900.00</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-primary" type="button">Apply</button>
+  </div>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary">View more</button>
+  </div>
+</div>
+
+<script id="test-script">
+	var POPOVER_OPTIONS = {
+		closebutton: true,
+		content: $('#popover-contents'),
+		extraClass: 'alternate',
+		placement: 'right',
+		popover: true,
+		offset: {
+			y: 10
+		},
+		title: 'ABC Engine Company',
+		trigger: 'click'
+	};
+
+	$('#popover-trigger').popover(POPOVER_OPTIONS);
+
+	var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+</script>
