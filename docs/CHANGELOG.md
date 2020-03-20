@@ -31,6 +31,7 @@
 - `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
 - `[Datagrid]` Fixed a bug when combining multiselect and expandable rows. If using the shift key to select multiple rows the selection would include incorrect rows. ([#2302](https://github.com/infor-design/enterprise/issues/2302))
 - `[Datagrid]` Added support for dragging and reordering columns in RTL and some minor style cleanup with dragging to reorder. ([#3552](https://github.com/infor-design/enterprise/issues/3552))
+- `[Datagrid]` Fixed an issue where the overlay was closing after close Modal. ([#735](https://github.com/infor-design/enterprise-ng/issues/735))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
 - `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
 - `[Datepicker]` Fixed an issue where dates would be invalid in ko-KO locale. ([#3470](https://github.com/infor-design/enterprise/issues/3470))
