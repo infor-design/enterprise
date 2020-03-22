@@ -4,8 +4,8 @@
 .toolbar.formatter-toolbar,
 .flex-toolbar.formatter-toolbar {
   .separator {
-    height: 17px;
-    margin: 3px 15px 0 3px;
+    height: 18px;
+    margin: 1px 11px 0 7px;
   }
 
   [class*='btn'] {
@@ -16,19 +16,14 @@
       margin-left: $theme-number-spacing-base;
     }
 
-    &[data-element='foreColor'] .icon,
-    &[data-element='foreColor'] .icon {
-      margin-right: 4px;
-      margin-top: auto;
+    &.btn-editor .icon:not(.icon-dropdown) {
+      height: 13px;
+      margin: -4px 2px 0;
+      width: 13px;
     }
 
-    &[data-element='u'] .icon {
-      height: 17px;
-      margin-top: 1px;
-    }
-
-    &[data-element='h3'],
-    &[data-element='h4'] {
+    &.btn-editor[data-element='h3'],
+    &.btn-editor[data-element='h4'] {
       margin-right: $theme-number-spacing-base;
       min-width: 32px;
 
@@ -38,30 +33,96 @@
       }
     }
 
-    &[data-action='insertunorderedlist'] {
+    &.btn-editor[data-element='foreColor'] .icon,
+    &.btn-editor[data-element='foreColor'] .icon {
+      margin-right: 4px;
+      margin-top: auto;
+    }
+
+    &.btn-editor[data-element='b'] .icon {
+      height: 14px;
+      margin: -4px 0 0 1px;
+      width: 14px;
+    }
+
+    &.btn-editor[data-element='i'] .icon {
+      height: 14px;
+      margin: -4px 0 0 1px;
+      width: 14px;
+    }
+
+    &.btn-editor[data-element='u'] .icon {
+      height: 14px;
+      margin: -2px 0 0 1px;
+      width: 14px;
+    }
+
+    &.btn-editor[data-element='strike'] .icon {
+      height: 14px;
+      margin: -4px 0 0 1px;
+      width: 14px;
+    }
+
+    &.btn-editor[data-element='foreColor'] {
+      .icon {
+        height: 14px;
+        margin: -2px 0 0 1px;
+        width: 14px;
+      }
+
+      .trigger .icon {
+        margin: -6px 0 0 1px;
+      }
+    }
+
+    &.btn-editor[data-element='ul'] {
+      margin-right: 10px;
+
+      .icon {
+        height: 15px;
+        left: 0 !important;
+        margin: -2px 0 0;
+        width: 14px;
+      }
+    }
+
+    &.btn-editor[data-element='a'] {
+      .icon {
+        height: 16px;
+        margin: -4px 1px 0;
+        width: 16px;
+      }
+    }
+
+    &.btn-editor[data-action='insertunorderedlist'] {
       .icon {
         left: 8px;
         position: relative;
       }
     }
 
-    &[data-action='visual'] {
-      .visual-icon {
-        margin-left: 0;
-        margin-right: 0;
-      }
+    &.btn-editor .icon.html-icon {
+      height: 30px;
+      margin: -3px 2px 0;
+      width: 36px;
     }
 
-    .html-icon {
-      margin-left: 3px;
-      margin-right: 2px;
-      width: 45px;
+    &.btn-editor .icon.visual-icon {
+      height: 30px;
+      margin: -3px 2px 0;
+      width: 46px;
     }
   }
 }
 
 .editor-container .icon-dirty {
   top: 61px;
+}
+
+.editor {
+  p {
+    line-height: 2.6rem;
+  }
 }
 
 .is-safari {

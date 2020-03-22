@@ -19,6 +19,7 @@ Soho.Locale.addCulture('en-AU', {
       full: 'EEEE, d MMMM yyyy',
       month: 'd MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'h:mm:ss a',
       hour: 'h:mm a',
       datetime: 'd/MM/yyyy h:mm a',

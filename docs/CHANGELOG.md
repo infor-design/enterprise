@@ -7,6 +7,7 @@
 - `[Button]` Add `toData()` and related API for programmatically handling control of buttons. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
+- `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
 
 ### v4.27.0 Important Changes
 
@@ -39,6 +40,13 @@
 - `[Datepicker]` Fixed an issue where AM/PM could not be set in hi-IN locale. ([#3474](https://github.com/infor-design/enterprise/issues/3474))
 - `[Datepicker]` Fixed an issue where change would fire twice or when the value is still blank. ([#3423](https://github.com/infor-design/enterprise/issues/3423))
 - `[Datepicker]` Fixed an issue where time would be reset to 12:00 AM when setting the time and clicking today. ([#3202](https://github.com/infor-design/enterprise/issues/3202))
+- `[Editor]` Added ui updates to the toolbar in uplift (vibrant mode) and minor style fixes. ([#3577](https://github.com/infor-design/enterprise/issues/3577))
+- `[Editor]` Fixed a width change when toggle source view when the editor is on a modal, this is also based on UI feedback that the switch was confusing, so we now disable the buttons. ([#3594](https://github.com/infor-design/enterprise/issues/3594))
+- `[Editor]` Fixed an issue where bullet and number lists could not be converted to headings and regular text with the font picker. ([#2679](https://github.com/infor-design/enterprise/issues/2679))
+- `[Editor]` Fixed an issue where some settings like bold and italics would not be reset consistently when applying headings and regular text with the font picker. ([#2256](https://github.com/infor-design/enterprise/issues/2256))
+- `[Editor]` Fixed an issue where the dirty events did not fire changing the source view. ([#3598](https://github.com/infor-design/enterprise/issues/3598))
+- `[Editor]` Adding missing bottom spacing under heading elements. ([#3288](https://github.com/infor-design/enterprise/issues/3288))
+- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Datepicker]` Fixed popover height and datepicker layout on mobile view. ([#2569](https://github.com/infor-design/enterprise/issues/3569))
 - `[Dropdown]` Fixed a bug where it was not possible for Dropdowns in certain scrollable Modal regions to close on scroll. ([#2650](https://github.com/infor-design/enterprise/issues/2650))
 - `[Dropdown]` Fixed a bug that dropdowns are in the wrong position if flowing up and other minor cases. ([#2068](https://github.com/infor-design/enterprise/issues/2068))
@@ -57,6 +65,19 @@
 - `[Tabs]` Fixed the position of error icon too close to the border on focus state. ([#3544](https://github.com/infor-design/enterprise/issues/3544))
 - `[Tabs-Vertical]` Fixed an issue where the content cannot scroll on mobile view. ([#3542](https://github.com/infor-design/enterprise/issues/3542))
 - `[Tags]` Fixed a regression on Tag Buttons, where they were visually, vertically misaligned with Tag text. ([#3604](https://github.com/infor-design/enterprise/issues/3604))
+- `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
+
+## v4.26.2
+
+### v4.26.2 Fixes
+
+- `[Textarea]` Fixed missing text in safari on disabled text areas. ([#3638](https://github.com/infor-design/enterprise/issues/3638))
+
+## v4.26.1
+
+### v4.26.1 Fixes
+
+- `[Demo App]` Fixed the embedded layout to show uplift theme. ([#861](https://github.com/infor-design/website/issues/861))
 
 ## v4.26.0
 

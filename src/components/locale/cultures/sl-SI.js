@@ -19,6 +19,7 @@ Soho.Locale.addCulture('sl-SI', {
       full: 'EEEE, dd. MMMM yyyy',
       month: 'd. MMMM',
       year: 'MMMM yyyy',
+      dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',
       datetime: 'd. MM. yyyy HH:mm',
