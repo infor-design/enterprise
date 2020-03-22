@@ -30,8 +30,13 @@ button {
   min-width: 100px;
   overflow: hidden;
   position: relative;
+  text-overflow: ellipsis;
   white-space: nowrap;
   width: auto;
+
+  @media (max-width: $breakpoint-slim) {
+    width: 100%;
+  }
 
   > * {
     vertical-align: middle;
@@ -114,13 +119,6 @@ button {
       position: absolute;
       right: 0;
       top: 0;
-    }
-  }
-
-  &.text-overflow {
-    @media (max-width: $breakpoint-slim) {
-      text-overflow: ellipsis;
-      width: 100%;
     }
   }
 }
