@@ -55,12 +55,6 @@
           @media (max-width: $breakpoint-slim - 25) {
             width: 100%;
           }
-
-          [class*='btn'] {
-            @media (max-width: $breakpoint-slim) {
-              width: auto;
-            }
-          }
         }
 
         .separator {

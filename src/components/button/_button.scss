@@ -34,10 +34,6 @@ button {
   white-space: nowrap;
   width: auto;
 
-  @media (max-width: $breakpoint-slim) {
-    width: 100%;
-  }
-
   > * {
     vertical-align: middle;
   }
