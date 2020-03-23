@@ -3183,7 +3183,7 @@ describe('Datagrid tree filter tests', () => {
     await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys('I dont exist');
     await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 5 Results)');
     expect(await element(by.css('.empty-message')).isDisplayed()).toBeTruthy();
   });
 });

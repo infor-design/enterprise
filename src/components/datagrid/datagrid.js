@@ -5569,14 +5569,15 @@ Datagrid.prototype = {
     const isClientSide = self.settings.paging && !(self.settings.source);
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
 
-    if (!self.settings.showFilterTotal && isClientSide || (!totals)) {
-      count = self.settings.dataset.filter(item => !item._isFilteredOut).length;
-      this.recordCount = count;
-    }
-
-    if (self.settings.showFilterTotal && isClientSide || (!totals)) {
+    if (isClientSide || (!totals)) {
       this.recordCount = self.settings.dataset.length;
       count = self.settings.dataset.length;
+    }
+
+    if (this.settings.treeGrid && isClientSide || (!totals)) {
+      this.filteredCount = self.settings.dataset.filter(item => item._isFilteredOut).length;
+      count = self.settings.dataset.length;
+      this.recordCount = self.settings.dataset.filter(item => !item._isFilteredOut).length;
     }
 
     if (self.settings.groupable) {
