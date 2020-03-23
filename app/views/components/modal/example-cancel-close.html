@@ -27,7 +27,7 @@
 			<div class="field field-checkbox">
 				<input type="checkbox" class="checkbox" name="allow-close" id="allow-close"/>
 				<label for="allow-close" class="checkbox-label">Allow this Modal to close</label>
-			</div>				
+			</div>
 		</div>
 
 	</div>
@@ -55,7 +55,7 @@
     });
 
 		// Only allow the Modal to be closed if the checkbox is checked.
-    $('.modal').on('beforeclose', function () {
+    $('.modal').on('beforeclose.test', function () {
 			if ($('#allow-close').prop('checked')) {
 				return true;
 			}
@@ -64,6 +64,7 @@
 				title: 'Example Only',
 				message: 'This Dialog May not be closed.'
 			});
+			$(this).off('beforeclose.test');
       return false;
     });
   });
