@@ -2028,7 +2028,7 @@ describe('Datagrid Frozen Column Card (auto) tests', () => {
 
 describe('Datagrid Frozen Column Card (fixed) tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-frozen-columns-fixed-row-height?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
