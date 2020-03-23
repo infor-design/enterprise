@@ -1989,7 +1989,7 @@ describe('Datagrid Dirty and New Row Indicator', () => {
   });
 });
 
-fdescribe('Datagrid Frozen Column Card (auto) tests', () => { //eslint-disable-line
+describe('Datagrid Frozen Column Card (auto) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
 
@@ -2026,7 +2026,7 @@ fdescribe('Datagrid Frozen Column Card (auto) tests', () => { //eslint-disable-l
   }
 });
 
-fdescribe('Datagrid Frozen Column Card (fixed) tests', () =>  {//eslint-disable-line
+describe('Datagrid Frozen Column Card (fixed) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-fixed-row-height?layout=nofrills');
 
@@ -3700,8 +3700,8 @@ describe('Datagrid columns width test', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-/* eslint-disable */
-  fit('Should not change columns width after reset layout', async () => {
+
+  it('Should not change columns width after reset layout', async () => {
     const width = 420;
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {

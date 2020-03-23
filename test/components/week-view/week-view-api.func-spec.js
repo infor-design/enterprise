@@ -236,8 +236,8 @@ describe('WeekView API', () => {
       firstDayOfWeek: 1
     });
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toContain('16Mon');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toContain('22Sun');
+    expect(document.body.querySelector('thead tr th:nth-child(2) span:nth-child(2)').textContent.trim()).toContain('Mon');
+    expect(document.body.querySelector('thead tr th:nth-child(8) span:nth-child(2)').textContent.trim()).toContain('Sun');
   });
 
   it('Should be able to hide show all day area', () => {
