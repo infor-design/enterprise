@@ -3760,8 +3760,8 @@ describe('Datagrid columns width test', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-/* eslint-disable */
-  fit('Should not change columns width after reset layout', async () => {
+
+  it('Should not change columns width after reset layout', async () => {
     const width = 420;
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {
