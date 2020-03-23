@@ -1255,6 +1255,9 @@ Modal.prototype = {
 
     // Restore focus
     if (!this.settings.noRefocus) {
+      if (this.isFocused) {
+        document.activeElement.blur();
+      }
       if (!this.oldActive && this.settings.triggerButton) {
         this.oldActive = this.useJqEl(this.settings.triggerButton);
       }
