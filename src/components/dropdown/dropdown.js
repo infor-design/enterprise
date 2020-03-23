@@ -130,6 +130,20 @@ Dropdown.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the pseudo-element, or one of elements inside the Dropdown List has focus.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    if (this.pseudoElem && this.pseudoElem.length && this.pseudoElem.is($(active))) {
+      return true;
+    }
+    if (this.list && this.list.length && this.list[0].contains(active)) {
+      return true;
+    }
+    return false;
+  },
+
+  /**
    * @returns {boolean} whether or not this Dropdown component is a "short" field.
    */
   get isShortField() {

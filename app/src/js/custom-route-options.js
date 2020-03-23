@@ -87,6 +87,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.setOption('iconHtml', html);
   }
 
+  // Modal's `iframe` Example
+  if (url.match(/modal\/test-iframe/)) {
+    customOpts.setOption('layout', 'components/modal/layout-iframe');
+  }
+
   // Placement Logic
   if (url.match(/place\/test-container-is-body/)) {
     customOpts.setOption('layout', 'components/place/layout-body');

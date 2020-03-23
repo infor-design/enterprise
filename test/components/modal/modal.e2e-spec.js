@@ -361,3 +361,43 @@ describe('Modal overlay opacity tests', () => {
     expect(await overlayEl.getCssValue('opacity')).toBe('0.3');
   });
 });
+
+describe('Modal iframe focus tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-iframe');
+
+    // Switch to the iframe
+    await browser.switchTo().frame(await element(by.css('#maincontent')).getWebElement());
+
+    const buttonEl = await element(by.id('add-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('should correctly focus the first focusable element inside the Modal if focus is lost, and the user presses Tab', async () => {
+    // Temporarily sleep while we wait for focus to be set by the Modal.
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Click the overlay to defocus the first element
+    // NOTE: directly clicking the element causes "Element click intercepted" errors in Protractor,
+    // so we give it arbitrary coordinates instead (which still clicks the overlay).
+    // await element(by.className('overlay')).click();
+    await browser.driver.actions().mouseMove({ x: 20, y: 150 }).mouseDown().perform();
+
+    // Press "Tab" key.  This should NOT cause the "Add Context" button to focus.
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+
+    // Detect if the elements are the same by comparing IDs
+    const targetElemId = await element(by.css('#subject')).getAttribute('id');
+    const focusedElemId = await browser.driver.switchTo().activeElement().getAttribute('id');
+
+    expect(focusedElemId).toEqual(targetElemId);
+  });
+});

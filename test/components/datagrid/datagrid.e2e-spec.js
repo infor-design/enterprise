@@ -3747,3 +3747,34 @@ describe('Datagrid hide pager on one page tests', () => {
     expect(await element.all(by.css(selector.rows)).count()).toEqual(5);
   });
 });
+
+describe('Datagrid columns width test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-columns-width');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+/* eslint-disable */
+  fit('Should not change columns width after reset layout', async () => {
+    const width = 420;
+    let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
+    await elem.getSize().then((size) => {
+      expect(size.width).toEqual(width);
+    });
+    await element.all(by.css('#maincontent .btn-actions')).first().click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.is-open'))), config.waitsFor);
+    await element(by.css('li a[data-option="reset-layout"]')).click();
+    await browser.driver.sleep(config.sleep);
+    elem = await element(by.css('#datagrid thead th:nth-child(5)'));
+    await elem.getSize().then((size) => {
+      expect(size.width).toEqual(width);
+    });
+  });
+});
