@@ -59,7 +59,7 @@
     }
   });
   $('.homepage')
-    .on('resizecard', function(event, columns, data){ console.log("resizecard event: ", [columns, data])})
-    .on('reordercard', function(event, columns, data){ console.log("reordercard event: ", [columns, data])})
-    .on('removecard', function(event, columns, data){ console.log("removecard event: ", [columns, data])});
+    .on('resizecard', function(event, card, data){ console.log("resizecard event: ", [card, data])})
+    .on('reordercard', function(event, card, data){ console.log("reordercard event: ", [card, data])})
+    .on('removecard', function(event, card, data){ console.log("removecard event: ", [card, data])});
 </script>
