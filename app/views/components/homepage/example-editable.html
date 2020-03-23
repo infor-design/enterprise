@@ -35,7 +35,7 @@
       homepageApi.setEdit(!editing);
     });
     homepageApi.settings.onBeforeRemoveCard = function (card) {
-      var result = new Promise((resolve, reject) => {
+      var result = new Promise(function(resolve, reject){
         $('body').message({
           title: 'Remove this widget?',
           buttons: [{
@@ -59,7 +59,7 @@
     }
   });
   $('.homepage')
-    .on('resizecard', (event, ...data) => console.log("resizecard event: ", data))
-    .on('reordercard', (event, ...data) => console.log("reordercard event: ", data))
-    .on('removecard', (event, ...data) => console.log("removecard event: ", data));
+    .on('resizecard', function(event, columns, data){ console.log("resizecard event: ", [columns, data])})
+    .on('reordercard', function(event, columns, data){ console.log("reordercard event: ", [columns, data])})
+    .on('removecard', function(event, columns, data){ console.log("removecard event: ", [columns, data])});
 </script>
