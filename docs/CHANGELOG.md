@@ -54,6 +54,7 @@
 - `[Lookup]` Fixed an issue where selected values were clearing when use server side data. ([#588](https://github.com/infor-design/enterprise-ng/issues/588))
 - `[Masthead]` Fixed layout and color issues in uplift theme. ([#3526](https://github.com/infor-design/enterprise/issues/3526))
 - `[Modal]` Fixed an iOS bug where after opening several Modals/Messages, it would occasionally be impossible to scroll a scrollable page area. ([#3389](https://github.com/infor-design/enterprise/issues/3389))
+- `[Modal]` Fixed a bug where when iframe elements are present, focus traps could occur and cause focus on elements outside of the Modal, but within the iframe. ([#2287](https://github.com/infor-design/enterprise/issues/2287))
 - `[Modal]` Fixed dropdown position when the field is required. ([#3482](https://github.com/infor-design/enterprise/issues/3482))
 - `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
 - `[Personalize]` Fixed an issue that colorschanged events do not fire on set to default. ([#751](https://github.com/infor-design/enterprise-ng/issues/751))

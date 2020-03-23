@@ -1074,6 +1074,57 @@ Modal.prototype = {
     return this.visible;
   },
 
+  /**
+   * @returns {boolean} whether or not the Modal itself, or a component inside the Modal, currently has focus.
+   * In some cases, this needs to get access to child components to determine focus state.
+   */
+  get isFocused() {
+    let componentHasFocus = false;
+    const activeElem = document.activeElement;
+    const focusableElems = $.makeArray(this.element.find(':focusable, [contenteditable], iframe'));
+    focusableElems.forEach((elem) => {
+      if (componentHasFocus) {
+        return;
+      }
+
+      // Check the base element
+      const $elem = $(elem);
+      if ($elem.is($(activeElem)) || elem.contains(activeElem)) {
+        componentHasFocus = true;
+      }
+
+      // Dropdown/Multiselect
+      if ($elem.is('div.dropdown, div.multiselect')) {
+        componentHasFocus = $elem.parent().prev('select').data('dropdown').isFocused;
+      }
+
+      // Searchfield
+      if ($elem.is('.searchfield')) {
+        componentHasFocus = $elem.data('searchfield').isFocused;
+      }
+    });
+
+    // Check to see if a Popover/Tooltip has focus, and if that component's parent
+    // element is inside the Modal
+    const tooltipParents = $(activeElem).parents('.tooltip, .popover');
+    if (tooltipParents.length) {
+      tooltipParents.each((i, elem) => {
+        const api = $(elem).data('tooltip');
+        if (api && api.isFocused) {
+          componentHasFocus = true;
+        }
+      });
+    }
+
+    return componentHasFocus;
+  },
+
+  /**
+   * Sets up event listeners that deal with retaining keyboard focus on elements within the current Modal
+   * window when the Modal is open. These events are cleared when the modal is closed.
+   * @private
+   * @returns {void}
+   */
   keepFocus() {
     const self = this;
 
@@ -1133,6 +1184,14 @@ Modal.prototype = {
           }
         }
       });
+
+    // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
+    // or a wrapping iframe element is clicked.  This will reset the focus.
+    $('body').on(`focusin.${self.namespace}`, () => {
+      if (!self.isFocused) {
+        firstTabbable.removeClass('hide-focus').focus();
+      }
+    });
   },
 
   /**
@@ -1167,7 +1226,7 @@ Modal.prototype = {
     if (this.mainContent && this.removeNoScroll) {
       this.mainContent.removeClass('no-scroll');
     }
-    $('body').off(`resize.${this.namespace}`);
+    $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
     this.element.removeClass('is-visible');
