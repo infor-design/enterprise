@@ -4934,7 +4934,7 @@ Datagrid.prototype = {
     const lsCols = localStorage[this.uniqueId('columns')];
 
     if (!cols && lsCols) {
-      this.originalColumns = this.columnsFromString(this.copyThenStringify(this.settings.columns));
+      this.originalColumns = utils.deepCopy(this.settings.columns);
       this.settings.columns = this.columnsFromString(lsCols);
     }
   },
@@ -5081,10 +5081,7 @@ Datagrid.prototype = {
     }
 
     if (this.originalColumns) {
-      const originalColumns = this.columnsFromString(
-        this.copyThenStringify(this.originalColumns),
-        true
-      );
+      const originalColumns = utils.deepCopy(this.originalColumns);
       const columnGroups = this.settings.columnGroups && this.originalColGroups ?
         this.originalColGroups : null;
       this.updateColumns(originalColumns, columnGroups);
