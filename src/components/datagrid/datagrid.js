@@ -67,7 +67,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
- * @param {string}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights.
+ * @param {number|string|function}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights. If `auto` is used the row heights will be calculated, this can be expensive. This can also be a function that returns the row height dynamically.
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
@@ -3322,6 +3322,34 @@ Datagrid.prototype = {
   */
   afterRender() {
     const self = this;
+
+    if (this.settings.fixedRowHeight && this.settings.fixedRowHeight === 'auto'
+      && this.settings.frozenColumns) {
+      self.tableBody.find('tr').each(function (i) {
+        let leftHeight = 0;
+        let centerHeight = 0;
+        let rightHeight = 0;
+        const row = $(this);
+        centerHeight = row.height();
+
+        if (self.tableBodyLeft) {
+          leftHeight = self.tableBodyLeft.find('tr').eq(i).height();
+        }
+        if (self.tableBodyRight) {
+          rightHeight = self.tableBodyLeft.find('tr').eq(i).height();
+        }
+
+        const maxHeight = Math.max(leftHeight, centerHeight, rightHeight);
+        row.css('height', maxHeight);
+        if (self.tableBodyLeft) {
+          leftHeight = self.tableBodyLeft.find('tr').eq(i).css('height', maxHeight);
+        }
+        if (self.tableBodyRight) {
+          rightHeight = self.tableBodyLeft.find('tr').eq(i).css('height', maxHeight);
+        }
+        return true;
+      });
+    }
 
     // Column column postRender functions
     if (this.settings.onPostRenderCell) {
