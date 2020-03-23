@@ -365,18 +365,18 @@
       padding: 0;
 
       &:not(.last-child) {
-        margin-right: 10px;
+        margin-right: 5px;
 
         &.is-error {
           a[role='tab'] {
-            padding: 12px 17px 12px 5px;
+            padding: 12px 20px 12px 5px;
           }
 
           .icon-error {
             margin-left: 0;
-            position: relative;
-            right: 4px;
-            top: 0;
+            margin-right: 11px;
+            margin-top: -4px;
+            position: absolute;
           }
         }
       }
