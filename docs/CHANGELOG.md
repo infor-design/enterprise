@@ -7,6 +7,7 @@
 - `[Button]` Add `toData()` and related API for programmatically handling control of buttons. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
+- `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calcualte the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is prefered. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
 
 ### v4.27.0 Important Changes
@@ -35,6 +36,8 @@
 - `[Datagrid]` Fixed an issue where datagrid tree did not show empty messages. ([#3642](https://github.com/infor-design/enterprise/issues/3642))
 - `[Datagrid]` Fixed an issue where grouped rows did not render when combined with frozen columns. ([#3367](https://github.com/infor-design/enterprise/issues/3367))
 - `[Datagrid]` Fixed an issue where the overlay was closing after close Modal. ([#735](https://github.com/infor-design/enterprise-ng/issues/735))
+- `[Datagrid]` Fixed a misaligned drag and drop column icon on IE 11. ([#3648](https://github.com/infor-design/enterprise/issues/3648))
+- `[Datepicker]` Fixed popover height and datepicker layout on mobile view. ([#2569](https://github.com/infor-design/enterprise/issues/3569))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
 - `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
 - `[Datepicker]` Fixed an issue where dates would be invalid in ko-KO locale. ([#3470](https://github.com/infor-design/enterprise/issues/3470))
@@ -42,6 +45,9 @@
 - `[Datepicker]` Fixed an issue where AM/PM could not be set in hi-IN locale. ([#3474](https://github.com/infor-design/enterprise/issues/3474))
 - `[Datepicker]` Fixed an issue where change would fire twice or when the value is still blank. ([#3423](https://github.com/infor-design/enterprise/issues/3423))
 - `[Datepicker]` Fixed an issue where time would be reset to 12:00 AM when setting the time and clicking today. ([#3202](https://github.com/infor-design/enterprise/issues/3202))
+- `[Dropdown]` Fixed a bug where it was not possible for Dropdowns in certain scrollable Modal regions to close on scroll. ([#2650](https://github.com/infor-design/enterprise/issues/2650))
+- `[Dropdown]` Fixed a bug that dropdowns are in the wrong position if flowing up and other minor cases. ([#2068](https://github.com/infor-design/enterprise/issues/2068))
+- `[Dropdown]` Fixed alignment when using dropdown in compound field. ([#3647](https://github.com/infor-design/enterprise/issues/3647))
 - `[Editor]` Added ui updates to the toolbar in uplift (vibrant mode) and minor style fixes. ([#3577](https://github.com/infor-design/enterprise/issues/3577))
 - `[Editor]` Fixed a width change when toggle source view when the editor is on a modal, this is also based on UI feedback that the switch was confusing, so we now disable the buttons. ([#3594](https://github.com/infor-design/enterprise/issues/3594))
 - `[Editor]` Fixed an issue where bullet and number lists could not be converted to headings and regular text with the font picker. ([#2679](https://github.com/infor-design/enterprise/issues/2679))
@@ -49,9 +55,6 @@
 - `[Editor]` Fixed an issue where the dirty events did not fire changing the source view. ([#3598](https://github.com/infor-design/enterprise/issues/3598))
 - `[Editor]` Adding missing bottom spacing under heading elements. ([#3288](https://github.com/infor-design/enterprise/issues/3288))
 - `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
-- `[Datepicker]` Fixed popover height and datepicker layout on mobile view. ([#2569](https://github.com/infor-design/enterprise/issues/3569))
-- `[Dropdown]` Fixed a bug where it was not possible for Dropdowns in certain scrollable Modal regions to close on scroll. ([#2650](https://github.com/infor-design/enterprise/issues/2650))
-- `[Dropdown]` Fixed a bug that dropdowns are in the wrong position if flowing up and other minor cases. ([#2068](https://github.com/infor-design/enterprise/issues/2068))
 - `[Editor]` Added a font color for rest/none swatch. ([#2035](https://github.com/infor-design/enterprise/issues/2035))
 - `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
@@ -59,7 +62,9 @@
 - `[Masthead]` Fixed layout and color issues in uplift theme. ([#3526](https://github.com/infor-design/enterprise/issues/3526))
 - `[Modal]` Fixed an iOS bug where after opening several Modals/Messages, it would occasionally be impossible to scroll a scrollable page area. ([#3389](https://github.com/infor-design/enterprise/issues/3389))
 - `[Modal]` Fixed a bug where when iframe elements are present, focus traps could occur and cause focus on elements outside of the Modal, but within the iframe. ([#2287](https://github.com/infor-design/enterprise/issues/2287))
+- `[Modal]` Added a check for preventing Tooltips inside a Modal from opening while the Modal is not visible ([#3588](https://github.com/infor-design/enterprise/issues/3588))
 - `[Modal]` Fixed dropdown position when the field is required. ([#3482](https://github.com/infor-design/enterprise/issues/3482))
+- `[Modal]` Fixed a regression where some Close buttons were not properly closing. ([#3615](https://github.com/infor-design/enterprise/issues/3615))
 - `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
 - `[Personalize]` Fixed an issue that colorschanged events do not fire on set to default. ([#751](https://github.com/infor-design/enterprise-ng/issues/751))
 - `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
@@ -69,7 +74,7 @@
 - `[Tabs-Vertical]` Fixed an issue where the content cannot scroll on mobile view. ([#3542](https://github.com/infor-design/enterprise/issues/3542))
 - `[Tags]` Fixed a regression on Tag Buttons, where they were visually, vertically misaligned with Tag text. ([#3604](https://github.com/infor-design/enterprise/issues/3604))
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
-- `[Dropdown]` Fixed alignment when using dropdown in compound field. ([#3647](https://github.com/infor-design/enterprise/issues/3647))
+- `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
 
 ## v4.26.2
 

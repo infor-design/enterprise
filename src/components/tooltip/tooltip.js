@@ -3,6 +3,7 @@ import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { xssUtils } from '../../utils/xss';
 
 // jQuery components
@@ -10,6 +11,9 @@ import '../place/place.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'tooltip';
+
+// Trigger Methods
+const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
 
 /**
  * Tooltip and Popover Control
@@ -43,7 +47,7 @@ const TOOLTIP_DEFAULTS = {
   content: null,
   offset: { top: 10, left: 10 },
   placement: 'top',
-  trigger: 'hover',
+  trigger: TOOLTIP_TRIGGER_METHODS[0],
   title: null,
   beforeShow: null,
   popover: null,
@@ -71,10 +75,23 @@ function Tooltip(element, settings) {
 Tooltip.prototype = {
 
   /**
-   * @returns {boolean} whether or not the tooltip/popover is currently showing
+   * @returns {boolean} whether or not the tooltip/popover element is currently visible
    */
   get visible() {
-    return DOM.hasClass(this.element[0], 'is-hidden') === false;
+    return this.tooltip.length &&
+      this.tooltip[0].classList.contains('hidden') === false &&
+      this.tooltip[0].classList.contains('is-hidden') === false;
+  },
+
+  /**
+   * @returns {boolean} whether or not the tooltip/popover is able to be displayed,
+   * which depends on its trigger element and all of its parent elements being visible.
+   */
+  get canBeShown() {
+    return !this.reopenDelay &&
+      this.element[0].classList.contains('hidden') === false &&
+      this.element[0].classList.contains('is-hidden') === false &&
+      this.element.parents('.hidden, .is-hidden').length < 1;
   },
 
   /**
@@ -236,31 +253,44 @@ Tooltip.prototype = {
   handleEvents() {
     const self = this;
     const delay = 400;
+    const renderLoopDelay = (delay / 30);
     let timer;
 
+    function clearTimer() {
+      if (timer && timer.destroy) {
+        timer.destroy();
+      }
+    }
+
     function showOnTimer() {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        if (self.element.is(':visible') || self.element.is('.dropdown, .multiselect')) {
+      clearTimer();
+      timer = new RenderLoopItem({
+        duration: renderLoopDelay,
+        timeoutCallback() {
           self.show();
         }
-      }, delay);
+      });
+      renderLoop.register(timer);
     }
 
     function hideOnTimer() {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        self.hide();
-      }, delay);
+      clearTimer();
+      timer = new RenderLoopItem({
+        duration: renderLoopDelay,
+        timeoutCallback() {
+          self.hide();
+        }
+      });
+      renderLoop.register(timer);
     }
 
     function showImmediately() {
-      clearTimeout(timer);
+      clearTimer();
       self.show();
     }
 
     function hideImmediately() {
-      clearTimeout(timer);
+      clearTimer();
       self.hide();
     }
 
@@ -291,9 +321,9 @@ Tooltip.prototype = {
 
     function toggleTooltipDisplay() {
       if (!self.visible) {
-        hideImmediately();
-      } else {
         showImmediately();
+      } else {
+        hideImmediately();
       }
     }
 
@@ -590,15 +620,20 @@ Tooltip.prototype = {
    */
   show(newSettings, ajaxReturn) {
     const self = this;
-    this.isInPopup = false;
-
-    if (newSettings) {
-      this.settings = utils.mergeSettings(this.element[0], newSettings, this.settings);
-    }
 
     // Don't open if this is an Actions Button with an open popupmenu
     if (this.popupmenuAPI && this.popupmenuAPI.isOpen) {
       return;
+    }
+
+    // Don't open if this tooltip's trigger element is currently hidden.
+    if (!this.canBeShown) {
+      return;
+    }
+
+    this.isInPopup = false;
+    if (newSettings) {
+      this.settings = utils.mergeSettings(this.element[0], newSettings, this.settings);
     }
 
     if (this.settings.beforeShow && !ajaxReturn) {
@@ -691,7 +726,7 @@ Tooltip.prototype = {
           if (target.closest('.popover').length === 1 &&
               target.closest('.popover').not('.monthview-popup').length &&
               self.element.prev().is('.datepicker')) {
-            self.hide(e);
+            self.hide();
           }
         })
         .on(`keydown.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
@@ -845,7 +880,7 @@ Tooltip.prototype = {
 
   /**
    * Hides the Tooltip/Popover
-   * @param {boolean} [force] Force the tooltip to hide no matter the settings.
+   * @param {boolean} [force=false] Force the tooltip to hide no matter the settings.
    * @returns {void}
    */
   hide(force) {
@@ -941,6 +976,10 @@ Tooltip.prototype = {
     this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
     if (!this.tooltip.hasClass('is-hidden')) {
       this.hide();
+    }
+
+    if (this.reopenDelay) {
+      delete this.reopenDelay;
     }
 
     if (this.tooltip && this.tooltip.length) {

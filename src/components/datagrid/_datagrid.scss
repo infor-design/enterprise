@@ -3932,8 +3932,8 @@ html[dir='rtl'] {
     .is-draggable-target {
       display: none;
       height: $datagrid-header-height;
+      margin-top: 0;
       position: absolute;
-      top: 0;
 
       &.is-draggable-target {
         &.last {
