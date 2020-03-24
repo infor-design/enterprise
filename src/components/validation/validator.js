@@ -422,7 +422,7 @@ Validator.prototype = {
    * @returns {void}
    */
   setIconOnParent(field, type) {
-    const errorIcon = $.createIcon({ classes: [`icon-${type}`], icon: type });
+    const errorIcon = $.createIcon({ classes: [`icon-${type}`], icon: `${type}-alert` });
     const parent = field.closest('.tab-panel, .expandable-pane');
     const flexRow = field.closest('.row.flex-align-bottom');
     let iconTarget = parent.attr('id');

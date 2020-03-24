@@ -67,7 +67,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
- * @param {string}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights.
+ * @param {number|string|function}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights. If `auto` is used the row heights will be calculated, this can be expensive. This can also be a function that returns the row height dynamically.
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
  * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
@@ -1226,15 +1226,22 @@ Datagrid.prototype = {
           total += colspan;
         }
 
-        headerRows.center += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        const container = self.getContainer(self.settings.columns[k].id);
+        headerRows[container] += `<th${hiddenStr}${colspanStr} id="${uniqueId}" class="${groupedHeaderAlignmentClass}"><div class="datagrid-column-wrapper"><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       });
 
       if (total < visibleColumnsLen) {
         diff = visibleColumnsLen - total;
         const colspanStr = ` colspan="${diff > 0 ? diff : 1}"`;
-        headerRows.center += `<th${colspanStr}></th>`;
+        if (self.hasRightPane) {
+          headerRows.right += `<th${colspanStr}></th>`;
+        } else {
+          headerRows.center += `<th${colspanStr}></th>`;
+        }
       }
+      headerRows.left += '</tr><tr>';
       headerRows.center += '</tr><tr>';
+      headerRows.right += '</tr><tr>';
     } else {
       headerRows.left += '<tr role="row">';
       headerRows.center += '<tr role="row">';
@@ -3247,7 +3254,10 @@ Datagrid.prototype = {
       if (self.hasRightPane && rowHtml.right) {
         tableHtmlRight += rowHtml.right;
       }
-      this.recordCount++;
+
+      if (!s.dataset[i]._isFilteredOut) {
+        this.recordCount++;
+      }
       this.visibleRowCount = currentCount + 1;
 
       if (s.dataset[i].rowStatus) {
@@ -3322,6 +3332,34 @@ Datagrid.prototype = {
   */
   afterRender() {
     const self = this;
+
+    if (this.settings.fixedRowHeight && this.settings.fixedRowHeight === 'auto'
+      && this.settings.frozenColumns) {
+      self.tableBody.find('tr').each(function (i) {
+        let leftHeight = 0;
+        let centerHeight = 0;
+        let rightHeight = 0;
+        const row = $(this);
+        centerHeight = row.height();
+
+        if (self.tableBodyLeft) {
+          leftHeight = self.tableBodyLeft.find('tr').eq(i).height();
+        }
+        if (self.tableBodyRight) {
+          rightHeight = self.tableBodyLeft.find('tr').eq(i).height();
+        }
+
+        const maxHeight = Math.max(leftHeight, centerHeight, rightHeight);
+        row.css('height', maxHeight);
+        if (self.tableBodyLeft) {
+          leftHeight = self.tableBodyLeft.find('tr').eq(i).css('height', maxHeight);
+        }
+        if (self.tableBodyRight) {
+          rightHeight = self.tableBodyLeft.find('tr').eq(i).css('height', maxHeight);
+        }
+        return true;
+      });
+    }
 
     // Column column postRender functions
     if (this.settings.onPostRenderCell) {
@@ -4002,7 +4040,7 @@ Datagrid.prototype = {
     }
 
     // Render Tree Children
-    if (rowData.children && !skipChildren) {
+    if (rowData.children && !skipChildren && !rowData._isFilteredOut) {
       for (let i = 0, l = rowData.children.length; i < l; i++) {
         const lineage = actualIndexLineage ? `${actualIndexLineage}.${actualIndex}` : `${actualIndex}`;
         this.recordCount++;
@@ -5562,6 +5600,12 @@ Datagrid.prototype = {
     if (isClientSide || (!totals)) {
       this.recordCount = self.settings.dataset.length;
       count = self.settings.dataset.length;
+    }
+
+    if (this.settings.treeGrid && isClientSide || (!totals)) {
+      this.filteredCount = self.settings.dataset.filter(item => item._isFilteredOut).length;
+      count = self.settings.dataset.length;
+      this.recordCount = self.settings.dataset.filter(item => !item._isFilteredOut).length;
     }
 
     if (self.settings.groupable) {
@@ -8050,7 +8094,7 @@ Datagrid.prototype = {
       let cell = self.activeCell.cell;
       const col = self.columnSettings(cell);
       const isGroupRow = rowNode.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
-      const item = self.settings.dataset[self.dataRowIndex(node)];
+      const item = self.settings.dataset[self.dataRowIndex(rowNode)];
       const visibleRows = self.tableBody.find('tr:visible');
       const getVisibleRows = function (index) {
         const visibleRow = visibleRows.filter(`[aria-rowindex="${index + 1}"]`);

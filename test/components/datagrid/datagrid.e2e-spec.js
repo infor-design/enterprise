@@ -439,6 +439,81 @@ describe('Datagrid filter short row tests', () => {
   }
 });
 
+describe('Datagrid form button tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-form-buttons?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show item when clicked with keyboard', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(4) td:nth-child(6)')).click();
+    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    const toast = element.all(by.css('#toast-container .toast-message')).first();
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(toast), config.waitsFor);
+
+    expect(await toast.getText()).toEqual('Id : 4 was clicked.');
+  });
+
+  it('Should show item when clicked', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(4) td:nth-child(6) button')).click();
+    const toast = element.all(by.css('#toast-container .toast-message')).first();
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(toast), config.waitsFor);
+
+    expect(await toast.getText()).toEqual('Id : 4 was clicked.');
+  });
+});
+
+describe('Datagrid frozen column grouped rows tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:first-child'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render grouped headers with frozen columns', async () => {
+    expect(await element.all(by.css('.datagrid-header-groups')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(6);
+    expect(await element.all(by.css('.datagrid-header.center th')).count()).toEqual(9);
+    expect(await element(by.css('.datagrid-header.center .datagrid-header-groups th:nth-child(2)')).getText()).toEqual('Column Group One');
+    expect(await element(by.css('.datagrid-header.center .datagrid-header-groups th:nth-child(3)')).getText()).toEqual('Column Group Two');
+  });
+});
+
+describe('Datagrid frozen column grouped rows show row tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-short-row');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:first-child'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render grouped headers with frozen columns', async () => {
+    expect(await element.all(by.css('.datagrid-header-groups')).count()).toEqual(2);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-header.center th')).count()).toEqual(13);
+    expect(await element(by.css('.datagrid-header.center .datagrid-header-groups th:nth-child(4)')).getText()).toEqual('Group Header 1');
+    expect(await element(by.css('.datagrid-header.center .datagrid-header-groups th:nth-child(5)')).getText()).toEqual('Group Header 2');
+  });
+});
+
 describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
@@ -1989,9 +2064,46 @@ describe('Datagrid Dirty and New Row Indicator', () => {
   });
 });
 
-describe('Datagrid Frozen Column Card tests', () => {
+describe('Datagrid Frozen Column Card (auto) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render frozen columns', async () => {
+    // Check all containers rendered on the header
+    expect(await element.all(by.css('.datagrid-header th')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(1);
+
+    // Check all containers rendered on the body
+    expect(await element.all(by.css('.datagrid-wrapper tbody tr:first-child td')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-wrapper.left tbody tr:first-child td')).count()).toEqual(1);
+
+    // Check all rows rendered on the body
+    expect(await element.all(by.css('.datagrid-wrapper tbody tr')).count()).toEqual(14);
+    expect(await element.all(by.css('.datagrid-wrapper.left tbody tr')).count()).toEqual(7);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-card-frozen-auto')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Frozen Column Card (fixed) tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -3091,6 +3203,28 @@ describe('Datagrid editable tree tests', () => {
   }
 });
 
+describe('Datagrid tree filter tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-filter?layout=nofrills');
+
+    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should show empty message on filter', async () => {
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(5 Results)');
+    expect(await element(by.css('.empty-message')).isDisplayed()).toBeFalsy();
+
+    await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).click();
+    await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys('I dont exist');
+    await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 5 Results)');
+    expect(await element(by.css('.empty-message')).isDisplayed()).toBeTruthy();
+  });
+});
+
 describe('Datagrid Tree and Frozen Column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-frozen-columns?layout=nofrills');
@@ -3663,8 +3797,8 @@ describe('Datagrid columns width test', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-/* eslint-disable */
-  fit('Should not change columns width after reset layout', async () => {
+
+  it('Should not change columns width after reset layout', async () => {
     const width = 420;
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {

@@ -212,6 +212,22 @@ describe('Validation alert on tab', () => {
   });
 });
 
+describe('Validation alert on tab with add message', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-error-on-tab-with-addmessage');
+  });
+
+  it('Should render icon on tab on add message', async () => {
+    expect(await element(by.css('.tab .icon-error')).isPresent()).toBe(false);
+    await element(by.id('show-error')).click();
+
+    expect(await element(by.css('.tab .icon-error')).isPresent()).toBe(true);
+    await element(by.id('show-error')).click();
+
+    expect(await element(by.css('.tab .icon-error')).isPresent()).toBe(false);
+  });
+});
+
 describe('Validation on date year', () => {
   beforeEach(async () => {
     await utils.setPage('/components/validation/test-invalid-date-events');
