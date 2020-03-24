@@ -191,7 +191,7 @@ Homepage.prototype = {
       });
 
       cards
-        .on('mouseenter.card', () => {
+        .on('mouseenter.card', function () {
           const card = $(this);
           const eastHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-e')
             .drag({ axis: 'x' })
@@ -270,23 +270,23 @@ Homepage.prototype = {
           }
           card.css({ border: '1px solid #078cd9' });
         })
-        .on('mouseleave.card', () => {
+        .on('mouseleave.card', function () {
           const card = $(this);
           if (!card.hasClass('ui-resize-passive')) {
             $('.ui-resizable-handle').remove();
           }
           card.css({ border: '1px solid #bdbdbd' });
         })
-        .on('dragstart.card', () => {
+        .on('dragstart.card', function () {
           const card = $(this);
           card.addClass('is-dragging');
         })
-        .on('dragover.card', (event) => {
+        .on('dragover.card', function (event) {
           // For mac chrome/safari to remove animation
           // https://stackoverflow.com/questions/32206010/disable-animation-for-drag-and-drop-chrome-safari
           event.preventDefault();
         })
-        .on('dragenter.card', (event) => {
+        .on('dragenter.card', function (event) {
           event.preventDefault();
           const card = $(this);
           const draggingCard = $('.is-dragging');
@@ -306,7 +306,7 @@ Homepage.prototype = {
           card.append(homepage.guide);
           homepage.refresh(false);
         })
-        .on('dragend.card', () => {
+        .on('dragend.card', function () {
           const card = $(this);
           const cardOver = $(cards).has('.drop-indicator');
           if (card.index() < cardOver.index()) {
