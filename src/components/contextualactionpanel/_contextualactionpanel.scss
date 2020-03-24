@@ -170,6 +170,12 @@
       padding-top: 0;
     }
 
+    textarea {
+      @media (max-width: $breakpoint-big-phone) {
+        width: 100%;
+      }
+    }
+
   }
 }
 

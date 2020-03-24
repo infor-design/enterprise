@@ -71,16 +71,6 @@ button {
   &.full-width {
     padding: 0 30px;
     width: 100%;
-
-    &.contextual-action-panel-trigger {
-      padding: 0 15px;
-      text-overflow: ellipsis;
-      width: auto;
-
-      @media (max-width: $breakpoint-phone-to-tablet) {
-        width: 100%;
-      }
-    }
   }
 
   span {
@@ -765,6 +755,18 @@ html[lang^='fr-'] {
 
     .icon {
       color: $hyperlink-hover-color;
+    }
+  }
+}
+
+// Special case to target buttons that are inside of the page container only
+.page-container {
+  button {
+    &.btn {
+      @media (max-width: $breakpoint-big-phone) {
+        text-overflow: ellipsis;
+        width: 100%;
+      }
     }
   }
 }
