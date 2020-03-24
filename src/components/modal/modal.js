@@ -117,7 +117,7 @@ Modal.prototype = {
     let api;
     if (this.trigger && this.trigger.length) {
       api = this.trigger.data('contextualactionpanel');
-    } else if (this.mainContent.is('body')) {
+    } else if (this.mainContent && this.mainContent.length && this.mainContent.is('body')) {
       api = this.mainContent.data('contextualactionpanel');
     }
     return api;
