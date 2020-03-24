@@ -7,6 +7,7 @@
 - `[Button]` Add `toData()` and related API for programmatically handling control of buttons. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
+- `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calcualte the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is prefered. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
 
 ### v4.27.0 Important Changes
@@ -35,6 +36,7 @@
 - `[Datagrid]` Fixed an issue where datagrid tree did not show empty messages. ([#3642](https://github.com/infor-design/enterprise/issues/3642))
 - `[Datagrid]` Fixed an issue where grouped rows did not render when combined with frozen columns. ([#3367](https://github.com/infor-design/enterprise/issues/3367))
 - `[Datagrid]` Fixed an issue where the overlay was closing after close Modal. ([#735](https://github.com/infor-design/enterprise-ng/issues/735))
+- `[Datagrid]` Fixed a misaligned drag and drop column icon on IE 11. ([#3648](https://github.com/infor-design/enterprise/issues/3648))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
 - `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
 - `[Datepicker]` Fixed an issue where dates would be invalid in ko-KO locale. ([#3470](https://github.com/infor-design/enterprise/issues/3470))
