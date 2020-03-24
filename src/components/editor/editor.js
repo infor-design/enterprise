@@ -2411,7 +2411,7 @@ Editor.prototype = {
 
     // Set selection color checkmark in picker popup
     // by adding/updating ['data-value'] attribute
-    if (cpApi) {
+    if (cpApi && color !== 'rgb(0, 0, 0)') {
       if (env.browser.name === 'firefox' && action === 'backColor') {
         color = $(window.getSelection().focusNode.parentNode).css('background-color');
       }
