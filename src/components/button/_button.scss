@@ -30,7 +30,6 @@ button {
   min-width: 100px;
   overflow: hidden;
   position: relative;
-  text-overflow: ellipsis;
   white-space: nowrap;
   width: auto;
 
@@ -72,6 +71,16 @@ button {
   &.full-width {
     padding: 0 30px;
     width: 100%;
+
+    &.contextual-action-panel-trigger {
+      padding: 0 15px;
+      text-overflow: ellipsis;
+      width: auto;
+
+      @media (max-width: $breakpoint-phone-to-tablet) {
+        width: 100%;
+      }
+    }
   }
 
   span {
