@@ -115,18 +115,19 @@ Line.prototype = {
    */
   build() {
     const self = this;
+    const s = this.settings;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
-    const isFormatter = !!this.settings.formatterString;
+    const isFormatter = !!s.formatterString;
     const format = function (value) {
-      return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
+      return isFormatter ? d3.format(s.formatterString)(value) : value;
     };
 
-    this.element.addClass(`line-chart${self.settings.isBubble ? ' bubble' : ''}`);
-    this.element.addClass(`line-chart${self.settings.isScatterPlot ? ' scatterplot' : ''}`);
+    this.element.addClass(`line-chart${s.isBubble ? ' bubble' : ''}`);
+    this.element.addClass(`line-chart${s.isScatterPlot ? ' scatterplot' : ''}`);
 
     // Handle Empty Data Set
-    if (self.settings.dataset.length === 0) {
-      self.element.emptymessage(self.settings.emptyMessage);
+    if (s.dataset.length === 0) {
+      self.element.emptymessage(s.emptyMessage);
       return this;
     }
 
@@ -138,24 +139,24 @@ Line.prototype = {
     };
 
     // Set to zero for animation
-    if (self.settings.isBubble) {
+    if (s.isBubble) {
       dots.radius = 0;
       dots.radiusOnHover = 0;
       dots.strokeWidth = 0;
     }
 
-    if (self.settings.isScatterPlot) {
+    if (s.isScatterPlot) {
       dots.radius = 0;
       dots.strokeWidth = 50;
     }
-    $.extend(true, dots, this.settings.dots);
+    $.extend(true, dots, s.dots);
     self.dots = dots;
 
     const isRTL = Locale.isRTL();
 
     let tooltipInterval;
     const tooltipDataCache = [];
-    let tooltipData = self.settings.tooltip;
+    let tooltipData = s.tooltip;
 
     // Config axis labels
     let i;
@@ -164,8 +165,8 @@ Line.prototype = {
     const isAxisLabels = { atLeastOne: false };
     const axisArray = ['left', 'top', 'right', 'bottom'];
 
-    if (self.settings.axisLabels) {
-      $.extend(true, axisLabels, self.settings.axisLabels);
+    if (s.axisLabels) {
+      $.extend(true, axisLabels, s.axisLabels);
     }
 
     if (!$.isEmptyObject(axisLabels)) {
@@ -180,10 +181,34 @@ Line.prototype = {
 
     // Append the SVG in the parent area.
     let longestLabel = '';
-    let longestLabelLength = 0;
-    const dataset = this.settings.dataset;
+    // let longestLabelLength = 0;
+    let xRotateMarginBot = 0;
 
-    const isAxisXRotate = (self.settings.xAxis && self.settings.xAxis.rotate !== undefined); // TODO
+    const dataset = s.dataset;
+
+    const hideDots = (s.hideDots);
+    const parent = this.element.parent();
+    const isCardAction = !!$('.widget-chart-action', parent).length;
+    const isViewSmall = parent.width() < 450;
+
+    const getRotateValue = (v) => {
+      const defaultAngle = '-45';
+      return (typeof v !== 'undefined' && typeof v !== 'function' && v !== null) ?
+        (typeof v === 'boolean' ? (v ? defaultAngle : null) : v) : null;
+    };
+    const xRotate = {
+      large: getRotateValue(s.xAxis?.rotate),
+      small: getRotateValue(s.xAxis?.rotateOnSmallView)
+    };
+    let isAxisXRotate = !!xRotate.large;
+    if (isAxisXRotate) {
+      xRotate.use = xRotate.large;
+    }
+    if (isViewSmall && !!xRotate.small) {
+      isAxisXRotate = true;
+      xRotate.use = xRotate.small;
+    }
+
     const getMaxes = function (d, option) {
       return d3.max(d.data, function (maxData) {
         return option ? maxData.value[option] : maxData.value;
@@ -197,19 +222,16 @@ Line.prototype = {
           longestLabel = d.name;
         }
       });
-      longestLabelLength = longestLabel.length;
+      let angle = Math.abs(xRotate.use);
+      angle = !isNaN(angle) ? angle : 0;
+      xRotateMarginBot = longestLabel.length * (angle > 50 ? 5 : 2);
     }
 
-    const hideDots = (this.settings.hideDots);
-    const parent = this.element.parent();
-    const isCardAction = !!$('.widget-chart-action', parent).length;
-    const isViewSmall = parent.width() < 450;
     const margin = {
       top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
-      right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-      bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) :
-        (isAxisXRotate ? (longestLabelLength * 5) + 35 : 35)),
-      left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
+      right: (isAxisLabels.right ? 65 : 55),
+      bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : xRotateMarginBot + 35),
+      left: (isAxisLabels.right ? 75 : 65)
     };
     const width = parent.width() - margin.left - margin.right;
     let height = parent.height() - margin.top - margin.bottom - 30; // legend
@@ -234,9 +256,9 @@ Line.prototype = {
       $.extend(true, valueFormatterString, dataset[0].valueFormatterString);
     }
 
-    const formatValue = function (s, value) {
-      return !$.isEmptyObject(valueFormatterString) && !!s ?
-        (d3.format(s)(s === '0.0%' ? value / 100 : value)) : value;
+    const formatValue = function (str, value) {
+      return !$.isEmptyObject(valueFormatterString) && !!str ?
+        (d3.format(str)(str === '0.0%' ? value / 100 : value)) : value;
     };
 
     const labels = {
@@ -254,19 +276,19 @@ Line.prototype = {
 
     // Calculate the Domain X and Y Ranges
     let maxes;
-    const x = ((!!self.settings.xAxis && !!self.settings.xAxis.scale) ?
-      (self.settings.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
+    const x = ((!!s.xAxis && !!s.xAxis.scale) ?
+      (s.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
 
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
 
-    if (self.settings.isBubble) {
+    if (s.isBubble) {
       maxes = {
         x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
         y: dataset.map(function (d) { return getMaxes(d, 'y'); }),
         z: dataset.map(function (d) { return getMaxes(d, 'z'); })
       };
-    } else if (self.settings.isScatterPlot) {
+    } else if (s.isScatterPlot) {
       maxes = {
         x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
         y: dataset.map(function (d) { return getMaxes(d, 'y'); })
@@ -282,35 +304,41 @@ Line.prototype = {
       entries = d3.max(dataset.map(function (d) { return d.data.length; })) - 1;
     }
 
-    const xScale = x.domain(!!self.settings.xAxis && !!self.settings.xAxis.domain ?
-      (self.settings.xAxis.domain) :
-      ([0, self.settings.isBubble || self.settings.isScatterPlot ? d3.max(maxes.x) : entries]));
+    const xScale = x.domain(!!s.xAxis && !!s.xAxis.domain ?
+      (s.xAxis.domain) :
+      ([0, s.isBubble || s.isScatterPlot ? d3.max(maxes.x) : entries]));
 
-    const yScale = y.domain([0, d3.max(self.settings.isBubble ||
-      self.settings.isScatterPlot ? maxes.y : maxes)]).nice();
-    const zScale = z.domain([0, d3.max(self.settings.isBubble ? maxes.z : maxes)]).nice();
+    const yScale = y.domain([0, d3.max(s.isBubble ||
+      s.isScatterPlot ? maxes.y : maxes)]).nice();
+    const zScale = z.domain([0, d3.max(s.isBubble ? maxes.z : maxes)]).nice();
     let numTicks = entries;
-    if (self.settings.xAxis && self.settings.xAxis.ticks) {
-      numTicks = self.settings.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : self.settings.xAxis.ticks;
-      if (self.settings.isBubble || self.settings.isScatterPlot && isViewSmall) {
+    if (s.xAxis && s.xAxis.ticks) {
+      numTicks = s.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : s.xAxis.ticks;
+      if (s.isBubble || s.isScatterPlot && isViewSmall) {
         numTicks = Math.round(entries / 2);
+      }
+    }
+
+    if (isViewSmall) {
+      if (s.xAxis?.numTicksOnSmallView) {
+        numTicks = s.xAxis?.numTicksOnSmallView;
       }
     }
 
     const xAxis = d3.axisBottom(xScale)
       .ticks(numTicks)
       .tickPadding(10)
-      .tickSize(self.settings.isBubble || self.settings.isScatterPlot ? -(height + 10) : 0)
+      .tickSize(s.isBubble || s.isScatterPlot ? -(height + 10) : 0)
       .tickFormat(function (d, j) {
-        if (self.settings.xAxis) {
-          if (self.settings.xAxis.formatter) {
-            return self.settings.xAxis.formatter(d, j);
+        if (s.xAxis) {
+          if (s.xAxis.formatter) {
+            return s.xAxis.formatter(d, j);
           }
-          if (self.settings.xAxis.ticks === 'auto') {
+          if (s.xAxis.ticks === 'auto') {
             return names[d];
           }
         }
-        return self.settings.isBubble || self.settings.isScatterPlot ? d : names[j];
+        return s.isBubble || s.isScatterPlot ? d : names[d];
       });
 
     const yAxis = d3.axisLeft(yScale)
@@ -318,17 +346,17 @@ Line.prototype = {
       .tickSize(-(width + 20))
       .tickPadding(isRTL ? -18 : 20);
 
-    if (self.settings.yAxis && self.settings.yAxis.formatter) {
+    if (s.yAxis && s.yAxis.formatter) {
       yAxis.tickFormat(function (d, k) {
-        if (typeof self.settings.yAxis.formatter === 'function') {
-          return self.settings.yAxis.formatter(d, k);
+        if (typeof s.yAxis.formatter === 'function') {
+          return s.yAxis.formatter(d, k);
         }
         return d;
       });
     }
 
-    if (self.settings.yAxis && self.settings.yAxis.ticks) {
-      yAxis.ticks(self.settings.yAxis.ticks.number, self.settings.yAxis.ticks.format);
+    if (s.yAxis && s.yAxis.ticks) {
+      yAxis.ticks(s.yAxis.ticks.number, s.yAxis.ticks.format);
     }
 
     // Append The Axis Labels
@@ -378,7 +406,7 @@ Line.prototype = {
     // Offset the tick inside, uses the fact that the yAxis has 20 added.
     self.svg.selectAll('.tick line').attr('x1', '-10');
 
-    if (self.settings.isBubble || self.settings.isScatterPlot) {
+    if (s.isBubble || s.isScatterPlot) {
       self.svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
       self.svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
       self.svg.select('.y.axis .tick line').style('opacity', 1);
@@ -396,15 +424,15 @@ Line.prototype = {
           return -(this.getBBox().width + 10);
         })
         .attr('dy', '1em')
-        .attr('transform', `rotate(${self.settings.xAxis.rotate})`)
+        .attr('transform', `rotate(${xRotate.use})`)
         .style('text-anchor', 'start');
     }
 
-    if (self.settings.xAxis && self.settings.xAxis.formatText) {
+    if (s.xAxis && s.xAxis.formatText) {
       self.svg.selectAll('.x.axis .tick text').each(function (m) {
         const elem = d3.select(this);
         const text = d3.select(this).text();
-        const markup = self.settings.xAxis.formatText(text, m);
+        const markup = s.xAxis.formatText(text, m);
         DOM.html(elem.node(), markup, '<tspan><text><glyph>');
       });
     }
@@ -412,13 +440,13 @@ Line.prototype = {
     // Create the line generator
     const line = d3.line()
       .x(function (d, n) {
-        if (!!self.settings.xAxis && !!self.settings.xAxis.parser) {
-          return xScale(self.settings.xAxis.parser(d, n));
+        if (!!s.xAxis && !!s.xAxis.parser) {
+          return xScale(s.xAxis.parser(d, n));
         }
-        return xScale(self.settings.isBubble || self.settings.isScatterPlot ? d.value.x : n);
+        return xScale(s.isBubble || s.isScatterPlot ? d.value.x : n);
       })
       .y(function (d) {
-        return yScale(self.settings.isBubble || self.settings.isScatterPlot ? d.value.y : d.value);
+        return yScale(s.isBubble || s.isScatterPlot ? d.value.y : d.value);
       });
 
     // Append the lines
@@ -427,15 +455,15 @@ Line.prototype = {
         .attr('data-group-id', lineIdx)
         .attr('class', 'line-group');
 
-      if (self.settings.isArea) {
+      if (s.isArea) {
         const area = d3.area()
           .x(function (dc, p) {
             return xScale(p);
           })
           .y0(height)
           .y1(function (db) {
-            return yScale(self.settings.isBubble ||
-              self.settings.isScatterPlot ? db.value.y : db.value);
+            return yScale(s.isBubble ||
+              s.isScatterPlot ? db.value.y : db.value);
           });
 
         lineGroups.append('path')
@@ -450,7 +478,7 @@ Line.prototype = {
         .datum(d.data)
         .attr('d', line(d.data))
         .attr('stroke', function () {
-          return self.settings.isBubble || self.settings.isScatterPlot ? '' : charts.chartColor(lineIdx, 'line', d);
+          return s.isBubble || s.isScatterPlot ? '' : charts.chartColor(lineIdx, 'line', d);
         })
         .attr('stroke-width', 2)
         .attr('fill', 'none')
@@ -468,7 +496,7 @@ Line.prototype = {
         .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
         .attr('stroke-dashoffset', totalLength)
         .transition()
-        .duration(self.settings.animate ? 600 : 0)
+        .duration(s.animate ? 600 : 0)
         .ease(d3.easeCubic)
         .attr('stroke-dashoffset', 0);
 
@@ -481,7 +509,7 @@ Line.prototype = {
           let posX = rect.left - (size.width / 2) + 6;
           const posY = rect.top - size.height - 18;
 
-          posX = self.settings.isBubble || self.settings.isScatterPlot ?
+          posX = s.isBubble || s.isScatterPlot ?
             ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
 
           if (content !== '') {
@@ -492,7 +520,7 @@ Line.prototype = {
           }
         };
 
-        if (self.settings.isBubble || self.settings.isScatterPlot) {
+        if (s.isBubble || s.isScatterPlot) {
           content = `<div class="chart-swatch line"><div class="swatch-caption"><span class="indicator-box"></span>
             <b>${mouseEnterData.name}</b></div>`;
 
@@ -547,34 +575,34 @@ Line.prototype = {
           // Set the colors
           const spans = document.querySelectorAll('#svg-tooltip .swatch-caption span');
           for (let k = 0; k < spans.length; k++) {
-            spans[k].style.backgroundColor = charts.chartColor(self.settings.isBubble || self.settings.isScatterPlot ? mouseEnterData.lineIdx : k, 'line', mouseEnterData);
+            spans[k].style.backgroundColor = charts.chartColor(s.isBubble || s.isScatterPlot ? mouseEnterData.lineIdx : k, 'line', mouseEnterData);
           }
         }
 
         // Circle associated with hovered point
         d3.select(this).attr('r', function (df) {
-          return self.settings.isBubble ? (2 + zScale(df.value.z)) : dots.radiusOnHover;
+          return s.isBubble ? (2 + zScale(df.value.z)) : dots.radiusOnHover;
         });
       };
 
       if (!hideDots) {
-        if (!self.settings.isScatterPlot) {
+        if (!s.isScatterPlot) {
           lineGroups.selectAll('circle')
             .data(d.data)
             .enter()
             .append('circle')
             .attr('class', dots.class)
             .attr('cx', function (dd, p) {
-              if (!!self.settings.xAxis && !!self.settings.xAxis.parser) {
-                return xScale(self.settings.xAxis.parser(dd, p));
+              if (!!s.xAxis && !!s.xAxis.parser) {
+                return xScale(s.xAxis.parser(dd, p));
               }
-              return xScale(self.settings.isBubble || self.settings.isScatterPlot ? dd.value.x : p);
+              return xScale(s.isBubble || s.isScatterPlot ? dd.value.x : p);
             })
-            .attr('cy', function (de) { return yScale(self.settings.isBubble || self.settings.isScatterPlot ? 0 : de.value); })
+            .attr('cy', function (de) { return yScale(s.isBubble || s.isScatterPlot ? 0 : de.value); })
             .attr('r', dots.radius)
             .style('stroke-width', dots.strokeWidth)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
-            .style('opacity', (self.settings.isBubble || self.settings.isScatterPlot ? '.7' : '1'))
+            .style('opacity', (s.isBubble || s.isScatterPlot ? '.7' : '1'))
             .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
               handleMouseEnter(this, mouseEnterData);
@@ -583,7 +611,7 @@ Line.prototype = {
               clearInterval(tooltipInterval);
               charts.hideTooltip();
               d3.select(this).attr('r', function (dg) {
-                return self.settings.isBubble ? zScale(dg.value.z) : dots.radius;
+                return s.isBubble ? zScale(dg.value.z) : dots.radius;
               });
             })
             .on(`click.${self.namespace}`, function (dh) {
@@ -594,7 +622,7 @@ Line.prototype = {
             });
         }
 
-        if (self.settings.isScatterPlot) {
+        if (s.isScatterPlot) {
           lineGroups.selectAll('.symbol')
             .data(d.data)
             .enter()
@@ -624,19 +652,19 @@ Line.prototype = {
               charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
             });
         }
-        if (self.settings.isBubble) {
+        if (s.isBubble) {
           // Add animation
           lineGroups.selectAll('circle')
             .attr('cy', function (di) { return yScale(di.value.y); })
-            .transition().duration(self.settings.animate ? 750 : 0)
+            .transition().duration(s.animate ? 750 : 0)
             .ease(d3.easeCubic)
             .attr('r', function (dj) { return zScale(dj.value.z); });
         }
 
-        if (self.settings.isScatterPlot) {
+        if (s.isScatterPlot) {
           // Add animation
           lineGroups.selectAll('.symbol')
-            .transition().duration(self.settings.animate ? 750 : 0)
+            .transition().duration(s.animate ? 750 : 0)
             .ease(d3.easeCubic)
             .style('opacity', 1);
         }
@@ -652,8 +680,8 @@ Line.prototype = {
       return { color: d.color, name: d.name, selectionObj: self.svg.selectAll('.line-group'), selectionInverse: self.svg.selectAll('.line-group'), data: d };
     });
 
-    if (this.settings.showLegend) {
-      charts.addLegend(series, self.settings.isScatterPlot ? 'scatterplot' : 'line', this.settings, this.element);
+    if (s.showLegend) {
+      charts.addLegend(series, s.isScatterPlot ? 'scatterplot' : 'line', s, this.element);
     }
     charts.appendTooltip();
 
@@ -821,17 +849,22 @@ Line.prototype = {
    * @returns {void}
    */
   handleResize() {
-    if (this.width === this.element.width()) {
-      return;
+    const resize = () => {
+      if (this.width === this.element.width()) {
+        return;
+      }
+      this.width = this.element.width();
+      if (!this.element.is(':visible')) {
+        return;
+      }
+      this.updated();
+    };
+    // Waiting to complete the animatin on widget
+    if (this.element.closest('.homepage').length) {
+      setTimeout(() => resize(), 300);
+    } else {
+      resize();
     }
-
-    this.width = this.element.width();
-
-    if (!this.element.is(':visible')) {
-      return;
-    }
-
-    this.updated();
   },
 
   /**
