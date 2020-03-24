@@ -2064,9 +2064,46 @@ describe('Datagrid Dirty and New Row Indicator', () => {
   });
 });
 
-describe('Datagrid Frozen Column Card tests', () => {
+describe('Datagrid Frozen Column Card (auto) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render frozen columns', async () => {
+    // Check all containers rendered on the header
+    expect(await element.all(by.css('.datagrid-header th')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(1);
+
+    // Check all containers rendered on the body
+    expect(await element.all(by.css('.datagrid-wrapper tbody tr:first-child td')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-wrapper.left tbody tr:first-child td')).count()).toEqual(1);
+
+    // Check all rows rendered on the body
+    expect(await element.all(by.css('.datagrid-wrapper tbody tr')).count()).toEqual(14);
+    expect(await element.all(by.css('.datagrid-wrapper.left tbody tr')).count()).toEqual(7);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-card-frozen-auto')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid Frozen Column Card (fixed) tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver

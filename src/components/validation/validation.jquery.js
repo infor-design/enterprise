@@ -134,13 +134,16 @@ $.fn.addMessage = function (settings) {
       id: settings.id || settings.message,
     };
 
+    const field = $(this);
     instance.addMessage(
-      $(this),
+      field,
       rule,
       settings.inline,
       settings.showTooltip,
       settings.isAlert
     );
+
+    instance.setIconOnParent(field, settings.type);
   });
 };
 
