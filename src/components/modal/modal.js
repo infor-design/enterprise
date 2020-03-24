@@ -163,6 +163,20 @@ Modal.prototype = {
   },
 
   /**
+   * @returns {HTMLElement} type of things.
+   */
+  get closeBtn() {
+    let closeBtn;
+    const capAPI = this.capAPI;
+    if (capAPI && capAPI.element instanceof $) {
+      closeBtn = capAPI.closeButton[0];
+    } else {
+      closeBtn = this.element[0].querySelector('.modal-content > button.btn-close');
+    }
+    return closeBtn;
+  },
+
+  /**
    * @private
    */
   init() {
@@ -1271,6 +1285,13 @@ Modal.prototype = {
     // close tooltips
     $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
 
+    const closeBtn = $(this.closeBtn);
+    const closeBtnTooltipAPI = closeBtn.data('tooltip');
+    if (closeBtnTooltipAPI) {
+      closeBtnTooltipAPI.hide();
+      closeBtnTooltipAPI.reopenDelay = true;
+    }
+
     // remove the event that changed this page's skip-link functionality in the open event.
     $('.skip-link').off(`focus.${this.namespace}`);
 
@@ -1280,6 +1301,10 @@ Modal.prototype = {
         self.overlay.remove();
         self.root[0].style.display = 'none';
         self.element.trigger('afterclose');
+
+        if (closeBtnTooltipAPI) {
+          delete closeBtnTooltipAPI.reopenDelay;
+        }
 
         if (self.settings.trigger === 'immediate' || destroy) {
           if (!self.isCAP || (self.isCAP && !self.capAPI)) {

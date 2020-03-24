@@ -139,4 +139,17 @@ describe('Modal API', () => {
     expect(buttonsetEl.classList.contains('is-disabled')).toBeFalsy();
     expect(enabledButtons.length).toEqual(5);
   });
+
+  it('can have a close button', () => {
+    modalAPI = new Modal($('body'), {
+      content: $(modalPanelEl),
+      buttons: standardButtonsDef,
+      showCloseBtn: true
+    });
+    const closeBtn = modalAPI.closeBtn;
+
+    expect(closeBtn).toBeDefined();
+    expect(closeBtn instanceof HTMLElement).toBeTruthy();
+    expect(closeBtn.classList.contains('btn-close')).toBeTruthy();
+  });
 });
