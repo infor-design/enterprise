@@ -153,7 +153,7 @@ Homepage.prototype = {
       <div class='edge'></div>
       `);
 
-      cards.each(function (index, element) {
+      cards.each((index, element) => {
         const card = $(element);
         const removeButton = $('<button>').addClass('card-remove').append(`
         <span class="audible">Remove Widget</span>
@@ -167,11 +167,11 @@ Homepage.prototype = {
           // Remove button should be inserted before the header for proper alignment
           const header = card.children('.widget-header');
           removeButton.insertBefore(header)
-            .on('click.card-remove', function () {
+            .on('click.card-remove', () => {
               if (this.settings && typeof this.settings.onBeforeRemoveCard === 'function') {
                 const result = this.settings.onBeforeRemoveCard(card);
                 if (result && result.then && typeof result.then === 'function') { // A promise is returned
-                  result.then(function () {
+                  result.then(() => {
                     card.remove();
                     homepage.refresh(false);
                     homepage.element.triggerHandler('removecard', [card, homepage.state]);
@@ -191,16 +191,16 @@ Homepage.prototype = {
       });
 
       cards
-        .on('mouseenter.card', function () {
+        .on('mouseenter.card', () => {
           const card = $(this);
           const eastHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-e')
             .drag({ axis: 'x' })
-            .on('dragstart.handle', function (dragevent) {
+            .on('dragstart.handle', (dragevent) => {
               dragevent.preventDefault();
               card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
-                .on('mousemove.handle', function (mouseevent) {
+                .on('mousemove.handle', (mouseevent) => {
                   const width = mouseevent.clientX - card.offset().left;
                   if (width < homepage.settings.widgetWidth / 2) {
                     eastHandle.css({ left: homepage.settings.widgetWidth / 2 });
@@ -208,7 +208,7 @@ Homepage.prototype = {
                     card.width(width);
                   }
                 })
-                .on('mouseup.handle', function () {
+                .on('mouseup.handle', () => {
                   card.removeClass('ui-resize-passive');
                   card.css({ zIndex: 'auto' });
                   $(window)
@@ -233,12 +233,12 @@ Homepage.prototype = {
             });
           const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
             .drag({ axis: 'y' })
-            .on('dragstart.handle', function (dragevent) {
+            .on('dragstart.handle', (dragevent) => {
               dragevent.preventDefault();
               card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
               $(window)
-                .on('mousemove.handle', function (mouseevent) {
+                .on('mousemove.handle', (mouseevent) => {
                   const height = mouseevent.clientY - card.offset().top;
                   if (height < homepage.settings.widgetHeight) {
                     southHandle.css({ top: homepage.settings.widgetHeight });
@@ -246,7 +246,7 @@ Homepage.prototype = {
                     card.height(height);
                   }
                 })
-                .on('mouseup.handle', function () {
+                .on('mouseup.handle', () => {
                   card.removeClass('ui-resize-passive');
                   card.css({ zIndex: 'auto' });
                   $(window)
@@ -270,23 +270,23 @@ Homepage.prototype = {
           }
           card.css({ border: '1px solid #078cd9' });
         })
-        .on('mouseleave.card', function () {
+        .on('mouseleave.card', () => {
           const card = $(this);
           if (!card.hasClass('ui-resize-passive')) {
             $('.ui-resizable-handle').remove();
           }
           card.css({ border: '1px solid #bdbdbd' });
         })
-        .on('dragstart.card', function () {
+        .on('dragstart.card', () => {
           const card = $(this);
           card.addClass('is-dragging');
         })
-        .on('dragover.card', function (event) {
+        .on('dragover.card', (event) => {
           // For mac chrome/safari to remove animation
           // https://stackoverflow.com/questions/32206010/disable-animation-for-drag-and-drop-chrome-safari
           event.preventDefault();
         })
-        .on('dragenter.card', function (event) {
+        .on('dragenter.card', (event) => {
           event.preventDefault();
           const card = $(this);
           const draggingCard = $('.is-dragging');
@@ -306,7 +306,7 @@ Homepage.prototype = {
           card.append(homepage.guide);
           homepage.refresh(false);
         })
-        .on('dragend.card', function () {
+        .on('dragend.card', () => {
           const card = $(this);
           const cardOver = $(cards).has('.drop-indicator');
           if (card.index() < cardOver.index()) {
@@ -732,11 +732,11 @@ Homepage.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    $('body').on('resize.homepage', function () {
+    $('body').on('resize.homepage', () => {
       this.resize(this, this.settings.animate);
     });
 
-    $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
+    $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', () => {
       this.resize(this, this.settings.animate);
     });
   }
