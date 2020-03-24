@@ -1,9 +1,9 @@
 <div id="maincontent" class="homepage page-container scrollable" data-columns="3" role="main">
   <div class="content">
 
-    <div class="widget triple-width">
+    <div class="widget double-width">
       <div class="widget-header">
-        <h2 tabindex="0" class="widget-title">Widget 3x1 (Dom Order 1) - A</h2>
+        <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 1) - A</h2>
       </div>
       <div class="widget-content">
         <div id="line-example-1" class="chart-container"></div>
@@ -19,12 +19,21 @@
       </div>
     </div>
 
-    <div class="widget double-width">
+    <div class="widget">
       <div class="widget-header">
-        <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 3) - C</h2>
+        <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 3) - C</h2>
       </div>
       <div class="widget-content">
         <div id="line-example-3" class="chart-container"></div>
+      </div>
+    </div>
+
+    <div class="widget double-width">
+      <div class="widget-header">
+        <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 4) - D</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example-4" class="chart-container"></div>
       </div>
     </div>
 
@@ -78,22 +87,26 @@
       name: 'Component A'
     }];
 
-    // Setting with copy dataset
-    function getSetting() {
+    // Get setting with copy dataset
+    function getSetting(xAxis) {
       return {
         type: 'line',
         showLegend: false,
         dataset: JSON.parse(JSON.stringify(dataset)),
-        xAxis: {
-          rotateOnSmallView: true,
-          // numTicksOnSmallView: 3
-        }
+        xAxis: xAxis
       };
     }
 
+    // Set setting
+    var setting1 = getSetting({ rotateOnSmallView: true });
+    var setting2 = getSetting({ numTicksOnSmallView: 3 });
+    var setting3 = getSetting({ rotateOnSmallView: true });
+    var setting4 = getSetting({ rotateOnSmallView: true });
+
     // Initialized
-    $('#line-example-1').chart(getSetting());
-    $('#line-example-2').chart(getSetting());
-    $('#line-example-3').chart(getSetting());
+    $('#line-example-1').chart(setting1);
+    $('#line-example-2').chart(setting2);
+    $('#line-example-3').chart(setting3);
+    $('#line-example-4').chart(setting4);
   });
 </script>
