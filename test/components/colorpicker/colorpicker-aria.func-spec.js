@@ -44,6 +44,6 @@ describe('ColorPicker ARIA', () => {
       expect(parent.querySelector('.colorpicker[aria-haspopup="true"]')).toBeTruthy();
       expect(parent.querySelector('.colorpicker[aria-controls="colorpicker-menu"]')).toBeTruthy();
       done();
-    }, 350);
+    }, 450);
   });
 });
