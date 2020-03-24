@@ -18,14 +18,14 @@ exports.config = {
   params: {
     theme
   },
-  allScriptsTimeout: 12000,
+  allScriptsTimeout: 20000,
   logLevel: 'INFO',
   specs: specs,
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   baseUrl: 'http://master-enterprise.demo.design.infor.com/',
   jasmineNodeOpt: {
-    defaultTimeoutInterval: 10000,
+    defaultTimeoutInterval: 30000,
     showColors: true,
     random: false
   },
@@ -44,9 +44,7 @@ exports.config = {
       browser: 'SEVERE'
     },
     name: `${theme} theme ci:bs e2e tests`,
-    project: 'ids-enterprise-e2e-ci',
-    shardTestFiles: false,
-    maxInstances: 3
+    project: 'ids-enterprise-e2e-ci'
   },
   multiCapabilities: [
     {
