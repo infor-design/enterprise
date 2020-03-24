@@ -93,8 +93,11 @@ $.fn.icon = function (settings) {
     const svg = $(this);
     const use = svg.find('use');
 
-    if (use.length === 1) {
+    if (use.length === 1 && use.attr('href')) {
       return use.attr('href').substr(use.attr('href').indexOf('#icon-') + 6);
+    }
+    if (use.length === 1 && use.attr('xlink:href')) {
+      return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-') + 6);
     }
     return svg.attr('data-icon');
   };
