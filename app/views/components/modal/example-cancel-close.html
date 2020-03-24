@@ -57,6 +57,7 @@
 		// Only allow the Modal to be closed if the checkbox is checked.
     $('.modal').on('beforeclose.test', function () {
 			if ($('#allow-close').prop('checked')) {
+				$(this).off('beforeclose.test');
 				return true;
 			}
 
@@ -64,7 +65,6 @@
 				title: 'Example Only',
 				message: 'This Dialog May not be closed.'
 			});
-			$(this).off('beforeclose.test');
       return false;
     });
   });
