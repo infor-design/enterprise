@@ -337,4 +337,18 @@ DOM.getPreviousSibling = function getPreviousSibling(el, selector) {
   return undefined;
 };
 
+/**
+ * Returns a simple CSS selector string that represents an existing page element.
+ * Generally used in reporting (error/console messages).
+ * @param {HTMLElement|SVGElement} el the element to report on
+ * @returns {string} containing a simple CSS selector that represents the element
+ */
+DOM.getSimpleSelector = function getSimpleSelector(el) {
+  const tagName = el.tagName.toLowerCase();
+  const id = el.id ? `#${el.id}` : '';
+  const className = el.className ? `.${el.className.split(' ').join('.')}` : '';
+
+  return `${tagName}${id}${className}`;
+};
+
 export { DOM };
