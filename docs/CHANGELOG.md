@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.28.0
+
+### v4.28.0 Deprecation
+
+### v4.28.0 Features
+
+- `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
+
+### v4.28.0 Fixes
+
+### v4.28.0 Chores & Maintenance
+
 ## v4.27.0
 
 ### v4.27.0 Features
