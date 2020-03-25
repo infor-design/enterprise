@@ -733,6 +733,11 @@ html.is-firefox {
   }
 }
 
+// Push up the dirty indicator
+.modal-body .editor-container .icon-dirty {
+  top: 33px;
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .editor-container {

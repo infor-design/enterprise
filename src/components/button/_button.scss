@@ -66,10 +66,18 @@ button {
   &.half-width {
     padding: 0 30px;
     width: 50%;
+
+    @media (max-width: $breakpoint-slim) {
+      text-overflow: ellipsis;
+    }
   }
 
   &.full-width {
     padding: 0 30px;
+    width: 100%;
+  }
+
+  &.btn-full-width {
     width: 100%;
   }
 
@@ -755,6 +763,18 @@ html[lang^='fr-'] {
 
     .icon {
       color: $hyperlink-hover-color;
+    }
+  }
+}
+
+// Special case to target buttons that are inside of the page container only
+.page-container {
+  button {
+    &.btn {
+      @media (max-width: $breakpoint-big-phone) {
+        text-overflow: ellipsis;
+        width: 100%;
+      }
     }
   }
 }

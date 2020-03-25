@@ -50,6 +50,18 @@
             }
           }
         }
+
+        &.buttonset {
+          @media (max-width: $breakpoint-slim - 25) {
+            width: 100%;
+          }
+        }
+
+        .separator {
+          @media (max-width: $breakpoint-big-phone - 20) {
+            margin: 3px 0 0;
+          }
+        }
       }
     }
   }
@@ -68,6 +80,7 @@
       font-size: $theme-size-font-lg;
       height: inherit;
       margin-left: 15px;
+      margin-top: 1px;
     }
 
     .separator {
@@ -124,9 +137,19 @@
   .close-button {
     display: inline-block;
 
+    @media (max-width: $breakpoint-big-phone - 20) {
+      min-width: 50px;
+    }
+
     .btn {
       margin: 7px 5px 3px 0;
       vertical-align: middle;
+    }
+
+    span {
+      @media (max-width: $breakpoint-big-phone - 20) {
+        display: none;
+      }
     }
   }
 
@@ -146,6 +169,12 @@
 
     .full-width {
       padding-top: 0;
+    }
+
+    textarea {
+      @media (max-width: $breakpoint-big-phone) {
+        width: 100%;
+      }
     }
 
   }
@@ -172,8 +201,13 @@ html[dir='rtl'] {
       .flex-toolbar {
         .toolbar-section {
           &.title {
+            font-size: $theme-size-font-lg;
             padding-left: 0;
             padding-right: 15px;
+
+            h2 {
+              font-size: $theme-size-font-lg;
+            }
           }
         }
       }

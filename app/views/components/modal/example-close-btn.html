@@ -35,7 +35,8 @@ var modals = {
       'title': 'Add Context',
       'id': 'my-id',
       'content': $('#modal-add-context'),
-      'showCloseBtn': true
+      'showCloseBtn': true,
+			'triggerButton': $('#add-context')
     },
   },
 
@@ -55,7 +56,7 @@ var modals = {
         },
         validate: false,
         isDefault: true
-      }]
+      }],
     }, opt);
 
     $('body').modal(opt);

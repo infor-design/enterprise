@@ -259,25 +259,6 @@ body.modal-engaged {
   }
 }
 
-// iOS has lots of issues regarding scrolling of elements that are
-// technically "behind" the modal.  This CSS, as well as some JS in the Modal component,
-// seek to stop scrolling behind the in-focus modal element.
-.ios {
-  body.modal-engaged {
-    -webkit-overflow-scrolling: auto;
-
-    .page-container.scrollable,
-    .page-container.scrollable-x,
-    .page-container.scrollable-y {
-      pointer-events: none;
-    }
-
-    .modal-body-wrapper {
-      -webkit-overflow-scrolling: touch;
-    }
-  }
-}
-
 .modal-header {
   padding: 20px;
 }
@@ -513,12 +494,35 @@ html.ie {
   }
 }
 
-// iOS specific adjustments
-html.ios {
-  .modal-engaged {
+// iOS has lots of issues regarding scrolling of elements that are
+// technically "behind" the modal.  This CSS, as well as some JS in the Modal component,
+// seek to stop scrolling behind the in-focus modal element.
+.ios {
+  body.modal-engaged {
+    -webkit-overflow-scrolling: auto;
+
     [aria-hidden='true'],
     [aria-hidden='true'] * {
       overflow: hidden;
+    }
+
+    .page-container.scrollable,
+    .page-container.scrollable-x,
+    .page-container.scrollable-y {
+      pointer-events: none;
+    }
+
+    .modal-body-wrapper {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  // Fix a sizing bug on textareas in portrait-oriented iOS devices
+  .modal {
+    .field {
+      textarea {
+        max-width: 100%;
+      }
     }
   }
 }

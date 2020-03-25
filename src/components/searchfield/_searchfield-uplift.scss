@@ -43,6 +43,12 @@
       top: 12px;
     }
   }
+
+  &:not(.is-open) {
+    .icon:not(.close) {
+      top: 8px;
+    }
+  }
 }
 
 // Firefox needs some help
