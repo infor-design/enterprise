@@ -181,7 +181,7 @@ describe('Editor dirty tracking tests', () => {
     }
   });
 
-  fit('Should reset dirty tracker', async () => { //eslint-disable-line
+  it('Should reset dirty tracker', async () => {
     await element(by.id('editor1')).sendKeys('T');
 
     await browser.driver.wait(protractor.ExpectedConditions
@@ -209,7 +209,7 @@ describe('Editor dirty tracking tests', () => {
   });
 });
 
-fdescribe('Editor reset dirty tracking tests', () => { //eslint-disable-line
+describe('Editor reset dirty tracking tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/test-dirty-tracking-reset.html?layout=nofrills');
   });
@@ -231,7 +231,7 @@ fdescribe('Editor reset dirty tracking tests', () => { //eslint-disable-line
     expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 
-  fit('Should reset dirty tracker on edit', async () => { //eslint-disable-line
+  it('Should reset dirty tracker on edit', async () => {
     await element(by.id('editor1')).sendKeys('T');
 
     await browser.driver.wait(protractor.ExpectedConditions

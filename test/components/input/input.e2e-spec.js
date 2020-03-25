@@ -46,7 +46,7 @@ describe('Input example-index tests', () => {
   }
 });
 
-fdescribe('Input Test Reset', () => { //eslint-disable-line
+describe('Input Test Reset', () => {
   beforeEach(async () => {
     await utils.setPage('/components/input/test-dirty-reset?layout=nofrills');
     await browser.driver

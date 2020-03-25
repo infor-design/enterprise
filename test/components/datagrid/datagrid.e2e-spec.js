@@ -67,7 +67,7 @@ describe('Datagrid Colspan Tests', () => {
   }
 });
 
-fdescribe('Datagrid Colspan Frozen Column Tests', () => { //eslint-disable-line
+describe('Datagrid Colspan Frozen Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?layout=nofrills');
 
