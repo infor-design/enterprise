@@ -89,8 +89,8 @@ Tooltip.prototype = {
    */
   get canBeShown() {
     return !this.reopenDelay &&
-      this.element[0].classList.contains('hidden') === false &&
-      this.element[0].classList.contains('is-hidden') === false &&
+      !DOM.hasClass(this.element[0], 'hidden') &&
+      !DOM.hasClass(this.element[0], 'is-hidden') &&
       this.element.parents('.hidden, .is-hidden').length < 1;
   },
 
@@ -179,7 +179,7 @@ Tooltip.prototype = {
     }
 
     this.isRTL = Locale.isRTL();
-    this.element[0].classList.add('has-tooltip');
+    DOM.addClass(this.element[0], 'has-tooltip');
   },
 
   /**
@@ -676,7 +676,7 @@ Tooltip.prototype = {
     this.tooltip[0].removeAttribute('style');
     this.tooltip[0].classList.add(this.settings.placement);
     this.tooltip[0].classList.add('is-open');
-    this.element[0].classList.add('has-open-tooltip');
+    DOM.addClass(this.element[0], 'has-open-tooltip');
 
     if (this.settings.isError || this.settings.isErrorColor) {
       this.tooltip[0].classList.add('is-error');
@@ -893,7 +893,7 @@ Tooltip.prototype = {
       return;
     }
 
-    this.element[0].classList.remove('has-open-tooltip');
+    DOM.removeClass(this.element[0], 'has-open-tooltip');
     this.tooltip[0].classList.remove('is-personalizable');
     this.tooltip[0].classList.remove('is-open');
     this.tooltip[0].classList.add('is-hidden');
@@ -1002,7 +1002,7 @@ Tooltip.prototype = {
       `focus.${COMPONENT_NAME}`,
       `blur.${COMPONENT_NAME}`].join(' '));
 
-    this.element[0].classList.remove('has-tooltip');
+    DOM.removeClass(this.element[0], 'has-tooltip');
 
     this.detachOpenEvents();
 
