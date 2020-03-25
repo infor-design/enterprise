@@ -688,12 +688,18 @@
 
 //monthview legend
 .monthview-legend {
+  display: inline-block;
   margin: 0 auto;
   max-width: 300px;
   padding: 10px 5px 0;
 
+  @media (min-width: $breakpoint-wide-tablet) {
+    display: none;
+  }
+
   .monthview-legend-item {
     display: inline-block;
+    margin-bottom: 10px;
   }
 
   .monthview-legend-text {
@@ -706,6 +712,7 @@
   }
 
   .monthview-legend-swatch {
+    border-radius: 50px;
     display: inline-block;
     height: 12px;
     width: 12px;

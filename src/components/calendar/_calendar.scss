@@ -47,6 +47,10 @@
     .monthview-header {
       height: 46px;
     }
+
+    .monthview-legend {
+      padding: 25px 5px 15px;
+    }
   }
 
   .calendar-weekview {
@@ -180,6 +184,12 @@
       position: relative;
       right: 0;
       top: -12px;
+    }
+  }
+
+  .calendar-event-details-mobile {
+    @media (min-width: $breakpoint-wide-tablet) {
+      display: none;
     }
   }
 }
@@ -328,9 +338,77 @@
 // Responsive Styles
 @include respond-to(phabletdown) {
   .calendar {
-    .calendar-events,
+    flex-wrap: wrap;
+
+    .calendar-events {
+      display: none;
+    }
+
     .calendar-event-details {
       display: none;
+    }
+
+    .calendar-event-details-mobile {
+      display: inline-block;
+      width: 100%;
+
+      .listview-heading {
+        display: inline-block;
+        width: 80%;
+      }
+
+      .listview-micro {
+        display: inline-block;
+        float: right;
+        margin-top: 2px;
+        text-align: right;
+        width: 20%;
+      }
+
+      .status-swatch {
+        border-radius: 50px;
+        display: inline-block;
+        height: 12px;
+        margin-right: 5px;
+        width: 12px;
+
+        + p {
+          display: inline-block;
+          vertical-align: top;
+        }
+
+        &.ruby {
+          background-color: $theme-color-palette-ruby-60;
+        }
+
+        &.amber {
+          background-color: $theme-color-palette-amber-60;
+        }
+
+        &.emerald {
+          background-color: $theme-color-palette-emerald-60;
+        }
+
+        &.azure {
+          background-color: $theme-color-palette-azure-60;
+        }
+
+        &.turquoise {
+          background-color: $theme-color-palette-turquoise-60;
+        }
+
+        &.amethyst {
+          background-color: $theme-color-palette-amethyst-60;
+        }
+
+        &.slate {
+          background-color: $theme-color-palette-slate-60;
+        }
+
+        &.graphite {
+          background-color: $theme-color-palette-graphite-60;
+        }
+      }
     }
 
     .calendar-monthview {

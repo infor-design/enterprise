@@ -243,6 +243,10 @@ MonthView.prototype = {
       </div>
     </div>`);
 
+    if (this.table && this.settings.legend) {
+      this.settings.showLegend = true;
+    }
+
     if (this.settings.hideDays) {
       this.table = '';
     }
