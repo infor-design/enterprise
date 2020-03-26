@@ -16,7 +16,7 @@ const openPersonalizationDialog = async () => {
   await browser.driver.sleep(config.sleep);
 };
 
-fdescribe('Datagrid Alternate Row Tests', () => {
+describe('Datagrid Alternate Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-alternate-row-shading?layout=nofrills');
 
@@ -35,7 +35,7 @@ fdescribe('Datagrid Alternate Row Tests', () => {
   });
 });
 
-fdescribe('Datagrid Colspan Tests', () => {
+describe('Datagrid Colspan Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
 
@@ -67,7 +67,7 @@ fdescribe('Datagrid Colspan Tests', () => {
   }
 });
 
-fdescribe('Datagrid Colspan Frozen Column Tests', () => {
+describe('Datagrid Colspan Frozen Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?layout=nofrills');
 
@@ -102,7 +102,7 @@ fdescribe('Datagrid Colspan Frozen Column Tests', () => {
   }
 });
 
-fdescribe('Datagrid Comments Tests', () => {
+describe('Datagrid Comments Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
 
@@ -125,7 +125,7 @@ fdescribe('Datagrid Comments Tests', () => {
   }
 });
 
-fdescribe('Datagrid Custom Filter Option Tests', () => {
+describe('Datagrid Custom Filter Option Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-custom-filter-conditions?layout=nofrills');
 
@@ -152,7 +152,7 @@ fdescribe('Datagrid Custom Filter Option Tests', () => {
   });
 });
 
-fdescribe('Datagrid Disable Rows Tests', () => {
+describe('Datagrid Disable Rows Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-disabled-rows?layout=nofrills');
 
@@ -183,7 +183,7 @@ fdescribe('Datagrid Disable Rows Tests', () => {
   }
 });
 
-fdescribe('Datagrid Editable Tests', () => {
+describe('Datagrid Editable Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-editable?layout=nofrills');
 
@@ -237,7 +237,7 @@ fdescribe('Datagrid Editable Tests', () => {
   });
 });
 
-fdescribe('Datagrid Empty Message Tests', () => {
+describe('Datagrid Empty Message Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-empty-message?layout=nofrills');
 
@@ -264,7 +264,7 @@ fdescribe('Datagrid Empty Message Tests', () => {
   }
 });
 
-fdescribe('Datagrid Expandable Cells Tests', () => {
+describe('Datagrid Expandable Cells Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-expandable-cells?layout=nofrills');
 
@@ -289,7 +289,7 @@ fdescribe('Datagrid Expandable Cells Tests', () => {
   });
 });
 
-fdescribe('Datagrid Expandable Row Tests', () => {
+describe('Datagrid Expandable Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-expandable-row?layout=nofrills');
 
@@ -321,7 +321,7 @@ fdescribe('Datagrid Expandable Row Tests', () => {
   });
 });
 
-fdescribe('Datagrid filter tests', () => {
+describe('Datagrid filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?layout=nofrills');
 
@@ -371,7 +371,7 @@ fdescribe('Datagrid filter tests', () => {
   }
 });
 
-fdescribe('Datagrid filter RTL tests', () => {
+describe('Datagrid filter RTL tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&layout=nofrills');
 
@@ -397,7 +397,7 @@ fdescribe('Datagrid filter RTL tests', () => {
   }
 });
 
-fdescribe('Datagrid filter alternate row tests', () => { //eslint-disable-line
+describe('Datagrid filter alternate row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
 
@@ -428,7 +428,7 @@ fdescribe('Datagrid filter alternate row tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datagrid filter medium row tests', () => {
+describe('Datagrid filter medium row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-medium-rowheight?layout=nofrills');
 
@@ -451,7 +451,7 @@ fdescribe('Datagrid filter medium row tests', () => {
   }
 });
 
-fdescribe('Datagrid filter short row tests', () => {
+describe('Datagrid filter short row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-short-rowheight?layout=nofrills');
 
@@ -474,7 +474,7 @@ fdescribe('Datagrid filter short row tests', () => {
   }
 });
 
-fdescribe('Datagrid form button tests', () => {
+describe('Datagrid form button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-form-buttons?layout=nofrills');
 
@@ -505,7 +505,7 @@ fdescribe('Datagrid form button tests', () => {
   });
 });
 
-fdescribe('Datagrid frozen column grouped rows tests', () => {
+describe('Datagrid frozen column grouped rows tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers');
 
@@ -527,7 +527,7 @@ fdescribe('Datagrid frozen column grouped rows tests', () => {
   });
 });
 
-fdescribe('Datagrid frozen column grouped rows show row tests', () => {
+describe('Datagrid frozen column grouped rows show row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-short-row');
 
@@ -549,7 +549,7 @@ fdescribe('Datagrid frozen column grouped rows show row tests', () => {
   });
 });
 
-fdescribe('Datagrid frozen column tests', () => {
+describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
 
@@ -596,7 +596,7 @@ fdescribe('Datagrid frozen column tests', () => {
   });
 });
 
-fdescribe('Datagrid grouping and editing tests', () => {
+describe('Datagrid grouping and editing tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-editable?layout=nofrills');
 
@@ -678,7 +678,7 @@ fdescribe('Datagrid grouping and editing tests', () => {
   }
 });
 
-fdescribe('Datagrid grouping headers and filter tests', () => {
+describe('Datagrid grouping headers and filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
 
@@ -712,7 +712,7 @@ fdescribe('Datagrid grouping headers and filter tests', () => {
   }
 });
 
-fdescribe('Datagrid grouping with paging tests', () => {
+describe('Datagrid grouping with paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-paging');
 
@@ -791,7 +791,7 @@ fdescribe('Datagrid grouping with paging tests', () => {
   });
 });
 
-fdescribe('Datagrid grouping totals tests', () => {
+describe('Datagrid grouping totals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-totals?layout=nofrills');
 
@@ -819,7 +819,7 @@ fdescribe('Datagrid grouping totals tests', () => {
   }
 });
 
-fdescribe('Datagrid index tests', () => {
+describe('Datagrid index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
@@ -877,7 +877,7 @@ fdescribe('Datagrid index tests', () => {
   }
 });
 
-fdescribe('Datagrid keyword search tests', () => {
+describe('Datagrid keyword search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-keyword-search?layout=nofrills');
 
@@ -909,7 +909,7 @@ fdescribe('Datagrid keyword search tests', () => {
   });
 });
 
-fdescribe('Datagrid List Styles Tests', () => {
+describe('Datagrid List Styles Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-list?layout=nofrills');
 
@@ -932,7 +932,7 @@ fdescribe('Datagrid List Styles Tests', () => {
   }
 });
 
-fdescribe('Datagrid mixed selection tests', () => {
+describe('Datagrid mixed selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-mixed-selection?layout=nofrills');
 
@@ -972,7 +972,7 @@ fdescribe('Datagrid mixed selection tests', () => {
   }
 });
 
-fdescribe('Datagrid multiselect tests', () => {
+describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?layout=nofrills');
 
@@ -1067,7 +1067,7 @@ fdescribe('Datagrid multiselect tests', () => {
   }
 });
 
-fdescribe('Datagrid paging tests', () => {
+describe('Datagrid paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
@@ -1185,7 +1185,7 @@ fdescribe('Datagrid paging tests', () => {
   }
 });
 
-fdescribe('Datagrid paging client side tests', () => {
+describe('Datagrid paging client side tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-client-side');
 
@@ -1302,7 +1302,7 @@ fdescribe('Datagrid paging client side tests', () => {
   });
 });
 
-fdescribe('Datagrid Row Indeterminate Activation tests', () => {
+describe('Datagrid Row Indeterminate Activation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging-indeterminate');
 
@@ -1334,7 +1334,7 @@ fdescribe('Datagrid Row Indeterminate Activation tests', () => {
   });
 });
 
-fdescribe('Datagrid Row Row Reorder', () => {
+describe('Datagrid Row Row Reorder', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
 
@@ -1366,7 +1366,7 @@ fdescribe('Datagrid Row Row Reorder', () => {
   }
 });
 
-fdescribe('Datagrid Date default values', () => {
+describe('Datagrid Date default values', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');
 
@@ -1386,7 +1386,7 @@ fdescribe('Datagrid Date default values', () => {
   });
 });
 
-fdescribe('Datagrid Align Header Text Tests', () => {
+describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
 
@@ -1409,7 +1409,7 @@ fdescribe('Datagrid Align Header Text Tests', () => {
   }
 });
 
-fdescribe('Datagrid Align Header Text Toggle Tests', () => {
+describe('Datagrid Align Header Text Toggle Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text-toggle?layout=nofrills');
 
@@ -1448,7 +1448,7 @@ fdescribe('Datagrid Align Header Text Toggle Tests', () => {
   }
 });
 
-fdescribe('Datagrid page size selector tests', () => {
+describe('Datagrid page size selector tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-page-size-selector');
 
@@ -1472,7 +1472,7 @@ fdescribe('Datagrid page size selector tests', () => {
   });
 });
 
-fdescribe('Datagrid test post renderer tests', () => {
+describe('Datagrid test post renderer tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-post-renderer-tree?layout=nofrills');
 
@@ -1495,7 +1495,7 @@ fdescribe('Datagrid test post renderer tests', () => {
   }
 });
 
-fdescribe('Datagrid single select tests', () => {
+describe('Datagrid single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-singleselect');
 
@@ -1551,7 +1551,7 @@ fdescribe('Datagrid single select tests', () => {
   });
 });
 
-fdescribe('Datagrid summary row tests', () => {
+describe('Datagrid summary row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-summary-row');
 
@@ -1570,7 +1570,7 @@ fdescribe('Datagrid summary row tests', () => {
   });
 });
 
-fdescribe('Datagrid Client Side Filter and Sort Tests', () => {
+describe('Datagrid Client Side Filter and Sort Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-disable-client-filter-and-sort');
 
@@ -1622,7 +1622,7 @@ fdescribe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-fdescribe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
 
@@ -1645,7 +1645,7 @@ fdescribe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Datagrid checkbox disabled editor tests', () => {
+describe('Datagrid checkbox disabled editor tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
 
@@ -1668,7 +1668,7 @@ fdescribe('Datagrid checkbox disabled editor tests', () => {
   }
 });
 
-fdescribe('Datagrid Lookup Editor', () => {
+describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup-mask');
 
@@ -1693,7 +1693,7 @@ fdescribe('Datagrid Lookup Editor', () => {
   });
 });
 
-fdescribe('Datagrid Time Editor Test', () => {
+describe('Datagrid Time Editor Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-time?layout=nofrills');
 
@@ -1751,7 +1751,7 @@ fdescribe('Datagrid Time Editor Test', () => {
   }
 });
 
-fdescribe('Datagrid editor dropdown source tests', () => {
+describe('Datagrid editor dropdown source tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editor-dropdown-source');
 
@@ -1809,7 +1809,7 @@ fdescribe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-fdescribe('Datagrid onKeyDown Tests', () => {
+describe('Datagrid onKeyDown Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-onkeydown?layout=nofrills');
 
@@ -1836,7 +1836,7 @@ fdescribe('Datagrid onKeyDown Tests', () => {
   });
 });
 
-fdescribe('Datagrid Header Alignment with Ellipsis', () => {
+describe('Datagrid Header Alignment with Ellipsis', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
 
@@ -1859,7 +1859,7 @@ fdescribe('Datagrid Header Alignment with Ellipsis', () => {
   }
 });
 
-fdescribe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
+describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-sort-indicator?layout=nofrills');
 
@@ -1882,7 +1882,7 @@ fdescribe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   }
 });
 
-fdescribe('Datagrid Expandable Row with multiselect', () => {
+describe('Datagrid Expandable Row with multiselect', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-expandable-row-multiselect');
 
@@ -1923,7 +1923,7 @@ fdescribe('Datagrid Expandable Row with multiselect', () => {
   });
 });
 
-fdescribe('Datagrid Empty Card Scrolling', () => {
+describe('Datagrid Empty Card Scrolling', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-card?layout=nofrills');
 
@@ -1946,7 +1946,7 @@ fdescribe('Datagrid Empty Card Scrolling', () => {
   }
 });
 
-fdescribe('Datagrid Empty Message Tests After Load', () => {
+describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load?layout=nofrills');
 
@@ -1976,7 +1976,7 @@ fdescribe('Datagrid Empty Message Tests After Load', () => {
   }
 });
 
-fdescribe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
+describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');
 
@@ -2006,7 +2006,7 @@ fdescribe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   }
 });
 
-fdescribe('Datagrid Header Overlapping Sorting Indicator', () => {
+describe('Datagrid Header Overlapping Sorting Indicator', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-overlapping-sort-indicator?layout=nofrills');
 
@@ -2029,7 +2029,7 @@ fdescribe('Datagrid Header Overlapping Sorting Indicator', () => {
   }
 });
 
-fdescribe('Datagrid Dirty and New Row Indicator', () => {
+describe('Datagrid Dirty and New Row Indicator', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-overlaps-row-cell-indicators?layout=nofrills');
 
@@ -2099,7 +2099,7 @@ fdescribe('Datagrid Dirty and New Row Indicator', () => {
   });
 });
 
-fdescribe('Datagrid Frozen Column Card (auto) tests', () => {
+describe('Datagrid Frozen Column Card (auto) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
 
@@ -2136,7 +2136,7 @@ fdescribe('Datagrid Frozen Column Card (auto) tests', () => {
   }
 });
 
-fdescribe('Datagrid Frozen Column Card (fixed) tests', () => {
+describe('Datagrid Frozen Column Card (fixed) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?layout=nofrills');
 
@@ -2173,7 +2173,7 @@ fdescribe('Datagrid Frozen Column Card (fixed) tests', () => {
   }
 });
 
-fdescribe('Datagrid contextmenu tests', () => {
+describe('Datagrid contextmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu');
 
@@ -2216,7 +2216,7 @@ fdescribe('Datagrid contextmenu tests', () => {
   }
 });
 
-fdescribe('Datagrid Custom Tooltip tests', () => {
+describe('Datagrid Custom Tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-custom-tooltip-dynamic?layout=nofrills');
 
@@ -2240,7 +2240,7 @@ fdescribe('Datagrid Custom Tooltip tests', () => {
   });
 });
 
-fdescribe('Datagrid custom number format tests', () => {
+describe('Datagrid custom number format tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-custom-number-formats?layout=nofrills');
 
@@ -2281,7 +2281,7 @@ fdescribe('Datagrid custom number format tests', () => {
   });
 });
 
-fdescribe('Datagrid custom date format tests', () => {
+describe('Datagrid custom date format tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-custom-date-formats?layout=nofrills');
 
@@ -2306,7 +2306,7 @@ fdescribe('Datagrid custom date format tests', () => {
   });
 });
 
-fdescribe('Datagrid filter load data and update columns tests', () => {
+describe('Datagrid filter load data and update columns tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-load-data-update-columns?layout=nofrills');
 
@@ -2334,7 +2334,7 @@ fdescribe('Datagrid filter load data and update columns tests', () => {
   });
 });
 
-fdescribe('Datagrid filter single select tests', () => {
+describe('Datagrid filter single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-singleselect');
 
@@ -2368,7 +2368,7 @@ fdescribe('Datagrid filter single select tests', () => {
   });
 });
 
-fdescribe('Datagrid filter lookup custom click function tests', () => {
+describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function?layout=nofrills');
 
@@ -2421,7 +2421,7 @@ fdescribe('Datagrid filter lookup custom click function tests', () => {
   });
 });
 
-fdescribe('Datagrid filter masks', () => {
+describe('Datagrid filter masks', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-mask');
 
@@ -2445,7 +2445,7 @@ fdescribe('Datagrid filter masks', () => {
   });
 });
 
-fdescribe('Datagrid grouping multiselect tests', () => {
+describe('Datagrid grouping multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-grouping-multiselect');
 
@@ -2484,7 +2484,7 @@ fdescribe('Datagrid grouping multiselect tests', () => {
   });
 });
 
-fdescribe('Datagrid hide selection checkbox tests', () => {
+describe('Datagrid hide selection checkbox tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-selection-checkbox');
 
@@ -2502,7 +2502,7 @@ fdescribe('Datagrid hide selection checkbox tests', () => {
   });
 });
 
-fdescribe('Datagrid icon buttons tests', () => {
+describe('Datagrid icon buttons tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-icon-buttons');
 
@@ -2525,7 +2525,7 @@ fdescribe('Datagrid icon buttons tests', () => {
   }
 });
 
-fdescribe('Datagrid loaddata selected rows tests', () => {
+describe('Datagrid loaddata selected rows tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-loaddata-selected-rows');
 
@@ -2559,7 +2559,7 @@ fdescribe('Datagrid loaddata selected rows tests', () => {
   });
 });
 
-fdescribe('Datagrid with long cell text', () => {
+describe('Datagrid with long cell text', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-long-text?layout=nofrills');
 
@@ -2582,7 +2582,7 @@ fdescribe('Datagrid with long cell text', () => {
   }
 });
 
-fdescribe('Datagrid disableRowDeactivation setting tests', () => {
+describe('Datagrid disableRowDeactivation setting tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-mixed-selection-disable-row-dectivation');
 
@@ -2606,7 +2606,7 @@ fdescribe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-fdescribe('Datagrid on modal with no default size', () => {
+describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
     await element(by.id('add-context')).click();
@@ -2631,7 +2631,7 @@ fdescribe('Datagrid on modal with no default size', () => {
   }
 });
 
-fdescribe('Datagrid multiselect with no selection checkbox', () => {
+describe('Datagrid multiselect with no selection checkbox', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-multiselect-no-checkboxes');
 
@@ -2653,7 +2653,7 @@ fdescribe('Datagrid multiselect with no selection checkbox', () => {
   });
 });
 
-fdescribe('Datagrid disable last page', () => {
+describe('Datagrid disable last page', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-disable-lastpage');
 
@@ -2671,7 +2671,7 @@ fdescribe('Datagrid disable last page', () => {
   });
 });
 
-fdescribe('Datagrid paging force disabled', () => {
+describe('Datagrid paging force disabled', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-force-disabled');
 
@@ -2698,7 +2698,7 @@ fdescribe('Datagrid paging force disabled', () => {
   });
 });
 
-fdescribe('Datagrid paging multiselect across pages', () => {
+describe('Datagrid paging multiselect across pages', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
 
@@ -2732,7 +2732,7 @@ fdescribe('Datagrid paging multiselect across pages', () => {
   });
 });
 
-fdescribe('Datagrid paging multiselect tests', () => {
+describe('Datagrid paging multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-multiselect');
 
@@ -2765,7 +2765,7 @@ fdescribe('Datagrid paging multiselect tests', () => {
   });
 });
 
-fdescribe('Datagrid paging clientside multiselect tests', () => {
+describe('Datagrid paging clientside multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple');
 
@@ -2798,7 +2798,7 @@ fdescribe('Datagrid paging clientside multiselect tests', () => {
   });
 });
 
-fdescribe('Datagrid paging clientside single select tests', () => {
+describe('Datagrid paging clientside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-single');
 
@@ -2829,7 +2829,7 @@ fdescribe('Datagrid paging clientside single select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate multiple select tests', () => {
+describe('Datagrid paging indeterminate multiple select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-multiple');
 
@@ -2862,7 +2862,7 @@ fdescribe('Datagrid paging indeterminate multiple select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate single select tests', () => {
+describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
@@ -2906,7 +2906,7 @@ fdescribe('Datagrid paging indeterminate single select tests', () => {
   }
 });
 
-fdescribe('Datagrid paging serverside multi select tests', () => {
+describe('Datagrid paging serverside multi select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-multiple');
 
@@ -2939,7 +2939,7 @@ fdescribe('Datagrid paging serverside multi select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging serverside multi select tests 2nd page', () => {
+describe('Datagrid paging serverside multi select tests 2nd page', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
 
@@ -2975,7 +2975,7 @@ fdescribe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
-fdescribe('Datagrid Paging with Summary Row test', () => {
+describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-with-summary-row');
 
@@ -2993,7 +2993,7 @@ fdescribe('Datagrid Paging with Summary Row test', () => {
   });
 });
 
-fdescribe('Datagrid paging serverside single select tests', () => {
+describe('Datagrid paging serverside single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-serverside-single');
 
@@ -3026,7 +3026,7 @@ fdescribe('Datagrid paging serverside single select tests', () => {
   });
 });
 
-fdescribe('Datagrid save user settings', () => {
+describe('Datagrid save user settings', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-save-settings');
 
@@ -3071,7 +3071,7 @@ fdescribe('Datagrid save user settings', () => {
   }
 });
 
-fdescribe('Datagrid select and focus row', () => {
+describe('Datagrid select and focus row', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-and-focus-row');
 
@@ -3092,7 +3092,7 @@ fdescribe('Datagrid select and focus row', () => {
   });
 });
 
-fdescribe('Datagrid select and filter tests', () => {
+describe('Datagrid select and filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-select-filter-issue');
 
@@ -3127,7 +3127,7 @@ fdescribe('Datagrid select and filter tests', () => {
   });
 });
 
-fdescribe('Datagrid select event tests', () => {
+describe('Datagrid select event tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-selected-event');
 
@@ -3150,7 +3150,7 @@ fdescribe('Datagrid select event tests', () => {
   });
 });
 
-fdescribe('Datagrid Targeted Achievement', () => {
+describe('Datagrid Targeted Achievement', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-targeted-achievement?layout=nofrills');
 
@@ -3173,7 +3173,7 @@ fdescribe('Datagrid Targeted Achievement', () => {
   }
 });
 
-fdescribe('Datagrid timezone tests', () => {
+describe('Datagrid timezone tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-timezone-formats?layout=nofrills&locale=nl-NL');
 
@@ -3207,7 +3207,7 @@ fdescribe('Datagrid timezone tests', () => {
   }
 });
 
-fdescribe('Datagrid editable tree tests', () => {
+describe('Datagrid editable tree tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-editable?layout=nofrills');
 
@@ -3238,7 +3238,7 @@ fdescribe('Datagrid editable tree tests', () => {
   }
 });
 
-fdescribe('Datagrid tree filter tests', () => {
+describe('Datagrid tree filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-filter?layout=nofrills');
 
@@ -3260,7 +3260,7 @@ fdescribe('Datagrid tree filter tests', () => {
   });
 });
 
-fdescribe('Datagrid Tree and Frozen Column tests', () => {
+describe('Datagrid Tree and Frozen Column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-frozen-columns?layout=nofrills');
 
@@ -3329,7 +3329,7 @@ fdescribe('Datagrid Tree and Frozen Column tests', () => {
   }
 });
 
-fdescribe('Datagrid tree with grouped header tests', () => {
+describe('Datagrid tree with grouped header tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-grouped-headers?layout=nofrills');
 
@@ -3352,7 +3352,7 @@ fdescribe('Datagrid tree with grouped header tests', () => {
   }
 });
 
-fdescribe('Datagrid select tree tests', () => {
+describe('Datagrid select tree tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-multiselect');
 
@@ -3379,7 +3379,7 @@ fdescribe('Datagrid select tree tests', () => {
   });
 });
 
-fdescribe('Datagrid Tree Paging Tests', () => {
+describe('Datagrid Tree Paging Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-paging-serverside?layout=nofrills');
 
@@ -3415,7 +3415,7 @@ fdescribe('Datagrid Tree Paging Tests', () => {
   });
 });
 
-fdescribe('Datagrid tree do not select children tests', () => {
+describe('Datagrid tree do not select children tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-dont-select-children');
 
@@ -3439,7 +3439,7 @@ fdescribe('Datagrid tree do not select children tests', () => {
   });
 });
 
-fdescribe('Datagrid tree do not select siblings tests', () => {
+describe('Datagrid tree do not select siblings tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-siblings');
 
@@ -3467,7 +3467,7 @@ fdescribe('Datagrid tree do not select siblings tests', () => {
   });
 });
 
-fdescribe('Datagrid tree single select tests', () => {
+describe('Datagrid tree single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-single');
 
@@ -3499,7 +3499,7 @@ fdescribe('Datagrid tree single select tests', () => {
   });
 });
 
-fdescribe('Datagrid tooltip tests', () => {
+describe('Datagrid tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-tooltips');
 
@@ -3540,7 +3540,7 @@ fdescribe('Datagrid tooltip tests', () => {
   });
 });
 
-fdescribe('Datagrid Row Activation tests', () => {
+describe('Datagrid Row Activation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-row-activated');
 
@@ -3565,7 +3565,7 @@ fdescribe('Datagrid Row Activation tests', () => {
   });
 });
 
-fdescribe('Datagrid update column tests', () => {
+describe('Datagrid update column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-update-columns');
 
@@ -3583,7 +3583,7 @@ fdescribe('Datagrid update column tests', () => {
   });
 });
 
-fdescribe('Datagrid update column and reset tests', () => {
+describe('Datagrid update column and reset tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-update-columns-empty');
 
@@ -3604,7 +3604,7 @@ fdescribe('Datagrid update column and reset tests', () => {
   });
 });
 
-fdescribe('Datagrid paging with empty dataset', () => {
+describe('Datagrid paging with empty dataset', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-empty-dataset?layout=nofrills');
     await browser.driver
@@ -3639,7 +3639,7 @@ fdescribe('Datagrid paging with empty dataset', () => {
   });
 });
 
-fdescribe('Datagrid multiselect sorting test', () => {
+describe('Datagrid multiselect sorting test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-multiselect?layout=nofrills');
 
@@ -3655,7 +3655,7 @@ fdescribe('Datagrid multiselect sorting test', () => {
   });
 });
 
-fdescribe('Datagrid Personalization tests', () => {
+describe('Datagrid Personalization tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index?layout=nofrills');
 
@@ -3704,7 +3704,7 @@ fdescribe('Datagrid Personalization tests', () => {
   });
 });
 
-fdescribe('Datagrid Actions Popupmenu tests', () => {
+describe('Datagrid Actions Popupmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-actions-reload?layout=nofrills');
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1)'));
@@ -3733,7 +3733,7 @@ fdescribe('Datagrid Actions Popupmenu tests', () => {
   });
 });
 
-fdescribe('Datagrid tree select multiple tests', () => {
+describe('Datagrid tree select multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-multiple');
 
@@ -3753,7 +3753,7 @@ fdescribe('Datagrid tree select multiple tests', () => {
   });
 });
 
-fdescribe('Datagrid horizontal scrolling tests', () => {
+describe('Datagrid horizontal scrolling tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-horizontal-scroll.html?layout=nofrills');
 
@@ -3779,7 +3779,7 @@ fdescribe('Datagrid horizontal scrolling tests', () => {
   }
 });
 
-fdescribe('Datagrid hide pager on one page tests', () => {
+describe('Datagrid hide pager on one page tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-pager-if-one-page-filter');
 
@@ -3820,7 +3820,7 @@ fdescribe('Datagrid hide pager on one page tests', () => {
   });
 });
 
-fdescribe('Datagrid columns width test', () => {
+describe('Datagrid columns width test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-columns-width');
 
