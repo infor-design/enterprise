@@ -3264,7 +3264,7 @@ fdescribe('Datagrid Tree and Frozen Column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-frozen-columns?layout=nofrills');
 
-    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    const datagridEl = await element(by.css('.center .datagrid tr:nth-child(10)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });

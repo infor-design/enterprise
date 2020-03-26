@@ -342,25 +342,27 @@ describe('Multiselect placeholder tests', () => {
 });
 
 fdescribe('Multiselect with Tags tests', () => { //eslint-disable-line
-  it('standard example should not visually regress', async () => {
-    await utils.setPage('/components/multiselect/example-index');
+  if (utils.isChrome() && utils.isCI()) {
+    it('Standard example should not visually regress', async () => {
+      await utils.setPage('/components/multiselect/example-index');
 
-    const multiselectStandardEl = await element(by.css('#multi-optgroup-tagged + .dropdown-wrapper div.dropdown'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(multiselectStandardEl), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
+      const multiselectStandardEl = await element(by.css('#multi-optgroup-tagged + .dropdown-wrapper div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(multiselectStandardEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepShort);
 
-    expect(await browser.protractorImageComparison.checkElement(multiselectStandardEl, 'multiselect-tags-standard')).toEqual(0);
-  });
+      expect(await browser.protractorImageComparison.checkElement(multiselectStandardEl, 'multiselect-tags-standard')).toEqual(0);
+    });
 
-  it('disabled example should not visually regress', async () => {
-    await utils.setPage('/components/multiselect/example-index');
+    it('Disabled example should not visually regress', async () => {
+      await utils.setPage('/components/multiselect/example-index');
 
-    const multiselectDisabledEl = await element(by.css('#multi-disabled-tagged + .dropdown-wrapper div.dropdown'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(multiselectDisabledEl), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
+      const multiselectDisabledEl = await element(by.css('#multi-disabled-tagged + .dropdown-wrapper div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(multiselectDisabledEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepShort);
 
-    expect(await browser.protractorImageComparison.checkElement(multiselectDisabledEl, 'multiselect-tags-disabled')).toEqual(0);
-  });
+      expect(await browser.protractorImageComparison.checkElement(multiselectDisabledEl, 'multiselect-tags-disabled')).toEqual(0);
+    });
+  }
 });
