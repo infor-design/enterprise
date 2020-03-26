@@ -1173,33 +1173,6 @@ Modal.prototype = {
   keepFocus() {
     const self = this;
 
-    /*
-    // Escape key
-    $(this.element)
-      .off(`keydown.${self.namespace}`)
-      .on(`keydown.${self.namespace}`, (e) => {
-        const keyCode = e.which || e.keyCode;
-        if (keyCode === 27) {
-          const modals = $('.modal.is-visible');
-
-          self.isCancelled = true;
-
-          if (modals.length > 1) {
-            modals.not(':last').on(`beforeclose.${self.namespace}`, () => false);
-            modals.on(`afterclose.${self.namespace}`, () => {
-              modals.off(`beforeclose.${self.namespace}`);
-            });
-            const apiModal = modals.last().data('modal');
-            if (apiModal && apiModal.close) {
-              apiModal.close();
-            }
-          } else {
-            self.close();
-          }
-        }
-      });
-    */
-
     // Cache tab fields and update them if the DOM changes
     const selector = ':focusable, [contenteditable], iframe';
     let tabbableElements = self.element.find(selector);
