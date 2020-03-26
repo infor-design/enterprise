@@ -6,6 +6,8 @@
 
 ### v4.28.0 Fixes
 
+- `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
+
 ## v4.27.0
 
 ### v4.27.0 Features
