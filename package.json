@@ -147,7 +147,7 @@
     "node-sass-once-importer": "^5.3.2",
     "protractor": "^5.4.2",
     "protractor-flake": "^4.0.0",
-    "protractor-image-comparison": "^3.9.0",
+    "protractor-image-comparison": "^2.0.1",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
     "release-it": "^10.4.2",
