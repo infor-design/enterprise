@@ -8,10 +8,10 @@
        </div>
 
       <div class="buttonset">
-        <button type="button" id="addRowTop" class="btn">
+        <button type="button" id="add-row-top" class="btn">
           <span>Add Row (top)</span>
         </button>
-        <button type="button" id="addRowBottom" class="btn">
+        <button type="button" id="add-row-bottom" class="btn">
           <span>Add Row (bottom)</span>
         </button>
       </div>
@@ -114,11 +114,11 @@
 
       gridApi = $('#datagrid').data('datagrid');
 
-      $('#addRowTop').on('click', function () {
+      $('#add-row-top').on('click', function () {
         gridApi.addRow({ productName: '', productId: '0' });
       });
 
-      $('#addRowBottom').on('click', function () {
+      $('#add-row-bottom').on('click', function () {
         gridApi.addRow({ productName: '', productId: '0' }, 'bottom');
       });
   });
