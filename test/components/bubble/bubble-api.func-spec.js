@@ -302,4 +302,34 @@ describe('Bubble Chart API', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
   });
+
+  it('Should hide xAxis line', () => {
+    bubbleObj.destroy();
+    bubbleObj = new Line(bubbleEl, {
+      dataset,
+      type: 'bubble',
+      isBubble: true,
+      animate: false,
+      xAxis: { hideLine: true }
+    });
+
+    expect(document.body.querySelectorAll('.dot').length).toEqual(24);
+    expect(document.body.querySelectorAll('.line-group').length).toEqual(2);
+    expect(document.body.querySelector('.x.axis .tick line').style.opacity).toEqual('0');
+  });
+
+  it('Should hide yAxis line', () => {
+    bubbleObj.destroy();
+    bubbleObj = new Line(bubbleEl, {
+      dataset,
+      type: 'bubble',
+      isBubble: true,
+      animate: false,
+      yAxis: { hideLine: true }
+    });
+
+    expect(document.body.querySelectorAll('.dot').length).toEqual(24);
+    expect(document.body.querySelectorAll('.line-group').length).toEqual(2);
+    expect(document.body.querySelector('.y.axis .tick line').style.opacity).toEqual('0');
+  });
 });

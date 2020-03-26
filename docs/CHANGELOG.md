@@ -6,6 +6,8 @@
 
 ### v4.28.0 Fixes
 
+- `[Bubble Chart]` Fixed an issue where axis line was not able to be hide. ([#501](https://github.com/infor-design/enterprise/issues/501))
+
 ## v4.27.0
 
 ### v4.27.0 Features
