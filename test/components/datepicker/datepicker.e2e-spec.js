@@ -917,7 +917,7 @@ describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.trigger'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.datepicker + .icon'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
