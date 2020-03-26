@@ -1,17 +1,5 @@
 # What's New with Enterprise
 
-## v4.28.0
-
-### v4.28.0 Deprecation
-
-### v4.28.0 Features
-
-- `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
-
-### v4.28.0 Fixes
-
-### v4.28.0 Chores & Maintenance
-
 ## v4.27.0
 
 ### v4.27.0 Features
@@ -21,6 +9,7 @@
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
 - `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calcualte the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is prefered. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
+- `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
 
 ### v4.27.0 Important Changes
 
@@ -92,6 +81,8 @@
 - `[Tags]` Fixed a regression on Tag Buttons, where they were visually, vertically misaligned with Tag text. ([#3604](https://github.com/infor-design/enterprise/issues/3604))
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
 - `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
+
+(70 Issues Solved this release, Backlog Enterprise 289, Backlog Ng 76, 1033 Functional Tests, 1320 e2e Test)
 
 ## v4.26.2
 
