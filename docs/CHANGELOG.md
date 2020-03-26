@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.28.0
+
+### v4.28.0 Features
+
+### v4.28.0 Fixes
+
 ## v4.27.0
 
 ### v4.27.0 Features
