@@ -40,6 +40,16 @@
     background-color: $calendar-bg-color;
     flex: 1 1 auto;
 
+    &.monthview {
+      &.hidden {
+        ~ .calendar-event-details {
+          @media (max-width: $breakpoint-wide-tablet - 1) {
+            display: none;
+          }
+        }
+      }
+    }
+
     .monthview-table {
       table-layout: fixed;
     }
@@ -50,6 +60,65 @@
 
     .monthview-legend {
       padding: 25px 5px 15px;
+    }
+
+    @include respond-to(phabletdown) {
+      .calendar-event-legend {
+        padding: 25px 15px;
+
+        .calendar-event-legend-item {
+          display: inline-block;
+          margin: 0 20px 10px 0;
+
+          .calendar-event-legend-swatch {
+            border-radius: 50px;
+            display: inline-block;
+            height: 12px;
+            margin-right: 5px;
+            width: 12px;
+
+            &.ruby {
+              background-color: $theme-color-palette-ruby-60;
+            }
+
+            &.amber {
+              background-color: $theme-color-palette-amber-60;
+            }
+
+            &.emerald {
+              background-color: $theme-color-palette-emerald-60;
+            }
+
+            &.azure {
+              background-color: $theme-color-palette-azure-60;
+            }
+
+            &.turquoise {
+              background-color: $theme-color-palette-turquoise-60;
+            }
+
+            &.amethyst {
+              background-color: $theme-color-palette-amethyst-60;
+            }
+
+            &.slate {
+              background-color: $theme-color-palette-slate-60;
+            }
+
+            &.graphite {
+              background-color: $theme-color-palette-graphite-60;
+            }
+          }
+
+          .calendar-event-legend-text {
+            @include font-size(12);
+
+            color: $calendar-event-color;
+            position: relative;
+            top: -2px;
+          }
+        }
+      }
     }
   }
 
@@ -184,12 +253,6 @@
       position: relative;
       right: 0;
       top: -12px;
-    }
-  }
-
-  .calendar-event-details-mobile {
-    @media (min-width: $breakpoint-wide-tablet) {
-      display: none;
     }
   }
 }
@@ -335,6 +398,16 @@
   }
 }
 
+@include respond-to(phabletup) {
+  .calendar {
+    .calendar-event-details {
+      .listview {
+        display: none;
+      }
+    }
+  }
+}
+
 // Responsive Styles
 @include respond-to(phabletdown) {
   .calendar {
@@ -345,12 +418,12 @@
     }
 
     .calendar-event-details {
-      display: none;
-    }
-
-    .calendar-event-details-mobile {
-      display: inline-block;
       width: 100%;
+
+      .accordion-header,
+      .accordion-pane {
+        display: none;
+      }
 
       .listview-heading {
         display: inline-block;
@@ -408,6 +481,11 @@
         &.graphite {
           background-color: $theme-color-palette-graphite-60;
         }
+      }
+
+      .calendar-event-details-mobile {
+        display: inline-block;
+        width: 100%;
       }
     }
 

@@ -26,7 +26,6 @@ const COMPONENT_NAME_DEFAULTS = {
   showViewChanger: true,
   onRenderMonth: null,
   template: null,
-  mobileTemplate: null,
   upcomingEventDays: 14,
   modalTemplate: null,
   menuId: null,
@@ -68,7 +67,6 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {string} [settings.template] The ID of the template used for the events.
- * @param {string} [settings.mobileTemplate] The ID of the mobile template used for the events.
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
@@ -111,7 +109,8 @@ Calendar.prototype = {
       .renderEventTypes()
       .renderMonthView()
       .renderWeekView()
-      .handleEvents();
+      .handleEvents()
+      .addEventLegend();
 
     return this;
   },
@@ -142,6 +141,32 @@ Calendar.prototype = {
   setCurrentCalendar() {
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     return this;
+  },
+
+  /**
+   * Display event legends below the calendar table on mobile view.
+   * @private
+   * @returns {void} 
+   */
+  addEventLegend() {
+    const s = this.settings;
+
+    this.eventLegend = $('<div class="calendar-event-legend"></div>');
+    this.monthviewTable = $('.monthview-table');
+
+    for (let i = 0; i < s.eventTypes.length; i++) {
+      const event = s.eventTypes[i];
+      const color = event.color;
+
+      const legend = '' +
+        `<div class="calendar-event-legend-item">
+          <span class="calendar-event-legend-swatch ${color}"></span>
+          <span class="calendar-event-legend-text">${event.label}</span>
+        </div>`;
+
+      this.eventLegend.append(legend);
+    }
+    this.monthviewTable.after(this.eventLegend);
   },
 
   /**
@@ -377,23 +402,15 @@ Calendar.prototype = {
     }
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
-    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile');
     if (!this.eventDetailsContainer) {
       return;
     }
-    if (!this.eventDetailsMobileContainer) {
-      return;
-    }
+
     const thisEvent = $.extend(true, {}, eventData[0]);
     if (thisEvent.durationHours && !thisEvent.isDays) {
       calendarShared.formateTimeString(thisEvent, this.locale, this.language);
     }
     this.renderTmpl(thisEvent, this.settings.template, this.eventDetailsContainer, count > 1);
-
-    this.renderTmpl(
-      thisEvent, this.settings.mobileTemplate,
-      this.eventDetailsMobileContainer, count > 1
-    );
 
     const api = $(this.eventDetailsContainer).data('accordion');
     if (api) {
@@ -401,7 +418,6 @@ Calendar.prototype = {
     }
 
     $(this.eventDetailsContainer).accordion();
-    $(this.eventDetailsMobileContainer).listview();
 
     if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
       $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
@@ -454,13 +470,9 @@ Calendar.prototype = {
    */
   clearEventDetails() {
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
-    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile');
+
     if (this.eventDetailsContainer) {
       this.eventDetailsContainer.innerHTML = '';
-    }
-
-    if (this.eventDetailsMobileContainer) {
-      this.eventDetailsMobileContainer.innerHTML = '';
     }
   },
 
@@ -1342,8 +1354,7 @@ Calendar.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
-    if (settings.locale || settings.template || settings.upcomingEventDays ||
-      settings.mobileTemplate) {
+    if (settings.locale || settings.template || settings.upcomingEventDays) {
       this.destroy().init();
       return this;
     }
@@ -1409,9 +1420,7 @@ Calendar.prototype = {
     if (this.eventDetailsContainer) {
       this.eventDetailsContainer.innerHTML = '';
     }
-    if (this.eventDetailsMobileContainer) {
-      this.eventDetailsMobileContainer.innerHTML = '';
-    }
+
     this.removeModal();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

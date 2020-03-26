@@ -23,8 +23,6 @@
   </div>
   <div class="calendar-event-details accordion" data-init="false" data-options="{'allowOnePane': false}">
   </div>
-  <div class="calendar-event-details-mobile listview" data-init="false" data-options="{'allowOnePane': false}">
-  </div>
 </div>
 
 <ul id="calendar-actions-menu" class="popupmenu">
@@ -51,7 +49,6 @@ $('body').one('initialized', function () {
         events: events,
         upcomingEventDays: 0,
         template: 'tmpl-readonly',
-        mobileTemplate: 'tmpl-mbl-readonly',
         modalTemplate: 'tmpl-modal',
         menuId: 'calendar-actions-menu'
       });
@@ -124,6 +121,40 @@ $('body').one('initialized', function () {
     </div>
   </div>
   {{/event}}
+
+  <div class="listview">
+    <ul>
+      {{#event}}
+      <li>
+
+      {{#duration}}
+      <p class="listview-heading">{{startsLong}} - {{endsLong}}</p>
+      {{/duration}}
+
+      {{#durationHours}}
+      <p class="listview-heading">{{startsHoursLong}} - {{endsHoursLong}}</p>
+      {{/durationHours}}
+
+      {{#durationHours}}
+      <p class="listview-micro">{{durationHours}} {{durationUnits}}</p>
+      {{/durationHours}}
+
+      {{#duration}}
+      <p class="listview-micro">{{duration}} {{durationUnits}}</p>
+      {{/duration}}
+
+      {{#status}}
+      <div class="status-container">
+        <span class="status-swatch {{color}}"></span>
+        <p class="listview-subheading">{{status}} | {{typeLabel}}</p>
+      </div>
+      {{/status}}
+
+      </li>
+      {{/event}}
+    </ul>
+  </div>
+
 </script>
 
 <script id="tmpl-modal" type="text/html">
