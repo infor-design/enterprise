@@ -692,10 +692,6 @@
   max-width: 300px;
   padding: 10px 5px 0;
 
-  @media (min-width: $breakpoint-wide-tablet) {
-    display: none;
-  }
-
   .monthview-legend-item {
     display: inline-block;
   }
