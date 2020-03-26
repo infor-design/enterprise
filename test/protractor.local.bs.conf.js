@@ -28,8 +28,7 @@ exports.config = {
   baseUrl: 'http://localhost:4000',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 10000,
-    showColors: true,
-    random: false
+    showColors: true
   },
   commonCapabilities: {
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
