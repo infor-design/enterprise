@@ -320,7 +320,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       setTimeout(() => {
         expect(buttonSpyEvent).toHaveBeenTriggered();
         done();
-      }, 300);
+      }, 400);
     });
 
     it('Should trigger "selected" event for a menu button', (done) => {
