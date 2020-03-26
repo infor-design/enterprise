@@ -19,11 +19,18 @@ const COMPONENT_NAME = 'bullet';
  * @param {array} [settings.dataset.data.tooltip] Tooltip contents for each point.
  * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
  * @param {boolean} [settings.redrawOnResize=true] If set to false the component will not redraw when the page or parent is resized.
+ * @param {object} [settings.format] The format element.
+ * @param {string|function} [settings.format.ranges] The `d3` formatter string or callback function.
+ * @param {string|function} [settings.format.difference] The `d3` formatter string or callback function.
  */
 const BULLET_DEFAULTS = {
   dataset: [],
   animate: false,
-  redrawOnResize: true
+  redrawOnResize: true,
+  format: {
+    ranges: null,
+    difference: null
+  }
 };
 
 function Bullet(element, settings) {
@@ -99,6 +106,30 @@ Bullet.prototype = {
       };
     }
 
+    // Prepare the format callback function
+    const formatCallback = (type, d, i) => {
+      function callback(func, d2, i2) {
+        const results = func(d2, i2);
+        return typeof results !== 'undefined' ? results : d2;
+      }
+      if (chartData.format && typeof chartData.format[type] === 'function') {
+        return callback(chartData.format[type], d, i);
+      } else if (chartData.format && typeof chartData.format[type] === 'string') {
+        return d3.format(chartData.format[type])(d);
+      } else if (this.settings.format && typeof this.settings.format[type] === 'function') {
+        return callback(this.settings.format[type], d, i);
+      } else if (this.settings.format && typeof this.settings.format[type] === 'string') {
+        return d3.format(this.settings.format[type])(d);
+      }
+      return d;
+    };
+
+    // Set format functions
+    const format = {
+      ranges: (d, i) => formatCallback('ranges', d, i),
+      difference: d => formatCallback('difference', d),
+    };
+
     for (let i = 0; i < chartData.data.length; i++) {
       const duration = this.settings.animate ? 400 : 0;
       const barHeight = 20;
@@ -172,7 +203,7 @@ Bullet.prototype = {
           const bar = d3.select(this);
           const data = chartData.data[bar.attr('data-idx')];
           const rect = this.getBoundingClientRect();
-          let content = `<p>${d}</p>`;
+          let content = `<p>${format.ranges(d, mouseEnterIdx)}</p>`;
 
           const show = function () {
             const size = charts.tooltipSize(content);
@@ -280,7 +311,7 @@ Bullet.prototype = {
           .attr('y', barHeight / 2 + 4)
           .attr('dx', charts.isRTL ? '-20px' : '20px')
           .attr('x', 0)
-          .text(diff)
+          .text(format.difference(diff))
           .merge(marker)
           .transition()
           .duration(duration)
@@ -324,7 +355,7 @@ Bullet.prototype = {
         .attr('dy', '1.1em')
         .attr('y', Math.round((barHeight * 7) / 4.7))
         .attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'))
-        .text(d => d);
+        .text((d, k) => format.ranges(d, k));
 
       // Transition the entering ticks to the new scale, x1
       tickEnter.transition()
