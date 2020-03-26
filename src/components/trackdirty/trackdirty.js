@@ -57,16 +57,27 @@ Trackdirty.prototype = {
         return el.val();
       }
       default: {
-        if (element.is('textarea')) {
-          return element.text().trim()
-            .replace(/\s+/g, ' ')
-            .replace(/<br( \/)?>/g, '<br>\n')
-            .replace(/<\/p> /g, '</p>\n\n')
-            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+        if (element.is('textarea.editor')) {
+          return this.trimEditorText(element.text());
         }
         return element.val();
       }
     }
+  },
+
+  /**
+   * Trim out the editor spaces for comparison.
+   * @private
+   * @param  {string} text The starting text.
+   * @returns {string} The trimmed text.
+   */
+  trimEditorText(text) {
+    return text.trim()
+      .replace(/\s+/g, ' ')
+      .replace(' has-tooltip', '')
+      .replace(/<br( \/)?>/g, '<br>\n')
+      .replace(/<\/p> /g, '</p>\n\n')
+      .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
   },
 
   /**
@@ -143,14 +154,14 @@ Trackdirty.prototype = {
 
     if (input.is('.editor')) {
       const textArea = input.parent().find('textarea');
-      textArea.data('original', this.valMethod(textArea));
+      textArea.data('original', this.trimEditorText(this.valMethod(textArea)));
     }
 
     input.data('original', this.valMethod(input, true))
       .on('resetdirty.dirty', () => {
         if (input.is('.editor')) {
           const textArea = input.parent().find('textarea');
-          textArea.data('original', this.valMethod(textArea));
+          textArea.data('original', this.trimEditorText(this.valMethod(textArea)));
         }
 
         input.data('original', this.valMethod(input))
@@ -236,11 +247,7 @@ Trackdirty.prototype = {
           } else {
             current = textArea.text();
           }
-          current = current.trim()
-            .replace(/\s+/g, ' ')
-            .replace(/<br( \/)?>/g, '<br>\n')
-            .replace(/<\/p> /g, '</p>\n\n')
-            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+          current = this.trimEditorText(current);
 
           if (this.isIe || this.isIeEdge) {
             current = input[0].innerHTML;

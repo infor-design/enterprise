@@ -67,6 +67,41 @@ describe('Datagrid Colspan Tests', () => {
   }
 });
 
+describe('Datagrid Colspan Frozen Column Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should marhup frozen colspan columns', async () => {
+    expect(await element(by.css('#datagrid .left tr:nth-child(3) td:nth-child(2)')).getAttribute('class')).toEqual('is-last-visible l-left-text');
+    expect(await element(by.css('#datagrid .left tr:nth-child(3) td:nth-child(2)')).getAttribute('colspan')).toEqual('1');
+    expect(await element(by.css('#datagrid .center tr:nth-child(3) td:nth-child(3)')).getAttribute('class')).toEqual('');
+    expect(await element(by.css('#datagrid .center tr:nth-child(3) td:nth-child(3)')).getAttribute('colspan')).toEqual(null);
+
+    expect(await element(by.css('#datagrid .left tr:nth-child(4) td:nth-child(2)')).getAttribute('class')).toEqual('is-last-visible l-left-text');
+    expect(await element(by.css('#datagrid .left tr:nth-child(4) td:nth-child(2)')).getAttribute('colspan')).toEqual('5');
+    expect(await element(by.css('#datagrid .center tr:nth-child(4) td:nth-child(3)')).getAttribute('class')).toEqual('is-hidden l-left-text');
+    expect(await element(by.css('#datagrid .center tr:nth-child(4) td:nth-child(3)')).getAttribute('colspan')).toEqual('3');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-colspan-frozen')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Comments Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-comments?layout=nofrills');

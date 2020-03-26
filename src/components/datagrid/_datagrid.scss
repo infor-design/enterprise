@@ -175,7 +175,12 @@ $datagrid-short-row-height: 25px;
       background-color: $datagrid-empty-bg-color;
     }
 
-    &:not(.left) td:last-child {
+    &:not(.left) td:last-child,
+    &:not(.left) td.is-last-visible {
+      border-right-color: transparent;
+    }
+
+    &.left td.is-last-visible {
       border-right-color: transparent;
     }
 
@@ -1735,6 +1740,10 @@ $datagrid-short-row-height: 25px;
       br {
         display: none;
       }
+    }
+
+    &.is-invisible .datagrid-cell-wrapper {
+      visibility: hidden;
     }
 
     &.is-spacer {
