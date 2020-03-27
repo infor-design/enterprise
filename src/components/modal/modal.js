@@ -141,6 +141,29 @@ Modal.prototype = {
   },
 
   /**
+   * @param {boolean} val whether or not this modal is the active one within the
+   * global Modal stack.
+   */
+  set visible(val) {
+    this.element[0].classList[val === true ? 'add' : 'remove']('is-visible');
+  },
+
+  /**
+   * @param {boolean} val whether or not this modal is the active one within the
+   * global Modal stack.
+   */
+  set active(val) {
+    this.element[0].classList[val === true ? 'add' : 'remove']('is-active');
+  },
+
+  /**
+   * @returns {boolean} whether or not this Modal is currently active
+   */
+  get active() {
+    return this.element[0].classList.contains('is-active');
+  },
+
+  /**
    * @returns {boolean} whether or not this Modal instance is the top-level one
    */
   get isOnTop() {
@@ -193,10 +216,6 @@ Modal.prototype = {
     this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
     if (this.element.is('body')) {
       this.trigger = this.element;
-    }
-
-    if (!this.overlay) {
-      this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
     }
 
     this.oldActive = this.settings.triggerButton ?
@@ -779,14 +798,26 @@ Modal.prototype = {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
     }
 
-    if (!this.element.next().is('.overlay')) {
-      this.element.after(this.overlay);
+    // Setup links to Modal Manager elements.
+    if (!this.overlay) {
+      this.overlay = $(modalManager.overlayElem);
+    }
+    if (!this.root) {
+      this.root = $(modalManager.rootElem);
     }
 
-    if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
-      this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
+    // Check for wrapping markup first.
+    let $wrapperElem = this.element.parent();
+    if (!$wrapperElem.is('.modal-wrapper')) {
+      this.element.wrap('<div class="modal-wrapper"></div>');
+      $wrapperElem = this.element.parent();
     }
-    this.root = this.element.closest('.modal-page-container');
+
+    // If the parent element of the wrapper is not the `.modal-page-container`,
+    // move the wrapper to the correct place.
+    if (!$wrapperElem.parent().is(this.root)) {
+      $wrapperElem.insertAfter(this.overlay);
+    }
 
     messageArea = this.element.find('.detailed-message');
     if (messageArea.length === 1) {
@@ -808,8 +839,6 @@ Modal.prototype = {
     this.isCancelled = false;
 
     if (elemCanOpen === false) {
-      this.overlay.remove();
-      this.root[0].style.display = 'none';
       return;
     }
 
@@ -821,36 +850,8 @@ Modal.prototype = {
       }
     }
 
-    // Look for other nested dialogs and adjust the zindex.
-    const currentModalApi = this;
-    const modals = $('.modal');
-    const lastModalIndex = modals.length - 1;
-    modals.each(function (i) {
-      const modal = $(this);
-      this.style.zIndex = (1020 + (i + 1)).toString();
-
-      if (modal.data('modal') && modal.data('modal').overlay) {
-        modal.data('modal').overlay[0].style.zIndex = (1020 + i).toString();
-      }
-
-      if (!modal.data('modal')) {
-        const overlay = modal.closest('.modal-page-container').next('.overlay');
-        if (overlay && overlay[0]) {
-          overlay[0].style.zIndex = (1020 + i).toString();
-        }
-      }
-      if (i === lastModalIndex) {
-        const zIndex = {
-          element: parseInt(currentModalApi.element[0].style.zIndex, 10),
-          overlay: parseInt(currentModalApi.overlay[0].style.zIndex, 10)
-        };
-        if (!zIndex.overlay) {
-          currentModalApi.overlay[0].style.zIndex = zIndex.element - 1;
-        }
-      }
-    });
-
-    $('body > *').not(this.element).not('.modal, .overlay, .modal-page-container').attr('aria-hidden', 'true');
+    // Temporary
+    modalManager.currentlyActive = this;
 
     // Ensure aria-labelled by points to the id
     if (this.settings.isAlert) {
@@ -893,7 +894,6 @@ Modal.prototype = {
     });
 
     // Center
-    this.root[0].style.display = '';
     this.element[0].style.display = '';
 
     // Stagger the rest of the Modal "show" process in several renderLoop ticks
@@ -903,25 +903,17 @@ Modal.prototype = {
       timeoutCallback() {
         self.resize();
         self.element.attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
-        self.root.removeAttr('aria-hidden');
-        self.overlay.attr('aria-hidden', 'true');
         self.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
       }
     });
     const displayTimer = new RenderLoopItem({
-      duration: 2,
+      duration: modalManager.modalFadeDuration,
       timeoutCallback() {
-        self.element.addClass('is-visible');
+        self.visible = true;
       }
     });
     renderLoop.register(resizeTimer);
     renderLoop.register(displayTimer);
-
-    // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a
-    // chance to be established
-    // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
-    // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-    $('body').addClass('modal-engaged');
 
     // Handle Default button.
     $(this.element).on(`keypress.${this.namespace}`, (e) => {
@@ -1232,10 +1224,11 @@ Modal.prototype = {
 
   /**
    * Close the modal.
-   * @param  {boolean} destroy Call the destroy method.
+   * @param {boolean} destroy Call the destroy method.
+   * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
-  close(destroy) {
+  close(destroy, noRefresh) {
     if (!this.visible) {
       return true;
     }
@@ -1247,8 +1240,6 @@ Modal.prototype = {
     const elemCanClose = this.element.triggerHandler('beforeclose');
     const self = this;
     const fields = this.element.find('[data-validate]');
-
-    this.root = this.element.closest('.modal-page-container');
     fields.addClass('disable-validation');
 
     if (elemCanClose === false) {
@@ -1265,26 +1256,8 @@ Modal.prototype = {
     $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
-    this.element.removeClass('is-visible');
-
-    this.overlay.attr('aria-hidden', 'true');
-    if (this.root) {
-      this.root.attr('aria-hidden', 'true');
-    }
-
-    // Remove the overlay and special body classes if this Modal was the very last one to be closed
-    // (Modals can be nested)
-    const modalContainers = $('.modal-page-container');
-    const visibleModalPageContainers = modalContainers.filter((i, elem) => {
-      const ariaHidden = $(elem).is('[aria-hidden]');
-      const displayNone = $(elem).css('display') === 'none';
-      return !ariaHidden && !displayNone;
-    });
-    if (visibleModalPageContainers.length < 1) {
-      $('body').removeClass('modal-engaged');
-      modalContainers.not(this.root).removeAttr('aria-hidden');
-      $('.overlay:not(.busy)').remove();
-    }
+    this.visible = false;
+    this.active = false;
 
     delete this.dontCheckFocus;
 
@@ -1320,10 +1293,8 @@ Modal.prototype = {
     $('.skip-link').off(`focus.${this.namespace}`);
 
     const afterCloseTimer = new RenderLoopItem({
-      duration: 20, // should match the length of time needed for the overlay to fade out
+      duration: modalManager.modalFadeDuration,
       timeoutCallback() {
-        self.overlay.remove();
-        self.root[0].style.display = 'none';
         self.element.trigger('afterclose');
 
         if (closeBtnTooltipAPI) {
@@ -1334,6 +1305,10 @@ Modal.prototype = {
           if (!self.isCAP || (self.isCAP && !self.capAPI)) {
             self.destroy();
           }
+        }
+
+        if (!noRefresh) {
+          modalManager.refresh();
         }
       }
     });
@@ -1417,11 +1392,6 @@ Modal.prototype = {
 
       self.trigger.off(`click.${self.namespace}`);
 
-      if (self.root && self.root.length) {
-        self.root.remove();
-      } else {
-        self.element.closest('.modal-page-container').remove();
-      }
       self.element[0].removeAttribute('data-modal');
 
       const destroyTimer = new RenderLoopItem({
@@ -1438,7 +1408,6 @@ Modal.prototype = {
             }
           }
           if (elem && modalApi && modalApi.overlay) {
-            modalApi.overlay.remove();
             $.removeData(elem, COMPONENT_NAME);
           }
         }

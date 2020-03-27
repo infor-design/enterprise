@@ -9,6 +9,7 @@
   height: 100%;
   justify-content: center;
   margin: 0 auto;
+  position: absolute;
   width: 100%;
 }
 
@@ -18,6 +19,14 @@
   position: absolute;
   top: 0;
   width: 100%;
+
+  &[aria-hidden='true'] {
+    pointer-events: none;
+
+    .modal-wrapper {
+      display: none;
+    }
+  }
 }
 
 // Extra Class to hide the header and keep the padding
@@ -45,15 +54,20 @@
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
+  pointer-events: none;
   position: relative;
   vertical-align: middle;
   width: auto;
   z-index: 1001;
 
-  &.is-visible {
+  &.is-visible.is-active {
     @include css3(transform, scale(1, 1));
 
     opacity: 1;
+  }
+
+  &.is-active {
+    pointer-events: auto;
   }
 
   .field {
