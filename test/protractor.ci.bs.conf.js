@@ -26,8 +26,7 @@ exports.config = {
   baseUrl: 'http://master-enterprise.demo.design.infor.com/',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 30000,
-    showColors: true,
-    random: false
+    showColors: true
   },
   commonCapabilities: {
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,

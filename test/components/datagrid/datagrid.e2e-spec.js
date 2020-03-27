@@ -397,7 +397,7 @@ describe('Datagrid filter RTL tests', () => {
   }
 });
 
-describe('Datagrid filter alternate row tests', () => { //eslint-disable-line
+describe('Datagrid filter alternate row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
 
@@ -2835,7 +2835,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -3244,7 +3244,7 @@ describe('Datagrid tree filter tests', () => {
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should show empty message on filter', async () => {
@@ -3264,9 +3264,9 @@ describe('Datagrid Tree and Frozen Column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-frozen-columns?layout=nofrills');
 
-    const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
+    const datagridEl = await element(by.css('.center .datagrid tr:nth-child(10)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should expand tree nodes', async () => {
@@ -3826,7 +3826,7 @@ describe('Datagrid columns width test', () => {
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -3834,10 +3834,10 @@ describe('Datagrid columns width test', () => {
   });
 
   it('Should not change columns width after reset layout', async () => {
-    const width = 420;
+    const width = [400, 420];
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {
-      expect(size.width).toEqual(width);
+      expect(width).toContain(size.width);
     });
     await element.all(by.css('#maincontent .btn-actions')).first().click();
     await browser.driver
@@ -3846,7 +3846,7 @@ describe('Datagrid columns width test', () => {
     await browser.driver.sleep(config.sleep);
     elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {
-      expect(size.width).toEqual(width);
+      expect(width).toContain(size.width);
     });
   });
 });

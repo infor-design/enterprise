@@ -20,7 +20,6 @@ exports.config = {
       server: 'INFO',
       browser: 'SEVERE'
     },
-    maxInstances: 2,
     chromeOptions: {
       args: [
         '--headless',
