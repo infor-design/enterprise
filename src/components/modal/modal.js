@@ -1114,6 +1114,8 @@ Modal.prototype = {
     let componentHasFocus = false;
     const activeElem = document.activeElement;
     const focusableElems = DOM.focusableElems(this.element[0]);
+
+    // Check each match for IDS components that may have a more complex focus routine
     focusableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
@@ -1133,6 +1135,11 @@ Modal.prototype = {
       // Lookup
       if ($elem.is('.lookup')) {
         componentHasFocus = $elem.data('lookup')?.isFocused;
+      }
+
+      // Popupmenu
+      if ($elem.is('.btn-menu, .btn-actions')) {
+        componentHasFocus = $elem.data('popupmenu')?.isFocused;
       }
 
       // Searchfield
