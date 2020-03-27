@@ -248,14 +248,44 @@ describe('Editor reset dirty tracking tests', () => {
     expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 
-  it('Should render dirty tracker in the source view', async () => {
+  it('Should reset dirty tracker after switch', async () => {
+    await element(by.id('editor1')).clear();
+    await element(by.id('editor1')).sendKeys('Test');
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+    await element(by.id('reset-dirty')).click();
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
+
     await element(by.css('button[data-action=source]')).click();
-    await element(by.tagName('textarea')).sendKeys('<b>Test</b>');
+    await element(by.tagName('textarea')).clear();
+    await element(by.tagName('textarea')).sendKeys('<p>2</p>');
 
     await browser.driver.wait(protractor.ExpectedConditions
       .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
 
     expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+    await element(by.id('reset-dirty')).click();
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
+    await element(by.css('button[data-action=visual]')).click();
+    await element(by.id('editor1')).clear();
+    await element(by.id('editor1')).sendKeys('3');
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+    await element(by.id('reset-dirty')).click();
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 });
 
