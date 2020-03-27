@@ -4,7 +4,7 @@ const config = requireHelper('e2e-config');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Message tests', () => { //eslint-disable-line
+describe('Message tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/message/example-index');
   });

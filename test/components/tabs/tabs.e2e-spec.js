@@ -464,7 +464,7 @@ describe('Tabs click example-url-hash-change tests', () => {
   });
 });
 
-fdescribe('Tabs ajax as source tests', () => { //eslint-disable-line
+describe('Tabs ajax as source tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/test-ajax-source-as-string');
     const tabsContainerEl = await element(by.id('ajaxified-tabs'));

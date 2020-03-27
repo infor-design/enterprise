@@ -9,7 +9,7 @@ const ddSelector = function (dropdown) {
   return `#timepicker-popup select.dropdown.${dropdown} + .dropdown-wrapper div.dropdown`;
 };
 
-fdescribe('Timepicker example-index tests', () => { //eslint-disable-line
+describe('Timepicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-index');
   });
@@ -95,7 +95,7 @@ fdescribe('Timepicker example-index tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Timepicker 24 Hour tests', () => { //eslint-disable-line
+describe('Timepicker 24 Hour tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-24-hour');
   });
@@ -131,7 +131,7 @@ fdescribe('Timepicker 24 Hour tests', () => { //eslint-disable-line
   }
 });
 
-fdescribe('Timepicker with seconds example tests', () => { //eslint-disable-line
+describe('Timepicker with seconds example tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-seconds-picker');
   });
@@ -207,7 +207,7 @@ fdescribe('Timepicker with seconds example tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Timepicker Intervals tests', () => { //eslint-disable-line
+describe('Timepicker Intervals tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-intervals');
   });
@@ -253,7 +253,7 @@ fdescribe('Timepicker Intervals tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Timepicker states tests', () => { //eslint-disable-line
+describe('Timepicker states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-states');
   });
@@ -288,7 +288,7 @@ fdescribe('Timepicker states tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Timepicker Custom Validation Tests', () => { //eslint-disable-line
+describe('Timepicker Custom Validation Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-validation');
   });
@@ -335,7 +335,7 @@ fdescribe('Timepicker Custom Validation Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Timepicker specific locale/language tests', () => { //eslint-disable-line
+describe('Timepicker specific locale/language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/test-specific-locale');
   });

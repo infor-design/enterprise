@@ -23,7 +23,7 @@ describe('Tag example-linkable tests', () => {
 });
 
 if (utils.isChrome() && utils.isCI()) {
-  fdescribe('Tag visual regression tests', () => { //eslint-disable-line
+  describe('Tag visual regression tests', () => {
     it('standard tags should not change', async () => {
       await utils.setPage('/components/tag/example-index');
       await browser.driver
