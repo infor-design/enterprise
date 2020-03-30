@@ -472,11 +472,11 @@ describe('Tabs ajax as source tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
+  if (!utils.isCI() && !utils.isBS()) {
+    it('Should not have errors', async () => {
+      await utils.checkForErrors();
+    });
 
-  if (!utils.isCI()) {
     // This test is being flaky on ci so ignoring there.
     it('Should be able to activate tabs', async () => {
       expect(await element(by.id('tab-one')).getAttribute('innerHTML')).not.toBe('');
