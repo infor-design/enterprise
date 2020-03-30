@@ -8,7 +8,7 @@
   cursor: pointer;
   font-size: $theme-size-font-sm;
   line-height: 1.5rem;
-  margin-left: -3px;
+  margin-left: -4px;
   padding: 3px;
   position: relative;
   text-decoration: underline;
@@ -71,7 +71,7 @@
   &.back {
     .icon {
       left: 2px;
-      margin-left: -3px;
+      margin-left: -6px;
       margin-right: 2px;
     }
   }
