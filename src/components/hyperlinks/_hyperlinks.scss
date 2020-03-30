@@ -9,7 +9,6 @@
   font-size: $theme-size-font-sm;
   line-height: 1.5rem;
   margin-left: -4px;
-  margin-right: -4px;
   padding: 3px;
   position: relative;
   text-decoration: underline;
@@ -148,20 +147,16 @@ p .hyperlink {
 // Right To Left Styles
 html[dir='rtl'] {
   .hyperlink {
-    &.back {
-      .icon {
-        left: auto;
-        margin-left: -10px;
-        margin-right: auto;
-        right: -8px;
-      }
-    }
-
-    &.directional {
-      span::before {
-        margin-left: 18px;
-      }
-    }
+    margin-right: -4px;
   }
 
+  .hyperlink.back {
+    &:focus span {
+      box-shadow: none;
+    }
+
+    .icon {
+      margin-right: 0;
+    }
+  }
 }
