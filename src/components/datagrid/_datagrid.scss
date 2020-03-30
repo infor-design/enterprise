@@ -2998,10 +2998,6 @@ td .btn-actions {
   left: -7px;
   position: relative;
 
-  &.datagrid-selection-checkbox {
-    padding: 0 9px;
-  }
-
   &::before {
     @include checkbox-unchecked-before-style;
 
@@ -4253,6 +4249,10 @@ html[dir='rtl'] {
     .listview.alternate-bg {
       background-color: $listview-bg-color;
     }
+  }
+
+  .datagrid-selection-checkbox {
+    padding: 0 9px;
   }
 
   // Modal Lists
