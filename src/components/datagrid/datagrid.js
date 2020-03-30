@@ -5703,13 +5703,19 @@ Datagrid.prototype = {
       }
     }
 
+    if (optionTitle) {
+      this.optionTitle = $('.modal-title');
+
+      $(this.optionTitle).prepend(optionTitle);
+    }
+
     if (self.toolbar) {
       DOM.html(self.toolbar.find('.datagrid-result-count'), countText, '<span>');
       DOM.html(self.toolbar.find('.datagrid-group-count'), groupCountText, '<span>');
       self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
-    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), `${optionTitle} ${countText}`, '<span>');
+    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
     this.lastCount = count;
 
     this.checkEmptyMessage();
