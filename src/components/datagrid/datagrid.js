@@ -5647,7 +5647,6 @@ Datagrid.prototype = {
     let groupCountText = '';
     const isClientSide = self.settings.paging && !(self.settings.source);
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
-    const optionTitle = self.settings.toolbar.title;
 
     if (isClientSide || (!totals)) {
       this.recordCount = self.settings.dataset.length;
@@ -5701,12 +5700,6 @@ Datagrid.prototype = {
       } else {
         countText = self.settings.resultsText;
       }
-    }
-
-    if (optionTitle) {
-      this.optionTitle = $('.modal-title');
-
-      $(this.optionTitle).prepend(optionTitle);
     }
 
     if (self.toolbar) {
@@ -6606,6 +6599,11 @@ Datagrid.prototype = {
       xIcon.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
+    }
+
+    if (this.settings.toolbar.title && $('.lookup-modal .modal-title')) {
+      const optionTitle = this.settings.toolbar.title
+      $('.lookup-modal .modal-title').prepend(optionTitle);
     }
 
     if (this.settings.toolbar && this.settings.toolbar.contextualToolbar) {
