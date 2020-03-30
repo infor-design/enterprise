@@ -198,7 +198,7 @@
     .hyperlink {
       color: $hyperlink-color;
       font-size: $input-size-regular-font-size !important;
-      margin-left: 0;
+      margin-left: -1px;
       padding: 0;
     }
   }
