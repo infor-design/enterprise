@@ -6602,7 +6602,7 @@ Datagrid.prototype = {
     }
 
     if (this.settings.toolbar.title && $('.lookup-modal .modal-title')) {
-      const optionTitle = this.settings.toolbar.title
+      const optionTitle = this.settings.toolbar.title;
       $('.lookup-modal .modal-title').prepend(optionTitle);
     }
 
