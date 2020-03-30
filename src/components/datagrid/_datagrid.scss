@@ -2998,6 +2998,10 @@ td .btn-actions {
   left: -7px;
   position: relative;
 
+  &.datagrid-selection-checkbox {
+    padding: 0 9px;
+  }
+
   &::before {
     @include checkbox-unchecked-before-style;
 
