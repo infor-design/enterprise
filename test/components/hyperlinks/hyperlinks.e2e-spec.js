@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Hyperlink index tests', () => { //eslint-disable-line
+describe('Hyperlink index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/hyperlinks/example-index?layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -16,7 +16,7 @@ fdescribe('Hyperlink index tests', () => { //eslint-disable-line
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on soho (subtle)', async () => {
+    it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
