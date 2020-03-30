@@ -5647,6 +5647,7 @@ Datagrid.prototype = {
     let groupCountText = '';
     const isClientSide = self.settings.paging && !(self.settings.source);
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
+    const optionTitle = self.settings.toolbar.title;
 
     if (isClientSide || (!totals)) {
       this.recordCount = self.settings.dataset.length;
@@ -5708,7 +5709,7 @@ Datagrid.prototype = {
       self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
     }
-    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
+    DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), `${optionTitle} ${countText}`, '<span>');
     this.lastCount = count;
 
     this.checkEmptyMessage();
