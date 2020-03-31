@@ -1,4 +1,3 @@
-import { DOM } from '../../utils/dom';
 import { Modal } from '../../components/modal/modal';
 
 const EVENT_NAMESPACE = 'modalmanager';
@@ -189,15 +188,19 @@ ModalManager.prototype = {
 
   /**
    * Closes a Modal on the page globally by its element
-   * @param {jQuery|HTMLElement} elem the `.modal` element to close.
+   * @param {jQuery|HTMLElement} [elem] the `.modal` element to close. If this is not provided, the last Modal API on the stack is used.
    * @param {boolean} [cancelled=false] passes along a flag that designates this close action as "cancelled" to the Modal API.
    * @returns {void}
    */
   close(elem, cancelled = false) {
+    if (!elem || !(elem instanceof HTMLElement || elem instanceof $)) {
+      elem = this.last;
+    }
+
     const $elem = $(elem);
     const api = $elem.data('modal');
     if (!api) {
-      throw new Error(`Cannot detect a modal instance against element "${DOM.getSimpleSelector($elem[0])}".`);
+      return;
     }
 
     if (cancelled) {
@@ -228,11 +231,7 @@ ModalManager.prototype = {
    * @returns {void}
    */
   closeLast(cancelled = false) {
-    const api = this.last;
-    if (cancelled) {
-      api.isCancelled = true;
-    }
-    api.close();
+    this.close(undefined, cancelled);
   },
 
   /**
@@ -265,11 +264,10 @@ ModalManager.prototype = {
       switch (keyCode) {
         // Escape Key
         case 27:
-          if (!modalTargetElem.length) {
-            this.closeLast();
-          } else {
-            this.close(modalTargetElem);
-          }
+          this.close(modalTargetElem);
+          break;
+        case 9:
+          this.setModalFocus(e.shiftKey ? 'last' : 'first', e);
           break;
         default:
           break;
@@ -287,6 +285,30 @@ ModalManager.prototype = {
     }
 
     this.hasEstablishedEvents = true;
+  },
+
+  /**
+   * Redirects the page's focus to an element within the currently active Modal.
+   * @param {string} place the location to set the Modal's current focus
+   * @param {jQuery.Event} e the original jquery event
+   * @returns {void}
+   */
+  setModalFocus(place, e) {
+    const api = this.currentlyActive;
+    if (!api) {
+      return;
+    }
+
+    // If focus already exists within the modal, with the exception of certain placements
+    // on certain elements, return out and allow change of focus to occur as normal.
+    if (api.isFocused) {
+      if (!($(api.tabbableElems.last).is(document.activeElement) && place === 'first') &&
+        !($(api.tabbableElems.first).is(document.activeElement) && place === 'last')) {
+        return;
+      }
+    }
+    e.preventDefault();
+    api.setFocus(place);
   },
 
   /**

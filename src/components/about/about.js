@@ -274,13 +274,6 @@ About.prototype = {
       this.modal.find('.modal-body').scrollTop(0);
     });
 
-    $(document).on('keydown.about', (e) => {
-      // Close on Escape.
-      if (e.which === 0 || e.which === 27) {
-        this.close();
-      }
-    });
-
     return this;
   }
 };

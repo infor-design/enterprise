@@ -944,7 +944,16 @@ Modal.prototype = {
 
     function focusElement(thisElem) {
       let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
-      thisElem.keepFocus();
+
+      // When changes happen within the subtree on the Modal, rebuilds the internal hash of
+      // tabbable elements used for retaining focus.
+      self.changeObserver = new MutationObserver(() => {
+        self.setFocusableElems();
+      });
+      self.changeObserver.observe(self.element[0], { childList: true, subtree: true });
+      self.setFocusableElems();
+
+      thisElem.setFocus('first');
 
       /**
       * Fires when the modal opens.
@@ -961,10 +970,6 @@ Modal.prototype = {
 
       if (focusElem.length === 1 && focusElem.is('.btn-modal')) {
         focusElem = thisElem.element.find('.btn-modal-primary');
-      }
-
-      if (focusElem.length === 1 && focusElem.is('button') && !focusElem.is(':disabled')) {
-        focusElem.addClass('hide-focus');
       }
 
       if (!self.settings.autoFocus) {
@@ -1113,10 +1118,9 @@ Modal.prototype = {
   get isFocused() {
     let componentHasFocus = false;
     const activeElem = document.activeElement;
-    const focusableElems = DOM.focusableElems(this.element[0]);
 
     // Check each match for IDS components that may have a more complex focus routine
-    focusableElems.forEach((elem) => {
+    this.tabbableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
       }
@@ -1164,68 +1168,46 @@ Modal.prototype = {
   },
 
   /**
-   * Sets up event listeners that deal with retaining keyboard focus on elements within the current Modal
-   * window when the Modal is open. These events are cleared when the modal is closed.
+   * Creates an internal reference for all tabbable elements present within the Modal.
    * @private
    * @returns {void}
    */
-  keepFocus() {
-    const self = this;
+  setFocusableElems() {
+    const elems = DOM.focusableElems(this.element[0]);
+    if (!this.tabbableElems) {
+      this.tabbableElems = elems;
+    }
+    this.tabbableElems.first = elems[0];
+    this.tabbableElems.last = elems[elems.length - 1];
+  },
 
-    // Cache tab fields and update them if the DOM changes
-    const selector = ':focusable, [contenteditable], iframe';
-    let tabbableElements = self.element.find(selector);
-    let firstTabbable = tabbableElements.first();
-    let lastTabbable = tabbableElements.last();
+  /**
+   * Focuses special elements within the modal.
+   * @param {string} place the location to set the Modal's current focus
+   */
+  setFocus(place) {
+    const places = ['last', 'first'];
+    if (places.indexOf(place) === -1) {
+      return;
+    }
 
-    this.changeObserver = new MutationObserver(() => {
-      tabbableElements = self.element.find(selector);
-      firstTabbable = tabbableElements.first();
-      lastTabbable = tabbableElements.last();
-    });
-    this.changeObserver.observe(self.element[0], { childList: true, subtree: true });
+    this.setFocusableElems();
 
-    $(self.element)
-      .off(`keypress.${self.namespace} keydown.${self.namespace}`)
-      .on(`keypress.${self.namespace} keydown.${self.namespace}`, (e) => {
-        const keyCode = e.which || e.keyCode;
+    let target;
+    switch (place) {
+      case 'last':
+        target = this.tabbableElems.last;
+        break;
+      case 'first':
+        target = this.tabbableElems.first;
+        break;
+      default:
+        break;
+    }
 
-        if (keyCode === 9) {
-          const field = $(e.target);
-
-          // Move focus to first element that can be tabbed if Shift isn't used
-          if (!e.shiftKey && field.is(lastTabbable)) {
-            e.preventDefault();
-            tabbableElements.first().removeClass('hide-focus').focus();
-          } else if (e.shiftKey && field.is(firstTabbable)) {
-            e.preventDefault();
-            tabbableElements.last().removeClass('hide-focus').focus();
-          }
-        }
-      });
-
-    // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
-    // or a wrapping iframe element is clicked.  This will reset the focus.
-    if (this.settings.autoFocus) {
-      $('body').on(`focusin.${self.namespace}`, (e) => {
-        if (self.dontCheckFocus || !self.isOnTop) {
-          return;
-        }
-        if ($(e.target).closest(self.element).length === 1) {
-          return;
-        }
-        if (!self.isFocused) {
-          self.dontCheckFocus = true;
-          const ignoreFocusCheckTimer = new RenderLoopItem({
-            duration: 20,
-            timeoutCallback() {
-              delete self.dontCheckFocus;
-            }
-          });
-          renderLoop.register(ignoreFocusCheckTimer);
-          firstTabbable.removeClass('hide-focus').focus();
-        }
-      });
+    if (target) {
+      target.focus();
+      target.classList.remove('hide-focus');
     }
   },
 
@@ -1240,17 +1222,18 @@ Modal.prototype = {
       return true;
     }
 
-    if (this.changeObserver) {
-      this.changeObserver.disconnect();
-      delete this.changeObserver;
-    }
     const elemCanClose = this.element.triggerHandler('beforeclose');
+    if (elemCanClose === false) {
+      return false;
+    }
+
     const self = this;
     const fields = this.element.find('[data-validate]');
     fields.addClass('disable-validation');
 
-    if (elemCanClose === false) {
-      return false;
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
     }
 
     if (this.isCAP) {
@@ -1269,6 +1252,7 @@ Modal.prototype = {
     delete this.dontCheckFocus;
 
     // Fire Events
+    debugger;
     self.element.trigger('close', self.isCancelled);
 
     // Restore focus
@@ -1357,11 +1341,6 @@ Modal.prototype = {
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');
-    if (this.changeObserver) {
-      this.changeObserver.disconnect();
-      delete this.changeObserver;
-    }
-
     if (!canDestroy) {
       return;
     }
@@ -1396,6 +1375,7 @@ Modal.prototype = {
         delete self.buttonsetAPI;
         delete self.buttonsetElem;
       }
+      delete self.tabbableElems;
 
       self.trigger.off(`click.${self.namespace}`);
 

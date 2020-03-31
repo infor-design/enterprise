@@ -1,23 +1,21 @@
 import { About } from '../../../src/components/about/about';
+import { cleanup } from '../../helpers/func-utils';
 
 const aboutHTML = require('../../../app/views/components/about/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let aboutEl;
-let svgEl;
 let aboutObj;
 
-describe('About API', () => {
+fdescribe('About API', () => {
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
     aboutEl = null;
-    svgEl = null;
     aboutObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', aboutHTML);
     aboutEl = document.body.querySelector('.about');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.set('en-US');
@@ -27,22 +25,27 @@ describe('About API', () => {
 
   afterEach(() => {
     Locale.set('en-US');
-    aboutObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
+    if (aboutObj) {
+      aboutObj.destroy();
+    }
 
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.row',
+      '.svg-icons',
+      '.about',
+      '.modal'
+    ]);
   });
 
   afterAll(() => {
+    const modalAPI = $('body').data('modal');
+    if (modalAPI && typeof modalAPI.destroy === 'function') {
+      modalAPI.destroy();
+    }
+
     const aboutModalEls = document.body.querySelectorAll('.modal');
     for (let i = 0; i < aboutModalEls.length; i++) {
       aboutModalEls[i].parentNode.removeChild(aboutModalEls[i]);
-    }
-
-    const containerEls = document.body.querySelectorAll('.modal-page-container');
-    for (let i = 0; i < containerEls.length; i++) {
-      containerEls[i].parentNode.removeChild(containerEls[i]);
     }
   });
 
@@ -55,9 +58,9 @@ describe('About API', () => {
     });
 
     setTimeout(() => {
-      expect(document.body.querySelector('#about-modal + .modal-page-container')).toBeVisible();
+      expect(document.body.querySelector('#about-modal').classList.contains('is-visible')).toBeTruthy();
       done();
-    }, 600);
+    }, 650);
   });
 
   it('Should fire close', (done) => {
@@ -68,9 +71,9 @@ describe('About API', () => {
       content: '<p>Fashionable components for fashionable applications.</p>'
     });
 
+    const spyEvent = spyOnEvent('body', 'close');
     setTimeout(() => {
-      const spyEvent = spyOnEvent('body', 'close');
-      document.body.querySelector('#about-modal + .modal-page-container .close-container button').click();
+      document.body.querySelector('#about-modal .close-container button').click();
 
       setTimeout(() => {
         expect(spyEvent).toHaveBeenTriggered();
