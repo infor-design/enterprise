@@ -38,8 +38,11 @@ const COMPONENT_NAME = 'datepicker';
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
+ * @param {function} [settings.disable.callback] return true to disable passed dates.
  * @param {array} [settings.disable.dates] Disable specific dates.
- * Example `{dates: ['12/31/2018', '01/01/2019'}`.
+ * Example `{dates: ['12/31/2018', '01/01/2019']}`.
+ * @param {array} [settings.disable.years] Disable specific years.
+ * Example `{years: [2018, 2019]}`.
  * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
  * Example `{minDate: '12/31/2016'}`.
  * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
@@ -94,7 +97,9 @@ const DATEPICKER_DEFAULTS = {
   placeholder: false,
   firstDayOfWeek: 0,
   disable: {
+    callback: null,
     dates: [],
+    years: [],
     minDate: '',
     maxDate: '',
     dayOfWeek: [],

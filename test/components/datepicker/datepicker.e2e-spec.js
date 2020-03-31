@@ -441,6 +441,33 @@ describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates?layout=nofrills');
   });
+  const sel = {};
+  async function setSelector(elemSel) {
+    sel.elem = elemSel;
+    sel.popup = '#monthview-popup.is-open';
+    sel.trigger = `${sel.elem} + .icon`;
+    sel.table = `${sel.popup} .monthview-table`;
+    sel.firstTr = `${sel.table} tbody tr:first-child`;
+    sel.lastTr = `${sel.table} tbody tr:last-child`;
+    sel.footer = `${sel.popup} .popup-footer`;
+  }
+  async function setDateAndOpenPicker(date) {
+    await element(by.css(sel.elem)).clear();
+    await element(by.css(sel.elem)).sendKeys(date);
+    await element(by.css(sel.elem)).sendKeys(protractor.Key.TAB);
+    await element(by.css(sel.trigger)).click();
+    await browser.driver.wait(
+      protractor.ExpectedConditions.visibilityOf(await element(by.css(sel.popup))),
+      config.waitsFor
+    );
+  }
+  async function checkDisabled(selector, isDisabled) {
+    if (isDisabled) {
+      expect(await element(by.css(selector)).getAttribute('class')).toContain('is-disabled');
+    } else {
+      expect(await element(by.css(selector)).getAttribute('class')).not.toContain('is-disabled');
+    }
+  }
 
   it('Should support custom validation', async () => {
     await element(by.css('#date-field + .icon')).click();
@@ -462,6 +489,60 @@ describe('Datepicker disabled date tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.error-message'))), config.waitsFor);
 
     expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
+  });
+
+  it('Should show errors on disabled years', async () => {
+    await element(by.css('#date-field-2')).clear();
+    await element(by.css('#date-field-2')).sendKeys('5/2/2019');
+    await element(by.css('#date-field-2')).sendKeys(protractor.Key.TAB);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.error-message'))), config.waitsFor);
+
+    expect(await element(by.css('.error-message')).getText()).toEqual('Unavailable Date');
+  });
+
+  it('Should disabled dates for disabled years', async () => {
+    await setSelector('#date-field-2');
+    await setDateAndOpenPicker('1/2/2020');
+    await checkDisabled(`${sel.firstTr} td:nth-child(1)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(2)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(3)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(4)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(5)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(6)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(7)`, false);
+
+    await element(by.css(`${sel.footer} .is-cancel`)).click();
+    await setDateAndOpenPicker('12/1/2017');
+    await checkDisabled(`${sel.lastTr} td:nth-child(1)`, false);
+    await checkDisabled(`${sel.lastTr} td:nth-child(2)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(3)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(4)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(5)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(6)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(7)`, true);
+  });
+
+  it('Should disabled dates by callback', async () => {
+    await setSelector('#date-field-3');
+    await setDateAndOpenPicker('1/2/2020');
+    await checkDisabled(`${sel.firstTr} td:nth-child(1)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(2)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(3)`, true);
+    await checkDisabled(`${sel.firstTr} td:nth-child(4)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(5)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(6)`, false);
+    await checkDisabled(`${sel.firstTr} td:nth-child(7)`, false);
+
+    await element(by.css(`${sel.footer} .is-cancel`)).click();
+    await setDateAndOpenPicker('12/1/2017');
+    await checkDisabled(`${sel.lastTr} td:nth-child(1)`, false);
+    await checkDisabled(`${sel.lastTr} td:nth-child(2)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(3)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(4)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(5)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(6)`, true);
+    await checkDisabled(`${sel.lastTr} td:nth-child(7)`, true);
   });
 
   if (utils.isChrome() && utils.isCI()) {

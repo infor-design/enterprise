@@ -22,7 +22,9 @@ const COMPONENT_NAME_DEFAULTS = {
   headerStyle: 'full',
   firstDayOfWeek: null,
   disable: {
+    callback: null,
     dates: [],
+    years: [],
     minDate: '',
     maxDate: '',
     dayOfWeek: [],
@@ -75,8 +77,11 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
+ * @param {function} [settings.disable.callback] return true to disable passed dates.
  * @param {array} [settings.disable.dates] Disable specific dates.
- * Example `{dates: ['12/31/2018', '01/01/2019'}`.
+ * Example `{dates: ['12/31/2018', '01/01/2019']}`.
+ * @param {array} [settings.disable.years] Disable specific years.
+ * Example `{years: [2018, 2019]}`.
  * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
  * Example `{minDate: '12/31/2016'}`.
  * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
@@ -693,13 +698,27 @@ MonthView.prototype = {
    */
   setDisabled(elem, year, month, date) {
     const s = this.settings;
-    const dateIsDisabled = this.isDateDisabled(year, month, date);
-    elem.removeClass('is-disabled').removeAttr('aria-disabled');
-
-    if ((dateIsDisabled && !s.disable.isEnable) || (!dateIsDisabled && s.disable.isEnable)) {
+    function makeDisable() {
       elem
         .addClass('is-disabled').attr('aria-disabled', 'true')
         .removeClass('is-selected range').removeAttr('aria-selected');
+    }
+
+    // Reset
+    elem.removeClass('is-disabled').removeAttr('aria-disabled');
+
+    if (typeof s.disable.callback === 'function') {
+      $.when(this.isDateDisabled(year, month, date)).then((dateIsDisabled) => {
+        if (dateIsDisabled) {
+          makeDisable();
+        }
+      });
+    } else {
+      const dateIsDisabled = this.isDateDisabled(year, month, date);
+      if ((dateIsDisabled && !s.disable.isEnable) ||
+        (!dateIsDisabled && s.disable.isEnable)) {
+        makeDisable();
+      }
     }
   },
 
@@ -713,6 +732,13 @@ MonthView.prototype = {
    */
   isDateDisabled(year, month, date) {
     const s = this.settings;
+    if (typeof s.disable.callback === 'function') {
+      const deferred = $.Deferred();
+      $.when(s.disable.callback(year, month, date)).then((results) => {
+        deferred.resolve(results);
+      });
+      return deferred.promise();
+    }
     const min = (new Date(s.disable.minDate)).setHours(0, 0, 0, 0);
     const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
@@ -727,6 +753,8 @@ MonthView.prototype = {
       return true;
     }
 
+    const thisYear = d2.getFullYear();
+
     d2 = d2.setHours(0, 0, 0, 0);
 
     // min and max
@@ -734,11 +762,20 @@ MonthView.prototype = {
       return true;
     }
 
+    // years
+    if (/string|number/.test(typeof s.disable.years)) {
+      s.disable.years = [s.disable.years];
+    }
+    for (let i = 0, l = s.disable.years.length; i < l; i++) {
+      if (thisYear === Number(s.disable.years[i])) {
+        return true;
+      }
+    }
+
     // dates
     if (s.disable.dates.length && typeof s.disable.dates === 'string') {
       s.disable.dates = [s.disable.dates];
     }
-
     for (let i = 0, l = s.disable.dates.length; i < l; i++) {
       const d = new Date(s.disable.dates[i]);
       if (d2 === d.setHours(0, 0, 0, 0)) {
