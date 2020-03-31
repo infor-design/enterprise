@@ -408,8 +408,14 @@ Line.prototype = {
 
     if (s.isBubble || s.isScatterPlot) {
       self.svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
-      self.svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
-      self.svg.select('.y.axis .tick line').style('opacity', 1);
+      const firstLineX = self.svg.select('.x.axis .tick line');
+      firstLineX.attr('x2', '-10');
+      if (!s.xAxis || (s.xAxis && !s.xAxis.hideLine)) {
+        firstLineX.style('opacity', 1);
+      }
+      if (!s.yAxis || (s.yAxis && !s.yAxis.hideLine)) {
+        self.svg.select('.y.axis .tick line').style('opacity', 1);
+      }
     }
 
     if (isRTL) {

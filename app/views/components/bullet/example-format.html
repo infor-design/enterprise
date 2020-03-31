@@ -1,0 +1,163 @@
+<div class="row">
+  <div class="full column center">
+    <div id="bullet-example1" class="chart-container"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="full column center">
+    <div id="bullet-example2" class="chart-container"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="full column center">
+    <div id="bullet-example3" class="chart-container"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="full column center">
+    <div id="bullet-example4" class="chart-container"></div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var initCharts = function () {
+    var palette = Soho.theme.themeColors().palette;
+
+    // Example 1 - Format values with d3 formatter string by Dataset
+    var dataset1 = [{
+        data: [{
+          title: 'Format values with formatter string in the settings dataset',
+          ranges: [1500000, 2250000, 3000000, 4000000, 6000000],
+          measures: [2200000, 2700000],
+          markers: [2500000]
+        }],
+        barColors: [
+          palette.turquoise[Soho.theme.uplift ? '20': '10'].value,
+          palette.turquoise[Soho.theme.uplift ? '30': '30'].value,
+          palette.turquoise[Soho.theme.uplift ? '60': '50'].value,
+          palette.turquoise[Soho.theme.uplift ? '80': '70'].value,
+          palette.turquoise[Soho.theme.uplift ? '100': '90'].value
+        ],
+        format: {
+          ranges: '.1s',
+          difference: '.1s'
+        },
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
+
+    $('#bullet-example1').chart({
+      type: 'bullet',
+      dataset: dataset1
+    });
+
+     // Example 2 - Format values with d3 formatter string by Settings
+     var dataset2 = [{
+        data: [{
+          title: 'Format values with formatter string in the settings',
+          ranges: [20000, 25000, 30000],
+          measures: [17000, 21000],
+          markers: [26000]
+        }],
+        barColors: [
+          palette.azure[Soho.theme.uplift ? '30': '20'].value,
+          palette.azure[Soho.theme.uplift ? '50': '40'].value,
+          palette.azure[Soho.theme.uplift ? '70': '60'].value
+        ],
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
+
+    $('#bullet-example2').chart({
+      type: 'bullet',
+      dataset: dataset2,
+      format: {
+        ranges: '.1s',
+        difference: '.1s'
+      }
+    });
+
+    // Example 3 - Format values with callback function by Dataset
+    var dataset3 = [{
+        data: [{
+          title: 'Format values with callback function in the dataset',
+          ranges: [1500000, 2250000, 3000000, 4000000, 6000000],
+          measures: [2200000, 2700000],
+          markers: [2500000]
+        }],
+        barColors: [
+          palette.turquoise[Soho.theme.uplift ? '20': '10'].value,
+          palette.turquoise[Soho.theme.uplift ? '30': '30'].value,
+          palette.turquoise[Soho.theme.uplift ? '60': '50'].value,
+          palette.turquoise[Soho.theme.uplift ? '80': '70'].value,
+          palette.turquoise[Soho.theme.uplift ? '100': '90'].value
+        ],
+        format: {
+          ranges: function (d, i) {
+            return formatToUnits(d);
+          },
+          difference: function (d) {
+            return formatToUnits(d);
+          }
+        },
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
+
+    $('#bullet-example3').chart({
+      type: 'bullet',
+      dataset: dataset3
+    });
+
+     // Example 4 - Format values with callback function by Settings
+     var dataset4 = [{
+        data: [{
+          title: 'Format values with callback function in the settings',
+          ranges: [20000, 25000, 30000],
+          measures: [17000, 21000],
+          markers: [26000]
+        }],
+        barColors: [
+          palette.azure[Soho.theme.uplift ? '30': '20'].value,
+          palette.azure[Soho.theme.uplift ? '50': '40'].value,
+          palette.azure[Soho.theme.uplift ? '70': '60'].value
+        ],
+        lineColors: ['#000000', '#000000', '#000000'],
+        markerColors: ['#000000']
+      }];
+
+    $('#bullet-example4').chart({
+      type: 'bullet',
+      dataset: dataset4,
+      format: {
+        ranges: function (d, i) {
+          return formatToUnits(d);
+        },
+        difference: function (d) {
+          return formatToUnits(d);
+        }
+      }
+    });
+  };
+
+  // Initialize
+  $('html').on('themechanged', function() {
+    initCharts();
+  });
+  initCharts();
+});
+
+// Helper Function ===================================
+function formatToUnits(num, digits) {
+  var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+  var decimal;
+  for (var i = units.length - 1; i >= 0; i--) {
+    decimal = Math.pow(1000, (i + 1));
+    if (num <= -decimal || num >= decimal) {
+      return +(num / decimal).toFixed(digits) + units[i];
+    }
+  }
+  return num;
+}
+</script>

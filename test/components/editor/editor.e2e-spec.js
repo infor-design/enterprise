@@ -181,6 +181,73 @@ describe('Editor dirty tracking tests', () => {
     }
   });
 
+  it('Should reset dirty tracker', async () => {
+    await element(by.id('editor1')).sendKeys('T');
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+
+    const backKey = utils.isMac() || utils.isBS() || utils.isCI() ? 'BACK_SPACE' : 'DELETE';
+    await element(by.id('editor1')).sendKeys(protractor.Key[backKey]);
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
+  });
+
+  it('Should render dirty tracker in the source view', async () => {
+    await element(by.css('button[data-action=source]')).click();
+    await element(by.tagName('textarea')).sendKeys('<b>Test</b>');
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+  });
+});
+
+describe('Editor reset dirty tracking tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/editor/test-dirty-tracking-reset.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {  //eslint-disable-line
+    await utils.checkForErrors();
+  });
+
+  it('Should reset dirty tracker on reset api', async () => {
+    await element(by.id('editor1')).sendKeys('Test');
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+    await element(by.id('reset-dirty')).click();
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
+  });
+
+  it('Should reset dirty tracker on edit', async () => {
+    await element(by.id('editor1')).sendKeys('T');
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
+
+    const backKey = utils.isMac() || utils.isBS() || utils.isCI() ? 'BACK_SPACE' : 'DELETE';
+    await element(by.id('editor1')).sendKeys(protractor.Key[backKey]);
+
+    await browser.driver.wait(protractor.ExpectedConditions
+      .stalenessOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
+
+    expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
+  });
+
   it('Should render dirty tracker in the source view', async () => {
     await element(by.css('button[data-action=source]')).click();
     await element(by.tagName('textarea')).sendKeys('<b>Test</b>');

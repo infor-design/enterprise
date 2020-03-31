@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
     <div role="toolbar" class="toolbar">
@@ -8,17 +7,16 @@
        </div>
 
       <div class="buttonset">
-        <button type="button" id="addRowTop" class="btn">
+        <button type="button" id="add-row-top" class="btn">
           <span>Add Row (top)</span>
         </button>
-        <button type="button" id="addRowBottom" class="btn">
+        <button type="button" id="add-row-bottom" class="btn">
           <span>Add Row (bottom)</span>
         </button>
       </div>
     </div>
 
     <div id="datagrid">
-
     </div>
   </div>
 </div>
@@ -69,7 +67,6 @@
           }
         };
 
-
       // Some Sample Data
       data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
       data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
@@ -79,14 +76,14 @@
       data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
-      //Define Columns for the Grid.
+      // Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Ellipsis, editor: Editors.Input });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions });
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date5});
 
-      //Init and get the api for the grid
+      // Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
@@ -114,13 +111,12 @@
 
       gridApi = $('#datagrid').data('datagrid');
 
-      $('#addRowTop').on('click', function () {
+      $('#add-row-top').on('click', function () {
         gridApi.addRow({ productName: '', productId: '0' });
       });
 
-      $('#addRowBottom').on('click', function () {
+      $('#add-row-bottom').on('click', function () {
         gridApi.addRow({ productName: '', productId: '0' }, 'bottom');
       });
   });
-
 </script>

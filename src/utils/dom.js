@@ -69,12 +69,19 @@ DOM.addClass = function addClass(el, ...className) {
   if (!el) {
     return;
   }
+  let classStr = '';
   for (let i = 0; i < className.length; i++) {
     if (el.classList) {
       el.classList.add(className[i]);
     } else if (!DOM.hasClass(el, [i])) {
-      el.className += ` ${className[i]}`;
+      if (classStr.length) {
+        classStr += ' ';
+      }
+      classStr += className[i];
     }
+  }
+  if (classStr.length) {
+    $(el).addClass(classStr);
   }
 };
 
@@ -89,19 +96,19 @@ DOM.removeClass = function removeClass(el, ...className) {
     return;
   }
 
+  let classStr = '';
   for (let i = 0; i < className.length; i++) {
     if (el.classList) {
       el.classList.remove(className[i]);
-    } else {
-      let newClassName = '';
-      const classes = el.className.split(' ');
-      for (let j = 0; j < classes.length; j++) {
-        if (classes[j] !== className[j]) {
-          newClassName += `${classes[i]} `;
-        }
+    } else if (!DOM.hasClass(el, [i])) {
+      if (classStr.length) {
+        classStr += ' ';
       }
-      this.className = newClassName;
+      classStr += className[i];
     }
+  }
+  if (classStr.length) {
+    $(el).removeClass(classStr);
   }
 };
 

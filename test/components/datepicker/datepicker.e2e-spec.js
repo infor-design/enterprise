@@ -916,7 +916,8 @@ describe('Datepicker Timeformat Tests', () => {
 describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
-    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.datepicker + .icon'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -924,16 +925,13 @@ describe('Datepicker Umalqura Tests', () => {
   });
 
   it('Should render Umalqura monthview', async () => {
-    const datepickerEl = await element(by.id('islamic-date'));
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await await element(by.id('islamic-date')).sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    const todayEl = await element(by.css('.hyperlink.today'));
-    await todayEl.click();
-
+    await await element(by.css('.hyperlink.today')).click();
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
     expect([8, 9, 10]).toContain(value.length);
@@ -953,6 +951,7 @@ describe('Datepicker Month Year Picker Tests', () => {
     const datepickerEl = await element(by.id('month-year'));
     await datepickerEl.sendKeys('01/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', 'April')).click();
     await element(by.css('.picklist-item.down a')).click();

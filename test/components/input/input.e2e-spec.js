@@ -46,6 +46,47 @@ describe('Input example-index tests', () => {
   }
 });
 
+describe('Input Test Reset', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/test-dirty-reset?layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id('department-code'))), config.waitsFor);
+  });
+
+  it('Should be able to reset the dirty indicator', async () => {
+    // Change the input
+    await element(by.id('department-code')).sendKeys('Test');
+    await element(by.id('department-code')).sendKeys(protractor.Key.TAB);
+
+    // Change the dropdown
+    const dropdownEl = await element(by.css('#dropdown-dirty + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.id('dropdown-dirty')).getAttribute('value')).toEqual('a');
+
+    // Change the textarea
+    await element(by.id('description-dirty')).sendKeys('Test');
+    await element(by.id('description-dirty')).sendKeys(protractor.Key.TAB);
+
+    // Click the text box
+    await browser.actions().sendKeys(protractor.Key.SPACE).perform();
+    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+
+    expect(await element.all(by.css('.icon-dirty')).count()).toEqual(4);
+    await element(by.id('btn-save')).click();
+
+    expect(await element.all(by.css('.icon-dirty')).count()).toEqual(0);
+  });
+});
+
 describe('Input tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/input/test-tooltips?layout=nofrills');
