@@ -1110,12 +1110,12 @@ Modal.prototype = {
 
       // Dropdown/Multiselect
       if ($elem.is('div.dropdown, div.multiselect')) {
-        componentHasFocus = $elem.parent().prev('select').data('dropdown').isFocused;
+        componentHasFocus = $elem.parent().prev('select').data('dropdown')?.isFocused;
       }
 
       // Searchfield
       if ($elem.is('.searchfield')) {
-        componentHasFocus = $elem.data('searchfield').isFocused;
+        componentHasFocus = $elem.data('searchfield')?.isFocused;
       }
     });
 
