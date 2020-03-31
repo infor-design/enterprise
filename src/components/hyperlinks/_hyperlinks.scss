@@ -1,36 +1,19 @@
 // Hyperlinks
 //================================================== //
-
-@mixin hyperlink-focus-state {
-  border: 1px solid transparent;
-  border-radius: 2px;
-  content: '';
-  display: block;
-  height: calc(100% + 6px);
-  left: -4px;
-  pointer-events: none;
-  position: absolute;
-  top: -4px;
-  width: calc(100% + 6px);
-
-  @include css3(transition, border-color 100ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
-}
-
 .hyperlink {
   @include antialiased();
 
+  border: 1px solid transparent;
   color: $hyperlink-color;
   cursor: pointer;
   font-size: $theme-size-font-sm;
   line-height: 1.5rem;
+  margin-left: -4px;
+  padding: 3px;
   position: relative;
   text-decoration: underline;
 
-  // Focus states appear in ::after pseudo elements to take
-  // advantage of border radius.
-  &::after {
-    @include hyperlink-focus-state;
-  }
+  @include css3(transition, border-color 100ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
   &:hover:not([disabled]) {
     color: $hyperlink-hover-color;
@@ -49,11 +32,11 @@
   &:focus:not(.hide-focus),
   &:active {
     outline: none;
+  }
 
-    &::after {
-      border-color: $hyperlink-focus-border-color;
-      box-shadow: $focus-box-shadow;
-    }
+  &:focus:not(.hide-focus) {
+    border-color: $hyperlink-focus-border-color;
+    box-shadow: $focus-box-shadow;
   }
 
   &[disabled] {
@@ -66,10 +49,6 @@
 
     &:focus:not(.hide-focus) {
       outline: none;
-
-      &::after {
-        border-color: $disabled-color;
-      }
     }
   }
 
@@ -78,65 +57,33 @@
     color: $hyperlink-color;
     font-size: $theme-size-font-sm;
 
-    &::after {
-      display: none;
-    }
-
-    span {
-      &::after {
-        @include hyperlink-focus-state;
-      }
-    }
-
     .icon {
       color: $hyperlink-color;
       display: inline;
-      height: 12px;
+      height: 11px;
       position: relative;
       top: -1px;
       vertical-align: middle;
-      width: 12px;
-    }
-
-    &:focus:not(.hide-focus) {
-      span {
-        &::after {
-          border-color: $hyperlink-focus-border-color;
-          box-shadow: $focus-box-shadow;
-        }
-      }
+      width: 11px;
     }
   }
 
   &.back {
     .icon {
-      left: -4px;
-      margin-right: -5px;
-    }
-
-    span {
-      &::after {
-        margin-left: -2px;
-        width: calc(100% + 4px);
-      }
+      left: 2px;
+      margin-left: -6px;
+      margin-right: 2px;
     }
   }
 
   &.directional {
     .icon {
-      left: -1px;
-      margin-right: -3px;
-    }
-
-    span {
-      &::after {
-        left: -5px;
-        width: calc(100% - 1px);
-      }
+      left: 1px;
     }
   }
 }
 
+// Compressed Padding in a compact form layout
 .field-short,
 .form-layout-compact .field {
   .hyperlink {
@@ -197,27 +144,19 @@ p .hyperlink {
   }
 }
 
-//Right To Left Styles
+// Right To Left Styles
 html[dir='rtl'] {
   .hyperlink {
-    &.back {
-      .icon {
-        left: auto;
-        margin-left: -10px;
-        margin-right: auto;
-        right: -8px;
-      }
-
-      span::after {
-        margin-left: 0;
-      }
-    }
-
-    &.directional {
-      span::after {
-        margin-left: 18px;
-      }
-    }
+    margin-right: -4px;
   }
 
+  .hyperlink.back {
+    &:focus span {
+      box-shadow: none;
+    }
+
+    .icon {
+      margin-right: 0;
+    }
+  }
 }
