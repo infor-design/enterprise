@@ -719,20 +719,6 @@ Lookup.prototype = {
       }
     }
 
-    // Add unvisited values
-    if (this.initValues) {
-      const initValues = this.initValues.filter(n => !n.visited).map(n => n.value);
-      const data = {};
-      initValues.forEach((v) => {
-        if (value.indexOf(v) === -1) {
-          value += (value !== '' ? this.settings.delimiter : '') + v;
-          data[this.settings.field] = v;
-          this.selectedRows.push({ data });
-        }
-      });
-      delete this.initValues;
-    }
-
     /**
       * Fires on input value change.
       *
