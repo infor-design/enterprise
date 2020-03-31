@@ -7,7 +7,7 @@ const svg = require('../../../src/components/icons/svg.html');
 let aboutEl;
 let aboutObj;
 
-fdescribe('About API', () => {
+describe('About API', () => {
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {
