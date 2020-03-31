@@ -6723,7 +6723,7 @@ Datagrid.prototype = {
     }
 
     pagingInfo.activePage = this.activePage;
-    this.renderPager(pagingInfo, true);
+    this.renderPager(pagingInfo);
   },
 
   /**
