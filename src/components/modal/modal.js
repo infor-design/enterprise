@@ -1217,7 +1217,6 @@ Modal.prototype = {
         });
         renderLoop.register(ignoreFocusCheckTimer);
         firstTabbable.removeClass('hide-focus').focus();
-        console.log('x', firstTabbable);
       }
     });
   },
