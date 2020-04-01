@@ -85,7 +85,7 @@
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
 - `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
 
-(70 Issues Solved this release, Backlog Enterprise 289, Backlog Ng 76, 1033 Functional Tests, 1320 e2e Test)
+(81 Issues Solved this release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Test)
 
 ## v4.26.2
 
