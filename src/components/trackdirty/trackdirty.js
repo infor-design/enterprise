@@ -57,8 +57,9 @@ Trackdirty.prototype = {
         return el.val();
       }
       default: {
-        if (element.is('textarea.editor')) {
-          return this.trimEditorText(element.text());
+        if (element.is('textarea') && element.closest('.editor-source').length === 1) {
+          const value = element.is(':visible') ? element.val() : element.text();
+          return this.trimEditorText(value);
         }
         return element.val();
       }

@@ -3299,7 +3299,7 @@ Datagrid.prototype = {
 
       if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        self.tableBodyLeft.before(self.bodyColGroupLeft);
+        (self.headerRowLeft || self.tableBodyLeft).before(self.bodyColGroupLeft);
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
@@ -3307,7 +3307,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        self.tableBodyRight.before(self.bodyColGroupRight);
+        (self.headerRowLeft || self.tableBodyRight).before(self.bodyColGroupRight);
       }
     }
 
@@ -6723,7 +6723,7 @@ Datagrid.prototype = {
     }
 
     pagingInfo.activePage = this.activePage;
-    this.renderPager(pagingInfo, true);
+    this.renderPager(pagingInfo);
   },
 
   /**

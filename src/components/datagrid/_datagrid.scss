@@ -4251,6 +4251,14 @@ html[dir='rtl'] {
     }
   }
 
+  .datagrid-selection-checkbox {
+    min-width: 20px;
+
+    &.datagrid-checkbox.is-checked::after {
+      left: 15px;
+    }
+  }
+
   // Modal Lists
   table {
     width: auto;
