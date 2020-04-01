@@ -157,9 +157,10 @@
                     if (selectedRows.length === 0) {
                       return;
                     }
-
-                    $('#product-lookup3').val(selectedRows[0].data.productId).focus();
+                    const value = selectedRows[0].data.productId;
                     modal.close();
+
+                    $('#product-lookup3').val(value).focus();
                   },
                   isDefault: true
                 }]

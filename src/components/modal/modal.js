@@ -1208,11 +1208,13 @@ Modal.prototype = {
     // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
     // or a wrapping iframe element is clicked.  This will reset the focus.
     if (this.settings.autoFocus) {
-      $('body').on(`focusin.${self.namespace}`, () => {
+      $('body').on(`focusin.${self.namespace}`, (e) => {
         if (self.dontCheckFocus || !self.isOnTop) {
           return;
         }
-
+        if ($(e.target).closest(self.element).length === 1) {
+          return;
+        }
         if (!self.isFocused) {
           self.dontCheckFocus = true;
           const ignoreFocusCheckTimer = new RenderLoopItem({
