@@ -376,22 +376,31 @@ Hierarchy.prototype = {
     // Ignoring next line. Eslint expects template literals vs string concat.
     // However template literals break JSON.stringify() in this case
     /* eslint-disable */
-    return `${actions.map(a => `
-      <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
-        <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
-          ${a.value}
-          ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
-        </a>
-        ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
-          <ul class="popupmenu">
-            ${a.menu.map(i => `
-            <li data-disabled='${a.disabled}'>
-              <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>${i.value}</a>
-            </li>`).join('')}
-          </ul>
-        </div>` : ''}
-      </li>`).join('')}`;
+    const actionMarkup = actions.map(a => {
+      if (a.hasOwnProperty('data')) {
+        if (a.data.type === 'separator') {
+          return `<li class="separator"></li>`
+        }
+      }
+      return `
+        <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
+          <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
+            ${a.value}
+            ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
+          </a>
+          ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
+            <ul class="popupmenu">
+              ${a.menu.map(i => `
+              <li data-disabled='${a.disabled}'>
+                <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>${i.value}</a>
+              </li>`).join('')}
+            </ul>
+          </div>` : ''}
+        </li>`
+    }).join('');
     /* eslint-enable */
+
+    return actionMarkup;
   },
 
   /**
