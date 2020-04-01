@@ -109,7 +109,7 @@ Lookup.prototype = {
     }
 
     // Add Button
-    this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
+    this.icon = $('<span class="trigger"></span>').append($.createIcon('search-list'));
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
