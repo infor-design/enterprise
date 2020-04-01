@@ -1203,7 +1203,7 @@ Modal.prototype = {
     // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
     // or a wrapping iframe element is clicked.  This will reset the focus.
     $('body').on(`focusin.${self.namespace}`, () => {
-      if (self.dontCheckFocus) {
+      if (self.dontCheckFocus || !self.isOnTop) {
         return;
       }
 
@@ -1217,6 +1217,7 @@ Modal.prototype = {
         });
         renderLoop.register(ignoreFocusCheckTimer);
         firstTabbable.removeClass('hide-focus').focus();
+        console.log('x', firstTabbable);
       }
     });
   },
