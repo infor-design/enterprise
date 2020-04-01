@@ -128,6 +128,22 @@ describe('Editor visual regression tests', () => {
 
       expect(await browser.protractorImageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
     });
+
+    it('Should not visually regress on subtle rows setting', async () => {
+      await utils.setPage('/components/editor/test-rows?theme=soho&variant=contrast&layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-subtle-rows')).toEqual(0);
+    });
+
+    it('Should not visually regress on vibrant rows setting', async () => {
+      await utils.setPage('/components/editor/test-rows?theme=uplift&variant=contrast&layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+      const elem = await element(by.css('.editor-container'));
+
+      expect(await browser.protractorImageComparison.checkElement(elem, 'editor-vibrant-rows')).toEqual(0);
+    });
   }
 });
 

@@ -8,6 +8,7 @@
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
 - `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calcualte the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is prefered. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
+- `[Editor]` Added an option to set the height of the editor in `rows`. If you set this the estimated number for rows can be specified for the source and html pane. It will scroll after that. ([#3688](https://github.com/infor-design/enterprise/issues/3688))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
 - `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
 
@@ -84,7 +85,7 @@
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
 - `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
 
-(70 Issues Solved this release, Backlog Enterprise 289, Backlog Ng 76, 1033 Functional Tests, 1320 e2e Test)
+(81 Issues Solved this release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Test)
 
 ## v4.26.2
 
