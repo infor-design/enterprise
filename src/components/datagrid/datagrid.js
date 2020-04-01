@@ -6601,11 +6601,6 @@ Datagrid.prototype = {
       });
     }
 
-    if (this.settings.toolbar.title && $('.lookup-modal .modal-title')) {
-      const optionTitle = this.settings.toolbar.title;
-      $('.lookup-modal .modal-title').prepend(optionTitle);
-    }
-
     if (this.settings.toolbar && this.settings.toolbar.contextualToolbar) {
       const contextualToolbar = `
         <div class="contextual-toolbar datagrid-contextual-toolbar toolbar is-hidden">
