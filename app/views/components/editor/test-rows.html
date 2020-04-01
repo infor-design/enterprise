@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments">
+        <p>
+          Line One</br>Line Two</br>Line Three</br>Line Four</br>Line Five</br>Line Six</br>Line Seven</br>Line Eight</br>Line Nine</br>Line Ten</br>
+       </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#editor1').editor({
+      rows: {
+        editor: 10,
+        source: 10
+      }
+    });
+  });
+</script>
