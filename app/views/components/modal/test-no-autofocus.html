@@ -1,0 +1,63 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+
+         <button class="btn-secondary" type="button" id="show-modal">Show Modal (no focus)</button>
+         <div class="modal" id="modal-1">
+            <div class="modal-content">
+
+               <div class="modal-header">
+                  <h1 class="modal-title" >Select State</h1>
+               </div>
+
+               <div class="modal-body">
+                  <div class="field">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first-name"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last-name"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="email-address">Email Address</label>
+                    <input type="text" id="email-address"name="email-address"/>
+                  </div>
+
+                  <div class="modal-buttonset">
+                     <button type="button" class="btn-modal">Cancel</button>
+                     <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+<script>
+  $('#show-modal').click(function () {
+    $('body').modal({
+      title: 'Edit Details',
+      content: $('#modal-1'),
+      autoFocus: false,
+      buttons: [{
+        text: 'Cancel',
+        id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        isDefault: true
+      }]
+    });
+  });
+</script>
