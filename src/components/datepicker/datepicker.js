@@ -1144,9 +1144,21 @@ DatePicker.prototype = {
    */
   insertDate(date, isReset) {
     const s = this.settings;
-    const year = (date instanceof Array ? date[0] : date.getFullYear());
-    const month = (date instanceof Array ? date[1] : date.getMonth());
-    const day = (date instanceof Array ? date[2] : date.getDate()).toString();
+    let year = '';
+    let month = '';
+    let day = '';
+
+    if (date instanceof Array) {
+      year = date[0];
+      month = date[1];
+      day = (date[2]).toString();
+    } else if (date instanceof Date && !isNaN(date.getTime())) {
+      year = date.getFullYear();
+      month = date.getMonth();
+      day = (date.getDate()).toString();
+    } else {
+      return;
+    }
 
     // Make sure Calendar is showing that month
     if (this.calendarAPI.currentMonth !== month || this.calendarAPI.currentYear !== year) {
