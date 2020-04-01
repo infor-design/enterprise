@@ -33,7 +33,7 @@ describe('Timepicker example-index tests', () => {
   it('Should open popup on icon click', async () => {
     await element(by.css('.timepicker + .icon')).click();
 
-    expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
+    expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
   it('Should open popup on keypress(arrow-down)', async () => {
@@ -103,7 +103,7 @@ describe('Timepicker 24 Hour tests', () => {
   it('Should open popup on icon click for 24 Hour', async () => {
     await element(by.css('.timepicker + .icon')).click();
 
-    expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
+    expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
   if (!utils.isBS() && !utils.isCI()) {
@@ -139,7 +139,7 @@ describe('Timepicker with seconds example tests', () => {
   it('Should open popup on icon click with seconds', async () => {
     await element(by.css('.timepicker + .icon')).click();
 
-    expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
+    expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
   it('Should set time from popup to field with seconds', async () => {
@@ -150,50 +150,52 @@ describe('Timepicker with seconds example tests', () => {
     expect(await timepickerEl.getAttribute('value')).toEqual('01:00:00 AM');
   });
 
-  it('Should pick time from picker and set to field with seconds', async () => {
-    const timepickerEl = await element(by.id('time-field'));
-    await element(by.css('.timepicker + .icon')).click();
-    let dropdownEl = await element(by.css(ddSelector('hours')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
+  if (!utils.isBS()) {
+    it('Should pick time from picker and set to field with seconds', async () => {
+      const timepickerEl = await element(by.id('time-field'));
+      await element(by.css('.timepicker + .icon')).click();
+      let dropdownEl = await element(by.css(ddSelector('hours')));
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
 
-    expect(await dropdownEl.getText()).toEqual('03');
-    dropdownEl = await element(by.css(ddSelector('minutes')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
+      expect(await dropdownEl.getText()).toEqual('03');
+      dropdownEl = await element(by.css(ddSelector('minutes')));
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
 
-    expect(await dropdownEl.getText()).toEqual('10');
-    dropdownEl = await element(by.css(ddSelector('seconds')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
+      expect(await dropdownEl.getText()).toEqual('10');
+      dropdownEl = await element(by.css(ddSelector('seconds')));
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
 
-    expect(await dropdownEl.getText()).toEqual('15');
-    dropdownEl = await element(by.css(ddSelector('period')));
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.SPACE);
-    await browser.driver.sleep(config.sleep);
+      expect(await dropdownEl.getText()).toEqual('15');
+      dropdownEl = await element(by.css(ddSelector('period')));
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.SPACE);
+      await browser.driver.sleep(config.sleep);
 
-    expect(await dropdownEl.getText()).toEqual('PM');
-    await element(by.css('.set-time')).click();
-    await browser.driver.sleep(config.sleep);
+      expect(await dropdownEl.getText()).toEqual('PM');
+      await element(by.css('.set-time')).click();
+      await browser.driver.sleep(config.sleep);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('03:10:15 PM');
-  });
+      expect(await timepickerEl.getAttribute('value')).toEqual('03:10:15 PM');
+    });
+  }
 
   it('Should not pick date from picker with seconds', async () => {
     const timepickerEl = await element(by.id('time-field'));
