@@ -1113,6 +1113,11 @@ Modal.prototype = {
         componentHasFocus = $elem.parent().prev('select').data('dropdown')?.isFocused;
       }
 
+      // Lookup
+      if ($elem.is('.lookup')) {
+        componentHasFocus = $elem.data('lookup')?.isFocused;
+      }
+
       // Searchfield
       if ($elem.is('.searchfield')) {
         componentHasFocus = $elem.data('searchfield')?.isFocused;

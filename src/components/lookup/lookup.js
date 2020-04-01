@@ -65,6 +65,16 @@ function Lookup(element, settings) {
 Lookup.prototype = {
 
   /**
+   * @returns {boolean} true if the Lookup is currently the active element.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const inputIsActive = this.element.is(active);
+    const wrapperHasActive = this.element.parent('.lookup-wrapper')[0].contains(active);
+    return (inputIsActive || wrapperHasActive);
+  },
+
+  /**
    * @private
    * @returns {void}
    */
