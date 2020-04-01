@@ -63,6 +63,7 @@
 - `[Editor]` Added a font color for rest/none swatch. ([#2035](https://github.com/infor-design/enterprise/issues/2035))
 - `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
+- `[Field Filter]` Fixed an issue where stray text would be shown if the filters are hidden and then shown later. ([#3687](https://github.com/infor-design/enterprise/issues/3687))
 - `[Line Chart]` Fixed an issue where x-axis labels were overlapping for small viewport on homepage widget. ([#2674](https://github.com/infor-design/enterprise/issues/2674))
 - `[Lookup]` Fixed an issue where selected values were clearing when use server side data. ([#588](https://github.com/infor-design/enterprise-ng/issues/588))
 - `[Locale]` Added missing Afrikaans translations. ([#3685](https://github.com/infor-design/enterprise/issues/3685))
