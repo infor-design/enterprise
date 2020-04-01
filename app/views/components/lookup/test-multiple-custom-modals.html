@@ -142,6 +142,7 @@
               $('body').modal({
                 title: 'Add Item',
                 content: $('#modal-datagrid'),
+                autoFocus: false,
                 buttons: [{
                   text: 'Cancel',
                   id: 'modal-button-1',
@@ -152,6 +153,12 @@
                   text: 'Save',
                   id: 'modal-button-2',
                   click: function(e, modal) {
+                    const selectedRows = modal.element.find('#datagrid').data('datagrid').selectedRows();
+                    if (selectedRows.length === 0) {
+                      return;
+                    }
+
+                    $('#product-lookup3').val(selectedRows[0].data.productId).focus();
                     modal.close();
                   },
                   isDefault: true
@@ -160,12 +167,6 @@
             }
          });
       });
-
-      // Close modal upon submit
-      $('#submit').on('click', function () {
-         console.log('Attempting to close modal...');
-         modal.close();
-      })
    </script>
 
 </div>
