@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
+import { DOM } from '../../utils/dom';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
@@ -1095,7 +1096,7 @@ Modal.prototype = {
   get isFocused() {
     let componentHasFocus = false;
     const activeElem = document.activeElement;
-    const focusableElems = $.makeArray(this.element.find(':focusable, [contenteditable], iframe'));
+    const focusableElems = DOM.focusableElems(this.element[0]);
     focusableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
@@ -1109,12 +1110,17 @@ Modal.prototype = {
 
       // Dropdown/Multiselect
       if ($elem.is('div.dropdown, div.multiselect')) {
-        componentHasFocus = $elem.parent().prev('select').data('dropdown').isFocused;
+        componentHasFocus = $elem.parent().prev('select').data('dropdown')?.isFocused;
+      }
+
+      // Lookup
+      if ($elem.is('.lookup')) {
+        componentHasFocus = $elem.data('lookup')?.isFocused;
       }
 
       // Searchfield
       if ($elem.is('.searchfield')) {
-        componentHasFocus = $elem.data('searchfield').isFocused;
+        componentHasFocus = $elem.data('searchfield')?.isFocused;
       }
     });
 
@@ -1201,11 +1207,27 @@ Modal.prototype = {
 
     // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
     // or a wrapping iframe element is clicked.  This will reset the focus.
-    $('body').on(`focusin.${self.namespace}`, () => {
-      if (!self.isFocused) {
-        firstTabbable.removeClass('hide-focus').focus();
-      }
-    });
+    if (this.settings.autoFocus) {
+      $('body').on(`focusin.${self.namespace}`, (e) => {
+        if (self.dontCheckFocus || !self.isOnTop) {
+          return;
+        }
+        if ($(e.target).closest(self.element).length === 1) {
+          return;
+        }
+        if (!self.isFocused) {
+          self.dontCheckFocus = true;
+          const ignoreFocusCheckTimer = new RenderLoopItem({
+            duration: 20,
+            timeoutCallback() {
+              delete self.dontCheckFocus;
+            }
+          });
+          renderLoop.register(ignoreFocusCheckTimer);
+          firstTabbable.removeClass('hide-focus').focus();
+        }
+      });
+    }
   },
 
   /**
@@ -1263,6 +1285,8 @@ Modal.prototype = {
       modalContainers.not(this.root).removeAttr('aria-hidden');
       $('.overlay:not(.busy)').remove();
     }
+
+    delete this.dontCheckFocus;
 
     // Fire Events
     self.element.trigger('close', self.isCancelled);

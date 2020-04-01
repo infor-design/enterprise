@@ -65,6 +65,16 @@ function Lookup(element, settings) {
 Lookup.prototype = {
 
   /**
+   * @returns {boolean} true if the Lookup is currently the active element.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const inputIsActive = this.element.is(active);
+    const wrapperHasActive = this.element.parent('.lookup-wrapper')[0].contains(active);
+    return (inputIsActive || wrapperHasActive);
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -109,7 +119,7 @@ Lookup.prototype = {
     }
 
     // Add Button
-    this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
+    this.icon = $('<span class="trigger"></span>').append($.createIcon('search-list'));
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
@@ -213,6 +223,12 @@ Lookup.prototype = {
    */
   openDialog(e) {
     const self = this;
+
+    // Don't try to re-open the lookup if it's already open.
+    if (this.isOpen) {
+      return;
+    }
+
     /**
       * Fires before open dialog.
       *
@@ -221,7 +237,6 @@ Lookup.prototype = {
       * @property {object} event - The jquery event object
       */
     const canOpen = self.element.triggerHandler('beforeopen');
-
     if (canOpen === false) {
       return;
     }
@@ -234,6 +249,8 @@ Lookup.prototype = {
       self.settings.click(e, this, self.settings.clickArguments);
       return;
     }
+
+    this.isOpen = true;
 
     if (this.settings.beforeShow) {
       const response = function (grid) {
@@ -397,6 +414,7 @@ Lookup.prototype = {
       .off('close.lookup')
       .on('close.lookup', () => {
         self.element.focus();
+        delete self.isOpen;
         /**
           * Fires on close dialog.
           *

@@ -1,25 +1,20 @@
-
-
 <div class="row">
   <div class="twelve columns">
 
     <div class="field">
       <label for="product-lookup" class="label">Products</label>
-      <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text">
+      <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
     </div>
 
   </div>
 </div>
 
 <script>
-
-    //Init and get the api for the grid
-    $('#product-lookup').lookup({
-        //field: 'productId',
-        click: function (a, b, c) {
-          console.log(a, b, c);
-          alert('Open Popup');
-        }
-    });
-
+  // Init and get the api for the grid
+  $('#product-lookup').lookup({
+      click: function (a, b, c) {
+        console.log(a, b, c);
+        alert('Open Popup');
+      }
+  });
 </script>

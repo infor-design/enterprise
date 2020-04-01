@@ -55,7 +55,7 @@ FileUpload.prototype = {
     const instructions = Locale.translate('FileUpload');
     const label = $(`<label for="${id}-filename">${elem.text()} <span class="audible">${instructions}</span></label>`);
     const shadowField = $(`<input readonly id="${id}-filename" class="fileupload-background-transparent${elemClass}" type="text">`);
-    const svg = `<span class="trigger" tabindex="-1">${$.createIcon('folder')}</span>`;
+    const svg = `<span class="trigger">${$.createIcon('folder')}</span>`;
     const svgClose = `<span class="trigger-close" tabindex="-1">${$.createIcon('close')}</span>`;
 
     if (!hasInlineLabel) {
