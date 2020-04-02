@@ -4,6 +4,8 @@
 
 ### v4.28.0 Features
 
+- `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
+
 ### v4.28.0 Fixes
 
 - `[Bubble Chart]` Fixed an issue where an extra axis line was shown when using the domain formatter. ([#501](https://github.com/infor-design/enterprise/issues/501))
