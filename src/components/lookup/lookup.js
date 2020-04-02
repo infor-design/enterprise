@@ -383,9 +383,15 @@ Lookup.prototype = {
       }];
     }
 
+    // if editor option title is not available, column name will be used.
+    const col = self.settings.options.columns;
+    self.colName = col.filter(x => x.id === 'productName').map(x => x.name)[0];
+
+    const lookupTitle = (!self.settings.options.toolbar || !self.settings.options.toolbar.title)
+      ? self.colName : self.settings.options.toolbar.title;
+
     const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
       this.settings.options.toolbar.keywordFilter;
-    const lookupTitle = self.settings.options.toolbar.title;
 
     $('body').modal({
       title: lookupTitle,
@@ -413,15 +419,6 @@ Lookup.prototype = {
     self.modal = $('body').data('modal');
     if (!this.settings.title) {
       self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
-    }
-
-    // if editor option title is not available, column name will be used.
-    if (!lookupTitle) {
-      const modalTitle = self.modal.element.find('.modal-title');
-      const col = self.settings.options.columns;
-
-      self.colName = col.filter(x => x.id === 'productName').map(x => x.name);
-      modalTitle.prepend(self.colName[0]);
     }
 
     self.modal.element.off('afterclose.lookup').on('afterclose.lookup', () => {
