@@ -147,7 +147,7 @@
                   text: 'Cancel',
                   id: 'modal-button-1',
                   click: function(e, modal) {
-                    $('#product-lookup3').focus();
+                    //$('#product-lookup3').focus();
                     modal.close();
                   }
                 }, {
@@ -161,7 +161,7 @@
                     const value = selectedRows[0].data.productId;
                     modal.close();
 
-                    $('#product-lookup3').val(value).focus();
+                    $('#product-lookup3').val(value); /*.focus();*/
                   },
                   isDefault: true
                 }]
