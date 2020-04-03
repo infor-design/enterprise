@@ -527,7 +527,7 @@ DatePicker.prototype = {
     const self = this;
     const s = this.settings;
     const timeOptions = {};
-    this.lastValue = this.currentDate?.getTime();
+    this.lastValue = typeof this.currentDate === 'string' ? this.currentDate : this.currentDate?.getTime();
 
     if ((this.element.is(':disabled') || this.element.attr('readonly')) && this.element.closest('.monthview').length === 0) {
       return;
@@ -1216,8 +1216,9 @@ DatePicker.prototype = {
       }));
     }
 
-    const isChanged = this.lastValue !== this.currentDate?.getTime();
-    this.lastValue = this.currentDate?.getTime();
+    const newValue = typeof this.currentDate === 'string' ? this.currentDate : this.currentDate?.getTime();
+    const isChanged = this.lastValue !== newValue;
+    this.lastValue = newValue;
 
     if (trigger && isChanged) {
       if (s.range.useRange) {
