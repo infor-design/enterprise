@@ -380,12 +380,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          self.element.focus();
+          modal.oldActive = self.element;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
+          modal.oldActive = self.element;
           modal.close();
           self.insertRows();
         },
@@ -397,7 +398,7 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          self.element.focus();
+          modal.oldActive = self.element;
           modal.close();
         }
       }];
@@ -407,6 +408,7 @@ Lookup.prototype = {
       this.settings.options.toolbar.keywordFilter;
 
     $('body').modal({
+      triggerButton: this.element,
       title: labelText,
       content,
       buttons,
@@ -416,7 +418,6 @@ Lookup.prototype = {
     })
       .off('close.lookup')
       .on('close.lookup', () => {
-        self.element.focus();
         delete self.isOpen;
         /**
           * Fires on close dialog.

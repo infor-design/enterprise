@@ -134,34 +134,41 @@
            redrawOnResize: false,
            rowHeight: 'short',
            selectable: 'multiple',
-           toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+           toolbar: {
+             title: 'Compressors',
+             actions: true,
+             rowHeight: true,
+             personalize: true
+           }
          });
 
          $('#product-lookup3').lookup({
-            click: function (a, b, c) {
+            click: function (lookupEvt, lookupAPI, clickArgs) {
               $('body').modal({
+                triggerButton: $('#product-lookup3'),
                 title: 'Add Item',
                 content: $('#modal-datagrid'),
                 autoFocus: false,
                 buttons: [{
                   text: 'Cancel',
                   id: 'modal-button-1',
-                  click: function(e, modal) {
-                    //$('#product-lookup3').focus();
+                  click: function(modalEvt, modal) {
+                    modal.oldActive = lookupAPI.element;
                     modal.close();
                   }
                 }, {
                   text: 'Save',
                   id: 'modal-button-2',
-                  click: function(e, modal) {
+                  click: function(modalEvt, modal) {
                     const selectedRows = modal.element.find('#datagrid').data('datagrid').selectedRows();
                     if (selectedRows.length === 0) {
                       return;
                     }
                     const value = selectedRows[0].data.productId;
-                    modal.close();
 
-                    $('#product-lookup3').val(value); /*.focus();*/
+                    modal.oldActive = lookupAPI.element;
+                    modal.close();
+                    lookupAPI.val(value);
                   },
                   isDefault: true
                 }]

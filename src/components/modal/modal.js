@@ -1258,19 +1258,8 @@ Modal.prototype = {
     // Fire Events
     self.element.trigger('close', self.isCancelled);
 
-    // Restore focus
-    if (!this.settings.noRefocus) {
-      if (this.isFocused) {
-        document.activeElement.blur();
-      }
-      if (!this.oldActive && this.settings.triggerButton) {
-        this.oldActive = this.useJqEl(this.settings.triggerButton);
-      }
-      if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
-        this.oldActive.focus();
-      } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
-        this.trigger.focus();
-      }
+    if (!this.settings.noRefocus && this.isFocused) {
+      document.activeElement.blur();
     }
 
     // close tooltips
@@ -1303,6 +1292,18 @@ Modal.prototype = {
 
         if (!noRefresh) {
           modalManager.refresh();
+        }
+
+        // Restore focus to the correct element.
+        if (!self.settings.noRefocus) {
+          if (!self.oldActive && self.settings.triggerButton) {
+            self.oldActive = self.useJqEl(self.settings.triggerButton);
+          }
+          if (self.oldActive && $(self.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
+            self.oldActive.focus();
+          } else if (self.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
+            self.trigger.focus();
+          }
         }
       }
     });
@@ -1383,6 +1384,12 @@ Modal.prototype = {
       self.trigger.off(`click.${self.namespace}`);
 
       self.element[0].removeAttribute('data-modal');
+
+      const $wrapperElem = self.element.parent('.modal-wrapper');
+      if ($wrapperElem.length) {
+        $wrapperElem.parent().append(self.element);
+        $wrapperElem.remove();
+      }
 
       const destroyTimer = new RenderLoopItem({
         duration: 21, // should match the length of time needed for the overlay to fade out
