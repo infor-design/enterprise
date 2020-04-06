@@ -754,6 +754,18 @@ const editors = {
         row, cell, value, container, column, event, grid, rowData
       );
 
+      if (!column.editorOptions) {
+        column.editorOptions = {};
+      }
+      if (!column.editorOptions.options) {
+        column.editorOptions.options = {};
+      }
+      if (!column.editorOptions.options.toolbar) {
+        column.editorOptions.options.toolbar = {};
+      }
+      if (!column.editorOptions.options.toolbar.title) {
+        column.editorOptions.options.toolbar.title = column.name;
+      }
       this.input.lookup(column.editorOptions);
 
       // Append the Lookup's clickArguments with some row/col meta-data
