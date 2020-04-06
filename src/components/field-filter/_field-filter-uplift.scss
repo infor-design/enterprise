@@ -18,22 +18,69 @@
   }
 }
 
-// Why is Firefox different?
-html:not(.is-firefox) {
-  .field.fieldfilter-wrapper {
-    div:first-of-type {
-      height: auto;
+// Firefox
+.is-firefox {
+  .field.fieldfilter-wrapper div:first-of-type,
+  .field-short.fieldfilter-wrapper div:first-of-type {
+    height: 38px;
+
+    .listoption-icon {
+      top: 12px;
     }
   }
-}
 
-.is-firefox {
   .dropdown-list.ffdropdown {
     > .trigger {
       margin-left: -40px;
 
       .icon {
-        left: -1px;
+        left: 2px !important;
+        top: 7px !important;
+      }
+    }
+
+    &.is-ontop {
+      > .trigger {
+        .icon {
+          top: 11px !important;
+        }
+      }
+    }
+  }
+
+  &:not(.is-mac) {
+    .dropdown-list.ffdropdown {
+      > .trigger {
+        .icon {
+          top: 6px !important;
+        }
+      }
+
+      &.is-ontop {
+        > .trigger {
+          .icon {
+            top: 14px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Safari
+.is-safari {
+  .dropdown-list.ffdropdown {
+    > .trigger {
+      .icon {
+        top: 8px !important;
+      }
+    }
+
+    &.is-ontop {
+      > .trigger {
+        .icon {
+          top: 10px !important;
+        }
       }
     }
   }
