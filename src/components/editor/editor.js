@@ -520,6 +520,9 @@ Editor.prototype = {
 
     $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
       this.setRowsHeight();
+      if (!(this.sourceView.hasClass('hidden'))) {
+        this.adjustSourceLineNumbers();
+      }
     });
 
     this.setupTextareaEvents();
@@ -750,6 +753,11 @@ Editor.prototype = {
     return this;
   },
 
+  /**
+   * Set the heights and adjust the line number feature.
+   * @private
+   * @returns {void}
+   */
   adjustSourceLineNumbers() {
     const container = this.textarea.parent();
     const lineHeight = parseInt(getComputedStyle(this.textarea[0]).lineHeight, 10);
@@ -787,8 +795,9 @@ Editor.prototype = {
         numberList.find('li').slice(-(i)).remove();
       }
       this.lineNumbers = lineNumberCount;
-      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     }
+
+    container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     if (scrollHeight !== this.textarea[0].scrollHeight) {
       this.adjustSourceLineNumbers();
       return;

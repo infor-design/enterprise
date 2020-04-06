@@ -636,6 +636,7 @@
 }
 
 .editor-source {
+  background-color: $editor-bg-color;
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
