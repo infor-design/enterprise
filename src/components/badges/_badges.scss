@@ -464,6 +464,17 @@ html {
         }
       }
     }
+
+    .datagrid {
+      .tag,
+      .badge {
+        button {
+          .icon {
+            top: -2px;
+          }
+        }
+      }
+    }
   }
 
   &.is-firefox,
@@ -473,6 +484,17 @@ html {
       button {
         .icon {
           top: 0;
+        }
+      }
+    }
+
+    .datagrid {
+      .tag,
+      .badge {
+        button {
+          .icon {
+            top: 1px;
+          }
         }
       }
     }
