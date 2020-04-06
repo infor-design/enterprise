@@ -1,6 +1,6 @@
 module.exports = (req, res) => {
-  const menPath = '/images/';
-  const womenPath = '/images/';
+  const menPath = `${res.opts.basepath}images/`;
+  const womenPath = `${res.opts.basepath}images/`;
   const orgdata = [{
     id: '1',
     Name: 'Jonathan Cargill',
