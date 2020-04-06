@@ -56,12 +56,11 @@ describe('Modal init example-modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-engaged'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal.is-visible'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
     await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
     await browser.driver.sleep(config.sleep);
-    await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
     await browser.driver
       .wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-engaged'))), config.waitsFor);
 
