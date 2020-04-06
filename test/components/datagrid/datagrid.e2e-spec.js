@@ -1386,7 +1386,7 @@ describe('Datagrid Date default values', () => {
   });
 });
 
-fdescribe('Datagrid Alert and Badges Tests', () => { //eslint-disable-line
+describe('Datagrid Alert and Badges Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
 
