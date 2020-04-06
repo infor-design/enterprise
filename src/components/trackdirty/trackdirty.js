@@ -74,6 +74,7 @@ Trackdirty.prototype = {
    */
   trimEditorText(text) {
     return text.trim()
+      .replace(/>\s+</g, '')
       .replace(/\s+/g, ' ')
       .replace(' has-tooltip', '')
       .replace(/<br( \/)?>/g, '<br>\n')
@@ -248,12 +249,12 @@ Trackdirty.prototype = {
           } else {
             current = textArea.text();
           }
-          current = this.trimEditorText(current);
-
           if (this.isIe || this.isIeEdge) {
             current = input[0].innerHTML;
           }
+          current = this.trimEditorText(current);
         }
+
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
