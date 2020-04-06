@@ -1387,7 +1387,6 @@ Modal.prototype = {
 
       const $wrapperElem = self.element.parent('.modal-wrapper');
       if ($wrapperElem.length) {
-        $wrapperElem.parent().append(self.element);
         $wrapperElem.remove();
       }
 

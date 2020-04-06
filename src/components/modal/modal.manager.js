@@ -167,7 +167,7 @@ ModalManager.prototype = {
       throw new Error('The provided API is not a Modal API, and cannot be unregistered.');
     }
 
-    this.modals = this.modals.filter(thisAPI => $(thisAPI.element).is(api.element));
+    this.modals = this.modals.filter(thisAPI => !($(thisAPI.element).is(api.element)));
   },
 
   /**
