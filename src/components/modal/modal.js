@@ -942,8 +942,21 @@ Modal.prototype = {
       this.element.find(':focusable').first().focus();
     });
 
+    function callOpenEvent(thisElem) {
+      /**
+      * Fires when the modal opens.
+      * @event open
+      * @memberof Modal
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
+      self.element.trigger('open', [thisElem]);
+    }
+
     function focusElement(thisElem) {
-      let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
+      if (!self.settings.autoFocus) {
+        return;
+      }
 
       // When changes happen within the subtree on the Modal, rebuilds the internal hash of
       // tabbable elements used for retaining focus.
@@ -953,27 +966,12 @@ Modal.prototype = {
       self.changeObserver.observe(self.element[0], { childList: true, subtree: true });
       self.setFocusableElems();
 
-      thisElem.setFocus('first');
-
-      /**
-      * Fires when the modal opens.
-      * @event open
-      * @memberof Modal
-      * @property {object} event - The jquery event object
-      * @property {object} ui - The dialog object
-      */
-      self.element.trigger('open', [thisElem]);
-
+      let focusElem = $(self.focusableElems).not('.modal-header .searchfield').first();
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
-
       if (focusElem.length === 1 && focusElem.is('.btn-modal')) {
         focusElem = thisElem.element.find('.btn-modal-primary');
-      }
-
-      if (!self.settings.autoFocus) {
-        return;
       }
 
       // If the selected element is a tab, actually make sure it's the "selected" tab.
@@ -1014,6 +1012,7 @@ Modal.prototype = {
       duration: 20,
       timeoutCallback() {
         focusElement(self);
+        callOpenEvent(self);
       }
     });
     renderLoop.register(focusElementTimer);
@@ -1119,12 +1118,12 @@ Modal.prototype = {
     let componentHasFocus = false;
     const activeElem = document.activeElement;
 
-    if (!this.tabbableElems) {
+    if (!this.focusableElems) {
       this.setFocusableElems();
     }
 
     // Check each match for IDS components that may have a more complex focus routine
-    this.tabbableElems.forEach((elem) => {
+    this.focusableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
       }
@@ -1178,9 +1177,9 @@ Modal.prototype = {
    */
   setFocusableElems() {
     const elems = DOM.focusableElems(this.element[0]);
-    this.tabbableElems = elems;
-    this.tabbableElems.first = elems[0];
-    this.tabbableElems.last = elems[elems.length - 1];
+    this.focusableElems = elems;
+    this.focusableElems.first = elems[0];
+    this.focusableElems.last = elems[elems.length - 1];
   },
 
   /**
@@ -1193,17 +1192,17 @@ Modal.prototype = {
       return;
     }
 
-    if (!this.tabbableElems) {
+    if (!this.focusableElems) {
       this.setFocusableElems();
     }
 
     let target;
     switch (place) {
       case 'last':
-        target = this.tabbableElems.last;
+        target = this.focusableElems.last;
         break;
       case 'first':
-        target = this.tabbableElems.first;
+        target = this.focusableElems.first;
         break;
       default:
         break;
@@ -1379,7 +1378,7 @@ Modal.prototype = {
         delete self.buttonsetAPI;
         delete self.buttonsetElem;
       }
-      delete self.tabbableElems;
+      delete self.focusableElems;
 
       self.trigger.off(`click.${self.namespace}`);
 
