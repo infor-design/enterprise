@@ -874,8 +874,7 @@ Calendar.prototype = {
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
-      // throw this case out or you can click the wrong day
-      if (!key || this.isSwitchingMonth || this.modalVisible()) {
+      if (!key || this.isSwitchingMonth) {
         return;
       }
       const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
@@ -1210,9 +1209,8 @@ Calendar.prototype = {
         strategies: ['flip', 'nudge', 'shrink-y'],
         parentXAlignment: 'center',
         parentYAlignment: 'center',
-        placement: placementArgs,
+        placement: placementArgs
       },
-      offset: { x: 15 },
       title: event.title || event.subject,
       trigger: 'immediate',
       keepOpen: true,
@@ -1284,6 +1282,23 @@ Calendar.prototype = {
         });
       });
 
+    $('#calendar-popup').one('tooltipafterplace.calendar', (e, args) => {
+      const arrow = args.element.find('.arrow');
+      const topValue = parseInt(arrow.css('margin-top'), 10);
+      if (dayObj.elem.parent().index() >= 3) {
+        const offsetTop = parseInt(args.element.offset().top, 10);
+        const diff = offsetTop + args.element.height();
+        const height = $('html').height() + 10;
+
+        if (diff > height) {
+          const adjustment = (offsetTop - (diff - height) - 25);
+          args.element.css('top', `${adjustment}px`);
+          arrow.css('margin-top', `${topValue + (offsetTop - adjustment) - 18}px`);
+        }
+      } else if (args.element.height() > 580) {
+        arrow.css('margin-top', `${topValue - 18}px`);
+      }
+    });
     this.activeElem = eventTarget;
   },
 
