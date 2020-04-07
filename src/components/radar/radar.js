@@ -192,8 +192,8 @@ Radar.prototype = {
       dims.h -= (420 - dims.w) * adjust;
     }
     dims.transform = {
-      x: (dims.w / 2) - ((s.margin.left + s.margin.right) / 2),
-      y: ((dims.h / 2) * dims.extra) - ((s.margin.top + s.margin.bottom) / 2)
+      x: (dims.w / 2) + ((s.margin.left + s.margin.right) / 2),
+      y: ((dims.h / 2) * dims.extra) + ((s.margin.top + s.margin.bottom) / 2)
     };
 
     // Get the name text from given data
@@ -232,8 +232,8 @@ Radar.prototype = {
 
     // Initiate the radar chart SVG
     const svg = d3.select(elem).append('svg')
-      .attr('width', dims.w - (s.margin.left + s.margin.right))
-      .attr('height', dims.h - (s.margin.top + s.margin.bottom))
+      .attr('width', dims.w + (s.margin.left + s.margin.right))
+      .attr('height', dims.h + (s.margin.top + s.margin.bottom))
       .attr('class', 'chart-radar');
 
     this.svg = svg; // Pointer for selection states
