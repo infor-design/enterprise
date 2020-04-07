@@ -51,6 +51,7 @@
     $('#product-lookup, #product-mask').lookup({
       field: 'productId',
       autoApply: true,
+      autoFocus: false,
       options: {
         columns: columns,
         dataset: data,
@@ -65,7 +66,7 @@
           filterable: true,
           views: true,
           rowHeight: false,
-          collapsibleFilter: false,
+          collapsibleFilter: true,
           fullWidth: true
         }
       }
