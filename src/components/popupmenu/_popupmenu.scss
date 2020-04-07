@@ -616,6 +616,11 @@ html[dir='rtl'] {
       padding: 0 10px 0 30px;
     }
 
+    .shortcut-text {
+      float: left;
+      margin-right: $theme-number-spacing-base * 2;
+    }
+
     &.has-icons,
     &.is-selectable {
       > li a {
