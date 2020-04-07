@@ -153,7 +153,6 @@ ModalManager.prototype = {
     }
 
     this.checkRootElements();
-
     const hasInstance = this.modals.filter(thisAPI => $(thisAPI.element).is(api)) > 0;
     if (!hasInstance) {
       this.modals.push(api);
@@ -169,6 +168,7 @@ ModalManager.prototype = {
       throw new Error('The provided API is not a Modal API, and cannot be unregistered.');
     }
 
+    this.checkRootElements();
     this.modals = this.modals.filter(thisAPI => !($(thisAPI.element).is(api.element)));
   },
 
