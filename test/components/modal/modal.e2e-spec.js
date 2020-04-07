@@ -56,13 +56,16 @@ describe('Modal init example-modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal.is-visible'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.modal.is-visible'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
-    await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
+
     await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+
     await browser.driver
-      .wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-engaged'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.modal'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
@@ -130,6 +133,7 @@ describe('Modal example-close-btn tests', () => {
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
+    await browser.driver.sleep(config.sleep);
     const closeBtn = await element(by.css('button.btn-close'));
     await closeBtn.click();
     await browser.driver

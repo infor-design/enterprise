@@ -182,7 +182,7 @@ ModalManager.prototype = {
     let opacity = 0;
     const active = this.currentlyActive;
     if (active) {
-      opacity = this.currentlyActive.settings.opacity;
+      opacity = this.currentlyActive.settings.overlayOpacity;
     }
 
     this.overlayElem.style.opacity = opacity ? `${opacity}` : '';
