@@ -152,6 +152,8 @@ ModalManager.prototype = {
       throw new Error('The provided API is not a Modal API, and cannot be registered.');
     }
 
+    this.checkRootElements();
+
     const hasInstance = this.modals.filter(thisAPI => $(thisAPI.element).is(api)) > 0;
     if (!hasInstance) {
       this.modals.push(api);
@@ -184,6 +186,26 @@ ModalManager.prototype = {
     }
 
     this.overlayElem.style.opacity = opacity ? `${opacity}` : '';
+  },
+
+  /**
+   * Checks that the root element and the overlay exist.  In some environments (Angular),
+   * the root node may become modified after these elements are drawn, and links may need
+   * to be re-established.
+   * @private
+   * @returns {void}
+   */
+  checkRootElements() {
+    const rootElem = document.querySelector('#ids-modal-root');
+    if (rootElem instanceof HTMLElement) {
+      return;
+    }
+
+    if (this.rootElem instanceof HTMLElement) {
+      document.body.appendChild(this.rootElem);
+    } else {
+      this.render();
+    }
   },
 
   /**
