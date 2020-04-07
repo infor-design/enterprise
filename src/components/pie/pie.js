@@ -106,6 +106,8 @@ Pie.prototype = {
       return this;
     }
 
+    this.initialSelectCall = false;
+
     this
       .build()
       .handleEvents();
@@ -378,7 +380,7 @@ Pie.prototype = {
           task: isSelected ? 'unselected' : 'selected',
           container: self.element,
           selector: isSelected ? '.chart-container .is-selected' : this,
-          isTrigger: !isSelected,
+          isTrigger: self.initialSelectCall ? false : !isSelected,
           d: d.data,
           i,
           type: self.settings.type,
@@ -386,7 +388,7 @@ Pie.prototype = {
           svg: self.svg
         });
 
-        if (isSelected) {
+        if (isSelected && !self.initialSelectCall) {
           /**
            * Fires when arc/slice is selected.
            * @event selected
@@ -617,10 +619,12 @@ Pie.prototype = {
 
       if (d.data.selected && selected < 1) {
         selected++;
+        self.initialSelectCall = true;
         selector = d3.select(this);
         selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), i);
       }
     });
+    this.initialSelectCall = false;
   },
 
   /**

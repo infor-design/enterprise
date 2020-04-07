@@ -85,6 +85,7 @@ Bar.prototype = {
   init() {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
+    this.initialSelectCall = false;
     this
       .build()
       .handleEvents();
@@ -143,6 +144,7 @@ Bar.prototype = {
     const mediumViewport = innerWidth >= 481 && innerWidth <= 992;
     const largeViewport = innerWidth > 992;
     let dataset = this.settings.dataset;
+    this.dataset = dataset;
 
     const margins = {
       top: 20,
@@ -621,12 +623,12 @@ Bar.prototype = {
           task: (isSelected ? 'unselected' : 'selected'),
           container: self.element,
           selector: this,
-          isTrigger: !isSelected,
+          isTrigger: self.initialSelectCall ? false : !isSelected,
           triggerGroup: self.settings.isGrouped,
           d,
           i,
           type: self.settings.type,
-          dataset,
+          dataset: self.settings.dataset,
           isSingle: self.isSingular,
           isGrouped: self.settings.isGrouped,
           isStacked: self.settings.isStacked,
@@ -634,7 +636,7 @@ Bar.prototype = {
           clickedLegend: self.settings.clickedLegend
         });
 
-        if (isSelected) {
+        if (isSelected && !self.initialSelectCall) {
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
         }
       })
@@ -754,11 +756,12 @@ Bar.prototype = {
    * @private
    */
   setInitialSelected() {
-    let selected = 0;
     const self = this;
     const legendsNode = self.svg.node().parentNode.nextSibling;
     const legends = d3.select(legendsNode);
     const isLegends = legends.node() && legends.classed('chart-legend');
+    let isLegendsCall = false;
+    let selected = 0;
     let barIndex;
     let selector;
     let isStackedGroup;
@@ -779,10 +782,29 @@ Bar.prototype = {
 
     const setSelectedGroup = function () {
       const groups = self.svg.selectAll('.series-group');
-      if (groups.nodes().length) { // eslint-disable-line
-        groups.each(function () {
+      if (groups.nodes().length) {
+        const getSelected = arr => arr.reduce((acc, n) => (n.selected ? acc + 1 : acc), 0);
+        const sel = { groups: [], itemsInGroup: 0 };
+        groups.each(function (d, i) {
           setSelectedBar(this);
+          if (Array.isArray(d)) {
+            sel.itemsInGroup = d.length;
+            if (selected > 0) {
+              sel.groups.push({ i, d, totalSel: getSelected(d) });
+            }
+          }
         });
+        sel.gLen = sel.groups.length;
+        if (!isLegendsCall && self.settings.isGrouped
+          && sel.gLen === groups.size() && sel.groups[0]?.totalSel === 1) {
+          isLegendsCall = true;
+          for (let i = 0, l = sel.groups[0].d; i < l; i++) {
+            if (sel.groups[0].d[i].selected) {
+              barIndex = i;
+              break;
+            }
+          }
+        }
       }
     };
 
@@ -805,14 +827,17 @@ Bar.prototype = {
     }
 
     if (selected > 0) {
-      if (isStackedGroup) {
+      if (isStackedGroup || isLegendsCall) {
         if (isLegends) {
-          $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          this.initialSelectCall = true;
+          $(legends.node()).find('.chart-legend-item').eq(barIndex).trigger('click.chart');
         }
       } else {
+        this.initialSelectCall = true;
         selector.on('click').call(selector.node(), selector.datum(), barIndex);
       }
     }
+    this.initialSelectCall = false;
   },
 
   /**

@@ -177,6 +177,9 @@ Radar.prototype = {
     if (s.legendPlacement === 'right') {
       dims.w *= 0.75;
     }
+    if (s.showLegend && dims.w < 420 && !s.margin.bottom) {
+      s.margin.bottom -= 15;
+    }
     dims.transform = {
       x: (dims.w / 2) + ((s.margin.left + s.margin.right) / 2),
       y: ((dims.h / 2) * dims.extra) + ((s.margin.top + s.margin.bottom) / 2)
@@ -347,11 +350,13 @@ Radar.prototype = {
         const isSelected = selectElem.classed('is-selected');
         svg.selectAll('.is-selected').classed('is-selected', false);
         svg.selectAll('.is-not-selected').classed('is-not-selected', false);
+        charts.clearSelected(s.dataset);
 
         if (!isSelected) {
           svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
           selectElem.classed('is-selected', true).classed('is-not-selected', false);
           selectElem.style('fill-opacity', s.opacityArea);
+          s.dataset[i].selected = true;
         }
 
         const triggerData = {
@@ -490,7 +495,21 @@ Radar.prototype = {
    * @private
    */
   setInitialSelected() {
-
+    const s = this.settings;
+    if (Array.isArray(s.dataset)) {
+      for (let i = 0, l = s.dataset.length; i < l; i++) {
+        if (s.dataset[i].selected) {
+          const elems = this.svg.selectAll('.chart-radar-area').nodes();
+          const selectElem = d3.select(elems[i]);
+          this.svg.selectAll('.is-selected').classed('is-selected', false);
+          this.svg.selectAll('.is-not-selected').classed('is-not-selected', false);
+          this.svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
+          selectElem.classed('is-selected', true).classed('is-not-selected', false);
+          selectElem.style('fill-opacity', s.opacityArea);
+          break;
+        }
+      }
+    }
   },
 
   /**
