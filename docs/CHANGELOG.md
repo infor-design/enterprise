@@ -12,6 +12,7 @@
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Hierarchy]` Added support for separators in the actions menu on a hierarchy leaf. ([#3636](https://github.com/infor-design/enterprise/issues/3636))
+- `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 
 ## v4.27.0
 
