@@ -32,7 +32,6 @@
   &.is-small {
     &.has-right-legend {
       display: block;
-      // height: inherit;
 
       .chart-legend {
         margin: 0;
@@ -44,8 +43,6 @@
           display: inline-block;
           height: 28px;
           margin: 2px 0;
-          // position: relative;
-          // top: 27px;
           width: auto;
         }
 
