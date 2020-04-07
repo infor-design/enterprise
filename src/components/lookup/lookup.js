@@ -358,6 +358,9 @@ Lookup.prototype = {
       if (self.settings.title) {
         return self.settings.title;
       }
+      if (self.settings?.options?.toolbar?.title) {
+        return self.settings?.options?.toolbar?.title;
+      }
       return '';
     }
     const labelText = getLabelText();
@@ -533,8 +536,7 @@ Lookup.prototype = {
       self.modal.element.find('.title').not('.selection-count').remove();
     }
 
-    const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
-      this.settings.options.toolbar.keywordFilter;
+    const hasKeywordSearch = this.settings?.options?.toolbar?.keywordFilter;
 
     if (!hasKeywordSearch && self.modal) {
       self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
