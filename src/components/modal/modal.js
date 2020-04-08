@@ -1176,7 +1176,16 @@ Modal.prototype = {
    * @returns {void}
    */
   setFocusableElems() {
-    const elems = DOM.focusableElems(this.element[0]);
+    const extraSelectors = [
+      'div.dropdown',
+      'div.multiselect'
+    ];
+    const ignoredSelectors = [
+      'select',
+      'option'
+    ];
+
+    const elems = DOM.focusableElems(this.element[0], extraSelectors, ignoredSelectors);
     this.focusableElems = elems;
     this.focusableElems.first = elems[0];
     this.focusableElems.last = elems[elems.length - 1];
