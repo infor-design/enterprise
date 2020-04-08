@@ -2622,9 +2622,8 @@ fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-lin
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('body.no-scroll'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
-      await element(by.id('h1-title')).click();
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
     });
@@ -2647,9 +2646,8 @@ fdescribe('Datagrid on modal with no default size (two columns)', () => { //esli
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('body.no-scroll'));
+      const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
-      await element(by.id('h1-title')).click();
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
     });
