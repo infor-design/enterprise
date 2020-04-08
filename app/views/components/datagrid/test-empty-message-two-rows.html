@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Define Some Sample Data
+      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), time: '1:30:45 AM', action: 'Action', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), time: '2:00 AM', action: 'On Hold', status: 'Error'});
+
+      var statuses = [{id: '', value: '', label:'&nbsp;'},
+                      {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+                      {id:'Error', value:'Error', label:'Error'}];
+
+      var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+                         {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
+
+    var lookupOptions = {
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          response();
+        });
+      },
+      options: {
+        selectable: 'single',
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+      }
+    };
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', mask: '#######' });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
+      columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}, width: 250});
+      columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, width: 160, filterType: 'time' });
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        filterable: true,
+        filterWhenTyping: false,
+        selectable: 'single',
+        editable: true,
+        frozenColumns: {left: ['id', 'productId']},
+        emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+      }).on('filtered', function (e, args) {
+        console.log('filter ran', args);
+      });
+ });
+
+</script>
