@@ -1,6 +1,11 @@
-import { Modal } from '../../components/modal/modal';
-
 const EVENT_NAMESPACE = 'modalmanager';
+
+// Checks to see if an object can be identified as a Modal instance.
+// NOTE: This is not 100% accurate, we should find a better way to do this.
+// Pulling in an import of the Modal prototype causes circular dependencies.
+function isModalAPI(obj) {
+  return obj !== undefined && obj.element instanceof $ && typeof obj.destroy === 'function';
+}
 
 /**
  * Top-level component that manages all modal instances. This component is responsible for handling global
@@ -48,7 +53,7 @@ ModalManager.prototype = {
    * @param {Modal} api the incoming Modal API to set as displayed
    */
   set currentlyActive(api) {
-    if (!(api instanceof Modal)) {
+    if (!isModalAPI(api)) {
       throw new Error('Cannot set the provided Modal API to currently displayed.');
     }
 
@@ -148,7 +153,7 @@ ModalManager.prototype = {
    * @returns {void}
    */
   register(api) {
-    if (!(api instanceof Modal)) {
+    if (!isModalAPI(api)) {
       throw new Error('The provided API is not a Modal API, and cannot be registered.');
     }
 
@@ -164,7 +169,7 @@ ModalManager.prototype = {
    * @returns {void}
    */
   unregister(api) {
-    if (!(api instanceof Modal)) {
+    if (!isModalAPI(api)) {
       throw new Error('The provided API is not a Modal API, and cannot be unregistered.');
     }
 
