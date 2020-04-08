@@ -2606,7 +2606,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
+describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column?layout=nofrills');
     await element(by.id('open-modal')).click();
@@ -2630,7 +2630,7 @@ fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-lin
   }
 });
 
-fdescribe('Datagrid on modal with no default size (two columns)', () => { //eslint-disable-line
+describe('Datagrid on modal with no default size (two columns)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns?layout=nofrills');
     await element(by.id('open-modal')).click();
