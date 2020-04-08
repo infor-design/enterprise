@@ -324,8 +324,8 @@ ModalManager.prototype = {
     // If focus already exists within the modal, with the exception of certain placements
     // on certain elements, return out and allow change of focus to occur as normal.
     if (api.isFocused) {
-      if (!($(api.tabbableElems.last).is(document.activeElement) && place === 'first') &&
-        !($(api.tabbableElems.first).is(document.activeElement) && place === 'last')) {
+      if (!($(api.focusableElems.last).is(document.activeElement) && place === 'first') &&
+        !($(api.focusableElems.first).is(document.activeElement) && place === 'last')) {
         return;
       }
     }
