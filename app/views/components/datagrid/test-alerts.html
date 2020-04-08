@@ -28,10 +28,11 @@
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': ' Alert Text'}]});
       columns.push({ id: 'price', name: 'Alert Choose Header', field: 'price', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
-      columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
+      columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'alert', text: ' '}]});
       columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
       columns.push({ id: 'price3', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
-      columns.push({ id: 'price4', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'price4', name: 'Tag (Clickable)', field: 'price', align: 'center', formatter: Formatters.Tag, editorOptions: {clickable: true}, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+      columns.push({ id: 'price5', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       // Init and get the api for the grid
@@ -42,6 +43,10 @@
         cellNavigation: false,
         clickToSelect: true,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+      }).on('click', function (e, args) {
+        if (args) {
+          $('body').toast({ title: 'Row ' + args.row + ' was clicked', message: 'Tag Data: ' + args.cellElem.text().trim() });
+        }
       });
  });
 </script>
