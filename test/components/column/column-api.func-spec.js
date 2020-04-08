@@ -248,7 +248,7 @@ describe('Column Chart API', () => {
     columnEl = document.body.querySelector('#column-bar-example');
     svgEl = document.body.querySelector('.svg-icons');
 
-    columnObj = new Column(columnEl, { type: 'column', dataset, animate: false });
+    columnObj = new Column(columnEl, { type: 'column', dataset: JSON.parse(JSON.stringify(dataset)), animate: false });
     setTimeout(done());
   });
 
@@ -279,7 +279,7 @@ describe('Column Chart API', () => {
 
   it('Should be able to format axis', () => {
     columnObj.destroy();
-    columnObj = new Column(columnEl, { type: 'column', dataset, animate: false, formatterString: '.3f' });
+    columnObj = new Column(columnEl, { type: 'column', dataset: JSON.parse(JSON.stringify(dataset)), animate: false, formatterString: '.3f' });
 
     expect(document.body.querySelectorAll('.y.axis .tick text')[0].innerHTML).toEqual('0');
     expect(document.body.querySelectorAll('.y.axis .tick text')[1].innerHTML).toEqual('10');

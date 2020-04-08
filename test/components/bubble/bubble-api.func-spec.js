@@ -294,7 +294,7 @@ describe('Bubble Chart API', () => {
 
   it('Should fire contextmenu event', () => {
     const spyEvent = spyOnEvent(bubbleEl, 'contextmenu');
-    const result = { name: 'January', value: { x: 5, y: 3, z: 3 }, selected: true };
+    const result = { name: 'January', value: { x: 5, y: 3, z: 3 } };
     $(bubbleEl).on('contextmenu', (e, el, d) => {
       expect(d).toEqual(jasmine.objectContaining(result));
     });
