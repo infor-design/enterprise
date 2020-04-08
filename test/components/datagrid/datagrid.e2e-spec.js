@@ -1976,6 +1976,36 @@ describe('Datagrid Empty Message Tests After Load', () => {
   }
 });
 
+describe('Datagrid Empty Message with two rows', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-message-two-rows?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not show empty indicator on load', async () => {
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(false);
+  });
+
+  it('Should show empty indicator on filtering zero', async () => {
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys('33');
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(true);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 2 Results)');
+  });
+
+  it('Should not show empty indicator on filtering one', async () => {
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys('22');
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(false);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 2 Results)');
+  });
+});
+
 describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');

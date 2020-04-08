@@ -42,6 +42,7 @@
 - `[Datagrid]` Fixed an issue where the overlay was closing after close Modal. ([#735](https://github.com/infor-design/enterprise-ng/issues/735))
 - `[Datagrid]` Fixed a misaligned drag and drop column icon on IE 11. ([#3648](https://github.com/infor-design/enterprise/issues/3648))
 - `[Datagrid]` Fixed an issue when using the colspan column option along with frozenColumns. ([#3416](https://github.com/infor-design/enterprise/issues/3416))
+- `[Datagrid]` Fixed an issue where the empty message might still show if the amount of rows dont fill the page. ([#3697](https://github.com/infor-design/enterprise/issues/3697))
 - `[Datepicker]` Fixed popover height and datepicker layout on mobile view. ([#2569](https://github.com/infor-design/enterprise/issues/3569))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
 - `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
