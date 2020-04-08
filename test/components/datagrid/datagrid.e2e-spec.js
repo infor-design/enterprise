@@ -2606,9 +2606,9 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-describe('Datagrid on modal with no default size', () => {
+fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
     await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
@@ -2622,7 +2622,7 @@ describe('Datagrid on modal with no default size', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
@@ -2630,9 +2630,9 @@ describe('Datagrid on modal with no default size', () => {
   }
 });
 
-describe('Datagrid on modal with no default size (two columns)', () => {
+fdescribe('Datagrid on modal with no default size (two columns)', () => {  //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns');
     await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
@@ -2646,7 +2646,7 @@ describe('Datagrid on modal with no default size (two columns)', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
