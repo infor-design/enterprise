@@ -177,6 +177,7 @@ describe('Lookup multiselect tests', () => {
     await element(by.id('modal-button-1')).click();
     await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
 
+    await browser.driver.sleep(config.sleep);
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
@@ -205,14 +206,17 @@ describe('Lookup filtering tests', () => {
   it('should reset filter on close', async () => {
     await element(by.css('#product-lookup + .trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys('I L');
     await element(by.id('example-filter-row-lookup-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(1);
     await element(by.css('#modal-button-2')).click();
     await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('#product-lookup + .trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-wrapper tbody .datagrid-row')).count()).toEqual(7);
   });

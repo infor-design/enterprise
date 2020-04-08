@@ -295,7 +295,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
     await element(by.id('modal-button-1')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.modal-page-container .overlay'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
@@ -313,7 +313,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.id('color1')).getAttribute('value')).toEqual('#1A1A1A');
     await element(by.id('modal-button-2')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.modal-page-container .overlay'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
