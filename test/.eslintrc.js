@@ -27,7 +27,8 @@ module.exports = {
     'window': true,
     'CustomEvent': true,
     'HTMLElement': true,
-    'SVGElement': true
+    'SVGElement': true,
+    'Soho': true,
   },
 
   'rules': {

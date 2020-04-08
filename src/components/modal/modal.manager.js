@@ -203,6 +203,11 @@ ModalManager.prototype = {
   checkRootElements() {
     const rootElem = document.querySelector('#ids-modal-root');
     if (rootElem instanceof HTMLElement) {
+      this.rootElem = rootElem;
+      const overlayElem = rootElem.querySelector('.overlay');
+      if (overlayElem instanceof HTMLElement) {
+        this.overlayElem = overlayElem;
+      }
       return;
     }
 
@@ -303,12 +308,14 @@ ModalManager.prototype = {
 
     // Setup a listener for building out core Modal container markup.
     // If state is being refreshed, simply run the method.
+    const self = this;
     if (!this.preRendered) {
       $(document).ready(() => {
-        this.render();
+        self.checkRootElements();
+        self.preRendered = true;
       });
     } else {
-      this.render();
+      this.checkRootElements();
     }
 
     this.hasEstablishedEvents = true;
