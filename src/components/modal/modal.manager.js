@@ -215,12 +215,12 @@ ModalManager.prototype = {
    * @returns {void}
    */
   close(elem, cancelled = false) {
-    if (!elem || !(elem instanceof HTMLElement || elem instanceof $)) {
-      elem = this.last;
+    let api;
+    if (!elem || !(elem instanceof HTMLElement || (elem instanceof $ && elem.length))) {
+      api = this.last;
+    } else {
+      api = $(elem).data('modal');
     }
-
-    const $elem = $(elem);
-    const api = $elem.data('modal');
     if (!api) {
       return;
     }
