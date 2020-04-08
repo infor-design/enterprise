@@ -2609,7 +2609,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
 fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column?layout=nofrills');
-    await element(by.id('add-context')).click();
+    await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2631,10 +2631,10 @@ fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-lin
   }
 });
 
-fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
+fdescribe('Datagrid on modal with no default size (two columns)', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns?layout=nofrills');
-    await element(by.id('add-context')).click();
+    await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
