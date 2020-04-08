@@ -2606,9 +2606,9 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-describe('Datagrid on modal with no default size', () => {
+fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column?layout=nofrills');
     await element(by.id('add-context')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
@@ -2627,6 +2627,31 @@ describe('Datagrid on modal with no default size', () => {
       await element(by.id('h1-title')).click();
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datagrid on modal with no default size', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns?layout=nofrills');
+    await element(by.id('add-context')).click();
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+      await element(by.id('h1-title')).click();
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
     });
   }
 });
