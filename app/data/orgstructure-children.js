@@ -1,5 +1,5 @@
 module.exports = (req, res) => {
-  const womenPath = '/images/';
+  const womenPath = `${res.opts.basepath}images/`;
   const orgdata = [
     { id: `AA${Math.floor(Math.random() * 1000)}`, Name: 'Kaylee Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: `${womenPath}11.jpg` },
     { id: `BB${Math.floor(Math.random() * 1000)}`, Name: 'Emily Johnson', Position: 'Senior Software Engineer', EmploymentType: 'FT', Picture: `${womenPath}9.jpg`, isLeaf: true },

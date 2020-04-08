@@ -341,7 +341,7 @@ describe('Multiselect placeholder tests', () => {
   });
 });
 
-describe('Multiselect with Tags tests', () => { //eslint-disable-line
+describe('Multiselect with Tags tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Standard example should not visually regress', async () => {
       await utils.setPage('/components/multiselect/example-index');

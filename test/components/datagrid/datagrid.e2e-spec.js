@@ -1386,6 +1386,36 @@ describe('Datagrid Date default values', () => {
   });
 });
 
+describe('Datagrid Alert and Badges Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show data on the click events', async () => {
+    await element(by.css('#datagrid tr:nth-child(1) td:nth-child(9) .tag')).click();
+
+    expect(await element.all(by.css('.toast-title')).count()).toEqual(1);
+    expect(await element(by.css('.toast-message')).getText()).toEqual('Tag Data: #210.99');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-tags-badges')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');

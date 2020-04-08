@@ -37,12 +37,9 @@
   text-decoration: none;
   vertical-align: middle;
 
-  > * {
-    vertical-align: middle;
-  }
-
   a {
     color: inherit;
+    line-height: 21px;
     text-decoration: none;
   }
 
@@ -52,10 +49,6 @@
     margin-right: 0;
     min-height: auto;
     min-width: 0;
-
-    > .icon {
-      margin-top: auto;
-    }
   }
 
   .dismissible-btn,
@@ -89,17 +82,21 @@
     @include transition(background-color 200ms $cubic-ease, border-color 200ms $cubic-ease, color 200ms $cubic-ease);
 
     border: 1px solid transparent;
-    line-height: 21px;
+    line-height: 20px;
 
     a {
       cursor: pointer;
     }
 
     .linkable-btn {
+      height: 20px;
       padding-left: 5px;
+      vertical-align: top;
 
       .icon {
         height: 10px;
+        margin: 0;
+        vertical-align: baseline;
         width: 10px;
       }
     }
@@ -118,14 +115,18 @@
 
   &.is-dismissible {
     border: 1px solid transparent;
-    line-height: 21px;
+    line-height: 20px;
     padding: 0 10px;
 
     .dismissible-btn {
+      height: 20px;
       padding-left: 5px;
+      vertical-align: top;
 
       .icon {
         height: 10px;
+        margin: 0;
+        vertical-align: baseline;
         width: 10px;
       }
     }
@@ -175,7 +176,7 @@
     background-color: $badge-secondary-bg-color;
     border: 1px solid $badge-secondary-border-color;
     color: $badge-secondary-color;
-    line-height: 21px;
+    line-height: 20px;
 
     .dismissible-btn,
     .linkable-btn {
@@ -209,10 +210,6 @@
     }
 
     @include disabled-tag();
-
-    &.is-disabled {
-      border-color: $badge-secondary-disabled-border-color;
-    }
   }
 
   // Error Tags
@@ -226,7 +223,7 @@
 
       &:hover {
         .icon {
-          color: $badge-error-hover-icon-color;
+          color: $badge-error-icon-color;
         }
       }
     }
@@ -252,7 +249,7 @@
 
       &:hover {
         .icon {
-          color: $badge-alert-hover-icon-color;
+          color: $badge-alert-icon-color;
         }
       }
     }
@@ -306,6 +303,10 @@
 
       &:hover {
         color: $badge-info-hover-icon-color;
+
+        .icon {
+          color: $badge-info-icon-color;
+        }
       }
     }
 
@@ -325,7 +326,13 @@
   }
 }
 
+.tag {
+  display: inline-flex;
+}
+
 .badge {
+  display: inline-block;
+
   &.pending {
     min-height: 22px;
     min-width: 22px;
@@ -398,14 +405,6 @@
   }
 }
 
-.tag {
-  display: inline-flex;
-}
-
-.badge {
-  display: inline-block;
-}
-
 .hyperlink + .tag {
   margin-bottom: 0;
   margin-left: 10px;
@@ -453,29 +452,14 @@ html.theme-uplift-contrast {
   }
 }
 
-// Bump all icons in tags by 1px on a Mac
-html {
-  &.is-mac {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -1px;
-        }
-      }
-    }
+// Firefox behaves odd
+.is-firefox {
+  .tag.is-linkable .linkable-btn .icon {
+    vertical-align: middle;
   }
 
-  &.is-firefox,
-  &.ios {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: 0;
-        }
-      }
-    }
+  .tag.is-dismissible .dismissible-btn .icon {
+    vertical-align: middle;
   }
 }
 
@@ -491,8 +475,17 @@ html[dir='rtl'] {
     &.is-dismissible {
       .dismissible-btn {
         .icon {
-          left: -7px;
+          left: -6px;
         }
+      }
+    }
+
+    &.is-linkable .linkable-btn {
+      margin-left: -6px;
+      padding: 0 5px;
+
+      .icon {
+        transform: rotate(180deg);
       }
     }
   }
