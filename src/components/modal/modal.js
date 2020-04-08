@@ -187,6 +187,10 @@ Modal.prototype = {
     this.id = this.element.attr('id') || (parseInt($('.modal').length, 10) + 1);
     this.namespace = `${COMPONENT_NAME}-${this.id}`;
 
+    if (this.settings.cssClass) {
+      this.element.addClass(this.settings.cssClass);
+    }
+
     // Find the button or anchor with same dialog ID
     this.trigger = $(`[data-modal="${this.element.attr('id')}"]`);
     if (this.element.is('body')) {
@@ -321,10 +325,6 @@ Modal.prototype = {
 
     if (!isAppended) {
       this.element.appendTo('body');
-    }
-
-    if (this.settings.cssClass) {
-      this.element.addClass(this.settings.cssClass);
     }
 
     if (this.settings.title) {
