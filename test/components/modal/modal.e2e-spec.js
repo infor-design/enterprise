@@ -439,10 +439,6 @@ describe('Nested Modal keyboard access tests', () => {
     await element(by.id('open-third-modal')).click();
     browser.driver.sleep(config.sleep);
 
-    // Last modal should become active
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#modal-4.is-active'))), config.waitsFor);
-
     expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).not.toBeDefined();
 
     // Close all three modals with the ESCAPE key
