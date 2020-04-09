@@ -439,7 +439,7 @@ describe('Nested Modal keyboard access tests', () => {
     await element(by.id('open-third-modal')).click();
     browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).not.toBeDefined();
+    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).toBe(null);
 
     // Close all three modals with the ESCAPE key
     await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
@@ -451,6 +451,6 @@ describe('Nested Modal keyboard access tests', () => {
 
     // No modals should be active, and all aria attributes set
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
-    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).toBeTruthy();
+    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).not.toBe(null);
   });
 });
