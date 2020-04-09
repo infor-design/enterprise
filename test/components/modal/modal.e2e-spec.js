@@ -432,7 +432,7 @@ describe('Nested Modal keyboard access tests', () => {
 
   it('can use the keyboard to escape from nested modals', async () => {
     // Open all three modals
-    await element(by.id('add-context')).click();
+    await element(by.id('open-first-modal')).click();
     browser.driver.sleep(config.sleep);
     await element(by.id('open-second-modal')).click();
     browser.driver.sleep(config.sleep);
