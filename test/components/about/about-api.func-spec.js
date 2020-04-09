@@ -23,10 +23,14 @@ describe('About API', () => {
     aboutObj = new About(aboutEl);
   });
 
-  afterEach(() => {
+  afterEach((done) => {
     Locale.set('en-US');
     if (aboutObj) {
       aboutObj.destroy();
+    }
+    const modalAPI = $('body').data('modal');
+    if (modalAPI && typeof modalAPI.destroy === 'function') {
+      modalAPI.destroy();
     }
 
     cleanup([
@@ -35,18 +39,9 @@ describe('About API', () => {
       '.about',
       '.modal'
     ]);
-  });
-
-  afterAll(() => {
-    const modalAPI = $('body').data('modal');
-    if (modalAPI && typeof modalAPI.destroy === 'function') {
-      modalAPI.destroy();
-    }
-
-    const aboutModalEls = document.body.querySelectorAll('.modal');
-    for (let i = 0; i < aboutModalEls.length; i++) {
-      aboutModalEls[i].parentNode.removeChild(aboutModalEls[i]);
-    }
+    setTimeout(() => {
+      done();
+    }, 500);
   });
 
   it('Should show on page via API', (done) => {
@@ -72,13 +67,14 @@ describe('About API', () => {
     });
 
     const spyEvent = spyOnEvent('body', 'close');
+
     setTimeout(() => {
       document.body.querySelector('#about-modal .close-container button').click();
 
       setTimeout(() => {
         expect(spyEvent).toHaveBeenTriggered();
         done();
-      });
-    }, 400);
+      }, 650);
+    }, 650);
   });
 });

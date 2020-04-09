@@ -162,19 +162,43 @@ describe('Modal API', () => {
   });
 });
 
+let modalPanelEl2;
+let modalAPI2;
+
 describe('Modal Manager API', () => {
+  beforeAll((done) => {
+    // No idea why this is necessary
+    const modalManagerLeftovers = modalManager.modals;
+    if (modalManagerLeftovers.length) {
+      modalManagerLeftovers.forEach((api) => {
+        api.destroy();
+        modalManager.unregister(api);
+      });
+    }
+    setTimeout(() => {
+      done();
+    }, 500);
+  });
+
   beforeEach(() => {
     modalPanelEl = null;
     modalAPI = null;
+    modalPanelEl2 = null;
+    modalAPI2 = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
     document.body.insertAdjacentHTML('afterbegin', modalPanelHTML);
     modalPanelEl = document.querySelector('#modal-panel');
+    document.body.insertAdjacentHTML('afterbegin', smallerModalPanelHTML);
+    modalPanelEl2 = document.querySelector('#modal-panel-2');
   });
 
-  afterEach(() => {
+  afterEach((done) => {
     if (modalAPI) {
       modalAPI.destroy();
+    }
+    if (modalAPI2) {
+      modalAPI2.destroy();
     }
     cleanup([
       '.svg-icons',
@@ -185,6 +209,9 @@ describe('Modal Manager API', () => {
       '.modal-container',
       '.modal'
     ]);
+    setTimeout(() => {
+      done();
+    }, 500);
   });
 
   it('should exist as part of the global Soho object', () => {
@@ -197,6 +224,7 @@ describe('Modal Manager API', () => {
     });
 
     // Modals should be registered upon creation, even if they aren't shown yet.
+    debugger;
     expect(modalManager.modals.length).toEqual(1);
 
     modalAPI.open();
@@ -218,48 +246,86 @@ describe('Modal Manager API', () => {
 
   // made `xit` til we figure out how to get timeouts working.
   // may need to replace setTimeout with renderLoop or direct `requestAnimationFrame` access.
-  xit('correctly organizes a modal stack based on which modal was last opened', (done) => {
+  it('correctly organizes a modal stack based on which modal was last opened', (done) => {
     modalAPI = new Modal($('body'), {
       content: $(modalPanelEl)
     });
 
     expect(modalManager.modals.length).toEqual(1);
 
-    document.body.insertAdjacentHTML('afterbegin', smallerModalPanelHTML);
-    const modalPanelEl2 = $('#modal-panel-2');
-    const modalAPI2 = new Modal($('body'), {
+    modalAPI2 = new Modal($('body'), {
       content: $(modalPanelEl2)
     });
 
     expect(modalManager.modals.length).toEqual(2);
 
     modalAPI.open();
-    setTimeout(() => {
-      expect(modalManager.currentlyOpen.length).toEqual(1);
-      expect(modalManager.currentlyActive).toEqual(modalAPI);
-      expect(modalManager.last).toEqual(modalAPI);
 
+    setTimeout(() => {
       modalAPI2.open();
+
       setTimeout(() => {
         expect(modalManager.currentlyOpen.length).toEqual(2);
         expect(modalManager.currentlyActive).toEqual(modalAPI2);
         expect(modalManager.last).toEqual(modalAPI2);
         done();
-      }, 300);
-    }, 300);
+      }, 500);
+    }, 200);
   });
 
-  /*
-  xit('can close the last modal open on a stack', (done) => {
-    // check `modalManager.closeLast()`
+  it('can close the last modal open on a stack', (done) => {
+    modalAPI = new Modal($('body'), {
+      content: $(modalPanelEl)
+    });
+    modalAPI2 = new Modal($('body'), {
+      content: $(modalPanelEl2)
+    });
+
+    modalAPI.open();
+
+    setTimeout(() => {
+      modalAPI2.open();
+
+      setTimeout(() => {
+        expect(modalManager.last).toEqual(modalAPI2);
+
+        modalManager.closeLast();
+
+        setTimeout(() => {
+          expect(modalManager.currentlyOpen.length).toEqual(1);
+          expect(modalManager.currentlyActive).toEqual(modalAPI);
+          expect(modalManager.last).toEqual(modalAPI);
+          done();
+        }, 500);
+      }, 500);
+    }, 200);
   });
 
-  xit('can close all open modals on a stack', (done) => {
-    // check `modalManager.closeAll()`
-  });
+  it('can close all open modals on a stack', (done) => {
+    modalAPI = new Modal($('body'), {
+      content: $(modalPanelEl)
+    });
+    modalAPI2 = new Modal($('body'), {
+      content: $(modalPanelEl2)
+    });
 
-  xit('can activate the last modal open on a stack', (done) => {
-    // check `modalManager.activateLast()`
+    modalAPI.open();
+
+    setTimeout(() => {
+      modalAPI2.open();
+
+      setTimeout(() => {
+        expect(modalManager.last).toEqual(modalAPI2);
+
+        modalManager.closeAll();
+
+        setTimeout(() => {
+          expect(modalManager.currentlyOpen.length).toEqual(0);
+          expect(modalManager.currentlyActive).not.toBeDefined();
+          expect(modalManager.last).not.toBeDefined();
+          done();
+        }, 500);
+      }, 500);
+    }, 200);
   });
-  */
 });
