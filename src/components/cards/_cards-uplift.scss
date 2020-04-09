@@ -12,9 +12,9 @@
 
   .card-title,
   .widget-title {
-    font-size: $theme-size-font-md;
+    font-size: $theme-size-font-px-20;
     font-weight: $theme-number-font-weight-base;
-    line-height: 2.8rem;
+    line-height: $theme-number-font-line-height-sm;
   }
 }
 

@@ -15,7 +15,7 @@
 .card-empty-title,
 .widget-empty-title,
 .empty-title {
-  font-size: 2rem;
+  font-size: $theme-size-font-px-20;
   font-weight: $theme-number-font-weight-bold;
   margin-top: -5px;
   padding: 0 0 10px;
@@ -29,12 +29,12 @@
   padding: 0 20px 20px;
 }
 
-.empty-title {
+.empty-title,
+.card-empty-title {
   color: $font-color-muted;
 }
 
-.empty-message {
-  .empty-icon {
-    padding-bottom: $theme-number-spacing-base;
-  }
+.empty-icon,
+.card-empty-icon {
+  padding-bottom: $theme-number-spacing-base;
 }
