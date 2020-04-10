@@ -425,7 +425,7 @@ describe('Modal iframe focus tests', () => {
 describe('Nested Modal keyboard access tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/test-nested');
-    const buttonEl = await element(by.id('add-context'));
+    const buttonEl = await element(by.id('open-first-modal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
   });
@@ -433,21 +433,21 @@ describe('Nested Modal keyboard access tests', () => {
   it('can use the keyboard to escape from nested modals', async () => {
     // Open all three modals
     await element(by.id('open-first-modal')).click();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
     await element(by.id('open-second-modal')).click();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
     await element(by.id('open-third-modal')).click();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).toBe(null);
 
     // Close all three modals with the ESCAPE key
     await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
     await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
     await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
-    browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleep);
 
     // No modals should be active, and all aria attributes set
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
