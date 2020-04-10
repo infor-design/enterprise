@@ -12,6 +12,19 @@
 ### v4.27.1 Fixes
 
 - `[Icons]` Added a fix to support both `href` and `xlink:href` in icons. ([#3734](https://github.com/infor-design/enterprise/issues/3734))
+- `[Bubble Chart]` Fixed an issue where an extra axis line was shown when using the domain formatter. ([#501](https://github.com/infor-design/enterprise/issues/501))
+- `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
+- `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
+- `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
+- `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
+- `[Datagrid]` Fixed lookup modal title to be visible and adjust the position to make it centered. ([#3635](https://github.com/infor-design/enterprise/issues/3635))
+- `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
+- `[Datagrid]` Fixed an issue where selected rows are not reset when calling loadData. ([#3718](https://github.com/infor-design/enterprise/issues/3718))
+- `[Datagrid]` Fixed an issue where if using grouping totals and hiding and showing columns the page is not refreshed properly. ([#2564](https://github.com/infor-design/enterprise/issues/2564)
+- `[Datagrid]` Fixed an issue the selected row header icon is the wrong state when using allowSelectAcrossPages. ([#3043](https://github.com/infor-design/enterprise/issues/3043)
+- `[Fieldset]` Fixed fieldset text data overlapping in compact mode on mobile view. ([#3627](https://github.com/infor-design/enterprise/issues/3627))
+- `[Hierarchy]` Added support for separators in the actions menu on a hierarchy leaf. ([#3636](https://github.com/infor-design/enterprise/issues/3636))
+- `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 
 ## v4.27.0
 
