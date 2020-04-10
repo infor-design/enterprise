@@ -21,6 +21,12 @@
 - `[Hierarchy]` Added support for separators in the actions menu on a hierarchy leaf. ([#3636](https://github.com/infor-design/enterprise/issues/3636))
 - `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 
+## v4.27.1
+
+### v4.27.1 Fixes
+
+- `[Icons]` Added a fix to support both `href` and `xlink:href` in icons. ([#3734](https://github.com/infor-design/enterprise/issues/3734))
+
 ## v4.27.0
 
 ### v4.27.0 Important Changes
