@@ -5,33 +5,39 @@
 ### v4.28.0 Features
 
 - `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
+- `[Contextmenu]` Added support for shortcut display in menus. ([#3490](https://github.com/infor-design/enterprise/issues/3490))
 
 ### v4.28.0 Fixes
 
 - `[Bubble Chart]` Fixed an issue where an extra axis line was shown when using the domain formatter. ([#501](https://github.com/infor-design/enterprise/issues/501))
+- `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
+- `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
+- `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed lookup modal title to be visible and adjust the position to make it centered. ([#3635](https://github.com/infor-design/enterprise/issues/3635))
 - `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
+- `[Datagrid]` Improved the `datagrid-default-modal-width` concept if setting a modal datagrid default with so it works on any parent. [3562](https://github.com/infor-design/enterprise/issues/3562))
 - `[EmptyMessage]` Updated the text to be more subtle. ([#3476](https://github.com/infor-design/enterprise/issues/3476))
 - `[Fieldset]` Fixed fieldset text data overlapping in compact mode on mobile view. ([#3627](https://github.com/infor-design/enterprise/issues/3627))
 - `[Hierarchy]` Added support for separators in the actions menu on a hierarchy leaf. ([#3636](https://github.com/infor-design/enterprise/issues/3636))
+- `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 
 ## v4.27.0
+
+### v4.27.0 Important Changes
+
+- `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
+- `[Icons]` Changed the svg icons to use `href` instead of deprecated `xlink:href`. This isnt a breaking change either will work but `href` works better with Ivy in Angular. ([#3611](https://github.com/infor-design/enterprise/issues/3611))
 
 ### v4.27.0 Features
 
 - `[Button]` Add `toData()` and related API for programmatically handling control of buttons. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
-- `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calcualte the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is prefered. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
+- `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calculate the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is preferred. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
 - `[Editor]` Added an option to set the height of the editor in `rows`. If you set this the estimated number for rows can be specified for the source and html pane. It will scroll after that. ([#3688](https://github.com/infor-design/enterprise/issues/3688))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
 - `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
-
-### v4.27.0 Important Changes
-
-- `[Hierarchy]` Removed the following deprecated options `paging: <bool>` and `mobileView: <bool>`. Instead use `layout='paging'` or `layout='mobile-only'`.
-- `[Icons]` Changed the svg icons to use `href` instead of deprecated `xlink:href`. This isnt a breaking change either will work but `href` works better with Ivy in Angular. ([#3611](https://github.com/infor-design/enterprise/issues/3611))
 
 ### v4.27.0 Fixes
 
@@ -58,6 +64,7 @@
 - `[Datagrid]` Fixed an issue where the overlay was closing after close Modal. ([#735](https://github.com/infor-design/enterprise-ng/issues/735))
 - `[Datagrid]` Fixed a misaligned drag and drop column icon on IE 11. ([#3648](https://github.com/infor-design/enterprise/issues/3648))
 - `[Datagrid]` Fixed an issue when using the colspan column option along with frozenColumns. ([#3416](https://github.com/infor-design/enterprise/issues/3416))
+- `[Datagrid]` Fixed an issue where the empty message might still show if the amount of rows do not fill the page. ([#3697](https://github.com/infor-design/enterprise/issues/3697))
 - `[Datepicker]` Fixed popover height and datepicker layout on mobile view. ([#2569](https://github.com/infor-design/enterprise/issues/3569))
 - `[Datepicker]` Fixed an issue where date range with minimum range was not working. ([#3268](https://github.com/infor-design/enterprise/issues/3268))
 - `[Datepicker]` Fixed an issue where date range was reverting to initial values after clearing. ([#1306](https://github.com/infor-design/enterprise/issues/1306))
@@ -70,7 +77,7 @@
 - `[Dropdown]` Fixed a bug that dropdowns are in the wrong position if flowing up and other minor cases. ([#2068](https://github.com/infor-design/enterprise/issues/2068))
 - `[Dropdown]` Fixed alignment when using dropdown in compound field. ([#3647](https://github.com/infor-design/enterprise/issues/3647))
 - `[Editor]` Added ui updates to the toolbar in uplift (vibrant mode) and minor style fixes. ([#3577](https://github.com/infor-design/enterprise/issues/3577))
-- `[Editor]` Added fixes to reseting the dirty indicator when used in an deditor. ([#3662](https://github.com/infor-design/enterprise/issues/3662))
+- `[Editor]` Added fixes to reseting the dirty indicator when used in an editor. ([#3662](https://github.com/infor-design/enterprise/issues/3662))
 - `[Editor]` Fixed a width change when toggle source view when the editor is on a modal, this is also based on UI feedback that the switch was confusing, so we now disable the buttons. ([#3594](https://github.com/infor-design/enterprise/issues/3594))
 - `[Editor]` Fixed an issue where bullet and number lists could not be converted to headings and regular text with the font picker. ([#2679](https://github.com/infor-design/enterprise/issues/2679))
 - `[Editor]` Fixed an issue where some settings like bold and italics would not be reset consistently when applying headings and regular text with the font picker. ([#2256](https://github.com/infor-design/enterprise/issues/2256))
@@ -78,7 +85,7 @@
 - `[Editor]` Adding missing bottom spacing under heading elements. ([#3288](https://github.com/infor-design/enterprise/issues/3288))
 - `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Editor]` Added a font color for rest/none swatch. ([#2035](https://github.com/infor-design/enterprise/issues/2035))
-- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causesing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
+- `[Field Filter]` Fixed an issue where switching to In Range filter type with a value in the field was causing an error. ([#3515](https://github.com/infor-design/enterprise/issues/3515))
 - `[Field Filter]` Fixed an issue where date range was not working after using other filter. ([#2764](https://github.com/infor-design/enterprise/issues/2764))
 - `[Field Filter]` Fixed an issue where stray text would be shown if the filters are hidden and then shown later. ([#3687](https://github.com/infor-design/enterprise/issues/3687))
 - `[Line Chart]` Fixed an issue where x-axis labels were overlapping for small viewport on homepage widget. ([#2674](https://github.com/infor-design/enterprise/issues/2674))
@@ -91,7 +98,7 @@
 - `[Modal]` Fixed dropdown position when the field is required. ([#3482](https://github.com/infor-design/enterprise/issues/3482))
 - `[Modal]` Fixed a regression where some Close buttons were not properly closing. ([#3615](https://github.com/infor-design/enterprise/issues/3615))
 - `[Process Indicator]` Fixed icons that are not centered inside the circle indicators. ([#3509](https://github.com/infor-design/enterprise/issues/3509))
-- `[Personalize]` Fixed an issue that colorschanged events do not fire on set to default. ([#751](https://github.com/infor-design/enterprise-ng/issues/751))
+- `[Personalize]` Fixed an issue that colorschanged events do not fire on when doing a set to default ation. ([#751](https://github.com/infor-design/enterprise-ng/issues/751))
 - `[Searchfield]` Correct the background color of toolbar search fields. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Spinbox]` Corrected an issue in the enable method, where it did not fully remove the readonly state. ([#3527](https://github.com/infor-design/enterprise/issues/3527))
 - `[Swaplist]` Fixed an issue where lists were overlapping on uplift theme. ([#3452](https://github.com/infor-design/enterprise/issues/3452))
@@ -101,7 +108,7 @@
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
 - `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
 
-(81 Issues Solved this release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Test)
+(87 Issues Solved this release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Test)
 
 ## v4.26.2
 
@@ -123,7 +130,7 @@
 - `[Datagrid]` Added a new `resizeMode` option that allows you to pick between `flex` and `fit`. `flex` will resize columns independently shifting other columns to fit the table layout if needed. `fit` will resize using the neighbor's column width. This is possible more useful when you have less columns. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
 - `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
-- `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise-ng/issues/3296))
+- `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise/issues/3296))
 
 ### v4.26.0 Fixes
 
@@ -306,7 +313,7 @@
 - `[Datagrid]` Fixed an issue where in some cases where if you have one column and are in edit mode resizing the page behaved strangely. ([#3193](https://github.com/infor-design/enterprise/issues/3193))
 - `[Datagrid]` Changed the rendering of columns so that there will never be a gap on the left side, changed the default of stretchColumn to null which will fill. ([#1818](https://github.com/infor-design/enterprise/issues/1818))
 - `[Datagrid]` Fixed an issue that hyperlinks in the datagrid would redirect. ([#3207](https://github.com/infor-design/enterprise/issues/3207))
-- `[Datagrid]` Changed the behavior of column resizing to use "fit" during resize, which means adgecent columns only will be resized. ([#605](https://github.com/infor-design/enterprise/issues/605))
+- `[Datagrid]` Changed the behavior of column resizing to use "fit" during resize, which means adjacent columns only will be resized. ([#605](https://github.com/infor-design/enterprise/issues/605))
 - `[Datagrid]` Fixed an issue that resizing the last column would create a gap. ([#1671](https://github.com/infor-design/enterprise/issues/1671))
 - `[Datepicker]` Fixed missing background color on disable dates and adjusted the colors in all themes. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
 - `[Datepicker]` Fixed a layout issue on the focus state on colored/legend days. ([#2910](https://github.com/infor-design/enterprise/issues/2910))
@@ -379,8 +386,8 @@
 - `[Datepicker]` Fixed layout issues in RTL mode, also the buttons are switched the to the opposite side now. ([#3068](https://github.com/infor-design/enterprise/issues/3068))
 - `[Dropdown]` Fixed an issue where the dropdown icons are misaligned in IE11 in the Uplift theme. ([#2826](https://github.com/infor-design/enterprise/issues/2912))
 - `[Dropdown]` Fixed an issue where the placeholder was incorrectly renders when initially set selected item. ([#2870](https://github.com/infor-design/enterprise/issues/2870))
-- `[Dropdown]` Fixed placement logic when dropdowns flip, as well as a visual bug with checkmark/icon placement on some browsers. ([#3058](https://github.com/infor-design/enterprise/issues/3058))
-- `[Dropdown]` Fixed an issue where it was possible to inject xss when clearing the typehead. ([#650](https://github.com/infor-design/enterprise-ng/issues/650))
+- `[Dropdown]` Fixed placement logic when dropdown's flip, as well as a visual bug with checkmark/icon placement on some browsers. ([#3058](https://github.com/infor-design/enterprise/issues/3058))
+- `[Dropdown]` Fixed an issue where it was possible to inject xss when clearing the typeahead. ([#650](https://github.com/infor-design/enterprise-ng/issues/650))
 - `[Field Filter]` Fixed an issues where the icons are not vertically centered, and layout issues when opening the dropdown in a smaller height browser. ([#2951](https://github.com/infor-design/enterprise/issues/2951))
 - `[Header]` Fixed an iOS bug where the theme switcher wasn't working after Popupmenu lifecycle changes. ([#2986](https://github.com/infor-design/enterprise/issues/2986))
 - `[Header Tabs]` Added a more distinct style to selected header tabs. ([infor-design/design-system#422](https://github.com/infor-design/design-system/issues/422))

@@ -4,83 +4,24 @@
 .tag,
 .badge {
   font-size: 14px;
-  line-height: 20px;
 
-  button {
-    .icon {
-      top: -1px;
-    }
-  }
+  a {
+    font-size: 14px;
+    line-height: 20px;
 
-  &.round {
-    width: 30px;
-  }
-}
-
-html {
-  &.is-mac {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -2px;
-        }
-      }
-    }
-  }
-
-  &.ie11 {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -4px;
-        }
-      }
-    }
-  }
-
-  &.is-safari {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -1px;
-        }
-      }
-    }
-  }
-
-  &.ios {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -1px;
-        }
-      }
-    }
-  }
-
-  &.is-firefox {
-    .tag,
-    .badge {
-      button {
-        .icon {
-          top: -1px;
-        }
-      }
-
-      .tag-content {
-        line-height: 19px;
-      }
+    &.round {
+      width: 30px;
     }
   }
 }
 
-html[dir='rtl'] {
-  .tag,
-  .badge {
-    line-height: 22px;
+// Firefox behaves odd
+.is-firefox {
+  .tag.is-linkable .linkable-btn .icon {
+    vertical-align: baseline;
+  }
+
+  .tag.is-dismissible .dismissible-btn .icon {
+    vertical-align: baseline;
   }
 }

@@ -3414,7 +3414,6 @@ Datagrid.prototype = {
     // Set UI elements after dataload
     if (!self.settings.source) {
       self.displayCounts();
-      self.checkEmptyMessage();
     }
 
     self.setAlternateRowShading();
@@ -4440,8 +4439,10 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+      if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.element.css('width', this.elemWidth);
+        this.element.css('min-width', 0);
         this.isInModal = true;
       } else if (this.element.parent().is('.modal-body')) {
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
@@ -5731,12 +5732,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * See if the empty message object should be shown.
+  * Hide/Show the empty message object should be shown.
   * @private
   */
   checkEmptyMessage() {
     if (this.emptyMessage && this.emptyMessageContainer) {
-      if (this.filteredCount === this.recordCount || this.recordCount === 0) {
+      if (this.recordCount === 0) {
         this.emptyMessageContainer.show();
         this.element.addClass('is-empty');
       } else {

@@ -1386,6 +1386,36 @@ describe('Datagrid Date default values', () => {
   });
 });
 
+describe('Datagrid Alert and Badges Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show data on the click events', async () => {
+    await element(by.css('#datagrid tr:nth-child(1) td:nth-child(9) .tag')).click();
+
+    expect(await element.all(by.css('.toast-title')).count()).toEqual(1);
+    expect(await element(by.css('.toast-message')).getText()).toEqual('Tag Data: #210.99');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-tags-badges')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
@@ -1974,6 +2004,36 @@ describe('Datagrid Empty Message Tests After Load', () => {
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-after-load')).toEqual(0);
     });
   }
+});
+
+describe('Datagrid Empty Message with two rows', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-message-two-rows?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not show empty indicator on load', async () => {
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(false);
+  });
+
+  it('Should show empty indicator on filtering zero', async () => {
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys('33');
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(true);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 2 Results)');
+  });
+
+  it('Should not show empty indicator on filtering one', async () => {
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys('22');
+    await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(false);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 2 Results)');
+  });
 });
 
 describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
@@ -2609,7 +2669,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
 describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
-    await element(by.id('add-context')).click();
+    await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2624,9 +2684,32 @@ describe('Datagrid on modal with no default size', () => {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
-      await element(by.id('h1-title')).click();
 
       expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+    });
+  }
+});
+
+describe('Datagrid on modal with no default size (two columns)', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns');
+    await element(by.id('open-modal')).click();
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('body.no-scroll'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
     });
   }
 });

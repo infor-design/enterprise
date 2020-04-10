@@ -87,6 +87,7 @@ Line.prototype = {
    */
   init() {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
+    this.initialSelectCall = false;
     this
       .build()
       .handleEvents();
@@ -490,7 +491,7 @@ Line.prototype = {
         .attr('fill', 'none')
         .attr('class', 'line')
         .on(`click.${self.namespace}`, function () {
-          charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element);
+          charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall);
         })
         .on(`contextmenu.${self.namespace}`, function () {
           charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
@@ -621,7 +622,7 @@ Line.prototype = {
               });
             })
             .on(`click.${self.namespace}`, function (dh) {
-              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
             })
             .on(`contextmenu.${self.namespace}`, function (di) {
               charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
@@ -652,7 +653,7 @@ Line.prototype = {
               });
             })
             .on(`click.${self.namespace}`, function (dh) {
-              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
+              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
             })
             .on(`contextmenu.${self.namespace}`, function (di) {
               charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
@@ -746,7 +747,7 @@ Line.prototype = {
       });
 
       if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-        charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element);
+        charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, dataset, self.initialSelectCall);
       }
     };
 
@@ -788,8 +789,10 @@ Line.prototype = {
     });
 
     if (selected > 0) {
-      charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element);
+      self.initialSelectCall = true;
+      charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, self.settings.dataset, self.initialSelectCall);
     }
+    self.initialSelectCall = false;
   },
 
   /**

@@ -3,22 +3,24 @@ title: Tag Component
 description: null
 demo:
   embedded:
-  - name: Common Tag Examples
+  - name: Simple Tag Examples
     slug: example-index
+  - name: Dismissible and Linkable
+    slug: example-dismissible-and-clickable
+  - name: Linkable
+    slug: example-linkable
 ---
 ## Code Example
 
-Tags are simple span elements with the class `tag`. They can be mixed in with other elements like lists, grids and search fields. You can optionally add a few classes to add color or status such as `error` for red, `good` to be green and `alert` for yellow. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.
+Tags are simple span elements with the class `tag`. They can be mixed in to other elements like lists, grids and multiselect. You can optionally add a few classes to add color or status such as `error` for red, `good` to be green and `alert` for yellow. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.
+Tags may also have a close button to remove them or contain a link.
 
 ```html
-<span class="tag">#Tagged</span>
-<span class="tag secondary">#Tagged</span>
-<span class="tag error"><span class="audible">Error</span>Delayed</span>
-<span class="tag good">Open Order</span>
-<span class="tag alert"><span class="audible">Alert</span>Help Order</span>
-<br><br><br><br>
-<a href="#" id="example-clickable" class="tag is-linkable">#Linkable</a>
-<a href="#" id="example-dismissible" class="tag is-dismissible">#Dismissible</a>
+<div class="tag-list">
+    <span class="tag hide-focus"><span class="tag-content">#Tagged 1</span></span>
+    <span class="tag hide-focus"><span class="tag-content">#Tagged 2</span></span>
+    <span class="tag hide-focus"><span class="tag-content">#Tagged 3</span></span>
+</div>
 ```
 
 ## Accessibility
@@ -31,16 +33,19 @@ Tags are simple span elements with the class `tag`. They can be mixed in with ot
 
 ## Keyboard Shortcuts
 
-- No keyboard support, but can be added to elements with keyboard support
+- <kbd>Tab/Shift+Tab</kbd>: If the tab is focusable this will focus or unfocus the tag.
+- <kbd>Backspace / Alt+Del</kbd>: If the tag is dismissible then this will remove the tag.
+- <kbd>Enter</kbd>: If the tag is clickable then this will follow the tag link.
 
 ## States and Variations
 
 - Dismissible
-- Linkable
+- Linkable / Clickable
+- Static
 
 ## Responsive Guidelines
 
-- Takes responsiveness from the parent container
+- Takes fits within the width of the parent container
 
 ## Upgrading from 3.X
 

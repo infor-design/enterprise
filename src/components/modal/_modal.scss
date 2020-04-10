@@ -20,6 +20,21 @@
   width: 100%;
 }
 
+// Extra Class to hide the header and keep the padding
+.modal-no-header {
+  .modal-title {
+    display: none;
+  }
+
+  .modal-header {
+    padding: 0 0 5px;
+  }
+
+  .modal-buttonset {
+    margin-top: 2px;
+  }
+}
+
 .modal {
   @include css3(transform, scale(0.9, 0.9));
   @include css3(transition, opacity 0.2s, transform 0.2s);

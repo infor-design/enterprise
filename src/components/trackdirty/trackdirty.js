@@ -247,10 +247,7 @@ Trackdirty.prototype = {
           if (field.find('.editor-source').is(':visible')) {
             current = textArea.val();
           } else {
-            current = textArea.text();
-          }
-          if (this.isIe || this.isIeEdge) {
-            current = input[0].innerHTML;
+            current = this.isIe || this.isIeEdge ? input[0].innerHTML : textArea.text();
           }
           current = this.trimEditorText(current);
         }
