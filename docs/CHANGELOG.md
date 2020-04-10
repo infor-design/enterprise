@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.27.1
+
+### v4.27.1 Fixes
+
+- `[Icons]` Added a fix to support both `href` and `xlink:href` in icons. ([#3734](https://github.com/infor-design/enterprise/issues/3734))
+
 ## v4.27.0
 
 ### v4.27.0 Important Changes
