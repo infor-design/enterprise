@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
-    <button class="btn-secondary" type="button" id="add-context">Add Context</button>
-    <div id="modal-content" class="datagrid-default-modal-width hidden">
+    <button class="btn-secondary" type="button" id="open-modal">Add Context</button>
+    <div id="modal-content" class="hidden datagrid-default-modal-width">
       <div id="datagrid">
       </div>
     </div>
@@ -44,15 +44,10 @@
       toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
     });
 
-    var modals = {
-      'add-context': {
-        'title': 'Add Context',
-        'content': $('#modal-content')
-      }
-    },
-
-    setModal = function (opt) {
-      opt = $.extend({
+    $('#open-modal').on('click', function () {
+      $('body').modal({
+        content: $('#modal-content'),
+        cssClass: 'modal-no-header',
         buttons: [{
           text: 'Cancel',
           id: 'modal-button-1',
@@ -67,14 +62,9 @@
           },
           validate: false,
           isDefault: true
-        }]
-      }, opt);
-
-      $('body').modal(opt);
-    };
-
-    $('#add-context').on('click', function () {
-      setModal(modals[this.id]);
+        }],
+        autoFocus: false
+      });
     });
   });
 </script>

@@ -4429,8 +4429,10 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+      if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.element.css('width', this.elemWidth);
+        this.element.css('min-width', 0);
         this.isInModal = true;
       } else if (this.element.parent().is('.modal-body')) {
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
