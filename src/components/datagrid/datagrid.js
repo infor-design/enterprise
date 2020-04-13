@@ -6941,6 +6941,7 @@ Datagrid.prototype = {
         this.unselectRow(idx, true, true);
       }
     }
+    this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
     this._selectedRows = [];
