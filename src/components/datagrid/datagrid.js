@@ -3307,7 +3307,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.headerRowLeft || self.tableBodyRight).before(self.bodyColGroupRight);
+        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
       }
     }
 

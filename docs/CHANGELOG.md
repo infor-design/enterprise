@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.27.2
+
+### v4.27.2 Fixes
+
+- `[Datagrid]` Fixed an issue in datagrid frozen columns, actions that re-render like sorting may cause rendering issues. ([#3735](https://github.com/infor-design/enterprise/issues/3735))
+- `[Datagrid]` Fixed an issue in lookup datagrid editors that clicking a trigger in the cell would commit the cell causing editing not to work in some cases. ([#785](https://github.com/infor-design/enterprise-ng/issues/785))
+
 ## v4.27.1
 
 ### v4.27.1 Fixes
