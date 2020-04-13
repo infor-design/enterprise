@@ -177,6 +177,9 @@ Radar.prototype = {
     if (s.legendPlacement === 'right') {
       dims.w *= 0.75;
     }
+    if (theme.uplift && dims.w >= 420) {
+      dims.extra -= 0.12;
+    }
     // Manually adjust height to fit legend on mobile view
     if (s.showLegend && dims.w < 420 && !s.margin.bottom) {
       let adjust;
