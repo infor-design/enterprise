@@ -697,11 +697,11 @@ $datagrid-short-row-height: 25px;
     width: 100%;
   }
 
-  &.scroll-x {
+  &.scrollable-x {
     overflow-x: auto;
   }
 
-  &.scroll-y {
+  &.scrollable-y {
     overflow-y: auto;
   }
 
@@ -713,7 +713,7 @@ $datagrid-short-row-height: 25px;
     display: none;
   }
 
-  &.left + &.center.scroll-x,
+  &.left + &.center.scrollable-x,
   &.left {
     overflow-y: hidden;
   }
