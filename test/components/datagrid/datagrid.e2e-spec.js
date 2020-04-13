@@ -1704,7 +1704,6 @@ describe('Datagrid Lookup Editor', () => {
   });
 
   it('should be able to select with the dialog when clicking the cell', async () => {
-    debugger;
     const staticCell = '#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2)';
     await element(by.css(staticCell)).click();
     await element(by.css('.has-editor.is-editing .trigger')).click();
