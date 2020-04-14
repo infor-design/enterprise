@@ -13,7 +13,7 @@
 
     &.close {
       right: 9px;
-      top: 12px;
+      top: 10px;
     }
   }
 
@@ -47,6 +47,12 @@
   &:not(.is-open) {
     .icon:not(.close) {
       top: 8px;
+    }
+  }
+
+  &.is-open {
+    .searchfield {
+      padding-bottom: 2px;
     }
   }
 }
