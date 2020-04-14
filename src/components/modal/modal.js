@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { DOM } from '../../utils/dom';
+import { findComponentsOnElements } from '../../utils/lifecycle/lifecycle';
 import { modalManager } from './modal.manager';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
@@ -1111,6 +1112,35 @@ Modal.prototype = {
   },
 
   /**
+   * @returns {array} containing references to current IDS subcomponent APIs inside this modal that
+   * are currently reporting as "open"
+   */
+  get openSubComponents() {
+    const elems = this.element.find('*');
+    const subComponentTypes = [
+      'datepicker',
+      'dropdown',
+      'popupmenu',
+      'timepicker',
+      'tooltip',
+    ];
+    const targetProps = ['isOpen', 'visible'];
+    const matchedSubComponentAPIs = findComponentsOnElements(elems, targetProps, subComponentTypes);
+    const openSubComponents = [];
+
+    matchedSubComponentAPIs.forEach((matchObj) => {
+      const componentAPI = matchObj.control;
+      if ((typeof componentAPI.isOpen === 'function' && componentAPI.isOpen()) ||
+        (typeof componentAPI.isOpen === 'boolean' && componentAPI.isOpen === true) ||
+        (typeof componentAPI.visible === 'boolean' && componentAPI.visible === true)) {
+        openSubComponents.push(componentAPI);
+      }
+    });
+
+    return openSubComponents;
+  },
+
+  /**
    * @returns {boolean} whether or not the Modal itself, or a component inside the Modal, currently has focus.
    * In some cases, this needs to get access to child components to determine focus state.
    */
@@ -1123,6 +1153,7 @@ Modal.prototype = {
     }
 
     // Check each match for IDS components that may have a more complex focus routine
+    // NOTE: Some elements that come through may be SVGs, careful which methods are used.
     this.focusableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
@@ -1130,7 +1161,7 @@ Modal.prototype = {
 
       // Check the base element
       const $elem = $(elem);
-      if ($elem.is($(activeElem)) || elem.contains(activeElem)) {
+      if ($elem.is($(activeElem)) || (typeof elem.contains === 'function' && elem.contains(activeElem))) {
         componentHasFocus = true;
       }
 
@@ -1230,7 +1261,7 @@ Modal.prototype = {
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy, noRefresh) {
-    if (!this.visible) {
+    if (!this.visible || this.openSubComponents.length) {
       return true;
     }
 

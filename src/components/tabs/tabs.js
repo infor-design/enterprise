@@ -9,7 +9,7 @@ import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
 // jQuery components
-import '../../utils/lifecycle';
+import '../../utils/lifecycle/lifecycle.jquery';
 import '../icons/icons.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../tooltip/tooltip.jquery';

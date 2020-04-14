@@ -11,7 +11,7 @@ import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../icons/icons.jquery';
-import '../../utils/lifecycle';
+import '../../utils/lifecycle/lifecycle.jquery';
 import '../place/place.jquery';
 import '../tooltip/tooltip.jquery';
 
