@@ -1,6 +1,14 @@
 // Uplift Modal
 //================================================== //
 
+.modal {
+  .modal-content {
+      h1 {
+        line-height: 3.5rem;
+      }
+    }
+}
+
 .modal-buttonset {
   button {
     line-height: normal;
