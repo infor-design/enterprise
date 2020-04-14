@@ -212,6 +212,13 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   vertical-align: top;
 }
 
+// Control line text via line clamp
+@mixin line-clamp($num-lines) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $num-lines;
+}
+
 @mixin antialiased {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
