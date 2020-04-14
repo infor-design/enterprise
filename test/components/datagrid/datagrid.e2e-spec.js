@@ -1160,6 +1160,19 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('990');
   });
 
+  it('Should have correct header checkbox states', async () => {
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(10);
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeTruthy();
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeFalsy();
+  });
+
   if (!utils.isCI()) {
     it('Should work with sort', async () => {
       expect(await element(by.css('#datagrid .datagrid-header th:nth-child(2).is-sorted-desc')).isPresent()).toBeFalsy();
@@ -1344,6 +1357,24 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('tbody tr[aria-rowindex="2"]'))), config.waitsFor);
 
     expect(await element(by.css('tbody tr[aria-rowindex="2"]')).getAttribute('class')).toContain('is-rowactivated');
+  });
+
+  it('Should reset selections after changing page', async () => {
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(5);
+
+    await element(by.css('.pager-next')).click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
+
+    await element(by.css('.pager-prev')).click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
   });
 });
 
@@ -2679,6 +2710,36 @@ describe('Datagrid loaddata selected rows tests', () => {
     await element(by.id('save')).click();
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(1);
+  });
+});
+
+describe('Datagrid loaddata clear selected rows tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-loaddata-clear-selected-rows');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should be able to select then update rows, and have no selected rows', async () => {
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+    await element(by.id('show-selected')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
+
+    expect(await element(by.css('.toast-message')).getText()).toEqual('Number selected rows: 7');
+    await element(by.css('#toast-container .btn-close')).click();
+    await element(by.id('load-other')).click();
+    await element(by.id('show-selected')).click();
+
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
+
+    expect(await element.all(by.css('.toast-message')).last().getText()).toEqual('Number selected rows: 0');
   });
 });
 
