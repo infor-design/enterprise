@@ -767,6 +767,7 @@ const editors = {
         column.editorOptions.options.toolbar.title = column.name;
       }
       this.input.lookup(column.editorOptions);
+      container.find('span.trigger').attr('tabindex', '-1');
 
       // Append the Lookup's clickArguments with some row/col meta-data
       const api = this.input.data('lookup');

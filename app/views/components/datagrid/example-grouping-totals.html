@@ -13,12 +13,12 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id', hideable: false});
       columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
       columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
       columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
-      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
-      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', hideable: false});
+      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', hideable: false});
 
       //Get some data via ajax
       var url = '{{basepath}}api/accounts';
@@ -34,7 +34,7 @@
             aggregate: 'purchases',
             groupFooterRow: true,
             groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
-              return '<td role="gridcell" colspan=' + (idx-1) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+              return '<td role="gridcell" colspan=' + (api.visibleColumns().length - 2) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
             },
             expanded: function (row, cell, value, col, item) {
               // Similate some logic to determine which rows should be Collapsed

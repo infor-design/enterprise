@@ -390,7 +390,7 @@ Datagrid.prototype = {
     }
 
     if (this.settings.source) {
-      pagingInfo.preserveSelected = true;
+      pagingInfo.preserveSelected = this.settings.allowSelectAcrossPages;
       this.triggerSource(pagingInfo);
       return;
     }
@@ -822,9 +822,6 @@ Datagrid.prototype = {
         this.recordCount = pagingInfo.total;
         this.displayCounts(pagingInfo.total);
       }
-
-      // Handle row selection across pages
-      this.syncSelectedUI();
     }
 
     if (!this.settings.source && this.filterExpr && this.filterExpr[0] && this.filterExpr[0].column === 'all') {
@@ -894,18 +891,12 @@ Datagrid.prototype = {
     this.setTreeRootNodes();
 
     // Figure out whether or not to preserve previously selected rows
-    if (pagerInfo.preserveSelected === undefined) {
-      if (this.settings.source) {
-        this._selectedRows = [];
-      } else if (pagerInfo.type === 'initial' || !pagerInfo.type) {
-        this.unSelectAllRows();
-      }
-    } else if (pagerInfo.preserveSelected === false) {
-      if (this.settings.source) {
-        this._selectedRows = [];
-      } else {
-        this.unSelectAllRows();
-      }
+    if (!pagerInfo.preserveSelected && this.settings.source
+      && !this.settings.allowSelectAcrossPages) {
+      this.unSelectAllRows();
+    }
+    if (!pagerInfo.preserveSelected && (pagerInfo.type === 'initial' || !pagerInfo.type)) {
+      this.unSelectAllRows();
     }
 
     if (this.settings.disableClientFilter) {
@@ -936,7 +927,6 @@ Datagrid.prototype = {
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
     this.renderPager(pagerInfo, true);
-    this.syncSelectedUI();
     this.displayCounts();
   },
 
@@ -3307,7 +3297,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.headerRowLeft || self.tableBodyRight).before(self.bodyColGroupRight);
+        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
       }
     }
 
@@ -5373,7 +5363,6 @@ Datagrid.prototype = {
                 lv.node = lv.api.settings.dataset[idx];
               }
             }
-
             if (!isChecked) {
               self.showColumn(id);
               chk.prop('checked', true);
@@ -5382,6 +5371,9 @@ Datagrid.prototype = {
               self.hideColumn(id);
               chk.prop('checked', false);
               lv.node.hidden = true;
+            }
+            if (self.settings.groupable) {
+              self.rerender();
             }
           });
 
@@ -6937,6 +6929,7 @@ Datagrid.prototype = {
   unSelectAllRows(nosync, noTrigger) {
     // Nothing to do
     if (!this._selectedRows || this._selectedRows.length === 0) {
+      this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
       return;
     }
     this.dontSyncUi = true;
@@ -6948,8 +6941,10 @@ Datagrid.prototype = {
         this.unselectRow(idx, true, true);
       }
     }
+    this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
+    this._selectedRows = [];
 
     if (!nosync) {
       this.syncSelectedUI();
@@ -7215,8 +7210,12 @@ Datagrid.prototype = {
 
     const headerCheckbox = this.headerNodes().find('.datagrid-checkbox');
     const rowsLength = rows.length;
-    const selectedRowsLength = this._selectedRows.length;
+    let selectedRowsLength = this._selectedRows.length;
     const status = headerCheckbox.data('selected');
+
+    if (this.settings.source && this.settings.allowSelectAcrossPages) {
+      selectedRowsLength = this.settings.dataset.filter(i => i._selected).length;
+    }
 
     // Do not run if checkbox in same state
     if ((selectedRowsLength !== rowsLength &&
