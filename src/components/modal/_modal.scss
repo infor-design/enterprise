@@ -260,7 +260,7 @@
     }
   }
 
-  &:not(.display-fullsize) {
+  &:not(.display-fullsize):not(.about) {
     .modal-content {
       h1 {
         @include line-clamp(2);
