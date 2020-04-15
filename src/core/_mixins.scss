@@ -202,6 +202,14 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   }
 }
 
+// Control the text color of placeholder
+@mixin placeholderTextColor {
+  &::-webkit-input-placeholder { @content; } /* Chrome | Opera |Safari | Edge */
+  &::-moz-placeholder { @content; } /* Firefox 19+ */
+  &:-ms-input-placeholder { @content; } /* IE 10+ */
+  &:-moz-placeholder { @content; } /* Firefox 18- */
+}
+
 // Align Vertically to Parent
 @mixin vertical-align {
   position: relative;
@@ -210,6 +218,13 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   vertical-align: top;
+}
+
+// Control line text via line clamp
+@mixin line-clamp($num-lines) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $num-lines;
 }
 
 @mixin antialiased {
