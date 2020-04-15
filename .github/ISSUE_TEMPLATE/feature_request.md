@@ -4,7 +4,7 @@ about: Suggest an idea for this project
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
+**Is your feature request related to a problem or use case? Please describe.**
 A clear and concise description of what the problem is. [e.g. {Component Name} has a problem when {...}]
 
 **Describe the solution you'd like**
@@ -15,3 +15,4 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+And what application do you work on? [e.g. {Infor XYZ}]

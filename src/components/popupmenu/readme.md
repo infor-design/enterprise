@@ -15,6 +15,8 @@ demo:
     slug: example-icons
   - name: Invoking Popupmenu immediately
     slug: example-trigger-immediate
+  - name: Popupmenu with shortcut text
+    slug: example-shortcut-text
 ---
 
 ## Code Example

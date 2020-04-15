@@ -57,8 +57,9 @@ Trackdirty.prototype = {
         return el.val();
       }
       default: {
-        if (element.is('textarea.editor')) {
-          return this.trimEditorText(element.text());
+        if (element.is('textarea') && element.closest('.editor-source').length === 1) {
+          const value = element.is(':visible') ? element.val() : element.text();
+          return this.trimEditorText(value);
         }
         return element.val();
       }
@@ -73,6 +74,7 @@ Trackdirty.prototype = {
    */
   trimEditorText(text) {
     return text.trim()
+      .replace(/>\s+</g, '')
       .replace(/\s+/g, ' ')
       .replace(' has-tooltip', '')
       .replace(/<br( \/)?>/g, '<br>\n')
@@ -245,14 +247,11 @@ Trackdirty.prototype = {
           if (field.find('.editor-source').is(':visible')) {
             current = textArea.val();
           } else {
-            current = textArea.text();
+            current = this.isIe || this.isIeEdge ? input[0].innerHTML : textArea.text();
           }
           current = this.trimEditorText(current);
-
-          if (this.isIe || this.isIeEdge) {
-            current = input[0].innerHTML;
-          }
         }
+
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();

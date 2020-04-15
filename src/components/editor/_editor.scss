@@ -198,6 +198,9 @@
     .hyperlink {
       color: $hyperlink-color;
       font-size: $input-size-regular-font-size !important;
+      margin-left: -1px;
+      margin-right: -1px;
+      padding: 0;
     }
   }
 
@@ -636,6 +639,7 @@
 }
 
 .editor-source {
+  background-color: $editor-bg-color;
   border: 1px solid;
   border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;

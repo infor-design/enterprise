@@ -38,8 +38,11 @@ const COMPONENT_NAME = 'datepicker';
  * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
+ * @param {function} [settings.disable.callback] return true to disable passed dates.
  * @param {array} [settings.disable.dates] Disable specific dates.
- * Example `{dates: ['12/31/2018', '01/01/2019'}`.
+ * Example `{dates: ['12/31/2018', '01/01/2019']}`.
+ * @param {array} [settings.disable.years] Disable specific years.
+ * Example `{years: [2018, 2019]}`.
  * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
  * Example `{minDate: '12/31/2016'}`.
  * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
@@ -94,7 +97,9 @@ const DATEPICKER_DEFAULTS = {
   placeholder: false,
   firstDayOfWeek: 0,
   disable: {
+    callback: null,
     dates: [],
+    years: [],
     minDate: '',
     maxDate: '',
     dayOfWeek: [],
@@ -527,7 +532,7 @@ DatePicker.prototype = {
     const self = this;
     const s = this.settings;
     const timeOptions = {};
-    this.lastValue = this.element.val();
+    this.lastValue = typeof this.currentDate === 'string' ? this.currentDate : this.currentDate?.getTime();
 
     if ((this.element.is(':disabled') || this.element.attr('readonly')) && this.element.closest('.monthview').length === 0) {
       return;
@@ -1139,9 +1144,21 @@ DatePicker.prototype = {
    */
   insertDate(date, isReset) {
     const s = this.settings;
-    const year = (date instanceof Array ? date[0] : date.getFullYear());
-    const month = (date instanceof Array ? date[1] : date.getMonth());
-    const day = (date instanceof Array ? date[2] : date.getDate()).toString();
+    let year = '';
+    let month = '';
+    let day = '';
+
+    if (date instanceof Array) {
+      year = date[0];
+      month = date[1];
+      day = (date[2]).toString();
+    } else if (date instanceof Date && !isNaN(date.getTime())) {
+      year = date.getFullYear();
+      month = date.getMonth();
+      day = (date.getDate()).toString();
+    } else {
+      return;
+    }
 
     // Make sure Calendar is showing that month
     if (this.calendarAPI.currentMonth !== month || this.calendarAPI.currentYear !== year) {
@@ -1216,8 +1233,9 @@ DatePicker.prototype = {
       }));
     }
 
-    const isChanged = this.lastValue !== this.element.val();
-    this.lastValue = this.element.val();
+    const newValue = typeof this.currentDate === 'string' ? this.currentDate : this.currentDate?.getTime();
+    const isChanged = this.lastValue !== newValue;
+    this.lastValue = newValue;
 
     if (trigger && isChanged) {
       if (s.range.useRange) {
@@ -1869,7 +1887,8 @@ DatePicker.prototype = {
 
     // Fix two digit year for main input element
     self.element.on('blur.datepicker', () => {
-      this.lastValue = this.element.val();
+      this.lastValue = this.currentDate?.getTime;
+
       if (this.element.val().trim() !== '') {
         this.setValueFromField();
       }

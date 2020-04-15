@@ -128,8 +128,10 @@ FieldFilter.prototype = {
       this.ffdropdown.prev('label')[0].setAttribute('for', ffId);
 
       // Add css classes
-      this.field.addClass('fieldfilter-wrapper')
-        .find('div.dropdown.field-filter-dropdown span').addClass('audible');
+      const labelText = this.ffdropdown.prev('label').prev('label').text();
+      this.field.addClass('fieldfilter-wrapper');
+      this.field.find('div.dropdown span.audible').text(labelText);
+      this.field.find('div.dropdown span').addClass('audible');
 
       // Dropdown api
       this.ddApi = this.ffdropdown.data('dropdown');

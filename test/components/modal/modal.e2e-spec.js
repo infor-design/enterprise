@@ -269,6 +269,22 @@ describe('Modal manual content loading', () => {
   });
 });
 
+describe('Modal No Auto Focus', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-no-autofocus.html');
+  });
+
+  it('Should not focus any fields with autoFocus false', async () => {
+    await element(by.id('show-modal')).click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.id('modal-1'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('show-modal');
+  });
+});
+
 describe('Modal Full Content Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/modal/example-full-content');

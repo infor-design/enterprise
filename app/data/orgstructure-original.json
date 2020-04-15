@@ -36,7 +36,16 @@
           {"value": "Transfer", "url" : "#", "data": {}},
           {"value": "Terminate", "url" : "#", "data": {}},
           {"value": "Update", "url" : "#", "data": {}},
-          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]}
+          {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]},
+          {
+            "value": "",
+            "url": "#",
+            "data": {
+              "id": "separator",
+              "label": "",
+              "type": "separator"
+            }
+          }
         ]
       }
     },

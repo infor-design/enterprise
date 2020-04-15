@@ -75,6 +75,7 @@ Column.prototype = {
   init() {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
+    this.initialSelectCall = false;
 
     this
       .build()
@@ -890,7 +891,7 @@ Column.prototype = {
           task: (isSelected ? 'unselected' : 'selected'),
           container: self.element,
           selector: this,
-          isTrigger: !isSelected,
+          isTrigger: self.initialSelectCall ? false : !isSelected,
           isTargetBar,
           triggerGroup: isGrouped,
           d,
@@ -904,7 +905,7 @@ Column.prototype = {
           clickedLegend: (clickedLegend === true)
         });
 
-        if (isSelected) {
+        if (isSelected && !self.initialSelectCall) {
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
         }
       })
@@ -1078,13 +1079,16 @@ Column.prototype = {
    * @private
    */
   setInitialSelected() {
-    let selected = 0;
     const self = this;
+    const isPositiveNegative = /positive-negative/.test(self.settings.type);
     const legendsNode = self.svg.node().parentNode.nextSibling;
     const legends = d3.select(legendsNode);
     const isLegends = legends.node() && legends.classed('chart-legend');
+    let isLegendsCall = false;
+    let selected = 0;
     let barIndex;
     let selector;
+    let isStacked;
     let isStackedGroup;
 
     const setSelectedBar = function (g) {
@@ -1093,8 +1097,8 @@ Column.prototype = {
         if (!d) {
           return;
         }
-        if ((self.isSingle && self.settings.isStacked ?
-          d[0].selected : d.selected) && selected < 1) {
+        const data = self.isSingle && self.settings.isStacked ? d[0] : d;
+        if (data.selected && selected < 1) {
           selected++;
           selector = d3.select(this);
           barIndex = i;
@@ -1105,14 +1109,57 @@ Column.prototype = {
     const setSelectedGroup = function () {
       const groups = self.svg.selectAll('.series-group');
       if (groups.nodes().length) {
-        groups.each(function () {
+        const getSelected = arr => arr.reduce((acc, n) => (n.selected ? acc + 1 : acc), 0);
+        const sel = { groups: [], itemsInGroup: 0 };
+        groups.each(function (d, i) {
           setSelectedBar(this);
+          isStacked = Array.isArray(d);
+          if (isStacked || (d?.data && Array.isArray(d?.data))) {
+            sel.itemsInGroup = (isStacked ? d : d.data).length;
+            if (selected > 0) {
+              sel.groups.push({ i, totalSel: getSelected(isStacked ? d : d.data) });
+            }
+          }
         });
+        sel.gLen = sel.groups.length;
+        if (!isLegendsCall && ((isStacked && sel.gLen && sel.groups[0].totalSel > 1) ||
+          (sel.gLen === groups.size() && !isStacked))) {
+          const results = sel.groups.filter(n => n?.totalSel > 1).length;
+          isLegendsCall = isStacked ? !!results : !results;
+          if (isStacked) {
+            barIndex = sel.groups[0].i;
+          }
+        }
       }
     };
 
-    if (self.isGrouped || (self.settings.isStacked && !self.isSingle && !self.isGrouped)) {
-      self.dataset.forEach(function (d, i) {
+    // Positive Negative and Legends
+    if (isPositiveNegative) {
+      const setLegendsCall = (idx) => {
+        isLegendsCall = true;
+        barIndex = idx;
+        selected++;
+      };
+      if (self.dataset[0].targetBarsSelected) {
+        setLegendsCall(0);
+      } else {
+        const sel = { selected: 0, i: -1 };
+        self.dataset[0].data.forEach((d, i) => {
+          if (d.selected) {
+            sel.selected++;
+            sel.i = i;
+          }
+        });
+        if (sel.selected > 1) {
+          sel.elem = self.svg.select(`.target-bar.series-${sel.i}`);
+          setLegendsCall(sel.elem.classed('positive') ? 1 : 2);
+        }
+      }
+    }
+
+    if (!isLegendsCall &&
+      (self.isGrouped || (self.settings.isStacked && !self.isSingle && !self.isGrouped))) {
+      self.dataset.forEach((d, i) => {
         if (d.selected && selected < 1) {
           selected++;
           selector = self.svg.select(`[data-group-id="${i}"]`).select('.bar');
@@ -1130,14 +1177,17 @@ Column.prototype = {
     }
 
     if (selected > 0) {
-      if (isStackedGroup) {
+      if (isStackedGroup || isLegendsCall) {
         if (isLegends) {
-          $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          this.initialSelectCall = true;
+          $(legends.node()).find('.chart-legend-item').eq(barIndex).trigger('click.chart');
         }
       } else {
+        this.initialSelectCall = true;
         selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
       }
     }
+    this.initialSelectCall = false;
   },
 
   /**

@@ -815,7 +815,9 @@ Tooltip.prototype = {
    */
   handleAfterPlace(e, placementObj) {
     this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
-    this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+    setTimeout(() => {
+      this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+    });
   },
 
   /**

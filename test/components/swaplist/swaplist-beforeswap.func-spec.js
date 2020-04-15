@@ -1,4 +1,5 @@
 import { SwapList } from '../../../src/components/swaplist/swaplist';
+import { cleanup } from '../../helpers/func-utils';
 
 const swaplistHTML = require('../../../app/views/components/swaplist/test-beforeswap-with-search.html');
 const svg = require('../../../src/components/icons/svg.html');
@@ -20,29 +21,28 @@ dataset.push({ id: 13, value: 'opt-13', text: 'Option MM' });
 dataset.push({ id: 14, value: 'opt-14', text: 'Option NN' });
 
 let swaplistEl;
-let svgEl;
 let swaplistObj;
 
 describe('SwapList API', () => {
   beforeEach(() => {
     swaplistEl = null;
-    svgEl = null;
     swaplistObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', swaplistHTML);
-    svgEl = document.body.querySelector('.svg-icons');
     swaplistEl = document.body.querySelector('#example-swaplist-1');
     swaplistObj = new SwapList(swaplistEl, { available: dataset, searchable: true });
   });
 
   afterEach(() => {
     swaplistObj.destroy();
-    swaplistEl.parentNode.removeChild(swaplistEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '#swaplist-tmpl',
+      '#swaplist-code',
+      '.svg-icons',
+      '.row',
+      '.page-container'
+    ]);
   });
 
   it('Should be defined as an object', () => {

@@ -246,11 +246,6 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
-.is-safari .toolbar,
-.is-safari .formatter-toolbar {
-  overflow-x: hidden;
-}
-
 // Styles for contextual toolbar
 .contextual-toolbar {
   background-color: $contextual-toolbar-bg-color;
@@ -347,6 +342,16 @@ $toolbar-buttonset-height: 40px;
   &.is-hidden {
     display: none;
     height: 0;
+  }
+}
+
+.toolbar.do-resize {
+  .toolbar-searchfield-wrapper {
+    .searchfield {
+      @include placeholderTextColor {
+        color: $searchfield-placeholder-text-color;
+      }
+    }
   }
 }
 

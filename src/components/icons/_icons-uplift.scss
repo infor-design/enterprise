@@ -39,3 +39,13 @@
     top: 2px !important;
   }
 }
+
+.ie,
+.ie11 {
+  .icon.plus-minus {
+    &::before,
+    &::after {
+      height: 2px;
+    }
+  }
+}

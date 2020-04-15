@@ -12,6 +12,7 @@ import { Locale } from '../locale/locale';
 import { ToolbarFlexItem } from '../toolbar-flex/toolbar-flex.item';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
+import { theme } from '../theme/theme';
 
 const COMPONENT_NAME = 'editor';
 
@@ -44,6 +45,7 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 * @param {boolean} [settings.useFlexToolbar = false] if set to true, renders the toolbar as flex toolbar.
 * @param {boolean} [settings.useSourceFormatter = false] true will format the html content in source mode.
 * @param {boolean} [settings.formatterTabsize = 4] number of spaces can use for indentation.
+* @param {boolean} [settings.rows = null] Number of rows that will be shown in each part of the editor. Set like textarea rows attributes to adjust the height of the editor without css. Example: `{ editor: 10, source: 20 }`
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -73,6 +75,10 @@ const EDITOR_DEFAULTS = {
   excludeButtons: {
     editor: ['backColor'],
     source: ['backColor']
+  },
+  rows: {
+    editor: null,
+    source: null
   },
   delay: 200,
   placeholder: null,
@@ -232,6 +238,7 @@ Editor.prototype = {
       this.toggleSource();
     }
 
+    this.setRowsHeight();
     return this;
   },
 
@@ -511,8 +518,30 @@ Editor.prototype = {
       this.element.trigger('change');
     }, 300));
 
+    $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
+      this.setRowsHeight();
+      if (!(this.sourceView.hasClass('hidden'))) {
+        this.adjustSourceLineNumbers();
+      }
+    });
+
     this.setupTextareaEvents();
     return this.textarea;
+  },
+
+  /**
+   * Set or reset the `rows` setting height
+   * @private
+   */
+  setRowsHeight() {
+    const isUplift = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1;
+    if (this.settings?.rows?.editor) {
+      this.element.height(this.settings?.rows?.editor * (isUplift ? 26 : 22.2));
+    }
+
+    if (this.settings?.rows?.source) {
+      this.element.parent().find('.editor-source').height((this.settings?.rows?.source * (isUplift ? 26 : 26)) + 15);
+    }
   },
 
   /**
@@ -724,6 +753,11 @@ Editor.prototype = {
     return this;
   },
 
+  /**
+   * Set the heights and adjust the line number feature.
+   * @private
+   * @returns {void}
+   */
   adjustSourceLineNumbers() {
     const container = this.textarea.parent();
     const lineHeight = parseInt(getComputedStyle(this.textarea[0]).lineHeight, 10);
@@ -761,8 +795,9 @@ Editor.prototype = {
         numberList.find('li').slice(-(i)).remove();
       }
       this.lineNumbers = lineNumberCount;
-      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     }
+
+    container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 2)}px)`;
     if (scrollHeight !== this.textarea[0].scrollHeight) {
       this.adjustSourceLineNumbers();
       return;
@@ -2117,7 +2152,7 @@ Editor.prototype = {
       this.sourceView.addClass('hidden').removeClass('is-focused');
       this.element.trigger('focus.editor');
       this.switchToolbars();
-      this.textarea.off('input.editor');
+      this.textarea.off('input.editor-firechange');
 
       setTimeout(() => {
         this.element.html(content);
@@ -2154,7 +2189,7 @@ Editor.prototype = {
       this.adjustSourceLineNumbers();
       this.textarea.focus();
       content = this.textarea.val();
-      this.textarea.off('input.editor').on('input.editor', () => {
+      this.textarea.off('input.editor-firechange').on('input.editor-firechange', () => {
         this.element.trigger('change');
       });
 
@@ -2856,6 +2891,7 @@ Editor.prototype = {
       `updated.${COMPONENT_NAME}`
     ].join(' '));
 
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     delete this.id;
     delete this.isActive;
 

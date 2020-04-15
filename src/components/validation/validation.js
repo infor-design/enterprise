@@ -192,6 +192,11 @@ function ValidationRules() {
         }
         let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 
+        // Custom callback
+        if (d2 && hasOptions && typeof options.disable.callback === 'function') {
+          return !(options.disable.callback(d2.getFullYear(), d2.getMonth(), d2.getDate()));
+        }
+
         // TODO: The developer will have to set disabled dates in arabic as arrays,
         // will come back to this for now its not supported in arabic.
         if (d2 instanceof Array) {
@@ -211,11 +216,24 @@ function ValidationRules() {
             check = false;
           }
 
+          const thisYear = d2.getFullYear();
+
           d2 = d2.setHours(0, 0, 0, 0);
 
           // min and max
           if ((d2 <= min) || (d2 >= max)) {
             check = false;
+          }
+
+          // years
+          if (/string|number/.test(typeof options.disable.years)) {
+            options.disable.years = [options.disable.years];
+          }
+          for (let i2 = 0, l2 = options.disable.years.length; i2 < l2; i2++) {
+            if (thisYear === Number(options.disable.years[i2])) {
+              check = false;
+              break;
+            }
           }
 
           // dates

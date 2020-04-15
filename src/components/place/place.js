@@ -424,6 +424,7 @@ Place.prototype = {
     });
 
     // Trigger an event to notify placement has ended
+    placementObj.element = this.element;
     this.element.trigger('afterplace', [placementObj]);
 
     return placementObj;
@@ -478,6 +479,7 @@ Place.prototype = {
    */
   handlePlacementCallback(placementObj) {
     const cb = placementObj.callback || this.settings.callback;
+    placementObj.element = this.element;
 
     if (cb && typeof cb === 'function') {
       placementObj = cb(placementObj);

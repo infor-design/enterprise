@@ -871,6 +871,11 @@ describe('Locale API', () => { //eslint-disable-line
 
     expect(Locale.translate('Equals')).toEqual('Gleich');
 
+    // Afrikaans
+    Locale.set('af-ZA');
+
+    expect(Locale.translate('Equals')).toEqual('Gelyk aan');
+
     // Error
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
   });

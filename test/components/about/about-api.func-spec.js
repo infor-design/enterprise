@@ -72,8 +72,10 @@ describe('About API', () => {
       const spyEvent = spyOnEvent('body', 'close');
       document.body.querySelector('#about-modal + .modal-page-container .close-container button').click();
 
-      expect(spyEvent).toHaveBeenTriggered();
-      done();
-    }, 650);
+      setTimeout(() => {
+        expect(spyEvent).toHaveBeenTriggered();
+        done();
+      });
+    }, 400);
   });
 });

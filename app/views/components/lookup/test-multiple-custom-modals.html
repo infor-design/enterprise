@@ -1,0 +1,174 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+
+         <button class="btn-secondary" type="button" data-modal="modal-1">Select State</button>
+         <div class="modal" id="modal-1">
+            <div class="modal-content">
+
+               <div class="modal-header">
+                  <h1 class="modal-title" >Select State</h1>
+               </div>
+
+               <div class="modal-body">
+
+                  <div class="field">
+                    <label for="date-field-normal" class="label">Date Field</label>
+                    <input id="date-field-normal" class="datepicker" name="date-field" type="text"/>
+                  </div>
+
+                  <div class="field">
+                     <label for="product-lookup" class="label">Products</label>
+                     <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first-name"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last-name"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="email-address">Email Address</label>
+                    <input type="text" id="email-address"name="email-address"/>
+                  </div>
+
+                  <div class="field">
+                    <label for="email-address-ok">Email Address - Checker</label>
+                    <input type="text" id="email-address-ok" name="email-address-ok"/>
+                  </div>
+
+                  <!--<div class="field">
+                     <label for="product-lookup2" class="label">Lookup (2)</label>
+                     <input id="product-lookup2" data-init="false" class="lookup" name="product-lookup2" type="text">
+                  </div> -->
+
+                  <div class="field">
+                     <label for="product-lookup3" class="label">Custom Modal Lookup</label>
+                     <input id="product-lookup3" data-init="false" class="lookup" name="product-lookup3" type="text"/>
+                  </div>
+
+                  <div class="modal-buttonset">
+                     <button type="button" class="btn-modal" style="width:50%">Cancel</button>
+                     <button type="button" id="submit" class="btn-modal-primary" style="width:50%">Submit</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+    <div id="modal-datagrid" class="datagrid-default-modal-width hidden">
+      <div id="datagrid">
+      </div>
+    </div>
+
+   <script>
+      var modal;
+
+      $('body').one('initialized', function () {
+         var grid,
+            columns = [],
+            data = [];
+
+         // Some Sample Data
+         data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+         data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+         data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+         data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+         data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+         data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+         //Define Columns for the Grid.
+         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
+         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+         //Init and get the api for the grid
+         $('#product-lookup, #product-lookup2').lookup({
+            options: {
+               columns: columns,
+               dataset: data,
+               selectable: 'single', //multiselect or single
+               toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+            }
+         });
+
+         // Init and get the api for the grid
+         var grid, columns = [], data = [];
+
+         // Some Sample Data
+         data.push({ id: 1, productId: 'T100', productName: 'Compressor', phone: '191/2004', activity:  'Assemble Paint', quantity: 1, price: '800.9905673502324', percent: .10, status: 'OK', orderDate: '00000000', action: 'Action'});
+         data.push({ id: 2, productId: '200', productName: 'Different Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: '2', percent: .10, price: null, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+         data.push({ id: 3, productId: '300', productName: 'Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: 1, price: '120.99', percent: .10, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+         data.push({ id: 4, productId: 'Z400', productName: 'Another Compressor', phone: '(888) 888-8888', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+         data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+         data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', percent: .10, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+         data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', percent: .10, status: 'OK', orderDate:new Date(2017, 5, 5), action: 'On Hold'});
+         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold'});
+
+         // Define Columns for the Grid.
+         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+         columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text, sortable: false, filterType: 'text' });
+
+         // Init and get the api for the grid
+         $('#datagrid').datagrid({
+           columns: columns,
+           dataset: data,
+           saveColumns: false,
+           paging: true,
+           pagesize: 5,
+           enableTooltips: true,
+           filterWhenTyping: false,
+           filterable: true,
+           redrawOnResize: false,
+           rowHeight: 'short',
+           selectable: 'multiple',
+           toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+         });
+
+         $('#product-lookup3').lookup({
+            click: function (a, b, c) {
+              $('body').modal({
+                title: 'Add Item',
+                content: $('#modal-datagrid'),
+                autoFocus: false,
+                buttons: [{
+                  text: 'Cancel',
+                  id: 'modal-button-1',
+                  click: function(e, modal) {
+                    $('#product-lookup3').focus();
+                    modal.close();
+                  }
+                }, {
+                  text: 'Save',
+                  id: 'modal-button-2',
+                  click: function(e, modal) {
+                    const selectedRows = modal.element.find('#datagrid').data('datagrid').selectedRows();
+                    if (selectedRows.length === 0) {
+                      return;
+                    }
+                    const value = selectedRows[0].data.productId;
+                    modal.close();
+
+                    $('#product-lookup3').val(value).focus();
+                  },
+                  isDefault: true
+                }]
+              });
+            }
+         });
+      });
+   </script>
+
+</div>

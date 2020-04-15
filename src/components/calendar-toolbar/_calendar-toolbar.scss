@@ -37,7 +37,7 @@
   .today {
     font-size: $theme-size-font-sm;
     font-weight: $theme-number-font-weight-bold;
-    margin-left: 18px;
+    margin-left: 14px;
     text-decoration: none;
     top: 1px;
   }
@@ -80,7 +80,7 @@
   // Move the second section to the right
   &.is-alternate {
     .today {
-      left: -10px;
+      left: -6px;
       margin-left: 0;
       position: relative;
     }

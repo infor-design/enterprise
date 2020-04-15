@@ -3,8 +3,8 @@
 
 .icon-empty-state {
   fill: transparent;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
 
   &.is-graphite {
     color: $icon-empty-bg-color;
@@ -15,7 +15,7 @@
 .card-empty-title,
 .widget-empty-title,
 .empty-title {
-  font-size: 2.2rem;
+  font-size: $theme-size-font-px-20;
   font-weight: $theme-number-font-weight-bold;
   margin-top: -5px;
   padding: 0 0 10px;
@@ -24,7 +24,17 @@
 .card-empty-info,
 .widget-empty-info,
 .empty-info {
-  color: $font-color;
+  color: $font-color-muted;
   font-size: 1.6rem;
   padding: 0 20px 20px;
+}
+
+.empty-title,
+.card-empty-title {
+  color: $font-color-muted;
+}
+
+.empty-icon,
+.card-empty-icon {
+  padding-bottom: $theme-number-spacing-base;
 }

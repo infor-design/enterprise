@@ -65,6 +65,16 @@ function Lookup(element, settings) {
 Lookup.prototype = {
 
   /**
+   * @returns {boolean} true if the Lookup is currently the active element.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const inputIsActive = this.element.is(active);
+    const wrapperHasActive = this.element.parent('.lookup-wrapper')[0].contains(active);
+    return (inputIsActive || wrapperHasActive);
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -109,7 +119,7 @@ Lookup.prototype = {
     }
 
     // Add Button
-    this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
+    this.icon = $('<span class="trigger"></span>').append($.createIcon('search-list'));
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
@@ -213,6 +223,12 @@ Lookup.prototype = {
    */
   openDialog(e) {
     const self = this;
+
+    // Don't try to re-open the lookup if it's already open.
+    if (this.isOpen) {
+      return;
+    }
+
     /**
       * Fires before open dialog.
       *
@@ -221,7 +237,6 @@ Lookup.prototype = {
       * @property {object} event - The jquery event object
       */
     const canOpen = self.element.triggerHandler('beforeopen');
-
     if (canOpen === false) {
       return;
     }
@@ -234,6 +249,8 @@ Lookup.prototype = {
       self.settings.click(e, this, self.settings.clickArguments);
       return;
     }
+
+    this.isOpen = true;
 
     if (this.settings.beforeShow) {
       const response = function (grid) {
@@ -341,6 +358,9 @@ Lookup.prototype = {
       if (self.settings.title) {
         return self.settings.title;
       }
+      if (self.settings?.options?.toolbar?.title) {
+        return self.settings?.options?.toolbar?.title;
+      }
       return '';
     }
     const labelText = getLabelText();
@@ -397,6 +417,7 @@ Lookup.prototype = {
       .off('close.lookup')
       .on('close.lookup', () => {
         self.element.focus();
+        delete self.isOpen;
         /**
           * Fires on close dialog.
           *
@@ -515,8 +536,7 @@ Lookup.prototype = {
       self.modal.element.find('.title').not('.selection-count').remove();
     }
 
-    const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
-      this.settings.options.toolbar.keywordFilter;
+    const hasKeywordSearch = this.settings?.options?.toolbar?.keywordFilter;
 
     if (!hasKeywordSearch && self.modal) {
       self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
@@ -543,26 +563,7 @@ Lookup.prototype = {
     if (this.settings.options.source) {
       lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
         const fieldVal = self.element.val();
-        if (fieldVal) {
-          if (this.initValues) {
-            const isMatch = (node, v) => ((node[this.settings.field] || '').toString() === v.toString());
-            let vaulesToBeSelect = '';
-            const a1 = this.initValues.filter(n => !n.visited).map(n => n.value);
-            const a2 = this.grid._selectedRows.map(n => n.data[this.settings.field]);
-            const a3 = this.doMerge(a1, a2);
-            a3.forEach((v, i) => {
-              vaulesToBeSelect += (i !== 0 ? this.settings.delimiter : '') + v;
-            });
-            this.selectGridRows(vaulesToBeSelect || fieldVal);
-            this.initValues.forEach((n) => {
-              if (!n.visited) {
-                n.visited = !!(this.grid.settings.dataset.filter(node => isMatch(node, n.value)).length); // eslint-disable-line
-              }
-            });
-          } else {
-            this.selectGridRows(fieldVal);
-          }
-        }
+        this.selectGridRows(fieldVal);
       });
     }
 
@@ -736,20 +737,6 @@ Lookup.prototype = {
       if (this.settings.options.dataset && this.settings.options.dataset[idx]) {
         delete this.settings.options.dataset[idx]._selected;
       }
-    }
-
-    // Add unvisited values
-    if (this.initValues) {
-      const initValues = this.initValues.filter(n => !n.visited).map(n => n.value);
-      const data = {};
-      initValues.forEach((v) => {
-        if (value.indexOf(v) === -1) {
-          value += (value !== '' ? this.settings.delimiter : '') + v;
-          data[this.settings.field] = v;
-          this.selectedRows.push({ data });
-        }
-      });
-      delete this.initValues;
     }
 
     /**

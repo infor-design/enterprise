@@ -1446,6 +1446,11 @@ $datagrid-short-row-height: 25px;
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
+
+      .tag:not(.info):not(.good):not(.error):not(.alert) {
+        background-color: $badge-neutral-hover-bg-color;
+        transition: none;
+      }
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1532,10 +1537,6 @@ $datagrid-short-row-height: 25px;
         border-color: transparent;
         box-shadow: none;
       }
-
-      td {
-        box-shadow: none;
-      }
     }
 
     &.is-clickable {
@@ -1565,6 +1566,7 @@ $datagrid-short-row-height: 25px;
 
     .datagrid-alert-text {
       line-height: 25px;
+      margin-right: -10px;
       padding-left: 10px;
       text-align: left;
       width: inherit;
@@ -1589,7 +1591,9 @@ $datagrid-short-row-height: 25px;
       top: -2px;
       vertical-align: middle;
 
-      &[class*='azure'] {
+      &[class*='azure'],
+      &[class*='error'],
+      &[class*='good'] {
         color: $inverse-color;
       }
 
@@ -4249,6 +4253,10 @@ html[dir='rtl'] {
     .listview.alternate-bg {
       background-color: $listview-bg-color;
     }
+  }
+
+  td .datagrid-checkbox-wrapper {
+    width: 21px;
   }
 
   // Modal Lists

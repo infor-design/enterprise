@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-xdescribe('Icon Soho (Subtle) tests', () => {
+describe('Icon Soho (Subtle) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -25,7 +25,7 @@ xdescribe('Icon Soho (Subtle) tests', () => {
   }
 });
 
-xdescribe('Icon Uplift (Vibrant)  tests', () => {
+describe('Icon Uplift (Vibrant)  tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?theme=uplift&layout=nofrills');
     await browser.driver.sleep(config.sleep);

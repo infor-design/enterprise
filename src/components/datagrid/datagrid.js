@@ -390,7 +390,7 @@ Datagrid.prototype = {
     }
 
     if (this.settings.source) {
-      pagingInfo.preserveSelected = true;
+      pagingInfo.preserveSelected = this.settings.allowSelectAcrossPages;
       this.triggerSource(pagingInfo);
       return;
     }
@@ -822,9 +822,6 @@ Datagrid.prototype = {
         this.recordCount = pagingInfo.total;
         this.displayCounts(pagingInfo.total);
       }
-
-      // Handle row selection across pages
-      this.syncSelectedUI();
     }
 
     if (!this.settings.source && this.filterExpr && this.filterExpr[0] && this.filterExpr[0].column === 'all') {
@@ -894,18 +891,12 @@ Datagrid.prototype = {
     this.setTreeRootNodes();
 
     // Figure out whether or not to preserve previously selected rows
-    if (pagerInfo.preserveSelected === undefined) {
-      if (this.settings.source) {
-        this._selectedRows = [];
-      } else if (pagerInfo.type === 'initial' || !pagerInfo.type) {
-        this.unSelectAllRows();
-      }
-    } else if (pagerInfo.preserveSelected === false) {
-      if (this.settings.source) {
-        this._selectedRows = [];
-      } else {
-        this.unSelectAllRows();
-      }
+    if (!pagerInfo.preserveSelected && this.settings.source
+      && !this.settings.allowSelectAcrossPages) {
+      this.unSelectAllRows();
+    }
+    if (!pagerInfo.preserveSelected && (pagerInfo.type === 'initial' || !pagerInfo.type)) {
+      this.unSelectAllRows();
     }
 
     if (this.settings.disableClientFilter) {
@@ -936,7 +927,6 @@ Datagrid.prototype = {
     // Setup focus on the first cell
     this.cellNode(0, 0, true).attr('tabindex', '0');
     this.renderPager(pagerInfo, true);
-    this.syncSelectedUI();
     this.displayCounts();
   },
 
@@ -3299,7 +3289,7 @@ Datagrid.prototype = {
 
       if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        self.tableBodyLeft.before(self.bodyColGroupLeft);
+        (self.headerRowLeft || self.tableBodyLeft).before(self.bodyColGroupLeft);
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
@@ -3307,7 +3297,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        self.tableBodyRight.before(self.bodyColGroupRight);
+        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
       }
     }
 
@@ -3414,7 +3404,6 @@ Datagrid.prototype = {
     // Set UI elements after dataload
     if (!self.settings.source) {
       self.displayCounts();
-      self.checkEmptyMessage();
     }
 
     self.setAlternateRowShading();
@@ -4440,8 +4429,10 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.parent().is('.datagrid-default-modal-width')) { // handle on invisible modal
+      if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
+        this.element.css('width', this.elemWidth);
+        this.element.css('min-width', 0);
         this.isInModal = true;
       } else if (this.element.parent().is('.modal-body')) {
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
@@ -5372,7 +5363,6 @@ Datagrid.prototype = {
                 lv.node = lv.api.settings.dataset[idx];
               }
             }
-
             if (!isChecked) {
               self.showColumn(id);
               chk.prop('checked', true);
@@ -5381,6 +5371,9 @@ Datagrid.prototype = {
               self.hideColumn(id);
               chk.prop('checked', false);
               lv.node.hidden = true;
+            }
+            if (self.settings.groupable) {
+              self.rerender();
             }
           });
 
@@ -5731,12 +5724,12 @@ Datagrid.prototype = {
   },
 
   /**
-  * See if the empty message object should be shown.
+  * Hide/Show the empty message object should be shown.
   * @private
   */
   checkEmptyMessage() {
     if (this.emptyMessage && this.emptyMessageContainer) {
-      if (this.filteredCount === this.recordCount || this.recordCount === 0) {
+      if (this.recordCount === 0) {
         this.emptyMessageContainer.show();
         this.element.addClass('is-empty');
       } else {
@@ -6723,7 +6716,7 @@ Datagrid.prototype = {
     }
 
     pagingInfo.activePage = this.activePage;
-    this.renderPager(pagingInfo, true);
+    this.renderPager(pagingInfo);
   },
 
   /**
@@ -6936,6 +6929,7 @@ Datagrid.prototype = {
   unSelectAllRows(nosync, noTrigger) {
     // Nothing to do
     if (!this._selectedRows || this._selectedRows.length === 0) {
+      this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
       return;
     }
     this.dontSyncUi = true;
@@ -6947,8 +6941,10 @@ Datagrid.prototype = {
         this.unselectRow(idx, true, true);
       }
     }
+    this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
+    this._selectedRows = [];
 
     if (!nosync) {
       this.syncSelectedUI();
@@ -7214,8 +7210,12 @@ Datagrid.prototype = {
 
     const headerCheckbox = this.headerNodes().find('.datagrid-checkbox');
     const rowsLength = rows.length;
-    const selectedRowsLength = this._selectedRows.length;
+    let selectedRowsLength = this._selectedRows.length;
     const status = headerCheckbox.data('selected');
+
+    if (this.settings.source && this.settings.allowSelectAcrossPages) {
+      selectedRowsLength = this.settings.dataset.filter(i => i._selected).length;
+    }
 
     // Do not run if checkbox in same state
     if ((selectedRowsLength !== rowsLength &&

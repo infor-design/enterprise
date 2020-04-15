@@ -615,6 +615,12 @@ span.required::after {
 .form-layout-compact {
   .field {
     margin-bottom: $form-size-field-compact-margin-bottom;
+
+    span {
+      &.data {
+        display: inline;
+      }
+    }
   }
 
   label,
