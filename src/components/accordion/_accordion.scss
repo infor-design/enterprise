@@ -1410,6 +1410,19 @@ html[dir='rtl'] {
   }
 }
 
+// Fix size of the bullet icon on Android devices
+html.android {
+  .accordion-pane {
+    .accordion-header.list-item {
+      &::before {
+        font-size: 1rem;
+        padding-right: 8px;
+        padding-top: 4px;
+      }
+    }
+  }
+}
+
 // Windows-style popup for truncated text elements
 .tooltip {
   &.tooltip-accordion-style {
