@@ -93,10 +93,14 @@
     $('#add-context').on('click', function () {
       $(this).focus();
       setModal(modals[this.id]);
-      
-      setTimeout(function() {
-        $('.modal-title').tooltip(TOOLTIP_OPTIONS);
-      }, 500);
+
+      console.log($('.modal-title').eq(0))
+
+      if ($('.modal-title').height() > 25) {
+        setTimeout(function () {
+          $('.modal-title').tooltip(TOOLTIP_OPTIONS);
+        }, 500);
+      }
     });
   })
 
