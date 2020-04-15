@@ -1768,11 +1768,11 @@ describe('Datagrid Lookup Editor', () => {
     const staticCell = '#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2)';
     await element(by.css(staticCell)).click();
     await element(by.css('.has-editor.is-editing .trigger')).click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.lookup-modal tr:nth-child(5) td:nth-child(1)')).click();
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.has-editor.is-editing')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css(staticCell)).getText()).toEqual('2542205');
   });

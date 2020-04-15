@@ -164,7 +164,7 @@ describe('Lookup multiselect tests', () => {
     expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
   });
 
-  fit('should selections reset on close', async () => {
+  it('should selections reset on close', async () => {
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
