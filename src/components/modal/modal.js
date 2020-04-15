@@ -1012,8 +1012,8 @@ Modal.prototype = {
     const focusElementTimer = new RenderLoopItem({
       duration: 20,
       timeoutCallback() {
-        focusElement(self);
         callOpenEvent(self);
+        focusElement(self);
       }
     });
     renderLoop.register(focusElementTimer);
