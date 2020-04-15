@@ -28,6 +28,7 @@
 - `[Icons]` Added new locked/unlocked icons in ids-identity [#3732](https://github.com/infor-design/enterprise/issues/3732)
 - `[Radar Chart]` Fixed an issue where labels were cutoff at desktop view. ([#3510](https://github.com/infor-design/enterprise/issues/3510))
 - `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
+- `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 
 ## v4.27.2
 
