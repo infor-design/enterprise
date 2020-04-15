@@ -1,7 +1,8 @@
 <div class="row">
   <div class="twelve columns">
 
-    <button class="btn-secondary" type="button" id="add-context">Show Modal</button><br /><br />
+    <button class="btn-secondary" type="button" id="add-context">Show
+      Modal</button><br /><br />
 
     <!-- Modal Example -->
     <div id="modal-add-context" class="hidden">
@@ -50,39 +51,53 @@
 </div>
 
 <script>
-  var modals = {
-      'add-context': {
-        'title': 'Really Long Title Here Like Woah You Don\'t Even Understand This Is Long. It is a very long title since sometimes you have to have a very long title. This can sometimes cause spacing issues',
-        'id': 'my-id',
-        'content': $('#modal-add-context')
-      }
-    },
+  $('body').on('initialized', function () {
+    var modalTitle =
+      'Really Long Title Here Like Woah You Don\'t Even Understand This Is Long. It is a very long title since sometimes you have to have a very long title. This can sometimes cause spacing issues';
 
-    setModal = function (opt) {
-      opt = $.extend({
-        buttons: [{
-          text: 'Cancel',
-          //  id: 'modal-button-1',
-          click: function (e, modal) {
-            modal.close();
-          }
-        }, {
-          text: 'Save',
-          //  id: 'modal-button-2',
-          click: function (e, modal) {
-            modal.close();
-          },
-          validate: false,
-          isDefault: true
-        }]
-      }, opt);
+    var TOOLTIP_OPTIONS = {
+      trigger: 'hover',
+      content: modalTitle,
+      placement: 'top'
+    }
 
-      $('body').modal(opt);
-    };
+    var modals = {
+        'add-context': {
+          'title': modalTitle,
+          'content': $('#modal-add-context')
+        }
+      },
 
-  $('#add-context').on('click', function () {
-    $(this).focus();
-    setModal(modals[this.id]);
-  });
+      setModal = function (opt) {
+        opt = $.extend({
+          buttons: [{
+            text: 'Cancel',
+            //  id: 'modal-button-1',
+            click: function (e, modal) {
+              modal.close();
+            }
+          }, {
+            text: 'Save',
+            //  id: 'modal-button-2',
+            click: function (e, modal) {
+              modal.close();
+            },
+            validate: false,
+            isDefault: true
+          }]
+        }, opt);
+
+        $('body').modal(opt);
+      };
+
+    $('#add-context').on('click', function () {
+      $(this).focus();
+      setModal(modals[this.id]);
+      
+      setTimeout(function() {
+        $('.modal-title').tooltip(TOOLTIP_OPTIONS);
+      }, 500);
+    });
+  })
 
 </script>
