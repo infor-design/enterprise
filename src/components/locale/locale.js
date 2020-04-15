@@ -1077,6 +1077,8 @@ const Locale = {  // eslint-disable-line
     const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
     let hasDays = false;
     let hasAmFirst = false;
+    const amSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g,'');
+    const pmSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g,'');
 
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
@@ -1187,8 +1189,8 @@ const Locale = {  // eslint-disable-line
           dateObj.mm = value;
           break;
         case 'a':
-          if ((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
-           (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
+          if ((value.toLowerCase() === amSetting) ||
+           (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
 
             if (!dateObj.h && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
@@ -1203,8 +1205,8 @@ const Locale = {  // eslint-disable-line
             }
           }
 
-          if ((value.toLowerCase() === thisLocaleCalendar.dayPeriods[1]) ||
-           (value.toUpperCase() === thisLocaleCalendar.dayPeriods[1])) {
+          if ((value.toLowerCase() === pmSetting) ||
+           (value.toUpperCase() === pmSetting)) {
             dateObj.a = 'PM';
 
             if (dateObj.h) {
