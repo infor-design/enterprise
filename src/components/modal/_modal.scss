@@ -23,7 +23,7 @@
 // Extra Class to hide the header and keep the padding
 .modal-no-header {
   .modal-title {
-    display: none;
+    display: none !important;
   }
 
   .modal-header {
