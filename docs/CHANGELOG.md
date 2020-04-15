@@ -12,8 +12,6 @@
 - `[Contextmenu]` Added support for shortcut display in menus. ([#3490](https://github.com/infor-design/enterprise/issues/3490))
 - `[Modal]` Improved handling of multiple Modal windows stemming from a single trigger element. ([ng#705](https://github.com/infor-design/enterprise-ng/issues/705))
 
-### v4.28.0 Important Changes
-
 ### v4.28.0 Fixes
 
 - `[Application Menu]` Fixed the icons on breaking apart it's appearance when zooming out the browser in IE11, uplift theme. ([#3070](https://github.com/infor-design/enterprise/issues/3070))

@@ -164,7 +164,7 @@ describe('Lookup multiselect tests', () => {
     expect(await element(by.className('btn-modal-primary')).isEnabled()).toBe(true);
   });
 
-  it('should selections reset on close', async () => {
+  fit('should selections reset on close', async () => {
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
 
@@ -172,14 +172,16 @@ describe('Lookup multiselect tests', () => {
     const checkboxTd = await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.is-selected')).count()).toEqual(1);
     await element(by.id('modal-button-1')).click();
     await browser.driver.wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-content'))), config.waitsFor);
-
     await browser.driver.sleep(config.sleep);
+
     await element(by.className('trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-content'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('#lookup-datagrid .datagrid-wrapper tbody tr.is-selected')).count()).toEqual(0);
   });
