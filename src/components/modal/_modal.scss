@@ -270,6 +270,16 @@
       }
     }
   }
+
+  &.has-minwidth {
+    &:not(.display-fullsize):not(.about) {
+      .modal-content {
+        h1 {
+          max-width: 450px;
+        }
+      }
+    }
+  }
 }
 
 .overlay {
