@@ -1978,7 +1978,7 @@ Dropdown.prototype = {
     // When the Dropdown is located within a scrollable section,
     // the dropdown must close if that section is scrolled.
     let parentScrollableArea = $('.modal.is-visible .modal-body-wrapper');
-    const subScrollableSection = self.element.closest('.scrollable, .scrollable-x, .scrollable-y, .card-content');
+    const subScrollableSection = self.element.parents('.scrollable, .scrollable-x, .scrollable-y, .card-content');
     if (subScrollableSection.length) {
       parentScrollableArea = subScrollableSection;
     }
