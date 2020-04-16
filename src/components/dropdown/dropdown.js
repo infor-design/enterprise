@@ -3236,7 +3236,7 @@ Dropdown.prototype = {
         }
         self.toggle();
       })
-      .on('touchend.dropdown touchcancel.dropdown', (e) => {
+      .on('touchcancel.dropdown', (e) => {
         if (isTag(e)) {
           return;
         }
