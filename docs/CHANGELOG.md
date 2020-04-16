@@ -32,6 +32,12 @@
 - `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 
+## v4.27.3
+
+### v4.27.3 Fixes
+
+- `[Datagrid]` Fixed a bug in the indeterminate paging example, that the select checkbox would not work and be out of sync when changing pages. [2230](https://github.com/infor-design/enterprise/issues/2230))
+
 ## v4.27.2
 
 ### v4.27.2 Fixes
