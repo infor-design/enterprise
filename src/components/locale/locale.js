@@ -1077,8 +1077,8 @@ const Locale = {  // eslint-disable-line
     const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
     let hasDays = false;
     let hasAmFirst = false;
-    const amSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g,'');
-    const pmSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g,'');
+    const amSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g, '');
+    const pmSetting = thisLocaleCalendar.dayPeriods[1].replace(/\./g, '');
 
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
