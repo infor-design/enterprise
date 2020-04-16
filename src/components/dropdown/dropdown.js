@@ -3219,33 +3219,7 @@ Dropdown.prototype = {
   handleEvents() {
     const self = this;
 
-    this.pseudoElem
-      .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
-      .on('click.dropdown touchstart.dropdown', (e) => {
-
-        // Would like the click event to bubble up if ctrl and shift are pressed
-        if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
-          e.stopPropagation();
-        }
-      }).on('mouseup.dropdown touchend.dropdown', (e) => {
-        if (e.button === 2) {
-          return;
-        }
-        if (isTag(e)) {
-          return;
-        }
-        self.toggle();
-      })
-      .on('touchcancel.dropdown', (e) => {
-        if (isTag(e)) {
-          return;
-        }
-        e.stopPropagation();
-        self.toggle();
-        e.preventDefault();
-      });
-
-    function isTag(e) {
+    function isTagEl(e) {
       // If the element clicked is a tag, ignore and let the tag handle it.
       const containedByTag = $(e.target).parents('.tag').length > 0;
       let isTag = false;
@@ -3255,10 +3229,35 @@ Dropdown.prototype = {
 
       if (isTag || containedByTag) {
         return true;
-      } else {
-        return false;
       }
+
+      return false;
     }
+
+    this.pseudoElem
+      .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
+      .on('click.dropdown touchstart.dropdown', (e) => {
+        // Would like the click event to bubble up if ctrl and shift are pressed
+        if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
+          e.stopPropagation();
+        }
+      }).on('mouseup.dropdown touchend.dropdown', (e) => {
+        if (e.button === 2) {
+          return;
+        }
+        if (isTagEl(e)) {
+          return;
+        }
+        self.toggle();
+      })
+      .on('touchcancel.dropdown', (e) => {
+        if (isTagEl(e)) {
+          return;
+        }
+        e.stopPropagation();
+        self.toggle();
+        e.preventDefault();
+      });
 
     self.element.on('activated.dropdown', () => {
       self.label.trigger('click');
