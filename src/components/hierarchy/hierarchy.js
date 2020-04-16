@@ -24,7 +24,6 @@ const COMPONENT_NAME = 'hierarchy';
  * @param {number} [settings.leafHeight=null] Set the height of the leaf
  * @param {number} [settings.leafWidth=null] Set the width of the leaf
  * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
-
  * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
  * @param {boolean} [settings.layout=string] Which layout should be rendered {'horizontal', 'mobile-only', 'stacked', 'paging'}
  * @param {object} [settings.emptyMessage] An optional settings object for the empty message when there is no data.
