@@ -30,21 +30,17 @@
       });
     }
 
-    beforeOpen(eventInfo, hierarchyControl);
+    if (eventInfo.isActionsEvent) {
+      $.when(getActionsAsync()).then((actions) => {
+        hierarchyControl.updateActions(eventInfo, actions);
+      });
+    }
   });
 
   function reload(eventInfo, hierarchyControl, newData) {
     eventInfo.data.children = newData;
     options.dataset = [eventInfo.data.children];
     hierarchyControl.reload(options);
-  }
-
-  function beforeOpen(eventInfo, hierarchyControl) {
-    if (eventInfo.isActionsEvent) {
-      $.when(getActionsAsync()).then((actions) => {
-        hierarchyControl.updateActions(eventInfo, actions);
-      });
-    }
   }
 
   // Emulate a call to the server to get actions for popupmenu
@@ -73,7 +69,6 @@
       ];
 
       defer.resolve(actions);
-      // setTimeout(() => defer.resolve(actions), 500);
 
       return defer.promise();
   }
