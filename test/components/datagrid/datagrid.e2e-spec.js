@@ -4057,3 +4057,21 @@ describe('Datagrid columns width test', () => {
     });
   });
 });
+
+describe('Datagrid With Recursive Column Data', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-recursive-object');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render rows', async () => {
+    expect(await element.all(by.css('#datagrid .datagrid-wrapper tbody tr')).count()).toEqual(7);
+  });
+});
