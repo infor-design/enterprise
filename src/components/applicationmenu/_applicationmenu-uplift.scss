@@ -388,7 +388,7 @@
         &.list-item {
           &::before {
             color: inherit;
-            font-size: 0.8rem;
+            font-size: 0.6rem;
             padding-right: 12px;
           }
         }
@@ -510,6 +510,22 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &.android {
+    .application-menu {
+      .accordion.panel.inverse {
+        .accordion-pane {
+          .accordion-header {
+            &.list-item {
+              &::before {
+                font-size: 0.6rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Application Menu's Accordion alignment rules
@@ -594,7 +610,7 @@ html[dir='rtl'] {
       @include left-align-cascade-styles-pane(55px, 78px, 56px);
 
       .accordion-header {
-        @include left-align-cascade-styles-header(54px, 50px, 78px, 58px);
+        @include left-align-cascade-styles-header(54px, 50px, 78px, 60px);
       }
 
       // Level 2 Pane
@@ -603,7 +619,7 @@ html[dir='rtl'] {
 
         // Level 3 Header
         .accordion-header {
-          @include left-align-cascade-styles-header(59px, 74px, 102px, 82px);
+          @include left-align-cascade-styles-header(59px, 74px, 102px, 84px);
         }
 
         // Level 3 Pane
@@ -612,7 +628,7 @@ html[dir='rtl'] {
 
           // Level 4 Header
           .accordion-header {
-            @include left-align-cascade-styles-header(59px, 99px, 127px, 107px);
+            @include left-align-cascade-styles-header(59px, 99px, 127px, 109px);
           }
 
           // Level 4 Pane
@@ -621,7 +637,7 @@ html[dir='rtl'] {
 
             // Level 5 Header
             .accordion-header {
-              @include left-align-cascade-styles-header(78px, 124px, 152px, 132px);
+              @include left-align-cascade-styles-header(78px, 124px, 152px, 134px);
             }
 
             // Level 5 Pane
@@ -630,7 +646,7 @@ html[dir='rtl'] {
 
               // Level 6 Header
               .accordion-header {
-                @include left-align-cascade-styles-header(122px, 152px, 180px, 160px);
+                @include left-align-cascade-styles-header(122px, 152px, 180px, 162px);
 
                 &.no-icon {
                   > a {

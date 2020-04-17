@@ -737,7 +737,7 @@
         content: '\25cf';
         display: inline-block;
         font-size: $theme-size-font-sm;
-        padding: 8px 10px 8px 21px;
+        padding: 4px 10px 8px 21px;
         vertical-align: middle;
       }
 
@@ -1415,9 +1415,7 @@ html.android {
   .accordion-pane {
     .accordion-header.list-item {
       &::before {
-        font-size: 1rem;
-        padding-right: 8px;
-        padding-top: 4px;
+        font-size: 0.7rem;
       }
     }
   }
