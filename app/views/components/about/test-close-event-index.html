@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button type="button" class="btn-secondary" id="about-trigger">Show About Screen</button>
+
+  </div>
+</div>
+
+<script>
+
+  $('#about-trigger').on('click', function () {
+
+    //Show About Screen
+    $('body').about({
+      appName: 'IDS Enterprise',
+      productName: 'Controls',
+      version: 'Example Application Version No. XX',
+      content: '<p>Fashionable components for fashionable applications.</p>'
+    }).off('close').on('close', function () {
+      $('body').toast({
+        'title': 'Close Event Triggered',
+        'message': ''
+      });
+    });
+  });
+</script>
