@@ -413,12 +413,12 @@ Datagrid.prototype = {
       self.element.append(self.bodyWrapperLeft);
     }
 
-    self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scroll-x${!this.hasRightPane ? ' scroll-y' : ''}"></div>`);
+    self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scrollable-x${!this.hasRightPane ? ' scrollable-y' : ''}"></div>`);
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
 
     if (this.hasRightPane) {
-      self.bodyWrapperRight = $('<div class="datagrid-wrapper right scroll-y"></div>');
+      self.bodyWrapperRight = $('<div class="datagrid-wrapper right scrollable-y"></div>');
       self.tableRight = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperRight);
       self.element.append(self.bodyWrapperRight);
     }
@@ -1662,7 +1662,7 @@ Datagrid.prototype = {
         }).on('listopened.datagrid', () => {
           const api = dropdown.data('dropdown');
           if (api) {
-            if (!self.isInViewport(api.list[0])) {
+            if (!utils.isInViewport(api.list[0])) {
               self.adjustPosLeft(api.list[0]);
             }
           }
@@ -2294,21 +2294,6 @@ Datagrid.prototype = {
     } else if (b.left >= 0 && !(b.right <= w)) {
       el.style.left = `${(w - b.width) - padding}px`; // Right side
     }
-  },
-
-  /**
-   * Check if given element is in the viewport
-   * @private
-   * @param {object} el The element to check
-   * @returns {boolean} true if is in the viewport
-   */
-  isInViewport(el) {
-    const b = el.getBoundingClientRect();
-    return (
-      b.top >= 0 && b.left >= 0 &&
-      b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      b.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
   },
 
   /**

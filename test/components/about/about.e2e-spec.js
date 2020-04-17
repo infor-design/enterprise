@@ -56,3 +56,20 @@ describe('About translation tests', () => {
     await utils.checkForErrors();
   });
 });
+
+describe('About Event tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/about/test-close-event-index');
+  });
+
+  it('Should fire the close event', async () => {
+    await element(by.id('about-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+    await element(by.css('.close-container button')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#toast-container .toast-title')).getText()).toEqual('Close Event Triggered');
+    await utils.checkForErrors();
+  });
+});
