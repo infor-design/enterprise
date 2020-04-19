@@ -7,6 +7,7 @@
 - `[Bar Chart]` Added support to ellipsis for yaxis labels. ([#3702](https://github.com/infor-design/enterprise/issues/3702))
 - `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
 - `[Contextmenu]` Added support for shortcut display in menus. ([#3490](https://github.com/infor-design/enterprise/issues/3490))
+- `[Line Chart]` Added support to ellipsis for yaxis labels. ([#3702](https://github.com/infor-design/enterprise/issues/3702))
 
 ### v4.28.0 Fixes
 
