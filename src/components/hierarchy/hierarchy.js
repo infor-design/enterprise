@@ -320,6 +320,7 @@ Hierarchy.prototype = {
     const leaf = $(eventInfo.targetInfo.target).closest('.leaf');
     const nodeData = eventInfo.data;
     const popupMenu = $(leaf).find('.popupmenu');
+    const popupMenuControl = popupMenu.data('trigger').data().popupmenu;
     const lineItemsToRemove = popupMenu.find('li').not(':eq(0)');
 
     $(lineItemsToRemove).each((idx, item) => {
@@ -328,6 +329,8 @@ Hierarchy.prototype = {
 
     nodeData.menu.actions = updatedActions;
     popupMenu.append(this.getActionMenuItems(nodeData));
+
+    popupMenuControl.open();
   },
 
   /**

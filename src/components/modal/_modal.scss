@@ -544,6 +544,42 @@ html.ie {
   }
 }
 
+// Solution for multi line with ellipsis
+.ie11 {
+  .modal {
+    &:not(.display-fullsize):not(.about) {
+      .modal-content {
+        h1 {
+          line-height: 1.2em;
+          margin-right: -1em;
+          max-height: 2.4em;
+          overflow: hidden;
+          padding-right: 1em;
+          position: relative;
+          text-align: justify;
+          white-space: normal;
+
+          &::before {
+            bottom: 0;
+            content: '...';
+            position: absolute;
+            right: 0;
+          }
+
+          &::after {
+            background-color: $modal-bg-color; // Covering up the ‘…’ if the text is less than the max number of lines.
+            content: '';
+            height: 1em;
+            position: absolute;
+            right: 0;
+            width: 1em;
+          }
+        }
+      }
+    }
+  }
+}
+
 // iOS has lots of issues regarding scrolling of elements that are
 // technically "behind" the modal.  This CSS, as well as some JS in the Modal component,
 // seek to stop scrolling behind the in-focus modal element.
