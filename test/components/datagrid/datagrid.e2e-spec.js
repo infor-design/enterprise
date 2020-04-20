@@ -1696,7 +1696,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+describe('Datagrid Duplicate Ids Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
 
