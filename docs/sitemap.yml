@@ -13,6 +13,8 @@ sections:
   pages:
   - name: Grid
     slug: grid
+  - name: Forms
+    slug: form
 - name: Components
   pages:
   - name: Accordion
@@ -125,8 +127,6 @@ sections:
     slug: arrange
   - name: Drag
     slug: drag
-  - name: Initialize
-    slug: initialize
   - name: Locale
     slug: locale
   - name: Mask
@@ -143,8 +143,6 @@ sections:
     slug: visibility
   - name: Validation
     slug: validation
-  - name: Zoom
-    slug: zoom
 - name: Patterns
   pages:
     - name: About
@@ -213,8 +211,6 @@ sections:
     slug: fieldset
   - name: Field Options
     slug: field-options
-  - name: Form Functionality
-    slug: form
   - name: Hierarchy (Org Chart)
     slug: hierarchy
   - name: Homepage

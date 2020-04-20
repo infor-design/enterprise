@@ -59,23 +59,4 @@ describe('About API', () => {
       done();
     }, 600);
   });
-
-  it('Should fire close', (done) => {
-    $('body').about({
-      appName: 'IDS Enterprise',
-      productName: 'Controls',
-      version: 'ver. {{version}}',
-      content: '<p>Fashionable components for fashionable applications.</p>'
-    });
-
-    setTimeout(() => {
-      const spyEvent = spyOnEvent('body', 'close');
-      document.body.querySelector('#about-modal + .modal-page-container .close-container button').click();
-
-      setTimeout(() => {
-        expect(spyEvent).toHaveBeenTriggered();
-        done();
-      });
-    }, 400);
-  });
 });

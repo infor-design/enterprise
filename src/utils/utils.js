@@ -1192,4 +1192,19 @@ utils.deepCopy = function (arrayOrObject) {
   return copy(arrayOrObject);
 };
 
+/**
+ * Check if given element is within the viewport.
+ * @private
+ * @param {object} element The element to check
+ * @returns {boolean} Whether or not the element is in the viewport.
+ */
+utils.isInViewport = function isInViewport(element) {
+  const b = element.getBoundingClientRect();
+  return (
+    b.top >= 0 && b.left >= 0 &&
+    b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    b.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
+
 export { utils, math };
