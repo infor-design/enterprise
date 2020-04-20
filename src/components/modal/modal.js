@@ -372,6 +372,8 @@ Modal.prototype = {
 
   /**
    * Registers this modal component with the global Modal Manager, while setting up other links.
+   * @private
+   * @returns {void}
    */
   registerModal() {
     // If the current `element` is not the original one the component was invoked against,
@@ -386,6 +388,7 @@ Modal.prototype = {
   },
 
   /**
+   * Moves around the basic structure of a Modal's HTML Markup for some legacy cases.
    * @private
    * @returns {void}
    */
@@ -1112,7 +1115,9 @@ Modal.prototype = {
   },
 
   /**
-   * @returns {array} containing references to current IDS subcomponent APIs inside this modal that
+   * Reports to a consumer a list of IDS components contained by this Modal, that are also currently
+   * reporting as "open".  This is used to determine if it's OK to close the Modal or not.
+   * @returns {array} containing references to IDS subcomponent APIs inside this modal that
    * are currently reporting as "open"
    */
   get openSubComponents() {
