@@ -82,6 +82,7 @@ describe('Message overlay opacity tests', () => {
     await btnEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await overlayEl.getCssValue('opacity')).toBe('0.1');
   });

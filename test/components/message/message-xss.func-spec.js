@@ -1,4 +1,3 @@
-
 import { Message } from '../../../src/components/message/message';
 
 let messageEl;
@@ -11,14 +10,18 @@ describe('Message XSS Prevention', () => {
     messageEl = document.body;
   });
 
-  afterEach(() => {
-    messageEl = null;
+  afterEach((done) => {
+    if (messageAPI) {
+      messageAPI.destroy();
+      messageAPI = null;
+    }
 
-    messageAPI.destroy();
-    messageAPI = null;
-
-    messageTitleEl = null;
-    messageContentEl = null;
+    setTimeout(() => {
+      messageEl = null;
+      messageTitleEl = null;
+      messageContentEl = null;
+      done();
+    }, 650);
   });
 
   it('Can strip HTML tags out of user-set content', () => {
@@ -31,11 +34,13 @@ describe('Message XSS Prevention', () => {
       message: dangerousMessageContent
     });
 
-    messageTitleEl = document.querySelector('.modal .modal-title');
-    messageContentEl = document.querySelector('.modal .modal-body'); // should only be one
+    setTimeout(() => {
+      messageTitleEl = document.querySelector('.modal .modal-title');
+      messageContentEl = document.querySelector('.modal .modal-body'); // should only be one
 
-    expect(messageTitleEl.innerText).toEqual('Application Message alert("GOTCHA!");');
-    expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
+      expect(messageTitleEl.innerText).toEqual('Application Message alert("GOTCHA!");');
+      expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
+    }, 650);
   });
 
   it('Can disallow HTML tags based on component setting', () => {
@@ -48,10 +53,12 @@ describe('Message XSS Prevention', () => {
       allowedTags: ''
     });
 
-    messageTitleEl = document.querySelector('.modal .modal-title');
-    messageContentEl = document.querySelector('.modal .modal-body');
+    setTimeout(() => {
+      messageTitleEl = document.querySelector('.modal .modal-title');
+      messageContentEl = document.querySelector('.modal .modal-body');
 
-    expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
-    expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+      expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+      expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+    }, 650);
   });
 });

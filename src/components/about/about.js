@@ -201,29 +201,28 @@ About.prototype = {
    * @returns {void}
    */
   close() {
-    const modalApi = this.modal.data('modal');
-
     /**
-    * Fires when the dialog is closing.
-    * @event close
-    * @memberof About
-    * @property {object} event - The jquery event object
-    * @property {object} ui - The dialog object
-    */
-    if (modalApi) {
-      modalApi.close();
+     * Fires after the dialog is done closing and removed.
+     * @event afterclose
+     * @memberof About
+     * @property {object} event - The jquery event object
+     * @property {object} ui - The dialog object
+     */
+    if (this.isBody) {
+      this.destroy();
+      return;
     }
 
     /**
-    * Fires after the dialog is done closing and removed.
-    * @event afterclose
-    * @memberof About
-    * @property {object} event - The jquery event object
-    * @property {object} ui - The dialog object
-    */
-
-    if (this.isBody) {
-      this.destroy();
+     * Fires when the dialog is closing.
+     * @event close
+     * @memberof About
+     * @property {object} event - The jquery event object
+     * @property {object} ui - The dialog object
+     */
+    const modalApi = this.modal.data('modal');
+    if (modalApi) {
+      modalApi.close();
     }
   },
 
@@ -232,15 +231,14 @@ About.prototype = {
    * @returns {void}
    */
   destroy() {
-    const modalApi = this.modal.data('modal');
+    this.buttons.off();
+    this.element.off('open.about');
 
+    const modalApi = this.modal.data('modal');
     if (modalApi) {
       modalApi.element.off('beforeopen.about');
       modalApi.destroy();
     }
-
-    this.buttons.off();
-    this.element.off('open.about');
 
     if (this.element.length > 0) {
       $.removeData(this.element[0], COMPONENT_NAME);
@@ -272,13 +270,6 @@ About.prototype = {
     */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);
-    });
-
-    $(document).on('keydown.about', (e) => {
-      // Close on Escape.
-      if (e.which === 0 || e.which === 27) {
-        this.close();
-      }
     });
 
     return this;
