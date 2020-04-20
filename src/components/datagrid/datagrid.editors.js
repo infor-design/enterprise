@@ -502,11 +502,7 @@ const editors = {
 
     this.init = function () {
       this.input = $('<input class="datepicker" autocomplete="off"/>').appendTo(container);
-      let options = column.editorOptions;
-      if (!options && column.dateFormat) {
-        options = { dateFormat: column.dateFormat };
-      }
-      this.input.datepicker(options);
+      this.input.datepicker(column.editorOptions || { dateFormat: column.dateFormat });
     };
 
     this.val = function (v) {

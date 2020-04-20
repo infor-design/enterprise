@@ -2,6 +2,10 @@
 
 ## v4.28.0
 
+### v4.28.0 Important Changes
+
+- `[Pager]` The Deprecated `pager` getter method was removed. Use `pagerAPI` instead for the same thing if accessing this internal object directly. ([#3759](https://github.com/infor-design/enterprise/issues/3759))
+
 ### v4.28.0 Features
 
 - `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))

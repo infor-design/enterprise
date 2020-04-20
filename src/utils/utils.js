@@ -643,12 +643,52 @@ DOM.focusableElems = function focusableElems(el) {
 };
 
 /**
- * Object deep copy.
- * For now, alias jQuery.extend
- * Eventually we'll replace this with a non-jQuery extend method.
- * @private
+ * Object deep copy and merge. Replaces jQuery.extend without the true option.
+ * @param {boolean|object} deep For a deep extend, set the first argument to `true`.
+ * @returns {object} The merged object
  */
-utils.extend = $.extend;
+utils.extend = function extend() {
+  // Variables
+  const extended = {};
+  let deep = false;
+  let i = 0;
+
+  // Check if a deep merge
+  if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') { //eslint-disable-line
+    deep = arguments[0]; //eslint-disable-line
+    i++;
+  }
+
+  // Merge the object into the extended object
+  const merge = function (obj) {
+    for (let prop in obj) { //eslint-disable-line
+      if (obj.hasOwnProperty(prop)) { //eslint-disable-line
+        // If property is an object, merge properties - in several ways
+        if (obj[prop] instanceof jQuery) {
+          // Needed for now until jQuery is fully dropped
+          extended[prop] = $(obj[prop]);
+        } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+          extended[prop] = extend(extended[prop], obj[prop]);
+        } else {
+          extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
+            extended[prop] : obj[prop];
+        }
+      }
+
+      // Add functions and jQuery objects
+      if (!obj.hasOwnProperty(prop) && !extended[prop] && Object.prototype.toString.call(obj[prop]) === '[object Function]') { //eslint-disable-line
+        extended[prop] = obj[prop];
+      }
+    }
+  };
+
+  // Loop through each object and conduct a merge
+  for (; i < arguments.length; i++) {
+    merge(arguments[i]);  //eslint-disable-line
+  }
+
+  return extended;
+};
 
 /**
  * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
@@ -948,11 +988,13 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
     }
   }
 
-  return {
-    ...resolveFunctionBasedSettings(defaultOptions || {}),
-    ...resolveFunctionBasedSettings(incomingOptions),
-    ...(element !== undefined ? utils.parseSettings(element) : {})
-  };
+  return utils.extend(
+    true,
+    {},
+    resolveFunctionBasedSettings(defaultOptions),
+    resolveFunctionBasedSettings(incomingOptions),
+    (element !== undefined ? utils.parseSettings(element) : {})
+  );
 };
 
 /**

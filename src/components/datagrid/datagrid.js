@@ -7,7 +7,6 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
@@ -247,17 +246,6 @@ Datagrid.prototype = {
       api = this.tableBody.data('pager');
     }
     return api;
-  },
-
-  /**
-   * Reference to the pager API, if applicable.
-   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
-   * @deprecated as of v4.16.0. Please use `pagerAPI` property instead.
-   * @returns {Pager} IDS Pager component API.
-   */
-  get pager() {
-    warnAboutDeprecation('pagerAPI', 'pager');
-    return this.pagerAPI;
   },
 
   /**

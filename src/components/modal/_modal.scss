@@ -518,9 +518,11 @@ body.modal-engaged {
   }
 
   .btn-modal-primary {
+    background-color: transparent;
     color: $modal-btn-primary-color;
 
     &:hover {
+      background-color: transparent;
       color: $modal-btn-primary-hover-color;
     }
   }
