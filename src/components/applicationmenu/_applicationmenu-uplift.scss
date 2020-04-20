@@ -388,8 +388,9 @@
         &.list-item {
           &::before {
             color: inherit;
-            font-size: 0.6rem;
-            padding-right: 12px;
+            font-size: 0.4rem;
+            padding-right: 13px;
+            padding-top: 7px;
           }
         }
 
@@ -539,7 +540,7 @@ html[dir='rtl'] {
 
     // Level 2 Header
     .accordion-header {
-      @include left-align-cascade-styles-header(20px, 18px, 49px, 26px);
+      @include left-align-cascade-styles-header(20px, 18px, 49px, 29px);
     }
 
     // Level 2 Pane
@@ -548,7 +549,7 @@ html[dir='rtl'] {
 
       // Level 3 Header
       .accordion-header {
-        @include left-align-cascade-styles-header(40px, 44px, 72px, 52px);
+        @include left-align-cascade-styles-header(40px, 44px, 72px, 55px);
       }
 
       // Level 3 Pane
@@ -557,7 +558,7 @@ html[dir='rtl'] {
 
         // Level 4 Header
         .accordion-header {
-          @include left-align-cascade-styles-header(59px, 69px, 97px, 77px);
+          @include left-align-cascade-styles-header(59px, 69px, 97px, 80px);
         }
 
         // Level 4 Pane
@@ -566,7 +567,7 @@ html[dir='rtl'] {
 
           // Level 5 Header
           .accordion-header {
-            @include left-align-cascade-styles-header(78px, 94px, 122px, 102px);
+            @include left-align-cascade-styles-header(78px, 94px, 122px, 105px);
           }
 
           // Level 5 Pane
@@ -575,7 +576,7 @@ html[dir='rtl'] {
 
             // Level 6 Header
             .accordion-header {
-              @include left-align-cascade-styles-header(122px, 122px, 150px, 130px);
+              @include left-align-cascade-styles-header(122px, 122px, 150px, 133px);
 
               &.no-icon {
                 > a {
@@ -610,25 +611,25 @@ html[dir='rtl'] {
       @include left-align-cascade-styles-pane(55px, 78px, 56px);
 
       .accordion-header {
-        @include left-align-cascade-styles-header(54px, 50px, 78px, 60px);
+        @include left-align-cascade-styles-header(54px, 50px, 78px, 61px);
       }
 
       // Level 2 Pane
       .accordion-pane {
-        @include left-align-cascade-styles-pane(55px, 103px, 78px);
+        @include left-align-cascade-styles-pane(55px, 102px, 78px);
 
         // Level 3 Header
         .accordion-header {
-          @include left-align-cascade-styles-header(59px, 74px, 102px, 84px);
+          @include left-align-cascade-styles-header(59px, 74px, 102px, 85px);
         }
 
         // Level 3 Pane
         .accordion-pane {
-          @include left-align-cascade-styles-pane(79px, 127px, 103px);
+          @include left-align-cascade-styles-pane(79px, 127px, 102px);
 
           // Level 4 Header
           .accordion-header {
-            @include left-align-cascade-styles-header(59px, 99px, 127px, 109px);
+            @include left-align-cascade-styles-header(59px, 99px, 127px, 110px);
           }
 
           // Level 4 Pane
@@ -637,12 +638,12 @@ html[dir='rtl'] {
 
             // Level 5 Header
             .accordion-header {
-              @include left-align-cascade-styles-header(78px, 124px, 152px, 134px);
+              @include left-align-cascade-styles-header(78px, 124px, 152px, 135px);
             }
 
             // Level 5 Pane
             .accordion-pane {
-              @include left-align-cascade-styles-pane(130px, 150px, 153px);
+              @include left-align-cascade-styles-pane(130px, 152px, 153px);
 
               // Level 6 Header
               .accordion-header {
@@ -708,15 +709,15 @@ html[dir='rtl'] {
 
             // Level 5 Pane
             .accordion-pane {
-              @include right-align-cascade-styles-pane(122px, 150px, 122px);
+              @include right-align-cascade-styles-pane(122px, 152px, 122px);
 
               // Level 6 Header
               .accordion-header {
-                @include right-align-cascade-styles-header(122px, 122px, 150px, 130px);
+                @include right-align-cascade-styles-header(122px, 122px, 152px, 130px);
 
                 &.no-icon {
                   > a {
-                    padding-right: 150px;
+                    padding-right: 152px;
                   }
                 }
               }
@@ -752,7 +753,7 @@ html[dir='rtl'] {
 
         // Level 2 Pane
         .accordion-pane {
-          @include right-align-cascade-styles-pane(55px, 103px, 78px);
+          @include right-align-cascade-styles-pane(55px, 102px, 78px);
 
           // Level 3 Header
           .accordion-header {
@@ -761,7 +762,7 @@ html[dir='rtl'] {
 
           // Level 3 Pane
           .accordion-pane {
-            @include right-align-cascade-styles-pane(79px, 127px, 103px);
+            @include right-align-cascade-styles-pane(79px, 127px, 102px);
 
             // Level 4 Header
             .accordion-header {
