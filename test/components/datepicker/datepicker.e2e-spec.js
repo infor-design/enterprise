@@ -1186,6 +1186,26 @@ describe('Datepicker 12hr Time Tests', () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
 
+  it('Should render ar-ZA time', async () => {
+    await utils.setPage('/components/datepicker/test-12hr-time?locale=af-ZA');
+
+    const datepickerEl = await element(by.id('datetime-field-time'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await browser.driver.sleep(config.sleep);
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+    await datepickerEl.sendKeys(protractor.Key.TAB);
+
+    const value = await element(by.id('datetime-field-time')).getAttribute('value');
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('af-ZA', { month: 'short' })} ${testDate.getFullYear()} 12:00 vm.`);
+  });
+
   it('Should render 12hr time', async () => {
     const datepickerEl = await element(by.id('datetime-field-time'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
