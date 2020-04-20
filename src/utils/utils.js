@@ -643,6 +643,25 @@ DOM.focusableElems = function focusableElems(el) {
 };
 
 /**
+ * See if the object is simple or more complex (has a constructor).
+ * @param {object} obj The object to check
+ * @returns {boolean} Returns true if simple
+ */
+utils.isPlainObject = function isPlainObject(obj) {
+  if (!obj || Object.prototype.toString.call(obj) !== '[object Object]') {
+    return false;
+  }
+
+  // Objects with no prototype (e.g., `Object.create( null )`) are plain
+  const proto = Object.getPrototypeOf(obj);
+  if (!proto) {
+    return true;
+  }
+
+  return obj !== null && typeof (obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
+};
+
+/**
  * Object deep copy and merge. Replaces jQuery.extend without the true option.
  * @param {boolean|object} deep For a deep extend, set the first argument to `true`.
  * @returns {object} The merged object
@@ -668,7 +687,8 @@ utils.extend = function extend() {
           // Needed for now until jQuery is fully dropped
           extended[prop] = $(obj[prop]);
         } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-          extended[prop] = extend(extended[prop], obj[prop]);
+          const isPlain = utils.isPlainObject(obj[prop]);
+          extended[prop] = isPlain ? extend(extended[prop], obj[prop]) : obj[prop];
         } else {
           extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
             extended[prop] : obj[prop];
