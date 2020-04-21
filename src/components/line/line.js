@@ -775,7 +775,6 @@ Line.prototype = {
       boxWidth: isLeftAxis ? 23 : 43,
       transMatrix: this.svg?.node()?.transform?.baseVal?.consolidate()?.matrix
     };
-    brief.transX = (brief.transMatrix?.e || 70) + 10;
     brief.transY = brief.transMatrix?.f || 30;
     brief.customCss = () => ({
       tooltip: { maxWidth: `${brief.maxWidth}px` },
@@ -791,11 +790,9 @@ Line.prototype = {
       const textWidth = charts.calculateTextRenderWidth(text);
       const parentNode = tick.parentNode;
       if (textWidth >= brief.boxWidth) {
-        const truncatedText = charts.trimText(text, 5);
-        const truncatedWidth = charts.calculateTextRenderWidth(truncatedText);
         const calculatePos = (rect) => {
           const numOfLines = Math.ceil(textWidth / brief.maxWidth);
-          let x = brief.transX - truncatedWidth;
+          let x = rect.left;
           let y = rect.top;
           x = x < 0 ? 30 : x;
           y = (y < 0 ? 30 : y) - 36;
