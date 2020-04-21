@@ -100,7 +100,7 @@ describe('Area Chart API', () => {
     areaEl = document.body.querySelector('#area-example');
     svgEl = document.body.querySelector('.svg-icons');
 
-    areaObj = new Line(areaEl, { type: 'area', dataset, animate: false });
+    areaObj = new Line(areaEl, { type: 'area', dataset, animate: false, isArea: true });
   });
 
   afterEach(() => {
@@ -118,14 +118,9 @@ describe('Area Chart API', () => {
     expect(document.body.querySelectorAll('.chart-legend')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('Component AComponent BComponent C');
   });
 
-  it('Should render selected dot', () => {
-    expect(document.body.querySelectorAll('[data-group-id="0"]').length).toEqual(1);
-    expect(document.body.querySelector('[data-group-id="0"]').classList.contains('is-selected')).toBeTruthy();
-  });
-
   it('Should be able to format axis', () => {
     areaObj.destroy();
-    areaObj = new Line(areaEl, { type: 'area', dataset: datasetFormat, animate: false, formatterString: '$,.2f' });
+    areaObj = new Line(areaEl, { type: 'area', isArea: true, dataset: datasetFormat, animate: false, formatterString: '$,.2f' });
 
     expect(document.body.querySelectorAll('.y.axis .tick text')[0].innerHTML).toEqual('0');
     expect(document.body.querySelectorAll('.y.axis .tick text')[1].innerHTML).toEqual('5');
@@ -135,6 +130,11 @@ describe('Area Chart API', () => {
     expect(document.body.querySelectorAll('.y.axis .tick text')[5].innerHTML).toEqual('25');
     expect(document.body.querySelectorAll('.y.axis .tick text')[6].innerHTML).toEqual('30');
     expect(document.body.querySelectorAll('.y.axis .tick text')[7].innerHTML).toEqual('35');
+  });
+
+  it('Should render selected dot', () => {
+    expect(document.body.querySelectorAll('[data-group-id="0"]').length).toEqual(1);
+    expect(document.body.querySelector('[data-group-id="0"]').classList.contains('is-selected')).toBeTruthy();
   });
 
   it('Should be able to get the get and set the selected line', () => {

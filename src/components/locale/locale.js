@@ -1677,7 +1677,7 @@ const Locale = {  // eslint-disable-line
       return;
     }
     const base = this.languages[lang].messages;
-    this.languages[lang].messages = $.extend(false, base, messages);
+    this.languages[lang].messages = utils.extend(true, base, messages);
   },
 
   /**
@@ -1730,7 +1730,7 @@ const Locale = {  // eslint-disable-line
         dayPeriods: ['AM', 'PM']
       };
     }
-    const calendar = utils.extend({}, calendars[0]);
+    const calendar = utils.extend(true, {}, calendars[0]);
 
     if (lang && locale.substr(0, 2) !== lang) {
       const defaultLocale = this.defaultLocales.filter(a => a.lang === lang);

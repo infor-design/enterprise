@@ -10852,20 +10852,6 @@ Datagrid.prototype = {
   },
 
   /**
-  * Determine equality for two deeply nested JavaScript objects.
-  * @private
-  * @param {object} obj1 First object to compare
-  * @param {object} obj2 Second object to compare
-  * @returns {boolean} If it is equal or not
-  */
-  isEquivalent(obj1, obj2) {
-    function _equals(a, b) {
-      return JSON.stringify(a) === JSON.stringify($.extend(true, {}, a, b));
-    }
-    return _equals(obj1, obj2) && _equals(obj2, obj1);
-  },
-
-  /**
    * The default formatter to use (just plain text). When no formatter is specified.
    * @param  {number} row The rowindex
    * @param  {number} cell The cell index

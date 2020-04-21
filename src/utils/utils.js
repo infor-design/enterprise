@@ -1,3 +1,5 @@
+/* eslint-disable prefer-rest-params */
+
 import { defer } from './behaviors';
 import { Environment as env } from './environment';
 import { DOM } from './dom';
@@ -663,18 +665,22 @@ utils.isPlainObject = function isPlainObject(obj) {
 
 /**
  * Object deep copy and merge. Replaces jQuery.extend without the true option.
- * @param {boolean|object} deep For a deep extend, set the first argument to `true`.
+ * @param {boolean|object} deep If true, the merge becomes recursive (aka. deep copy). Passing false for this argument is not supported.
+ * @param {object} target The object to extend. It will receive the new properties.
+ * @param {object} object1 An object containing additional properties to merge in.
+ * @param {object} objectN Additional objects containing properties to merge in.
  * @returns {object} The merged object
  */
 utils.extend = function extend() {
   // Variables
-  const extended = {};
+  let extended = arguments[0] || {};
   let deep = false;
   let i = 0;
 
   // Check if a deep merge
-  if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') { //eslint-disable-line
-    deep = arguments[0]; //eslint-disable-line
+  if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+    deep = arguments[0];
+    extended = {};
     i++;
   }
 
