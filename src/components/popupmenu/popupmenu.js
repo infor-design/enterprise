@@ -1559,7 +1559,8 @@ PopupMenu.prototype = {
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     this.wrapperPlace.setArrowPosition(e, placementObj, wrapper);
 
-
+    // Check if colorpicker has scrollbar
+    // Use CSS class to modify width of popupmenu.
     if (placementObj.height < this.menu[0].offsetHeight) {
       if (this.menu[0].classList.contains('colorpicker')) {
         this.menu[0].classList.add('has-scrollbar');
