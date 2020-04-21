@@ -31,7 +31,7 @@
     }
 
     if (eventInfo.isActionsEvent) {
-      $.when(getActionsAsync()).then((actions) => {
+      $.when(getActionsAsync()).then(function (actions) {
         hierarchyControl.updateActions(eventInfo, actions);
       });
     }
