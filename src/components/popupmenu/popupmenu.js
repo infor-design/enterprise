@@ -1427,6 +1427,8 @@ PopupMenu.prototype = {
       return;
     }
 
+    console.log(this.menu[0].offsetHeight);
+
     // Make the field the same size
     const elemWidth = this.element[0].offsetWidth;
     if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
@@ -1556,6 +1558,13 @@ PopupMenu.prototype = {
   handleAfterPlace(e, placementObj) {
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     this.wrapperPlace.setArrowPosition(e, placementObj, wrapper);
+
+
+    if (placementObj.height < this.menu[0].offsetHeight) {
+      if (this.menu[0].classList.contains('colorpicker')) {
+        this.menu[0].classList.add('has-scrollbar');
+      }
+    }
 
     if (placementObj.height) {
       wrapper[0].style.height = '';
