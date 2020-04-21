@@ -160,7 +160,7 @@ Soho.Locale.addCulture('en-US', {
     Error: { id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured' },
     ErrorAllowedTypes: { id: 'ErrorAllowedTypes', value: 'File type is not allowed', comment: 'Error string for file-upload' },
     ErrorMaxFileSize: { id: 'ErrorMaxFileSize', value: 'Exceeded file size limit', comment: 'Error string for file-upload' },
-    ErrorMaxFiles: { id: 'ErrorMaxFiles', value: 'Exceeded maximum ({n}) files allowed limit', comment: 'Error string for file-upload' },
+    ErrorMaxFiles: { id: 'ErrorMaxFiles', value: 'Cannot upload more than the maximum number of files ({n}).', comment: 'Error string for file-upload' },
     ErrorMaxFilesInProcess: { id: 'ErrorMaxFilesInProcess', value: 'Exceeded maximum files allowed limit', comment: 'Error string for file-upload' },
     ErrorOnPage: { id: 'ErrorOnPage', value: 'Error message(s) on page', comment: 'Error message(s) on page n' },
     EmailValidation: { id: 'EmailValidation', value: 'Email address not valid', comment: 'This the rule for email validation' },
