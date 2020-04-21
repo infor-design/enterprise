@@ -737,7 +737,7 @@
         content: '\25cf';
         display: inline-block;
         font-size: $theme-size-font-sm;
-        padding: 8px 10px 8px 21px;
+        padding: 4px 10px 8px 21px;
         vertical-align: middle;
       }
 
@@ -1405,6 +1405,17 @@ html[dir='rtl'] {
             top: 9px;
           }
         }
+      }
+    }
+  }
+}
+
+// Fix size of the bullet icon on Android devices
+html.android {
+  .accordion-pane {
+    .accordion-header.list-item {
+      &::before {
+        font-size: 0.7rem;
       }
     }
   }
