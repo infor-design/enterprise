@@ -2,6 +2,8 @@ import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { breakpoints } from '../../utils/breakpoints';
 import { DOM } from '../../utils/dom';
+import { findComponentsOnElements } from '../../utils/lifecycle/lifecycle';
+import { modalManager } from './modal.manager';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
@@ -91,6 +93,7 @@ function handleModalDefaults(settings) {
 function Modal(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MODAL_DEFAULTS);
   this.settings = handleModalDefaults(this.settings);
+  this.originalElement = $(element);
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -136,6 +139,29 @@ Modal.prototype = {
    */
   get visible() {
     return this.element.is('.is-visible');
+  },
+
+  /**
+   * @param {boolean} val whether or not this modal is the active one within the
+   * global Modal stack.
+   */
+  set visible(val) {
+    this.element[0].classList[val === true ? 'add' : 'remove']('is-visible');
+  },
+
+  /**
+   * @param {boolean} val whether or not this modal is the active one within the
+   * global Modal stack.
+   */
+  set active(val) {
+    this.element[0].classList[val === true ? 'add' : 'remove']('is-active');
+  },
+
+  /**
+   * @returns {boolean} whether or not this Modal is currently active
+   */
+  get active() {
+    return this.element[0].classList.contains('is-active');
   },
 
   /**
@@ -193,10 +219,6 @@ Modal.prototype = {
       this.trigger = this.element;
     }
 
-    if (!this.overlay) {
-      this.overlay = $(`<div class="overlay" style="opacity: ${self.settings.overlayOpacity};"></div>`);
-    }
-
     this.oldActive = this.settings.triggerButton ?
       this.useJqEl(this.settings.triggerButton) : this.trigger;
 
@@ -249,6 +271,8 @@ Modal.prototype = {
       // Adds the modal buttonset, if applicable
       this.renderButtonset();
     }
+
+    this.registerModal();
 
     this.element.appendTo('body');
     this.element[0].style.display = 'none';
@@ -341,9 +365,33 @@ Modal.prototype = {
       }
     }
 
+    this.registerModal();
+
     utils.fixSVGIcons(this.element);
   },
 
+  /**
+   * Registers this modal component with the global Modal Manager, while setting up other links.
+   * @private
+   * @returns {void}
+   */
+  registerModal() {
+    // If the current `element` is not the original one the component was invoked against,
+    // add a second reference to this component API to the new element.
+    if (!this.originalElement.is(this.element)) {
+      this.originalElement.data('modalElementLink', this.element[0]);
+      this.element.data('modal', this);
+    }
+
+    // Register the modal into the global Modal manager
+    modalManager.register(this);
+  },
+
+  /**
+   * Moves around the basic structure of a Modal's HTML Markup for some legacy cases.
+   * @private
+   * @returns {void}
+   */
   reStructure() {
     const body = $('.modal-body', this.element);
     const hr = $('hr:first-child', body);
@@ -754,14 +802,26 @@ Modal.prototype = {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
     }
 
-    if (!this.element.next().is('.overlay')) {
-      this.element.after(this.overlay);
+    // Setup links to Modal Manager elements.
+    if (!this.overlay) {
+      this.overlay = $(modalManager.overlayElem);
+    }
+    if (!this.root) {
+      this.root = $(modalManager.rootElem);
     }
 
-    if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
-      this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
+    // Check for wrapping markup first.
+    let $wrapperElem = this.element.parent();
+    if (!$wrapperElem.is('.modal-wrapper')) {
+      this.element.wrap('<div class="modal-wrapper"></div>');
+      $wrapperElem = this.element.parent();
     }
-    this.root = this.element.closest('.modal-page-container');
+
+    // If the parent element of the wrapper is not the `.modal-page-container`,
+    // move the wrapper to the correct place.
+    if (!$wrapperElem.parent().is(this.root)) {
+      $wrapperElem.insertAfter(this.overlay);
+    }
 
     messageArea = this.element.find('.detailed-message');
     if (messageArea.length === 1) {
@@ -783,8 +843,6 @@ Modal.prototype = {
     this.isCancelled = false;
 
     if (elemCanOpen === false) {
-      this.overlay.remove();
-      this.root[0].style.display = 'none';
       return;
     }
 
@@ -796,36 +854,8 @@ Modal.prototype = {
       }
     }
 
-    // Look for other nested dialogs and adjust the zindex.
-    const currentModalApi = this;
-    const modals = $('.modal');
-    const lastModalIndex = modals.length - 1;
-    modals.each(function (i) {
-      const modal = $(this);
-      this.style.zIndex = (1020 + (i + 1)).toString();
-
-      if (modal.data('modal') && modal.data('modal').overlay) {
-        modal.data('modal').overlay[0].style.zIndex = (1020 + i).toString();
-      }
-
-      if (!modal.data('modal')) {
-        const overlay = modal.closest('.modal-page-container').next('.overlay');
-        if (overlay && overlay[0]) {
-          overlay[0].style.zIndex = (1020 + i).toString();
-        }
-      }
-      if (i === lastModalIndex) {
-        const zIndex = {
-          element: parseInt(currentModalApi.element[0].style.zIndex, 10),
-          overlay: parseInt(currentModalApi.overlay[0].style.zIndex, 10)
-        };
-        if (!zIndex.overlay) {
-          currentModalApi.overlay[0].style.zIndex = zIndex.element - 1;
-        }
-      }
-    });
-
-    $('body > *').not(this.element).not('.modal, .overlay, .modal-page-container').attr('aria-hidden', 'true');
+    // Temporary
+    modalManager.currentlyActive = this;
 
     // Ensure aria-labelled by points to the id
     if (this.settings.isAlert) {
@@ -868,7 +898,6 @@ Modal.prototype = {
     });
 
     // Center
-    this.root[0].style.display = '';
     this.element[0].style.display = '';
 
     // Stagger the rest of the Modal "show" process in several renderLoop ticks
@@ -878,25 +907,17 @@ Modal.prototype = {
       timeoutCallback() {
         self.resize();
         self.element.attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
-        self.root.removeAttr('aria-hidden');
-        self.overlay.attr('aria-hidden', 'true');
         self.element.attr('aria-modal', 'true'); // This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
       }
     });
     const displayTimer = new RenderLoopItem({
-      duration: 2,
+      duration: modalManager.modalFadeDuration,
       timeoutCallback() {
-        self.element.addClass('is-visible');
+        self.visible = true;
       }
     });
     renderLoop.register(resizeTimer);
     renderLoop.register(displayTimer);
-
-    // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a
-    // chance to be established
-    // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
-    // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-    $('body').addClass('modal-engaged');
 
     // Handle Default button.
     $(this.element).on(`keypress.${this.namespace}`, (e) => {
@@ -925,10 +946,7 @@ Modal.prototype = {
       this.element.find(':focusable').first().focus();
     });
 
-    function focusElement(thisElem) {
-      let focusElem = thisElem.element.find(':focusable').not('.modal-header .searchfield').first();
-      thisElem.keepFocus();
-
+    function callOpenEvent(thisElem) {
       /**
       * Fires when the modal opens.
       * @event open
@@ -937,21 +955,27 @@ Modal.prototype = {
       * @property {object} ui - The dialog object
       */
       self.element.trigger('open', [thisElem]);
+    }
 
+    function focusElement(thisElem) {
+      if (!self.settings.autoFocus) {
+        return;
+      }
+
+      // When changes happen within the subtree on the Modal, rebuilds the internal hash of
+      // tabbable elements used for retaining focus.
+      self.changeObserver = new MutationObserver(() => {
+        self.setFocusableElems();
+      });
+      self.changeObserver.observe(self.element[0], { childList: true, subtree: true });
+      self.setFocusableElems();
+
+      let focusElem = $(self.focusableElems).not('.modal-header .searchfield').first();
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
-
       if (focusElem.length === 1 && focusElem.is('.btn-modal')) {
         focusElem = thisElem.element.find('.btn-modal-primary');
-      }
-
-      if (focusElem.length === 1 && focusElem.is('button') && !focusElem.is(':disabled')) {
-        focusElem.addClass('hide-focus');
-      }
-
-      if (!self.settings.autoFocus) {
-        return;
       }
 
       // If the selected element is a tab, actually make sure it's the "selected" tab.
@@ -991,6 +1015,7 @@ Modal.prototype = {
     const focusElementTimer = new RenderLoopItem({
       duration: 20,
       timeoutCallback() {
+        callOpenEvent(self);
         focusElement(self);
       }
     });
@@ -1090,21 +1115,58 @@ Modal.prototype = {
   },
 
   /**
+   * Reports to a consumer a list of IDS components contained by this Modal, that are also currently
+   * reporting as "open".  This is used to determine if it's OK to close the Modal or not.
+   * @returns {array} containing references to IDS subcomponent APIs inside this modal that
+   * are currently reporting as "open"
+   */
+  get openSubComponents() {
+    const elems = this.element.find('*');
+    const subComponentTypes = [
+      'datepicker',
+      'dropdown',
+      'popupmenu',
+      'timepicker',
+      'tooltip',
+    ];
+    const targetProps = ['isOpen', 'visible'];
+    const matchedSubComponentAPIs = findComponentsOnElements(elems, targetProps, subComponentTypes);
+    const openSubComponents = [];
+
+    matchedSubComponentAPIs.forEach((matchObj) => {
+      const componentAPI = matchObj.control;
+      if ((typeof componentAPI.isOpen === 'function' && componentAPI.isOpen()) ||
+        (typeof componentAPI.isOpen === 'boolean' && componentAPI.isOpen === true) ||
+        (typeof componentAPI.visible === 'boolean' && componentAPI.visible === true)) {
+        openSubComponents.push(componentAPI);
+      }
+    });
+
+    return openSubComponents;
+  },
+
+  /**
    * @returns {boolean} whether or not the Modal itself, or a component inside the Modal, currently has focus.
    * In some cases, this needs to get access to child components to determine focus state.
    */
   get isFocused() {
     let componentHasFocus = false;
     const activeElem = document.activeElement;
-    const focusableElems = DOM.focusableElems(this.element[0]);
-    focusableElems.forEach((elem) => {
+
+    if (!this.focusableElems) {
+      this.setFocusableElems();
+    }
+
+    // Check each match for IDS components that may have a more complex focus routine
+    // NOTE: Some elements that come through may be SVGs, careful which methods are used.
+    this.focusableElems.forEach((elem) => {
       if (componentHasFocus) {
         return;
       }
 
       // Check the base element
       const $elem = $(elem);
-      if ($elem.is($(activeElem)) || elem.contains(activeElem)) {
+      if ($elem.is($(activeElem)) || (typeof elem.contains === 'function' && elem.contains(activeElem))) {
         componentHasFocus = true;
       }
 
@@ -1116,6 +1178,11 @@ Modal.prototype = {
       // Lookup
       if ($elem.is('.lookup')) {
         componentHasFocus = $elem.data('lookup')?.isFocused;
+      }
+
+      // Popupmenu
+      if ($elem.is('.btn-menu, .btn-actions')) {
+        componentHasFocus = $elem.data('popupmenu')?.isFocused;
       }
 
       // Searchfield
@@ -1140,119 +1207,81 @@ Modal.prototype = {
   },
 
   /**
-   * Sets up event listeners that deal with retaining keyboard focus on elements within the current Modal
-   * window when the Modal is open. These events are cleared when the modal is closed.
+   * Creates an internal reference for all tabbable elements present within the Modal.
    * @private
    * @returns {void}
    */
-  keepFocus() {
-    const self = this;
+  setFocusableElems() {
+    const extraSelectors = [
+      'div.dropdown',
+      'div.multiselect'
+    ];
+    const ignoredSelectors = [
+      'select',
+      'option'
+    ];
 
-    // Escape key
-    $(document)
-      .off(`keydown.${self.namespace}`)
-      .on(`keydown.${self.namespace}`, (e) => {
-        const keyCode = e.which || e.keyCode;
-        if (keyCode === 27) {
-          const modals = $('.modal.is-visible');
+    const elems = DOM.focusableElems(this.element[0], extraSelectors, ignoredSelectors);
+    this.focusableElems = elems;
+    this.focusableElems.first = elems[0];
+    this.focusableElems.last = elems[elems.length - 1];
+  },
 
-          self.isCancelled = true;
+  /**
+   * Focuses special elements within the modal.
+   * @param {string} place the location to set the Modal's current focus
+   */
+  setFocus(place) {
+    const places = ['last', 'first'];
+    if (places.indexOf(place) === -1) {
+      return;
+    }
 
-          if (modals.length > 1) {
-            modals.not(':last').on(`beforeclose.${self.namespace}`, () => false);
-            modals.on(`afterclose.${self.namespace}`, () => {
-              modals.off(`beforeclose.${self.namespace}`);
-            });
-            const apiModal = modals.last().data('modal');
-            if (apiModal && apiModal.close) {
-              apiModal.close();
-            }
-          } else {
-            self.close();
-          }
-        }
-      });
+    if (!this.focusableElems) {
+      this.setFocusableElems();
+    }
 
-    // Cache tab fields and update them if the DOM changes
-    const selector = ':focusable, [contenteditable], iframe';
-    let tabbableElements = self.element.find(selector);
-    let firstTabbable = tabbableElements.first();
-    let lastTabbable = tabbableElements.last();
+    let target;
+    switch (place) {
+      case 'last':
+        target = this.focusableElems.last;
+        break;
+      case 'first':
+        target = this.focusableElems.first;
+        break;
+      default:
+        break;
+    }
 
-    this.changeObserver = new MutationObserver(() => {
-      tabbableElements = self.element.find(selector);
-      firstTabbable = tabbableElements.first();
-      lastTabbable = tabbableElements.last();
-    });
-    this.changeObserver.observe(self.element[0], { childList: true, subtree: true });
-
-    $(self.element)
-      .off(`keypress.${self.namespace} keydown.${self.namespace}`)
-      .on(`keypress.${self.namespace} keydown.${self.namespace}`, (e) => {
-        const keyCode = e.which || e.keyCode;
-
-        if (keyCode === 9) {
-          const field = $(e.target);
-
-          // Move focus to first element that can be tabbed if Shift isn't used
-          if (!e.shiftKey && field.is(lastTabbable)) {
-            e.preventDefault();
-            tabbableElements.first().removeClass('hide-focus').focus();
-          } else if (e.shiftKey && field.is(firstTabbable)) {
-            e.preventDefault();
-            tabbableElements.last().removeClass('hide-focus').focus();
-          }
-        }
-      });
-
-    // In some cases, the `body` tag becomes the `document.activeElement` if the Overlay,
-    // or a wrapping iframe element is clicked.  This will reset the focus.
-    if (this.settings.autoFocus) {
-      $('body').on(`focusin.${self.namespace}`, (e) => {
-        if (self.dontCheckFocus || !self.isOnTop) {
-          return;
-        }
-        if ($(e.target).closest(self.element).length === 1) {
-          return;
-        }
-        if (!self.isFocused) {
-          self.dontCheckFocus = true;
-          const ignoreFocusCheckTimer = new RenderLoopItem({
-            duration: 20,
-            timeoutCallback() {
-              delete self.dontCheckFocus;
-            }
-          });
-          renderLoop.register(ignoreFocusCheckTimer);
-          firstTabbable.removeClass('hide-focus').focus();
-        }
-      });
+    if (target) {
+      target.focus();
+      target.classList.remove('hide-focus');
     }
   },
 
   /**
    * Close the modal.
-   * @param  {boolean} destroy Call the destroy method.
+   * @param {boolean} destroy Call the destroy method.
+   * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
-  close(destroy) {
-    if (!this.visible) {
+  close(destroy, noRefresh) {
+    if (!this.visible || this.openSubComponents.length) {
       return true;
     }
+
+    const elemCanClose = this.element.triggerHandler('beforeclose');
+    if (elemCanClose === false) {
+      return false;
+    }
+
+    const self = this;
+    const fields = this.element.find('[data-validate]');
+    fields.addClass('disable-validation');
 
     if (this.changeObserver) {
       this.changeObserver.disconnect();
       delete this.changeObserver;
-    }
-    const elemCanClose = this.element.triggerHandler('beforeclose');
-    const self = this;
-    const fields = this.element.find('[data-validate]');
-
-    this.root = this.element.closest('.modal-page-container');
-    fields.addClass('disable-validation');
-
-    if (elemCanClose === false) {
-      return false;
     }
 
     if (this.isCAP) {
@@ -1265,45 +1294,16 @@ Modal.prototype = {
     $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
-    this.element.removeClass('is-visible');
-
-    this.overlay.attr('aria-hidden', 'true');
-    if (this.root) {
-      this.root.attr('aria-hidden', 'true');
-    }
-
-    // Remove the overlay and special body classes if this Modal was the very last one to be closed
-    // (Modals can be nested)
-    const modalContainers = $('.modal-page-container');
-    const visibleModalPageContainers = modalContainers.filter((i, elem) => {
-      const ariaHidden = $(elem).is('[aria-hidden]');
-      const displayNone = $(elem).css('display') === 'none';
-      return !ariaHidden && !displayNone;
-    });
-    if (visibleModalPageContainers.length < 1) {
-      $('body').removeClass('modal-engaged');
-      modalContainers.not(this.root).removeAttr('aria-hidden');
-      $('.overlay:not(.busy)').remove();
-    }
+    this.visible = false;
+    this.active = false;
 
     delete this.dontCheckFocus;
 
     // Fire Events
     self.element.trigger('close', self.isCancelled);
 
-    // Restore focus
-    if (!this.settings.noRefocus) {
-      if (this.isFocused) {
-        document.activeElement.blur();
-      }
-      if (!this.oldActive && this.settings.triggerButton) {
-        this.oldActive = this.useJqEl(this.settings.triggerButton);
-      }
-      if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
-        this.oldActive.focus();
-      } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
-        this.trigger.focus();
-      }
+    if (!this.settings.noRefocus && this.isFocused) {
+      document.activeElement.blur();
     }
 
     // close tooltips
@@ -1320,10 +1320,8 @@ Modal.prototype = {
     $('.skip-link').off(`focus.${this.namespace}`);
 
     const afterCloseTimer = new RenderLoopItem({
-      duration: 20, // should match the length of time needed for the overlay to fade out
+      duration: modalManager.modalFadeDuration,
       timeoutCallback() {
-        self.overlay.remove();
-        self.root[0].style.display = 'none';
         self.element.trigger('afterclose');
 
         if (closeBtnTooltipAPI) {
@@ -1333,6 +1331,22 @@ Modal.prototype = {
         if (self.settings.trigger === 'immediate' || destroy) {
           if (!self.isCAP || (self.isCAP && !self.capAPI)) {
             self.destroy();
+          }
+        }
+
+        if (!noRefresh) {
+          modalManager.refresh();
+        }
+
+        // Restore focus to the correct element.
+        if (!self.settings.noRefocus) {
+          if (!self.oldActive && self.settings.triggerButton) {
+            self.oldActive = self.useJqEl(self.settings.triggerButton);
+          }
+          if (self.oldActive && $(self.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
+            self.oldActive.focus();
+          } else if (self.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
+            self.trigger.focus();
           }
         }
       }
@@ -1375,11 +1389,6 @@ Modal.prototype = {
   destroy() {
     const self = this;
     const canDestroy = this.element.trigger('beforedestroy');
-    if (this.changeObserver) {
-      this.changeObserver.disconnect();
-      delete this.changeObserver;
-    }
-
     if (!canDestroy) {
       return;
     }
@@ -1392,7 +1401,7 @@ Modal.prototype = {
 
       $('.skip-link').off(`focus.${self.namespace}`);
       $('body').off(`resize.${self.namespace}`);
-      $(document).off(`keydown.${self.namespace}`);
+      $(self.element).off(`keydown.${self.namespace}`);
 
       if (self.element.find('.detailed-message').length === 1) {
         $('body').off(`resize.${self.namespace}`);
@@ -1414,15 +1423,16 @@ Modal.prototype = {
         delete self.buttonsetAPI;
         delete self.buttonsetElem;
       }
+      delete self.focusableElems;
 
       self.trigger.off(`click.${self.namespace}`);
 
-      if (self.root && self.root.length) {
-        self.root.remove();
-      } else {
-        self.element.closest('.modal-page-container').remove();
-      }
       self.element[0].removeAttribute('data-modal');
+
+      const $wrapperElem = self.element.parent('.modal-wrapper');
+      if ($wrapperElem.length) {
+        $wrapperElem.remove();
+      }
 
       const destroyTimer = new RenderLoopItem({
         duration: 21, // should match the length of time needed for the overlay to fade out
@@ -1438,12 +1448,20 @@ Modal.prototype = {
             }
           }
           if (elem && modalApi && modalApi.overlay) {
-            modalApi.overlay.remove();
             $.removeData(elem, COMPONENT_NAME);
           }
         }
       });
       renderLoop.register(destroyTimer);
+
+      // Remove this modal instance from the global Modal manager.
+      modalManager.unregister(self);
+
+      // If the current `element` is not the original one the component was invoked against,
+      // remove the second reference to this component API on the new element.
+      if (self.originalElement instanceof $) {
+        $.removeData(self.originalElement[0], 'modalElementLink');
+      }
 
       $.removeData(self.element[0], COMPONENT_NAME);
     }

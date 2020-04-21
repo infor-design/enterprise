@@ -618,9 +618,11 @@ DOM.convertToHTMLElement = function convertToHTMLElement(item) {
  * Returns a list of all focusable elements contained within the current element.
  * Somewhat lifted from https://gomakethings.com/how-to-get-the-first-and-last-focusable-elements-in-the-dom/
  * @param {HTMLElement} el the element to search.
+ * @param {array} [additionalSelectors] containing strings representing CSS selectors that should also be considered when making the query for focusable elements.
+ * @param {array} [ignoreSelectors] containing strings representing CSS selectors that should be filtered out from selection.
  * @returns {array} containing the focusable elements.
  */
-DOM.focusableElems = function focusableElems(el) {
+DOM.focusableElems = function focusableElems(el, additionalSelectors = [], ignoreSelectors = []) {
   const focusableElemSelector = [
     'button',
     '[href]',
@@ -631,7 +633,7 @@ DOM.focusableElems = function focusableElems(el) {
     '[tabindex]:not([tabindex="-1"])',
     '[contenteditable]',
     'iframe'
-  ];
+  ].concat(additionalSelectors).filter(item => ignoreSelectors.indexOf(item) === -1);
   const elems = el.querySelectorAll(focusableElemSelector.join(', '));
   const arrElems = utils.getArrayFromList(elems);
   return arrElems.filter((elem) => {

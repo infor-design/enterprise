@@ -24,7 +24,7 @@ describe('Fontpicker API', () => {
     if (fontpickerAPI) {
       fontpickerAPI.destroy();
     }
-    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.modal-page-container', '.popupmenu-wrapper', '.popupmenu']);
+    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.popupmenu-wrapper', '.popupmenu']);
   });
 
   it('can be invoked', () => {
