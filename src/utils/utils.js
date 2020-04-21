@@ -666,9 +666,8 @@ utils.isPlainObject = function isPlainObject(obj) {
 };
 
 /**
- * Object deep copy and merge. Replaces jQuery.extend without the true option.
- * @param {boolean|object} deep If true, the merge becomes recursive (aka. deep copy). Passing false for this argument is not supported.
- * @param {object} target The object to extend. It will receive the new properties.
+ * Merge the contents of two or more objects together into the first object.
+ * @param {boolean|object} deepOrTarget If a boolean (true), the merge becomes recursive (aka. deep copy). Passing false for this argument is not supported. If an object then this object well get the extended objects applied.
  * @param {object} object1 An object containing additional properties to merge in.
  * @param {object} objectN Additional objects containing properties to merge in.
  * @returns {object} The merged object
