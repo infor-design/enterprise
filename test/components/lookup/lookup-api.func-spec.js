@@ -59,7 +59,12 @@ const settings = {
 
 describe('Lookup API', () => {
   beforeEach(() => {
-    cleanup(['.svg-icons', '.row', '.modal-page-container', '.trigger']);
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.trigger',
+      '.modal'
+    ]);
     lookupEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -69,8 +74,15 @@ describe('Lookup API', () => {
   });
 
   afterEach(() => {
-    lookupObj.destroy();
-    cleanup(['.svg-icons', '.row', '.modal-page-container', '.trigger']);
+    if (lookupObj) {
+      lookupObj.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.trigger',
+      '.lookup'
+    ]);
   });
 
   it('Should be defined', () => {
@@ -131,7 +143,7 @@ describe('Lookup API', () => {
 
       expect(lookupEl.value).toEqual('2142201');
       done();
-    }, 300);
+    }, 600);
   });
 
   it('Should be able to update the dataset when closed', (done) => {
@@ -167,7 +179,7 @@ describe('Lookup API', () => {
 
       expect(lookupEl.value).toEqual('777777');
       done();
-    }, 300);
+    }, 600);
   });
 
   it('Should be able to update the dataset when open', (done) => {

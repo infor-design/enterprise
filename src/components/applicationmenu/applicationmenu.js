@@ -5,7 +5,7 @@ import { breakpoints } from '../../utils/breakpoints';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
-import '../../utils/lifecycle';
+import '../../utils/lifecycle/lifecycle.jquery';
 import '../accordion/accordion.jquery';
 import '../searchfield/searchfield.jquery';
 

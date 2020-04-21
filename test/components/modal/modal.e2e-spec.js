@@ -56,14 +56,16 @@ describe('Modal init example-modal tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('modal-engaged'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.modal.is-visible'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
-    await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
+
     await browser.driver.sleep(config.sleep);
-    await element(by.css('body')).sendKeys(protractor.Key.ESCAPE);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+
     await browser.driver
-      .wait(protractor.ExpectedConditions.stalenessOf(element(by.className('modal-engaged'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.modal'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
@@ -131,6 +133,7 @@ describe('Modal example-close-btn tests', () => {
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
+    await browser.driver.sleep(config.sleep);
     const closeBtn = await element(by.css('button.btn-close'));
     await closeBtn.click();
     await browser.driver
@@ -372,6 +375,7 @@ describe('Modal overlay opacity tests', () => {
   });
 
   it('Should be able to set overlay opacity to 30%', async () => {
+    await browser.driver.sleep(config.sleep);
     const overlayEl = await element(by.css('.overlay'));
 
     expect(await overlayEl.getCssValue('opacity')).toBe('0.3');
@@ -415,5 +419,38 @@ describe('Modal iframe focus tests', () => {
     const focusedElemId = await browser.driver.switchTo().activeElement().getAttribute('id');
 
     expect(focusedElemId).toEqual(targetElemId);
+  });
+});
+
+describe('Nested Modal keyboard access tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-nested');
+    const buttonEl = await element(by.id('open-first-modal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+  });
+
+  it('can use the keyboard to escape from nested modals', async () => {
+    // Open all three modals
+    await element(by.id('open-first-modal')).click();
+    await browser.driver.sleep(config.sleep);
+    await element(by.id('open-second-modal')).click();
+    await browser.driver.sleep(config.sleep);
+    await element(by.id('open-third-modal')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).toBe(null);
+
+    // Close all three modals with the ESCAPE key
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+
+    // No modals should be active, and all aria attributes set
+    expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+    expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).not.toBe(null);
   });
 });
