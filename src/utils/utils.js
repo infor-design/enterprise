@@ -694,10 +694,14 @@ utils.extend = function extend() {
           extended[prop] = $(obj[prop]);
         } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
           const isPlain = utils.isPlainObject(obj[prop]);
-          extended[prop] = isPlain ? extend(extended[prop], obj[prop]) : obj[prop];
+          extended[prop] = isPlain ? extend(true, {}, extended[prop], obj[prop]) : obj[prop];
         } else {
-          extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
-            extended[prop] : obj[prop];
+          if (Array.isArray(obj[prop])) { //eslint-disable-line
+            extended[prop] = [...obj[prop]];
+          } else if (obj[prop] !== undefined) {
+            extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
+              extended[prop] : obj[prop];
+          }
         }
       }
 

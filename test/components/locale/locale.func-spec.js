@@ -56,13 +56,11 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-fdescribe('Locale API', () => { //eslint-disable-line
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
-    debugger;
     Locale.set('en-US');
-    debugger;
   });
 
   it('Should be possible to preset culturesPath', () => {
@@ -341,7 +339,6 @@ fdescribe('Locale API', () => { //eslint-disable-line
   });
 
   it('Should format timestamp in English', () => {
-    debugger;
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), { date: 'timestamp' })).toEqual('10:20:05 AM');

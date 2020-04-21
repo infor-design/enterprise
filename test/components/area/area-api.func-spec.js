@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/area/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
 let areaEl;
-let svgEl;
 let areaObj;
 const dataset = [{
   data: [{
@@ -92,24 +91,21 @@ const datasetFormat = [{
 
 describe('Area Chart API', () => {
   beforeEach(() => {
-    areaEl = null;
-    svgEl = null;
     areaObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', areaHTML);
     areaEl = document.body.querySelector('#area-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     areaObj = new Line(areaEl, { type: 'area', dataset, animate: false, isArea: true });
   });
 
   afterEach(() => {
     areaObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    areaEl.parentNode.removeChild(areaEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '#area-script'
+    ]);
   });
 
   it('Should show on page', () => {
@@ -130,11 +126,6 @@ describe('Area Chart API', () => {
     expect(document.body.querySelectorAll('.y.axis .tick text')[5].innerHTML).toEqual('25');
     expect(document.body.querySelectorAll('.y.axis .tick text')[6].innerHTML).toEqual('30');
     expect(document.body.querySelectorAll('.y.axis .tick text')[7].innerHTML).toEqual('35');
-  });
-
-  it('Should render selected dot', () => {
-    expect(document.body.querySelectorAll('[data-group-id="0"]').length).toEqual(1);
-    expect(document.body.querySelector('[data-group-id="0"]').classList.contains('is-selected')).toBeTruthy();
   });
 
   it('Should be able to get the get and set the selected line', () => {
