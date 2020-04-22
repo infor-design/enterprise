@@ -1081,20 +1081,18 @@ cleanAll(true).then(() => {
         const cssPath = path.join(__dirname, '..', 'dist', 'css');
         const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
 
-        const proms = cssFiles.map((file) => { //eslint-disable-line
-          return new Promise((resolve, reject) => {
-            const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
-            const pieces = getVariantRx.exec(file);
-            const backwardCompatName = (pieces[1] === 'contrast' ? 'high-contrast' : pieces[1]);
-            const depName = `${backwardCompatName}-theme.${pieces[2]}`; // i.e. light-theme.css.map
+        const proms = cssFiles.map(file => new Promise((resolve, reject) => {
+          const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
+          const pieces = getVariantRx.exec(file);
+          const backwardCompatName = (pieces[1] === 'contrast' ? 'high-contrast' : pieces[1]);
+          const depName = `${backwardCompatName}-theme.${pieces[2]}`; // i.e. light-theme.css.map
 
-            return fs.copyFile(file, `${cssPath}/${depName}`, (err) => {
-              if (err) reject(err);
-              logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
-              resolve();
-            });
+          return fs.copyFile(file, `${cssPath}/${depName}`, (err) => {
+            if (err) reject(err);
+            logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
+            resolve();
           });
-        });
+        }));
         return Promise.all(proms);
       })
       .catch(buildFailure)
