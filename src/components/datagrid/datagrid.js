@@ -1809,14 +1809,17 @@ Datagrid.prototype = {
 
     if (col.filterType === 'text') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
+      // btnMarkup = renderButton(btnDefault) +
+      //   render('contains', 'Contains') +
+      //   render('does-not-contain', 'DoesNotContain') +
+      //   render('equals', 'Equals') +
+      //   render('does-not-equal', 'DoesNotEqual') +
+      //   render('is-empty', 'IsEmpty') +
+      //   render('is-not-empty', 'IsNotEmpty');
       btnMarkup = renderButton(btnDefault) +
-        render('contains', 'Contains', true) +
-        render('does-not-contain', 'DoesNotContain') +
-        render('equals', 'Equals') +
-        render('does-not-equal', 'DoesNotEqual') +
-        render('is-empty', 'IsEmpty') +
-        render('is-not-empty', 'IsNotEmpty');
+        filterConditions.map(filter => render(filter, 'Equals')).join('');
       btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      console.log(btnMarkup);
     }
 
     if (col.filterType === 'checkbox') {
