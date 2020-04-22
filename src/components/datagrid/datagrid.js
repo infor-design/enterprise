@@ -1799,18 +1799,33 @@ Datagrid.prototype = {
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
-    const formatFilterText = function(str) {
+    const formatFilterText = function (str) {
       str = str
         .split('-')
-        .map(s => s = s.charAt(0).toUpperCase() + s.slice(1)).join('');
-      if (str === 'StartWith') {
-        str = str.replace('StartWith', 'StartsWith');
+        .map((s) => {
+          s = s.charAt(0).toUpperCase() + s.slice(1);
+          return s;
+        }).join('');
+
+      switch (str) {
+        case 'StartWith':
+          str = str.replace('StartWith', 'StartsWith');
+          break;
+        case 'EndWith':
+          str = str.replace('EndWith', 'EndsWith');
+          break;
+        case 'LessEquals':
+          str = str.replace('LessEquals', 'LessOrEquals');
+          break;
+        case 'GreaterEquals':
+          str = str.replace('GreaterEquals', 'GreaterOrEquals');
+          break;
+        default:
+          break;
       }
-      if (str === 'EndWith') {
-        str = str.replace('EndWith', 'EndsWith');
-      }
+
       return str;
-    }
+    };
 
     let btnMarkup = '';
     let btnDefault = '';
