@@ -1837,9 +1837,18 @@ Datagrid.prototype = {
 
     if (col.filterType === 'text') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      btnMarkup = renderButton(btnDefault) +
-        filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
-      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render('end-with', 'EndsWith', true) +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartsWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+        btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     if (col.filterType === 'checkbox') {
