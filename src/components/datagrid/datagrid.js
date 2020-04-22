@@ -1799,6 +1799,19 @@ Datagrid.prototype = {
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
+    const formatFilterText = function(str) {
+      str = str
+        .split('-')
+        .map(s => s = s.charAt(0).toUpperCase() + s.slice(1)).join('');
+      if (str === 'StartWith') {
+        str = str.replace('StartWith', 'StartsWith');
+      }
+      if (str === 'EndWith') {
+        str = str.replace('EndWith', 'EndsWith');
+      }
+      return str;
+    }
+
     let btnMarkup = '';
     let btnDefault = '';
 
@@ -1809,17 +1822,9 @@ Datagrid.prototype = {
 
     if (col.filterType === 'text') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      // btnMarkup = renderButton(btnDefault) +
-      //   render('contains', 'Contains') +
-      //   render('does-not-contain', 'DoesNotContain') +
-      //   render('equals', 'Equals') +
-      //   render('does-not-equal', 'DoesNotEqual') +
-      //   render('is-empty', 'IsEmpty') +
-      //   render('is-not-empty', 'IsNotEmpty');
       btnMarkup = renderButton(btnDefault) +
-        filterConditions.map(filter => render(filter, 'Equals')).join('');
+        filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
       btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
-      console.log(btnMarkup);
     }
 
     if (col.filterType === 'checkbox') {
@@ -1852,15 +1857,6 @@ Datagrid.prototype = {
       }${render('greater-than', 'GreaterThan')
       }${render('greater-equals', 'GreaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
-    }
-
-    if (col.filterType === 'text') {
-      btnMarkup += `${
-        render('end-with', 'EndsWith')
-      }${render('does-not-end-with', 'DoesNotEndWith')
-      }${render('start-with', 'StartsWith')
-      }${render('does-not-start-with', 'DoesNotStartWith')}`;
-      btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
     if (col.filterType === 'lookup') {
