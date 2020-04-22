@@ -1427,7 +1427,6 @@ PopupMenu.prototype = {
       return;
     }
 
-    console.log(this.menu[0].offsetHeight);
 
     // Make the field the same size
     const elemWidth = this.element[0].offsetWidth;
