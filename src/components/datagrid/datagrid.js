@@ -1839,11 +1839,17 @@ Datagrid.prototype = {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
       if (filterConditions.length === 0) {
         btnMarkup = renderButton(btnDefault) +
-          render('end-with', 'EndsWith', true) +
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty') +
+          render('end-with', 'EndsWith') +
           render('does-not-end-with', 'DoesNotEndWith') +
           render('start-with', 'StartsWith') +
           render('does-not-start-with', 'DoesNotStartWith');
-        btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
       } else {
         btnMarkup = renderButton(btnDefault) +
           filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
