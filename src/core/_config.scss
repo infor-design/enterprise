@@ -493,6 +493,13 @@ $modal-btn-disabled-opacity: 0.5;
 $modal-color: $theme-color-palette-graphite-60;
 $modal-primary-color: $theme-color-font-base;
 $modal-secondary-color: $theme-color-palette-graphite-60;
+$modal-overlay-empty-message-bg-color: $theme-color-palette-graphite-40;
+$modal-btn-empty-message-bg-color: $theme-color-palette-azure-10;
+$modal-btn-empty-message-border-color: $modal-btn-empty-message-bg-color;
+$modal-btn-empty-message-hover-color: $theme-color-palette-azure-20;
+$modal-btn-empty-message-font-color: $theme-color-palette-azure-80;
+$modal-empty-message-title-font-color: $theme-color-font-base;
+$modal-empty-message-info-font-color: $theme-color-palette-graphite-40;
 
 // Accordion
 $accordion-bg-color: $theme-color-palette-graphite-10;

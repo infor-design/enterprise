@@ -1,6 +1,12 @@
 // Empty Message - Uplift / Vibrant
 //================================================== //
 
+.modal-engaged.empty-message {
+  .overlay {
+    background: $modal-overlay-empty-message-bg-color;
+  }
+}
+
 .icon-empty-state {
   fill: transparent;
   height: 80px;

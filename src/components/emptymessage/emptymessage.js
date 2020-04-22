@@ -3,6 +3,9 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
+// jQuery Components
+import '../modal/modal';
+
 // The name of this component
 const COMPONENT_NAME = 'emptymessage';
 
@@ -16,13 +19,19 @@ const COMPONENT_NAME = 'emptymessage';
 * @param {string} [settings.icon = null] The name of the icon to use. See {@link https://design.infor.com/code/ids-enterprise/latest/demo/icons/example-empty-widgets?font=source-sans} for options.
 * @param {boolean} [settings.button = null] The botton text and click event to add.
 * @param {string} [settings.color = 'graphite']  Defaults to 'graphite' but can also be azure. Later may be expanded to all personalization colors.
+* @param {boolean} [settings.modalErrorMessage = false] If true, it will display the custom empty message in modal.
+* @param {string} [settings.buttonStyle = 'secondary'] Control color button styles inside the modal [primary, secondary, tertiary].
+* @param {strung} [settings.modalMessageClass = undefined] Add custom id in the modal container.
 */
 const EMPTYMESSAGE_DEFAULTS = {
   title: null,
   info: null,
   icon: null,
   button: null,
-  color: 'graphite' // or azure for now until personalization works
+  buttonStyle: 'secondary',
+  modalErrorMessage: false,
+  color: 'graphite', // or azure for now until personalization works
+  modalMessageClass: undefined
 };
 
 function EmptyMessage(element, settings) {
@@ -50,11 +59,26 @@ EmptyMessage.prototype = {
   build() {
     const opts = this.settings;
 
+    if (opts.modalErrorMessage) {
+      this.modalErrorMessage = $(`<div class="${opts.modalMessageClass} modal message empty-state-message"></div>`);
+      this.modalErrorMessageContent = $('<div class="modal-content"></div>');
+      this.modalErrorContentBody = $('<div class="modal-body"></div>').appendTo(this.modalErrorMessageContent);
+
+      this.modalErrorMessage.append(this.modalErrorMessageContent).appendTo('body');
+
+      this.modalErrorMessage.modal({
+        trigger: 'immediate',
+        close: this.settings.close,
+        overlayOpacity: this.settings.overlayOpacity,
+        overlayBackgroundColor: this.settings.overlayBackgroundColor
+      });
+    }
+
     if (opts.icon) {
       $(`<div class="empty-icon">
           <svg class="icon-empty-state is-${this.settings.color}" focusable="false" aria-hidden="true" role="presentation">
             <use href="#${opts.icon}"></use>
-          </svg></div>`).appendTo(this.element);
+          </svg></div>`).appendTo(opts.modalErrorMessage ? this.modalErrorContentBody : this.element);
     }
 
     if (opts.title) {
@@ -63,19 +87,19 @@ EmptyMessage.prototype = {
         opts.title = Locale ? Locale.translate('NoData') : 'No Data Available';
       }
 
-      $(`<div class="empty-title">${opts.title}</div>`).appendTo(this.element);
+      $(`<div class="empty-title">${opts.title}</div>`).appendTo(opts.modalErrorMessage ? this.modalErrorContentBody : this.element);
     }
 
     if (opts.info) {
-      $(`<div class="empty-info">${opts.info}</div>`).appendTo(this.element);
+      $(`<div class="empty-info">${opts.info}</div>`).appendTo(opts.modalErrorMessage ? this.modalErrorContentBody : this.element);
     }
 
     if (opts.button) {
       $(`${'<div class="empty-actions">' +
-          '<button type="button" class="btn-secondary hide-focus '}${opts.button.cssClass}" id="${opts.button.id}">` +
+          '<button type="button" '}class="btn-${opts.buttonStyle} ${opts.button.cssClass} hide-focus" id="${opts.button.id}">` +
             `<span>${opts.button.text}</span>` +
           '</button>' +
-        '</div>').appendTo(this.element);
+        '</div>').appendTo(opts.modalErrorMessage ? this.modalErrorContentBody : this.element);
 
       if (opts.button.click) {
         this.element.on('click', 'button', opts.button.click);

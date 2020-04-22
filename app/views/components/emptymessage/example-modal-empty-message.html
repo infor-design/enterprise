@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="show-empty-state-message">Modal Empty State Message</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#show-empty-state-message').on('click', function (e) {
+      $('body').emptymessage({
+        modalErrorMessage: true,
+        color: 'azure',
+        modalMessageClass: 'modal-test',
+        title: 'Access Denied',
+        icon: 'icon-empty-error-loading',
+        info: 'SunSystems Configuration Manager access has been denied.',
+        overlayOpacity: 1,
+        buttonStyle: 'primary',
+        button: {
+          id: 'test',
+          text: 'Return',
+          cssClass: 'btn',
+          click: function (e, modal) {
+            console.log("e", e)
+            $('.modal-test').data('modal').close();
+          }
+        }
+      });
+    });
+  });
+
+</script>

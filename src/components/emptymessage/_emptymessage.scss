@@ -1,6 +1,66 @@
 // Empty Message
 //================================================== //
 
+.modal-engaged.empty-message {
+  .overlay {
+    background: $modal-overlay-empty-message-bg-color;
+  }
+}
+
+.modal.message {
+  &.empty-state-message {
+    .modal-body {
+      .empty-icon {
+        padding: 79px 0 35px;
+
+        svg.icon-empty-state {
+          height: 141px;
+          width: 145px;
+        }
+      }
+
+      .empty-title {
+        @include font-size(24);
+
+        color: $modal-empty-message-title-font-color;
+        font-weight: 600;
+        line-height: 18px;
+      }
+
+      .empty-info {
+        @include font-size(16);
+
+        color: $modal-empty-message-info-font-color;
+        line-height: 18px;
+        max-width: 320px;
+        padding: 0 20px 22px;
+      }
+
+      .empty-actions {
+        padding: 0 0 62px;
+
+        button {
+          @include font-size(16);
+
+          border-radius: 8px;
+          height: 40px;
+          width: 100%;
+
+          @media (min-width: $breakpoint-phone) {
+            width: 180px;
+          }
+
+          span {
+            @include ellipsis();
+
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
 .empty-message {
   min-height: 60px;
   padding-bottom: 5px;
