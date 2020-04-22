@@ -201,6 +201,20 @@ Autocomplete.prototype = {
     this.handleEvents();
   },
 
+  /**
+   * @returns {boolean} whether or not this component instance has an element that is focused.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const input = this.element[0];
+    const $list = this.list;
+
+    if (input.isEqualNode(active) || ($list && $list.length && $list[0].contains(active))) {
+      return true;
+    }
+    return false;
+  },
+
   addMarkup() {
     this.element.addClass('autocomplete').attr({
       role: 'combobox',
@@ -623,7 +637,7 @@ Autocomplete.prototype = {
     }
 
     this.loadingTimeout = setTimeout(() => {
-      if (self.isLoading()) {
+      if (self.isLoading() || !self.isFocused) {
         return;
       }
 
