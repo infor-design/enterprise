@@ -132,7 +132,6 @@ describe('ButtonSet API', () => {
     const enabledButtons = buttonSetAPI.buttons.filter(buttonAPI => buttonAPI.disabled === false);
 
     expect(thirdBtnEl.disabled).toBeTruthy();
-    expect(thirdBtnEl.getAttribute('disabled')).toBe('disabled');
     expect(enabledButtons.length).toEqual(4);
   });
 
