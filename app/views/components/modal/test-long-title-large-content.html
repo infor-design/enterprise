@@ -94,11 +94,16 @@
       $(this).focus();
       setModal(modals[this.id]);
 
-      if ($('.modal-title').height() > 35) {
-        setTimeout(function () {
+      var sohoTheme = (Soho.theme.currentTheme.name.lastIndexOf('Soho') !== -1 || Soho.theme.currentTheme.name === 'Soho Light') && $('.modal-title')[0].innerHTML.length > 68;
+
+      var upliftTheme = (Soho.theme.currentTheme.name.lastIndexOf('Uplift') !== -1 || Soho.theme.currentTheme.name === 'Soho Uplift') && $('.modal-title')[0].innerHTML.length > 47;
+
+      setTimeout(function () {
+        if (sohoTheme || upliftTheme) {
           $('.modal-title').tooltip(TOOLTIP_OPTIONS);
-        }, 500);
-      }
+        }
+      }, 100);
+
     });
   })
 

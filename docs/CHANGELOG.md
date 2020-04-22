@@ -4,14 +4,17 @@
 
 ### v4.28.0 Features
 
-- `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
 - `[Contextmenu]` Added support for shortcut display in menus. ([#3490](https://github.com/infor-design/enterprise/issues/3490))
 - `[EmptyMessage]` Added a new design for custom error message. ([#281](https://github.com/infor-design/design-system/issues/281))
+- `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
+- `[Modal]` Improved handling of multiple Modal windows stemming from a single trigger element. ([ng#705](https://github.com/infor-design/enterprise-ng/issues/705))
 
 ### v4.28.0 Fixes
 
 - `[Application Menu]` Fixed the icons on breaking apart it's appearance when zooming out the browser in IE11, uplift theme. ([#3070](https://github.com/infor-design/enterprise/issues/3070))
+- `[Application Menu]` Fixed misalignment/size of bullet icons in the accordion on Android devices. ([#1429](http://localhost:4000/components/applicationmenu/test-six-levels.html))
 - `[Bubble Chart]` Fixed an issue where an extra axis line was shown when using the domain formatter. ([#501](https://github.com/infor-design/enterprise/issues/501))
+- `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
 - `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
@@ -23,6 +26,7 @@
 - `[Datagrid]` Fixed an issue the selected row header icon is the wrong state when using allowSelectAcrossPages. ([#3043](https://github.com/infor-design/enterprise/issues/3043)
 - `[Datagrid]` Improved the `datagrid-default-modal-width` concept if setting a modal datagrid default with so it works on any parent. [3562](https://github.com/infor-design/enterprise/issues/3562))
 - `[Datagrid]` Fixed a bug in the indeterminate paging example, that the select checkbox would not work and be out of sync when changing pages. [2230](https://github.com/infor-design/enterprise/issues/2230))
+- `[Datepicker]` Fixed a bug where for some locales like `af-ZA` and `fi_FI` with dots in the day periods, setting 24 hr time to AM did not work. [3750](https://github.com/infor-design/enterprise/issues/3750))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
 - `[Dropdown]` Fixed an issue that Dropdown did not close when scrolling in some nested containers. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
 - `[EmptyMessage]` Updated the text to be more subtle. ([#3476](https://github.com/infor-design/enterprise/issues/3476))
@@ -70,7 +74,6 @@
 - `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calculate the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is preferred. ([#3374](https://github.com/infor-design/enterprise/issues/3374))
 - `[Editor]` Added an option to set the height of the editor in `rows`. If you set this the estimated number for rows can be specified for the source and html pane. It will scroll after that. ([#3688](https://github.com/infor-design/enterprise/issues/3688))
 - `[Homepage]` Added support for reordering, resizing, and removing widgets by enabling edit mode on the homepage component. ([#3531](https://github.com/infor-design/enterprise/issues/3531))
-- `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
 
 ### v4.27.0 Fixes
 

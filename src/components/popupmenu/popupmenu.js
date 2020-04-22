@@ -118,6 +118,21 @@ PopupMenu.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the popupmenu trigger, or an item within the
+   * popupmenu, currently has focus.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const triggerIsActive = this.element.is(active);
+    const menuIsActive = this.menu && this.menu.length && this.menu[0].contains(active);
+
+    if (triggerIsActive || menuIsActive) {
+      return true;
+    }
+    return false;
+  },
+
+  /**
    * @private
    * @returns {void}
    */

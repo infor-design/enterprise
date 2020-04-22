@@ -68,11 +68,11 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
   });
 
-  afterEach(() => {
+  afterEach((done) => {
     cleanup([
       '.svg-icons',
       '#tooltip',
-      '.contextual-action-panel.modal',
+      '.modal',
       '.row',
       '#test-script'
     ]);
@@ -81,6 +81,9 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
       capAPI.destroy();
     }
     document.body.removeAttribute('data-modal');
+    setTimeout(() => {
+      done();
+    }, 500);
   });
 
   it('can be invoked', () => {

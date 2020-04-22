@@ -14,6 +14,7 @@ module.exports = {
   ],
 
   'env': {
+    'es6': true,
     'jasmine': true,
     'jquery': true,
     'node': true,
@@ -27,7 +28,8 @@ module.exports = {
     'window': true,
     'CustomEvent': true,
     'HTMLElement': true,
-    'SVGElement': true
+    'SVGElement': true,
+    'Soho': true,
   },
 
   'rules': {
