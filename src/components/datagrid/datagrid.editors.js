@@ -4,6 +4,22 @@ import { Locale } from '../locale/locale';
 import { Formatters } from './datagrid.formatters';
 import { xssUtils } from '../../utils/xss';
 
+// jQuery Components
+import '../autocomplete/autocomplete.jquery';
+import '../colorpicker/colorpicker.jquery';
+import '../datepicker/datepicker.jquery';
+import '../dropdown/dropdown.jquery';
+import '../editor/editor.jquery';
+import '../fileupload/fileupload.jquery';
+import '../icons/icons.jquery';
+import '../lookup/lookup.jquery';
+import '../mask/mask-input.jquery';
+import '../popover/popover.jquery';
+import '../spinbox/spinbox.jquery';
+import '../textarea/textarea.jquery';
+import '../timepicker/timepicker.jquery';
+import '../tooltip/tooltip.jquery';
+
 // Adds all the basic input features to any Datagrid Editor.
 function addStandardInputFeatures(input, row, cell, value, container, column, e, api, item) {
   if (column.align) {

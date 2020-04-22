@@ -20,12 +20,18 @@ import { Editors } from '../datagrid/datagrid.editors';
 
 // jQuery components
 import '../../utils/animations';
-import '../emptymessage/emptymessage.jquery';
-import '../pager/pager.jquery';
-import '../mask/mask-input.jquery';
-import '../multiselect/multiselect.jquery';
-import '../timepicker/timepicker.jquery';
 import '../drag/drag.jquery';
+import '../emptymessage/emptymessage.jquery';
+import '../listview/listview.jquery';
+import '../mask/mask-input.jquery';
+import '../modal/modal.jquery';
+import '../multiselect/multiselect.jquery';
+import '../pager/pager.jquery';
+import '../popupmenu/popupmenu.jquery';
+import '../searchfield/searchfield.jquery';
+import '../timepicker/timepicker.jquery';
+import '../toolbar/toolbar.jquery';
+import '../tooltip/tooltip.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
