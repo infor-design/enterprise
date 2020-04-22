@@ -1427,7 +1427,6 @@ PopupMenu.prototype = {
       return;
     }
 
-
     // Make the field the same size
     const elemWidth = this.element[0].offsetWidth;
     if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
