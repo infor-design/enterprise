@@ -47,6 +47,7 @@
 - `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 - `[Utils]` Exposed `Soho.utils.isInViewport(elem)` for external use. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
+- `[Tree]` Fixed an issue where use `UpdateNode()` method the data was not sync. ([#3724](https://github.com/infor-design/enterprise/issues/3724))
 
 ## v4.27.3
 
