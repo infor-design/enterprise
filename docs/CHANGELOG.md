@@ -23,6 +23,8 @@
 - `[Button]` Fixed the button disabled method to no longer use class `is-disabled`. ([#3447](https://github.com/infor-design/enterprise-ng/issues/799))
 - `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
 - `[Colorpicker]` Fixed an issue where the color swatches shift when the colorpicker has a scrollbar. ([#2266](https://github.com/infor-design/enterprise/issues/2266))
+- `[ContextualActionPanel]` Fixed an issue where toolbars in CAP are not torn down on destroy. ([#3785](https://github.com/infor-design/enterprise/issues/3785))
+- `[ContextualActionPanel]` Fixed an issue where nested caps or closing and reopening caps would not work. ([#801](https://github.com/infor-design/enterprise-ng/issues/801))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))

@@ -176,3 +176,40 @@ describe('Contextual Action Panel Locale Tests', () => {
     await utils.checkForErrors();
   });
 });
+
+describe('Contextual Action Panel Nested tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-nested?layout=nofrills');
+  });
+
+  it('Should open two caps on a page', async () => {
+    await element(by.id('button-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#cap-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#cap-1 .title')).getText()).toEqual('Company Information');
+    await element(by.css('#cap-1 #close-button')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    await element(by.id('button-2')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#cap-2')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#cap-2 .title')).getText()).toEqual('Supplier Information');
+    await element(by.css('#cap-2 #close-button')).click();
+  });
+
+  it('Should open nested caps on a page', async () => {
+    await element(by.id('button-1')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#cap-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#cap-1 .title')).getText()).toEqual('Company Information');
+    await element(by.id('trigger-2')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#cap-2')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#cap-2 .title')).getText()).toEqual('Supplier Information');
+    await element(by.css('#cap-2 #close-button')).click();
+  });
+});
