@@ -79,10 +79,14 @@ Progress.prototype = {
   * @param {string} value  The percent value to use to fill. 0-100
   * @returns {void}
   */
-  update(value = 0) {
-    this.element.attr('data-value', value);
-    this.element[0].style.width = `${value.toString()}%`;
-    this.updateAria(value);
+  update(value) {
+    let percent = this.element[0].getAttribute('data-value') || 0;
+    if (/number|string/.test(typeof value)) {
+      this.element[0].setAttribute('data-value', value);
+      percent = value;
+    }
+    this.element[0].style.width = `${percent}%`;
+    this.updateAria(percent);
   },
 
   /**

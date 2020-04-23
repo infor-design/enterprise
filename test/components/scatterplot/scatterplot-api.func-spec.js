@@ -1,10 +1,9 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const scatterplotHTML = require('../../../app/views/components/scatterplot/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
-let svgEl;
 let scatterplotEl;
 let scatterplotObj;
 
@@ -175,24 +174,22 @@ const dataset = [{
 
 describe('Scatter Plot API', () => {
   beforeEach(() => {
-    svgEl = null;
     scatterplotEl = null;
     scatterplotObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', scatterplotHTML);
     scatterplotEl = document.body.querySelector('#scatterplot-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     scatterplotObj = new Line(scatterplotEl, { type: 'scatterplot', dataset, isScatterPlot: true });
   });
 
   afterEach(() => {
     scatterplotObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    scatterplotEl.parentNode.removeChild(scatterplotEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '#scatterplot-script'
+    ]);
   });
 
   it('Should be defined on jQuery object', () => {

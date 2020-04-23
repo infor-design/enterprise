@@ -16,7 +16,8 @@ const COMPONENT_NAME = 'fileuploadadvanced';
 * @param {boolean} [settings.isStandalone=true] On page(true)|on modal(false), used for some visual style only.
 * @param {string} [settings.standaloneClass='standalone'] Css class if on page.
 * @param {string} [settings.allowedTypes='*'] Restrict file types(ie. 'jpg|png|gif') ['*' all types]
-* @param {number} [settings.maxFilesInProcess=99999] Max number of files can be uploaded
+* @param {number} [settings.maxFiles=99999] Max number of files can be uploaded
+* @param {number} [settings.maxFilesInProcess=99999] Max number of files can be uploaded while in process
 * @param {number} [settings.maxFileSize=-1] Max file size in bytes, -1 for unlimited
 * @param {string} [settings.fileName='myfile'] Variable name to read from server
 * @param {boolean} [settings.isDisabled=false] Make control disabled
@@ -29,6 +30,7 @@ const COMPONENT_NAME = 'fileuploadadvanced';
 * @param {string} [settings.textBtnRemove] Hidden text for remove button
 * @param {string} [settings.errorAllowedTypes] Error text for allowed types
 * @param {string} [settings.errorMaxFileSize] Error text for max file size
+* @param {string} [settings.errorMaxFiles] Error text for max files to upload
 * @param {string} [settings.errorMaxFilesInProcess] Error text for max files in process
 */
 
@@ -36,7 +38,8 @@ const FILEUPLOADADVANCED_DEFAULTS = {
   isStandalone: true, //
   standaloneClass: 'standalone', // css class if on page
   allowedTypes: '*', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
-  maxFilesInProcess: 99999, // max files can be upload
+  maxFiles: 99999, // max files can be upload
+  maxFilesInProcess: 99999, // max files can be upload while in process
   maxFileSize: -1, // max file size in bytes, -1 for unlimited
   fileName: 'myfile', // variable name to read from server
   isDisabled: false, // Disabled
@@ -53,6 +56,7 @@ const FILEUPLOADADVANCED_DEFAULTS = {
   // Error strings
   errorAllowedTypes: null,
   errorMaxFileSize: null,
+  errorMaxFiles: null,
   errorMaxFilesInProcess: null
 };
 
@@ -91,6 +95,8 @@ FileUploadAdvanced.prototype = {
     s.textBtnRemove = s.textBtnRemove || Locale.translate('TextBtnRemove');
     s.errorAllowedTypes = s.errorAllowedTypes || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorAllowedTypes')}`;
     s.errorMaxFileSize = s.errorMaxFileSize || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFileSize')}`;
+    s.errorMaxFiles = s.errorMaxFiles || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFiles')}`;
+    s.errorMaxFiles = s.errorMaxFiles.replace('{n}', s.maxFiles);
     s.errorMaxFilesInProcess = s.errorMaxFilesInProcess || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFilesInProcess')}`;
 
     // Disabled
@@ -192,16 +198,6 @@ FileUploadAdvanced.prototype = {
         self.element.triggerHandler('filesdroped', [files]);
 
         $(this).removeClass('hover is-focus');
-
-        // Clear previous errors in general area
-        $('span.msg', this.element).closest('.error').remove();
-
-        // Max files can be upload
-        if ((files.length + $('.progress', this.element).length) > s.maxFilesInProcess) {
-          self.showError(s.errorMaxFilesInProcess);
-          return;
-        }
-
         self.handleFileUpload(files);
       });
 
@@ -251,6 +247,24 @@ FileUploadAdvanced.prototype = {
   */
   handleFileUpload(files) {
     const s = this.settings;
+
+    // Clear previous errors in general area
+    $('span.msg', this.element).closest('.error').remove();
+
+    // Total files completed
+    this.totalCompleted = this.totalCompleted || 0;
+
+    // Max files can be upload
+    const filesLen = this.totalCompleted + files.length + $('.progress', this.element).length;
+    if (filesLen > s.maxFiles) {
+      this.showError(s.errorMaxFiles);
+      return;
+    }
+    if (filesLen > s.maxFilesInProcess) {
+      this.showError(s.errorMaxFilesInProcess);
+      return;
+    }
+
     const fileName = s.fileName.replace('[]', '');
 
     /* eslint-disable no-continue */
@@ -402,6 +416,10 @@ FileUploadAdvanced.prototype = {
       // Remove Cancel button and progress-bar area
       btnCancel.off('click.fileuploadadvanced');
       btnCancel.add(progressBar.closest('.progress-row')).remove();
+
+      // Increment to total files completed
+      self.totalCompleted++;
+
       /**
       * Fires when file complete uploading.
       *
@@ -453,7 +471,7 @@ FileUploadAdvanced.prototype = {
     let container;
     const s = this.settings;
 
-    if (error === s.errorMaxFilesInProcess) {
+    if (error === s.errorMaxFiles || error === s.errorMaxFilesInProcess) {
       // This error show without file name or size in general area
       container = $('' +
         `<div class="container error">
