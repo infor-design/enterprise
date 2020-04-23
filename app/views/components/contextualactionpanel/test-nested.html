@@ -204,8 +204,10 @@
     $('body').contextualactionpanel({
       title: 'Expenses: $50,000.00',
       content: $('#panel-1'),
-      trigger: 'immediate',
-      buttons: [
+      modalSettings: {
+        trigger: 'immediate',
+        id: 'cap-1',
+        buttons: [
         {
           type: 'input',
           text: 'Keyword',
@@ -224,12 +226,14 @@
           text: 'Close',
           cssClass: 'btn',
           icon: '#icon-close',
+          id: 'close-button',
           click: function() {
             var api = $(this).data('modal');
             api.close();
           }
         }
       ]
+      }
     });
   });
 
@@ -242,10 +246,14 @@
       title: 'Expenses: $50,000.00',
       content: $('#panel-2'),
       trigger: 'immediate',
-      buttons: [
+      modalSettings: {
+        trigger: 'immediate',
+        id: 'cap-2',
+        buttons: [
         {
           text: 'Close',
           cssClass: 'btn',
+          id: 'close-button',
           icon: '#icon-close',
           click: function() {
             var api = $(this).data('modal');
@@ -253,6 +261,7 @@
           }
         }
       ]
+      }
     });
   });
 </script>

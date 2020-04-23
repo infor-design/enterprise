@@ -30,27 +30,30 @@ test:
 
 ## Code Example
 
-This example shows how to invoke a contextual action panel and pass in the content for the body. The `buttons` option lets you customize the contextual action panel's toolbar and functions.
+This example shows how to invoke a contextual action panel and pass in the content for the body. The `buttons` option lets you customize the contextual action panel's toolbar and functions. For best cleanup of memory its recommended to either add an id to the modalSettings option(`modalSettings.id`) or within the content property, the main div should have an ID `<div id="panel-1" style="display: none;">`. If not a unique one will be assigned and you should cleanup and destroy the CAP when done in that case because the component is not able to track open CAPs and reuse the same objects.
+
+It will still work without if but you may need to call CAP destroy or destroyAll to further clean memory up.
 
 ```javascript
 $('body').contextualactionpanel({
-  id: 'contextual-action-modal-id',
   title: 'Expenses: $50,000.00',
-  content: '<markup>',
+  content: $('#panel-2'),
   trigger: 'immediate',
-  buttons: [
+  modalSettings: {
+    trigger: 'immediate',
+    id: 'cap-2',
+    buttons: [
     {
-      type: 'input',
-      text: 'Keyword',
-      id: 'filter',
-      name: 'filter',
-      cssClass: 'searchfield'
-    }, {
       text: 'Close',
       cssClass: 'btn',
-      icon: '#icon-close'
+      icon: '#icon-close',
+      click: function() {
+        var api = $(this).data('modal');
+        api.close();
+      }
     }
   ]
+  }
 });
 ```
 
