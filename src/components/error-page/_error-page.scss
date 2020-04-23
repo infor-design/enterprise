@@ -1,0 +1,31 @@
+// Error Page
+//================================================== //
+
+.error-page-message {
+  padding: 50px 0;
+  text-align: center;
+
+  .error-page-icon {
+    padding: 25px 0;
+  }
+
+  .error-page-title {
+    @include font-size(16);
+
+    padding-bottom: 20px;
+  }
+
+  .error-page-info {
+    @include font-size(14);
+
+    padding: 0 20px 30px;
+  }
+}
+
+.error-page-title,
+.error-page-info {
+  -webkit-font-smoothing: antialiased;
+  font-weight: $theme-number-font-weight-base;
+  line-height: normal;
+  text-align: center;
+}
