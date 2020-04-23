@@ -5528,11 +5528,15 @@ Datagrid.prototype = {
         }
         const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
         const offsetLeft = parseFloat(self.currentHeader.offset().left);
-        const leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        let leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        if (self.hasLeftPane && self.settings.frozenColumns.left.length && idx === 0) {
+          leftOffset = (offsetLeft - offsetParentLeft - 2);
+        }
         const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
         widthToSet = cssWidth - diff;
+
         if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
           return;
