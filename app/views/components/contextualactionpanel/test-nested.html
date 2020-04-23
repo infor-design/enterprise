@@ -1,8 +1,12 @@
 <div class="row">
   <div class="six columns">
 
-    <button type="button" id="trigger-1" class="btn-secondary">
-      Contextual Action Panel
+    <button type="button" id="button-1" class="btn-secondary">
+      Contextual Action Panel 1
+    </button>
+
+    <button type="button" id="button-2" class="btn-secondary">
+      Contextual Action Panel 2
     </button>
 
   </div>
@@ -95,9 +99,86 @@
       </div>
 
       <div class="field">
-        <button class="btn-secondary" type="button" id="trigger-2">Show Nested Modal</button>
+        <button class="btn-secondary" type="button" id="trigger-1">Show Nested Modal</button>
+      </div>
+      <div class="field">
+        <button class="btn-secondary" type="button" id="trigger-2">Show Nested CAP</button>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<div id="panel-2" style="display: none;">
+  <div class="toolbar">
+    <div class="title">Supplier Information</div>
+    <div class="buttonset">
+      <button class="btn" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-save"></use>
+        </svg>
+        <span>Save and Return</span>
+      </button>
+      <div class="separator"></div>
+      <button name="close" class="btn" type="button">
+        <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-close"></use>
+        </svg>
+        <span>Close and Return</span>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+
+      <div class="field">
+        <label for="supplier-name">Supplier Name</label>
+        <select id="supplier-name" name="supplier-name" class="dropdown">
+          <option value="">None</option>
+          <option value="jawbone" selected>Jawbone, Inc.</option>
+          <option value="infor">Infor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="packaging-form">Packaging</label>
+        <select id="packaging-form" name="packaging-form" class="dropdown">
+          <option value="">None</option>
+          <option value="3567" selected>3567</option>
+          <option value="3568">3568</option>
+          <option value="3569">3569</option>
+        </select>
+      </div>
+    </div>
+    <div class="six columns">
+
+      <div class="field">
+        <label for="details-terms">Details Terms</label>
+        <select id="details-terms" name="details-terms" class="dropdown">
+          <option value="">None</option>
+          <option value="default" selected>Default</option>
+          <option value="alternate">Alternate</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="billing-via">Billing Via</label>
+        <select id="billing-via" name="billing-via" class="dropdown">
+          <option value="">None</option>
+          <option value="freight" selected>Freight</option>
+          <option value="air">USPS Air</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="control-method">Control Method</label>
+        <select id="control-method" name="control-method" class="dropdown">
+          <option value="">None</option>
+          <option value="phone">Telephone</option>
+          <option value="email" selected>E-mail</option>
+          <option value="sms">SMS Message</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>
@@ -119,12 +200,14 @@
 
 <script>
 
-  $('#trigger-1').on('click', function () {
+  $('#button-1').on('click', function () {
     $('body').contextualactionpanel({
       title: 'Expenses: $50,000.00',
       content: $('#panel-1'),
-      trigger: 'immediate',
-      buttons: [
+      modalSettings: {
+        trigger: 'immediate',
+        id: 'cap-1',
+        buttons: [
         {
           type: 'input',
           text: 'Keyword',
@@ -143,17 +226,42 @@
           text: 'Close',
           cssClass: 'btn',
           icon: '#icon-close',
+          id: 'close-button',
           click: function() {
             var api = $(this).data('modal');
             api.close();
           }
         }
       ]
+      }
     });
   });
 
-  $('#trigger-2').on('click', function () {
+  $('#trigger-1').on('click', function () {
     $('body').modal({'title': 'Add Context', 'content': $('#modal-2')});
   });
 
+  $('#button-2, #trigger-2').on('click', function () {
+    $('body').contextualactionpanel({
+      title: 'Expenses: $50,000.00',
+      content: $('#panel-2'),
+      trigger: 'immediate',
+      modalSettings: {
+        trigger: 'immediate',
+        id: 'cap-2',
+        buttons: [
+        {
+          text: 'Close',
+          cssClass: 'btn',
+          id: 'close-button',
+          icon: '#icon-close',
+          click: function() {
+            var api = $(this).data('modal');
+            api.close();
+          }
+        }
+      ]
+      }
+    });
+  });
 </script>

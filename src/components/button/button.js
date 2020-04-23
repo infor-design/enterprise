@@ -93,10 +93,8 @@ Button.prototype = {
    * @returns {void}
    */
   set disabled(val) {
-    const trueVal = (val === true);
-    this.settings.disabled = trueVal;
-    this.element[0].disabled = trueVal;
-    this.element[0].classList[trueVal ? 'add' : 'remove']('is-disabled');
+    const isTrue = (val === true);
+    this.element[0].disabled = isTrue;
   },
 
   /**
