@@ -139,7 +139,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
   });
 
   it('Should have custom filter options', async () => {
-    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-0 button';
     await element(by.css(selector)).click();
 
     expect(await element.all(await by.css('.popupmenu')).count()).toEqual(5);
@@ -149,6 +149,19 @@ describe('Datagrid Custom Filter Option Tests', () => {
     const text = await element(by.id('popupmenu-2')).getText();
 
     expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
+  });
+
+  it('Should have custom filter options', async () => {
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    await element(by.css(selector)).click();
+
+    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(5);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-2'))), config.waitsFor);
+
+    const text = await element(by.id('popupmenu-2')).getText();
+
+    expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('EqualsDoesNotEqualContainsDoesNotContainIsEmptyIsNotEmptyEndsWithDoesNotEndWithStartsWithDoesNotStartWith');
   });
 });
 
