@@ -298,7 +298,7 @@ ModalManager.prototype = {
   /**
    * Find a modal instance if the modal has been opened and not destroyed.
    * @param  {string} id The id to look for
-   * @returns {object} The modal API instance
+   * @returns {Modal|undefined} a matching Modal API instance, if available
    */
   findById(id) {
     if (!id) {
