@@ -1619,7 +1619,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
   });
 
-  it('Should be able to not show the group size', () => {
+  it('Should be able to not show the group size', () => { //eslint-disable-line
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');

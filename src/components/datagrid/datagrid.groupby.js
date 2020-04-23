@@ -7,7 +7,6 @@ import { numberUtils } from '../../utils/number';
 * @private
 */
 const groupBy = (function () {
-  // Can also use in isEquivalent: function(obj1, obj2)  in datagrid.js
   const equals = utils.equals;
 
   // See if the object has these proprties or not

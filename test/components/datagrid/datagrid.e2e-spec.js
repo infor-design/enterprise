@@ -1696,7 +1696,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+describe('Datagrid Duplicate Ids Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
 
@@ -4056,5 +4056,23 @@ describe('Datagrid columns width test', () => {
     await elem.getSize().then((size) => {
       expect(width).toContain(size.width);
     });
+  });
+});
+
+describe('Datagrid With Recursive Column Data', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-recursive-object');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render rows', async () => {
+    expect(await element.all(by.css('#datagrid .datagrid-wrapper tbody tr')).count()).toEqual(7);
   });
 });
