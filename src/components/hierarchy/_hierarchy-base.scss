@@ -436,15 +436,16 @@
   }
 
   .popupmenu.has-detail-fields + .arrow {
-    border-bottom-color: $theme-color-palette-slate-80;
+    border-bottom-color: $popupmenu-border-color;
   }
 
   .popupmenu.has-detail-fields + .arrow::after {
-    border-bottom-color: $theme-color-palette-slate-80;
+    border-bottom-color: $theme-color-palette-white;
   }
 
   .detail-fields {
-    background: $theme-color-palette-slate-80;
+    background: $theme-color-palette-white;
+    border-bottom: thin solid $theme-color-palette-slate-30;
     padding: 10px;
 
     .dt-fields-row {
@@ -462,7 +463,7 @@
     }
 
     .dt-fields-cell {
-      color: $theme-color-palette-white;
+      color: $theme-color-palette-slate-80;
       display: table-cell;
       font-size: $theme-size-font-sm;
       line-height: 1.4rem;

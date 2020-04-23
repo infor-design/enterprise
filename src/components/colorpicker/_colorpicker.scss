@@ -224,6 +224,10 @@
   padding: 10px 0 10px 10px;
   width: 322px;
 
+  &.has-scrollbar {
+    width: calc(322px + 17px);
+  }
+
   li {
     display: inline-block;
     height: 20px;

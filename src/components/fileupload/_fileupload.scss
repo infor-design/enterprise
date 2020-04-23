@@ -286,7 +286,7 @@
         border-radius: 50%;
         float: left;
         height: 16px;
-        margin: 8px 10px 0;
+        margin: 10px 10px 0;
         width: 16px;
 
         .btn-icon {
@@ -297,13 +297,17 @@
           min-width: 18px;
           top: -1px;
           width: 18px;
+
+          .icon {
+            margin-top: -2px;
+          }
         }
 
         .icon {
           color: $fileupload-status-color;
-          height: 10px;
+          height: 10px !important;
           left: 3px;
-          top: 3px;
+          top: 2px;
           width: 10px;
         }
 
@@ -423,6 +427,30 @@
   .field-fileupload .trigger .icon,
   .field-fileupload .trigger-close .icon {
     top: 3px;
+  }
+}
+
+// Firefox needs some hand-holding
+.is-firefox {
+  &.is-mac {
+    .fileupload-wrapper {
+      .container {
+        .file-row,
+        .progress-row {
+          .status-icon {
+            button {
+              .icon {
+                margin-top: 0;
+              }
+            }
+
+            .icon {
+              top: 3px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

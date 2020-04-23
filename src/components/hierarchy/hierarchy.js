@@ -331,6 +331,11 @@ Hierarchy.prototype = {
     popupMenu.append(this.getActionMenuItems(nodeData));
 
     popupMenuControl.open();
+    popupMenuControl.handleAfterPlace(null, {
+      element: popupMenu.parent(),
+      parent: $(leaf).find('.btn-actions'),
+      placement: 'bottom'
+    });
   },
 
   /**
