@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Locale } from '../locale/locale';
+import { modalManager } from '../modal/modal.manager';
 
 import '../icons/icons.jquery';
 
@@ -30,7 +31,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   modalSettings: {
     buttons: null,
     centerTitle: false,
-    id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
+    id: null,
     showCloseBtn: false,
     trigger: 'click',
     useFlexToolbar: false
@@ -123,17 +124,16 @@ ContextualActionPanel.prototype = {
   */
   setup() {
     let existingPanel = this.element.next('.contextual-action-panel');
-    const dataModal = this.element.data('modal');
+    const modalId = this.id;
     const setPanel = (id) => {
       const panelFromID = $(`#${id}`);
       if (panelFromID.length) {
         existingPanel = panelFromID;
       }
     };
+
     if (typeof dataModal === 'string') {
-      setPanel(dataModal);
-    } else if (typeof dataModal === 'object') {
-      setPanel(this.element.attr('data-modal'));
+      setPanel(modalId);
     }
 
     // Handle case with popup triggered from a menu
@@ -158,6 +158,10 @@ ContextualActionPanel.prototype = {
   build() {
     const self = this;
     const modalContent = this.settings.content;
+    this.id = (this.settings?.modalSettings?.id) || modalContent?.attr('id') || utils.uniqueId(this.element, 'contextual-action-modal');
+    if (!this.settings?.modalSettings?.id) {
+      this.settings.modalSettings.id = this.id;
+    }
 
     // Build the Content if it's not present
     if (!this.panel || !this.panel.length) {
@@ -470,7 +474,6 @@ ContextualActionPanel.prototype = {
 
     const children = self.panel.find('.modal-body').children();
     children.first().unwrap().unwrap();
-
     self.element.removeAttr('data-modal');
 
     if (self.closeButton && self.closeButton.length) {
@@ -544,6 +547,20 @@ ContextualActionPanel.prototype = {
       this.modalAPI.close(true);
     }
     $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.toolbar && this.toolbar.data('toolbar')) {
+      this.toolbar.data('toolbar').destroy();
+    }
+    if (this.toolbar && this.toolbar.data('toolbarFlex')) {
+      this.toolbar.data('toolbarFlex').destroy();
+    }
+  },
+
+  /**
+  * Destroy an and all active cap instances
+  * @returns {void}
+  */
+  destroyAll() {
+    modalManager.destroyAll(true);
   }
 };
 

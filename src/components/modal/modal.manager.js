@@ -258,6 +258,23 @@ ModalManager.prototype = {
   },
 
   /**
+   * Destroys all registered modals
+   * @param {boolean} [capsOnly=true] If true, nly destroy the caps.
+   * @returns {void}
+   */
+  destroyAll(capsOnly = false) {
+    this.modals.forEach((api) => {
+      const okToDestroy = !capsOnly || api.capAPI;
+      if (okToDestroy) {
+        api.close(undefined, true);
+        api.destroy();
+      }
+    });
+
+    this.refresh();
+  },
+
+  /**
    * Closes the last open modal in the stack
    * @param {boolean} [cancelled=false] passes along a flag that designates this close action as "cancelled" to the Modal API.
    * @returns {void}
@@ -276,6 +293,19 @@ ModalManager.prototype = {
       api.active = true;
     }
     return api;
+  },
+
+  /**
+   * Find a modal instance if the modal has been opened and not destroyed.
+   * @param  {string} id The id to look for
+   * @returns {object} The modal API instance
+   */
+  findById(id) {
+    if (!id) {
+      return undefined;
+    }
+    const results = this.modals.filter(api => api.id === id);
+    return results[0] || undefined;
   },
 
   /**
