@@ -52,6 +52,13 @@
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 - `[Tree]` Fixed an issue where use `UpdateNode()` method the data was not sync. ([#3724](https://github.com/infor-design/enterprise/issues/3724))
 
+## v4.27.4
+
+### v4.27.4 Fixes
+
+`[Button]` Fixed the button disabled method to no longer use class `is-disabled`. ([#3447](https://github.com/infor-design/enterprise-ng/issues/801))
+`[Button]` Fixed a regression where some buttons would get a 100% width on mobile. ([#801](https://github.com/infor-design/enterprise-ng/issues/801))
+
 ## v4.27.3
 
 ### v4.27.3 Fixes
