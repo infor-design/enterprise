@@ -770,10 +770,11 @@ html[lang^='fr-'] {
 // Special case to target buttons that are inside of the page container only
 .page-container {
   button {
-    &.btn {
+    &.btn,
+    &.btn-secondary {
       @media (max-width: $breakpoint-big-phone) {
+        max-width: 100%;
         text-overflow: ellipsis;
-        width: 100%;
       }
     }
   }

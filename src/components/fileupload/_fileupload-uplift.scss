@@ -19,7 +19,7 @@
         button {
           .icon {
             left: 0;
-            top: -4px;
+            top: -3px;
           }
         }
       }
@@ -41,6 +41,27 @@
 
 // Firefox needs some hand-holding
 .is-firefox {
+  &.is-mac {
+    .fileupload-wrapper {
+      .container {
+        .file-row,
+        .progress-row {
+          .status-icon {
+            button {
+              .icon {
+                top: -4px !important;
+              }
+            }
+
+            .icon {
+              top: -3px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .fileupload-wrapper {
     .container {
       .file-row,
@@ -49,6 +70,24 @@
           button {
             .icon {
               top: -3px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ie11
+.ie11 {
+  .fileupload-wrapper {
+    .container {
+      .file-row,
+      .progress-row {
+        .status-icon {
+          button {
+            .icon {
+              top: -7px;
             }
           }
         }

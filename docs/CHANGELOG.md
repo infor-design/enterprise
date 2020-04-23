@@ -2,30 +2,39 @@
 
 ## v4.28.0
 
+### v4.28.0 Important Changes
+
+- `[Pager]` The Deprecated `pager` getter method was removed. Use `pagerAPI` instead for the same thing if accessing this internal object directly. ([#3759](https://github.com/infor-design/enterprise/issues/3759))
+
 ### v4.28.0 Features
 
 - `[Contextmenu]` Added support for shortcut display in menus. ([#3490](https://github.com/infor-design/enterprise/issues/3490))
 - `[Datepicker]` Added support for custom api callback to disable passed dates and to disable dates by years. ([#3462](https://github.com/infor-design/enterprise/issues/3462))
+- `[FileUploadAdvanced]` Added support to api settings `maxFiles` to limit number of uploads. ([#3512](https://github.com/infor-design/enterprise/issues/3512))
 - `[Modal]` Improved handling of multiple Modal windows stemming from a single trigger element. ([ng#705](https://github.com/infor-design/enterprise-ng/issues/705))
 
 ### v4.28.0 Fixes
 
 - `[Application Menu]` Fixed the icons on breaking apart it's appearance when zooming out the browser in IE11, uplift theme. ([#3070](https://github.com/infor-design/enterprise/issues/3070))
 - `[Application Menu]` Fixed misalignment/size of bullet icons in the accordion on Android devices. ([#1429](http://localhost:4000/components/applicationmenu/test-six-levels.html))
+- `[Autocomplete]` Added a check to prevent the autocomplete from incorrectly stealing form focus, by checking for inner focus before opening a list on typeahead. ([#3639](https://github.com/infor-design/enterprise/issues/3070))
 - `[Bubble Chart]` Fixed an issue where an extra axis line was shown when using the domain formatter. ([#501](https://github.com/infor-design/enterprise/issues/501))
 - `[Bullet Chart]` Added support to format ranges and difference values. ([#3447](https://github.com/infor-design/enterprise/issues/3447))
+- `[Button]` Fixed the button disabled method to no longer use class `is-disabled`. ([#3447](https://github.com/infor-design/enterprise-ng/issues/799))
 - `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
+- `[Colorpicker]` Fixed an issue where the color swatches shift when the colorpicker has a scrollbar. ([#2266](https://github.com/infor-design/enterprise/issues/2266))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed lookup modal title to be visible and adjust the position to make it centered. ([#3635](https://github.com/infor-design/enterprise/issues/3635))
-- `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Datagrid]` Fixed an issue where selected rows are not reset when calling loadData. ([#3718](https://github.com/infor-design/enterprise/issues/3718))
 - `[Datagrid]` Fixed an issue where if using grouping totals and hiding and showing columns the page is not refreshed properly. ([#2564](https://github.com/infor-design/enterprise/issues/2564)
 - `[Datagrid]` Fixed an issue the selected row header icon is the wrong state when using allowSelectAcrossPages. ([#3043](https://github.com/infor-design/enterprise/issues/3043)
 - `[Datagrid]` Improved the `datagrid-default-modal-width` concept if setting a modal datagrid default with so it works on any parent. [3562](https://github.com/infor-design/enterprise/issues/3562))
 - `[Datagrid]` Fixed a bug in the indeterminate paging example, that the select checkbox would not work and be out of sync when changing pages. [2230](https://github.com/infor-design/enterprise/issues/2230))
 - `[Datagrid]` Fixed an issue where the filter condition leaves two selected if you just reorder. ([#3779](https://github.com/infor-design/enterprise/issues/3779))
+- `[Datagrid/General]` Fixed a bug where when loading the datagrid with a columns object that contain recursive objects the grid would crash. [3759](https://github.com/infor-design/enterprise/issues/3759))
+- `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Datepicker]` Fixed a bug where for some locales like `af-ZA` and `fi_FI` with dots in the day periods, setting 24 hr time to AM did not work. [3750](https://github.com/infor-design/enterprise/issues/3750))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
 - `[Dropdown]` Fixed an issue that Dropdown did not close when scrolling in some nested containers. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
