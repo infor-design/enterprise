@@ -2,7 +2,8 @@
 //================================================== //
 
 .error-page-message {
-  padding: 50px 0;
+  max-width: 300px;
+  padding: 10px 0 50px;
   text-align: center;
 
   .error-page-icon {
@@ -10,15 +11,18 @@
   }
 
   .error-page-title {
-    @include font-size(16);
+    @include font-size(24);
 
+    color: $error-page-title-color;
+    font-weight: 600;
+    margin: 0 15px;
     padding-bottom: 20px;
   }
 
   .error-page-info {
-    @include font-size(14);
+    @include font-size(16);
 
-    padding: 0 20px 30px;
+    margin: 0 15px 20px;
   }
 }
 
