@@ -75,7 +75,7 @@ describe('Error Page example-index tests', () => {
   });
 });
 
-fdescribe('Error page open example-index tests on click', () => {
+describe('Error page open example-index tests on click', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
@@ -93,6 +93,8 @@ fdescribe('Error page open example-index tests on click', () => {
       await btnEl.click();
 
       const contentEl = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.sleep);
+
       expect(await browser.protractorImageComparison.checkElement(contentEl, 'error-page-modal')).toEqual(0);
     });
   }
