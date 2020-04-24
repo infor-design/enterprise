@@ -7,7 +7,6 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
@@ -247,17 +246,6 @@ Datagrid.prototype = {
       api = this.tableBody.data('pager');
     }
     return api;
-  },
-
-  /**
-   * Reference to the pager API, if applicable.
-   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
-   * @deprecated as of v4.16.0. Please use `pagerAPI` property instead.
-   * @returns {Pager} IDS Pager component API.
-   */
-  get pager() {
-    warnAboutDeprecation('pagerAPI', 'pager');
-    return this.pagerAPI;
   },
 
   /**
@@ -1799,6 +1787,34 @@ Datagrid.prototype = {
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
+    const formatFilterText = function (str) {
+      str = str
+        .split('-')
+        .map((s) => {
+          s = s.charAt(0).toUpperCase() + s.slice(1);
+          return s;
+        }).join('');
+
+      switch (str) {
+        case 'StartWith':
+          str = str.replace('StartWith', 'StartsWith');
+          break;
+        case 'EndWith':
+          str = str.replace('EndWith', 'EndsWith');
+          break;
+        case 'LessEquals':
+          str = str.replace('LessEquals', 'LessOrEquals');
+          break;
+        case 'GreaterEquals':
+          str = str.replace('GreaterEquals', 'GreaterOrEquals');
+          break;
+        default:
+          break;
+      }
+
+      return str;
+    };
+
     let btnMarkup = '';
     let btnDefault = '';
 
@@ -1809,14 +1825,24 @@ Datagrid.prototype = {
 
     if (col.filterType === 'text') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      btnMarkup = renderButton(btnDefault) +
-        render('contains', 'Contains', true) +
-        render('does-not-contain', 'DoesNotContain') +
-        render('equals', 'Equals') +
-        render('does-not-equal', 'DoesNotEqual') +
-        render('is-empty', 'IsEmpty') +
-        render('is-not-empty', 'IsNotEmpty');
-      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty') +
+          render('end-with', 'EndsWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartsWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     if (col.filterType === 'checkbox') {
@@ -1849,15 +1875,6 @@ Datagrid.prototype = {
       }${render('greater-than', 'GreaterThan')
       }${render('greater-equals', 'GreaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
-    }
-
-    if (col.filterType === 'text') {
-      btnMarkup += `${
-        render('end-with', 'EndsWith')
-      }${render('does-not-end-with', 'DoesNotEndWith')
-      }${render('start-with', 'StartsWith')
-      }${render('does-not-start-with', 'DoesNotStartWith')}`;
-      btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
     if (col.filterType === 'lookup') {
@@ -10861,20 +10878,6 @@ Datagrid.prototype = {
 
       return ascending * ((a > b) - (b > a));
     };
-  },
-
-  /**
-  * Determine equality for two deeply nested JavaScript objects.
-  * @private
-  * @param {object} obj1 First object to compare
-  * @param {object} obj2 Second object to compare
-  * @returns {boolean} If it is equal or not
-  */
-  isEquivalent(obj1, obj2) {
-    function _equals(a, b) {
-      return JSON.stringify(a) === JSON.stringify($.extend(true, {}, a, b));
-    }
-    return _equals(obj1, obj2) && _equals(obj2, obj1);
   },
 
   /**

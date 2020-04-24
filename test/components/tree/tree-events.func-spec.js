@@ -68,16 +68,16 @@ describe('Tree Methods', () => {
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 0);
+    }, 300);
   });
 
   it('Should trigger "selected" event', (done) => {
     const spyEvent = spyOnEvent('#json-tree', 'selected');
-    treeObj.selectNodeById('node3');
+    treeObj.selectNodeById('node1');
 
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 0);
+    }, 300);
   });
 });

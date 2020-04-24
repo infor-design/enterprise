@@ -16,6 +16,11 @@ describe('Button example-index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should be disabled', async () => {
+    expect(await element(by.id('primary-action-three')).getAttribute('class')).not.toContain('is-disabled');
+    expect(await element(by.id('primary-action-three')).getAttribute('disabled')).toBe('true');
+  });
+
   if (utils.isChrome()) {
     it('Should tab to "Primary Button", and animate on enter', async () => {
       const buttonEl = await element.all(by.css('.btn-primary')).get(0);
