@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Error Page example-index tests', () => {
+describe('Error Page example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
@@ -75,7 +75,7 @@ fdescribe('Error Page example-index tests', () => {
   });
 });
 
-fdescribe('Error page open example-index tests on click', () => {
+describe('Error page open example-index tests on click', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
