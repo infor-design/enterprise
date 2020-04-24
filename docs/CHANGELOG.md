@@ -39,6 +39,8 @@
 - `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Datepicker]` Fixed a bug where for some locales like `af-ZA` and `fi_FI` with dots in the day periods, setting 24 hr time to AM did not work. [3750](https://github.com/infor-design/enterprise/issues/3750))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
+- `[Demoapp]` Did cleanup on the icons and patterns links. ([3790](https://github.com/infor-design/enterprise/issues/3790))
+- `[Demoapp]` When deployed on a proxy the icons page would not change contents when changing theme. ([3790](https://github.com/infor-design/enterprise/issues/3790))
 - `[Dropdown]` Fixed an issue that Dropdown did not close when scrolling in some nested containers. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
 - `[EmptyMessage]` Updated the text to be more subtle. ([#3476](https://github.com/infor-design/enterprise/issues/3476))
 - `[Fieldset]` Fixed fieldset text data overlapping in compact mode on mobile view. ([#3627](https://github.com/infor-design/enterprise/issues/3627))
