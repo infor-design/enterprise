@@ -89,13 +89,9 @@ describe('Error page open example-index tests on click', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example index', async () => {
-      const btnEl = await element(by.id('modal-context'));
-      await btnEl.click();
+      const bodyEl = await element(by.id('modal-engaged'));
 
-      const contentEl = await element(by.id('maincontent'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(contentEl, 'error-page-modal')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'error-page-modal')).toEqual(0);
     });
   }
 
