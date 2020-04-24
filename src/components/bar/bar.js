@@ -1,4 +1,5 @@
 // Other Shared Imports
+import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
 import { charts } from '../charts/charts';
@@ -113,14 +114,14 @@ Bar.prototype = {
    */
   build() {
     const self = this;
-    const isRTL = Locale.isRTL();
+    const s = this.settings;
+    const parent = this.element.parent();
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
-    const isFormatter = !!this.settings.formatterString;
-    const format = function (value) {
-      return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
-    };
+    const isFormatter = !!s.formatterString;
+    const format = value => (isFormatter ? d3.format(s.formatterString)(value) : value);
 
     let maxTextWidth;
+    let largestText;
     let yMap;
     let isGrouped;
     let legendMap = [];
@@ -133,18 +134,26 @@ Bar.prototype = {
 
     let tooltipInterval;
     const tooltipDataCache = [];
-    const tooltipData = self.settings.tooltip;
+    const tooltipData = s.tooltip;
 
     let barSpace = 0;
     let maxBarHeight = 30;
     const legendHeight = 30;
     const gapBetweenGroups = 0.6; // Makes it one bar in height (barHeight * 0.5)
-    const isViewSmall = this.element.parent().width() < 450;
-    const smallViewport = innerWidth <= 480;
-    const mediumViewport = innerWidth >= 481 && innerWidth <= 992;
-    const largeViewport = innerWidth > 992;
-    let dataset = this.settings.dataset;
+    const isViewSmall = parent.width() < 450;
+    let dataset = s.dataset;
+
+    this.isRTL = Locale.isRTL();
     this.dataset = dataset;
+
+    const innerWidth = window.innerWidth;
+    this.viewport = {
+      xxsmall: innerWidth <= 380,
+      xsmall: innerWidth >= 381 && innerWidth <= 450,
+      small: innerWidth >= 451 && innerWidth <= 480,
+      medium: innerWidth >= 481 && innerWidth <= 992,
+      large: innerWidth > 992
+    };
 
     const margins = {
       top: 20,
@@ -152,70 +161,79 @@ Bar.prototype = {
       right: 30,
       bottom: dataset.length === 1 ? 5 : 30
     };
-    if (self.settings.isGrouped && dataset.length === 1) {
+    if (s.isGrouped && dataset.length === 1) {
       margins.bottom = 30;
       barSpace = 2;
     }
 
     this.element.addClass('bar-chart');
-    if (this.settings.isGrouped) {
+    if (s.isGrouped) {
       this.element.addClass('bar-chart-grouped');
     }
 
-    if (this.settings.isStacked) {
+    if (s.isStacked) {
       this.element.addClass('bar-chart-stacked');
     }
 
     // Handle Empty Data Set
     if (dataset.length === 0) {
-      self.element.emptymessage(self.settings.emptyMessage);
+      self.element.emptymessage(s.emptyMessage);
       return this;
     }
 
-    // const width = parseInt(this.element.parent().width(), 10) - margins.left - margins.right;
-    const height = parseInt(this.element.parent().height(), 10) - margins.top - margins.bottom -
-      legendHeight; // influences the bar width
+    // Get the Legend Series
+    const series = dataset.map(d => ({ name: d.name, color: d.color, pattern: d.pattern }));
 
-    // Get the Legend Series'
-    const series = dataset.map(function (d) { //eslint-disable-line
-      return { name: d.name, color: d.color, pattern: d.pattern };
-    });
+    // Ellipsis
+    this.ellipsis = { use: false, percentageWidth: 25, threshold: 12 };
+    if (this.viewport.xxsmall) {
+      this.ellipsis.percentageWidth = 37;
+      this.ellipsis.threshold = 10;
+    } else if (this.viewport.xsmall) {
+      this.ellipsis.percentageWidth = 28;
+      this.ellipsis.threshold = 10;
+    } else if (this.viewport.small) {
+      this.ellipsis.percentageWidth = 35;
+    }
 
     // Map the Data Sets and Stack them.
     const yStack = { y1: [], y2: [] };
-    dataset = dataset.map(function (d, i) {  //eslint-disable-line
-      return d.data.map(function (o, i2) { //eslint-disable-line
-        let y0 = 0;
-        if (i === 0) {
-          yStack.y1.push(o.value);
-          yStack.y2.push(0);
-        } else {
-          y0 = yStack.y1[i2] + yStack.y2[i2];
-          yStack.y1[i2] = o.value;
-          yStack.y2[i2] = y0;
-        }
-        return $.extend({}, o, {  //eslint-disable-line
-          y0,
-          y: o.value,
-          x: o.name,
-          color: o.color,
-          pattern: o.pattern
-        });
+    dataset = dataset.map((d, i) => d.data.map((o, i2) => {
+      let y0 = 0;
+      if (i === 0) {
+        yStack.y1.push(o.value);
+        yStack.y2.push(0);
+      } else {
+        y0 = yStack.y1[i2] + yStack.y2[i2];
+        yStack.y1[i2] = o.value;
+        yStack.y2[i2] = y0;
+      }
+      return $.extend({}, o, {
+        y0,
+        y: o.value,
+        x: charts.getLabel(o, self.viewport),
+        color: o.color,
+        pattern: o.pattern
       });
-    });
+    }));
 
     // Calculate max text width
     maxTextWidth = 0;
+    largestText = '';
     dataset = dataset.map(function (group, i) { // eslint-disable-line
-      if (!self.settings.isStacked) {
+      if (!s.isStacked) {
         if (series[i]) {
-          maxTextWidth = (series[i].name.length > maxTextWidth ?
-            series[i].name.length : maxTextWidth);
+          const label = charts.getLabel(series[i], self.viewport);
+          const len = label.length;
+          largestText = (len > maxTextWidth ? label : largestText);
+          maxTextWidth = (len > maxTextWidth ? len : maxTextWidth);
         }
       }
       return group.map(function (d) { // eslint-disable-line
-        if (self.settings.isStacked) {
-          maxTextWidth = (d.x.length > maxTextWidth ? d.x.length : maxTextWidth);
+        if (s.isStacked) {
+          const len = d.x.length;
+          largestText = (len > maxTextWidth ? d.x : largestText);
+          maxTextWidth = (len > maxTextWidth ? len : maxTextWidth);
         }
 
         // Invert the x and y values, and y0 becomes x0
@@ -229,22 +247,18 @@ Bar.prototype = {
       });
     });
 
-    const isLongText = this.settings.longText;
-    const h = parseInt(this.element.parent().height(), 10) - margins.bottom -
-      (self.settings.isStacked ? 0 : (legendHeight / 2));
-    const w = parseInt(this.element.parent().width(), 10) - margins.left;
-    let textWidth;
-
-    if (smallViewport) {
-      textWidth = margins.left + maxTextWidth * 1;
-    } else if (mediumViewport) {
-      textWidth = margins.left + maxTextWidth * 4;
-    } else if (largeViewport) {
-      textWidth = margins.left + maxTextWidth * 6;
+    // influences the bar width
+    const height = parseInt(parent.height(), 10) - margins.top - margins.bottom - legendHeight;
+    const h = parseInt(parent.height(), 10) - margins.bottom -
+      (s.isStacked ? 0 : (legendHeight / 2));
+    const w = parseInt(parent.width(), 10) - margins.left;
+    let textWidth = charts.calculateTextRenderWidth(largestText);
+    if (textWidth < 200) {
+      textWidth += 26;
     }
-
-    if (!isLongText) {
-      textWidth = margins.left + maxTextWidth * 6;
+    if (charts.calculatePercentage(textWidth, w) > 55) {
+      textWidth = charts.getPercentage(w, this.ellipsis.percentageWidth);
+      this.ellipsis.use = true;
     }
 
     self.svg = d3.select(this.element[0])
@@ -255,33 +269,24 @@ Bar.prototype = {
       .attr('class', 'group')
       .attr('transform', `translate(${textWidth},${margins.top})`);
 
-    let xMin = d3.min(dataset, function (group) { //eslint-disable-line
-      return d3.min(group, function (d) { //eslint-disable-line
-        return self.settings.isStacked ? (d.x + d.x0) : d.x;
-      });
-    });
+    const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
+    let xMax = d3.max(dataset, g => (d3.max(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
 
-    let xMax = d3.max(dataset, function (group) { //eslint-disable-line
-      return d3.max(group, function (d) { //eslint-disable-line
-        return self.settings.isStacked ? (d.x + d.x0) : d.x;
-      });
-    });
-
-    if (self.settings.isStacked && self.settings.isNormalized) {
+    if (s.isStacked && s.isNormalized) {
       const gMax = [];
       // get the max for each array group
-      dataset.forEach(function (d) {  //eslint-disable-line
-        d.forEach(function (d, i) {  //eslint-disable-line
-          gMax[i] = (gMax[i] === undefined ? 0 : gMax[i]) + d.x;
+      dataset.forEach((d) => {
+        d.forEach((d2, i) => {
+          gMax[i] = (gMax[i] === undefined ? 0 : gMax[i]) + d2.x;
         });
       });
 
       // Normalize Each Group
-      dataset.forEach(function (d) {   //eslint-disable-line
-        d.forEach(function (d, i) {  //eslint-disable-line
+      dataset.forEach((d) => {
+        d.forEach((d2, i) => {
           const xDif = gMax[i] / 100;
-          d.x /= xDif;
-          d.x0 /= xDif;
+          d2.x /= xDif;
+          d2.x0 /= xDif;
         });
       });
       xMax = 100;
@@ -291,7 +296,7 @@ Bar.prototype = {
     const barWith = w - textWidth - margins.left;
     let xScale;
 
-    if (self.settings.useLogScale) {
+    if (s.useLogScale) {
       xScale = d3.scaleLog()
         .domain([(xMin > 0 ? xMin : 1), xMax])
         .range([1, barWith])
@@ -303,7 +308,7 @@ Bar.prototype = {
         .nice();
     }
 
-    if (self.settings.isStacked) {
+    if (s.isStacked) {
       yMap = dataset[0].map(d => d.y);
 
       barHeight = 0.32;
@@ -311,11 +316,8 @@ Bar.prototype = {
       yMap = series.map(d => d.name);
 
       (function () {
-        let i;
-        let l;
-        let lm;
         // Loop backwards to catch and override with found first custom info from top
-        for (i = dataset.length - 1, l = -1; i > l; i--) {
+        for (let lm, i = dataset.length - 1, l = -1; i > l; i--) {
           lm = dataset[i].map(d => d);
           $.extend(true, legendMap, lm);
           // Convert back to array from object
@@ -347,25 +349,25 @@ Bar.prototype = {
       xAxis.ticks(textWidth < 100 ? 5 : 3);
     }
 
-    if (self.settings.isStacked && self.settings.isNormalized) {
+    if (s.isStacked && s.isNormalized) {
       xAxis.tickFormat(d => `${d}%`);
     }
 
-    if (self.settings.useLogScale) {
+    if (s.useLogScale) {
       xAxis.ticks(10, ',.1s');
 
-      if (self.settings.showLines === false) {
+      if (s.showLines === false) {
         xAxis.tickSize(0);
       }
     }
 
-    if (self.settings.ticks && !self.settings.useLogScale) {
-      if (smallViewport) {
-        xAxis.ticks(self.settings.ticks.smallNumber, self.settings.ticks.format);
-      } else if (mediumViewport) {
-        xAxis.ticks(self.settings.ticks.mediumNumber, self.settings.ticks.format);
-      } else if (largeViewport) {
-        xAxis.ticks(self.settings.ticks.largeNumber, self.settings.ticks.format);
+    if (s.ticks && !s.useLogScale) {
+      if (self.viewport.small) {
+        xAxis.ticks(s.ticks.smallNumber, s.ticks.format);
+      } else if (self.viewport.medium) {
+        xAxis.ticks(s.ticks.mediumNumber, s.ticks.format);
+      } else if (self.viewport.large) {
+        xAxis.ticks(s.ticks.largeNumber, s.ticks.format);
       }
     }
 
@@ -390,15 +392,15 @@ Bar.prototype = {
       .attr('class', 'series-group')
       .attr('data-group-id', (d, i) => i);
 
-    self.settings.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !self.settings.isStacked) || (self.settings.isGrouped && dataset.length === 1);
-    self.settings.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && self.settings.isStacked);
+    s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
+    s.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && s.isStacked);
 
     groups.selectAll('rect')
       .data((d, i) => {
         d.forEach((d3) => {
           d3.index = i;
 
-          if (!self.settings.isStacked) {
+          if (!s.isStacked) {
             d3.gindex = gindex++;
           }
         });
@@ -407,30 +409,30 @@ Bar.prototype = {
       .enter()
       .append('rect')
       .attr('class', (d, i) => `bar series-${i}`)
-      .style('fill', (d, i) => (self.settings.isStacked ? // eslint-disable-line
+      .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
         (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :  // eslint-disable-line
           (charts.chartColor(d.index, 'bar', series[d.index]))) : // eslint-disable-line
         (charts.chartColor(i, 'bar', legendMap[i])))) // eslint-disable-line
       .attr('mask', (d, i) => {
         if (dataset.length === 1 && dataset[0][i].pattern) {
           return `url(#${dataset[0][i].pattern})`;
-        } else if (self.settings.isStacked && series[d.index].pattern) {
+        } else if (s.isStacked && series[d.index].pattern) {
           return `url(#${series[d.index].pattern})`;
-        } else if (!self.settings.isStacked && legendMap[i] && legendMap[i].pattern) {
+        } else if (!s.isStacked && legendMap[i] && legendMap[i].pattern) {
           return `url(#${legendMap[i].pattern})`;
         }
         return '';
       })
       .attr('x', (d) => {
-        if (self.settings.useLogScale) {
+        if (s.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ?
+        return (s.isStacked && !s.isSingle) ?
           xScale(d.x0) + 1 : xScale(0) + 1;
       })
-      .attr('y', d => (self.settings.isStacked ? yScale(d.y) :
+      .attr('y', d => (s.isStacked ? yScale(d.y) :
         ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
-      .attr('height', () => (self.settings.isStacked ? (yScale.bandwidth()) : maxBarHeight))
+      .attr('height', () => (s.isStacked ? (yScale.bandwidth()) : maxBarHeight))
       .attr('width', 0) // Animated in later
       .on(`mouseenter.${self.namespace}`, function (d, i) {
         let j;
@@ -516,7 +518,7 @@ Bar.prototype = {
         } else {
           content = '<div class="chart-swatch">';
 
-          if (self.settings.isStacked) {
+          if (s.isStacked) {
             for (j = 0, l = dataset.length; j < l; j++) {
               total = 0;
               hexColor = charts.chartColor(j, 'bar', series[j]);
@@ -553,7 +555,7 @@ Bar.prototype = {
         const xPosS = shape.nodes()[0].getBoundingClientRect().left + $(window).scrollLeft();
 
         const maxBarsForTopTooltip = 6;
-        const isTooltipBottom = (!self.settings.isStacked && (data.length > maxBarsForTopTooltip));
+        const isTooltipBottom = (!s.isStacked && (data.length > maxBarsForTopTooltip));
 
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
           content = '';
@@ -588,7 +590,7 @@ Bar.prototype = {
           }
 
           // set inline colors
-          if (self.settings.isStacked) {
+          if (s.isStacked) {
             for (j = 0, l = dataset.length; j < l; j++) {
               hexColor = charts.chartColor(j, 'bar', series[j]);
 
@@ -624,16 +626,16 @@ Bar.prototype = {
           container: self.element,
           selector: this,
           isTrigger: self.initialSelectCall ? false : !isSelected,
-          triggerGroup: self.settings.isGrouped,
+          triggerGroup: s.isGrouped,
           d,
           i,
-          type: self.settings.type,
-          dataset: self.settings.dataset,
+          type: s.type,
+          dataset: s.dataset,
           isSingle: self.isSingular,
-          isGrouped: self.settings.isGrouped,
-          isStacked: self.settings.isStacked,
+          isGrouped: s.isGrouped,
+          isStacked: s.isStacked,
           svg: self.svg,
-          clickedLegend: self.settings.clickedLegend
+          clickedLegend: s.clickedLegend
         });
 
         if (isSelected && !self.initialSelectCall) {
@@ -645,15 +647,15 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr('x', () => (isRTL ? 15 : -15));
+    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? 15 : -15));
     self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
-    if (isRTL && (charts.isIE || charts.isIEEdge)) {
+    if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
       self.svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }
 
-    if (isViewSmall && self.settings.useLogScale) {
+    if (isViewSmall && s.useLogScale) {
       const ticks = d3.selectAll('.x .tick text');
       let foundMid = false;
 
@@ -667,7 +669,7 @@ Bar.prototype = {
         }
 
         if (i !== 0 && i !== ticks.size() - 1 &&
-          (self.settings.useLogScale ? d !== middleTick : i !== middleTick)) {
+          (s.useLogScale ? d !== middleTick : i !== middleTick)) {
           d3.select(this).remove();
         }
       });
@@ -678,7 +680,7 @@ Bar.prototype = {
 
     // Animate the Bars In
     self.svg.selectAll('.bar')
-      .transition().duration(self.settings.animate ? 600 : 0)
+      .transition().duration(s.animate ? 600 : 0)
       .attr('width', (d) => {
         let scale = xScale(d.x);
         let scale0 = xScale(0);
@@ -694,24 +696,18 @@ Bar.prototype = {
         return Math.abs(scale - scale0);
       })
       .attr('x', (d) => {
-        if (self.settings.useLogScale) {
+        if (s.useLogScale) {
           return 0;
         }
-        return (self.settings.isStacked && !self.settings.isSingle) ? xScale(d.x0) + 1 :  //eslint-disable-line
+        return (s.isStacked && !s.isSingle) ? xScale(d.x0) + 1 :  //eslint-disable-line
           (d.x < 0 ? xScale(d.x) + 1 : xScale(0) + 1);
       });
 
-    self.settings.svg = self.svg;
+    s.svg = self.svg;
 
     // Add Legends
-    if (self.settings.showLegend) {
-      charts.addLegend(
-        (self.settings.isStacked ? series : legendMap),
-        self.settings.type,
-        self.settings,
-        this.element
-      );
-      // charts.addLegend(self.settings.isStacked ? series : legendMap);
+    if (s.showLegend) {
+      charts.addLegend((s.isStacked ? series : legendMap), s.type, s, this.element);
     }
     charts.appendTooltip();
 
@@ -726,27 +722,84 @@ Bar.prototype = {
    * @private
    */
   setTextValues() {
-    if (this.settings.isGrouped) {
-      // These are TODO, as you need a different structure since its using the group name
+    const dataset = this.settings?.dataset;
+    if (!dataset || (dataset && dataset.constructor !== Array)) {
       return;
     }
-
     const elems = this.element[0].querySelectorAll('.bar-chart .axis.y .tick text');
-    const dataset = this.settings.dataset;
-    for (let i = 0; i < dataset.length; i++) {
-      const values = Object.keys(dataset[i]).map(e => dataset[i][e]);
-      values.forEach((key) => {
-        if (key && key.constructor === Array) {
-          for (let j = 0; j < key.length; j++) {
-            if (innerWidth <= 480) {
-              elems[j].textContent = key[j].shortName || key[j].name;
-            } else if (innerWidth >= 481 && innerWidth <= 992) {
-              elems[j].textContent = key[j].abbrName || key[j].name;
-            } else if (innerWidth > 992) {
-              elems[j].textContent = key[j].name;
+    const brief = {};
+    if (this.ellipsis.use) {
+      brief.maxWidth = this.element.width();
+      brief.transX = this.svg?.node()?.transform?.baseVal?.consolidate()?.matrix?.e || 1;
+      brief.customCss = () => ({
+        tooltip: { maxWidth: `${brief.maxWidth}px` },
+        arrow: { left: this.isRTL ? 'calc(100% - 20px)' : '20px' }
+      });
+    }
+    const getText = (d, i) => {
+      let r;
+      if (this.ellipsis.use) {
+        r = charts.trimText(d.name, this.ellipsis.threshold);
+        if (r.substr(-3) === '...') {
+          const textWidth = charts.calculateTextRenderWidth(d.name);
+          const truncatedWidth = charts.calculateTextRenderWidth(r);
+          const parentNode = elems[i].parentNode;
+          const calculatePos = (rect) => {
+            const numOfLines = Math.ceil(textWidth / brief.maxWidth);
+            let x = brief.transX - truncatedWidth;
+            let y = rect.top;
+            x = (x < 0 ? 30 : x) + 20;
+            y = (y < 0 ? 30 : y) - 36;
+            if (numOfLines > 1) {
+              y -= (33 * ((numOfLines - 1) * 0.5));
             }
+            if (this.isRTL) {
+              x = rect.left - textWidth + brief.transX;
+            }
+            return { x, y };
+          };
+
+          if (!env.browser.isIE11()) {
+            r = d.name;
+            elems[i].classList.add('hidden');
+            d3.select(parentNode).append('foreignObject')
+              .attr('overflow', 'visible')
+              .attr('width', `${brief.transX}`)
+              .attr('height', '16')
+              .attr('class', `foreign-object tick-y${i}`)
+              .attr('x', `-${brief.transX}`)
+              .attr('y', '-1em')
+              .attr('requiredFeatures', 'http://www.w3.org/TR/SVG11/feature#Extensibility')
+              .html(`<div class="text ellipsis" resizeable="false" xmlns="http://www.w3.org/1999/xhtml">${d.name}</div>`);
           }
+
+          d3.select(parentNode)
+            .on(`mouseover.${this.namespace}`, () => {
+              const pos = calculatePos(parentNode.getBoundingClientRect());
+              charts.showTooltip(pos.x, pos.y, d.name, 'top', brief.customCss());
+            })
+            .on(`mouseout.${this.namespace}`, () => charts.hideTooltip());
         }
+      } else {
+        r = charts.getLabel(d, this.viewport);
+      }
+      return r;
+    };
+
+    if (this.settings.isGrouped) {
+      dataset.forEach((d, i) => {
+        elems[i].textContent = getText(d, i);
+      });
+    } else {
+      dataset.forEach((d) => {
+        const values = Object.keys(d).map(key => d[key]);
+        values.forEach((key) => {
+          if (key && key.constructor === Array) {
+            key.forEach((k, i) => {
+              elems[i].textContent = getText(k, i);
+            });
+          }
+        });
       });
     }
   },
