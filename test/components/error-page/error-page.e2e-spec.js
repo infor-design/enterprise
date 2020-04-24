@@ -61,7 +61,7 @@ describe('Error Page example-index tests', () => {
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.modal.is-visible'))), config.waitsFor);
-    
+
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
     await browser.driver.sleep(config.sleep);
@@ -75,7 +75,7 @@ describe('Error Page example-index tests', () => {
   });
 });
 
-describe('Error page open example-index tests on click', () => {
+fdescribe('Error page open example-index tests on click', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
@@ -88,13 +88,10 @@ describe('Error page open example-index tests on click', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[role=main]'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+    it('Should not visual regress on example index', async () => {
+      const bodyEl = await element(by.css('modal-engaged'));
 
-      expect(await browser.protractorImageComparison.checkScreen('error-page-message')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
     });
   }
 
