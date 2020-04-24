@@ -7,6 +7,7 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../../utils/lifecycle/lifecycle.jquery';
 import '../accordion/accordion.jquery';
+import '../expandablearea/expandablearea.jquery';
 import '../searchfield/searchfield.jquery';
 
 // Name of the component in this file.
@@ -181,22 +182,6 @@ ApplicationMenu.prototype = {
       if (!expandableArea) {
         this.switcherPanel.expandablearea();
       }
-
-      this.switcherPanel.on('beforeexpand.applicationmenu', () => {
-        const height = this.element.height();
-
-        this.element.addClass('has-open-switcher');
-        this.switcherPanel.find('.content').height(height - 71); // The height of the visible header part
-
-        if (this.settings.onExpandSwitcher) {
-          this.settings.onExpandSwitcher(this, this.element, this.settings);
-        }
-      }).on('aftercollapse.applicationmenu', () => {
-        this.element.removeClass('has-open-switcher');
-        if (this.settings.onCollapseSwitcher) {
-          this.settings.onCollapseSwitcher(this, this.element, this.settings);
-        }
-      });
     }
     return this;
   },
@@ -708,7 +693,8 @@ ApplicationMenu.prototype = {
 
     this.element.find('.expandable-area').off([
       'beforeexpand.applicationmenu',
-      'aftercollapse.applicationmenu'
+      'aftercollapse.applicationmenu',
+      `keydown.${COMPONENT_NAME}-switcher`
     ].join(' '));
 
     this.accordion.off([
@@ -814,6 +800,34 @@ ApplicationMenu.prototype = {
     }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
       self.toggleScrollClass();
     });
+
+    // If a Switcher Panel exists, handle callbacks, setup keyboard events.
+    if (this.switcherPanel) {
+      this.switcherPanel.on('beforeexpand.applicationmenu', () => {
+        const height = this.element.height();
+
+        this.element.addClass('has-open-switcher');
+        this.switcherPanel.find('.content').height(height - 71); // The height of the visible header part
+
+        if (this.settings.onExpandSwitcher) {
+          this.settings.onExpandSwitcher(this, this.element, this.settings);
+        }
+
+        this.element.on(`keydown.${COMPONENT_NAME}-switcher`, (e) => {
+          const key = e.key;
+          if (key === 'Escape' && self.element[0].classList.contains('has-open-switcher')) {
+            e.preventDefault();
+            this.closeSwitcherPanel();
+          }
+        });
+      }).on('aftercollapse.applicationmenu', () => {
+        this.element.removeClass('has-open-switcher');
+        if (this.settings.onCollapseSwitcher) {
+          this.settings.onCollapseSwitcher(this, this.element, this.settings);
+        }
+        this.element.off(`keydown.${COMPONENT_NAME}-switcher`);
+      });
+    }
 
     $(document).on('open-applicationmenu', () => {
       self.openMenu(undefined, true);
