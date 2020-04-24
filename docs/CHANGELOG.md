@@ -24,17 +24,20 @@
 - `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
 - `[Colorpicker]` Fixed an issue where the color swatches shift when the colorpicker has a scrollbar. ([#2266](https://github.com/infor-design/enterprise/issues/2266))
 - `[Datagrid]` Fixed an issue where row data was not available for serializer with Treegrid. ([#3663](https://github.com/infor-design/enterprise/issues/3724))
+- `[ContextualActionPanel]` Fixed an issue where toolbars in CAP are not torn down on destroy. ([#3785](https://github.com/infor-design/enterprise/issues/3785))
+- `[ContextualActionPanel]` Fixed an issue where nested caps or closing and reopening caps would not work. ([#801](https://github.com/infor-design/enterprise-ng/issues/801))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible. ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed some styling issues in alerts and tags, and made clickable tags available in the formatter. ([#3631](https://github.com/infor-design/enterprise/issues/3631))
 - `[Datagrid]` Fixed a css issue in dark uplift mode where the group row lines were not visible . ([#3649](https://github.com/infor-design/enterprise/issues/3649))
 - `[Datagrid]` Fixed lookup modal title to be visible and adjust the position to make it centered. ([#3635](https://github.com/infor-design/enterprise/issues/3635))
-- `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Datagrid]` Fixed an issue where selected rows are not reset when calling loadData. ([#3718](https://github.com/infor-design/enterprise/issues/3718))
 - `[Datagrid]` Fixed an issue where if using grouping totals and hiding and showing columns the page is not refreshed properly. ([#2564](https://github.com/infor-design/enterprise/issues/2564)
 - `[Datagrid]` Fixed an issue the selected row header icon is the wrong state when using allowSelectAcrossPages. ([#3043](https://github.com/infor-design/enterprise/issues/3043)
 - `[Datagrid]` Improved the `datagrid-default-modal-width` concept if setting a modal datagrid default with so it works on any parent. [3562](https://github.com/infor-design/enterprise/issues/3562))
 - `[Datagrid]` Fixed a bug in the indeterminate paging example, that the select checkbox would not work and be out of sync when changing pages. [2230](https://github.com/infor-design/enterprise/issues/2230))
+- `[Datagrid]` Fixed an issue where the filter condition leaves two selected if you just reorder. ([#3779](https://github.com/infor-design/enterprise/issues/3779))
 - `[Datagrid/General]` Fixed a bug where when loading the datagrid with a columns object that contain recursive objects the grid would crash. [3759](https://github.com/infor-design/enterprise/issues/3759))
+- `[Datagrid/Hyperlink]` Fixed layout issues with links in right text align mode. To do this refactored links to not use a psuedo element for the focus style. ([#3680](https://github.com/infor-design/enterprise/issues/3680))
 - `[Datepicker]` Fixed a bug where for some locales like `af-ZA` and `fi_FI` with dots in the day periods, setting 24 hr time to AM did not work. [3750](https://github.com/infor-design/enterprise/issues/3750))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
 - `[Dropdown]` Fixed an issue that Dropdown did not close when scrolling in some nested containers. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
@@ -49,6 +52,13 @@
 - `[Utils]` Exposed `Soho.utils.isInViewport(elem)` for external use. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 - `[Tree]` Fixed an issue where use `UpdateNode()` method the data was not sync. ([#3724](https://github.com/infor-design/enterprise/issues/3724))
+
+## v4.27.4
+
+### v4.27.4 Fixes
+
+`[Button]` Fixed the button disabled method to no longer use class `is-disabled`. ([#3447](https://github.com/infor-design/enterprise-ng/issues/801))
+`[Button]` Fixed a regression where some buttons would get a 100% width on mobile. ([#801](https://github.com/infor-design/enterprise-ng/issues/801))
 
 ## v4.27.3
 
