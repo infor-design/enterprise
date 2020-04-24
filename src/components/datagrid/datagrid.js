@@ -1971,6 +1971,10 @@ Datagrid.prototype = {
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
 
+        if (columnDef === undefined) {
+          return;
+        }
+
         let rowValue = rowData && rowData[columnDef.field] !== undefined ?
           rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
@@ -6738,6 +6742,7 @@ Datagrid.prototype = {
 
       const checkColumn = function (columnId) {
         const column = self.columnById(columnId)[0];
+        console.log(column);
         const fieldValue = self.fieldValue(data, column.field);
         let value;
         const cell = self.settings.columns.indexOf(column);
