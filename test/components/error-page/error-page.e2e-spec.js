@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Error Page example-index tests', () => {
+fdescribe('Error Page example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
@@ -75,7 +75,7 @@ describe('Error Page example-index tests', () => {
   });
 });
 
-describe('Error page open example-index tests on click', () => {
+fdescribe('Error page open example-index tests on click', () => {
   beforeEach(async () => {
     await utils.setPage('/components/error-page/example-index');
     const modalEl = await element(by.id('modal-context'));
@@ -89,7 +89,7 @@ describe('Error page open example-index tests on click', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example index', async () => {
-      const bodyEl = await element(by.id('modal-engaged'));
+      const bodyEl = await element(by.className('modal-engaged'));
 
       expect(await browser.protractorImageComparison.checkElement(bodyEl, 'error-page-modal')).toEqual(0);
     });
