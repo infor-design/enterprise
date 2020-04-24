@@ -89,9 +89,11 @@ fdescribe('Error page open example-index tests on click', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example index', async () => {
-      const bodyEl = await element(by.css('modal-engaged'));
+      const btnEl = await element(by.id('modal-context'));
+      await btnEl.click();
 
-      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
+      const contentEl = await element(by.id('maincontent'));
+      expect(await browser.protractorImageComparison.checkElement(contentEl, 'error-page-modal')).toEqual(0);
     });
   }
 
