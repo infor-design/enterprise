@@ -1972,7 +1972,7 @@ Datagrid.prototype = {
         const columnDef = self.columnById(conditions[i].columnId)[0];
 
         if (columnDef === undefined) {
-          return;
+          return false;
         }
 
         let rowValue = rowData && rowData[columnDef.field] !== undefined ?
@@ -6742,7 +6742,7 @@ Datagrid.prototype = {
 
       const checkColumn = function (columnId) {
         const column = self.columnById(columnId)[0];
-        console.log(column);
+
         const fieldValue = self.fieldValue(data, column.field);
         let value;
         const cell = self.settings.columns.indexOf(column);
