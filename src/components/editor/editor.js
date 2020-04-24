@@ -14,6 +14,13 @@ import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
 
+// jQuery Components
+import '../colorpicker/colorpicker.jquery';
+import '../fontpicker/fontpicker.jquery';
+import '../toolbar/toolbar.jquery';
+import '../toolbar-flex/toolbar-flex.jquery';
+import '../tooltip/tooltip.jquery';
+
 const COMPONENT_NAME = 'editor';
 
 const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'code'];

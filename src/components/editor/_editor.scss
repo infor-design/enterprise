@@ -1,6 +1,11 @@
 // Editor (Rich Text)
 //================================================== //
 
+@import '../button/button';
+@import '../colorpicker/colorpicker';
+@import '../fontpicker/fontpicker';
+@import '../popupmenu/popupmenu';
+
 .editor-container {
   .label {
     cursor: default;
