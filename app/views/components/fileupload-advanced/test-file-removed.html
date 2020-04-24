@@ -1,0 +1,32 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Fileupload Advanced</h2>
+    <p>Event `fileremoved` Fires when attached file removed.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="test-1" class="fileupload-advanced"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#test-1')
+      // Fires when attached file aborted.
+      .on('fileaborted', function (e, file) {
+        $('body').toast({
+          title: 'File aborted',
+          message: file && file.name ? file.name : ''
+        });
+      })
+      // Fires when attached file removed.
+      .on('fileremoved', function (e, file) {
+        $('body').toast({
+          title: 'File removed',
+          message: file && file.name ? file.name : ''
+        });
+      });
+    });
+</script>
