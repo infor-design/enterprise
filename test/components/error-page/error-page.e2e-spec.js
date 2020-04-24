@@ -33,7 +33,7 @@ describe('Error Page example-index tests', () => {
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
-    
+
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
   });
 
@@ -70,8 +70,21 @@ describe('Error Page example-index tests', () => {
 
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.modal'))), config.waitsFor);
-    
+
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+  });
+});
+
+describe('Error page open example-index tests on click', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/error-page/example-index');
+    const modalEl = await element(by.id('modal-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
+    await modalEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -84,4 +97,9 @@ describe('Error Page example-index tests', () => {
       expect(await browser.protractorImageComparison.checkScreen('error-page-message')).toEqual(0);
     });
   }
+
+  it('Should open error page on click', async () => {
+    expect(await element(by.css('.modal.is-visible')).isDisplayed()).toBeTruthy();
+  });
 });
+
