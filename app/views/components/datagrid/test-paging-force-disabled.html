@@ -94,8 +94,8 @@
 
     function reloadGrid(forceDisable) {
       var pagingInfo = {};
-      pagingInfo.activePage = gridApi.pager.activePage;
-      pagingInfo.pagesize = gridApi.pager.settings.pagesize;
+      pagingInfo.activePage = gridApi.pagerAPI.activePage;
+      pagingInfo.pagesize = gridApi.pagerAPI.settings.pagesize;
 
       if (forceDisable !== undefined) {
         if (forceDisable === true) {

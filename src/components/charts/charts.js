@@ -12,7 +12,7 @@ charts.isIE = env.browser.name === 'ie';
 charts.isIEEdge = env.browser.name === 'edge';
 
 /**
- * Get the current height and widthe of the tooltip.
+ * Get the current height and width of the tooltip.
  * @private
  * @param  {string} content The tooltip content.
  * @returns {object} Object with the height and width.
@@ -68,7 +68,8 @@ charts.formatToSettings = function formatToSettings(data, settings) {
 charts.appendTooltip = function appendTooltip(extraClass) {
   this.tooltip = $('#svg-tooltip');
   if (this.tooltip.length === 0) {
-    this.tooltip = $(`<div id="svg-tooltip" class="tooltip ${extraClass} right is-hidden">
+    extraClass = extraClass ? ` ${extraClass}` : '';
+    this.tooltip = $(`<div id="svg-tooltip" class="tooltip right is-hidden${extraClass}">
       <div class="arrow"></div>
         <div class="tooltip-content">
           <p><b>32</b> Element</p>
@@ -273,8 +274,9 @@ charts.chartColorName = function chartColor(i, chartType, data) {
  * @param  {number} y The y position.
  * @param  {string} content The tooltip contents.
  * @param  {string} arrow The arrow direction.
+ * @param  {object} customCss Some custom tooltip css settings.
  */
-charts.showTooltip = function (x, y, content, arrow) {
+charts.showTooltip = function (x, y, content, arrow, customCss) {
   // Simple Collision of left side
   if (x < 0) {
     x = 2;
@@ -285,6 +287,9 @@ charts.showTooltip = function (x, y, content, arrow) {
   DOM.html(this.tooltip.find('.tooltip-content'), content, '*');
 
   this.tooltip.removeClass('bottom top left right').addClass(arrow);
+  this.tooltip.css('max-width', (customCss?.tooltip?.maxWidth || ''));
+  this.tooltip.find('.arrow').css('left', (customCss?.arrow?.left || ''));
+
   this.tooltip.removeClass('is-hidden');
 
   // Hide the tooltip when the page scrolls.
@@ -970,6 +975,74 @@ charts.triggerContextMenu = function (container, elem, d) {
   e.pageX = d3.event.pageX;
   e.pageY = d3.event.pageY;
   $(container).trigger(e, [elem, d]);
+};
+
+/**
+ * Calculates the width to render given text string.
+ * @private
+ * @param  {string} textStr The text to render.
+ * @param  {object} fonts Optional for each theme.
+ * @returns {number} The calculated text width in pixels.
+ */
+charts.calculateTextRenderWidth = function (textStr, fonts) {
+  const defaultFonts = { soho: '700 12px arial', uplift: '600 14px arial' };
+  fonts = utils.mergeSettings(undefined, fonts, defaultFonts);
+  let themeId = (theme?.currentTheme?.id || '').match(/soho|uplift/);
+  themeId = themeId ? themeId[0] : 'soho';
+  this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+  const context = this.canvas.getContext('2d');
+  context.font = fonts[themeId];
+  return context.measureText(textStr).width;
+};
+
+/**
+ * Calculate the percentage for given partial and total value.
+ * @private
+ * @param  {number} value The partial value.
+ * @param  {number} total The total value.
+ * @returns {number} The calculated percentage.
+ */
+charts.calculatePercentage = function (value, total) {
+  return (100 * value) / total;
+};
+
+/**
+ * Get the percent value for given total value and percentage amount.
+ * @private
+ * @param  {number} total The total value.
+ * @param  {number} amount The percentage amount.
+ * @returns {number} The percent value.
+ */
+charts.getPercentage = function (total, amount) {
+  return total * amount / 100;
+};
+
+/**
+ * Trim given text to threshold and add `...` at the end.
+ * @private
+ * @param  {string} text The text to be trimed.
+ * @param  {number} threshold The number of characters.
+ * @returns {number} The calculated percent value.
+ */
+charts.trimText = function (text, threshold) {
+  return text.length <= threshold ? text : `${text.substr(0, threshold)}...`;
+};
+
+/**
+ * Get the label to use for given data and viewport area.
+ * @private
+ * @param  {object} d The data.
+ * @param  {number} viewport The viewport area.
+ * @returns {string} The label to use.
+ */
+charts.getLabel = function (d, viewport) {
+  let r = d.name;
+  if (viewport.xxsmall || viewport.xsmall || viewport.small) {
+    r = d.shortName || d.abbrName || d.name;
+  } else if (viewport.medium) {
+    r = d.abbrName || d.name;
+  }
+  return r;
 };
 
 /**

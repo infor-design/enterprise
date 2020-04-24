@@ -1,0 +1,63 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button type="button" id="btn-update-node" class="btn-secondary">updateNode()</button>
+    <button type="button" id="btn-remove-node" class="btn-secondary">removeNode()</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul id="tree" class="tree" role="tree" aria-label="Asset Types" data-init="false">
+      <li><a href="#" id="home">Home</a></li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li><a href="#" id="new1">New Item 1</a></li>
+                <li><a href="#" id="new2">New Item 2</a></li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var tree = $('#tree').tree().data('tree');
+
+  // Update node
+  $('#btn-update-node').one('click', function () {
+    tree.updateNode({
+      id: 'leadership',
+      text: 'Just Updated',
+      children: [{
+        id: 'line-mgr',
+        text: 'Line Manager',
+        children: [{
+          id: 'bloc_mgr',
+          text: 'Block Manager'
+        }, {
+          id: 'shift_mgr',
+          text: 'Shift Manager'
+        }]
+      }]
+    });
+    $(this).disable(); // let it trigger onetime only
+    console.log('Node Updated');
+  });
+
+  // Remove node
+  $('#btn-remove-node').one('click', function () {
+    var toRemoveId = tree.findById('line-mgr') ? 'line-mgr' : 'new2';
+    tree.removeNode({id: toRemoveId});
+    $(this).disable(); // let it trigger onetime only
+    console.log('Node Removed');
+  });
+
+</script>

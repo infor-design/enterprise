@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="twelve columns">
+		<button class="btn-secondary" type="button" id="show-modal-one">Show Modal 1</button><br/><br/>
+		<button class="btn-secondary" type="button" id="show-modal-two">Show Modal 2</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-1" class="hidden">
+			<div class="field">
+				<label for="subject">Problem One</label>
+				<input type="text" id="subject" name="subject" />
+			</div>
+
+      <div class="field">
+        <label for="location" class="label">Location One</label>
+        <select id="location" name="location" class="dropdown">
+          <option value="N">North</option>
+          <option value="S">South</option>
+          <option value="E">East</option>
+          <option value="W">West</option>
+        </select>
+      </div>
+
+			<div class="field">
+				<label for="notes-max">Notes (maxlength) One</label>
+				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+			</div>
+		</div>
+
+		<div id="modal-2" class="hidden">
+			<div class="field">
+				<label for="subject">Problem Two</label>
+				<input type="text" id="subject" name="subject" />
+			</div>
+
+      <div class="field">
+        <label for="location" class="label">Location Two</label>
+        <select id="location" name="location" class="dropdown">
+          <option value="N">North</option>
+          <option value="S">South</option>
+          <option value="E">East</option>
+          <option value="W">West</option>
+        </select>
+      </div>
+
+			<div class="field">
+				<label for="notes-max">Notes Two</label>
+				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+  $('#show-modal-one').on('click', function () {
+		$('body').modal({
+      title: 'Modal 1',
+      id: 'my-id',
+      content: $('#modal-1'),
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    });
+  });
+
+  $('#show-modal-two').on('click', function () {
+		$('body').modal({
+      title: 'Modal 2',
+      id: 'my-id',
+      content: $('#modal-2'),
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    });
+  });
+</script>

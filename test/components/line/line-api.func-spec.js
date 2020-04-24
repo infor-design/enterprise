@@ -1,10 +1,9 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const lineHTML = require('../../../app/views/components/line/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
-let svgEl;
 let lineEl;
 let lineObj;
 
@@ -82,24 +81,22 @@ const dataset = [{
 
 describe('Line Chart API', () => {
   beforeEach(() => {
-    svgEl = null;
     lineEl = null;
     lineObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', lineHTML);
     lineEl = document.body.querySelector('#line-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     lineObj = new Line(lineEl, { type: 'line', dataset });
   });
 
   afterEach(() => {
     lineObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    lineEl.parentNode.removeChild(lineEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '#line-script'
+    ]);
   });
 
   it('Should fire contextmenu event', () => {
