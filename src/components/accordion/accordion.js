@@ -1491,7 +1491,6 @@ Accordion.prototype = {
       headerElems = this.headers;
       globalEventSetup = true;
     }
-    const anchors = headerElems.find('a');
 
     // Returns "Header", "Anchor", or "Expander" based on the element's tag
     function getElementType(element) {
