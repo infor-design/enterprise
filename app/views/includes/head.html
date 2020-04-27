@@ -158,13 +158,13 @@
         if (parts[1] !== shortThemeName) {
           shortThemeName = parts[1];
 
-          $.get('/api/icons?theme=' + shortThemeName, function(htmlStr) {
+          $.get('{{basepath}}api/icons?theme=' + shortThemeName, function(htmlStr) {
             htmlStr = htmlStr.replace('</div>', '');
             htmlStr = htmlStr.replace('<div class="svg-icons">', '');
             $('div.svg-icons').empty().append(htmlStr);
           },'html');
 
-          $.get('/api/icons-empty?theme=' + shortThemeName, function(htmlStr) {
+          $.get('{{basepath}}api/icons-empty?theme=' + shortThemeName, function(htmlStr) {
             htmlStr = htmlStr.replace('</div>', '');
             htmlStr = htmlStr.replace('<div class="svg-icons-empty">', '');
             $('div.svg-icons-empty').empty().append(htmlStr);
