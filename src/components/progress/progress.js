@@ -56,11 +56,24 @@ Progress.prototype = {
     this.element.attr({ role: 'progressbar', 'aria-valuenow': value, 'aria-valuemax': '100' });
 
     const container = this.element.parent();
-    if (container.data('tooltip')) {
-      container.data('tooltip').content = `${value}%`;
+    this.tooltipApi = this.tooltipApi || container.data('tooltip');
+    if (this.tooltipApi) {
+      this.tooltipApi.content = `${value}%`;
+      if (this.tooltipApi.visible && value <= 100 && this.tooltipApi.tooltip.hasClass(`process${this.tooltipId}`)) {
+        this.tooltipApi.tooltip.find('.tooltip-content').text(this.tooltipApi.content);
+      }
     } else {
       container[0].setAttribute('title', `${value}%`);
       container.tooltip();
+      this.tooltipApi = container.data('tooltip');
+      this.tooltipId = this.tooltipApi.uniqueId;
+      container
+        .on('aftershow.progress', () => {
+          this.tooltipApi.tooltip.addClass(`process${this.tooltipId}`);
+        })
+        .on('hide.progress mouseout.progress', () => {
+          this.tooltipApi.tooltip.removeClass(`process${this.tooltipId}`);
+        });
     }
   },
 
@@ -70,6 +83,17 @@ Progress.prototype = {
    * @returns {object} The object for chaining.
    */
   unbind() {
+    const container = this.element.parent();
+    container.off('aftershow.progress hide.progress mouseout.progress');
+    this.tooltipApi = this.tooltipApi || container.data('tooltip');
+    if (this.tooltipApi) {
+      this.tooltipApi.destroy();
+      delete this.tooltipApi;
+    }
+    if (this.tooltipId) {
+      delete this.tooltipId;
+    }
+
     this.element.off('updated.progress');
     return this;
   },

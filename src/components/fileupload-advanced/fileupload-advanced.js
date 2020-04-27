@@ -411,9 +411,20 @@ FileUploadAdvanced.prototype = {
 
         // TODO: server call for removing data
         data.remove();
+
+        /**
+         * Fires when attached file removed.
+         *
+         * @event fileremoved
+         * @memberof FileUploadAdvanced
+         * @property {object} event - The jquery event object
+         * @property {object} file uploaded
+         */
+        self.element.triggerHandler('fileremoved', [file]);
       });
 
       // Remove Cancel button and progress-bar area
+      progressBar.destroy();
       btnCancel.off('click.fileuploadadvanced');
       btnCancel.add(progressBar.closest('.progress-row')).remove();
 
