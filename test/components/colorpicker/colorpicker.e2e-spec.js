@@ -286,7 +286,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await element(by.css('#color1 + .trigger .icon')).click();
@@ -304,7 +304,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await element(by.css('#color1 + .trigger .icon')).click();
@@ -322,7 +322,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await element(by.css('#color1 + .trigger .icon')).click();
@@ -344,7 +344,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await browser.driver.sleep(config.sleep);
@@ -359,7 +359,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await browser.driver.sleep(config.sleepLonger);
@@ -383,7 +383,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
     await browser.driver.sleep(config.sleep);

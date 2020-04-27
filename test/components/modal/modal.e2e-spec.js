@@ -45,7 +45,7 @@ describe('Modal init example-modal tests', () => {
     await element(by.css('body')).sendKeys(protractor.Key.TAB);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.className('overlay'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
   });
@@ -53,10 +53,10 @@ describe('Modal init example-modal tests', () => {
   it('Should close modal on tab, and escape', async () => {
     const modalEl = await element(by.id('add-context'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(modalEl), config.waitsFor);
     await modalEl.sendKeys(protractor.Key.ENTER);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.modal.is-visible'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.modal.is-visible'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).toContain('modal-engaged');
 
