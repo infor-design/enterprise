@@ -1544,10 +1544,6 @@ Accordion.prototype = {
         headerWhereMouseDown = null;
       });
 
-    anchors.on('click.accordion', function (e) {
-      return clickInterceptor(e, $(this));
-    });
-
     headerElems.children('[class^="btn"]')
       .on('click.accordion', function (e) {
         return clickInterceptor(e, $(this));
