@@ -30,6 +30,23 @@ describe('CAP jquery context tests', () => {
   });
 });
 
+describe('CAP trigger context tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/example-trigger.html');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open popup on click', async () => {
+    await element(by.id('manual-contextual-panel')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#contextual-action-modal-xyz')).isDisplayed()).toBe(true);
+  });
+});
+
 describe('CAP jquery context tests no-flex', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextualactionpanel/test-jquery-no-flex.html');
