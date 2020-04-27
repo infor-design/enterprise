@@ -47,10 +47,6 @@
             display: none;
           }
         }
-
-        ~ .list-detail {
-          display: none !important;
-        }
       }
     }
 
@@ -65,62 +61,63 @@
     .monthview-legend {
       padding: 25px 5px 15px;
     }
+  }
 
-    @include respond-to(phabletdown) {
-      .calendar-event-legend {
-        padding: 25px 15px 15px;
+  // Mobile Legend
+  @include respond-to(phabletdown) {
+    .calendar-event-legend {
+      padding: 20px 20px 0;
 
-        .calendar-event-legend-item {
+      .calendar-event-legend-item {
+        display: inline-block;
+        margin: 0 20px 10px 0;
+
+        .calendar-event-legend-swatch {
+          border-radius: 50px;
           display: inline-block;
-          margin: 0 20px 10px 0;
+          height: 12px;
+          margin-right: 5px;
+          width: 12px;
 
-          .calendar-event-legend-swatch {
-            border-radius: 50px;
-            display: inline-block;
-            height: 12px;
-            margin-right: 5px;
-            width: 12px;
-
-            &.ruby {
-              background-color: $theme-color-palette-ruby-60;
-            }
-
-            &.amber {
-              background-color: $theme-color-palette-amber-60;
-            }
-
-            &.emerald {
-              background-color: $theme-color-palette-emerald-60;
-            }
-
-            &.azure {
-              background-color: $theme-color-palette-azure-60;
-            }
-
-            &.turquoise {
-              background-color: $theme-color-palette-turquoise-60;
-            }
-
-            &.amethyst {
-              background-color: $theme-color-palette-amethyst-60;
-            }
-
-            &.slate {
-              background-color: $theme-color-palette-slate-60;
-            }
-
-            &.graphite {
-              background-color: $theme-color-palette-graphite-60;
-            }
+          &.ruby {
+            background-color: $theme-color-palette-ruby-60;
           }
 
-          .calendar-event-legend-text {
-            @include font-size(12);
-
-            color: $calendar-event-color;
-            position: relative;
-            top: -2px;
+          &.amber {
+            background-color: $theme-color-palette-amber-60;
           }
+
+          &.emerald {
+            background-color: $theme-color-palette-emerald-60;
+          }
+
+          &.azure {
+            background-color: $theme-color-palette-azure-60;
+          }
+
+          &.turquoise {
+            background-color: $theme-color-palette-turquoise-60;
+          }
+
+          &.amethyst {
+            background-color: $theme-color-palette-amethyst-60;
+          }
+
+          &.slate {
+            background-color: $theme-color-palette-slate-60;
+          }
+
+          &.graphite {
+            background-color: $theme-color-palette-graphite-60;
+          }
+        }
+
+        .calendar-event-legend-text {
+          @include font-size(12);
+
+          color: $calendar-event-color;
+          position: relative;
+          top: -2px;
         }
       }
     }
@@ -260,26 +257,17 @@
     }
   }
 
-  .calendar-event-details-mobile,
-  .list-detail {
+  .calendar-event-details-mobile.listview {
+    li:first-child {
+      border-top: 1px solid $calendar-line-color;
+    }
+
+    li {
+      border-bottom-color: $calendar-line-color;
+    }
+
     @media (min-width: $breakpoint-wide-tablet) {
       display: none !important;
-    }
-  }
-
-  .list-detail {
-    &.two-column.fixed {
-      > .sidebar {
-        @media (min-width: $breakpoint-phone-to-tablet) {
-          width: 400px;
-        }
-      }
-
-      > .main {
-        @media (min-width: $breakpoint-phone-to-tablet) {
-          width: calc(100% - 400px);
-        }
-      }
     }
   }
 }
@@ -401,6 +389,10 @@
       width: calc(100% - 66px) !important;
     }
   }
+
+  .container .form-responsive .field .checkbox-label {
+    margin-top: 0;
+  }
 }
 
 // Styles to reset the modal
@@ -409,33 +401,42 @@
   width: 320px;
 
   .tooltip-content {
-    height: calc(100% - 48px);
+    height: calc(100% - 49px);
     overflow: auto;
     padding: 20px 0 0;
   }
 
   .modal-buttonset {
+    background-color: $modal-bg-color;
+    border-top: 0;
+    bottom: 19px;
     height: 45px;
     margin-top: 0;
     padding: 0;
+    position: sticky;
+    z-index: 3011;
 
     button {
+      background-color: $modal-bg-color;
+      border-top: 1px solid $modal-btn-border-color;
       width: 50%;
     }
+  }
+}
+
+@include respond-to(phabletdown) {
+  .calendar-popup.calendar-popup-mobile {
+    height: 100% !important;
+    left: 0 !important;
+    max-width: 100%;
+    top: 0 !important;
+    width: 100% !important;
   }
 }
 
 @include respond-to(phonedown) {
   .calendar {
     .calendar-event-details-mobile {
-      &.listview {
-        li {
-          .r-content {
-            padding-left: 10px;
-          }
-        }
-      }
-
       .listview-micro {
         padding-right: 10px;
         position: absolute;
@@ -531,29 +532,44 @@
       }
     }
 
-    .list-detail {
-      display: none;
-      position: relative;
-      width: 100%;
-    }
-
     .calendar-event-details-mobile {
+      height: auto;
+      margin-bottom: 20px;
+
       &.listview {
+        cursor: pointer;
         display: inline-block;
         width: 100%;
 
         li {
           min-height: 70px;
 
-          .l-content {
-            display: inline-block;
-            width: 90%;
+          .container {
+            align-items: center;
+            display: flex;
           }
 
-          .r-content {
+          .column-left {
+            float: left;
+            width: 85%;
+          }
+
+          .column-right {
             float: right;
+            margin-right: 15px;
             text-align: right;
-            width: 10%;
+            width: 20%;
+          }
+
+          .listview-micro {
+            float: none;
+            width: auto;
+          }
+
+          .icon {
+            color: $button-color-tertiary-initial-font;
+            left: 10px;
+            top: 5px;
           }
         }
       }
@@ -618,6 +634,8 @@
     }
 
     .calendar-monthview {
+      border-bottom-color: transparent !important;
+      border-right-color: transparent !important;
       width: 100%;
     }
   }
@@ -684,7 +702,7 @@ html[dir='rtl'] {
   cursor: pointer;
   display: block;
   height: 18px;
-  margin: 0 2px 3px;
+  margin: 0 2px;
   width: calc(100% - 4px);
 
   //Event spanning
