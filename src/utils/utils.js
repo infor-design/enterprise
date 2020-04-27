@@ -1239,7 +1239,7 @@ utils.deepCopy = function (arrayOrObject) {
 utils.isSubscribedTo = function (elem, e, eventName, namespace) {
   const events = $._data(elem).events; //eslint-disable-line
 
-  for (const event in calendarEvents) { //eslint-disable-line
+  for (const event in events) { //eslint-disable-line
     if (event === eventName && !(events[event].length === 1 &&
       events[event][0].namespace === namespace)) {
       return true;

@@ -58,6 +58,8 @@ describe('Listview example-singleselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
+    await browser.driver.sleep(config.sleep);
+
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
 
     await listviewItemEl.click();

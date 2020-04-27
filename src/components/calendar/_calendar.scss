@@ -115,7 +115,7 @@
         .calendar-event-legend-text {
           @include font-size(12);
 
-          color: $calendar-event-color;
+          color: $datepicker-day-color;
           position: relative;
           top: -2px;
         }
@@ -391,6 +391,7 @@
   }
 
   .container .form-responsive .field .checkbox-label {
+    margin-bottom: 0;
     margin-top: 0;
   }
 }
@@ -431,6 +432,16 @@
     max-width: 100%;
     top: 0 !important;
     width: 100% !important;
+
+    .tooltip-content {
+      height: calc(100% - 96px);
+    }
+
+    .modal-buttonset {
+      bottom: 3px;
+      position: absolute;
+      width: 100%;
+    }
   }
 }
 
