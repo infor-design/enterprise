@@ -380,12 +380,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          self.element.focus();
+          modal.oldActive = self.element;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
+          modal.oldActive = self.element;
           modal.close();
           self.insertRows();
         },
@@ -397,7 +398,7 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          self.element.focus();
+          modal.oldActive = self.element;
           modal.close();
         }
       }];
@@ -407,6 +408,7 @@ Lookup.prototype = {
       this.settings.options.toolbar.keywordFilter;
 
     $('body').modal({
+      triggerButton: this.element,
       title: labelText,
       content,
       buttons,
@@ -416,7 +418,6 @@ Lookup.prototype = {
     })
       .off('close.lookup')
       .on('close.lookup', () => {
-        self.element.focus();
         delete self.isOpen;
         /**
           * Fires on close dialog.
@@ -871,20 +872,23 @@ Lookup.prototype = {
   * @returns {void}
   */
   destroy() {
-    $.removeData(this.element[0], COMPONENT_NAME);
     $('.modal .searchfield').off('keypress.lookup');
     $('body').off('open.lookup close.lookup');
+
+    this.icon.off('click.lookup');
+    this.icon.remove();
+
+    this.element.off('keyup.lookup');
+    this.element.unwrap();
+
     if (this.modal && this.modal.element) {
       this.modal.element.off('afterclose.lookup');
       if (typeof this.modal.destroy === 'function') {
         this.modal.destroy();
       }
     }
-    this.element.off('keyup.lookup');
-    this.icon.off('click.lookup');
 
-    this.icon.remove();
-    this.element.unwrap();
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 

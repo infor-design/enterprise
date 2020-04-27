@@ -777,7 +777,8 @@ DatePicker.prototype = {
       .off('show.datepicker')
       .on('show.datepicker', () => {
         // Horizontal view on mobile
-        if (window.innerHeight < 400 && this.popupClosestScrollable) {
+        if (window.innerHeight < 400 && this.popupClosestScrollable &&
+          this.popupClosestScrollable.length === 1) {
           this.popup.find('.arrow').hide();
           this.popup.css({
             'min-height': $('html').hasClass('theme-uplift-light') ? ''

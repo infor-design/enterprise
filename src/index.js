@@ -27,6 +27,9 @@ export { renderLoop, RenderLoopItem } from './utils/renderloop';
 // Keyboard needs a single instance of itself
 export { keyboard } from './utils/keyboard';
 
+// Modal Manager needs a single instance
+export { modalManager } from './components/modal/modal.manager';
+
 // Theme/Personalization need single instances of themselves
 export { personalization } from './components/personalize/personalize.bootstrap';
 export * from './components/personalize/personalize.hooks';

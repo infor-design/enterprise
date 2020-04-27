@@ -1,4 +1,5 @@
 import { ContextualActionPanel, COMPONENT_NAME } from './contextualactionpanel';
+import { modalManager } from '../modal/modal.manager';
 
 /**
  * jQuery Component Wrapper for Contextual Action Panel
@@ -7,11 +8,17 @@ import { ContextualActionPanel, COMPONENT_NAME } from './contextualactionpanel';
  */
 $.fn.contextualactionpanel = function (settings) {
   return this.each(function () {
-    let instance = $.data(this, COMPONENT_NAME);
+    let id = (settings?.modalSettings?.id);
+    if (!id && settings?.content && settings?.content instanceof jQuery) {
+      id = settings?.content?.attr('id');
+    }
+
+    const instance = modalManager.findById(id);
+
     if (instance) {
       instance.updated(settings);
-    } else {
-      instance = $.data(this, COMPONENT_NAME, new ContextualActionPanel(this, settings));
+      return;
     }
+    $.data(this, COMPONENT_NAME, new ContextualActionPanel(this, settings));
   });
 };

@@ -1,0 +1,93 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  <nav id="application-menu" class="application-menu is-personalizable">
+
+    <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
+
+      <div class="accordion-header is-selected">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-home"></use>
+        </svg>
+        <a href="#"><span>Item One</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-tools"></use>
+        </svg>
+        <a href="#"><span>Item Two</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-columns"></use>
+        </svg>
+        <a href="#"><span>Item Three</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-cascade"></use>
+        </svg>
+        <a href="#"><span>Item Four</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-insert-image"></use>
+        </svg>
+        <a href="#"><span>Item Five</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-ledger"></use>
+        </svg>
+        <a href="#"><span>Item Six</span></a>
+      </div>
+
+    </div>
+
+    <div class="branding">
+      <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-logo"></use>
+      </svg>
+    </div>
+  </nav>
+
+  <div class="page-container scrollable" role="main">
+      <header class="header is-personalizable" id="maincontent">
+        <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+        <div class="toolbar">
+          <div class="title">
+            <button class="btn-icon application-menu-trigger" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
+            <h1>
+              <span>App Menu Example</span>
+            </h1>
+
+          </div>
+
+          <div class="buttonset">
+          </div>
+          {{> includes/header-actionbutton}}
+        </div>
+
+      </header>
+
+  </div>
+
+  {{> includes/footer}}
+</body>
+</html>

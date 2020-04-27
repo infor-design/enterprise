@@ -118,6 +118,21 @@ PopupMenu.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the popupmenu trigger, or an item within the
+   * popupmenu, currently has focus.
+   */
+  get isFocused() {
+    const active = document.activeElement;
+    const triggerIsActive = this.element.is(active);
+    const menuIsActive = this.menu && this.menu.length && this.menu[0].contains(active);
+
+    if (triggerIsActive || menuIsActive) {
+      return true;
+    }
+    return false;
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -1557,6 +1572,14 @@ PopupMenu.prototype = {
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     this.wrapperPlace.setArrowPosition(e, placementObj, wrapper);
 
+    // Check if colorpicker has scrollbar
+    // Use CSS class to modify width of popupmenu.
+    if (placementObj.height < this.menu[0].offsetHeight) {
+      if (this.menu[0].classList.contains('colorpicker')) {
+        this.menu[0].classList.add('has-scrollbar');
+      }
+    }
+
     if (placementObj.height) {
       wrapper[0].style.height = '';
       this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(`${placementObj.height}`) ? '' : 'px');
@@ -1837,7 +1860,7 @@ PopupMenu.prototype = {
       });
 
       $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
-        const delay = self.isInViewport(self.element[0]) ? 0 : 150;
+        const delay = utils.isInViewport(self.element[0]) ? 0 : 150;
         setTimeout(() => {
           self.close();
         }, delay);
@@ -1935,19 +1958,6 @@ PopupMenu.prototype = {
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
     }
-  },
-
-  /**
-   * Checks if given element is all in viewport
-   * @private
-   * @param {HTMLElement} elem an HTML element to check
-   * @returns {boolean} true if given element is all in viewport
-   */
-  isInViewport(elem) {
-    const b = elem.getBoundingClientRect();
-    return b.top > 0 && b.left > 0 &&
-      b.bottom < (window.innerHeight || document.documentElement.clientHeight) &&
-      b.right < (window.innerWidth || document.documentElement.clientWidth);
   },
 
   /**

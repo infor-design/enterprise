@@ -9,6 +9,7 @@
   height: 100%;
   justify-content: center;
   margin: 0 auto;
+  position: absolute;
   width: 100%;
 }
 
@@ -18,12 +19,20 @@
   position: absolute;
   top: 0;
   width: 100%;
+
+  &[aria-hidden='true'] {
+    pointer-events: none;
+
+    .modal-wrapper {
+      display: none;
+    }
+  }
 }
 
 // Extra Class to hide the header and keep the padding
 .modal-no-header {
   .modal-title {
-    display: none;
+    display: none !important;
   }
 
   .modal-header {
@@ -45,15 +54,20 @@
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
+  pointer-events: none;
   position: relative;
   vertical-align: middle;
   width: auto;
   z-index: 1001;
 
-  &.is-visible {
+  &.is-visible.is-active {
     @include css3(transform, scale(1, 1));
 
     opacity: 1;
+  }
+
+  &.is-active {
+    pointer-events: auto;
   }
 
   .field {
@@ -78,6 +92,10 @@
 
     textarea {
       max-width: 300px;
+
+      @media (max-width: $breakpoint-slim) {
+        max-width: 100%;
+      }
 
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
@@ -244,10 +262,36 @@
       flex-direction: column;
       height: 100%;
       margin: 0;
+
+      h1 {
+        white-space: initial;
+        width: 100%;
+      }
     }
 
     .modal-body-wrapper {
       flex-grow: 1;
+    }
+  }
+
+  &:not(.display-fullsize):not(.about) {
+    .modal-content {
+      h1 {
+        @include line-clamp(2);
+
+        max-width: 300px;
+        white-space: initial;
+      }
+    }
+  }
+
+  &.has-minwidth {
+    &:not(.display-fullsize):not(.about) {
+      .modal-content {
+        h1 {
+          max-width: 450px;
+        }
+      }
     }
   }
 }
@@ -289,6 +333,9 @@ body.modal-engaged {
 
   // Messages/Content
   h1 {
+    @include ellipsis();
+    @include line-clamp(1);
+
     color: $modal-primary-color;
     font-size: $theme-size-font-lg;
     font-weight: $theme-number-font-weight-base;
@@ -485,9 +532,11 @@ body.modal-engaged {
   }
 
   .btn-modal-primary {
+    background-color: transparent;
     color: $modal-btn-primary-color;
 
     &:hover {
+      background-color: transparent;
       color: $modal-btn-primary-hover-color;
     }
   }
@@ -505,6 +554,42 @@ html.ie {
   .modal {
     &.full-width {
       margin: 0;
+    }
+  }
+}
+
+// Solution for multi line with ellipsis
+.ie11 {
+  .modal {
+    &:not(.display-fullsize):not(.about) {
+      .modal-content {
+        h1 {
+          line-height: 1.2em;
+          margin-right: -1em;
+          max-height: 2.4em;
+          overflow: hidden;
+          padding-right: 1em;
+          position: relative;
+          text-align: justify;
+          white-space: normal;
+
+          &::before {
+            bottom: 0;
+            content: '...';
+            position: absolute;
+            right: 0;
+          }
+
+          &::after {
+            background-color: $modal-bg-color; // Covering up the ‘…’ if the text is less than the max number of lines.
+            content: '';
+            height: 1em;
+            position: absolute;
+            right: 0;
+            width: 1em;
+          }
+        }
+      }
     }
   }
 }

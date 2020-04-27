@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    // Serializer
+    var serializer = function(value, oldVal, col, row, cell, rowData) {
+      return (rowData !== undefined ) ? rowData.desc.toUpperCase() : '';
+    }
+
+    // Define Columns for the Grid.
+    var columns = [];
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, editor: Editors.Input });
+    columns.push({ id: 'id', name: 'Id', field: 'id' });
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, editor: Editors.Input, width: 60});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, serialize: serializer  });
+
+    // Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+
+    // initialize
+    $.getJSON(url, function(data) {
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        editable: true,
+        toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
+      });
+    });
+  });
+</script>

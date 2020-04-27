@@ -1452,7 +1452,7 @@ Toolbar.prototype = {
 
     $('body').off(`resize.toolbar-${this.id}`);
 
-    const moreMenuChildren = this.moreMenu.children('li');
+    const moreMenuChildren = this.moreMenu === undefined ? [] : this.moreMenu.children('li');
     moreMenuChildren.each(function () {
       self.teardownMoreActionsMenuItem($(this), true);
     });

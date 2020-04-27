@@ -736,6 +736,17 @@ TimePicker.prototype = {
       parts = [parts[1], parts[2], parts[0]];
     }
 
+    // Fix am/pm
+    const periods = this.currentCalendar.dayPeriods;
+    if (parts[2] && (periods[0].indexOf('.') > -1 || periods[1].indexOf('.') > -1)) {
+      if (periods[0].replace('.', '') === parts[2]) {
+        parts[2] = periods[0];
+      }
+      if (periods[1].replace('.', '') === parts[2]) {
+        parts[2] = periods[1];
+      }
+    }
+
     // Check the last element in the array for a time period, and add it as an array
     // member if necessary
     if (!this.is24HourFormat() && !isAmFirst) {

@@ -307,3 +307,30 @@ describe('Tree checkbox tests', () => {
     expect(await element.all(by.css('.tree li.folder.is-open ul.folder.is-open a[role="treeitem"] .tree-checkbox')).count()).toBe(2);
   });
 });
+
+describe('Tree update and remove node tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-update-node-with-children');
+  });
+  const sel = { nodes: '.tree li a[role="treeitem"]' };
+  sel.new2 = `${sel.nodes}#new2`;
+  sel.lineMgr = `${sel.nodes}#line-mgr`;
+
+  it('Should update node', async () => {
+    expect(await element.all(by.css(sel.nodes)).count()).toBe(6);
+    expect(await element.all(by.css(sel.lineMgr)).count()).toBe(0);
+    await element(by.id('btn-update-node')).click();
+
+    expect(await element.all(by.css(sel.nodes)).count()).toBe(7);
+    expect(await element.all(by.css(sel.lineMgr)).count()).toBe(1);
+  });
+
+  it('Should remove node', async () => {
+    expect(await element.all(by.css(sel.nodes)).count()).toBe(6);
+    expect(await element.all(by.css(sel.new2)).count()).toBe(1);
+    await element(by.id('btn-remove-node')).click();
+
+    expect(await element.all(by.css(sel.nodes)).count()).toBe(5);
+    expect(await element.all(by.css(sel.new2)).count()).toBe(0);
+  });
+});
