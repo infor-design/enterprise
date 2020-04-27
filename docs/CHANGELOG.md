@@ -48,6 +48,8 @@
 - `[EmptyMessage]` Updated the text to be more subtle. ([#3476](https://github.com/infor-design/enterprise/issues/3476))
 - `[Fieldset]` Fixed fieldset text data overlapping in compact mode on mobile view. ([#3627](https://github.com/infor-design/enterprise/issues/3627))
 - `[Hierarchy]` Added support for separators in the actions menu on a hierarchy leaf. ([#3636](https://github.com/infor-design/enterprise/issues/3636))
+- `[Lookup]` Fixed an issue where `keywordFilter: true` and `filterable: true` used together cause the lookup modal to break. ([#3772](https://github.com/infor-design/enterprise/issues/3772))
+- `[Masthead]` Fixed layout and color issues in uplift theme. ([#3526](https://github.com/infor-design/enterprise/issues/3526))
 - `[Modal]` Fixed modal title to a two line with ellipsis when it's too long. ([#3479](https://github.com/infor-design/enterprise/issues/3479))
 - `[Multiselect]` Fixed tags dismiss button on mobile devices. ([#3640](https://github.com/infor-design/enterprise/issues/3640))
 - `[Icons]` Added new locked/unlocked icons in ids-identity [#3732](https://github.com/infor-design/enterprise/issues/3732)
