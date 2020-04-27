@@ -8,7 +8,11 @@ import { modalManager } from '../modal/modal.manager';
  */
 $.fn.contextualactionpanel = function (settings) {
   return this.each(function () {
-    const id = (settings?.modalSettings?.id) || settings?.content?.attr('id');
+    let id = (settings?.modalSettings?.id);
+    if (!id && settings?.content && settings?.content instanceof jQuery) {
+      id = settings?.content?.attr('id');
+    }
+
     const instance = modalManager.findById(id);
 
     if (instance) {
