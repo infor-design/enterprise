@@ -666,6 +666,30 @@ utils.isPlainObject = function isPlainObject(obj) {
 };
 
 /**
+ * Merge an array be each index position
+ * @param  {array} arr1 The first array
+ * @param  {array} arr2  The second array
+ * @returns {array} The merged array
+ */
+utils.mergeByPosition = function mergeByPosition(arr1, arr2) {
+  const len = Math.max(arr1?.length || 0, arr2?.length || 0);
+  if (!arr1) {
+    arr1 = [];
+  }
+
+  if (len === 0) {
+    return [];
+  }
+
+  for (let i = 0; i < len; i++) {
+    if (arr2[i] !== undefined && arr2[i] !== null) {
+      arr1[i] = arr2[i];
+    }
+  }
+  return arr1 || [];
+};
+
+/**
  * Merge the contents of two or more objects together into the first object.
  * @param {boolean|object} deepOrTarget If a boolean (true), the merge becomes recursive (aka. deep copy). Passing false for this argument is not supported. If an object then this object well get the extended objects applied.
  * @param {object} object1 An object containing additional properties to merge in.
@@ -681,12 +705,13 @@ utils.extend = function extend() {
   // Check if a deep merge
   if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
     deep = arguments[0];
-    extended = {};
+    extended = Array.isArray(arguments[1]) ? [] : {};
     i++;
   }
 
   // Merge the object into the extended object
   const merge = function (obj) {
+    const emptyObj = Array.isArray(obj) ? [] : {};
     for (let prop in obj) { //eslint-disable-line
       if (obj.hasOwnProperty(prop)) { //eslint-disable-line
         // If property is an object, merge properties - in several ways
@@ -695,10 +720,10 @@ utils.extend = function extend() {
           extended[prop] = $(obj[prop]);
         } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
           const isPlain = utils.isPlainObject(obj[prop]);
-          extended[prop] = isPlain ? extend(true, {}, extended[prop], obj[prop]) : obj[prop];
+          extended[prop] = isPlain ? extend(true, emptyObj, extended[prop], obj[prop]) : obj[prop];
         } else {
           if (Array.isArray(obj[prop])) { //eslint-disable-line
-            extended[prop] = [...obj[prop]];
+            extended[prop] = utils.mergeByPosition(extended[prop], obj[prop]);
           } else if (obj[prop] !== undefined) {
             extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
               extended[prop] : obj[prop];
