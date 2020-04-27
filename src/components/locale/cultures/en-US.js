@@ -287,6 +287,7 @@ Soho.Locale.addCulture('en-US', {
     OperatingSystem: { id: 'OperatingSystem', value: 'Operating System', comment: 'Device Operating System' },
     OrderedList: { id: 'OrderedList', value: 'Insert/Remove Numbered List', comment: 'Insert an Ordered list in the editor' },
     Page: { id: 'Page', value: 'page ', comment: 'Text on the pager links' },
+    Pagination: { id: 'Pagination', value: 'Pagination', comment: 'Text for a pager region on the page' },
     PageOf: { id: 'PageOf', value: 'Page {0} of {1}', comment: 'Pager Text Showing current and number of pages' },
     PageOn: { id: 'PageOn', value: 'You are currently on page ', comment: 'Text on the pager links' },
     PaidTimeOff: { id: 'PaidTimeOff', value: 'Paid Time Off', comment: 'As in vacation from work' },

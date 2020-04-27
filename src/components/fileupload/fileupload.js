@@ -67,7 +67,7 @@ FileUpload.prototype = {
       }
 
       label.html(`${orgLabel.text()} <span class="audible">${instructions}</span>`);
-      orgLabel.addClass('audible').add(this.fileInput).attr('tabindex', '-1');
+      orgLabel.addClass('audible').add(this.fileInput).attr('tabindex', '-1').attr('aria-hidden', 'true');
     }
 
     elem.before(label, shadowField);

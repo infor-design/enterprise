@@ -63,7 +63,6 @@ ExpandableArea.prototype = {
     this.header = this.settings.trigger ? this.element : this.element.children('.expandable-header');
     this.footer = this.element.children('.expandable-footer');
     this.content = this.element.children('.expandable-pane');
-
     this.isCard = this.element.is('.card, .widget');
     return this;
   },
@@ -82,7 +81,9 @@ ExpandableArea.prototype = {
       id: `${this.id}-header`
     });
     this.content.attr({
-      id: `${this.id}-content`
+      id: `${this.id}-content`,
+      role: 'region',
+      'aria-labelledby': `${this.id}-content`
     });
 
     // Add the link and footer if not there already.
@@ -98,7 +99,7 @@ ExpandableArea.prototype = {
         // Use icon-based expander in the header
         expander = instance.header.find('expandable-expander');
         if (!expander.length) {
-          expander = $(`${'<a href="#" target="_self" class="btn-expander">' +
+          expander = $(`${'<a href="#" target="_self" role="button" class="btn-expander">' +
             '<svg class="chevron icon" focusable="false" aria-hidden="true" role="presenation">' +
               '<use href="#icon-caret-down"></use>' +
             '</svg>' +
@@ -112,7 +113,7 @@ ExpandableArea.prototype = {
       // Use the text-based expander button in the footer
       expander = instance.footer.find('.expandable-expander');
       if (!expander.length) {
-        expander = $(`${'<a href="#" target="_self" class="expandable-expander hyperlink">' +
+        expander = $(`${'<a href="#" target="_self" role="button" class="expandable-expander hyperlink">' +
           '<span data-translated="true">'}${Locale.translate('ShowMore')}</span>` +
         '</a>').prependTo(instance.footer);
       }

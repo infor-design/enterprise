@@ -198,7 +198,7 @@ const dataset = [{
   name: 'Series 02'
 }];
 
-describe('Bubble Chart API', () => {
+fdescribe('Bubble Chart API', () => {
   beforeEach(() => {
     bubbleEl = null;
     svgEl = null;
@@ -227,6 +227,7 @@ describe('Bubble Chart API', () => {
   });
 
   it('Should render selected dot', () => {
+    debugger;
     expect(document.body.querySelectorAll('[data-group-id="0"]').length).toEqual(1);
     expect(document.body.querySelector('[data-group-id="0"]').classList.contains('is-selected')).toBeTruthy();
   });
