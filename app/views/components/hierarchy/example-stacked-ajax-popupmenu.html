@@ -1,0 +1,120 @@
+<figure class="hierarchy" id="hierarchy"></figure>
+
+<script id="hierarchy-init-script">
+
+  const options = {
+    templateId: 'hierarchyChartTemplate',
+    legendKey: 'employmentType',
+    legend: [
+      { 'value' : 'FT', 'label' : 'Full Time'     },
+      { 'value' : 'PT', 'label' : 'Part Time'     },
+      { 'value' : 'C',  'label' : 'Contractor'    },
+      { 'value' : 'O',  'label' : 'Open Position' }
+    ],
+    dataset: [],
+    layout: 'stacked'
+  };
+
+  // Initial load
+  $.getJSON('{{basepath}}api/hc-john-randolph-dynamic-actions', function(data) {
+    options.dataset = [data];
+    $('#hierarchy').hierarchy(options);
+  });
+
+  $('#hierarchy').on('selected', function(event, eventInfo) {
+    const hierarchyControl = $('#hierarchy').data('hierarchy');
+
+    if (eventInfo.eventType === 'expand' || eventInfo.eventType === 'back') {
+      $.getJSON('{{basepath}}api/'+ eventInfo.data.childrenUrl, function(newData) {
+        reload(eventInfo, hierarchyControl, newData);
+      });
+    }
+
+    if (eventInfo.isActionsEvent) {
+      $.when(getActionsAsync()).then(function (actions) {
+        hierarchyControl.updateActions(eventInfo, actions);
+      });
+    }
+  });
+
+  function reload(eventInfo, hierarchyControl, newData) {
+    eventInfo.data.children = newData;
+    options.dataset = [eventInfo.data.children];
+    hierarchyControl.reload(options);
+  }
+
+  // Emulate a call to the server to get actions for popupmenu
+  function getActionsAsync() {
+      const defer = $.Deferred();
+      const actions = [
+        {"value": "Profile", "url": "#", "data": {"id":"Profile","label":"Profile","type":"action","index":1}},
+        {"value": "Change Pay Rate", "url": "#", "data": {}, "disabled": true},
+        {"value": "Add work assignment", "url" : "#", "data": {}},
+        {"value": "Promote", "url" : "#", "data": {}},
+        {"value": "Transfer", "url" : "#", "data": {}},
+        {"value": "Terminate", "url" : "#", "data": {}},
+        {"value": "Update", "url" : "#", "data": {}},
+        {"value": "Options", "url" : "#", "data": {}, "menu": [{"value": "Sub Item", "url" : "#", "data": {}}]},
+        {"value": "Item1", "url" : "#", "data": {}},
+        {"value": "Item2", "url" : "#", "data": {}},
+        {"value": "Item3", "url" : "#", "data": {}},
+        {"value": "Item4", "url" : "#", "data": {}},
+        {"value": "Item5", "url" : "#", "data": {}},
+        {"value": "Item6", "url" : "#", "data": {}},
+        {"value": "Item7", "url" : "#", "data": {}},
+        {"value": "Item8", "url" : "#", "data": {}},
+        {"value": "Item9", "url" : "#", "data": {}},
+        {"value": "Item10", "url" : "#", "data": {}},
+        {"value": "Item11", "url" : "#", "data": {}}
+      ];
+
+      defer.resolve(actions);
+
+      return defer.promise();
+  }
+
+</script>
+
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchyChartTemplate">
+  <div class="leaf {{colorClass}}" id="{{id}}">
+
+    {{#picture}}
+    <img src="{{picture}}" class="image" alt="Image of {{name}}"/>
+    {{/picture}}
+    {{^picture}}
+
+    {{#avatarInitials}}
+    <div class="image-initials">{{avatarInitials}}</div>
+    {{/avatarInitials}}
+    {{^avatarInitials}}
+    <span class="image-placeholder"></span>
+    {{/avatarInitials}}
+
+    {{/picture}}
+
+    <div class="detail">
+      <p class="heading">{{name}}</p>
+      <p class="subheading">{{position}}</p>
+      <p class="micro">{{employmentType}}</p>
+    </div>
+
+    {{#menu}}
+    <button class="btn-actions btn-icon" type="button" data-init="false" id="btn-{{id}}">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-more"></use>
+      </svg>
+      <span class="audible">More Info & Additional Actions</span>
+    </button>
+    <ul class="popupmenu"></ul>
+    {{/menu}}
+
+    <button class="btn btn-icon" type="button">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-caret-up"></use>
+      </svg>
+      <span class="audible">Expand/Collapse</span>
+    </button>
+  </div>
+</script>

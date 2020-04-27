@@ -1,3 +1,5 @@
+/* eslint-disable prefer-rest-params */
+
 import { defer } from './behaviors';
 import { Environment as env } from './environment';
 import { DOM } from './dom';
@@ -618,9 +620,11 @@ DOM.convertToHTMLElement = function convertToHTMLElement(item) {
  * Returns a list of all focusable elements contained within the current element.
  * Somewhat lifted from https://gomakethings.com/how-to-get-the-first-and-last-focusable-elements-in-the-dom/
  * @param {HTMLElement} el the element to search.
+ * @param {array} [additionalSelectors] containing strings representing CSS selectors that should also be considered when making the query for focusable elements.
+ * @param {array} [ignoreSelectors] containing strings representing CSS selectors that should be filtered out from selection.
  * @returns {array} containing the focusable elements.
  */
-DOM.focusableElems = function focusableElems(el) {
+DOM.focusableElems = function focusableElems(el, additionalSelectors = [], ignoreSelectors = []) {
   const focusableElemSelector = [
     'button',
     '[href]',
@@ -631,7 +635,7 @@ DOM.focusableElems = function focusableElems(el) {
     '[tabindex]:not([tabindex="-1"])',
     '[contenteditable]',
     'iframe'
-  ];
+  ].concat(additionalSelectors).filter(item => ignoreSelectors.indexOf(item) === -1);
   const elems = el.querySelectorAll(focusableElemSelector.join(', '));
   const arrElems = utils.getArrayFromList(elems);
   return arrElems.filter((elem) => {
@@ -643,12 +647,104 @@ DOM.focusableElems = function focusableElems(el) {
 };
 
 /**
- * Object deep copy.
- * For now, alias jQuery.extend
- * Eventually we'll replace this with a non-jQuery extend method.
- * @private
+ * See if the object is simple or more complex (has a constructor).
+ * @param {object} obj The object to check
+ * @returns {boolean} Returns true if simple
  */
-utils.extend = $.extend;
+utils.isPlainObject = function isPlainObject(obj) {
+  if (!obj || Object.prototype.toString.call(obj) !== '[object Object]') {
+    return false;
+  }
+
+  // Objects with no prototype (e.g., `Object.create( null )`) are plain
+  const proto = Object.getPrototypeOf(obj);
+  if (!proto) {
+    return true;
+  }
+
+  return obj !== null && typeof (obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
+};
+
+/**
+ * Merge an array be each index position
+ * @param  {array} arr1 The first array
+ * @param  {array} arr2  The second array
+ * @returns {array} The merged array
+ */
+utils.mergeByPosition = function mergeByPosition(arr1, arr2) {
+  const len = Math.max(arr1?.length || 0, arr2?.length || 0);
+  if (!arr1) {
+    arr1 = [];
+  }
+
+  if (len === 0) {
+    return [];
+  }
+
+  for (let i = 0; i < len; i++) {
+    if (arr2[i] !== undefined && arr2[i] !== null) {
+      arr1[i] = arr2[i];
+    }
+  }
+  return arr1 || [];
+};
+
+/**
+ * Merge the contents of two or more objects together into the first object.
+ * @param {boolean|object} deepOrTarget If a boolean (true), the merge becomes recursive (aka. deep copy). Passing false for this argument is not supported. If an object then this object well get the extended objects applied.
+ * @param {object} object1 An object containing additional properties to merge in.
+ * @param {object} objectN Additional objects containing properties to merge in.
+ * @returns {object} The merged object
+ */
+utils.extend = function extend() {
+  // Variables
+  let extended = arguments[0] || {};
+  let deep = false;
+  let i = 0;
+
+  // Check if a deep merge
+  if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+    deep = arguments[0];
+    extended = Array.isArray(arguments[1]) ? [] : {};
+    i++;
+  }
+
+  // Merge the object into the extended object
+  const merge = function (obj) {
+    const emptyObj = Array.isArray(obj) ? [] : {};
+    for (let prop in obj) { //eslint-disable-line
+      if (obj.hasOwnProperty(prop)) { //eslint-disable-line
+        // If property is an object, merge properties - in several ways
+        if (obj[prop] instanceof jQuery) {
+          // Needed for now until jQuery is fully dropped
+          extended[prop] = $(obj[prop]);
+        } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+          const isPlain = utils.isPlainObject(obj[prop]);
+          extended[prop] = isPlain ? extend(true, emptyObj, extended[prop], obj[prop]) : obj[prop];
+        } else {
+          if (Array.isArray(obj[prop])) { //eslint-disable-line
+            extended[prop] = utils.mergeByPosition(extended[prop], obj[prop]);
+          } else if (obj[prop] !== undefined) {
+            extended[prop] = obj[prop] === undefined && extended[prop] !== undefined ?
+              extended[prop] : obj[prop];
+          }
+        }
+      }
+
+      // Add functions and jQuery objects
+      if (!obj.hasOwnProperty(prop) && !extended[prop] && Object.prototype.toString.call(obj[prop]) === '[object Function]') { //eslint-disable-line
+        extended[prop] = obj[prop];
+      }
+    }
+  };
+
+  // Loop through each object and conduct a merge
+  for (; i < arguments.length; i++) {
+    merge(arguments[i]);  //eslint-disable-line
+  }
+
+  return extended;
+};
 
 /**
  * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
@@ -778,7 +874,7 @@ utils.getHiddenSize = function getHiddenSize(el, options) {
   }
 
   el = $(el);
-  options = $.extend({}, defaults, options);
+  options = { ...defaults, ...options };
 
   // element becomes clone and appended to a parentElement, if defined
   const hasDefinedParentElement = DOM.isElement(options.parentElement);
@@ -948,13 +1044,13 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
     }
   }
 
-  // Actually get ready to merge incoming options if we get to this point.
   return utils.extend(
-    true, {},
-    resolveFunctionBasedSettings(defaultOptions || {}),
+    true,
+    {},
+    resolveFunctionBasedSettings(defaultOptions),
     resolveFunctionBasedSettings(incomingOptions),
     (element !== undefined ? utils.parseSettings(element) : {})
-  ); // possible to run this without an element present -- will simply skip this part
+  );
 };
 
 /**
@@ -1106,12 +1202,22 @@ utils.getScrollbarWidth = function () {
  * @returns {array|object} The copied array or object.
  */
 utils.deepCopy = function (arrayOrObject) {
+  const references = new Map();
   const copy = (input) => {
     if (typeof input !== 'object' || input === null) {
       return input; // Return the value if input is not an object
     }
+
+    // If an object has already been cloned then return a
+    // reference to that clone to avoid an infinite loop
+    if (references.has(input) === true) {
+      return references.get(input);
+    }
+
     // Create an array or object to hold the values
     const output = Array.isArray(input) ? [] : {};
+    references.set(arrayOrObject, input);
+
     Object.keys(input).forEach((key) => {
       const value = input[key];
       // Recursively (deep) copy for nested objects, including arrays
@@ -1140,6 +1246,21 @@ utils.isSubscribedTo = function (elem, e, eventName, namespace) {
     }
   }
   return false;
+};
+
+/**
+ * Check if given element is within the viewport.
+ * @private
+ * @param {object} element The element to check
+ * @returns {boolean} Whether or not the element is in the viewport.
+ */
+utils.isInViewport = function isInViewport(element) {
+  const b = element.getBoundingClientRect();
+  return (
+    b.top >= 0 && b.left >= 0 &&
+    b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    b.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
 };
 
 export { utils, math };

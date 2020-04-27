@@ -11,7 +11,7 @@ import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../icons/icons.jquery';
-import '../../utils/lifecycle';
+import '../../utils/lifecycle/lifecycle.jquery';
 import '../place/place.jquery';
 import '../tooltip/tooltip.jquery';
 
@@ -1978,7 +1978,7 @@ Dropdown.prototype = {
     // When the Dropdown is located within a scrollable section,
     // the dropdown must close if that section is scrolled.
     let parentScrollableArea = $('.modal.is-visible .modal-body-wrapper');
-    const subScrollableSection = self.element.closest('.scrollable, .scrollable-x, .scrollable-y', '.datagrid-wrapper');
+    const subScrollableSection = self.element.parents('.scrollable, .scrollable-x, .scrollable-y, .card-content');
     if (subScrollableSection.length) {
       parentScrollableArea = subScrollableSection;
     }
@@ -3219,30 +3219,41 @@ Dropdown.prototype = {
   handleEvents() {
     const self = this;
 
+    function isTagEl(e) {
+      // If the element clicked is a tag, ignore and let the tag handle it.
+      const containedByTag = $(e.target).parents('.tag').length > 0;
+      let isTag = false;
+      if (e.target instanceof HTMLElement && typeof e.target.className === 'string') {
+        isTag = e.target.classList.contains('tag');
+      }
+
+      if (isTag || containedByTag) {
+        return true;
+      }
+
+      return false;
+    }
+
     this.pseudoElem
       .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
-      .on('click.dropdown', (e) => {
+      .on('click.dropdown touchstart.dropdown', (e) => {
         // Would like the click event to bubble up if ctrl and shift are pressed
         if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
           e.stopPropagation();
         }
-      }).on('mouseup.dropdown', (e) => {
+      }).on('mouseup.dropdown touchend.dropdown', (e) => {
         if (e.button === 2) {
           return;
         }
-
-        // If the element clicked is a tag, ignore and let the tag handle it.
-        const containedByTag = $(e.target).parents('.tag').length > 0;
-        let isTag = false;
-        if (e.target instanceof HTMLElement && typeof e.target.className === 'string') {
-          isTag = e.target.classList.contains('tag');
-        }
-        if (isTag || containedByTag) {
+        if (isTagEl(e)) {
           return;
         }
         self.toggle();
       })
-      .on('touchend.dropdown touchcancel.dropdown', (e) => {
+      .on('touchcancel.dropdown', (e) => {
+        if (isTagEl(e)) {
+          return;
+        }
         e.stopPropagation();
         self.toggle();
         e.preventDefault();

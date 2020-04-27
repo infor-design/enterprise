@@ -7,7 +7,6 @@ import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../../utils/debounced-resize';
-import { warnAboutDeprecation } from '../../utils/deprecated';
 import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
@@ -250,17 +249,6 @@ Datagrid.prototype = {
   },
 
   /**
-   * Reference to the pager API, if applicable.
-   * This method is slated to be removed in a future v4.22.0 or v5.0.0.
-   * @deprecated as of v4.16.0. Please use `pagerAPI` property instead.
-   * @returns {Pager} IDS Pager component API.
-   */
-  get pager() {
-    warnAboutDeprecation('pagerAPI', 'pager');
-    return this.pagerAPI;
-  },
-
-  /**
   * Init the datagrid from its uninitialized state.
   * @private
   * @returns {void}
@@ -413,12 +401,12 @@ Datagrid.prototype = {
       self.element.append(self.bodyWrapperLeft);
     }
 
-    self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scroll-x${!this.hasRightPane ? ' scroll-y' : ''}"></div>`);
+    self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scrollable-x${!this.hasRightPane ? ' scrollable-y' : ''}"></div>`);
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
 
     if (this.hasRightPane) {
-      self.bodyWrapperRight = $('<div class="datagrid-wrapper right scroll-y"></div>');
+      self.bodyWrapperRight = $('<div class="datagrid-wrapper right scrollable-y"></div>');
       self.tableRight = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperRight);
       self.element.append(self.bodyWrapperRight);
     }
@@ -1662,7 +1650,7 @@ Datagrid.prototype = {
         }).on('listopened.datagrid', () => {
           const api = dropdown.data('dropdown');
           if (api) {
-            if (!self.isInViewport(api.list[0])) {
+            if (!utils.isInViewport(api.list[0])) {
               self.adjustPosLeft(api.list[0]);
             }
           }
@@ -1799,6 +1787,34 @@ Datagrid.prototype = {
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
+    const formatFilterText = function (str) {
+      str = str
+        .split('-')
+        .map((s) => {
+          s = s.charAt(0).toUpperCase() + s.slice(1);
+          return s;
+        }).join('');
+
+      switch (str) {
+        case 'StartWith':
+          str = str.replace('StartWith', 'StartsWith');
+          break;
+        case 'EndWith':
+          str = str.replace('EndWith', 'EndsWith');
+          break;
+        case 'LessEquals':
+          str = str.replace('LessEquals', 'LessOrEquals');
+          break;
+        case 'GreaterEquals':
+          str = str.replace('GreaterEquals', 'GreaterOrEquals');
+          break;
+        default:
+          break;
+      }
+
+      return str;
+    };
+
     let btnMarkup = '';
     let btnDefault = '';
 
@@ -1809,14 +1825,24 @@ Datagrid.prototype = {
 
     if (col.filterType === 'text') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      btnMarkup = renderButton(btnDefault) +
-        render('contains', 'Contains', true) +
-        render('does-not-contain', 'DoesNotContain') +
-        render('equals', 'Equals') +
-        render('does-not-equal', 'DoesNotEqual') +
-        render('is-empty', 'IsEmpty') +
-        render('is-not-empty', 'IsNotEmpty');
-      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty') +
+          render('end-with', 'EndsWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartsWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     if (col.filterType === 'checkbox') {
@@ -1849,15 +1875,6 @@ Datagrid.prototype = {
       }${render('greater-than', 'GreaterThan')
       }${render('greater-equals', 'GreaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
-    }
-
-    if (col.filterType === 'text') {
-      btnMarkup += `${
-        render('end-with', 'EndsWith')
-      }${render('does-not-end-with', 'DoesNotEndWith')
-      }${render('start-with', 'StartsWith')
-      }${render('does-not-start-with', 'DoesNotStartWith')}`;
-      btnMarkup = btnMarkup.replace('{{icon}}', 'end-with');
     }
 
     if (col.filterType === 'lookup') {
@@ -1953,6 +1970,10 @@ Datagrid.prototype = {
 
       for (let i = 0; i < conditions.length; i++) {
         const columnDef = self.columnById(conditions[i].columnId)[0];
+
+        if (columnDef === undefined) {
+          return false;
+        }
 
         let rowValue = rowData && rowData[columnDef.field] !== undefined ?
           rowData[columnDef.field] : self.fieldValue(rowData, columnDef.field);
@@ -2294,21 +2315,6 @@ Datagrid.prototype = {
     } else if (b.left >= 0 && !(b.right <= w)) {
       el.style.left = `${(w - b.width) - padding}px`; // Right side
     }
-  },
-
-  /**
-   * Check if given element is in the viewport
-   * @private
-   * @param {object} el The element to check
-   * @returns {boolean} true if is in the viewport
-   */
-  isInViewport(el) {
-    const b = el.getBoundingClientRect();
-    return (
-      b.top >= 0 && b.left >= 0 &&
-      b.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      b.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
   },
 
   /**
@@ -5555,11 +5561,15 @@ Datagrid.prototype = {
         }
         const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
         const offsetLeft = parseFloat(self.currentHeader.offset().left);
-        const leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        let leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
+        if (self.hasLeftPane && self.settings.frozenColumns.left.length && idx === 0) {
+          leftOffset = (offsetLeft - offsetParentLeft - 2);
+        }
         const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
         widthToSet = cssWidth - diff;
+
         if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
           return;
@@ -6716,6 +6726,7 @@ Datagrid.prototype = {
 
       const checkColumn = function (columnId) {
         const column = self.columnById(columnId)[0];
+
         const fieldValue = self.fieldValue(data, column.field);
         let value;
         const cell = self.settings.columns.indexOf(column);
@@ -9429,7 +9440,13 @@ Datagrid.prototype = {
     let newVal;
 
     if (col.serialize) {
-      newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
+      const s = this.settings;
+      let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+      if (this.settings.groupable) {
+        dataset = this.originalDataset || dataset;
+      }
+      const rowData = s.treeGrid ? dataset[row].node : dataset[row];
+      newVal = col.serialize(value, oldVal, col, row, cell, rowData);
       return newVal;
     } else if (col.sourceFormat) {
       if (value instanceof Date) {
@@ -10856,20 +10873,6 @@ Datagrid.prototype = {
 
       return ascending * ((a > b) - (b > a));
     };
-  },
-
-  /**
-  * Determine equality for two deeply nested JavaScript objects.
-  * @private
-  * @param {object} obj1 First object to compare
-  * @param {object} obj2 Second object to compare
-  * @returns {boolean} If it is equal or not
-  */
-  isEquivalent(obj1, obj2) {
-    function _equals(a, b) {
-      return JSON.stringify(a) === JSON.stringify($.extend(true, {}, a, b));
-    }
-    return _equals(obj1, obj2) && _equals(obj2, obj1);
   },
 
   /**

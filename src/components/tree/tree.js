@@ -1520,7 +1520,10 @@ Tree.prototype = {
 
     const items = [].slice.call(node.children('li').toArray());
     items.forEach((li) => {
-      json.push(self.syncNode(li.querySelector('a')));
+      const a = li.querySelector('a');
+      if (a) {
+        json.push(self.syncNode(a));
+      }
     });
 
     this.settings.dataset = json;
@@ -1535,65 +1538,72 @@ Tree.prototype = {
    */
   syncNode(node) {
     const self = this;
+    let entry;
+
     const nodeJQ = this.isjQuery(node) ? node : $(node);
     node = nodeJQ[0];
-    const parent = node.parentNode;
-    const hasClass = (el, className) => el.classList.contains(className);
+    if (node) {
+      const parent = node.parentNode;
+      const hasClass = (el, className) => el.classList.contains(className);
 
-    let entry = {
-      node: nodeJQ,
-      id: node.getAttribute('id'),
-      text: node.querySelector('.tree-text').textContent
-    };
+      entry = {
+        node: nodeJQ,
+        id: node.getAttribute('id'),
+        text: node.querySelector('.tree-text').textContent
+      };
 
-    // Is folder open
-    if (hasClass(node, 'is-open') ||
-        (parent && parent.tagName.toLowerCase() === 'li') && hasClass(parent, 'is-open')) {
-      entry.open = true;
+      // Is folder open
+      if (hasClass(node, 'is-open') ||
+          (parent && parent.tagName.toLowerCase() === 'li') && hasClass(parent, 'is-open')) {
+        entry.open = true;
+      }
+
+      // Href
+      const href = node.getAttribute('href');
+      if (href) {
+        entry.href = href;
+      }
+
+      // Selected
+      if (hasClass(parent, 'is-selected')) {
+        entry.selected = true;
+      }
+
+      // Disabled
+      if (hasClass(node, 'is-disabled')) {
+        entry.disabled = true;
+      }
+
+      // Icon
+      const classAttribute = node.getAttribute('class');
+      if (classAttribute && classAttribute.indexOf('icon') > -1) {
+        entry.icon = classAttribute;
+      }
+
+      // Children
+      const ul = nodeJQ.next();
+      if (ul[0] && ul[0].tagName.toLowerCase() === 'ul') {
+        entry.children = [];
+
+        const items = [].slice.call(ul.children('li').toArray());
+        items.forEach((li) => {
+          const a = li.querySelector('a');
+          if (a) {
+            entry.children.push(self.syncNode(a));
+          }
+        });
+      }
+
+      // Merge json data
+      const jsonData = nodeJQ.data('jsonData');
+      if (jsonData) {
+        delete jsonData.selected;
+        delete jsonData.children;
+        entry = $.extend({}, jsonData, entry);
+      }
+
+      nodeJQ.data('jsonData', entry);
     }
-
-    // Href
-    const href = node.getAttribute('href');
-    if (href) {
-      entry.href = href;
-    }
-
-    // Selected
-    if (hasClass(parent, 'is-selected')) {
-      entry.selected = true;
-    }
-
-    // Disabled
-    if (hasClass(node, 'is-disabled')) {
-      entry.disabled = true;
-    }
-
-    // Icon
-    const classAttribute = node.getAttribute('class');
-    if (classAttribute && classAttribute.indexOf('icon') > -1) {
-      entry.icon = classAttribute;
-    }
-
-    // Children
-    const ul = nodeJQ.next();
-    if (ul[0] && ul[0].tagName.toLowerCase() === 'ul') {
-      entry.children = [];
-
-      const items = [].slice.call(ul.children('li').toArray());
-      items.forEach((li) => {
-        entry.children.push(self.syncNode(li.querySelector('a')));
-      });
-    }
-
-    // Merge json data
-    const jsonData = nodeJQ.data('jsonData');
-    if (jsonData) {
-      delete jsonData.selected;
-      delete jsonData.children;
-      entry = $.extend({}, jsonData, entry);
-    }
-
-    nodeJQ.data('jsonData', entry);
     return entry;
   },
 
@@ -1935,6 +1945,7 @@ Tree.prototype = {
         this.removeChildren(nodeData, parent);
       }
     }
+    this.syncDataset();
     this.createSortable();
   },
 

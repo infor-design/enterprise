@@ -13,38 +13,38 @@
 
     <div class="field">
       <button type="button" id="contextual-panel-trigger" class="btn-secondary contextual-action-panel-trigger">
-        <span>Show Me Potato Salad</span>
+        <span>Show CAP</span>
       </button>
       <div class="contextual-action-panel">
-  	    <div class="row">
-    			<div class="twelve columns">
-    				<div class="field">
-    				  <label for="cool-dropdown">Cool Dropdown</label>
-    				  <select class="dropdown" id="cool-dropdown">
-    					<option value="1">One</option>
-    					<option value="2">Two</option>
-    					<option value="3">Three</option>
-    					<option value="4">Four</option>
-    				  </select>
-    				</div>
+        <div class="row">
+        <div class="twelve columns">
+        <div class="field">
+        <label for="cool-dropdown">Cool Dropdown</label>
+        <select class="dropdown" id="cool-dropdown">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+        </select>
+        </div>
 
-    				<div class="field">
-    				  <button type="button" id="destroy-contextual" class="btn-primary">
-    					<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-    					  <use href="#icon-delete"></use>
-    					</svg>
-    					<span>Destroy CAP</span>
-    				  </button>
-    				</div>
-    			</div>
-    		</div>
+        <div class="field">
+        <button type="button" id="destroy-contextual" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-delete"></use>
+        </svg>
+        <span>Destroy CAP</span>
+        </button>
+        </div>
+        </div>
+        </div>
       </div>
 
       <button type="button" id="invoke-contextual" class="btn-primary" disabled>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-refresh"></use>
         </svg>
-        <span>Invoke CAP</span>
+        <span>Re-Invoke CAP</span>
       </button>
     </div>
 
@@ -107,14 +107,14 @@
 
       contextualApi = $('#contextual-panel-trigger').data('contextualactionpanel');
 
-      setupDestroy();
-
       $('body').toast({
         title: 'Contextual Panel Rebuilt!',
         message: 'Contextual Action Panel has been rebuilt and re-invoked.'
       });
       $('#invoke-contextual').prop('disabled', true);
       $('#contextual-panel-trigger').prop('disabled', false);
+
+      setupDestroy();
     });
 
   });

@@ -591,6 +591,9 @@ Header.prototype = {
    * @returns {void}
    */
   updatePageChanger() {
+    if (!this.change || this.changer.length === 0) {
+      return;
+    }
     const api = this.changer.data('popupmenu');
     const menu = api.menu;
     const tags = menu.find('[data-rgbcolor]');

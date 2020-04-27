@@ -63,7 +63,7 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
       function hasNoTrailingSlash(dir) {
         return dir.lastIndexOf(sep) !== (dir.length - 1);
       }
-      const hasExplicitList = req.url.lastIndexOf('/list') !== -1;
+      const hasExplicitList = req.url.lastIndexOf('/list') !== -1 && req.url.length === 5;
 
       // handle "list"
       if (hasExplicitList) {

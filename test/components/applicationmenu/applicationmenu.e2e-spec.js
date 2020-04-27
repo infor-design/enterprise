@@ -304,3 +304,18 @@ describe('Application Menu Event Propagation Tests', () => {
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 });
+
+describe('Application Menu Manual Init Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/applicationmenu/test-manual-init');
+  });
+
+  it('should open when the hamburger button is clicked', async () => {
+    const button = await element(by.css('.application-menu-trigger'));
+    await button.click();
+    await browser.driver.sleep(config.sleepLonger);
+    await utils.checkForErrors();
+
+    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
+  });
+});

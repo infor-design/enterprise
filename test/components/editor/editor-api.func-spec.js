@@ -21,7 +21,7 @@ describe('Editor API', () => {
       editorObj.destroy();
     }
 
-    cleanup(['.editor', '.svg-icons', '.modal', '.row', '.modal-page-container']);
+    cleanup(['.editor', '.svg-icons', '.modal', '.row']);
   });
 
   it('Should be defined on jQuery object', () => {

@@ -46,7 +46,7 @@ describe('TimePicker API', () => {
       expect(timepickerObj.isOpen()).toBeTruthy();
       expect(document.body.querySelector('.timepicker.is-open')).toBeTruthy();
       done();
-    }, 450);
+    }, 650);
   });
 
   it('Should render based on locale setting', (done) => {

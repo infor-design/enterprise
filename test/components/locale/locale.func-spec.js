@@ -56,7 +56,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => { //eslint-disable-line
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
@@ -1619,7 +1619,7 @@ describe('Locale API', () => { //eslint-disable-line
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
   });
 
-  it('Should be able to not show the group size', () => {
+  it('Should be able to not show the group size', () => { //eslint-disable-line
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');

@@ -39,17 +39,21 @@
   }
 
   // Text Color
+  .text,
   text {
     @include antialiased();
 
+    color: $chart-font-color;
     fill: $chart-font-color;
     font-size: $theme-size-font-sm;
 
     &::selection {
+      color: $inverse-color;
       fill: $inverse-color;
     }
 
     &::-moz-selection {
+      color: $inverse-color;
       fill: $inverse-color;
     }
   }
@@ -121,6 +125,13 @@
     margin-top: -20px;
   }
 
+  .ellipsis {
+    display: block;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 // Tooltip Swatch

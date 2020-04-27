@@ -41,7 +41,7 @@
         indeterminate: true,
         pagesizes: [5, 10, 15, 20],
         resultsText: function (grid, count, filterCount) {
-          var currentPage = grid.pager.activePage,
+          var currentPage = grid.pagerAPI.activePage,
             endPage = currentPage * (grid.settings.pagesize),
             startPage = currentPage === 1 ? 1 : endPage - grid.settings.pagesize +1;
 

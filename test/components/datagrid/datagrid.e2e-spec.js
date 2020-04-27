@@ -139,7 +139,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
   });
 
   it('Should have custom filter options', async () => {
-    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-0 button';
     await element(by.css(selector)).click();
 
     expect(await element.all(await by.css('.popupmenu')).count()).toEqual(5);
@@ -149,6 +149,19 @@ describe('Datagrid Custom Filter Option Tests', () => {
     const text = await element(by.id('popupmenu-2')).getText();
 
     expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
+  });
+
+  it('Should have custom filter options', async () => {
+    const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
+    await element(by.css(selector)).click();
+
+    expect(await element.all(await by.css('.popupmenu')).count()).toEqual(5);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('popupmenu-2'))), config.waitsFor);
+
+    const text = await element(by.id('popupmenu-2')).getText();
+
+    expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('EqualsDoesNotEqualContainsDoesNotContainIsEmptyIsNotEmptyEndsWithDoesNotEndWithStartsWithDoesNotStartWith');
   });
 });
 
@@ -1696,7 +1709,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
   });
 });
 
-describe('Datagrid Duplicate Ids Tests', () => { //eslint-disable-line
+describe('Datagrid Duplicate Ids Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
 
@@ -1768,23 +1781,24 @@ describe('Datagrid Lookup Editor', () => {
     const staticCell = '#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2)';
     await element(by.css(staticCell)).click();
     await element(by.css('.has-editor.is-editing .trigger')).click();
-
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.lookup-modal tr:nth-child(5) td:nth-child(1)')).click();
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.has-editor.is-editing')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css(staticCell)).getText()).toEqual('2542205');
   });
 
-  it('should be able to select with the dialog when no clicking the cell', async () => {
+  it('should be able to select from the dialog when clicking directly on the icon', async () => {
     const checkboxTd = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2) .icon'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await element(by.css('.lookup-modal tr:nth-child(5) td:nth-child(1)')).click();
-    await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
     const editCell = '.has-editor.is-editing input';
     await element(by.css(editCell)).sendKeys(protractor.Key.ENTER);
 
@@ -2874,7 +2888,7 @@ describe('Datagrid disable last page', () => {
   });
 
   it('Should be have last and next page disabled', async () => {
-    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
+    expect(await element.all(by.css('.pager-toolbar button[disabled]')).count()).toEqual(2);
   });
 });
 
@@ -2896,12 +2910,12 @@ describe('Datagrid paging force disabled', () => {
     await element(by.id('force-disabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(4);
+    expect(await element.all(by.css('.pager-toolbar button[disabled]')).count()).toEqual(4);
 
     await element(by.id('force-enabled')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.pager-toolbar button.is-disabled')).count()).toEqual(2);
+    expect(await element.all(by.css('.pager-toolbar button[disabled]')).count()).toEqual(2);
   });
 });
 
@@ -4055,5 +4069,23 @@ describe('Datagrid columns width test', () => {
     await elem.getSize().then((size) => {
       expect(width).toContain(size.width);
     });
+  });
+});
+
+describe('Datagrid With Recursive Column Data', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-recursive-object');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render rows', async () => {
+    expect(await element.all(by.css('#datagrid .datagrid-wrapper tbody tr')).count()).toEqual(7);
   });
 });
