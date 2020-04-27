@@ -9461,7 +9461,13 @@ Datagrid.prototype = {
     let newVal;
 
     if (col.serialize) {
-      newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
+      const s = this.settings;
+      let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+      if (this.settings.groupable) {
+        dataset = this.originalDataset || dataset;
+      }
+      const rowData = s.treeGrid ? dataset[row].node : dataset[row];
+      newVal = col.serialize(value, oldVal, col, row, cell, rowData);
       return newVal;
     } else if (col.sourceFormat) {
       if (value instanceof Date) {
