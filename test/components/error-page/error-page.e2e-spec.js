@@ -16,7 +16,7 @@ describe('Error page example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-index', async () => {
-      const mainEl = await Element(by.css('div[role=main]'));
+      const mainEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
