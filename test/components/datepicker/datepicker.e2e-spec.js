@@ -992,6 +992,33 @@ describe('Datepicker Timeformat Tests', () => {
     expect(await element(by.id('dp2')).getAttribute('value')).toEqual(`${testDate.getDate().toString().padStart(2, '0')}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${(testDate.getFullYear())} 12:00 पूर्व`);
     expect(await element.all(by.css('.error-text')).count()).toEqual(0);
   });
+
+  it('Should work with ar-SA locale', async () => {
+    await utils.setPage('/components/datepicker/example-timeformat?locale=ar-SA');
+    const datepickerEl = await element(by.id('dp1'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    const todayEl = await element(by.css('.hyperlink.today'));
+    await todayEl.click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    // Cant parse the full date so its a loose check
+    // If this starts to fail, adjust the year
+    const displayedValue = element(by.id('policyNumber')).getAttribute('value');
+
+    expect(displayedValue).toContain('ص');
+    expect(displayedValue).toContain('14');
+
+    await utils.checkForErrors();
+
+    expect(await element.all(by.css('.error-text')).count()).toEqual(0);
+  });
 });
 
 describe('Datepicker Umalqura Tests', () => {
@@ -1017,6 +1044,15 @@ describe('Datepicker Umalqura Tests', () => {
 
     expect([8, 9, 10]).toContain(value.length);
     await utils.checkForErrors();
+  });
+
+  it('Should open popup on icon click', async () => {
+    const datepickerEl = await element(by.id('islamic-date'));
+    await datepickerEl.sendKeys('1441/09/19');
+    await element(by.css('#islamic-date + .icon')).click();
+
+    expect(await datepickerEl.getAttribute('class')).toContain('is-open');
+    expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
   });
 });
 
@@ -1108,6 +1144,16 @@ describe('Datepicker Month Only Picker Tests', () => {
     await element(by.cssContainingText('.picklist-item', 'April')).click();
 
     expect(await element(by.id('month-only')).getAttribute('value')).toEqual('April');
+  });
+
+  it('Should be able to function as month picker', async () => {
+    const datepickerEl = await element(by.id('month-only-med'));
+    await datepickerEl.sendKeys('Apr');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await element(by.cssContainingText('.picklist-item', 'May')).click();
+
+    expect(await element(by.id('month-only-med')).getAttribute('value')).toEqual('May');
   });
 
   if (utils.isChrome() && utils.isCI()) {

@@ -1,0 +1,43 @@
+{{> includes/head}}
+
+<body class="no-scroll error-page">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <div class="page-container scrollable" role="main">
+    <div class="row">
+      <div class="twelve columns">
+
+        <div class="error-page-context">
+          <div class="error-page-content">
+
+            <div class="error-page-icon">
+              <svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-empty-error-loading"></use>
+              </svg>
+            </div>
+
+            <div class="error-page-title">
+              Access Denied
+            </div>
+
+            <div class="error-page-info">
+              SunSystems Configuration Manager access has been denied.
+            </div>
+
+            <div class="error-page-button">
+              <button type="button" class="btn btn-primary">
+                <span>Return</span>
+              </button>
+            </div>
+
+          </div><!-- .error-page-message -->
+        </div><!-- #error-page -->
+
+      </div>
+    </div>
+  </div>
+
+  {{> includes/footer}}
+</body>
+</html>

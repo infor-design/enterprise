@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="autocomplete-default">States</label>
+      <input type="text" autocomplete="off" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="autocomplete-default"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#autocomplete-default')
+    .on('selected', function (e) {
+      console.log('selected:', $(this).val());
+    })
+    .on('change', function (e) {
+      console.log('change:', $(this).val());
+    });
+</script>

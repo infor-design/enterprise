@@ -183,6 +183,7 @@ const customLocations = {
   masks: 'rules',
   'mask-api': '',
   'mask-input': 'foundational',
+  'modal.manager': '',
   _tabs: 'mid',
   '_tabs-horizontal': 'mid',
   '_tabs-vertical': 'mid',

@@ -319,6 +319,14 @@ $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $theme-color-palette-graphite-30;
 $spinbox-button-color: $theme-color-palette-white;
 
+// Error Page
+$error-page-bg-color: $theme-color-palette-graphite-20;
+$error-page-content-bg-color: $theme-color-palette-graphite-10;
+$error-page-title-color: $theme-color-palette-graphite-90;
+$error-page-info-color: $label-color;
+$error-page-border-color: $theme-color-palette-graphite-60;
+$error-page-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
 //Skip Link
 $skip-link-border-color: $theme-color-palette-graphite-60;
 $skip-link-bg-color: $theme-color-palette-graphite-10;
