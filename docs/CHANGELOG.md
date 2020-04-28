@@ -60,6 +60,7 @@
 - `[Multiselect]` Fixed tags dismiss button on mobile devices. ([#3640](https://github.com/infor-design/enterprise/issues/3640))
 - `[Icons]` Added new locked/unlocked icons in ids-identity [#3732](https://github.com/infor-design/enterprise/issues/3732)
 - `[Radar Chart]` Fixed an issue where labels were cutoff at desktop view. ([#3510](https://github.com/infor-design/enterprise/issues/3510))
+- `[Splitter]` Fixed an issue where collapse button was misaligned. ([#3825](https://github.com/infor-design/enterprise/issues/3825))
 - `[Swaplist]` Fixed disabled swap buttons color in dark variant subtle theme. ([#3709](https://github.com/infor-design/enterprise/issues/3709))
 - `[Utils]` Exposed `Soho.utils.isInViewport(elem)` for external use. ([#3436](https://github.com/infor-design/enterprise/issues/3436))
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
