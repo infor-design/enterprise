@@ -6,3 +6,12 @@
 .tooltip-title.filled {
   font-size: $theme-size-font-md;
 }
+
+.popover.alternate .tooltip-title {
+  font-size: $theme-size-font-md;
+  padding: 12px 5px 6px 15px;
+
+  .btn-close {
+    margin-top: -8px;
+  }
+}
