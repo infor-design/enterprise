@@ -58,7 +58,7 @@ There are some added classes to style sections to look like `<fieldsets>` in cas
 
 ```
 
-## Testability
+## Accessibility
 
 - `role="region"` Should be added to the fieldset region to convey it to non-sighted users.
 - `aria-labelledby` Should be added to the dynamic expandable region, where aria-labelledby points back to the fieldset title.
