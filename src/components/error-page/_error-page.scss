@@ -1,28 +1,45 @@
 // Error Page
 //================================================== //
+.error-page {
+  background-color: $error-page-bg-color;
+}
 
-.error-page-message {
-  max-width: 300px;
-  padding: 10px 0 50px;
+.error-page-context {
   text-align: center;
 
-  .error-page-icon {
-    padding: 25px 0;
-  }
+  .error-page-content {
+    background-color: $error-page-content-bg-color;
+    border: 1px solid $error-page-border-color;
+    box-shadow: $error-page-box-shadow;
+    display: inline-block;
+    left: 50%;
+    min-height: 380px;
+    padding: 50px 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
-  .error-page-title {
-    @include font-size(24);
+    .error-page-icon {
+      padding: 25px 0;
+    }
 
-    color: $error-page-title-color;
-    font-weight: 600;
-    margin: 0 15px;
-    padding-bottom: 20px;
-  }
+    .error-page-title {
+      @include font-size(24);
 
-  .error-page-info {
-    @include font-size(16);
+      color: $error-page-title-color;
+      font-weight: 600;
+      margin: 0 15px;
+      max-width: 300px;
+      padding-bottom: 20px;
+    }
 
-    margin: 0 15px 20px;
+    .error-page-info {
+      @include font-size(16);
+
+      color: $error-page-info-color;
+      margin: 0 15px 20px;
+      max-width: 300px;
+    }
   }
 }
 

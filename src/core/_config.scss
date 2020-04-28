@@ -390,7 +390,12 @@ $spinbox-button-color: transparent;
 $spinbox-hover-color: $theme-color-font-base;
 
 // Error Page
+$error-page-bg-color: $theme-color-palette-graphite-30;
+$error-page-content-bg-color: $theme-color-palette-white;
 $error-page-title-color: $theme-color-palette-graphite-60;
+$error-page-info-color: $theme-color-palette-graphite-40;
+$error-page-border-color: $theme-color-palette-graphite-30;
+$error-page-box-shadow: 0 2px 5px $drop-shadow-depth;
 
 //Skip Link
 $skip-link-border-color: $theme-color-palette-graphite-30;

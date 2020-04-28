@@ -290,7 +290,12 @@ $spinbox-bg-color: $theme-color-palette-slate-60;
 $spinbox-button-color: $body-color-primary-background;
 
 // Error Pge
+$error-page-bg-color: $theme-color-palette-slate-100;
+$error-page-content-bg-color: $theme-color-palette-slate-70;
 $error-page-title-color: $theme-color-palette-white;
+$error-page-info-color: $theme-color-palette-slate-30;
+$error-page-border-color: $theme-color-palette-slate-50;
+$error-page-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
 // Skip Link
 $skip-link-border-color: $theme-color-palette-slate-50;
