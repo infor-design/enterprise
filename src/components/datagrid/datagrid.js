@@ -3012,6 +3012,33 @@ Datagrid.prototype = {
       return;
     }
 
+    if (groupSettings.aggregator === 'min') {
+      this.settings.dataset = GroupBy.min(
+        this.settings.dataset,
+        groupSettings.fields,
+        groupSettings.aggregate
+      );
+      return;
+    }
+
+    if (groupSettings.aggregator === 'avg') {
+      this.settings.dataset = GroupBy.avg(
+        this.settings.dataset,
+        groupSettings.fields,
+        groupSettings.aggregate
+      );
+      return;
+    }
+
+    if (groupSettings.aggregator === 'count') {
+      this.settings.dataset = GroupBy.count(
+        this.settings.dataset,
+        groupSettings.fields,
+        groupSettings.aggregate
+      );
+      return;
+    }
+
     if (groupSettings.aggregator === 'list') {
       this.settings.dataset = GroupBy.list(
         this.settings.dataset,

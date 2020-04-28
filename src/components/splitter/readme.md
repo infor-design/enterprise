@@ -8,8 +8,8 @@ demo:
   pages:
   - name: Splitter Element in Left Pane
     slug: example-splitter-left
-  - name: Events
-    slug: example-events
+  - name: Splitter Element in Right Pane
+    slug: example-splitter-right
 ---
 
 ## Code Example

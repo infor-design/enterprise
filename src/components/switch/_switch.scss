@@ -18,15 +18,19 @@
     }
   }
 
-  //Invisible Input
+  // Invisible Input
   input {
+    border: none;
+    height: 14px;
     position: absolute;
+
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   // Unchecked Styling
   input:empty {
-    margin-left: -9999px;
-
     ~ .label-text,
     ~ label {
       @include no-select();

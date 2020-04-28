@@ -88,21 +88,58 @@ const groupBy = (function () {
 groupBy.register('none', item => $.extend({}, item.key, { values: item.values }));
 
 groupBy.register('sum', function (item) {
-  const extra = this.extra;
+  const field = this.extra;
+  const nonEmpty = item.values.map(row => row[field])
+    .filter(val => val !== undefined && val !== null);
   return $.extend(
-    {}, item.key,
+    {},
+    item.key,
     { values: item.values },
-    { sum: item.values.reduce((memo, node) => memo + Number(node[extra]), 0) }
+    { sum: nonEmpty.reduce((a, b) => Number(a) + Number(b), 0) }
   );
 });
 
 groupBy.register('max', function (item) {
-  const extra = this.extra;
+  const field = this.extra;
   return $.extend(
     {},
     item.key,
     { values: item.values }, // eslint-disable-next-line
-    { max: item.values.reduce((memo, node) => Math.max(memo, Number(node[extra])), Number.NEGATIVE_INFINITY) }
+    { max: Math.max(...item.values.map(row => row[field]).filter(val => val !== undefined && val !== null)) }
+  );
+});
+
+groupBy.register('min', function (item) {
+  const field = this.extra;
+  return $.extend(
+    {},
+    item.key,
+    { values: item.values }, // eslint-disable-next-line
+    { min: Math.min(...item.values.map(row => row[field]).filter(val => val !== undefined && val !== null)) }
+  );
+});
+
+groupBy.register('avg', function (item) {
+  const field = this.extra;
+  const nonEmpty = item.values.map(row => row[field])
+    .filter(val => val !== undefined && val !== null);
+  return $.extend(
+    {},
+    item.key,
+    { values: item.values },
+    { avg: nonEmpty.reduce((a, b) => Number(a) + Number(b), 0) / nonEmpty.length }
+  );
+});
+
+groupBy.register('count', function (item) {
+  const field = this.extra;
+  const nonEmpty = item.values.map(row => row[field])
+    .filter(val => val !== undefined && val !== null);
+  return $.extend(
+    {},
+    item.key,
+    { values: item.values },
+    { count: nonEmpty.length }
   );
 });
 

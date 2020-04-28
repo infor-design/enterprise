@@ -240,19 +240,19 @@ describe('Datagrid Filter API', () => {
       toolbar: { title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false }
     });
 
-    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(16);
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(18);
     expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(7);
 
     let filter = [];
     filter = [{ columnId: 'location', operator: 'contains', value: 'USA' }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(9);
     expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(5);
 
     datagridObj.setSortColumn('location', true);
 
-    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr[role="row"]').length).toEqual(9);
     expect(document.body.querySelectorAll('tbody tr[role="rowgroup"]').length).toEqual(5);
   });
 
