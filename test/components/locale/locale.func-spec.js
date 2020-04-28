@@ -288,6 +288,19 @@ describe('Locale API', () => {
     expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
   });
 
+  it('Should parse date in ar-SA', () => {
+    Locale.set('ar-SA');
+
+    const dateTest = Locale.parseDate('1441/09/05 9:30 ص', { locale: 'ar-SA', pattern: 'yyyy/MM/dd h:mm a' });
+
+    expect(dateTest[0]).toEqual(1441);
+    expect(dateTest[1]).toEqual(8);
+    expect(dateTest[2]).toEqual(5);
+    expect(dateTest[3]).toEqual(9);
+    expect(dateTest[4]).toEqual(30);
+    expect(dateTest[5]).toEqual(0);
+  });
+
   it('Should parse am/pm in Korean', () => {
     Locale.set('ko-KO');
 
