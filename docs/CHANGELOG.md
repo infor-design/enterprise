@@ -71,6 +71,8 @@
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 - `[Tree]` Fixed an issue where use `UpdateNode()` method the data was not sync. ([#3724](https://github.com/infor-design/enterprise/issues/3724))
 
+(71 Issues Solved this release, Backlog Enterprise 260, Backlog Ng 82, 1048 Functional Tests, 1370 e2e Test)
+
 ## v4.27.4
 
 ### v4.27.4 Fixes
