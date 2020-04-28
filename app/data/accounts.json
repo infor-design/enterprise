@@ -7,7 +7,7 @@
 		"firstname": "Jonathon",
 		"lastname": "Hardy",
 		"phone": "(312) 555-7854",
-		"purchases": 1200
+		"purchases": "1200"
 	},
 	{
 		"id": 2,
@@ -17,7 +17,7 @@
 		"firstname": "Coyle",
 		"lastname": "Rita",
 		"phone": "+49 (897) 104-6155",
-		"purchases": 1800
+		"purchases": null
 	},
 	{
 		"id": 3,
@@ -158,5 +158,25 @@
 		"lastname": "Shroeder",
 		"phone": "(252) 262-2821",
 		"purchases": 2200
-	}
+	},
+  {
+    "id": 17,
+    "name": "American Eagle Inc.",
+    "type": "Software Prospect",
+    "location": "PA, USA",
+    "firstname": "Jon",
+    "lastname": "Smith",
+    "phone": "(212) 323-12121",
+    "purchases": null
+  }
+  ,
+  {
+    "id": 18,
+    "name": "Eagle Food Inc.",
+    "type": "Software Prospect",
+    "location": "Co, USA",
+    "firstname": "James",
+    "lastname": "James",
+    "phone": "(121) 332-3232"
+  }
 ]

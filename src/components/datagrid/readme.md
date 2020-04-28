@@ -216,6 +216,34 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 - Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-alternate-row-shading?font=source-sans" target="_blank">alternate row shading</a>|
 - Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-colspan?font=source-sans" target="_blank">Column Span Example</a>|
 
+## Grouping Data
+
+It is possible to group data like an SQL group by and create group separators and total lines. To do this you add the `groupable` option to the datagrid settings, an example of this is:
+
+```javascript
+  groupable: {
+    fields: ['type'],
+    aggregator: 'max',
+    aggregate: 'purchases',
+    groupFooterRow: true,
+    groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
+      return '<td role="gridcell" colspan=' + (api.visibleColumns().length - 2) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Max</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.max +'</div></td>';
+    },
+    expanded: function (row, cell, value, col, item) {
+      // Simulate some logic to determine which rows should be Collapsed
+      return item.type.indexOf('Customer') != -1;
+    }
+  }
+```
+
+The following explained....
+- fields - An array containing the field(s) you want to group by
+- aggregator - An optional single aggregator that will run a plugin function over the data and do summarization. By default the following are supported: sum, min, max, avg, count (non-blank/non-null)
+- aggregate - The field to run the aggregator on
+- groupFooterRow - If true a row will be added after each group
+- groupFooterRowFormatter - A function that returns the internal html contents as a string for the group row. Note that if using an aggregator you should add `item.<name-of-aggregator>` to get that result inserted where you like it. You can calculate spans t place the data over certain columns.
+- expanded - A function that returns true of false allowing you to custom which rows are initially collapsed or expanded.
+
 ## Frozen Columns
 
 Its possible to freeze columns on the left or right of the scroll area to keep them in view. To do this use the `frozenColumns` setting. When using set the column id for the columns you want to freeze. Id is required for this to work. For example
@@ -244,8 +272,6 @@ frozenColumns: {
 
 ### Frozen Columns Limitations
 
-- Wont work with columns with colspans
-- Wont work with dynamically height rows (example-comments.html)
 - You can’t resize frozen columns
 - Frozen columns cant be moved or hidden from the personalize dialog
 - Ids are required for the frozen columns and should be used in general to avoid bugs
@@ -257,7 +283,6 @@ frozenColumns: {
 - Row Reorder will not work with frozen columns at this time
 - Will not work with nested grids
 - Will not work with clickToSelect setting
-- Will not yet work with tree grid
 
 ## Testability
 

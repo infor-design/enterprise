@@ -2652,6 +2652,109 @@ describe('Datagrid grouping multiselect tests', () => {
   });
 });
 
+describe('Datagrid grouping aggregators', () => {
+  it('Should be to able aggregate an average', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-avg');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(2)')).getText()).toEqual('Avg');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(3)')).getText()).toEqual('1450');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(12) td:nth-child(3)')).getText()).toEqual('1940');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(16) td:nth-child(3)')).getText()).toEqual('3200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(19) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(23) td:nth-child(3)')).getText()).toEqual('3700');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(29) td:nth-child(3)')).getText()).toEqual('3200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(32) td:nth-child(3)')).getText()).toEqual('2200');
+  });
+
+  it('Should be to able aggregate a count', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-count');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(2)')).getText()).toEqual('Count (non empty)');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(3)')).getText()).toEqual('2');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(12) td:nth-child(3)')).getText()).toEqual('5');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(16) td:nth-child(3)')).getText()).toEqual('2');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(19) td:nth-child(3)')).getText()).toEqual('1');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(23) td:nth-child(3)')).getText()).toEqual('2');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(29) td:nth-child(3)')).getText()).toEqual('2');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(32) td:nth-child(3)')).getText()).toEqual('1');
+  });
+
+  it('Should be able to aggregate as a list', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-list');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(5)')).getText()).toEqual('700PE1PE11041');
+  });
+
+  it('Should be able to aggregate a max', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-max');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(2)')).getText()).toEqual('Max');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(3)')).getText()).toEqual('1700');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(12) td:nth-child(3)')).getText()).toEqual('2200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(16) td:nth-child(3)')).getText()).toEqual('3200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(19) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(23) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(29) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(32) td:nth-child(3)')).getText()).toEqual('2200');
+  });
+
+  it('Should be able to aggregate a min', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-min');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(2)')).getText()).toEqual('Min');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(3)')).getText()).toEqual('1200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(12) td:nth-child(3)')).getText()).toEqual('1500');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(16) td:nth-child(3)')).getText()).toEqual('3200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(19) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(23) td:nth-child(3)')).getText()).toEqual('3200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(29) td:nth-child(3)')).getText()).toEqual('2200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(32) td:nth-child(3)')).getText()).toEqual('2200');
+  });
+
+  it('Should be able to aggregate a sum', async () => {
+    await utils.setPage('/components/datagrid/test-grouping-aggregators-sum');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await utils.checkForErrors();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(2)')).getText()).toEqual('Sum');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(3)')).getText()).toEqual('2900');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(12) td:nth-child(3)')).getText()).toEqual('9700');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(16) td:nth-child(3)')).getText()).toEqual('6400');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(19) td:nth-child(3)')).getText()).toEqual('4200');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(23) td:nth-child(3)')).getText()).toEqual('7400');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(29) td:nth-child(3)')).getText()).toEqual('6400');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(32) td:nth-child(3)')).getText()).toEqual('2200');
+  });
+});
+
 describe('Datagrid hide selection checkbox tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-hide-selection-checkbox');
