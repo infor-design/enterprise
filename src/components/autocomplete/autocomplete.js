@@ -777,6 +777,7 @@ Autocomplete.prototype = {
    * @returns {void}
    */
   highlight(anchor, allAnchors) {
+    const val = this.element.val();
     let text = anchor.text().trim();
 
     if (anchor.find('.display-value').length > 0) {
@@ -790,6 +791,9 @@ Autocomplete.prototype = {
 
     this.noSelect = true;
     this.element.val(text).focus();
+    if (val !== text) {
+      this.element.triggerHandler('change');
+    }
   },
 
   /**

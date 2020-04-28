@@ -1328,6 +1328,7 @@ const Locale = {  // eslint-disable-line
         parseInt(dateObj.month, 10),
         parseInt(dateObj.day, 10),
         parseInt(dateObj.h || 0, 10),
+        parseInt(dateObj.mm || 0, 10),
         parseInt(dateObj.ss || 0, 10),
         parseInt(dateObj.ms || 0, 10)
       ];
@@ -1906,9 +1907,13 @@ const Locale = {  // eslint-disable-line
    * @param {number} year the year
    * @param {number} month the month
    * @param {number} day the day
-   * @returns {obgect} the date
+   * @param {number} hours the day
+   * @param {number} mins the day
+   * @param {number} secs the day
+   * @param {number} mills the day
+   * @returns {object} the date
    */
-  umalquraToGregorian(year, month, day) {
+  umalquraToGregorian(year, month, day, hours = 0, mins = 0, secs = 0, mills = 0) {
     // toGregorian
     // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
     const isNumber = n => typeof n === 'number' && !isNaN(n);
@@ -1946,10 +1951,10 @@ const Locale = {  // eslint-disable-line
       gregorianDateObj.year,
       gregorianDateObj.month,
       gregorianDateObj.day,
-      0,
-      0,
-      0,
-      0
+      hours,
+      mins,
+      secs,
+      mills
     );
     return gregorianDate;
   },

@@ -158,6 +158,11 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -50px;
     }
+
+    &.datetime {
+      padding-left: 30px;
+      padding-right: 10px;
+    }
   }
 
   // Short fields
@@ -185,6 +190,12 @@ html[dir='rtl'] {
 
     &.is-alternate .today {
       left: 0;
+    }
+  }
+
+  .monthview-popup {
+    button.btn-primary:hover {
+      border-left: none;
     }
   }
 }
