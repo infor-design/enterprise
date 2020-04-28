@@ -4,10 +4,10 @@ This document describes the process for achieving a high degree of accessibility
 
 ### Things IDS is Responsible For
 
-- We add [aria attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) within the components where appropriate.
+- We add [aria attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) within the component code where appropriate.
 - We add [Axe e2e tests](https://github.com/dequelabs/axe-core) to ensure the attributes are valid.
 - We provide a compliant series of color schemes (High Contrast theme is WCAG AAA)
-- We provide [audio labels](https://webaim.org/techniques/css/invisiblecontent/) where possible  within the components. This is done with the `audible` class for example:
+- We provide [audio labels](https://webaim.org/techniques/css/invisiblecontent/) where possible within the component code. This is done with the `audible` class for example:
 
 ```javascript
 <button class="btn">
@@ -16,10 +16,18 @@ This document describes the process for achieving a high degree of accessibility
   </svg>
   <span class="audible">Home</span>
 </button>
+
+- We make svg elements non focusable udio labels](https://webaim.org/techniques/css/invisiblecontent/) where appropriate within the component code. This is done with adding `focusable="false" aria-hidden="true" role="presentation"`.
+
+```javascript
+<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+  <use href="#icon-home"></use>
+</svg>
 ```
 
 ### Things Applications are Responsible For
 
+- Testing your application towards the [WCAG 2.1 spec](https://www.w3.org/WAI/WCAG21/quickref)
 - Providing accessible language and content to be used within our patterns and components
 - Appropriate usage of the components in a way that ensures all of our accessibility measures are correctly working, for example matching labels to inputs with the `for` attribute.
 - Testing their application for issues.

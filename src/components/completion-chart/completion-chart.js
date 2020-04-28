@@ -74,8 +74,10 @@ CompletionChart.prototype = {
     const isTarget = this.settings.type === 'completion-target';
     const isAchievment = this.settings.type === 'targeted-achievement';
 
-    $(this.element).addClass(`completion-chart${
-      this.settings.type === 'targeted-achievement' ? ' chart-targeted-achievement' : ''}`);
+    this.element
+      .addClass('completion-chart')
+      .addClass(`${this.settings.type === 'targeted-achievement' ? ' chart-targeted-achievement' : ''}`)
+      .attr('role', 'image');
 
     // Set total defaults
     dataset.total = $.extend({}, { value: 100 }, dataset.total);
@@ -338,7 +340,7 @@ CompletionChart.prototype = {
     if (dataset.remaining) {
       html.remaining = `${'' +
       '<div class="target remaining bar'}${!specColor.remaining ? ` ${fixUndefined(dataset.remaining.color)}` : ''}"${specColor.remaining ? (` style="color:${dataset.remaining.color};background-color:${dataset.remaining.color};"`) : ''}">${
-        isAchievment ? '' : `<span aria-hidden="true"${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
+        isAchievment ? '' : `<span${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
           `<span class="value${!specColor.remaining ? ` ${fixUndefined(dataset.remaining.color)}` : ''}"${specColor.remaining ? (` style="color:${dataset.remaining.color};"`) : ''}">${
             setFormat(dataset.remaining)
           }</span><br />` +
@@ -358,7 +360,7 @@ CompletionChart.prototype = {
       html.completed = `${'' +
       '<div class="completed bar'}${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''}"${specColor.completed ? (` style="color:${dataset.completed.color};background-color:${dataset.completed.color};"`) : ''}"></div>${
         percentText.show ? `<div class="chart-percent-text${!specColor.percentText && percentText.color !== '' ? ` ${percentText.color}` : ''}"${specColor.percentText ? (` style="color:${percentText.color};"`) : ''}>${percentText._text}</div>` : '' //eslint-disable-line
-      }<span class="completed-label" aria-hidden="true"${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
+      }<span class="completed-label"${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
           `<span class="text">${
             fixUndefined(dataset.completed.text)
           }</span>` +
@@ -372,7 +374,7 @@ CompletionChart.prototype = {
     if (dataset.completed && !isAchievment) {
       html.completed = `${'' +
       '<div class="completed bar'}${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''}"${specColor.completed ? (` style="color:${dataset.completed.color};background-color:${dataset.completed.color};"`) : ''}>` +
-        `<span aria-hidden="true"${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
+        `<span${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
           `<span class="value${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''}"${specColor.completed ? (` style="color:${dataset.completed.color};"`) : ''}">${setFormat(dataset.completed)}</span><br />` +
           `<span class="text${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''}"${specColor.completed ? (` style="color:${dataset.completed.color};"`) : ''}">${
             fixUndefined(dataset.completed.text)
@@ -383,7 +385,7 @@ CompletionChart.prototype = {
     if (dataset.targetline) {
       html.targetline = `${'' +
       '<div class="target-line targetline bar'}${!specColor.targetline ? ` ${fixUndefined(dataset.targetline.color)}` : ''}"${specColor.targetline ? (` style="color:${dataset.targetline.color};background-color:${dataset.targetline.color};"`) : ''}">` +
-        `<span aria-hidden="true"${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
+        `<span${!isTarget && !isAchievment ? ' class="audible"' : ''}>` +
           `<span class="value${!specColor.targetline ? ` ${fixUndefined(dataset.targetline.color)}` : ''}"${specColor.targetline ? (` style="color:${dataset.targetline.color};"`) : ''}">${
             setFormat(dataset.targetline)
           }</span><br />` +

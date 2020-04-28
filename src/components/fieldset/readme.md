@@ -18,8 +18,8 @@ Here is an example showing a few input fields in a `<fieldset>`. Anything can go
 
 ```html
 <form action="#" method="post">
-  <fieldset>
-    <legend>Company Information</legend>
+  <fieldset role="region" aria-labelledby="fieldset-id">
+    <legend id="fieldset-id">Company Information</legend>
 
     <div class="field">
       <label for="example-fs-company-name">Company Name</label>
@@ -57,6 +57,11 @@ There are some added classes to style sections to look like `<fieldsets>` in cas
 </div>
 
 ```
+
+## Accessibility
+
+- `role="region"` Should be added to the fieldset region to convey it to non-sighted users.
+- `aria-labelledby` Should be added to the dynamic expandable region, where aria-labelledby points back to the fieldset title.
 
 ## Testability
 

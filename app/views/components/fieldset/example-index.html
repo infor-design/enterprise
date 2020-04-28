@@ -1,65 +1,65 @@
 <div class="row">
     <div class="six columns">
-  
+
       <!-- Variation One -->
       <fieldset>
         <legend>Company Information</legend>
         <div class="summary-form">
-  
+
           <div class="row">
             <div class="one-half column">
-  
+
               <div class="field">
                 <span class="label">Company Name</span>
                 <span class="data">Building Suppliers</span>
               </div>
-  
+
               <div class="field">
                 <span class="label">Company Type</span>
                 <span class="data">Contractor</span>
               </div>
-  
+
               <div class="field">
                 <span class="label">Company Address</span>
                 <span class="data">4209 Industrial Avenue <br>Los Angeles, California 90001 USA</span>
               </div>
-  
+
             </div>
-  
+
             <div class="one-half column">
-  
+
               <div class="field">
                 <span class="label">Phone Number</span>
                 <span class="data">(999) 810-2604</span>
               </div>
-  
+
               <div class="field">
                 <span class="label">Website</span>
                 <span class="data">www.buildings.com</span>
               </div>
-  
+
               <div class="field">
                 <span class="label">Estimated Delivery</span>
                 <span class="data">June 21, 2015 <i> (4 days)</i></span>
               </div>
-  
+
             </div>
-  
+
           </div>
-  
+
         </div>
-  
+
       </fieldset>
-  
+
       <!-- Variation Two -->
-      <div class="fieldset">
-        <h2 class="fieldset-title">Credit Information</h2>
-        <div id="container-1" class="char-container"></div>
+      <div class="fieldset" role="region" aria-labelledby="fieldset-title">
+        <h2 class="fieldset-title" id="fieldset-title">Credit Information</h2>
+        <div id="container-1" class="chart-container"></div>
       </div>
-  
+
       <div class="fieldset">
         <h2 class="fieldset-title">Delivery Addresses</h2>
-  
+
         <div class="summary-form">
           <div class="field">
             <span class="data">4209 Industrial Avenue Los Angeles, California 90001 USA<br>
@@ -67,10 +67,10 @@
           </div>
         </div>
       </div>
-  
+
     </div>
   </div>
-  
+
   <script>
     $('body').on('initialized', function () {
       var container = [{
@@ -94,12 +94,11 @@
           },
         }]
       }];
-  
+
       $('#container-1').chart({
         dataset: container,
         type: 'completion-target'
       }).data('chart');
     });
-  
+
   </script>
-  

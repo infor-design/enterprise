@@ -10828,8 +10828,8 @@ Datagrid.prototype = {
 
     // Set Visual Indicator
     this.element.find('.is-sorted-asc, .is-sorted-desc')
-      .removeClass('is-sorted-asc is-sorted-desc')
-      .attr('aria-sort', 'none');
+      .removeClass('is-sorted-asc is-sorted-desc');
+
     this.element.find(`[data-column-id="${id}"]`)
       .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
       .attr('aria-sort', ascending ? 'ascending' : 'descending');

@@ -18,6 +18,8 @@ demo:
     slug: example-forgotpassword
   - name: Example of a sent a forgotten password page
     slug: example-forgotpassword-sent
+  - name: Example of a create new password page
+    slug: example-password-create
 ---
 
 ## Code Example

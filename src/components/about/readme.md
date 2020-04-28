@@ -22,7 +22,7 @@ $('body').about({
 
 ## Accessibility
 
-- [Modal](./modal) guidelines apply as this is actually a specific modal dialog.
+- `aria-describedby` The component auto renders an `aria-describedby` attribute which is necessary for setting the static text that is to be announced for the dialog static content.
 
 ## Code Tips
 

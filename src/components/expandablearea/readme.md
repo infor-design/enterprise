@@ -56,6 +56,12 @@ Its possible to assign a custom button that can toggle a specific area using the
 </div>
 ```
 
+## Accessibility
+
+- `role="button"` Should be added to the link so AT treats the link as if it was a button.
+- `role="region"` Should be added to the expandable region to convey it to non-sighted users.
+- `aria-labelledby` Should be added to the dynamic expandable region, where aria-labelledby points back to the area title.
+
 ## Testability
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

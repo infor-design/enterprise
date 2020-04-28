@@ -54,6 +54,7 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 - Icons have `role="presentation" aria-hidden="true" focusable="false"`
 - Selected page has `aria-selected = "true"`
 - Disabled pages (if exists) have `aria-disabled="true"`
+- Pager region has `role="region"` and `aria-label="Pagination"`
 
 ## Testability
 
