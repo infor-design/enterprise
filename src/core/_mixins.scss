@@ -189,6 +189,10 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) { @content; }
   }
 
+  @else if $media == phabletup {
+    @media (min-width: $breakpoint-wide-tablet - 1) { @content; }
+  }
+
   @else if $media == tabletup {
     @media (min-width: $breakpoint-phone-to-tablet) { @content; }
   }

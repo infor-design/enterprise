@@ -139,10 +139,43 @@
     }
 
     &.error,
-    &.alert {
+    &.alert,
+    &.border-color {
       border-left-style: solid;
-      border-left-width: 3px;
+      border-left-width: 4px;
       padding: 15px 20px 15px 17px;
+    }
+
+    &.border-color.ruby {
+      border-left-color: $theme-color-palette-ruby-60 !important;
+    }
+
+    &.border-color.amber {
+      border-left-color: $theme-color-palette-amber-60 !important;
+    }
+
+    &.border-color.emerald {
+      border-left-color: $theme-color-palette-emerald-60 !important;
+    }
+
+    &.border-color.azure {
+      border-left-color: $theme-color-palette-azure-60 !important;
+    }
+
+    &.border-color.turquoise {
+      border-left-color: $theme-color-palette-turquoise-60 !important;
+    }
+
+    &.border-color.amethyst {
+      border-left-color: $theme-color-palette-amethyst-60 !important;
+    }
+
+    &.border-color.slate {
+      border-left-color: $theme-color-palette-slate-60 !important;
+    }
+
+    &.border-color.graphite {
+      border-left-color: $theme-color-palette-graphite-60 !important;
     }
 
     &.error {

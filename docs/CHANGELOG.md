@@ -99,6 +99,7 @@
 ### v4.27.0 Features
 
 - `[Button]` Add `toData()` and related API for programmatically handling control of buttons. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
+- `[Calendar]` Enhanced the look and feel of monthview calendar by displaying legend and calendar event on mobile view. ([#925](https://github.com/infor-design/enterprise/issues/925))
 - `[Modal]` Created API for controlling the Modal ButtonSet. ([ng#467](https://github.com/infor-design/enterprise-ng/issues/467))
 - `[Datagrid]` Added support for api setting on expand and collapse children. ([#3274](https://github.com/infor-design/enterprise/issues/3274))
 - `[Datagrid]` Updated the fixedRowHeight setting to accept `auto` as an option. This will calculate the row height for all frozenRows section. If you have a lot of rows this may be slow so a number is preferred. ([#3374](https://github.com/infor-design/enterprise/issues/3374))

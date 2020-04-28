@@ -6196,7 +6196,7 @@ Datagrid.prototype = {
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
       const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
-      if (!hasMenu() || (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu())) {
+      if (!hasMenu() || (!utils.isSubscribedTo(self.element[0], e, 'contextmenu', 'datagrid') && !hasMenu())) {
         return true;
       }
       e.preventDefault();
@@ -6369,26 +6369,6 @@ Datagrid.prototype = {
         elem.trigger('close');
       }
     });
-  },
-
-  /**
-  * Check if the event is subscribed to.
-  * @private
-  * @param {object} e The update empty message config object.
-  * @param {string} eventName The update empty message config object.
-  * @returns {boolean} If the event is subscribed to.
-  */
-  isSubscribedTo(e, eventName) {
-    const self = this;
-    const gridEvents = $._data(self.element[0]).events;
-
-    for (const event in gridEvents) { //eslint-disable-line
-      if (event === eventName && !(gridEvents[event].length === 1 && gridEvents[event][0].namespace === 'datagrid')) {
-        return true;
-      }
-    }
-
-    return false;
   },
 
   /**

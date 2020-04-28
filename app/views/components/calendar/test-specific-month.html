@@ -23,6 +23,8 @@
   </div>
   <div class="calendar-event-details accordion" data-init="false" data-options="{'allowOnePane': false}">
   </div>
+  <div class="calendar-event-details-mobile listview" data-init="false">
+  </div>
 </div>
 
 <ul id="calendar-actions-menu" class="popupmenu">
@@ -49,12 +51,53 @@ $('body').one('initialized', function () {
         events: events,
         upcomingEventDays: 0,
         template: 'tmpl-readonly',
+        mobileTemplate: 'tmpl-mbl-readonly',
         modalTemplate: 'tmpl-modal',
         menuId: 'calendar-actions-menu'
       });
     });
   });
 });
+</script>
+
+<script id="tmpl-mbl-readonly" type="text/html">
+  {{={{{ }}}=}}
+  <ul>
+    {{#event}}
+      <li class="border-color {{color}}" data-id="{{id}}">
+        <div class="container">
+          <div class="column-left">
+            {{#subject}}
+            <p class="listview-heading">{{subject}}</p>
+            {{/subject}}
+
+            {{#duration}}
+            <p class="listview-subheading">{{startsLong}} - {{endsLong}}</p>
+            {{/duration}}
+
+            {{#durationHours}}
+            <p class="listview-subheading">{{startsHoursLong}} - {{endsHoursLong}}</p>
+            {{/durationHours}}
+
+            {{#status}}
+            <p class="listview-subheading">{{typeLabel}} | {{status}}</p>
+            {{/status}}
+          </div>
+          <div class="column-right">
+            {{#duration}}
+            <p class="listview-micro">{{duration}} {{durationUnits}}</p>
+            {{/duration}}
+            {{#durationHours}}
+            <p class="listview-micro">{{durationHours}} {{durationUnits}}</p>
+            {{/durationHours}}
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-caret-right"></use>
+            </svg>
+          </div>
+        </div>
+      </li>
+    {{/event}}
+  </ul>
 </script>
 
 <script id="tmpl-readonly" type="text/html">
@@ -125,67 +168,69 @@ $('body').one('initialized', function () {
 
 <script id="tmpl-modal" type="text/html">
   {{#event}}
-  <div class="form-responsive row">
-    <div class="twelve columns">
-      <div class="field">
-        <label for="subject" class="label" data-translate="text"><span data-translate="text">Subject</span></label>
-        <input id="subject" type="text" value="{{subject}}">
+  <div class="container">
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="subject" class="label" data-translate="text"><span data-translate="text">Subject</span></label>
+          <input id="subject" type="text" value="{{subject}}">
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="twelve columns">
-      <div class="field">
-        <label for="type" class="label"><span data-translate="text">Type</span></label>
-        <select id="type" class="dropdown" name="type">
-          {{#eventTypes}}
-          <option value="{{id}}">{{label}}</option>
-          {{/eventTypes}}
-        </select>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="type" class="label"><span data-translate="text">Type</span></label>
+          <select id="type" class="dropdown" name="type">
+            {{#eventTypes}}
+            <option value="{{id}}">{{label}}</option>
+            {{/eventTypes}}
+          </select>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="twelve columns">
-      <div class="field field-checkbox">
-        <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
-        <label for="isAllDay" class="checkbox-label"><span data-translate="text">AllDay</span></label>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
+          <label for="isAllDay" class="checkbox-label"><span data-translate="text">AllDay</span></label>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="six columns">
-      <div class="field">
-        <label for="startsLocale" class="label"><span data-translate="text">From</span></label>
-        <input id="startsLocale" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required date"/>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="startsLocale" class="label"><span data-translate="text">From</span></label>
+          <input id="startsLocale" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="startsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
+        </div>
       </div>
     </div>
-    <div class="six columns">
-      <div class="field">
-        <label for="startsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
-        <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="endsLocale" class="label"><span data-translate="text">To</span></label>
+          <input id="endsLocale" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="endsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="six columns">
-      <div class="field">
-        <label for="endsLocale" class="label"><span data-translate="text">To</span></label>
-        <input id="endsLocale" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required date"/>
-      </div>
-    </div>
-    <div class="six columns">
-      <div class="field">
-        <label for="endsHourLocale" class="label">&nsbp;<span class="audible">Time</span></label>
-        <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
-      </div>
-    </div>
-  </div>
-  <div class="form-responsive row">
-    <div class="twelve columns">
-      <div class="field">
-        <label for="comments" class="label"><span data-translate="text">Comments</span></label>
-        <textarea id="comments" type="text" value="{{comments}}"></textarea>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="comments" class="label"><span data-translate="text">Comments</span></label>
+          <textarea id="comments" type="text" value="{{comments}}"></textarea>
+        </div>
       </div>
     </div>
   </div>

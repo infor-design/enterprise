@@ -1229,6 +1229,26 @@ utils.deepCopy = function (arrayOrObject) {
 };
 
 /**
+ * Check if the event is subscribed to
+ * @param {HTMLElement} elem The object to check
+ * @param {object} e The event object to check
+ * @param {string} eventName The event name to look for
+ * @param {string} namespace The namespace to look for
+ * @returns {boolean} True if the event is subscribed to
+ */
+utils.isSubscribedTo = function (elem, e, eventName, namespace) {
+  const events = $._data(elem).events; //eslint-disable-line
+
+  for (const event in events) { //eslint-disable-line
+    if (event === eventName && !(events[event].length === 1 &&
+      events[event][0].namespace === namespace)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
  * Check if given element is within the viewport.
  * @private
  * @param {object} element The element to check
