@@ -39,7 +39,7 @@ describe('Tooltips index page tests', () => {
 
 describe('Tooltips on icon tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/icons/example-tooltips');
+    await utils.setPage('/components/tooltip/test-svg-icons');
   });
 
   it('Should not have errors', async () => {
