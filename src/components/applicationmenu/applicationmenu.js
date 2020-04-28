@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle, prefer-arrow-callback */
+import { DOM } from '../../utils/dom';
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
 import { breakpoints } from '../../utils/breakpoints';
@@ -7,6 +8,7 @@ import { Locale } from '../locale/locale';
 // jQuery Components
 import '../../utils/lifecycle/lifecycle.jquery';
 import '../accordion/accordion.jquery';
+import '../expandablearea/expandablearea.jquery';
 import '../searchfield/searchfield.jquery';
 
 // Name of the component in this file.
@@ -173,30 +175,15 @@ ApplicationMenu.prototype = {
     }
 
     // Handle Role Switcher with events and classes
-    const switchTrigger = this.element.find('.application-menu-switcher-trigger');
-    if (switchTrigger.length > 0) {
-      this.switcherPanel = switchTrigger.next('.expandable-area');
+    const switcherTrigger = this.element.find('.application-menu-switcher-trigger');
+    if (switcherTrigger.length > 0) {
+      this.switcherTrigger = switcherTrigger;
+      this.switcherPanel = switcherTrigger.next('.expandable-area');
 
       const expandableArea = this.switcherPanel.data('expandablearea');
       if (!expandableArea) {
         this.switcherPanel.expandablearea();
       }
-
-      this.switcherPanel.on('beforeexpand.applicationmenu', () => {
-        const height = this.element.height();
-
-        this.element.addClass('has-open-switcher');
-        this.switcherPanel.find('.content').height(height - 71); // The height of the visible header part
-
-        if (this.settings.onExpandSwitcher) {
-          this.settings.onExpandSwitcher(this, this.element, this.settings);
-        }
-      }).on('aftercollapse.applicationmenu', () => {
-        this.element.removeClass('has-open-switcher');
-        if (this.settings.onCollapseSwitcher) {
-          this.settings.onCollapseSwitcher(this, this.element, this.settings);
-        }
-      });
     }
     return this;
   },
@@ -708,7 +695,8 @@ ApplicationMenu.prototype = {
 
     this.element.find('.expandable-area').off([
       'beforeexpand.applicationmenu',
-      'aftercollapse.applicationmenu'
+      'aftercollapse.applicationmenu',
+      `keydown.${COMPONENT_NAME}-switcher`
     ].join(' '));
 
     this.accordion.off([
@@ -729,8 +717,11 @@ ApplicationMenu.prototype = {
     if (this.switcherPanel) {
       this.switcherPanel.off([
         'beforeexpand.applicationmenu',
-        'aftercollapse.applicationmenu'
+        'aftercollapse.applicationmenu',
+        `afterexpand.${COMPONENT_NAME}`
       ].join(' '));
+      delete this.switcherTrigger;
+      delete this.switcherPanel;
     }
 
     if (this.searchfield && this.searchfield.length) {
@@ -814,6 +805,53 @@ ApplicationMenu.prototype = {
     }).on('afterexpand.applicationmenu aftercollapse.applicationmenu', () => {
       self.toggleScrollClass();
     });
+
+    // If a Switcher Panel exists, handle callbacks, setup keyboard events.
+    if (this.switcherPanel) {
+      this.switcherPanel.on('beforeexpand.applicationmenu', () => {
+        const height = this.element.height();
+
+        self.element.addClass('has-open-switcher');
+        self.switcherPanel.find('.content').height(height - 71); // The height of the visible header part
+
+        if (self.settings.onExpandSwitcher) {
+          self.settings.onExpandSwitcher(self, self.element, self.settings);
+        }
+
+        // Sets focus on the first element in the switcher panel.
+        function focusElem() {
+          const focusableElems = DOM.focusableElems(self.switcherPanel[0]);
+          focusableElems[0].classList.remove('hide-focus');
+          focusableElems[0].focus();
+        }
+
+        self.element.on(`keydown.${COMPONENT_NAME}-switcher`, (e) => {
+          const key = e.key;
+          if (key === 'Escape' && self.element[0].classList.contains('has-open-switcher')) {
+            e.preventDefault();
+            self.closeSwitcherPanel();
+          }
+          if (key === 'Tab') {
+            self.keyboardChangedFocus = true;
+          }
+        });
+
+        self.switcherPanel.one(`afterexpand.${COMPONENT_NAME}`, () => {
+          if (this.keyboardChangedFocus) {
+            return;
+          }
+          focusElem();
+        });
+      }).on('aftercollapse.applicationmenu', () => {
+        this.element.removeClass('has-open-switcher');
+        if (this.settings.onCollapseSwitcher) {
+          this.settings.onCollapseSwitcher(this, this.element, this.settings);
+        }
+        this.element.off(`keydown.${COMPONENT_NAME}-switcher`);
+        this.switcherPanel.off(`afterexpand.${COMPONENT_NAME}`);
+        delete this.keyboardChangedFocus;
+      });
+    }
 
     $(document).on('open-applicationmenu', () => {
       self.openMenu(undefined, true);

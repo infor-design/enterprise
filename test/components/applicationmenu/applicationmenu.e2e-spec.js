@@ -237,6 +237,10 @@ describe('Application Menu role switcher tests', () => {
     await utils.setPage('/components/applicationmenu/test-personalized-role-switcher-long-title');
   });
 
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
   it('should have a working role switcher with long title', async () => {
     const btnSel = '.application-menu-switcher-trigger';
     await browser.driver
@@ -248,8 +252,20 @@ describe('Application Menu role switcher tests', () => {
     expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
   });
 
-  it('should not have errors', async () => {
-    await utils.checkForErrors();
+  it('can dismiss the role switcher by pressing Escape', async () => {
+    const btnSel = '.application-menu-switcher-trigger';
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css(btnSel)).last()), config.waitsFor); // eslint-disable-line
+
+    const btnEl = await element(by.css(btnSel));
+    await btnEl.click();
+
+    expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
+
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeFalsy();
   });
 });
 
