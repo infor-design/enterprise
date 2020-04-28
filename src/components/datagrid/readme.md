@@ -236,7 +236,8 @@ It is possible to group data like an SQL group by and create group separators an
   }
 ```
 
-The following explained....
+The grouping object has the following settings:
+
 - fields - An array containing the field(s) you want to group by
 - aggregator - An optional single aggregator that will run a plugin function over the data and do summarization. By default the following are supported: sum, min, max, avg, count (non-blank/non-null)
 - aggregate - The field to run the aggregator on
