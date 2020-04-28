@@ -315,6 +315,7 @@ Pager.prototype = {
       }
     }
 
+    this.element.attr({ role: 'region', 'aria-label': Locale.translate('Pagination') });
     return this;
   },
 

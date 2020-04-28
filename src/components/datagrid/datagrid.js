@@ -19,12 +19,18 @@ import { Editors } from '../datagrid/datagrid.editors';
 
 // jQuery components
 import '../../utils/animations';
-import '../emptymessage/emptymessage.jquery';
-import '../pager/pager.jquery';
-import '../mask/mask-input.jquery';
-import '../multiselect/multiselect.jquery';
-import '../timepicker/timepicker.jquery';
 import '../drag/drag.jquery';
+import '../emptymessage/emptymessage.jquery';
+import '../listview/listview.jquery';
+import '../mask/mask-input.jquery';
+import '../modal/modal.jquery';
+import '../multiselect/multiselect.jquery';
+import '../pager/pager.jquery';
+import '../popupmenu/popupmenu.jquery';
+import '../searchfield/searchfield.jquery';
+import '../timepicker/timepicker.jquery';
+import '../toolbar/toolbar.jquery';
+import '../tooltip/tooltip.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
@@ -6190,7 +6196,7 @@ Datagrid.prototype = {
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
 
       const hasMenu = () => self.settings.menuId && $(`#${self.settings.menuId}`).length > 0;
-      if (!hasMenu() || (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu())) {
+      if (!hasMenu() || (!utils.isSubscribedTo(self.element[0], e, 'contextmenu', 'datagrid') && !hasMenu())) {
         return true;
       }
       e.preventDefault();
@@ -6363,26 +6369,6 @@ Datagrid.prototype = {
         elem.trigger('close');
       }
     });
-  },
-
-  /**
-  * Check if the event is subscribed to.
-  * @private
-  * @param {object} e The update empty message config object.
-  * @param {string} eventName The update empty message config object.
-  * @returns {boolean} If the event is subscribed to.
-  */
-  isSubscribedTo(e, eventName) {
-    const self = this;
-    const gridEvents = $._data(self.element[0]).events;
-
-    for (const event in gridEvents) { //eslint-disable-line
-      if (event === eventName && !(gridEvents[event].length === 1 && gridEvents[event][0].namespace === 'datagrid')) {
-        return true;
-      }
-    }
-
-    return false;
   },
 
   /**
@@ -10842,8 +10828,8 @@ Datagrid.prototype = {
 
     // Set Visual Indicator
     this.element.find('.is-sorted-asc, .is-sorted-desc')
-      .removeClass('is-sorted-asc is-sorted-desc')
-      .attr('aria-sort', 'none');
+      .removeClass('is-sorted-asc is-sorted-desc');
+
     this.element.find(`[data-column-id="${id}"]`)
       .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
       .attr('aria-sort', ascending ? 'ascending' : 'descending');

@@ -1,6 +1,8 @@
 // Calendar Toolbar
 //================================================== //
 
+@import '../datepicker/datepicker';
+
 .calendar-toolbar {
   .datepicker {
     @include font-size(16);

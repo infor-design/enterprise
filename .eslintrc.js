@@ -15,8 +15,7 @@ module.exports = {
   'extends': [
     // Only import some AirBNB rules
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
-    'airbnb-base',
-    'plugin:compat/recommended'
+    'airbnb-base'
   ],
 
   // This is the root eslint file.
@@ -79,6 +78,11 @@ module.exports = {
 
     // disallow multiple empty lines and only one newline at the end
     'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+
+    // Don't allow paramter reassignment
+    'no-param-reassign': ['off', {
+      props: true,
+    }],
 
     // disallow use of unary operators, ++ and --
     // https://eslint.org/docs/rules/no-plusplus

@@ -75,10 +75,19 @@
   {{> includes/footer}}
 
   <script>
-    // May need to do more here.
-    $('.application-menu-switcher-panel .accordion').on('selected', function (e, args) {
-      $('body').toast({title: 'Role ' + args.innerText + ' Selected',  message: 'In a real application, you could refresh the app menu with new contents for the selected role.'});
-       $('.application-menu').data('applicationmenu').closeSwitcherPanel();
+    $('body').on('initialized', function() {
+      const appMenuAPI = $('.application-menu').data('applicationmenu');
+      const switcherPanelAcc = $('.application-menu-switcher-panel .accordion');
+      const switcherPanelTriggerSpan = $('.application-menu-switcher-trigger span');
+
+      switcherPanelAcc.on('selected.test', function (e, args) {
+        $('body').toast({
+          title: 'Role ' + args.innerText + ' Selected',
+          message: 'In a real application, you could refresh the app menu with new contents for the selected role.'
+        });
+        switcherPanelTriggerSpan.text(args.innerText)
+        appMenuAPI.closeSwitcherPanel();
+      });
     });
   </script>
 </body>

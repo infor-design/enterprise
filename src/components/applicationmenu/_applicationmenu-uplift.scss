@@ -99,9 +99,10 @@
     }
   }
 
-  .application-menu-footer {
-    .application-menu-toolbar {
-      padding: 10px 0 10px 19px;
+  .application-menu-toolbar {
+    .toolbar-section {
+      display: flex;
+      justify-content: center;
     }
   }
 

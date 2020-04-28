@@ -1,3 +1,19 @@
+// Datagrid Uplift Styles
+//================================================== //
+
+// NOTE: see `src/core/_required.scss` for other datagrid dependencies
+@import '../badges/badges-uplift';
+@import '../button/button-uplift';
+@import '../dropdown/dropdown-uplift';
+@import '../input/input-uplift';
+@import '../listview/listview-uplift';
+@import '../modal/modal-uplift';
+@import '../popupmenu/popupmenu-uplift';
+@import '../searchfield/searchfield-uplift';
+@import '../tag/tag-uplift';
+@import '../toolbar/toolbar-uplift';
+@import '../tooltip/tooltip-uplift';
+
 .datagrid-header {
   // Fix the size of the drag icon
   &.medium-rowheight {

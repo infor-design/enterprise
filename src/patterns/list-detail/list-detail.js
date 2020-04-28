@@ -135,7 +135,11 @@ ListDetail.prototype = {
 
       // Setup internal references that can be used to find out where a backElement
       // is located internally in this pattern instance.
-      this.listContainsBackElement = this.listElement.contains(this.backElement);
+
+      if (this.listContainsBackElement) {
+        this.listContainsBackElement = this.listElement.contains(this.backElement);
+      }
+      
       this.detailContainsBackElement = this.detailElement.contains(this.backElement);
     }
 

@@ -1,6 +1,11 @@
 // Toolbars
 //================================================== */
 
+@import '../button/button';
+@import '../colorpicker/colorpicker';
+@import '../fontpicker/fontpicker';
+@import '../popupmenu/popupmenu';
+
 $toolbar-buttonset-height: 40px;
 
 .toolbar {

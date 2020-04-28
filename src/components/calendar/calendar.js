@@ -26,6 +26,7 @@ const COMPONENT_NAME_DEFAULTS = {
   showViewChanger: true,
   onRenderMonth: null,
   template: null,
+  mobileTemplate: null,
   upcomingEventDays: 14,
   modalTemplate: null,
   menuId: null,
@@ -67,6 +68,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {string} [settings.template] The ID of the template used for the events.
+ * @param {string} [settings.mobileTemplate] The ID of the template on mobile responsive used for the events.
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
@@ -109,7 +111,8 @@ Calendar.prototype = {
       .renderEventTypes()
       .renderMonthView()
       .renderWeekView()
-      .handleEvents();
+      .handleEvents()
+      .addEventLegend();
 
     return this;
   },
@@ -140,6 +143,32 @@ Calendar.prototype = {
   setCurrentCalendar() {
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     return this;
+  },
+
+  /**
+   * Display event legends below the calendar table on mobile view.
+   * @private
+   * @returns {void}
+   */
+  addEventLegend() {
+    const s = this.settings;
+
+    this.eventLegend = $('<div class="calendar-event-legend"></div>');
+    this.monthviewTable = $('.monthview-table');
+
+    for (let i = 0; i < s.eventTypes.length; i++) {
+      const event = s.eventTypes[i];
+      const color = event.color;
+
+      const legend = '' +
+        `<div class="calendar-event-legend-item">
+          <span class="calendar-event-legend-swatch ${color}"></span>
+          <span class="calendar-event-legend-text">${event.label}</span>
+        </div>`;
+
+      this.eventLegend.append(legend);
+    }
+    this.monthviewTable.after(this.eventLegend);
   },
 
   /**
@@ -375,20 +404,40 @@ Calendar.prototype = {
     }
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile.listview');
     if (!this.eventDetailsContainer) {
       return;
     }
+    if (!this.eventDetailsMobileContainer) {
+      return;
+    }
+
     const thisEvent = $.extend(true, {}, eventData[0]);
     if (thisEvent.durationHours && !thisEvent.isDays) {
       calendarShared.formateTimeString(thisEvent, this.locale, this.language);
     }
-    this.renderTmpl(thisEvent, this.settings.template, this.eventDetailsContainer, count > 1);
+    this.renderTmpl(
+      thisEvent,
+      this.settings.template,
+      this.eventDetailsContainer,
+      count > 1
+    );
+
+    this.renderTmpl(
+      thisEvent,
+      this.settings.mobileTemplate,
+      this.eventDetailsMobileContainer,
+      count > 1
+    );
 
     const api = $(this.eventDetailsContainer).data('accordion');
     if (api) {
       api.destroy();
     }
+
+    $('.calendar .list-detail').css('display', 'block');
     $(this.eventDetailsContainer).accordion();
+    $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
 
     if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
       $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
@@ -441,8 +490,14 @@ Calendar.prototype = {
    */
   clearEventDetails() {
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
+    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile.listview');
+
     if (this.eventDetailsContainer) {
       this.eventDetailsContainer.innerHTML = '';
+    }
+
+    if (this.eventDetailsMobileContainer) {
+      this.eventDetailsMobileContainer.innerHTML = '';
     }
   },
 
@@ -775,7 +830,7 @@ Calendar.prototype = {
       const eventData = this.settings.events.filter(event => event.id === eventId);
       this.element.triggerHandler('contextmenu', { originalEvent: e, month: this.settings.month, year: this.settings.year, event: eventData[0] });
 
-      if (!self.isSubscribedTo(e, 'contextmenu') && !hasMenu()) {
+      if (!utils.isSubscribedTo(self.element[0], e, 'contextmenu', 'calendar') && !hasMenu()) {
         return true;
       }
       e.preventDefault();
@@ -806,21 +861,6 @@ Calendar.prototype = {
       return false;
     });
 
-    const showModalWithCallback = (eventData, isAdd, eventTarget) => {
-      this.showEventModal(eventData, (elem, event) => {
-        // Collect the data and popuplate the event object
-        const inputs = elem.querySelectorAll('input, textarea, select');
-        for (let i = 0; i < inputs.length; i++) {
-          event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
-        }
-        if (isAdd) {
-          this.addEvent(event);
-        } else {
-          this.updateEvent(event);
-        }
-      }, eventTarget);
-    };
-
     let timer = 0;
     const delay = 100;
     let prevent = false;
@@ -838,7 +878,7 @@ Calendar.prototype = {
             e.currentTarget.classList.contains('event-day-end')) {
             eventTarget = self.element.find(`.event-day-start[data-id="${target.attr('data-id')}"] .calendar-event-title`);
           }
-          showModalWithCallback(eventData[0], false, eventTarget);
+          this.showModalWithCallback(eventData[0], false, eventTarget);
           /**
            * Fires when an event in the calendar is clicked.
            * @event eventclick
@@ -895,7 +935,7 @@ Calendar.prototype = {
         this.settings.events,
         this.settings.eventTypes
       );
-      showModalWithCallback(eventData, true);
+      this.showModalWithCallback(eventData, true);
 
       /**
        * Fires when the calendar day is double clicked.
@@ -906,27 +946,21 @@ Calendar.prototype = {
        */
       this.element.triggerHandler('dblclick', { eventData, api: this });
     });
+
+    // Set up mobile list view events
+    this.element.find('.listview')
+      .off(`click.${COMPONENT_NAME}-mobile`)
+      .on(`click.${COMPONENT_NAME}-mobile`, (e) => {
+        const target = $(e.target).closest('li');
+        const mobileEventId = target.attr('data-id');
+        const mobileEventData = this.settings.events.filter(event => event.id === mobileEventId);
+        if (!mobileEventData || mobileEventData.length === 0) {
+          return;
+        }
+        this.showModalWithCallback(mobileEventData[0], false, target);
+        this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: mobileEventData[0] });
+      });
     return this;
-  },
-
-  /**
-   * Check if the event is subscribed to.
-   * @private
-   * @param {object} e The update empty message config object.
-   * @param {string} eventName The update empty message config object.
-   * @returns {boolean} If the event is subscribed to.
-   */
-  isSubscribedTo(e, eventName) {
-    const self = this;
-    const calendarEvents = $._data(self.element[0]).events;
-
-    for (const event in calendarEvents) { //eslint-disable-line
-      if (event === eventName && !(calendarEvents[event].length === 1 && calendarEvents[event][0].namespace === 'calendar')) {
-        return true;
-      }
-    }
-
-    return false;
   },
 
   /**
@@ -1214,7 +1248,7 @@ Calendar.prototype = {
       title: event.title || event.subject,
       trigger: 'immediate',
       keepOpen: true,
-      extraClass: 'calendar-popup',
+      extraClass: 'calendar-popup calendar-popup-mobile',
       tooltipElement: '#calendar-popup',
       headerClass: event.color,
       initializeContent: false
@@ -1303,6 +1337,29 @@ Calendar.prototype = {
   },
 
   /**
+   * Show the event modal and run a callback.
+   * @private
+   * @param {object} eventData Data from the event object
+   * @param {boolean} isAdd Open the modal in readnly mode vs edit mode
+   * @param {object} eventTarget The element to point the dialog at
+   * @returns {void}
+   */
+  showModalWithCallback(eventData, isAdd, eventTarget) {
+    this.showEventModal(eventData, (elem, event) => {
+      // Collect the data and popuplate the event object
+      const inputs = elem.querySelectorAll('input, textarea, select');
+      for (let i = 0; i < inputs.length; i++) {
+        event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+      }
+      if (isAdd) {
+        this.addEvent(event);
+      } else {
+        this.updateEvent(event);
+      }
+    }, eventTarget);
+  },
+
+  /**
    * Used to check if a Modal is currently visible.
    * @returns {boolean} whether or not the Modal is currently being displayed
    */
@@ -1339,7 +1396,8 @@ Calendar.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
-    if (settings.locale || settings.template || settings.upcomingEventDays) {
+    if (settings.locale || settings.template ||
+      settings.upcomingEventDays || settings.mobileTemplate) {
       this.destroy().init();
       return this;
     }
@@ -1405,6 +1463,10 @@ Calendar.prototype = {
     if (this.eventDetailsContainer) {
       this.eventDetailsContainer.innerHTML = '';
     }
+    if (this.eventDetailsMobileContainer) {
+      this.eventDetailsMobileContainer.innerHTML = '';
+    }
+
     this.removeModal();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

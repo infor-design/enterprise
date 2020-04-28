@@ -1,6 +1,11 @@
 // Toolbars - Uplift overrides
 //================================================== */
 
+@import '../button/button-uplift';
+@import '../colorpicker/colorpicker-uplift';
+@import '../fontpicker/fontpicker-uplift';
+@import '../popupmenu/popupmenu-uplift';
+
 // Styles for regular toolbar only
 .toolbar {
   .title {

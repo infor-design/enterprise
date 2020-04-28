@@ -1491,7 +1491,6 @@ Accordion.prototype = {
       headerElems = this.headers;
       globalEventSetup = true;
     }
-    const anchors = headerElems.find('a');
 
     // Returns "Header", "Anchor", or "Expander" based on the element's tag
     function getElementType(element) {
@@ -1543,10 +1542,6 @@ Accordion.prototype = {
       .on('mouseup.accordion', () => {
         headerWhereMouseDown = null;
       });
-
-    anchors.on('click.accordion', function (e) {
-      return clickInterceptor(e, $(this));
-    });
 
     headerElems.children('[class^="btn"]')
       .on('click.accordion', function (e) {
