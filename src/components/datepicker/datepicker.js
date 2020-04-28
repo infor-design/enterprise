@@ -1221,7 +1221,14 @@ DatePicker.prototype = {
 
     if (date instanceof Array) {
       this.currentIslamicDate = date;
-      this.currentDate = Locale.umalquraToGregorian(date[0], date[1], date[2]);
+      this.currentDate = Locale.umalquraToGregorian(
+        date[0],
+        date[1],
+        date[2],
+        date[3],
+        date[4],
+        date[5]
+      );
     }
 
     if (s.range.useRange) {
@@ -1549,7 +1556,10 @@ DatePicker.prototype = {
         gregorianValue = Locale.umalquraToGregorian(
           islamicValue[0],
           islamicValue[1],
-          islamicValue[2]
+          islamicValue[2],
+          islamicValue[3],
+          islamicValue[4],
+          islamicValue[5]
         );
       }
     }
@@ -1601,7 +1611,8 @@ DatePicker.prototype = {
 
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
-    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' || dateFormat === 'MMMM');
+    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' ||
+      dateFormat === 'MMMM' || dateFormat === 'MMM' || dateFormat === 'MM');
     const fieldValueTrimmed = self.element.val().trim();
 
     if (fieldValueTrimmed !== '' && !s.range.useRange) {
@@ -1611,7 +1622,12 @@ DatePicker.prototype = {
         calendarName: this.settings.calendarName
       }, isStrict);
 
-      const hours = parsedDate ? parsedDate.getHours() : 0;
+      let hours = 0;
+      if (this.isIslamic) {
+        hours = parsedDate[3];
+      } else {
+        hours = parsedDate?.getHours();
+      }
       if (parsedDate && hours < 12 &&
         self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
         parsedDate.setHours(hours + 12);
@@ -1763,8 +1779,15 @@ DatePicker.prototype = {
     hours = (period.length && (periodValue === this.currentCalendar.dayPeriods[0] ||
       !periodValue) && parseInt(hours, 10) === 12) ? 0 : hours;
 
-    date = new Date(date);
-    date.setHours(hours, minutes, seconds);
+    if (date instanceof Array) {
+      date[3] = hours;
+      date[4] = minutes;
+      date[5] = seconds;
+    } else {
+      date = new Date(date);
+      date.setHours(hours, minutes, seconds);
+    }
+
     return date;
   },
 
