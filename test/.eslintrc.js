@@ -4,6 +4,7 @@
  */
 module.exports = {
   'extends': [
+    'plugin:compat/recommended',
     'plugin:jasmine/recommended',
     'plugin:jasmine-jquery/recommended'
   ],

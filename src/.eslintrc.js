@@ -42,11 +42,6 @@ module.exports = {
     // https://eslint.org/docs/rules/no-mixed-operators
     'no-mixed-operators': ['off'],
 
-    // Don't allow paramter reassignment
-    'no-param-reassign': ['off', {
-      props: true,
-    }],
-
     // Ignore certain globals:
     // - IsNaN - due to our previous assumptions in code about how it sometimes will return 'false', and because `Number.isNaN` has no native IE11 support.
     // for things that are not numbers (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Examples).

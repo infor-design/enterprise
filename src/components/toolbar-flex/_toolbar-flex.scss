@@ -2,6 +2,11 @@
 // Flexible Toolbar Component
 // ==================================== //
 
+@import '../button/button';
+@import '../colorpicker/colorpicker';
+@import '../fontpicker/fontpicker';
+@import '../popupmenu/popupmenu';
+
 .toolbar-container {
   &.in-page {
     height: 40px;

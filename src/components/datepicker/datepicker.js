@@ -6,6 +6,7 @@ import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
 
 // jQuery Components
+import '../expandablearea/expandablearea.jquery';
 import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 import '../timepicker/timepicker.jquery';

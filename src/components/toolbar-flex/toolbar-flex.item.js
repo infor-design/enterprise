@@ -1,6 +1,13 @@
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
 
+// jQuery Components
+import '../button/button.jquery';
+import '../colorpicker/colorpicker.jquery';
+import '../hyperlinks/hyperlinks.jquery';
+import '../popupmenu/popupmenu.jquery';
+import '../searchfield/searchfield.jquery';
+
 // Component Name
 const COMPONENT_NAME = 'toolbarflexitem';
 

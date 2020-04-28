@@ -27,7 +27,6 @@
  * - Mid-Level Components (includes Charts)
  * - Complex Components
  */
-
 const commandLineArgs = require('yargs')
   .option('verbose', {
     alias: 'v',
@@ -64,6 +63,7 @@ const commandLineArgs = require('yargs')
 const chalk = require('chalk');
 const del = require('del');
 const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 
 const logger = require('./logger');
@@ -75,6 +75,7 @@ const createSvgHtml = require('./build/create-svg-html');
 const createColorJson = require('./build/create-color-json');
 
 const IdsMetadata = require('./helpers/ids-metadata');
+
 const IDS_THEMES = new IdsMetadata().getThemes();
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
@@ -162,6 +163,13 @@ const TEST_ARGS = [
   'validation'
 ];
 
+// Additional set of test args (provided in #3784 for fixing datagrid imports)
+const DATAGRID_TEST_ARGS = [
+  'button',
+  'busyindicator',
+  'datagrid'
+];
+
 // Library types
 const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
 
@@ -169,6 +177,9 @@ const libTypes = ['components', 'behaviors', 'layouts', 'patterns', 'utils'];
 // If the source code folder shows up as a property here, it will be moved to a different
 // bucket.
 const customLocations = {
+  'datagrid.editors': 'rules',
+  'datagrid.formatters': 'rules',
+  'datagrid.groupby': 'rules',
   masks: 'rules',
   'mask-api': '',
   'mask-input': 'foundational',
@@ -212,6 +223,15 @@ const dashSeparatedFileNames = {
   multitabs: 'tabs-multi', // (change)
   timepicker: 'time-picker',
   toolbarsearchfield: '' // don't actually include this one, cancel it out
+};
+
+// Map for converting certain `export` statements where the object names don't conform
+// to the expected standard of "export an object name that matches a camel-case version
+// of the dash/dot separated file name."
+const changedExportNames = {
+  'datagrid.editors': 'Editors',
+  'datagrid.formatters': 'Formatters',
+  'datagrid.groupby': 'GroupBy'
 };
 
 const lowercaseConstructorNames = {
@@ -386,6 +406,8 @@ function writeJSImportStatement(libFile, libPath, isExport, noConstructor) {
     constructorName = replaceDashesWithCaptials(constructorName);
   } else if (lowercaseConstructorNames[libFile]) {
     constructorName = lowercaseConstructorNames[libFile];
+  } else if (changedExportNames[libFile]) {
+    constructorName = changedExportNames[libFile];
   } else {
     constructorName = replaceDashesWithCaptials(libFile);
   }
@@ -1056,25 +1078,21 @@ cleanAll(true).then(() => {
       .then(() => {
         // THIS NEEDS REMOVED VERY SOON
         // Copy renamed soho theme files to their deprecated names for backwards compatibility
-
         const cssPath = path.join(__dirname, '..', 'dist', 'css');
-        const glob = require('glob');
         const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
 
-        const proms = cssFiles.map(file => {
-          return new Promise((resolve, reject) => {
-            const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
-            const pieces = getVariantRx.exec(file);
-            const backwardCompatName = (pieces[1] === "contrast" ? "high-contrast" : pieces[1]);
-            const depName = `${backwardCompatName}-theme.${pieces[2]}` // i.e. light-theme.css.map
+        const proms = cssFiles.map(file => new Promise((resolve, reject) => {
+          const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
+          const pieces = getVariantRx.exec(file);
+          const backwardCompatName = (pieces[1] === 'contrast' ? 'high-contrast' : pieces[1]);
+          const depName = `${backwardCompatName}-theme.${pieces[2]}`; // i.e. light-theme.css.map
 
-            return fs.copyFile(file, `${cssPath}/${depName}`, err => {
-              if (err) reject(err);
-              logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
-              resolve();
-            });
+          return fs.copyFile(file, `${cssPath}/${depName}`, (err) => {
+            if (err) reject(err);
+            logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
+            resolve();
           });
-        });
+        }));
         return Promise.all(proms);
       })
       .catch(buildFailure)

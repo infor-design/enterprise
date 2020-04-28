@@ -2,6 +2,9 @@ import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
 
+// jQuery Components
+import '../icons/icons.jquery';
+
 /**
  * *
  * Calculate if a Placeholder is required and its value.
