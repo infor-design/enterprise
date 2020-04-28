@@ -49,6 +49,10 @@ sections:
     slug: dropdown
   - name: Editor (RichText)
     slug: editor
+  - name: Empty Messages
+    slug: emptymessage
+  - name: Error Page
+    slug: error-page
   - name: Favorites
     slug: favorites
   - name: Field Filter
@@ -203,8 +207,6 @@ sections:
     slug: contextmenu
   - name: Composite Form
     slug: compositeform
-  - name: Empty Messages
-    slug: emptymessage
   - name: Expandable Area
     slug: expandablearea
   - name: Fieldset
