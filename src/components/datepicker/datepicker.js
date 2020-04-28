@@ -1611,7 +1611,8 @@ DatePicker.prototype = {
 
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
-    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' || dateFormat === 'MMMM' || dateFormat === 'MMM');
+    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy' ||
+      dateFormat === 'MMMM' || dateFormat === 'MMM' || dateFormat === 'MM');
     const fieldValueTrimmed = self.element.val().trim();
 
     if (fieldValueTrimmed !== '' && !s.range.useRange) {
@@ -1911,7 +1912,7 @@ DatePicker.prototype = {
 
     // Fix two digit year for main input element
     self.element.on('blur.datepicker', () => {
-      this.lastValue = this.currentDate?.getTime();
+      this.lastValue = this.currentDate?.getTime;
 
       if (this.element.val().trim() !== '') {
         this.setValueFromField();
