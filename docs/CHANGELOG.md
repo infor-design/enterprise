@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.29.0
+
+### v4.29.0 Fixes
+
+- `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
+
 ## v4.28.0
 
 ### v4.28.0 Important Changes
