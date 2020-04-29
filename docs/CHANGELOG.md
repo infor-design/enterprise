@@ -51,6 +51,7 @@
 - `[Datepicker]` Fixed a bug where date picker erred on arabic dates. [3804](https://github.com/infor-design/enterprise/issues/3804))
 - `[Datepicker]` Fixed a bug where date picker could not change arabic dates. [3819](https://github.com/infor-design/enterprise/issues/3819))
 - `[Datepicker]` Fixed a bug the month only picker would error the second time opened. [3817](https://github.com/infor-design/enterprise/issues/3817))
+- `[Datepicker]` Added fix for dates with month and day only format where day is first, this was incorrectly validating as invalid. ([#3833](https://github.com/infor-design/enterprise/issues/3833))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
 - `[Demoapp]` Did cleanup on the icons and patterns links. ([3790](https://github.com/infor-design/enterprise/issues/3790))
 - `[Demoapp]` When deployed on a proxy the icons page would not change contents when changing theme. ([3790](https://github.com/infor-design/enterprise/issues/3790))
