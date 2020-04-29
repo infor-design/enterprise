@@ -112,6 +112,7 @@ Tree.prototype = {
   initSelected() {
     const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
     listItems.forEach(li => this.setNodeStatus($(li.querySelector('a'))));
+    this.syncDataset();
   },
 
   /**
@@ -899,6 +900,7 @@ Tree.prototype = {
         self.popupEl = null;
       }
 
+      self.syncDataset();
       return false; // Prevent Click from Going to Top
     });
 
