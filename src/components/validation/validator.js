@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { theme } from '../theme/theme';
 
 import { Locale } from '../locale/locale';
 import { Validation } from './validation';
@@ -905,7 +906,12 @@ Validator.prototype = {
     rule.icon = rule.icon || validationType.icon;
 
     let markup;
-    const icon = `${validationType.type}-alert`;
+    let icon;
+    if (rule.type === 'error') {
+      icon = `${validationType.type }-alert`
+    } else {
+      icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ? `${validationType.type}-alert` : `${validationType.type}`;
+    }
 
     if (rule.type === 'icon') {
       markup = '' +
