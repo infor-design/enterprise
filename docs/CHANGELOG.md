@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.29.0
+
+### v4.29.0 Fixes
+
+- `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+
 ## v4.28.0
 
 ### v4.28.0 Important Changes
