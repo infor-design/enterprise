@@ -1,0 +1,74 @@
+<div class="homepage">
+  <div class="content">
+    <div class="row top-padding">
+      <div class="one-third column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Pie Chart</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div id="pie-chart-example" class="chart-container">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+  centerLabel: '<tspan x="0" dy="-0.4em" style="font-size:1.6rem">Total Hours</tspan> <tspan x="0" dy="1.4em" style="font-size:1.6rem">265</tspan>',
+  data: [{
+      name: 'Reg',
+      value: 192,
+      tooltip: 'Regular 192'
+    }, {
+      name: 'Unpaid',
+      value: 24,
+      tooltip: 'Unpaid 24'
+    }, {
+      name: 'Sick',
+      value: 22,
+      tooltip: 'Sick 22'
+    }, {
+      name: 'Half Time',
+      value: 7,
+      tooltip: 'Half Time 24'
+    }, {
+      name: 'Other',
+      value: 5,
+      tooltip: 'Other Leave 5'
+    }, {
+      name: 'Overtime',
+      value: 5,
+      tooltip: 'Overtime 5'
+    }, {
+      name: 'Other',
+      value: 10,
+      tooltip: 'Other 10'
+    }]
+  }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    showLegend: true,
+    legendPlacement: 'bottom'
+  });
+
+});
+</script>

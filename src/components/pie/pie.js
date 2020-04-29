@@ -173,6 +173,15 @@ Pie.prototype = {
       this.element.addClass('is-mobile');
     }
 
+    if (this.settings.legendPlacement === 'bottom' && dims.width < 360 && !this.settings.showMobile) {
+      this.element.closest('.widget-content').css({
+        height: 'auto',
+        'min-height': 'auto'
+      });
+      $(this.svg.node()).css({ 'min-height': 195 });
+      dims.height = parseInt(this.element.height(), 10);
+    }
+
     dims.radius = Math.min(dims.width, dims.height) / 2;
     self.dims = dims;
 
