@@ -907,8 +907,9 @@ Validator.prototype = {
 
     let markup;
     let icon;
+
     if (rule.type === 'error') {
-      icon = `${validationType.type }-alert`
+      icon = `${validationType.type}-alert`;
     } else {
       icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ? `${validationType.type}-alert` : `${validationType.type}`;
     }
