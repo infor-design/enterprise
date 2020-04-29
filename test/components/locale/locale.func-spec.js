@@ -301,6 +301,14 @@ describe('Locale API', () => {
     expect(dateTest[5]).toEqual(0);
   });
 
+  it('Should parse date in es-419', () => {
+    Locale.set('es-419');
+
+    const dateTest = Locale.parseDate('29/4/2020 08:40', { date: 'datetime' });
+
+    expect(dateTest.getTime()).toEqual(new Date(2020, 3, 29, 8, 40, 0).getTime());
+  });
+
   it('Should parse am/pm in Korean', () => {
     Locale.set('ko-KO');
 

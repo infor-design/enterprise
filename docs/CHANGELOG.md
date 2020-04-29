@@ -2,6 +2,12 @@
 
 ## v4.28.0
 
+### v4.28.0 Fixes
+
+- `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
+
+## v4.28.0
+
 ### v4.28.0 Important Changes
 
 - `[Pager]` The Deprecated `pager` getter method was removed. Use `pagerAPI` instead for the same thing if accessing this internal object directly. ([#3759](https://github.com/infor-design/enterprise/issues/3759))
