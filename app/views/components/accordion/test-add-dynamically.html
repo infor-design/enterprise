@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="six columns">
+    <p>Github Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/3826" target="_blank">#3826</a></p>
+    <p>In this test, clicking the "Add to favorites" button will add a new menu item in the Favorites content panel.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <button class="btn" id="addFavs">Add new favorite</button>
+    </div>
+
+    <div data-init="false" id="test-accordion" class="accordion panel inverse">
+
+      <!-- general -->
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-user"></use>
+        </svg>
+        <a href="#"><span>General</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#" id="preferencesLink1"><span>User Options</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#" id="preferencesLink2"><span>Change Password</span></a>
+        </div>
+      </div>
+
+      <!-- favorites -->
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-star-filled"></use>
+        </svg>
+        <a href="#"><span>Favorites</span></a>
+      </div>
+      <div class="accordion-pane" id="favorites-pane">
+        <div class="accordion-header">
+          <a href="#"><span>AC02.1 - Status</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Distribution Group Definitions</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+​
+<script>
+  // init the accordion
+  var accordionApi = $('#test-accordion').accordion({ allowOnePane: false }).data('accordion');
+
+  $('#addFavs').on('click', function() {
+    var $favoritesPane = $('#favorites-pane');
+
+    $favoritesPane.append('<div class="accordion-header hide-focus no-icon"><a href="#"><span>Dynamically added favorite</span></a></div>');
+
+    accordionApi.updated($favoritesPane.find('.accordion-header'));
+  });
+
+</script>
