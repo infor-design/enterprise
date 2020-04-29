@@ -1033,6 +1033,10 @@ cleanAll(true).then(() => {
         if (result.endsWith('.scss')) {
           renderTarget = sassMatches;
         }
+        // Don't bundle culture files, which are copied separately.
+        if (result.indexOf('locale/cultures/') > -1) {
+          return;
+        }
         if (renderTarget.indexOf(result) > -1) {
           return;
         }
