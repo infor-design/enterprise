@@ -4,6 +4,7 @@
 
 ### v4.29.0 Fixes
 
+- `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 
 ## v4.28.0
