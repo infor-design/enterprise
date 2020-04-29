@@ -49,16 +49,27 @@
   </div>
 </div>
 ​
-<script>
-  // init the accordion
-  var accordionApi = $('#test-accordion').accordion({ allowOnePane: false }).data('accordion');
+<script id="test-script">
+  var headerCount = 0;
+  var $accordionEl = $('#test-accordion');
 
+  // Initialize the Accordion
+  $accordionEl.accordion({
+    allowOnePane: false
+  });
+  var accordionAPI = $accordionEl.data('accordion');
+
+  // When button is clicked, add a new header and update the Accordion.
   $('#addFavs').on('click', function() {
     var $favoritesPane = $('#favorites-pane');
+    var newHeaderTmpl = '<div class="accordion-header hide-focus no-icon">' +
+      '<a href="#">' +
+        '<span>Dynamically-Added Favorite ('+ headerCount +')</span>' +
+      '</a>' +
+    '</div>';
 
-    $favoritesPane.append('<div class="accordion-header hide-focus no-icon"><a href="#"><span>Dynamically added favorite</span></a></div>');
-
-    accordionApi.updated($favoritesPane.find('.accordion-header'));
+    $favoritesPane.append(newHeaderTmpl);
+    accordionAPI.updated($favoritesPane.find('.accordion-header'));
+    headerCount++;
   });
-
 </script>
