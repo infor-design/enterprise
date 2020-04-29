@@ -1,0 +1,45 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button type="button" id="show-dada" class="btn-secondary">Show Data</button>
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+
+<script>
+  var sampleData = [{
+    id: 'Root 2 ',
+    open: true,
+    text: 'Node 1',
+    children: [
+        {
+          id: 'Node 1' + '/1',
+          text: 'Leaf 1'
+        },
+        {
+          id: 'Node 1' + '/2',
+          text: 'Node 2',
+          children: [{
+            id: 'Node 1' + '/2a',
+            text: 'Node 2a',
+            extra: 'Some extra data',
+            children: []
+          }]
+        }
+      ]
+    }];
+
+  var elem = $('#json-tree').tree({ dataset: sampleData });
+  var api = elem.data('tree');
+
+  $('#show-dada').on('click', function () {
+    console.log('Data:', api.settings.dataset);
+  });
+</script>
