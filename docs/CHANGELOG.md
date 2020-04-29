@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.28.0
+## v4.29.0
 
-### v4.28.0 Fixes
+### v4.29.0 Fixes
 
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
 
