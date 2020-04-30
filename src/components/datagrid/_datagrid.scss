@@ -777,6 +777,7 @@ $datagrid-short-row-height: 25px;
         }
 
         .hyperlink {
+          margin-top: -2px;
           vertical-align: middle;
         }
 
@@ -2987,16 +2988,15 @@ td .btn-actions {
 
 .medium-rowheight {
   .datagrid-multiline-text {
-    margin-top: -8px;
-    min-height: $datagrid-medium-row-height + 2;
+    min-height: $datagrid-medium-row-height;
+    padding: 5px 20px;
   }
 }
 
 .short-rowheight {
   .datagrid-multiline-text {
-    margin-bottom: -4px;
-    min-height: $datagrid-short-row-height + 6;
-    padding: 0 20px;
+    min-height: $datagrid-short-row-height;
+    padding: 2px 20px;
   }
 }
 
