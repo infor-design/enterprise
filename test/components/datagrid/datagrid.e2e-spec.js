@@ -151,7 +151,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
     expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
   });
 
-  it('Should have custom filter options', async () => {
+  it('Should be able to reorder filter options', async () => {
     const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
     await element(by.css(selector)).click();
 
@@ -1184,6 +1184,23 @@ describe('Datagrid paging tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeFalsy();
+  });
+
+  it('Should have be able to filter and show counts', async () => {
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(all 1000)');
+
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys('214220');
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(1);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 1000)');
+
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).clear();
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(all 1000)');
   });
 
   if (!utils.isCI()) {
