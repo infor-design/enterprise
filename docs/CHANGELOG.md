@@ -20,6 +20,7 @@
 
 ### v4.28.0 Fixes
 
+- `[Accordion]` Fixed a regression where updating individual headers within an Accordion was no longer working ([#3826](https://github.com/infor-design/enterprise/issues/3070))
 - `[Application Menu]` Fixed the icons on breaking apart it's appearance when zooming out the browser in IE11, uplift theme. ([#3070](https://github.com/infor-design/enterprise/issues/3070))
 - `[Application Menu]` Fixed misalignment/size of bullet icons in the accordion on Android devices. ([#1429](http://localhost:4000/components/applicationmenu/test-six-levels.html))
 - `[Application Menu]` Add keyboard support for closing Role Switcher panel ([#3477](https://github.com/infor-design/enterprise/issues/3477))

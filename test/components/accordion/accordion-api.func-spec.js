@@ -4,6 +4,17 @@ import { cleanup } from '../../helpers/func-utils';
 const accordionHTML = require('../../../app/views/components/accordion/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 
+const emptyAccordionHTML = `<div id="test-accordion" class="accordion">
+  <div id="top-header" class="accordion-header">Top Header</div>
+  <div id="top-pane" class="accordion-pane"></div>
+</div>`;
+const standardHeaderHTMLResponse = `
+  <div class="accordion-header"><a href="#"><span>Dynamically-Added Header (0)</span></a></div>
+  <div class="accordion-header"><a href="#"><span>Dynamically-Added Header (1)</span></a></div>
+  <div class="accordion-header"><a href="#"><span>Dynamically-Added Header (2)</span></a></div>
+  <div class="accordion-header"><a href="#"><span>Dynamically-Added Header (3)</span></a></div>
+`;
+
 let accordionEl;
 let accordionObj;
 
@@ -170,5 +181,79 @@ describe('Accordion API (data)', () => {
     expect(data[0].text).toBe('Warehouse Location');
     expect(data[0].type).toBe('header');
     expect(Array.isArray(data[0].children)).toBeTruthy();
+  });
+});
+
+describe('Accordion API (source/ajax)', () => {
+  beforeEach(() => {
+    accordionEl = null;
+    accordionObj = null;
+    document.body.insertAdjacentHTML('afterbegin', svg);
+  });
+
+  afterEach(() => {
+    accordionObj.destroy();
+    cleanup([
+      '.accordion',
+      '.svg-icons',
+      '.row',
+    ]);
+  });
+
+  it('can populate itself via AJAX call', (done) => {
+    document.body.insertAdjacentHTML('afterbegin', emptyAccordionHTML);
+    accordionEl = document.body.querySelector('.accordion');
+    const topHeader = accordionEl.querySelector('#top-header');
+    const topPane = accordionEl.querySelector('#top-pane');
+
+    const sourceContainer = {
+      source: (ui, response) => {
+        setTimeout(() => {
+          topPane.insertAdjacentHTML('afterbegin', standardHeaderHTMLResponse);
+          response();
+        }, 300);
+      }
+    };
+
+    const sourceSpy = spyOn(sourceContainer, 'source').and.callThrough();
+    accordionObj = new Accordion(accordionEl, {
+      source: sourceContainer.source
+    });
+    accordionObj.expand($(topHeader));
+
+    setTimeout(() => {
+      expect(sourceSpy).toHaveBeenCalled();
+      expect(topPane.children.length).toEqual(4);
+      expect(topPane.children[3].innerText.trim()).toEqual('Dynamically-Added Header (3)');
+      done();
+    }, 310);
+  });
+
+  // See `infor-design/enterprise#3826` for explanation
+  it('can skip the `updated()` method if the response is configured to do so', (done) => {
+    document.body.insertAdjacentHTML('afterbegin', emptyAccordionHTML);
+    accordionEl = document.body.querySelector('.accordion');
+    const topHeader = accordionEl.querySelector('#top-header');
+    const topPane = accordionEl.querySelector('#top-pane');
+
+    const sourceContainer = {
+      source: (ui, response) => {
+        setTimeout(() => {
+          topPane.insertAdjacentHTML('afterbegin', standardHeaderHTMLResponse);
+          response(true);
+        }, 300);
+      }
+    };
+
+    accordionObj = new Accordion(accordionEl, {
+      source: sourceContainer.source
+    });
+    const updatedSpy = spyOn(accordionObj, 'updated').and.callThrough();
+    accordionObj.expand($(topHeader));
+
+    setTimeout(() => {
+      expect(updatedSpy).not.toHaveBeenCalled();
+      done();
+    }, 310);
   });
 });
