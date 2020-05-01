@@ -1245,7 +1245,7 @@ describe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   });
 });
 
-describe('Datepicker 12hr Time Tests', () => {
+describe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
@@ -1262,12 +1262,8 @@ describe('Datepicker 12hr Time Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.TAB);
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
-    const testDate = new Date();
-    testDate.setHours(0);
-    testDate.setMinutes(0);
-    testDate.setSeconds(0);
 
-    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('af-ZA', { month: 'short' })} ${testDate.getFullYear()} 12:00 vm.`);
+    expect(value).toContain('12:00 vm.');
   });
 
   it('Should render 12hr time', async () => {
