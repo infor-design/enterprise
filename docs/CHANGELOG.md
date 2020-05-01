@@ -4,9 +4,11 @@
 
 ### v4.29.0 Fixes
 
+- `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
+- `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 
@@ -30,6 +32,7 @@
 
 ### v4.28.0 Fixes
 
+- `[Accordion]` Fixed a regression where updating individual headers within an Accordion was no longer working ([#3826](https://github.com/infor-design/enterprise/issues/3070))
 - `[Application Menu]` Fixed the icons on breaking apart it's appearance when zooming out the browser in IE11, uplift theme. ([#3070](https://github.com/infor-design/enterprise/issues/3070))
 - `[Application Menu]` Fixed misalignment/size of bullet icons in the accordion on Android devices. ([#1429](http://localhost:4000/components/applicationmenu/test-six-levels.html))
 - `[Application Menu]` Add keyboard support for closing Role Switcher panel ([#3477](https://github.com/infor-design/enterprise/issues/3477))
@@ -40,7 +43,9 @@
 - `[Button]` Fixed the button disabled method to no longer use class `is-disabled`. ([#3447](https://github.com/infor-design/enterprise-ng/issues/799))
 - `[Charts]` Fixed an issue where selected items were being deselected after resizing the page. ([#323](https://github.com/infor-design/enterprise/issues/323))
 - `[Colorpicker]` Fixed an issue where the color swatches shift when the colorpicker has a scrollbar. ([#2266](https://github.com/infor-design/enterprise/issues/2266))
-- `[Custom Builds]` Fixed issues related to custom builds specifically requiring the Datagrid component failing to compile. ([#3784](https://github.com/infor-design/enterprise/issues/3784))
+- `[Custom Builds]` Fixed issues related to custom building Datagrid. ([#3784](https://github.com/infor-design/enterprise/issues/3784))
+- `[Custom Builds]` Fixed issues related to custom building Locale. ([#3839](https://github.com/infor-design/enterprise/issues/3839))
+- `[Custom Builds]` Fixed issues related to custom building Modal. ([#3822](https://github.com/infor-design/enterprise/issues/3822))
 - `[Datagrid]` Fixed an issue where row data was not available for serializer with Treegrid. ([#3663](https://github.com/infor-design/enterprise/issues/3724))
 - `[ContextualActionPanel]` Fixed an issue where toolbars in CAP are not torn down on destroy. ([#3785](https://github.com/infor-design/enterprise/issues/3785))
 - `[ContextualActionPanel]` Fixed an issue where nested caps or closing and reopening caps would not work. ([#801](https://github.com/infor-design/enterprise-ng/issues/801))
@@ -61,6 +66,7 @@
 - `[Datepicker]` Fixed a bug where date picker erred on arabic dates. [3804](https://github.com/infor-design/enterprise/issues/3804))
 - `[Datepicker]` Fixed a bug where date picker could not change arabic dates. [3819](https://github.com/infor-design/enterprise/issues/3819))
 - `[Datepicker]` Fixed a bug the month only picker would error the second time opened. [3817](https://github.com/infor-design/enterprise/issues/3817))
+- `[Datepicker]` Added fix for dates with month and day only format where day is first, this was incorrectly validating as invalid. ([#3833](https://github.com/infor-design/enterprise/issues/3833))
 - `[Demoapp]` Fixed incorrect directory list hyperlinks in listview and listbuilder components. ([1783](https://github.com/infor-design/enterprise/issues/1783))
 - `[Demoapp]` Did cleanup on the icons and patterns links. ([3790](https://github.com/infor-design/enterprise/issues/3790))
 - `[Demoapp]` When deployed on a proxy the icons page would not change contents when changing theme. ([3790](https://github.com/infor-design/enterprise/issues/3790))
