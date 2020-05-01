@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Test: Autocomplete Inside Modal Content</h2>
+    <p>Scrolling inside of this Modal component should cause the Autocomplete list to close, if the list is open when attempting to scroll.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <button id="create-modal" class="btn-secondary">
+        <span>Create Modal</span>
+      </button>
+    </div>
+    <div class="field">
+      <fieldset class="radio-group">
+        <legend>Scrollable Area Type:</legend>
+        <input type="radio" class="radio" name="wrapper-type" id="wrapper-type-modal" value="modal" checked />
+        <label for="wrapper-type-modal" class="radio-label">`modal-body-wrapper` (default)</label>
+        <br/>
+        <input type="radio" class="radio" name="wrapper-type" id="wrapper-type-scrollable-y" value="scrollable-y" />
+        <label for="wrapper-type-scrollable-y" class="radio-label">`test-content` (`scrollable-y` section)</label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+<style id="test-style" type="text/css">
+  /**
+   * In order to control the scrolling in the custom scrollable section
+   * (and prevent false positives from the standard Modal setup), we need to
+   * set the height on the outer wrappers to inherit height.
+   */
+  .custom-scrollable-modal .modal-body,
+  .custom-scrollable-modal .test-content-wrapper,
+  .custom-scrollable-modal .test-content {
+    max-height: inherit;
+  }
+
+  /* Fixes the padding in the custom mode */
+  .custom-scrollable-modal .modal-content .modal-body-wrapper {
+    padding: 5px 0;
+  }
+  .custom-scrollable-modal .test-content {
+    padding: 0 20px;
+  }
+
+  /* Sets a min-width on the `#h1-title` just for this sample, since we make it dynamic */
+  #h1-title {
+    min-width: 400px;
+  }
+</style>
+
+<script id="test-script">
+  var usableContent = '<div id="modal-test-content" class="test-content">' +
+    '<p style="height: 500px;">Scroll down to see a autocomplete...</p>' +
+    '<div class="field">' +
+      '<label for="autocomplete-default">States</label>' +
+      '<input type="text" autocomplete="off" class="autocomplete" data-options="{ source: \'{{basepath}}api/states?term=\' }" placeholder="Type to Search" id="autocomplete-default"/>' +
+    '</div>' +
+    '<p style="height: 500px;"></p>' +
+    '<p style="padding-bottom: 20px;">Scroll up to see a autocomplete...</p>' +
+    '<div class="field">' +
+      '<label for="extra" class="label">Extra Info:</label>' +
+      '<input id="extra" type="text"/>' +
+    '</div>' +
+  '</div>';
+
+  var body = $('body');
+  var createBtn = $('#create-modal');
+  var baseModalSettings = {
+    title: 'Modal with Autocomplete',
+    showCloseBtn: true
+  };
+
+  // Updates the title text of the Modal.
+  function renderModalTitleText($elem) {
+    var scrollTopVal = $elem.scrollTop();
+    var type = $elem[0].tagName.toLowerCase();
+    $elem[0].classList.forEach(function (cssClass) {
+      type += '.' + cssClass;
+    });
+
+    var msg = '' + type + ' scrollTop: ' + scrollTopVal + 'px';
+    $('#h1-title').text(msg);
+  }
+
+  // Gets the current scrollable element inside the Modal.
+  function getScrollableElem() {
+    var scrollableType = $('[name="wrapper-type"]:checked').val();
+    if (scrollableType === 'scrollable-y') {
+      return $('#modal-test-content');
+    }
+    return $('.modal-body-wrapper');
+  }
+
+  createBtn.on('click.test', function () {
+    var thisUsableContent = '' + usableContent;
+
+    // Adds a scrollable wrapper section to the modal content.
+    // This tests that the Autocomplete code is correctly checking for the presence
+    // of a sub-scrollable section inside the Modal Content area.
+    var scrollableType = $('[name="wrapper-type"]:checked').val();
+    if (scrollableType === 'scrollable-y') {
+      thisUsableContent = '<div class="test-content-wrapper no-scroll">' +
+        usableContent +
+      '</div>';
+    }
+
+    // For `scrollable-y` type, remove the main scrolling areas and bolster the inner scrollable area.
+    var $thisUsableContent = $(thisUsableContent);
+    if (scrollableType === 'scrollable-y') {
+      $thisUsableContent
+        .children('.test-content')
+        .addClass('scrollable-y');
+    }
+
+    // Setup the modal and initialize the content
+    var settings = $.extend({}, baseModalSettings, {
+      content: $thisUsableContent
+    });
+    body.modal(settings);
+    var api = body.data('modal');
+    api.element.initialize();
+
+    $('#autocomplete-default').off('selected.test').on('selected.test', function(e, anchor, item) {
+      var anchorText = $(anchor).text().trim();
+
+      $('body').toast({
+        title: 'Select Event Fired',
+        message: 'Selected the <b>' + anchorText + '</b> item.'
+      });
+    });
+
+    // Make the `.modal-body-wrapper` element not scroll
+    // (forces the inner area we built to scroll instead)
+    if (scrollableType === 'scrollable-y') {
+      api.element.addClass('custom-scrollable-modal');
+      api.element.find('.modal-body-wrapper').addClass('no-scroll');
+    }
+
+    // As the Modal's scrolling area is scrolled, update the Title text on the Modal
+    // with the current `scrollTop` value.
+    var scrollableElem = getScrollableElem();
+    renderModalTitleText(scrollableElem);
+    scrollableElem.on('scroll.test', function () {
+      renderModalTitleText($(this));
+    });
+
+    // After the Modal closes, we destroy it.
+    // We will create a new one if the button's clicked again.
+    body.on('afterclose.test', function() {
+      api.destroy();
+      scrollableElem.off('scroll.test');
+      body.off('afterclose.test');
+      createBtn.focus();
+    });
+  });
+</script>
