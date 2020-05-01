@@ -2,6 +2,11 @@
 //================================================== //
 
 .chart-container {
+  .chart-legend.is-bottom {
+    padding-bottom: 0.5em;
+    padding-top: 0.7em;
+  }
+
   .chart-legend .chart-legend-item-text,
   .text,
   text {
