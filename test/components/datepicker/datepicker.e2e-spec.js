@@ -343,6 +343,24 @@ describe('Datepicker Anniversary tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }));
   });
 
+  it('Should populate month day in en-GB', async () => {
+    await utils.setPage('/components/datepicker/example-anniversary-format?locale=en-GB');
+
+    const datepickerEl = await element(by.id('MMMMd-date'));
+    await element(by.css('#MMMMd-date + .icon')).click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    await element(by.css('#monthview-popup td.is-selected')).click();
+
+    const resultDate = `${testDate.toLocaleDateString('en-US', { day: 'numeric' })} ${testDate.toLocaleDateString('en-US', { month: 'long' })}`;
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(resultDate);
+  });
+
   it('Should populate just year', async () => {
     const datepickerEl = await element(by.id('yyyy-date'));
     await element(by.css('#yyyy-date + .icon')).click();
@@ -1227,7 +1245,7 @@ describe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   });
 });
 
-describe('Datepicker 12hr Time Tests', () => {
+describe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
@@ -1244,12 +1262,8 @@ describe('Datepicker 12hr Time Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.TAB);
 
     const value = await element(by.id('datetime-field-time')).getAttribute('value');
-    const testDate = new Date();
-    testDate.setHours(0);
-    testDate.setMinutes(0);
-    testDate.setSeconds(0);
 
-    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('af-ZA', { month: 'short' })} ${testDate.getFullYear()} 12:00 vm.`);
+    expect(value).toContain('12:00 vm.');
   });
 
   it('Should render 12hr time', async () => {

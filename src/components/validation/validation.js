@@ -125,6 +125,7 @@ function ValidationRules() {
           dateFormat === 'MMM' ||
           dateFormat === 'MM' ||
           dateFormat === 'MMMM d' ||
+          dateFormat === 'd MMMM' ||
           dateFormat === 'yyyy'
         );
         if (dtApi) {
