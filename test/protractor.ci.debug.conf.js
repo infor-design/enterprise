@@ -47,7 +47,8 @@ exports.config = {
         autoSaveBaseline: true,
         ignoreAntialiasing: true,
         disableCSSAnimation: true,
-        debug: false
+        debug: false,
+        hideScrollBars: true
 			},
 		}
 	],
