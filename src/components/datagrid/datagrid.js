@@ -5728,7 +5728,10 @@ Datagrid.prototype = {
     if (self.settings.resultsText) {
       if (typeof self.settings.resultsText === 'function') {
         if (self.grandTotal) {
-          countText = self.settings.resultsText(self, self.grandTotal, count);
+          countText = self.settings.resultsText(
+            self,
+            self.grandTotal, count === self.grandTotal ? 0 : count
+          );
         } else {
           const filteredCount = (self.filteredCount === 0 ? 0 : count - self.filteredCount);
           countText = self.settings.resultsText(self, count, filteredCount);

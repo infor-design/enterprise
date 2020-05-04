@@ -1852,18 +1852,21 @@ PopupMenu.prototype = {
       }
 
       $(window).on('scroll.popupmenu', () => {
-        self.close();
+        setTimeout(() => {
+          self.close();
+        }, 150);
       });
 
       $('.datagrid-wrapper').on('scroll.popupmenu', () => {
-        self.close();
+        setTimeout(() => {
+          self.close();
+        }, 150);
       });
 
       $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
-        const delay = utils.isInViewport(self.element[0]) ? 0 : 150;
         setTimeout(() => {
           self.close();
-        }, delay);
+        }, 150);
       });
 
       /**

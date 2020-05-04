@@ -139,6 +139,13 @@ const filePaths = {
   }
 };
 
+// File Paths that are stripped/ignored.
+// Generally these are copied with another task, such as `npx grunt copy:main`.
+const ignoredFilePaths = [
+  'components/locale/cultures',
+  'components/locale/info'
+];
+
 // These search terms are used when scanning existing index files to determine
 // a component's placement in a generated file.
 const searchTerms = {
@@ -1033,7 +1040,14 @@ cleanAll(true).then(() => {
         if (result.endsWith('.scss')) {
           renderTarget = sassMatches;
         }
-        if (renderTarget.indexOf(result) > -1) {
+        // Don't bundle culture files, which are copied separately.
+        let hasIgnoredFilePath = false;
+        ignoredFilePaths.forEach((thisPath) => {
+          if (result.indexOf(thisPath) > -1) {
+            hasIgnoredFilePath = true;
+          }
+        });
+        if (hasIgnoredFilePath || renderTarget.indexOf(result) > -1) {
           return;
         }
         renderTarget.push(result);

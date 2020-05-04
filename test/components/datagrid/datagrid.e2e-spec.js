@@ -151,7 +151,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
     expect(await text.replace(/[\s\r\n]+/g, '')).toEqual('ContainsEquals');
   });
 
-  it('Should have custom filter options', async () => {
+  it('Should be able to reorder filter options', async () => {
     const selector = '#example-custom-filter-conditions-datagrid-1-header-1 button';
     await element(by.css(selector)).click();
 
@@ -704,7 +704,7 @@ describe('Datagrid grouping and editing tests', () => {
   }
 });
 
-describe('Datagrid grouping headers and filter tests', () => {
+describe('Datagrid grouping headers and filter tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
 
@@ -1184,6 +1184,23 @@ describe('Datagrid paging tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked')).isPresent()).toBeFalsy();
+  });
+
+  it('Should have be able to filter and show counts', async () => {
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(all 1000)');
+
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys('214220');
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(1);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 1000)');
+
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).clear();
+    await element(by.id('example-paging-datagrid-1-header-filter-2')).sendKeys(protractor.Key.ENTER);
+
+    expect(await element.all(by.css('#datagrid tr.datagrid-row')).count()).toEqual(10);
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(all 1000)');
   });
 
   if (!utils.isCI()) {
@@ -1947,7 +1964,7 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-describe('Datagrid onKeyDown Tests', () => {
+describe('Datagrid onKeyDown Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-onkeydown?layout=nofrills');
 
@@ -1968,6 +1985,7 @@ describe('Datagrid onKeyDown Tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(inputEl), config.waitsFor);
     await element(by.css(editCellSelector)).sendKeys('j');
     await element(by.css(editCellSelector)).sendKeys(protractor.Key.TAB);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('#toast-container .toast-message')).last()), config.waitsFor);
 
     expect(await element.all(by.css('#toast-container .toast-message')).first().getText()).toEqual('You hit j. Event has been vetoed, so nothing will happen.');
     expect(await element.all(by.css('#toast-container .toast-message')).last().getText()).toEqual('You hit Tab. Event has been vetoed, so nothing will happen.');

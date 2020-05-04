@@ -1002,8 +1002,11 @@ Accordion.prototype = {
       pane
     };
 
-    function response() {
-      self.updated();
+    function response(skipUpdated, headers) {
+      if (skipUpdated !== true) {
+        self.updated(headers);
+      }
+
       setTimeout(() => {
         animationCallback.apply(self);
       }, 1);
@@ -1408,7 +1411,7 @@ Accordion.prototype = {
   * @returns {void}
   */
   teardown(headers) {
-    let globalEventTeardown = false;
+    let globalTeardown = false;
     let headerElems = headers;
 
     if (this.currentlyFiltered) {
@@ -1417,7 +1420,7 @@ Accordion.prototype = {
 
     if (!headers || !(headers instanceof jQuery)) {
       headerElems = this.headers;
-      globalEventTeardown = true;
+      globalTeardown = true;
     }
 
     if (headerElems && headerElems.length) {
@@ -1453,14 +1456,14 @@ Accordion.prototype = {
         .off('touchend.accordion click.accordion keydown.accordion');
     }
 
-    if (globalEventTeardown) {
+    if (globalTeardown) {
       this.element.off('updated.accordion selected.accordion');
-    }
 
-    delete this.anchors;
-    delete this.headers;
-    delete this.panes;
-    delete this.contentAreas;
+      delete this.anchors;
+      delete this.headers;
+      delete this.panes;
+      delete this.contentAreas;
+    }
 
     return this;
   },

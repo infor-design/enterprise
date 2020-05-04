@@ -205,3 +205,35 @@ describe('Accordion expand multiple tests', () => {
     });
   });
 });
+
+describe('Accordion adding headers dynamically tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/accordion/test-add-dynamically.html?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('can dynamically add and navigate to new accordion headers', async () => {
+    // Add two headers
+    const addBtn = await element(by.id('addFavs'));
+    await addBtn.click();
+    await addBtn.click();
+
+    // Expand the "Favorites" header
+    await element.all(by.css('#test-accordion > .accordion-header')).last().click();
+    await browser.driver.sleep(config.sleep);
+
+    // Tab to the last of the new headers and check its content
+    await browser.driver.actions()
+      .sendKeys(protractor.Key.TAB)
+      .sendKeys(protractor.Key.TAB)
+      .sendKeys(protractor.Key.TAB)
+      .sendKeys(protractor.Key.TAB)
+      .perform();
+    const focusedElem = browser.driver.switchTo().activeElement();
+
+    expect(focusedElem.getText()).toEqual('Dynamically-Added Favorite (1)');
+  });
+});
