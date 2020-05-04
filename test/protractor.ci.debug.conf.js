@@ -1,7 +1,6 @@
 /* eslint-disable */
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
-const protractorImageComparison = require('protractor-image-comparison');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
@@ -37,19 +36,24 @@ exports.config = {
     defaultTimeoutInterval: 30000,
     print: () => {}
   },
-  onPrepare: () => {
-    global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
-    browser.ignoreSynchronization = true;
-    if (process.env.TRAVIS) {
-      browser.protractorImageComparison = new protractorImageComparison({
-        baselineFolder: `${basePath}/baseline`,
-        screenshotPath: `${basePath}/.tmp/`,
+	plugins: [
+		{
+			// The module name
+			package: 'protractor-image-comparison',
+			// Some options, see the docs for more
+			options: {
+				baselineFolder: `${basePath}/baseline`,
+				screenshotPath: `${basePath}/.tmp/`,
         autoSaveBaseline: true,
         ignoreAntialiasing: true,
         disableCSSAnimation: true,
         debug: false
-      });
-    }
+			},
+		}
+	],
+  onPrepare: () => {
+    global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
+    browser.ignoreSynchronization = true;
 
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: 'specs' }
