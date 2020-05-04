@@ -198,7 +198,8 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
     ) {
       return PREFIX.split(masks.EMPTY_STRING).concat([masks.DIGITS_REGEX])
         .concat(SUFFIX.split(masks.EMPTY_STRING));
-    } else if (
+    }
+    if (
       thisRawValue === DECIMAL && options.allowDecimal
     ) {
       return PREFIX.split(masks.EMPTY_STRING).concat(['0', DECIMAL, masks.DIGITS_REGEX])

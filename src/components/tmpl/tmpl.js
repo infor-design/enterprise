@@ -40,9 +40,9 @@ Tmpl.compile = function compile(template, self, parent, invert) {
             /{{{(.*?)}}}|{{(!?)(&?)(>?)(.*?)}}/g,
             (match, raw, comment, isRaw, partial, name) => (raw ? get(ctx, raw) //eslint-disable-line
               : isRaw ? get(ctx, name)  //eslint-disable-line
-                : partial ? render(get(ctx, name), ctx) //eslint-disable-line
-                  : !comment ? new Option(get(ctx, name)).innerHTML
-                    : '')
+                : partial ? render(get(ctx, name), ctx) : //eslint-disable-line
+                  !comment ? new Option(get(ctx, name)).innerHTML :
+                    '')
           );
           inverted = invert;
         } else {

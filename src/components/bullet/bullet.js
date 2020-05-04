@@ -114,11 +114,11 @@ Bullet.prototype = {
       }
       if (chartData.format && typeof chartData.format[type] === 'function') {
         return callback(chartData.format[type], d, i);
-      } else if (chartData.format && typeof chartData.format[type] === 'string') {
+      } if (chartData.format && typeof chartData.format[type] === 'string') {
         return d3.format(chartData.format[type])(d);
-      } else if (this.settings.format && typeof this.settings.format[type] === 'function') {
+      } if (this.settings.format && typeof this.settings.format[type] === 'function') {
         return callback(this.settings.format[type], d, i);
-      } else if (this.settings.format && typeof this.settings.format[type] === 'string') {
+      } if (this.settings.format && typeof this.settings.format[type] === 'string') {
         return d3.format(this.settings.format[type])(d);
       }
       return d;

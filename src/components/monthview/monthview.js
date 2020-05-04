@@ -472,9 +472,9 @@ MonthView.prototype = {
           }
         }
 
-        if (dayCnt === self.todayDay
-            && self.currentMonth === self.todayMonth
-            && self.currentYear === self.todayYear
+        if (dayCnt === self.todayDay &&
+            self.currentMonth === self.todayMonth &&
+            self.currentYear === self.todayYear
         ) {
           th.addClass('is-today');
         }
@@ -1578,8 +1578,8 @@ MonthView.prototype = {
    * @private
    */
   validatePrevNext() {
-    if (!this.settings.disable.restrictMonths
-      || !this.settings.disable.minDate || !this.settings.disable.maxDate) {
+    if (!this.settings.disable.restrictMonths ||
+      !this.settings.disable.minDate || !this.settings.disable.maxDate) {
       return;
     }
     const minDate = new Date(this.settings.disable.minDate);

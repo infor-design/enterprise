@@ -678,9 +678,8 @@ Validator.prototype = {
     }
 
     if (dataMsg &&
-      dataMsg.filter(rules =>
-        (rules.id || rules.message) === (rule.id || rule.message)
-        && rules.message === rule.message).length > 0) {
+      dataMsg.filter(rules => (rules.id || rules.message) === (rule.id || rule.message) &&
+        rules.message === rule.message).length > 0) {
       // No need to add new message
       return;
     }

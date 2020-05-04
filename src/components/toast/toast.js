@@ -3,7 +3,7 @@ import { utils, math } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Environment as env } from '../../utils/environment';
-import { Locale } from '../../../src/components/locale/locale';
+import { Locale } from '../locale/locale';
 
 // Component Name
 const COMPONENT_NAME = 'toast';

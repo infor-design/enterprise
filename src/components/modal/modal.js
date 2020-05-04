@@ -7,7 +7,7 @@ import { modalManager } from './modal.manager';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
-import { Locale } from '../../../src/components/locale/locale';
+import { Locale } from '../locale/locale';
 
 // jQuery components
 import '../button/button.jquery';

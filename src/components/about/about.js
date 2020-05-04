@@ -101,8 +101,8 @@ About.prototype = {
     const body = $('<div class="modal-body"></div>').appendTo(this.modal.find('.modal-content'));
 
     if (this.settings.version || this.settings.productName) {
-      const productAndVersion = this.settings.productName ? `${this.settings.productName} ${this.settings.version}`
-        : `${this.settings.version}`;
+      const productAndVersion = this.settings.productName ? `${this.settings.productName} ${this.settings.version}` :
+        `${this.settings.version}`;
 
       $('<p></p>').text(productAndVersion).appendTo(body);
     }

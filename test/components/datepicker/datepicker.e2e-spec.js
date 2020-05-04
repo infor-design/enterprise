@@ -1010,7 +1010,7 @@ describe('Datepicker Timeformat Tests', () => {
 
     // Cant parse the full date so its a loose check
     // If this starts to fail, adjust the year
-    const displayedValue = element(by.id('policyNumber')).getAttribute('value');
+    const displayedValue = element(by.id('dp1')).getAttribute('value');
 
     expect(displayedValue).toContain('ص');
     expect(displayedValue).toContain('14');
@@ -1249,7 +1249,7 @@ describe('Datepicker 12hr Time Tests', () => {
     testDate.setMinutes(0);
     testDate.setSeconds(0);
 
-    expect(value).toEqual(`${testDate.getDate()} ${testDate.toLocaleDateString('af-ZA', { month: 'short' })} ${testDate.getFullYear()} 12:00 vm.`);
+    expect(value).toContain('12:00 vm.');
   });
 
   it('Should render 12hr time', async () => {

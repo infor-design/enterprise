@@ -76,10 +76,9 @@ $(() => {
     control = $('input, textarea, select', this);
     str = control.attr('class');
 
-    $(this).addClass(() =>
-      // Add "inline" and "inline-{control}" class to label
-      // assuming control class is first thing in class string
-      `inline${str ? ` inline-${str.indexOf(' ') === -1 ? str : str.substr(0, str.indexOf(' '))}` : ''}`);
+    // Add "inline" and "inline-{control}" class to label
+    // assuming control class is first thing in class string
+    $(this).addClass(() => `inline${str ? ` inline-${str.indexOf(' ') === -1 ? str : str.substr(0, str.indexOf(' '))}` : ''}`);
   });
 });
 

@@ -31,7 +31,6 @@ const hbsRegistrar = require('handlebars-registrar');
 const marked = require('marked');
 const path = require('path');
 const slash = require('slash');
-const swlog = require(`./helpers/stopwatch-log`)
 const yaml = require('js-yaml');
 
 const argv = require('yargs')
@@ -54,6 +53,8 @@ const argv = require('yargs')
   .help('h')
   .alias('h', 'help')
   .argv;
+
+const swlog = require('./helpers/stopwatch-log');
 
 // Set Marked options
 marked.setOptions({

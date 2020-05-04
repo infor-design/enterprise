@@ -83,7 +83,8 @@ Textarea.prototype = {
   isSelected(input) {
     if (typeof input.selectionStart === 'number') {
       return input.selectionStart === 0 && input.selectionEnd === input.value.length;
-    } else if (typeof document.selection !== 'undefined') {
+    }
+    if (typeof document.selection !== 'undefined') {
       return document.selection.createRange().text === input.value;
     }
     return false;
@@ -267,7 +268,8 @@ Textarea.prototype = {
   getMaxLength() {
     if (this.settings.maxLength) {
       return this.settings.maxLength;
-    } else if (this.element.attr('maxlength')) {
+    }
+    if (this.element.attr('maxlength')) {
       return parseInt(this.element.attr('maxlength'), 10);
     }
 

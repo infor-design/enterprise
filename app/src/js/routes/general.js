@@ -1,12 +1,13 @@
 // General Route
 //= ====================================================
 const path = require('path');
+const express = require('express');
+
 const utils = require('../utils');
 const directoryListing = require('./directory-list');
 const sendGeneratedDocPage = require('./docs');
 const customRouteOptions = require('../custom-route-options');
 const setLayout = require('../set-layout');
-const express = require('express');
 
 const router = express.Router();
 

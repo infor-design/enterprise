@@ -718,7 +718,7 @@ describe('Datagrid grouping headers and filter tests', () => {
   });
 
   it('Should filter and show groups', async () => {
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(16);
+    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(18);
     expect(await element.all(by.css('.datagrid-rowgroup-header')).count()).toEqual(7);
 
     await element(by.css('#example-grouping-filter-datagrid-1-header-filter-1')).sendKeys('Ha');

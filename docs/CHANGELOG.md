@@ -4,6 +4,7 @@
 
 ### v4.29.0 Fixes
 
+- `[General]` Updated a lot of dependencies, most important to note is jQuery 3.5.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 
 ## v4.28.0
