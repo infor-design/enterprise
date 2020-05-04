@@ -4,7 +4,7 @@
 
 ### v4.29.0 Fixes
 
-- `[General]` Updated a lot of dependencies, most important to note is jQuery 3.5.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.0 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 
 ## v4.28.0
