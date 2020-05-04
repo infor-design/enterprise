@@ -142,13 +142,13 @@ describe('Bar Chart alignment tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+        .wait(protractor.ExpectedConditions.visibilityOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'bar-alignment')).toEqual(0);
     });

@@ -174,12 +174,12 @@ describe('Accordion example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const buttonEl = await element.all(by.tagName('button')).get(2);
       await buttonEl.click();
 
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'accordion-index')).toEqual(0);
     });
