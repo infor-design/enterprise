@@ -76,7 +76,7 @@ Displays one or more selectable values. A user can select exactly one value at a
 - Signin uses a form to fire the form submit on enter.
 - Turn off autocomplete for better security.
 - Consider two factor authentication.
-- The forgot password page is also a pattern you can use. (See examples)
+- The forgot password page is also a pattern you can use.
 
 ## Accessibility
 
