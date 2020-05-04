@@ -26,6 +26,30 @@
   max-width: 810px;
 }
 
+.modal {
+  .tab-container {
+    &.horizontal,
+    &.header-tabs {
+      > .tab-list-container {
+        .tab {
+          &:not(.last-child) {
+            &.is-error {
+              .icon-error,
+              .icon-info,
+              .icon-alert {
+                height: 15px;
+                margin-top: -3px;
+                right: -8px;
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .modal-content {
     > .btn-close {

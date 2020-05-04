@@ -28,11 +28,15 @@
   }
 }
 
-.tab-container.horizontal > .tab-list-container .tab:not(.last-child).is-error .icon-error,
-.tab-container.header-tabs > .tab-list-container .tab:not(.last-child).is-error .icon-error {
-  height: 15px;
-  margin-top: -3px;
-  width: 15px;
+.popupmenu.tab-list-spillover,
+.popupmenu.dropdown-tab {
+  .icon {
+    &.icon-error,
+    &.icon-info,
+    &.icon-alert {
+      top: 10px;
+    }
+  }
 }
 
 @import '../tabs-module/tabs-module-uplift';

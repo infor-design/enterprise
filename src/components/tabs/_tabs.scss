@@ -371,13 +371,6 @@
           a[role='tab'] {
             padding: 12px 20px 12px 5px;
           }
-
-          .icon-error {
-            margin-left: 0;
-            margin-right: 11px;
-            margin-top: -4px;
-            position: absolute;
-          }
         }
       }
 
@@ -449,10 +442,13 @@
           width: 32px;
         }
 
-        .icon-error {
+        .icon-error,
+        .icon-info,
+        .icon-alert {
           height: 16px;
-          right: -5px;
-          top: 11px;
+          position: relative;
+          right: 3px;
+          top: 0;
           width: 16px;
         }
       }
@@ -479,7 +475,9 @@
         font-size: 180%;
       }
 
-      .icon-error {
+      .icon-error,
+      .icon-info,
+      .icon-alert {
         color: $error-icon-fill;
         height: 14px;
         position: absolute;
@@ -594,11 +592,15 @@
 
 .popupmenu.tab-list-spillover,
 .popupmenu.dropdown-tab {
-  .icon.icon-error {
-    height: 14px;
-    left: 7px;
-    top: 8px;
-    width: 14px;
+  .icon {
+    &.icon-error,
+    &.icon-info,
+    &.icon-alert {
+      height: 14px;
+      left: 7px;
+      top: 8px;
+      width: 14px;
+    }
   }
 
   li.dismissible {
