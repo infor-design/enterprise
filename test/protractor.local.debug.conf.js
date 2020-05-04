@@ -1,7 +1,6 @@
 /* eslint-disable */
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
-const protractorImageComparison = require('protractor-image-comparison');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
@@ -31,13 +30,6 @@ exports.config = {
   onPrepare: () => {
     global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
-    browser.protractorImageComparison = new protractorImageComparison({
-      baselineFolder: `${basePath}/baseline`,
-      screenshotPath: `${basePath}/.tmp/`,
-      autoSaveBaseline: true,
-      ignoreAntialiasing: true,
-      debug: false
-    });
 
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: 'specs' }

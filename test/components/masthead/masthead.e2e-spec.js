@@ -29,7 +29,7 @@ describe('Masthead tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'masthead-soho')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-soho')).toEqual(0);
     });
   }
 
@@ -39,7 +39,7 @@ describe('Masthead tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'masthead-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-uplift')).toEqual(0);
     });
   }
 });

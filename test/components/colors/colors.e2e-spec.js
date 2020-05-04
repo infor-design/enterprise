@@ -26,7 +26,7 @@ describe('Color tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'colors')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'colors')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
@@ -52,7 +52,7 @@ describe('Color uplift tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'colors-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'colors-uplift')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }

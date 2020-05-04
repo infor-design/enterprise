@@ -1,7 +1,6 @@
 /* eslint-disable */
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
-const protractorImageComparison = require('protractor-image-comparison');
 const group = process.env.GROUP;
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS, group || 'all');
 

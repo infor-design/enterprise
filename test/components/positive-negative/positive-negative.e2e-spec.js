@@ -23,7 +23,7 @@ describe('Positive Negative Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'positive-negative')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'positive-negative')).toEqual(0);
     });
   }
 });

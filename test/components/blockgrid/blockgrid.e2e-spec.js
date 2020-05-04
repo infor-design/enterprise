@@ -71,7 +71,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('blockgrid')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('blockgrid')).toEqual(0);
     });
 
     it('Should not visual regress on example-responsive at 500px', async () => {
@@ -83,7 +83,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('blockgrid-500px')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('blockgrid-500px')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
       await browser.driver.sleep(config.sleep);
     });
@@ -97,7 +97,7 @@ describe('Blockgrid example-mixed-selection responsive tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('blockgrid-320px')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('blockgrid-320px')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
       await browser.driver.sleep(config.sleep);
     });

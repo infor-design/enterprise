@@ -21,7 +21,7 @@ describe('Circle pager example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('circlepager')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('circlepager')).toEqual(0);
     });
   }
 });

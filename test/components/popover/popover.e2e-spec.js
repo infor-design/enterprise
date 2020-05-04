@@ -34,7 +34,7 @@ describe('Popover Index Tests', () => {
       const popoverEl = await element(by.className('popover'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(popoverEl, 'popover-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(popoverEl, 'popover-index')).toEqual(0);
     });
   }
 });

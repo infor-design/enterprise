@@ -102,7 +102,7 @@ describe('Column Chart example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-index')).toEqual(0);
     });
   }
 });
@@ -127,7 +127,7 @@ describe('Column Chart balance tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-balance')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-balance')).toEqual(0);
     });
   }
 });
@@ -152,7 +152,7 @@ describe('Grouped Column Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-grouped')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-grouped')).toEqual(0);
     });
   }
 });
@@ -177,7 +177,7 @@ describe('Stacked Column Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-stacked')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-stacked')).toEqual(0);
     });
   }
 });

@@ -31,7 +31,7 @@ describe('Busy Indicator example-index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'busy-indicator-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'busy-indicator-index')).toEqual(0);
     });
   }
 });

@@ -23,7 +23,7 @@ describe('Line Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'line')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'line')).toEqual(0);
     });
   }
 });
@@ -46,7 +46,7 @@ describe('Line Chart Zero Millions tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'line-millions')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'line-millions')).toEqual(0);
     });
   }
 });
@@ -69,7 +69,7 @@ describe('Line Chart Two Line tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'line-twoline')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'line-twoline')).toEqual(0);
     });
   }
 });
@@ -92,7 +92,7 @@ describe('Line Chart Axis Label tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'line-axis-labels')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'line-axis-labels')).toEqual(0);
     });
   }
 });
@@ -115,7 +115,7 @@ describe('Line Chart Axis Rotate tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'line-rotate')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'line-rotate')).toEqual(0);
     });
   }
 });

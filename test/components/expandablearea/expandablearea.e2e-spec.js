@@ -34,7 +34,7 @@ describe('Expandable Area Index Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'expandablearea-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'expandablearea-index')).toEqual(0);
     });
   }
 });
@@ -67,7 +67,7 @@ describe('Expandable Custom Toggle Button Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'expandablearea-toggle')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'expandablearea-toggle')).toEqual(0);
     });
   }
 });

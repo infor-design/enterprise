@@ -73,7 +73,7 @@ describe('Personalization classes tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-classes')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-classes')).toEqual(0);
     });
   }
 });
@@ -94,7 +94,7 @@ describe('Personalization classes short tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-classes-short')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-classes-short')).toEqual(0);
     });
   }
 });
@@ -116,7 +116,7 @@ describe('Personalization example-tabs tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-tabs')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-tabs')).toEqual(0);
     });
   }
 });
@@ -137,7 +137,7 @@ describe('Personalization form tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-form')).toEqual(0);
     });
   }
 });
@@ -158,7 +158,7 @@ describe('Personalization form short tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form-short')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-form-short')).toEqual(0);
     });
   }
 });
@@ -179,7 +179,7 @@ describe('Personalization form2 tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form2-tabs')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-form2-tabs')).toEqual(0);
     });
   }
 });
@@ -200,7 +200,7 @@ describe('Personalization form 2 tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form2')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-form2')).toEqual(0);
     });
   }
 });
@@ -221,7 +221,7 @@ describe('Personalization form 2 short tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('personalize-form2-short')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('personalize-form2-short')).toEqual(0);
     });
   }
 });

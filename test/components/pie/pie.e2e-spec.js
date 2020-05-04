@@ -23,7 +23,7 @@ describe('Pie Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'pie')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'pie')).toEqual(0);
     });
   }
 });

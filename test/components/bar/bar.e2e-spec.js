@@ -46,7 +46,7 @@ describe('Bar Chart example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-index')).toEqual(0);
     });
   }
 });
@@ -125,7 +125,7 @@ describe('Bar Chart example-colors', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-color')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-color')).toEqual(0);
     });
   }
 });
@@ -150,7 +150,7 @@ describe('Bar Chart alignment tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-alignment')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-alignment')).toEqual(0);
     });
   }
 });
@@ -175,7 +175,7 @@ describe('Bar Chart axis adjust tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-adjust')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-axis-adjust')).toEqual(0);
     });
   }
 });
@@ -200,7 +200,7 @@ describe('Bar Chart axis formatter tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-axis-formatter')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-axis-formatter')).toEqual(0);
     });
   }
 });

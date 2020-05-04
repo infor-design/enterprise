@@ -22,7 +22,7 @@ describe('Tabs Module Toolbar tests', () => {
       const containerEl = await element(by.css('.page-container.no-scroll:not(.tab-panel-container)'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tabs-module')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'tabs-module')).toEqual(0);
     });
   }
 });

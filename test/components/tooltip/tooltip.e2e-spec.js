@@ -32,7 +32,7 @@ describe('Tooltips index page tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tooltip-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'tooltip-index')).toEqual(0);
     });
   }
 });
@@ -78,7 +78,7 @@ describe('Tooltip (personalizable) tests', () => {
         .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
       const tooltipEl = await element(by.id('tooltip'));
 
-      expect(await browser.protractorImageComparison.checkElement(tooltipEl, 'tooltip-personalized-text-color')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tooltipEl, 'tooltip-personalized-text-color')).toEqual(0);
     });
   }
 });

@@ -180,7 +180,7 @@ if (utils.isChrome() && utils.isCI()) {
     await browser.driver.sleep(config.sleep);
 
     // Test init/default state
-    expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
+    expect(await browser.imageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
     await clickOnDropdown();
     // Wait for animations to complete
     await browser.driver
@@ -188,7 +188,7 @@ if (utils.isChrome() && utils.isCI()) {
     await browser.driver.sleep(config.sleep);
 
     // Test open state
-    expect(await browser.protractorImageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
+    expect(await browser.imageComparison.checkElement(dropdownElList, 'dropdown-open')).toEqual(0);
   });
 }
 ```

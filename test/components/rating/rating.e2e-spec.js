@@ -21,7 +21,7 @@ describe('Rating example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('rating')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('rating')).toEqual(0);
     });
   }
 });

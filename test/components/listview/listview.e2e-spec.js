@@ -21,7 +21,7 @@ describe('Listview example-singleselect tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(listviewSection, 'listview-singleselect-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(listviewSection, 'listview-singleselect-open')).toEqual(0);
     });
   }
 
@@ -105,7 +105,7 @@ describe('Listview example-multiselect tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(listviewSection, 'listview-multiselect-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(listviewSection, 'listview-multiselect-open')).toEqual(0);
     });
   }
 
@@ -601,7 +601,7 @@ describe('Listview flex card empty tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(container, 'listview-flex-card')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(container, 'listview-flex-card')).toEqual(0);
     });
   }
 });
