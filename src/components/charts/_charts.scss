@@ -203,10 +203,21 @@
   margin-top: -9px;
 
   &.is-bottom {
-    border-top: 1px solid $panel-border-color;
+    border-top: 1px solid $chart-legend-border-color;
     margin: 0 auto;
     padding-bottom: 1em;
     padding-top: 1em;
+
+    &.adjusted-height {
+      .chart-legend-item {
+        font-size: 0;
+      }
+
+      .chart-legend-item-text {
+        position: relative;
+        top: -4px;
+      }
+    }
   }
 
   &.is-right {
