@@ -1,9 +1,10 @@
 // ================================================= /
 // IDS Enterprise - Rollup Configuration
 // ================================================= /
-const resolve = require('rollup-plugin-node-resolve');
+import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
+
 const babel = require('rollup-plugin-babel');
-const json = require('rollup-plugin-json');
 const license = require('rollup-plugin-license');
 const commandLineArgs = require('yargs').argv;
 

@@ -58,17 +58,24 @@ exports.config = {
       'browserstack.seleniumLogs' : 'false'
     }
   ],
+	plugins: [
+		{
+			// The module name
+			package: 'protractor-image-comparison',
+			// Some options, see the docs for more
+			options: {
+				baselineFolder: `${basePath}/baseline`,
+				screenshotPath: `${basePath}/.tmp/`,
+        autoSaveBaseline: true,
+        ignoreAntialiasing: true,
+        disableCSSAnimation: true,
+        debug: false
+			},
+		}
+	],
   onPrepare: () => {
     global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
-    browser.protractorImageComparison = new protractorImageComparison({
-      baselineFolder: `${basePath}/baseline`,
-      screenshotPath: `${basePath}/.tmp/`,
-      autoSaveBaseline: false,
-      ignoreAntialiasing: true,
-      debug: false
-    });
-
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: 'specs' }
     }));

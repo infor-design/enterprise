@@ -34,7 +34,7 @@ exports.config = {
     browser.protractorImageComparison = new protractorImageComparison({
       baselineFolder: `${basePath}/baseline`,
       screenshotPath: `${basePath}/.tmp/`,
-      autoSaveBaseline: false,
+      autoSaveBaseline: true,
       ignoreAntialiasing: true,
       debug: false
     });
