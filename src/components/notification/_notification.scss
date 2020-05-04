@@ -2,8 +2,10 @@
 //================================================== //
 
 .notification {
+  display: flex;
+  align-items: center;
   height: 0;
-  padding: 10px 45px;
+  padding: 10px 10px;
   position: relative;
   z-index: 1;
 
@@ -14,20 +16,12 @@
   }
 
   .notification-icon {
-    left: 15px;
-    position: absolute;
-    top: calc(50% - 9px);
+    flex-shrink: 0;
+    top: 0;
   }
 
   .notification-close {
-    color: inherit;
-    position: absolute;
-    right: 15px;
-    top: calc(50% - 7px);
-
-    .icon {
-      height: 15px;
-    }
+    margin-left: auto;
   }
 
   @mixin notification-styles($init-bkgd, $init-font, $hover-font) {
