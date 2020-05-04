@@ -2,6 +2,10 @@
 
 ## v4.29.0
 
+### v4.28.0 Features
+
+- `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
+
 ### v4.29.0 Fixes
 
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
