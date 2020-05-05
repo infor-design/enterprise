@@ -476,6 +476,28 @@ $datagrid-short-row-height: 25px;
     }
   }
 
+  &.has-draggable-columns {
+    th.is-active.is-sorted-asc {
+      .sort-indicator {
+        .sort-desc {
+          .icon {
+            color: $datagrid-list-draggable-sorted-icon-color;
+          }
+        }
+      }
+    }
+
+    th.is-active.is-sorted-desc {
+      .sort-indicator {
+        .sort-asc {
+          .icon {
+            color: $datagrid-list-draggable-sorted-icon-color;
+          }
+        }
+      }
+    }
+  }
+
   &.has-inline-editor {
     td {
       &:focus,
