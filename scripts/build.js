@@ -142,8 +142,8 @@ const filePaths = {
 // File Paths that are stripped/ignored.
 // Generally these are copied with another task, such as `npx grunt copy:main`.
 const ignoredFilePaths = [
-  'components/locale/cultures',
-  'components/locale/info'
+  path.join('components', 'locale', 'cultures'),
+  path.join('components', 'locale', 'info')
 ];
 
 // These search terms are used when scanning existing index files to determine
