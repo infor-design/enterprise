@@ -404,11 +404,7 @@ Calendar.prototype = {
     }
 
     this.eventDetailsContainer = document.querySelector('.calendar-event-details');
-    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile.listview');
     if (!this.eventDetailsContainer) {
-      return;
-    }
-    if (!this.eventDetailsMobileContainer) {
       return;
     }
 
@@ -423,12 +419,15 @@ Calendar.prototype = {
       count > 1
     );
 
-    this.renderTmpl(
-      thisEvent,
-      this.settings.mobileTemplate,
-      this.eventDetailsMobileContainer,
-      count > 1
-    );
+    this.eventDetailsMobileContainer = document.querySelector('.calendar-event-details-mobile.listview');
+    if (this.eventDetailsMobileContainer) {
+      this.renderTmpl(
+        thisEvent,
+        this.settings.mobileTemplate,
+        this.eventDetailsMobileContainer,
+        count > 1
+      );
+    }
 
     const api = $(this.eventDetailsContainer).data('accordion');
     if (api) {
@@ -437,7 +436,9 @@ Calendar.prototype = {
 
     $('.calendar .list-detail').css('display', 'block');
     $(this.eventDetailsContainer).accordion();
-    $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
+    if (this.eventDetailsMobileContainer) {
+      $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
+    }
 
     if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
       $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
