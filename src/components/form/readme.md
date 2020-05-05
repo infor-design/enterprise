@@ -29,7 +29,7 @@ The following classes can be used for form labels:
 
 - `label` - Used for styling spans like labels or form labels.
 - `data-description` - Used for stying data in a label when used next to an input.
-- `data` - Used for stying data in a label without an input, if you would like to align the inputs with other fields in the form, you can add the class `field-height` See Example](./demo/components/form/test-field-size-data-labels?font=source-sans).
+- `data` - Used for stying data in a label without an input, if you would like to align the inputs with other fields in the form, you can add the class `field-height` [See Example](./demo/components/form/test-field-size-data-labels?font=source-sans).
 
 The following classes can be used for form and label alignment.
 
