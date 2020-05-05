@@ -14,6 +14,7 @@
 - `[Datagrid]` Fixed visibility of sort icons when toggling and when the column is in active. ([#3692](https://github.com/infor-design/enterprise/issues/3692))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
+- `[Form]` Fix broken links in the form readme file. ([#818](https://github.com/infor-design/website/issues/818))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
 - `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
 - `[Multiselect]` Added support to api settings to `allTextString` and `selectedTextString` for custom headers. ([#3554](https://github.com/infor-design/enterprise/issues/3554))
