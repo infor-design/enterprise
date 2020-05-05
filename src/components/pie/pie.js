@@ -173,6 +173,17 @@ Pie.prototype = {
       this.element.addClass('is-mobile');
     }
 
+    let heightAdjusted = 0;
+    if (this.settings.legendPlacement === 'bottom' && dims.width < 360 && !this.settings.showMobile) {
+      heightAdjusted = 35;
+      this.element.closest('.widget-content').css({
+        height: 'auto',
+        'min-height': 'auto'
+      });
+      $(this.svg.node()).css({ 'min-height': 195 });
+      dims.height = parseInt(this.element.height(), 10) + heightAdjusted;
+    }
+
     dims.radius = Math.min(dims.width, dims.height) / 2;
     self.dims = dims;
 
@@ -196,7 +207,7 @@ Pie.prototype = {
       .attr('height', self.settings.showMobile ? '80%' : '100%');
 
     self.mainGroup
-      .attr('transform', `translate(${dims.width / 2},${dims.height / 2})`);
+      .attr('transform', `translate(${dims.width / 2},${((dims.height - heightAdjusted) / 2)})`);
 
     // move the origin of the group's coordinate space to the center of the SVG element
     dims.center = { x: (dims.width / 2), y: dims.height / 2 };
@@ -248,6 +259,8 @@ Pie.prototype = {
 
       this.settings.svg = self.svg;
       charts.addLegend(series, 'pie', this.settings, this.element);
+      const setClass = heightAdjusted > 0 ? 'addClass' : 'removeClass';
+      this.element.find('.chart-legend')[setClass]('adjusted-height');
     }
 
     this.setInitialSelected();

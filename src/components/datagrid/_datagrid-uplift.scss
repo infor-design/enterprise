@@ -166,6 +166,11 @@
   top: 4px;
 }
 
+.datagrid.short-rowheight tbody tr td .hyperlink,
+.datagrid.medium-rowheight tbody tr td .hyperlink {
+  margin-top: -4px;
+}
+
 // Adjust handle for resize on lists
 .is-gridlist.has-draggable-columns th .handle {
   font-size: 23px;
