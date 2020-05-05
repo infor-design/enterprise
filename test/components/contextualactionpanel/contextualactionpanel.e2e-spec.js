@@ -156,8 +156,8 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
     await element(by.id('trigger-1')).click();
     await browser.driver.sleep(config.sleepLonger);
 
-    expect(await element(by.css('#panel-1')).isDisplayed()).toBe(true);
-    expect(await element(by.css('#panel-1')).getAttribute('class')).not.toContain('display-fullsize');
+    expect(await element.all(by.css('#panel-1')).first().isDisplayed()).toBe(true);
+    expect(await element.all(by.css('#panel-1')).first().getAttribute('class')).not.toContain('display-fullsize');
 
     // Resize the page
     await browser.driver.manage().window().setSize(766, 600);

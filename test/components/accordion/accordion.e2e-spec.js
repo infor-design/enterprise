@@ -232,8 +232,8 @@ describe('Accordion adding headers dynamically tests', () => {
       .sendKeys(protractor.Key.TAB)
       .sendKeys(protractor.Key.TAB)
       .perform();
-    const focusedElem = browser.driver.switchTo().activeElement();
+    const focusedElem = await browser.driver.switchTo().activeElement();
 
-    expect(focusedElem.getText()).toEqual('Dynamically-Added Favorite (1)');
+    expect(await focusedElem.getText()).toEqual('Dynamically-Added Favorite (1)');
   });
 });

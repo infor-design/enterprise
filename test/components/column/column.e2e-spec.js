@@ -84,7 +84,7 @@ describe('Custom Tooltips page tests', () => {
 
 describe('Column Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/column/example-index?layout=nofrills');
+    await utils.setPage('/components/column/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
@@ -95,11 +95,11 @@ describe('Column Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.className('widget'));
       await browser.driver.sleep(config.sleepLonger);
 
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'column-index')).toEqual(0);
