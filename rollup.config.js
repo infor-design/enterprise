@@ -3,8 +3,8 @@
 // ================================================= /
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
 
-const babel = require('rollup-plugin-babel');
 const license = require('rollup-plugin-license');
 const commandLineArgs = require('yargs').argv;
 
