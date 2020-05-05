@@ -445,11 +445,18 @@
         .icon-error,
         .icon-info,
         .icon-alert {
-          height: 16px;
+          height: 14px;
           position: relative;
-          right: 3px;
+          right: 25px;
           top: 0;
           width: 16px;
+        }
+
+        &.is-error {
+          .icon-more.icon {
+            position: relative;
+            right: -13px;
+          }
         }
       }
 
@@ -598,7 +605,7 @@
     &.icon-alert {
       height: 14px;
       left: 7px;
-      top: 8px;
+      top: 9px;
       width: 14px;
     }
   }
