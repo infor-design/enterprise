@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="six columns">
+    <p>Github Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/3521" target="_blank">#3521</a></p>
+    <p>This test demonstrates how a Modal environment with Toasts could be configured to prevent dismissal of the Modal while toasts are open.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <button id="modal-trigger" class="btn-secondary" data-modal="test-modal">
+        <span>Show Modal</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="hidden" id="test-modal">
+  <div class="row">
+    <div class="twelve columns">
+      <p>After clicking the button below, try closing the Modal with the <b>Escape</b> key</p>
+    </div>
+  </div>
+  <div class="row top-padding">
+    <div class="twelve columns">
+      <div class="field" style="text-align: center;">
+        <button id="make-toasts" class="btn-secondary">
+          <span>Make Toasts</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  var triggerBtn = $('#modal-trigger');
+  var makeToastsBtn = $('#make-toasts');
+  var modalTemplate = $('#test-modal');
+  var totalToasts = 0;
+
+  triggerBtn.on('click.test', function () {
+    $('body').modal({
+      title: 'Modals with Toast',
+      content: modalTemplate
+    });
+
+    // Prevents the Modal from being closed if any toasts are open
+    var modalAPI = $('body').data('modal');
+    modalAPI.element
+      .on('beforeclose.test', function () {
+        var toasts = $('#toast-container').find('.toast')
+        if (toasts.length) {
+          return false;
+        }
+      })
+      .on('close.test', function () {
+        $(this).off('beforeclose.test');
+      });
+  });
+
+  function makeToast(count) {
+    $('body').toast({
+      title: 'Here \'s a Toast!',
+      message: 'This is toast #' + count
+    });
+  }
+
+  makeToastsBtn.on('click.test', function () {
+    var toastCount = 10;
+    while (toastCount > 0) {
+      makeToast(totalToasts);
+      toastCount--;
+      totalToasts++;
+    }
+  });
+</script>
