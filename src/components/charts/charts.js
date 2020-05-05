@@ -31,6 +31,7 @@ charts.tooltipSize = function tooltipSize(content) {
  */
 charts.formatToSettings = function formatToSettings(data, settings) {
   const d = data.data ? data.data : data;
+  const percentValue = (settings.formatter && settings.formatter !== '.0f' ? d3.format(settings.formatter)(d.percent) : `${isNaN(d.percentRound) ? 0 : d.percentRound}%`);
 
   if (settings.show === 'value') {
     return settings.formatter ? d3.format(settings.formatter)(d.value) : d.value;
@@ -41,7 +42,7 @@ charts.formatToSettings = function formatToSettings(data, settings) {
   }
 
   if (settings.show === 'label (percent)') {
-    return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+    return `${d.name} (${percentValue})`;
   }
 
   if (settings.show === 'label (value)') {
@@ -49,7 +50,7 @@ charts.formatToSettings = function formatToSettings(data, settings) {
   }
 
   if (settings.show === 'percent') {
-    return `${isNaN(d.percentRound) ? 0 : d.percentRound}%`;
+    return percentValue;
   }
 
   if (typeof settings.show === 'function') {
