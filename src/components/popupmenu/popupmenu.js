@@ -13,6 +13,9 @@ import '../place/place.jquery';
 // Component Name
 const COMPONENT_NAME = 'popupmenu';
 
+// Popupmenu Trigger Types
+const triggerTypes = ['click', 'rightClick', 'immediate', 'manual'];
+
 /**
  * Responsive Popup Menu Control aka Context Menu when doing a right click action.
  * @class PopupMenu
@@ -43,7 +46,7 @@ const COMPONENT_NAME = 'popupmenu';
 
 const POPUPMENU_DEFAULTS = {
   menu: null,
-  trigger: 'click',
+  trigger: triggerTypes[0],
   autoFocus: true,
   mouseFocus: true,
   attachToBody: true,
