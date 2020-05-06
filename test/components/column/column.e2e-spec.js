@@ -109,7 +109,7 @@ describe('Column Chart example-index tests', () => {
 
 describe('Column Chart balance tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/column/example-balance?layout=nofrills');
+    await utils.setPage('/components/column/example-balance');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
