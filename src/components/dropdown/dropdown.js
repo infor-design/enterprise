@@ -996,7 +996,9 @@ Dropdown.prototype = {
       }
     }
 
-    this.setPlaceholder(text);
+    if (!this.settings.showSearchUnderSelected) {
+      this.setPlaceholder(text);
+    }
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
@@ -1809,7 +1811,7 @@ Dropdown.prototype = {
       .addClass('is-open');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
-    if (this.settings.showTags) {
+    if (this.settings.showSearchUnderSelected) {
       this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
     }
 
@@ -1844,7 +1846,7 @@ Dropdown.prototype = {
     // If we've got a stored typeahead
     if (typeof this.filterTerm === 'string' && this.filterTerm.length > 0) {
       this.searchInput.val(this.filterTerm);
-    } else if (!this.settings.showTags) {
+    } else if (!this.settings.showSearchUnderSelected) {
       const selectedOpts = $(this.selectedOptions);
       const text = this.getOptionText(selectedOpts);
       this.searchInput.val(text);
