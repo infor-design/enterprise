@@ -49,6 +49,8 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 * @param {object} [settings.tagSettings] if defined, passes along 'clickHandler' and 'dismissHandler' functions to any Tags in the Taglist
+* @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
+* @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -70,7 +72,9 @@ const DROPDOWN_DEFAULTS = {
   maxWidth: null,
   placementOpts: null,
   onKeyDown: null,
-  tagSettings: {}
+  tagSettings: {},
+  allTextString: null,
+  selectedTextString: null
 };
 
 function Dropdown(element, settings) {
@@ -724,6 +728,7 @@ Dropdown.prototype = {
    */
   updateList(term) {
     const self = this;
+    const s = this.settings;
     const isMobile = self.isMobile();
     const listExists = self.list !== undefined && self.list !== null && self.list.length > 0;
     let listContents = '';
@@ -734,6 +739,15 @@ Dropdown.prototype = {
     const isMultiselect = this.settings.multiple === true;
     let moveSelected = `${this.settings.moveSelected}`;
     const showSelectAll = this.settings.showSelectAll === true;
+    const headerText = {
+      all: Locale.translate('All'),
+      selected: Locale.translate('Selected'),
+      labelText: self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()
+    };
+    headerText.all = (typeof s.allTextString === 'string' && s.allTextString !== '') ?
+      self.settings.allTextString : `${headerText.all} ${headerText.labelText}`;
+    headerText.selected = (typeof s.selectedTextString === 'string' && s.selectedTextString !== '') ?
+      self.settings.selectedTextString : `${headerText.selected} ${headerText.labelText}`;
 
     if (this.element[0].classList.contains('text-align-reverse')) {
       reverseText = ' text-align-reverse';
@@ -866,7 +880,7 @@ Dropdown.prototype = {
 
       // Show a "selected" header if there are selected options
       if (selectedOpts.length > 0) {
-        ulContents += buildLiHeader(`${Locale.translate('Selected')} ${self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()}`);
+        ulContents += buildLiHeader(headerText.selected);
       }
 
       selectedOpts.each(function (i) {
@@ -877,7 +891,7 @@ Dropdown.prototype = {
       // Only show the "all" header beneath the selected options if there
       // are no other optgroups present
       if (!hasOptGroups && opts.length > 0) {
-        ulContents += buildLiHeader(`${Locale.translate('All')} ${self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()}`);
+        ulContents += buildLiHeader(headerText.all);
       }
     }
 
