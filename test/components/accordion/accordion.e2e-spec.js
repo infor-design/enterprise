@@ -231,6 +231,7 @@ describe('Accordion adding headers dynamically tests', () => {
       .sendKeys(protractor.Key.TAB)
       .sendKeys(protractor.Key.TAB)
       .sendKeys(protractor.Key.TAB)
+      .sendKeys(protractor.Key.TAB)
       .perform();
     const focusedElem = await browser.driver.switchTo().activeElement();
 
