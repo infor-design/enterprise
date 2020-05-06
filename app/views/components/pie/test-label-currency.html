@@ -51,8 +51,12 @@ $('body').on('initialized', function () {
       show: 'label'
     },
     lines: {
-      show: 'percent', // value, label or percent or custom function
-      formatter: '.2',// Currency
+      show: 'value', // value, label or percent or custom function
+      formatter: '$,.2f',// Currency
+    },
+    tooltip: {
+      show: 'label (percent)',
+      formatter: ',.0%'
     }
   });
 

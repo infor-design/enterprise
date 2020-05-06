@@ -352,6 +352,19 @@ Pie.prototype = {
     const slice = self.svg.select('.slices').selectAll('path.slice')
       .data(self.pie(data), self.key);
 
+    const formatters = {
+      str: null,
+      isTooltip: self.settings.tooltip?.formatter &&
+        self.settings.tooltip.formatter !== PIE_DEFAULTS.tooltip.formatter,
+      isLines: self.settings.lines?.formatter &&
+        self.settings.lines.formatter !== PIE_DEFAULTS.lines.formatter
+    };
+    if (formatters.isTooltip) {
+      formatters.str = self.settings.tooltip.formatter;
+    } else if (formatters.isLines) {
+      formatters.str = self.settings.lines.formatter;
+    }
+
     const getOffset = (node) => {
       const body = document.body;
       let rect;
@@ -469,10 +482,15 @@ Pie.prototype = {
         };
 
         const value = charts.formatToSettings(d, self.settings.tooltip);
-        content = d.data.tooltip || value;
-        content = content.replace('{{percent}}', `${d.data.percentRound}%`);
+        const formatted = {
+          value: formatters.str && !formatters.isTooltip ?
+            d3.format(formatters.str)(d.value) : value,
+          percent: formatters.str ? d3.format(formatters.str)(d.data.percent) : `${isNaN(d.data.percentRound) ? 0 : d.data.percentRound}%`
+        };
+        content = d.data.tooltip || formatted.value;
+        content = content.replace('{{percent}}', `${formatted.percent}`);
         content = content.replace('{{value}}', d.value);
-        content = content.replace('%percent%', `${d.data.percentRound}%`);
+        content = content.replace('%percent%', `${formatted.percent}`);
         content = content.replace('%value%', d.value);
 
         if (content.indexOf('<b>') === -1) {

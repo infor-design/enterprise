@@ -330,7 +330,10 @@ Hierarchy.prototype = {
     nodeData.menu.actions = updatedActions;
     popupMenu.append(this.getActionMenuItems(nodeData));
 
+    // Setup flag to prevent double-open
+    popupMenuControl.keydownThenClick = true;
     popupMenuControl.open();
+
     popupMenuControl.handleAfterPlace(null, {
       element: popupMenu.parent(),
       parent: $(leaf).find('.btn-actions'),

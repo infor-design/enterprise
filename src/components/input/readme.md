@@ -104,7 +104,7 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 ## Responsive Guidelines
 
 - Default size is 300px wide but there are a number of widths. [View example](./demo/components/input/example-sizes?font=source-sans).
-- You can also use the responsive grid. [View example](./demo/form/example-inputs-simple?font=source-sans).
+- You can also use the responsive grid. [View example](./demo/components/form/example-inputs-simple?font=source-sans).
 
 ## Upgrading from 3.X
 

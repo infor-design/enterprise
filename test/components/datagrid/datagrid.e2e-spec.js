@@ -374,6 +374,23 @@ describe('Datagrid filter tests', () => {
     expect(await element(by.css('#example-filter-datagrid-1-header-filter-1 + .trigger')).isPresent()).toBeTruthy();
   });
 
+  it('Should render and filter type contents', async () => {
+    expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(9);
+    const selectEl = await element(by.id('example-filter-datagrid-1-header-filter-4'));
+    const selectElParent = await selectEl.element(by.xpath('..'));
+    let multiselectEl = await selectElParent.element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+    await multiselectEl.click();
+    multiselectEl = await selectElParent.element(by.css('div.dropdown.is-open'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+    await element.all(by.css('#dropdown-list #list-option-0')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(1);
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));

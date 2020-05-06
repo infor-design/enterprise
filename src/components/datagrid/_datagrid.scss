@@ -366,6 +366,26 @@ $datagrid-short-row-height: 25px;
           border: 1px solid $datagrid-list-header-checkbox-border-color;
         }
       }
+
+      &.is-active.is-sorted-asc {
+        .sort-indicator {
+          .sort-desc {
+            .icon {
+              color: $datagrid-list-alt-sorted-icon-color;
+            }
+          }
+        }
+      }
+
+      &.is-active.is-sorted-desc {
+        .sort-indicator {
+          .sort-asc {
+            .icon {
+              color: $datagrid-list-alt-sorted-icon-color;
+            }
+          }
+        }
+      }
     }
 
     td {
@@ -451,6 +471,28 @@ $datagrid-short-row-height: 25px;
       .handle {
         &:hover {
           color: $datagrid-list-header-color;
+        }
+      }
+    }
+  }
+
+  &.has-draggable-columns {
+    th.is-active.is-sorted-asc {
+      .sort-indicator {
+        .sort-desc {
+          .icon {
+            color: $datagrid-list-draggable-sorted-icon-color;
+          }
+        }
+      }
+    }
+
+    th.is-active.is-sorted-desc {
+      .sort-indicator {
+        .sort-asc {
+          .icon {
+            color: $datagrid-list-draggable-sorted-icon-color;
+          }
         }
       }
     }

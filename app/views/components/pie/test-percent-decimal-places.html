@@ -1,0 +1,60 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+var pieData = [{
+    data: [{
+      name: 'Component A',
+      value: 4,
+      tooltip: 'Component A <b>{{percent}}</b>'
+    }, {
+      name: 'Component B',
+      value: 0,
+      tooltip: 'Component B <b>{{percent}}</b>'
+    }, {
+      name: 'Component C',
+      value: 5,
+      tooltip: 'Component C <b>{{percent}}</b>'
+    }, {
+      name: 'Component D',
+      value: 5,
+      tooltip: 'Component D <b>{{percent}}</b>'
+    }, {
+      name: 'Component E',
+      value: 11.6,
+      tooltip: 'Component E <b>{{percent}}</b>'
+    }, {
+      name: 'Component F',
+      value: 12.6,
+      tooltip: 'Component F <b>{{percent}}</b>'
+    }]
+  }];
+
+  $('#pie-chart-example').chart({
+    type: 'pie',
+    dataset: pieData,
+    showLegend: false,
+    lines: {
+      show: 'percent',
+      formatter: ',.2%'
+    }
+  });
+
+});
+</script>
