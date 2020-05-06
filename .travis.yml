@@ -14,6 +14,7 @@ cache:
   directories:
     - node_modules
 env:
+  - TEST_SUITE=e2e-group0
   - TEST_SUITE=e2e-group1
   - TEST_SUITE=e2e-group2
   - TEST_SUITE=e2e-group3
@@ -31,6 +32,9 @@ script:
   - if [ $TEST_SUITE = lint  ]; then npm run lint:ci; fi
   - if [ $TEST_SUITE = functional  ]; then npm run functional:ci; fi
   # e2e non-Cron tests
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group0:ci; fi
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then (npm run quickstart &) && sleep 5; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group1:ci; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
@@ -41,6 +45,9 @@ script:
   - if [ $TEST_SUITE = e2e-group3 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run e2e:group3:ci; fi
   - if [ $TEST_SUITE = e2e-group3 ] && [ $TRAVIS_EVENT_TYPE != cron ]; then npm run stop; fi
   # e2e Cron test (browserstack)
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then (npm run quickstart &) && sleep 5; fi
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:group0:ci:bs; fi
+  - if [ $TEST_SUITE = e2e-group0 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then npm run stop; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then (npm run quickstart &) && sleep 5; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:group1:ci:bs; fi
   - if [ $TEST_SUITE = e2e-group1 ] && [ $TRAVIS_EVENT_TYPE = cron ]; then npm run stop; fi
@@ -83,5 +90,3 @@ stages:
     # do not run the deploy stage for Pull Request checks
     # and require the branch name to be master (note for PRs this is the base branch name)
     if: NOT type IN (pull_request) AND branch = master
-webhooks:
-  - https://outlook.office.com/webhook/a9f75c6d-a5d9-4556-9125-a5538f972afb@457d5685-0467-4d05-b23b-8f817adda47c/TravisCI/c40cbf2648c543729c0325f090430919/75c2d6d6-0ebd-4d85-be35-735b5168a29d
