@@ -119,7 +119,7 @@ describe('Column Chart balance tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const containerEl = await element(by.className('widget'));
       await browser.driver.sleep(config.sleep);
 
