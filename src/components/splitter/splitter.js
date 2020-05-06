@@ -66,6 +66,7 @@ Splitter.prototype = {
     const direction = s.axis === 'x' ? 'left' : 'top';
     const thisSide = parent.is('.content') ? parent.parent() : parent;
     const defaultOffset = 299;
+    const dragHandle = $('<div class="splitter-drag-handle"><svg class="icon"><use xlink:href="#icon-drag"/></svg></div>');
     let w = parent.width();
     let parentHeight;
 
@@ -77,6 +78,7 @@ Splitter.prototype = {
     this.isSplitterRightSide = splitter.is('.splitter-right') || (s.axis === 'x' && s.side === 'right');
     this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
     s.uniqueId = utils.uniqueId(this.element, 'splitter');
+    dragHandle.appendTo(splitter);
 
     if (this.isSplitterRightSide) {
       const thisPrev = thisSide.prev();

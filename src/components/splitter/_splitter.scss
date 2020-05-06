@@ -94,15 +94,16 @@
     height: 41px;
   }
 
-  &::after {
+  .splitter-drag-handle {
     color: $splitter-grip-bg-color;
-    content: '⁞';
     display: block;
-    font-size: 28px;
-    left: 5px;
-    margin-top: -12px;
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
+
+    .icon {
+      width: 20px;
+    }
   }
 
   //Other Layouts
@@ -124,17 +125,15 @@
     position: absolute;
     width: 100%;
 
-    &::after {
+    .splitter-drag-handle {
       @include transform(rotate(90deg));
 
       color: $splitter-grip-bg-color;
-      content: '⁞';
       display: block;
-      font-size: 28px;
       left: 50%;
       margin-left: -10px;
       position: absolute;
-      top: 30%;
+      top: 2px;
     }
   }
 
