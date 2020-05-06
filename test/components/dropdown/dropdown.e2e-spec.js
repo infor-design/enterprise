@@ -654,3 +654,33 @@ describe('Dropdown selectValue() tests', () => {
     });
   }
 });
+
+describe('Dropdown `showSearchUnderSelected` tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-search-under-selected?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('should not visually regress', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await browser.driver.manage().window().setSize(400, 640);
+
+    const dropdownEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+
+    // Just open the Dropdown
+    await dropdownEl.click();
+    const dropdownListEl = await element(by.css('#dropdown-list'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownListEl), config.waitsFor);
+
+    // Ensure the Searchfield is underneath
+    expect(await browser.protractorImageComparison.checkScreen('dropdown-search-under-selected')).toEqual(0);
+
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+});

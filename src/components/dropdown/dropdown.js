@@ -36,6 +36,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * even if no selectable options are present underneath.
 * @param {boolean} [settings.showSelectAll] if true, shows a `Select All` option at the top of a multiselect.
 * @param {boolean} [settings.showTags] if true, replaces the text-based pseudo-element in the page with a dismissible, tag-based display.
+* @param {boolean} [settings.showSearchUnderSelected=false] if true, moves the Searchfield in the Dropdown list from directly on top of the pseudo-element to underneath/above, providing visibility into the currently selected results.  When configured as a Multiselect with Tags, this is the default option.
 * @param {boolean} [settings.source]  A function that can do an ajax call.
 * @param {boolean} [settings.sourceArguments = {}]  If a source method is defined, this flexible object can be
 * passed into the source method, and augmented with parameters specific to the implementation.
@@ -62,6 +63,7 @@ const DROPDOWN_DEFAULTS = {
   showEmptyGroupHeaders: false,
   showSelectAll: false,
   showTags: false,
+  showSearchUnderSelected: false,
   source: undefined,
   sourceArguments: {},
   reload: reloadSourceStyles[0],
@@ -288,6 +290,9 @@ Dropdown.prototype = {
 
     // Create a taglist, if applicable
     if (this.settings.showTags) {
+      // Force searchfield to be beneath/above the pseudo element
+      // to prevent conflicts with the Tag List.
+      this.settings.showSearchUnderSelected = true;
       this.pseudoElem[0].classList.add('has-tags');
       this.renderTagList();
     }
@@ -2094,8 +2099,9 @@ Dropdown.prototype = {
     positionOpts.useParentWidth = useParentWidth;
 
     // Use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-    // Ignore this for Tag List Display and always position below/above the field.
-    if (!this.settings.showTags) {
+    // This is used when rendering a tag list, or if the Dropdown is explicitly configured for placing the Search outside the pseudo-element.
+    // Otherwise, always position below/above the field.
+    if (!this.settings.showSearchUnderSelected) {
       const isRetina = window.devicePixelRatio > 1;
       const isChrome = env.browser.name === 'chrome';
       positionOpts.y = -(parseInt(parentElement[0].clientHeight, 10) +
