@@ -299,7 +299,7 @@ describe('Contextmenu Placement Tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('Should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(640, 296);

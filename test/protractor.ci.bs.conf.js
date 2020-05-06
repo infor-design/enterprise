@@ -69,7 +69,8 @@ exports.config = {
         ignoreAntialiasing: true,
         disableCSSAnimation: false,
         debug: false,
-        hideScrollBars: true
+        hideScrollBars: true,
+        clearRuntimeFolder: true
 			},
 		}
 	],
