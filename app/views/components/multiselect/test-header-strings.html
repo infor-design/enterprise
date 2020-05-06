@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Multiselect - Custom Header Strings</h2>
+    <p>Demonstrates the <strong>allTextString</strong> and <strong>selectedTextString</strong> settings to customize the headers in multiselect.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="states-multi" class="label">States</label>
+      <select multiple id="states-multi" name="states-multi" class="multiselect" data-options="{allTextString: 'Available to choose', selectedTextString: 'Chosen'}">
+        <option value="AL">Alabama</option>
+        <option value="AK" selected>Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="ajax-test">Ajax Test</label>
+      <select id="ajax-test" name="ajax-test" class="multiselect" data-init="false" multiple></select>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#ajax-test').multiselect({
+    source: '{{basepath}}api/states?term=',
+    allTextString: 'Available to choose',
+    selectedTextString: 'Chosen'
+  });
+</script>

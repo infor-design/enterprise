@@ -341,6 +341,31 @@ describe('Multiselect placeholder tests', () => {
   });
 });
 
+describe('Multiselect header strings tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/multiselect/test-header-strings');
+
+    const multiselectEl = await element(by.css('select.multiselect + .dropdown-wrapper div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should have custom header strings', async () => {
+    const selector = '#dropdown-list .group-label';
+    await clickOnMultiselect();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
+
+    expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
+    expect(await element.all(by.css(selector)).get(0).getText()).toBe('Chosen');
+    expect(await element.all(by.css(selector)).get(1).getText()).toBe('Available to choose');
+  });
+});
+
 describe('Multiselect with Tags tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Standard example should not visually regress', async () => {
