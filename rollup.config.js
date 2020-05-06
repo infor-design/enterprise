@@ -33,7 +33,8 @@ const config = {
       process: commandLineArgs.verbose
     }),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
     }),
     license({
       sourcemap: true,
