@@ -54,7 +54,8 @@
     background-color: $splitter-active-bg-color;
     outline: none;
 
-    &::after {
+    &::after,
+    .splitter-drag-handle {
       color: $splitter-active-grip-bg-color;
     }
 
