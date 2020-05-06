@@ -6615,10 +6615,6 @@ Datagrid.prototype = {
         }
       });
 
-      thisSearch.off('blur.datagrid').on('blur.datagrid', () => {
-        self.keywordSearch(thisSearch.val());
-      });
-
       xIcon.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
@@ -11383,7 +11379,7 @@ Datagrid.prototype = {
       const searchfield = toolbar.find('.searchfield');
       const searchfieldApi = searchfield.data('searchfield');
       const xIcon = searchfield.parent().find('.close.icon');
-      searchfield.off('keypress.datagrid blur.datagrid');
+      searchfield.off('keypress.datagrid');
       xIcon.off('click.datagrid');
       if (searchfieldApi && typeof searchfieldApi.destroy === 'function') {
         searchfieldApi.destroy();
