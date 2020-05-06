@@ -66,7 +66,7 @@ Splitter.prototype = {
     const direction = s.axis === 'x' ? 'left' : 'top';
     const thisSide = parent.is('.content') ? parent.parent() : parent;
     const defaultOffset = 299;
-    const dragHandle = $('<div class="splitter-drag-handle"><svg class="icon"><use xlink:href="#icon-drag"/></svg></div>');
+    const dragHandle = $(`<div class="splitter-drag-handle">${$.createIcon('drag')}</div>`);
     let w = parent.width();
     let parentHeight;
 
