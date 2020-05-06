@@ -6615,6 +6615,10 @@ Datagrid.prototype = {
         }
       });
 
+      thisSearch.off('blur.datagrid').on('blur.datagrid', () => {
+        self.keywordSearch(thisSearch.val());
+      });
+
       xIcon.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
@@ -6840,13 +6844,17 @@ Datagrid.prototype = {
           if (cellText.indexOf(term) > -1 && isSearchExpandableRow) {
             found = true;
             [].slice.call(cell.querySelectorAll('*')).forEach((node) => {
-              if (xssUtils.unescapeHTML(node.innerHTML) === node.textContent) {
-                const contents = node.textContent;
-                const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
+              [].slice.call(node.childNodes).forEach((childNode) => {
+                const parent = childNode.parentElement;
+                if (childNode.nodeType === 3 &&
+                  xssUtils.unescapeHTML(parent.innerHTML) === childNode.textContent) {
+                  const contents = childNode.textContent;
+                  const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
 
-                DOM.addClass(node, 'search-mode');
-                DOM.html(node, contents.replace(exp, '<i>$1</i>'));
-              }
+                  DOM.addClass(parent, 'search-mode');
+                  DOM.html(parent, contents.replace(exp, '<i>$1</i>'));
+                }
+              });
             });
           }
         });
@@ -11373,8 +11381,12 @@ Datagrid.prototype = {
     if (this.removeToolbarOnDestroy && this.settings.toolbar &&
       this.settings.toolbar.keywordFilter) {
       const searchfield = toolbar.find('.searchfield');
-      if (searchfield.data('searchfield')) {
-        searchfield.data('searchfield').destroy();
+      const searchfieldApi = searchfield.data('searchfield');
+      const xIcon = searchfield.parent().find('.close.icon');
+      searchfield.off('keypress.datagrid blur.datagrid');
+      xIcon.off('click.datagrid');
+      if (searchfieldApi && typeof searchfieldApi.destroy === 'function') {
+        searchfieldApi.destroy();
       }
       searchfield.removeData('options');
     }
