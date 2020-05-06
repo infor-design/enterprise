@@ -380,15 +380,24 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(400, 640);
 
-    const multiEl = await element(by.css('div.multiselect'));
+    const multiEl = await element(by.css('div.dropdown'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(multiEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(multiEl), config.waitsFor);
 
     // Just open the Dropdown
     await multiEl.click();
     const multiListEl = await element(by.css('#dropdown-list'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(multiListEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(multiListEl), config.waitsFor);
+
+    // The test environment creates an incorrect baseline with the standard dropdown icon unless we
+    // type a space and backspace first (simulating a search).
+    const inputEl = await element(by.css('#dropdown-search'));
+    await inputEl.click();
+    await inputEl.sendKeys('n');
+    await browser.driver.sleep(config.sleep);
+    await inputEl.sendKeys(protractor.Key.BACK_SPACE);
+    await browser.driver.sleep(config.sleep);
 
     // Ensure the Searchfield is underneath
     expect(await browser.protractorImageComparison.checkScreen('multiselect-search-under-selected')).toEqual(0);
