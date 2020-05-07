@@ -975,7 +975,7 @@ Place.prototype = {
       }
       if (dir === 'top' || dir === 'bottom') {
         targetCenter = targetRect.left + (targetRect.width / 2);
-        currentArrowCenter = arrowRect.left + (arrowRect.width / 2);
+        currentArrowCenter = arrowRect.left + (arrowRect.width / 2) - (dir === 'top' ? 2 : 0);
         d = targetCenter - currentArrowCenter;
         newArrowRect.left = arrowRect.left + d;
         newArrowRect.right = arrowRect.right + d;

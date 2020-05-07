@@ -346,8 +346,6 @@ Slider.prototype = {
             return `${self.getModifiedTextValue(Math.floor(self.value()[i]))}`;
           },
           placement: (isVertical ? 'right' : self.settings.tooltipPosition),
-          placementOpts: { containerOffsetX: 5 },
-          offset: { left: 5 },
           trigger: 'focus',
           keepOpen: self.settings.persistTooltip
         });
