@@ -78,7 +78,7 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
     await sliderEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tooltip.top.is-open'))), config.waitsFor);
-    
+
     expect(await element(by.css('.tooltip.top.is-open')).isDisplayed()).toBeTruthy();
   });
 
@@ -94,7 +94,7 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
       const mainContent = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen(mainContent, 'slider-tooltip-position')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(mainContent, 'slider-tooltip-position')).toEqual(0);
     });
   }
 });
