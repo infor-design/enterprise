@@ -94,7 +94,7 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
       const mainContent = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContent, 'slider-tooltip-position-top')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(mainContent, 'slider-tooltip-position-top')).toEqual(0);
     });
   }
 });

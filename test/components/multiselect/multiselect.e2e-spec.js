@@ -425,7 +425,7 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
     await browser.driver.sleep(config.sleep);
 
     // Ensure the Searchfield is underneath
-    expect(await browser.protractorImageComparison.checkScreen('multiselect-search-under-selected')).toEqual(0);
+    expect(await browser.imageComparison.checkScreen('multiselect-search-under-selected')).toEqual(0);
 
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
