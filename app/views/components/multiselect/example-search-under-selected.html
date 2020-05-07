@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="visual-regression-target-field" class="field">
+      <label for="test-multi">Searchfield Underneath Selected</label>
+      <select id="test-multi" name="test-multi" class="multiselect" data-init="false" multiple></select>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#test-multi').multiselect({
+    showSearchUnderSelected: true,
+    source: function (response, term) {
+      $.getJSON('{{basepath}}api/states', function(data, term) {
+        response(data);
+      });
+    }
+  });
+</script>
