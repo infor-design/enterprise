@@ -50,7 +50,7 @@ describe('Textarea example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });
   }
 
@@ -224,7 +224,7 @@ describe('Textarea Rows Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'textarea-rows')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'textarea-rows')).toEqual(0);
     });
   }
 });

@@ -3,7 +3,6 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../../utils/behaviors'; // hidefocus
-import '../datepicker/datepicker.jquery';
 import '../dropdown/dropdown.jquery';
 import '../toolbar-flex/toolbar-flex.jquery';
 

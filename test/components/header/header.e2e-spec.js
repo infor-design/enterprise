@@ -24,7 +24,7 @@ describe('Header Index Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'header-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'header-index')).toEqual(0);
     });
   }
 });

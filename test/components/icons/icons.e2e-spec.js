@@ -20,7 +20,7 @@ describe('Icon Soho (Subtle) tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'icons-subtle')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'icons-subtle')).toEqual(0);
     });
   }
 });
@@ -40,7 +40,7 @@ describe('Icon Uplift (Vibrant)  tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'icons-vibrant')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'icons-vibrant')).toEqual(0);
     });
   }
 });

@@ -103,7 +103,7 @@ describe('Datepicker example-index tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-index')).toEqual(0);
     });
   }
 });
@@ -571,7 +571,7 @@ describe('Datepicker disabled date tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-disabled-dates')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-disabled-dates')).toEqual(0);
     });
   }
 });
@@ -599,7 +599,7 @@ describe('Datepicker Legend Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-legend')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-legend')).toEqual(0);
     });
   }
 });
@@ -777,7 +777,7 @@ describe('Datepicker Month Year Changer Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed')).toEqual(0);
     });
   }
 
@@ -791,7 +791,7 @@ describe('Datepicker Month Year Changer Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-open')).toEqual(0);
     });
   }
 });
@@ -857,7 +857,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disa
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed-yearfirst')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed-yearfirst')).toEqual(0);
     });
   }
 
@@ -871,7 +871,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disa
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-yearfirst')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-yearfirst')).toEqual(0);
     });
   }
 });
@@ -1028,7 +1028,7 @@ describe('Datepicker Timeformat Tests', () => {
 
     // Cant parse the full date so its a loose check
     // If this starts to fail, adjust the year
-    const displayedValue = element(by.id('policyNumber')).getAttribute('value');
+    const displayedValue = element(by.id('dp1')).getAttribute('value');
 
     expect(displayedValue).toContain('ص');
     expect(displayedValue).toContain('14');
@@ -1107,7 +1107,7 @@ describe('Datepicker Month Year Picker Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-month-year-picker')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-month-year-picker')).toEqual(0);
     });
   }
 });
@@ -1141,7 +1141,7 @@ describe('Datepicker Year Picker Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-year-only-picker')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-year-only-picker')).toEqual(0);
     });
   }
 });
@@ -1182,7 +1182,7 @@ describe('Datepicker Month Only Picker Tests', () => {
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datepicker-month-only-picker')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-month-only-picker')).toEqual(0);
     });
   }
 });

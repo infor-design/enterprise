@@ -83,7 +83,7 @@ const questionsArr = [{
   choices: ['Today', 'Yesterday']
 }];
 
-inquirer.prompt(questionsArr).then(answers => {
+inquirer.prompt(questionsArr).then((answers) => {
   let d = new Date();
   if (answers.tag === 'Yesterday') {
     d = d.setDate(d.getDate() - 1);
@@ -92,7 +92,7 @@ inquirer.prompt(questionsArr).then(answers => {
   const suffixDate = formatDate(d);
 
   pkgJson.version = `${getBaseVersion(pkgJson.version)}.${suffixDate}`;
-  const dataStr = JSON.stringify(pkgJson, null, 2) + '\n';
+  const dataStr = JSON.stringify(pkgJson, null, 2) + '\n'; //eslint-disable-line
 
   const cmdArr = [
     'git status -sb',
@@ -101,7 +101,7 @@ inquirer.prompt(questionsArr).then(answers => {
     'npm publish --tag=dev',
     'echo Reset the package.json version',
     'git checkout package.json'
-  ]
+  ];
 
   // Write the file with the new version
   fs.writeFile(pkgJsonPath, dataStr, 'utf8', () => {

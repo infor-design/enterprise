@@ -1,7 +1,7 @@
 const fs = require('fs');
-const logger = require('../logger');
 const path = require('path');
 const URL = require('url');
+const logger = require('../logger');
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.

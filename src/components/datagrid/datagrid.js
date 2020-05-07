@@ -12,8 +12,8 @@ import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 
-import { Formatters } from '../datagrid/datagrid.formatters';
-import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
+import { Formatters } from './datagrid.formatters';
+import { GroupBy, Aggregators } from './datagrid.groupby';
 // eslint-disable-next-line
 import { Editors } from '../datagrid/datagrid.editors';
 
@@ -885,8 +885,8 @@ Datagrid.prototype = {
     this.setTreeRootNodes();
 
     // Figure out whether or not to preserve previously selected rows
-    if (!pagerInfo.preserveSelected && this.settings.source
-      && !this.settings.allowSelectAcrossPages) {
+    if (!pagerInfo.preserveSelected && this.settings.source &&
+      !this.settings.allowSelectAcrossPages) {
       this.unSelectAllRows();
     }
     if (!pagerInfo.preserveSelected && (pagerInfo.type === 'initial' || !pagerInfo.type)) {
@@ -1243,8 +1243,8 @@ Datagrid.prototype = {
       const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false
-      if ((self.hasLeftPane || self.hasRightPane)
-        && (self.settings.frozenColumns.left &&
+      if ((self.hasLeftPane || self.hasRightPane) &&
+        (self.settings.frozenColumns.left &&
           self.settings.frozenColumns.left.indexOf(column.id) > -1 ||
         self.settings.frozenColumns.right &&
         self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
@@ -3362,8 +3362,8 @@ Datagrid.prototype = {
   afterRender() {
     const self = this;
 
-    if (this.settings.fixedRowHeight && this.settings.fixedRowHeight === 'auto'
-      && this.settings.frozenColumns) {
+    if (this.settings.fixedRowHeight && this.settings.fixedRowHeight === 'auto' &&
+      this.settings.frozenColumns) {
       self.tableBody.find('tr').each(function (i) {
         let leftHeight = 0;
         let centerHeight = 0;
@@ -4575,8 +4575,8 @@ Datagrid.prototype = {
     if (lastColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
 
-      if (this.isInModal && this.settings.stretchColumn === null
-        && !this.settings.sizeColumnsEqually && diff > 0 && !this.widthPercent && !col.width) {
+      if (this.isInModal && this.settings.stretchColumn === null &&
+        !this.settings.sizeColumnsEqually && diff > 0 && !this.widthPercent && !col.width) {
         colWidth = this.elemWidth;
         col.width = colWidth;
       }
@@ -9488,7 +9488,7 @@ Datagrid.prototype = {
       const rowData = s.treeGrid ? dataset[row].node : dataset[row];
       newVal = col.serialize(value, oldVal, col, row, cell, rowData);
       return newVal;
-    } else if (col.sourceFormat) {
+    } if (col.sourceFormat) {
       if (value instanceof Date) {
         newVal = Locale.parseDate(value, col.sourceFormat);
       } else {
@@ -11119,9 +11119,9 @@ Datagrid.prototype = {
 
       // Clean up text in selects
       const select = tooltip.wrapper.querySelector('select');
-      if (select && select.selectedIndex
-        && select.options[select.selectedIndex]
-        && select.options[select.selectedIndex].innerHTML) {
+      if (select && select.selectedIndex &&
+        select.options[select.selectedIndex] &&
+        select.options[select.selectedIndex].innerHTML) {
         tooltip.content = env.features.touch ? '' : select.options[select.selectedIndex].innerHTML.trim();
       }
 

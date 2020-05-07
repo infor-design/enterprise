@@ -170,14 +170,14 @@ describe('Multiselect example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
 
       await clickOnMultiselect();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectElList), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(multiselectElList, 'multiselect-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(multiselectElList, 'multiselect-open')).toEqual(0);
     });
   }
 
@@ -376,7 +376,7 @@ describe('Multiselect with Tags tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(multiselectStandardEl), config.waitsFor);
       await browser.driver.sleep(config.sleepShort);
 
-      expect(await browser.protractorImageComparison.checkElement(multiselectStandardEl, 'multiselect-tags-standard')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(multiselectStandardEl, 'multiselect-tags-standard')).toEqual(0);
     });
 
     it('Disabled example should not visually regress', async () => {
@@ -387,7 +387,7 @@ describe('Multiselect with Tags tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(multiselectDisabledEl), config.waitsFor);
       await browser.driver.sleep(config.sleepShort);
 
-      expect(await browser.protractorImageComparison.checkElement(multiselectDisabledEl, 'multiselect-tags-disabled')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(multiselectDisabledEl, 'multiselect-tags-disabled')).toEqual(0);
     });
   }
 });
@@ -425,7 +425,7 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
     await browser.driver.sleep(config.sleep);
 
     // Ensure the Searchfield is underneath
-    expect(await browser.protractorImageComparison.checkScreen('multiselect-search-under-selected')).toEqual(0);
+    expect(await browser.imageComparison.checkScreen('multiselect-search-under-selected')).toEqual(0);
 
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });

@@ -55,7 +55,7 @@ describe('Tree example-index tests', () => {
       const containerEl = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
     });
   }
 });

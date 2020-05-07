@@ -1712,8 +1712,8 @@ Tree.prototype = {
     }
 
     if (location instanceof jQuery &&
-      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)
-      && !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
+      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery) &&
+      !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
       location[0].appendChild(li);
       found = true;
     }

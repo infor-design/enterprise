@@ -30,7 +30,7 @@ describe('Hierarchy index tests', () => {
       const containerEl = await element.all(by.id('hierarchy')).first();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'hierarchy-index')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }

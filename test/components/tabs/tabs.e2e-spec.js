@@ -35,7 +35,7 @@ describe('Tabs click example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
     });
   }
 
@@ -124,7 +124,7 @@ describe('Tabs click example-counts tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
     });
   }
 
@@ -178,7 +178,7 @@ describe('Tabs click example-counts uplift tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-counts-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-counts-uplift')).toEqual(0);
     });
   }
 });
@@ -304,7 +304,7 @@ describe('Tabs click example-add-tab button tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
     });
   }
 
@@ -413,7 +413,7 @@ describe('Tabs click example-dropdown-tabs tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
     });
   }
 

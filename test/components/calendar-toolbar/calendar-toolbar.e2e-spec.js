@@ -39,7 +39,7 @@ describe('Calendar Toolbar visual tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'calendar-toolbar-visuals')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'calendar-toolbar-visuals')).toEqual(0);
     });
   }
 });

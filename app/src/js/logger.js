@@ -1,7 +1,7 @@
 // Wraps the logger from the `/scripts` folder with an optional
 // demoapp flag.
-const logger = require('../../../scripts/logger');
 const yargs = require('yargs').argv;
+const logger = require('../../../scripts/logger');
 
 function appLogger(type, msg) {
   if (!yargs.verbose) {

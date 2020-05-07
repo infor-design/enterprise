@@ -421,7 +421,7 @@ ColorPicker.prototype = {
     if (s.showLabel && label === s.clearableText) {
       this.setValueOnField({ hex: colorHex, label: s.clearableText, isEmpty: true });
       return;
-    } else if (!isValidHex) {
+    } if (!isValidHex) {
       if (!s.showLabel) {
         colorHex = colorHex !== '#' ? colorHex : '';
         this.setValueOnField({ hex: colorHex, invalid: true });
@@ -648,7 +648,7 @@ ColorPicker.prototype = {
   rgb2hex(rgb) {
     if (!rgb || rgb.search('rgb') === -1) {
       return rgb;
-    } else if (rgb === 'rgba(0, 0, 0, 0)') {
+    } if (rgb === 'rgba(0, 0, 0, 0)') {
       return 'transparent';
     }
 

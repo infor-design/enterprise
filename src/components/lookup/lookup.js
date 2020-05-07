@@ -4,7 +4,7 @@ import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
-import '../datagrid/datagrid.jquery';
+import '../datagrid/datagrid.jquery'; //eslint-disable-line
 import '../icons/icons.jquery';
 import '../modal/modal.jquery';
 

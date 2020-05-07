@@ -1607,8 +1607,8 @@ Dropdown.prototype = {
         return;
       }
 
-      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm
-          && !self.settings.noSearch) {
+      if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm &&
+          !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
@@ -2061,8 +2061,8 @@ Dropdown.prototype = {
       const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
       const isToBottom = parseInt(self.list[0].offsetTop, 10) +
         parseInt(self.list[0].offsetHeight, 10) >= window.innerHeight;
-      const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2))
-        && (ulHeight + searchInputHeight >= listHeight);
+      const isSmaller = (searchInputHeight < listHeight - (searchInputHeight * 2)) &&
+        (ulHeight + searchInputHeight >= listHeight);
 
       let adjustedUlHeight;
       if (isSmaller) {
@@ -2998,7 +2998,8 @@ Dropdown.prototype = {
   getDataAttributes(attr, attrToExclude) {
     if (!attr) {
       return;
-    } else if (typeof attr === 'string') {
+    }
+    if (typeof attr === 'string') {
       attr = [attr];
     }
 

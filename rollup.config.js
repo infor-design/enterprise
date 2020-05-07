@@ -1,9 +1,10 @@
 // ================================================= /
 // IDS Enterprise - Rollup Configuration
 // ================================================= /
-const resolve = require('rollup-plugin-node-resolve');
-const babel = require('rollup-plugin-babel');
-const json = require('rollup-plugin-json');
+import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
+
 const license = require('rollup-plugin-license');
 const commandLineArgs = require('yargs').argv;
 
@@ -32,7 +33,8 @@ const config = {
       process: commandLineArgs.verbose
     }),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
     }),
     license({
       sourcemap: true,

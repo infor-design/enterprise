@@ -24,7 +24,7 @@ describe('Counts Actionable tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'counts-actionable')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'counts-actionable')).toEqual(0);
     });
   }
 });
@@ -47,7 +47,7 @@ describe('Counts Non Actionable tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'counts-not-actionable')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'counts-not-actionable')).toEqual(0);
     });
   }
 });
@@ -70,7 +70,7 @@ describe('Counts Widgets tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'counts-widget')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'counts-widget')).toEqual(0);
     });
   }
 });
@@ -93,7 +93,7 @@ describe('Counts short tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'counts-short')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'counts-short')).toEqual(0);
     });
   }
 });

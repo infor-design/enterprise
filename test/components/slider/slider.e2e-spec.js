@@ -21,7 +21,7 @@ describe('Slider example-index tests', () => { //eslint-disable-line
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('slider')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('slider')).toEqual(0);
     });
   }
 });
@@ -42,7 +42,7 @@ describe('Slider Vertical tests', () => { //eslint-disable-line
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('slider-vertical')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('slider-vertical')).toEqual(0);
     });
   }
 });
@@ -63,7 +63,7 @@ describe('Slider short tests', () => { //eslint-disable-line
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('slider-short')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('slider-short')).toEqual(0);
     });
   }
 });
@@ -94,7 +94,7 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
       const mainContent = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(mainContent, 'slider-tooltip-position-top')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(mainContent, 'slider-tooltip-position-top')).toEqual(0);
     });
   }
 });

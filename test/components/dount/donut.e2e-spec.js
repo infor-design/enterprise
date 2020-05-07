@@ -23,7 +23,7 @@ describe('Donut Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'donut')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'donut')).toEqual(0);
     });
   }
 });
@@ -46,7 +46,7 @@ describe('Donut Chart alerts tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'donut-alerts')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'donut-alerts')).toEqual(0);
     });
   }
 });

@@ -31,7 +31,7 @@ if (utils.isChrome() && utils.isCI()) {
       const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-standard')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tagEl, 'tag-standard')).toEqual(0);
     });
 
     it('linkable tags should not change', async () => {
@@ -41,7 +41,7 @@ if (utils.isChrome() && utils.isCI()) {
       const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-linkable')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tagEl, 'tag-linkable')).toEqual(0);
     });
 
     it('dismissible and linkable tags should not change', async () => {
@@ -51,7 +51,7 @@ if (utils.isChrome() && utils.isCI()) {
       const tagEl = await element(by.css('.tag-list .tag:first-child'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-dismissible-clickable')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tagEl, 'tag-dismissible-clickable')).toEqual(0);
     });
 
     it('disabled tags should not change', async () => {
@@ -61,7 +61,7 @@ if (utils.isChrome() && utils.isCI()) {
       const tagEl = await element.all(by.css('.tag-list .tag:first-child')).first();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tagEl, 'tag-disabled')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tagEl, 'tag-disabled')).toEqual(0);
     });
   });
 }

@@ -21,7 +21,7 @@ describe('Completion Chart variations tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkScreen('completion-chart')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('completion-chart')).toEqual(0);
     });
   }
 });
@@ -42,7 +42,7 @@ describe('Completion Chart color tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkScreen('completion-chart-colors')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('completion-chart-colors')).toEqual(0);
     });
   }
 });
@@ -63,7 +63,7 @@ describe('Completion Chart Short Field tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkScreen('completion-chart-short')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('completion-chart-short')).toEqual(0);
     });
   }
 });

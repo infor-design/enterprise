@@ -21,7 +21,7 @@ describe('Homepage example hero widget tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('homepage-hero-widget')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('homepage-hero-widget')).toEqual(0);
     });
   }
 });
@@ -44,7 +44,7 @@ describe('Homepage example editable tests', () => {
 
       browser.actions().mouseMove(element(by.css('.widget'))).perform();
 
-      expect(await browser.protractorImageComparison.checkScreen('homepage-editable')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('homepage-editable')).toEqual(0);
     });
   }
 });

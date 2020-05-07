@@ -21,7 +21,7 @@ describe('Bubble example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('bubble')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('bubble')).toEqual(0);
     });
   }
 });

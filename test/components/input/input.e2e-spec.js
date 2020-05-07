@@ -41,7 +41,7 @@ describe('Input example-index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'input-index')).toEqual(0);
     });
   }
 });
@@ -133,7 +133,7 @@ describe('Input Short Field Sizes tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-short-fields-sizes')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'input-short-fields-sizes')).toEqual(0);
     });
   }
 });
@@ -153,7 +153,7 @@ describe('Input Short Field tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'input-short-fields')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'input-short-fields')).toEqual(0);
     });
   }
 });

@@ -158,8 +158,8 @@ Pie.prototype = {
       width: w
     };
 
-    if ((this.settings.lines.show === 'label' && this.settings.legendPlacement === 'bottom')
-      || (this.settings.lines.show === 'label' && this.settings.showLegend === 'false')) {
+    if ((this.settings.lines.show === 'label' && this.settings.legendPlacement === 'bottom') ||
+      (this.settings.lines.show === 'label' && this.settings.showLegend === 'false')) {
       self.mainGroup
         .attr('transform', `translate(${dims.width * 0.67777}, ${dims.height / 2})`);
     }

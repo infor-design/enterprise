@@ -403,7 +403,8 @@ $.copyToClipboard = function (text) { // eslint-disable-line
   if (window.clipboardData && window.clipboardData.setData) {
     // IE specific code path to prevent textarea being shown while dialog is visible.
     return window.clipboardData.setData('Text', text);
-  } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
+  }
+  if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
     const textarea = document.createElement('textarea');
     textarea.textContent = text;
     textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.

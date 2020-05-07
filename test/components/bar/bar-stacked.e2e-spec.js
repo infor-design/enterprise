@@ -45,7 +45,7 @@ describe('Bar (Stacked) Chart example-index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-stacked-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-stacked-index')).toEqual(0);
     });
   }
 });
@@ -90,7 +90,7 @@ describe('Bar (Stacked) Chart 100% tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'bar-stacked-100')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'bar-stacked-100')).toEqual(0);
     });
   }
 });

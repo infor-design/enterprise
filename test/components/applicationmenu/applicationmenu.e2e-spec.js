@@ -30,7 +30,7 @@ describe('Application Menu index tests', () => {
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(section, 'applicationmenu')).toEqual(0);
     });
   }
 });
@@ -152,7 +152,7 @@ describe('Application Menu personalize tests', () => {
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(section, 'applicationmenu-personalize')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
@@ -179,7 +179,7 @@ describe('Application Menu personalize roles tests', () => {
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(section, 'applicationmenu-personalize-roles')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
@@ -205,7 +205,7 @@ describe('Application Menu personalize roles switcher tests', () => {
       const section = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(section, 'applicationmenu-personalize-roles-switcher')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(section, 'applicationmenu-personalize-roles-switcher')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }

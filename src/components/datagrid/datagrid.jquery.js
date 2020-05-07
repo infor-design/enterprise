@@ -1,4 +1,4 @@
-import { Datagrid, COMPONENT_NAME } from './datagrid';
+import { Datagrid, COMPONENT_NAME } from './datagrid'; //eslint-disable-line
 
 /**
  * jQuery Component Wrapper for Datagrid

@@ -731,8 +731,8 @@ Accordion.prototype = {
   * @returns {void}
   */
   toggle(header) {
-    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)
-     || this.isAnimating) {
+    if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header) ||
+      this.isAnimating) {
       return;
     }
 

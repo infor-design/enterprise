@@ -22,11 +22,11 @@ describe('Colorpicker example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(colorpickerSection), config.waitsFor);
       const colorpickerContainer = await element.all(by.className('colorpicker-container')).first();
 
-      expect(await browser.protractorImageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
       await element(by.css('#background-color + .trigger .icon')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
     });
   }
 
@@ -413,7 +413,7 @@ describe('Colorpicker sizes tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('colorpicker-sizes')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('colorpicker-sizes')).toEqual(0);
     });
   }
 });

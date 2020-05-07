@@ -27,13 +27,13 @@ describe('Spinbox example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(spinboxElWrapper), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(spinboxElWrapper, 'spinbox-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(spinboxElWrapper, 'spinbox-init')).toEqual(0);
       await spinboxEl.sendKeys(protractor.Key.ARROW_UP);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.spinbox-wrapper.is-focused'))), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(spinboxElWrapper, 'spinbox-clicked')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(spinboxElWrapper, 'spinbox-clicked')).toEqual(0);
     });
   }
 

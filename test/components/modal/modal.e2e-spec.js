@@ -105,7 +105,7 @@ describe('Modal open example-modal tests on click', () => {
     it('Should not visual regress on example-index', async () => {
       const bodyEl = await element(by.className('modal-engaged'));
 
-      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
     });
   }
 
@@ -354,7 +354,7 @@ describe('Modal button tests', () => {
     it('Should not visual regress on 4 buttons', async () => {
       const bodyEl = await element(by.className('modal-engaged'));
 
-      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
     });
   }
 });

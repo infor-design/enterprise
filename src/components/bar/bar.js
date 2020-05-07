@@ -416,9 +416,9 @@ Bar.prototype = {
       .attr('mask', (d, i) => {
         if (dataset.length === 1 && dataset[0][i].pattern) {
           return `url(#${dataset[0][i].pattern})`;
-        } else if (s.isStacked && series[d.index].pattern) {
+        } if (s.isStacked && series[d.index].pattern) {
           return `url(#${series[d.index].pattern})`;
-        } else if (!s.isStacked && legendMap[i] && legendMap[i].pattern) {
+        } if (!s.isStacked && legendMap[i] && legendMap[i].pattern) {
           return `url(#${legendMap[i].pattern})`;
         }
         return '';
@@ -848,8 +848,8 @@ Bar.prototype = {
           }
         });
         sel.gLen = sel.groups.length;
-        if (!isLegendsCall && self.settings.isGrouped
-          && sel.gLen === groups.size() && sel.groups[0]?.totalSel === 1) {
+        if (!isLegendsCall && self.settings.isGrouped &&
+          sel.gLen === groups.size() && sel.groups[0]?.totalSel === 1) {
           isLegendsCall = true;
           for (let i = 0, l = sel.groups[0].d; i < l; i++) {
             if (sel.groups[0].d[i].selected) {

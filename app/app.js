@@ -5,8 +5,9 @@ const csrf = require('csurf');
 const session = require('express-session');
 const mmm = require('mmm');
 const path = require('path');
-const utils = require('./src/js/utils');
 const crypto = require('crypto');
+
+const utils = require('./src/js/utils');
 const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();

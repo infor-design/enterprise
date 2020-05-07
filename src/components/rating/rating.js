@@ -95,10 +95,10 @@ Rating.prototype = {
    * @returns {number}- The current value
    */
   val(value) {
-    if (arguments.length === 0
-      || value === ''
-      || isNaN(value)
-      || math.sign(value) === -1
+    if (arguments.length === 0 ||
+      value === '' ||
+      isNaN(value) ||
+      math.sign(value) === -1
     ) {
       return this.currentValue;
     }

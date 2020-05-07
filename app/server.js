@@ -14,8 +14,8 @@
  * to run this script with NPM.
  */
 
-const app = require('./app');
 const chalk = require('chalk');
+const app = require('./app');
 
 // With the express server and routes defined, we can start to listen for requests.
 const port = 4000;

@@ -158,14 +158,14 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &.is-hovered {
     .searchfield {
-      border-bottom-color: rgba($searchfield-border-color, 0);
       border-color: transparent;
+      border-bottom-color: rgba($searchfield-border-color, 0);
     }
 
     .btn,
     .collapse-button {
-      border-bottom-color: rgba($searchfield-border-color, 0);
       border-color: transparent;
+      border-bottom-color: rgba($searchfield-border-color, 0);
     }
 
     .go-button {

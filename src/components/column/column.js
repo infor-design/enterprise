@@ -114,8 +114,8 @@ Column.prototype = {
 
     const parent = this.element.parent();
     const isRTL = Locale.isRTL();
-    const isPositiveNegative = (this.settings.type === 'column-positive-negative'
-       || this.settings.type === 'positive-negative');
+    const isPositiveNegative = (this.settings.type === 'column-positive-negative' ||
+       this.settings.type === 'positive-negative');
     const isSingle = (dataset.length === 1);
     this.isSingle = isSingle;
     const isGrouped = !(isSingle || !isSingle && self.settings.isStacked);

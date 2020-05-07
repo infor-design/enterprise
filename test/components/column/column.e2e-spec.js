@@ -84,7 +84,7 @@ describe('Custom Tooltips page tests', () => {
 
 describe('Column Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/column/example-index?layout=nofrills');
+    await utils.setPage('/components/column/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
@@ -95,21 +95,21 @@ describe('Column Chart example-index tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.className('widget'));
       await browser.driver.sleep(config.sleepLonger);
 
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-index')).toEqual(0);
     });
   }
 });
 
 describe('Column Chart balance tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/column/example-balance?layout=nofrills');
+    await utils.setPage('/components/column/example-balance');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
@@ -120,14 +120,14 @@ describe('Column Chart balance tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.className('container'));
+      const containerEl = await element(by.className('widget'));
       await browser.driver.sleep(config.sleep);
 
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-balance')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-balance')).toEqual(0);
     });
   }
 });
@@ -152,7 +152,7 @@ describe('Grouped Column Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-grouped')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-grouped')).toEqual(0);
     });
   }
 });
@@ -177,7 +177,7 @@ describe('Stacked Column Chart tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'column-stacked')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'column-stacked')).toEqual(0);
     });
   }
 });

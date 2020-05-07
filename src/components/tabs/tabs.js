@@ -2673,7 +2673,8 @@ Tabs.prototype = {
 
     if (e) {
       return getTabFromEvent(e);
-    } else if (tabId) {
+    }
+    if (tabId) {
       return getTabFromId(tabId);
     }
 

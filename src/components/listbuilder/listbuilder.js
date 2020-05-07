@@ -165,7 +165,8 @@ ListBuilder.prototype = {
     const setAction = (selector) => {
       if (this.isjQuery(selector)) {
         return selector;
-      } else if (typeof selector === 'string') {
+      }
+      if (typeof selector === 'string') {
         return $(`[data-action="${selector}"]`, this.element);
       }
       return null;
@@ -721,7 +722,8 @@ ListBuilder.prototype = {
     // Make sure to return only one item -or- null
     if (li.length < 1) {
       return null;
-    } else if (li.length > 1) {
+    }
+    if (li.length > 1) {
       return li.eq(0);
     }
     return li;

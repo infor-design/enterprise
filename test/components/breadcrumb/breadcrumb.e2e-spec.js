@@ -23,7 +23,7 @@ describe('Breadcrumb example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('breadcrumb')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb')).toEqual(0);
     });
   }
 });
@@ -44,7 +44,7 @@ describe('Breadcrumb as text tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('breadcrumb-text')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb-text')).toEqual(0);
     });
   }
 });
@@ -65,7 +65,7 @@ describe('Breadcrumb navigation alternate tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('breadcrumb-alternate')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb-alternate')).toEqual(0);
     });
   }
 });
@@ -86,7 +86,7 @@ describe('Breadcrumb navigation tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('blockgrid-text')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('blockgrid-text')).toEqual(0);
     });
   }
 });
