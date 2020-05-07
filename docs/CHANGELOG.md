@@ -11,6 +11,7 @@
 ### v4.29.0 Fixes
 
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
+- `[Datagrid]` Fixed an issue where blank tooltip was showing when use Alert Formatter and no text. ([#2852](https://github.com/infor-design/enterprise/issues/2852))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for icons and badges. ([#3855](https://github.com/infor-design/enterprise/issues/3855))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for hyperlink. ([#3731](https://github.com/infor-design/enterprise/issues/3731))
 - `[Datagrid]` Fixed an issue where contents filtertype was not working on example page. ([#2887](https://github.com/infor-design/enterprise/issues/2887))

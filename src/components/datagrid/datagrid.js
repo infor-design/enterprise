@@ -11113,7 +11113,7 @@ Datagrid.prototype = {
           }
         } else {
           // Default use wrapper content
-          tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent);
+          tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent).trim();
         }
       }
 
