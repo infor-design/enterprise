@@ -290,13 +290,7 @@
 
       // We do this because folders don't have an associated content panel
       // as they are just links to open the subfolders.
-      var hashLoc = $(args.stepLink)[0].getAttribute('href');
-      var stepId;
-      if (hashLoc && hashLoc !== '#') {
-        stepId = hashLoc.substring(1);
-      } else {
-        stepId = $(args.stepLink)[0].getAttribute('id');
-      }
+      var stepId = $(args.stepLink).attr('id');
 
       var deferred = $.Deferred();
 
