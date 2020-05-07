@@ -4,7 +4,7 @@
 
 ### v4.29.0 Features
 
-- `[Dropdown]` Moved the functionality for displaying the Dropdown List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
+- `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
 
 ### v4.29.0 Fixes
