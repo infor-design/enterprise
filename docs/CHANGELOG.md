@@ -4,6 +4,7 @@
 
 ### v4.29.0 Features
 
+- `[Slider]` Added the ability to set position of the tooltip. ([#3746](https://github.com/infor-design/enterprise/issues/3746))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
 
 ### v4.29.0 Fixes
