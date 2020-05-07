@@ -22,6 +22,7 @@ const SLIDER_DEFAULTS = {
   step: undefined,
   ticks: [],
   tooltipContent: undefined,
+  tooltipPosition: 'top',
   persistTooltip: false
 };
 
@@ -37,6 +38,7 @@ const SLIDER_DEFAULTS = {
  * @param {undefined|Number} [settings.step] If added will be the number of slider steps to use.
  * @param {array} [settings.ticks = []] An array of the ticks to use for the steps
  * @param {undefined|Array} [settings.tooltipContent] Special customizable tooltip content.
+ * @param {string} [settings.tooltipPosition = 'top'] Option to control the position of tooltip. ['top' , 'bottom']
  * @param {boolean} [settings.persistTooltip = false] If true the tooltip will stay visible.
  */
 function Slider(element, settings) {
@@ -343,7 +345,7 @@ Slider.prototype = {
           content() {
             return `${self.getModifiedTextValue(Math.floor(self.value()[i]))}`;
           },
-          placement: (isVertical ? 'right' : 'bottom'),
+          placement: (isVertical ? 'right' : self.settings.tooltipPosition),
           trigger: 'focus',
           keepOpen: self.settings.persistTooltip
         });

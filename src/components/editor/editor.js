@@ -2162,8 +2162,8 @@ Editor.prototype = {
       this.textarea.off('input.editor-firechange');
 
       setTimeout(() => {
-        this.element.html(content);
-        content = this.element.html();
+        this.element[0].innerHTML = content;
+        content = this.element[0].innerHTML;
         /**
          * Fires after preview mode activated.
          * @event afterpreviewmode
