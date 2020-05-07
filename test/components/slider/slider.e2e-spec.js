@@ -70,7 +70,7 @@ describe('Slider short tests', () => { //eslint-disable-line
 
 describe('Slider tooltip position test', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/slider/example-tooltip-position?layout=nofrills');
+    await utils.setPage('/components/slider/example-tooltip-position');
   });
 
   it('Should show the tooltip on top', async () => {
