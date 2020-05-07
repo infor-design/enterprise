@@ -73,18 +73,28 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
     await utils.setPage('/components/slider/example-tooltip-position?layout=nofrills');
   });
 
+  it('Should show the tooltip on top', async () => {
+    const sliderEl = await element(by.className('slider-handle'));
+    await sliderEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.tooltip.top.is-open'))), config.waitsFor);
+    
+    expect(await element(by.css('.tooltip.top.is-open')).isDisplayed()).toBeTruthy();
+  });
+
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[role=main]'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      const sliderEl = await element(by.className('slider-handle'));
+      await sliderEl.click();
+
+      const mainContent = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('slider-tooltip-position')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen(mainContent, 'slider-tooltip-position')).toEqual(0);
     });
   }
 });

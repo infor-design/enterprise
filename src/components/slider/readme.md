@@ -18,6 +18,8 @@ demo:
     slug: example-custom-tooltips
   - name: "`setValue()` API Demo"
     slug: example-set-value-api
+  - name: Tooltip Position
+    slug: example-tooltip-position
 ---
 
 ## Code Example
