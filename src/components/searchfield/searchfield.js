@@ -426,7 +426,7 @@ SearchField.prototype = {
           </button>
         `);
       }
-      this.goButton.attr('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
+      this.goButton[0].setAttribute('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
     } else {

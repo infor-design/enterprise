@@ -18,7 +18,9 @@ const MULTISELECT_DEFAULTS = {
   showEmptyGroupHeaders: false,
   showSelectAll: false,
   showTags: false,
-  source: undefined
+  source: undefined,
+  allTextString: null,
+  selectedTextString: null
 };
 
 /**
@@ -33,6 +35,8 @@ const MULTISELECT_DEFAULTS = {
  * @param {boolean} [settings.showEmptyGroupHeaders = false]  If true groups with no items will still show the empty group header.
  * @param {boolean} [settings.showSelectAll = false]  Show the select all button and text .
  * @param {function} [settings.source]  The calback for ajax.
+ * @param {string} [settings.allTextString]  Custom text string for `All` text header.
+ * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header.
  */
 function MultiSelect(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MULTISELECT_DEFAULTS);

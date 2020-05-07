@@ -43,7 +43,9 @@ describe('Dropdown updates, events', () => {
       sourceArguments: {},
       onKeyDown: null,
       showTags: false,
-      tagSettings: {}
+      tagSettings: {},
+      allTextString: null,
+      selectedTextString: null
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -68,7 +70,9 @@ describe('Dropdown updates, events', () => {
       sourceArguments: {},
       onKeyDown: null,
       showTags: false,
-      tagSettings: {}
+      tagSettings: {},
+      allTextString: null,
+      selectedTextString: null
     };
 
     dropdownObj.updated();
@@ -97,7 +101,9 @@ describe('Dropdown updates, events', () => {
       sourceArguments: {},
       onKeyDown: null,
       showTags: false,
-      tagSettings: {}
+      tagSettings: {},
+      allTextString: null,
+      selectedTextString: null
     };
     dropdownObj.updated(settings);
 
@@ -132,7 +138,9 @@ describe('Dropdown updates, events', () => {
       sourceArguments: {},
       onKeyDown: null,
       showTags: false,
-      tagSettings: {}
+      tagSettings: {},
+      allTextString: null,
+      selectedTextString: null
     };
 
     const spyEvent = spyOnEvent('.dropdown', 'has-updated');
