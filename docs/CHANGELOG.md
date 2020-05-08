@@ -30,6 +30,7 @@
 - `[Tabs]` Fixed info and alert icons alignment on tabs and inside of modal. ([#2695](https://github.com/infor-design/enterprise/issues/2695))
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
 
 ## v4.28.0
 
