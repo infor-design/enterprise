@@ -29,7 +29,7 @@
     "quickstart": "npx grunt demo && node app/server.js",
     "quickstart:livereload": "npx grunt demo && node app/server.js --livereload",
     "build": "npm run clean:dist && node ./scripts/build",
-    "build:full": "npm run build && npm run minify && npm run build:verify",
+    "build:full": "npm run clean && npm run build && npm run minify && npm run build:verify",
     "build:icons": "node ./scripts/build-icons.js",
     "build:colors": "node ./scripts/build-colors.js",
     "build:release": "npm run clean && npm run build && npm run minify && npm run zip-dist && npm run build:verify",
