@@ -28,7 +28,7 @@
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
 - `[Tabs]` Fixed info and alert icons alignment on tabs and inside of modal. ([#2695](https://github.com/infor-design/enterprise/issues/2695))
-- `[Tabs]` Fixes and issue where the search bar background color was going to transparent on smaller breakpoints. ([#3871](https://github.com/infor-design/enterprise/issues/3871))
+- `[Tabs]` Fixes an issue where the search bar background color was going to transparent on smaller breakpoints. ([#3871](https://github.com/infor-design/enterprise/issues/3871))
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
