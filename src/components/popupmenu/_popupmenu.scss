@@ -414,6 +414,12 @@
     margin-left: $theme-number-spacing-base * 2;
   }
 
+  &:not(.has-icons) {
+    .shortcut-text {
+      margin-right: -20px;
+    }
+  }
+
   //Text Underline on Terms
   i {
     color: $font-color-extrahighcontrast;
@@ -619,7 +625,14 @@ html[dir='rtl'] {
 
     .shortcut-text {
       float: left;
+      margin-left: 0;
       margin-right: $theme-number-spacing-base * 2;
+    }
+
+    &:not(.has-icons) {
+      .shortcut-text {
+        margin-left: -20px;
+      }
     }
 
     &.has-icons,
