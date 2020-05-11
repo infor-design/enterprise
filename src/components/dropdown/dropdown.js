@@ -2897,17 +2897,19 @@ Dropdown.prototype = {
           textContent = option.label;
         }
 
+        // Detect whether or not the `<option>` should be selected
         const selectedValues = self.selectedValues;
         const hasSelectedValues = selectedValues.indexOf(val) > -1;
         if (self.settings.multiple) {
           val.forEach((value) => {
             if (value === option.value) {
               option.selected = true;
-              selected = ' selected';
             }
           });
         } else if (option.value === val || hasSelectedValues) {
           option.selected = true;
+        }
+        if (option.selected) {
           selected = ' selected';
         }
 
