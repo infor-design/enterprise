@@ -24,6 +24,12 @@
   .searchfield-category-button {
     height: 38px;
   }
+
+  &.context {
+    > .searchfield {
+      height: 34px;
+    }
+  }
 }
 
 .toolbar-searchfield-wrapper {
@@ -34,7 +40,7 @@
   &:not(.is-open),
   &.non-collapsible {
     .searchfield {
-      height: auto;
+      height: 34px;
       padding-bottom: 6px;
       padding-top: 7px;
     }
@@ -47,12 +53,6 @@
   &:not(.is-open) {
     .icon:not(.close) {
       top: 8px;
-    }
-  }
-
-  &.is-open {
-    .searchfield {
-      padding-bottom: 2px;
     }
   }
 }
