@@ -33,6 +33,7 @@ const COMPONENT_NAME = 'bar';
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
+ * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height and no scroll bar.
  * You may want to change this based on label data.
  * @param {object} [settings.emptyMessage={
  *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
@@ -61,6 +62,7 @@ const BAR_DEFAULTS = {
   showLines: true,
   labelFactor: 1.27,
   wrapWidth: 60,
+  fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
@@ -248,9 +250,10 @@ Bar.prototype = {
     });
 
     // influences the bar width
-    const height = parseInt(parent.height(), 10) - margins.top - margins.bottom - legendHeight;
-    const h = parseInt(parent.height(), 10) - margins.bottom -
-      (s.isStacked ? 0 : (legendHeight / 2));
+    const parentAvailHeight = utils.getParentAvailHeight(self.element[0]);
+    const useHeight = s.fitHeight ? parentAvailHeight : parseInt(parent.height(), 10);
+    const height = useHeight - margins.top - margins.bottom - legendHeight;
+    const h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2));
     const w = parseInt(parent.width(), 10) - margins.left;
     let textWidth = charts.calculateTextRenderWidth(largestText);
     if (textWidth < 200) {
