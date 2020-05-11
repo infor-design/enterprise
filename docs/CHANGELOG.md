@@ -29,6 +29,7 @@
 - `[Pie]` Fixed an issue where rounds decimal places for percent values were not working. ([#3599](https://github.com/infor-design/enterprise/issues/3599))
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
+- `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 - `[Tabs]` Fixed info and alert icons alignment on tabs and inside of modal. ([#2695](https://github.com/infor-design/enterprise/issues/2695))
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
