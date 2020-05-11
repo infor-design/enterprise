@@ -412,12 +412,7 @@
   .shortcut-text {
     float: right;
     margin-left: $theme-number-spacing-base * 2;
-  }
-
-  &:not(.has-icons) {
-    .shortcut-text {
-      margin-right: -20px;
-    }
+    margin-right: -20px;
   }
 
   //Text Underline on Terms
@@ -625,7 +620,7 @@ html[dir='rtl'] {
 
     .shortcut-text {
       float: left;
-      margin-left: 0;
+      margin-left: -25px;
       margin-right: $theme-number-spacing-base * 2;
     }
 
