@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed a bug in some themes, where the multi line cell would not be lined up correctly with a single line of data. ([#2703](https://github.com/infor-design/enterprise/issues/2703))
 - `[Datagrid]` Fixed visibility of sort icons when toggling and when the column is in active. ([#3692](https://github.com/infor-design/enterprise/issues/3692))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
+- `[Dropdown]` Fixed tooltip content gets cut off inside of modal. ([#3106](https://github.com/infor-design/enterprise/issues/3106))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
 - `[Form]` Fix broken links in the form readme file. ([#818](https://github.com/infor-design/website/issues/818))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
