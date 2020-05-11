@@ -654,6 +654,17 @@ div.multiselect {
   }
 }
 
+// Fix tooltip gets overlap by another element
+.modal {
+  .dropdown-wrapper {
+    .dropdown {
+      .tooltip {
+        position: fixed;
+      }
+    }
+  }
+}
+
 .modal-engaged .dropdown-search {
   background-color: $modal-bg-color;
 }
