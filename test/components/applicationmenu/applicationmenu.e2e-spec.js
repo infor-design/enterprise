@@ -230,6 +230,27 @@ describe('Application Menu personalize roles switcher tests', () => {
     expect(await element(by.id('application-menu')).getAttribute('class')).not.toContain('is-open');
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
+
+  it('should dismiss the appliction menu when clicking on one of the menu\'s toolbar buttons', async () => {
+    // NOTE: This only happens on mobile, and when `AppliationMenu.settings.dismissOnClickMobile: true;`
+    const windowSize = await browser.driver.manage().window().getSize();
+
+    // Simulate iPhone X device size.
+    // Shrinking the screen causes the menu to be dismissed.
+    await browser.driver.manage().window().setSize(375, 812);
+    await browser.driver.sleep(config.sleep);
+
+    // Reactivate App Menu
+    await element(by.css('#hamburger-button')).click();
+    await browser.driver.sleep(config.sleep);
+
+    // Click the first button in the Application Menu toolbar
+    await element(by.css('#toolbar-btn-download')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('application-menu')).getAttribute('class')).not.toContain('is-open');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
 });
 
 describe('Application Menu role switcher tests', () => {
