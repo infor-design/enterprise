@@ -23,7 +23,7 @@
 - `[Form]` Fix broken links in the form readme file. ([#818](https://github.com/infor-design/website/issues/818))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
 - `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
-- `[Multiselect]` Added ability to detect selected items from incoming data via `callSource()`. ((#2656)[https://github.com/infor-design/enterprise/issues/2656])
+- `[Multiselect]` Added ability to detect selected items from incoming data via `callSource()`. ([#2656](https://github.com/infor-design/enterprise/issues/2656))
 - `[Multiselect]` Added support to api settings to `allTextString` and `selectedTextString` for custom headers. ([#3554](https://github.com/infor-design/enterprise/issues/3554))
 - `[Pie]` Fixed an issue where rounds decimal places for percent values were not working. ([#3599](https://github.com/infor-design/enterprise/issues/3599))
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
