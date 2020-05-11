@@ -211,7 +211,7 @@ describe('Application Menu personalize roles switcher tests', () => {
   }
 
   it('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
-    // NOTE: This only happens on mobile, and when `AppliationMenu.settings.dismissOnClickMobile: true;`
+    // NOTE: This only happens on mobile, and when `ApplicationMenu.settings.dismissOnClickMobile: true;`
     const windowSize = await browser.driver.manage().window().getSize();
 
     // Simulate iPhone X device size.
@@ -232,7 +232,7 @@ describe('Application Menu personalize roles switcher tests', () => {
   });
 
   it('should dismiss the appliction menu when clicking on one of the menu\'s toolbar buttons', async () => {
-    // NOTE: This only happens on mobile, and when `AppliationMenu.settings.dismissOnClickMobile: true;`
+    // NOTE: This only happens on mobile, and when `ApplicationMenu.settings.dismissOnClickMobile: true;`
     const windowSize = await browser.driver.manage().window().getSize();
 
     // Simulate iPhone X device size.
