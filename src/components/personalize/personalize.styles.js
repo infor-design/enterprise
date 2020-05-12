@@ -3,6 +3,11 @@ import { colorUtils } from '../../utils/color';
 function personalizeStyles(colors) {
   return `
 
+.is-personalizable button svg.ripple-effect,
+button.is-personalizable svg.ripple-effect {
+  background-color: ${colors.base} !important;
+}
+
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.darkest} !important;
   border-bottom: 1px solid ${colors.darkest} !important;
@@ -39,6 +44,10 @@ function personalizeStyles(colors) {
 
 .header.is-personalizable h1 {
   color: ${colors.contrast};
+}
+
+.header.is-personalizable button svg.ripple-effect {
+  background-color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button:not(:disabled),
@@ -217,56 +226,51 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
   stroke: ${colors.lighter};
 }
 
-.application-menu.is-personalizable {
-  background-color: ${colors.lighter};
-  border-right: ${colors.light};
-}
-
-.application-menu.is-personalizable .application-menu-header {
-  background-color: ${colors.lighter};
-  border-bottom-color: ${colors.light};
-}
-
-.application-menu.is-personalizable .application-menu-footer {
-  background-color: ${colors.lighter};
-  border-top-color: ${colors.light};
-}
-
-.application-menu.is-personalizable button .icon,
-.application-menu.is-personalizable button span,
-.application-menu.is-personalizable .hyperlink {
+html[class*="theme-uplift-"] .application-menu.is-personalizable button .icon,
+html[class*="theme-uplift-"] .application-menu.is-personalizable button span,
+html[class*="theme-uplift-"] .application-menu.is-personalizable .hyperlink {
   color: ${colors.contrast} !important;
 }
 
-.application-menu.is-personalizable button:not(:disabled):hover .icon,
-.application-menu.is-personalizable button:not(:disabled):hover span,
-.application-menu.is-personalizable .hyperlink:hover {
+html[class*="theme-uplift-"] .application-menu.is-personalizable button:not(:disabled):hover .icon,
+html[class*="theme-uplift-"] .application-menu.is-personalizable button:not(:disabled):hover span,
+html[class*="theme-uplift-"] .application-menu.is-personalizable .hyperlink:hover {
   color: ${colors.contrast};
   opacity: 1;
 }
 
-.application-menu.is-personalizable .accordion.panel {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel {
   background-color: ${colors.lighter};
 }
 
-.application-menu.is-personalizable .name-xl,
-.application-menu.is-personalizable .name,
-.application-menu.is-personalizable .accordion-heading {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .name-xl,
+html[class*="theme-uplift-"] .application-menu.is-personalizable .name,
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion-heading {
   color: ${colors.contrast};
 }
 
-.application-menu.is-personalizable .accordion.panel .accordion-header {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel .accordion-header {
   background-color: ${colors.lighter} !important;
   border: 1px solid transparent !important;
   color: ${colors.contrast};
 }
 
-.application-menu.is-personalizable .accordion.panel .accordion-header .icon {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel .accordion-header .icon {
   color: ${colors.contrast} !important;
+}
+
+.application-menu.is-personalizable .btn-icon:focus:not(.hide-focus) {
+box-shadow: 0 0 0 2px transparent,
+  0 0 0 1px ${colors.lighter},
+  0 0 2px 1px ${colors.lighter};
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected {
   background-color: ${colors.base} !important;
+}
+
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover {
+  border-bottom-color: ${colors.dark} !important;
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
@@ -276,20 +280,16 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
   color: ${colors.contrast} !important;
 }
 
-.application-menu.is-personalizable .accordion.panel .accordion-header:hover {
-  background-color: ${colors.base} !important;
-}
-
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
   border: 1px solid ${colors.contrast} !important;
   box-shadow: none !important;
 }
 
-.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
   background-color: ${colors.lighter};
 }
 
-.application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
   border: 1px solid ${colors.lighter};
 }
 
@@ -298,18 +298,18 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
   background-color: ${colors.contrast};
 }
 
-.application-menu.is-personalizable button:focus:not(.hide-focus),
-.application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after {
+html[class*="theme-uplift-"] .application-menu.is-personalizable button:focus:not(.hide-focus),
+html[class*="theme-uplift-"] .application-menu.is-personalizable .hyperlink:focus:not(.hide-focus)::after {
   border-color: ${colors.contrast} !important;
   box-shadow: none !important;
 }
 
-.application-menu .application-menu-header button:hover,
-.application-menu .application-menu-footer button:hover {
+html[class*="theme-uplift-"] .application-menu .application-menu-header button:hover,
+html[class*="theme-uplift-"] .application-menu .application-menu-footer button:hover {
   background-color: ${colors.base} !important;
 }
 
-.application-menu.is-personalizable .searchfield-wrapper .searchfield {
+html[class*="theme-uplift-"] .application-menu.is-personalizable .searchfield-wrapper .searchfield {
   color: ${colors.contrast} !important;
 }
 
@@ -356,6 +356,25 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 html[dir='rtl'] .application-menu.is-personalizable {
   background-color: ${colors.lighter};
   border-left: ${colors.light};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable button svg.ripple-effect {
+  background-color: ${colors.contrast} !important;
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable {
+  background-color: ${colors.lighter};
+  border-right: ${colors.light};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .application-menu-header {
+  background-color: ${colors.lighter};
+  border-bottom-color: ${colors.light};
+}
+
+html[class*="theme-uplift-"] .application-menu.is-personalizable .application-menu-footer {
+  background-color: ${colors.lighter};
+  border-top-color: ${colors.light};
 }
 
 html[class*="theme-uplift-"] .application-menu.is-personalizable .searchfield-wrapper {
