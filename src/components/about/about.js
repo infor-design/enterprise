@@ -228,16 +228,19 @@ About.prototype = {
 
   /**
    * Teardown and remove any added markup and events.
+   * @param {boolean} [noModalDestroy=false] if true, skips the routine for destroying the modal (presumably because this is called from another method that destroys the modal manually)
    * @returns {void}
    */
-  destroy() {
+  destroy(noModalDestroy) {
     this.buttons.off();
     this.element.off('open.about');
 
-    const modalApi = this.modal.data('modal');
-    if (modalApi) {
-      modalApi.element.off('beforeopen.about');
-      modalApi.destroy();
+    if (noModalDestroy !== true) {
+      const modalApi = this.modal.data('modal');
+      if (modalApi) {
+        modalApi.element.off('beforeopen.about');
+        modalApi.destroy();
+      }
     }
 
     if (this.element.length > 0) {
