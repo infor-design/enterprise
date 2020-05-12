@@ -6698,7 +6698,7 @@ Datagrid.prototype = {
     this.filterKeywordSearch();
     this.clearCache();
     this.renderRows();
-    this.setSearchActivePage({ trigger: 'searched' });
+    this.setSearchActivePage({ trigger: 'searched', type: 'filtered' });
 
     if (!(this.settings.paging && this.settings.source)) {
       this.highlightSearchRows(term);
