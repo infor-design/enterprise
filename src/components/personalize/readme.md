@@ -25,7 +25,7 @@ The Vibrant Dark and Vibrant Contrast are still considered beta at this time as 
 To use each theme you need to:
 
 1. Import the correct style stylesheet which would be one of `theme-soho-contrast.css`, `theme-soho-dark.css`, `theme-soho-light.css`, `theme-uplift-contrast.css`, `theme-uplift-dark.css`, `theme-uplift-light.css` . The files `light-theme.css`, `high-contrast-theme.css` and `dark-theme.css` are there for backwards compatibility and will later be removed. We will later rename these to the new names Subtle and Vibrant.
-2. Add the correct SVG Block Element to the top of the page document (`theme-uplift-svg.html` or `theme-uplift-svg.html`). The file `svg.html` is there for backwards compatibility and will later be removed.
+2. Add the correct SVG Block Element to the top of the page document (`theme-soho-svg.html` or `theme-uplift-svg.html`). The file `svg.html` is there for backwards compatibility and will later be removed.
 
 It's also possible to get information about the themes from the theme api For info on that see the [theme api]( ./theme)
 
