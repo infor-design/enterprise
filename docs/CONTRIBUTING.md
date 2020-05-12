@@ -67,7 +67,7 @@ If you'd like to submit a pull request you'll need to do the following:
     - Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
     - If you are unsure, just ask someone on the team so you don't have to redo your branch.
 1. Remember to make an **e2e or functional test** for your case.
-1. Remember to add a **note to the [Change Log](docs/CHANGELOG.md)**.
+1. Remember to add a **note to the [Change Log](CHANGELOG.md)**.
 1. **Commit your changes locally.**  Try to follow the standards for your commit message outlined below.
     - Try to follow
         - [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore)
