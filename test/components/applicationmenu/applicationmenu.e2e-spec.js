@@ -231,7 +231,7 @@ describe('Application Menu personalize roles switcher tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  fit('should dismiss the application menu when clicking on one of the menu\'s toolbar buttons', async () => {
+  it('should dismiss the application menu when clicking on one of the menu\'s toolbar buttons', async () => {
     // NOTE: This only happens on mobile, and when `ApplicationMenu.settings.dismissOnClickMobile: true;`
     const windowSize = await browser.driver.manage().window().getSize();
 
