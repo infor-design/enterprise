@@ -10,6 +10,7 @@
 
 ### v4.29.0 Fixes
 
+- `[About]` Fixed a bug where About dialogs disappeared when being closed by the Modal Manager API. ([#3898](https://github.com/infor-design/enterprise/issues/3898))
 - `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.1 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Bar Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
@@ -30,7 +31,9 @@
 - `[Pie]` Fixed an issue where rounds decimal places for percent values were not working. ([#3599](https://github.com/infor-design/enterprise/issues/3599))
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
+- `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 - `[Tabs]` Fixed info and alert icons alignment on tabs and inside of modal. ([#2695](https://github.com/infor-design/enterprise/issues/2695))
+- `[Tabs]` Fixes an issue where the search bar background color was going to transparent on smaller breakpoints. ([#3871](https://github.com/infor-design/enterprise/issues/3871))
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))

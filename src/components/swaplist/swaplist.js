@@ -221,8 +221,8 @@ SwapList.prototype = {
     // Dragging time placeholder
     s.numOfSelectionsClass = 'num-of-selections';
     s.itemContentClass = 'swaplist-item-content';
-    s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span> ${
-      Locale ? Locale.translate('ItemsSelected') : ' Items Selected '}</p><div/>`);
+    s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span>
+      <span class="${s.numOfSelectionsClass}-text">&nbsp;</span></p><div/>`);
 
     // Make top buttons disabled if not draggable
     if (!s.draggable.available) {
@@ -688,17 +688,37 @@ SwapList.prototype = {
       return false;
     };
 
-    for (let i = 0, l = this.selections.items.length; i < l; i++) {
-      const item = this.selections.items[i];
-      for (let dtIndex = 0, l2 = droptargetNodes.length; dtIndex < l2; dtIndex++) {
-        if ($(droptargetNodes[dtIndex]).is(item)) {
-          for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
-            const ownerItem = ownerDataList[ownerIndex];
-            if (isMoved(ownerItem.node[0], item[0])) {
-              dtDataList.push(ownerItem);
-              ownerDataList.splice(ownerIndex, 1);
-              this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
-              break;
+    if (owner.is(droptarget)) {
+      const syncedList = [];
+      for (let i = 0, l = droptargetNodes.length; i < l; i++) {
+        const item = droptargetNodes[i];
+        for (let ownerIndex = 0, l2 = ownerDataList.length; ownerIndex < l2; ownerIndex++) {
+          const ownerItem = ownerDataList[ownerIndex];
+          if (isMoved(ownerItem.node[0], item)) {
+            syncedList.push(ownerItem);
+            break;
+          }
+        }
+      }
+      ownerDataList.splice(0, ownerDataList.length);
+      for (let i = 0, l = syncedList.length; i < l; i++) {
+        ownerDataList.push(syncedList[i]);
+      }
+    } else {
+      for (let i = 0, l = this.selections.items.length; i < l; i++) {
+        const item = this.selections.items[i];
+        let canLoop = true;
+        for (let dtIndex = 0, l2 = droptargetNodes.length; dtIndex < l2 && canLoop; dtIndex++) {
+          if ($(droptargetNodes[dtIndex]).is(item)) {
+            for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
+              const ownerItem = ownerDataList[ownerIndex];
+              if (isMoved(ownerItem.node[0], item[0])) {
+                dtDataList.push(ownerItem);
+                ownerDataList.splice(ownerIndex, 1);
+                this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
+                canLoop = false;
+                break;
+              }
             }
           }
         }
@@ -1085,6 +1105,7 @@ SwapList.prototype = {
         }
 
         $(`.${settings.numOfSelectionsClass}`, settings.itemContentTempl).html(selections.items.length);
+        $(`.${settings.numOfSelectionsClass}-text`, settings.itemContentTempl).text(Locale.translate('ItemsSelected'));
         self.addDropeffects();
 
         if (!self.isTouch) {
@@ -1198,7 +1219,7 @@ SwapList.prototype = {
 
     // Dragend - implement items being validly dropped into targets
       .on(self.dragEnd, self.dragElements, (e) => {
-        if (!selections.dragged) {
+        if (!selections.dragged || !selections.droptarget) {
           return;
         }
         const related = $(selections.related).closest('li');
@@ -1212,7 +1233,8 @@ SwapList.prototype = {
           val = $(val);
           val.find('mark.highlight').contents().unwrap();
           if (currentSize && !$(selections.related).is('ul')) {
-            const isLess = (related.index() < selections.draggedIndex);
+            const isLess = (related.index() < selections.draggedIndex) &&
+              (selections.owner.is(selections.droptarget));
             const el = isLess ? val : $(selections.items[(selections.items.length - 1) - index]);
             const posinset = related.index() + (isLess ? index + 1 : index + 2);
 
