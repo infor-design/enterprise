@@ -221,8 +221,8 @@ SwapList.prototype = {
     // Dragging time placeholder
     s.numOfSelectionsClass = 'num-of-selections';
     s.itemContentClass = 'swaplist-item-content';
-    s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span> ${
-      Locale ? Locale.translate('ItemsSelected') : ' Items Selected '}</p><div/>`);
+    s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span>
+      <span class="${s.numOfSelectionsClass}-text">&nbsp;</span></p><div/>`);
 
     // Make top buttons disabled if not draggable
     if (!s.draggable.available) {
@@ -1105,6 +1105,7 @@ SwapList.prototype = {
         }
 
         $(`.${settings.numOfSelectionsClass}`, settings.itemContentTempl).html(selections.items.length);
+        $(`.${settings.numOfSelectionsClass}-text`, settings.itemContentTempl).text(Locale.translate('ItemsSelected'));
         self.addDropeffects();
 
         if (!self.isTouch) {
