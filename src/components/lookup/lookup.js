@@ -216,6 +216,25 @@ Lookup.prototype = {
   },
 
   /**
+   * Triggers tooltip
+   * @private
+   * @returns {void}
+   */
+  setTooltip() {
+    setTimeout(() => {
+      this.element.tooltip({
+        content: this.element.val()
+      }).on(`blur.${COMPONENT_NAME}`, () => {
+        const tooltipApi = this.element.data('tooltip');
+        if (tooltipApi && this.element.val() === '') {
+          tooltipApi.element.off(`blur.${COMPONENT_NAME}`);
+          tooltipApi.destroy();
+        }
+      });
+    }, 400);
+  },
+
+  /**
    * Create and Open the Dialog
    * @private
    * @param {jquery.event} e click or keyup event
@@ -429,6 +448,7 @@ Lookup.prototype = {
           * @property {object} grid in lookup
           */
         self.element.triggerHandler('close', [self.modal, self.grid]);
+        self.setTooltip();
       });
 
     self.modal = $('body').data('modal');
