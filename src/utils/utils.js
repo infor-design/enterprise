@@ -1270,7 +1270,7 @@ utils.isInViewport = function isInViewport(element) {
  * @param {object} el The element to get parent available height.
  * @returns {number} The calculated height.
  */
-utils.getParentAvailHeight = function getParentAvailHeight(el) {
+utils.getParentAvailableHeight = function getParentAvailableHeight(el) {
   const parentHeight = el.parentNode.offsetHeight;
   const siblings = DOM.getSiblings(el);
   const siblingHeight = siblings.map(sibling => sibling.offsetHeight).reduce((a, h) => a + h, 0);

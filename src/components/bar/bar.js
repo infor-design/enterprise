@@ -250,8 +250,8 @@ Bar.prototype = {
     });
 
     // influences the bar width
-    const parentAvailHeight = utils.getParentAvailHeight(self.element[0]);
-    const useHeight = s.fitHeight ? parentAvailHeight : parseInt(parent.height(), 10);
+    const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
+    const useHeight = s.fitHeight ? parentAvailableHeight : parseInt(parent.height(), 10);
     const height = useHeight - margins.top - margins.bottom - legendHeight;
     const h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2));
     const w = parseInt(parent.width(), 10) - margins.left;
