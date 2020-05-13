@@ -1,0 +1,170 @@
+<div class="homepage">
+  <div class="content">
+    <div class="row top-padding">
+      <div class="one-third column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Chart Title</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div class="card-group-action">
+              <div class="flex-toolbar" role="toolbar" aria-label="Card group action toolbar">
+                <div class="toolbar-section title">Card group action</div>
+                <div class="toolbar-section buttonset">
+                  <button type="button" class="btn-icon" title="Filter" class="filter">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-filter"></use>
+                    </svg>
+                    <span class="audible">Filter</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="column-bar-stacked-example" class="chart-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 12,
+      }, {
+        name: 'Feb',
+        value: 11
+      }, {
+        name: 'Mar',
+        value: 14
+      }, {
+        name: 'Apr',
+        value: 10
+      }, {
+        name: 'May',
+        value: 14
+      }, {
+        name: 'Jun',
+        value: 8
+      }, {
+        name: 'Jul',
+        value: 7
+      }, {
+        name: 'Aug',
+        value: 10
+      }, {
+        name: 'Sep',
+        value: 9
+      }, {
+        name: 'Oct',
+        value: 8
+      }, {
+        name: 'Nov',
+        value: 10
+      }, {
+        name: 'Dec',
+        value: 6
+      }],
+      name: '2018'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 22
+      }, {
+        name: 'Feb',
+        value: 21
+      }, {
+        name: 'Mar',
+        value: 24
+      }, {
+        name: 'Apr',
+        value: 20
+      }, {
+        name: 'May',
+        value: 24
+      }, {
+        name: 'Jun',
+        value: 28
+      }, {
+        name: 'Jul',
+        value: 27
+      }, {
+        name: 'Aug',
+        value: 20
+      }, {
+        name: 'Sep',
+        value: 29
+      }, {
+        name: 'Oct',
+        value: 28
+      }, {
+        name: 'Nov',
+        value: 20
+      }, {
+        name: 'Dec',
+        value: 26
+      }],
+      name: '2017'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 32
+      }, {
+        name: 'Feb',
+        value: 31
+      }, {
+        name: 'Mar',
+        value: 34
+      }, {
+        name: 'Apr',
+        value: 30
+      }, {
+        name: 'May',
+        value: 34
+      }, {
+        name: 'Jun',
+        value: 38
+      }, {
+        name: 'Jul',
+        value: 37
+      }, {
+        name: 'Aug',
+        value: 30
+      }, {
+        name: 'Sep',
+        value: 39
+      }, {
+        name: 'Oct',
+        value: 38
+      }, {
+        name: 'Nov',
+        value: 30
+      }, {
+        name: 'Dec',
+        value: 36
+      }],
+      name: '2016'
+    }];
+
+    $('#column-bar-stacked-example').chart({
+      type: 'column-stacked',
+      dataset: dataset,
+      fitHeight: true
+    });
+
+  });
+</script>

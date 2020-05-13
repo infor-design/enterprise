@@ -129,10 +129,16 @@ Column.prototype = {
       left: 45
     };
     const legendHeight = 40;
-    const width = parent.width() - margin.left - margin.right - 10;
-    const height = parent.height() - margin.top - margin.bottom -
+    const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
+    const useHeight = this.settings.fitHeight ?
+      parentAvailableHeight : parseInt(parent.height(), 10);
+    let width = parent.width() - margin.left - margin.right - 10;
+    const height = useHeight - margin.top - margin.bottom -
         (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
+    if (width < 265) {
+      width += 25;
+    }
     let yMinTarget;
     let yMaxTarget;
     let series;
@@ -559,11 +565,15 @@ Column.prototype = {
             const bandwidth = x0.bandwidth();
             if (!self.settings.isStacked && isGroupSmaller &&
               bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
-              x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
+              x += (((bandwidth / 2) / dataArray.length) / 2);
             }
             if (self.isGrouped && !self.settings.isStacked) {
-              const barDiff = (barMaxWidth / (x0.bandwidth() > 150 ? 2 : 4));
+              const barDiff = (barMaxWidth / (bandwidth > 150 ? 2 : 4));
               x -= barDiff;
+            }
+            if (self.settings.isStacked && width < 290 && bandwidth < 40) {
+              const len = dataArray[0]?.data?.length || 0;
+              x = ((width - (bandwidth * len)) / len) / 2;
             }
             return `translate(${x},0)`;
           });
