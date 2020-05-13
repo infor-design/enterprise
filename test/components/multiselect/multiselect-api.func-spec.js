@@ -3,6 +3,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 const multiSelectHTML = require('../../../app/views/components/multiselect/_samples-standard.html');
 const svg = require('../../../src/components/icons/svg.html');
+const statesMultiselectData = require('../../../app/data/states-multiselect.json');
 
 let multiSelectEl;
 let multiSelectObj;
@@ -37,5 +38,64 @@ describe('MultiSelect API', () => {
 
   it('Should enable multiselect', () => {
     multiSelectObj.enable();
+  });
+});
+
+describe('Multiselect API (ajax)', () => {
+  const multiSelectSingleItemHTML = `
+    <div class="field">
+      <label for="multi-standard" class="label">Multiselect</label>
+      <select multiple id="multi-standard" name="multi-standard" data-maxselected="10" class="multiselect">
+        <option selected value="FL">Florida</option>
+      </div>
+    </div>
+  `;
+
+  // Pulls this in directly from the demoapp's datasource.
+  // "NJ", "NY", and "PA" are all selected.
+  const source = function (response) {
+    response(statesMultiselectData);
+  };
+
+  beforeEach(() => {
+    multiSelectEl = null;
+    multiSelectObj = null;
+    document.body.insertAdjacentHTML('afterbegin', multiSelectSingleItemHTML);
+    document.body.insertAdjacentHTML('afterbegin', svg);
+    multiSelectEl = document.body.querySelector('.multiselect');
+  });
+
+  afterEach(() => {
+    multiSelectObj.destroy();
+    cleanup([
+      '.multiselect',
+      '.dropdown',
+      '.svg-icons',
+      '#dropdown-list',
+      '.field',
+      '.row',
+      'select'
+    ]);
+  });
+
+  it('can set selected items from a datasource', (done) => {
+    multiSelectObj = new MultiSelect(multiSelectEl, {
+      source
+    });
+    const predefinedOpt = multiSelectEl.querySelector('option');
+
+    // Detect the pre-defined selected option
+    expect(predefinedOpt).toBeDefined();
+    expect(predefinedOpt.value).toEqual('FL');
+    expect(multiSelectObj.dropdown.selectedValues.includes(predefinedOpt.value)).toBeTruthy();
+
+    multiSelectObj.dropdown.open();
+
+    setTimeout(() => {
+      // Should include the predefined selected value AND the selected values from the backend
+      expect(multiSelectObj.dropdown.selectedValues.length).toEqual(4);
+      expect(multiSelectObj.dropdown.selectedValues.includes(predefinedOpt.value)).toBeTruthy();
+      done();
+    }, 650);
   });
 });

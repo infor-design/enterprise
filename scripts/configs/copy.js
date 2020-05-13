@@ -18,7 +18,7 @@ module.exports = {
           dest: 'dist/js/',
           filter: 'isFile',
           rename(dest, src) {
-            return dest + src.replace('jquery.', 'jquery-3.4.1.')
+            return dest + src.replace('jquery.', 'jquery-3.5.1.')
               .replace('polyfill.', 'promise-polyfill.');
           }
         },

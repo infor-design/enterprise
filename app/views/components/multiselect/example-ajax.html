@@ -17,7 +17,9 @@
 
     <div class="field">
       <label for="ajax-test">Ajax Test</label>
-      <select id="ajax-test" name="ajax-test" class="multiselect" data-init="false" multiple></select>
+      <select id="ajax-test" name="ajax-test" class="multiselect" data-init="false" multiple>
+        <option selected value="FL">Florida</option>
+      </select>
     </div>
 
   </div>
@@ -68,7 +70,7 @@
 
     cachedTerm = term;
 
-    var apiRoute = '{{basepath}}api/states';
+    var apiRoute = '{{basepath}}api/states-multiselect';
     if (term && typeof term === 'string' && term.length) {
       apiRoute += '?term=' + term;
     }
