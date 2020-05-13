@@ -438,8 +438,7 @@ SwapList.prototype = {
     if (this.isDragAndDropSupports) {
       // Use Handle if available
       this.handle = ul.first().attr('data-swap-handle');
-      this.handle = $(this.handle, ul).length > 0 ? this.handle : null;
-      // this.handle = (!this.isTouch && $(this.handle, ul).length > 0) ? this.handle : null;
+      this.handle = (!this.isTouch && $(this.handle, ul).length > 0) ? this.handle : null;
       $(this.handle, ul).addClass('draggable')
         .off('mousedown.swaplist touchstart.swaplist')
         .on('mousedown.swaplist touchstart.swaplist', () => {
