@@ -6842,7 +6842,7 @@ Datagrid.prototype = {
             [].slice.call(cell.querySelectorAll('*')).forEach((node) => {
               [].slice.call(node.childNodes).forEach((childNode) => {
                 const parent = childNode.parentElement;
-                if (childNode.nodeType === 3 &&
+                if (childNode.nodeType === 3 && parent.tagName.toLowerCase() !== 'i' &&
                   xssUtils.unescapeHTML(parent.innerHTML) === childNode.textContent) {
                   const contents = childNode.textContent;
                   const exp = new RegExp(`(${stringUtils.escapeRegExp(term)})`, 'gi');
