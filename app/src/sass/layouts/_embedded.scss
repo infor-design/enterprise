@@ -3,11 +3,25 @@
 
 .layout-embedded {
   height: 100%;
+  overflow: hidden;
+
+  .container {
+    height: calc(100% - 20px);
+    overflow: auto;
+    position: relative;
+
+    > .page-container {
+      padding: 20px 0;
+    }
+
+    > .row:first-child {
+      padding-top: 20px;
+    }
+  }
 
   .custom-header {
     background-color: $theme-color-palette-white;
     height: 38px;
-    margin-bottom: 20px;
     width: 100%;
     z-index: 100;
 
