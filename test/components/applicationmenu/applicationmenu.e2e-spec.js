@@ -211,7 +211,7 @@ describe('Application Menu personalize roles switcher tests', () => {
   }
 
   it('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
-    // NOTE: This only happens on mobile, and when `AppliationMenu.settings.dismissOnClickMobile: true;`
+    // NOTE: This only happens on mobile, and when `ApplicationMenu.settings.dismissOnClickMobile: true;`
     const windowSize = await browser.driver.manage().window().getSize();
 
     // Simulate iPhone X device size.
@@ -226,6 +226,27 @@ describe('Application Menu personalize roles switcher tests', () => {
     // Click more actions button, app menu should dismiss again.
     await element(by.css('#header-more-actions')).click();
     await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('application-menu')).getAttribute('class')).not.toContain('is-open');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+
+  it('should dismiss the application menu when clicking on one of the menu\'s toolbar buttons', async () => {
+    // NOTE: This only happens on mobile, and when `ApplicationMenu.settings.dismissOnClickMobile: true;`
+    const windowSize = await browser.driver.manage().window().getSize();
+
+    // Simulate iPhone X device size.
+    // Shrinking the screen causes the menu to be dismissed.
+    await browser.driver.manage().window().setSize(375, 812);
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Reactivate App Menu
+    await element(by.css('#hamburger-button')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Click the first button in the Application Menu toolbar
+    await element(by.css('#toolbar-btn-download')).click();
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('application-menu')).getAttribute('class')).not.toContain('is-open');
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
