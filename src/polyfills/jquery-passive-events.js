@@ -11,6 +11,13 @@ jQuery.event.special.touchstart = {
     });
   }
 };
+jQuery.event.special.touchmove = {
+  setup(_, ns, handle) {
+    this.addEventListener('touchmove', handle, {
+      passive: true
+    });
+  }
+};
 jQuery.event.special.mousewheel = {
   setup(_, ns, handle) {
     this.addEventListener('mousewheel', handle, {
