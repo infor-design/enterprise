@@ -28,6 +28,7 @@ const COMPONENT_NAME = 'column';
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
+* @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
@@ -50,6 +51,7 @@ const COLUMN_DEFAULTS = {
   format: null,
   redrawOnResize: true,
   ticks: 9,
+  fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 

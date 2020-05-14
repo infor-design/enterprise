@@ -33,7 +33,7 @@ const COMPONENT_NAME = 'bar';
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
- * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height and no scroll bar.
+ * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * You may want to change this based on label data.
  * @param {object} [settings.emptyMessage={
  *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
