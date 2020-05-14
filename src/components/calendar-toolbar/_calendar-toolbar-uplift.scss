@@ -16,4 +16,8 @@
   .toolbar-section > .year {
     @include font-size(20);
   }
+
+  .dropdown-wrapper {
+    top: 12px;
+  }
 }

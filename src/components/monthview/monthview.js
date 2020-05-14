@@ -326,15 +326,17 @@ MonthView.prototype = {
 
     if (this.isIslamic) {
       if (!s.activeDateIslamic) {
-        const gregorianDate = new Date();
-        this.todayDateIslamic = Locale.gregorianToUmalqura(gregorianDate);
+        const gregorianDate = new Date(year, month, this.currentDay || this.settings.day);
+        const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
+        this.todayDateIslamic = Locale.gregorianToUmalqura(now);
         s.activeDateIslamic = [];
-        s.activeDateIslamic[0] = this.todayDateIslamic[0];
-        s.activeDateIslamic[1] = this.todayDateIslamic[1];
-        s.activeDateIslamic[2] = this.todayDateIslamic[2];
-        year = s.activeDateIslamic[0];
-        month = s.activeDateIslamic[1];
-        elementDate = Locale.gregorianToUmalqura(now);
+        s.activeDateIslamic[0] = islamicDate[0];
+        s.activeDateIslamic[1] = islamicDate[1];
+        s.activeDateIslamic[2] = islamicDate[2];
+        year = islamicDate[0];
+        month = islamicDate[1];
+        elementDate = islamicDate;
+        this.currentDay = islamicDate[2];
       } else {
         elementDate = s.activeDateIslamic;
       }
@@ -408,7 +410,8 @@ MonthView.prototype = {
     }
 
     if (s.headerStyle === 'full' && this.calendarToolbarAPI) {
-      this.calendarToolbarAPI.setInternalDate(new Date(year, month, 1));
+      this.calendarToolbarAPI.setInternalDate(this.isIslamic ?
+        [year, month, 1] : new Date(year, month, 1));
     }
 
     this.appendMonthYearPicker(month, year);
@@ -457,7 +460,7 @@ MonthView.prototype = {
 
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
-          if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
+          if (dayCnt === elementDate[2]) {
             setSelected(th, true);
           }
         } else {
@@ -534,7 +537,7 @@ MonthView.prototype = {
 
     if (!this.currentDate) {
       if (this.isIslamic) {
-        this.currentIslamicDate = [this.currentYear, this.currentMonth, this.currentDay];
+        this.currentDateIslamic = [this.currentYear, this.currentMonth, this.currentDay];
         this.currentDate = Locale.umalquraToGregorian(
           this.currentYear,
           this.currentMonth,
@@ -1217,11 +1220,11 @@ MonthView.prototype = {
   */
   selectDay(date, closePopup, insertDate) {
     if (this.isIslamic && typeof date !== 'string') {
-      this.currentIslamicDate = Locale.gregorianToUmalqura(date);
+      this.currentDateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
-        this.currentIslamicDate[0],
-        this.currentIslamicDate[1],
-        this.currentIslamicDate[2]
+        this.currentDateIslamic[0],
+        this.currentDateIslamic[1],
+        this.currentDateIslamic[2]
       );
     }
 
@@ -1239,7 +1242,7 @@ MonthView.prototype = {
     const day = parseInt(date.substr(6, 2), 10);
 
     if (this.isIslamic) {
-      this.currentIslamicDate = date;
+      this.currentDateIslamic = date;
       this.currentDate = Locale.umalquraToGregorian(year, month, day);
     } else {
       this.currentDate = new Date(year, month, day);
@@ -1491,7 +1494,7 @@ MonthView.prototype = {
 
         this.currentDate = firstDay;
         if (this.isIslamic) {
-          this.currentIslamicDate = Locale.gregorianToUmalqura(this.currentDate);
+          this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
         }
         this.selectDay(this.currentDate, false, false);
       }
@@ -1516,7 +1519,7 @@ MonthView.prototype = {
 
         this.currentDate = lastDay;
         if (this.isIslamic) {
-          this.currentIslamicDate = Locale.gregorianToUmalqura(this.currentDate);
+          this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
         }
         this.selectDay(this.currentDate, false, false);
       }
@@ -1551,11 +1554,11 @@ MonthView.prototype = {
         const d = this.getCellDate(cell);
 
         if (this.isIslamic) {
-          this.currentIslamicDate = [d.year, d.month, d.day];
+          this.currentDateIslamic = [d.year, d.month, d.day];
           this.currentDate = Locale.umalquraToGregorian(
-            this.currentIslamicDate[0],
-            this.currentIslamicDate[1],
-            this.currentIslamicDate[2]
+            this.currentDateIslamic[0],
+            this.currentDateIslamic[1],
+            this.currentDateIslamic[2]
           );
         } else {
           this.currentDate = new Date(d.year, d.month, d.day);

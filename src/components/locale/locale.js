@@ -596,18 +596,17 @@ const Locale = {  // eslint-disable-line
     const seconds = (value instanceof Array ? value[5] : value.getSeconds());
     const millis = (value instanceof Array ? value[6] : value.getMilliseconds());
 
-    if (cal && cal.conversions) {
-      if (options.fromGregorian) {
-        const islamicParts = this.gregorianToUmalqura(value);
-        day = islamicParts[2];
-        month = islamicParts[1];
-        year = islamicParts[0];
-      } else if (options.toGregorian) {
-        const gregorianDate = this.umalquraToGregorian(year, month, day);
-        day = gregorianDate.getDate();
-        month = gregorianDate.getMonth();
-        year = gregorianDate.getFullYear();
-      }
+    if (options.fromGregorian) {
+      const islamicParts = this.gregorianToUmalqura(value);
+      day = islamicParts[2];
+      month = islamicParts[1];
+      year = islamicParts[0];
+    }
+    if (options.toGregorian) {
+      const gregorianDate = this.umalquraToGregorian(year, month, day);
+      day = gregorianDate.getDate();
+      month = gregorianDate.getMonth();
+      year = gregorianDate.getFullYear();
     }
 
     // Special
@@ -1782,6 +1781,15 @@ const Locale = {  // eslint-disable-line
   isRTL() {
     return !this.currentLanguage ? false :
       this.currentLanguage.direction === 'right-to-left';
+  },
+
+  /**
+   * Describes whether or not the default calendar is islamic.
+   * @param {string} locale The locale to check if not the current.
+   * @returns {boolean} whether or not this locale is "right-to-left".
+   */
+  isIslamic(locale) {
+    return this.calendar(locale)?.name === 'islamic-umalqura';
   },
 
   /**

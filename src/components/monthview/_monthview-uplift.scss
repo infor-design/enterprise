@@ -6,3 +6,9 @@
   font-weight: 400;
   top: -1px;
 }
+
+.monthview.is-fullsize {
+  .toolbar-section {
+    margin-top: -6px;
+  }
+}

@@ -20,15 +20,6 @@
       }
     }
   }
-
-  &.is-expanded {
-    + .accordion-header {
-      &.is-focused:not(.hide-focus),
-      &.is-selected {
-        border-top-color: $accordion-focused-border-color;
-      }
-    }
-  }
 }
 
 // Reset positioning for Uplift expander buttons

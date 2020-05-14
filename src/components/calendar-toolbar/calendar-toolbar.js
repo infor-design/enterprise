@@ -3,7 +3,6 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../../utils/behaviors'; // hidefocus
-import '../datepicker/datepicker.jquery';
 import '../dropdown/dropdown.jquery';
 import '../toolbar-flex/toolbar-flex.jquery';
 
@@ -154,7 +153,8 @@ CalendarToolbar.prototype = {
 
     // Hide focus on buttons
     this.element.find('button, a').hideFocus();
-    this.setInternalDate(new Date(this.settings.year, this.settings.month, 1));
+    this.setInternalDate(this.isIslamic ? [this.settings.year, this.settings.month, 1]
+      : new Date(this.settings.year, this.settings.month, 1));
     return this;
   },
 
@@ -165,10 +165,17 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   setInternalDate(date) {
-    this.currentYear = date.getFullYear();
-    this.currentMonth = date.getMonth();
-    this.currentDay = date.getDate();
-    this.currentDate = date;
+    if (Locale.isIslamic(this.locale.name)) {
+      this.currentYear = date[0];
+      this.currentMonth = date[1];
+      this.currentDay = date[2];
+      this.currentDateIslamic = date;
+    } else {
+      this.currentYear = date.getFullYear();
+      this.currentMonth = date.getMonth();
+      this.currentDay = date.getDate();
+      this.currentDate = date;
+    }
 
     this.monthPicker.text(Locale.formatDate(
       new Date(this.currentYear, this.currentMonth, this.currentDay),
@@ -260,7 +267,7 @@ CalendarToolbar.prototype = {
     const self = this;
     this.monthPicker.off('change.calendar-toolbar-p').on('change.calendar-toolbar-p', function () {
       const picker = $(this).data('datepicker');
-      self.setInternalDate(picker.currentDate);
+      self.setInternalDate(picker.isIslamic ? picker.currentDateIslamic : picker.currentDate);
       self.element.trigger('change-date', { selectedDate: picker.currentDate, isToday: false });
     });
 

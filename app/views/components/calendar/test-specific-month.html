@@ -58,6 +58,68 @@ $('body').one('initialized', function () {
     });
   });
 });
+
+// Wire up the actions
+$('#actions').on('selected', function(e, args) {
+  var action = args[0].getAttribute('data-action');
+  var api = $('.calendar').data('calendar');
+  var selectedDate = api.getDayEvents();
+  var events = api.settings.events;
+  var defaultHours = 8;
+  var startDate = new Date(selectedDate.date);
+  var endDate = new Date(selectedDate.date);
+  var isAllDay = true;
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(startDate.getHours() + defaultHours);
+  // To default all day use
+  if (isAllDay) {
+    endDate.setHours(23, 59, 59, 999);
+  }
+
+  if (action === 'add-api') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'team',
+      isAllDay: isAllDay
+    };
+    api.addEvent(newEvent);
+  }
+
+  if (action === 'add-modal') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      title: 'Request Time Off',
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'dto',
+      isAllDay: isAllDay
+    };
+
+    var done = function(elem, event) {
+      // Collect the data and popuplate the event object
+      var inputs = elem.querySelectorAll('input, textarea, select');
+      for (var i = 0; i < inputs.length; i++) {
+        newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+      }
+
+      api.addEvent(newEvent);
+      return;
+    };
+
+    api.showEventModal(newEvent, done);
+  }
+
+  if (action === 'clear') {
+    api.clearEvents(selectedDate.date);
+  }
+});
+
 </script>
 
 <script id="tmpl-mbl-readonly" type="text/html">
@@ -110,7 +172,7 @@ $('body').one('initialized', function () {
     <div class="accordion-content">
       {{#status}}
       <div class="field">
-        <span class="label">Status</span>
+        <span class="label" data-translate="text">Status</span>
         <span class="data">
           {{status}}
           {{#icon}}
@@ -120,7 +182,7 @@ $('body').one('initialized', function () {
       </div>
       {{/status}}
       <div class="field">
-        <span class="label">Date</span>
+        <span class="label" data-translate="text">Date</span>
         {{#duration}}
         <span class="data">
           {{startsLong}}
@@ -137,13 +199,13 @@ $('body').one('initialized', function () {
         {{/durationHours}}
       </div>
       <div class="field">
-        <span class="label">Event Type</span>
+        <span class="label" data-translate="text">EventType</span>
         <span class="data">
           {{typeLabel}}
         </span>
       </div>
       <div class="field">
-        <span class="label">Duration</span>
+        <span class="label" data-translate="text">Duration</span>
         {{#duration}}
         <span class="data">
           {{duration}} {{durationUnits}}
@@ -156,7 +218,7 @@ $('body').one('initialized', function () {
         {{/durationHours}}
       </div>
       <div class="field">
-        <span class="label">Comments</span>
+        <span class="label" data-translate="text">Comments</span>
         <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
           {{comments}}
         </span>

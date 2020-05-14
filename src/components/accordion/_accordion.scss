@@ -565,6 +565,7 @@
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
     border-color: $accordion-focused-border-color;
+    border-top-color: $accordion-focused-border-color !important;
     box-shadow: $focus-box-shadow;
   }
 
@@ -667,8 +668,7 @@
     + .accordion-content {
       border-top-color: $accordion-border-color;
 
-      &.is-focused,
-      &.is-selected {
+      &.is-focused {
         border-top-color: transparent;
       }
     }
