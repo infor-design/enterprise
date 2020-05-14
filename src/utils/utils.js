@@ -1203,30 +1203,7 @@ utils.getScrollbarWidth = function () {
  * @returns {array|object} The copied array or object.
  */
 utils.deepCopy = function (arrayOrObject) {
-  const references = new Map();
-  const copy = (input) => {
-    if (typeof input !== 'object' || input === null) {
-      return input; // Return the value if input is not an object
-    }
-
-    // If an object has already been cloned then return a
-    // reference to that clone to avoid an infinite loop
-    if (references.has(input) === true) {
-      return references.get(input);
-    }
-
-    // Create an array or object to hold the values
-    const output = Array.isArray(input) ? [] : {};
-    references.set(arrayOrObject, input);
-
-    Object.keys(input).forEach((key) => {
-      const value = input[key];
-      // Recursively (deep) copy for nested objects, including arrays
-      output[key] = (typeof value === 'object' && value !== null) ? copy(value) : value;
-    });
-    return output;
-  };
-  return copy(arrayOrObject);
+  return utils.extend(true, {}, arrayOrObject);
 };
 
 /**
