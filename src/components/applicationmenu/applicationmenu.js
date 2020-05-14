@@ -707,6 +707,8 @@ ApplicationMenu.prototype = {
       'aftercollapse.applicationmenu'
     ].join(' '));
 
+    this.element.find('.application-menu-toolbar').off(`click.${COMPONENT_NAME}`);
+
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -852,6 +854,15 @@ ApplicationMenu.prototype = {
         delete this.keyboardChangedFocus;
       });
     }
+
+    // If application menu toolbars exist, clicking buttons on the toolbars
+    // should cause the menu to close in some conditions.
+    this.element.find('.application-menu-toolbar').on(`click.${COMPONENT_NAME}`, 'button', (e) => {
+      if (e.defaultPrevented) {
+        return;
+      }
+      this.handleDismissOnClick();
+    });
 
     $(document).on('open-applicationmenu', () => {
       self.openMenu(undefined, true);

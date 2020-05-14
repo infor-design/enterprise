@@ -22,18 +22,6 @@ describe('Busy Indicator example-index tests', () => {
 
     expect(await element(by.className('busy-indicator-container'))).toBeTruthy();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const buttonEl = await element(by.id('submit'));
-      await buttonEl.click();
-
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'busy-indicator-index')).toEqual(0);
-    });
-  }
 });
 
 describe('Busy Indicator example-inputs tests', () => {

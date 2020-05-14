@@ -21,7 +21,7 @@ describe('Wizard example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('wizard')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('wizard')).toEqual(0);
     });
   }
 });

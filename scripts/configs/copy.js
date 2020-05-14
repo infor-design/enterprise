@@ -18,7 +18,7 @@ module.exports = {
           dest: 'dist/js/',
           filter: 'isFile',
           rename(dest, src) {
-            return dest + src.replace('jquery.', 'jquery-3.4.1.')
+            return dest + src.replace('jquery.', 'jquery-3.5.1.')
               .replace('polyfill.', 'promise-polyfill.');
           }
         },
@@ -26,13 +26,13 @@ module.exports = {
           expand: true,
           flatten: true,
           src: [
-            'node_modules/d3/build/d3.js',
-            'node_modules/d3/build/d3.min.js'
+            'node_modules/d3/dist/d3.js',
+            'node_modules/d3/dist/d3.min.js'
           ],
           dest: 'dist/js/',
           filter: 'isFile',
           rename(dest, src) {
-            return dest + src.replace('d3.', 'd3.v4.');
+            return dest + src.replace('d3.', 'd3.v5.');
           }
         },
         { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile' },

@@ -33,7 +33,7 @@ describe('Menu button example-index tests', () => {
       expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBe(true);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('menu-button')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('menu-button')).toEqual(0);
     });
   }
 });

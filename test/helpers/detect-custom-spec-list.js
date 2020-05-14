@@ -18,8 +18,15 @@ DEFAULT_E2E_SPECS.all = [
   'kitchen-sink.e2e-spec.js'
 ];
 
+DEFAULT_E2E_SPECS.group0 = [
+  'components/datagrid/*.e2e-spec.js',
+];
+
 DEFAULT_E2E_SPECS.group1 = [
-  'components/[d]*/*.e2e-spec.js',
+  'components/datepicker/*.e2e-spec.js',
+  'components/donut/*.e2e-spec.js',
+  'components/drag/*.e2e-spec.js',
+  'components/dropdown/*.e2e-spec.js',
 ];
 
 DEFAULT_E2E_SPECS.group2 = [

@@ -431,9 +431,9 @@ function Initialize(element, settings) {
     };
   }
 
-  if (Locale.currentLanguage && Locale.currentLanguage.name
-    && Locale.currentLocale.name.substr(0, 2) !== Locale.currentLanguage.name
-    && !settings) {
+  if (Locale.currentLanguage && Locale.currentLanguage.name &&
+    Locale.currentLocale.name.substr(0, 2) !== Locale.currentLanguage.name &&
+    !settings) {
     newSettings.language = Locale.currentLanguage.name;
   }
 

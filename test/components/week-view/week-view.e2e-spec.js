@@ -64,7 +64,7 @@ describe('WeekView specific week tests', () => {
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(weekviewEl, 'week-view-index')).toEqual(0);
     });
   }
 
@@ -100,7 +100,7 @@ describe('WeekView events tests', () => {
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-events')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(weekviewEl, 'week-view-events')).toEqual(0);
     });
   }
 });
@@ -171,7 +171,7 @@ describe('WeekView two weeks tests', () => {
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-two-weeks')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(weekviewEl, 'week-view-two-weeks')).toEqual(0);
     });
   }
 });
@@ -194,7 +194,7 @@ describe('WeekView one day weeks tests', () => {
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-one-day')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(weekviewEl, 'week-view-one-day')).toEqual(0);
     });
   }
 });
@@ -217,7 +217,7 @@ describe('WeekView two day tests', () => {
       const weekviewEl = await element(by.className('week-view'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(weekviewEl, 'week-view-two-day')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(weekviewEl, 'week-view-two-day')).toEqual(0);
     });
   }
 });

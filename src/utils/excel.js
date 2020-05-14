@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
-import { Editors } from '../components/datagrid/datagrid.editors';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -242,7 +241,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
       const col = settings.columns[idx];
 
       if (col.formatter !== Formatters.Readonly) {
-        if (col.editor.name === Editors.Input.name) {
+        if (col.editor.name === 'input') {
           if (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'number') {
             // Number Values
 
@@ -255,7 +254,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
             // Just overwrite the data in the cell
             rowData[col.field] = values[j];
           }
-        } else if (col.editor.name === Editors.Input.name) {
+        } else if (col.editor.name === 'input') {
           // Validates if input is date. If true, will overwrite the data in cell otherwise nothing will happen.
           if (!isNaN(Date.parse(values[j]))) {
             rowData[col.field] = new Date(values[j]);

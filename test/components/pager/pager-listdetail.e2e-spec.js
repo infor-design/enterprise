@@ -24,7 +24,7 @@ describe('Pager (List/Detail, no page size selector)', () => {
     it('Should not visually regress', async () => {
       const pagerToolbar = await element(by.css('.pager-toolbar'));
 
-      expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(pagerToolbar, 'pager-listdetail')).toEqual(0);
     });
   }
 });
@@ -55,7 +55,7 @@ describe('Pager (List/Detail, with page size selector)', () => {
     it('Should not visually regress when closed', async () => {
       const pagerToolbar = await element(by.css('.pager-toolbar'));
 
-      expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-closed')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-closed')).toEqual(0);
     });
 
     xit('Should not visually regress when opened', async () => {
@@ -66,8 +66,8 @@ describe('Pager (List/Detail, with page size selector)', () => {
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#popupmenu-1'))), config.waitsFor);
       const menu = await element(by.css('#popupmenu-1'));
 
-      expect(await browser.protractorImageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-open-bar')).toEqual(0);
-      expect(await browser.protractorImageComparison.checkElement(menu, 'pager-listdetail-pagesize-open-menu')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(pagerToolbar, 'pager-listdetail-pagesize-open-bar')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(menu, 'pager-listdetail-pagesize-open-menu')).toEqual(0);
     });
   }
 });

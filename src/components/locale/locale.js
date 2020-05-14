@@ -1411,9 +1411,9 @@ const Locale = {  // eslint-disable-line
       const lang = options.locale.split('-')[0];
       languageData = this.languages[lang];
     }
-    if (options && options.locale
-      && this.currentLanguage.name !== this.currentLocale.name.substr(0, 2)
-      && this.languages[this.currentLanguage.name]) {
+    if (options && options.locale &&
+      this.currentLanguage.name !== this.currentLocale.name.substr(0, 2) &&
+      this.languages[this.currentLanguage.name]) {
       languageData = this.languages[this.currentLanguage.name];
     }
     if (options && options.language && this.languages[options.language]) {
@@ -1657,8 +1657,8 @@ const Locale = {  // eslint-disable-line
     if (languageData.messages[key] === undefined) {
       const enLang = 'en';
       // Substitue English Expression if missing
-      if (!this.languages || !this.languages[enLang] || !this.languages[enLang].messages
-          || this.languages[enLang].messages[key] === undefined) {
+      if (!this.languages || !this.languages[enLang] || !this.languages[enLang].messages ||
+          this.languages[enLang].messages[key] === undefined) {
         return showAsUndefined ? undefined : `${showBrackets ? '[' : ''}${key}${showBrackets ? ']' : ''}`;
       }
       return this.languages[enLang].messages[key].value;

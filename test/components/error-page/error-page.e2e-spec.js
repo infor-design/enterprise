@@ -21,7 +21,7 @@ describe('Error page example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('error-page')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('error-page')).toEqual(0);
     });
   }
 });

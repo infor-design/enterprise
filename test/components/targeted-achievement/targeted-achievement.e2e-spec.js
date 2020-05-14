@@ -21,7 +21,7 @@ describe('Targeted Achievement example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkScreen('targeted-achievement')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('targeted-achievement')).toEqual(0);
     });
   }
 });
@@ -42,7 +42,7 @@ describe('Targeted Achievement icons and links tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkScreen('targeted-achievement-links-icons')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('targeted-achievement-links-icons')).toEqual(0);
     });
   }
 });

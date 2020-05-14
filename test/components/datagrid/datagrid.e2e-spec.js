@@ -62,7 +62,7 @@ describe('Datagrid Colspan Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-colspan')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan')).toEqual(0);
     });
   }
 });
@@ -97,7 +97,7 @@ describe('Datagrid Colspan Frozen Column Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-colspan-frozen')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen')).toEqual(0);
     });
   }
 });
@@ -120,7 +120,7 @@ describe('Datagrid Comments Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-comments')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-comments')).toEqual(0);
     });
   }
 });
@@ -191,7 +191,7 @@ describe('Datagrid Disable Rows Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-disabled-rows')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-disabled-rows')).toEqual(0);
     });
   }
 });
@@ -272,7 +272,7 @@ describe('Datagrid Empty Message Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-empty-message')).toEqual(0);
     });
   }
 });
@@ -396,7 +396,7 @@ describe('Datagrid filter tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter')).toEqual(0);
     });
   }
 });
@@ -422,7 +422,7 @@ describe('Datagrid filter RTL tests', () => {
       await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
       await browser.driver.sleep(config.sleepShort);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
     });
   }
 });
@@ -453,7 +453,7 @@ describe('Datagrid filter alternate row tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-alt-row-shading')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-alt-row-shading')).toEqual(0);
     });
   }
 });
@@ -476,7 +476,7 @@ describe('Datagrid filter medium row tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-medium-rowheight')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-medium-rowheight')).toEqual(0);
     });
   }
 });
@@ -499,7 +499,7 @@ describe('Datagrid filter short row tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-filter-short-rowheight')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-short-rowheight')).toEqual(0);
     });
   }
 });
@@ -597,7 +597,7 @@ describe('Datagrid frozen column tests', () => {
       const containerEl = await element(by.id('datagrid'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-frozen')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-frozen')).toEqual(0);
     });
   }
 
@@ -716,7 +716,7 @@ describe('Datagrid grouping and editing tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-grouping-editing')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-grouping-editing')).toEqual(0);
     });
   }
 });
@@ -750,7 +750,7 @@ describe('Datagrid grouping headers and filter tests', () => { //eslint-disable-
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-grouping')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-grouping')).toEqual(0);
     });
   }
 });
@@ -857,7 +857,7 @@ describe('Datagrid grouping totals tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-grouping-totals')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-grouping-totals')).toEqual(0);
     });
   }
 });
@@ -915,7 +915,7 @@ describe('Datagrid index tests', () => {
       const datagridEl = await element(by.id('datagrid'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(datagridEl, 'datagrid-index')).toEqual(0);
     });
   }
 });
@@ -970,7 +970,7 @@ describe('Datagrid List Styles Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-islist')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-islist')).toEqual(0);
     });
   }
 });
@@ -1010,7 +1010,7 @@ describe('Datagrid mixed selection tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-mixed-selection')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-mixed-selection')).toEqual(0);
     });
   }
 });
@@ -1105,7 +1105,7 @@ describe('Datagrid multiselect tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-multiselect')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-multiselect')).toEqual(0);
     });
   }
 });
@@ -1452,7 +1452,7 @@ describe('Datagrid Row Row Reorder', () => {
       await browser.actions()
         .mouseMove(await element(by.css('#datagrid thead th:nth-child(2)'))).perform();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-row-reorder')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-row-reorder')).toEqual(0);
     });
   }
 });
@@ -1502,7 +1502,7 @@ describe('Datagrid Alert and Badges Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-tags-badges')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-tags-badges')).toEqual(0);
     });
   }
 });
@@ -1525,7 +1525,7 @@ describe('Datagrid Align Header Text Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-test-align-header-text')).toEqual(0);
     });
   }
 });
@@ -1564,7 +1564,7 @@ describe('Datagrid Align Header Text Toggle Tests', () => {
 
       expect(await element(by.css('.has-filterable-columns'))).toBeTruthy();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-test-align-header-text-toggle')).toEqual(0);
     });
   }
 });
@@ -1611,7 +1611,7 @@ describe('Datagrid test post renderer tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-cell-post-renderer')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-cell-post-renderer')).toEqual(0);
     });
   }
 });
@@ -1761,7 +1761,7 @@ describe('Datagrid Duplicate Ids Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-dup-ids')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-dup-ids')).toEqual(0);
     });
   }
 });
@@ -1784,7 +1784,7 @@ describe('Datagrid checkbox disabled editor tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-checkbox-disabled')).toEqual(0);
     });
   }
 });
@@ -1918,7 +1918,7 @@ describe('Datagrid Time Editor Test', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-time-editor')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-time-editor')).toEqual(0);
     });
   }
 });
@@ -2027,7 +2027,7 @@ describe('Datagrid Header Alignment with Ellipsis', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-short-row')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-header-align-short-row')).toEqual(0);
     });
   }
 });
@@ -2050,7 +2050,7 @@ describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-ellipsis-sort')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-header-align-ellipsis-sort')).toEqual(0);
     });
   }
 });
@@ -2114,7 +2114,7 @@ describe('Datagrid Empty Card Scrolling', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-card')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-empty-card')).toEqual(0);
     });
   }
 });
@@ -2144,7 +2144,7 @@ describe('Datagrid Empty Message Tests After Load', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-after-load')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-empty-message-after-load')).toEqual(0);
     });
   }
 });
@@ -2204,7 +2204,7 @@ describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-empty-message-scroll-flex')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-empty-message-scroll-flex')).toEqual(0);
     });
   }
 });
@@ -2227,7 +2227,7 @@ describe('Datagrid Header Overlapping Sorting Indicator', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-header-align-overlapping-sort-indicator')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-header-align-overlapping-sort-indicator')).toEqual(0);
     });
   }
 });
@@ -2334,7 +2334,7 @@ describe('Datagrid Frozen Column Card (auto) tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-card-frozen-auto')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-card-frozen-auto')).toEqual(0);
     });
   }
 });
@@ -2371,7 +2371,7 @@ describe('Datagrid Frozen Column Card (fixed) tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-card-frozen')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-card-frozen')).toEqual(0);
     });
   }
 });
@@ -2619,7 +2619,7 @@ describe('Datagrid filter lookup custom click function tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
     }
   });
 });
@@ -2826,7 +2826,7 @@ describe('Datagrid icon buttons tests', () => {
       const containerEl = await element(by.id('readonly-datagrid'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-icon-buttons')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-icon-buttons')).toEqual(0);
     });
   }
 });
@@ -2913,7 +2913,7 @@ describe('Datagrid with long cell text', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-long-text')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-long-text')).toEqual(0);
     });
   }
 });
@@ -2961,7 +2961,7 @@ describe('Datagrid on modal with no default size', () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-modal-size')).toEqual(0);
     });
   }
 });
@@ -2985,7 +2985,7 @@ describe('Datagrid on modal with no default size (two columns)', () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-modal-size-two')).toEqual(0);
     });
   }
 });
@@ -3256,11 +3256,11 @@ describe('Datagrid paging indeterminate single select tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-first-page')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-first-page')).toEqual(0);
       await element(by.css('.pager-last')).click();
       await browser.driver.sleep(config.sleepLonger);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-last-page')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-paging-indeterminate-single-last-page')).toEqual(0);
     });
   }
 });
@@ -3527,7 +3527,7 @@ describe('Datagrid Targeted Achievement', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-targetted')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-targetted')).toEqual(0);
     });
   }
 });
@@ -3592,7 +3592,7 @@ describe('Datagrid editable tree tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-edit-tree')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-edit-tree')).toEqual(0);
     });
   }
 });
@@ -3683,7 +3683,7 @@ describe('Datagrid Tree and Frozen Column tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-frozen-tree')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-frozen-tree')).toEqual(0);
     });
   }
 });
@@ -3706,7 +3706,7 @@ describe('Datagrid tree with grouped header tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-tree-grouped-headers')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-tree-grouped-headers')).toEqual(0);
     });
   }
 });
@@ -4132,7 +4132,7 @@ describe('Datagrid horizontal scrolling tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'datagrid-horizontal-scrolling')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-horizontal-scrolling')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }

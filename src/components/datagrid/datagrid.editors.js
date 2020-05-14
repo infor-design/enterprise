@@ -12,7 +12,7 @@ import '../dropdown/dropdown.jquery';
 import '../editor/editor.jquery';
 import '../fileupload/fileupload.jquery';
 import '../icons/icons.jquery';
-import '../lookup/lookup.jquery';
+import '../lookup/lookup.jquery'; //eslint-disable-line
 import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 import '../spinbox/spinbox.jquery';

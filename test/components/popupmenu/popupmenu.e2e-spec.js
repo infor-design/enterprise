@@ -56,7 +56,7 @@ describe('Popupmenu example-selectable tests', () => {
       await buttonTriggerEl.click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-single-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(popupmenuSection, 'popupmenu-single-open')).toEqual(0);
     });
   }
 
@@ -181,7 +181,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await buttonTriggerEl.click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(popupmenuSection, 'popupmenu-multi-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(popupmenuSection, 'popupmenu-multi-open')).toEqual(0);
     });
   }
 
@@ -299,7 +299,7 @@ describe('Contextmenu Placement Tests', () => {
     await utils.checkForErrors();
   });
 
-  if (!utils.isBS()) {
+  if (!utils.isBS() && !utils.isCI()) {
     it('Should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(640, 296);

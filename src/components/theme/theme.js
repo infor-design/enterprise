@@ -4,7 +4,7 @@ import { color as sohoContrastColors } from './theme-soho-contrast-colors.json';
 import { color as upliftLightColors } from './theme-uplift-colors.json';
 import { color as upliftDarkColors } from './theme-uplift-dark-colors.json';
 import { color as upliftContrastColors } from './theme-uplift-contrast-colors.json';
-import { Locale } from '../../components/locale/locale';
+import { Locale } from '../locale/locale';
 
 /**
 * The Theme Component is a lightweight wrapper for theme information, which contains the colors
@@ -90,8 +90,7 @@ const theme = {
    * @returns {[type]} [description]
    */
   setTheme: function setTheme(themeId) {
-    const result = this.themes().filter(themeObj =>
-      themeObj.id === themeId || (themeObj.legacyId && themeObj.legacyId === themeId));
+    const result = this.themes().filter(themeObj => themeObj.id === themeId || (themeObj.legacyId && themeObj.legacyId === themeId)); //eslint-disable-line
 
     if (result.length === 0) {
       return '';

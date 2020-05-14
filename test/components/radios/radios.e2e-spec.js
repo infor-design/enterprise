@@ -27,7 +27,7 @@ describe('Radios example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(container, 'radio-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(container, 'radio-init')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }
@@ -51,7 +51,7 @@ describe('Radios Horizontal tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(container, 'radio-horizontal')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(container, 'radio-horizontal')).toEqual(0);
     });
   }
 });

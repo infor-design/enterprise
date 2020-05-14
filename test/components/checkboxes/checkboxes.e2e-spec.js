@@ -21,7 +21,7 @@ describe('Checkbox example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('checkboxes')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('checkboxes')).toEqual(0);
     });
   }
 });
@@ -38,7 +38,7 @@ describe('Checkbox Uplift tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('checkboxes-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('checkboxes-uplift')).toEqual(0);
     });
   }
 });
@@ -59,7 +59,7 @@ describe('Checkbox group tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('checkbox-groups')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('checkbox-groups')).toEqual(0);
     });
   }
 });
@@ -80,7 +80,7 @@ describe('Horizontal checkbox group tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkScreen('checkboxes-horizontal')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('checkboxes-horizontal')).toEqual(0);
     });
   }
 });

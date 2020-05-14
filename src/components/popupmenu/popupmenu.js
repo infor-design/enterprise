@@ -1220,9 +1220,9 @@ PopupMenu.prototype = {
         }
 
         // Down
-        if ((!isPicker && key === 40)
-          || (isPicker && key === (Locale.isRTL() ? 37 : 39))
-          && (!isAutocomplete)) {
+        if ((!isPicker && key === 40) ||
+          (isPicker && key === (Locale.isRTL() ? 37 : 39)) &&
+          (!isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 

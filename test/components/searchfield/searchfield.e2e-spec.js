@@ -31,14 +31,14 @@ describe('Searchfield example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
       await searchfieldInputEl.clear();
       await searchfieldInputEl.sendKeys('c');
       await searchfieldInputEl.sendKeys('o');
       await browser.driver.sleep(config.sleep);
       await searchfieldInputEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'searchfield-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(searchfieldSection, 'searchfield-open')).toEqual(0);
     });
   }
 
@@ -177,7 +177,7 @@ if (utils.isChrome() && utils.isCI()) {
     });
 
     it('Should not visual regress on test-configure-close-size', async () => {
-      expect(await browser.protractorImageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
     });
   });
 
@@ -205,8 +205,7 @@ if (utils.isChrome() && utils.isCI()) {
 
       // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
       await browser.executeScript('document.activeElement.blur();').then(async () => {
-        expect(await browser.protractorImageComparison
-          .checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
+        expect(await browser.imageComparison.checkElement(await element(by.css('.container')), 'searchfield-above-01')).toEqual(0);
       });
 
       await searchfieldInputEl.sendKeys('ew');
@@ -214,8 +213,7 @@ if (utils.isChrome() && utils.isCI()) {
 
       // blur the input field first, so we don't accidentaly get a text cursor in the screen capture.
       await browser.executeScript('document.activeElement.blur();').then(async () => {
-        expect(await browser.protractorImageComparison
-          .checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
+        expect(await browser.imageComparison.checkElement(await element(by.css('.container')), 'searchfield-above-02')).toEqual(0);
       });
 
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);

@@ -1,4 +1,4 @@
-import { Lookup, COMPONENT_NAME } from './lookup';
+import { Lookup, COMPONENT_NAME } from './lookup'; //eslint-disable-line
 
 /**
  * jQuery Component Wrapper for Lookup

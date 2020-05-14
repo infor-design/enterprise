@@ -102,7 +102,7 @@ describe('Lookup example tests', () => {
       const modalEl = await element(by.className('modal'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(modalEl, 'lookup-index')).toEqual(0);
     });
   }
 });
@@ -489,7 +489,7 @@ describe('Lookup minWidth tests', () => {
       const modalEl = await element(by.className('modal'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(modalEl, 'lookup-min-width')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(modalEl, 'lookup-min-width')).toEqual(0);
     });
   }
 });

@@ -31,6 +31,7 @@ module.exports = {
 
   // Need `ecmaVersion: 9` for:
   // - [Object spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals)
+  'parser': "babel-eslint",
   'parserOptions': {
     'ecmaVersion': 9,
     'sourceType': 'module'
@@ -139,6 +140,14 @@ module.exports = {
       },
     }, {
       enforceForRenamedProperties: false,
-    }]
+    }],
+
+    // Don't enforce extra brackets
+    // https://eslint.org/docs/2.0.0/rules/arrow-parensextra
+    'arrow-parens': ['error', 'as-needed', { 'requireForBlockBody' : true }],
+
+    // Have operators on same line
+    // https://eslint.org/docs/rules/operator-linebreak
+    'operator-linebreak': ['error', 'after']
   }
 };

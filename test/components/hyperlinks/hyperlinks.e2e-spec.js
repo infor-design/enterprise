@@ -20,7 +20,7 @@ describe('Hyperlink index tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'hyperlinks-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'hyperlinks-index')).toEqual(0);
     });
   }
 });

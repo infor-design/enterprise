@@ -540,8 +540,7 @@ MaskAPI.prototype = {
       // Now we find all the characters in the left half that exist in the conformed
       // input. This step ensures that we don't look for a character that was filtered
       // out or rejected by `conformToMask`.
-      const intersection = leftHalfChars.filter(char =>
-        normalizedConformedValue.indexOf(char) !== -1);
+      const intersection = leftHalfChars.filter(char => normalizedConformedValue.indexOf(char) !== -1); //eslint-disable-line
 
       // The last character in the intersection is the character we want to
       // look for in the conformed value and the one we want to adjust the caret close to
@@ -613,15 +612,11 @@ MaskAPI.prototype = {
       const countTargetCharInPlaceholder = opts.placeholder
         .substr(0, opts.placeholder.indexOf(opts.placeholderChar))
         .split(masks.EMPTY_STRING)
-        .filter((char, index) =>
-          // Check if `char` is the same as our `targetChar`, so we account for it
-          char === targetChar &&
-
-          // but also make sure that both the `rawValue` and placeholder don't have the same
-          // character at the same index because if they are equal, that means we are already
-          // counting those characters in `countTargetCharInIntersection`
-          opts.rawValue[index] !== char)
-        .length;
+        // Check if `char` is the same as our `targetChar`, so we account for it
+        // but also make sure that both the `rawValue` and placeholder don't have the same
+        // character at the same index because if they are equal, that means we are already
+        // counting those characters in `countTargetCharInIntersection`
+        .filter((char, index) => char === targetChar && opts.rawValue[index] !== char).length;
 
       // The number of times we need to see occurrences of the `targetChar` before we
       // know it is the one we're looking for is:

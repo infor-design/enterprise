@@ -1,7 +1,7 @@
 const fs = require('fs');
-const logger = require('./logger');
 const path = require('path');
 const commandLineArgs = require('yargs').argv;
+const logger = require('./logger');
 
 const utils = {};
 

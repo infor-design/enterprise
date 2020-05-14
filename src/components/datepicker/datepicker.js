@@ -783,8 +783,8 @@ DatePicker.prototype = {
           this.popupClosestScrollable.length === 1) {
           this.popup.find('.arrow').hide();
           this.popup.css({
-            'min-height': $('html').hasClass('theme-uplift-light') ? ''
-              : `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
+            'min-height': $('html').hasClass('theme-uplift-light') ? '' :
+              `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });
           this.popupClosestScrollable.css('min-height', '375px');
@@ -1781,8 +1781,8 @@ DatePicker.prototype = {
     const period = this.popup.find('.dropdown.period');
     const periodValue = period.val();
 
-    hours = (period.length && periodValue === this.currentCalendar.dayPeriods[1] && hours < 12)
-      ? (parseInt(hours, 10) + 12) : hours;
+    hours = (period.length && periodValue === this.currentCalendar.dayPeriods[1] && hours < 12) ?
+      (parseInt(hours, 10) + 12) : hours;
     hours = (period.length && (periodValue === this.currentCalendar.dayPeriods[0] ||
       !periodValue) && parseInt(hours, 10) === 12) ? 0 : hours;
 
@@ -1836,7 +1836,7 @@ DatePicker.prototype = {
       s.range.first && s.range.first.date &&
       s.range.second && s.range.second.date) {
       return `${formatDate(s.range.first.date) + s.range.separator + formatDate(s.range.second.date)}`;
-    } else if (s.range.useRange &&
+    } if (s.range.useRange &&
       s.range.first && s.range.first.date) {
       return s.placeholder ?
         `${formatDate(s.range.first.date) + s.range.separator + this.pattern}` :

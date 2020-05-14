@@ -7,7 +7,7 @@ import { modalManager } from './modal.manager';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
-import { Locale } from '../../../src/components/locale/locale';
+import { Locale } from '../locale/locale';
 
 // jQuery components
 import '../button/button.jquery';
@@ -103,6 +103,19 @@ function Modal(element, settings) {
 
 // Actual Plugin Code
 Modal.prototype = {
+
+  /**
+   * @private
+   */
+  get aboutAPI() {
+    let api;
+    if (this.trigger && this.trigger.length) {
+      api = this.trigger.data('about');
+    } else if (this.mainContent && this.mainContent.length && this.mainContent.is('body')) {
+      api = this.mainContent.data('about');
+    }
+    return api;
+  },
 
   /**
    * @private
@@ -1410,6 +1423,9 @@ Modal.prototype = {
       // Properly teardown contexual action panels
       if (self.isCAP && self.capAPI) {
         self.capAPI.destroy();
+      }
+      if (self.aboutAPI) {
+        self.aboutAPI.destroy(true);
       }
 
       // If a buttonset exists, remove events and destroy completely.

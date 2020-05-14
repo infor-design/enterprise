@@ -31,7 +31,7 @@ describe('Tabs header click example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'header-tabs-init')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'header-tabs-init')).toEqual(0);
     });
   }
 

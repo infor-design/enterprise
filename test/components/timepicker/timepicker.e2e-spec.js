@@ -26,7 +26,7 @@ describe('Timepicker example-index tests', () => {
       await element(by.css('.timepicker + .icon')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(timepickerSection, 'timepicker-open')).toEqual(0);
     });
   }
 

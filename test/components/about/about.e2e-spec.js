@@ -31,9 +31,32 @@ describe('About index tests', () => {
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'about-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(searchfieldSection, 'about-open')).toEqual(0);
     });
   }
+
+  it('should destroy and reinvoke properly', async () => {
+    // Open the About dialog
+    await element(by.id('about-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    expect(await element(by.id('about-modal')).isDisplayed()).toBeTruthy();
+
+    // Press the ESCAPE key to close the About Dialog (via modal manager)
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    expect(await element(by.id('about-modal')).isDisplayed()).toBeFalsy();
+
+    // Reopen the About Dialog (creates a new instance)
+    await element(by.id('about-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    expect(await element(by.id('about-modal')).isDisplayed()).toBeTruthy();
+  });
 });
 
 describe('About translation tests', () => {

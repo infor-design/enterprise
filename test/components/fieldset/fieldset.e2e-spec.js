@@ -15,7 +15,7 @@ describe('Fieldset Tests', () => {
 
       await utils.checkForErrors();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'fieldset-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'fieldset-index')).toEqual(0);
     });
 
     it('Should not visual regress on short layouts', async () => {
@@ -25,7 +25,7 @@ describe('Fieldset Tests', () => {
 
       await utils.checkForErrors();
 
-      expect(await browser.protractorImageComparison.checkElement(containerEl, 'fieldset-short-layout')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'fieldset-short-layout')).toEqual(0);
     });
   }
 });
