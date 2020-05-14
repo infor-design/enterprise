@@ -1,11 +1,126 @@
 import { colorUtils } from '../../utils/color';
 
 function personalizeStyles(colors) {
+  const baseColorObj = colorUtils.hexToRgb(colors.base);
+  const hyperlinkColorObj = colorUtils.hexToRgb(colors.hyperlinkText);
+
   return `
 
-.is-personalizable button svg.ripple-effect,
-button.is-personalizable svg.ripple-effect {
+.is-personalizable ::selection {
+  background: ${colors.selection} !important
+}
+
+.is-personalizable .btn-primary,
+.btn-primary.is-personalizable {
   background-color: ${colors.base} !important;
+  border-color: ${colors.base} !important;
+}
+
+.is-personalizable .btn-primary:disabled,
+.btn-primary.is-personalizable:disabled {
+  background-color: ${colors.baseDisabled} !important;
+  border-color: ${colors.baseDisabled} !important;
+}
+
+.is-personalizable .btn-link:not(:disabled),
+.btn-link.is-personalizable:not(:disabled) {
+  color: ${colors.light} !important;
+}
+
+.is-personalizable .btn-link:not(:disabled) .icon,
+.btn-link.is-personalizable:not(:disabled) .icon {
+  color: ${colors.light} !important;
+}
+
+.is-personalizable button.is-pressed,
+button.is-personalizable.is-pressed {
+  color: ${colors.base};
+}
+
+.is-personalizable button.is-pressed .icon,
+button.is-personalizable.is-pressed .icon {
+  color: ${colors.base};
+}
+
+.is-personalizable .btn-primary:hover:not(:disabled),
+.btn-primary.is-personalizable:hover:not(:disabled) {
+  background-color: ${colors.darker} !important;
+  border-color: ${colors.darker} !important;
+}
+
+.is-personalizable .btn-primary:hover:not(:disabled),
+.btn-primary.is-personalizable:hover:not(:disabled) {
+  background-color: ${colors.darker} !important;
+  border-color: ${colors.darker} !important;
+}
+
+.is-personalizable button:focus:not(.hide-focus),
+button.is-personalizable button:focus:not(.hide-focus),
+.is-personalizable a.btn:focus:not(.hide-focus),
+a.btn.is-personalizable:focus:not(.hide-focus),
+.is-personalizable a.btn-menu:focus:not(.hide-focus),
+a.btn-menu.is-personalizable:focus:not(.hide-focus),
+.is-personalizable a.btn-icon:focus:not(.hide-focus),
+a.btn-icon.is-personalizable:focus:not(.hide-focus),
+.is-personalizable a.btn-tertiary:focus:not(.hide-focus),
+a.btn-tertiary.is-personalizable:focus:not(.hide-focus),
+.is-personalizable a.btn-close:focus:not(.hide-focus),
+a.btn-close.is-personalizable:focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent,
+    0 0 0 1px ${colors.base},
+    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
+}
+
+.is-personalizable .btn-primary:focus:not(.hide-focus),
+.btn-primary.is-personalizable button:focus:not(.hide-focus),
+.is-personalizable .btn-secondary:focus:not(.hide-focus),
+.btn-secondary.is-personalizable button:focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px ${colors.theme.bg},
+    0 0 0 3px ${colors.base},
+    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
+}
+
+.is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
+.btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open,
+.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open,
+.btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open {
+  color: ${colors.base};
+}
+
+.is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon,
+.btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon,
+.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
+.btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon {
+  color: ${colors.base};
+}
+
+.is-personalizable .hyperlink,
+.hyperlink.is-personalizable {
+  color: ${colors.hyperlinkText}
+}
+.is-personalizable .hyperlink:hover,
+.hyperlink.is-personalizable:hover {
+  color: ${colors.hyperlinkTextHover};
+}
+.is-personalizable .hyperlink:focus:not(.hide-focus),
+.hyperlink.is-personalizable:focus:not(.hide-focus) {
+  border-color: ${colors.hyperlinkText};
+  box-shadow: 0 0 4px 3px rgba(${hyperlinkColorObj.r}, ${hyperlinkColorObj.g}, ${hyperlinkColorObj.b}, 0.3);
+}
+
+.is-personalizable button svg.ripple-effect,
+button.is-personalizable svg.ripple-effect,
+.is-personalizable a svg.ripple-effect,
+a.is-personalizable svg.ripple-effect {
+  background-color: ${colors.base} !important;
+}
+
+.is-personalizable .btn-primary svg.ripple-effect,
+.btn-primary.is-personalizable svg.ripple-effect,
+.is-personalizable .btn-secondary svg.ripple-effect,
+.btn-secondary.is-personalizable svg.ripple-effect {
+  background-color: ${colors.contrast} !important;
+  border-color: ${colors.contrast} !important;
 }
 
 .tab-container.module-tabs.is-personalizable {
@@ -23,6 +138,15 @@ button.is-personalizable svg.ripple-effect {
 
 .module-tabs.is-personalizable .tab.is-selected {
   background-color: ${colors.base} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
+  background-color: ${colors.base} !important;
+}
+
+.tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible {
+  border-color: ${colors.base} !important;
+  box-shadow: 0 0 4px 3px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
 .accordion.panel .accordion-header.is-selected {
@@ -194,12 +318,12 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.dark} , ${colorUtils.hexToRgba(colors.dark, 0)}) !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.dark, 0)}, ${colors.dark}) !important;
 }
 
 .hero-widget.is-personalizable {
@@ -260,9 +384,9 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 }
 
 .application-menu.is-personalizable .btn-icon:focus:not(.hide-focus) {
-box-shadow: 0 0 0 2px transparent,
-  0 0 0 1px ${colors.lighter},
-  0 0 2px 1px ${colors.lighter};
+  box-shadow: 0 0 0 2px transparent,
+    0 0 0 1px ${colors.lighter},
+    0 0 2px 1px ${colors.lighter};
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected {

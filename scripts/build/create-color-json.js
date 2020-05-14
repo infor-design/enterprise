@@ -46,7 +46,7 @@ async function cleanFiles() {
  */
 function createNewCustomObj(obj) {
   const newObj = {};
-  if (obj.hasOwnProperty('primary')) { //eslint-disable-line
+  if (obj.hasOwnProperty('primary') && obj.primary.hasOwnProperty('base')) { //eslint-disable-line
     newObj.primary = {};
     newObj.primary.name = obj.primary.base.name;
     newObj.primary.value = obj.primary.base.value;
@@ -85,11 +85,17 @@ const createJSONfile = filePath => new Promise((resolve) => {
   const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
   const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
 
+  // Get properties for individual components
+  const themeBodyObj = createNewCustomObj(themeObj.body.color);
+
   const colorsOnlyObj = {
     color: {
       palette: themeColorPaletteObj,
       status: themeColorStatusObj,
-      brand: themeColorBrandObj
+      brand: themeColorBrandObj,
+      components: {
+        body: themeBodyObj
+      }
     }
   };
   const fileName = `${path.basename(filePath, '.json')}-colors.json`;

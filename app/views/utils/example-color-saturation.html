@@ -1,0 +1,61 @@
+<style id="test-style">
+  .color-display-square {
+    border: 1px solid;
+    display: block;
+    content: ' ';
+    margin: 0 auto;
+    max-height: 256px;
+    max-width: 256px;
+    min-height: 128px;
+  }
+</style>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="color-display-square"></div>
+  </div>
+  <div class="six columns">
+    <div class="field">
+      <label for="hex-value">Hexidecimal Color Value</label>
+      <input id="hex-value" class="colorpicker" type="text" value="#880E0E" style="max-width: 200px;"/>
+    </div>
+    <div class="field">
+      <label for="luminosity">Percentage Luminosity</label>
+      <input id="luminosity" name="luminosity" value="0" min="-100" max="100" class="slider" type="range" data-options="{'persistTooltip': false, tooltipContent: ['']}"/>
+    </div>
+    <div class="field">
+      <label for="desaturation">Percentage Desaturation</label>
+      <input id="desaturation" name="desaturation" value="100" min="0" max="100" class="slider" type="range" data-options="{'persistTooltip': false, tooltipContent: ['']}"/>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  var hexInput = $('#hex-value');
+  var lumInput = $('#luminosity');
+  var satInput = $('#desaturation');
+  var displaySquare = $('.color-display-square');
+
+  function setColorOnSquare() {
+    var hexVal = hexInput.val();
+    var lumVal = lumInput.val() / 100; // util expects a value between -1 and 1
+    var satVal = satInput.val() / 100; // util expects a value between 0 and 1
+
+    var newHexVal = hexVal;
+    newHexVal = Soho.colors.getLuminousColorShade(newHexVal, lumVal);
+    newHexVal = Soho.colors.getDesaturatedColor(newHexVal, satVal);
+
+    displaySquare.css({
+      'background-color': newHexVal
+    });
+  }
+
+  hexInput.add(lumInput).add(satInput).on('change.test', function () {
+    setColorOnSquare();
+  });
+
+  // When the page loads, set the value and trigger change to have it update in the field.
+  $(function() {
+    $('#hex-value').val('#880E0E').trigger('change');
+  });
+</script>

@@ -176,6 +176,15 @@ Personalize.prototype = {
       defaultColors.subtext = '292929';
     }
 
+    // Pass in a standard set of theme-specific colors.
+    // These colors aren't personalized, but they may need to be referenced
+    // within the personalization colors CSS generator.
+    const themeColors = theme.themeColors();
+    colors.theme = {};
+    colors.theme.bg = themeColors.components.body.primary.background.value;
+    colors.theme.altbg = themeColors.components.body.secondary.background.value;
+    colors.theme.text = themeColors.components.body.primary.font.value;
+
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
     colors.header = colorUtils.validateHex(colors.header || defaultColors.header);
@@ -210,6 +219,23 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+
+    let lightDisabledColor = colorUtils.getLuminousColorShade(colors.light, 0.6);
+    lightDisabledColor = colorUtils.getDesaturatedColor(lightDisabledColor, 0.5);
+    colors.lightestDesaturated = lightDisabledColor;
+
+    let darkDisabledColor = colorUtils.getLuminousColorShade(colors.darkest, -0.8);
+    darkDisabledColor = colorUtils.getDesaturatedColor(darkDisabledColor, 0.5);
+    colors.darkestDesaturated = darkDisabledColor;
+
+    // Desaturated colors (disabled)
+    const hasLightTextColor = colorUtils.getContrastColor(colors.text) === 'white';
+    colors.baseDisabled = hasLightTextColor ? darkDisabledColor : lightDisabledColor;
+
+    // Hyperlink/Text Selection
+    colors.hyperlinkText = hasLightTextColor ? colors.dark : colors.lighter;
+    colors.hyperlinkTextHover = hasLightTextColor ? colors.darker : colors.lightest;
+    colors.selection = hasLightTextColor ? colors.darker : colors.lightest;
 
     const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';

@@ -1,5 +1,12 @@
 const colorUtils = {};
 
+// Safely converts a single RGBA color component (R, G, B, or A) to
+// its corresponding two-digit hexidecimal value.
+function componentToHex(c) {
+  const hex = Number(c).toString(16);
+  return hex.length === 1 ? `0${hex}` : hex;
+}
+
 /**
  * Convert the provided hex to an RGBA with an opacity.
  * @private
@@ -21,6 +28,31 @@ colorUtils.hexToRgba = function hexToRgba(hex, opacity) {
     return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity.toString()})`;
   }
   return '';
+};
+
+/**
+ * Converts a hex color to an object containing separate R, G, and B values.
+ * @param {string} hex string representing a hexidecimal color
+ * @returns {object|null} containing separate "r", "g", and "b" values.
+ */
+colorUtils.hexToRgb = function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+};
+
+/**
+ * Takes separate R, G, and B values, and converts them to a hexidecimal string
+ * @param {number|string} r a number between 0-255 representing the amount of red
+ * @param {number|string} g a number between 0-255 representing the amount of green
+ * @param {number|string} b a number between 0-255 representing the amount of blue
+ * @returns {string} containing the matching hexidecimal color value
+ */
+colorUtils.rgbToHex = function rgbToHex(r, g, b) {
+  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
 };
 
 /**
@@ -82,6 +114,27 @@ colorUtils.getContrastColor = function getContrastColor(hex, light, dark) {
   const b = parse(4);
   const diff = ((r * 299) + (g * 587) + (b * 114)) / 1000;
   return (diff >= 128) ? (dark || 'black') : (light || 'white');
+};
+
+/**
+ * Returns a less saturated shade of a provided color.
+ * @param {string} hex the starting hexadecimal color
+ * @param {number} [sat=1] a number representing a percentage change (between 0 and 1) of saturation.
+ * @returns {string} the modified hexidecimal color
+ */
+colorUtils.getDesaturatedColor = function getDesaturatedColor(hex, sat = 1) {
+  hex = hex ? hex.replace('#', '') : '';
+  const col = colorUtils.hexToRgb(hex);
+
+  // Grayscale constants
+  // https://en.m.wikipedia.org/wiki/Grayscale#Luma_coding_in_video_systems
+  const gray = col.r * 0.3086 + col.g * 0.6094 + col.b * 0.0820;
+
+  col.r = Math.round(col.r * sat + gray * (1 - sat));
+  col.g = Math.round(col.g * sat + gray * (1 - sat));
+  col.b = Math.round(col.b * sat + gray * (1 - sat));
+
+  return colorUtils.rgbToHex(col.r, col.g, col.b);
 };
 
 export { colorUtils }; //eslint-disable-line
