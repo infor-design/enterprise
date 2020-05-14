@@ -4,9 +4,9 @@ description: null
 demo:
   embedded:
   - name: Form Example
-    slug: example-index?colors=7025B6
+    slug: example-index
   - name: Use Personalize Classes Example
-    slug: example-classes?colors=7025B6
+    slug: example-classes
 ---
 
 ## Themes
