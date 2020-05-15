@@ -712,7 +712,6 @@ utils.extend = function extend() {
 
   // Merge the object into the extended object
   const merge = function (obj) {
-    const emptyObj = Array.isArray(obj) ? [] : {};
     for (let prop in obj) { //eslint-disable-line
       if (obj.hasOwnProperty(prop)) { //eslint-disable-line
         // If property is an object, merge properties - in several ways
@@ -720,8 +719,10 @@ utils.extend = function extend() {
           // Needed for now until jQuery is fully dropped
           extended[prop] = $(obj[prop]);
         } else if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-          const isPlain = utils.isPlainObject(obj[prop]);
-          extended[prop] = isPlain ? extend(true, emptyObj, extended[prop], obj[prop]) : obj[prop];
+          const newObj = obj[prop];
+          const isPlain = utils.isPlainObject(newObj);
+          const emptyObj = Array.isArray(newObj) ? [] : {};
+          extended[prop] = isPlain ? extend(true, emptyObj, extended[prop], newObj) : newObj;
         } else {
           if (Array.isArray(obj[prop])) { //eslint-disable-line
             extended[prop] = utils.mergeByPosition(extended[prop], obj[prop]);
@@ -1203,7 +1204,7 @@ utils.getScrollbarWidth = function () {
  * @returns {array|object} The copied array or object.
  */
 utils.deepCopy = function (arrayOrObject) {
-  return utils.extend(true, {}, arrayOrObject);
+  return utils.extend(true, Array.isArray(arrayOrObject) ? [] : {}, arrayOrObject);
 };
 
 /**
