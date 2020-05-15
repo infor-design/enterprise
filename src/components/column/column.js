@@ -134,13 +134,10 @@ Column.prototype = {
     const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
     const useHeight = this.settings.fitHeight ?
       parentAvailableHeight : parseInt(parent.height(), 10);
-    let width = parent.width() - margin.left - margin.right - 10;
+    const width = parent.width() - margin.left - margin.right - 10;
     const height = useHeight - margin.top - margin.bottom -
         (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
-    if (width < 265) {
-      width += 25;
-    }
     let yMinTarget;
     let yMaxTarget;
     let series;
