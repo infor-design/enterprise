@@ -1930,6 +1930,7 @@ describe('Datagrid editor dropdown source tests', () => {
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should datagrid exists', async () => {
@@ -3392,6 +3393,7 @@ describe('Datagrid save user settings', () => {
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(4)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   afterEach(async () => {
@@ -4145,6 +4147,7 @@ describe('Datagrid hide pager on one page tests', () => {
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(4)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should not have errors', async () => {
