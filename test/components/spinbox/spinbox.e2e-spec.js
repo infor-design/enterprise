@@ -53,3 +53,20 @@ describe('Spinbox example-index tests', () => {
     expect(await spinboxEl.getAttribute('value')).toEqual('1');
   });
 });
+
+describe('Spinbox Range Tests tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/spinbox/example-range-limits');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('limited-spinbox-2'))), config.waitsFor);
+  });
+
+  it('Should be able to type in range 100 to 200', async () => {
+    await element(by.id('limited-spinbox-2')).clear();
+    await element(by.id('limited-spinbox-2')).sendKeys('111');
+    await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('111');
+  });
+});
