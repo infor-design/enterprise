@@ -153,8 +153,8 @@ CalendarToolbar.prototype = {
 
     // Hide focus on buttons
     this.element.find('button, a').hideFocus();
-    this.setInternalDate(this.isIslamic ? [this.settings.year, this.settings.month, 1]
-      : new Date(this.settings.year, this.settings.month, 1));
+    this.setInternalDate(this.isIslamic ? [this.settings.year, this.settings.month, 1] :
+      new Date(this.settings.year, this.settings.month, 1));
     return this;
   },
 
