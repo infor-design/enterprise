@@ -2,6 +2,10 @@
 
 ## v4.29.0
 
+### v4.29.0 Announcements
+
+- `[General]` Heads Up that effective October 31, 2020 we will no longer support IE 11. Until that date we will test IE 11 but only critical issues will be fixed. See the linked issue for more details. ([#3756](https://github.com/infor-design/enterprise/issues/3756))
+
 ### v4.29.0 Features
 
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
