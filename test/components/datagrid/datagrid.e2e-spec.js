@@ -2150,6 +2150,23 @@ describe('Datagrid Empty Message Tests After Load', () => {
   }
 });
 
+describe('Datagrid Empty Message Button', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-empty-message-button?layout=nofrills');
+
+    const button = await element(by.id('reload'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(button), config.waitsFor);
+  });
+
+  it('Should be able to click the relaod button', async () => {
+    await element(by.id('reload')).click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.toast .toast-title')).getText()).toEqual('Retry button clicked');
+  });
+});
+
 describe('Datagrid Empty Message with two rows', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-empty-message-two-rows?layout=nofrills');
