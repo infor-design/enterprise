@@ -297,3 +297,27 @@ describe('MonthView specific language tests', () => {
     expect(await element(by.css('.monthview-table tr th:nth-child(7)')).getText()).toEqual('So');
   });
 });
+
+describe('MonthView RTL tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/monthview/test-specific-month.html?locale=ar-SA&layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to go to next and prev month', async () => {
+    await element(by.css('.monthview-header .prev')).click();
+
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('ذو الحجة 1439');
+    await element(by.css('.monthview-header .next')).click();
+    await element(by.css('.monthview-header .next')).click();
+
+    expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('صفر 1440');
+  });
+});

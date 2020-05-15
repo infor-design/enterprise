@@ -250,6 +250,7 @@
 
 - `[Datagrid]` Added support for expandable row to expand across all frozen columns, and fixed span layout issues on the right side frozen columns. ([#2867](https://github.com/infor-design/enterprise/issues/2867))
 - `[Datagrid]` Added a new `resizeMode` option that allows you to pick between `flex` and `fit`. `flex` will resize columns independently shifting other columns to fit the table layout if needed. `fit` will resize using the neighbor's column width. This is possible more useful when you have less columns. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
+- `[Calendar]` Made the monthview, weekview and calendar work in RTL mode and added official support for UmAlQura calendar. ([#2788](https://github.com/infor-design/enterprise/issues/2788))
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
 - `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
 - `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise/issues/3296))
@@ -258,7 +259,8 @@
 
 - `[Application Menu]` Fixed bugs with filtering where it was not possible to have the filter match text within content areas, as well as general expand/collapse bugs with filtering. ([#3131](https://github.com/infor-design/enterprise/issues/3131))
 - `[Application Menu]` Fixed overlap button when label is too long, and aligned dropdown icon in application menu uplift theme. ([#3133](https://github.com/infor-design/enterprise/issues/3133))
-- `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
+[Contextual Action Panel] - Fixed shade colors of text and icon buttons in uplift theme high contrast. (#3394)
+- `[Accordion]` - Fixed an issue with a missing border on the last element in certain states. ([#3885](https://github.com/infor-design/enterprise/issues/3885))
 - `[Calendar]` Fixed issue where on month view in events info `Date` and `Duration` fields were not working with some events and `Duration` field. Now `Duration` field support `Days, Hours and Minutes` text. ([#2777](https://github.com/infor-design/enterprise/issues/2777))
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
 - `[Calendar]` Fixed a calendar event where the start date today is not displaying as upcoming event in different timezone. ([#2776](https://github.com/infor-design/enterprise/issues/2776))
