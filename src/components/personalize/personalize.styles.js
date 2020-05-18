@@ -737,6 +737,7 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
     0 0 2px 1px ${colors.subtext};
 }
 
+/*
 .tooltip.is-personalizable {
   background-color: ${colors.darkest};
   border-color: ${colors.darkest};
@@ -762,7 +763,7 @@ html[class*="theme-uplift-"] .application-menu.is-personalizable .accordion.pane
 .tooltip.is-personalizable.left .arrow::after {
   border-left-color: ${colors.darkest};
 }
-
+*/
     `;
 }
 
