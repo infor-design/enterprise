@@ -4,6 +4,8 @@
 
 ### v4.29.0 Features
 
+- `[Lookup]` Added x icon button so it has the ability to clear the field. ([#740](https://github.com/infor-design/enterprise/issues/740))
+- `[Lookuo]` Added x icon and apply button inside of modal so it has a two options to clear the field. ([#2507](https://github.com/infor-design/enterprise/issues/2507))
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
 - `[Slider]` Added the ability to set position of the tooltip. ([#3746](https://github.com/infor-design/enterprise/issues/3746))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))

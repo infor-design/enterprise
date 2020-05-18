@@ -75,6 +75,28 @@
   }
 }
 
+.lookup-wrapper {
+  .searchfield-wrapper {
+    > .icon.close {
+      right: 30px;
+    }
+
+    &.non-collapsible {
+      svg.icon {
+        &:not(.close) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .has-close-icon-button {
+    .lookup {
+      padding-right: 50px;
+    }
+  }
+}
+
 .lookup-modal {
   .modal-content .modal-body-wrapper {
     margin-bottom: 20px;

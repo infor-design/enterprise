@@ -11,6 +11,15 @@
   }
 }
 
+.lookup-wrapper {
+  .searchfield-wrapper {
+    > .icon.close {
+      right: 35px;
+      top: 12px;
+    }
+  }
+}
+
 html.is-firefox {
   .lookup-wrapper {
     .trigger {
