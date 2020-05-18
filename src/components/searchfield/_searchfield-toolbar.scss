@@ -234,7 +234,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &:not(.non-collapsible) {
       .searchfield {
-        height: 35px; // Unable to use token here. need to use the soho height
+        height: 34px; // Unable to use token here. need to use the soho height
       }
     }
 
@@ -497,8 +497,16 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .searchfield {
       background-color: rgba($searchfield-header-bg-color, 0);
-      border-color: rgba($searchfield-header-border-color, 0);
+      border-bottom-color: rgba($searchfield-header-border-color, 0);
       color: $searchfield-header-text-color;
+    }
+
+    &.non-collapsible {
+      .searchfield {
+        background-color: rgba($searchfield-header-bg-color, 0.3);
+        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        color: $searchfield-header-text-color;
+      }
     }
 
     .go-button {
@@ -562,6 +570,13 @@ $toolbarsearchfield-category-empty-width: 51px;
             top: 0;
           }
         }
+      }
+    }
+
+    .searchfield-category-button {
+      &.btn {
+        background-color: rgba($searchfield-header-bg-color, 0.5);
+        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
       }
     }
 

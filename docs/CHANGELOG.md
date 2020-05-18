@@ -11,16 +11,20 @@
 
 ### v4.29.0 Fixes
 
+- `[About]` Fixed a bug where About dialogs disappeared when being closed by the Modal Manager API. ([#3898](https://github.com/infor-design/enterprise/issues/3898))
 - `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.1 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[Application Menu]` - Made it possible for App Menu Toolbars to dismiss the menu when the `dismissOnClickMobile` setting is true. ([#2831](https://github.com/infor-design/enterprise/issues/2831))
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
 - `[Datagrid]` Fixed an issue where blank tooltip was showing when use Alert Formatter and no text. ([#2852](https://github.com/infor-design/enterprise/issues/2852))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for icons and badges. ([#3855](https://github.com/infor-design/enterprise/issues/3855))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for hyperlink. ([#3731](https://github.com/infor-design/enterprise/issues/3731))
+- `[Datagrid]` Fixed an issue where keyword search results were not showing for paging, if searched from other than 1st page it came blank table. ([#3629](https://github.com/infor-design/enterprise/issues/3629))
 - `[Datagrid]` Fixed an issue where contents filtertype was not working on example page. ([#2887](https://github.com/infor-design/enterprise/issues/2887))
 - `[Datagrid]` Fixed a bug in some themes, where the multi line cell would not be lined up correctly with a single line of data. ([#2703](https://github.com/infor-design/enterprise/issues/2703))
 - `[Datagrid]` Fixed visibility of sort icons when toggling and when the column is in active. ([#3692](https://github.com/infor-design/enterprise/issues/3692))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
 - `[Dropdown]` Fixed tooltip content gets cut off inside of modal. ([#3106](https://github.com/infor-design/enterprise/issues/3106))
+- `[DemoApp]` Fixed an issue with some pages in the design site where the did not have a height. ([#878](https://github.com/infor-design/website/issues/878))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
 - `[Form]` Fix broken links in the form readme file. ([#818](https://github.com/infor-design/website/issues/818))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
@@ -30,10 +34,13 @@
 - `[Pie]` Fixed an issue where rounds decimal places for percent values were not working. ([#3599](https://github.com/infor-design/enterprise/issues/3599))
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
+- `[Popupmenu]` Fixed an issue the shortcut text leaves gap when no icons are present. ([#3849](https://github.com/infor-design/enterprise/issues/3849))
 - `[Tabs]` Fixed info and alert icons alignment on tabs and inside of modal. ([#2695](https://github.com/infor-design/enterprise/issues/2695))
+- `[Tabs]` Fixes an issue where the search bar background color was going to transparent on smaller breakpoints. ([#3871](https://github.com/infor-design/enterprise/issues/3871))
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
+- `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 
 ## v4.28.0
 
