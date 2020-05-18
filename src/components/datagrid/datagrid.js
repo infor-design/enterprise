@@ -4699,8 +4699,8 @@ Datagrid.prototype = {
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout(() => {
-        const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
-        const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
+        const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
@@ -4719,7 +4719,7 @@ Datagrid.prototype = {
       setTimeout(() => {
         self.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
-        if (utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
+        if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
           self.removeTooltipData(elem);
         }
       }, delay);
@@ -11048,11 +11048,11 @@ Datagrid.prototype = {
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
-      const isRowstatus = utils.hasClass(elem, 'rowstatus-cell');
+      const isRowstatus = DOM.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
       const isTh = elem.tagName.toLowerCase() === 'th';
-      const isHeaderColumn = utils.hasClass(elem, 'datagrid-column-wrapper');
-      const isHeaderFilter = utils.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+      const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
+      const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
       const cell = elem.getAttribute('aria-colindex') - 1;
       const col = this.columnSettings(cell);
       let title;
@@ -11067,7 +11067,7 @@ Datagrid.prototype = {
 
       // Cache rowStatus cell
       if (isRowstatus || isSvg) {
-        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+        const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error');
         tooltip.placement = 'right';
@@ -11130,7 +11130,7 @@ Datagrid.prototype = {
       }
 
       if (tooltip.content !== '') {
-        const isEllipsis = utils.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
+        const isEllipsis = DOM.hasClass((isHeaderColumn ? elem.parentNode : elem), 'text-ellipsis');
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
         let extraWidth = isEllipsis ? 8 : 0;
         icons.forEach((icon) => {
@@ -11154,7 +11154,7 @@ Datagrid.prototype = {
       }
 
       if (typeof col.tooltip === 'function') {
-        const rowNode = this.closest(elem, el => utils.hasClass(el, 'datagrid-row'));
+        const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
         const rowIdx = rowNode.getAttribute('data-index');
         const rowData = this.settings.dataset[rowIdx];
         const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);

@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 
@@ -477,7 +478,7 @@ Tree.prototype = {
     // Don't do selection for toggle type only
     if (this.isMultiselect && e) {
       if (e.type === 'click' || e.type === 'touch') {
-        if (e.target.classList.contains('icon') &&
+        if (DOM.hasClass(e.target, 'icon') &&
           node[0].parentNode.classList.contains('folder')) {
           return;
         }
@@ -881,7 +882,7 @@ Tree.prototype = {
       const parent = this.parentNode;
       if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
-          if (e.target.classList.contains('icon') && parent.classList.contains('folder')) {
+          if (DOM.hasClass(e.target, 'icon') && parent.classList.contains('folder')) {
             self.toggleNode(target, e);
           } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
             self.unSelectedNode(target, true);
