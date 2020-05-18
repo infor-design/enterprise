@@ -223,7 +223,7 @@ Lookup.prototype = {
   setTooltip() {
     setTimeout(() => {
       this.element.tooltip({
-        content: this.element.val()
+        content: this.element[0].scrollWidth < this.element[0].offsetWidth ? '' : this.element.val()
       }).on(`blur.${COMPONENT_NAME}`, () => {
         const tooltipApi = this.element.data('tooltip');
         if (tooltipApi && this.element.val() === '') {
