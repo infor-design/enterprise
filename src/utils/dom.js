@@ -338,6 +338,18 @@ DOM.getPreviousSibling = function getPreviousSibling(el, selector) {
 };
 
 /**
+ * Get the sibling elements.
+ * @param {HTMLElement/SVGElement} el The element to get siblings
+ * @returns {array} Array of sibling elements
+ */
+DOM.getSiblings = function getSiblings(el) {
+  if (el instanceof $ && el.length) {
+    el = el[0];
+  }
+  return [].slice.call(el.parentNode.children).filter(child => child !== el);
+};
+
+/**
  * Returns a simple CSS selector string that represents an existing page element.
  * Generally used in reporting (error/console messages).
  * @param {HTMLElement|SVGElement} el the element to report on

@@ -1242,4 +1242,24 @@ utils.isInViewport = function isInViewport(element) {
   );
 };
 
+/**
+ * Get siblings height for given element.
+ * @privateel
+ * @param {object} el The element to get siblings height.
+ * @returns {number} The calculated height.
+ */
+utils.getSiblingsHeight = function getSiblingsHeight(el) {
+  const siblings = DOM.getSiblings(el);
+  return siblings.map(sibling => sibling.offsetHeight).reduce((a, h) => a + h, 0);
+};
+/**
+ * Get parent available height for given element.
+ * @privateel
+ * @param {object} el The element to get parent available height.
+ * @returns {number} The calculated height.
+ */
+utils.getParentAvailableHeight = function getParentAvailableHeight(el) {
+  return el.parentNode.offsetHeight - utils.getSiblingsHeight(el);
+};
+
 export { utils, math };

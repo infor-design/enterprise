@@ -50,6 +50,7 @@ const COMPONENT_NAME = 'line';
  * the size on hover and stroke or even add a custom class.
  * Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
  * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+ * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
@@ -67,6 +68,7 @@ const LINE_DEFAULTS = {
   hideDots: false,
   animate: true,
   redrawOnResize: true,
+  fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
@@ -230,8 +232,11 @@ Line.prototype = {
       bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : xRotateMarginBot + 35),
       left: (isAxisLabels.left ? 75 : 65)
     };
+    const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
+    const useHeight = s.fitHeight ? parentAvailableHeight : parseInt(parent.height(), 10);
     const width = parent.width() - margin.left - margin.right;
-    let height = parent.height() - margin.top - margin.bottom - 30; // legend
+    let height = useHeight - margin.top - margin.bottom - 30; // legend
+    // let height = parent.height() - margin.top - margin.bottom - 30; // legend
 
     if (isCardAction) {
       height -= 40;
