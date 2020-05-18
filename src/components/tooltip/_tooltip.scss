@@ -481,6 +481,10 @@ html[dir='rtl'] {
     }
   }
 
+  .tooltip-title.filled {
+    padding: 15px 15px 7px 0;
+  }
+
   .popover-content,
   .popover-content-area {
     margin-left: inherit;

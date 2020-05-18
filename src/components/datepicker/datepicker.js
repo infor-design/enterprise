@@ -268,7 +268,6 @@ DatePicker.prototype = {
     );
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
-    this.conversions = this.currentCalendar.conversions;
     this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
     this.setFormat();
     this.mask();
@@ -667,15 +666,17 @@ DatePicker.prototype = {
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
-      this.settings.month = this.settings.activeDate.getMonth();
-      this.settings.year = this.settings.activeDate.getFullYear();
-
       if (this.isIslamic) {
         this.settings.activeDateIslamic = Locale.gregorianToUmalqura(this.settings.activeDate);
+        this.settings.year = this.settings.activeDateIslamic[0];
+        this.settings.month = this.settings.activeDateIslamic[1];
+      } else {
+        this.settings.year = this.settings.activeDate.getFullYear();
+        this.settings.month = this.settings.activeDate.getMonth();
       }
     } else {
       this.settings.activeDate = this.currentDate || this.todayDate;
-      this.settings.activeDateIslamic = this.currentIslamicDate || this.todayDateIslamic;
+      this.settings.activeDateIslamic = this.currentDateIslamic || this.todayDateIslamic;
     }
 
     this.settings.isPopup = true;
@@ -832,7 +833,7 @@ DatePicker.prototype = {
     this.popup.attr('role', 'dialog');
     this.originalDate = this.element.val();
     this.calendarAPI.currentDate = this.currentDate;
-    this.calendarAPI.currentIslamicDate = this.currentIslamicDate;
+    this.calendarAPI.currentDateIslamic = this.currentDateIslamic;
     this.calendarAPI.validatePrevNext();
 
     // Calendar Day Events
@@ -1220,7 +1221,7 @@ DatePicker.prototype = {
     this.currentDate = date;
 
     if (date instanceof Array) {
-      this.currentIslamicDate = date;
+      this.currentDateIslamic = date;
       this.currentDate = Locale.umalquraToGregorian(
         date[0],
         date[1],
@@ -1601,7 +1602,6 @@ DatePicker.prototype = {
       this.currentYear = this.currentDateIslamic[0];
       this.currentMonth = this.currentDateIslamic[1];
       this.currentDay = this.currentDateIslamic[2];
-      this.currentIslamicDate = this.currentDateIslamic;
     } else {
       this.currentDate = this.currentDate || new Date();
       this.currentMonth = this.currentDate.getMonth();
@@ -1628,12 +1628,19 @@ DatePicker.prototype = {
       } else {
         hours = parsedDate?.getHours();
       }
-      if (parsedDate && hours < 12 &&
+      if (!this.isIslamic && parsedDate && hours < 12 &&
         self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
         parsedDate.setHours(hours + 12);
       }
-      if (self.pattern && self.pattern.indexOf('d') === -1) {
+      if (this.isIslamic && parsedDate && hours < 12 &&
+        self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
+        hours += 12;
+      }
+      if (!this.isIslamic && self.pattern && self.pattern.indexOf('d') === -1) {
         parsedDate.setDate(selectedDay);
+      }
+      if (this.isIslamic && self.pattern && self.pattern.indexOf('d') === -1) {
+        parsedDate[2] = selectedDay;
       }
       if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
         self.setValue(parsedDate);

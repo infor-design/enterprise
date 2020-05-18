@@ -11,6 +11,8 @@ sections:
     slug: typography
 - name: Layouts
   pages:
+  - name: Block Grid
+    slug: blockgrid
   - name: Grid
     slug: grid
   - name: Forms
@@ -63,10 +65,14 @@ sections:
     slug: fileupload-advanced
   - name: Header
     slug: header
+  - name: Homepage
+    slug: homepage
   - name: Hyperlinks
     slug: hyperlinks
   - name: Input (Text)
     slug: input
+  - name: Lookup
+    slug: lookup
   - name: List
     slug: listview
   - name: List Builder
@@ -111,6 +117,8 @@ sections:
     slug: tabs-vertical
   - name: Tag
     slug: tag
+  - name: Textarea
+    slug: textarea
   - name: Text Input
     slug: input
   - name: Timeline
@@ -125,6 +133,10 @@ sections:
     slug: toolbarsearchfield
   - name: Tooltip
     slug: tooltip
+  - name: Tree
+    slug: tree
+  - name: Wizard
+    slug: wizard
 - name: Utilities
   pages:
   - name: Arrange
@@ -133,6 +145,8 @@ sections:
     slug: drag
   - name: Locale
     slug: locale
+  - name: List Filter
+  slug: listfilter
   - name: Mask
     slug: mask
   - name: Personalize
@@ -173,6 +187,8 @@ sections:
     slug: bubble
   - name: Bullet
     slug: bullet
+  - name: Calendar
+    slug: calendar
   - name: Column Chart
     slug: column
   - name: Column Chart (Grouped)
@@ -201,8 +217,6 @@ sections:
     slug: completion-chart
 - name: Unclassified
   pages:
-  - name: Block Grid
-    slug: blockgrid
   - name: Context Menu
     slug: contextmenu
   - name: Composite Form
@@ -215,14 +229,8 @@ sections:
     slug: field-options
   - name: Hierarchy (Org Chart)
     slug: hierarchy
-  - name: Homepage
-    slug: homepage
   - name: Images
     slug: images
-  - name: List Filter
-    slug: listfilter
-  - name: Lookup
-    slug: lookup
   - name: Masthead
     slug: masthead
   - name: Message
@@ -233,9 +241,3 @@ sections:
     slug: processindicator
   - name: Tabs-multi
     slug: tabs-multi
-  - name: Textarea
-    slug: textarea
-  - name: Tree
-    slug: tree
-  - name: Wizard
-    slug: wizard

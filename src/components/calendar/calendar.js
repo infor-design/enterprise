@@ -438,11 +438,31 @@ Calendar.prototype = {
     $(this.eventDetailsContainer).accordion();
     if (this.eventDetailsMobileContainer) {
       $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
+      this.translate(this.eventDetailsMobileContainer);
     }
 
     if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
       $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
     }
+
+    this.translate(this.eventDetailsContainer);
+  },
+
+  /**
+   * Translate elements in a DOM object
+   * @private
+   * @param  {object} elem The DOM Element
+   */
+  translate(elem) {
+    $(elem).find('[data-translate="text"]').each((i, item) => {
+      const obj = $(item);
+      obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+        showAsUndefined: false,
+        showBrackets: false,
+        language: this.settings.language,
+        locale: this.settings.locale
+      }));
+    });
   },
 
   /**
@@ -562,6 +582,7 @@ Calendar.prototype = {
       if (filters.indexOf(event.type) > -1) {
         continue;
       }
+
       self.renderEvent(event);
     }
 
@@ -582,19 +603,38 @@ Calendar.prototype = {
 
     // Check for events starting on this day , or only on this day.
     const startDate = Locale.newDateObj(event.starts);
-    const startKey = stringUtils.padDate(
+    const isIslamic = Locale.isIslamic(this.locale.name);
+    let startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
-      startDate.getDate(),
+      startDate.getDate()
     );
+
+    if (isIslamic) {
+      const startDateIslamic = Locale.gregorianToUmalqura(startDate);
+      startKey = stringUtils.padDate(
+        startDateIslamic[0],
+        startDateIslamic[1],
+        startDateIslamic[2]
+      );
+    }
 
     // Check for events extending onto this day
     const endDate = Locale.newDateObj(event.ends);
-    const endKey = stringUtils.padDate(
+    let endKey = stringUtils.padDate(
       endDate.getFullYear(),
       endDate.getMonth(),
       endDate.getDate()
     );
+
+    if (isIslamic) {
+      const endDateIslamic = Locale.gregorianToUmalqura(endDate);
+      endKey = stringUtils.padDate(
+        endDateIslamic[0],
+        endDateIslamic[1],
+        endDateIslamic[2]
+      );
+    }
 
     const days = self.monthView.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
     event.endKey = endKey;
@@ -1018,7 +1058,7 @@ Calendar.prototype = {
    * @returns {date} the currently selected date on the control.
    */
   currentDate() {
-    const ret = this.isIslamic ? this.monthView.currentIslamicDate : this.monthView.currentDate;
+    const ret = this.isIslamic ? this.monthView.currentDateIslamic : this.monthView.currentDate;
     if (!Locale.isValidDate(ret)) {
       return new Date();
     }
@@ -1043,11 +1083,12 @@ Calendar.prototype = {
       );
     }
 
-    if (this.isRTL) {
+    if (Locale.isIslamic(this.locale.name)) {
+      const dateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
-        date[0],
-        date[1],
-        date[2],
+        dateIslamic[0],
+        dateIslamic[1],
+        dateIslamic[2]
       );
     }
 
@@ -1098,6 +1139,15 @@ Calendar.prototype = {
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;
     event.endsHoursLong = `${Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.ends, { date: 'hour', locale: this.locale.name })}`;
+
+    if (Locale.isIslamic(this.locale.name)) {
+      const startsIslamic = Locale.gregorianToUmalqura(new Date(event.starts));
+      const endsIslamic = Locale.gregorianToUmalqura(new Date(event.ends));
+      event.startsLong = Locale.formatDate(startsIslamic, { date: 'long', locale: this.locale.name });
+      event.endsLong = Locale.formatDate(endsIslamic, { date: 'long', locale: this.locale.name });
+      event.startsHoursLong = `${Locale.formatDate(startsIslamic, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(startsIslamic, { date: 'hour', locale: this.locale.name })}`;
+      event.endsHoursLong = `${Locale.formatDate(endsIslamic, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(endsIslamic, { date: 'hour', locale: this.locale.name })}`;
+    }
     event.typeLabel = this.getEventTypeLabel(event.type);
 
     const renderedTmpl = Tmpl.compile(template, { event });
@@ -1306,15 +1356,7 @@ Calendar.prototype = {
         // Init the contents
         elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
         elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
-        elem.find('[data-translate="text"]').each((i, item) => {
-          const obj = $(item);
-          obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
-            showAsUndefined: false,
-            showBrackets: false,
-            language: this.settings.language,
-            locale: this.settings.locale
-          }));
-        });
+        this.translate(elem);
       });
 
     $('#calendar-popup').one('tooltipafterplace.calendar', (e, args) => {

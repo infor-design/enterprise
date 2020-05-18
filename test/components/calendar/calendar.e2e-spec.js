@@ -333,3 +333,30 @@ describe('Calendar WeekView settings tests', () => {
     expect(await element(by.css('.week-view ')).isDisplayed()).toBe(true);
   });
 });
+
+describe('Calendar RTL tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-specific-month.html?locale=ar-SA&layout=nofrills');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
+    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(2);
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to go to next and prev month', async () => {
+    await element(by.css('.monthview-header .prev')).click();
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('ذو الحجة 1439');
+    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(4);
+    await element(by.css('.monthview-header .next')).click();
+    await element(by.css('.monthview-header .next')).click();
+
+    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('صفر 1440');
+    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(21);
+  });
+});

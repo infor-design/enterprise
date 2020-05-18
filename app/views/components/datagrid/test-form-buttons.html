@@ -39,7 +39,7 @@
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', formatter: Formatters.Hyperlink, icon: 'reset'});
-      columns.push({ id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Formatters.Button, click: function (e, args) {debugger; $('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
+      columns.push({ id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Formatters.Button, click: function (e, args) {$('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
       , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
 
       //Init and get the api for the grid

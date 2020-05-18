@@ -540,7 +540,7 @@ Tree.prototype = {
       /**
        * Fires when the node is selected.
        * @memberof Tree
-       * @event unselected
+       * @event selected
        * @type {object}
        * @property {object} event - The jquery event object
        * @property {object} args for node element, item

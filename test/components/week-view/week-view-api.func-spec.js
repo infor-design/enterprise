@@ -87,10 +87,10 @@ describe('WeekView API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ربيع الآخر 1441');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('ساعةطوال اليوم');
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1الأحد');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7السبت');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('4الأحد');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('10السبت');
   });
 
   it('Should move to next week and back', () => {
@@ -128,7 +128,7 @@ describe('WeekView API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 2019');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ربيع الآخر 1441');
 
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line

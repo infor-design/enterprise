@@ -34,7 +34,7 @@ describe('Toast example-index tests', () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.toast'))), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.toast')).count()).toEqual(1);
 
@@ -48,7 +48,7 @@ describe('Toast example-index tests', () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.toast'))), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.toast')).count()).toEqual(1);
 

@@ -113,7 +113,7 @@ WeekView.prototype = {
       this.settings.language,
       this.settings.calendarName
     );
-    this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
     return this;
@@ -201,18 +201,36 @@ WeekView.prototype = {
    */
   renderEvent(event) {
     const startDate = new Date(event.starts);
-    const startKey = stringUtils.padDate(
+    let startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate(),
     );
 
+    if (Locale.isIslamic(this.locale.name)) {
+      const startDateIslamic = Locale.gregorianToUmalqura(startDate);
+      startKey = stringUtils.padDate(
+        startDateIslamic[0],
+        startDateIslamic[1],
+        startDateIslamic[2]
+      );
+    }
+
     const endDate = new Date(event.ends);
-    const endKey = stringUtils.padDate(
+    let endKey = stringUtils.padDate(
       endDate.getFullYear(),
       endDate.getMonth(),
       endDate.getDate()
     );
+
+    if (Locale.isIslamic(this.locale.name)) {
+      const endDateIslamic = Locale.gregorianToUmalqura(endDate);
+      endKey = stringUtils.padDate(
+        endDateIslamic[0],
+        endDateIslamic[1],
+        endDateIslamic[2]
+      );
+    }
 
     const days = this.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
     event.endKey = endKey;
@@ -450,6 +468,33 @@ WeekView.prototype = {
    */
   showWeek(startDate, endDate) {
     this.numberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+    const gregStartDate = new Date(startDate.getTime());
+    const gregEndDate = new Date(endDate.getTime());
+
+    if (Locale.isIslamic(this.locale.name)) {
+      startDate = Locale.gregorianToUmalqura(startDate);
+      startDate = new Date(
+        startDate[0],
+        startDate[1],
+        startDate[2],
+        startDate[3],
+        startDate[4],
+        startDate[5],
+        startDate[6]
+      );
+      endDate = Locale.gregorianToUmalqura(endDate);
+      endDate = new Date(
+        endDate[0],
+        endDate[1],
+        endDate[2],
+        endDate[3],
+        endDate[4],
+        endDate[5],
+        endDate[6]
+      );
+    }
+
     this.dayMap = [];
     this.isDayView = false;
     this.element.removeClass('is-day-view');
@@ -502,7 +547,13 @@ WeekView.prototype = {
     this.weekContainer = `<div class="week-view-container"><table class="week-view-table">${this.weekHeader}${this.weekBody}</table></div>`;
     this.element.find('.week-view-container').remove();
 
-    const args = { isDayView: this.isDayView, startDate, endDate, elem: this.element, api: this };
+    const args = {
+      isDayView: this.isDayView,
+      startDate: Locale.isIslamic(this.locale.name) ? gregStartDate : startDate,
+      endDate: Locale.isIslamic(this.locale.name) ? gregEndDate : endDate,
+      elem: this.element,
+      api: this
+    };
 
     /**
     * Fires as the calendar popup is opened.
@@ -537,8 +588,8 @@ WeekView.prototype = {
     this.renderAllEvents();
 
     // Update currently set start and end date
-    this.settings.startDate = startDate;
-    this.settings.endDate = endDate;
+    this.settings.startDate = Locale.isIslamic(this.locale.name) ? gregStartDate : startDate;
+    this.settings.endDate = Locale.isIslamic(this.locale.name) ? gregEndDate : endDate;
   },
 
   /**
