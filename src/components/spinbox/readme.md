@@ -20,11 +20,11 @@ demo:
 
 ## Behavior Guidelines
 
-Using the arrows, the user can move through the range of values. Depending on the exact use case, users can also type one of the supported values directly in the field.
+Using the up and down arrow keys, the user can move through the range of values. Depending on the exact settings, users can also type one of the supported values directly in the field.
 
 ## Code Example
 
-A spinbox is created from a standard `type="text"` `<input>` field by adding `class="spinbox"`. The initializer will initialize this control using the following attributes:
+A spinbox is created from a standard `type="text"` `<input>` field by adding `class="spinbox"`. The `type="number"` input can not be used as the browser will take over controlling the field if you use this. The initializer will initialize this control using the following attributes:
 
 - `min` - Determines the lowest value this can be set to
 - `max` - Determines the highest value this can be set to
@@ -39,14 +39,6 @@ Touch and mobile keyboard are supported.
   <input id="stepped-spinbox" name="stepped-spinbox" type="text" class="spinbox" min="-99" max="99" value="0" step="3"/>
 </div>
 ```
-
-## Implementation Tips
-
-- Localization for right to left languages may wish to reverse the left and right arrows.
-
-## Accessibility
-
-- Focus should remain on the edit field
 
 ## Testability
 
@@ -66,7 +58,7 @@ The spinbox takes the same states as any trigger field. See the Text Box for mor
 
 ## Responsive Guidelines
 
-- Its size is always less than mobile (150px) small size. From guidelines apply
+- Its size is always less than mobile (150px) small size. General form guidelines apply.
 
 ## Upgrading from 3.X
 
