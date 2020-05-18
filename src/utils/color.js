@@ -1,3 +1,4 @@
+/* eslint-disable yoda */
 const colorUtils = {};
 
 // Safely converts a single RGBA color component (R, G, B, or A) to
@@ -46,13 +47,155 @@ colorUtils.hexToRgb = function hexToRgb(hex) {
 
 /**
  * Takes separate R, G, and B values, and converts them to a hexidecimal string
- * @param {number|string} r a number between 0-255 representing the amount of red
+ * @param {number|string|obj} r a number between 0-255 representing the amount of red. Can also be an object with `r`, `g`, and `b` values.
  * @param {number|string} g a number between 0-255 representing the amount of green
  * @param {number|string} b a number between 0-255 representing the amount of blue
  * @returns {string} containing the matching hexidecimal color value
  */
 colorUtils.rgbToHex = function rgbToHex(r, g, b) {
+  if (typeof r === 'object' && (typeof r.r === 'number' || typeof r.r === 'string')) {
+    g = r.g;
+    b = r.b;
+    r = r.r;
+  }
   return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+};
+
+/**
+ * Converts an RGB color value to an HSL color value
+ * @param {number|string|obj} r a number between 0-255 representing the amount of red. Can also be an object with `r`, `g`, and `b` values.
+ * @param {number|string} g a number between 0-255 representing the amount of green
+ * @param {number|string} b a number between 0-255 representing the amount of blue
+ * @returns {object} containing hue/saturation/lightness values (h, s, l).
+ */
+colorUtils.rgbToHsl = function rgbToHsl(r, g, b) {
+  if (typeof r === 'object' && (typeof r.r === 'number' || typeof r.r === 'string')) {
+    g = r.g;
+    b = r.b;
+    r = r.r;
+  }
+
+  // Ensure all values are numbers
+  r = Number(r);
+  g = Number(g);
+  b = Number(b);
+
+  // Make all the values fractions
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  // Find greatest/smallest channel values
+  const cmin = Math.min(r, g, b);
+  const cmax = Math.max(r, g, b);
+  const delta = cmax - cmin;
+  let h = 0;
+  let s = 0;
+  let l = 0;
+
+  // Calculate Hue
+  // delta of `0` means there is no adjustment.
+  if (delta === 0) {
+    h = 0;
+  } else if (cmax === r) {
+    // Red is max
+    h = ((g - b) / delta) % 6;
+  } else if (cmax === g) {
+    // Green is Max
+    h = (b - r) / delta + 2;
+  } else {
+    // Blue is Max
+    h = (r - g) / delta + 4;
+  }
+
+  h = Math.round(h * 60);
+
+  // If the hue comes out negative, make it a positive
+  if (h < 0) {
+    h += 360;
+  }
+
+  // Calculate Lightness
+  l = (cmax + cmin) / 2;
+
+  // Calculate Saturation
+  if (delta !== 0) {
+    s = delta / (1 - Math.abs(2 * l - 1));
+  }
+
+  // multiply the final saturation/lightness values by 100 (make them percentages)
+  s = +(s * 100).toFixed(1);
+  l = +(l * 100).toFixed(1);
+
+  return { h, s, l };
+};
+
+/**
+ * Converts an HSL color value to an RGB color value
+ * @param {number|string|obj} h a number between 0-255 representing the amount of red. Can also be an object with `h`, `s`, and `l` properties.
+ * @param {number|string} s a number between 0-255 representing the amount of green
+ * @param {number|string} l a number between 0-255 representing the amount of blue
+ * @returns {object} containing hue/saturation/lightness values (h, s, l).
+ */
+colorUtils.hslToRgb = function hslToRgb(h, s, l) {
+  if (typeof h === 'object' && (typeof h.h === 'number' || typeof h.h === 'string')) {
+    h = h.h;
+    s = h.s;
+    l = h.l;
+  }
+
+  // Ensure all values are numbers
+  h = Number(h);
+  s = Number(s);
+  l = Number(l);
+
+  // make saturation/lightness fractions of 1
+  s /= 100;
+  l /= 100;
+
+  // chroma (c), second largest component (x),
+  // and amount to add to each channel to match lightness (m)
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+
+  // whichever 60deg slice of an entire 360deg pie the hue lies within
+  // determines the values for r/g/b
+  if (0 <= h && h < 60) {
+    r = c;
+    g = x;
+    b = 0;
+  } else if (60 <= h && h < 120) {
+    r = x;
+    g = c;
+    b = 0;
+  } else if (120 <= h && h < 180) {
+    r = 0;
+    g = x;
+    b = c;
+  } else if (180 <= h && h < 240) {
+    r = 0;
+    g = x;
+    b = c;
+  } else if (240 <= h && h < 300) {
+    r = x;
+    g = 0;
+    b = c;
+  } else if (300 <= h && h < 360) {
+    r = c;
+    g = 0;
+    b = x;
+  }
+
+  // Add (m) to all channels, multiply each by 255, and round to get final values.
+  r = Math.round((r + m) * 255);
+  g = Math.round((g + m) * 255);
+  b = Math.round((b + m) * 255);
+
+  return { r, g, b };
 };
 
 /**
@@ -135,6 +278,25 @@ colorUtils.getDesaturatedColor = function getDesaturatedColor(hex, sat = 1) {
   col.b = Math.round(col.b * sat + gray * (1 - sat));
 
   return colorUtils.rgbToHex(col.r, col.g, col.b);
+};
+
+/**
+ * Compares the luminosity of two hex colors.
+ * @param {string|obj} baseColorHex a string representing a hexadecimal color
+ * @param {string|obj} compareColorHex a string representing a hexadecimal color
+ * @returns {boolean} true if the base color is more luminous, false if the compared color is more luminous.
+ */
+colorUtils.isLighter = function isLighter(baseColorHex, compareColorHex) {
+  // Convert to RGB Objects
+  const baseColorRGB = colorUtils.hexToRgb(baseColorHex);
+  const compareColorRGB = colorUtils.hexToRgb(compareColorHex);
+
+  // Convert to HSL Objects
+  const baseColorHSL = colorUtils.rgbToHsl(baseColorRGB);
+  const compareColorHSL = colorUtils.rgbToHsl(compareColorRGB);
+
+  // Compare the HSL
+  return baseColorHSL.l <= compareColorHSL.l;
 };
 
 export { colorUtils }; //eslint-disable-line

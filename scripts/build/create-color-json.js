@@ -7,9 +7,11 @@
 const del = require('del');
 const fs = require('fs');
 const glob = require('glob');
-const logger = require('../logger');
 const path = require('path');
 const slash = require('slash');
+
+// Local Libs
+const logger = require('../logger');
 
 const IdsMetadata = require('../helpers/ids-metadata');
 
@@ -88,8 +90,12 @@ const createJSONfile = filePath => new Promise((resolve) => {
   // Get properties for individual components
   const themeBodyObj = createNewCustomObj(themeObj.body.color);
 
+  // Get the theme's name for file path/property generation
+  const themeName = path.basename(filePath, '.json');
+
   const colorsOnlyObj = {
     color: {
+      themeName,
       palette: themeColorPaletteObj,
       status: themeColorStatusObj,
       brand: themeColorBrandObj,
@@ -98,7 +104,7 @@ const createJSONfile = filePath => new Promise((resolve) => {
       }
     }
   };
-  const fileName = `${path.basename(filePath, '.json')}-colors.json`;
+  const fileName = `${themeName}-colors.json`;
   fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
   resolve(fileName);
 });
