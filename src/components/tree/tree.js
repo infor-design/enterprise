@@ -572,8 +572,8 @@ Tree.prototype = {
         a.classList.add('is-selected');
         a.setAttribute('aria-selected', true);
       } else {
-        li.classList.remove('is-selected', 'is-partial');
-        a.classList.remove('is-selected', 'is-partial');
+        DOM.removeClass(li, 'is-selected', 'is-partial');
+        DOM.removeClass(a, 'is-selected', 'is-partial');
         a.setAttribute('aria-selected', false);
       }
       return;
@@ -585,13 +585,13 @@ Tree.prototype = {
         const status = self.getSelectedStatus(a, isFirstSkipped);
 
         if (status === 'mixed') {
-          li.classList.remove('is-selected', 'is-partial');
+          DOM.removeClass(li, 'is-selected', 'is-partial');
           li.classList.add('is-partial');
         } else if (status) {
-          li.classList.remove('is-selected', 'is-partial');
+          DOM.removeClass(li, 'is-selected', 'is-partial');
           li.classList.add('is-selected');
         } else {
-          li.classList.remove('is-selected', 'is-partial');
+          DOM.removeClass(li, 'is-selected', 'is-partial');
         }
         self.syncNode(a);
       });
@@ -1855,7 +1855,7 @@ Tree.prototype = {
       if (!badge && !nodeData.badge.remove) {
         if (typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
           const newBadge = document.createElement('span');
-          newBadge.classList.add('tree-badge', 'badge');
+          DOM.addClass(newBadge, 'tree-badge', 'badge');
           nodetext.parentNode.insertBefore(newBadge, nodetext);
           badge = elem.node[0].querySelector('.tree-badge');
         }
@@ -1871,7 +1871,8 @@ Tree.prototype = {
           }
         }
         if (typeof nodeData.badge.type !== 'undefined') {
-          badge.classList.remove('info', 'good', 'error', 'alert', 'pending');
+          DOM.removeClass(badge, 'info', 'good', 'error', 'alert', 'pending');
+
           if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
             badge.classList.add(nodeData.badge.type);
           } else if (nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
@@ -1970,7 +1971,8 @@ Tree.prototype = {
     const ul = li.querySelector('ul');
 
     this.setTreeIcon(li.querySelector('svg.icon-tree'), (nodeData.icon || 'icon-tree-node'));
-    li.classList.remove('folder', 'is-open');
+    DOM.removeClass(li, 'folder', 'is-open');
+
     if (ul) {
       ul.parentNode.removeChild(ul);
     }
