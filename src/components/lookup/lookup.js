@@ -222,16 +222,17 @@ Lookup.prototype = {
    */
   setTooltip() {
     setTimeout(() => {
-      this.element.tooltip({
-        content: this.element[0].scrollWidth < this.element[0].offsetWidth ? '' : this.element.val()
-      }).on(`blur.${COMPONENT_NAME}`, () => {
-        const tooltipApi = this.element.data('tooltip');
-        if (tooltipApi && this.element.val() === '') {
-          tooltipApi.element.off(`blur.${COMPONENT_NAME}`);
-          tooltipApi.destroy();
-        }
-      });
-    }, 400);
+      const isOverlapping = this.element[0].scrollWidth > this.element[0].offsetWidth;
+      const tooltipApi = this.element.data('tooltip');
+
+      if (isOverlapping) {
+        this.element.tooltip({
+          content: this.element.val()
+        });
+      } else if (tooltipApi && !isOverlapping) {
+        tooltipApi.destroy();
+      }
+    }, 100);
   },
 
   /**
