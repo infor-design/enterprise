@@ -34,6 +34,7 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {boolean} [settings.autoWidth=false] If true the field will grow/change in size based on the content selected.
  * @param {char} [settings.delimiter=','] A character being used to separate data strings
  * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
+ * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
  */
 
 const LOOKUP_DEFAULTS = {
@@ -51,7 +52,8 @@ const LOOKUP_DEFAULTS = {
   autoWidth: false,
   clickArguments: {},
   delimiter: ',',
-  minWidth: null
+  minWidth: null,
+  clearable: false
 };
 
 function Lookup(element, settings) {
@@ -160,6 +162,10 @@ Lookup.prototype = {
 
     if (this.element.is(':disabled')) {
       this.disable();
+    }
+
+    if (this.settings.clearable) {
+      lookup.searchfield({ clearable: true });
     }
 
     if (!this.settings.editable) {
@@ -401,6 +407,14 @@ Lookup.prototype = {
           modal.oldActive = self.element;
           modal.close();
         }
+      }, {
+        text: Locale.translate('Apply'),
+        click(e, modal) {
+          modal.oldActive = self.element;
+          modal.close();
+          self.insertRows();
+        },
+        isDefault: true
       }];
     }
 
