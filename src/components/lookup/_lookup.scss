@@ -295,7 +295,7 @@ html[dir='rtl'] {
       > .icon.close {
         left: 30px;
       }
-  
+
       &.non-collapsible {
         svg.icon {
           &:not(.close) {
@@ -304,7 +304,7 @@ html[dir='rtl'] {
         }
       }
     }
-  
+
     .has-close-icon-button {
       .lookup {
         padding-left: 50px;
