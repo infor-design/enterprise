@@ -279,7 +279,7 @@ Spinbox.prototype = {
         allowDecimal: false,
         allowNegative: Math.min(this.settings.min, this.settings.max) < 0,
         decimalLimit: 0,
-        integerLimit: this.settings.max.length
+        integerLimit: String(this.settings.max).length
       }
     };
 
