@@ -245,6 +245,7 @@
 
     .day-text {
       @include rem(font-size, 1.4rem);
+      @include no-select();
 
       border-radius: 50%;
       color: $datepicker-day-color;
