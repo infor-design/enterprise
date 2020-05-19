@@ -289,4 +289,26 @@ html[dir='rtl'] {
     text-align: right;
     text-overflow: ellipsis;
   }
+
+  .lookup-wrapper {
+    .searchfield-wrapper {
+      > .icon.close {
+        left: 30px;
+      }
+  
+      &.non-collapsible {
+        svg.icon {
+          &:not(.close) {
+            display: none;
+          }
+        }
+      }
+    }
+  
+    .has-close-icon-button {
+      .lookup {
+        padding-left: 50px;
+      }
+    }
+  }
 }

@@ -41,4 +41,12 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .lookup-wrapper {
+    .searchfield-wrapper {
+      > .icon.close {
+        left: 35px;
+      }
+    }
+  }
 }
