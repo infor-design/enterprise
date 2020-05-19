@@ -35,6 +35,10 @@
     }
   }
 
+  .calendar-event-legend {
+    display: none;
+  }
+
   // Changes to the monthview container
   .calendar-monthview {
     background-color: $calendar-bg-color;
@@ -66,6 +70,7 @@
   // Mobile Legend
   @include respond-to(phabletdown) {
     .calendar-event-legend {
+      display: block;
       padding: 20px 20px 0;
 
       .calendar-event-legend-item {
