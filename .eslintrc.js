@@ -12,7 +12,7 @@
  * - `eslint-plugin-jasmine-jquery`
  */
 module.exports = {
-  'extends': [
+  extends: [
     // Only import some AirBNB rules
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
     'airbnb-base'
@@ -20,36 +20,36 @@ module.exports = {
 
   // This is the root eslint file.
   // We should ONLY be using eslint rules specific to this project.
-  'root': true,
+  root: true,
 
   // All source code is at least ES6 friendly.
   // Note that this is not the case in the demoapp example pages,
   // which are ES5 compatible and not compiled.
-  'env': {
-    'es6': true
+  env: {
+    es6: true
   },
 
   // Need `ecmaVersion: 9` for:
   // - [Object spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals)
-  'parser': "babel-eslint",
-  'parserOptions': {
-    'ecmaVersion': 9,
-    'sourceType': 'module'
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 9,
+    sourceType: 'module'
   },
 
   // Add ES6 import plugins
-  'plugins': [
+  plugins: [
     'import'
   ],
 
-  'rules': {
+  rules: {
     // require trailing commas in multiline object literals
     'comma-dangle': ['off', {
-      'arrays': 'never',
-      'objects': 'never',
-      'imports': 'never',
-      'exports': 'never',
-      'functions': 'never'
+      arrays: 'never',
+      objects: 'never',
+      imports: 'never',
+      exports: 'never',
+      functions: 'never'
     }],
 
     // Re-enable anonymous/unnamed functions
@@ -91,15 +91,15 @@ module.exports = {
 
     // Allow usage of certain Global values
     'no-restricted-globals': ['warn', {
-      'name': 'isNaN',
-      'message': 'Make sure to explore using `Number.isNaN()` instead.'
+      name: 'isNaN',
+      message: 'Make sure to explore using `Number.isNaN()` instead.'
     }],
 
     // Ignore usage of certain properties:
     // - Math.pow (not really sure why AirBNB doesn't allow this)
     'no-restricted-properties': ['off', {
-      'object': 'Math',
-      'property': 'pow'
+      object: 'Math',
+      property: 'pow'
     }],
 
     // set "no-trailing-spaces" to only a warning (this shouldn't fail builds)
@@ -144,7 +144,7 @@ module.exports = {
 
     // Don't enforce extra brackets
     // https://eslint.org/docs/2.0.0/rules/arrow-parensextra
-    'arrow-parens': ['error', 'as-needed', { 'requireForBlockBody' : true }],
+    'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
 
     // Have operators on same line
     // https://eslint.org/docs/rules/operator-linebreak
