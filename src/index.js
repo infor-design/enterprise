@@ -13,6 +13,7 @@ export { DOM } from './utils/dom';
 export { objectUtils as object } from './utils/object';
 export { stringUtils as string } from './utils/string';
 export { numberUtils as number } from './utils/number';
+export { colorUtils as colors } from './utils/color';
 export { xssUtils as xss } from './utils/xss';
 export { breakpoints } from './utils/breakpoints';
 export { Locale } from './components/locale/locale';
