@@ -717,7 +717,7 @@ PopupMenu.prototype = {
           submenu.classList.add('popupmenu');
         }
         if (submenuWrapper instanceof HTMLElement) {
-          li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
+          li.className += `${DOM.hasAnyClass(li) ? ' ' : ''}submenu`;
           submenu = $(submenuWrapper).children('ul')[0];
           if (submenu instanceof HTMLElement) {
             submenu.classList.add('popupmenu');
