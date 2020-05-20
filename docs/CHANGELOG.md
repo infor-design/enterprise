@@ -8,6 +8,7 @@
 
 ### v4.29.0 Features
 
+- `[Lookup]` Added a tooltip functionality when the data is overflowed. ([#3703](https://github.com/infor-design/enterprise/issues/3703))
 - `[Lookup]` Added a clear (x icon) button to clear the field. ([#740](https://github.com/infor-design/enterprise/issues/740))
 - `[Lookup]` Added a clear (x icon) button and apply button inside of modal so there are now two options to clear the field. ([#2507](https://github.com/infor-design/enterprise/issues/2507))
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
