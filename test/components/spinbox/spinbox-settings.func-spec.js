@@ -32,11 +32,11 @@ describe('Spinbox settings', () => {
     spinboxEl.removeAttribute('data-options');
     spinboxApi.destroy();
     const settings = {
-      autocorrectOnBlur: false,
+      autocorrectOnBlur: true,
       min: 0,
       max: 10,
       step: null,
-      validateOnInput: true
+      maskOptions: null
     };
 
     settings.min = 0; // example initializes with data-options
@@ -47,11 +47,11 @@ describe('Spinbox settings', () => {
 
   it('Should update set settings via data', () => {
     const settings = {
-      autocorrectOnBlur: false,
+      autocorrectOnBlur: true,
       min: 10,
       max: 20,
       step: null,
-      validateOnInput: true
+      maskOptions: null
     };
 
     spinboxApi.updated();
@@ -63,11 +63,11 @@ describe('Spinbox settings', () => {
 
   it('Should update set settings via parameter', () => {
     const settings = {
-      autocorrectOnBlur: false,
+      autocorrectOnBlur: true,
       min: 10,
       max: 20,
       step: null,
-      validateOnInput: true
+      maskOptions: null
     };
     spinboxApi.updated(settings);
     spinboxApi.settings.min = 10;
@@ -78,11 +78,11 @@ describe('Spinbox settings', () => {
 
   it('Should update settings via data-options', () => {
     const settings = {
-      autocorrectOnBlur: false,
+      autocorrectOnBlur: true,
       min: 0,
       max: 10,
       step: null,
-      validateOnInput: true
+      maskOptions: null
     };
 
     expect(spinboxApi.settings).toEqual(settings);

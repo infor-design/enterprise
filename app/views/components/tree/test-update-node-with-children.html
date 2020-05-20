@@ -1,13 +1,13 @@
 <div class="row top-padding">
   <div class="twelve columns">
     <button type="button" id="btn-update-node" class="btn-secondary">updateNode()</button>
+    <button type="button" id="btn-empty-node" class="btn-secondary">emptyNode()</button>
     <button type="button" id="btn-remove-node" class="btn-secondary">removeNode()</button>
   </div>
 </div>
 
 <div class="row top-padding">
   <div class="twelve columns">
-
     <ul id="tree" class="tree" role="tree" aria-label="Asset Types" data-init="false">
       <li><a href="#" id="home">Home</a></li>
       <li><a href="#" id="about">About Us</a></li>
@@ -32,7 +32,7 @@
   var tree = $('#tree').tree().data('tree');
 
   // Update node
-  $('#btn-update-node').one('click', function () {
+  $('#btn-update-node').on('click', function () {
     tree.updateNode({
       id: 'leadership',
       text: 'Just Updated',
@@ -53,11 +53,21 @@
   });
 
   // Remove node
-  $('#btn-remove-node').one('click', function () {
+  $('#btn-remove-node').on('click', function () {
     var toRemoveId = tree.findById('line-mgr') ? 'line-mgr' : 'new2';
     tree.removeNode({id: toRemoveId});
     $(this).disable(); // let it trigger onetime only
     console.log('Node Removed');
   });
+
+  // Revert to Root Node
+   $('#btn-empty-node').on('click', function () {
+      tree.updateNode({
+        id: 'leadership',
+        text: 'Leadership',
+        icon: 'icon-tree-node',
+        children: []
+      });
+   });
 
 </script>

@@ -6931,7 +6931,7 @@ Datagrid.prototype = {
 
     /**
     * Fires after a row is selected.
-    * @event contextmenu
+    * @event selected
     * @memberof Datagrid
     * @property {object} event The jquery event object
     * @property {object} args Additional arguments
@@ -8699,7 +8699,7 @@ Datagrid.prototype = {
 
     /**
     * Fires before a cell goes into edit mode. Giving you a chance to adjust column settings.
-    * @event entereditmode
+    * @event beforeentereditmode
     * @memberof Datagrid
     * @property {object} event The jquery event object
     * @property {object} args Additional arguments

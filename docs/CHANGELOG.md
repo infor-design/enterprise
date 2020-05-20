@@ -2,9 +2,15 @@
 
 ## v4.29.0
 
+### v4.29.0 Announcements
+
+- `[General]` Heads Up that effective October 31, 2020 we will no longer support IE 11. Until that date we will test IE 11 but only critical issues will be fixed. See the linked issue for more details. ([#3756](https://github.com/infor-design/enterprise/issues/3756))
+
 ### v4.29.0 Features
 
-- `[Lookup]` Added a tooltip functionality. ([#3703](https://github.com/infor-design/enterprise/issues/3703))
+- `[Lookup]` Added a tooltip functionality when the data is overflowed. ([#3703](https://github.com/infor-design/enterprise/issues/3703))
+- `[Lookup]` Added a clear (x icon) button to clear the field. ([#740](https://github.com/infor-design/enterprise/issues/740))
+- `[Lookup]` Added a clear (x icon) button and apply button inside of modal so there are now two options to clear the field. ([#2507](https://github.com/infor-design/enterprise/issues/2507))
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
 - `[Slider]` Added the ability to set position of the tooltip. ([#3746](https://github.com/infor-design/enterprise/issues/3746))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
@@ -13,9 +19,12 @@
 
 - `[About]` Fixed a bug where About dialogs disappeared when being closed by the Modal Manager API. ([#3898](https://github.com/infor-design/enterprise/issues/3898))
 - `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.1 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[Bar Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Application Menu]` - Made it possible for App Menu Toolbars to dismiss the menu when the `dismissOnClickMobile` setting is true. ([#2831](https://github.com/infor-design/enterprise/issues/2831))
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
+- `[Column Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Datagrid]` Fixed an issue where blank tooltip was showing when use Alert Formatter and no text. ([#2852](https://github.com/infor-design/enterprise/issues/2852))
+- `[Datagrid]` Fixed a bug where the datagrid had blocked the clicking of buttons in an empty message area. ([#3922](https://github.com/infor-design/enterprise/issues/3922))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for icons and badges. ([#3855](https://github.com/infor-design/enterprise/issues/3855))
 - `[Datagrid]` Fixed an issue where keyword search results were breaking the html markup for hyperlink. ([#3731](https://github.com/infor-design/enterprise/issues/3731))
 - `[Datagrid]` Fixed an issue where keyword search results were not showing for paging, if searched from other than 1st page it came blank table. ([#3629](https://github.com/infor-design/enterprise/issues/3629))
@@ -23,14 +32,17 @@
 - `[Datagrid]` Fixed a bug in some themes, where the multi line cell would not be lined up correctly with a single line of data. ([#2703](https://github.com/infor-design/enterprise/issues/2703))
 - `[Datagrid]` Fixed visibility of sort icons when toggling and when the column is in active. ([#3692](https://github.com/infor-design/enterprise/issues/3692))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
+- `[Datagrid/General]` Fixed an additional bug where when loading the datagrid with a columns object that contain recursive objects the grid would crash in saveColumns. [3759](https://github.com/infor-design/enterprise/issues/3759))
 - `[Dropdown]` Fixed tooltip content gets cut off inside of modal. ([#3106](https://github.com/infor-design/enterprise/issues/3106))
 - `[DemoApp]` Fixed an issue with some pages in the design site where the did not have a height. ([#878](https://github.com/infor-design/website/issues/878))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
 - `[Form]` Fix broken links in the form readme file. ([#818](https://github.com/infor-design/website/issues/818))
+- `[Line Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
 - `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
 - `[Multiselect]` Added ability to detect selected items from incoming data via `callSource()`. ([#2656](https://github.com/infor-design/enterprise/issues/2656))
 - `[Multiselect]` Added support to api settings to `allTextString` and `selectedTextString` for custom headers. ([#3554](https://github.com/infor-design/enterprise/issues/3554))
+- `[Pie Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Pie]` Fixed an issue where rounds decimal places for percent values were not working. ([#3599](https://github.com/infor-design/enterprise/issues/3599))
 - `[Pie/Donut]` Fixed an issue where placing legend on bottom was not working for Homepage widget/Cards. ([#3560](https://github.com/infor-design/enterprise/issues/3560))
 - `[Pager]` Reduced the space between buttons. ([#1942](https://github.com/infor-design/enterprise/issues/1942))
@@ -40,6 +52,7 @@
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
+- `[Spinbox]` Fixed an issue where a two or more digit min value would make it difficult to type in the spinbox. To fix this the values will only be validated on blur by default. ([#3909](https://github.com/infor-design/enterprise/issues/3909))
 - `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 
 ## v4.28.0
@@ -252,6 +265,7 @@
 
 - `[Datagrid]` Added support for expandable row to expand across all frozen columns, and fixed span layout issues on the right side frozen columns. ([#2867](https://github.com/infor-design/enterprise/issues/2867))
 - `[Datagrid]` Added a new `resizeMode` option that allows you to pick between `flex` and `fit`. `flex` will resize columns independently shifting other columns to fit the table layout if needed. `fit` will resize using the neighbor's column width. This is possible more useful when you have less columns. ([#3251](https://github.com/infor-design/enterprise/issues/3251))
+- `[Calendar]` Made the monthview, weekview and calendar work in RTL mode and added official support for UmAlQura calendar. ([#2788](https://github.com/infor-design/enterprise/issues/2788))
 - `[Icons]` Added new icons `icon-play, icon-stop, icon-record, icon-pause` for video players. ([#411](https://github.com/infor-design/design-system/issues/411))
 - `[Icons]` Added new icons `icon-security-off, icon-security-on` for toggles related to security/secure items. ([#397](https://github.com/infor-design/design-system/issues/397))
 - `[Searchfield]` Added a setting that makes it possible to adjust the "collapsed" size of a Toolbar Searchfield to better accommodate some use cases. ([#3296](https://github.com/infor-design/enterprise/issues/3296))
@@ -260,7 +274,8 @@
 
 - `[Application Menu]` Fixed bugs with filtering where it was not possible to have the filter match text within content areas, as well as general expand/collapse bugs with filtering. ([#3131](https://github.com/infor-design/enterprise/issues/3131))
 - `[Application Menu]` Fixed overlap button when label is too long, and aligned dropdown icon in application menu uplift theme. ([#3133](https://github.com/infor-design/enterprise/issues/3133))
-- `[Contextual Action Panel]` - Fixed shade colors of text and icon buttons in uplift theme high contrast. ([#3394](https://github.com/infor-design/enterprise/issues/3394))
+[Contextual Action Panel] - Fixed shade colors of text and icon buttons in uplift theme high contrast. (#3394)
+- `[Accordion]` - Fixed an issue with a missing border on the last element in certain states. ([#3885](https://github.com/infor-design/enterprise/issues/3885))
 - `[Calendar]` Fixed issue where on month view in events info `Date` and `Duration` fields were not working with some events and `Duration` field. Now `Duration` field support `Days, Hours and Minutes` text. ([#2777](https://github.com/infor-design/enterprise/issues/2777))
 - `[Calendar]` Fixed an issue where link was not working on monthview to switch to day view when clicked on more events on that day. ([#3181](https://github.com/infor-design/enterprise/issues/3181))
 - `[Calendar]` Fixed a calendar event where the start date today is not displaying as upcoming event in different timezone. ([#2776](https://github.com/infor-design/enterprise/issues/2776))

@@ -770,8 +770,9 @@ charts.setSelectedElement = function (o) {
         .classed('is-not-selected', true)
         .attr('transform', '');
 
-      const thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
+      let thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
         dataset[0].data[o.i] : (o.d ? o.d.data : o.d);  //eslint-disable-line
+      thisArcData = thisArcData || {};
       thisArcData.selected = true;
       selector.classed('is-selected', true)
         .classed('is-not-selected', false)

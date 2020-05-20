@@ -120,4 +120,11 @@ describe('Extend Tests', () => {
 
     expect(newObj2.test).toEqual(1);
   });
+
+  it('can extend arrays of objects', () => {
+    const newArray1 = utils.extend(true, [], [{ test1: '1', test2: '1' }, { test1: '2', test2: '2' }]);
+
+    expect(newArray1[0]).toEqual({ test1: '1', test2: '1' });
+    expect(newArray1[1]).toEqual({ test1: '2', test2: '2' });
+  });
 });

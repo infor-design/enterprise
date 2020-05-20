@@ -22,6 +22,8 @@ demo:
     slug: example-custom-toolbar
   - name: Custom Buttons
     slug: example-custom-buttons
+  - name: Clearable Lookup
+    slug: example-clearable
 ---
 
 ## Behavior Guidelines

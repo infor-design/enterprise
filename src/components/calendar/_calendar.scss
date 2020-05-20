@@ -27,7 +27,7 @@
     }
 
     .accordion-header > button {
-      margin: 0 0 7px 10px;
+      margin: 0 0 2px 10px;
 
       svg {
         top: 0;
@@ -341,8 +341,8 @@
     }
 
     .btn {
-      margin-left: -4px;
-      margin-top: -7px;
+      margin-left: -3px;
+      margin-top: 3px;
 
       .chevron {
         color: $theme-color-palette-white;
@@ -663,11 +663,80 @@ html[dir='rtl'] {
     .today {
       margin-right: 15px;
     }
+
+    .monthview.is-fullsize.monthview td:last-child {
+      border-left: 0;
+    }
+  }
+
+  .calendar-events .accordion-header > button {
+    margin: -1px 7px 2px 0;
+  }
+
+  .calendar-event {
+    border-left: 0;
+    border-right: 5px solid $theme-color-brand-primary-alt;
+
+    &.event-day-end {
+      border-radius: 3px 0 0 3px;
+      border-right: 0 !important;
+      margin-right: 0;
+    }
+
+    &.event-day-span {
+      border-right: 0 !important;
+    }
+
+    &.event-day-start {
+      border-radius: 0 3px 3px 0;
+      padding-left: 4px;
+      padding-right: 0;
+    }
+
+    &.ruby {
+      border-right: 5px solid $theme-color-palette-ruby-70;
+    }
+
+    &.amber {
+      border-right: 5px solid $theme-color-palette-amber-70;
+    }
+
+    &.emerald {
+      border-right: 5px solid $theme-color-palette-emerald-70;
+    }
+
+    &.turquoise {
+      border-right: 5px solid $theme-color-palette-turquoise-70;
+    }
+
+    &.amethyst {
+      border-right: 5px solid $theme-color-palette-amethyst-70;
+    }
+
+    &.slate {
+      border-right: 5px solid $theme-color-palette-slate-70;
+    }
+
+    &.graphite {
+      border-right: 5px solid $theme-color-palette-graphite-70;
+    }
+
+    .calendar-event-content {
+      padding: 1px 5px;
+      text-align: right;
+    }
   }
 
   .calendar-event-details {
-    border-left: 0;
-    border-right: 1px solid $calendar-line-color;
+    border: 0;
+  }
+
+  .calendar-event-types .checkbox-label {
+    padding-right: 25px;
+
+    &::after {
+      right: 6px !important;
+    }
   }
 
   .calendar-toolbar .monthview-datepicker {
@@ -758,7 +827,7 @@ html[dir='rtl'] {
   .calendar-event-content {
     color: $calendar-event-color;
     overflow: hidden;
-    padding: 3px 5px;
+    padding: 2px 5px;
     position: relative;
     text-align: left;
     text-overflow: ellipsis;

@@ -28,6 +28,7 @@ const COMPONENT_NAME = 'column';
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
+* @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
@@ -50,6 +51,7 @@ const COLUMN_DEFAULTS = {
   format: null,
   redrawOnResize: true,
   ticks: 9,
+  fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
@@ -129,8 +131,11 @@ Column.prototype = {
       left: 45
     };
     const legendHeight = 40;
+    const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
+    const useHeight = this.settings.fitHeight ?
+      parentAvailableHeight : parseInt(parent.height(), 10);
     const width = parent.width() - margin.left - margin.right - 10;
-    const height = parent.height() - margin.top - margin.bottom -
+    const height = useHeight - margin.top - margin.bottom -
         (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
     let yMinTarget;
@@ -559,11 +564,15 @@ Column.prototype = {
             const bandwidth = x0.bandwidth();
             if (!self.settings.isStacked && isGroupSmaller &&
               bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
-              x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
+              x += (((bandwidth / 2) / dataArray.length) / 2);
             }
             if (self.isGrouped && !self.settings.isStacked) {
-              const barDiff = (barMaxWidth / (x0.bandwidth() > 150 ? 2 : 4));
+              const barDiff = (barMaxWidth / (bandwidth > 150 ? 2 : 4));
               x -= barDiff;
+            }
+            if (self.settings.isStacked && width < 290 && bandwidth < 40) {
+              const len = dataArray[0]?.data?.length || 0;
+              x = ((width - (bandwidth * len)) / len) / 2;
             }
             return `translate(${x},0)`;
           });

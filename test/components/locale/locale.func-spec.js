@@ -2024,4 +2024,20 @@ describe('Locale API', () => {
 
     expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
   });
+
+  it('Should be able to determine if we are using the islamic calendar', () => {
+    Locale.set('en-US');
+
+    expect(Locale.isIslamic()).toEqual(false);
+
+    Locale.set('ar-SA');
+
+    expect(Locale.isIslamic()).toEqual(true);
+
+    Locale.set('es-ES');
+
+    expect(Locale.isIslamic()).toEqual(false);
+    expect(Locale.isIslamic('ar-SA')).toEqual(true);
+    expect(Locale.isIslamic('xx-XX')).toEqual(false);
+  });
 });

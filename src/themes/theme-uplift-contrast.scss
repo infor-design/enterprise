@@ -435,7 +435,7 @@ $modal-secondary-color: $theme-color-palette-graphite-90;
 
 // Accordion
 $accordion-bg-color: $theme-color-palette-graphite-10;
-$accordion-border-color: $theme-color-palette-graphite-60;
+$accordion-border-color: $theme-color-palette-graphite-30;
 $accordion-toplevel-border-color: $theme-color-palette-slate-40;
 $accordion-pane-bg-color: $theme-color-palette-graphite-40;
 $accordion-text-color: $theme-color-palette-graphite-90;
@@ -772,15 +772,15 @@ $treemap-title-bg-color: $theme-color-palette-graphite-80;
 $treemap-title-color: $theme-color-palette-white;
 
 // Calendar
-$calendar-bg-color: $theme-color-palette-graphite-10;
+$calendar-bg-color: $theme-color-palette-white;
 $calendar-event-color: $theme-color-palette-graphite-100;
-$calendar-line-color: $theme-color-palette-graphite-60;
-$calendar-line-color-light: $theme-color-palette-graphite-40;
+$calendar-line-color: $theme-color-palette-graphite-30;
+$calendar-line-color-light: $theme-color-palette-graphite-20;
 $calendar-selected-border-color: $theme-color-brand-primary-base;
-$calendar-selected-bg-color: $theme-color-palette-graphite-30;
+$calendar-selected-bg-color: $theme-color-palette-graphite-10;
 $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
-$calendar-disabled-color: $theme-color-palette-graphite-100;
+$calendar-disabled-color: $theme-color-palette-graphite-80;
 
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;

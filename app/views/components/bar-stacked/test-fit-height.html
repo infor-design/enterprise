@@ -1,0 +1,77 @@
+<div class="homepage">
+  <div class="content">
+    <div class="row top-padding">
+      <div class="one-third column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Chart Title</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div class="card-group-action">
+              <div class="flex-toolbar" role="toolbar" aria-label="Card group action toolbar">
+                <div class="toolbar-section title">Card group action</div>
+                <div class="toolbar-section buttonset">
+                  <button type="button" class="btn-icon" title="Filter" class="filter">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-filter"></use>
+                    </svg>
+                    <span class="audible">Filter</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="bar-stacked-example" class="chart-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [{
+        name: '2008',
+        value: 123
+      }, {
+        name: '2009',
+        value: 234
+      }, {
+        name: '2010',
+        value: 345,
+      }],
+      name: 'Series 1'
+    }, {
+      data: [{
+        name: '2008',
+        value: 235
+      }, {
+        name: '2009',
+        value: 267
+      }, {
+        name: '2010',
+        value: 573
+      }],
+      name: 'Series 2'
+    }];
+
+    $('#bar-stacked-example').chart({
+      type: 'bar-stacked',
+      dataset: dataset,
+      fitHeight: true
+    });
+
+  });
+</script>

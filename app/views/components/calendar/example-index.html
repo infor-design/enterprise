@@ -168,7 +168,7 @@
     <div class="accordion-content">
       {{#status}}
       <div class="field">
-        <span class="label">Status</span>
+        <span class="label" data-translate="text">Status</span>
         <span class="data">
           {{status}}
           {{#icon}}
@@ -178,30 +178,30 @@
       </div>
       {{/status}}
       <div class="field">
-        <span class="label">Date</span>
+        <span class="label" data-translate="text">Date</span>
         {{#duration}}
         <span class="data">
           {{startsLong}}
-              to
+              -
           {{endsLong}}
         </span>
         {{/duration}}
         {{#durationHours}}
         <span class="data">
           {{startsHoursLong}}
-              to
+              -
           {{endsHoursLong}}
         </span>
         {{/durationHours}}
       </div>
       <div class="field">
-        <span class="label">Event Type</span>
+        <span class="label" data-translate="text">EventType</span>
         <span class="data">
           {{typeLabel}}
         </span>
       </div>
       <div class="field">
-        <span class="label">Duration</span>
+        <span class="label" data-translate="text">Duration</span>
         {{#duration}}
         <span class="data">
           {{duration}} {{durationUnits}}
@@ -214,7 +214,7 @@
         {{/durationHours}}
       </div>
       <div class="field">
-        <span class="label">Comments</span>
+        <span class="label" data-translate="text">Comments</span>
         <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
           {{comments}}
         </span>

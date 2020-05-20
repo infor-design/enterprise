@@ -128,6 +128,10 @@ html[dir='rtl'] {
       left: 0;
     }
 
+    .datepicker {
+      padding: 8px 3px 7px 35px;
+    }
+
     .datepicker + .icon {
       margin-right: -15px;
       margin-top: 11px;
@@ -135,11 +139,11 @@ html[dir='rtl'] {
 
     .today {
       left: 0;
-      margin-right: 10px;
+      margin-right: 33px;
     }
 
     #monthview-datepicker-field + .icon {
-      margin-right: -23px;
+      margin-right: -22px;
     }
   }
 
