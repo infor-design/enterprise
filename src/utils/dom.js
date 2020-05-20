@@ -30,33 +30,30 @@ DOM.getAttributes = function getAttributes(element) {
  * @param {HTMLElement} element the element to test
  * @returns {boolean} whether or not a className exists
  */
-DOM.classNameExists = function classNameExists(element) {
+DOM.hasAnyClass = function hasAnyClass(element) {
   const cn = element.className;
   return cn && cn.length > 0;
 };
 
 /**
  * Checks the element for the existence of a particular class.
- * @param {HTMLElement|SVGElement} el a element being checked.
+ * @param {HTMLElement|SVGElement} elem a element being checked.
  * @param {string} className a string representing a class name to check for.
  * @returns {boolean} whether or not the element's class attribute contains the string.
  */
-DOM.hasClass = function hasClass(el, className) {
-  if (!el.classList) {
-    return false;
+DOM.hasClass = function hasClass(elem, className) {
+  let r = false;
+  if (!elem?.getAttribute) {
+    return r;
   }
 
-  // Use `className` if there's no `classList`
-  if (el.className) {
-    return new RegExp(`\\b${className}\\b`).test(el.className);
+  if ('classList' in elem) {
+    r = elem.classList.contains(className);
+  } else {
+    const classAttr = elem.getAttribute('class');
+    r = classAttr ? classAttr.split(/\s+/).indexOf(className) !== -1 : false;
   }
-
-  // If no `className`, this element is probably an SVG or other namespace element
-  const classAttr = el.getAttribute('class');
-  if (!classAttr || !classAttr.length) {
-    return false;
-  }
-  return classAttr.indexOf(className) > -1;
+  return r;
 };
 
 /**

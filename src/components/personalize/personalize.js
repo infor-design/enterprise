@@ -145,6 +145,33 @@ Personalize.prototype = {
       header: '2578A9'
     };
 
+    // Pass in a standard set of theme-specific colors.
+    // These colors aren't personalized, but they may need to be referenced
+    // within the personalization colors CSS generator.
+    const themeColors = theme.themeColors();
+    colors.theme = {};
+    colors.theme.bg = themeColors.components.body.primary.background.value;
+    colors.theme.altbg = themeColors.components.body.secondary.background.value;
+    colors.theme.text = themeColors.components.body.primary.font.value;
+
+    let dark = false;
+    let contrast = false;
+    let uplift = false;
+    if (themeColors.themeName.indexOf('contrast') > -1) {
+      contrast = true;
+    }
+    if (themeColors.themeName.indexOf('dark') > -1) {
+      dark = true;
+    }
+    if (themeColors.themeName.indexOf('uplift') > -1) {
+      uplift = true;
+    }
+    colors.theme.props = {
+      contrast,
+      dark,
+      uplift
+    };
+
     // Force to be light text on custom colors { color: ['soho', 'uplift'] }
     const forceToBeLightTextOn = {
       amber: ['#db7726', '#bb5500'], // amber 09
@@ -164,11 +191,12 @@ Personalize.prototype = {
     });
     isDark = foundColor ? 'white' : null;
 
+    // Evaluate text contrast colors.
+    // If the primary color is too "bright", this will flip the text color to black.
     const lightest = colorUtils.validateHex(colors.lightest ||
       colorUtils.getLuminousColorShade((colors.header || defaultColors.header), 0.3));
-    const contrast = colorUtils.getContrastColor(lightest, null, isDark);
-
-    if (contrast === 'white') {
+    const textContrastColor = colorUtils.getContrastColor(lightest, null, isDark);
+    if (textContrastColor === 'white') {
       defaultColors.text = 'ffffff';
       defaultColors.subtext = 'f0f0f0';
     } else {
@@ -210,6 +238,56 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+
+    // Some disabled colors on some preset color schemes come out terrible,
+    // unless they are adjusted here. { color: ['soho', 'uplift'] }
+    // The alternate color is generally less luminous and less color-saturated (more gray).
+    const alternateDisabledColors = {
+      amber: ['#db7726', '#bb5500'], // amber 09
+      amethyst: ['#9279a6', '#7834dd'], // amethyst 06
+      emerald: ['#56932e', '#1f9254'], // emerald 08
+      slate: ['#50535a', '#98949e'], // slate 06
+    };
+    let useAlternates = false;
+    const fixedVal = colorUtils.validateHex(`${colors.header || defaultColors.header}`.toLowerCase());
+    Object.keys(alternateDisabledColors).forEach((color) => {
+      useAlternates = useAlternates || alternateDisabledColors[color].indexOf(fixedVal) > -1;
+    });
+
+    // Start with standard Soho values
+    let baseColor = colors.light;
+    let lum = useAlternates ? 0.5 : 0.7;
+    let sat = useAlternates ? 0.3 : 0.5;
+
+    if (!uplift) {
+      // Soho adjustments go here
+      if (dark) {
+        baseColor = colors.darkest;
+        lum = -0.1;
+      } else if (contrast) {
+        lum = 0.3;
+      }
+    } else {
+      // Uplift adjustments go here
+      lum = useAlternates ? 0.6 : 0.8;
+      sat = useAlternates ? 0.6 : 0.8;
+      if (dark) {
+        baseColor = colors.darkest;
+        lum = 0.1;
+      } else if (contrast) {
+        lum = 0.8;
+        sat = 0.4;
+      }
+    }
+
+    let disabledBGColor = colorUtils.getLuminousColorShade(baseColor, lum);
+    disabledBGColor = colorUtils.getDesaturatedColor(disabledBGColor, sat);
+    colors.baseDisabled = disabledBGColor;
+
+    // Hyperlink/Text Selection
+    colors.hyperlinkText = dark ? colors.dark : colors.lighter;
+    colors.hyperlinkTextHover = dark ? colors.darker : colors.lightest;
+    colors.selection = dark ? colors.darker : colors.lightest;
 
     const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
@@ -369,6 +447,9 @@ Personalize.prototype = {
     // record state of theme in settings
     this.settings.theme = incomingTheme;
     theme.setTheme(incomingTheme);
+
+    // Do another color reset, if applicable
+    this.setColors(this.settings.colors);
   },
 
   /**
