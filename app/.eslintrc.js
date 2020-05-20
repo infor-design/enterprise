@@ -3,11 +3,11 @@
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
 module.exports = {
-  'env': {
-    'node': true
+  env: {
+    node: true
   },
 
-  'rules': {
+  rules: {
     // Forbid the use of extraneous packages
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
     // paths are treated both as absolute paths, and relative to process.cwd()

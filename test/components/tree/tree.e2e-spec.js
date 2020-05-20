@@ -158,6 +158,19 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.is-selected a[role="treeitem"] .tree-checkbox')).count()).toBe(3);
   });
 
+  it('Should expand independently', async () => {
+    let visibleNodes = await element.all(by.css('.tree li')).filter(node => node.isDisplayed());
+
+    expect(visibleNodes.length).toEqual(13);
+    const testNode = await element(by.css(('#leadership svg')));
+    await browser.actions().mouseMove(testNode).perform();
+    await browser.actions().click(testNode).perform();
+    await browser.driver.sleep(config.sleep);
+    visibleNodes = await element.all(by.css('.tree li')).filter(node => node.isDisplayed());
+
+    expect(visibleNodes.length).toEqual(9);
+  });
+
   it('Should select all children nodes', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
 
