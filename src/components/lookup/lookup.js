@@ -222,6 +222,26 @@ Lookup.prototype = {
   },
 
   /**
+   * Triggers tooltip
+   * @private
+   * @returns {void}
+   */
+  setTooltip() {
+    setTimeout(() => {
+      const isOverlapping = this.element[0].scrollWidth > this.element[0].offsetWidth;
+      const tooltipApi = this.element.data('tooltip');
+
+      if (isOverlapping) {
+        this.element.tooltip({
+          content: this.element.val()
+        });
+      } else if (tooltipApi && !isOverlapping) {
+        tooltipApi.destroy();
+      }
+    }, 100);
+  },
+
+  /**
    * Create and Open the Dialog
    * @private
    * @param {jquery.event} e click or keyup event
@@ -443,6 +463,7 @@ Lookup.prototype = {
           * @property {object} grid in lookup
           */
         self.element.triggerHandler('close', [self.modal, self.grid]);
+        self.setTooltip();
       });
 
     self.modal = $('body').data('modal');

@@ -7,9 +7,11 @@
 const del = require('del');
 const fs = require('fs');
 const glob = require('glob');
-const logger = require('../logger');
 const path = require('path');
 const slash = require('slash');
+
+// Local Libs
+const logger = require('../logger');
 
 const IdsMetadata = require('../helpers/ids-metadata');
 
@@ -46,7 +48,7 @@ async function cleanFiles() {
  */
 function createNewCustomObj(obj) {
   const newObj = {};
-  if (obj.hasOwnProperty('primary')) { //eslint-disable-line
+  if (obj.hasOwnProperty('primary') && obj.primary.hasOwnProperty('base')) { //eslint-disable-line
     newObj.primary = {};
     newObj.primary.name = obj.primary.base.name;
     newObj.primary.value = obj.primary.base.value;
@@ -85,14 +87,24 @@ const createJSONfile = filePath => new Promise((resolve) => {
   const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
   const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
 
+  // Get properties for individual components
+  const themeBodyObj = createNewCustomObj(themeObj.body.color);
+
+  // Get the theme's name for file path/property generation
+  const themeName = path.basename(filePath, '.json');
+
   const colorsOnlyObj = {
     color: {
+      themeName,
       palette: themeColorPaletteObj,
       status: themeColorStatusObj,
-      brand: themeColorBrandObj
+      brand: themeColorBrandObj,
+      components: {
+        body: themeBodyObj
+      }
     }
   };
-  const fileName = `${path.basename(filePath, '.json')}-colors.json`;
+  const fileName = `${themeName}-colors.json`;
   fs.writeFileSync(`${PATHS.dest}/${fileName}`, JSON.stringify(colorsOnlyObj), 'utf-8');
   resolve(fileName);
 });

@@ -8,6 +8,7 @@
 
 ### v4.29.0 Features
 
+- `[Lookup]` Added a tooltip functionality when the data is overflowed. ([#3703](https://github.com/infor-design/enterprise/issues/3703))
 - `[Lookup]` Added a clear (x icon) button to clear the field. ([#740](https://github.com/infor-design/enterprise/issues/740))
 - `[Lookup]` Added a clear (x icon) button and apply button inside of modal so there are now two options to clear the field. ([#2507](https://github.com/infor-design/enterprise/issues/2507))
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
@@ -17,6 +18,7 @@
 ### v4.29.0 Fixes
 
 - `[About]` Fixed a bug where About dialogs disappeared when being closed by the Modal Manager API. ([#3898](https://github.com/infor-design/enterprise/issues/3898))
+- `[Application Menu]` Fixed personalization regressions on Soho theme ([#3704](github.com/infor-design/enterprise/issues/3704))
 - `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.1 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Bar Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Application Menu]` - Made it possible for App Menu Toolbars to dismiss the menu when the `dismissOnClickMobile` setting is true. ([#2831](https://github.com/infor-design/enterprise/issues/2831))
@@ -52,8 +54,11 @@
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
 - `[Spinbox]` Fixed an issue where a two or more digit min value would make it difficult to type in the spinbox. To fix this the values will only be validated on blur by default. ([#3909](https://github.com/infor-design/enterprise/issues/3909))
+- `[Slider]` Improved the sliding so that decimal values would not trigger the change event. ([#787](https://github.com/infor-design/enterprise-ng/issues/787))
+- `[Slider]` Reduced the number of change events that fire while sliding. ([#788](https://github.com/infor-design/enterprise-ng/issues/788))
 - `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 - `[Tree]` Fixed an issue where tree could not be expanded when using multiselect mode in IE 11. ([#3936](https://github.com/infor-design/enterprise/issues/3936))
+- `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 ## v4.28.0
 

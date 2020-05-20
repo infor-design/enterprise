@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="slider-regular">Regular</label>
+      <input id="slider-regular" data-init="false" name="slider-regular" value="10" class="slider" type="range" data-options="{'persistTooltip': false, tooltipContent: ['']}"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#slider-regular').slider().on('change', function () {
+    $('body').toast({ title: 'Change Fired', message: 'Value is : ' + $(this).val() });
+  });
+</script>

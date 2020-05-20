@@ -78,7 +78,6 @@ function getDistance(pointA, pointB) {
 
 // Actual Plugin Code
 Slider.prototype = {
-
   /**
    * @private
    * @returns {this} component instance
@@ -114,6 +113,10 @@ Slider.prototype = {
 
     if (this.settings.value === '') {
       this.settings.value = this.settings.min;
+    }
+
+    if (this.settings.step === 1) {
+      this.settings.step = undefined;
     }
 
     // build tick list
@@ -425,8 +428,6 @@ Slider.prototype = {
       } else {
         self.value([rangeVal]);
       }
-    } else {
-      self.value([rangeVal]);
     }
 
     self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
@@ -853,10 +854,6 @@ Slider.prototype = {
    * @param {number} updatedVal the target value
    */
   checkHandleDifference(handle, originalVal, updatedVal) {
-    // IE9 doesn't support animation so return immediately.
-    if ($('html').hasClass('ie9')) {
-      return;
-    }
     const origPercent = this.convertValueToPercentage(originalVal);
     const updatedPercent = this.convertValueToPercentage(updatedVal);
 
@@ -1016,7 +1013,9 @@ Slider.prototype = {
       });
     });
 
-    self.element.trigger('change');
+    if (this.element.next().find('.slider-handle.is-dragging').length === 0) {
+      self.element.trigger('change', { element: self.element, value: self._value });
+    }
     return self._value;
   },
 
