@@ -11,8 +11,7 @@ const SPLITTER_DEFAULTS = {
   side: 'left', // or right
   resize: 'immediate',
   containment: null, // document or parent
-  // save: true,
-  save: false,
+  save: true,
   maxWidth: {
     left: 'auto',
     right: 'auto'
