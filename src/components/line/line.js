@@ -211,6 +211,11 @@ Line.prototype = {
       xRotate.use = xRotate.small;
     }
 
+    // If card action present then use instead fit height.
+    if (isCardAction) {
+      s.fitHeight = false;
+    }
+
     // Get maxes
     const getMaxes = (d, opt) => d3.max(d.data, d2 => (opt ? d2.value[opt] : d2.value));
 
