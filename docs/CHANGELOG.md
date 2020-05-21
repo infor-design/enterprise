@@ -11,6 +11,7 @@
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
 - `[Slider]` Added the ability to set position of the tooltip. ([#3746](https://github.com/infor-design/enterprise/issues/3746))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
+- `[Homepage]` Homepage edit events (resize, reorder, remove widgets) now fire on widget elements too ([#3679](https://github.com/infor-design/enterprise/issues/3679))
 
 ### v4.29.0 Fixes
 
