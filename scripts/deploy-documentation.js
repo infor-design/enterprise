@@ -104,7 +104,8 @@ const serverURIs = {
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
   staging: 'https://staging.design.infor.com/api/docs/',
-  prod: 'https://design.infor.com/api/docs/'
+  prod: 'https://design.infor.com/api/docs/',
+  dev: 'https://dev.design.infor.com/api/docs/'
 };
 const packageJson = require(`${rootPath}/package.json`);
 const testComponents = [
