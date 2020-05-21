@@ -313,10 +313,10 @@ Homepage.prototype = {
           card.append(homepage.guide);
           homepage.refresh(false);
         })
-        .on('dragend.card', function (event) {
+        .on('dragend.card', function () {
           const card = $(this);
           // Make sure this is not from a resize event, card should have is-dragging class
-          if(card.hasClass('is-dragging')){
+          if (card.hasClass('is-dragging')) {
             const cardOver = $(cards).has('.drop-indicator');
             if (card.index() < cardOver.index()) {
               card.insertAfter(cardOver);
