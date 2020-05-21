@@ -196,7 +196,8 @@ Validator.prototype = {
         const thisField = $(this);
         const handleEventData = thisField.data(`handleEvent${[(e.type || '')]}`);
 
-        if (thisField.is('[readonly]') && !thisField.parent().is('.field-fileupload')) {
+        if (thisField.is('[readonly]') && !thisField.parent().is('.field-fileupload') &&
+          !thisField.is('.lookup.is-not-editable')) {
           return;
         }
 

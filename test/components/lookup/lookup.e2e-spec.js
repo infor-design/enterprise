@@ -139,6 +139,14 @@ describe('Lookup editable strict tests', () => {
   it('input field should be readonly', async () => {
     expect(await element(by.css('.is-not-editable')).getAttribute('readonly')).toBeTruthy();
   });
+
+  it('Should validate', async () => {
+    await element(by.css('#lookup')).sendKeys(protractor.Key.TAB);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.error-message'))), config.waitsFor);
+
+    expect(await element(by.css('.error-message')).getText()).toEqual('Required');
+  });
 });
 
 describe('Lookup multiselect tests', () => {

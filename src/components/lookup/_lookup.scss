@@ -36,6 +36,10 @@
       &:focus {
         @include focus-state();
       }
+
+      &.error {
+        border-color: $error-border-color;
+      }
     }
   }
 

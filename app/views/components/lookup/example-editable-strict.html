@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="twelve columns">
 		<div class="field">
-			<label class="label" for="lookup">Lookup that can only be edited by selection in modal</label>
-			<input type="text" data-init="false" class="lookup input-lg" id="lookup" placeholder="choose a product" />
+			<label class="label required" for="lookup">Lookup that can only be edited by selection in modal</label>
+			<input type="text" class="lookup input-lg" id="lookup" data-validate="required"  />
 		</div>
 	</div>
 </div>
@@ -29,7 +29,7 @@
   columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
   columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
-  //Init and get the api for the grid
+  // Init and get the api for the grid
   $('#lookup').lookup({
 		field: 'productName',
 		editable: false,
@@ -38,7 +38,7 @@
 			dataset: data,
 			selectable: "multiple",
 			clickToSelect: false,
-      editable: true,
+      editable: false,
 			toolbar: {
 				keywordFilter: true,
 				results: true
