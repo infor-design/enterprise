@@ -202,11 +202,15 @@ html[dir='rtl'] {
       }
     }
 
-    .splitter-btn .icon {
-      -ms-filter: fliph;
-      filter: fliph;
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
+    .splitter-btn {
+      left: -6px;
+
+      .icon {
+        -ms-filter: fliph;
+        filter: fliph;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+      }
     }
   }
 }

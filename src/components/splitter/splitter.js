@@ -66,8 +66,8 @@ Splitter.prototype = {
     const parent = splitter.parent();
     const direction = s.axis === 'x' ? 'left' : 'top';
     const thisSide = parent.is('.content') ? parent.parent() : parent;
-    const defaultOffset = 299;
     const dragHandle = $(`<div class="splitter-drag-handle">${$.createIcon('drag')}</div>`);
+    let defaultOffset = 299;
     let w = parent.width();
     let parentHeight;
 
@@ -100,41 +100,60 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
+        let isClickedOnce = false;
+        const splitAndRotate = (splitVal, el, isRotate) => {
+          self.splitTo(splitVal, parentHeight);
+          $(el)[isRotate ? 'addClass' : 'removeClass']('rotate');
+        };
         this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
         this.splitterCollapseButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
           this.splitterCollapseButton.addClass('rotate');
         }
         this.splitterCollapseButton.click(function () {
-          if (savedOffset <= 0) {
-            if (splitter[0].offsetLeft <= 10) {
-              self.splitTo(defaultOffset, parentHeight);
-              $(this).addClass('rotate');
-            } else {
-              savedOffset = splitter[0].offsetLeft;
-              self.splitTo(0, parentHeight);
-              $(this).removeClass('rotate');
+          if (self.isRTL && !self.isSplitterHorizontal) {
+            const containerWidth = self.getContainerWidth() - 20;
+            const x = containerWidth;
+            if (!isClickedOnce) {
+              savedOffset = containerWidth - savedOffset;
+              defaultOffset = containerWidth - defaultOffset;
             }
-          } else if (splitter[0].offsetLeft > 10) {
-            savedOffset = splitter[0].offsetLeft;
-            self.splitTo(0, parentHeight);
-            $(this).removeClass('rotate');
+            const left = splitter[0].offsetLeft;
+            if (savedOffset >= x) {
+              if (left >= containerWidth) {
+                splitAndRotate(defaultOffset, this, true);
+              } else {
+                savedOffset = left;
+                splitAndRotate(x, this, false);
+              }
+            } else if (left < containerWidth) {
+              savedOffset = left;
+              splitAndRotate(x, this, false);
+            } else {
+              splitAndRotate(savedOffset, this, true);
+              savedOffset = x;
+            }
           } else {
-            self.splitTo(savedOffset, parentHeight);
-            $(this).addClass('rotate');
-            savedOffset = 0;
+            const left = splitter[0].offsetLeft;
+            if (savedOffset <= 0) {
+              if (left <= 10) {
+                splitAndRotate(defaultOffset, this, true);
+              } else {
+                savedOffset = left;
+                splitAndRotate(0, this, false);
+              }
+            } else if (left > 10) {
+              savedOffset = left;
+              splitAndRotate(0, this, false);
+            } else {
+              splitAndRotate(savedOffset, this, true);
+              savedOffset = 0;
+            }
           }
+          isClickedOnce = true;
         });
       }
-      if (this.isRTL) {
-        this.container = this.element.closest('.splitter-container');
-        if (!this.container.length) {
-          thisSide.parent().addClass('splitter-container');
-          this.container = this.element.closest('.splitter-container');
-        }
-        this.containerWidth = this.container.outerWidth();
-        w = this.containerWidth - w;
-      }
+      this.setSplitterContainer(thisSide.parent());
     } else if (this.isSplitterHorizontal) {
       this.topPanel = splitter.prev();
       w = this.topPanel.height();
@@ -146,13 +165,16 @@ Splitter.prototype = {
       this.rightSide = thisSide;
       this.leftSide = thisSide.prev().parent();
 
-      if (this.isRTL) {
-        w = this.leftSide.outerWidth() - parseInt(w, 10);
-      }
-
       thisSide.prev()
         .addClass('flex-grow-shrink')
         .parent().addClass('splitter-container');
+
+      this.setSplitterContainer(thisSide.parent());
+    }
+
+    if (this.isRTL && !this.isSplitterHorizontal) {
+      const containerWidth = this.getContainerWidth();
+      w = containerWidth >= w ? containerWidth - w : w;
     }
 
     // Restore from local storage
@@ -240,6 +262,29 @@ Splitter.prototype = {
   },
 
   /**
+   * Set the splitter container
+   * @private
+   * @param {jQueryElement} parentEl The main parent container element.
+   * @returns {void}
+   */
+  setSplitterContainer(parentEl) {
+    this.container = this.element.closest('.splitter-container');
+    if (!this.container.length && parentEl && parentEl.length) {
+      parentEl.addClass('splitter-container');
+      this.container = this.element.closest('.splitter-container');
+    }
+  },
+
+  /**
+   * Get splitter container width
+   * @private
+   * @returns {number} Container width
+   */
+  getContainerWidth() {
+    return this.container?.outerWidth() || 0;
+  },
+
+  /**
    * Toggle selection
    * @private
    * @returns {void}
@@ -289,9 +334,16 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeRight(splitter, w) {
+    let width = w;
+    let left = w - 1;
+    if (this.isRTL && !this.isSplitterHorizontal) {
+      const containerWidth = this.getContainerWidth();
+      width = containerWidth >= w ? ((containerWidth - w) - 20) : w;
+      left = w;
+    }
     // Adjust Left and Right Side
-    this.leftSide[0].style.width = `${this.isRTL ? (this.containerWidth - w) - 20 : w}px`;
-    splitter[0].style.left = `${(w - (this.isRTL ? 0 : 1))}px`;
+    this.leftSide[0].style.width = `${width}px`;
+    splitter[0].style.left = `${left}px`;
   },
 
   /**
