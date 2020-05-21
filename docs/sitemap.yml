@@ -146,7 +146,7 @@ sections:
   - name: Locale
     slug: locale
   - name: List Filter
-  slug: listfilter
+    slug: listfilter
   - name: Mask
     slug: mask
   - name: Personalize
