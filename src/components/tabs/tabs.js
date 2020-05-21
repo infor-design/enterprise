@@ -3957,6 +3957,10 @@ Tabs.prototype = {
     }
     $('.tab-panel input').off('error.tabs valid.tabs');
 
+    this.addTabButton.remove();
+    this.addTabButton = undefined;
+    this.element.find('.close.icon').remove();
+
     return this;
   },
 

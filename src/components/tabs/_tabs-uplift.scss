@@ -39,4 +39,15 @@
   }
 }
 
+.tab-container.horizontal .add-tab-button {
+  margin-top: 7px;
+  padding: 0;
+  width: 35px;
+
+  span[aria-hidden] {
+    font-size: 25px;
+    top: -1px;
+  }
+}
+
 @import '../tabs-module/tabs-module-uplift';
