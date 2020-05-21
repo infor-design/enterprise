@@ -172,16 +172,19 @@ Homepage.prototype = {
                 const result = this.settings.onBeforeRemoveCard(card);
                 if (result && result.then && typeof result.then === 'function') { // A promise is returned
                   result.then(() => {
+                    card.triggerHandler('removecard', [card, homepage.state]);
                     card.remove();
                     homepage.refresh(false);
                     homepage.element.triggerHandler('removecard', [card, homepage.state]);
                   });
                 } else if (result) { // Boolean is returned instead of a promise
+                  card.triggerHandler('removecard', [card, homepage.state]);
                   card.remove();
                   homepage.refresh(false);
                   homepage.element.triggerHandler('removecard', [card, homepage.state]);
                 }
               } else {
+                card.triggerHandler('removecard', [card, homepage.state]);
                 card.remove();
                 homepage.refresh(false);
                 homepage.element.triggerHandler('removecard', [card, homepage.state]);
@@ -196,6 +199,7 @@ Homepage.prototype = {
           const eastHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-e')
             .drag({ axis: 'x' })
             .on('dragstart.handle', (dragevent) => {
+              dragevent.stopPropagation();
               dragevent.preventDefault();
               card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
@@ -228,12 +232,14 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, width: '' });
                   homepage.refresh(false);
+                  card.triggerHandler('resizecard', [card, homepage.state]);
                   homepage.element.triggerHandler('resizecard', [card, homepage.state]);
                 });
             });
           const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
             .drag({ axis: 'y' })
             .on('dragstart.handle', (dragevent) => {
+              dragevent.stopPropagation();
               dragevent.preventDefault();
               card.addClass('ui-resize-passive');
               card.css({ opacity: 0.9, zIndex: 90 });
@@ -262,6 +268,7 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, height: '' });
                   homepage.refresh(false);
+                  card.triggerHandler('resizecard', [card, homepage.state]);
                   homepage.element.triggerHandler('resizecard', [card, homepage.state]);
                 });
             });
@@ -308,16 +315,20 @@ Homepage.prototype = {
         })
         .on('dragend.card', function () {
           const card = $(this);
-          const cardOver = $(cards).has('.drop-indicator');
-          if (card.index() < cardOver.index()) {
-            card.insertAfter(cardOver);
-          } else {
-            card.insertBefore(cardOver);
+          // Make sure this is not from a resize event, card should have is-dragging class
+          if (card.hasClass('is-dragging')) {
+            const cardOver = $(cards).has('.drop-indicator');
+            if (card.index() < cardOver.index()) {
+              card.insertAfter(cardOver);
+            } else {
+              card.insertBefore(cardOver);
+            }
+            card.removeClass('is-dragging');
+            homepage.guide.remove();
+            homepage.refresh(false);
+            card.triggerHandler('reordercard', [card, homepage.state]);
+            homepage.element.triggerHandler('reordercard', [card, homepage.state]);
           }
-          card.removeClass('is-dragging');
-          homepage.guide.remove();
-          homepage.refresh(false);
-          homepage.element.triggerHandler('reordercard', [card, homepage.state]);
         });
     } else {
       cards.attr('draggable', false);

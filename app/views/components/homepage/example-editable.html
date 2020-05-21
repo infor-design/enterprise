@@ -59,7 +59,11 @@
     }
   });
   $('.homepage')
-    .on('resizecard', function(event, card, data){ console.log("resizecard event: ", [card, data])})
-    .on('reordercard', function(event, card, data){ console.log("reordercard event: ", [card, data])})
-    .on('removecard', function(event, card, data){ console.log("removecard event: ", [card, data])});
+    .on('resizecard', function(event, card, data){ console.log("Homepage: resizecard event: ", [card, data])})
+    .on('reordercard', function(event, card, data){ console.log("Homepage: reordercard event: ", [card, data])})
+    .on('removecard', function(event, card, data){ console.log("Homepage: removecard event: ", [card, data])});
+  $('.widget')
+    .on('resizecard', function(event, card, data){ console.log("Widget: resizecard event: ", [card, data])})
+    .on('reordercard', function(event, card, data){ console.log("Widget: reordercard event: ", [card, data])})
+    .on('removecard', function(event, card, data){ console.log("Widget: removecard event: ", [card, data])});
 </script>
