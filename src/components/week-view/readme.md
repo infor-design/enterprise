@@ -84,7 +84,7 @@ The following data fields are used.
 - id - A unique eventType id
 - label - The label that will show up in the legend
 - translationKey - The key that will be looked up in the locale data
-- color - The color from the color pallete (without the color number)
+- color - The color from the color palette (without the color number)
 - checked - If true the event checkbox will appear checked
 - disabled - If true the event checkbox will appear disabled from use
 

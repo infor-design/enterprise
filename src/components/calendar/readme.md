@@ -22,7 +22,7 @@ The setup for a calendar only involves creating a `div` with the class `calendar
 - The `calendar-monthview` section is a `div` with where the monthview calendar will be rendered.
 - The `calendar-weekview` will hold the day and week container (if used)
 - The `calendar-event-details` is also an accordion where the event details will be shown when you click on a day.
-- The `calendar-event-mobile` shuold be a listview, which is the calendar-event-details section shown at mobile breakpoints as a list instead.
+- The `calendar-event-mobile` should be a listview, which is the calendar-event-details section shown at mobile breakpoints as a list instead.
 
 The calendar supports event rendering, for all day and spanning days. It supports locales and rendering specific months and Ajax. Filtering is done with checkboxes in the event legend. You can change months with the arrows or picker on the header.
 
@@ -107,7 +107,7 @@ The following data fields are used.
 - id - A unique eventType id
 - label - The label that will show up in the legend
 - translationKey - The key that will be looked up in the locale data
-- color - The color from the color pallete (without the color number)
+- color - The color from the color palette (without the color number)
 - checked - If true the event checkbox will appear checked
 - disabled - If true the event checkbox will appear disabled from use
 

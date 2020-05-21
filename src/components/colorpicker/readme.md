@@ -22,7 +22,7 @@ demo:
 
 ## Code Example
 
-The color picker consists of an input with `class="colorpicker"`. It can be initialized manually or with the page initializer. Once initialized, it functions similarly to a dropdown except that the list shows a color pallete in the popup. A tooltip shows the hex code to be inserted if you hover it on the popup. After selecting, the hex code is inserted. You can also optionally select the label into the field instead of the hex.
+The color picker consists of an input with `class="colorpicker"`. It can be initialized manually or with the page initializer. Once initialized, it functions similarly to a dropdown except that the list shows a color palette in the popup. A tooltip shows the hex code to be inserted if you hover it on the popup. After selecting, the hex code is inserted. You can also optionally select the label into the field instead of the hex.
 
 ```html
 <div class="field">

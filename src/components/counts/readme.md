@@ -62,7 +62,7 @@ If you want the counts to appear attached to the header area and you use persona
 
 ## Code Example - Widget Counts
 
-Counts also have a style for use within a widget. Also called instance Counts from the original use case. These are simple CSS/HTML components with a `count` and `title` element. You can use any of the colors in the [pallette]( ./colors).
+Counts also have a style for use within a widget. Also called instance Counts from the original use case. These are simple CSS/HTML components with a `count` and `title` element. You can use any of the colors in the [palette]( ./colors).
 
 ```html
 <div class="instance-count ">
