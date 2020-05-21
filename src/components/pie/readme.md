@@ -65,7 +65,7 @@ See also [Donut Chart Example](./demo/components/donut/example-index?font=source
 
 ## Keyboard Shortcuts
 
-- <kbd>Longpress</kbd> show tooltip on touch devices.
+- <kbd>Longpress</kbd> Show tooltip on touch devices.
 
 ## Upgrading from 3.X
 
