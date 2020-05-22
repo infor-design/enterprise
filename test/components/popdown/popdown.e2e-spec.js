@@ -123,3 +123,35 @@ describe('Popdown first last tab Tests', () => {
     expect(await focusedId()).toEqual('date-field-normal');
   });
 });
+
+describe('Popdown/Lookup integration Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/popdown/test-contains-lookup.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should remain open when an inner Lookup component is opened', async () => {
+    // Open the Popdown
+    await element(by.id('popdown-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
+
+    // Open the Lookup
+    await element(by.css('.lookup-wrapper > .trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+
+    // Test that the Popdown remained open
+    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
+
+    // Choose an option from the Lookup
+    await element(by.css('#lookup-datagrid > div.datagrid-wrapper > table > tbody > tr:nth-child(1) > td:nth-child(2) > div > a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    // Test that the Popdown remained open
+    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
+  });
+});

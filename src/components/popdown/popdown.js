@@ -148,6 +148,8 @@ Popdown.prototype = {
       });
 
     // First and last tab
+    this.setFirstLastTab();
+
     // When changes happen within the subtree on the Popdown, rebuilds the internal hash of
     // tabbable elements used for retaining focus.
     this.changeObserver = new MutationObserver(() => {
@@ -205,6 +207,9 @@ Popdown.prototype = {
     // If a target element is passed from an event, check it for some easy types.
     if (targetElem) {
       if (targetElem.classList.contains('overlay')) {
+        return true;
+      }
+      if (this.popdown[0].contains(targetElem)) {
         return true;
       }
     }
@@ -267,7 +272,85 @@ Popdown.prototype = {
   },
 
   /**
-   *
+   * Set first last tab action.
+   * @private
+   * @returns {void}
+   */
+  setFirstLastTab() {
+    const s = this.settings;
+    if (s.firstLastTab && (/function|boolean|object/.test(typeof s.firstLastTab))) {
+      let first = null;
+      let last = null;
+      let callback = null;
+      if (typeof s.firstLastTab === 'object') {
+        if (s.firstLastTab.first) {
+          first = s.firstLastTab.first instanceof jQuery ?
+            s.firstLastTab.first : $(s.firstLastTab.first);
+          first.first();
+          if (!this.popdown[0].contains(first[0])) {
+            first = null;
+          }
+        }
+        if (s.firstLastTab.last) {
+          last = s.firstLastTab.last instanceof jQuery ?
+            s.firstLastTab.last : $(s.firstLastTab.last);
+          last.first();
+          if (!this.popdown[0].contains(last[0])) {
+            last = null;
+          }
+        }
+        if (typeof s.firstLastTab.callback === 'function') {
+          callback = s.firstLastTab.callback;
+        }
+      } else if (typeof s.firstLastTab === 'function') {
+        callback = s.firstLastTab;
+      } else if (typeof s.firstLastTab === 'boolean' ||
+        s.firstLastTab) {
+        callback = this.closeAndContinue;
+      }
+
+      if (callback) {
+        if ((!first || !last) || (first && !first.length) || (last && !last.length)) {
+          // Focusable (only input/select/textarea or with tabindex) elements in popdown
+          const focusable = `input:not(:disabled):not([tabindex^="-"]),
+            select:not(:disabled):not([tabindex^="-"]),
+            textarea:not(:disabled):not([tabindex^="-"]),
+            [tabindex]:not(:disabled):not([tabindex^="-"])`;
+          const focusableElem = this.popdown.find(focusable);
+          if (!first || (first && !first.length)) {
+            first = focusableElem.first();
+          }
+          if (!last || (last && !last.length)) {
+            last = focusableElem.last();
+          }
+        }
+
+        // Attach them to self, so later can turn them off
+        this.focusableElem = { first, last };
+
+        // First element
+        first.on('keydown.popdown', (e) => {
+          if (e.keyCode === 9 && e.shiftKey) {
+            e.preventDefault();
+            callback({ e, self: this, first });
+          }
+        });
+        // Last element
+        last.on('keydown.popdown', (e) => {
+          if (e.keyCode === 9 && !e.shiftKey) {
+            e.preventDefault();
+            callback({ e, self: this, last });
+          }
+        });
+      }
+    }
+  },
+
+  /**
+   * Creates an internal list of focusable items within the Popdown component,
+   * which is used for managing tab order.
+   * @private
+   * @returns {void}
    */
   setFocusableElems() {
     const extraSelectors = [
@@ -338,8 +421,15 @@ Popdown.prototype = {
 
     // Generic function for checking Popdown focus before closing
     function handleFocusOut(e) {
-      console.log(e);
       if (self.focusableElems.includes(e.target) || self.hasFocus(e.target)) {
+        self.keyTarget = e.target;
+        return;
+      }
+      // Using `keydown` sometimes prematurely causes the Popdown to close if elements
+      // near the front or back are focused. `keyTarget` detects what was previously clicked
+      // and is used as an additional element check in these cases.
+      if (e.target.tagName === 'BODY' && self.keyTarget) {
+        delete self.keyTarget;
         return;
       }
       self.close();
@@ -403,6 +493,10 @@ Popdown.prototype = {
     if (this.addEventsTimer) {
       this.addEventsTimer.destroy(true);
       delete this.addEventsTimer;
+    }
+
+    if (this.keyTarget) {
+      delete this.keyTarget;
     }
 
     const self = this;
@@ -595,7 +689,17 @@ Popdown.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-expanded');
 
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
+
     // First and last turn off and withdraw
+    if (this.focusableElem) {
+      this.focusableElem.first.off('keydown.popdown');
+      this.focusableElem.last.off('keydown.popdown');
+      delete this.focusableElem;
+    }
     if (this.focusableElems) {
       this.focusableElems.first.off('keydown.popdown');
       this.focusableElems.last.off('keydown.popdown');

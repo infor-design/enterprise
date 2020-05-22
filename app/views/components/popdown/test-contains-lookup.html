@@ -5,21 +5,21 @@
       <span>Trigger Popdown</span>
     </button>
     <div class="popdown hidden">
-      <div class="widget">
+      <form id="lookup-form" class="widget" action="#" method="post">
         <div class="widget-header">
           <h2 class="widget-title">Look Up Something</h2>
         </div>
-        <div class="widget-content">
+        <div class="widget-content" style="padding: 20px;">
           <div class="field">
             <label for="lookup-input">Lookup</label>
             <input id="lookup-input" class="lookup" data-init="false"/>
           </div>
         </div>
         <div class="widget-footer modal-buttonset">
-          <button id="edit-cart" type="button" class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
-          <button id="checkout" type="button" class="btn-modal-primary" style="width: 50%;">Checkout</button>
+          <button id="reset" type="reset" class="btn-modal-secondary" style="width: 50%;">Reset</button>
+          <button id="accept" type="submit" class="btn-modal-primary" style="width: 50%;">Accept</button>
         </div>
-      </div>
+      </form>
     </div>
 
   </div>
@@ -69,5 +69,15 @@
         fullWidth: true
       }
     }
+  });
+
+  function closePopdown() {
+    $('#popdown-trigger').data('popdown').close();
+  }
+
+  $('#lookup-form').on('submit.test', function (e) {
+    e.preventDefault();
+    closePopdown();
+    return false;
   });
 </script>
