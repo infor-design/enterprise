@@ -62,6 +62,7 @@
 - `[Slider]` Reduced the number of change events that fire while sliding. ([#788](https://github.com/infor-design/enterprise-ng/issues/788))
 - `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 - `[Tree]` Fixed an issue where tree could not be expanded when using multiselect mode in IE 11. ([#3936](https://github.com/infor-design/enterprise/issues/3936))
+- `[Tabs]` Fixed an issue where calling destroy did not remove the add tab button. ([#1439](https://github.com/infor-design/enterprise/issues/1439))
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 ## v4.28.0

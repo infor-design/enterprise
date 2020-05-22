@@ -6,7 +6,7 @@
     <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-2986" target="_blank">Related JIRA Ticket</a>.</p>
 
     <p>Activating Tabs with the "addTabButton" option set to true causes an extra tab at the end of the stack to exist.  This can add a new empty tab and panel to the list.</p>
-
+    <p>Also as an extra test try to <a class="hyperlink" id="reinvoke" href="#">destroy and invoke</a>  the tabs component.</p>
     <p></p>
 
   </div>
@@ -178,5 +178,12 @@
 
     // Run "changeTabSettings()" one time on intialization to invoke with defaults
     changeTabSettings();
+
+    $('#reinvoke').on('click', function () {
+      var tabs = $('#add-capable-tabs');
+      var settings = tabs.settings;
+      tabs.data('tabs').destroy();
+      tabs.tabs(settings);
+    });
   });
 </script>

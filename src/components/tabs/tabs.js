@@ -3957,6 +3957,12 @@ Tabs.prototype = {
     }
     $('.tab-panel input').off('error.tabs valid.tabs');
 
+    if (this.addTabButton) {
+      this.addTabButton.remove();
+      this.addTabButton = undefined;
+    }
+    this.element.find('.close.icon').remove();
+
     return this;
   },
 
