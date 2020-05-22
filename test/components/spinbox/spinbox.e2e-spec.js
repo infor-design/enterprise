@@ -87,4 +87,22 @@ describe('Spinbox Range Tests tests', () => {
 
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
   });
+
+  it('Should be able to correct over', async () => {
+    await element(by.id('limited-spinbox-2')).clear();
+    await element(by.id('limited-spinbox-2')).sendKeys('999');
+    await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
+  });
+
+  it('Should be able to correct text', async () => {
+    await element(by.id('limited-spinbox-2')).clear();
+    await element(by.id('limited-spinbox-2')).sendKeys('AA999');
+    await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
+  });
 });
