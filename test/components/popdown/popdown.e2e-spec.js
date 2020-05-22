@@ -75,7 +75,7 @@ describe('Popdown first last tab Tests', () => {
     await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should open and first input should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
@@ -85,14 +85,14 @@ describe('Popdown first last tab Tests', () => {
 
     // Tab on first input
     await element(by.css('#first-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Last input should be focused in popdown.
     expect(await focusedId()).toEqual('last-name');
 
     // Tab on last input in popdown
     await element(by.css('#last-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should close and next input (another-field) should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
@@ -103,7 +103,7 @@ describe('Popdown first last tab Tests', () => {
     // Shift + Tab on this next to popdown input (another-field)
     await element(by.css('#another-field'))
       .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should open again and first input should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
@@ -114,7 +114,7 @@ describe('Popdown first last tab Tests', () => {
     // Shift + Tab on first input in popdown
     await element(by.css('#first-name'))
       .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should close and previous input (date field) should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
