@@ -1,6 +1,6 @@
 ---
 title: MonthView
-description: null
+description: A Full page monthview shared component.
 demo:
   embedded:
   - name: Full Page MonthView Example
@@ -12,8 +12,7 @@ demo:
     slug: test-restrict-month-selection
 ---
 
-The setup for a monthview only involves creating an `<div>` with the class `monthview`. The monthview is also used in [datepicker](./datepicker) popup (isPopup option). The [calendar](./calendar) is also part of the calendar.
-This plugin works using Locale plugin which provides data for the calendar, including calendar format for [all supported locales](./locale).
+The setup for a monthview only involves creating an `<div>` with the class `monthview`. The monthview is also used in [datepicker](./datepicker) popup (isPopup option). and inside the [calendar](./calendar) component. This component works by using Locale plugin which provides data for the calendar for [all supported locales](./locale). This data includes start day of the week, format and date translations as well as UmAlQura and Gregorion calendars.
 
 ```html
 <div class="monthview">
@@ -31,9 +30,16 @@ The monthview is a very complex component to code for accessibility. We take the
 
 ## Keyboard Shortcuts
 
-- <kbd>Tab</kbd> - Tabbing will tab across the header elements
-
-Future: arrow keys will work.
+- <kbd>Tab</kbd> - Tabbing will tab across the header elements and into the monthview
+- <kbd>Shift + Tab</kbd> reverses the direction of the tab order.
+- <kbd>Up</kbd> and <kbd>Down</kbd> goes to the same day of the week in the previous or next week respectively. If the user advances past the end of the month they continue into the next or previous month as appropriate
+- <kbd>Left</kbd> and <kbd>Right</kbd> advances one day to the next, also in a continuum. Visually, focus is moved from day to day and wraps from row to row in a grid of days and weeks
+- <kbd>Control + Page Up</kbd> moves to the same date in the previous year
+- <kbd>Control + Page Down</kbd> moves to the same date in the next year
+- <kbd>Home</kbd> moves to the first day of the current month
+- <kbd>End</kbd> moves to the last day of the current month
+- <kbd>Page Up</kbd> moves to the same date in the previous month
+- <kbd>Page Down</kbd> moves to the same date in the next month
 
 ## Upgrading from 3.X
 
