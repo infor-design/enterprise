@@ -1,8 +1,7 @@
-
 <div class="row">
   <div class="six columns">
 
-    <div class="accordion" data-demo-set-links="true" data-options="{'allowOnePane': false}">
+    <div class="accordion" id="accordion-example" data-options="{'allowOnePane': false}">
       <div class="accordion-header" id="header-one">
         <a href="#"><span>Warehouse Location</span></a>
       </div>
@@ -64,3 +63,11 @@
 
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#accordion-example').data('accordion').expand('header-four');
+    $('#accordion-example').data('accordion').collapse('header-four');
+    $('#accordion-example').data('accordion').expand('header-three');
+  });
+</script>

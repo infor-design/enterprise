@@ -113,6 +113,32 @@ describe('Accordion API', () => {
       }, 300);
     }, 300);
   });
+
+  it('can expand by ID', (done) => {
+    expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeFalsy();
+    expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeFalsy();
+
+    accordionObj.expand('header-two');
+
+    setTimeout(() => {
+      expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
+      expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeTruthy();
+      expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeFalsy();
+      expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeFalsy();
+
+      accordionObj.collapse('header-two');
+
+      setTimeout(() => {
+        expect(accordionObj.isExpanded(accordionObj.headers[0])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[1])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[2])).toBeFalsy();
+        expect(accordionObj.isExpanded(accordionObj.headers[3])).toBeFalsy();
+        done();
+      }, 300);
+    }, 300);
+  });
 });
 
 describe('Accordion API (settings)', () => {
