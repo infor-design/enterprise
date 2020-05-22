@@ -289,6 +289,7 @@
 	"/dist/sass/src/components/tooltip/_tooltip-uplift.scss",
 	"/dist/sass/src/components/tooltip/_tooltip.scss",
 	"/dist/sass/src/components/tree/_tree.scss",
+	"/dist/sass/src/components/tree/_tree-uplift.scss",
 	"/dist/sass/src/components/treemap/_treemap.scss",
 	"/dist/sass/src/components/typography/_typography-uplift.scss",
 	"/dist/sass/src/components/typography/_typography.scss",

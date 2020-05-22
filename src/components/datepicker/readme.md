@@ -75,7 +75,4 @@ The Date Picker is a complex control to code for accessibility.
 
 ## Upgrading from 3.X
 
-- Change `inforLabel` class to `label`
-- Change `inforDateField` to class `datepicker`
-- Optionally, set the `placeholder` and `data-mask`
-- Wrap the input and label in a `class="field"` element
+- This is a new component for 4.x

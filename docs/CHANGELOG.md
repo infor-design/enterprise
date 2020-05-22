@@ -24,6 +24,7 @@
 - `[General]` We Updated a lot of development dependencies. Most important things to note are: we now support node 12 for development and this is recommended, from tests 13 will also work. Node 14 will not work. We updated jQuery to 3.5.1 as a client side dependency and d3 to 5.16.0. If copying files from the `dist` folder note that the d3 file is called d3.v5.js. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Bar Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Application Menu]` - Made it possible for App Menu Toolbars to dismiss the menu when the `dismissOnClickMobile` setting is true. ([#2831](https://github.com/infor-design/enterprise/issues/2831))
+- `[Calendar/Weekview/Monthview]` Added more docs and exposed them on the design site. ([#3575](https://github.com/infor-design/enterprise/issues/3758))
 - `[Checkbox]` Fixed an issue where the error icon was inconsistent between subtle and vibrant themes. ([#3575](https://github.com/infor-design/enterprise/issues/3575))
 - `[Column Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Datagrid]` Fixed an issue where blank tooltip was showing when use Alert Formatter and no text. ([#2852](https://github.com/infor-design/enterprise/issues/2852))
@@ -55,11 +56,13 @@
 - `[Notification]` Fixed an issue where the icons were lagging in the animation. ([#2099](https://github.com/infor-design/enterprise/issues/2099))
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
+- `[Splitter]` Fixed an issue where dragging for RTL direction was not working. ([#1813](https://github.com/infor-design/enterprise/issues/1813))
 - `[Spinbox]` Fixed an issue where a two or more digit min value would make it difficult to type in the spinbox. To fix this the values will only be validated on blur by default. ([#3909](https://github.com/infor-design/enterprise/issues/3909))
 - `[Slider]` Improved the sliding so that decimal values would not trigger the change event. ([#787](https://github.com/infor-design/enterprise-ng/issues/787))
 - `[Slider]` Reduced the number of change events that fire while sliding. ([#788](https://github.com/infor-design/enterprise-ng/issues/788))
 - `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))
 - `[Tree]` Fixed an issue where tree could not be expanded when using multiselect mode in IE 11. ([#3936](https://github.com/infor-design/enterprise/issues/3936))
+- `[Tabs]` Fixed an issue where calling destroy did not remove the add tab button. ([#1439](https://github.com/infor-design/enterprise/issues/1439))
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 ## v4.28.0
@@ -1477,7 +1480,7 @@
 
 ### v4.10.0 Fixes
 
-- `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpallette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
+- `[Dropdown]` Minor Breaking Change for Xss reasons we removed the ability to set a custom hex color on icons in the dropdown. You can still pass in one of the alert colors from the colorpalette (fx alert, good, info). This was not even shown in the examples so may not be missed. ([#256](https://github.com/infor-design/enterprise/issues/256))
 - `[Popupmenu]` Fixed a problem in popupmenu, if it was opened in immediate mode, submenus will be cleared of their text when the menu is eventually closed. ([#701](https://github.com/infor-design/enterprise/issues/701))
 - `[Editor]` Fixed xss injection problem on the link dialog. ([#257](https://github.com/infor-design/enterprise/issues/257))
 - `[Spinbox]` Fixed a height / alignment issue on spinboxes when used in short height configuration. ([#547](https://github.com/infor-design/enterprise/issues/547))

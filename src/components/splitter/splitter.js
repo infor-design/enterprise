@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Locale } from '../locale/locale';
 
 // Component Name
 const COMPONENT_NAME = 'splitter';
@@ -65,10 +66,12 @@ Splitter.prototype = {
     const parent = splitter.parent();
     const direction = s.axis === 'x' ? 'left' : 'top';
     const thisSide = parent.is('.content') ? parent.parent() : parent;
-    const defaultOffset = 299;
     const dragHandle = $(`<div class="splitter-drag-handle">${$.createIcon('drag')}</div>`);
+    let defaultOffset = 299;
     let w = parent.width();
     let parentHeight;
+
+    this.isRTL = Locale.isRTL();
 
     setTimeout(() => {
       parentHeight = parent.height();
@@ -97,32 +100,60 @@ Splitter.prototype = {
 
       if (s.collapseButton) {
         let savedOffset = 0;
+        let isClickedOnce = false;
+        const splitAndRotate = (splitVal, el, isRotate) => {
+          self.splitTo(splitVal, parentHeight);
+          $(el)[isRotate ? 'addClass' : 'removeClass']('rotate');
+        };
         this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
         this.splitterCollapseButton.appendTo(splitter);
         if (splitter[0].offsetLeft > 10) {
           this.splitterCollapseButton.addClass('rotate');
         }
         this.splitterCollapseButton.click(function () {
-          if (savedOffset <= 0) {
-            if (splitter[0].offsetLeft <= 10) {
-              self.splitTo(defaultOffset, parentHeight);
-              $(this).addClass('rotate');
-            } else {
-              savedOffset = splitter[0].offsetLeft;
-              self.splitTo(0, parentHeight);
-              $(this).removeClass('rotate');
+          if (self.isRTL && !self.isSplitterHorizontal) {
+            const containerWidth = self.getContainerWidth() - 20;
+            const x = containerWidth;
+            if (!isClickedOnce) {
+              savedOffset = containerWidth - savedOffset;
+              defaultOffset = containerWidth - defaultOffset;
             }
-          } else if (splitter[0].offsetLeft > 10) {
-            savedOffset = splitter[0].offsetLeft;
-            self.splitTo(0, parentHeight);
-            $(this).removeClass('rotate');
+            const left = splitter[0].offsetLeft;
+            if (savedOffset >= x) {
+              if (left >= containerWidth) {
+                splitAndRotate(defaultOffset, this, true);
+              } else {
+                savedOffset = left;
+                splitAndRotate(x, this, false);
+              }
+            } else if (left < containerWidth) {
+              savedOffset = left;
+              splitAndRotate(x, this, false);
+            } else {
+              splitAndRotate(savedOffset, this, true);
+              savedOffset = x;
+            }
           } else {
-            self.splitTo(savedOffset, parentHeight);
-            $(this).addClass('rotate');
-            savedOffset = 0;
+            const left = splitter[0].offsetLeft;
+            if (savedOffset <= 0) {
+              if (left <= 10) {
+                splitAndRotate(defaultOffset, this, true);
+              } else {
+                savedOffset = left;
+                splitAndRotate(0, this, false);
+              }
+            } else if (left > 10) {
+              savedOffset = left;
+              splitAndRotate(0, this, false);
+            } else {
+              splitAndRotate(savedOffset, this, true);
+              savedOffset = 0;
+            }
           }
+          isClickedOnce = true;
         });
       }
+      this.setSplitterContainer(thisSide.parent());
     } else if (this.isSplitterHorizontal) {
       this.topPanel = splitter.prev();
       w = this.topPanel.height();
@@ -137,6 +168,13 @@ Splitter.prototype = {
       thisSide.prev()
         .addClass('flex-grow-shrink')
         .parent().addClass('splitter-container');
+
+      this.setSplitterContainer(thisSide.parent());
+    }
+
+    if (this.isRTL && !this.isSplitterHorizontal) {
+      const containerWidth = this.getContainerWidth();
+      w = containerWidth >= w ? containerWidth - w : w;
     }
 
     // Restore from local storage
@@ -167,21 +205,21 @@ Splitter.prototype = {
       containment: s.containment || s.axis === 'x' ? 'document' : 'parent',
       containmentOffset: { left: 0, top: 0 }
     }).on('dragstart.splitter', () => {
-      const iframes = $('iframe');
+      const iframes = thisSide.parent().find('iframe');
       self.documentWidth = $(document).width();
 
       if (iframes.length > 0) {
         for (let i = 0, l = iframes.length; i < l; i++) {
           const frame = $(iframes[i]);
           // eslint-disable-next-line
-          const width = `${parseInt(getComputedStyle(frame.parent()[0]).width, 10) - 40}px`;
+          const width = `${parseInt(getComputedStyle(frame.parent()[0]).width, 10)}px`;
           const overlay = $('<div class="overlay splitter-overlay"></div>');
           overlay.css('width', width);
           frame.before(overlay);
         }
       }
     }).on('dragend.splitter', (e, args) => {
-      $('.overlay').remove();
+      thisSide.parent().find('.overlay').remove();
 
       if (s.collapseButton) {
         if (args[direction] <= 10) {
@@ -193,6 +231,14 @@ Splitter.prototype = {
 
       if (s.resize === 'end') {
         self.splitTo(args[direction], parentHeight);
+      }
+
+      // Run here on `dragend` and `drag` because it take some time to apply, which leaving some gap in between especially with case zero or less value.
+      if (s.resize === 'immediate' && this.isRTL && !this.isSplitterHorizontal) {
+        setTimeout(() => {
+          const left = parseInt(this.element.css('left'), 10);
+          self.splitTo(left, parentHeight);
+        }, 0);
       }
     }).on('drag.splitter', (e, args) => {
       if (args.left <= 0) {
@@ -213,6 +259,29 @@ Splitter.prototype = {
     this.element.attr({ 'aria-dropeffect': 'move', tabindex: '0', 'aria-grabbed': 'false' });
 
     return this;
+  },
+
+  /**
+   * Set the splitter container
+   * @private
+   * @param {jQueryElement} parentEl The main parent container element.
+   * @returns {void}
+   */
+  setSplitterContainer(parentEl) {
+    this.container = this.element.closest('.splitter-container');
+    if (!this.container.length && parentEl && parentEl.length) {
+      parentEl.addClass('splitter-container');
+      this.container = this.element.closest('.splitter-container');
+    }
+  },
+
+  /**
+   * Get splitter container width
+   * @private
+   * @returns {number} Container width
+   */
+  getContainerWidth() {
+    return this.container?.outerWidth() || 0;
   },
 
   /**
@@ -248,7 +317,7 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeLeft(splitter, leftArg) {
-    const left = this.leftSide.outerWidth() - leftArg;
+    const left = this.isRTL ? (leftArg + 20) : this.leftSide.outerWidth() - leftArg;
 
     // Adjust Left and Right Side
     this.rightSide[0].style.width = `${left}px`;
@@ -265,9 +334,16 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeRight(splitter, w) {
+    let width = w;
+    let left = w - 1;
+    if (this.isRTL && !this.isSplitterHorizontal) {
+      const containerWidth = this.getContainerWidth();
+      width = containerWidth >= w ? ((containerWidth - w) - 20) : w;
+      left = w;
+    }
     // Adjust Left and Right Side
-    this.leftSide[0].style.width = `${w}px`;
-    splitter[0].style.left = `${(w - 1)}px`;
+    this.leftSide[0].style.width = `${width}px`;
+    splitter[0].style.left = `${left}px`;
   },
 
   /**
@@ -283,14 +359,16 @@ Splitter.prototype = {
     const splitter = this.element;
 
     if (this.isSplitterRightSide) {
-      if (split > s.maxWidth.right) {
+      if ((!this.isRTL && split > s.maxWidth.right) ||
+        (this.isRTL && split < s.maxWidth.right)) {
         split = s.maxWidth.right;
       }
       this.resizeRight(splitter, split);
     } else if (this.isSplitterHorizontal) {
       this.resizeTop(splitter, split, parentHeight);
     } else {
-      if (split > s.maxWidth.left) {
+      if ((!this.isRTL && split > s.maxWidth.left) ||
+        (this.isRTL && split < s.maxWidth.left)) {
         split = s.maxWidth.left;
       }
       this.resizeLeft(splitter, split);

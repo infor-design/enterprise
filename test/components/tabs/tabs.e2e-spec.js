@@ -297,6 +297,13 @@ describe('Tabs click example-add-tab button tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should remove add on destroy', async () => {
+    expect(await element.all(by.css('.add-tab-button')).count()).toEqual(1);
+    await element(by.id('reinvoke')).click();
+
+    expect(await element.all(by.css('.add-tab-button')).count()).toEqual(1);
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-add-tab-button', async () => {
       const tabsEl = await element(by.id('add-capable-tabs'));

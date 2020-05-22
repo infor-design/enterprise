@@ -1,7 +1,7 @@
 [
-  { "id": "dto", "label": "Discretionary Time Off", "translationKey": "DiscretionaryTimeOff", "color": "azure", "checked": true, "click": null },
-  { "id": "admin", "label": "Admin", "translationKey": "AdministrativeLeave", "color": "amethyst", "checked": true, "click": null },
-  { "id": "team", "label": "Team Event", "translationKey": "TeamEvent", "color": "emerald", "checked": true, "click": null },
-  { "id": "sick", "label": "Sick Time", "translationKey": "SickTime", "color": "amber", "checked": true, "click": null },
-  { "id": "holiday", "label": "Company Holiday", "translationKey": "CompanyHoliday", "color": "graphite", "checked": true, "click": null, "disabled": true }
+  { "id": "dto", "label": "Discretionary Time Off", "translationKey": "DiscretionaryTimeOff", "color": "azure", "checked": true },
+  { "id": "admin", "label": "Admin", "translationKey": "AdministrativeLeave", "color": "amethyst", "checked": true },
+  { "id": "team", "label": "Team Event", "translationKey": "TeamEvent", "color": "emerald", "checked": true },
+  { "id": "sick", "label": "Sick Time", "translationKey": "SickTime", "color": "amber", "checked": true },
+  { "id": "holiday", "label": "Company Holiday", "translationKey": "CompanyHoliday", "color": "graphite", "checked": true, "disabled": true }
 ]

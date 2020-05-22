@@ -81,6 +81,8 @@ sections:
     slug: menubutton
   - name: Modal
     slug: modal
+  - name: Month View
+    slug: monthview
   - name: Multiselect
     slug: multiselect
   - name: Pager
@@ -135,6 +137,8 @@ sections:
     slug: tooltip
   - name: Tree
     slug: tree
+  - name: Week / Day View
+    slug: week-view
   - name: Wizard
     slug: wizard
 - name: Utilities
