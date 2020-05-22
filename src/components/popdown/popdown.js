@@ -2,12 +2,14 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 
 // jQuery Components
 
 // Component Name
 const COMPONENT_NAME = 'popdown';
+const loopDuration = 30;
 
 /**
  * The Popdown Component can be used to open an animated popdown from a button. This may in the future
@@ -148,6 +150,14 @@ Popdown.prototype = {
     // First and last tab
     this.setFirstLastTab();
 
+    // When changes happen within the subtree on the Popdown, rebuilds the internal hash of
+    // tabbable elements used for retaining focus.
+    this.changeObserver = new MutationObserver(() => {
+      this.setFocusableElems();
+    });
+    this.changeObserver.observe(this.element[0], { childList: true, subtree: true });
+    this.setFocusableElems();
+
     // Toggle on focus for popdown trigger
     if (this.settings.toggleOnFocus) {
       this.trigger.on('focus.popdown', () => {
@@ -163,31 +173,102 @@ Popdown.prototype = {
   },
 
   /**
-   * Detects whether or not the Popdown has focus.
-   * @private
-   * @param {HTMLElement|SVGElement} [target=undefined] an element to be checked for focus.
-   * @returns {boolean} whether or not the element is currently focused.
+   * Standard IDS check for focus.
+   * @returns {boolean} whether or not the Popdown itself, or a component inside the Popdown, currently has focus.
+   * In some cases, this needs to get access to child components to determine focus state.
    */
-  hasFocus(target) {
-    const active = target || document.activeElement;
-    if (this.trigger.is(active)) {
+  get isFocused() {
+    return this.hasFocus();
+  },
+
+  /**
+   * @private
+   * @param {HTMLElement} [targetElem=undefined] if defined as an HTMLElement, will be evaluated along with
+   * the active element when checking to see if a child element of an IDS component has focus.
+   * @returns {boolean} whether or not the Popdown itself, or a component inside the Popdown, currently has focus.
+   * In some cases, this needs to get access to child components to determine focus state.
+   */
+  hasFocus(targetElem = undefined) {
+    let componentHasFocus = false;
+    const activeElem = document.activeElement;
+
+    // If a valid HTMLElement isn't provided, cancel it out.
+    if (!(targetElem instanceof HTMLElement)) {
+      targetElem = undefined;
+    }
+
+    if (this.trigger.is($(activeElem))) {
       return true;
     }
-    if (this.popdown[0].contains(active)) {
+    if (this.popdown[0].contains(activeElem)) {
       return true;
     }
 
-    // If focus is on an internal open Dropdown/Multiselect, stay open.
-    const dds = this.popdown[0].querySelectorAll('.dropdown, .multiselect');
-    let isOpen = false;
-    dds.forEach((dd) => {
-      const api = $(dd).data('dropdown');
-      if (api && api.list && api.list.length && api.list[0].contains(active)) {
-        isOpen = true;
+    // If a target element is passed from an event, check it for some easy types.
+    if (targetElem) {
+      if (targetElem.classList.contains('overlay')) {
+        return true;
+      }
+      if (this.popdown[0].contains(targetElem)) {
+        return true;
+      }
+    }
+
+    if (!this.focusableElems) {
+      this.setFocusableElems();
+    }
+
+    // Check each match for IDS components that may have a more complex focus routine
+    // NOTE: Some elements that come through may be SVGs, careful which methods are used.
+    this.focusableElems.forEach((elem) => {
+      if (componentHasFocus) {
+        return;
+      }
+
+      // Check the base element
+      const $elem = $(elem);
+      if ($elem.is($(activeElem)) || (typeof elem.contains === 'function' && elem.contains(activeElem))) {
+        componentHasFocus = true;
+      }
+
+      // Dropdown/Multiselect
+      if ($elem.is('div.dropdown, div.multiselect')) {
+        componentHasFocus = $elem.parent().prev('select').data('dropdown')?.isFocused;
+      }
+
+      // Lookup
+      if ($elem.is('.lookup')) {
+        const lookupAPI = $elem.data('lookup');
+        componentHasFocus = lookupAPI?.isFocused;
+        if (!componentHasFocus && targetElem) {
+          componentHasFocus = lookupAPI?.modal?.element[0].contains(targetElem);
+        }
+      }
+
+      // Popupmenu
+      if ($elem.is('.btn-menu, .btn-actions')) {
+        componentHasFocus = $elem.data('popupmenu')?.isFocused;
+      }
+
+      // Searchfield
+      if ($elem.is('.searchfield')) {
+        componentHasFocus = $elem.data('searchfield')?.isFocused;
       }
     });
 
-    return isOpen;
+    // Check to see if a Popover/Tooltip has focus, and if that component's parent
+    // element is inside the Popdown
+    const tooltipParents = $(activeElem).parents('.tooltip, .popover');
+    if (tooltipParents.length) {
+      tooltipParents.each((i, elem) => {
+        const api = $(elem).data('tooltip');
+        if (api && api.isFocused) {
+          componentHasFocus = true;
+        }
+      });
+    }
+
+    return componentHasFocus;
   },
 
   /**
@@ -266,6 +347,29 @@ Popdown.prototype = {
   },
 
   /**
+   * Creates an internal list of focusable items within the Popdown component,
+   * which is used for managing tab order.
+   * @private
+   * @returns {void}
+   */
+  setFocusableElems() {
+    const extraSelectors = [
+      'div.dropdown',
+      'div.multiselect',
+      '.lookup-wrapper > span.trigger'
+    ];
+    const ignoredSelectors = [
+      'select',
+      'option'
+    ];
+
+    const elems = DOM.focusableElems(this.popdown[0], extraSelectors, ignoredSelectors);
+    this.focusableElems = elems;
+    this.focusableElems.first = elems[0];
+    this.focusableElems.last = elems[elems.length - 1];
+  },
+
+  /**
    * Close the popdown and if available focus to prev/next focusable item.
    * @private
    * @param  {object} args The keydown event, first or last element and popdown reference
@@ -310,36 +414,72 @@ Popdown.prototype = {
 
     // Auto focus
     if (this.settings.autoFocus) {
-      const focusElem = this.focusableElem ?
-        this.focusableElem.first : this.popdown.find(':focusable').first();
+      const focusElem = this.focusableElems ?
+        this.focusableElems.first : this.popdown.find(':focusable').first();
       focusElem.focus();
     }
 
+    // Generic function for checking Popdown focus before closing
     function handleFocusOut(e) {
-      if (!self.hasFocus(e.target)) {
-        self.close();
+      if (self.focusableElems.includes(e.target) || self.hasFocus(e.target)) {
+        self.keyTarget = e.target;
+        return;
       }
+      // Using `keydown` sometimes prematurely causes the Popdown to close if elements
+      // near the front or back are focused. `keyTarget` detects what was previously clicked
+      // and is used as an additional element check in these cases.
+      if (e.target.tagName === 'BODY' && self.keyTarget) {
+        delete self.keyTarget;
+        return;
+      }
+      self.close();
     }
 
     // Setup events that happen on open
     // Needs to be on a timer to prevent automatic closing of popdown.
-    setTimeout(() => {
-      $('body').on('resize.popdown', () => {
-        if (!self.hasFocus()) {
-          self.close();
+    if (this.addEventsTimer) {
+      this.addEventsTimer.destroy(true);
+      delete this.addEventsTimer;
+    }
+    this.addEventsTimer = new RenderLoopItem({
+      duration: loopDuration,
+      timeoutCallback() {
+        $('body').on('resize.popdown', (e) => {
+          handleFocusOut(e);
+        });
+
+        // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
+        // Also run this on `focusout` events that occur outside the Popdown, for keyboard access.
+        if (!self.settings.keepOpen) {
+          $(document).on('click.popdown', (e) => {
+            handleFocusOut(e);
+          });
         }
-      });
 
-      // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
-      // Also run this on `focusin` events that occur outside the Popdown, for keyboard access.
-      if (!self.settings.keepOpen) {
-        $(document)
-          .on('click.popdown', handleFocusOut)
-          .on('focusin.popdown', handleFocusOut);
+        // Setup a global keydown event that can handle the closing of modals in the proper order.
+        $(document).on('keydown.popdown', (e) => {
+          const popdownTargetElem = $(e.target).parents('.popdown');
+          const keyCode = e.which || e.keyCode;
+          switch (keyCode) {
+            // Escape Key
+            case 27:
+              if (popdownTargetElem.length) {
+                self.close();
+              }
+              break;
+            // Tab Key
+            case 9:
+              handleFocusOut(e);
+              break;
+            default:
+              break;
+          }
+        });
+
+        self.isAnimating = false;
       }
-
-      self.isAnimating = false;
-    }, 400);
+    });
+    renderLoop.register(this.addEventsTimer);
   },
 
   /**
@@ -350,6 +490,15 @@ Popdown.prototype = {
       return;
     }
 
+    if (this.addEventsTimer) {
+      this.addEventsTimer.destroy(true);
+      delete this.addEventsTimer;
+    }
+
+    if (this.keyTarget) {
+      delete this.keyTarget;
+    }
+
     const self = this;
     this.isAnimating = true;
     this.trigger.attr('aria-expanded', 'false');
@@ -357,13 +506,21 @@ Popdown.prototype = {
 
     // Turn off events
     $('body').off('resize.popdown');
-    $(document).off('click.popdown focusin.popdown');
+    $(document).off('click.popdown focusout.popdown keydown.popdown');
 
     // Sets the element to "display: none" to prevent interactions while hidden.
-    setTimeout(() => {
-      self.popdown[0].style.display = 'none';
-      self.isAnimating = false;
-    }, 400);
+    if (this.closeTimer) {
+      this.closeTimer.destroy(true);
+      delete this.closeTimer;
+    }
+    this.closeTimer = new RenderLoopItem({
+      duration: loopDuration,
+      timeoutCallback() {
+        self.popdown[0].style.display = 'none';
+        self.isAnimating = false;
+      }
+    });
+    renderLoop.register(this.closeTimer);
   },
 
   /**
@@ -532,11 +689,21 @@ Popdown.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-expanded');
 
+    if (this.changeObserver) {
+      this.changeObserver.disconnect();
+      delete this.changeObserver;
+    }
+
     // First and last turn off and withdraw
     if (this.focusableElem) {
       this.focusableElem.first.off('keydown.popdown');
       this.focusableElem.last.off('keydown.popdown');
       delete this.focusableElem;
+    }
+    if (this.focusableElems) {
+      this.focusableElems.first.off('keydown.popdown');
+      this.focusableElems.last.off('keydown.popdown');
+      delete this.focusableElems;
     }
 
     if (this.originalParent && this.originalParent.length) {

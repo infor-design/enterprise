@@ -75,7 +75,7 @@ describe('Popdown first last tab Tests', () => {
     await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should open and first input should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
@@ -85,14 +85,14 @@ describe('Popdown first last tab Tests', () => {
 
     // Tab on first input
     await element(by.css('#first-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Last input should be focused in popdown.
     expect(await focusedId()).toEqual('last-name');
 
     // Tab on last input in popdown
     await element(by.css('#last-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should close and next input (another-field) should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
@@ -103,7 +103,7 @@ describe('Popdown first last tab Tests', () => {
     // Shift + Tab on this next to popdown input (another-field)
     await element(by.css('#another-field'))
       .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should open again and first input should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
@@ -114,12 +114,44 @@ describe('Popdown first last tab Tests', () => {
     // Shift + Tab on first input in popdown
     await element(by.css('#first-name'))
       .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should close and previous input (date field) should be focused.
     expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#first-name')).isDisplayed()).toBeFalsy();
     expect(await element(by.css('#last-name')).isDisplayed()).toBeFalsy();
     expect(await focusedId()).toEqual('date-field-normal');
+  });
+});
+
+describe('Popdown/Lookup integration Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/popdown/test-contains-lookup.html?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should remain open when an inner Lookup component is opened', async () => {
+    // Open the Popdown
+    await element(by.id('popdown-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
+
+    // Open the Lookup
+    await element(by.css('.lookup-wrapper > .trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.lookup-modal'))), config.waitsFor);
+
+    // Test that the Popdown remained open
+    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
+
+    // Choose an option from the Lookup
+    await element(by.css('#lookup-datagrid > div.datagrid-wrapper > table > tbody > tr:nth-child(1) > td:nth-child(2) > div > a')).click();
+    await browser.driver.sleep(config.sleep);
+
+    // Test that the Popdown remained open
+    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
   });
 });

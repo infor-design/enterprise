@@ -14,6 +14,7 @@
 - `[Lookup]` Added a clear (x icon) button and apply button inside of modal so there are now two options to clear the field. ([#2507](https://github.com/infor-design/enterprise/issues/2507))
 - `[Lookup]` Fixed a bug where validation did not work if the lookup is non-editable (select only). ([#3950](https://github.com/infor-design/enterprise/issues/3950))
 - `[Multiselect]` Moved the functionality for displaying the Multiselect List's searchfield underneath/above the pseudo element into a configurable setting. ([#3864](https://github.com/infor-design/enterprise/issues/3864))
+- `[Popdown]` Fixed some integration problems with nested Lookups that were causing closing to happen prematurely. ([ng#760](https://github.com/infor-design/enterprise-ng/issues/760))
 - `[Slider]` Added the ability to set position of the tooltip. ([#3746](https://github.com/infor-design/enterprise/issues/3746))
 - `[Toast]` Added the ability to dismiss toasts via keyboard. ([#3521](https://github.com/infor-design/enterprise/issues/3521))
 - `[Homepage]` Homepage edit events (resize, reorder, remove widgets) now fire on widget elements too ([#3679](https://github.com/infor-design/enterprise/issues/3679))
