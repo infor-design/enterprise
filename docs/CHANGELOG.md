@@ -68,6 +68,8 @@
 - `[Tabs]` Fixed an issue where calling destroy did not remove the add tab button. ([#1439](https://github.com/infor-design/enterprise/issues/1439))
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
+(64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
+
 ## v4.28.0
 
 ### v4.28.0 Important Changes
@@ -144,7 +146,7 @@
 - `[Toolbar]` Improved the placeholder text color to be more visible in uplift (dark variant). ([#3727](https://github.com/infor-design/enterprise/issues/3727))
 - `[Tree]` Fixed an issue where use `UpdateNode()` method the data was not sync. ([#3724](https://github.com/infor-design/enterprise/issues/3724))
 
-(71 Issues Solved this release, Backlog Enterprise 260, Backlog Ng 82, 1048 Functional Tests, 1370 e2e Test)
+(71 Issues Solved This Release, Backlog Enterprise 260, Backlog Ng 82, 1048 Functional Tests, 1370 e2e Tests)
 
 ## v4.27.4
 
@@ -258,7 +260,7 @@
 - `[Week-View]` Changed the look of the week-view and day-view day of the week so its a 3 (or 2) letter abbreviation and emphasizes the date and spans two lines. This makes all the days of the week the same length. ([#3262](https://github.com/infor-design/enterprise/issues/3262))
 - `[Validation]` Fixed a bug where addMessage did not add messages to the parent. ([#711](https://github.com/infor-design/enterprise-ng/issues/711))
 
-(87 Issues Solved this release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Test)
+(87 Issues Solved This Release, Backlog Enterprise 279, Backlog Ng 75, 1033 Functional Tests, 1322 e2e Tests)
 
 ## v4.26.2
 
@@ -349,7 +351,7 @@
 - `[Validation/Checkboxes]` Fixed issues with making checkboxes required, the styling did not work for it and the scrollIntoView function and validation failed to fire. Note that to add required to the checkbox you need to add an extra span, adding a class to the label will not work because the checkbox is styled using the label already. ([#3147](https://github.com/infor-design/enterprise/issues/3147))
 - `[Validation]` Fixed an issue where calling removeMessage would not remove a manually added error class. ([#3318](https://github.com/infor-design/enterprise/issues/3318))
 
-(78 Issues Solved this release, Backlog Enterprise 336, Backlog Ng 77, 989 Functional Tests, 1246 e2e Test)
+(78 Issues Solved This Release, Backlog Enterprise 336, Backlog Ng 77, 989 Functional Tests, 1246 e2e Tests)
 
 ## v4.25.3
 
@@ -427,7 +429,7 @@
 - `[Searchfield]` Fixed an overlapping text in searchfield when close icon button is showed. ([#3135](https://github.com/infor-design/enterprise/issues/3135))
 - `[Tabs]` Fixed an issue where scroll was not working on mobile view for scrollable-flex layout. ([#2931](https://github.com/infor-design/enterprise/issues/2931))
 
-(47 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 96, 980 Functional Tests, 1196 e2e Test)
+(47 Issues Solved This Release, Backlog Enterprise 374, Backlog Ng 96, 980 Functional Tests, 1196 e2e Tests)
 
 ## v4.24.0
 
@@ -498,7 +500,7 @@
 - `[Demoapp]` Allow the query params that affect theming/personalization (theme/variant/colors) to be appended/adjusted on the browser's URL without affecting other query parameters, or adding unnecessary paramters that weren't changed.
 - `[Toolbar Searchfield]` Increased the amount of text shown when the Searchfield is not expanded, and appears similar to a button.  Also modified some styles in all themes to make alignment of the text better between the Searchfield and buttons when the Searchfield is not expanded. ([#2944](https://github.com/infor-design/enterprise/issues/2944))
 
-(74 Issues Solved this release, Backlog Enterprise 374, Backlog Ng 85, 974 Functional Tests, 1191 e2e Test)
+(74 Issues Solved This Release, Backlog Enterprise 374, Backlog Ng 85, 974 Functional Tests, 1191 e2e Tests)
 
 ## v4.23.0
 
@@ -564,7 +566,7 @@
 
 - `[Build System]` Created separate sets linting rules for demoapp, source code, and tests, as well as a base set of rules for all environments. ([#2662](https://github.com/infor-design/enterprise/issues/2662))
 
-(70 Issues Solved this release, Backlog Enterprise 378, Backlog Ng 82, 939 Functional Tests, 1136 e2e Test)
+(70 Issues Solved This Release, Backlog Enterprise 378, Backlog Ng 82, 939 Functional Tests, 1136 e2e Tests)
 
 ## v4.22.0
 
@@ -630,7 +632,7 @@
 - `[Demo App]` Changed the theme switch to call the page refresh. ([#2743](https://github.com/infor-design/enterprise/issues/2743))
 - `[Export]` Added support for separator to use custom string or object type with Export to CSV. ([#2490](https://github.com/infor-design/enterprise/issues/2490))
 
-(53 Issues Solved this release, Backlog Enterprise 342, Backlog Ng 81, 892 Functional Tests, 909 e2e Test)
+(53 Issues Solved This Release, Backlog Enterprise 342, Backlog Ng 81, 892 Functional Tests, 909 e2e Tests)
 
 ## v4.21.0
 
@@ -695,7 +697,7 @@
 
 - `[Custom Builds]` Improved Sass builder's ability to code split and include partials once. ([#1038](https://github.com/infor-design/enterprise/issues/1038))
 
-(61 Issues Solved this release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 880 e2e Test)
+(61 Issues Solved This Release, Backlog Enterprise 335, Backlog Ng 76, 867 Functional Tests, 880 e2e Tests)
 
 ## v4.20.0
 
@@ -826,7 +828,7 @@
 - `[Demo App]` Fixed routing issues that could cause 500 errors or crash the Demoapp. ([#2343](https://github.com/infor-design/enterprise/issues/2343))
 - `[Demo App]` Fixed an issue where the sorting was wrong on compressor data. ([#2390](https://github.com/infor-design/enterprise/issues/2390))
 
-(95 Issues Solved this release, Backlog Enterprise 296, Backlog Ng 79, 852 Functional Tests, 865 e2e Test)
+(95 Issues Solved This Release, Backlog Enterprise 296, Backlog Ng 79, 852 Functional Tests, 865 e2e Tests)
 
 ## v4.19.3
 
@@ -910,7 +912,7 @@
 - `[Fileuploader]` Fixed an issue where the fileuploader icon and close icon were misplaced and not visible in RTL after uploading a file. ([#2098](https://github.com/infor-design/enterprise/issues/2098))
 - `[Fileuploader]` Fixed an issue where backspace in IE11 caused the browser to go back instead of removing the uploaded file from the input. ([#2184](https://github.com/infor-design/enterprise/issues/2184))
 - `[Input]` Improved alignment of icons in the uplift theme input components. ([#2072](https://github.com/infor-design/enterprise/issues/2072))
-- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e Testss. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Locale]` Fixed an issue loading duplicate locales such as en-GB where the strings are copies, before you might get undefined strings. ([#2216](https://github.com/infor-design/enterprise/issues/2216))
 - `[Locale]` Added support for es-419 locale. ([#2204](https://github.com/infor-design/enterprise/issues/2204))
@@ -941,7 +943,7 @@
 - `[Demo App]` Fixed CSP and handling of image paths for better support of images in examples on IDS demo sites (demo.design.infor.com). ([#1888](https://github.com/infor-design/enterprise/issues/1888))
 - `[Personalize]` Separated personalization styles into standalone file for improved maintainability. ([#2127](https://github.com/infor-design/enterprise/issues/2127))
 
-(84 Issues Solved this release, Backlog Enterprise 311, Backlog Ng 79, 839 Functional Tests, 876 e2e Test)
+(84 Issues Solved This Release, Backlog Enterprise 311, Backlog Ng 79, 839 Functional Tests, 876 e2e Tests)
 
 ## v4.18.2
 
@@ -1023,7 +1025,7 @@
 - `[Docs]` Added a statement on supporting accessibility. ([#1540](https://github.com/infor-design/enterprise/issues/1540))
 - `[Docs]` Added the supported screen readers and some notes on accessibility. ([#1722](https://github.com/infor-design/enterprise/issues/1722))
 
-(50 Issues Solved this release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 803 e2e Test)
+(50 Issues Solved This Release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 803 e2e Tests)
 
 ## v4.17.1
 
@@ -1100,7 +1102,7 @@
 - `[Demoapp]` Removed query parameter for changing fonts. ([#1747](https://github.com/infor-design/enterprise/issues/1747))
 - `[Build]` Added a process to notify developers that things are being deprecated or going away. Documented the current deprecations in this system and made [notes for developers](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md#deprecations). ([#1747](https://github.com/infor-design/enterprise/issues/1747))
 
-(30 Issues Solved this release, Backlog Enterprise 224, Backlog Ng 59, 785 Functional Tests, 793 e2e Test)
+(30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 59, 785 Functional Tests, 793 e2e Tests)
 
 ## v4.16.0
 
@@ -1158,7 +1160,7 @@
 - `[Demo App]` Added a fix for incorrect links when running on windows. ([#1549](https://github.com/infor-design/enterprise/issues/1549))
 - `[Docs]` Added a fix to prevent the documentation generator from failing intermittently. ([#1377](https://github.com/infor-design/enterprise/issues/1377))
 
-(29 Issues Solved this release, Backlog Enterprise 203, Backlog Ng 69, 735 Functional Tests, 670 e2e Test)
+(29 Issues Solved This Release, Backlog Enterprise 203, Backlog Ng 69, 735 Functional Tests, 670 e2e Tests)
 
 ## v4.15.0
 
@@ -1225,7 +1227,7 @@
 - `[General]` Fixed some incorrect layouts. ([#1357](https://github.com/infor-design/enterprise/issues/1357))
 - `[Targeted Achievement]` Removed some older non working examples. ([#520](https://github.com/infor-design/enterprise/issues/520))
 
-(50 Issues Solved this release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 716 e2e Test)
+(50 Issues Solved This Release, Backlog Enterprise 294, Backlog Ng 80, 809 Functional Tests, 716 e2e Tests)
 
 ## v4.14.0
 
@@ -1280,7 +1282,7 @@
 - `[Docs]` Added setting so themes can be shown in the documentation pages. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Docs]` Made links to example pages open in a new window. ([#1132](https://github.com/infor-design/enterprise/issues/1132))
 
-(43 Issues Solved this release, Backlog Enterprise 181, Backlog Ng 64, 682 Functional Tests, 612 e2e Test)
+(43 Issues Solved This Release, Backlog Enterprise 181, Backlog Ng 64, 682 Functional Tests, 612 e2e Tests)
 
 ## v4.13.0
 
@@ -1357,7 +1359,7 @@
 - `[Angular 1.0]` We removed the angular 1.0 directives from the code and examples. These are no longer being updated. You can still use older versions of this or move on to Angular 7.x ([#1136](https://github.com/infor-design/enterprise/issues/1136))
 - `[Uplift]` Included the uplift theme again as alpha for testing. It will show with a watermark and is only available via the personalize api or url params in the demo app. ([#1224](https://github.com/infor-design/enterprise/issues/1224))
 
-(69 Issues Solved this release, Backlog Enterprise 199, Backlog Ng 63, 662 Functional Tests, 659 e2e Test)
+(69 Issues Solved This Release, Backlog Enterprise 199, Backlog Ng 63, 662 Functional Tests, 659 e2e Tests)
 
 ## v4.12.0
 
@@ -1406,7 +1408,7 @@
 - `[Bar Chart]` Added test coverage. ([#848](https://github.com/infor-design/enterprise/issues/848))
 - `[Datagrid]` Added full api test coverage. ([#242](https://github.com/infor-design/enterprise/issues/242))
 
-(55 Issues Solved this release, Backlog Enterprise 185, Backlog Ng 50, 628 Functional Tests, 562 e2e Test)
+(55 Issues Solved This Release, Backlog Enterprise 185, Backlog Ng 50, 628 Functional Tests, 562 e2e Tests)
 
 ## v4.11.0
 
@@ -1465,7 +1467,7 @@
 - `[Accordion]` Added additional test coverage. ([#516](https://github.com/infor-design/enterprise/issues/516))
 - `[General]` Added sass linter (stylelint). ([#767](https://github.com/infor-design/enterprise/issues/767))
 
-(53 Issues Solved this release, Backlog Enterprise 170, Backlog Ng 41, 587 Functional Tests, 458 e2e Test)
+(53 Issues Solved This Release, Backlog Enterprise 170, Backlog Ng 41, 587 Functional Tests, 458 e2e Tests)
 
 ## v4.10.0
 
@@ -1512,7 +1514,7 @@
 - `[Locale]` Sent out translations so things like the Editor New/Same window dialog will be translated in the future. ([#511](https://github.com/infor-design/enterprise/issues/511))
 - `[Nested Datagrid]` Fixed focus issues, the wrong cell in the nest was getting focused. ([#371](https://github.com/infor-design/enterprise/issues/371))
 
-(44 Issues Solved this release, Backlog Enterprise 173, Backlog Ng 44, 565 Functional Tests, 426 e2e Test)
+(44 Issues Solved This Release, Backlog Enterprise 173, Backlog Ng 44, 565 Functional Tests, 426 e2e Tests)
 
 ## v4.9.0
 
@@ -1556,7 +1558,7 @@
 - `[Toast]` Added full test coverage ([#232](https://github.com/infor-design/enterprise/issues/232))
 - `[Testing]` Added visual regression tests, and more importantly a system for doing them via CI. ([#255](https://github.com/infor-design/enterprise/issues/255))
 
-(34 Issues Solved this release, Backlog Enterprise 158, Backlog Ng 41, 458 Functional Tests, 297 e2e Test)
+(34 Issues Solved This Release, Backlog Enterprise 158, Backlog Ng 41, 458 Functional Tests, 297 e2e Tests)
 
 ## v4.8.0
 
@@ -1613,13 +1615,13 @@
 ### v4.8.0 Chore & Maintenance
 
 - `[Npm Package]` Added back sass files in correct folder structure. ([#SOHO-7583](https://jira.infor.com/browse/SOHO-7583))
-- `[Menu Button]` Added button functional and e2e tests. ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
-- `[Textarea]` Added Textarea functional and e2e tests. ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
-- `[ListFilter]` Added ListFilter functional and e2e tests. ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
-- `[Colorpicker]` Added Colorpicker functional and e2e tests. ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
+- `[Menu Button]` Added button functional and e2e Testss. ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
+- `[Textarea]` Added Textarea functional and e2e Testss. ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
+- `[ListFilter]` Added ListFilter functional and e2e Testss. ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
+- `[Colorpicker]` Added Colorpicker functional and e2e Testss. ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
 - `[Site / Docs]` Fixed a few broken links ([#SOHO-7993](https://jira.infor.com/browse/SOHO-7993))
 
-(62 Jira Issues Solved this release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
+(62 Jira Issues Solved This Release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
 
 ## v4.7.0
 
@@ -1679,10 +1681,10 @@
 
 ### v4.7.0 Chore & Maintenance
 
-- `[Timepicker]` Added functional and e2e tests ([#SOHO-7809](https://jira.infor.com/browse/SOHO-7809))
+- `[Timepicker]` Added functional and e2e Testss ([#SOHO-7809](https://jira.infor.com/browse/SOHO-7809))
 - `[General]` Restructured the project to clean up and separate the demo app from code. ([#SOHO-7803](https://jira.infor.com/browse/SOHO-7803))
 
-(56 Jira Issues Solved this release, Backlog Dev 218, Design 101, Unresolved 391, Test Count 232 Functional, 117 e2e )
+(56 Jira Issues Solved This Release, Backlog Dev 218, Design 101, Unresolved 391, Test Count 232 Functional, 117 e2e )
 
 ## v4.6.0
 
@@ -1768,7 +1770,7 @@
 - `[Validation]` Fixed broken form submit validation.
 - `[Vertical Tabs]` Fix cut off header.
 
-(98 Jira Issues Solved this release, Backlog Dev 388, Design 105, Unresolved 595, Test Coverage 6.66%)
+(98 Jira Issues Solved This Release, Backlog Dev 388, Design 105, Unresolved 595, Test Coverage 6.66%)
 
 ## v4.5.0
 
@@ -1843,4 +1845,4 @@
 - `[Track Dirty]` Did not work to reset dirty on editor and Multiselect.
 - `[Validation]` Fixed more extra events firing.
 
-(67 Jira Issues Solved this release, Backlog Dev 378, Design 105, Unresolved 585, Test Coverage 6% )
+(67 Jira Issues Solved This Release, Backlog Dev 378, Design 105, Unresolved 585, Test Coverage 6% )
