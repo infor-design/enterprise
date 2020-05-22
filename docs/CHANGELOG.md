@@ -57,6 +57,7 @@
 - `[Tree]` Fixed an issue where data was not in sync for children property. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Splitter]` Fixed an issue the drag handle characters render incorrectly. ([#1458](https://github.com/infor-design/enterprise/issues/1458))
 - `[Spinbox]` Fixed an issue where a two or more digit min value would make it difficult to type in the spinbox. To fix this the values will only be validated on blur by default. ([#3909](https://github.com/infor-design/enterprise/issues/3909))
+- `[Spinbox]` Fixed an issue where the number mask did not match the max value of the spinbox. ([#3939](https://github.com/infor-design/enterprise/issues/3939))
 - `[Slider]` Improved the sliding so that decimal values would not trigger the change event. ([#787](https://github.com/infor-design/enterprise-ng/issues/787))
 - `[Slider]` Reduced the number of change events that fire while sliding. ([#788](https://github.com/infor-design/enterprise-ng/issues/788))
 - `[Swaplist]` Fixed an issue where dragging items more than once was not working on Android or iOS devices. ([#1423](https://github.com/infor-design/enterprise/issues/1423))

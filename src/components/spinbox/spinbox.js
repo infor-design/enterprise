@@ -130,7 +130,7 @@ Spinbox.prototype = {
     }
 
     if (this.element.attr('min')) {
-      this.settings.max = this.element.attr('min');
+      this.settings.min = this.element.attr('min');
     } else if (this.settings.min) {
       this.element.attr('min', this.settings.min);
     }
@@ -197,65 +197,20 @@ Spinbox.prototype = {
     // use them.
     const min = this.element.attr('min');
     let max = this.element.attr('max');
-    let mask = this.element.attr('data-mask');
-    let maskValue = '';
     const attributes = {
       role: 'spinbutton'
     };
-    let i = 0;
 
     // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
     // work correctly.  Cannot define a Min value here because the plugin must be able to invoke
     // itself with a NULL value.
-    if (!min && !max && !mask) {
+    if (!min && !max) {
       max = '9999999';
     }
 
-    // If a mask doesn't exist, but min and max values do exist, create a mask that reflects
-    // those min/max values
-    if ((min || max) && !mask) {
-      let newMask = '';
-      const tempMin = min || '';
-      const tempMax = max || '';
-      const longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
-      i = 0;
-
-      while (i <= longerVal.length) {
-        newMask += '#';
-        i++;
-      }
-
-      // Add a negative symbol to the mask if it exists within the longer value.
-      if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
-        newMask = `-${newMask.substring(0, (newMask.length - 1))}`;
-      }
-
-      attributes['data-mask'] = newMask;
-      mask = newMask;
-    }
-
-    // If a "data-mask" attribute is already defined, use it to determine missing values
-    // for min/max, if they don't already exist.
-    const maskSize = mask.length;
-
-    i = 0;
-    while (i <= maskSize) {
-      maskValue += '9';
-      i++;
-    }
-
     // If no negative symbol exists in the mask, the minimum value must be zero.
-    if (mask.indexOf('-') === -1) {
-      attributes.min = min || 0;
-      attributes.max = max || maskValue;
-    } else {
-      attributes.min = min || maskValue;
-      attributes.max = max || maskValue.substring(0, (maskValue.length - 1));
-    }
-
-    if (!this.element.attr('data-mask-mode') || this.element.attr('data-mask-mode') !== 'number') {
-      attributes['data-mask-mode'] = 'number';
-    }
+    attributes.min = min || 0;
+    attributes.max = max;
 
     // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later
     // on during initialization.  Check to make sure its the actual Mask plugin object,
