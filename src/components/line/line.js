@@ -244,7 +244,7 @@ Line.prototype = {
     // let height = parent.height() - margin.top - margin.bottom - 30; // legend
 
     if (isCardAction) {
-      height -= 40;
+      height -= 42;
     }
 
     self.svg = d3.select(this.element[0]).append('svg')
