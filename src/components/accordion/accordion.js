@@ -751,13 +751,16 @@ Accordion.prototype = {
 
   /**
   * Expand the given Panel on the Accordion.
-  * @param {object} header The jquery header element.
+  * @param {object|string} header The jquery header element or the id of a header DOM element
   * @param {boolean} dontCollapseHeaders if defined, will not collapse any open accordion headers
   *  (generally used while filtering)
   * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
   expand(header, dontCollapseHeaders) {
+    if (typeof header === 'string') {
+      header = this.element.find(`#${header}`).first();
+    }
     if (!header || !header.length) {
       return;
     }
@@ -887,12 +890,15 @@ Accordion.prototype = {
 
   /**
   * Collapse the given Panel on the Accordion.
-  * @param {object} header The jquery header element.
+  * @param {object|string} header The jquery header element or the id of a header DOM element
   * @param {boolean} closeChildren If true closeChildren elements that may be on the page. Skip for performance.
   * @returns {$.Deferred} resolved on the completion of an Accordion pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
   collapse(header, closeChildren = true) {
+    if (typeof header === 'string') {
+      header = this.element.find(`#${header}`).first();
+    }
     if (!header || !header.length) {
       return;
     }
