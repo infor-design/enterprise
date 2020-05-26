@@ -32,7 +32,7 @@ describe('Textarea example-index tests', () => {
   it('Should maintain counts', async () => {
     await element(by.id('description-max')).sendKeys('This is a test');
 
-    expect(await element(by.css('#description-max + span')).getText()).toBe('You can type 68 more characters.');
+    expect(await element(by.css('#description-max + span')).getText()).toBe('Characters left 68');
   });
 
   if (!utils.isIE()) {
@@ -60,7 +60,7 @@ describe('Textarea example-index tests', () => {
     await element(by.id('description-max')).sendKeys(charStr);
 
     expect(await element(by.id('description-max')).getAttribute('value')).toEqual(charStr);
-    expect(await element(by.css('#description-max + span')).getText()).toBe('You can type 1 more characters.');
+    expect(await element(by.css('#description-max + span')).getText()).toBe('Characters left 1');
   });
 
   it('Should show validation message if more than/equal to 90 characters', async () => {
@@ -215,6 +215,7 @@ describe('Textarea Modal Tests', () => {
 
   it('Should translate the count text', async () => {
     await utils.setPage('/components/textarea/example-index?locale=af-ZA');
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.textarea-wordcount')).getText()).toEqual('Oorblywende karakters 82');
     const textareaEl = await element(by.id('description-max'));
