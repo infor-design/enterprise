@@ -248,7 +248,7 @@ The following options are supported:
 
 ## Date and Time Format Patterns
 
-A date format can be constructed by adding the needed date and time parts. For example `yyyy-MM-DD HH:mm`. In formatting dates and numbers we use a variation on the CLDR formats http://cldr.unicode.org/translation/date-time-1/date-time The following parts can be used:
+A date format can be constructed by adding the needed date and time parts. For example `yyyy-MM-DD HH:mm`. In formatting dates and numbers we use a subset off the <a href="http://cldr.unicode.org/translation/date-time-1/date-time" target="_blank">CLDR formats</a>. The following formats can be used:
 
 - `dd` - Shows the date portion padded with zeros
 - `d` - Shows the date portion un-padded
