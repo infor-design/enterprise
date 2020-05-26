@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.30.0
+
+### v4.30.0 Announcements
+
+### v4.30.0 Features
+
+### v4.30.0 Fixes
+
+- `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+
 ## v4.29.0
 
 ### v4.29.0 Announcements
