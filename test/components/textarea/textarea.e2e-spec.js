@@ -212,6 +212,16 @@ describe('Textarea Modal Tests', () => {
     expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toBe('TestTest');
     expect(await element(by.id('modal-1')).isDisplayed()).toBeTruthy();
   });
+
+  it('Should translate the count text', async () => {
+    await utils.setPage('/components/textarea/example-index?locale=af-ZA');
+
+    expect(await element(by.css('.textarea-wordcount')).getText()).toEqual('Oorblywende karakters 82');
+    const textareaEl = await element(by.id('description-max'));
+    await textareaEl.sendKeys('Test');
+
+    expect(await element(by.css('.textarea-wordcount')).getText()).toEqual('Oorblywende karakters 78');
+  });
 });
 
 describe('Textarea Rows Tests', () => {
