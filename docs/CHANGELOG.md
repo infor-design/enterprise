@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.30.0
+
+### v4.30.0 Announcements
+
+- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+
 ## v4.29.0
 
 ### v4.29.0 Announcements
