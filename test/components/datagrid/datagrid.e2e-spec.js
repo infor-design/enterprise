@@ -952,7 +952,7 @@ describe('Datagrid keyword search tests', () => {
   });
 });
 
-describe('Datagrid List Styles Tests', () => {
+fdescribe('Datagrid List Styles Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-list?layout=nofrills');
 

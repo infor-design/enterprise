@@ -331,7 +331,8 @@ $datagrid-short-row-height: 25px;
 
     th {
       background-color: $datagrid-list-header-bg-color;
-      border-right: 0;
+      border-left: 0 !important;
+      border-right: 0 !important;
 
       .datagrid-header-text {
         color: $datagrid-list-header-color;
@@ -399,8 +400,9 @@ $datagrid-short-row-height: 25px;
     }
 
     tr td {
-      border-left: 0;
-      border-right: 0;
+      border-left: 0 !important;
+      border-right: 0 !important;
+      border-right-color: transparent !important;
     }
 
     //Filter Row
