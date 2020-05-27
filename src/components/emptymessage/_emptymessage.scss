@@ -65,6 +65,10 @@
     transform: translate(0, -50%);
     width: inherit;
   }
+
+  button {
+    pointer-events: initial;
+  }
 }
 
 // IE11

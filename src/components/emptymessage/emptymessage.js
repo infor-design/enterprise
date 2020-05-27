@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'emptymessage';
 * @param {string} [settings.title = null] The Main text to show.
 * @param {string} [settings.info = null] Longer paragraph text to show
 * @param {string} [settings.icon = null] The name of the icon to use. See {@link https://design.infor.com/code/ids-enterprise/latest/demo/icons/example-empty-widgets?font=source-sans} for options.
-* @param {boolean} [settings.button = null] The botton text and click event to add.
+* @param {boolean} [settings.button = null] The button text and click event to add.
 * @param {string} [settings.color = 'graphite']  Defaults to 'graphite' but can also be azure. Later may be expanded to all personalization colors.
 */
 const EMPTYMESSAGE_DEFAULTS = {
@@ -50,6 +50,10 @@ EmptyMessage.prototype = {
   build() {
     const opts = this.settings;
 
+    if (opts?.button?.isPrimary) {
+      this.settings.color = 'azure';
+    }
+
     if (opts.icon) {
       $(`<div class="empty-icon">
           <svg class="icon-empty-state is-${this.settings.color}" focusable="false" aria-hidden="true" role="presentation">
@@ -71,11 +75,12 @@ EmptyMessage.prototype = {
     }
 
     if (opts.button) {
-      $(`${'<div class="empty-actions">' +
-          '<button type="button" class="btn-secondary hide-focus '}${opts.button.cssClass}" id="${opts.button.id}">` +
-            `<span>${opts.button.text}</span>` +
-          '</button>' +
-        '</div>').appendTo(this.element);
+      const buttonMarkup = `<div class="empty-actions">
+          <button type="button" class="${opts.button.isPrimary ? 'btn-primary' : 'btn-secondary'} ${opts.button.cssClass} hide-focus" id="${opts.button.id}">
+            <span>${opts.button.text}</span>
+          </button>
+        </div>`;
+      $(buttonMarkup).appendTo(this.element);
 
       if (opts.button.click) {
         this.element.on('click', 'button', opts.button.click);

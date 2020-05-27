@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.28.1
+
+### v4.28.1 Fixes
+
+- `[Datagrid]` Fixed a bug where the datagrid had blocked the clicking of buttons in an empty message area. ([#3922](https://github.com/infor-design/enterprise/issues/3922))
+- `[Datagrid]` Added ability to set the datagrid emptymessage as primary. ([#3922](https://github.com/infor-design/enterprise/issues/3922))
+
 ## v4.28.0
 
 ### v4.28.0 Important Changes
