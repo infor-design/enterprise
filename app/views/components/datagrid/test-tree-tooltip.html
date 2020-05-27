@@ -9,12 +9,15 @@
 <script>
   $('body').one('initialized', function () {
     var columns = [];
+    var dynamicFunction = function(row, cell, value, column, dataset, api) {
+      return 'Ordered at '+ dataset.time + ' This is cell: ' + cell;
+    };
 
     //Define Columns for the Grid.
     columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
     columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Formatters.Hyperlink, tooltip: 'This is a product', headerTooltip: 'This is the header'});
     columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
-    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
+    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60, tooltip: dynamicFunction});
     columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
 
     //Get some data via ajax

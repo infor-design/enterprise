@@ -1410,6 +1410,17 @@ html[dir='rtl'] {
   }
 }
 
+html {
+  &.is-safari,
+  &.ios {
+    .accordion-header {
+      .btn {
+        top: -2px;
+      }
+    }
+  }
+}
+
 // Fix size of the bullet icon on Android devices
 html.android {
   .accordion-pane {
