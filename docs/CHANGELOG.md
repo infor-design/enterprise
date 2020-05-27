@@ -6,6 +6,14 @@
 
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 
+### v4.30.0 Announcements
+
+### v4.30.0 Features
+
+### v4.30.0 Fixes
+
+- `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+
 ## v4.29.0
 
 ### v4.29.0 Announcements
@@ -75,6 +83,13 @@
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 (64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
+
+## v4.28.1
+
+### v4.28.1 Fixes
+
+- `[Datagrid]` Fixed a bug where the datagrid had blocked the clicking of buttons in an empty message area. ([#3922](https://github.com/infor-design/enterprise/issues/3922))
+- `[Datagrid]` Added ability to set the datagrid emptymessage as primary. ([#3922](https://github.com/infor-design/enterprise/issues/3922))
 
 ## v4.28.0
 
