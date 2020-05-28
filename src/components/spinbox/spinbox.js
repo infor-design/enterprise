@@ -232,6 +232,7 @@ Spinbox.prototype = {
       process: 'number',
       patternOptions: {
         allowDecimal: false,
+        allowThousandsSeparator: false,
         allowNegative: Math.min(this.settings.min, this.settings.max) < 0,
         decimalLimit: 0,
         integerLimit: String(this.settings.max).length
