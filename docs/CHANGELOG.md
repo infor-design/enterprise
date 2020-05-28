@@ -8,7 +8,8 @@
 
 ### v4.30.0 Fixes
 
-- `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 
 ## v4.29.0
 
