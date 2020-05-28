@@ -11,7 +11,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const searchfieldId = 'searchfield';
 const searchfieldGoButtonId = 'searchfield-go-button--1';
 
-describe('Searchfield example-index tests', () => {
+fdescribe('Searchfield example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-index');
     await browser.driver
@@ -85,7 +85,7 @@ describe('Searchfield example-index tests', () => {
   });
 });
 
-describe('Searchfield go-button tests', () => {
+fdescribe('Searchfield go-button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-go-button');
     await browser.driver
@@ -111,7 +111,7 @@ describe('Searchfield go-button tests', () => {
 
 const singleCategoryId = 'category-searchfield';
 
-describe('Searchfield full-text category tests', () => {
+fdescribe('Searchfield full-text category tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-categories-full');
     await browser.driver
@@ -128,7 +128,7 @@ describe('Searchfield full-text category tests', () => {
   });
 });
 
-describe('Searchfield full-text category with go button tests', () => {
+fdescribe('Searchfield full-text category with go button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-categories-and-go-button');
     await browser.driver
@@ -168,7 +168,7 @@ describe('Searchfield full-text category with go button tests', () => {
 });
 
 if (utils.isChrome() && utils.isCI()) {
-  describe('Searchfield `collapseSize` tests', () => {
+  fdescribe('Searchfield `collapseSize` tests', () => {
     beforeEach(async () => {
       await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
       await browser.driver
@@ -181,7 +181,7 @@ if (utils.isChrome() && utils.isCI()) {
     });
   });
 
-  describe('Searchfield placement tests', () => {
+  fdescribe('Searchfield placement tests', () => {
     beforeEach(async () => {
       await utils.setPage('/components/searchfield/test-place-on-bottom.html?layout=nofrills');
       await browser.driver
