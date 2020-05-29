@@ -179,7 +179,7 @@ Splitter.prototype = {
         }
       }
     }).on('dragend.splitter', (e, args) => {
-      $('.overlay').remove();
+      $('.splitter-overlay').remove();
 
       if (s.collapseButton) {
         if (args[direction] <= 10) {
