@@ -883,6 +883,7 @@ describe('Locale API', () => {
 
     expect(Locale.translate('Required')).toEqual('Erforderlich');
     expect(Locale.translate('Loading')).toEqual('Laden...');
+    expect(Locale.translate('Filter')).toEqual('Filtern');
 
     // Error
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');

@@ -177,7 +177,7 @@ Soho.Locale.addCulture('de-DE', {
     Favorite: { id: 'Favorite', value: 'Favorit', comment: 'A favorite item' },
     FileUpload: { id: 'FileUpload', value: 'Datei hochladen. Drücken Sie die Eingabetaste, um nach einer Datei zu suchen', comment: 'Screen Reader instructions' },
     FieldFilter: { id: 'FieldFilter', value: 'Feldfilter', comment: 'Used for Field Filter' },
-    Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
+    Filter: { id: 'Filter', value: 'Filtern', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'Erste Seite', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Ordner', comment: 'Folder tooltip' },
     FontPickerNormal: { id: 'FontPickerNormal', value: 'Normaler Text', comment: 'Description of default text style on Fontpicker components' },
