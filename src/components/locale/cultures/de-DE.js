@@ -312,7 +312,7 @@ Soho.Locale.addCulture('de-DE', {
     ReorderRows: { id: 'ReorderRows', value: 'Zeilen neu anordnen', comment: 'Drag and Reorder Grid Rows' },
     Refresh: { id: 'Refresh', value: 'Aktualisieren', comment: 'Refresh tooltip' },
     RequestTimeOff: { id: 'RequestTimeOff', value: 'Arbeitsfreie Zeit beantragen', comment: 'Making a request for time off work.' },
-    Required: { id: 'Required', value: 'Obligatorisch', comment: 'indicates a form field is manditory' },
+    Required: { id: 'Required', value: 'Erforderlich', comment: 'indicates a form field is manditory' },
     Reset: { id: 'Reset', value: 'Zurücksetzen', comment: 'Reset tooltip' },
     ResetDefault: { id: 'ResetDefault', value: 'Auf Standard zurücksetzen', comment: 'Reset Datagrid Columns, Filter and other Layout' },
     Result: { id: 'Result', value: 'Ergebnis', comment: 'Showing a single result in a List' },

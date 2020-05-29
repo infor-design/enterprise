@@ -881,7 +881,7 @@ describe('Locale API', () => {
     // With Object Selector
     Locale.set('de-DE');
 
-    expect(Locale.translate('Required')).toEqual('Obligatorisch');
+    expect(Locale.translate('Required')).toEqual('Erforderlich');
     expect(Locale.translate('Loading')).toEqual('Laden...');
 
     // Error
@@ -1853,7 +1853,7 @@ describe('Locale API', () => {
       expect(Locale.currentLanguage.name).toEqual('en');
       expect(Locale.translate('Required')).toEqual('Required');
       expect(Locale.translate('Loading')).toEqual('Loading');
-      expect(Locale.translate('Required', { language: 'de' })).toEqual('Obligatorisch');
+      expect(Locale.translate('Required', { language: 'de' })).toEqual('Erforderlich');
       expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
       done();
     });
@@ -1865,8 +1865,8 @@ describe('Locale API', () => {
     Locale.getLocale('de-DE');
 
     expect(Locale.translate('Required', { locale: 'fi-FI' })).toEqual('Obligatoriskt');
-    expect(Locale.translate('Required', { language: 'de' })).toEqual('Obligatorisch');
-    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'de' })).toEqual('Obligatorisch');
+    expect(Locale.translate('Required', { language: 'de' })).toEqual('Erforderlich');
+    expect(Locale.translate('Required', { locale: 'fi-FI', language: 'de' })).toEqual('Erforderlich');
     expect(Locale.translate('Required', { language: 'sv' })).toEqual('Obligatoriskt');
     expect(Locale.translate('Required', { locale: 'fi-FI', language: 'sv' })).toEqual('Obligatoriskt');
     done();
