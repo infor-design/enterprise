@@ -71,6 +71,12 @@
 
 (64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
 
+## v4.28.2
+
+### v4.28.2 Fixes
+
+- `[Splitter]` Fixed an issue where the splitter would remove the modal overlay in some cases. ([#3982](https://github.com/infor-design/enterprise/issues/3982))
+
 ## v4.28.1
 
 ### v4.28.1 Fixes
