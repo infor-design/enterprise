@@ -1974,8 +1974,13 @@ $datagrid-short-row-height: 25px;
     }
 
     .hyperlink {
+      color: $hyperlink-color;
       display: inline-block;
       font-size: $theme-size-font-base;
+
+      &:hover {
+        color: $hyperlink-hover-color;
+      }
 
       &:focus {
         outline: none;
