@@ -1772,6 +1772,8 @@ $datagrid-short-row-height: 25px;
 
   //Table Body
   td {
+    @include transition(none);
+
     background-color: $datagrid-cell-bg-color;
     border-bottom: 1px solid $datagrid-cell-border-color;
     border-right: 1px solid $datagrid-cell-border-color;
