@@ -1643,7 +1643,7 @@ describe('Datagrid single select tests', () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1)')).getAttribute('class')).not.toMatch('is-selected');
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('class')).toMatch('is-selected');
   });
 
   it('Should work with sort', async () => {
@@ -3817,7 +3817,7 @@ describe('Datagrid tree do not select children tests', () => {
   });
 });
 
-describe('Datagrid tree do not select siblings tests', () => {
+describe('Datagrid tree select siblings tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-tree-select-siblings');
 
@@ -3835,9 +3835,19 @@ describe('Datagrid tree do not select siblings tests', () => {
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(5);
 
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(8) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(3);
+  });
+
+  it('Should not de-select siblings', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
 
-    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(5);
+
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(5);
 
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(8) td:nth-child(1)')).click();
 
