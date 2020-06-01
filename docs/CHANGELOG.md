@@ -1,4 +1,4 @@
-# What's New with Enterprise
+properly# What's New with Enterprise
 
 ## v4.30.0
 
@@ -11,6 +11,7 @@
 ### v4.30.0 Fixes
 
 - `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 
 ## v4.29.0
 
