@@ -11,6 +11,7 @@
 ### v4.30.0 Fixes
 
 - `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 
 ## v4.29.0
 

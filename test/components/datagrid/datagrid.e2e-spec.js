@@ -878,7 +878,7 @@ describe('Datagrid index tests', () => {
   });
 
   it('Should show results', async () => {
-    expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 Results)');
+    expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 results)');
   });
 
   it('Should navigate with arrow keys', async () => {
@@ -1276,7 +1276,7 @@ describe('Datagrid paging client side tests', () => {
     await element(by.id('gridfilter')).sendKeys('ressor 2');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
   });
 
@@ -1284,13 +1284,13 @@ describe('Datagrid paging client side tests', () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
   });
 
@@ -1298,13 +1298,13 @@ describe('Datagrid paging client side tests', () => {
     await element(by.id('gridfilter')).sendKeys('ressor 1');
     await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
 
     await element(by.css('.pager-next .btn-icon')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(111 of 1,000 results)');
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(10);
   });
 
@@ -2185,7 +2185,7 @@ describe('Datagrid Empty Message with two rows', () => {
     await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
     expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(true);
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 2 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 2 results)');
   });
 
   it('Should not show empty indicator on filtering one', async () => {
@@ -2193,7 +2193,7 @@ describe('Datagrid Empty Message with two rows', () => {
     await element(by.id('test-empty-message-two-rows-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
 
     expect(await element(by.css('.empty-message')).isDisplayed()).toEqual(false);
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 2 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(1 of 2 results)');
   });
 });
 
@@ -3626,14 +3626,14 @@ describe('Datagrid tree filter tests', () => {
   });
 
   it('Should show empty message on filter', async () => {
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(5 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(5 results)');
     expect(await element(by.css('.empty-message')).isDisplayed()).toBeFalsy();
 
     await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).click();
     await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys('I dont exist');
     await element(by.id('test-tree-filter-datagrid-1-header-filter-0')).sendKeys(protractor.Key.ENTER);
 
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 5 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(0 of 5 results)');
     expect(await element(by.css('.empty-message')).isDisplayed()).toBeTruthy();
   });
 });
@@ -4007,7 +4007,7 @@ describe('Datagrid paging with empty dataset', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('#datagrid tbody tr[aria-rowindex]')).count()).toEqual(10);
-    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 Results)');
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(11 results)');
     expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
 
     await element(by.css('.pager-toolbar .pager-next')).click();
