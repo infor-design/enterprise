@@ -2,14 +2,14 @@
 
 ## v4.30.0
 
+### v4.30.0 Features
+
 ### v4.30.0 Fixes
 
 - `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
-
-### v4.30.0 Announcements
-
-### v4.30.0 Features
 
 ## v4.29.0
 
@@ -80,6 +80,12 @@
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 (64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
+
+## v4.28.2
+
+### v4.28.2 Fixes
+
+- `[Splitter]` Fixed an issue where the splitter would remove the modal overlay in some cases. ([#3982](https://github.com/infor-design/enterprise/issues/3982))
 
 ## v4.28.1
 

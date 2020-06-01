@@ -3434,11 +3434,6 @@ Tabs.prototype = {
 
     const self = this;
     const target = li;
-    const scrollingTablist = this.tablistContainer;
-    const isRTL = Locale.isRTL();
-    let tablistScrollWidth;
-    let tablistScrollLeft;
-    let anchorStyle;
 
     this.animatedBar.removeClass('no-transition');
 
@@ -3446,33 +3441,11 @@ Tabs.prototype = {
       this.animatedBar.removeClass('visible');
       return;
     }
-
-    const targetStyle = window.getComputedStyle(target[0], null);
-    let paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
-    const width = parseInt(targetStyle.getPropertyValue('width'), 10) || 0;
-
-    if (target.is('.tab')) {
-      anchorStyle = window.getComputedStyle(target.children('a')[0]);
-      paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
-    }
-
-    const left = isRTL ?
-      (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
-
     clearTimeout(self.animationTimeout);
     this.animatedBar.addClass('visible');
 
     function animationTimeout(cb) {
-      const style = self.animatedBar[0].style;
-      tablistScrollLeft = scrollingTablist[0].scrollLeft;
-      tablistScrollWidth = scrollingTablist[0].scrollWidth;
-
-      if (isRTL) {
-        style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft)}px`;
-      } else {
-        style.left = `${left + tablistScrollLeft}px`;
-      }
-      style.width = `${width}px`;
+      self.sizeBar(target);
 
       if (cb && typeof cb === 'function') {
         cb();
@@ -3480,6 +3453,40 @@ Tabs.prototype = {
     }
 
     animationTimeout(callback);
+  },
+
+  /**
+   * Recalculate the sizes on the animated bar
+   * @param {jQuery} target The target tab element
+   * @private
+   * @returns {void}
+   */
+  sizeBar(target) {
+    target = target || this.element.find('.tab.is-selected');
+    const style = this.animatedBar[0].style;
+    const scrollingTablist = this.tablistContainer;
+    const tablistScrollLeft = scrollingTablist[0].scrollLeft;
+    const tablistScrollWidth = scrollingTablist[0].scrollWidth;
+
+    const targetStyle = window.getComputedStyle(target[0], null);
+    let paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
+    const width = parseInt(targetStyle.getPropertyValue('width'), 10) || 0;
+
+    if (target.is('.tab')) {
+      const anchorStyle = window.getComputedStyle(target.children('a')[0]);
+      paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
+    }
+
+    const left = Locale.isRTL() ?
+      (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
+
+    if (Locale.isRTL()) {
+      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft)}px`;
+    } else {
+      style.left = `${left + tablistScrollLeft}px`;
+    }
+    style.width = `${width}px`;
+    this.focusState[0].style.width = `${width}px`;
   },
 
   /**

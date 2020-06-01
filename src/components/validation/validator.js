@@ -497,6 +497,11 @@ Validator.prototype = {
       if (!($(`.icon-${type}`, iconContainer).length)) {
         iconContainer.addClass(`is-${type}`).append(errorIcon);
       }
+
+      const tabsAPI = parentContainer.data('tabs');
+      if (tabsAPI) {
+        tabsAPI.sizeBar();
+      }
     } else {
       // Remove icon
       iconContainer = iconContainer.add(menuitem);
