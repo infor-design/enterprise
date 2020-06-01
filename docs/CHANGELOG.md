@@ -2,16 +2,16 @@
 
 ## v4.30.0
 
-### v4.30.0 Announcements
-
-- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
-
 ### v4.30.0 Features
 
 ### v4.30.0 Fixes
 
 - `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fix a bug with cellNavigation false, the focus state was still visible. ([#3937](https://github.com/infor-design/enterprise/issues/3937))
+- `[Datagrid]` Fix a bug with cellNavigation false, the focus state was incorrect on stretched rows in IE. ([#1644](https://github.com/infor-design/enterprise/issues/1644))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
+- `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 
 ## v4.29.0
 
