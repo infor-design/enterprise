@@ -29,6 +29,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {string} element The component element.
 * @param {string} settings The component settings.
 *
+* @param {string} [settings.title='Message Title']  Title text or content shown in the modal. An HTML string containing the follow tags may also be used `<div><span><a><small><img><svg><i><b><use><br><strong><em>`.
 * @param {string} [settings.trigger='click'] The method of opening the dialog. Supports click, immediate.
 * @param {array} [settings.buttons=null]  A list of buttons that will sit in the toolbar's Buttonset area.
 * @param {isAlert} [settings.isAlert=false] Adds alertdialog role for message dialogs.

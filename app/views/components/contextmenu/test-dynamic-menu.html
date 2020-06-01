@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="input-menu">Label</label>
+      <input type="text" value="Right Click Me" id="input-menu"/>
+    </div>
+
+    <ul id="menu-one" class="popupmenu">
+   </ul>
+
+  </div>
+
+</div>
+
+<script id="test-script">
+  var options1 = `<li><a href="#" id="option1A">Option One - A</a></li>
+        <li><a href="#" id="option2A">Option Two - A</a></li>
+        <li><a href="#" id="option3A">Option Three - A</a></li>`;
+  var options2 = `<li><a href="#" id="option1B">Option One - B</a></li>
+        <li><a href="#" id="option2B">Option Two - B</a></li>
+        <li><a href="#" id="option3B">Option Three - B</a></li>
+        <li><a href="#" id="option4B">Option Four - B</a></li>
+        <li><a href="#" id="option5B">Option Five - B</a></li>
+        <li><a href="#" id="option6B">Option Six - B</a></li>
+        <li><a href="#" id="option7B">Option Seven - B</a></li>
+        <li><a href="#" id="option8B">Option Eight - B</a></li>
+        <li><a href="#" id="option9B">Option Nine - B</a></li>
+        <li><a href="#" id="option10B">Option Ten - B</a></li>`;
+  var toggle = false;
+
+  $('#input-menu').popupmenu({
+    menu: 'menu-one',
+    trigger: 'rightClick',
+    beforeOpen: function(response, args) {
+      if (toggle) {
+        toggle = !toggle;
+        response(options2);
+        return;
+      }
+      toggle = !toggle;
+      response(options1);
+    }
+  });
+</script>

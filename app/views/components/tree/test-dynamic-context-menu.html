@@ -1,0 +1,195 @@
+<div class="row">
+  <div class="twelve columns">
+    <ul id="test-tree" role="tree" aria-label="Asset Types" class="tree">
+      <li>
+          <a id="home" href="#">Home</a>
+      </li>
+      <li><a id="about-us" href="#">About Us</a></li>
+      <li class="is-open mycustom">
+          <a id="public-folders" href="#">Public Folders</a>
+          <ul class="is-open root">
+            <li class="is-open">
+                <a id="leadership" href="#">Leadership</a>
+                <ul class="is-open">
+                  <li>
+                    <a href="#">Leadership</a>
+                  </li>
+                  <li>
+                    <a id="history" href="#" class="is-disabled">History</a>
+                  </li>
+                  <li>
+                    <a id="careers-last" href="#">Careers last</a>
+                  </li>
+                </ul>
+            </li>
+            <li><a id="history2" href="#">History2</a></li>
+            <li><a id="careers" href="#">Careers</a></li>
+          </ul>
+      </li>
+      <li>
+          <a id="icons" href="#">Icons</a>
+          <ul class="root">
+            <li>
+              <a id="audio" href="#" class="icon-tree-audio">Audio</a>
+            </li>
+            <li>
+              <a id="avi" href="#" class="icon-tree-avi">Avi</a>
+            </li>
+            <li>
+              <a id="bmp" href="#" class="icon-tree-bmp">Bmp</a>
+            </li>
+            <li>
+              <a id="chart" href="#" class="icon-tree-chart">Chart</a>
+            </li>
+            <li>
+              <a id="code" href="#" class="icon-tree-code">Code</a>
+            </li>
+            <li>
+              <a id="csv" href="#" class="icon-tree-csv">Csv</a>
+            </li>
+            <li>
+              <a id="doc" href="#" class="icon-tree-doc">Doc</a>
+            </li>
+            <li>
+              <a id="excel" href="#" class="icon-tree-excel">Excel</a>
+            </li>
+            <li>
+              <a id="expenses" href="#" class="icon-tree-expenses">Expenses</a>
+            </li>
+            <li>
+              <a id="gif" href="#" class="icon-tree-gif">Gif</a>
+            </li>
+            <li>
+              <a id="img" href="#" class="icon-tree-image">Image</a>
+            </li>
+            <li>
+              <a id="jpg" href="#" class="icon-tree-jpg">Jpg</a>
+            </li>
+            <li>
+              <a id="link" href="#" class="icon-tree-link">Link</a>
+            </li>
+            <li>
+              <a id="mail" href="#" class="icon-tree-mail">Mail</a>
+            </li>
+            <li>
+              <a id="mp3" href="#" class="icon-tree-mp3">Mp3</a>
+            </li>
+            <li>
+              <a id="msg" href="#" class="icon-tree-msg">Msg</a>
+            </li>
+            <li>
+              <a id="pdf" href="#" class="icon-tree-pdf">Pdf</a>
+            </li>
+            <li>
+              <a id="png" href="#" class="icon-tree-png">Png</a>
+            </li>
+            <li>
+              <a id="ppt" href="#" class="icon-tree-ppt">Ppt</a>
+            </li>
+            <li>
+              <a id="prj" href="#" class="icon-tree-prj">Prj</a>
+            </li>
+            <li>
+              <a id="psd" href="#" class="icon-tree-psd">Psd</a>
+            </li>
+            <li>
+              <a id="pub" href="#" class="icon-tree-pub">Pub</a>
+            </li>
+            <li>
+              <a id="rar" href="#" class="icon-tree-rar">Rar</a>
+            </li>
+            <li>
+              <a id="text" href="#" class="icon-tree-text">Text</a>
+            </li>
+            <li>
+              <a id="tif" href="#" class="icon-tree-tif">Tif</a>
+            </li>
+            <li>
+              <a id="video" href="#" class="icon-tree-video">Video</a>
+            </li>
+            <li>
+              <a id="vis" href="#" class="icon-tree-vis">Vis</a>
+            </li>
+            <li>
+              <a id="word" href="#" class="icon-tree-word">Word</a>
+            </li>
+            <li>
+              <a id="xls" href="#" class="icon-tree-xls">Xls</a>
+            </li>
+            <li>
+              <a id="xml" href="#" class="icon-tree-xml">Xml</a>
+            </li>
+            <li>
+              <a id="zip" href="#" class="icon-tree-zip">Zip</a>
+            </li>
+          </ul>
+      </li>
+
+      <li>
+        <a id="blog" href="#">Blog</a>
+      </li>
+
+      <li>
+        <a id="contact" href="#">Contact</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ul id="tree-popupmenu" class="popupmenu">
+</ul>
+
+<script>
+  var toggle = false;
+  var options1 = `<li><a href="#" id="option1A">Option One - A</a></li>
+        <li><a href="#" id="option2A">Option Two - A</a></li>
+        <li><a href="#" id="option3A">Option Three - A</a></li>`;
+  var options2 = `<li><a href="#" id="option1B">Option One - B</a></li>
+        <li><a href="#" id="option2B">Option Two - B</a></li>
+        <li><a href="#" id="option3B">Option Three - B</a></li>
+        <li><a href="#" id="option4B">Option Four - B</a></li>
+        <li><a href="#" id="option5B">Option Five - B</a></li>
+        <li><a href="#" id="option6B">Option Six - B</a></li>
+        <li><a href="#" id="option7B">Option Seven - B</a></li>
+        <li><a href="#" id="option8B">Option Eight - B</a></li>
+        <li><a href="#" id="option9B">Option Nine - B</a></li>
+        <li><a href="#" id="option10B">Option Ten - B</a></li>
+        <li><a href="#" id="option11B">Option Eleven - B</a></li>
+        <li><a href="#" id="option12B">Option Twelve - B</a></li>
+        <li><a href="#" id="option13B">Option Thirteen - B</a></li>
+        <li><a href="#" id="option14B">Option Fourteen - B</a></li>
+        <li><a href="#" id="option15B">Option Fifteen - B</a></li>
+        <li><a href="#" id="option16B">Option Sixteen - B</a></li>
+        <li><a href="#" id="option17B">Option Seventeen - B</a></li>
+        <li><a href="#" id="option18B">Option Eightteen - B</a></li>`;
+
+  //Can refer to the data set here
+  $('#test-tree').tree({ menuId: 'tree-popupmenu' }).on('menuopen', function (e, args) {
+    if (toggle) {
+      toggle = !toggle;
+      args.menu.empty().append(options2);
+      return;
+    }
+    toggle = !toggle;
+    args.menu.empty().append(options1);
+  }).on('menuselect', function (e, args) {
+    var treeApi = $(this).data('tree'),
+      cmd = args.item.attr('data-cmd');
+
+    switch (cmd) {
+      case 'expand':
+        treeApi.toggleNode(args.node);
+        break;
+      case 'select':
+        treeApi.selectNode(args.node, true);
+        break;
+      case 'explorer':
+        alert('Open Explorer View');
+        break;
+      default:
+        break;
+    }
+
+  });
+
+</script>

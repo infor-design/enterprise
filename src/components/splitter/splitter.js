@@ -219,7 +219,7 @@ Splitter.prototype = {
         }
       }
     }).on('dragend.splitter', (e, args) => {
-      thisSide.parent().find('.overlay').remove();
+      thisSide.parent().find('.splitter-overlay').remove();
 
       if (s.collapseButton) {
         if (args[direction] <= 10) {

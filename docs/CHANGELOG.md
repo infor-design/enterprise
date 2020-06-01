@@ -2,7 +2,13 @@
 
 ## v4.30.0
 
+### v4.30.0 Bugs
+
+- `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
+
 ### v4.30.0 Announcements
+
+- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 
 ### v4.30.0 Features
 
@@ -10,6 +16,7 @@
 
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
+- `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 
 ## v4.29.0
 
@@ -80,6 +87,12 @@
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
 (64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
+
+## v4.28.2
+
+### v4.28.2 Fixes
+
+- `[Splitter]` Fixed an issue where the splitter would remove the modal overlay in some cases. ([#3982](https://github.com/infor-design/enterprise/issues/3982))
 
 ## v4.28.1
 
