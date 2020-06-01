@@ -4290,7 +4290,6 @@ describe('Datagrid with select rows across pages tests', () => {
   it('Should filter on 2nd page', async () => {
     const filterId = 'test-paging-multiselect-select-across-page-datagrid-1-header-filter-2';
     const allRows = '#datagrid .datagrid-wrapper tbody .datagrid-row';
-    const row = '#datagrid .datagrid-wrapper tbody tr:nth-child(2)';
     await browser.driver
       .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next .btn-icon'))), config.waitsFor);
 
