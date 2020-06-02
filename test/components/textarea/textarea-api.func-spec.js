@@ -66,18 +66,4 @@ describe('Textarea API', () => {
 
     expect(textareaObj.printarea[0].innerHTML).toEqual(textareaEl.value);
   });
-
-  it('Should update counter', () => {
-    textareaEl = document.body.querySelector('#description-max');
-    textareaObj = new Textarea(textareaEl);
-    textareaEl.value = 'This is a test \n This is a test \n This is a test \n This is a test \n This is a test';
-    textareaObj.updateCounter();
-
-    expect(textareaEl.nextSibling.innerText).toEqual('You can type 4 more characters.');
-
-    textareaEl.value = 'This is a testThis is a testThis is a testThis is a testThis is a testThis is a test123456';
-    textareaObj.updateCounter();
-
-    expect(textareaEl.nextSibling.innerText).toEqual('This text cannot exceed 90 characters.');
-  });
 });
