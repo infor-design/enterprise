@@ -81,10 +81,10 @@ describe('Monthview API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 1439');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو القعدة 1439');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('الأحد');
-    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('1');
-    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('7');
+    expect(document.body.querySelector('tbody tr:first-child td:first-child').textContent.trim()).toEqual('25');
+    expect(document.body.querySelector('tbody tr:first-child td:last-child').textContent.trim()).toEqual('1');
   });
 
   it('Should render based on locale setting', () => {
@@ -148,7 +148,7 @@ describe('Monthview API', () => {
     Soho.Locale.set('ar-SA'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
 
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو الحجة 1439');
+    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('ذو القعدة 1439');
 
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line
