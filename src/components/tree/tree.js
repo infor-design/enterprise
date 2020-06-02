@@ -880,7 +880,7 @@ Tree.prototype = {
     this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
       const target = $(this);
       const parent = this.parentNode;
-      self.clearTextSelection();
+      utils.clearSelection(); // Deselect all selected text.
       if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
           if (DOM.hasClass(e.target, 'icon') && parent.classList.contains('folder')) {
@@ -2373,19 +2373,6 @@ Tree.prototype = {
         node.addClass(node.data('oldData').iconClass);
       }
       node.data('oldData', null);
-    }
-  },
-
-  /**
-   * Deselect all selected text.
-   * @private
-   * @returns {void}
-   */
-  clearTextSelection() {
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-    } else if (document.selection) {
-      document.selection.empty();
     }
   },
 
