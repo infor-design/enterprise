@@ -106,7 +106,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
  * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
  * @param {boolean}  [settings.enableTooltips=false] Process tooltip logic at a cost of performance
- * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not be able to deactivate it by clicking on the activated row
+ * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user will not be able to deactivate it by clicking on the activated row
+ * @param {boolean}  [settings.disableRowDeselection=false] if a row is selected the user will not be able to deselect it by clicking on the selected row again
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
@@ -206,6 +207,7 @@ const DATAGRID_DEFAULTS = {
   allowOneExpandedRow: true, // Only allows one expandable row at a time
   enableTooltips: false, // Process tooltip logic at a cost of performance
   disableRowDeactivation: false,
+  disableRowDeselection: false,
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
@@ -7670,14 +7672,16 @@ Datagrid.prototype = {
       return;
     }
 
-    if (isSingle && row.hasClass('is-selected')) {
+    if (isSingle && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
       this.unselectRow(rowIndex);
       this.displayCounts();
       return this._selectedRows; // eslint-disable-line
     }
 
     if (row.hasClass('is-selected')) {
-      this.unselectRow(rowIndex);
+      if (!this.settings.disableRowDeselection) {
+        this.unselectRow(rowIndex);
+      }
     } else {
       this.selectRow(rowIndex);
     }
