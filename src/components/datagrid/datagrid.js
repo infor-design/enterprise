@@ -6922,10 +6922,8 @@ Datagrid.prototype = {
         if (!dataset[i]._isFilteredOut) {
           rows.push(idx);
         }
-      } else {
-        if (!dataset[i]._selected) {
-          rows.push(idx);
-        }
+      } else if (!dataset[i]._selected) {
+        rows.push(idx);
       }
     }
 
@@ -8097,7 +8095,6 @@ Datagrid.prototype = {
       const last = self.visibleColumns().length - 1;
       let triggerEl;
       let move;
-      let handled = false;
 
       if ($(e.target).closest('.popupmenu').length > 0) {
         return;
@@ -8120,7 +8117,6 @@ Datagrid.prototype = {
           }
 
           self.selectAllRows();
-          handled = true;
         }
 
         if (key === 32) { // Prevent scrolling with space
