@@ -7127,8 +7127,8 @@ Datagrid.prototype = {
                   pagingIdx: actualIdx,
                   pagesize: s.pagesize
                 };
-                if (this.settings.source && this.settings.allowSelectAcrossPages) {
-                  const uniqueRowID = this.getUniqueRowID(data);
+                if (self.settings.source && self.settings.allowSelectAcrossPages) {
+                  const uniqueRowID = self.getUniqueRowID(data);
                   if (uniqueRowID) {
                     args.uniqueRowID = uniqueRowID;
                   }
@@ -7171,8 +7171,8 @@ Datagrid.prototype = {
                   pagingIdx: actualIdx,
                   pagesize: s.pagesize
                 };
-                if (this.settings.source && this.settings.allowSelectAcrossPages) {
-                  const uniqueRowID = this.getUniqueRowID(data);
+                if (self.settings.source && self.settings.allowSelectAcrossPages) {
+                  const uniqueRowID = self.getUniqueRowID(data);
                   if (uniqueRowID) {
                     args.uniqueRowID = uniqueRowID;
                   }
@@ -7204,8 +7204,8 @@ Datagrid.prototype = {
               pagingIdx: dataRowIndex,
               pagesize: self.settings.pagesize
             };
-            if (this.settings.source && this.settings.allowSelectAcrossPages) {
-              const uniqueRowID = this.getUniqueRowID(rowData);
+            if (self.settings.source && self.settings.allowSelectAcrossPages) {
+              const uniqueRowID = self.getUniqueRowID(rowData);
               if (uniqueRowID) {
                 args.uniqueRowID = uniqueRowID;
               }
@@ -7233,8 +7233,8 @@ Datagrid.prototype = {
             pagingIdx: idx,
             pagesize: self.settings.pagesize
           };
-          if (this.settings.source && this.settings.allowSelectAcrossPages) {
-            const uniqueRowID = this.getUniqueRowID(rowData);
+          if (self.settings.source && self.settings.allowSelectAcrossPages) {
+            const uniqueRowID = self.getUniqueRowID(rowData);
             if (uniqueRowID) {
               args.uniqueRowID = uniqueRowID;
             }
