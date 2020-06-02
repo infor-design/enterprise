@@ -7128,7 +7128,10 @@ Datagrid.prototype = {
                   pagesize: s.pagesize
                 };
                 if (this.settings.source && this.settings.allowSelectAcrossPages) {
-                  args.uniqueRowID = this.getUniqueRowID(data);
+                  const uniqueRowID = this.getUniqueRowID(data);
+                  if (uniqueRowID) {
+                    args.uniqueRowID = uniqueRowID;
+                  }
                 }
                 self._selectedRows.push(args);
               }
@@ -7169,7 +7172,10 @@ Datagrid.prototype = {
                   pagesize: s.pagesize
                 };
                 if (this.settings.source && this.settings.allowSelectAcrossPages) {
-                  args.uniqueRowID = this.getUniqueRowID(data);
+                  const uniqueRowID = this.getUniqueRowID(data);
+                  if (uniqueRowID) {
+                    args.uniqueRowID = uniqueRowID;
+                  }
                 }
                 self._selectedRows.push(args);
               }
@@ -7199,7 +7205,10 @@ Datagrid.prototype = {
               pagesize: self.settings.pagesize
             };
             if (this.settings.source && this.settings.allowSelectAcrossPages) {
-              args.uniqueRowID = this.getUniqueRowID(rowData);
+              const uniqueRowID = this.getUniqueRowID(rowData);
+              if (uniqueRowID) {
+                args.uniqueRowID = uniqueRowID;
+              }
             }
             this._selectedRows.push(args);
           }
@@ -7225,7 +7234,10 @@ Datagrid.prototype = {
             pagesize: self.settings.pagesize
           };
           if (this.settings.source && this.settings.allowSelectAcrossPages) {
-            args.uniqueRowID = this.getUniqueRowID(rowData);
+            const uniqueRowID = this.getUniqueRowID(rowData);
+            if (uniqueRowID) {
+              args.uniqueRowID = uniqueRowID;
+            }
           }
           this._selectedRows.push(args);
         }
@@ -7308,17 +7320,18 @@ Datagrid.prototype = {
    * @returns {string} calculated id
    */
   getUniqueRowID(data) {
-    let str = 'rowId';
+    let str = null;
     if (this.settings.columnIds.length > 0) {
+      str = 'rowId';
       for (let i = 0; i < this.settings.columnIds.length; i++) {
         str += ` ${data[this.settings.columnIds[i]]}`;
       }
+      str = str.replace(/([0-9A-Z]+)/g, (m, chr) => ` ${chr}`)
+        .replace(/([0-9a-z]+)/g, (m, chr) => `${chr} `)
+        .trim();
+      str = xssUtils.toCamelCase(str);
     }
-    str = str
-      .replace(/([0-9A-Z]+)/g, (m, chr) => ` ${chr}`)
-      .replace(/([0-9a-z]+)/g, (m, chr) => `${chr} `)
-      .trim();
-    return xssUtils.toCamelCase(str);
+    return str;
   },
 
   /**
@@ -7339,18 +7352,20 @@ Datagrid.prototype = {
       }
     };
 
-    for (let i = 0; i < this._selectedRows.length; i++) {
-      if (this.settings.source && this.settings.allowSelectAcrossPages) {
-        const uniqueRowID = this._selectedRows[i]?.uniqueRowID || -1;
-        dataset.forEach((node, index) => {
-          if (uniqueRowID === this.getUniqueRowID(node)) {
-            const elem = s.groupable ? this.dataRowNode(index) : this.visualRowNode(index);
+    const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
+
+    for (let i = 0, l = this._selectedRows.length; i < l; i++) {
+      const selectedUniqueRowID = getSelUniqueRowID(this._selectedRows[i]);
+      if (this.settings.source && this.settings.allowSelectAcrossPages && !!selectedUniqueRowID) {
+        for (let i2 = 0, l2 = dataset.length; i2 < l2; i2++) {
+          if (selectedUniqueRowID === this.getUniqueRowID(dataset[i2])) {
+            const elem = s.groupable ? this.dataRowNode(i2) : this.visualRowNode(i2);
             if (elem[0]) {
               this._selectedRows[i].elem = elem;
-              this.selectNode(elem, index, dataset[index], true);
+              this.selectNode(elem, i2, dataset[i2], true);
             }
           }
-        });
+        }
       } else {
         if (this.pagerAPI && this._selectedRows[i].page === this.pagerAPI.activePage) {
           idx = this._selectedRows[i].idx;
@@ -7767,6 +7782,8 @@ Datagrid.prototype = {
       return;
     }
 
+    const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
+
     // Unselect it
     const unselectNode = function (elem, index) {
       const removeSelected = function (node, selIdx) {
@@ -7775,9 +7792,9 @@ Datagrid.prototype = {
           selIdx = index;
         }
         for (let i = 0; i < self._selectedRows.length; i++) {
-          if (s.source && s.allowSelectAcrossPages) {
-            const uniqueRowID = self._selectedRows[i].uniqueRowID;
-            if (uniqueRowID === self.getUniqueRowID(node)) {
+          const selectedUniqueRowID = getSelUniqueRowID(self._selectedRows[i]);
+          if (s.source && s.allowSelectAcrossPages && !!selectedUniqueRowID) {
+            if (selectedUniqueRowID === self.getUniqueRowID(node)) {
               self._selectedRows.splice(i, 1);
               break;
             }
