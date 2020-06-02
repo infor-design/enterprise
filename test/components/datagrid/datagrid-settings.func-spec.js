@@ -102,6 +102,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       allowOneExpandedRow: true,
       enableTooltips: false,
       disableRowDeactivation: false,
+      disableRowDeselection: false,
       sizeColumnsEqually: false,
       expandableRow: false,
       exportConvertNegative: false,
