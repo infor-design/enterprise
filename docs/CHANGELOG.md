@@ -5,6 +5,7 @@
 ### v4.30.0 Bugs
 
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
+- `[Datagrid]` Fixed an issue where select all using keyboard in multiSelect/mixedSelect was not working. ([#3921](https://github.com/infor-design/enterprise/issues/3921))
 
 ### v4.30.0 Announcements
 
