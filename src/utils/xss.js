@@ -107,6 +107,20 @@ xssUtils.ensureAlphaNumericWithSpaces = function (string) {
 };
 
 /**
+ * Converting given string into camel case.
+ * @private
+ * @param {string} string To be convert into camel case
+ * @returns {string} the modified value
+ */
+xssUtils.toCamelCase = function (string) {
+  if (typeof string !== 'string') {
+    return string;
+  }
+  string = this.stripTags(string).replace(/[^a-z0-9 ]/gi, '', '');
+  return string.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+};
+
+/**
  * Escapes HTML, replacing special characters with encoded symbols.
  * Symbols taken from https://bit.ly/1iVkGlc
  * @private
