@@ -2,15 +2,6 @@
 
 ## v4.30.0
 
-### v4.30.0 Bugs
-
-- `[Contextual Action Panel]` Fixed an issue where the searchfield should be collapsible on mobile view. ([#918](https://github.com/infor-design/enterprise/issues/918))
-- `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
-
-### v4.30.0 Announcements
-
-- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
-
 ### v4.30.0 Features
 
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
@@ -20,9 +11,12 @@
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Contextual Action Panel]` Fixed an issue where the searchfield should be collapsible on mobile view. ([#918](https://github.com/infor-design/enterprise/issues/918))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
