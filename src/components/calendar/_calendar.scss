@@ -299,10 +299,6 @@
         width: calc(100% - 3px);
       }
 
-      &:hover > a {
-        text-decoration: none;
-      }
-
       .btn {
         display: none;
       }
@@ -337,6 +333,10 @@
   }
 
   .accordion-header {
+    &:hover > a {
+      text-decoration: none;
+    }
+
     &.has-chevron > a {
       line-height: 15px;
       width: calc(100% - 40px);
