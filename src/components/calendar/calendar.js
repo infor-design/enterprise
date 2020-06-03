@@ -434,15 +434,8 @@ Calendar.prototype = {
       api.destroy();
     }
 
-    $('.calendar .list-detail').css('display', 'block');
-    $(this.eventDetailsContainer).accordion();
     if (this.eventDetailsMobileContainer) {
-      $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
       this.translate(this.eventDetailsMobileContainer);
-    }
-
-    if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
-      $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
     }
 
     this.translate(this.eventDetailsContainer);
@@ -479,6 +472,20 @@ Calendar.prototype = {
     for (let i = 0; i < dayObj.events.length; i++) {
       this.renderEventDetails(dayObj.events[i].id, dayObj.events.length);
     }
+
+    $('.calendar .list-detail', this.element).css('display', 'block');
+
+    $(this.eventDetailsContainer).accordion();
+    if (this.eventDetailsMobileContainer) {
+      $(this.eventDetailsMobileContainer).addClass('listview').listview({ selectable: false, hoverable: false });
+    }
+
+    if (DOM.hasClass(this.eventDetailsContainer, 'has-only-one')) {
+      $(this.eventDetailsContainer).find('.accordion-header, .accordion-header a').off('click');
+    }
+
+    $('.accordion-pane.no-transition', this.element).removeClass('no-transition');
+    $(this.eventDetailsContainer).find('.is-expanded').removeClass('is-expanded');
   },
 
   /**
@@ -748,6 +755,25 @@ Calendar.prototype = {
       ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
       <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
     </div>`;
+
+    // Make sure we are on the same "level", when events overlap
+    const eventHead = this.monthViewContainer.querySelectorAll(`.calendar-event.event-day-start[data-id="${event.id}"]`);
+
+    if (eventHead[0]) {
+      const children = eventHead[0].parentNode.children;
+      for (let i = 0; i < children.length; i++) {
+        const dataid = children[i].getAttribute('data-id');
+        if (dataid === event.id) {
+          break;
+        }
+        if (!children[i].classList.contains('day-text')) {
+          const spacer = document.createElement('span');
+          spacer.classList.add('calendar-event-spacer');
+          container.querySelector('.day-container').appendChild(spacer);
+        }
+      }
+    }
+
     container.querySelector('.day-container').appendChild(node);
 
     if (this.settings.iconTooltip !== 'overflow') {

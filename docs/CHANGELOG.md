@@ -9,8 +9,11 @@
 ### v4.30.0 Fixes
 
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Calendar]` Fixed a bug that when setting accordions to allowOnePane it did not work. ([#3773](https://github.com/infor-design/enterprise/issues/3773))
+- `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
+- `[Calendar]` Fixed a bug where the days would be out of alignment if the end and starts dates intersect. ([#1725](https://github.com/infor-design/enterprise/issues/1725))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
-- `[Accordion]` Fixed an issue where the chevron icon is not poperly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))

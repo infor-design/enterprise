@@ -299,6 +299,10 @@
         width: calc(100% - 3px);
       }
 
+      &:hover > a {
+        text-decoration: none;
+      }
+
       .btn {
         display: none;
       }
@@ -891,4 +895,9 @@ html[dir='rtl'] {
     outline: none;
     outline-color: transparent;
   }
+}
+
+.calendar-event-spacer {
+  display: block;
+  height: 18px;
 }

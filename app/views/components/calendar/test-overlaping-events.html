@@ -1,0 +1,303 @@
+<div class="calendar" data-init="false">
+  <div class="calendar-events">
+    <div class="accordion" data-options="{'allowOnePane': false}">
+      <div class="accordion-header is-expanded">
+        <a href="#"><span data-translate="text">Legend</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-event-types accordion-content">
+        </div>
+      </div>
+      <div class="accordion-header is-expanded">
+        <a href="#"><span data-translate="text">UpComing</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="calendar-upcoming-events accordion-content">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="calendar-monthview">
+  </div>
+  <div class="calendar-weekview">
+  </div>
+  <div class="calendar-event-details accordion" data-init="false" data-options="{'allowOnePane': false}">
+  </div>
+  <div class="calendar-event-details-mobile listview" data-init="false">
+  </div>
+</div>
+
+<ul id="calendar-actions-menu" class="popupmenu">
+  <li><a href="#" data-action="delete-event"><span data-translate="text">DeleteEvent</span></a></li>
+  <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
+</ul>
+
+<script id="test-script">
+  var events = [];
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
+
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+      eventTypes = res;
+
+      $.getJSON('{{basepath}}api/events', function(res) {
+        events = res;
+
+        $('.calendar').calendar({
+          month: 5,
+          year: 2020,
+          day: 3,
+          eventTypes: eventTypes,
+          events: events,
+          template: 'tmpl-readonly',
+          mobileTemplate: 'tmpl-mbl-readonly',
+          modalTemplate: 'tmpl-modal',
+          menuId: 'calendar-actions-menu'
+        });
+      });
+    });
+  });
+
+  $('#actions').on('selected', function(e, args) {
+    var action = args[0].getAttribute('data-action');
+    var api = $('.calendar').data('calendar');
+    var selectedDate = api.getDayEvents();
+    var events = api.settings.events;
+    var defaultHours = 8;
+    var startDate = new Date(selectedDate.date);
+    var endDate = new Date(selectedDate.date);
+    var isAllDay = true;
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(startDate.getHours() + defaultHours);
+    // To default all day use
+    if (isAllDay) {
+      endDate.setHours(23, 59, 59, 999);
+    }
+
+    if (action === 'add-api') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'team',
+        isAllDay: isAllDay
+      };
+      api.addEvent(newEvent);
+    }
+
+    if (action === 'add-modal') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        title: 'Request Time Off',
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'dto',
+        isAllDay: isAllDay
+      };
+
+      var done = function(elem, event) {
+        // Collect the data and popuplate the event object
+        var inputs = elem.querySelectorAll('input, textarea, select');
+        for (var i = 0; i < inputs.length; i++) {
+          newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+        }
+
+        api.addEvent(newEvent);
+        return;
+      };
+
+      api.showEventModal(newEvent, done);
+    }
+
+    if (action === 'clear') {
+      api.clearEvents(selectedDate.date);
+    }
+  });
+</script>
+
+
+<script id="tmpl-mbl-readonly" type="text/html">
+  {{={{{ }}}=}}
+  <ul>
+    {{#event}}
+      <li class="border-color {{color}}" data-id="{{id}}">
+        <div class="container">
+          <div class="column-left">
+            {{#subject}}
+            <p class="listview-heading">{{subject}}</p>
+            {{/subject}}
+
+            {{#duration}}
+            <p class="listview-subheading">{{startsLong}} - {{endsLong}}</p>
+            {{/duration}}
+
+            {{#durationHours}}
+            <p class="listview-subheading">{{startsHoursLong}} - {{endsHoursLong}}</p>
+            {{/durationHours}}
+
+            {{#status}}
+            <p class="listview-subheading">{{typeLabel}} | {{status}}</p>
+            {{/status}}
+          </div>
+          <div class="column-right">
+            {{#duration}}
+            <p class="listview-micro">{{duration}} {{durationUnits}}</p>
+            {{/duration}}
+            {{#durationHours}}
+            <p class="listview-micro">{{durationHours}} {{durationUnits}}</p>
+            {{/durationHours}}
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-caret-right"></use>
+            </svg>
+          </div>
+        </div>
+      </li>
+    {{/event}}
+  </ul>
+</script>
+
+<script id="tmpl-readonly" type="text/html">
+{{={{{ }}}=}}
+  {{#event}}
+  <div class="accordion-header is-expanded {{color}}">
+    <a href="#">{{subject}}</a>
+  </div>
+  <div class="accordion-pane is-expanded">
+    <div class="accordion-content">
+      {{#status}}
+      <div class="field">
+        <span class="label" data-translate="text">Status</span>
+        <span class="data">
+          {{status}}
+          {{#icon}}
+          <svg class="icon {{icon}}" focusable="false" aria-hidden="true" role="presentation" data-status="{{status}}"><use href="#{{icon}}"></use></svg>
+          {{/icon}}
+        </span>
+      </div>
+      {{/status}}
+      <div class="field">
+        <span class="label" data-translate="text">Date</span>
+        {{#duration}}
+        <span class="data">
+          {{startsLong}}
+              -
+          {{endsLong}}
+        </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              -
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">EventType</span>
+        <span class="data">
+          {{typeLabel}}
+        </span>
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">Duration</span>
+        {{#duration}}
+        <span class="data">
+          {{duration}} {{durationUnits}}
+        </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{durationHours}} {{durationUnits}}
+        </span>
+        {{/durationHours}}
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">Comments</span>
+        <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
+          {{comments}}
+        </span>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+</script>
+
+<script id="tmpl-modal" type="text/html">
+  {{#event}}
+  <div class="container">
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="subject" class="label" data-translate="text"><span data-translate="text">Subject</span></label>
+          <input id="subject" type="text" value="{{subject}}">
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="type" class="label"><span data-translate="text">Type</span></label>
+          <select id="type" class="dropdown" name="type">
+            {{#eventTypes}}
+            <option value="{{id}}">{{label}}</option>
+            {{/eventTypes}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
+          <label for="isAllDay" class="checkbox-label"><span data-translate="text">AllDay</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="startsLocale" class="label"><span data-translate="text">From</span></label>
+          <input id="startsLocale" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="startsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="endsLocale" class="label"><span data-translate="text">To</span></label>
+          <input id="endsLocale" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="endsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="comments" class="label"><span data-translate="text">Comments</span></label>
+          <textarea id="comments" type="text" value="{{comments}}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+  <div class="modal-buttonset">
+    <button id="cancel" data-cancel="submit" type="button" class="btn-modal-secondary"><span data-translate="text">Cancel</span></button>
+    <button id="submit" data-action="submit" type="button" class="btn-modal-primary hide-focus"><span data-translate="text">Submit</span></button>
+  </div>
+</script>
