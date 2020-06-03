@@ -17,6 +17,7 @@
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
+- `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 
 ## v4.29.0
 
