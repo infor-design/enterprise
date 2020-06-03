@@ -36,7 +36,6 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
  */
-
 const LOOKUP_DEFAULTS = {
   click: null,
   field: 'id',
