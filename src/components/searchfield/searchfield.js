@@ -302,7 +302,7 @@ SearchField.prototype = {
 
     // Backwards compatibility with collapsibleOnMobile
     // TODO: Remove in v4.9.0
-    if (this.settings.collapsibleOnMobile === true) {
+    if (this.settings.collapsibleOnMobile === true || this.settings.collapsible === false) {
       this.settings.collapsible = SEARCHFIELD_COLLAPSE_MODES[1];
     }
 
