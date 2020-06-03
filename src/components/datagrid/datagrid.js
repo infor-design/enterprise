@@ -9438,7 +9438,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   validateRow(row) {
-    if (!row) {
+    if (row === undefined) {
       return;
     }
 
