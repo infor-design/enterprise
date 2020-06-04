@@ -1,0 +1,172 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="open-modal">Open Modal</button><br/><br/>
+
+    <div id="modal-content" class="hidden">
+
+      <div id="common-toolbar" class="toolbar" role="toolbar">
+
+        <div class="title">
+          Toolbar Title
+        </div>
+
+        <div class="buttonset">
+          <button type="button" class="btn-tertiary" disabled>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-open-folder"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary" id="btnFilter">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-filter"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-delete"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-refresh"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <form id="searchForm" style="display: none;">
+        <div class="row demo-grid">
+          <div class="full column">
+
+            <div class="compound-field">
+
+              <div class="field">
+                <label for="example-mulitcolumn-first" class="required">First Name</label>
+                <input type="text" id="example-mulitcolumn-first" name="first-name"/>
+              </div>
+
+              <div class="field">
+                <label for="example-mulitcolumn-last" class="required">Last Name</label>
+                <input type="text" id="example-mulitcolumn-last" class="input-sm" name="last-name"/>
+              </div>
+
+              <div class="field">
+                <label for="cpf-input-unit" class="label">Unit</label>
+                <input type="text" id="cpf-input-unit" name="cpf-input-unit" class="input-sm"/>
+              </div>
+
+            </div>
+
+            <div class="compound-field">
+
+              <div class="field">
+                <label for="example-mulitcolumn-phone" class="required">Phone</label>
+                <input type="text" aria-required="true" data-validate="required" id="example-mulitcolumn-phone" class="input-sm" name="phone"/>
+              </div>
+
+              <div class="field">
+                <label for="example-mulitcolumn-ext">Ext</label>
+                <input type="text" id="example-mulitcolumn-ext" class="input-xs" name="ext"/>
+              </div>
+
+              <div class="field">
+                <label for="cpf-input-setting" class="label">Setting</label>
+                <input type="text" id="cpf-input-setting"/>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn-primary">Search</button>
+
+          </div>
+
+        </div>
+
+      </form>
+
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var showSearchForm = false;
+    var grid,
+    columns = [],
+    data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 'T100', productName: 'Compressor', phone: '191/2004', activity:  'Assemble Paint', quantity: 1, price: '800.9905673502324', percent: .10, status: 'OK', orderDate: '00000000', action: 'Action', summary: 'Is action oriented and full of energy'});
+    data.push({ id: 2, productId: '200', productName: 'Different Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: '2', percent: .10, price: null, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', summary: 'Active Server Pages'});
+    data.push({ id: 3, productId: '300', productName: 'Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: 1, price: '120.99', percent: .10, status: null, orderDate: new Date(2014, 6, 3), action: 'Action', summary: 'Analytical Skills'});
+    data.push({ id: 4, productId: 'Z400', productName: 'Another Compressor', phone: '(888) 888-8888', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', summary: 'Is excellent at honest analysis'});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', summary: 'Assessment Skills'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', percent: .10, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', summary: 'Practices attentive and active listening'});
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', percent: .10, status: 'OK', orderDate:new Date(2017, 5, 5), action: 'On Hold', summary: 'Creates a feeling of belonging to and commitment to the team'});
+    data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold', summary: 'Brings out the best in people'});
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Text, filterType: 'text', align: 'left' });
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      paging: true,
+      pagesize: 10,
+      actionableMode: true,
+      cellNavigation: true,
+      editable: false,
+      enableTooltips: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      rowHeight: 'short',
+      selectable: 'multiple',
+      showDirty: false,
+      filterable: true,
+      // toolbar: {title: 'Select Compressor', actions: true, rowHeight: true, personalize: true}
+    });
+
+    $('#open-modal').on('click', function () {
+      $('body').modal({
+        title: 'Open Modal',
+        content: $('#modal-content'),
+        // cssClass: 'modal-no-header',
+        cssClass: 'datagrid-default-modal-width',
+        buttons: [{
+          text: 'Cancel',
+          id: 'modal-button-1',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'OK',
+          id: 'modal-button-2',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }],
+        autoFocus: false
+      });
+    });
+
+    $('#btnFilter').on('click', function () {
+      showSearchForm = !showSearchForm;
+      if (showSearchForm) {
+        $('#searchForm').show();
+      } else {
+        $('#searchForm').hide();
+      }
+    });
+
+  });
+</script>
