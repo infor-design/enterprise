@@ -167,7 +167,7 @@ node app/server.js --verbose --locale=es-ES --colors=#941e1e
 
 Appending these same parameters to the URL is a way to temporarily test them against a single page:
 
-```
+```html
 http://localhost:4000/components/mask/test-number-mask-gauntlet?locale=es-ES&colors=#941e1e
 ```
 
