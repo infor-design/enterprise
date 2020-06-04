@@ -880,6 +880,7 @@ Tree.prototype = {
     this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
       const target = $(this);
       const parent = this.parentNode;
+      utils.clearSelection(); // Deselect all selected text.
       if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
         if (self.isMultiselect) {
           if (DOM.hasClass(e.target, 'icon') && parent.classList.contains('folder')) {

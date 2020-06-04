@@ -15,11 +15,11 @@
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
-- `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
-- `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
+- `[Datagrid]` Fixed an issue where using selectRowsAcrossPages setting the selected rows were reseting by filter, to use this feature you may need to set columnIds in the settings to form whats unique for the row. ([#3601](https://github.com/infor-design/enterprise/issues/3601))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
+- `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 
 ## v4.29.0
 
@@ -60,6 +60,7 @@
 - `[Datagrid]` Fixed visibility of sort icons when toggling and when the column is in active. ([#3692](https://github.com/infor-design/enterprise/issues/3692))
 - `[Datagrid]` Fixed a bug where the data passed to resultsText was incorrect in the case of reseting a filter. ([#2177](https://github.com/infor-design/enterprise/issues/2177))
 - `[Datagrid/General]` Fixed an additional bug where when loading the datagrid with a columns object that contain recursive objects the grid would crash in saveColumns. [3759](https://github.com/infor-design/enterprise/issues/3759))
+- `[Datepicker]` Fixed a bug where the modal would take aspects of the personalize colors by mistake. ([#3997](https://github.com/infor-design/enterprise/issues/3997))
 - `[Dropdown]` Fixed tooltip content gets cut off inside of modal. ([#3106](https://github.com/infor-design/enterprise/issues/3106))
 - `[DemoApp]` Fixed an issue with some pages in the design site where the did not have a height. ([#878](https://github.com/infor-design/website/issues/878))
 - `[Fonts]` A note that the Source Sans Pro font thats used in the new theme and served at google fonts, now have a fix for the issue that capitalized letters and numbers had different heights. You may need to release any special caching. ([#1789](https://github.com/infor-design/enterprise/issues/1789))
@@ -67,6 +68,7 @@
 - `[Line Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))
 - `[Locale]` Fixed the es-419 date time value, as it was incorrectly using the medium length date format. ([#3830](https://github.com/infor-design/enterprise/issues/3830))
 - `[Modal]` Fixed the inconsistencies of spacing on required fields. ([#3587](https://github.com/infor-design/enterprise/issues/3587))
+- `[Modal]` Fixed a bug where the title would overflow too soon. ([#3996](https://github.com/infor-design/enterprise/issues/3996))
 - `[Multiselect]` Added ability to detect selected items from incoming data via `callSource()`. ([#2656](https://github.com/infor-design/enterprise/issues/2656))
 - `[Multiselect]` Added support to api settings to `allTextString` and `selectedTextString` for custom headers. ([#3554](https://github.com/infor-design/enterprise/issues/3554))
 - `[Pie Chart]` Fixed an issue where height was not calculating properly when used other elements along content container. ([#2670](https://github.com/infor-design/enterprise/issues/2670))

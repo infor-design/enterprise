@@ -696,9 +696,11 @@ Tooltip.prototype = {
 
     const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
-    // Personalizable the toolbar
-    const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
-    self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
+    // Personalizable the tooltip
+    if (!self.settings.popover) {
+      const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
+      self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
+    }
 
     setTimeout(() => {
       $(document)
