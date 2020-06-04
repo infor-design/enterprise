@@ -148,12 +148,28 @@ Optional: We use [`nvm`](https://github.com/creationix/nvm) in development so th
 
 See the `scripts` object in [package.json](../package.json) for a full list of commands.
 
-#### Debugging the Demo Server
+#### Debugging the Demo Application
+
+Debugging the Demo App can be done in the usual manner for Node applications, with the `--inspect` or `--inspect-brk` flags:
 
 - Add a break point in the demo app code
-- Run `node --inspect app/server.js --verbose` to start the app in debug mode
+- Run `node --inspect-brk app/server.js --verbose` to start the app in debug mode
 - Open chrome and navigate to `chrome://inspect` and press run target
 - Open the page in question and the debugger should popup up
+
+It's also possible to start the demoapp with flags that control certain options, such as locale, color scheme, etc.  Unless these flags are individually overriden via URL query parameters, they will take effect on all pages until the demoapp is restarted.
+
+For example, if you wanted to test overall changes to the demoapp in the Spanish locale with an alternate color scheme, you could start the demoapp with the following flags:
+
+```sh
+node app/server.js --verbose --locale=es-ES --colors=#941e1e
+```
+
+Appending these same parameters to the URL is a way to temporarily test them against a single page:
+
+```
+http://localhost:4000/components/mask/test-number-mask-gauntlet?locale=es-ES&colors=#941e1e
+```
 
 #### Editor Plugins
 

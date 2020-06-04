@@ -1,15 +1,12 @@
-const extend = require('extend');
-
 const logger = require('../logger');
 const setLayout = require('../set-layout');
+const setImportStyle = require('../set-import-style');
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
 // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
-module.exports = function (app, defaults) {
+module.exports = function () {
   return function optionHandler(req, res, next) {
-    res.opts = extend({}, defaults);
-
     // Change Locale (which also changes right-to-left text setting)
     if (req.query.locale && req.query.locale.length > 0) {
       res.opts.locale = req.query.locale;
@@ -37,6 +34,7 @@ module.exports = function (app, defaults) {
     // NOTE: see the `app/src/js/custom-route-options.js` middleware for where this
     // setting is translated into `window.SohoConfig`.
     if (req.query.minify && req.query.minify.length > 0) {
+      setImportStyle(req, res, 'minify');
       res.opts.minify = true;
       logger('info', 'Using the minified version of "sohoxi.js" and culture files');
     }

@@ -5,6 +5,7 @@
 ### v4.30.0 Features
 
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
+- `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 
 ### v4.30.0 Fixes
 

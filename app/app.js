@@ -84,7 +84,8 @@ csp.extend(app);
 
 // Import various custom middleware (order matters!)
 app.use(require('./src/js/middleware/request-logger')(app));
-app.use(require('./src/js/middleware/option-handler')(app, DEFAULT_RESPONSE_OPTS));
+app.use(require('./src/js/middleware/cmd-params-handler')(app, DEFAULT_RESPONSE_OPTS));
+app.use(require('./src/js/middleware/option-handler')(app));
 app.use(require('./src/js/middleware/option-handler-themes')(app));
 app.use(require('./src/js/middleware/option-handler-fonts')());
 app.use(require('./src/js/middleware/basepath-handler')(app));
