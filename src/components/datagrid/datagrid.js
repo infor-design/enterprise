@@ -8113,6 +8113,7 @@ Datagrid.prototype = {
             .attr('aria-checked', 'true');
 
           if (self.recordCount === self._selectedRows.length) {
+            self.unSelectAllRows();
             return;
           }
 
@@ -8496,6 +8497,7 @@ Datagrid.prototype = {
           .attr('aria-checked', 'true');
 
         if (self.recordCount === self._selectedRows.length) {
+          self.unSelectAllRows();
           return;
         }
 
