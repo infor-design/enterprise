@@ -10,14 +10,14 @@ function personalizeStyles(colors) {
   background: ${colors.selection} !important
 }
 
-.is-personalizable .btn-primary,
-.btn-primary.is-personalizable {
+.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+.btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable {
   background-color: ${colors.base} !important;
   border-color: ${colors.base} !important;
 }
 
-.is-personalizable .btn-primary:disabled,
-.btn-primary.is-personalizable:disabled {
+.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+.btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
   background-color: ${colors.baseDisabled} !important;
   border-color: ${colors.baseDisabled} !important;
 }
@@ -42,19 +42,19 @@ button.is-personalizable.is-pressed .icon {
   color: ${colors.base};
 }
 
-.is-personalizable .btn-primary:hover:not(:disabled),
-.btn-primary.is-personalizable:hover:not(:disabled) {
+.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+.btn-primary.is-personalizable:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darker} !important;
   border-color: ${colors.darker} !important;
 }
 
-.is-personalizable .btn-primary:hover:not(:disabled),
-.btn-primary.is-personalizable:hover:not(:disabled) {
+.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+.btn-primary.is-personalizable:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darker} !important;
   border-color: ${colors.darker} !important;
 }
 
-.is-personalizable button:focus:not(.hide-focus),
+.is-personalizable button:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
 button.is-personalizable button:focus:not(.hide-focus),
 .is-personalizable a.btn:focus:not(.hide-focus),
 a.btn.is-personalizable:focus:not(.hide-focus),
@@ -71,7 +71,7 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
     0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
-.is-personalizable .btn-primary:focus:not(.hide-focus),
+.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
 .btn-primary.is-personalizable button:focus:not(.hide-focus),
 .is-personalizable .btn-secondary:focus:not(.hide-focus),
 .btn-secondary.is-personalizable button:focus:not(.hide-focus) {
@@ -94,22 +94,22 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
   color: ${colors.base};
 }
 
-.is-personalizable .hyperlink,
-.hyperlink.is-personalizable {
+.is-personalizable .hyperlink:not(.today),
+.hyperlink:not(.today).is-personalizable {
   color: ${colors.hyperlinkText}
 }
-.is-personalizable .hyperlink:hover,
-.hyperlink.is-personalizable:hover {
+.is-personalizable .hyperlink:not(.today):hover,
+.hyperlink:not(.today).is-personalizable:hover {
   color: ${colors.hyperlinkTextHover};
 }
-.is-personalizable .hyperlink:focus:not(.hide-focus),
-.hyperlink.is-personalizable:focus:not(.hide-focus) {
+.is-personalizable .hyperlink:not(.today):focus:not(.hide-focus),
+.hyperlink:not(.today).is-personalizable:focus:not(.hide-focus) {
   border-color: ${colors.hyperlinkText};
   box-shadow: 0 0 4px 3px rgba(${hyperlinkColorObj.r}, ${hyperlinkColorObj.g}, ${hyperlinkColorObj.b}, 0.3);
 }
 
-.is-personalizable button svg.ripple-effect,
-button.is-personalizable svg.ripple-effect,
+.is-personalizable button:not(.btn-monthyear-pane) svg.ripple-effect,
+button:not(.btn-monthyear-pane).is-personalizable svg.ripple-effect,
 .is-personalizable a svg.ripple-effect,
 a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base} !important;
