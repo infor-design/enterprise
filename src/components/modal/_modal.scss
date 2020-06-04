@@ -281,8 +281,8 @@
       h1 {
         @include line-clamp(2);
 
-        max-width: 300px;
         white-space: initial;
+        width: inherit;
       }
     }
   }

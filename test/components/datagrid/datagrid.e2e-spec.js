@@ -4257,3 +4257,103 @@ describe('Datagrid With Recursive Column Data', () => {
     expect(await element.all(by.css('#datagrid .datagrid-wrapper tbody tr')).count()).toEqual(7);
   });
 });
+
+describe('Datagrid with select rows across pages tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-multiselect-select-across-page');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render rows', async () => {
+    expect(await element.all(by.css('#datagrid .datagrid-wrapper tbody tr')).count()).toEqual(5);
+  });
+
+  it('Should not deselect the selected rows after filter', async () => {
+    const filterId = 'test-paging-multiselect-select-across-page-datagrid-1-header-filter-2';
+    const allRows = '#datagrid .datagrid-wrapper tbody .datagrid-row';
+    const row = '#datagrid .datagrid-wrapper tbody tr:nth-child(2)';
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+    await element(by.id(filterId)).clear();
+    await element(by.id(filterId)).sendKeys('214229');
+    await element(by.id(filterId)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(1);
+    await element(by.id(filterId)).clear();
+    await element(by.id(filterId)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+  });
+
+  it('Should filter on 2nd page', async () => {
+    const filterId = 'test-paging-multiselect-select-across-page-datagrid-1-header-filter-2';
+    const allRows = '#datagrid .datagrid-wrapper tbody .datagrid-row';
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next .btn-icon'))), config.waitsFor);
+
+    await element(by.css('.pager-next')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev .btn-icon'))), config.waitsFor);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    await element(by.id(filterId)).clear();
+    await element(by.id(filterId)).sendKeys('214229');
+    await element(by.id(filterId)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(1);
+  });
+
+  it('Should sync if select/deselect while filtering', async () => {
+    const textSel = '.toolbar > div.title.selection-count.has-tooltip';
+    const filterId = 'test-paging-multiselect-select-across-page-datagrid-1-header-filter-2';
+    const allRows = '#datagrid .datagrid-wrapper tbody .datagrid-row';
+    const row = '#datagrid .datagrid-wrapper tbody tr[aria-rowindex="2"]';
+    const row2 = '#datagrid .datagrid-wrapper tbody tr[aria-rowindex="10"]';
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-next .btn-icon'))), config.waitsFor);
+
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+    expect(await element.all(by.css(textSel)).first().getText()).toEqual('1 Selected');
+    await element(by.id(filterId)).clear();
+    await element(by.id(filterId)).sendKeys('214229');
+    await element(by.id(filterId)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(1);
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(1);
+    expect(await element.all(by.css(textSel)).first().getText()).toEqual('2 Selected');
+    await element(by.id(filterId)).clear();
+    await element(by.id(filterId)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    expect(await element.all(by.css(textSel)).first().getText()).toEqual('2 Selected');
+    expect(await element(by.css(row)).getAttribute('class')).toMatch('is-selected');
+
+    await element(by.css('.pager-next')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.elementToBeClickable(await element(by.css('.pager-prev .btn-icon'))), config.waitsFor);
+
+    expect(await element.all(by.css(allRows)).count()).toEqual(5);
+    expect(await element.all(by.css(textSel)).first().getText()).toEqual('2 Selected');
+    expect(await element(by.css(row2)).getAttribute('class')).toMatch('is-selected');
+  });
+});

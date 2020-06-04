@@ -592,7 +592,7 @@ ListView.prototype = {
    * @returns {void}
    */
   selectItemsBetweenIndexes(indexes) {
-    this.clearSelection();
+    utils.clearSelection(); // Clear all currently selected list items.
     indexes.sort((a, b) => a - b);
     for (let i = indexes[0]; i <= indexes[1]; i++) {
       const item = $('li, tbody tr', this.element).eq(i);
@@ -617,19 +617,6 @@ ListView.prototype = {
       if (!item.is('.is-disabled') && item.is('.is-selected')) {
         this.select(item);
       }
-    }
-  },
-
-  /**
-  * Clear all currently selected list items.
-  * @private
-  * @returns {void}
-  */
-  clearSelection() {
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-    } else if (document.selection) {
-      document.selection.empty();
     }
   },
 
