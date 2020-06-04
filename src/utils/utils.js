@@ -1232,6 +1232,7 @@ utils.getSiblingsHeight = function getSiblingsHeight(el) {
   const siblings = DOM.getSiblings(el);
   return siblings.map(sibling => sibling.offsetHeight).reduce((a, h) => a + h, 0);
 };
+
 /**
  * Get parent available height for given element.
  * @privateel
@@ -1240,6 +1241,19 @@ utils.getSiblingsHeight = function getSiblingsHeight(el) {
  */
 utils.getParentAvailableHeight = function getParentAvailableHeight(el) {
   return el.parentNode.offsetHeight - utils.getSiblingsHeight(el);
+};
+
+/**
+ * Clear all currently selected.
+ * @privateel
+ * @returns {void}
+ */
+utils.clearSelection = function clearSelection() {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+  } else if (document.selection) {
+    document.selection.empty();
+  }
 };
 
 export { utils, math };
