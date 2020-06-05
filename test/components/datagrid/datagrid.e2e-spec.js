@@ -3352,7 +3352,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
-fdescribe('Datagrid Paging with Summary Row test', () => {
+describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-with-summary-row?layout=nofrills');
 
