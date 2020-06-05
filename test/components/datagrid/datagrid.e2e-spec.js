@@ -3352,9 +3352,9 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
-describe('Datagrid Paging with Summary Row test', () => {
+fdescribe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-paging-with-summary-row');
+    await utils.setPage('/components/datagrid/test-paging-with-summary-row?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -3368,6 +3368,15 @@ describe('Datagrid Paging with Summary Row test', () => {
   it('Should display summary row', async () => {
     expect(await element.all(by.css('tr.datagrid-summary-row')).count()).toEqual(1);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-summary-row-paging')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid paging serverside single select tests', () => {
