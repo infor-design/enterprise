@@ -2864,33 +2864,30 @@ Datagrid.prototype = {
     const endRow = this.tableBody.find('tr').eq(endIndex);
 
     // Move the elem in the data set
-    const startRowIdx = this.settings.dataset.splice(startIndex, 1)[0];
-    this.settings.dataset.splice(endIndex, 0, startRowIdx);
+    const dataRowIndex = { start: this.dataRowIndex(status ? status.start : endRow) };
+    dataRowIndex.end = dataRowIndex.start + (endIndex - startIndex);
+    this.arrayIndexMove(this.settings.dataset, dataRowIndex.start, dataRowIndex.end);
 
-    // move in the ui
-    if (!status && moveDown) {
-      startRow.insertAfter(endRow);
-    }
-
-    if (!status && !moveDown) {
-      startRow.insertBefore(endRow);
-    }
-
-    // If using expandable rows move the expandable row with it
-    if ((this.settings.rowTemplate || this.settings.expandableRow) && moveDown) {
-      this.tableBody.find('tr').eq(startIndex * 2).insertAfter(status.end);
-      status.end.next().next().insertAfter(status.over);
-    }
-
-    if ((this.settings.rowTemplate || this.settings.expandableRow) && !moveDown) {
-      this.tableBody.find('tr').eq(startIndex * 2).next().insertAfter(status.end);
+    if (status) {
+      // If using expandable rows move the expandable row with it
+      if (this.settings.rowTemplate || this.settings.expandableRow) {
+        if (moveDown) {
+          this.tableBody.find('tr').eq(startIndex * 2).insertAfter(status.end);
+          status.end.next().next().insertAfter(status.over);
+        } else {
+          this.tableBody.find('tr').eq(startIndex * 2).next().insertAfter(status.end);
+        }
+      }
+    } else {
+      // Move in the ui
+      startRow[moveDown ? 'insertAfter' : 'insertBefore'](endRow);
     }
 
     // Resequence the rows
     const allRows = this.tableBody.find('tr:not(.datagrid-expandable-row)');
     for (let i = 0; i < allRows.length; i++) {
       allRows[i].setAttribute('data-index', i);
-      allRows[i].setAttribute('aria-rowindex', i + 1);
+      allRows[i].setAttribute('aria-rowindex', this.pagingRowIndex(i + 1));
     }
 
     /**
