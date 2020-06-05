@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="open-modal">Open Modal</button><br/><br/>
+    <div id="modal-content" style="display: none;">
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    //Locale.set('en-US').done(function () {
+    var grid,
+    columns = [],
+    data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 'T100', summary: 'Is action oriented and full of energy'});
+    data.push({ id: 2, productId: '200', summary: 'Active Server Pages'});
+    data.push({ id: 3, productId: '300', summary: 'Analytical Skills'});
+    data.push({ id: 4, productId: 'Z400', summary: 'Is excellent at honest analysis'});
+    data.push({ id: 4, productId: 2445204, summary: 'Assessment Skills'});
+    data.push({ id: 5, productId: 2542205, summary: 'Practices attentive and active listening'});
+    data.push({ id: 5, productId: 2642205, summary: 'Creates a feeling of belonging to and commitment to the team'});
+    data.push({ id: 6, productId: 2642206, summary: 'Brings out the best in people'});
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text});
+    columns.push({ id: 'summary', name: 'Summary', field: 'summary', formatter: Formatters.Editor, textOverflow: 'ellipsis', width: 300, singleline: true, contentTooltip: true, filterType: 'text', align: 'left' });
+
+    // Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      saveColumns: false,
+      paging: true,
+      pagesize: 10,
+      actionableMode: true,
+      cellNavigation: true,
+      editable: false,
+      enableTooltips: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      rowHeight: 'short',
+      selectable: 'multiple',
+      showDirty: false,
+      // toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+    }).data('datagrid');
+
+    var modals = {
+      'open-modal': {
+        'title': 'Open Modal',
+        'content': $('#modal-content')
+      }
+    },
+
+    setModal = function (opt) {
+      opt = $.extend({
+        buttons: [{
+          text: 'Cancel',
+          id: 'modal-button-1',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+          id: 'modal-button-2',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }],
+        // maxWidth: 1000
+        autoFocus: false
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+    $('#open-modal').on('click', function () {
+      setModal(modals[this.id]);
+    });
+  });
+</script>

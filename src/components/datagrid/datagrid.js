@@ -11170,11 +11170,12 @@ Datagrid.prototype = {
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
         // Width for tooltip can be come from column options
-        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
-        const wrapperHTML = tooltip.wrapper.innerHTML;
+        const newContentTooltip = $(contentTooltip).clone()[0];
+        newContentTooltip.style.width = width || `${elem.offsetWidth}px`;
+        const tooltipHTML = newContentTooltip.outerHTML;
 
-        if (xssUtils.stripHTML(wrapperHTML) !== '') {
-          tooltip.content = wrapperHTML;
+        if (xssUtils.stripHTML(tooltipHTML) !== '') {
+          tooltip.content = tooltipHTML;
           tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
         }
       } else if (aTitle) {
@@ -11311,7 +11312,7 @@ Datagrid.prototype = {
 
         tooltip
           .one('afterplace.gridtooltip', (e, placementObj) => {
-            this.handleAfterPlaceTooltip(e, placementObj);
+            this.handleAfterPlaceTooltip(e, tooltip, placementObj);
           })
           .on('click.gridtooltip', () => {
             this.hideTooltip();
@@ -11329,14 +11330,15 @@ Datagrid.prototype = {
    * Placement behavior's "afterplace" handler.
    * @private
    * @param {jquery.event} e custom `afterPlace` event
+   * @param {jquery} tooltip element
    * @param {placementobject} placementObj object containing placement settings
    * @returns {void}
    */
-  handleAfterPlaceTooltip(e, placementObj) {
-    const tooltip = $('#tooltip');
-    if (tooltip[0]) {
-      tooltip.data('place').setArrowPosition(e, placementObj, tooltip);
-      tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+  handleAfterPlaceTooltip(e, tooltip, placementObj) {
+    const elem = tooltip || $('#tooltip');
+    if (elem[0]) {
+      elem.data('place').setArrowPosition(e, placementObj, elem);
+      elem.triggerHandler('tooltipafterplace', [placementObj]);
     }
   },
 
