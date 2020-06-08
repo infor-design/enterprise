@@ -11299,6 +11299,14 @@ Datagrid.prototype = {
           placeOptions.y = 0;
         }
 
+        tooltip
+          .one('afterplace.gridtooltip', (e, placementObj) => {
+            this.handleAfterPlaceTooltip(e, tooltip, placementObj);
+          })
+          .on('click.gridtooltip', () => {
+            this.hideTooltip();
+          });
+
         // If not already have place instance
         if (!tooltip.data('place')) {
           tooltip.place(placeOptions);
@@ -11309,14 +11317,6 @@ Datagrid.prototype = {
 
         // Flag to mark as gridtooltip
         tooltip.data('gridtooltip', true);
-
-        tooltip
-          .one('afterplace.gridtooltip', (e, placementObj) => {
-            this.handleAfterPlaceTooltip(e, tooltip, placementObj);
-          })
-          .on('click.gridtooltip', () => {
-            this.hideTooltip();
-          });
 
         // Hide the tooltip when the page scrolls.
         $('body, .scrollable').off('scroll.gridtooltip').on('scroll.gridtooltip', () => {
