@@ -204,6 +204,7 @@ Validator.prototype = {
         if (handleEventData &&
             handleEventData.type === e.type &&
             e.handleObj.namespace === 'validate' &&
+            !thisField.is('.lookup') &&
             !thisField.closest('.modal:visible').length) {
           return;
         }

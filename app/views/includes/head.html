@@ -22,16 +22,30 @@
   {{#SohoConfig}}
   <script>
     window.SohoConfig = JSON.parse('{{{SohoConfig}}}');
+    window.IDSConfig = window.SohoConfig;
   </script>
   {{/SohoConfig}}
 
-  {{#minify}}
-  <script src="{{basepath}}js/sohoxi.min.js"></script>
-  {{/minify}}
-  {{^minify}}
-  <script src="{{basepath}}js/sohoxi.js"></script>
-  {{/minify}}
-  <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
+  {{#importStyle}}
+    {{#esModule}}
+    <script id="ids-module" type="module">
+      (async () => {
+        const moduleSpecifier = '{{basepath}}js/sohoxi.esm.js';
+        const Soho = await import(moduleSpecifier);
+
+        window.Soho = Soho;
+      })();
+    </script>
+    {{/esModule}}
+    {{^esModule}}
+      <script src="{{basepath}}js/sohoxi.{{importStyle}}.js"></script>
+      <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
+    {{/esModule}}
+  {{/importStyle}}
+  {{^importStyle}}
+    <script src="{{basepath}}js/sohoxi.js"></script>
+    <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
+  {{/importStyle}}
 
   <!-- Supplying the culture in the head is supported
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>

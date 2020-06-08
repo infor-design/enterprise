@@ -212,7 +212,7 @@ Arrange.prototype = {
         return this.isIe;
       });
 
-    this.items.each(function () {
+    this.items.add(placeholder).each(function () {
       $(this)
         // Drag start --------------------------------------------------------------------------
         .on(self.dragStart, function (e) {
