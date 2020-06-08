@@ -4258,7 +4258,12 @@ html[dir='rtl'] {
 // Summary totals
 .datagrid-summary-row {
   td {
+    background-color: $datagrid-cell-bg-color !important;
     border-right-color: transparent;
+
+    .datagrid-checkbox-wrapper {
+      display: none;
+    }
   }
 
   .datagrid-summary-totals {
