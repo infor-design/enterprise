@@ -9,6 +9,7 @@
 
 ### v4.30.0 Fixes
 
+- `[Application Menu]` Fixed an issue where the dropdown icon is not properly centered in Safari. ([#3766](https://github.com/infor-design/enterprise/issues/3766))
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
 - `[Calendar]` Fixed a bug that when setting accordions to allowOnePane it did not work. ([#3773](https://github.com/infor-design/enterprise/issues/3773))
 - `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
