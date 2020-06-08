@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed a bug inside validateRow when passing in a zero the function would exit. ([#4002](https://github.com/infor-design/enterprise/issues/4002))
 - `[Datagrid]` Fixed an issue where select all using keyboard in multiSelect/mixedSelect was not working. ([#3921](https://github.com/infor-design/enterprise/issues/3921))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fixed an issue where data was not in sync for row reorder and paging. ([#3749](https://github.com/infor-design/enterprise/issues/3749))
 - `[Datagrid]` Fixed an issue where using selectRowsAcrossPages setting the selected rows were reseting by filter, to use this feature you may need to set columnIds in the settings to form whats unique for the row. ([#3601](https://github.com/infor-design/enterprise/issues/3601))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
