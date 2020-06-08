@@ -306,8 +306,6 @@ SearchField.prototype = {
       this.settings.collapsible = SEARCHFIELD_COLLAPSE_MODES[1];
     }
 
-    this.alwaysCollapsibleOnMobile();
-
     // Add/remove the collapsible functionality
     this.wrapper[0].classList[!this.settings.collapsible === true ? 'add' : 'remove']('non-collapsible');
 
@@ -527,17 +525,6 @@ SearchField.prototype = {
     }
 
     this.setInitalWidth();
-  },
-
-  /**
-   * Forcing the searchfield to be collapsible on mobile view.
-   * @private
-   * @returns {void}
-   */
-  alwaysCollapsibleOnMobile() {
-    if (this.settings.collapsible !== true && !breakpoints.isAbove('phone-to-tablet')) {
-      this.settings.collapsible = SEARCHFIELD_COLLAPSE_MODES[1];
-    }
   },
 
   /**
@@ -789,7 +776,6 @@ SearchField.prototype = {
     } else {
       $('body').on(`resize.${this.id}`, () => {
         self.simpleAdjustOnBreakpoint();
-        self.alwaysCollapsibleOnMobile();
       });
       self.simpleAdjustOnBreakpoint();
     }
