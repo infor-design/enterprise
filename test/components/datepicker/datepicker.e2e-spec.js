@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
