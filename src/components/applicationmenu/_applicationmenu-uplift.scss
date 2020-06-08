@@ -806,3 +806,15 @@ html[dir='rtl'] {
     }
   }
 }
+
+.is-safari {
+  .application-menu {
+    .accordion-static-panel {
+      .btn-menu {
+        svg {
+          margin-top: -2px;
+        }
+      }
+    }
+  }
+}
