@@ -12,6 +12,7 @@ const files = [
   'dist/js/d3.v5.js',
   'dist/js/sohoxi.js',
   'dist/js/cultures/en-US.js',
+  'dist/js/cultures/da-DK.js',
   'dist/js/cultures/ar-EG.js',
   'dist/js/cultures/es-ES.js',
   'dist/js/cultures/fr-FR.js',

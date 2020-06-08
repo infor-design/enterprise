@@ -6925,12 +6925,13 @@ Datagrid.prototype = {
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
+
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i]._isFilteredOut) {
           rows.push(idx);
         }
-      } else {
+      } else if (!dataset[i]._selected) {
         rows.push(idx);
       }
     }
@@ -8165,6 +8166,7 @@ Datagrid.prototype = {
   handleKeys() {
     const self = this;
     const isMultiple = self.settings.selectable === 'multiple';
+    const isMixed = self.settings.selectable === 'mixed';
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
 
     // Handle header navigation
@@ -8184,6 +8186,21 @@ Datagrid.prototype = {
       if (key === 13 || key === 32) {
         triggerEl = (isMultiple && index === 0) ? $('.datagrid-checkbox', th) : th;
         triggerEl.trigger('click.datagrid').focus();
+        const selectionCheckbox = (triggerEl[0].dataset.columnId === 'selectionCheckbox' || triggerEl.prevObject[0].dataset.columnId === 'selectionCheckbox');
+
+        if ((isMultiple || isMixed) && selectionCheckbox) {
+          checkbox
+            .addClass('is-checked')
+            .removeClass('is-partial')
+            .attr('aria-checked', 'true');
+
+          if (self.recordCount === self._selectedRows.length) {
+            self.unSelectAllRows();
+            return;
+          }
+
+          self.selectAllRows();
+        }
 
         if (key === 32) { // Prevent scrolling with space
           e.preventDefault();
@@ -8554,12 +8571,18 @@ Datagrid.prototype = {
         }
       }
 
-      // If multiSelect is enabled, press Control+A to toggle select all rows
-      if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+      // If multiSelect or mixedSelect is enabled, press Control+A to toggle select all rows
+      if ((isMultiple || isMixed) && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
         checkbox
           .addClass('is-checked')
           .removeClass('is-partial')
           .attr('aria-checked', 'true');
+
+        if (self.recordCount === self._selectedRows.length) {
+          self.unSelectAllRows();
+          return;
+        }
+
         self.selectAllRows();
         handled = true;
       }
@@ -9520,7 +9543,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   validateRow(row) {
-    if (!row) {
+    if (row === undefined) {
       return;
     }
 

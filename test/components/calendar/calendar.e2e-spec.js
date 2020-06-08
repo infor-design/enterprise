@@ -360,3 +360,46 @@ describe('Calendar RTL tests', () => {
     expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(21);
   });
 });
+
+describe('Calendar allow one pane tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-allow-single-pane');
+
+    const pane = await element.all(by.css('.calendar-event-details .accordion-pane')).first();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(pane), config.waitsFor);
+  });
+
+  it('Should only allow one pane open at a time', async () => {
+    await utils.checkForErrors();
+
+    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(0);
+
+    const buttonEl = await element(by.css('.calendar-event-details > div:nth-child(5) button'));
+    await buttonEl.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-event-details > div:nth-child(6).is-expanded'))), config.waitsFor);
+
+    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(1);
+  });
+});
+
+describe('Calendar overlapping events', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-overlaping-events');
+
+    const pane = await element.all(by.css('.calendar-event-spacer')).first();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(pane), config.waitsFor);
+  });
+
+  it('Should span overlaping events', async () => {
+    await utils.checkForErrors();
+
+    expect(await element.all(by.css('[data-key="20200611"] .calendar-event-spacer')).count()).toEqual(1);
+    expect(await element.all(by.css('[data-key="20200613"] .calendar-event-spacer')).count()).toEqual(2);
+    expect(await element.all(by.css('[data-key="20200615"] .calendar-event-spacer')).count()).toEqual(2);
+    expect(await element.all(by.css('[data-key="20200617"] .calendar-event-spacer')).count()).toEqual(0);
+  });
+});
