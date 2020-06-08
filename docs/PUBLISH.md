@@ -77,7 +77,7 @@ git config --global credential.helper wincred
     - You may get warnings about the release you are trying to do, will not line up with the previous tag. This is usually nothing, but spend a minute or two to think through it.
 
 1. Set the master branch to the next minor dev version. For example if we made branch `4.23.x`, then the `master` package.json version should now be changed to `4.24.0-dev`
-1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho4-swarm-deploy/)
+1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho-kubernetes-deploy/)
 1. Watch Ms Teams for a posted release and notify QA for beta and minor
 
 For a final release, finish with:
