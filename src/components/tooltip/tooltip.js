@@ -684,6 +684,7 @@ Tooltip.prototype = {
 
     this.position();
     utils.fixSVGIcons(this.tooltip);
+
     /**
      * Fires on show the tooltip.
      *
@@ -792,6 +793,7 @@ Tooltip.prototype = {
    */
   setTargetContainer() {
     let targetContainer = $('body');
+    let attachAfterTriggerElem = false;
 
     // adjust the tooltip if the element is being scrolled inside a scrollable DIV
     this.scrollparent = this.element.closest('.page-container.scrollable');
@@ -799,12 +801,24 @@ Tooltip.prototype = {
       targetContainer = this.scrollparent;
     }
 
+    // If the tooltip/popover is located inside a Modal, contain it within the modal, but
+    // place its markup directly after its target element.
+    const modalParent = this.element.closest('.modal');
+    if (modalParent.length) {
+      attachAfterTriggerElem = true;
+      targetContainer = modalParent;
+    }
+
+    // If a specific parent element is defined, use that
     if (this.settings.parentElement) {
       targetContainer = this.settings.parentElement;
     }
 
-    // this.tooltip.detach().appendTo(targetContainer);
-    targetContainer[0].appendChild(this.tooltip[0]);
+    if (attachAfterTriggerElem) {
+      this.tooltip.insertAfter(this.element);
+    } else {
+      targetContainer[0].appendChild(this.tooltip[0]);
+    }
   },
 
   /**
