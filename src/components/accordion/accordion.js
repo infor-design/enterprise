@@ -509,16 +509,20 @@ Accordion.prototype = {
       // If the accordion pane is not expanded skip over the link when tabbing.
       if (!this.isExpanded(header)) {
         pane = header.next();
-        [...pane[0].children].forEach(el => {
-          $(el).find('a').attr('tabindex', '-1');
-          $(el).find('button').attr('tabindex', '-1');
-        });
+        if (pane[0]) {
+          [...pane[0].children].forEach(el => {
+            $(el).find('a').attr('tabindex', '-1');
+            $(el).find('button').attr('tabindex', '-1');
+          });
+        }
       } else {
         pane = header.next();
-        [...pane[0].children].forEach(el => {
-          $(el).find('a').removeAttr('tabindex');
-          $(el).find('button').removeAttr('tabindex');
-        });
+        if (pane[0]) {
+          [...pane[0].children].forEach(el => {
+            $(el).find('a').removeAttr('tabindex');
+            $(el).find('button').removeAttr('tabindex');
+          });
+        }
       }
 
       if (target.is('a') && expander.length) {
