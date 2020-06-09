@@ -1434,10 +1434,6 @@ $datagrid-short-row-height: 25px;
     &.is-active-row {
       outline: 1px solid $theme-color-brand-primary-base;
       outline-offset: -1px;
-
-      td {
-        border-bottom-color: transparent;
-      }
     }
 
     .is-editor {
@@ -1593,9 +1589,10 @@ $datagrid-short-row-height: 25px;
 
     &.is-clickable,
     &.is-active-row {
-      td:focus .datagrid-cell-wrapper {
-        border-color: transparent;
+      td:focus {
         box-shadow: none;
+        outline: none;
+        transform: none;
       }
     }
 
@@ -4261,7 +4258,12 @@ html[dir='rtl'] {
 // Summary totals
 .datagrid-summary-row {
   td {
+    background-color: $datagrid-cell-bg-color !important;
     border-right-color: transparent;
+
+    .datagrid-checkbox-wrapper {
+      display: none;
+    }
   }
 
   .datagrid-summary-totals {
@@ -4441,27 +4443,26 @@ html[dir='rtl'] {
 .ie {
   .datagrid-wrapper {
     tbody tr {
-      &.is-active-row {
+      &.is-active-row td {
+        border-bottom: 1px solid $theme-color-brand-primary-base;
+        border-top: 1px solid $theme-color-brand-primary-base;
         outline: 0;
 
-        td {
+        .datagrid-cell-wrapper {
+          margin-bottom: -1px;
+          margin-top: -1px;
+        }
+
+        &:first-child {
+          border-left: 1px solid $theme-color-brand-primary-base;
+
           .datagrid-cell-wrapper {
-            border-color: $theme-color-brand-primary-base;
-            border-style: solid;
-            border-width: 1px 0;
+            margin-left: -1px;
           }
+        }
 
-          &:first-child {
-            .datagrid-cell-wrapper {
-              border-width: 1px 0 1px 1px;
-            }
-          }
-
-          &:last-child {
-            .datagrid-cell-wrapper {
-              border-width: 1px 1px 1px 0;
-            }
-          }
+        &:last-child {
+          border-right: 1px solid $theme-color-brand-primary-base;
         }
       }
     }

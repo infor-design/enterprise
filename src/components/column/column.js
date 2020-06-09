@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, prefer-arrow-callback */
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-unused-vars */
 
 // Other Shared Imports
 import * as debug from '../../utils/debug';

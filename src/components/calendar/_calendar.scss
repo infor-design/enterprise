@@ -333,6 +333,10 @@
   }
 
   .accordion-header {
+    &:hover > a {
+      text-decoration: none;
+    }
+
     &.has-chevron > a {
       line-height: 15px;
       width: calc(100% - 40px);
@@ -891,4 +895,9 @@ html[dir='rtl'] {
     outline: none;
     outline-color: transparent;
   }
+}
+
+.calendar-event-spacer {
+  display: block;
+  height: 18px;
 }
