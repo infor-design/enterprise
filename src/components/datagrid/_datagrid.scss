@@ -4324,7 +4324,7 @@ html[dir='rtl'] {
 
   // Modal Lists
   table {
-    width: -webkit-fill-available;
+    width: auto;
   }
 }
 
@@ -4431,12 +4431,6 @@ html[dir='rtl'] {
 .is-safari {
   a.btn-icon.row-btn {
     top: -4px;
-  }
-
-  .modal {
-    table {
-      width: -moz-available;
-    }
   }
 }
 

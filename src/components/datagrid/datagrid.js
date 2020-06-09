@@ -4473,7 +4473,7 @@ Datagrid.prototype = {
 
       if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
         this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
-        this.element.css('width', this.elemWidth);
+        this.element.css('width', (!this.isInModal && window.innerWidth > 565) ? this.elemWidth : 'auto');
         this.element.css('min-width', 0);
         this.isInModal = true;
       } else if (this.element.parent().is('.modal-body')) {
@@ -5965,6 +5965,10 @@ Datagrid.prototype = {
         }
       });
     }
+
+    $(window).on('resize.modal', () => {
+      this.element.css('width', (window.innerWidth > 565 && this.isInModal === true) ? '466' : 'auto');
+    })
 
     // Handle Sorting
     this.element
