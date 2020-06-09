@@ -490,7 +490,6 @@ Accordion.prototype = {
     const header = target.parent();
     const expander = header.children('[class^="btn"]').first();
     const anchor = header.children('a');
-    const headerPane = header.parent();
 
     function setInitialOriginalSelection(selection) {
       if (!selection) {
@@ -504,14 +503,21 @@ Accordion.prototype = {
 
     if (key === 9) { // Tab (also triggered by Shift + Tab)
 
+      let pane;
       this.headers.removeClass('is-selected');
 
       // If the accordion pane is not expanded skip over the link when tabbing.
-      if ($(headerPane[0]).hasClass('accordion-pane') && !$(headerPane[0]).hasClass('is-expanded')) {
-        [...headerPane[0].children].forEach(child => {
-          [...child.children].forEach(el => {
-            el.setAttribute('tabindex', '-1');
-          });
+      if (!this.isExpanded(header)) {
+        pane = header.next();
+        [...pane[0].children].forEach(el => {
+          $(el).find('a').attr('tabindex', '-1');
+          $(el).find('button .btn').attr('tabindex', '-1');
+        });
+      } else {
+        pane = header.next();
+        [...pane[0].children].forEach(el => {
+          $(el).find('a').removeAttr('tabindex');
+          $(el).find('button .btn').removeAttr('tabindex');
         });
       }
 
