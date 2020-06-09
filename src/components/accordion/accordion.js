@@ -502,7 +502,6 @@ Accordion.prototype = {
     }
 
     if (key === 9) { // Tab (also triggered by Shift + Tab)
-
       let pane;
       this.headers.removeClass('is-selected');
 
@@ -510,7 +509,7 @@ Accordion.prototype = {
       if (!this.isExpanded(header)) {
         pane = header.next();
         if (pane[0]) {
-          [...pane[0].children].forEach(el => {
+          [...pane[0].children].forEach((el) => {
             $(el).find('a').attr('tabindex', '-1');
             $(el).find('button').attr('tabindex', '-1');
           });
@@ -518,7 +517,7 @@ Accordion.prototype = {
       } else {
         pane = header.next();
         if (pane[0]) {
-          [...pane[0].children].forEach(el => {
+          [...pane[0].children].forEach((el) => {
             $(el).find('a').removeAttr('tabindex');
             $(el).find('button').removeAttr('tabindex');
           });
