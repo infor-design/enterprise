@@ -9,6 +9,7 @@
 
 ### v4.30.0 Fixes
 
+- `[Application Menu]` Fixed an issue where the dropdown icon is not properly centered in Safari. ([#3766](https://github.com/infor-design/enterprise/issues/3766))
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
 - `[Calendar]` Fixed a bug that when setting accordions to allowOnePane it did not work. ([#3773](https://github.com/infor-design/enterprise/issues/3773))
 - `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
@@ -24,7 +25,9 @@
 - `[Datagrid]` Fixed a bug inside validateRow when passing in a zero the function would exit. ([#4002](https://github.com/infor-design/enterprise/issues/4002))
 - `[Datagrid]` Fixed an issue where select all using keyboard in multiSelect/mixedSelect was not working. ([#3921](https://github.com/infor-design/enterprise/issues/3921))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fixed an issue where data was not in sync for row reorder and paging. ([#3749](https://github.com/infor-design/enterprise/issues/3749))
 - `[Datagrid]` Fixed an issue where using selectRowsAcrossPages setting the selected rows were reseting by filter, to use this feature you may need to set columnIds in the settings to form whats unique for the row. ([#3601](https://github.com/infor-design/enterprise/issues/3601))
+- `[Datagrid]` Fixed an issue where readonly and checkbox cells would show up on the summary row. ([#3862](https://github.com/infor-design/enterprise/issues/3862))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))

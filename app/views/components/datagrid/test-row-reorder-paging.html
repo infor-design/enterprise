@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script id="test-script">
+  $('body').one('initialized', function () {
+    var columns = [];
+
+    // Define columns for the grid
+    columns.push({ id: 'rowReorder', name: '', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder });
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, sortable: false });
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink });
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', sortable: false });
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', sortable: false });
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, sortable: false });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', sortable: false });
+
+    // Get some data via ajax
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+    $.getJSON(url, function(res) {
+
+      // Initialize the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res.data,
+        paging: true,
+        pagesize: 5,
+        rowReorder: true,
+        toolbar: { title: 'Compressors', actions: true, personalize: true, results: true }
+      });
+    });
+  });
+</script>
