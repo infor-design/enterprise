@@ -511,13 +511,13 @@ Accordion.prototype = {
         pane = header.next();
         [...pane[0].children].forEach(el => {
           $(el).find('a').attr('tabindex', '-1');
-          $(el).find('button .btn').attr('tabindex', '-1');
+          $(el).find('button').attr('tabindex', '-1');
         });
       } else {
         pane = header.next();
         [...pane[0].children].forEach(el => {
           $(el).find('a').removeAttr('tabindex');
-          $(el).find('button .btn').removeAttr('tabindex');
+          $(el).find('button').removeAttr('tabindex');
         });
       }
 
