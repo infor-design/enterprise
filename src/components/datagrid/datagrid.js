@@ -5965,7 +5965,7 @@ Datagrid.prototype = {
 
     $(window).on('resize.modal', () => {
       this.element.css('width', (window.innerWidth > 565 && this.isInModal === true) ? '466' : 'auto');
-    })
+    });
 
     // Handle Sorting
     this.element
