@@ -348,9 +348,9 @@ describe('Tree update and remove node tests', () => {
   });
 });
 
-describe('Tree toggle by clicked on icon only tests', () => {
+describe('Tree expand target tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/test-toggle-by-icon');
+    await utils.setPage('/components/tree/test-expand-target');
   });
 
   it('Should not have errors', async () => {
