@@ -30,7 +30,7 @@ const COMPONENT_NAME = 'tree';
 * @param {null|function} [settings.onBeforeSelect] If defined as a function, fires that function as a callback before the selection on a node occurs.
 * @param {null|function} [settings.onExpand] If defined as a function, fires that function as a node is expanded.
 * @param {null|function} [settings.onCollapse] If defined as a function, fires that function as a node is collapsed.
-* @param {string} [settings.expandTarget = 'node'] 'node' or 'icon', if set to `icon` this will allows to toggle only by click on icon.
+* @param {string} [settings.expandTarget = 'node'] 'node' or 'icon', if set to `icon` this will allows to toggle when clicking only the icon portion of the tree node.
 */
 
 const TREE_DEFAULTS = {
