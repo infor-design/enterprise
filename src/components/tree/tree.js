@@ -30,7 +30,7 @@ const COMPONENT_NAME = 'tree';
 * @param {null|function} [settings.onBeforeSelect] If defined as a function, fires that function as a callback before the selection on a node occurs.
 * @param {null|function} [settings.onExpand] If defined as a function, fires that function as a node is expanded.
 * @param {null|function} [settings.onCollapse] If defined as a function, fires that function as a node is collapsed.
-* @param {boolean} [settings.toggleByIcon = true] if `true` && selectable set to `single`, this will allows to toggle parent nodes only by click on icon.
+* @param {string} [settings.expandTarget = 'node'] 'node' or 'icon', if set to `icon` this will allows to toggle only by click on icon.
 */
 
 const TREE_DEFAULTS = {
@@ -46,7 +46,7 @@ const TREE_DEFAULTS = {
   onBeforeSelect: null,
   onExpand: null,
   onCollapse: null,
-  toggleByIcon: false
+  expandTarget: 'node'
 };
 
 function Tree(element, settings) {
@@ -478,7 +478,7 @@ Tree.prototype = {
    */
   selectNodeFinish(node, focus, e) {
     // Don't do selection for toggle type only
-    if ((this.isMultiselect || this.settings.toggleByIcon) && e) {
+    if ((this.isMultiselect || this.settings.expandTarget === 'icon') && e) {
       if (e.type === 'click' || e.type === 'touch') {
         if (DOM.hasClass(e.target, 'icon') &&
           node[0].parentNode.classList.contains('folder')) {
@@ -884,7 +884,7 @@ Tree.prototype = {
       const parent = this.parentNode;
       utils.clearSelection(); // Deselect all selected text.
       if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
-        if (self.isMultiselect || self.settings.toggleByIcon) {
+        if (self.isMultiselect || self.settings.expandTarget === 'icon') {
           if (DOM.hasClass(e.target, 'icon') && parent.classList.contains('folder')) {
             self.toggleNode(target, e);
           } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
