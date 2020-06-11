@@ -454,3 +454,32 @@ describe('Nested Modal keyboard access tests', () => {
     expect(await element(by.css('#ids-modal-root')).getAttribute('aria-hidden')).not.toBe(null);
   });
 });
+
+describe('Modal with external components tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-external-components?layout=nofrills');
+    const buttonEl = await element(by.id('add-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('should be able to tab into Popover elements from within the Modal', async () => {
+    // Tab to the Popover trigger button
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+
+    // Activate the popover
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver.sleep(config.sleep);
+
+    // Press tab, which should tab into the Popover and focus the close button
+    await browser.driver.actions().sendKeys(protractor.Key.TAB).perform();
+    const focusedElemText = await browser.driver.switchTo().activeElement().getText();
+
+    // Check the text content of the button for accuracy
+    expect(focusedElemText).toEqual('Close');
+  });
+});
