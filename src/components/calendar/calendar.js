@@ -695,6 +695,11 @@ Calendar.prototype = {
       calendarEvents[i].parentNode.removeChild(calendarEvents[i]);
     }
 
+    const calendarEventSpacers = this.monthViewContainer.querySelectorAll('.calendar-event-spacer');
+    for (let i = 0; i < calendarEventSpacers.length; i++) {
+      calendarEventSpacers[i].parentNode.removeChild(calendarEventSpacers[i]);
+    }
+
     for (let i = 0; i < this.monthView.dayMap.length; i++) {
       this.monthView.dayMap[i].events = [];
     }
