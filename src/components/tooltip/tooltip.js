@@ -788,7 +788,8 @@ Tooltip.prototype = {
   /**
    * Places the tooltip element itself in the correct DOM element.
    * If the current element is inside a scrollable container, the tooltip element
-   *  goes as high as possible in the DOM structure.
+   * goes as high as possible in the DOM structure.
+   * @private
    * @returns {void}
    */
   setTargetContainer() {
