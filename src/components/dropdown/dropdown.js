@@ -1416,13 +1416,8 @@ Dropdown.prototype = {
 
           if (options.length && selectedIndex > -1) {
             // store the current selection
-            // selectValue
-            self.selectOption(this.correctValue($(options[selectedIndex])));
-          }
-
-          if (self.settings.closeOnSelect) {
-            self.closeList('select'); // Close the option list
-            self.activate();
+            const li = $(options[selectedIndex]);
+            self.selectListItem(li);
           }
         }
         e.stopPropagation();
