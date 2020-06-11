@@ -4,7 +4,7 @@
     ],
     "hooks": {
         "before:init": "npm run eslint:error-only",
-        "before:stage": "npm run build:release",
+        "after:bump": "npm run build:release",
         "after:release": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
     "git": {
