@@ -50,6 +50,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 * @param {object} [settings.tagSettings] if defined, passes along 'clickHandler' and 'dismissHandler' functions to any Tags in the Taglist
+* @param {number|undefined} [settings.tagListMaxHeight=120] if defined, sets a maximum height for a rendered tag list, and makes it scrollable.
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 */
@@ -75,6 +76,7 @@ const DROPDOWN_DEFAULTS = {
   placementOpts: null,
   onKeyDown: null,
   tagSettings: {},
+  tagListMaxHeight: 120,
   allTextString: null,
   selectedTextString: null
 };
@@ -140,10 +142,11 @@ Dropdown.prototype = {
    */
   get isFocused() {
     const active = document.activeElement;
-    if (this.pseudoElem && this.pseudoElem.length && this.pseudoElem.is($(active))) {
-      return true;
-    }
-    if (this.list && this.list.length && this.list[0].contains(active)) {
+    const pseudoIsActive = this.pseudoElem.length && this.pseudoElem.is($(active));
+    const listContainsActive = this.list && this.list.length && this.list[0].contains(active);
+    const tagActive = this.tagListAPI && this.tagListAPI.element.contains(active);
+
+    if (pseudoIsActive || listContainsActive || tagActive) {
       return true;
     }
     return false;
@@ -436,6 +439,10 @@ Dropdown.prototype = {
     }
 
     this.tagListAPI.element.classList[this.selectedOptions.length ? 'remove' : 'add']('empty');
+    if (!isNaN(this.settings.tagListMaxHeight)) {
+      span.classList.add('scrollable');
+      span.style.maxHeight = tags.length ? `${this.settings.tagListMaxHeight}px` : '';
+    }
 
     if (this.isOpen()) {
       this.position();
@@ -1008,10 +1015,10 @@ Dropdown.prototype = {
       if (span.length > 0) {
         span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${xssUtils.escapeHTML(text)}`;
       }
-    }
 
-    if (!this.settings.showSearchUnderSelected) {
-      this.setPlaceholder(text);
+      if (!this.settings.showSearchUnderSelected) {
+        this.setPlaceholder(text);
+      }
     }
 
     // Set the "previousActiveDescendant" to the first of the items
@@ -1275,6 +1282,8 @@ Dropdown.prototype = {
     // Adjust height / top position
     if (this.list.hasClass('is-ontop')) {
       this.list[0].style.top = `${this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2}px`;
+    } else {
+      this.list[0].style.top = '';
     }
 
     if (this.settings.multiple) {
@@ -2041,10 +2050,8 @@ Dropdown.prototype = {
 
     function dropdownAfterPlaceCallback(e, placementObj) {
       // Turn upside-down if flipped to the top of the pseudoElem
-      if (placementObj.wasFlipped === true) {
-        self.list.addClass('is-ontop');
-        self.listUl.prependTo(self.list);
-      }
+      self.list[placementObj.wasFlipped === true ? 'addClass' : 'removeClass']('is-ontop');
+      self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
 
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
@@ -2253,6 +2260,11 @@ Dropdown.prototype = {
     this.searchKeyMode = false;
     this.setDisplayedValues();
 
+    // Scroll TagList to the top
+    if (this.tagListAPI) {
+      this.scrollTagList();
+    }
+
     this.searchInput.off([
       `input.${COMPONENT_NAME}`,
       `keydown.${COMPONENT_NAME}`,
@@ -2334,6 +2346,23 @@ Dropdown.prototype = {
     self.listUl.scrollTop(0);
     self.listUl.scrollTop(current.offset().top - self.listUl.offset().top -
       self.listUl.scrollTop() - 40);
+  },
+
+  /**
+   * Scrolls an overflowed Tag List
+   * @private
+   * @returns {void}
+   */
+  scrollTagList() {
+    if (!this.tagListAPI) {
+      return;
+    }
+
+    setTimeout(() => {
+      if (!this.isFocused) {
+        this.tagListAPI.element.scrollTop = 0;
+      }
+    }, 5);
   },
 
   /**
@@ -2488,7 +2517,6 @@ Dropdown.prototype = {
     const options = [].slice.call(this.element[0].querySelectorAll(selector.options));
     const items = [].slice.call(this.listUl[0].querySelectorAll(selector.items));
     const last = options[options.length - 1];
-    let text = '';
 
     if (doSelectAll) {
       // Select all
@@ -2500,12 +2528,6 @@ Dropdown.prototype = {
         node.selected = true;
         node.setAttribute('selected', true);
       });
-
-      text = this.getOptionText($(options));
-      const maxlength = this.element[0].getAttribute('maxlength');
-      if (maxlength) {
-        text = text.substr(0, maxlength);
-      }
     } else {
       // Clear all
       items.forEach((node) => {
@@ -2522,8 +2544,7 @@ Dropdown.prototype = {
     }
     this.previousActiveDescendant = last.value || '';
 
-    this.pseudoElem[0].querySelector('span').textContent = text;
-    this.searchInput[0].value = text;
+    this.setDisplayedValues();
     this.updateItemIcon(last);
 
     if (this.list[0].classList.contains('search-mode')) {
@@ -3283,6 +3304,14 @@ Dropdown.prototype = {
         self.toggle();
         e.preventDefault();
       });
+
+    // If the Dropdown/Multiselect loses focus while tags are showing,
+    // the tag list will scroll itself to the top.
+    if (this.tagListAPI) {
+      this.pseudoElem.on('focusout.dropdown', () => {
+        this.scrollTagList();
+      });
+    }
 
     self.element.on('activated.dropdown', () => {
       self.label.trigger('click');
