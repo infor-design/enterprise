@@ -13,6 +13,7 @@
 
 - `[Application Menu]` Fixed an issue where the dropdown icon is not properly centered in Safari. ([#3766](https://github.com/infor-design/enterprise/issues/3766))
 - `[Accordion]` Fixed an issue where the chevron icon is not properly centered in Safari. ([#2161](https://github.com/infor-design/enterprise/issues/2161))
+- `[Accordion]` Fixed issue where hidden headers were not excluded from tab navigation. ([#3835](https://github.com/infor-design/enterprise/issues/3835))
 - `[Calendar]` Fixed a bug that when setting accordions to allowOnePane it did not work. ([#3773](https://github.com/infor-design/enterprise/issues/3773))
 - `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
 - `[Calendar]` Fixed a bug where the days would be out of alignment if the end and starts dates intersect. ([#1725](https://github.com/infor-design/enterprise/issues/1725))
@@ -34,6 +35,7 @@
 - `[Datagrid]` Fixed an issue where readonly and checkbox cells would show up on the summary row. ([#3862](https://github.com/infor-design/enterprise/issues/3862))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
+- `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
