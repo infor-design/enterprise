@@ -347,3 +347,27 @@ describe('Tree update and remove node tests', () => {
     expect(await element.all(by.css(sel.new2)).count()).toBe(0);
   });
 });
+
+describe('Tree expand target tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tree/test-expand-target');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should toggle by clicked on icon only', async () => {
+    const link = await element(by.id('node2'));
+    const icon = await link.element(by.css('.icon-tree'));
+    const text = await link.element(by.css('.tree-text'));
+
+    expect(await link.getAttribute('class')).not.toContain('is-selected');
+    await icon.click();
+
+    expect(await link.getAttribute('class')).not.toContain('is-selected');
+    await text.click();
+
+    expect(await link.getAttribute('class')).toContain('is-selected');
+  });
+});

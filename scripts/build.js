@@ -58,6 +58,11 @@ const commandLineArgs = require('yargs')
     describe: 'Disables the copying of all pre-built assets to the `/dist` folder',
     default: false,
   })
+  .option('types', {
+    alias: 't',
+    describe: 'Provides a mechanism for building one or more Rollup bundle types when building IDS Javascript',
+    default: false,
+  })
   .argv;
 
 const chalk = require('chalk');
@@ -924,8 +929,12 @@ function runBuildProcesses(requested) {
   let targetSassConfig = 'dist';
   let rollupArgs = '-c';
 
+  // Add Rollup Args, if applicable
   if (commandLineArgs.verbose) {
     rollupArgs += ' --verbose';
+  }
+  if (commandLineArgs.types) {
+    rollupArgs += ` --types=${commandLineArgs.types}`;
   }
 
   // if Requested
