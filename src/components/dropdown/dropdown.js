@@ -1371,6 +1371,12 @@ Dropdown.prototype = {
         // If search mode is on, Tab should 'select' the currently highlighted
         // option in the list, update the SearchInput and close the list.
         if (self.isOpen()) {
+          if (options.length && selectedIndex > -1) {
+            // store the current selection
+            // selectValue
+            self.selectOption(this.correctValue($(options[selectedIndex])));
+          }
+
           self.closeList('tab');
           this.activate();
         }
