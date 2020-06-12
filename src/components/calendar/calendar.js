@@ -766,7 +766,7 @@ Calendar.prototype = {
 
     if (eventHead[0]) {
       const children = eventHead[0].parentNode.children;
-      for (let i = 0; i < children.length; i++) {
+      for (let i = container.querySelector('.day-container').children.length; i < children.length; i++) {
         const dataid = children[i].getAttribute('data-id');
         if (dataid === event.id) {
           break;
