@@ -45,7 +45,6 @@ const LOOKUP_DEFAULTS = {
   beforeShow: null,
   modalContent: null,
   editable: true,
-  typeahead: false, // Future TODO
   autoApply: true,
   validator: null,
   autoWidth: false,

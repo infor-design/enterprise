@@ -62,10 +62,13 @@ $('body').on('initialized', function () {
     type: 'column',
     dataset: dataset,
     yAxis: {
-      ticks: {
-        number: 5, // Tip: round max data value
-        format: 'd'
-      }
+      formatter: function (d, i) {
+        var locale = d3.formatLocale({
+          decimal: Locale.currentLocale.data.numbers.decimal,
+          thousands: Locale.currentLocale.data.numbers.group
+        });
+        return locale.format(',.2f')(d);
+      },
     }
   });
 
