@@ -267,7 +267,6 @@ Datagrid.prototype = {
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
-    this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
     this.setOriginalColumns();
@@ -4468,19 +4467,6 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
-        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
-        this.element.css('width', (!this.isInModal && window.innerWidth > 565) ? this.elemWidth : 'auto');
-        this.element.css('min-width', 0);
-        this.isInModal = true;
-      } else if (this.element.parent().is('.modal-body')) {
-        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
-        if (this.element.css('min-width')) {
-          this.elemWidth = parseInt(this.element.css('min-width'), 10);
-        }
-        this.isInModal = true;
-      }
-
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4574,12 +4560,6 @@ Datagrid.prototype = {
     // For the last column stretch it if it doesnt fit the area
     if (lastColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
-
-      if (this.isInModal && this.settings.stretchColumn === null &&
-        !this.settings.sizeColumnsEqually && diff > 0 && !this.widthPercent && !col.width) {
-        colWidth = this.elemWidth;
-        col.width = colWidth;
-      }
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
         this.stretchColumnDiff = diff;
@@ -5962,10 +5942,6 @@ Datagrid.prototype = {
         }
       });
     }
-
-    $(window).on('resize.modal', () => {
-      this.element.css('width', (window.innerWidth > 565 && this.isInModal === true) ? '466' : 'auto');
-    });
 
     // Handle Sorting
     this.element
