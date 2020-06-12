@@ -5802,7 +5802,7 @@ Datagrid.prototype = {
     let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
-    if (target.is('a')) {
+    if (target.is('a') || target.closest('a').length) {
       stopPropagation = false;
     }
 

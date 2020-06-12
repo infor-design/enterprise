@@ -102,10 +102,27 @@ To manually build the contents of the distributable folder (`dist/`), run the fo
 npm run build
 ```
 
+### Custom builds
+
 It's also possible to run a custom build of IDS with your choice of components.  The custom bundler can be run with:
 
 ```sh
 npm run build -- --components=button,input,masks,popupmenu,listview
+```
+
+### Different bundle types
+
+In some cases, you may want to include an [ES Module](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/) version of the IDS components to be imported in your application.  By default, IDS's build tools will use the standard bundle. However, the Custom Builder can be configured to produce both a standard IIFE bundle, and/or an ES Module that exports the component library.  Use the `--types` flag to do this:
+
+```sh
+# builds the ES Module by itself
+npm run build -- --types="es"
+
+# builds the standard bundle by itself
+npm run build -- --types="iife"
+
+# builds both
+npm run build -- --types="es,iife"
 ```
 
 ## Running the development server
