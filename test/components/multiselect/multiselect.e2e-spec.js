@@ -496,4 +496,24 @@ describe('Multiselect select all behavior tests', () => {
     // No checkbox for "Select All" should be present
     expect(await element(by.css('#dropdown-select-all-anchor')).isPresent()).toBeFalsy();
   });
+
+  it('should only "Select All" filtered items by default', async () => {
+    await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');
+
+    // Find/Open the Multiselect with Typeahead Reloading by pressing "F"
+    const multiEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(multiEl), config.waitsFor);
+    await multiEl.sendKeys('f');
+    await browser.driver.sleep(config.sleep);
+
+    // Click "Select All"
+    await element(by.css('#dropdown-select-all-anchor')).click();
+    await browser.driver.sleep(config.sleep);
+
+    // Track the number of selected items
+    const selected = await element.all(by.css('.dropdown-option.is-selected')).count();
+
+    expect(selected).toEqual(4);
+  });
 });

@@ -53,6 +53,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {number|undefined} [settings.tagListMaxHeight=120] if defined, sets a maximum height for a rendered tag list, and makes it scrollable.
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
+* @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -78,7 +79,8 @@ const DROPDOWN_DEFAULTS = {
   tagSettings: {},
   tagListMaxHeight: 120,
   allTextString: null,
-  selectedTextString: null
+  selectedTextString: null,
+  selectAllFilterOnly: true
 };
 
 function Dropdown(element, settings) {
@@ -1189,7 +1191,9 @@ Dropdown.prototype = {
 
     results.removeClass('hidden');
     list.not(results).add(headers).addClass('hidden');
-    list.filter(results).each(function (i) {
+
+    this.filteredItems = list.filter(results);
+    this.filteredItems.each(function (i) {
       const li = $(this);
       const a = li.children('a');
       li.attr('tabindex', i === 0 ? '0' : '-1');
@@ -1285,6 +1289,8 @@ Dropdown.prototype = {
     } else {
       this.list[0].style.top = '';
     }
+
+    delete this.filteredItems;
 
     if (this.settings.multiple) {
       this.updateList();
@@ -2254,6 +2260,7 @@ Dropdown.prototype = {
     this.filterTerm = '';
     this.searchKeyMode = false;
     this.setDisplayedValues();
+    delete this.filteredItems;
 
     // Scroll TagList to the top
     if (this.tagListAPI) {
@@ -2509,9 +2516,26 @@ Dropdown.prototype = {
       options: 'option:not(.is-disabled):not(:disabled)',
       items: 'li.dropdown-option:not(.separator):not(.group-label):not(.is-disabled)'
     };
-    const options = [].slice.call(this.element[0].querySelectorAll(selector.options));
-    const items = [].slice.call(this.listUl[0].querySelectorAll(selector.items));
+    let options = utils.getArrayFromList(this.element[0].querySelectorAll(selector.options));
+    let items = utils.getArrayFromList(this.listUl[0].querySelectorAll(selector.items));
     const last = options[options.length - 1];
+
+    // If the Multiselect should only select from filtered items,
+    // filter the full result sets down to the ones that aren't hidden.
+    if (this.settings.selectAllFilterOnly && this.filteredItems) {
+      options = [];
+      items = $.makeArray(this.filteredItems);
+      items.forEach((item) => {
+        const val = item.getAttribute('data-val');
+        if (!val) {
+          return;
+        }
+        const opt = this.element[0].querySelector(`option[value="${val}"]`);
+        if (opt) {
+          options.push(opt);
+        }
+      });
+    }
 
     if (doSelectAll) {
       // Select all
@@ -2542,9 +2566,10 @@ Dropdown.prototype = {
     this.setDisplayedValues();
     this.updateItemIcon(last);
 
-    if (this.list[0].classList.contains('search-mode')) {
+    if (!this.settings.selectAllFilterOnly && this.list[0].classList.contains('search-mode')) {
       this.resetList();
     }
+
     this.activate(true);
     this.setBadge(last);
     this.toggleTooltip();
