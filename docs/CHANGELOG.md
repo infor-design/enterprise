@@ -29,6 +29,7 @@
 - `[Datagrid]` Fixed an issue where data was not in sync for row reorder and paging. ([#3749](https://github.com/infor-design/enterprise/issues/3749))
 - `[Datagrid]` Fixed an issue where using selectRowsAcrossPages setting the selected rows were reseting by filter, to use this feature you may need to set columnIds in the settings to form whats unique for the row. ([#3601](https://github.com/infor-design/enterprise/issues/3601))
 - `[Datagrid]` Fixed an issue where readonly and checkbox cells would show up on the summary row. ([#3862](https://github.com/infor-design/enterprise/issues/3862))
+- `[Datepicker]` Fixed an issue where some languages like fr-CA and pt-BR (that are languages in a non default locale), would error when opening the picker. ([#4035](https://github.com/infor-design/enterprise/issues/4035))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Locale]` Fixed abbreviated chinese month translations. ([#4034](https://github.com/infor-design/enterprise/issues/4034))

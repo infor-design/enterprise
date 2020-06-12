@@ -86,7 +86,7 @@ const Locale = {  // eslint-disable-line
     'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO', 'nn-NO',
     'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
-  translatedLocales: ['fr-CA', 'fr-FR', 'pl-PL', 'pt-PT'],
+  translatedLocales: ['fr-CA', 'fr-FR', 'pt-BR', 'pt-PT'],
   defaultLocale: 'en-US',
   minify: minifyCultures,
 
