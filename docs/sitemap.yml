@@ -41,6 +41,8 @@ sections:
     slug: circlepager
   - name: Color Picker
     slug: colorpicker
+  - name: Context Menu
+    slug: contextmenu
   - name: Counts
     slug: counts
   - name: Data Grid
@@ -53,12 +55,16 @@ sections:
     slug: editor
   - name: Empty Messages
     slug: emptymessage
+  - name: Expandable Area
+    slug: expandablearea
   - name: Error Page
     slug: error-page
   - name: Favorites
     slug: favorites
   - name: Field Filter
     slug: field-filter
+  - name: Fieldset
+    slug: fieldset
   - name: File Upload
     slug: fileupload
   - name: File Upload (Advanced)
@@ -67,30 +73,42 @@ sections:
     slug: header
   - name: Homepage
     slug: homepage
+  - name: Hierarchy (Org Chart)
+    slug: hierarchy
   - name: Hyperlinks
     slug: hyperlinks
   - name: Input (Text)
     slug: input
+  - name: Images
+    slug: images
   - name: Lookup
     slug: lookup
   - name: List
     slug: listview
   - name: List Builder
     slug: listbuilder
+  - name: Masthead
+    slug: masthead
   - name: Menubutton
     slug: menubutton
+  - name: Message
+    slug: message
   - name: Modal
     slug: modal
   - name: Month View
     slug: monthview
   - name: Multiselect
     slug: multiselect
+  - name: Notification Banner
+    slug: notification
   - name: Pager
     slug: pager
   - name: Popover
     slug: popover
   - name: Popupmenu
     slug: popupmenu
+  - name: Process Indicator
+    slug: processindicator
   - name: Progress Indicator
     slug: progress
   - name: Radios
@@ -115,6 +133,8 @@ sections:
     slug: tabs-header
   - name: Tabs (Module)
     slug: tabs-module
+  - name: Tabs-multi
+    slug: tabs-multi
   - name: Tabs (Vertical)
     slug: tabs-vertical
   - name: Tag
@@ -219,29 +239,3 @@ sections:
     slug: treemap
   - name: Completion Chart
     slug: completion-chart
-- name: Unclassified
-  pages:
-  - name: Context Menu
-    slug: contextmenu
-  - name: Composite Form
-    slug: compositeform
-  - name: Expandable Area
-    slug: expandablearea
-  - name: Fieldset
-    slug: fieldset
-  - name: Field Options
-    slug: field-options
-  - name: Hierarchy (Org Chart)
-    slug: hierarchy
-  - name: Images
-    slug: images
-  - name: Masthead
-    slug: masthead
-  - name: Message
-    slug: message
-  - name: Notification Banner
-    slug: notification
-  - name: Process Indicator
-    slug: processindicator
-  - name: Tabs-multi
-    slug: tabs-multi
