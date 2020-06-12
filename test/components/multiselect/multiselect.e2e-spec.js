@@ -432,3 +432,68 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
     });
   }
 });
+
+describe('Multiselect select all behavior tests', () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visually regress', async () => {
+      await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');
+
+      // Resize page to fit a "full" Multiselect
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(500, 800);
+
+      // Find/Open the Multiselect
+      const multiEl = await element(by.css('div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(multiEl), config.waitsFor);
+      await multiEl.click();
+      const multiListEl = await element(by.css('#dropdown-list'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(multiListEl), config.waitsFor);
+
+      // Click "Select All"
+      await element(by.css('#dropdown-select-all-anchor')).click();
+
+      // Snap a photo
+      expect(await browser.imageComparison.checkScreen('multiselect-select-all-tags')).toEqual(0);
+
+      // Put page back to original size
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
+
+  it('should not allow the tag list to become taller than the `tagListMaxHeight` setting', async () => {
+    await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');
+
+    // Find/Open the Multiselect
+    const multiEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(multiEl), config.waitsFor);
+    await multiEl.click();
+    const multiListEl = await element(by.css('#dropdown-list'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(multiListEl), config.waitsFor);
+
+    // Click "Select All"
+    await element(by.css('#dropdown-select-all-anchor')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('div.dropdown > .tag-list')).getAttribute('style')).toContain('max-height: 120px;');
+  });
+
+  it('should not display an option for selecting all items if no items are present', async () => {
+    await utils.setPage('/components/multiselect/test-select-all-no-opts.html?layout=nofrills');
+
+    // Find/Open the Multiselect
+    const multiEl = await element(by.css('div.dropdown'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(multiEl), config.waitsFor);
+    await multiEl.click();
+    const multiListEl = await element(by.css('#dropdown-list'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(multiListEl), config.waitsFor);
+
+    // No checkbox for "Select All" should be present
+    expect(await element(by.css('#dropdown-select-all-anchor')).isPresent()).toBeFalsy();
+  });
+});

@@ -858,7 +858,7 @@ Dropdown.prototype = {
 
     // In multiselect scenarios, shows an option at the top of the list that will
     // select all available options if checked.
-    if (isMultiselect && showSelectAll) {
+    if (isMultiselect && showSelectAll && opts.length) {
       const allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
 
       ulContents += `<li role="presentation" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
