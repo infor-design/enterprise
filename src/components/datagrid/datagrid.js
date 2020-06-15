@@ -267,7 +267,6 @@ Datagrid.prototype = {
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
-    this.isInModal = false;
     this.appendTooltip();
     this.initSettings();
     this.setOriginalColumns();
@@ -4468,19 +4467,6 @@ Datagrid.prototype = {
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
-      if (!this.elemWidth && this.element.closest('.datagrid-default-modal-width').length > 0) { // handle on invisible modal
-        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
-        this.element.css('width', this.elemWidth);
-        this.element.css('min-width', 0);
-        this.isInModal = true;
-      } else if (this.element.parent().is('.modal-body')) {
-        this.elemWidth = this.settings.paging ? 466 : 300; // Default a size for when on modals
-        if (this.element.css('min-width')) {
-          this.elemWidth = parseInt(this.element.css('min-width'), 10);
-        }
-        this.isInModal = true;
-      }
-
       this.widthSpecified = false;
       this.widthPixel = false;
     }
@@ -4574,12 +4560,6 @@ Datagrid.prototype = {
     // For the last column stretch it if it doesnt fit the area
     if (lastColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
-
-      if (this.isInModal && this.settings.stretchColumn === null &&
-        !this.settings.sizeColumnsEqually && diff > 0 && !this.widthPercent && !col.width) {
-        colWidth = this.elemWidth;
-        col.width = colWidth;
-      }
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
         this.stretchColumnDiff = diff;
@@ -11190,11 +11170,12 @@ Datagrid.prototype = {
           col.editorOptions.width ? this.setUnit(col.editorOptions.width) : false;
 
         // Width for tooltip can be come from column options
-        contentTooltip.style.width = width || `${elem.offsetWidth}px`;
-        const wrapperHTML = tooltip.wrapper.innerHTML;
+        const newContentTooltip = $(contentTooltip).clone()[0];
+        newContentTooltip.style.width = width || `${elem.offsetWidth}px`;
+        const tooltipHTML = newContentTooltip.outerHTML;
 
-        if (xssUtils.stripHTML(wrapperHTML) !== '') {
-          tooltip.content = wrapperHTML;
+        if (xssUtils.stripHTML(tooltipHTML) !== '') {
+          tooltip.content = tooltipHTML;
           tooltip.extraClassList = ['popover', 'alternate', 'content-tooltip'];
         }
       } else if (aTitle) {
@@ -11318,6 +11299,14 @@ Datagrid.prototype = {
           placeOptions.y = 0;
         }
 
+        tooltip
+          .one('afterplace.gridtooltip', (e, placementObj) => {
+            this.handleAfterPlaceTooltip(e, tooltip, placementObj);
+          })
+          .on('click.gridtooltip', () => {
+            this.hideTooltip();
+          });
+
         // If not already have place instance
         if (!tooltip.data('place')) {
           tooltip.place(placeOptions);
@@ -11328,14 +11317,6 @@ Datagrid.prototype = {
 
         // Flag to mark as gridtooltip
         tooltip.data('gridtooltip', true);
-
-        tooltip
-          .one('afterplace.gridtooltip', (e, placementObj) => {
-            this.handleAfterPlaceTooltip(e, placementObj);
-          })
-          .on('click.gridtooltip', () => {
-            this.hideTooltip();
-          });
 
         // Hide the tooltip when the page scrolls.
         $('body, .scrollable').off('scroll.gridtooltip').on('scroll.gridtooltip', () => {
@@ -11349,14 +11330,15 @@ Datagrid.prototype = {
    * Placement behavior's "afterplace" handler.
    * @private
    * @param {jquery.event} e custom `afterPlace` event
+   * @param {jquery} tooltip element
    * @param {placementobject} placementObj object containing placement settings
    * @returns {void}
    */
-  handleAfterPlaceTooltip(e, placementObj) {
-    const tooltip = $('#tooltip');
-    if (tooltip[0]) {
-      tooltip.data('place').setArrowPosition(e, placementObj, tooltip);
-      tooltip.triggerHandler('tooltipafterplace', [placementObj]);
+  handleAfterPlaceTooltip(e, tooltip, placementObj) {
+    const elem = tooltip || $('#tooltip');
+    if (elem[0]) {
+      elem.data('place').setArrowPosition(e, placementObj, elem);
+      elem.triggerHandler('tooltipafterplace', [placementObj]);
     }
   },
 
