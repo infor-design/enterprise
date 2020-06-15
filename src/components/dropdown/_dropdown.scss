@@ -236,6 +236,12 @@ div.multiselect {
       background-color: transparent;
     }
   }
+
+  &.has-scrollbar {
+    + .icon {
+      right: 18px;
+    }
+  }
 }
 
 // The List
@@ -1197,6 +1203,13 @@ html[dir='rtl'] {
 
       &.empty {
         padding: 16px 10px 15px 30px;
+      }
+    }
+
+    &.has-scrollbar {
+      + .icon {
+        left: 18px;
+        right: auto;
       }
     }
   }

@@ -446,6 +446,10 @@ Dropdown.prototype = {
       span.style.maxHeight = tags.length ? `${this.settings.tagListMaxHeight}px` : '';
     }
 
+    // Detect scrollbar, if applicable, to push the dropdown icon away from the scrollbar.
+    const hasScrollbar = span.scrollHeight > span.clientHeight;
+    this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
+
     if (this.isOpen()) {
       this.position();
     }
