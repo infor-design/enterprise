@@ -725,7 +725,7 @@ Calendar.prototype = {
       this.monthView.dayMap[idx].events.push(event);
     }
 
-    if (eventCnt >= 2) {
+    if (eventCnt >= 3) {
       const moreSpan = container.querySelector('.calendar-event-more');
       const setMoreSpan = (elem, count) => {
         elem.setAttribute('data-count', count);
