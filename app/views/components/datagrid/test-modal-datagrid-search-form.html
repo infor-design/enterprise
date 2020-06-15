@@ -3,6 +3,90 @@
     <button class="btn-secondary" type="button" id="open-modal">Open Modal</button><br/><br/>
 
     <div id="modal-content" class="hidden">
+
+      <div id="common-toolbar" class="toolbar" role="toolbar">
+
+        <div class="title">
+          Toolbar Title
+        </div>
+
+        <div class="buttonset">
+          <button type="button" class="btn-tertiary" disabled>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-open-folder"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary" id="btnFilter">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-filter"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-delete"></use>
+            </svg>
+          </button>
+
+          <button type="button" class="btn-tertiary">
+            <svg class="icon" focusable="true" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-refresh"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <form id="searchForm" style="display: none;">
+        <div class="row demo-grid">
+          <div class="full column">
+
+            <div class="compound-field">
+
+              <div class="field">
+                <label for="example-mulitcolumn-first" class="required">First Name</label>
+                <input type="text" id="example-mulitcolumn-first" name="first-name"/>
+              </div>
+
+              <div class="field">
+                <label for="example-mulitcolumn-last" class="required">Last Name</label>
+                <input type="text" id="example-mulitcolumn-last" class="input-sm" name="last-name"/>
+              </div>
+
+              <div class="field">
+                <label for="cpf-input-unit" class="label">Unit</label>
+                <input type="text" id="cpf-input-unit" name="cpf-input-unit" class="input-sm"/>
+              </div>
+
+            </div>
+
+            <div class="compound-field">
+
+              <div class="field">
+                <label for="example-mulitcolumn-phone" class="required">Phone</label>
+                <input type="text" aria-required="true" data-validate="required" id="example-mulitcolumn-phone" class="input-sm" name="phone"/>
+              </div>
+
+              <div class="field">
+                <label for="example-mulitcolumn-ext">Ext</label>
+                <input type="text" id="example-mulitcolumn-ext" class="input-xs" name="ext"/>
+              </div>
+
+              <div class="field">
+                <label for="cpf-input-setting" class="label">Setting</label>
+                <input type="text" id="cpf-input-setting"/>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn-primary">Search</button>
+
+          </div>
+
+        </div>
+
+      </form>
+
       <div id="datagrid">
       </div>
     </div>
@@ -11,6 +95,7 @@
 
 <script>
   $('body').one('initialized', function () {
+    var showSearchForm = false;
     var grid,
     columns = [],
     data = [];
@@ -46,14 +131,14 @@
       selectable: 'multiple',
       showDirty: false,
       filterable: true,
-      toolbar: {title: 'Select Compressor', actions: true, rowHeight: true, personalize: true}
+      // toolbar: {title: 'Select Compressor', actions: true, rowHeight: true, personalize: true}
     });
 
     $('#open-modal').on('click', function () {
       $('body').modal({
         title: 'Open Modal',
         content: $('#modal-content'),
-        cssClass: 'modal-no-header',
+        // cssClass: 'modal-no-header',
         buttons: [{
           text: 'Cancel',
           id: 'modal-button-1',
@@ -61,7 +146,7 @@
             modal.close();
           }
         }, {
-          text: 'Save',
+          text: 'OK',
           id: 'modal-button-2',
           click: function(e, modal) {
             modal.close();
@@ -72,5 +157,15 @@
         autoFocus: false
       });
     });
+
+    $('#btnFilter').on('click', function () {
+      showSearchForm = !showSearchForm;
+      if (showSearchForm) {
+        $('#searchForm').show();
+      } else {
+        $('#searchForm').hide();
+      }
+    });
+
   });
 </script>
