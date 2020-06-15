@@ -2309,6 +2309,7 @@ $datagrid-short-row-height: 25px;
         }
 
         .icon {
+          left: calc(100% - 22px);
           top: 6px;
         }
       }
