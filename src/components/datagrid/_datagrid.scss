@@ -4330,7 +4330,17 @@ html[dir='rtl'] {
 
   // Modal Lists
   table {
-    width: auto;
+    width: 300px;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+  }
+
+  .paginated table {
+    width: 466px;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
   }
 }
 
