@@ -167,11 +167,11 @@ describe('Searchfield full-text category with go button tests', () => {
   });
 });
 
-const searchfieldClearId = 'searchfield-clear';
+const searchfieldClearId = 'searchfield';
 
 describe('Searchfield clearable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/searchfield/test-clearable.html');
+    await utils.setPage('/components/searchfield/example-clear-api.html');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldClearId))), config.waitsFor);

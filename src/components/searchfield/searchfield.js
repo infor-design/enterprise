@@ -205,16 +205,6 @@ SearchField.prototype = {
   },
 
   /**
-   * @public
-   * @returns {void} adds 'x' button to clear the searchfield.
-   */
-  clear() {
-    this.element.clearable();
-    this.wrapper.addClass('has-close-icon-button');
-    this.xButton = this.wrapper.children('.icon.close');
-  },
-
-  /**
    * Initialization Kickoff
    * @private
    * @returns {void}
@@ -2078,6 +2068,16 @@ SearchField.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * @public
+   * @returns {void} adds 'x' button to clear the searchfield.
+   */
+  clear() {
+    this.element.clearable();
+    this.wrapper.addClass('has-close-icon-button');
+    this.xButton = this.wrapper.children('.icon.close');
   },
 
   /**
