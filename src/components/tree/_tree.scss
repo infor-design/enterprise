@@ -1,8 +1,18 @@
 // Tree Component
 //================================================== //
 
-.tree {
+// Keyframes for the  "plusminus" icon animation
+@include keyframes(rotate180forward) {
+  0% { @include rotate(0); }
+  100% { @include rotate(180); }
+}
 
+@include keyframes(rotate180backward) {
+  0% { @include rotate(0); }
+  100% { @include rotate(-180); }
+}
+
+.tree {
   // Tree Items
   a {
     @include antialiased();
@@ -49,6 +59,20 @@
       margin: 0 5px 0 0;
       top: 2px;
       width: 15px;
+
+      &.rotate180-forward,
+      &.rotate180-backward {
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+      }
+
+      &.rotate180-forward {
+        animation-name: rotate180forward;
+      }
+
+      &.rotate180-backward {
+        animation-name: rotate180backward;
+      }
     }
 
     //Ignore Visited Color Change

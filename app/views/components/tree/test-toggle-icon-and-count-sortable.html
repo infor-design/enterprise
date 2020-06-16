@@ -1,0 +1,39 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree" data-init="false">
+      <li>
+          <a href="#" id="home">Home</a>
+      </li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li>
+                  <a href="#" id="managers" class="icon-tree-image">Managers</a>
+                </li>
+                <li class="is-selected">
+                  <a href="#" id="history" class="my-class">History</a>
+                </li>
+                <li>
+                  <a href="#" id="careers">Careers</a>
+                </li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var elem = $('#addnode-tree').tree({
+    sortable: true,
+    useExpandTarget: true,
+    showChildrenCount: true
+  });
+</script>

@@ -31,6 +31,11 @@ const COMPONENT_NAME = 'tree';
 * @param {null|function} [settings.onExpand] If defined as a function, fires that function as a node is expanded.
 * @param {null|function} [settings.onCollapse] If defined as a function, fires that function as a node is collapsed.
 * @param {string} [settings.expandTarget = 'node'] 'node' or 'icon', if set to `icon` this will allows to toggle when clicking only the icon portion of the tree node.
+* @param {boolean} [settings.useExpandTarget = false] if `true`, allows separate icon button to expand/collapse.
+* @param {string} [settings.expandIconOpen = 'plusminus-folder-open'] the icon used for expand target icon button when a tree folder node is open.
+* @param {string} [settings.expandIconClosed = 'plusminus-folder-closed'] the icon used for expand target icon button when a tree folder node is closed.
+* @param {boolean} [settings.showChildrenCount = false] if `true`, allows show children count beside the node name text.
+* @param {boolean} [settings.childrenAutoCount = true] if `true`, allows to auto count the children.
 */
 
 const TREE_DEFAULTS = {
@@ -46,7 +51,12 @@ const TREE_DEFAULTS = {
   onBeforeSelect: null,
   onExpand: null,
   onCollapse: null,
-  expandTarget: 'node'
+  expandTarget: 'node',
+  useExpandTarget: false,
+  expandIconOpen: 'plusminus-folder-open',
+  expandIconClosed: 'plusminus-folder-closed',
+  showChildrenCount: false,
+  childrenAutoCount: true
 };
 
 function Tree(element, settings) {
@@ -77,6 +87,7 @@ Tree.prototype = {
       this.focusFirst();
       this.attachMenu(this.settings.menuId);
       this.createSortable();
+      this.childrenCountInit();
     }
   },
 
@@ -89,6 +100,10 @@ Tree.prototype = {
     const s = this.settings;
     const links = this.element.find('a');
     const selectableAttr = this.element.attr('data-selectable');
+
+    if (s.useExpandTarget) {
+      s.expandTarget = 'icon';
+    }
 
     // Set attribute "data-selectable"
     s.selectable = ((typeof selectableAttr !== 'undefined') &&
@@ -150,10 +165,11 @@ Tree.prototype = {
    * @param {object} a an anchor tag reference wrapped in a jQuery object.
    * @param {string} iconToSet icon for tree node.
    * @param {bool} hideCheckbox to show or hide checkbox for tree node.
+   * @param {object} nodeData the data relative to given node.
    * @returns {void}
    */
   // Added parameters - To show check box and icon on demand for particular node
-  decorateNode(a, iconToSet, hideCheckbox) {
+  decorateNode(a, iconToSet, hideCheckbox, nodeData) {
     a = this.isjQuery(a) ? a : $(a);
 
     let parentCount = 0;
@@ -202,13 +218,15 @@ Tree.prototype = {
 
     // Set the current tree item node expansion state
     const subNode = a.next('ul');
+    let subNodeOpen = false;
     if (subNode[0] && subNode.children().length > 0) {
-      a[0].setAttribute('aria-expanded', subNode[0].classList.contains('is-open') ? 'true' : 'false');
+      subNodeOpen = subNode[0].classList.contains('is-open');
+      a[0].setAttribute('aria-expanded', subNodeOpen ? 'true' : 'false');
     }
 
     // Inject Icons
     const text = a.contents().filter(function () {
-      return !$(this).is('.tree-badge');// Do not include badge text
+      return !$(this).is('.tree-badge, .tree-children-count');// Do not include badge text
     }).text();
 
     a[0].textContent = '';
@@ -223,6 +241,11 @@ Tree.prototype = {
       if (this.settings.useStepUI) {
         a[0].insertAdjacentHTML('afterbegin', $.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
       }
+    }
+
+    // Inject expand target
+    if (subNode[0]) {
+      a[0].insertAdjacentHTML('beforeend', this.getExpandTargetHtml(subNodeOpen));
     }
 
     // Inject checkbox
@@ -242,6 +265,11 @@ Tree.prototype = {
     span.textContent = text;
     a[0].appendChild(span);
 
+    // Inject children count
+    if (subNode[0]) {
+      a[0].insertAdjacentHTML('beforeend', this.getChildrenCountHtml(nodeData));
+    }
+
     if (this.hasIconClass(a)) {
       // CreateIconPath
       this.setTreeIcon(a.find('svg.icon-tree'), a[0].getAttribute('class'));
@@ -252,11 +280,11 @@ Tree.prototype = {
       let aClass = a[0].getAttribute('class');
       subNode[0].setAttribute('role', 'group');
       subNode[0].parentNode.classList.add('folder');
-      this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+      this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
 
       if (aClass && aClass.indexOf('open') === -1 && aClass.indexOf('closed') === -1) {
         a[0].setAttribute('class', isDisabled ? 'is-disabled' : '');
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
+        this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
       }
 
       if (this.hasIconClass(a)) {
@@ -676,7 +704,8 @@ Tree.prototype = {
           self.selectNodeFinish(node, focus, e);
         }
 
-        self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), s.folderIconClosed);
+        node.closest('.folder').removeClass('is-open');
+        self.setFolderIcon(node, false);
 
         if (self.hasIconClass(node.closest('.folder a'))) {
           self.setTreeIcon(
@@ -735,6 +764,9 @@ Tree.prototype = {
             // Sync data on node
             nodeData.children = nodes;
             node.data('jsonData', nodeData);
+            if (node[0].parentNode.classList.contains('folder')) {
+              self.childrenCountInit(node[0].parentNode);
+            }
             self.selectNode(node, true);
             self.initSelected();
           };
@@ -746,6 +778,7 @@ Tree.prototype = {
 
           return;
         }
+        self.setFolderIcon(node, true);
         self.accessNode(next, node);
       }
     }
@@ -760,7 +793,8 @@ Tree.prototype = {
   accessNode(next, node) {
     const nodeClass = node.attr('class');
 
-    this.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), this.settings.folderIconOpen);
+    node.closest('.folder').addClass('is-open');
+    this.setFolderIcon(node, true);
 
     if (this.hasIconClass(nodeClass)) {
       this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
@@ -1082,6 +1116,7 @@ Tree.prototype = {
     self.focusFirst();
     self.attachMenu(self.settings.menuId);
     self.createSortable();
+    this.childrenCountInit();
   },
 
   /**
@@ -1211,6 +1246,7 @@ Tree.prototype = {
     position += 1;
     const s = this.settings;
     const isDisabled = isParentsDisabled || data.disabled || false;
+    const isChildren = data.children && Array.isArray(data.children);
     const a = {
       id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
       href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
@@ -1222,7 +1258,9 @@ Tree.prototype = {
       class: ['hide-focus'],
       ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
       checkbox: this.isMultiselect && (!this.settings.hideCheckboxes || data.hideCheckbox === false) ? '<span class="tree-checkbox"></span>' : '',
-      badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : ''
+      badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : '',
+      expandTarget: isChildren ? this.getExpandTargetHtml(data.open) : '',
+      childrenCount: isChildren ? this.getChildrenCountHtml(data) : ''
     };
     this.jsonData.push(data);
 
@@ -1230,7 +1268,6 @@ Tree.prototype = {
       a.alertIcon = `<svg class="icon step-alert icon-${data.alertIcon}" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${data.alertIcon}"></use>`;
     }
 
-    const isChildren = data.children && Array.isArray(data.children);
     let liClassList = isChildren ? 'folder' : '';
     liClassList += data.selected ? ' is-selected' : '';
     if (liClassList !== '') {
@@ -1246,7 +1283,7 @@ Tree.prototype = {
         a.class.push(data.icon);
       }
     }
-    if (isChildren) {
+    if (isChildren && (!s.useExpandTarget || (s.useExpandTarget && !data.icon))) {
       if (data.open) {
         a.icon = data.icon && /open|closed/i.test(data.icon) ? data.icon : s.folderIconOpen;
         isParentsDisabled = isDisabled;
@@ -1290,7 +1327,7 @@ Tree.prototype = {
           aria-setsize="${position}"
           ${a.id + a.href + a.class + a.expanded + a.ariaDisabled + a.alertIconAttr}>
             <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="${a.icon}"></use>
-            </svg>${a.checkbox + a.alertIcon + a.badge + a.text}
+            </svg>${a.expandTarget + a.checkbox + a.alertIcon + a.badge + a.text + a.childrenCount}
         </a>
         ${selectHtml}`;
 
@@ -1304,6 +1341,190 @@ Tree.prototype = {
     html += '</li>';
 
     return html;
+  },
+
+  /**
+   * Get expand target html.
+   * @private
+   * @param {boolean} isOpen if true, use open icon.
+   * @returns {string} html created
+   */
+  getExpandTargetHtml(isOpen) {
+    let r = '';
+    if (this.settings.useExpandTarget) {
+      const cssClass = 'icon-expand-target';
+      const expandTarget = isOpen ?
+        { icon: this.settings.expandIconOpen, class: 'open' } :
+        { icon: this.settings.expandIconClosed, class: 'close' };
+      r = $.createIcon({ icon: expandTarget.icon, classes: [cssClass, `${cssClass}-${expandTarget.class}`] });
+    }
+    return r;
+  },
+
+  /**
+   * Get children count html.
+   * @private
+   * @param {object} data to do children.
+   * @returns {string} html created
+   */
+  getChildrenCountHtml(data) {
+    let r = '';
+    if (this.settings.showChildrenCount) {
+      r = `<span class="tree-children-count">
+          (<span class="tree-children-count-text">${this.getDataChildrenCount(data)}</span>)
+        </span>`;
+    }
+    return r;
+  },
+
+  /**
+   * Get children count set via a tree node property.
+   * @private
+   * @param {object} nodeData to do children.
+   * @returns {number} calculated actual children count
+   */
+  getDataChildrenCount(nodeData) {
+    return nodeData && /string|number/.test(typeof nodeData.childrenCount) ?
+      parseInt(nodeData.childrenCount, 10) : 0;
+  },
+
+  /**
+   * Get calculated on the basis of actual children count.
+   * @private
+   * @param {object} a an anchor tag reference.
+   * @returns {number} calculated actual children count
+   */
+  getActualChildrenCount(a) {
+    let count = 0;
+    if (a) {
+      const next = a.nextElementSibling;
+      if (next && next.tagName.toLowerCase() === 'ul') {
+        count = next.childElementCount;
+      }
+    }
+    return count;
+  },
+
+  /**
+   * Update children count for given node.
+   * @private
+   * @param {object} a an anchor tag reference.
+   * @param {number} count optional to manually set the children count.
+   * @returns {void}
+   */
+  updateChildrenCount(a, count) {
+    if (a) {
+      const countTextEl = a.querySelector('.tree-children-count-text');
+      if (countTextEl) {
+        count = /string|number/.test(typeof count) ?
+          parseInt(count, 10) : this.getActualChildrenCount(a);
+        if (!(count === 0 &&
+          parseInt(countTextEl.textContent, 10) > 0 &&
+          typeof this.settings.source === 'function' &&
+          !a.nextElementSibling?.classList?.contains('is-open'))) {
+          countTextEl.textContent = count;
+        }
+      }
+    }
+  },
+
+  /**
+   * Auto calculate and update children count for given node.
+   * @private
+   * @param {object} elem the node element.
+   * @returns {void}
+   */
+  updateAutoChildrenCount(elem) {
+    if (this.settings.showChildrenCount && elem) {
+      const links = [].slice.call(elem.querySelectorAll('a'));
+      links.forEach(a => this.updateChildrenCount(a));
+    }
+  },
+
+  /**
+   * Initial update to children count.
+   * @private
+   * @param {object} elem Optional the node element.
+   * @returns {void}
+   */
+  childrenCountInit(elem) {
+    elem = elem || this.element;
+    elem = this.isjQuery(elem) ? elem[0] : elem;
+
+    if (this.settings.showChildrenCount && elem) {
+      if (this.settings.childrenAutoCount) {
+        this.updateAutoChildrenCount(elem);
+      } else {
+        const links = [].slice.call(elem.querySelectorAll('a[data-children-count]'));
+        links.forEach((a) => {
+          const childrenCount = a.getAttribute('data-children-count');
+          if (typeof childrenCount !== 'undefined') {
+            this.updateChildrenCount(a, childrenCount);
+          }
+        });
+      }
+    }
+  },
+
+  /**
+   * Set the folder icon to use.
+   * @private
+   * @param {object} a an anchor tag reference.
+   * @param {boolean} isOpen if true, use open icon.
+   * @param {object} nodeData the node data.
+   * @returns {void}
+   */
+  setFolderIcon(a, isOpen, nodeData) {
+    const s = this.settings;
+    const aJq = this.isjQuery(a) ? a : $(a);
+    a = aJq[0];
+
+    if (a) {
+      const svg = {
+        el: {
+          tree: a.querySelector('svg.icon-tree'),
+          expand: a.querySelector('svg.icon-expand-target')
+        },
+        icon: isOpen ?
+          { tree: s.folderIconOpen, expand: s.expandIconOpen, rotate: 'forward' } :
+          { tree: s.folderIconClosed, expand: s.expandIconClosed, rotate: 'backward' }
+      };
+
+      let target;
+
+      if (s.useExpandTarget) {
+        target = { el: svg.el.expand, icon: svg.icon.expand, rotateClass: `rotate180-${svg.icon.rotate}` };
+        this.setTreeIcon(target.el, target.icon);
+        this.rotatePlusminus(target);
+
+        nodeData = nodeData || aJq.data('jsonData');
+        if (!nodeData || (nodeData && !nodeData.icon)) {
+          target = { el: svg.el.tree, icon: svg.icon.tree };
+          this.setTreeIcon(target.el, target.icon);
+        }
+      } else {
+        target = { el: svg.el.tree, icon: svg.icon.tree };
+        this.setTreeIcon(target.el, target.icon);
+      }
+    }
+  },
+
+  /**
+   * Rotate class for plusminus icons.
+   * @private
+   * @param {object} target to set values.
+   * @returns {void}
+   */
+  rotatePlusminus(target) {
+    if (this.settings.useExpandTarget) {
+      if (this.settings.expandIconOpen === 'plusminus-folder-open' &&
+        this.settings.expandIconClosed === 'plusminus-folder-closed') {
+        target.el.classList.add(target.rotateClass);
+        $(target.el).one('webkitAnimationEnd.tree oAnimationEnd.tree msAnimationEnd.tree animationend.tree', () => {
+          target.el.classList.remove(target.rotateClass);
+        });
+      }
+    }
   },
 
   /**
@@ -1407,8 +1628,8 @@ Tree.prototype = {
         return item;
       }
 
-      if (item.children || item.node.data('jsonData').children) {
-        const subresult = self.findById(id, item.children || item.node.data('jsonData').children);
+      if (item.children || item.node?.data('jsonData')?.children) {
+        const subresult = self.findById(id, item.children || item.node?.data('jsonData')?.children);
 
         if (subresult) {
           return subresult;
@@ -1635,7 +1856,9 @@ Tree.prototype = {
     location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
     let a = document.createElement('a');
-    a.setAttribute('id', nodeData.id);
+    if (typeof nodeData.id !== 'undefined') {
+      a.setAttribute('id', nodeData.id);
+    }
     a.setAttribute('href', nodeData.href);
     if (typeof badgeAttr !== 'undefined') {
       a.setAttribute('data-badge', badgeAttr);
@@ -1759,7 +1982,8 @@ Tree.prototype = {
 
     a = $(a);
     // Added parameter to show or hide checkbox according to node.
-    this.decorateNode(a, nodeData.icon, nodeData.hideCheckbox);
+    this.decorateNode(a, nodeData.icon, nodeData.hideCheckbox, nodeData);
+    this.childrenCountInit(a.parentsUntil(this.element, '.folder:last'));
 
     if (nodeData.selected) {
       this.selectNode(a, nodeData.focus);
@@ -1906,6 +2130,11 @@ Tree.prototype = {
     if (nodeData.icon) {
       this.setTreeIcon(elem.node[0].querySelector('svg.icon-tree'), nodeData.icon);
       elem.icon = nodeData.icon;
+      const jsonData = elem.node.data('jsonData');
+      if (jsonData) {
+        jsonData.icon = nodeData.icon;
+        elem.node.data('jsonData', jsonData);
+      }
     } else if (nodeData.children && nodeData.children.length &&
       !parent.classList.contains('folder')) {
       this.convertFileToFolder(elem.node);
@@ -1939,6 +2168,10 @@ Tree.prototype = {
           });
         }
       }
+    }
+
+    if (nodeData.childrenCount) {
+      this.updateChildrenCount(elem.node[0], nodeData.childrenCount);
     }
 
     if (nodeData.node) {
@@ -1988,13 +2221,17 @@ Tree.prototype = {
    */
   removeNode(nodeData) {
     let elem = this.findById(nodeData.id);
+    let targetNode = null;
 
     if (nodeData instanceof jQuery) {
       elem = nodeData;
+      targetNode = elem.parentsUntil(this.element, '.folder:last');
       elem.parent().remove();
     } else if (elem) {
+      targetNode = elem.node.parentsUntil(this.element, '.folder:last');
       elem.node.parent().remove();
     }
+    this.childrenCountInit(targetNode);
 
     if (!elem) {
       return;
@@ -2151,7 +2388,7 @@ Tree.prototype = {
               const items = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
               items.forEach(node => node.classList.remove('is-over'));
 
-              if (!clone || !self.sortable.overDirection) {
+              if (!clone || !self.sortable?.overDirection) {
                 return;
               }
               clone[0].style.left = `${pos.left}px`;
@@ -2197,6 +2434,8 @@ Tree.prototype = {
               if (self.isMultiselect) {
                 self.initSelected();
               }
+              self.updateAutoChildrenCount(self.element[0]);
+              delete self.sortable;
             });
         });
       }
@@ -2230,6 +2469,10 @@ Tree.prototype = {
     let top;
     let direction;
     let doAction;
+
+    if (!self.sortable) {
+      return;
+    }
 
     // Set as out of range
     const outOfRange = function () {
@@ -2341,10 +2584,11 @@ Tree.prototype = {
 
   // Convert file node to folder type
   convertFileToFolder(node) {
+    const iconEl = $('svg.icon-tree', node);
     const newFolder = document.createElement('ul');
     newFolder.setAttribute('role', 'group');
     const oldData = {
-      icon: $('svg.icon-tree', node).getIconName(),
+      icon: iconEl.getIconName(),
       type: 'file'
     };
     if (this.hasIconClass(node)) {
@@ -2358,13 +2602,21 @@ Tree.prototype = {
       parent.classList.add('folder');
       parent.appendChild(newFolder);
     }
-    this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
+
+    // Inject expand target
+    iconEl[0].insertAdjacentHTML('afterend', this.getExpandTargetHtml(false));
+
+    // Inject children count
+    node[0].insertAdjacentHTML('beforeend', this.getChildrenCountHtml());
+
+    this.setTreeIcon(iconEl, this.settings.folderIconClosed);
   },
 
   // Convert folder node to file type
   convertFolderToFile(node) {
     const parent = node.parent('.folder');
     parent.removeClass('folder is-open');
+    $('.icon-expand-target, .tree-children-count', node).remove();
     $('ul:first', parent).remove();
     if (parent.length) {
       this.setTreeIcon(

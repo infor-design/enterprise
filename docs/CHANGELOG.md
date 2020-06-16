@@ -8,6 +8,7 @@
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Tree]` Added a setting to support to expanding/collapsing when clicking only the icon portion of the tree node. ([#3730](https://github.com/infor-design/enterprise/issues/3730))
+- `[Tree]` Added the ability to have separate icon button for expand/collapse and children count. ([#3847](https://github.com/infor-design/enterprise/issues/3847))
 
 ### v4.30.0 Fixes
 
