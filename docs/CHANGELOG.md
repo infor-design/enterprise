@@ -40,6 +40,9 @@
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))
+- `[Multiselect]` Fixed a bug that would incorrectly cause both text and tags to be rendered on the page when using the Select All checkbox. ([#3767](https://github.com/infor-design/enterprise/issues/3767))
+- `[Multiselect]` When using the `showSelectAll` setting, if no selectable options are present, the Select All checkbox will now remain hidden and unusable. ([#3777](https://github.com/infor-design/enterprise/issues/3777))
+- `[Multiselect]` Changed "Select All" checkbox's default behavior to only select items that match the current search filter, if a search filter is present.  The original filter behavior is available by setting `selectAllFilterOnly` to false. ([#3845](https://github.com/infor-design/enterprise/issues/3845))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 

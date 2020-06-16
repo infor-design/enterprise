@@ -50,8 +50,10 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 * @param {object} [settings.tagSettings] if defined, passes along 'clickHandler' and 'dismissHandler' functions to any Tags in the Taglist
+* @param {number|undefined} [settings.tagListMaxHeight=120] if defined, sets a maximum height for a rendered tag list, and makes it scrollable.
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
+* @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -75,8 +77,10 @@ const DROPDOWN_DEFAULTS = {
   placementOpts: null,
   onKeyDown: null,
   tagSettings: {},
+  tagListMaxHeight: 120,
   allTextString: null,
-  selectedTextString: null
+  selectedTextString: null,
+  selectAllFilterOnly: true
 };
 
 function Dropdown(element, settings) {
@@ -140,10 +144,11 @@ Dropdown.prototype = {
    */
   get isFocused() {
     const active = document.activeElement;
-    if (this.pseudoElem && this.pseudoElem.length && this.pseudoElem.is($(active))) {
-      return true;
-    }
-    if (this.list && this.list.length && this.list[0].contains(active)) {
+    const pseudoIsActive = this.pseudoElem.length && this.pseudoElem.is($(active));
+    const listContainsActive = this.list && this.list.length && this.list[0].contains(active);
+    const tagActive = this.tagListAPI && this.tagListAPI.element.contains(active);
+
+    if (pseudoIsActive || listContainsActive || tagActive) {
       return true;
     }
     return false;
@@ -436,6 +441,14 @@ Dropdown.prototype = {
     }
 
     this.tagListAPI.element.classList[this.selectedOptions.length ? 'remove' : 'add']('empty');
+    if (!isNaN(this.settings.tagListMaxHeight)) {
+      span.classList.add('scrollable');
+      span.style.maxHeight = tags.length ? `${this.settings.tagListMaxHeight}px` : '';
+    }
+
+    // Detect scrollbar, if applicable, to push the dropdown icon away from the scrollbar.
+    const hasScrollbar = span.scrollHeight > span.clientHeight;
+    this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
       this.position();
@@ -851,7 +864,7 @@ Dropdown.prototype = {
 
     // In multiselect scenarios, shows an option at the top of the list that will
     // select all available options if checked.
-    if (isMultiselect && showSelectAll) {
+    if (isMultiselect && showSelectAll && opts.length) {
       const allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
 
       ulContents += `<li role="presentation" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
@@ -1008,10 +1021,10 @@ Dropdown.prototype = {
       if (span.length > 0) {
         span[0].innerHTML = `<span class="audible">${this.label.text()} </span>${xssUtils.escapeHTML(text)}`;
       }
-    }
 
-    if (!this.settings.showSearchUnderSelected) {
-      this.setPlaceholder(text);
+      if (!this.settings.showSearchUnderSelected) {
+        this.setPlaceholder(text);
+      }
     }
 
     // Set the "previousActiveDescendant" to the first of the items
@@ -1182,7 +1195,9 @@ Dropdown.prototype = {
 
     results.removeClass('hidden');
     list.not(results).add(headers).addClass('hidden');
-    list.filter(results).each(function (i) {
+
+    this.filteredItems = list.filter(results);
+    this.filteredItems.each(function (i) {
       const li = $(this);
       const a = li.children('a');
       li.attr('tabindex', i === 0 ? '0' : '-1');
@@ -1275,7 +1290,11 @@ Dropdown.prototype = {
     // Adjust height / top position
     if (this.list.hasClass('is-ontop')) {
       this.list[0].style.top = `${this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2}px`;
+    } else {
+      this.list[0].style.top = '';
     }
+
+    delete this.filteredItems;
 
     if (this.settings.multiple) {
       this.updateList();
@@ -1413,13 +1432,8 @@ Dropdown.prototype = {
 
           if (options.length && selectedIndex > -1) {
             // store the current selection
-            // selectValue
-            self.selectOption(this.correctValue($(options[selectedIndex])));
-          }
-
-          if (self.settings.closeOnSelect) {
-            self.closeList('select'); // Close the option list
-            self.activate();
+            const li = $(options[selectedIndex]);
+            self.selectListItem(li);
           }
         }
         e.stopPropagation();
@@ -2047,10 +2061,8 @@ Dropdown.prototype = {
 
     function dropdownAfterPlaceCallback(e, placementObj) {
       // Turn upside-down if flipped to the top of the pseudoElem
-      if (placementObj.wasFlipped === true) {
-        self.list.addClass('is-ontop');
-        self.listUl.prependTo(self.list);
-      }
+      self.list[placementObj.wasFlipped === true ? 'addClass' : 'removeClass']('is-ontop');
+      self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
 
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
@@ -2258,6 +2270,12 @@ Dropdown.prototype = {
     this.filterTerm = '';
     this.searchKeyMode = false;
     this.setDisplayedValues();
+    delete this.filteredItems;
+
+    // Scroll TagList to the top
+    if (this.tagListAPI) {
+      this.scrollTagList();
+    }
 
     this.searchInput.off([
       `input.${COMPONENT_NAME}`,
@@ -2340,6 +2358,23 @@ Dropdown.prototype = {
     self.listUl.scrollTop(0);
     self.listUl.scrollTop(current.offset().top - self.listUl.offset().top -
       self.listUl.scrollTop() - 40);
+  },
+
+  /**
+   * Scrolls an overflowed Tag List
+   * @private
+   * @returns {void}
+   */
+  scrollTagList() {
+    if (!this.tagListAPI) {
+      return;
+    }
+
+    setTimeout(() => {
+      if (!this.isFocused) {
+        this.tagListAPI.element.scrollTop = 0;
+      }
+    }, 5);
   },
 
   /**
@@ -2491,10 +2526,26 @@ Dropdown.prototype = {
       options: 'option:not(.is-disabled):not(:disabled)',
       items: 'li.dropdown-option:not(.separator):not(.group-label):not(.is-disabled)'
     };
-    const options = [].slice.call(this.element[0].querySelectorAll(selector.options));
-    const items = [].slice.call(this.listUl[0].querySelectorAll(selector.items));
+    let options = utils.getArrayFromList(this.element[0].querySelectorAll(selector.options));
+    let items = utils.getArrayFromList(this.listUl[0].querySelectorAll(selector.items));
     const last = options[options.length - 1];
-    let text = '';
+
+    // If the Multiselect should only select from filtered items,
+    // filter the full result sets down to the ones that aren't hidden.
+    if (this.settings.selectAllFilterOnly && this.filteredItems) {
+      options = [];
+      items = $.makeArray(this.filteredItems);
+      items.forEach((item) => {
+        const val = item.getAttribute('data-val');
+        if (!val) {
+          return;
+        }
+        const opt = this.element[0].querySelector(`option[value="${val}"]`);
+        if (opt) {
+          options.push(opt);
+        }
+      });
+    }
 
     if (doSelectAll) {
       // Select all
@@ -2506,12 +2557,6 @@ Dropdown.prototype = {
         node.selected = true;
         node.setAttribute('selected', true);
       });
-
-      text = this.getOptionText($(options));
-      const maxlength = this.element[0].getAttribute('maxlength');
-      if (maxlength) {
-        text = text.substr(0, maxlength);
-      }
     } else {
       // Clear all
       items.forEach((node) => {
@@ -2528,13 +2573,13 @@ Dropdown.prototype = {
     }
     this.previousActiveDescendant = last.value || '';
 
-    this.pseudoElem[0].querySelector('span').textContent = text;
-    this.searchInput[0].value = text;
+    this.setDisplayedValues();
     this.updateItemIcon(last);
 
-    if (this.list[0].classList.contains('search-mode')) {
+    if (!this.settings.selectAllFilterOnly && this.list[0].classList.contains('search-mode')) {
       this.resetList();
     }
+
     this.activate(true);
     this.setBadge(last);
     this.toggleTooltip();
@@ -3289,6 +3334,14 @@ Dropdown.prototype = {
         self.toggle();
         e.preventDefault();
       });
+
+    // If the Dropdown/Multiselect loses focus while tags are showing,
+    // the tag list will scroll itself to the top.
+    if (this.tagListAPI) {
+      this.pseudoElem.on('focusout.dropdown', () => {
+        this.scrollTagList();
+      });
+    }
 
     self.element.on('activated.dropdown', () => {
       self.label.trigger('click');
