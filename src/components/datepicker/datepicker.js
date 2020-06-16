@@ -730,10 +730,6 @@ DatePicker.prototype = {
       };
     }
 
-    if (!this.settings.language) {
-      this.settings.language = this.language;
-    }
-
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
 
