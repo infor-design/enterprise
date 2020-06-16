@@ -21,8 +21,15 @@
 <script>
   $('body').on('initialized', function () {
     var api = $('#searchfield').data('searchfield');
-
+    
+    // overrule the clearable setting
     api.clear();
+
+    console.log(`Clearable Setting Value: ${api.settings.clearable}`);
+
+    $('#searchfield').on('cleared', function () {
+      console.log('Cleared Fired');
+    });
   });
 
 </script>
