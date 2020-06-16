@@ -7,6 +7,7 @@
 - `[Custom Builds]` The build script can now produce an ES Module version of the components that can be imported by your application. ([#3771](https://github.com/infor-design/enterprise/issues/3771))
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
+- `[Searchfield]` Added the ability to clear the searchfield by calling a public clear() function. ([#3810](https://github.com/infor-design/enterprise/issues/3810))
 - `[Tree]` Added a setting to support to expanding/collapsing when clicking only the icon portion of the tree node. ([#3730](https://github.com/infor-design/enterprise/issues/3730))
 - `[Tree]` Added the ability to have separate icon button for expand/collapse and children count. ([#3847](https://github.com/infor-design/enterprise/issues/3847))
 
@@ -41,6 +42,9 @@
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))
+- `[Multiselect]` Fixed a bug that would incorrectly cause both text and tags to be rendered on the page when using the Select All checkbox. ([#3767](https://github.com/infor-design/enterprise/issues/3767))
+- `[Multiselect]` When using the `showSelectAll` setting, if no selectable options are present, the Select All checkbox will now remain hidden and unusable. ([#3777](https://github.com/infor-design/enterprise/issues/3777))
+- `[Multiselect]` Changed "Select All" checkbox's default behavior to only select items that match the current search filter, if a search filter is present.  The original filter behavior is available by setting `selectAllFilterOnly` to false. ([#3845](https://github.com/infor-design/enterprise/issues/3845))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 

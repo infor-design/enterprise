@@ -204,7 +204,7 @@ div.multiselect {
 
   &.has-tags {
     line-height: normal;
-    padding: 0 30px 1px 10px;
+    padding: 0;
   }
 
   .tag-list {
@@ -212,7 +212,8 @@ div.multiselect {
     line-height: 26px;
     margin: 0;
     overflow: auto;
-    padding: 2px 4px 3px;
+    padding: 2px 30px 3px 10px;
+    scroll-behavior: smooth;
     text-overflow: clip;
     white-space: normal;
 
@@ -233,6 +234,12 @@ div.multiselect {
 
     .icon {
       background-color: transparent;
+    }
+  }
+
+  &.has-scrollbar {
+    + .icon {
+      right: 18px;
     }
   }
 }
@@ -572,7 +579,7 @@ div.multiselect {
 
     &:not(:first-child) {
       border-top: 1px solid $dropdown-menu-separator-border-color;
-      margin-top: 10px;
+      margin-top: 5px;
     }
 
     &:hover {
@@ -727,6 +734,10 @@ input.dropdown.error:focus {
 
     &.has-tags {
       height: auto;
+
+      &.empty {
+        height: $input-size-regular-height;
+      }
     }
   }
 
@@ -990,7 +1001,7 @@ div.dropdown-xs,
     }
 
     &.has-tags {
-      padding: 1px 30px 0 10px;
+      padding: 0;
     }
 
     .dismissible-btn,
@@ -1184,7 +1195,22 @@ html[dir='rtl'] {
   div.dropdown,
   div.multiselect {
     &.has-tags {
-      padding: 5px 10px 5px 30px;
+      padding: 0;
+    }
+
+    .tag-list {
+      padding: 2px 10px 3px 30px;
+
+      &.empty {
+        padding: 16px 10px 15px 30px;
+      }
+    }
+
+    &.has-scrollbar {
+      + .icon {
+        left: 18px;
+        right: auto;
+      }
     }
   }
 
@@ -1421,6 +1447,13 @@ html[dir='rtl'] {
         .dropdown-search {
           padding: 6px 25px 5px 21px;
         }
+      }
+    }
+
+    div.dropdown,
+    div.multiselect {
+      &.has-tags {
+        padding: 0;
       }
     }
   }

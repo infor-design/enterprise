@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Example: clear API</h2>
+    <p>Added a public clear API to be expose and not limiting to the clearable setting.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="searchfield">clearable: false (but will override by the clear API)</label>
+      <input data-options="{clearable: false}" data-autocomplete="{{basepath}}api/states?term=" id="searchfield" placeholder="Search" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var api = $('#searchfield').data('searchfield');
+    
+    // overrule the clearable setting
+    api.clear();
+
+    console.log(`Clearable Setting Value: ${api.settings.clearable}`);
+
+    $('#searchfield').on('cleared', function () {
+      console.log('Cleared Fired');
+    });
+  });
+
+</script>

@@ -1,7 +1,8 @@
 <div class="row">
   <div class="six columns">
-    <h2>Multiselect Test: Select All</h2>
-    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.</p>
+    <h2>Multiselect Test: Select All (No Options)</h2>
+    <p>Github Issue: <a class="hyperlink" href="http://github.com/infor-design/enterprise/issues/3777" target="_blank">#3777</a></p>
+    <p>When using the `showSelectAll` setting with no selectable options present, the Dropdown/Multiselect will not show the "Select All" option either.</p>
   </div>
 </div>
 
@@ -16,7 +17,6 @@
 
 <script>
   $('#states-multi').multiselect({
-    source: '{{basepath}}api/states?term=',
     showSelectAll: true,
     showEmptyGroupHeaders: false
   });

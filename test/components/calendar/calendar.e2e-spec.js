@@ -352,7 +352,7 @@ describe('Calendar RTL tests', () => {
     await element(by.css('.monthview-header .prev')).click();
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('ذو الحجة 1439');
-    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(4);
+    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(5);
     await element(by.css('.monthview-header .next')).click();
     await element(by.css('.monthview-header .next')).click();
 
