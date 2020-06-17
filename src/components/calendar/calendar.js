@@ -485,7 +485,6 @@ Calendar.prototype = {
     }
 
     $('.accordion-pane.no-transition', this.element).removeClass('no-transition');
-    $(this.eventDetailsContainer).find('.is-expanded').removeClass('is-expanded');
   },
 
   /**
