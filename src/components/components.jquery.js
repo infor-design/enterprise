@@ -14,6 +14,7 @@ import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
 import './blockgrid/blockgrid.jquery';
+import './breadcrumb/breadcrumb.jquery';
 import './busyindicator/busyindicator.jquery';
 import './charts/charts.jquery';
 import './calendar/calendar.jquery';
