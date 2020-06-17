@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="twelve columns">
+    <nav id="level-breadcrumb" class="breadcrumb">
+      <ol aria-label="breadcrumb">
+        <li>
+          <a href="#" id="test-breadcrumb-home" class="hyperlink hide-focus">Home</a>
+        </li>
+        <li>
+          <a href="#" id="test-breadcrumb-second" class="hyperlink hide-focus">Second Item</a>
+        </li>
+        <li>
+          <a href="#" id="test-breadcrumb-third" class="hyperlink hide-focus">Third Item</a>
+        </li>
+        <li class="current">Fourth Item <span class="audible">Current</span></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <button id="breadcrumb-destroy" class="btn-secondary">Destroy</button>
+      <button id="breadcrumb-invoke" class="btn-secondary" disabled>Invoke</button>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  var destroyBtn = $('#breadcrumb-destroy');
+  var invokeBtn = $('#breadcrumb-invoke');
+  var breadcrumb = $('#level-breadcrumb');
+
+  function invoke() {
+    breadcrumb.breadcrumb();
+  }
+
+  function destroy() {
+    var api = breadcrumb.data('breadcrumb');
+    if (api && typeof api.destroy === 'function') {
+      api.destroy();
+    }
+  }
+
+  destroyBtn.on('click.test', function() {
+    destroy();
+    $(this).disable();
+    invokeBtn.enable();
+  });
+
+  invokeBtn.on('click.test', function() {
+    invoke();
+    $(this).disable();
+    destroyBtn.enable();
+  });
+
+  // Start as invoked
+  invokeBtn.click();
+</script>
