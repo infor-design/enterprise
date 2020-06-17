@@ -2084,6 +2084,11 @@ Dropdown.prototype = {
         self.listUl[0].style.height = adjustedUlHeight;
       }
 
+      if (adjustedUlHeight === undefined && self.list[0].classList.contains('is-ontop')) {
+        adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 7}`;
+        self.list[0].style.top = `${listStyleTop - adjustedUlHeight}px`;
+      }
+
       return placementObj;
     }
 
