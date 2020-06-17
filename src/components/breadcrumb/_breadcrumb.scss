@@ -25,6 +25,10 @@
       color: $breadcrumb-color;
       font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
+
+      a {
+        color: inherit;
+      }
     }
 
   }

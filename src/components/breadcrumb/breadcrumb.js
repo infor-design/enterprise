@@ -90,6 +90,9 @@ BreadcrumbItem.prototype = {
     // content
     a.innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
 
+    // invoke/update IDS Hyperlink
+    $(a).hyperlink();
+
     return li;
   },
 
@@ -101,14 +104,20 @@ BreadcrumbItem.prototype = {
     const element = this.settings.element;
     const a = element.querySelector('a');
 
+    // Remove the "current" label if we find one
+    function cleanAria(str) {
+      str = str.replace('<span class="audible">Current</span>', '');
+      return xssUtils.stripHTML(str);
+    }
+
     // Some legacy breadcrumb items are not reprsented by a hyperlink
     if (!a) {
-      this.settings.content = element.innerHTML;
+      this.settings.content = cleanAria(element.innerHTML);
       if (element.id) {
         this.settings.id = element.id;
       }
     } else {
-      this.settings.content = a.innerHTML;
+      this.settings.content = cleanAria(a.innerHTML);
       this.settings.href = a.href;
       this.settings.id = a.id;
     }
@@ -128,6 +137,13 @@ BreadcrumbItem.prototype = {
    */
   destroy() {
     if (!this.fromElement && this.element && this.element.parentNode) {
+      const a = this.element.querySelector('a');
+      if (a) {
+        const $a = $(a);
+        $a.off();
+        $a.data('hyperlink').destroy();
+      }
+
       this.element.parentNode.removeChild(this.element);
       delete this.element;
     }
@@ -225,7 +241,6 @@ Breadcrumb.prototype = {
     this.breadcrumbs.forEach((breadcrumb) => {
       if (!breadcrumb.fromElement) {
         const li = breadcrumb.render();
-        $(li.querySelector('a')).hyperlink();
         html.appendChild(li);
       } else {
         breadcrumb.refresh();

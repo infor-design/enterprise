@@ -4,6 +4,30 @@
   </div>
 </div>
 
-<script type="text/javascript" id="test-script">
-
+<script id="test-script">
+  $('#level-breadcrumb').breadcrumb({
+    breadcrumbs: [
+      {
+        content: 'Home',
+        id: 'test-breadcrumb-home',
+        href: '#'
+      },
+      {
+        content: 'Second Item',
+        id: 'test-breadcrumb-second',
+        href: '#'
+      },
+      {
+        content: 'Third Item',
+        id: 'test-breadcrumb-third',
+        href: '#'
+      },
+      {
+        content: 'Fourth Item',
+        current: true,
+        id: 'test-breadcrumb-fourth',
+        href: '#'
+      }
+    ]
+  });
 </script>
