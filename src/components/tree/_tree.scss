@@ -7,9 +7,9 @@
   100% { @include rotate(180); }
 }
 
-@include keyframes(rotate180backward) {
+@include keyframes(rotate90backward) {
   0% { @include rotate(0); }
-  100% { @include rotate(-180); }
+  100% { @include rotate(-90); }
 }
 
 .tree {
@@ -60,18 +60,16 @@
       top: 2px;
       width: 15px;
 
-      &.rotate180-forward,
-      &.rotate180-backward {
-        animation-duration: 0.7s;
+      &.rotate-forward {
+        animation-duration: 0.4s;
         animation-iteration-count: 1;
-      }
-
-      &.rotate180-forward {
         animation-name: rotate180forward;
       }
 
-      &.rotate180-backward {
-        animation-name: rotate180backward;
+      &.rotate-backward {
+        animation-duration: 0.2s;
+        animation-iteration-count: 1;
+        animation-name: rotate90backward;
       }
     }
 

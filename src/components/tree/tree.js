@@ -34,6 +34,7 @@ const COMPONENT_NAME = 'tree';
 * @param {boolean} [settings.useExpandTarget = false] if `true`, allows separate icon button to expand/collapse.
 * @param {string} [settings.expandIconOpen = 'plusminus-folder-open'] the icon used for expand target icon button when a tree folder node is open.
 * @param {string} [settings.expandIconClosed = 'plusminus-folder-closed'] the icon used for expand target icon button when a tree folder node is closed.
+* @param {boolean} [settings.expandPlusminusRotate = true] if `true`, will rotate expand target plus-minus icon.
 * @param {boolean} [settings.showChildrenCount = false] if `true`, allows show children count beside the node name text.
 * @param {boolean} [settings.childrenAutoCount = true] if `true`, allows to auto count the children.
 */
@@ -55,6 +56,7 @@ const TREE_DEFAULTS = {
   useExpandTarget: false,
   expandIconOpen: 'plusminus-folder-open',
   expandIconClosed: 'plusminus-folder-closed',
+  expandPlusminusRotate: true,
   showChildrenCount: false,
   childrenAutoCount: true
 };
@@ -713,7 +715,7 @@ Tree.prototype = {
         }
 
         node.closest('.folder').removeClass('is-open');
-        self.setFolderIcon(node, false);
+        self.setFolderIcon(node, false, false, s.expandPlusminusRotate);
 
         if (self.hasIconClass(node.closest('.folder a'))) {
           self.setTreeIcon(
@@ -789,7 +791,7 @@ Tree.prototype = {
 
           return;
         }
-        self.setFolderIcon(node, true);
+        self.setFolderIcon(node, true, false, s.expandPlusminusRotate);
         self.accessNode(next, node);
       }
     }
@@ -805,7 +807,7 @@ Tree.prototype = {
     const nodeClass = node.attr('class');
 
     node.closest('.folder').addClass('is-open');
-    this.setFolderIcon(node, true);
+    this.setFolderIcon(node, true, false, this.settings.expandPlusminusRotate);
 
     if (this.hasIconClass(nodeClass)) {
       this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
@@ -1483,9 +1485,10 @@ Tree.prototype = {
    * @param {object} a an anchor tag reference.
    * @param {boolean} isOpen if true, use open icon.
    * @param {object} nodeData the node data.
+   * @param {boolean} isRotatePlusminus if true, will rotate plus-minus icon.
    * @returns {void}
    */
-  setFolderIcon(a, isOpen, nodeData) {
+  setFolderIcon(a, isOpen, nodeData, isRotatePlusminus) {
     const s = this.settings;
     const aJq = this.isjQuery(a) ? a : $(a);
     a = aJq[0];
@@ -1504,9 +1507,11 @@ Tree.prototype = {
       let target;
 
       if (s.useExpandTarget) {
-        target = { el: svg.el.expand, icon: svg.icon.expand, rotateClass: `rotate180-${svg.icon.rotate}` };
+        target = { el: svg.el.expand, icon: svg.icon.expand, rotateClass: `rotate-${svg.icon.rotate}` };
         this.setTreeIcon(target.el, target.icon);
-        this.rotatePlusminus(target);
+        if (isRotatePlusminus) {
+          this.rotatePlusminus(target);
+        }
 
         nodeData = nodeData || aJq.data('jsonData');
         if (!nodeData || (nodeData && !nodeData.icon)) {
