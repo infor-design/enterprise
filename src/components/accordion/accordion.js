@@ -942,9 +942,6 @@ Accordion.prototype = {
       expander.children('.audible').text(Locale.translate('Expand'));
     }
 
-    header.add(pane).removeClass('is-expanded');
-    a.attr('aria-expanded', 'false');
-
     if (closeChildren) {
       pane.closeChildren();
     }
@@ -972,6 +969,8 @@ Accordion.prototype = {
       }
       pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
+      header.add(pane).removeClass('is-expanded');
+      a.attr('aria-expanded', 'false');
       dfd.resolve();
     }
 
