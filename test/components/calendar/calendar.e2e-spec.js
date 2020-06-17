@@ -380,6 +380,7 @@ describe('Calendar allow one pane tests', () => {
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-event-details > div:nth-child(6).is-expanded'))), config.waitsFor);
+    await browser.driver.sleep(1000);
 
     expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(1);
   });
