@@ -15,7 +15,7 @@ const BREADCRUMB_ITEM_DEFAULTS = {
 };
 
 /**
- * Represents the current state of a single breadcrumb item
+ * Represents the current state of a single breadcrumb item.  Used internally by the IDS Breadcrumb component.
  * @private
  * @param {object} [settings] representing an individual breadcrumb item's properties.
  * @param {function} [settings.callback = undefined] if defined, fires a callback function when a breadcrumb item is activated.
@@ -167,7 +167,8 @@ const BREADCRUMB_DEFAULTS = {
  * Navigation Component that displays a trail of previously-accessed pages.
  * @param {HTMLElement} element the base breadcrumb element
  * @param {string} [settings] The component settings.
- * @param {string} [settings.param=null] The icon to use for on state on toggle buttons
+ * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
+ * @param {array} [settings.breadcrumbs=[]] predefines breadcrumb items as plain objects.  All properties in these objects correspond to the settings available in the `BreadcrumbItem` type.
  * @returns {this} component instance
  */
 function Breadcrumb(element, settings) {
@@ -285,7 +286,7 @@ Breadcrumb.prototype = {
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
     this.teardown();
@@ -299,7 +300,7 @@ Breadcrumb.prototype = {
   */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element, COMPONENT_NAME);
   },
 };
 
