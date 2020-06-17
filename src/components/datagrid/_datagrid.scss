@@ -2309,6 +2309,7 @@ $datagrid-short-row-height: 25px;
         }
 
         .icon {
+          left: calc(100% - 22px);
           top: 6px;
         }
       }
@@ -4329,7 +4330,17 @@ html[dir='rtl'] {
 
   // Modal Lists
   table {
-    width: auto;
+    width: 300px;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+  }
+
+  .paginated table {
+    width: 466px;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
   }
 }
 

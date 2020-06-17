@@ -695,6 +695,11 @@ Calendar.prototype = {
       calendarEvents[i].parentNode.removeChild(calendarEvents[i]);
     }
 
+    const calendarEventSpacers = this.monthViewContainer.querySelectorAll('.calendar-event-spacer');
+    for (let i = 0; i < calendarEventSpacers.length; i++) {
+      calendarEventSpacers[i].parentNode.removeChild(calendarEventSpacers[i]);
+    }
+
     for (let i = 0; i < this.monthView.dayMap.length; i++) {
       this.monthView.dayMap[i].events = [];
     }
@@ -720,7 +725,7 @@ Calendar.prototype = {
       this.monthView.dayMap[idx].events.push(event);
     }
 
-    if (eventCnt >= 2) {
+    if (eventCnt >= 3) {
       const moreSpan = container.querySelector('.calendar-event-more');
       const setMoreSpan = (elem, count) => {
         elem.setAttribute('data-count', count);
@@ -761,7 +766,7 @@ Calendar.prototype = {
 
     if (eventHead[0]) {
       const children = eventHead[0].parentNode.children;
-      for (let i = 0; i < children.length; i++) {
+      for (let i = container.querySelector('.day-container').children.length; i < children.length; i++) {
         const dataid = children[i].getAttribute('data-id');
         if (dataid === event.id) {
           break;

@@ -60,6 +60,21 @@ describe('Searchfield API', () => {
     expect(wrapper.classList.contains('is-disabled')).toBeFalsy();
   });
 
+  it('can clear the searchfield via clear API', () => {
+    searchfieldInputEl.setAttribute('value', 'Alaska');
+
+    searchfieldAPI.clear();
+
+    const closeButtonEl = document.body.querySelector('svg.close');
+    const spyEvent = spyOnEvent(closeButtonEl, 'click');
+
+    setTimeout(() => {
+      closeButtonEl.click();
+      expect(spyEvent).toHaveBeenTriggered();
+      expect(searchfieldInputEl.getAttribute('value')).toEqual('');
+    }, 1);
+  });
+
   it('can add an extra "More Results" link to the results list', () => {
     let wasCalled = false;
     function allResultsCallback() {

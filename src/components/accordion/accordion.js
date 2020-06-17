@@ -490,6 +490,7 @@ Accordion.prototype = {
     const header = target.parent();
     const expander = header.children('[class^="btn"]').first();
     const anchor = header.children('a');
+    const headerPanes = document.querySelectorAll('.accordion-pane');
 
     function setInitialOriginalSelection(selection) {
       if (!selection) {
@@ -503,6 +504,27 @@ Accordion.prototype = {
 
     if (key === 9) { // Tab (also triggered by Shift + Tab)
       this.headers.removeClass('is-selected');
+
+      const collapsedPanes = [...headerPanes].filter(pane => !pane.classList.contains('is-expanded'));
+      const expandedPanes = [...headerPanes].filter(pane => pane.classList.contains('is-expanded'));
+
+      // If accordion pane is expanded enable normal tabbing behavior.
+      expandedPanes.forEach((pane) => {
+        [...pane.children].forEach((el) => {
+          if (!$(el).hasClass('is-disabled')) {
+            $(el).find('a').removeAttr('tabindex');
+            $(el).find('button').removeAttr('tabindex');
+          }
+        });
+      });
+
+      // If accordion pane is collapsed skip over the child elements.
+      collapsedPanes.forEach((pane) => {
+        [...pane.children].forEach((el) => {
+          $(el).find('a').attr('tabindex', '-1');
+          $(el).find('button').attr('tabindex', '-1');
+        });
+      });
 
       if (target.is('a') && expander.length) {
         setInitialOriginalSelection(expander);

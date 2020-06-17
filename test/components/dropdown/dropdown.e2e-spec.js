@@ -44,6 +44,22 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.id('states')).getAttribute('value')).toEqual('NM');
   });
 
+  it('Should select the active element on tab', async () => {
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
+    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(searchEl), config.waitsFor);
+
+    await browser.switchTo().activeElement().sendKeys('Oh');
+    await browser.driver.sleep(config.sleep);
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('states')).getAttribute('value')).toEqual('OH');
+  });
+
   it('Should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
     await browser.driver

@@ -1,7 +1,8 @@
 <div class="row">
   <div class="six columns">
-    <h2>Multiselect Test: Select All</h2>
-    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.</p>
+    <h2>Multiselect Test: Select All with Tags</h2>
+    <p>Github Issue: <a class="hyperlink" href="http://github.com/infor-design/enterprise/issues/3767" target="_blank">#3767</a></p>
+    <p>Demonstrates a working "Select All" checkbox in the Multiselect list combined with Tags.</p>
   </div>
 </div>
 
@@ -17,8 +18,9 @@
 <script>
   $('#states-multi').multiselect({
     source: '{{basepath}}api/states?term=',
+    showEmptyGroupHeaders: false,
+    showTags: true,
     showSelectAll: true,
-    showEmptyGroupHeaders: false
   });
   $('#states-multi').on('change', function () {
     console.log('change fired');
