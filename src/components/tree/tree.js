@@ -278,12 +278,20 @@ Tree.prototype = {
     // Adds role=group' to all subnodes
     if (subNode[0] && subNode[0].tagName.toLowerCase() === 'ul') {
       let aClass = a[0].getAttribute('class');
+      if (this.settings.useExpandTarget && aClass && !nodeData) {
+        const icon = aClass.match(/(icon-)[^\s]+/g);
+        if (icon) {
+          nodeData = { icon: icon[0] };
+        }
+      }
       subNode[0].setAttribute('role', 'group');
       subNode[0].parentNode.classList.add('folder');
       this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
 
       if (aClass && aClass.indexOf('open') === -1 && aClass.indexOf('closed') === -1) {
-        a[0].setAttribute('class', isDisabled ? 'is-disabled' : '');
+        if (isDisabled) {
+          a[0].classList.add('is-disabled');
+        }
         this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
       }
 
@@ -767,7 +775,10 @@ Tree.prototype = {
             if (node[0].parentNode.classList.contains('folder')) {
               self.childrenCountInit(node[0].parentNode);
             }
-            self.selectNode(node, true);
+
+            if (!self.isMultiselect && !s.expandTarget === 'icon') {
+              self.selectNode(node, true);
+            }
             self.initSelected();
           };
 
