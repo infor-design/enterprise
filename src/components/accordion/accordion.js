@@ -722,7 +722,7 @@ Accordion.prototype = {
       return;
     }
 
-    return header.children('a').attr('aria-expanded') === 'true';
+    return header.children('a').attr('aria-expanded') === 'true' || header.hasClass('is-expanded');
   },
 
   /**

@@ -373,7 +373,7 @@ describe('Calendar allow one pane tests', () => {
   it('Should only allow one pane open at a time', async () => {
     await utils.checkForErrors();
 
-    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(0);
+    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(1);
 
     const buttonEl = await element(by.css('.calendar-event-details > div:nth-child(5) button'));
     await buttonEl.click();

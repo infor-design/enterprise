@@ -662,8 +662,8 @@
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {
-    padding: 0;
     display: block;
+    padding: 0;
 
     + .accordion-header,
     + .accordion-content {
