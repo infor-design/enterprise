@@ -7,10 +7,10 @@
       </li>
       <li><a href="#" id="about">About Us</a></li>
       <li class="is-open">
-        <a href="#" id="public">Public Folders</a>
+        <a href="#" id="public" class="icon-cloud">Public Folders</a>
         <ul class="is-open root">
           <li class="is-open">
-              <a href="#" id="leadership">Leadership</a>
+              <a href="#" id="leadership" class="icon-cloud">Leadership</a>
               <ul class="is-open">
                 <li class="is-selected">
                   <a href="#" id="managers" class="icon-tree-image">Managers</a>
@@ -40,8 +40,8 @@
   var api = elem.data('tree');
 
   //Add at Root
-  api.addNode({text: 'New Item 1', id: 'new1'});
-  api.addNode({text: 'New Item 2', id: 'new2', children: [{
+  api.addNode({text: 'New Item 1', id: 'new1', icon: 'icon-cloud'});
+  api.addNode({text: 'New Item 2', id: 'new2', icon: 'icon-cloud', children: [{
     id: 'node3',
     text: 'Node 2.1'
   }, {
@@ -65,7 +65,7 @@
 
   //Add Children to parent ID
   api.addNode({text: 'New Item 1.1', parent: 'new1', disabled: true});
-  api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12'});
+  api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12', icon: 'icon-tree-chart'});
   api.addNode({text: 'New Item 1.2.1', parent: 'new12', id: 'new121'});
   api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
 

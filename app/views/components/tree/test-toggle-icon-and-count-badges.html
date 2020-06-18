@@ -9,11 +9,11 @@
         </li>
         <li><a href="#" id="about">About Us</a></li>
         <li>
-          <a href="#" id="sales-target" data-badge="{'text': '0'}">Sales Target</a>
+          <a href="#" id="sales-target" data-badge="{'text': '0'}" class="icon-cloud">Sales Target</a>
           <ul></ul>
         </li>
         <li>
-          <a href="#" id="sales-orders" data-badge="{'text': '10', 'type': 'info'}">Sales Orders</a>
+          <a href="#" id="sales-orders" data-badge="{'text': '10', 'type': 'info'}" class="icon-cloud">Sales Orders</a>
           <ul>
             <li>
               <a href="#" id="order-1">Order 1</a>
@@ -21,10 +21,10 @@
           </ul>
         </li>
         <li class="is-open">
-          <a href="#" id="public">Public Folders</a>
+          <a href="#" id="public" class="icon-cloud">Public Folders</a>
           <ul class="is-open root">
             <li class="is-open">
-                <a href="#" id="leadership" data-badge="{'text': '4', 'type': '#EB9D9D'}">Leadership</a>
+                <a href="#" id="leadership" data-badge="{'text': '4', 'type': '#EB9D9D'}" class="icon-cloud">Leadership</a>
                 <ul class="is-open">
                   <li class="is-selected">
                     <a href="#" id="managers" class="icon-tree-image">Managers</a>
@@ -63,6 +63,7 @@
   api.addNode({
     text: 'New Item 2',
     id: 'new2',
+    icon: 'icon-cloud',
     badge: {'text': '912', 'type':'info'},
     children: [
       {id: 'new21', text: 'Node 2.1'},

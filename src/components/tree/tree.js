@@ -158,7 +158,7 @@ Tree.prototype = {
       return;
     }
     node.focus();
-    node.classList.remove('hide-focus');
+    DOM.removeClass(node, 'hide-focus');
   },
 
   /**
@@ -178,7 +178,7 @@ Tree.prototype = {
     let badgeData = a[0].getAttribute('data-badge');
     const alertIcon = a[0].getAttribute('data-alert-icon');
     const isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
-    const isDisabled = a[0].classList.contains('is-disabled') || isParentsDisabled;
+    const isDisabled = DOM.hasClass(a[0], 'is-disabled') || isParentsDisabled;
 
     if (typeof badgeData !== 'undefined') {
       badgeData = utils.parseSettings(a, 'data-badge');
@@ -191,18 +191,18 @@ Tree.prototype = {
 
     // Add Aria disabled
     if (isDisabled) {
-      a[0].classList.add('is-disabled');
+      DOM.addClass(a[0], 'is-disabled');
       a[0].setAttribute('aria-disabled', 'true');
       const childSection = a.next();
 
-      if (childSection[0] && childSection[0].tagName.toLowerCase() === 'ul' && childSection[0].classList.contains('is-open')) {
+      if (childSection[0] && childSection[0].tagName.toLowerCase() === 'ul' && DOM.hasClass(childSection[0], 'is-open')) {
         const childLinks = [].slice.call(childSection[0].querySelectorAll('a'));
         childLinks.forEach((link) => {
-          link.classList.add('is-disabled');
+          DOM.addClass(link, 'is-disabled');
           link.setAttribute('aria-disabled', 'true');
         });
         const parentUls = [].slice.call(a[0].parentNode.querySelectorAll('ul'));
-        parentUls.forEach(ul => ul.classList.add('is-disabled'));
+        parentUls.forEach(ul => DOM.addClass(ul, 'is-disabled'));
       }
     }
 
@@ -222,7 +222,7 @@ Tree.prototype = {
     const subNode = a.next('ul');
     let subNodeOpen = false;
     if (subNode[0] && subNode.children().length > 0) {
-      subNodeOpen = subNode[0].classList.contains('is-open');
+      subNodeOpen = DOM.hasClass(subNode[0], 'is-open');
       a[0].setAttribute('aria-expanded', subNodeOpen ? 'true' : 'false');
     }
 
@@ -263,7 +263,7 @@ Tree.prototype = {
     }
 
     const span = document.createElement('span');
-    span.classList.add('tree-text');
+    DOM.addClass(span, 'tree-text');
     span.textContent = text;
     a[0].appendChild(span);
 
@@ -287,19 +287,19 @@ Tree.prototype = {
         }
       }
       subNode[0].setAttribute('role', 'group');
-      subNode[0].parentNode.classList.add('folder');
-      this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
+      DOM.addClass(subNode[0].parentNode, 'folder');
+      this.setFolderIcon(a, DOM.hasClass(subNode[0], 'is-open'), nodeData);
 
       if (aClass && aClass.indexOf('open') === -1 && aClass.indexOf('closed') === -1) {
         if (isDisabled) {
-          a[0].classList.add('is-disabled');
+          DOM.addClass(a[0], 'is-disabled');
         }
-        this.setFolderIcon(a, subNode[0].classList.contains('is-open'), nodeData);
+        this.setFolderIcon(a, DOM.hasClass(subNode[0], 'is-open'), nodeData);
       }
 
       if (this.hasIconClass(a)) {
         aClass = a[0].getAttribute('class');
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode[0].classList.contains('is-open') ?
+        this.setTreeIcon(a.find('svg.icon-tree'), DOM.hasClass(subNode[0], 'is-open') ?
           aClass : aClass.replace('open', 'closed'));
       }
     }
@@ -341,8 +341,8 @@ Tree.prototype = {
 
     groups.forEach((group) => {
       const prev = group.previousElementSibling;
-      group.parentNode.classList.add('is-open');
-      group.classList.add('is-open');
+      DOM.addClass(group.parentNode, 'is-open');
+      DOM.addClass(group, 'is-open');
       group.style.height = '';
 
       if (prev && prev.tagName.toLowerCase() === 'a') {
@@ -373,15 +373,15 @@ Tree.prototype = {
 
     groups.forEach((group) => {
       const prev = group.previousElementSibling;
-      group.parentNode.classList.remove('is-open');
-      group.classList.remove('is-open');
+      DOM.removeClass(group.parentNode, 'is-open');
+      DOM.removeClass(group, 'is-open');
       group.style.height = 0;
 
       if (prev && prev.tagName.toLowerCase() === 'a') {
         const svg = prev.querySelector('svg.icon-tree');
         this.setTreeIcon(svg, this.settings.folderIconClosed);
         prev.setAttribute('aria-expanded', false);
-        prev.classList.remove('is-selected');
+        DOM.removeClass(prev, 'is-selected');
         if (this.hasIconClass(prev)) {
           this.setTreeIcon(svg, prev.getAttribute('class').replace('open', 'closed'));
         }
@@ -454,8 +454,8 @@ Tree.prototype = {
 
     // Set active css class
     const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
-    listItems.forEach(li => li.classList.remove('is-active'));
-    node[0].parentNode.classList.add('is-active');
+    listItems.forEach(li => DOM.removeClass(li, 'is-active'));
+    DOM.addClass(node[0].parentNode, 'is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -519,7 +519,7 @@ Tree.prototype = {
     if ((this.isMultiselect || this.settings.expandTarget === 'icon') && e) {
       if (e.type === 'click' || e.type === 'touch') {
         if (DOM.hasClass(e.target, 'icon') &&
-          node[0].parentNode.classList.contains('folder')) {
+          DOM.hasClass(node[0].parentNode, 'folder')) {
           return;
         }
       } else if (e.type === 'keydown') {
@@ -539,11 +539,11 @@ Tree.prototype = {
       const links2 = [].slice.call(node[0].parentNode.querySelectorAll('a:not(.is-disabled)'));
       links2.forEach((a) => {
         a.setAttribute('aria-selected', 'true');
-        a.classList.add('is-selected');
-        a.parentNode.classList.add('is-selected');
+        DOM.addClass(a, 'is-selected');
+        DOM.addClass(a.parentNode, 'is-selected');
       });
     } else {
-      if (node[0].classList.contains('is-selected')) {
+      if (DOM.hasClass(node[0], 'is-selected')) {
         return;
       }
       links.forEach((a) => {
@@ -554,12 +554,12 @@ Tree.prototype = {
           link.data('jsonData', data);
         }
         a.setAttribute('aria-selected', 'false');
-        a.classList.remove('is-selected');
-        a.parentNode.classList.remove('is-selected');
+        DOM.removeClass(a, 'is-selected');
+        DOM.removeClass(a.parentNode, 'is-selected');
       });
       node[0].setAttribute('aria-selected', 'true');
-      node[0].classList.add('is-selected');
-      node[0].parentNode.classList.add('is-selected');
+      DOM.addClass(node[0], 'is-selected');
+      DOM.addClass(node[0].parentNode, 'is-selected');
     }
 
     this.syncNode(node);
@@ -573,8 +573,8 @@ Tree.prototype = {
 
     // Set active css class
     const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
-    listItems.forEach(li => li.classList.remove('is-active'));
-    node[0].parentNode.classList.add('is-active');
+    listItems.forEach(li => DOM.removeClass(li, 'is-active'));
+    DOM.addClass(node[0].parentNode, 'is-active');
 
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
@@ -608,8 +608,8 @@ Tree.prototype = {
       const a = node[0];
       const li = a.parentNode;
       if (data && data.selected) {
-        li.classList.add('is-selected');
-        a.classList.add('is-selected');
+        DOM.addClass(li, 'is-selected');
+        DOM.addClass(a, 'is-selected');
         a.setAttribute('aria-selected', true);
       } else {
         DOM.removeClass(li, 'is-selected', 'is-partial');
@@ -626,10 +626,10 @@ Tree.prototype = {
 
         if (status === 'mixed') {
           DOM.removeClass(li, 'is-selected', 'is-partial');
-          li.classList.add('is-partial');
+          DOM.addClass(li, 'is-partial');
         } else if (status) {
           DOM.removeClass(li, 'is-selected', 'is-partial');
-          li.classList.add('is-selected');
+          DOM.addClass(li, 'is-selected');
         } else {
           DOM.removeClass(li, 'is-selected', 'is-partial');
         }
@@ -698,7 +698,7 @@ Tree.prototype = {
     const s = this.settings;
     let result;
     if (next[0] && next[0].tagName.toLowerCase() === 'ul' && next[0].getAttribute('role') === 'group') {
-      if (next[0].classList.contains('is-open')) {
+      if (DOM.hasClass(next[0], 'is-open')) {
         if (typeof s.onCollapse === 'function') {
           result = s.onCollapse(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
@@ -728,13 +728,13 @@ Tree.prototype = {
 
         self.isAnimating = true;
 
-        if (!self.isMultiselect) {
+        if (!self.isMultiselect && !s.expandTarget === 'icon') {
           self.unSelectedNode(node.parent().find('li.is-selected'), false);
-          node[0].classList.remove('is-selected');
+          DOM.removeClass(node[0], 'is-selected');
         }
 
         next.one('animateclosedcomplete', () => {
-          next[0].classList.remove('is-open');
+          DOM.removeClass(next[0], 'is-open');
           self.isAnimating = false;
         }).animateClosed();
 
@@ -765,7 +765,7 @@ Tree.prototype = {
             // Add DB and UI nodes
             elem.children = nodes;
             self.addChildNodes(elem, node.parent());
-            node[0].classList.remove('is-loading');
+            DOM.removeClass(node[0], 'is-loading');
             self.loading = false;
 
             // Open
@@ -774,7 +774,7 @@ Tree.prototype = {
             // Sync data on node
             nodeData.children = nodes;
             node.data('jsonData', nodeData);
-            if (node[0].parentNode.classList.contains('folder')) {
+            if (DOM.hasClass(node[0].parentNode, 'folder')) {
               self.childrenCountInit(node[0].parentNode);
             }
 
@@ -785,7 +785,7 @@ Tree.prototype = {
           };
 
           const args = { node, data: node.data('jsonData') };
-          node[0].classList.add('is-loading');
+          DOM.addClass(node[0], 'is-loading');
           self.loading = true;
           self.settings.source(args, response);
 
@@ -930,11 +930,11 @@ Tree.prototype = {
       const target = $(this);
       const parent = this.parentNode;
       utils.clearSelection(); // Deselect all selected text.
-      if (!target[0].classList.contains('is-disabled') && !target[0].classList.contains('is-loading')) {
+      if (!DOM.hasClass(target[0], 'is-disabled') && !DOM.hasClass(target[0], 'is-loading')) {
         if (self.isMultiselect || self.settings.expandTarget === 'icon') {
-          if (DOM.hasClass(e.target, 'icon') && parent.classList.contains('folder')) {
+          if (DOM.hasClass(e.target, 'icon') && DOM.hasClass(parent, 'folder')) {
             self.toggleNode(target, e);
-          } else if (parent.classList.contains('is-selected') || parent.classList.contains('is-partial')) {
+          } else if (DOM.hasClass(parent, 'is-selected') || DOM.hasClass(parent, 'is-partial')) {
             self.unSelectedNode(target, true);
           } else {
             self.selectNode(target, true);
@@ -960,7 +960,7 @@ Tree.prototype = {
       .on('focus.tree', 'a', function () {
         if (parseInt(this.getAttribute('aria-level'), 10) === 0 && parseInt(this.getAttribute('aria-posinset'), 10) === 1) {
           // First element if disabled
-          if (this.classList.contains('is-disabled')) {
+          if (DOM.hasClass(this, 'is-disabled')) {
             const e = $.Event('keydown.tree');
             e.keyCode = 40; // move down
             $(this).trigger(e);
@@ -1434,7 +1434,7 @@ Tree.prototype = {
         if (!(count === 0 &&
           parseInt(countTextEl.textContent, 10) > 0 &&
           typeof this.settings.source === 'function' &&
-          !a.nextElementSibling?.classList?.contains('is-open'))) {
+          !DOM.hasClass(a.nextElementSibling, 'is-open'))) {
           countTextEl.textContent = count;
         }
       }
@@ -1535,9 +1535,9 @@ Tree.prototype = {
     if (this.settings.useExpandTarget) {
       if (this.settings.expandIconOpen === 'plusminus-folder-open' &&
         this.settings.expandIconClosed === 'plusminus-folder-closed') {
-        target.el.classList.add(target.rotateClass);
+        DOM.addClass(target.el, target.rotateClass);
         $(target.el).one('webkitAnimationEnd.tree oAnimationEnd.tree msAnimationEnd.tree animationend.tree', () => {
-          target.el.classList.remove(target.rotateClass);
+          DOM.removeClass(target.el, target.rotateClass);
         });
       }
     }
@@ -1787,7 +1787,7 @@ Tree.prototype = {
     node = nodeJQ[0];
     if (node) {
       const parent = node.parentNode;
-      const hasClass = (el, className) => el.classList.contains(className);
+      const hasClass = (el, className) => DOM.hasClass(el, className);
 
       entry = {
         node: nodeJQ,
@@ -1888,16 +1888,16 @@ Tree.prototype = {
     }
 
     if (nodeData.disabled) {
-      a.classList.add('is-disabled');
+      DOM.addClass(a, 'is-disabled');
     }
     if (nodeData.icon) {
-      a.classList.add(nodeData.icon);
+      DOM.addClass(a, nodeData.icon);
     }
 
     let li = document.createElement('li');
 
     if (nodeData.open) {
-      li.classList.add('is-open');
+      DOM.addClass(li, 'is-open');
     }
 
     li.appendChild(a);
@@ -2025,7 +2025,7 @@ Tree.prototype = {
     }
 
     if (nodeData.open) {
-      ul.classList.add('is-open');
+      DOM.addClass(ul, 'is-open');
     }
 
     this.decorateNode(li.querySelector('a'));
@@ -2108,16 +2108,16 @@ Tree.prototype = {
         if (typeof nodeData.badge.text !== 'undefined') {
           nodeData.badge.text = nodeData.badge.text.toString();
           badge.textContent = nodeData.badge.text;
-          badge.classList.remove('round');
+          DOM.removeClass(badge, 'round');
           if (nodeData.badge.text.length === 1) {
-            badge.classList.add('round');
+            DOM.addClass(badge, 'round');
           }
         }
         if (typeof nodeData.badge.type !== 'undefined') {
           DOM.removeClass(badge, 'info', 'good', 'error', 'alert', 'pending');
 
           if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
-            badge.classList.add(nodeData.badge.type);
+            DOM.addClass(badge, nodeData.badge.type);
           } else if (nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
             badge.style.backgroundColor = nodeData.badge.type;
           }
@@ -2152,18 +2152,18 @@ Tree.prototype = {
         elem.node.data('jsonData', jsonData);
       }
     } else if (nodeData.children && nodeData.children.length &&
-      !parent.classList.contains('folder')) {
+      !DOM.hasClass(parent, 'folder')) {
       this.convertFileToFolder(elem.node);
     }
 
     if (isDisabled) {
-      elem.node[0].classList.add('is-disabled');
+      DOM.addClass(elem.node[0], 'is-disabled');
       elem.node[0].setAttribute('aria-disabled', 'true');
 
-      if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+      if (DOM.hasClass(parent, 'folder') && DOM.hasClass(parent, 'is-open')) {
         const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
         nodes.forEach((node) => {
-          node.classList.add('is-disabled');
+          DOM.addClass(node, 'is-disabled');
           node.setAttribute('aria-disabled', 'true');
         });
       }
@@ -2173,13 +2173,13 @@ Tree.prototype = {
       const isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
 
       if (!isParentsDisabled) {
-        elem.node[0].classList.remove('is-disabled');
+        DOM.removeClass(elem.node[0], 'is-disabled');
         elem.node[0].removeAttribute('aria-disabled');
 
-        if (parent.classList.contains('folder') && parent.classList.contains('is-open')) {
+        if (DOM.hasClass(parent, 'folder') && DOM.hasClass(parent, 'is-open')) {
           const nodes = [].slice.call(parent.querySelectorAll('a, ul[role=group]'));
           nodes.forEach((node) => {
-            node.classList.remove('is-disabled');
+            DOM.removeClass(node, 'is-disabled');
             node.removeAttribute('aria-disabled');
           });
         }
@@ -2314,9 +2314,9 @@ Tree.prototype = {
     self.targetArrow = self.element[0].previousElementSibling;
     self.linkSelector = 'a:not(.is-dragging-clone):not(.is-disabled)';
 
-    if (!self.targetArrow || (self.targetArrow && !self.targetArrow.classList.contains('tree-drag-target-arrow'))) {
+    if (!self.targetArrow || (self.targetArrow && !DOM.hasClass(self.targetArrow, 'tree-drag-target-arrow'))) {
       const div = document.createElement('div');
-      div.classList.add('tree-drag-target-arrow');
+      DOM.addClass(div, 'tree-drag-target-arrow');
       self.element[0].parentNode.insertBefore(div, self.element[0]);
       self.targetArrow = self.element[0].previousElementSibling;
     }
@@ -2342,8 +2342,8 @@ Tree.prototype = {
             if (e.which === 3) {
               doDrag = false;
             } else {
-              doDrag = e.target.classList.contains('icon') ?
-                !link.parentNode.classList.contains('folder') : true;
+              doDrag = DOM.hasClass(e.target, 'icon') ?
+                !DOM.hasClass(link.parentNode, 'folder') : true;
             }
           })
 
@@ -2357,7 +2357,7 @@ Tree.prototype = {
             // Drag start =======================================
             .on('dragstart.tree', (e, pos, thisClone) => {
               if (!thisClone || !doDrag) {
-                link.classList.remove('is-dragging');
+                DOM.removeClass(link, 'is-dragging');
                 if (thisClone) {
                   thisClone[0].parentNode.removeChild(thisClone[0]);
                 }
@@ -2365,7 +2365,7 @@ Tree.prototype = {
               }
               clone = thisClone;
               clone[0].removeAttribute('id');
-              clone[0].classList.add('is-dragging-clone');
+              DOM.addClass(clone[0], 'is-dragging-clone');
 
               const items = [].slice.call(clone[0].querySelectorAll('.tree-checkbox, .tree-badge'));
               items.forEach(node => node.parentNode.removeChild(node));
@@ -2402,7 +2402,7 @@ Tree.prototype = {
             .on('dragend.tree', (e, pos) => {
               self.targetArrow.style.display = 'none';
               const items = [].slice.call(self.element[0].querySelectorAll(self.linkSelector));
-              items.forEach(node => node.classList.remove('is-over'));
+              items.forEach(node => DOM.removeClass(node, 'is-over'));
 
               if (!clone || !self.sortable?.overDirection) {
                 return;
@@ -2415,11 +2415,11 @@ Tree.prototype = {
 
               // Over
               if (self.sortable.overDirection === 'over') {
-                if (!end[0].classList.contains('folder')) {
+                if (!DOM.hasClass(end[0], 'folder')) {
                   self.convertFileToFolder(self.sortable.overNode);
                 }
                 end[0].querySelector('ul').appendChild(start[0]);
-                if (!end[0].classList.contains('is-open')) {
+                if (!DOM.hasClass(end[0], 'is-open')) {
                   self.toggleNode(self.sortable.overNode, e);
                 }
               } else if (self.sortable.overDirection === 'up') {
@@ -2427,7 +2427,7 @@ Tree.prototype = {
                 start.insertBefore(end);
               } else if (self.sortable.overDirection === 'down') {
                 // Down
-                if (end[0].classList.contains('is-open') && end[0].classList.contains('folder')) {
+                if (DOM.hasClass(end[0], 'is-open') && DOM.hasClass(end[0], 'folder')) {
                   $('ul:first', end).prepend(start);
                 } else {
                   start.insertAfter(end);
@@ -2533,7 +2533,7 @@ Tree.prototype = {
           exMargin = parseInt(li.style.marginTop, 10) > 0 ? 2 : 0;
           isBeforeStart = ((i - 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
           isAfterSttart = ((i + 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
-          links.forEach(node => node.classList.remove('is-over'));
+          links.forEach(node => DOM.removeClass(node, 'is-over'));
 
           // Apply actions
           /* eslint-disable no-loop-func */
@@ -2549,15 +2549,15 @@ Tree.prototype = {
             // Over
             if (direction === 'over') {
               self.targetArrow.style.display = 'none';
-              if (!link.classList.contains('is-disabled')) {
-                link.classList.add('is-over');
+              if (!DOM.hasClass(link, 'is-disabled')) {
+                DOM.addClass(link, 'is-over');
               }
             } else {
               // Up -or- Down
-              links.forEach(node => node.classList.remove('is-over'));
+              links.forEach(node => DOM.removeClass(node, 'is-over'));
               top = (direction === 'up') ?
-                (rec.top - 1.5 - (li.classList.contains('is-active') ? 3 : 0)) :
-                (rec.bottom + (li.nextElementSibling && li.nextElementSibling.classList.contains('is-active') ? -1 : 1.5) + exMargin);
+                (rec.top - 1.5 - (DOM.hasClass(li, 'is-active') ? 3 : 0)) :
+                (rec.bottom + (li.nextElementSibling && DOM.hasClass(li.nextElementSibling, 'is-active') ? -1 : 1.5) + exMargin);
               self.targetArrow.style.left = `${left}px`;
               self.targetArrow.style.top = `${top}px`;
               self.targetArrow.style.display = 'block';
@@ -2615,7 +2615,7 @@ Tree.prototype = {
     node.data('oldData', oldData);
     const parent = node[0].parentNode;
     if (parent && parent.tagName.toLowerCase() === 'li') {
-      parent.classList.add('folder');
+      DOM.addClass(parent, 'folder');
       parent.appendChild(newFolder);
     }
 
@@ -2699,7 +2699,7 @@ Tree.prototype = {
   disable() {
     const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
     nodes.forEach((node) => {
-      node.classList.add('is-disabled');
+      DOM.addClass(node, 'is-disabled');
       node.setAttribute('aria-disabled', 'true');
     });
   },
@@ -2711,7 +2711,7 @@ Tree.prototype = {
   enable() {
     const nodes = [].slice.call(this.element[0].querySelectorAll('a'));
     nodes.forEach((node) => {
-      node.classList.remove('is-disabled');
+      DOM.removeClass(node, 'is-disabled');
       node.removeAttribute('aria-disabled');
     });
   },
@@ -2725,7 +2725,7 @@ Tree.prototype = {
     const enablementStates = [];
 
     nodes.forEach((node) => {
-      if ((node.classList.contains('is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
+      if ((DOM.hasClass(node, 'is-disabled')) || (node.getAttribute('aria-disabled') === true)) {
         enablementStates.push({ nodeId: node.id, state: 'disabled' });
       } else {
         enablementStates.push({ nodeId: node.id, state: 'enabled' });
@@ -2751,10 +2751,10 @@ Tree.prototype = {
         s.originalEnablementState.forEach((origNode) => {
           if (origNode.nodeId === node.id) {
             if (origNode.state === 'disabled') {
-              node.classList.add('is-disabled');
+              DOM.addClass(node, 'is-disabled');
               node.setAttribute('aria-disabled', 'true');
             } else {
-              node.classList.remove('is-disabled');
+              DOM.removeClass(node, 'is-disabled');
               node.removeAttribute('aria-disabled');
             }
           }
