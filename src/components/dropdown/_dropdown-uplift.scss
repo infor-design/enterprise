@@ -322,7 +322,18 @@ html.is-firefox:not([dir='rtl']) {
     }
 
     &.has-tags {
-      padding: 1px 30px 1px 10px;
+      padding: 0;
+    }
+
+    .tag-list {
+      padding: 4px 30px 6px 10px;
+
+      &.empty {
+        &::after {
+          content: ' ';
+          display: inline-block;
+        }
+      }
     }
   }
 
