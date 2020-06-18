@@ -109,4 +109,94 @@ describe('Breadcrumb API', () => {
     expect(a3.href).toEqual(TEST_BREADCRUMBS[2].href);
     expect(li4.classList.contains('current')).toBeTruthy();
   });
+
+  it('can be set to the alternate style', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      style: 'alternate'
+    });
+
+    expect(breadcrumbAPI.element.classList.contains('alternate')).toBeTruthy();
+  });
+
+  it('can disable and re-enable the entire breadcrumb list', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    breadcrumbAPI.disabled = true;
+
+    expect(breadcrumbEl.classList.contains('is-disabled')).toBeTruthy();
+
+    breadcrumbAPI.disabled = false;
+
+    expect(breadcrumbEl.classList.contains('is-disabled')).toBeFalsy();
+
+    breadcrumbAPI.disable();
+
+    expect(breadcrumbEl.classList.contains('is-disabled')).toBeTruthy();
+
+    breadcrumbAPI.enable();
+
+    expect(breadcrumbEl.classList.contains('is-disabled')).toBeFalsy();
+  });
+
+  it('can run a callback attached to a single item', () => {
+    let result = false;
+    function changeResult() {
+      result = true;
+      this.settings.content = 'Not Home Anymore';
+      this.refresh();
+      return result;
+    }
+
+    // Add a callback function to the first breadcrumb
+    const newBreadcrumbs = [].concat(TEST_BREADCRUMBS);
+    newBreadcrumbs[0].callback = changeResult;
+
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: newBreadcrumbs
+    });
+
+    const targetA = breadcrumbEl.querySelector(`#${id} li:first-child > a`);
+    $(targetA).click();
+
+    // Callback should have executed, AND should've changed the text value
+    expect(result).toBeTruthy();
+    expect(breadcrumbAPI.breadcrumbs[0].element.textContent).toEqual('Not Home Anymore');
+  });
+
+  it('can get a specific BreadcrumbItem\'s API via its anchor tag', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const api3 = breadcrumbAPI.getBreadcrumbAPI(a3);
+
+    expect(api3).toBeDefined();
+    expect(api3.element).toEqual(breadcrumbAPI.breadcrumbs[2].element);
+  });
+
+  it('can be destroyed', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const api3 = breadcrumbAPI.getBreadcrumbAPI(a3);
+
+    breadcrumbAPI.destroy();
+
+    expect(api3.element).not.toBeDefined();
+  });
 });

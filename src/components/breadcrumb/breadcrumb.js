@@ -75,8 +75,7 @@ BreadcrumbItem.prototype = {
     }
 
     // Disabled
-    a.disabled = this.settings.disabled;
-    li.classList[this.settings.disabled ? 'add' : 'remove']('is-disabled');
+    this.disabled = this.settings.disabled;
 
     // Current
     li.classList[this.settings.current ? 'add' : 'remove']('current');
@@ -94,6 +93,56 @@ BreadcrumbItem.prototype = {
     $(a).hyperlink();
 
     return li;
+  },
+
+  /**
+   * Enables/Disables this breadcrumb item
+   * @param {boolean} state whether or not this breadcrumb item is disabled
+   * @returns {void}
+   */
+  set disabled(state) {
+    const realState = state === true;
+    const a = this.element.querySelector('a');
+
+    this.element.classList[realState ? 'add' : 'remove']('is-disabled');
+    a.disabled = realState;
+  },
+
+  /**
+   * Disables the breadcrumb
+   * @returns {void}
+   */
+  disable() {
+    this.disabled = true;
+  },
+
+  /**
+   * Enables the breadcrumb
+   * @returns {void}
+   */
+  enable() {
+    this.disabled = false;
+  },
+
+  /**
+   * Triggers a callback function that is associated with
+   * @param {jQuery.Event} e the original jQuery-wrapped 'click' event
+   * @param {...object} [args] any extra number of arguments to apply to the callback
+   * @returns {boolean} the callback function's returned result
+   */
+  callback(e, ...args) {
+    if (typeof this.settings.callback !== 'function') {
+      return false;
+    }
+
+    // Callback is run with this Breadcrumb Item's API as `this` context.
+    const callbackFn = this.settings.callback;
+    const result = callbackFn.apply(this, ...args);
+
+    if (!result) {
+      e.preventDefault();
+    }
+    return result;
   },
 
   /**
@@ -221,6 +270,7 @@ Breadcrumb.prototype = {
     }
 
     this.render();
+    this.handleEvents();
   },
 
   /**
@@ -254,6 +304,68 @@ Breadcrumb.prototype = {
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
+  },
+
+  /**
+   * @param {boolean} state whether or not the component is disabled.
+   * @returns {void}
+   */
+  set disabled(state) {
+    const realState = state === true;
+
+    // Add/remove a class on the container
+    this.element.classList[realState ? 'add' : 'remove']('is-disabled');
+
+    // Disable/enable each one individually
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.disabled = realState;
+    });
+  },
+
+  /**
+   * Disables the entire breadcrumb list
+   * @returns {void}
+   */
+  disable() {
+    this.disabled = true;
+  },
+
+  /**
+   * Enables the entire breadcrumb list
+   * @returns {void}
+   */
+  enable() {
+    this.disabled = false;
+  },
+
+  /**
+   * Sets up Breadcrumb list-level events
+   * @returns {void}
+   */
+  handleEvents() {
+    // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
+    $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
+      const api = this.getBreadcrumbAPI(e.target);
+      if (!api) {
+        return;
+      }
+      api.callback(e, args);
+    });
+  },
+
+  /**
+   * @param {HTMLElement} a the anchor tag to check for a Breadcrumb Item API.
+   * @returns {BreadcrumbItem|undefined} a Breadcrumb Item API, if applicable.
+   */
+  getBreadcrumbAPI(a) {
+    let api;
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      const thisA = breadcrumbAPI.element.querySelector('a');
+      if (a === thisA) {
+        api = breadcrumbAPI;
+      }
+    });
+    return api;
   },
 
   /**
