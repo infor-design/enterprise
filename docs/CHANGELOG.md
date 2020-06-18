@@ -46,6 +46,7 @@
 - `[Multiselect]` Changed "Select All" checkbox's default behavior to only select items that match the current search filter, if a search filter is present.  The original filter behavior is available by setting `selectAllFilterOnly` to false. ([#3845](https://github.com/infor-design/enterprise/issues/3845))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
+- `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
 
 ## v4.29.0
 
