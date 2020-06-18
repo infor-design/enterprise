@@ -19,6 +19,7 @@
 - `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
 - `[Calendar]` Fixed a bug where the days would be out of alignment if the end and starts dates intersect. ([#1725](https://github.com/infor-design/enterprise/issues/1725))
 - `[Contextual Action Panel]` Fixed an issue where the searchfield should be collapsible on mobile view. ([#918](https://github.com/infor-design/enterprise/issues/918))
+- `[Counts]` Revamped the look and feel of widget counts in uplift theme. ([#3666](https://github.com/infor-design/enterprise/issues/3666))
 - `[Datagrid]` Fixed an issue where the table doesn't filled the datagrid wrapper inside of modal. ([#3897](https://github.com/infor-design/enterprise/issues/3897))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 - `[Datagrid]` Fix a bug with cellNavigation false, the focus state was still visible. ([#3937](https://github.com/infor-design/enterprise/issues/3937))
