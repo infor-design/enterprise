@@ -32,31 +32,7 @@
   var breadcrumb = $('#level-breadcrumb');
 
   function invoke() {
-    breadcrumb.breadcrumb({
-      breadcrumbs: [
-        {
-          content: 'Home',
-          id: 'test-breadcrumb-home',
-          href: '#'
-        },
-        {
-          content: 'Second Item',
-          id: 'test-breadcrumb-second',
-          href: '#'
-        },
-        {
-          content: 'Third Item',
-          id: 'test-breadcrumb-third',
-          href: '#'
-        },
-        {
-          content: 'Fourth Item',
-          current: true,
-          id: 'test-breadcrumb-fourth',
-          href: '#'
-        }
-      ]
-    });
+    breadcrumb.breadcrumb();
   }
 
   function destroy() {
