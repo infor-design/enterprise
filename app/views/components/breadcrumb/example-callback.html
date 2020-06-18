@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="six colums">
+    <p>Clicking on each of the Breadcrumb Items below will fire a callback</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <nav id="level-breadcrumb" class="breadcrumb" data-init="false"></nav>
+  </div>
+</div>
+
+<script id="test-script">
+  var $breadcrumbEl = $('#level-breadcrumb');
+  var breadcrumb_defs = [
+    {
+      content: 'Home',
+      id: 'test-breadcrumb-home',
+      href: '#'
+    },
+    {
+      content: 'Second Item',
+      id: 'test-breadcrumb-second',
+      href: '#'
+    },
+    {
+      content: 'Third Item',
+      id: 'test-breadcrumb-third',
+      href: '#'
+    },
+    {
+      content: 'Fourth Item',
+      current: true,
+      id: 'test-breadcrumb-fourth',
+      href: '#'
+    }
+  ];
+
+  // Runs in the context of the Breadcrumb Item
+  function callback() {
+    const content = this.settings.content;
+    $('body').toast({
+      title: '"' + content + '" Clicked',
+      message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.'
+    })
+    return true;
+  };
+
+  breadcrumb_defs.forEach((setting) => {
+    setting.callback = callback;
+  });
+
+  $breadcrumbEl.breadcrumb({
+    breadcrumbs: breadcrumb_defs
+  });
+</script>
