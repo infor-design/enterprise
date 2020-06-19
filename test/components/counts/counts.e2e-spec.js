@@ -70,7 +70,7 @@ describe('Counts Widgets tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'counts-widget')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'widget-count')).toEqual(0);
     });
   }
 });
