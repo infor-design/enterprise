@@ -3,7 +3,7 @@
   <div class="one-third column">
     <div class="card auto-height">
       <div class="card-header">
-          <h2 class="widget-title">Infor GRC Violation Count</h2>
+          <h2 class="widget-title">Alert Board</h2>
           <button class="btn-actions" type="button">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -44,4 +44,160 @@
       </div>
     </div>
   </div>
+
+  <div class="one-third column">
+    <div class="card auto-height">
+      <div class="card-header">
+          <h2 class="widget-title">Infor GRC Violation Count</h2>
+          <svg class="icon azure06" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-info"></use>
+          </svg>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content l-center" >
+
+          <div class="instance-count">
+            <span class="count ruby06">5352</span>
+            <span class="title">High</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count amber06">10021</span>
+            <span class="title">Medium</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count amber03">4k</span>
+            <span class="title">Low</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count azure06">103910</span>
+            <span class="title">Info</span>
+          </div>
+
+          <div class="count-info">
+            <p>Violation Count for: <span>User</span></p>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="one-third column">
+    <div class="card auto-height">
+      <div class="card-header">
+          <h2 class="widget-title">Infor GRC Violation Count: User</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content l-center" >
+
+          <div class="instance-count">
+            <span class="count ruby06">5352</span>
+            <span class="title">High</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count amber06">10021</span>
+            <svg class="icon amber03" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-alert"></use>
+            </svg>
+            <span class="title">Medium</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count amber03">4k</span>
+            <span class="title">Low</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count azure06">103910</span>
+            <span class="title">Info</span>
+          </div>
+
+          <div class="count-info">
+            <p>Violation Count for: <span>User</span></p>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="one-third column">
+    <div class="card auto-height">
+      <div class="card-header">
+          <h2 class="widget-title">GRC Violation Count: User</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content l-center" >
+
+          <div class="instance-count">
+            <span class="count azure06">5352</span>
+            <span class="title">High</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count turquoise05">10021</span>
+            <svg class="icon amber03" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-alert"></use>
+            </svg>
+            <span class="title">Medium</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count amethyst08">4k</span>
+            <span class="title">Low</span>
+          </div>
+
+          <div class="instance-count">
+            <span class="count">103910</span>
+            <span class="title">Info</span>
+          </div>
+
+          <div class="count-info">
+            <p>Violation Count for: <span>User</span></p>
+          </div>
+
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  $('body').on('initialized', function () {
+    var TOOLTIP_OPTIONS = {
+      trigger: 'hover',
+      content: 'Infor GRC Violation Count: User',
+      placement: 'bottom'
+    }
+
+    $('.card-header .widget-title ~ svg.icon').tooltip(TOOLTIP_OPTIONS);
+  });
+</script>

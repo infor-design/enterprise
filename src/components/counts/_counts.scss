@@ -4,35 +4,38 @@
 .instance-count {
   display: inline-block;
   margin: 20px 10px;
+  position: relative;
   width: 120px;
 
   .count {
     @include font-size(16);
+    @include colorPalettesProperty(border-color);
 
+    background: transparent;
+    border: 1px solid;
     border-radius: 50%;
-    color: $theme-color-palette-white;
+    color: $theme-color-font-base;
     display: inline-block;
     font-weight: $theme-number-font-weight-bold;
-    height: 65px;
-    line-height: 65px;
+    height: 80px;
+    line-height: 80px;
     margin-bottom: 10px;
     text-align: center;
     vertical-align: middle;
-    width: 65px;
+    width: 80px;
+  }
 
-    @each $name in $color-names {
-      $i: index($color-names, $name);
-      $color: nth($color-vars, $i);
+  svg.icon {
+    @include colorPalettesProperty(color);
 
-      &.#{$name} {
-        border-color: $color;
-      }
-    }
+    background: transparent;
+    position: absolute;
+    right: 21px;
   }
 
   // No Color Class.
   .count[class=count] {
-    background-color: $theme-color-brand-secondary-alt;
+    background-color: transparent;
   }
 
   .title {

@@ -131,6 +131,19 @@
     }
   }
 
+  .card-title,
+  .widget-title {
+    ~ svg.icon {
+      @include colorPalettesProperty(color);
+
+      background: transparent;
+      cursor: pointer;
+      margin-left: 5px;
+      position: relative;
+      top: -7px;
+    }
+  }
+
   [class*='btn'] {
     color: $listview-toolbar-button-text-color;
 

@@ -28,6 +28,17 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   }
 }
 
+@mixin colorPalettesProperty($prop) {
+  @each $name in $color-names {
+    $i: index($color-names, $name);
+    $color: nth($color-vars, $i);
+
+    &.#{$name} {
+      #{$prop}: $color;
+    }
+  }
+}
+
 // Builds out vendor-prefixed keyframe definitions
 @mixin no-animation() {
   animation: none !important;
