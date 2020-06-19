@@ -1957,7 +1957,15 @@ Tree.prototype = {
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery) &&
       !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
-      location[0].appendChild(li);
+      const nextEl = location.next();
+      if (nextEl.is('ul')) {
+        nextEl[0].appendChild(li);
+      } else {
+        const target = location.closest('li')[0];
+        if (target) {
+          target.insertAdjacentElement('afterend', li);
+        }
+      }
       found = true;
     }
 
@@ -2006,6 +2014,7 @@ Tree.prototype = {
     }
 
     a.data('jsonData', nodeData);
+    this.createSortable();
     return li;
   },
 
@@ -2610,7 +2619,9 @@ Tree.prototype = {
     if (this.hasIconClass(node)) {
       const iconClass = node.attr('class').replace(/\s?is-selected/, '');
       oldData.iconClass = iconClass;
-      node.removeClass(iconClass);
+      if (!this.settings.useExpandTarget) {
+        node.removeClass(iconClass);
+      }
     }
     node.data('oldData', oldData);
     const parent = node[0].parentNode;
