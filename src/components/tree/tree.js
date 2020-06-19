@@ -1957,15 +1957,7 @@ Tree.prototype = {
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery) &&
       !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
-      const nextEl = location.next();
-      if (nextEl.is('ul')) {
-        nextEl[0].appendChild(li);
-      } else {
-        const target = location.closest('li')[0];
-        if (target) {
-          target.insertAdjacentElement('afterend', li);
-        }
-      }
+      location[0].appendChild(li);
       found = true;
     }
 
@@ -2028,8 +2020,10 @@ Tree.prototype = {
   addAsChild(nodeData, li) {
     li = this.isjQuery(li) ? li[0] : li;
     let ul = li.querySelector('ul');
-    if (!ul) {
-      li.insertAdjacentHTML('beforeend', '<ul class="folder"></ul>');
+    const isFolder = !!ul;
+
+    if (!isFolder) {
+      li.insertAdjacentHTML('beforeend', '<ul class="folder" role="group"></ul>');
       ul = li.querySelector('ul');
     }
 
@@ -2037,7 +2031,9 @@ Tree.prototype = {
       DOM.addClass(ul, 'is-open');
     }
 
-    this.decorateNode(li.querySelector('a'));
+    if (!isFolder) {
+      this.decorateNode(li.querySelector('a'));
+    }
 
     nodeData.parent = '';
     this.addNode(nodeData, $(ul));
@@ -2063,7 +2059,7 @@ Tree.prototype = {
     }
 
     if (!ul) {
-      li.insertAdjacentHTML('beforeend', `<ul class="folder${nodeData.open ? ' is-open' : ''}"></ul>`);
+      li.insertAdjacentHTML('beforeend', `<ul class="folder${nodeData.open ? ' is-open' : ''}" role="group"></ul>`);
       ul = li.querySelector('ul');
     }
 
@@ -2612,6 +2608,7 @@ Tree.prototype = {
     const iconEl = $('svg.icon-tree', node);
     const newFolder = document.createElement('ul');
     newFolder.setAttribute('role', 'group');
+    DOM.addClass(newFolder, 'folder');
     const oldData = {
       icon: iconEl.getIconName(),
       type: 'file'
