@@ -1532,14 +1532,11 @@ Tree.prototype = {
    * @returns {void}
    */
   rotatePlusminus(target) {
-    if (this.settings.useExpandTarget) {
-      if (this.settings.expandIconOpen === 'plusminus-folder-open' &&
-        this.settings.expandIconClosed === 'plusminus-folder-closed') {
-        DOM.addClass(target.el, target.rotateClass);
-        $(target.el).one('webkitAnimationEnd.tree oAnimationEnd.tree msAnimationEnd.tree animationend.tree', () => {
-          DOM.removeClass(target.el, target.rotateClass);
-        });
-      }
+    if (this.settings.useExpandTarget && this.settings.expandPlusminusRotate) {
+      DOM.addClass(target.el, target.rotateClass);
+      $(target.el).one('webkitAnimationEnd.tree oAnimationEnd.tree msAnimationEnd.tree animationend.tree', () => {
+        DOM.removeClass(target.el, target.rotateClass);
+      });
     }
   },
 
