@@ -79,7 +79,7 @@ describe('Editor example-index tests', () => {
   });
 });
 
-fdescribe('Editor visual regression tests', () => {
+describe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visually regress on subtle light', async () => {
       await utils.setPage('/components/editor/example-index?theme=soho&variant=light&layout=nofrills');
@@ -110,7 +110,7 @@ fdescribe('Editor visual regression tests', () => {
       await browser.driver.sleep(config.sleepLonger);
       const elem = await element(by.css('.editor-container'));
 
-      expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-light')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-theme-light')).toEqual(0);
     });
 
     it('Should not visually regress on vibrant dark', async () => {
