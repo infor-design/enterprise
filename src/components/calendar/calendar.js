@@ -1505,7 +1505,10 @@ Calendar.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off();
+    if (this.element) {
+      this.element.off();
+    }
+
     $(this.monthViewContainer).off();
 
     if (this.monthView) {
