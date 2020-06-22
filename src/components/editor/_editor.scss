@@ -322,7 +322,7 @@
   }
 
   [class*='btn'] {
-    margin-top: 6px;
+    margin-top: 5px;
   }
 
   &.has-more-button {
@@ -515,12 +515,12 @@
 
     &[data-element='foreColor'] {
       .icon {
-        margin-top: 1px;
+        margin-top: -1px;
       }
 
       .trigger {
-        padding-left: 0;
-        padding-right: 5px;
+        padding-left: 2px;
+        padding-right: 8px;
 
         .icon {
           height: 16px;
@@ -598,8 +598,8 @@
 
       span {
         display: inline-block;
-        max-width: 100px;
-        width: 100px;
+        max-width: 90px;
+        width: 90px;
       }
     }
   }
@@ -610,7 +610,7 @@
 .flex-toolbar.formatter-toolbar {
   .separator {
     height: 18px;
-    margin: 1px 11px 0 3px;
+    margin: 0 10px 0 6px;
   }
 }
 
@@ -627,11 +627,6 @@
         left: 2px;
       }
     }
-  }
-
-  .separator {
-    height: 20px;
-    margin: -3px 15px 0 3px;
   }
 }
 

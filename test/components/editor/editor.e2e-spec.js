@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Editor example-index tests', () => {
+fdescribe('Editor example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/example-index?layout=nofrills');
   });
@@ -79,7 +79,7 @@ describe('Editor example-index tests', () => {
   });
 });
 
-describe('Editor visual regression tests', () => {
+fdescribe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visually regress on subtle light', async () => {
       await utils.setPage('/components/editor/example-index?theme=soho&variant=light&layout=nofrills');
@@ -147,7 +147,7 @@ describe('Editor visual regression tests', () => {
   }
 });
 
-describe('Editor preview mode tests', () => {
+fdescribe('Editor preview mode tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/example-preview?layout=nofrills');
   });
@@ -172,7 +172,7 @@ describe('Editor preview mode tests', () => {
   });
 });
 
-describe('Editor dirty tracking tests', () => {
+fdescribe('Editor dirty tracking tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/example-dirty-tracking?layout=nofrills');
   });
@@ -225,7 +225,7 @@ describe('Editor dirty tracking tests', () => {
   });
 });
 
-describe('Editor reset dirty tracking tests', () => {
+fdescribe('Editor reset dirty tracking tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/test-dirty-tracking-reset.html?layout=nofrills');
   });
@@ -305,7 +305,7 @@ describe('Editor reset dirty tracking tests', () => {
   });
 });
 
-describe('Editor empty tests', () => {
+fdescribe('Editor empty tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/test-empty?layout=nofrills');
   });
@@ -324,7 +324,7 @@ describe('Editor empty tests', () => {
   });
 });
 
-describe('Editor placeholder tests', () => {
+fdescribe('Editor placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/test-placeholder?layout=nofrills');
   });
@@ -342,7 +342,7 @@ describe('Editor placeholder tests', () => {
   }
 });
 
-describe('Editor modal tests', () => {
+fdescribe('Editor modal tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/editor/test-modal?layout=nofrills');
   });
