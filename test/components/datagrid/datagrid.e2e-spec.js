@@ -2010,6 +2010,24 @@ describe('Datagrid onKeyDown Tests', () => { //eslint-disable-line
   });
 });
 
+fdescribe('Datagrid Editor Single Tests', () => { //eslint-disable-line
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-editor-singleline-rowheight?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render content', async () => {
+
+  });
+});
+
 describe('Datagrid Header Alignment with Ellipsis', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');

@@ -105,7 +105,7 @@ const EDITOR_DEFAULTS = {
   showHtmlView: false,
   preview: false,
   paragraphSeparator: 'p',
-  useFlexToolbar: false,
+  useFlexToolbar: true,
   useSourceFormatter: false,
   formatterTabsize: 4,
   fontpickerSettings: {

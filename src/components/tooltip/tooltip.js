@@ -41,6 +41,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.maxWidth] Toolip max width.
  * @param {boolean} [settings.initializeContent] Init the content in the tooltip.
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
+ * @param {string} [settings.delay] The delay before showing the tooltip
  */
 
 const TOOLTIP_DEFAULTS = {
@@ -61,7 +62,8 @@ const TOOLTIP_DEFAULTS = {
   placementOpts: {},
   maxWidth: null,
   initializeContent: true,
-  headerClass: null
+  headerClass: null,
+  delay: 500
 };
 
 function Tooltip(element, settings) {
@@ -252,36 +254,24 @@ Tooltip.prototype = {
    */
   handleEvents() {
     const self = this;
-    const delay = 400;
-    const renderLoopDelay = (delay / 30);
-    let timer;
+    const delay = self.settings.delay;
+    const renderLoopDelay = (delay / 10);
 
     function clearTimer() {
-      if (timer && timer.destroy) {
-        timer.destroy();
+      if (self.timer && self.timer.destroy) {
+        self.timer.destroy(true);
       }
     }
 
     function showOnTimer() {
       clearTimer();
-      timer = new RenderLoopItem({
+      self.timer = new RenderLoopItem({
         duration: renderLoopDelay,
         timeoutCallback() {
           self.show();
         }
       });
-      renderLoop.register(timer);
-    }
-
-    function hideOnTimer() {
-      clearTimer();
-      timer = new RenderLoopItem({
-        duration: renderLoopDelay,
-        timeoutCallback() {
-          self.hide();
-        }
-      });
-      renderLoop.register(timer);
+      renderLoop.register(self.timer);
     }
 
     function showImmediately() {
@@ -303,13 +293,17 @@ Tooltip.prototype = {
           showOnTimer();
         })
         .on(`mouseleave.${COMPONENT_NAME}`, () => {
-          hideOnTimer();
+          if (self.visible) {
+            hideImmediately();
+          } else {
+            clearTimer();
+          }
         })
         .on(`click.${COMPONENT_NAME}`, () => {
           if (self.isTouch) {
             return;
           }
-          showImmediately();
+          hideImmediately();
         })
         .on(`longpress.${COMPONENT_NAME}`, () => {
           showImmediately();
@@ -334,7 +328,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'immediate') {
-      timer = setTimeout(() => {
+      setTimeout(() => {
         toggleTooltipDisplay();
       }, 1);
     }
@@ -782,7 +776,7 @@ Tooltip.prototype = {
        * @property {object} tooltip - instance
        */
       self.element.trigger('aftershow', [self.tooltip]);
-    }, 400);
+    }, self.settings.delay);
   },
 
   /**

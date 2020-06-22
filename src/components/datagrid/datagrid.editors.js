@@ -248,7 +248,7 @@ const editors = {
     };
 
     this.val = function () {
-      return this.input.html();
+      return xssUtils.escapeHTML(this.input.html());
     };
 
     this.focus = function () {

@@ -14,7 +14,8 @@
   &.is-hover:not(.is-readonly):not(.is-disabled) {
     .editor,
     .editor-source,
-    .toolbar {
+    .toolbar,
+    .flex-toolbar {
       border-color: $editor-hover-border-color;
     }
   }
@@ -310,7 +311,8 @@
   }
 }
 
-.toolbar.formatter-toolbar {
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
   overflow-x: visible;
 
   .buttonset {
@@ -604,7 +606,8 @@
 }
 
 // Standard Toolbar-specific styles
-.toolbar.formatter-toolbar {
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
   .separator {
     height: 18px;
     margin: 1px 11px 0 3px;
@@ -735,7 +738,8 @@ html.is-firefox {
     }
   }
 
-  .toolbar.formatter-toolbar .fontpicker {
+  .toolbar.formatter-toolbar .fontpicker,
+  .flex-toolbar.formatter-toolbar .fontpicker {
     span {
       padding-top: 3px !important;
     }

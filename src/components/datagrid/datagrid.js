@@ -2921,11 +2921,14 @@ Datagrid.prototype = {
       return '';
     }
 
+    let rawValue;
     if (field.indexOf('.') > -1) {
-      return field.split('.').reduce((o, x) => (o ? o[x] : ''), obj);
+      rawValue = field.split('.').reduce((o, x) => (o ? o[x] : ''), obj);
+    } else {
+      rawValue = obj[field];
     }
 
-    const rawValue = obj[field];
+    // const rawValue = obj[field];
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
 
     value = xssUtils.escapeHTML(value);
