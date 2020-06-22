@@ -107,7 +107,7 @@ describe('Editor visual regression tests', () => {
 
     it('Should not visually regress on vibrant light', async () => {
       await utils.setPage('/components/editor/example-index?theme=uplift&variant=light&layout=nofrills');
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-light')).toEqual(0);
@@ -115,7 +115,7 @@ describe('Editor visual regression tests', () => {
 
     it('Should not visually regress on vibrant dark', async () => {
       await utils.setPage('/components/editor/example-index?theme=uplift&variant=dark&layout=nofrills');
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-dark')).toEqual(0);
@@ -123,7 +123,7 @@ describe('Editor visual regression tests', () => {
 
     it('Should not visually regress on vibrant contrast', async () => {
       await utils.setPage('/components/editor/example-index?theme=uplift&variant=contrast&layout=nofrills');
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
