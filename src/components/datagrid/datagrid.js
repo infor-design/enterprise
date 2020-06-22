@@ -2928,9 +2928,7 @@ Datagrid.prototype = {
       rawValue = obj[field];
     }
 
-    // const rawValue = obj[field];
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
-
     value = xssUtils.escapeHTML(value);
     return value;
   },
