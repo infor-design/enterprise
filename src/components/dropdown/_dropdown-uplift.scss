@@ -25,7 +25,7 @@ div.multiselect {
   }
 
   &.has-tags {
-    padding: 2px 30px 3px 10px;
+    padding: 0;
 
     + .icon {
       height: 30px;
@@ -33,7 +33,7 @@ div.multiselect {
   }
 
   .tag-list {
-    padding: 1px 4px 4px;
+    padding: 2px 30px 4px 10px;
 
     &.empty {
       padding: 16px 0 15px;
@@ -322,7 +322,18 @@ html.is-firefox:not([dir='rtl']) {
     }
 
     &.has-tags {
-      padding: 1px 30px 1px 10px;
+      padding: 0;
+    }
+
+    .tag-list {
+      padding: 4px 30px 6px 10px;
+
+      &.empty {
+        &::after {
+          content: ' ';
+          display: inline-block;
+        }
+      }
     }
   }
 

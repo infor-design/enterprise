@@ -1643,6 +1643,54 @@
       </header>
 
       <div class="row full-width">
+        <div class="flex-toolbar" id="flex-toolbar">
+          <div class="toolbar-section title">
+            <h2>Some Title</h2>
+          </div>
+
+          <div class="toolbar-section buttonset">
+            <button class="btn-icon" disabled>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-settings"></use>
+              </svg>
+              <span class="audible">Settings</span>
+            </button>
+
+            <button class="btn-icon">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-delete"></use>
+              </svg>
+              <span class="audible">Trash</span>
+            </button>
+          </div>
+
+          <div class="toolbar-section more">
+            <button class="btn-actions">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+              <span class="audible">More Actions</span>
+            </button>
+            <ul class="popupmenu" id="more-actions">
+              <li><a href="#">More One</a></li>
+              <li><a href="#">More Two</a></li>
+              <li class="submenu">
+                <a href="#">More Three</a>
+                <ul class="popupmenu">
+                  <li><a href="#">Sub-Item One</a></li>
+                  <li><a href="#">Sub-Item Two</a></li>
+                </ul>
+              </li>
+              <li><a href="#">More Three</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox1">
+          <label for="checkbox1" class="checkbox-label">Checkbox Test</label>
+        </div>
+
         <div id="datagrid"></div>
         <div class="pager-container"></div>
       </div>
@@ -1691,7 +1739,15 @@
             enableLastButton: false
           });
         });
+      });
 
+      const toolbarAPI = $('#flex-toolbar').data('toolbar-flex');
+      $('#checkbox1').change(function() {
+        if(this.checked) {
+          setTimeout(function() {
+            toolbarAPI.updated();
+          }, 100);
+        }
       });
     });
   </script>
