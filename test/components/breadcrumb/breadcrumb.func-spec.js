@@ -48,7 +48,7 @@ const TEST_BREADCRUMBS = [
 let breadcrumbEl;
 let breadcrumbAPI;
 
-describe('Breadcrumb API', () => {
+fdescribe('Breadcrumb API', () => {
   beforeEach(() => {});
 
   afterEach(() => {
@@ -179,7 +179,7 @@ describe('Breadcrumb API', () => {
     });
 
     const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
-    const api3 = breadcrumbAPI.getBreadcrumbAPI(a3);
+    const api3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     expect(api3).toBeDefined();
     expect(api3.element).toEqual(breadcrumbAPI.breadcrumbs[2].element);
@@ -193,10 +193,41 @@ describe('Breadcrumb API', () => {
     });
 
     const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
-    const api3 = breadcrumbAPI.getBreadcrumbAPI(a3);
+    const api3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     breadcrumbAPI.destroy();
 
     expect(api3.element).not.toBeDefined();
+  });
+
+  it('can programmatically add a breadcrumb', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    breadcrumbAPI.add({
+      id: 'fifth-item',
+      content: 'Fifth Item',
+      href: '#'
+    });
+    const fifth = breadcrumbAPI.breadcrumbs[4];
+
+    expect(breadcrumbAPI.breadcrumbs.length).toEqual(5);
+    expect(fifth.settings.id).toEqual('fifth-item');
+    expect(fifth.disabled).toBeFalsy(); // Should take on the default
+  });
+
+  xit('can programmatically remove a breadcrumb via its anchor', () => {
+    //
+  });
+
+  xit('can programmatically remove a breadcrumb by providing an index', () => {
+    //
+  });
+
+  xit('can programmatically remove a breadcrumb via its BreadcrumbItem API', () => {
+    //
   });
 });

@@ -16,11 +16,12 @@ const BREADCRUMB_ITEM_DEFAULTS = {
 
 /**
  * Represents the current state of a single breadcrumb item.  Used internally by the IDS Breadcrumb component.
+ * @class BreadcrumbItem
  * @private
  * @param {object} [settings] representing an individual breadcrumb item's properties.
  * @param {function} [settings.callback = undefined] if defined, fires a callback function when a breadcrumb item is activated.
- * @param {string} [settings.content=''] the text/html content of the breadcrumb.
- * @param {boolean} [settings.current=false] if true, renders without a link and displays differently to indicate active status.
+ * @param {string} [settings.content = ''] the text/html content of the breadcrumb.
+ * @param {boolean} [settings.current = false] if true, renders without a link and displays differently to indicate active status.
  * @param {boolean} [settings.disabled = false] if true, causes this breadcrumb not to be interactable.
  * @param {string} [settings.href = undefined] if defined, used as the contents of an `href` attribute.
  * @param {string} [settings.id = undefined] if defined, used as the contents of an `id` attribute.
@@ -84,7 +85,13 @@ BreadcrumbItem.prototype = {
     a.id = typeof this.settings.id === 'string' ? this.settings.id : '';
 
     // href
-    a.href = typeof this.settings.href === 'string' ? this.settings.href : '';
+    if (typeof this.settings.href === 'string') {
+      a.href = this.settings.href;
+      a.setAttribute('href', this.settings.href);
+    } else {
+      a.href = undefined;
+      a.removeAttribute('href');
+    }
 
     // content
     a.innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
@@ -106,6 +113,16 @@ BreadcrumbItem.prototype = {
 
     this.element.classList[realState ? 'add' : 'remove']('is-disabled');
     a.disabled = realState;
+
+    if (realState) {
+      a.setAttribute('disabled', realState);
+      a.setAttribute('aria-disabled', realState);
+      a.tabIndex = -1;
+    } else {
+      a.removeAttribute('disabled');
+      a.removeAttribute('aria-disabled');
+      a.tabIndex = 0;
+    }
   },
 
   /**
@@ -137,7 +154,7 @@ BreadcrumbItem.prototype = {
 
     // Callback is run with this Breadcrumb Item's API as `this` context.
     const callbackFn = this.settings.callback;
-    const result = callbackFn.apply(this, ...args);
+    const result = callbackFn.apply(this, [e].concat(args));
 
     if (!result) {
       e.preventDefault();
@@ -182,17 +199,28 @@ BreadcrumbItem.prototype = {
 
   /**
    * Tears down this breadcrumb item
+   * @param {boolean} [doRemove = false] if true, forces the removal of the node from the DOM.
    * @returns {void}
    */
-  destroy() {
-    if (!this.fromElement && this.element && this.element.parentNode) {
+  destroy(doRemove = false) {
+    if (!this.element || !this.element.parentNode) {
+      return;
+    }
+
+    // If the element was auto-generated and not build from pre-existing markup,
+    // destroy everything associated.
+    if (!this.fromElement) {
       const a = this.element.querySelector('a');
       if (a) {
         const $a = $(a);
         $a.off();
         $a.data('hyperlink').destroy();
       }
+    }
 
+    // Remove the node if it was not generated from markup,
+    // or was explicitly told to remove
+    if (doRemove || !this.fromElement) {
       this.element.parentNode.removeChild(this.element);
       delete this.element;
     }
@@ -212,8 +240,9 @@ const BREADCRUMB_DEFAULTS = {
 };
 
 /**
- * IDS Breadcrumb Component
+ * IDS Breadcrumb Component.
  * Navigation Component that displays a trail of previously-accessed pages.
+ * @class Breadcrumb
  * @param {HTMLElement} element the base breadcrumb element
  * @param {string} [settings] The component settings.
  * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
@@ -247,8 +276,7 @@ Breadcrumb.prototype = {
     }
     if (breadcrumbs.length) {
       breadcrumbs.forEach((breadcrumbLi) => {
-        const breadcrumb = new BreadcrumbItem({ element: breadcrumbLi });
-        this.breadcrumbs.push(breadcrumb);
+        this.add({ element: breadcrumbLi });
       });
     }
 
@@ -257,7 +285,7 @@ Breadcrumb.prototype = {
       this.settings.breadcrumbs = [];
     }
     this.settings.breadcrumbs.forEach((entry) => {
-      this.breadcrumbs.push(new BreadcrumbItem(entry));
+      this.add(entry);
     });
 
     // Check the element for a valid style CSS class
@@ -270,7 +298,6 @@ Breadcrumb.prototype = {
     }
 
     this.render();
-    this.handleEvents();
   },
 
   /**
@@ -290,7 +317,7 @@ Breadcrumb.prototype = {
     // Build/invoke hyperlinks against each item
     const html = document.createDocumentFragment();
     this.breadcrumbs.forEach((breadcrumb) => {
-      if (!breadcrumb.fromElement) {
+      if (!breadcrumb.fromElement || !breadcrumb.element) {
         const li = breadcrumb.render();
         html.appendChild(li);
       } else {
@@ -304,6 +331,104 @@ Breadcrumb.prototype = {
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
+
+    // Reset events
+    this.handleEvents();
+  },
+
+  /**
+   * @param {object} settings representing an individual breadcrumb item's properties
+   * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @returns {void}
+   */
+  add(settings, doRender = false) {
+    if (!settings) {
+      throw new Error('Settings for a new breadcrumb item must be provided.');
+    }
+
+    this.breadcrumbs.forEach((api) => {
+      if (settings.id && api.id === settings.id) {
+        throw new Error('New breadcrumbs must have a unique ID attribute.');
+      }
+    });
+
+    this.breadcrumbs.push(new BreadcrumbItem(settings));
+
+    if (doRender) {
+      this.teardown();
+      this.render();
+    }
+  },
+
+  /**
+   * @param {BreadcrumbItem|HTMLElement} a the anchor element to remove
+   * @param {number} [index = null] representing the index of the target anchor to remove
+   * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @returns {void}
+   */
+  remove(a, index = null, doRender = false) {
+    let compareByIndex = false;
+    let targetAPI;
+
+    // If we get a null/non-valid first argument, and an index is provided,
+    // the Breadcrumb array will be checked for an matching index number instead.
+    if (!(a instanceof HTMLElement) && !isNaN(index) && index > -1) {
+      compareByIndex = true;
+    }
+
+    // If a BreadcrumbItem is passed directly, use that instead of searching the array.
+    if (a instanceof BreadcrumbItem) {
+      targetAPI = a;
+      index = this.breadcrumbs.indexOf(a);
+    } else {
+      // Search the breadcrumb array for either a matching anchor, or an index.
+      this.breadcrumbs.forEach((breadcrumbAPI, i) => {
+        if (compareByIndex) {
+          if (index === i) {
+            targetAPI = breadcrumbAPI;
+          }
+        } else {
+          const thisA = breadcrumbAPI.element.querySelector('a');
+          if (thisA.isEqualNode(a)) {
+            targetAPI = breadcrumbAPI;
+            index = i;
+          }
+        }
+      });
+    }
+
+    if (!targetAPI) {
+      const matchType = compareByIndex ? 'at index ' : ' with matching HTML anchor';
+      const match = compareByIndex ? index : a;
+      throw new Error(`No matching Breadcrumb was found by ${matchType} "${match}"`);
+    }
+
+    targetAPI.destroy(true);
+
+    // Remove from the internal array
+    this.breadcrumbs = this.breadcrumbs.splice(index, 1);
+
+    if (doRender) {
+      this.teardown();
+      this.render();
+    }
+  },
+
+  /**
+   * Remove all breadcrumbs in the list
+   * @param {boolean} [doRender = false] if true, causes the breadcrumb list to rerender
+   * @returns {void}
+   */
+  removeAll(doRender = false) {
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.destroy(true);
+    });
+    this.breadcrumbs = [];
+
+    if (doRender) {
+      this.teardown();
+      this.render();
+    }
   },
 
   /**
@@ -340,12 +465,13 @@ Breadcrumb.prototype = {
 
   /**
    * Sets up Breadcrumb list-level events
+   * @private
    * @returns {void}
    */
   handleEvents() {
     // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
     $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
-      const api = this.getBreadcrumbAPI(e.target);
+      const api = this.getBreadcrumbItemAPI(e.target);
       if (!api) {
         return;
       }
@@ -354,10 +480,11 @@ Breadcrumb.prototype = {
   },
 
   /**
+   * Accesses a Breadcrumb Item's API via its anchor tag.
    * @param {HTMLElement} a the anchor tag to check for a Breadcrumb Item API.
    * @returns {BreadcrumbItem|undefined} a Breadcrumb Item API, if applicable.
    */
-  getBreadcrumbAPI(a) {
+  getBreadcrumbItemAPI(a) {
     let api;
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       const thisA = breadcrumbAPI.element.querySelector('a');
@@ -378,6 +505,8 @@ Breadcrumb.prototype = {
     $(this.element).off();
 
     this.teardownBreadcrumbs();
+
+    this.list.parentNode.removeChild(this.list);
     delete this.list;
 
     return this;

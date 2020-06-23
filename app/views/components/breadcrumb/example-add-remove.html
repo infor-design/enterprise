@@ -1,0 +1,239 @@
+<div class="row">
+  <div class="twelve columns">
+    <nav id="level-breadcrumb" class="breadcrumb"></nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <form id="breadcrumb-gauntlet" action="#" method="POST">
+      <h2 class="fieldset-title">Add New Breadcrumb:</h2>
+      <div class="field">
+        <label for="new-id">ID</label>
+        <input id="new-id" disabled />
+      </div>
+      <div class="field">
+        <input id="new-id-auto" type="checkbox" class="checkbox" name="new-id-auto" checked/>
+        <label for="new-id-auto" class="checkbox-label">Auto-generate IDs</label>
+      </div>
+      <div class="field">
+        <label for="new-content" class="required">Content</label>
+        <input id="new-content" disabled />
+      </div>
+      <div class="field">
+        <input id="new-content-auto" type="checkbox" class="checkbox" name="new-id-auto" checked/>
+        <label for="new-content-auto" class="checkbox-label">Auto-generate Content</label>
+      </div>
+      <div class="field">
+        <label for="new-href">`href` Attribute (Causes Link to become Active)</label>
+        <input id="new-href" />
+      </div>
+      <div class="field">
+        <input id="new-disabled" type="checkbox" class="checkbox" />
+        <label for="new-disabled" class="checkbox-label">Disabled</label>
+      </div>
+      <div class="field">
+        <input id="new-current" type="checkbox" class="checkbox" />
+        <label for="new-current" class="checkbox-label">Currently Active</label>
+      </div>
+      <div class="field">
+        <input id="new-callback" type="checkbox" class="checkbox" checked />
+        <label for="new-callback" class="checkbox-label">Trigger a callback when clicked</label>
+      </div>
+      <div class="field">
+        <button id="control-reset" class="btn-secondary" type="reset">Reset</button>
+        <button id="control-add" class="btn-primary" type="submit">Add</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="six columns">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Last-Clicked Breadcrumb Contents</h2>
+      </div>
+      <div class="card-content" id="results-card"></div>
+      <div class="card-footer">
+        <button class="btn-secondary" id="control-remove">Remove This Breadcrumb</button>
+        <button class="btn-secondary" id="control-remove-all">Remove All</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style id="test-style">
+  #results-card {
+    padding: 20px;
+  }
+
+  #results-card .prop {
+    display: inline-block;
+    font-weight: 700;
+    min-width: 150px;
+  }
+</style>
+
+<script id="test-script">
+  // Overall Form Controls
+  var breadcrumbIdCount = 0;
+  var breadcrumbAPI;
+  var lastClickedAPI;
+  var $form = $('#breadcrumb-gauntlet');
+  var $resultsCard = $('#results-card');
+  var $breadcrumbEl = $('#level-breadcrumb');
+  var $addBtn = $('#control-add');
+  var $removeBtn = $('#control-remove');
+  var $removeAllBtn = $('#control-remove-all');
+  var $resetBtn = $('#control-reset');
+  var $newId = $('#new-id');
+  var $newIdAuto = $('#new-id-auto');
+  var $newContent = $('#new-content');
+  var $newContentAuto = $('#new-content-auto');
+  var $newHref = $('#new-href');
+  var $newDisabled = $('#new-disabled');
+  var $newCurrent = $('#new-current');
+  var $newCallback = $('#new-callback');
+  var xssUtils = Soho.xss;
+
+  $('body').on('initialized', function () {
+    breadcrumbAPI = $breadcrumbEl.data('breadcrumb');
+
+    // Displays the contents of a breadcrumb item's configuration inside the card
+    function renderBreadcrumbConfig(a) {
+      const api = breadcrumbAPI.getBreadcrumbItemAPI(a);
+      if (!api) {
+        return;
+      }
+
+      // Renders the return message
+      var msg = '<p>' +
+        '<span class="prop">ID:</span> ' + ('"' + api.settings.id + '"' || 'undefined') + '<br />' +
+        '<span class="prop">Content:</span> "' + api.settings.content + '" <br />' +
+        '<span class="prop">Callback Enabled:</span> ' + (typeof api.settings.callback === 'function') + '<br />' +
+        '<span class="prop">Currently Active:</span> ' + api.settings.current + '<br />' +
+        '<span class="prop">Disabled:</span> ' + (api.disabled || 'false') + '<br />' +
+        '<span class="prop">href:</span> ' + ('"' + api.settings.href + '"' || 'undefined') + '<br />' +
+        '</p>';
+
+      $resultsCard.html(msg);
+      lastClickedAPI = api;
+    }
+
+    // Example callback
+    // Runs in the context of the Breadcrumb Item's API
+    function testCallback(e) {
+      renderBreadcrumbConfig(e.target);
+      const content = this.settings.content;
+
+      // Automatically disable "linking out" from breadcrumb links on this test.
+      // Normal behavior will allow the links to be followed as expected.
+      if (e.target.href === '#' || e.target.href === '') {
+        e.preventDefault();
+        return false;
+      }
+
+      // Trigger a toast message
+      $('body').toast({
+        title: '"' + content + '" Clicked',
+        message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.'
+      });
+
+      return false;
+    }
+
+    // Scrapes form fields and creates a new breadcrumb settings object
+    function add() {
+      let settings = {};
+      let increaseCount = false;
+
+      // Content (Required)
+      const content = xssUtils.stripHTML($newContent.val());
+      if ($newContentAuto.prop('checked') === true) {
+        settings.content = 'New Breadcrumb ' + breadcrumbIdCount;
+        increaseCount = true;
+      } else if (content && content.length) {
+        settings.content = content;
+      }
+
+      // Set an ID
+      const id = xssUtils.stripHTML($newId.val());
+      if ($newIdAuto.prop('checked') === true) {
+        settings.id = 'breadcrumb-' + breadcrumbIdCount;
+        increaseCount = true;
+      } else if (id && id.length) {
+        settings.id = id;
+      }
+
+      // HREF Attribute
+      const href = xssUtils.stripHTML($newHref.val());
+      if (href && href.length) {
+        settings.href = href;
+      }
+
+      // Disabled?
+      const disabled = $newDisabled.prop('checked');
+      settings.disabled = disabled;
+
+      // Currently Active
+      const current = $newCurrent.prop('checked');
+      settings.current = current;
+
+      // Use a callback when the link is clicked
+      const callback = $newCallback.prop('checked');
+      if (callback) {
+        settings.callback = testCallback;
+      }
+
+      // Increase the counter, if applicable
+      if (increaseCount) {
+        breadcrumbIdCount++;
+      }
+
+      breadcrumbAPI.add(settings, true);
+    }
+
+    function clearCard() {
+      $resultsCard.html('');
+      lastClickedAPI = undefined;
+    }
+
+    function remove() {
+      if (!lastClickedAPI) {
+        return;
+      }
+      breadcrumbAPI.remove(lastClickedAPI);
+      clearCard();
+    }
+
+    //==========================
+    // Event Handlers
+    //==========================
+
+    $newIdAuto.on('change.test', function () {
+      const isChecked = $(this).prop('checked');
+      $newId.prop('disabled', isChecked);
+    });
+
+    $newContentAuto.on('change.test', function () {
+      const isChecked = $(this).prop('checked');
+      $newContent.prop('disabled', isChecked);
+    });
+
+    $removeAllBtn.on('click.test', function (e) {
+      breadcrumbAPI.removeAll();
+      clearCard();
+    });
+
+    $removeBtn.on('click.test', function(e) {
+      remove()
+    });
+
+    $form.on('submit.test', function (e) {
+      // Don't actually submit
+      e.preventDefault();
+
+      // Add a new breadcrumb, if possible
+      add();
+    });
+  });
+</script>

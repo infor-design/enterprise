@@ -2,6 +2,11 @@
 //================================================== //
 
 .breadcrumb {
+  ul,
+  ol {
+    min-height: $theme-size-font-sm;
+  }
+
   li {
     @include antialiased();
 
