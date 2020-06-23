@@ -34,7 +34,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     $color: nth($color-vars, $i);
 
     &.#{$name} {
-      #{$prop}: $color;
+      #{$prop}: $color !important;
     }
   }
 }

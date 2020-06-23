@@ -28,9 +28,17 @@
   svg.icon {
     @include colorPalettesProperty(color);
 
-    background: transparent;
+    background: $cardlist-bg-color;
+    height: 19px;
     position: absolute;
-    right: 21px;
+    right: 23px;
+    top: 0;
+    width: 20px;
+
+    &.icon-alert {
+      right: 22px;
+      top: -3px;
+    }
   }
 
   // No Color Class.
