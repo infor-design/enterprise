@@ -846,7 +846,7 @@ const Locale = {  // eslint-disable-line
     let n = number.toLocaleString(args.locale, args.options);
     if (!(/undefined|null/.test(typeof groupSeparator))) {
       const gSeparator = this.getSeparator(args.locale, 'group');
-      if (gSeparator === ',') {
+      if (gSeparator !== '.') {
         n = n.replace(new RegExp(gSeparator, 'g'), groupSeparator.toString());
       }
     }
