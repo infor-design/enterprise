@@ -38,6 +38,7 @@
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Locale]` Fixed abbreviated chinese month translations. ([#4034](https://github.com/infor-design/enterprise/issues/4034))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
+- `[Lookup]` Added example page for server side keyword search. ([#2806](https://github.com/infor-design/enterprise/issues/2806))
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))

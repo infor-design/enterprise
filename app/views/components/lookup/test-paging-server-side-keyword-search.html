@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="product-lookup" class="label">Products</label>
+      <input id="product-lookup" name="product-lookup" data-init="false" class="lookup" type="text"/>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  var columns = [];
+
+  // Define Columns for the Grid.
+  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+
+  // Init and get the api for the grid
+  $('#product-lookup').lookup({
+    field: 'productName',
+    options: {
+      columns: columns,
+      disableClientFilter: true,
+      disableClientSort: true,
+      columnReorder: true,
+      paging: true,
+      pagesize: 10,
+      pagesizes: [5, 10, 25, 50],
+      selectable: 'single',
+      toolbar: {
+        results: true,
+        keywordFilter: true,
+        actions: false
+      },
+      source: function (req, response) {
+        console.log('lookup source', req);
+        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+        if (req.sortField) {
+          url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+        }
+
+        if (req.filterExpr && req.filterExpr[0]) {
+          url += '&filterValue=' + req.filterExpr[0].value;
+          url += '&filterOp=' + req.filterExpr[0].operator;
+          if (req.filterExpr[0].columnId) {
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          } else if (req.filterExpr[0].column === 'all') {
+            url += '&filterColumn=' + columns[0].id;
+          }
+        }
+
+        //Get Page Based on info in Req, return results into response;
+        $.getJSON(url, function(res) {
+          req.total = res.total;
+          response(res.data, req);
+        });
+      }
+    }
+  });
+</script>
