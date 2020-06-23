@@ -129,6 +129,8 @@ function addThousandsSeparator(n, thousands, options, localeStringOpts) {
       zeros -= 1;
       formatted = `0${formatted}`;
     }
+  } else {
+    formatted = n;
   }
 
   return formatted;
@@ -170,6 +172,12 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   if (!options.locale || !options.locale.length) {
     options.locale = Locale.currentLocale.name;
   }
+
+  const dSeparator = Locale.getSeparator(options.locale, 'decimal');
+  if (dSeparator === ',') {
+    options.symbols.decimal = ',';
+  }
+
   // Deprecated in v4.25.1
   if (options.allowLeadingZeroes) {
     warnAboutDeprecation('allowLeadingZeros', 'allowLeadingZeroes', 'Number Mask');
@@ -184,6 +192,9 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   const prefixLength = PREFIX && PREFIX.length || 0;
   const suffixLength = SUFFIX && SUFFIX.length || 0;
   const thousandsSeparatorSymbolLength = THOUSANDS && THOUSANDS.length || 0;
+
+  console.log(THOUSANDS);
+  console.log(DECIMAL);
 
   function numberMask(thisRawValue) {
     if (typeof thisRawValue !== 'string') {
@@ -249,6 +260,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       style: 'decimal',
       useGrouping: true
     };
+
     integer = (options.allowThousandsSeparator) ?
       addThousandsSeparator(integer, THOUSANDS, options, localeOptions) : integer;
 
