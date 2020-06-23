@@ -854,6 +854,7 @@ DatePicker.prototype = {
 
         const cell = $(this);
         cell.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
+        self.lastValue = '';
         self.insertSelectedDate(cell);
 
         if (s.range.useRange) {
@@ -1694,6 +1695,7 @@ DatePicker.prototype = {
    */
   setToday(keepFocus) {
     const s = this.settings;
+    this.lastValue = null;
     this.currentDate = new Date();
 
     if (!this.settings.useCurrentTime) {
