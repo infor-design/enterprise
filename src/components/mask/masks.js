@@ -172,10 +172,8 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   }
 
   const dSeparator = Locale.getSeparator(options.locale, 'decimal');
-  const gSeparator = Locale.getSeparator(options.locale, 'group');
-  if (gSeparator === '.' && dSeparator === ',') {
-    options.symbols.decimal = ',';
-    options.symbols.thousands = '.';
+  if (dSeparator === ',') {
+    options.symbols.decimal = dSeparator;
   }
 
   // Deprecated in v4.25.1
