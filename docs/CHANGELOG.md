@@ -47,6 +47,7 @@
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 - `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
+- `[Mask]` Fixed issue where languages with `,` as decimal were causing the fields to only show `.` instead of the actual characters that were input. ([#3933](https://github.com/infor-design/enterprise/issues/3933))
 
 ## v4.29.0
 
