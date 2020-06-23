@@ -129,8 +129,6 @@ function addThousandsSeparator(n, thousands, options, localeStringOpts) {
       zeros -= 1;
       formatted = `0${formatted}`;
     }
-  } else {
-    formatted = n;
   }
 
   return formatted;
@@ -174,8 +172,10 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   }
 
   const dSeparator = Locale.getSeparator(options.locale, 'decimal');
-  if (dSeparator === ',') {
+  const gSeparator = Locale.getSeparator(options.locale, 'group');
+  if (gSeparator === '.' && dSeparator === ',') {
     options.symbols.decimal = ',';
+    options.symbols.thousands = '.';
   }
 
   // Deprecated in v4.25.1
