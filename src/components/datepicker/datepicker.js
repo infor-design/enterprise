@@ -854,7 +854,7 @@ DatePicker.prototype = {
 
         const cell = $(this);
         cell.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
-        self.lastValue = '';
+        self.lastValue = null;
         self.insertSelectedDate(cell);
 
         if (s.range.useRange) {
