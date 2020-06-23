@@ -193,9 +193,6 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   const suffixLength = SUFFIX && SUFFIX.length || 0;
   const thousandsSeparatorSymbolLength = THOUSANDS && THOUSANDS.length || 0;
 
-  console.log(THOUSANDS);
-  console.log(DECIMAL);
-
   function numberMask(thisRawValue) {
     if (typeof thisRawValue !== 'string') {
       thisRawValue = masks.EMPTY_STRING;
