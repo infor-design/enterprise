@@ -1,0 +1,90 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" id="test-tree" aria-label="Asset Types" class="tree" data-init="false">
+      <li>
+        <a href="#" id="home">Home</a>
+      </li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public" class="icon-cloud">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership" class="icon-cloud">Leadership</a>
+              <ul class="is-open">
+                <li class="is-selected">
+                  <a href="#" id="managers" class="icon-tree-image">Managers</a>
+                </li>
+                <li>
+                  <a href="#" id="history">History</a>
+                </li>
+                <li>
+                  <a href="#" id="careers" class="is-disabled">Careers</a>
+                </li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script id="test-script">
+  var elem = $('#test-tree').tree({
+    useExpandTarget: true,
+    showChildrenCount: true,
+    childrenAutoCount: true
+  });
+
+  var api = elem.data('tree');
+
+  //Add at Root
+  api.addNode({text: 'New Item 1', id: 'new1', icon: 'icon-cloud'});
+  api.addNode({text: 'New Item 2', id: 'new2', icon: 'icon-cloud', children: [{
+    id: 'node3',
+    text: 'Node 2.1'
+  }, {
+    id: 'node4',
+    text: 'Node 2.2',
+    children: [{
+      id: 'node5',
+      text: 'Node 2.2.1',
+      icon: 'icon-tree-chart',
+      children: [{
+        id: 'node6',
+        text: 'Node 2.2.1.1',
+        icon: 'icon-tree-chart'
+      }]
+    }]
+  }, {
+    id: 'node7',
+    text: 'Node 2.3',
+    icon: 'icon-tree-chart'
+  }]});
+
+  //Add Children to parent ID
+  api.addNode({text: 'New Item 1.1', parent: 'new1', disabled: true});
+  api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12', icon: 'icon-tree-chart'});
+  api.addNode({text: 'New Item 1.2.1', parent: 'new12', id: 'new121'});
+  api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
+
+  //Wrong id - adds to bottom
+  api.addNode({text: 'New Item 3 ', parent: 'xxx', id: 'new3'});
+
+  //Add view jquery object
+  api.addNode({text: 'New Item 5', parent: $('#leadership'), id: 'new5'});
+
+  //Change node text
+  api.updateNode({node: $('#new121'), text: 'Changed Item 2', icon: 'icon-tree-chart', disabled: true});
+
+  api.addNode({text: 'New Item 6', id: 'new6'});
+
+  api.removeNode({id: 'new6'});
+  api.removeNode($('#new6'));
+
+  //Wrong escape markup
+  api.addNode({text: '<h1>New Item 3</h1>', id: 'new7'});
+  api.updateNode({node: $('#new3'), text: '<h1>Changed Item 2</h1>'});
+
+</script>

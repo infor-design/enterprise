@@ -26,6 +26,7 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         allowSelectAcrossPages: true,
+        columnIds: ['productName', 'activity', 'productId'],
         columns: columns,
         selectable: 'multiple',
         paging: true,

@@ -4,42 +4,65 @@
 .instance-count {
   display: inline-block;
   margin: 20px 10px;
-  vertical-align: top;
-  width: 150px;
+  position: relative;
+  width: 120px;
 
   .count {
-    @include font-size(22);
+    @include font-size(16);
+    @include colorPalettesProperty(border-color);
 
+    background: transparent;
+    border: 1px solid;
     border-radius: 50%;
-    color: $theme-color-palette-white;
-    display: inline;
-    float: left;
+    color: $theme-color-font-base;
+    display: inline-block;
     font-weight: $theme-number-font-weight-bold;
-    height: 38px;
-    line-height: 40px;
+    height: 80px;
+    line-height: 80px;
+    margin-bottom: 10px;
     text-align: center;
     vertical-align: middle;
-    width: 38px;
+    width: 80px;
+  }
+
+  svg.icon {
+    @include colorPalettesProperty(color);
+
+    background: $cardlist-bg-color;
+    height: 19px;
+    position: absolute;
+    right: 23px;
+    top: 0;
+    width: 20px;
+
+    &.icon-alert {
+      right: 22px;
+      top: -3px;
+    }
   }
 
   // No Color Class.
   .count[class=count] {
-    background-color: $theme-color-brand-secondary-alt;
+    background-color: transparent;
   }
 
   .title {
     @include antialiased();
 
     color: $font-color;
-    display: inline-block;
-    float: left;
+    display: block;
     font-size: $theme-size-font-base;
     line-height: 20px;
-    max-width: 50px;
-    padding-left: 11px;
-    text-align: left;
+    text-align: center;
+    width: auto;
   }
 
+}
+
+.count-info {
+  margin: 15px 20px;
+  text-align: center;
+  width: auto;
 }
 
 .object-count {

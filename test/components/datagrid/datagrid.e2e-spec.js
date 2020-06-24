@@ -2056,6 +2056,26 @@ describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   }
 });
 
+describe('Datagrid Expandable Row with checkboxes', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-expandable-row-checkboxes');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should be able to check the checkboxes in an expandable area', async () => {
+    await element(by.css('[aria-rowindex="1"] [aria-colindex="1"] button')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.datagrid-expandable-row.is-expanded .checkbox')).first().isSelected()).toBeTruthy();
+    await element(by.css('.datagrid-expandable-row.is-expanded .inline-checkbox')).click();
+
+    expect(await element.all(by.css('.datagrid-expandable-row.is-expanded .checkbox')).first().isSelected()).toBeFalsy();
+  });
+});
+
 describe('Datagrid Expandable Row with multiselect', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-expandable-row-multiselect');
