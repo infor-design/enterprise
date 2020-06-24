@@ -505,7 +505,7 @@ describe('Datepicker Legend Tests', () => {
   }
 });
 
-fdescribe('Datepicker Change Event Tests', () => {
+describe('Datepicker Change Event Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-change-event?layout=nofrills');
   });
