@@ -265,7 +265,9 @@ Breadcrumb.prototype = {
    * @private
    */
   init() {
-    this.breadcrumbs = [];
+    if (!Array.isArray(this.breadcrumbs)) {
+      this.breadcrumbs = [];
+    }
 
     // Detect existing list markup for backwards compatability.
     // If breadcrumbs are present, they are processed for settings and removed.
@@ -355,7 +357,6 @@ Breadcrumb.prototype = {
     this.breadcrumbs.push(new BreadcrumbItem(settings));
 
     if (doRender) {
-      this.teardown();
       this.render();
     }
   },
@@ -405,11 +406,11 @@ Breadcrumb.prototype = {
 
     targetAPI.destroy(true);
 
-    // Remove from the internal array
-    this.breadcrumbs = this.breadcrumbs.splice(index, 1);
+    // Remove the API from the internal array
+    this.breadcrumbs.splice(index, 1);
 
     if (doRender) {
-      this.teardown();
+      this.teardownBreadcrumbs();
       this.render();
     }
   },
@@ -426,7 +427,6 @@ Breadcrumb.prototype = {
     this.breadcrumbs = [];
 
     if (doRender) {
-      this.teardown();
       this.render();
     }
   },
@@ -496,7 +496,8 @@ Breadcrumb.prototype = {
   },
 
   /**
-   * Removes bound events and generated markup from this component
+   * Removes bound events and generated markup from this component, and tears down all
+   * breadcrumb items.
    * @private
    * @returns {Breadcrumb} This component's API.
    */
@@ -505,14 +506,14 @@ Breadcrumb.prototype = {
     $(this.element).off();
 
     this.teardownBreadcrumbs();
-
-    this.list.parentNode.removeChild(this.list);
-    delete this.list;
+    this.breadcrumbs = [];
 
     return this;
   },
 
   /**
+   * Only tears down the breadcrumb items themselves.  Does not reset the internal
+   * breadcrumb array.
    * @private
    * @returns {void}
    */
