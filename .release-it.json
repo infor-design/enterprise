@@ -2,10 +2,10 @@
     "pkgFiles": [
         "package.json"
     ],
-    "scripts": {
-        "beforeStart": "npm run eslint:error-only",
-        "beforeStage": "npm run build:release",
-        "afterRelease": "./scripts/after-release.sh ${npm.tag} ${version}"
+    "hooks": {
+        "before:init": "npm run eslint:error-only",
+        "after:bump": "npm run build:release",
+        "after:release": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
     "git": {
         "commitMessage": "Release v${version}",

@@ -505,7 +505,7 @@ describe('Datepicker Legend Tests', () => {
   }
 });
 
-describe('Datepicker Change Event Tests', () => {
+fdescribe('Datepicker Change Event Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-change-event?layout=nofrills');
   });
@@ -543,6 +543,22 @@ describe('Datepicker Change Event Tests', () => {
     await element(by.css('.hyperlink.today')).click();
     await element(by.css('#date-field-1')).click();
     await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
+  it('Should trigger after clearing the value', async () => {
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+
+    await element(by.css('#date-field-1')).click();
+    await element(by.css('#date-field-1')).clear();
+    await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });
