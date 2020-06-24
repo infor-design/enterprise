@@ -895,11 +895,6 @@ ToolbarFlexItem.prototype = {
 
     this.teardownPredefinedItems();
 
-    const popupmenu = $(this.element).data('popupmenu');
-    if (popupmenu && popupmenu.destroy) {
-      popupmenu.destroy();
-    }
-
     delete this.type;
     delete this.selected;
     delete this.focusable;
@@ -911,8 +906,19 @@ ToolbarFlexItem.prototype = {
     delete this.toolbar;
     delete this.trueSelected;
     delete this.menuRendered;
-  }
+  },
 
+  /**
+   * Destroy the item and any popup menus
+   * @returns {void}
+   */
+  destroy() {
+    const popupmenu = $(this.element).data('popupmenu');
+    if (popupmenu && popupmenu.destroy) {
+      popupmenu.destroy();
+    }
+    this.teardown();
+  }
 };
 
 export { ToolbarFlexItem, getToolbarItemType, COMPONENT_NAME, TOOLBAR_ELEMENTS };
