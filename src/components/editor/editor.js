@@ -444,7 +444,7 @@ Editor.prototype = {
       }
     }
 
-    const toolbar = `<div class="${toolbarCssClasses}" id="editor-toolbar-${this.id}">
+    const toolbar = `<div class="${toolbarCssClasses}" data-init="false" id="editor-toolbar-${this.id}">
       <div class="${sectionCss}buttonset">
         ${buttonsHTML}
       </div>
@@ -933,7 +933,7 @@ Editor.prototype = {
 
       unorderedlist: `<button type="button" class="btn btn-editor" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
 
-      fontPicker: `<button type="button" class="btn btn-editor fontpicker" data-action="fontStyle"><span>${'FontPicker'}</span></button>`,
+      fontPicker: `<button type="button" class="btn btn-editor fontpicker" data-action="fontStyle" data-init="false"><span>${'FontPicker'}</span></button>`,
 
       justifyLeft: `<button type="button" class="btn btn-editor" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
 
