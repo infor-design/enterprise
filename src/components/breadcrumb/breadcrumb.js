@@ -40,6 +40,7 @@ BreadcrumbItem.prototype = {
 
     this.settings.callback = typeof this.settings.callback === 'function' ? this.settings.callback : null;
     this.settings.content = typeof this.settings.content === 'string' ? xssUtils.stripHTML(this.settings.content) : '';
+    this.settings.current = this.settings.current === true;
     this.settings.disabled = this.settings.disabled === true;
     this.settings.id = typeof this.settings.id === 'string' ? xssUtils.stripHTML(this.settings.id) : undefined;
     this.settings.href = typeof this.settings.href === 'string' ? xssUtils.stripHTML(this.settings.href) : undefined;
@@ -79,7 +80,7 @@ BreadcrumbItem.prototype = {
     this.disabled = this.settings.disabled;
 
     // Current
-    li.classList[this.settings.current ? 'add' : 'remove']('current');
+    this.current = this.settings.current;
 
     // id
     a.id = typeof this.settings.id === 'string' ? this.settings.id : '';
@@ -103,6 +104,17 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * Sets whether or not this breadcrumb is currently active.
+   * @param {boolean} state whether or not this breadcrumb item is disabled
+   * @returns {void}
+   */
+  set current(state) {
+    const realState = state === true;
+    this.settings.current = realState;
+    this.element.classList[realState ? 'add' : 'remove']('current');
+  },
+
+  /**
    * Enables/Disables this breadcrumb item
    * @param {boolean} state whether or not this breadcrumb item is disabled
    * @returns {void}
@@ -111,6 +123,7 @@ BreadcrumbItem.prototype = {
     const realState = state === true;
     const a = this.element.querySelector('a');
 
+    this.settings.disabled = realState;
     this.element.classList[realState ? 'add' : 'remove']('is-disabled');
     a.disabled = realState;
 
@@ -358,60 +371,31 @@ Breadcrumb.prototype = {
       }
     });
 
-    this.breadcrumbs.push(new BreadcrumbItem(settings));
+    const newBreadcrumb = new BreadcrumbItem(settings);
+    this.breadcrumbs.push(newBreadcrumb);
 
     if (doRender) {
       this.render();
+
+      // Set this one to current, if applicable
+      if (newBreadcrumb.settings.current === true) {
+        this.makeCurrent(newBreadcrumb);
+      }
     }
   },
 
   /**
-   * @param {BreadcrumbItem|HTMLElement} a the anchor element to remove
-   * @param {number} [index = null] representing the index of the target anchor to remove
+   * @param {BreadcrumbItem|HTMLElement|number} item an input representing a Breadcrumb API, an anchor tag linked to one, or an index number of a breadcrumb in the list.
    * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
    * @returns {void}
    */
-  remove(a, index = null, doRender = false) {
-    let compareByIndex = false;
-    let targetAPI;
+  remove(item, doRender = false) {
+    const target = this.getBreadcrumbItemAPI(item);
 
-    // If we get a null/non-valid first argument, and an index is provided,
-    // the Breadcrumb array will be checked for an matching index number instead.
-    if (!(a instanceof HTMLElement) && !isNaN(index) && index > -1) {
-      compareByIndex = true;
-    }
-
-    // If a BreadcrumbItem is passed directly, use that instead of searching the array.
-    if (a instanceof BreadcrumbItem) {
-      targetAPI = a;
-      index = this.breadcrumbs.indexOf(a);
-    } else {
-      // Search the breadcrumb array for either a matching anchor, or an index.
-      this.breadcrumbs.forEach((breadcrumbAPI, i) => {
-        if (compareByIndex) {
-          if (index === i) {
-            targetAPI = breadcrumbAPI;
-          }
-        } else {
-          const thisA = breadcrumbAPI.element.querySelector('a');
-          if (thisA.isEqualNode(a)) {
-            targetAPI = breadcrumbAPI;
-            index = i;
-          }
-        }
-      });
-    }
-
-    if (!targetAPI) {
-      const matchType = compareByIndex ? 'at index ' : ' with matching HTML anchor';
-      const match = compareByIndex ? index : a;
-      throw new Error(`No matching Breadcrumb was found by ${matchType} "${match}"`);
-    }
-
-    targetAPI.destroy(true);
+    target.api.destroy(true);
 
     // Remove the API from the internal array
-    this.breadcrumbs.splice(index, 1);
+    this.breadcrumbs.splice(target.i, 1);
 
     if (doRender) {
       this.teardownBreadcrumbs();
@@ -433,6 +417,41 @@ Breadcrumb.prototype = {
     if (doRender) {
       this.render();
     }
+  },
+
+  /**
+   * Sets a provided target breadcrumb as the "current" one, updating the rest.
+   * @param {BreadcrumbItem|HTMLElement|number} item an input representing a Breadcrumb API, an anchor tag linked to one, or an index number of a breadcrumb in the list.
+   * @returns {void}
+   */
+  makeCurrent(item) {
+    const target = this.getBreadcrumbItemAPI(item);
+    this.breadcrumbs.forEach((thisAPI) => {
+      const a = thisAPI.element.querySelector('a');
+      thisAPI.current = a.isEqualNode(target.a);
+    });
+  },
+
+  /**
+   * @returns {object} Containing meta data about the "current" breadcrumb
+   * @returns {BreadcrumbItem} [object.api]
+   */
+  get current() {
+    let api;
+    let index;
+    this.breadcrumbs.forEach((breadcrumbAPI, i) => {
+      if (!api && breadcrumbAPI.current) {
+        api = breadcrumbAPI;
+        index = i;
+      }
+    });
+    const a = api.element.querySelector('a');
+
+    return {
+      api,
+      a,
+      i: index
+    };
   },
 
   /**
@@ -475,11 +494,11 @@ Breadcrumb.prototype = {
   handleEvents() {
     // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
     $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
-      const api = this.getBreadcrumbItemAPI(e.target);
-      if (!api) {
+      const item = this.getBreadcrumbItemAPI(e.target);
+      if (!item || !item.api) {
         return;
       }
-      api.callback(e, args);
+      item.api.callback(e, args);
     });
 
     this.hasEvents = true;
@@ -487,18 +506,50 @@ Breadcrumb.prototype = {
 
   /**
    * Accesses a Breadcrumb Item's API via its anchor tag.
-   * @param {HTMLElement} a the anchor tag to check for a Breadcrumb Item API.
+   * @param {BreadcrumbItem|HTMLElement|number} item the anchor tag to check for a Breadcrumb Item API.
    * @returns {BreadcrumbItem|undefined} a Breadcrumb Item API, if applicable.
    */
-  getBreadcrumbItemAPI(a) {
+  getBreadcrumbItemAPI(item) {
     let api;
-    this.breadcrumbs.forEach((breadcrumbAPI) => {
-      const thisA = breadcrumbAPI.element.querySelector('a');
-      if (a === thisA) {
-        api = breadcrumbAPI;
-      }
-    });
-    return api;
+    let a;
+    let index;
+    let compareByIndex = false;
+
+    // If a breadcrumb item is passed, use that instead of searching the array.
+    if (item instanceof BreadcrumbItem) {
+      api = item;
+      a = item.element.querySelector('a');
+      index = this.breadcrumbs.indexOf(item);
+    // Search the breadcrumb array for a matching anchor.
+    } else if (item instanceof HTMLAnchorElement) {
+      a = item;
+      this.breadcrumbs.forEach((breadcrumbAPI, i) => {
+        const thisA = breadcrumbAPI.element.querySelector('a');
+        if (thisA.isEqualNode(a)) {
+          api = breadcrumbAPI;
+          index = i;
+        }
+      });
+    // If the item is a number type, this will be used as in index number, and
+    // the Breadcrumb array will be checked for an matching index instead.
+    } else if (!isNaN(item) && item > -1) {
+      compareByIndex = true;
+      index = item;
+      api = this.breadcrumbs[index];
+      a = item.element.querySelector('a');
+    }
+
+    if (!api) {
+      const matchType = compareByIndex ? 'at index ' : ' with matching HTML anchor';
+      const match = compareByIndex ? index : a;
+      throw new Error(`No matching Breadcrumb was found by ${matchType} "${match}"`);
+    }
+
+    return {
+      api,
+      a,
+      i: index
+    };
   },
 
   /**

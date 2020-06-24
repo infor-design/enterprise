@@ -179,10 +179,10 @@ fdescribe('Breadcrumb API', () => {
     });
 
     const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
-    const api3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
+    const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
-    expect(api3).toBeDefined();
-    expect(api3.element).toEqual(breadcrumbAPI.breadcrumbs[2].element);
+    expect(target3.api).toBeDefined();
+    expect(target3.api.element).toEqual(breadcrumbAPI.breadcrumbs[2].element);
   });
 
   it('can be destroyed', () => {
@@ -193,11 +193,11 @@ fdescribe('Breadcrumb API', () => {
     });
 
     const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
-    const api3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
+    const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     breadcrumbAPI.destroy();
 
-    expect(api3.element).not.toBeDefined();
+    expect(target3.api.element).not.toBeDefined();
   });
 
   it('can programmatically add a breadcrumb', () => {
@@ -229,5 +229,17 @@ fdescribe('Breadcrumb API', () => {
 
   xit('can programmatically remove a breadcrumb via its BreadcrumbItem API', () => {
     //
+  });
+
+  xit('can programmatically make a breadcrumb current via its anchor', () => {
+
+  });
+
+  xit('can programmatically make a breadcrumb current by providing its index', () => {
+
+  });
+
+  xit('can programmatically make a breadcrumb current via its BreadcrumbItem API', () => {
+
   });
 });

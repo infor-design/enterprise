@@ -54,6 +54,7 @@
       </div>
       <div class="card-content" id="results-card"></div>
       <div class="card-footer">
+        <button class="btn-secondary" id="control-current">Make Current</button>
         <button class="btn-secondary" id="control-remove">Remove This Breadcrumb</button>
         <button class="btn-secondary" id="control-remove-all">Remove All</button>
       </div>
@@ -85,6 +86,7 @@
   var $removeBtn = $('#control-remove');
   var $removeAllBtn = $('#control-remove-all');
   var $resetBtn = $('#control-reset');
+  var $currentBtn = $('#control-current');
   var $newId = $('#new-id');
   var $newIdAuto = $('#new-id-auto');
   var $newContent = $('#new-content');
@@ -100,7 +102,8 @@
 
     // Displays the contents of a breadcrumb item's configuration inside the card
     function renderBreadcrumbConfig(a) {
-      const api = breadcrumbAPI.getBreadcrumbItemAPI(a);
+      const target = breadcrumbAPI.getBreadcrumbItemAPI(a);
+      const api = target.api;
       if (!api) {
         return;
       }
@@ -128,7 +131,7 @@
       // Trigger a toast message
       $('body').toast({
         title: '"' + content + '" Clicked',
-        message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.<br />href: "' + (e.target.href || '') + '"'
+        message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.'
       });
 
       // Automatically disable "linking out" from breadcrumb links on this test.
@@ -205,6 +208,13 @@
       clearCard();
     }
 
+    function current() {
+      if (!lastClickedAPI) {
+        return;
+      }
+      breadcrumbAPI.makeCurrent(lastClickedAPI);
+    }
+
     //==========================
     // Event Handlers
     //==========================
@@ -217,6 +227,10 @@
     $newContentAuto.on('change.test', function () {
       const isChecked = $(this).prop('checked');
       $newContent.prop('disabled', isChecked);
+    });
+
+    $currentBtn.on('click.test', function(e) {
+      current();
     });
 
     $removeAllBtn.on('click.test', function (e) {
