@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.28.3
+
+### v4.28.3 Fixes
+
+- `[Datepicker]` Fixed an issue where change did not fire when rangeselecting the same day. ([#4075](https://github.com/infor-design/enterprise/issues/4075))
+- `[Datepicker]` Fixed an issue where change did not fire when selecting today after having a cleared value in the field. ([#853](https://github.com/infor-design/enterprise-ng/issues/853))
+
 ## v4.28.2
 
 ### v4.28.2 Fixes
