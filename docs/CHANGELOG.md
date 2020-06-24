@@ -9,6 +9,7 @@
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Searchfield]` Added the ability to clear the searchfield by calling a public clear() function. ([#3810](https://github.com/infor-design/enterprise/issues/3810))
 - `[Tree]` Added a setting to support to expanding/collapsing when clicking only the icon portion of the tree node. ([#3730](https://github.com/infor-design/enterprise/issues/3730))
+- `[Tree]` Added the ability to have separate icon button for expand/collapse and children count. ([#3847](https://github.com/infor-design/enterprise/issues/3847))
 
 ### v4.30.0 Fixes
 
@@ -19,8 +20,10 @@
 - `[Calendar]` Fixed a bug where the accordion sections would show a line on hover in high contrast mode. ([#2779](https://github.com/infor-design/enterprise/issues/2779))
 - `[Calendar]` Fixed a bug where the days would be out of alignment if the end and starts dates intersect. ([#1725](https://github.com/infor-design/enterprise/issues/1725))
 - `[Contextual Action Panel]` Fixed an issue where the searchfield should be collapsible on mobile view. ([#918](https://github.com/infor-design/enterprise/issues/918))
+- `[Counts]` Revamped the look and feel of widget counts in uplift theme. ([#3666](https://github.com/infor-design/enterprise/issues/3666))
 - `[Datagrid]` Fixed an issue where the table doesn't filled the datagrid wrapper inside of modal. ([#3897](https://github.com/infor-design/enterprise/issues/3897))
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
+- `[Datagrid]` Fixed an issue where example page for filter and pager was not working properly. ([#3856](https://github.com/infor-design/enterprise/issues/3856))
 - `[Datagrid]` Fix a bug with cellNavigation false, the focus state was still visible. ([#3937](https://github.com/infor-design/enterprise/issues/3937))
 - `[Datagrid]` Fix a bug with cellNavigation false, the focus state was incorrect on stretched rows in IE. ([#1644](https://github.com/infor-design/enterprise/issues/1644))
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
@@ -34,7 +37,10 @@
 - `[Datagrid]` Fixed an issue where readonly and checkbox cells would show up on the summary row. ([#3862](https://github.com/infor-design/enterprise/issues/3862))
 - `[Datagrid]` Fixed an issue where text in nested objects where not encoded correctly. ([#4058](https://github.com/infor-design/enterprise/issues/3862))
 - `[Datagrid]` Fixed an issue where text editor style editors are not saved properly. ([#4058](https://github.com/infor-design/enterprise/issues/4058))
+- `[Datagrid]` Fixed an issue where checkboxes in an expandable area could not be checked. ([#4062](https://github.com/infor-design/enterprise/issues/4062))
 - `[Datepicker]` Fixed an issue where some languages like fr-CA and pt-BR (that are languages in a non default locale), would error when opening the picker. ([#4035](https://github.com/infor-design/enterprise/issues/4035))
+- `[Datepicker]` Fixed an issue where change did not fire when rangeselecting the same day. ([#4075](https://github.com/infor-design/enterprise/issues/4075))
+- `[Datepicker]` Fixed an issue where change did not fire when selecting today after having a cleared value in the field. ([#853](https://github.com/infor-design/enterprise-ng/issues/853))
 - `[Dropdown]` Changed the keyboard dropdown so it will select the active item when tabbing out. ([#3028](https://github.com/infor-design/enterprise/issues/3028))
 - `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
 - `[Editor]` Fixed missing tooltips. ([#issues](https://github.com/infor-design/enterprise/issues/issues))
@@ -42,6 +48,7 @@
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Locale]` Fixed abbreviated chinese month translations. ([#4034](https://github.com/infor-design/enterprise/issues/4034))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
+- `[Lookup]` Added example page for server side keyword search. ([#2806](https://github.com/infor-design/enterprise/issues/2806))
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))

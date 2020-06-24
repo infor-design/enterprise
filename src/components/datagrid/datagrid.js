@@ -6011,7 +6011,7 @@ Datagrid.prototype = {
       const target = $(e.target);
       const td = target.closest('td');
 
-      if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
+      if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1) {
         return;
       }
 

@@ -17,6 +17,7 @@
   $('#date-field-1, #date-field-2').on('change', function () {
       $('body').toast({
       title: 'Change Event Fired',
+      timeout: 20000,
       message: 'Value is now: '+ $(this).val() +''
     });
   });

@@ -7,3 +7,7 @@
 .tree.is-multiselect li .tree-checkbox {
   top: 2px;
 }
+
+.tree-drag-target-arrow::before {
+  margin-top: -4px;
+}
