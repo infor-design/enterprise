@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.28.4
+
+### v4.28.4 Fixes
+
+- `[Datagrid]` Fixed an issue where checkboxes in an expandable area could not be checked. ([#4062](https://github.com/infor-design/enterprise/issues/4062))
+
 ## v4.28.3
 
 ### v4.28.3 Fixes
