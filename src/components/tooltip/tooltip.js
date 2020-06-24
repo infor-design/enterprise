@@ -28,6 +28,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.trigger='hover'] Supports click and immediate and hover (and maybe in future focus).
  * @param {string} [settings.title] Title for Infor Tips.
  * @param {string} [settings.beforeShow] Call back for ajax tooltip.
+ * @param {string} [settings.onHidden] Call back for hiding.
  * @param {string} [settings.popover] force it to be a popover (no content).
  * @param {string} [settings.closebutton] Show X close button next to title in popover.
  * @param {boolean} [settings.isError=false] Add error classes.
@@ -63,7 +64,8 @@ const TOOLTIP_DEFAULTS = {
   maxWidth: null,
   initializeContent: true,
   headerClass: null,
-  delay: 500
+  delay: 500,
+  onHidden: null
 };
 
 function Tooltip(element, settings) {
@@ -714,6 +716,10 @@ Tooltip.prototype = {
             return;
           }
 
+          if ($('#editor-popup').length === 1 && target.closest('.popupmenu').length === 1) {
+            return;
+          }
+
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
             self.hide();
@@ -930,6 +936,9 @@ Tooltip.prototype = {
      * @property {object} tooltip - instance
      */
     this.element.triggerHandler('hide', [this.tooltip]);
+    if (this.settings.onHidden) {
+      this.settings.onHidden({ api: this, elem: this.tooltip });
+    }
   },
 
   /**

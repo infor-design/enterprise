@@ -227,12 +227,12 @@ const editors = {
           popover: true,
           trigger: 'immediate',
           tooltipElement: '#editor-popup',
-          extraClass: 'editor-popup'
+          extraClass: 'editor-popup',
+          onHidden: () => {
+            api.commitCellEdit(self.input);
+          }
         })
         .editor(editorOptions)
-        .on('hide.editor', () => {
-          api.commitCellEdit(self.input);
-        })
         .on('keydown.editor', (event) => {
           const key = event.which || event.keyCode || event.charCode || 0;
           // Ctrl + Enter (Some browser return keyCode: 10, not 13)
@@ -244,6 +244,7 @@ const editors = {
             }
           }
         });
+
       utils.fixSVGIcons($('#editor-popup'));
     };
 
@@ -261,10 +262,10 @@ const editors = {
       const self = this;
       container.removeAttr('style');
       api.quickEditMode = false;
-      self.input.off('hide.editor keydown.editor');
-      setTimeout(() => {
+      if (self.input.data('editor')) {
+        self.input.destroy();
         self.input.remove();
-      }, 0);
+      }
     };
 
     this.init();
