@@ -163,14 +163,7 @@ FieldOptions.prototype = {
       let returns;
 
       if (isFieldset) {
-        const lineHeight = parseInt(this.element.css('line-height'), 10);
-        if (height > lineHeight) {
-          this.element.css({ 'margin-bottom': '', 'padding-bottom': '' });
-          returns = ((height - lineHeight) / 2) * -1;
-        } else {
-          this.element.css({ 'margin-bottom': '8px', 'padding-bottom': '12px' });
-          returns = 6;
-        }
+        returns = (((height - this.trigger.height()) - 1) / 2) * -1;
       } else if (isRadio) {
         returns = ((height - this.trigger.height()) / 2) * -1;
       }
