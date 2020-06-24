@@ -326,7 +326,11 @@ Breadcrumb.prototype = {
         breadcrumb.refresh();
       }
     });
-    this.list.appendChild(html);
+
+    // If markup needs to change, rebind events
+    if (html.children.length) {
+      this.list.appendChild(html);
+    }
 
     // Add/remove the Alternate class, if applicable
     this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
@@ -334,7 +338,7 @@ Breadcrumb.prototype = {
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
 
-    // Reset events
+    this.teardownEvents();
     this.handleEvents();
   },
 
@@ -477,6 +481,8 @@ Breadcrumb.prototype = {
       }
       api.callback(e, args);
     });
+
+    this.hasEvents = true;
   },
 
   /**
@@ -502,13 +508,26 @@ Breadcrumb.prototype = {
    * @returns {Breadcrumb} This component's API.
    */
   teardown() {
-    $(this.list).off();
-    $(this.element).off();
-
+    this.teardownEvents();
     this.teardownBreadcrumbs();
     this.breadcrumbs = [];
 
     return this;
+  },
+
+  /**
+   * Only tears down this breadcrumb list's events.
+   * @private
+   * @returns {void}
+   */
+  teardownEvents() {
+    if (!this.hasEvents) {
+      return;
+    }
+
+    $(this.list).off();
+    $(this.element).off();
+    delete this.hasEvents;
   },
 
   /**

@@ -125,6 +125,12 @@
       renderBreadcrumbConfig(e.target);
       const content = this.settings.content;
 
+      // Trigger a toast message
+      $('body').toast({
+        title: '"' + content + '" Clicked',
+        message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.<br />href: "' + (e.target.href || '') + '"'
+      });
+
       // Automatically disable "linking out" from breadcrumb links on this test.
       // Normal behavior will allow the links to be followed as expected.
       if (e.target.href === '#' || e.target.href === '') {
@@ -132,13 +138,7 @@
         return false;
       }
 
-      // Trigger a toast message
-      $('body').toast({
-        title: '"' + content + '" Clicked',
-        message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.'
-      });
-
-      return false;
+      return true;
     }
 
     // Scrapes form fields and creates a new breadcrumb settings object
