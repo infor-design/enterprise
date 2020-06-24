@@ -896,7 +896,7 @@ ToolbarFlexItem.prototype = {
     this.teardownPredefinedItems();
 
     const popupmenu = $(this.element).data('popupmenu');
-    if (popupmenu && popupmenu.destroy()) {
+    if (popupmenu && popupmenu.destroy) {
       popupmenu.destroy();
     }
 
