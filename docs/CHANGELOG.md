@@ -41,6 +41,7 @@
 - `[Datepicker]` Fixed an issue where change did not fire when rangeselecting the same day. ([#4075](https://github.com/infor-design/enterprise/issues/4075))
 - `[Datepicker]` Fixed an issue where change did not fire when selecting today after having a cleared value in the field. ([#853](https://github.com/infor-design/enterprise-ng/issues/853))
 - `[Dropdown]` Changed the keyboard dropdown so it will select the active item when tabbing out. ([#3028](https://github.com/infor-design/enterprise/issues/3028))
+- `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Locale]` Fixed abbreviated chinese month translations. ([#4034](https://github.com/infor-design/enterprise/issues/4034))
@@ -49,12 +50,12 @@
 - `[Lookup]` Fixed a bug that the required validation would not reset from empty in certain cases. ([#810](https://github.com/infor-design/enterprise-ng/issues/810))
 - `[Lookup]` Fixed an issue in the min width examples that showed up in Safari only. ([#3949](https://github.com/infor-design/enterprise/issues/3949))
 - `[Popover]` Corrected the tabindex order of Popover elements when the Popover is contained within a Modal. ([#3644](https://github.com/infor-design/enterprise/issues/3644))
+- `[Mask]` Fixed issue where languages with `,` as decimal were causing the fields to only show `.` instead of the actual characters that were input. ([#3933](https://github.com/infor-design/enterprise/issues/3933))
 - `[Multiselect]` Fixed a bug that would incorrectly cause both text and tags to be rendered on the page when using the Select All checkbox. ([#3767](https://github.com/infor-design/enterprise/issues/3767))
 - `[Multiselect]` When using the `showSelectAll` setting, if no selectable options are present, the Select All checkbox will now remain hidden and unusable. ([#3777](https://github.com/infor-design/enterprise/issues/3777))
 - `[Multiselect]` Changed "Select All" checkbox's default behavior to only select items that match the current search filter, if a search filter is present.  The original filter behavior is available by setting `selectAllFilterOnly` to false. ([#3845](https://github.com/infor-design/enterprise/issues/3845))
 - `[Textarea]` Added tests to show that the textarea count text is translated. ([#3807](https://github.com/infor-design/enterprise/issues/3807))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
-- `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
 
 ## v4.29.0
 

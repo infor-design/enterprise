@@ -85,7 +85,7 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
   requireDecimal: false,
   allowNegative: false,
   allowLeadingZeros: false,
-  integerLimit: null
+  integerLimit: null,
 };
 
 // Gets the number of leading zeros in a string representing a formatted number.
@@ -170,6 +170,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   if (!options.locale || !options.locale.length) {
     options.locale = Locale.currentLocale.name;
   }
+
   // Deprecated in v4.25.1
   if (options.allowLeadingZeroes) {
     warnAboutDeprecation('allowLeadingZeros', 'allowLeadingZeroes', 'Number Mask');
@@ -249,6 +250,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       style: 'decimal',
       useGrouping: true
     };
+
     integer = (options.allowThousandsSeparator) ?
       addThousandsSeparator(integer, THOUSANDS, options, localeOptions) : integer;
 
