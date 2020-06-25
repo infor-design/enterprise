@@ -36,7 +36,7 @@
 - `[Datagrid]` Fixed an issue the arrow on tooltips flowed in the wrong direction. ([#3854](https://github.com/infor-design/enterprise/issues/3854))
 - `[Datagrid]` Fixed an issue where readonly and checkbox cells would show up on the summary row. ([#3862](https://github.com/infor-design/enterprise/issues/3862))
 - `[Datagrid]` Fixed an issue where checkboxes in an expandable area could not be checked. ([#4062](https://github.com/infor-design/enterprise/issues/4062))
-- `[Datagrid]` Fix a bug where multiselect checkboxes were misaligned in a modal. ([#4806](https://github.com/infor-design/enterprise/issues/4806))
+- `[Datagrid]` Fix a bug where multiselect checkboxes were misaligned in a modal. ([#4086](https://github.com/infor-design/enterprise/issues/4086))
 - `[Datepicker]` Fixed an issue where some languages like fr-CA and pt-BR (that are languages in a non default locale), would error when opening the picker. ([#4035](https://github.com/infor-design/enterprise/issues/4035))
 - `[Datepicker]` Fixed an issue where change did not fire when rangeselecting the same day. ([#4075](https://github.com/infor-design/enterprise/issues/4075))
 - `[Datepicker]` Fixed an issue where change did not fire when selecting today after having a cleared value in the field. ([#853](https://github.com/infor-design/enterprise-ng/issues/853))
