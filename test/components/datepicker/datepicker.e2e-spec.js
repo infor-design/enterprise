@@ -505,7 +505,7 @@ describe('Datepicker Legend Tests', () => {
   }
 });
 
-describe('Datepicker Change Event Tests', () => {
+fdescribe('Datepicker Change Event Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-change-event?layout=nofrills');
   });
@@ -534,6 +534,15 @@ describe('Datepicker Change Event Tests', () => {
     await element(by.css('#date-field-2')).clear();
     await element(by.css('#date-field-2')).sendKeys('5/2/2020');
     await element(by.css('#date-field-2')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
+  it('Should trigger 1 change on clear and then change value', async () => {
+    await element(by.css('#date-field-2')).sendKeys('5/2/2020');
+    await element(by.css('#date-field-2')).clear();
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });
