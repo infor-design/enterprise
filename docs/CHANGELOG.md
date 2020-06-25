@@ -25,6 +25,7 @@
 - `[Datagrid]` Fix a bug with columns with buttons, they had an unneeded animation that caused states to be delayed when painting. ([#3808](https://github.com/infor-design/enterprise/issues/3808))
 - `[Datagrid]` Fixed an issue where example page for filter and pager was not working properly. ([#3856](https://github.com/infor-design/enterprise/issues/3856))
 - `[Datagrid]` Fix a bug with cellNavigation false, the focus state was still visible. ([#3937](https://github.com/infor-design/enterprise/issues/3937))
+- `[Datagrid]` Updated example page for keyword search to fix error state. ([#3961](https://github.com/infor-design/enterprise/issues/3961))
 - `[Datagrid]` Fix a bug with cellNavigation false, the focus state was incorrect on stretched rows in IE. ([#1644](https://github.com/infor-design/enterprise/issues/1644))
 - `[Datagrid]` Fixed an issue where an extra border is shown in grid list mode and RTL. ([#3895](https://github.com/infor-design/enterprise/issues/3895))
 - `[Datagrid]` Fixed a bug inside validateRow when passing in a zero the function would exit. ([#4002](https://github.com/infor-design/enterprise/issues/4002))
