@@ -198,7 +198,7 @@ const editors = {
       const self = this;
       // Editor options
       const editorOptions = $.extend({}, {
-        buttons: { editor: ['bold', 'italic', 'underline', 'strikethrough', 'separator', 'foreColor'], source: [] },
+        buttons: { editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'foreColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight'], source: [] },
         excludeButtons: { editor: [] }
       }, column.editorOptions);
 

@@ -120,6 +120,9 @@ const EDITOR_DEFAULTS = {
 
 function Editor(element, settings) {
   this.settings = utils.mergeSettings(element, settings, EDITOR_DEFAULTS);
+  if (settings?.buttons) {
+    this.settings.buttons = settings.buttons;
+  }
 
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
@@ -909,7 +912,7 @@ Editor.prototype = {
 
       strikethrough: `<button type="button" class="btn btn-editor" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
 
-      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
+      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor" data-init="false">${buttonLabels.foreColor}</button>`,
 
       backColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
 
