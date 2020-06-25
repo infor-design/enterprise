@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.28.5
+
+### v4.28.5 Fixes
+
+- `[Datepicker]` Fixed an issue where change events did not fire consistently. ([#4087](https://github.com/infor-design/enterprise/issues/4087))
+
 ## v4.28.4
 
 ### v4.28.4 Fixes
