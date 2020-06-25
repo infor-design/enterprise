@@ -347,6 +347,7 @@ describe('Editor modal tests', () => {
     await element(by.css('button[data-action=source]')).click();
     await browser.driver.sleep(config.sleep);
     const sourceSize = await element(by.css('.editor-source')).getSize();
-    expect([previewSize.width, previewSize.width - 7]).toContain(previewSize.width);
+
+    expect([previewSize.width, previewSize.width - 7]).toContain(sourceSize.width);
   });
 });
