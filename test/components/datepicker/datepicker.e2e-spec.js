@@ -741,6 +741,15 @@ describe('Datepicker Change Event Tests', () => {
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });
 
+  it('Should trigger 1 change on clear and then change value', async () => {
+    await element(by.css('#date-field-2')).sendKeys('5/2/2020');
+    await element(by.css('#date-field-2')).clear();
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
   it('Should not trigger change two changes on select and tab', async () => {
     await element(by.css('#date-field-1 + .icon')).click();
     await element(by.css('.hyperlink.today')).click();
