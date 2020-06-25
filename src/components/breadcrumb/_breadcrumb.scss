@@ -1,10 +1,12 @@
 // Buttons
 //================================================== //
 
+$breadcrumb-container-height: $theme-size-font-xl;
+
 .breadcrumb {
   ul,
   ol {
-    min-height: $theme-size-font-px24;
+    min-height: $breadcrumb-container-height;
   }
 
   li {
@@ -35,7 +37,33 @@
         color: inherit;
       }
     }
+  }
 
+  // Truncated behavior forces all breadcrumbs onto one line
+  &.truncated {
+    ul,
+    ol {
+      display: flex;
+      overflow: hidden;
+    }
+
+    li {
+      overflow: hidden;
+      white-space: nowrap;
+
+      &:first-child,
+      &.current,
+      &:last-child {
+        flex-shrink: 0;
+      }
+
+      a {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 40px);
+      }
+    }
   }
 
   .hyperlink {
