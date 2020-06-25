@@ -48,7 +48,7 @@ const TEST_BREADCRUMBS = [
 let breadcrumbEl;
 let breadcrumbAPI;
 
-fdescribe('Breadcrumb API', () => {
+describe('Breadcrumb API', () => {
   beforeEach(() => {});
 
   afterEach(() => {
