@@ -4,6 +4,7 @@
 
 ### v4.30.0 Features
 
+- `[Breadcrumb]` Javascript Component API is now available. ([infor-design/enterprise-ng#700](https://github.com/infor-design/enterprise-ng/issues/700))
 - `[Custom Builds]` The build script can now produce an ES Module version of the components that can be imported by your application. ([#3771](https://github.com/infor-design/enterprise/issues/3771))
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
