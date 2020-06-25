@@ -115,6 +115,13 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not this breadcrumb is the current one
+   */
+  get current() {
+    return this.settings.current;
+  },
+
+  /**
    * Enables/Disables this breadcrumb item
    * @param {boolean} state whether or not this breadcrumb item is disabled
    * @returns {void}
@@ -201,7 +208,12 @@ BreadcrumbItem.prototype = {
       this.settings.id = a.id;
     }
 
-    this.settings.current = element.classList.contains('current') === true;
+    // Detect current by checking the list item and the anchor
+    const liHasCurrent = element.classList.contains('current') === true;
+    const aHasCurrent = a && a.classList.contains('current') === true;
+    this.settings.current = liHasCurrent || aHasCurrent;
+
+    // Disabled
     this.settings.disabled = element.classList.contains('is-disabled') === true;
 
     // Clean up reference
@@ -438,25 +450,18 @@ Breadcrumb.prototype = {
   },
 
   /**
-   * @returns {object} Containing meta data about the "current" breadcrumb
-   * @returns {BreadcrumbItem} [object.api]
+   * @returns {HTMLElement|undefined} representing the anchor of the current breadcrumb item
    */
   get current() {
     let api;
-    let index;
-    this.breadcrumbs.forEach((breadcrumbAPI, i) => {
+    let a;
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
       if (!api && breadcrumbAPI.current) {
         api = breadcrumbAPI;
-        index = i;
+        a = api.element.querySelector('a');
       }
     });
-    const a = api.element.querySelector('a');
-
-    return {
-      api,
-      a,
-      i: index
-    };
+    return a;
   },
 
   /**
@@ -541,7 +546,7 @@ Breadcrumb.prototype = {
       compareByIndex = true;
       index = item;
       api = this.breadcrumbs[index];
-      a = item.element.querySelector('a');
+      a = api.element.querySelector('a');
     }
 
     if (!api) {

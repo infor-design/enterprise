@@ -219,27 +219,99 @@ fdescribe('Breadcrumb API', () => {
     expect(fifth.disabled).toBeFalsy(); // Should take on the default
   });
 
-  xit('can programmatically remove a breadcrumb via its anchor', () => {
-    //
+  it('can programmatically remove a breadcrumb via its anchor', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    const a1 = breadcrumbEl.querySelector('li:first-child > a');
+    breadcrumbAPI.remove(a1, true);
+
+    expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
+    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
   });
 
-  xit('can programmatically remove a breadcrumb by providing an index', () => {
-    //
+  it('can programmatically remove a breadcrumb by providing an index', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    breadcrumbAPI.remove(0, true);
+
+    expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
+    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
   });
 
-  xit('can programmatically remove a breadcrumb via its BreadcrumbItem API', () => {
-    //
+  it('can programmatically remove a breadcrumb via its BreadcrumbItem API', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    const api1 = breadcrumbAPI.breadcrumbs[0];
+    breadcrumbAPI.remove(api1, true);
+
+    expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
+    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
   });
 
-  xit('can programmatically make a breadcrumb current via its anchor', () => {
+  it('can programmatically make a breadcrumb current via its anchor', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
 
+    const a1 = breadcrumbEl.querySelector('li:first-child > a');
+    breadcrumbAPI.makeCurrent(a1);
+    const liCssClasses = breadcrumbEl.querySelector('li:first-child').classList;
+
+    expect(liCssClasses.contains('current')).toBeTruthy();
   });
 
-  xit('can programmatically make a breadcrumb current by providing its index', () => {
+  it('can programmatically make a breadcrumb current by providing its index', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
 
+    breadcrumbAPI.makeCurrent(0);
+    const liCssClasses = breadcrumbEl.querySelector('li:first-child').classList;
+
+    expect(liCssClasses.contains('current')).toBeTruthy();
   });
 
-  xit('can programmatically make a breadcrumb current via its BreadcrumbItem API', () => {
+  it('can programmatically make a breadcrumb current via its BreadcrumbItem API', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
 
+    const api1 = breadcrumbAPI.breadcrumbs[0];
+    breadcrumbAPI.makeCurrent(api1);
+    const liCssClasses = breadcrumbEl.querySelector('li:first-child').classList;
+
+    expect(liCssClasses.contains('current')).toBeTruthy();
+  });
+
+  it('can programmatically get the current breadcrumb\'s anchor', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    const currentA = breadcrumbAPI.current;
+    const a4 = breadcrumbAPI.breadcrumbs[3].element.querySelector('a');
+
+    expect(currentA).toBeDefined();
+    expect(currentA).toEqual(a4);
   });
 });
