@@ -163,7 +163,16 @@ FieldOptions.prototype = {
       let returns;
 
       if (isFieldset) {
-        returns = (((height - this.trigger.height()) - 1) / 2) * -1;
+        const lineHeight = parseInt(this.element.css('line-height'), 10);
+        if (height > lineHeight) {
+          this.element.removeClass('is-singleline');
+          returns = (((this.element.outerHeight() - this.trigger.height()) / 2) + 0) * -1;
+          const diff = (lineHeight - 16);
+          returns += diff ? (diff / 2) : 0;
+        } else {
+          this.element.addClass('is-singleline');
+          returns = 1.5;
+        }
       } else if (isRadio) {
         returns = ((height - this.trigger.height()) / 2) * -1;
       }

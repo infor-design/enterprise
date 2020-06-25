@@ -441,12 +441,20 @@
     border: solid 1px transparent;
     display: inline-block;
     height: auto;
-    line-height: 2rem;
+    line-height: 16px;
+    margin-bottom: -4px;
     margin-left: -5px;
     max-width: 100%;
     outline: 0;
     padding: 0 5px;
     width: calc(100% - 46px);
+
+    &.is-singleline {
+      margin-bottom: -5px;
+      margin-top: -9px;
+      padding-bottom: 9px;
+      padding-top: 6px;
+    }
 
     &:focus,
     &:active {
