@@ -127,6 +127,25 @@
 
 (64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
 
+## v4.28.5
+
+### v4.28.5 Fixes
+
+- `[Datepicker]` Fixed an issue where change events did not fire consistently. ([#4087](https://github.com/infor-design/enterprise/issues/4087))
+
+## v4.28.4
+
+### v4.28.4 Fixes
+
+- `[Datagrid]` Fixed an issue where checkboxes in an expandable area could not be checked. ([#4062](https://github.com/infor-design/enterprise/issues/4062))
+
+## v4.28.3
+
+### v4.28.3 Fixes
+
+- `[Datepicker]` Fixed an issue where change did not fire when rangeselecting the same day. ([#4075](https://github.com/infor-design/enterprise/issues/4075))
+- `[Datepicker]` Fixed an issue where change did not fire when selecting today after having a cleared value in the field. ([#853](https://github.com/infor-design/enterprise-ng/issues/853))
+
 ## v4.28.2
 
 ### v4.28.2 Fixes
