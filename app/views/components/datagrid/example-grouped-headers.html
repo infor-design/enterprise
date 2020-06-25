@@ -36,7 +36,6 @@
       // Init and get the api for the grid
       $('#datagrid').datagrid({
         columns: columns,
-
         // Numeric Column Span Groups (3 + 1 + 2 + 3 === 9)
         columnGroups: [
           { colspan: 3, id: 'group1', name: 'Column Group One', align: 'center' },
@@ -49,7 +48,7 @@
         saveColumns: false,
         filterable: true,
         selectable: 'multiple',
-        toolbar: { title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true, rowHeight: true }
+        toolbar: { title: 'Groups', actions: true, collapsibleFilter: true, keywordFilter: true,  personalize: true, results: true, resetLayout: true, rowHeight: true }
       });
 
  });

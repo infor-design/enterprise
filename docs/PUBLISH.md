@@ -100,3 +100,8 @@ git push origin master
 1. In this repo check the branches dropdown for the tag for example (4.xx.x).
 1. Check the releases tag for the release.
 1. Check a page on the [latest deployed server](https://latest-enterprise.demo.design.infor.com/components/about/example-index.html) and inspect the page and check the js and css scripts have the new version in the head.
+1. Check the [npm link](https://www.npmjs.com/package/ids-enterprise) page that the expected version is the latest. If you patched it could change. If you need to reset this then run a command such as:
+
+```sh
+npm dist-tags add ids-enterprise@4.29.3 latest
+```

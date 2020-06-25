@@ -108,8 +108,8 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
   box-shadow: 0 0 4px 3px rgba(${hyperlinkColorObj.r}, ${hyperlinkColorObj.g}, ${hyperlinkColorObj.b}, 0.3);
 }
 
-.is-personalizable button:not(.btn-monthyear-pane) svg.ripple-effect,
-button:not(.btn-monthyear-pane).is-personalizable svg.ripple-effect,
+.is-personalizable button:not(.btn-monthyear-pane):not(.btn-editor) svg.ripple-effect,
+button:not(.btn-monthyear-pane):not(.btn-editor).is-personalizable svg.ripple-effect,
 .is-personalizable a svg.ripple-effect,
 a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base} !important;
