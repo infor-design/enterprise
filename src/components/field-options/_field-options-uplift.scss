@@ -115,6 +115,21 @@
   }
 }
 
+.summary-form {
+  .data.field-options {
+    line-height: 20px;
+    margin-bottom: -10px;
+
+    &.is-singleline {
+      margin-bottom: -7px;
+    }
+
+    ~ .btn-actions {
+      left: -11px;
+    }
+  }
+}
+
 .compound-field .field.is-fieldoptions:first-child input[type='text'] ~ .btn-actions:not(.is-checkbox) {
   left: -12px;
 }
