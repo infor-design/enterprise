@@ -1,0 +1,71 @@
+<div class="page-container no-scroll">
+  <div class="page-container no-scroll">
+    <div id="tabs-vertical" class="vertical tab-container scrollable" data-options="{ &quot;lazyLoad&quot;: false }">
+      <div class="tab-list-container">
+        <div class="tab-focus-indicator is-selected" role="presentation" style="x: 0px; y: 80px; width: 249px; height: 36px; top: 20px; right: 249px; bottom: 116px; left: 0px;"></div>
+        <ul class="tab-list" role="tablist" aria-multiselectable="false">
+          <li class="tab is-selected" role="presentation">
+            <a href="#outbound-links-page-1" role="tab" aria-expanded="true" aria-selected="true" tabindex="0">Test 1</a>
+          </li>
+          <li class="tab" role="presentation">
+            <a href="#outbound-links-page-2" role="tab" aria-expanded="false" aria-selected="false" tabindex="1">Test 2</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel-container">
+        <div id="outbound-links-page-1" class="tab-panel can-show is-visible" role="tabpanel">
+          <section id="maincontent" class="page-container scrollable" role="main">
+                <div class="twelve columns">
+                  <figure class="hierarchy" id="hierarchy"></figure>
+                </div>
+
+                <script>
+                  const options = {
+                    templateId: 'hierarchyChartTemplate',
+                    dataset: [],
+                    layout: 'stacked'
+                  };
+
+                  // Initial load
+                  $.getJSON('{{basepath}}api/hc-john-randolph', function(data) {
+                    options.dataset = [data];
+                    $('#hierarchy').hierarchy(options);
+                  });
+
+                  $('#hierarchy').on('selected', function(event, eventInfo) {
+                    const hierarchyControl = $('#hierarchy').data('hierarchy');
+                    console.log(event, eventInfo);
+
+                    if (eventInfo.data.childrenUrl) {
+                      $.getJSON('{{basepath}}api/' + eventInfo.data.childrenUrl, function(newData) {
+                        reload(eventInfo, hierarchyControl, newData);
+                      });
+                    }
+                  });
+
+                  function reload(eventInfo, hierarchyControl, newData) {
+                    eventInfo.data.children = newData;
+                    options.dataset = [eventInfo.data.children];
+                    hierarchyControl.reload(options);
+                  }
+                </script>
+
+
+                {{={{{ }}}=}}
+                <script type="text/html" id="hierarchyChartTemplate">
+                  <div class="leaf" id="{{id}}">
+                    <div class="detail">
+                      <p class="heading">{{id}}</p>
+                    </div>
+                  </div>
+                </script>
+              </section>
+        </div>
+        <div id="outbound-links-page-2" class="tab-panel" role="tabpanel">
+          <p>Page 2</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
