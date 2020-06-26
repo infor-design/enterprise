@@ -1,13 +1,25 @@
 // Tree Uplift
 //================================================== */
-.tree a {
-  padding: 5px;
-}
+.tree {
+  &.is-multiselect li .tree-checkbox {
+    top: 2px;
+  }
 
-.tree.is-multiselect li .tree-checkbox {
-  top: 2px;
+  a {
+    padding: 5px;
+
+    .tree-badge {
+      line-height: 17px;
+    }
+  }
 }
 
 .tree-drag-target-arrow::before {
   margin-top: -4px;
+}
+
+.ie11 {
+  .tree a .tree-badge {
+    line-height: 17px !important;
+  }
 }
