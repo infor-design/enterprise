@@ -14,7 +14,8 @@
   &.is-hover:not(.is-readonly):not(.is-disabled) {
     .editor,
     .editor-source,
-    .toolbar {
+    .toolbar,
+    .flex-toolbar {
       border-color: $editor-hover-border-color;
     }
   }
@@ -310,7 +311,8 @@
   }
 }
 
-.toolbar.formatter-toolbar {
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
   overflow-x: visible;
 
   .buttonset {
@@ -320,7 +322,7 @@
   }
 
   [class*='btn'] {
-    margin-top: 6px;
+    margin-top: 5px;
   }
 
   &.has-more-button {
@@ -357,6 +359,7 @@
 
         &.fontpicker {
           margin-left: 5px;
+          width: 130px;
         }
       }
     }
@@ -513,12 +516,12 @@
 
     &[data-element='foreColor'] {
       .icon {
-        margin-top: 1px;
+        margin-top: -1px;
       }
 
       .trigger {
-        padding-left: 0;
-        padding-right: 5px;
+        padding-left: 2px;
+        padding-right: 8px;
 
         .icon {
           height: 16px;
@@ -596,18 +599,19 @@
 
       span {
         display: inline-block;
-        max-width: 100px;
-        width: 100px;
+        max-width: 90px;
+        width: 90px;
       }
     }
   }
 }
 
 // Standard Toolbar-specific styles
-.toolbar.formatter-toolbar {
+.toolbar.formatter-toolbar,
+.flex-toolbar.formatter-toolbar {
   .separator {
     height: 18px;
-    margin: 1px 11px 0 3px;
+    margin: 0 10px 0 6px;
   }
 }
 
@@ -616,19 +620,15 @@
   .toolbar-section.more {
     .btn-actions {
       height: 23px;
-      margin-right: 15px;
-      min-height: 23px;
+      margin-right: 12px;
+      min-height: 20px;
+      top: -3px;
       width: 23px;
 
       > .icon {
         left: 2px;
       }
     }
-  }
-
-  .separator {
-    height: 20px;
-    margin: -3px 15px 0 3px;
   }
 }
 
@@ -735,7 +735,8 @@ html.is-firefox {
     }
   }
 
-  .toolbar.formatter-toolbar .fontpicker {
+  .toolbar.formatter-toolbar .fontpicker,
+  .flex-toolbar.formatter-toolbar .fontpicker {
     span {
       padding-top: 3px !important;
     }

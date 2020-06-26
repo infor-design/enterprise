@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="six columns">
     <div class="field">
       <label for="states-multi" class="label">States</label>
@@ -17,7 +17,7 @@
 <script>
   $('#states-multi').multiselect({
     source: '{{basepath}}api/states?term=',
-    showSelectAll: false,
+    showSelectAll: true,
     showEmptyGroupHeaders: false
   });
   $('#states-multi').on('change', function () {

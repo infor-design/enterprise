@@ -32,6 +32,7 @@ const triggerTypes = ['click', 'rightClick', 'immediate', 'manual'];
  * @param {string} [settings.triggerSelect]  If false select event will not be triggered.
  * @param {string} [settings.removeOnDestroy] Dispose of the menu from the DOM on destroy
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
+ * @param {string} [settings.stretchToWidestMenuItem] Find the widest menu element and stretch the width to that element.
  * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. Can also be defined as a callback that can determine how
   to return focus.  It usually should be for accessibility purposes.
@@ -378,13 +379,7 @@ PopupMenu.prototype = {
     // If `settings.stretchToWidestMenuItem` is true, the trigger element will be sized
     // to match the size of the menu's largest item.
     if (this.settings.stretchToWidestMenuItem) {
-      const btnStyle = window.getComputedStyle(this.element[0]);
-      let padding = 0;
-      if (btnStyle && btnStyle.getPropertyValue('padding-left')) {
-        padding = parseInt(btnStyle.getPropertyValue('padding-left'), 10) + parseInt(btnStyle.getPropertyValue('padding-right'), 10);
-      }
-
-      this.element.width(parseInt(this.getMaxMenuWidth(), 10) - padding);
+      this.element.width(parseInt(this.getMaxMenuWidth(), 10));
     }
   },
 

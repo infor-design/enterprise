@@ -2010,6 +2010,20 @@ describe('Datagrid onKeyDown Tests', () => { //eslint-disable-line
   });
 });
 
+describe('Datagrid Editor Single Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-editable-editor-singleline-rowheight?layout=nofrills');
+
+    const datagridEl = await element(by.css('#readonly-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should render content', async () => {
+    expect(await element(by.css('#readonly-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('Bold & Italics');
+  });
+});
+
 describe('Datagrid Header Alignment with Ellipsis', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
@@ -2054,6 +2068,26 @@ describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-header-align-ellipsis-sort')).toEqual(0);
     });
   }
+});
+
+describe('Datagrid Expandable Row with checkboxes', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-expandable-row-checkboxes');
+
+    const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should be able to check the checkboxes in an expandable area', async () => {
+    await element(by.css('[aria-rowindex="1"] [aria-colindex="1"] button')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.datagrid-expandable-row.is-expanded .checkbox')).first().isSelected()).toBeTruthy();
+    await element(by.css('.datagrid-expandable-row.is-expanded .inline-checkbox')).click();
+
+    expect(await element.all(by.css('.datagrid-expandable-row.is-expanded .checkbox')).first().isSelected()).toBeFalsy();
+  });
 });
 
 describe('Datagrid Expandable Row with multiselect', () => {

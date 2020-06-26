@@ -1,0 +1,146 @@
+
+<div class="row top-padding">
+
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-2" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-3" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-4" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-5" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-6" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-7" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-8" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type-9" name="type" aria-required="true">
+              <option value="">-- Select Type ---</option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var test1 = $('#test-1');
+
+  test1.on('click', function () {
+
+    $('body').modal({content: $('#modal-1')})
+      .on('afterclose', function() {
+        test1.focus();
+      });
+
+  });
+</script>

@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Multiselect Test: Select All with Tags</h2>
+    <p>Github Issue: <a class="hyperlink" href="http://github.com/infor-design/enterprise/issues/3767" target="_blank">#3767</a></p>
+    <p>Demonstrates a working "Select All" checkbox in the Multiselect list combined with Tags.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="states-multi" class="label">States</label>
+      <select multiple id="states-multi" name="states-multi" class="multiselect" data-init="false"></select>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#states-multi').multiselect({
+    source: '{{basepath}}api/states?term=',
+    showEmptyGroupHeaders: false,
+    showTags: true,
+    showSelectAll: true,
+  });
+  $('#states-multi').on('change', function () {
+    console.log('change fired');
+  });
+  $('#states-multi').on('selected', function () {
+    console.log('selected fired');
+  });
+</script>

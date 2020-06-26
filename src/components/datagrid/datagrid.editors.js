@@ -198,7 +198,7 @@ const editors = {
       const self = this;
       // Editor options
       const editorOptions = $.extend({}, {
-        buttons: { editor: ['bold', 'italic', 'underline', 'strikethrough', 'separator', 'foreColor'], source: [] },
+        buttons: { editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'foreColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight'], source: [] },
         excludeButtons: { editor: [] }
       }, column.editorOptions);
 
@@ -227,12 +227,12 @@ const editors = {
           popover: true,
           trigger: 'immediate',
           tooltipElement: '#editor-popup',
-          extraClass: 'editor-popup'
+          extraClass: 'editor-popup',
+          onHidden: () => {
+            api.commitCellEdit(self.input);
+          }
         })
         .editor(editorOptions)
-        .on('hide.editor', () => {
-          api.commitCellEdit(self.input);
-        })
         .on('keydown.editor', (event) => {
           const key = event.which || event.keyCode || event.charCode || 0;
           // Ctrl + Enter (Some browser return keyCode: 10, not 13)
@@ -244,11 +244,12 @@ const editors = {
             }
           }
         });
+
       utils.fixSVGIcons($('#editor-popup'));
     };
 
     this.val = function () {
-      return this.input.html();
+      return xssUtils.escapeHTML(this.input.html());
     };
 
     this.focus = function () {
@@ -261,10 +262,10 @@ const editors = {
       const self = this;
       container.removeAttr('style');
       api.quickEditMode = false;
-      self.input.off('hide.editor keydown.editor');
-      setTimeout(() => {
+      if (self.input.data('editor')) {
+        self.input.destroy();
         self.input.remove();
-      }, 0);
+      }
     };
 
     this.init();

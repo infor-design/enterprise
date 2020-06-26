@@ -1,0 +1,19 @@
+.instance-count {
+  .count {
+    background: transparent;
+    border: 1px solid;
+    color: $theme-color-font-base;
+    height: 80px;
+    line-height: 75px;
+    width: 80px;
+
+    &[class=count] {
+      background-color: transparent;
+    }
+  }
+
+  svg.icon {
+    background: $cardlist-bg-color;
+    right: 24px;
+  }
+}

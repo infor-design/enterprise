@@ -186,8 +186,7 @@ FontPicker.prototype = {
     $menu.html(this.buildMenuHTML());
 
     const menuSettings = utils.extend({}, this.settings.popupmenuSettings, {
-      menu: $menu,
-      stretchToWidestMenuItem: true
+      menu: $menu
     });
     $element.popupmenu(menuSettings);
 

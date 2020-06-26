@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Multiselect Test: Select All (No Options)</h2>
+    <p>Github Issue: <a class="hyperlink" href="http://github.com/infor-design/enterprise/issues/3777" target="_blank">#3777</a></p>
+    <p>When using the `showSelectAll` setting with no selectable options present, the Dropdown/Multiselect will not show the "Select All" option either.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="states-multi" class="label">States</label>
+      <select multiple id="states-multi" name="states-multi" class="multiselect" data-init="false"></select>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#states-multi').multiselect({
+    showSelectAll: true,
+    showEmptyGroupHeaders: false
+  });
+  $('#states-multi').on('change', function () {
+    console.log('change fired');
+  });
+  $('#states-multi').on('selected', function () {
+    console.log('selected fired');
+  });
+</script>

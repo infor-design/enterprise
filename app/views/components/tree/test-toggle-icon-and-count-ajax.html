@@ -1,0 +1,61 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="test-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script id="test-script">
+  var sampleData = [{
+    id: "node1",
+    text: "Documents",
+    icon: "icon-tree-doc"
+  }, {
+    id: "node2",
+    text: "Road",
+    open: false,
+    childrenCount: 3,
+    children: []
+  }, {
+    id: "node3",
+    text: "Media",
+    icon: "icon-tree-image"
+  }];
+
+var tempId = 0;
+  $('#test-tree').tree({
+    dataset: sampleData,
+    useExpandTarget: true,
+    showChildrenCount: true,
+    // childrenAutoCount: false,
+    source: function (req, response) {
+      tempId++;
+      setTimeout(function () {
+        var nodes = [{
+          id: "new" + tempId,
+          text: "New Node " + tempId,
+          icon: "icon-tree-linked-report"
+        }, {
+          id: "new" + (tempId + 1),
+          text: "New Node " + (tempId + 1),
+          icon: "icon-cloud",
+          // open: true,
+          // childrenCount: 1,
+          children: [{
+            id: "new" + (tempId + 1) + "a",
+            text: "New Node " + (tempId + 1) + "a",
+            icon: "icon-map-pin"
+          }]
+        }, {
+          id: "new" + (tempId + 2),
+          text: "New Node " + (tempId + 2),
+          childrenCount: 3,
+          children: []
+        }];
+        response(nodes);
+      }, 2000);
+    }
+  });
+</script>

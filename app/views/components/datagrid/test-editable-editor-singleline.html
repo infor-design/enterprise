@@ -25,9 +25,9 @@
       //Define Columns for the Grid.
       columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 200});
       columns.push({ id: 'singleline', name: 'Singleline', field: 'comment', formatter: Formatters.Editor, editor: Editors.Editor, singleline: true, contentTooltip: true, width: 500 });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160 });
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 100 });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160, editor: Editors.Input });
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 100, editor: Editors.Input });
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

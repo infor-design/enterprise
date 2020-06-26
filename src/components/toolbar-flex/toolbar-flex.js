@@ -619,9 +619,13 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * Do full destroy and remove children popup menus
    * @returns {void}
    */
   destroy() {
+    this.items.forEach((item) => {
+      item.destroy();
+    });
     this.teardown();
   }
 

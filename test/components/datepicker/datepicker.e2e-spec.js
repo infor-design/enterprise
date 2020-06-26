@@ -109,6 +109,109 @@ describe('Datepicker example-index tests', () => {
   }
 });
 
+describe('Datepicker example-index tests (fr-CA)', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=fr-CA');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should open popup on icon click', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await datepickerEl.getAttribute('class')).toContain('is-open');
+    expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
+  });
+
+  it('Should open popup on keypress(arrow-down)', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    expect(await datepickerEl.getAttribute('class')).toContain('is-open');
+    expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
+  });
+
+  it('Should set todays date from popup to field', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getFullYear()}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getDate().toString().padStart(2, '0')}`);
+  });
+
+  it('Should not be able to pick a date from readonly and disabled datepicker', async () => {
+    let datepickerEl = await element(by.id('date-field-disabled'));
+    await element(by.css('#date-field-disabled + .icon')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
+
+    datepickerEl = await element(by.id('date-field-readonly'));
+    await element(by.css('#date-field-readonly + .icon')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
+  });
+
+  it('Should not be able to show today on a entered date', async () => {
+    await element(by.id('date-field-normal')).sendKeys('4/12/2024');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element.all(by.css('.monthview-table .is-selected')).count()).toEqual(1);
+  });
+
+  it('Should be able to clear a date', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('4/12/2024');
+    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('button.is-cancel')).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('');
+  });
+
+  if (!utils.isBS()) {
+    it('Should be able to select with arrows and enter', async () => {
+      const datepickerEl = await element(by.id('date-field-normal'));
+      let focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_UP);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ARROW_RIGHT);
+      focusTD = await element(by.css('#monthview-popup td.is-selected'));
+      await focusTD.sendKeys(protractor.Key.ENTER);
+
+      const testDate = new Date();
+      testDate.setHours(0);
+      testDate.setMinutes(0);
+      testDate.setSeconds(0);
+
+      expect(await datepickerEl.getAttribute('value')).toEqual(`${testDate.getFullYear()}-${(testDate.getMonth() + 1).toString().padStart(2, '0')}-${testDate.getDate().toString().padStart(2, '0')}`);
+    });
+  }
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      await element(by.css('#date-field-normal')).sendKeys('2018-06-20');
+      await element(by.css('#date-field-normal + .icon')).click();
+
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-index-fr-ca')).toEqual(0);
+    });
+  }
+});
+
 describe('Datepicker keyboard tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index');
@@ -638,11 +741,36 @@ describe('Datepicker Change Event Tests', () => {
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });
 
+  it('Should trigger 1 change on clear and then change value', async () => {
+    await element(by.css('#date-field-2')).sendKeys('5/2/2020');
+    await element(by.css('#date-field-2')).clear();
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
   it('Should not trigger change two changes on select and tab', async () => {
     await element(by.css('#date-field-1 + .icon')).click();
     await element(by.css('.hyperlink.today')).click();
     await element(by.css('#date-field-1')).click();
     await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+  });
+
+  it('Should trigger after clearing the value', async () => {
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
+
+    await element(by.css('#date-field-1')).click();
+    await element(by.css('#date-field-1')).clear();
+    await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
+
+    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });

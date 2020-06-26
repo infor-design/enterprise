@@ -2,21 +2,33 @@
   <div class="four columns">
     <div class="field">
       <label for="date-field-1" class="label">Date Field 1</label>
-      <input id="date-field-1" class="datepicker" name="date-field" type="text"/>
+      <input id="date-field-1" class="datepicker" name="date-field-1" type="text"/>
     </div>
 
     <div class="field">
       <label for="date-field-2" class="label">Date Field 2</label>
-      <input id="date-field-2" class="datepicker" name="date-field" type="text" value="3/3/2020"/>
+      <input id="date-field-2" class="datepicker" name="date-field-2" type="text" value="3/3/2020"/>
     </div>
+
+    <div class="field">
+      <label for="date-field-3" class="label">Date-Time Picker</label>
+      <input id="date-field-3" data-init="false" class="datepicker datetime" name="date-field-3" type="text" />
+    </div>
+
   </div>
 </div>
 
-
 <script>
-  $('#date-field-1, #date-field-2').on('change', function () {
+  $('body').on('initialized', function () {
+    $('#date-field-3').datepicker({
+      showTime: true
+    });
+  });
+
+  $('#date-field-1, #date-field-2, #date-field-3').on('change', function () {
       $('body').toast({
       title: 'Change Event Fired',
+      timeout: 20000,
       message: 'Value is now: '+ $(this).val() +''
     });
   });

@@ -167,6 +167,31 @@ describe('Searchfield full-text category with go button tests', () => {
   });
 });
 
+const searchfieldClearId = 'searchfield';
+
+describe('Searchfield clearable tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/searchfield/example-clear-api.html');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(searchfieldClearId))), config.waitsFor);
+  });
+
+  it('Should clear the searchfield', async () => {
+    const searchfieldInputEl = await element(by.id(searchfieldClearId));
+    const closeBtn = await element(by.css('.close'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+
+    await searchfieldInputEl.clear();
+    await searchfieldInputEl.sendKeys('ne');
+
+    await closeBtn.click();
+
+    expect(await searchfieldInputEl.getText()).toEqual('');
+  });
+});
+
 if (utils.isChrome() && utils.isCI()) {
   describe('Searchfield `collapseSize` tests', () => {
     beforeEach(async () => {

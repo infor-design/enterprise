@@ -684,10 +684,12 @@ Popdown.prototype = {
       this.close();
     }
 
-    this.trigger
-      .off('updated.popdown click.popdown focus.popdown')
-      .removeAttr('aria-controls')
-      .removeAttr('aria-expanded');
+    if (this.trigger) {
+      this.trigger
+        .off('updated.popdown click.popdown focus.popdown')
+        .removeAttr('aria-controls')
+        .removeAttr('aria-expanded');
+    }
 
     if (this.changeObserver) {
       this.changeObserver.disconnect();

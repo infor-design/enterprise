@@ -352,7 +352,7 @@ describe('Calendar RTL tests', () => {
     await element(by.css('.monthview-header .prev')).click();
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('ذو الحجة 1439');
-    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(4);
+    expect(await element.all(by.css('.monthview-table .calendar-event')).count()).toEqual(5);
     await element(by.css('.monthview-header .next')).click();
     await element(by.css('.monthview-header .next')).click();
 
@@ -373,13 +373,14 @@ describe('Calendar allow one pane tests', () => {
   it('Should only allow one pane open at a time', async () => {
     await utils.checkForErrors();
 
-    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(0);
+    expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(1);
 
     const buttonEl = await element(by.css('.calendar-event-details > div:nth-child(5) button'));
     await buttonEl.click();
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.calendar-event-details > div:nth-child(6).is-expanded'))), config.waitsFor);
+    await browser.driver.sleep(1000);
 
     expect(await element.all(by.css('.calendar-event-details .accordion-pane.is-expanded')).count()).toEqual(1);
   });
