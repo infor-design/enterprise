@@ -52,7 +52,7 @@ describe('Tree example-index tests', () => {
       const link = await element.all(by.css('a[role="treeitem"]')).first();
       await link.click();
 
-      const containerEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.css('.two-column'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
