@@ -27,6 +27,7 @@
  * - Mid-Level Components (includes Charts)
  * - Complex Components
  */
+debugger;
 const commandLineArgs = require('yargs')
   .option('verbose', {
     alias: 'v',
@@ -45,18 +46,15 @@ const commandLineArgs = require('yargs')
   })
   .option('disable-css', {
     alias: 'c',
-    describe: 'Disables the build process for CSS',
-    default: false
+    describe: 'Disables the build process for CSS'
   })
   .option('disable-js', {
     alias: 'j',
-    describe: 'Disables the build process for JS',
-    default: false
+    describe: 'Disables the build process for JS'
   })
   .option('disable-copy', {
     alias: 'p',
-    describe: 'Disables the copying of all pre-built assets to the `/dist` folder',
-    default: false,
+    describe: 'Disables the copying of all pre-built assets to the `/dist` folder'
   })
   .option('types', {
     alias: 't',
@@ -173,13 +171,6 @@ const TEST_ARGS = [
   'popupmenu',
   'tabs',
   'validation'
-];
-
-// Additional set of test args (provided in #3784 for fixing datagrid imports)
-const DATAGRID_TEST_ARGS = [
-  'button',
-  'busyindicator',
-  'datagrid'
 ];
 
 // Library types

@@ -1256,4 +1256,33 @@ utils.clearSelection = function clearSelection() {
   }
 };
 
+/**
+ * Toggle the form compact mode and any child classes as need.
+ * @param {HTMLElement} elem The top level element or form element
+ * @returns {void}
+ */
+utils.toggleCompactMode = function toggleCompactMode(elem) {
+  const className = 'form-layout-compact';
+  const hasClass = elem.classList.contains(className);
+  if (hasClass) {
+    elem.classList.remove(className);
+  } else {
+    elem.classList.add(className);
+  }
+
+  const datagrids = elem.querySelectorAll('.datagrid-container');
+  for (let i = 0; i < datagrids.length; i++) {
+    const api = $(datagrids[i]).data('datagrid');
+    if (!api.rowHeight) {
+      return;
+    }
+    if (hasClass) {
+      api.rowHeight(api.oldRowHeight || 'large');
+    } else {
+      api.oldRowHeight = api.settings.rowHeight;
+      api.rowHeight('extra-small');
+    }
+  }
+};
+
 export { utils, math };

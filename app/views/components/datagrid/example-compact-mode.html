@@ -1,0 +1,119 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <form class="form-layout-compact">
+      <div class="toolbar" role="toolbar">
+        <div class="title">
+          Compressors
+          <span class="datagrid-result-count">(N Results)</span>
+        </div>
+        <div class="buttonset">
+
+          <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+          <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+
+          <button class="btn btn-toggle no-ripple hide-focus is-pressed" type="button" aria-pressed="true" id="toggle-compact">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-change-row-line-height"></use>
+            </svg>
+            <span>Compact Mode</span>
+          </button>
+        </div>
+
+        <div class="more">
+          <button class="btn-actions" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+            <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+            <li class="separator"></li>
+            <li><a data-option="export-to-excel" href="#" data-translate="text">ExportToExcel</a></li>
+            <li class="separator single-selectable-section"></li>
+            <li class="heading">Row Height</li>
+            <li class="is-selectable is-checked"><a data-option="row-extra-small" href="#" data-translate="text"data-translate="text">ExtraSmall</a></li>
+            <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text"data-translate="text">Small</a></li>
+            <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text"data-translate="text">Medium</a></li>
+            <li class="is-selectable"><a data-option="row-large" href="#" data-translate="text"data-translate="text">Large</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <div id="datagrid">
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity',  filterType: 'integer', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'contents', options: [{id: '1', value: '1', label: '1'}, {id: '2', value: '2', label: '2'}]});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'decimal', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        allowSelectAcrossPages: true,
+        columns: columns,
+        selectable: 'multiple',
+        paging: true,
+        editable: true,
+        filterable: true,
+        pagesize: 10,
+        rowHeight: 'extra-small',
+        resultsText: function (grid, count, filterCount) {
+          console.log('ResultsText:', grid, count, filterCount);
+          if (filterCount > 0) {
+            return '(' + filterCount + ' of '+ count + ')';
+          }
+          else {
+            return '(' + 'all '+ count + ')';
+          }
+        },
+        source: function(req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          }
+
+          //Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
+            req.total = res.total;
+            req.preserveSelected = true;
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total;
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
+            response(res.data, req);
+          });
+        },
+        toolbar: {title: 'Data Grid Header Title', filterRow: true, personalize: true, results: true, keywordFilter: false, actions: true, rowHeight: true}
+      });
+
+      $('#toggle-compact').on('click', function () {
+        Soho.utils.toggleCompactMode(document.querySelector('form'));
+      });
+  });
+</script>

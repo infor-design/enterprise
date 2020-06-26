@@ -6,6 +6,7 @@
 
 - `[Custom Builds]` The build script can now produce an ES Module version of the components that can be imported by your application. ([#3771](https://github.com/infor-design/enterprise/issues/3771))
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
+- `[Datagrid]` Added an additional row size extra-small. This row size may need a bit of further fleshing out. All of the previous row sizes have been renamed but using the old settings are supported but deprecated. The new sizes are Extra Small, Small, Medium, Large (Normal). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Tree]` Added a setting to support to expanding/collapsing when clicking only the icon portion of the tree node. ([#3730](https://github.com/infor-design/enterprise/issues/3730))
 

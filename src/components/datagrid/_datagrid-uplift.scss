@@ -64,6 +64,11 @@
     padding: 3px 19px 0;
   }
 
+  > tbody > tr .icon.plus-minus::before,
+  > tbody > tr .icon.plus-minus::after {
+    color: $font-color-highcontrast;
+  }
+
   td.is-editing {
     .lookup-wrapper {
       padding-top: 5px;
@@ -171,6 +176,13 @@
   margin-top: -4px;
 }
 
+// Extra small mode adjustments
+.datagrid-container.extra-small-rowheight {
+  .datagrid-header .datagrid-filter-wrapper .datepicker + .icon {
+    top: -6px;
+  }
+}
+
 // Adjust handle for resize on lists
 .is-gridlist.has-draggable-columns th .handle {
   font-size: 23px;
@@ -218,5 +230,38 @@
     .searchfield-wrapper {
       height: auto;
     }
+  }
+}
+
+// Adjustments for uplift mode
+.datagrid.extra-small-rowheight {
+  tbody tr td.is-editing input {
+    height: 25px;
+  }
+
+  tbody tr td.is-editing .datepicker {
+    height: 28px;
+  }
+
+  div.dropdown + .icon,
+  div.multiselect + .icon {
+    height: 16px;
+    right: 4px;
+    top: 7px !important;
+    width: 14px;
+  }
+
+  tbody tr td.is-editing .datepicker + .icon {
+    top: -4px !important;
+  }
+
+  tbody tr td.datagrid-trigger-cell .dropdown-trigger + .icon {
+    top: 4px !important;
+  }
+}
+
+.datagrid.small-rowheight {
+  tbody tr td.is-editing .datepicker + .icon {
+    top: -3px;
   }
 }

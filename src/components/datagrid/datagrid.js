@@ -71,7 +71,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuSelected=false] Callback for the header level context menu
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique DOM ID to use as local storage reference and internal variable names
- * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
+ * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (extra-small, small, medium or large) previous values of short, medium, normal are also mapped.
  * @param {number|string|function}   [settings.fixedRowHeight=null] Sets the height of the row to something other then the three built in rowHeights. If `auto` is used the row heights will be calculated, this can be expensive. This can also be a function that returns the row height dynamically.
  * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
  * @param {null|function} [settings.onBeforeSelect=null] If defined as a function will fire as callback before rows are selected. You can return false to veto row selection.
@@ -168,7 +168,7 @@ const DATAGRID_DEFAULTS = {
   headerMenuSelected: null, // Callback for the header level right click menu
   headerMenuBeforeOpen: null, // Call back for the header level before open menu event
   uniqueId: null, // Unique ID for local storage reference and variable names
-  rowHeight: 'normal', // (short, medium or normal)
+  rowHeight: 'large', // extra-small, short, medium, normal - or older values: (short, medium or normal)
   fixedRowHeight: null,
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
@@ -421,15 +421,18 @@ Datagrid.prototype = {
     this.element.removeClass('datagrid').addClass('datagrid-container').attr('x-ms-format-detection', 'none');
 
     // initialize row height by a setting
-    if (this.settings.rowHeight !== 'normal') {
+    if (this.settings.rowHeight !== 'normal' && this.settings.rowHeight !== 'large') {
+      let rowHeight = this.settings.rowHeight === 'short' ? 'small' : this.settings.rowHeight;
+      rowHeight = this.settings.rowHeight === 'normal' ? 'large' : this.settings.rowHeight;
+
       if (this.hasLeftPane) {
-        self.tableLeft.addClass(`${this.settings.rowHeight}-rowheight`);
+        self.tableLeft.addClass(`${rowHeight}-rowheight`);
       }
-      self.table.addClass(`${this.settings.rowHeight}-rowheight`);
+      self.table.addClass(`${rowHeight}-rowheight`);
       if (this.hasRightPane) {
-        self.tableRight.addClass(`${this.settings.rowHeight}-rowheight`);
+        self.tableRight.addClass(`${rowHeight}-rowheight`);
       }
-      this.element.addClass(`${this.settings.rowHeight}-rowheight`);
+      this.element.addClass(`${rowHeight}-rowheight`);
     }
 
     if (this.settings.isList) {
@@ -2551,18 +2554,19 @@ Datagrid.prototype = {
   getExtraTop() {
     const s = this.settings;
     const topPositions = {
-      default: { short: 0, medium: 0, normal: 0 },
-      filterable: { short: 0, medium: 0, normal: 0 },
-      group: { short: -25, medium: -30, normal: -39 },
-      groupFilterable: { short: -29, medium: -30, normal: -41 }
+      default: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
+      filterable: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
+      group: { extraSmall: -22, short: -25, small: -25, medium: -30, normal: -39, large: -39 },
+      groupFilter: { extraSmall: -27, short: -29, small: -29, medium: -30, normal: -41, large: -41 }
     };
     let extraTop = 0;
+    const prop = s.rowHeight === 'extra-small' ? 'extraSmall' : s.rowHeight;
     if (s.columnGroups) {
       extraTop = s.filterable ?
-        topPositions.groupFilterable[s.rowHeight] : topPositions.group[s.rowHeight];
+        topPositions.groupFilter[prop] : topPositions.group[prop];
     } else {
       extraTop = s.filterable ?
-        topPositions.filterable[s.rowHeight] : topPositions.default[s.rowHeight];
+        topPositions.filterable[prop] : topPositions.default[prop];
     }
     return extraTop;
   },
@@ -2575,18 +2579,19 @@ Datagrid.prototype = {
   getTargetHeight() {
     const s = this.settings;
     const heights = {
-      default: { short: 20, medium: 28, normal: 35 },
-      filterable: { short: 53, medium: 54, normal: 60 },
-      group: { short: 46, medium: 56, normal: 74 },
-      groupFilterable: { short: 83, medium: 87, normal: 103 }
+      default: { extraSmall: 20, short: 20, small: 20, medium: 28, normal: 35, large: 35 },
+      filterable: { extraSmall: 47, short: 53, small: 53, medium: 54, normal: 60, large: 60 },
+      group: { extraSmall: 43, short: 46, small: 46, medium: 56, normal: 74, large: 74 },
+      groupFilter: { extraSmall: 80, small: 80, short: 83, medium: 87, normal: 103, large: 103 }
     };
     let height = 0;
+    const prop = s.rowHeight === 'extra-small' ? 'extraSmall' : s.rowHeight;
     if (s.columnGroups) {
       height = s.filterable && this.filterRowRendered ?
-        heights.groupFilterable[s.rowHeight] : heights.group[s.rowHeight];
+        heights.groupFilter[prop] : heights.group[prop];
     } else {
       height = s.filterable && this.filterRowRendered ?
-        heights.filterable[s.rowHeight] : heights.default[s.rowHeight];
+        heights.filterable[prop] : heights.default[prop];
     }
     return height;
   },
@@ -3553,9 +3558,16 @@ Datagrid.prototype = {
   cacheVirtualStats() {
     const containerHeight = this.element[0].offsetHeight;
     const scrollTop = this.bodyWrapperCenter[0].scrollTop;
-    const headerHeight = this.settings.rowHeight === 'normal' ? 40 : (this.settings.rowHeight === 'medium' ? 30 : 25);
+    let headerHeight = this.settings.rowHeight === 'normal' || this.settings.rowHeight === 'large' ?
+      40 : (this.settings.rowHeight === 'medium' ? 30 : 25);
     const bodyH = containerHeight - headerHeight;
-    const rowH = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+    let rowH = this.settings.rowHeight === 'normal' || this.settings.rowHeight === 'large' ?
+      50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+
+    if (this.settings.rowHeight === 'extra-small') {
+      headerHeight = 22;
+      rowH = 27;
+    }
 
     this.virtualRange = {
       rowHeight: rowH,
@@ -6387,26 +6399,52 @@ Datagrid.prototype = {
   */
   refreshSelectedRowHeight() {
     const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
-    const short = toolbar.find('[data-option="row-short"]');
-    const med = toolbar.find('[data-option="row-medium"]');
-    const normal = toolbar.find('[data-option="row-normal"]');
+    const actions = toolbar.find('.btn-actions').data('popupmenu');
+    if (!actions.wrapper) {
+      return;
+    }
 
-    if (this.settings.rowHeight === 'short') {
+    const extraSmall = actions.wrapper.find('[data-option="row-extra-small"]');
+    const small = actions.wrapper.find('[data-option="row-small"]');
+    const short = actions.wrapper.find('[data-option="row-short"]');
+    const med = actions.wrapper.find('[data-option="row-medium"]');
+    const normal = actions.wrapper.find('[data-option="row-normal"]');
+    const large = actions.wrapper.find('[data-option="row-large"]');
+
+    if (this.settings.rowHeight === 'extra-small') {
+      extraSmall.parent().addClass('is-checked');
+      small.parent().removeClass('is-checked');
+      short.parent().removeClass('is-checked');
+      med.parent().removeClass('is-checked');
+      normal.parent().removeClass('is-checked');
+      large.parent().removeClass('is-checked');
+    }
+
+    if (this.settings.rowHeight === 'short' || this.settings.rowHeight === 'small') {
+      extraSmall.parent().removeClass('is-checked');
+      small.parent().addClass('is-checked');
       short.parent().addClass('is-checked');
       med.parent().removeClass('is-checked');
       normal.parent().removeClass('is-checked');
+      large.parent().removeClass('is-checked');
     }
 
     if (this.settings.rowHeight === 'medium') {
-      short.parent().removeClass('is-checked');
+      extraSmall.parent().removeClass('is-checked');
+      small.parent().removeClass('is-checked');
+      short.parent().addClass('is-checked');
       med.parent().addClass('is-checked');
       normal.parent().removeClass('is-checked');
+      large.parent().removeClass('is-checked');
     }
 
-    if (this.settings.rowHeight === 'normal') {
-      short.parent().removeClass('is-checked');
+    if (this.settings.rowHeight === 'normal' || this.settings.rowHeight === 'large') {
+      extraSmall.parent().removeClass('is-checked');
+      small.parent().removeClass('is-checked');
+      short.parent().addClass('is-checked');
       med.parent().removeClass('is-checked');
       normal.parent().addClass('is-checked');
+      large.parent().addClass('is-checked');
     }
 
     // Set draggable targets arrow height
@@ -6502,9 +6540,10 @@ Datagrid.prototype = {
       if (this.settings.toolbar.rowHeight) {
         menu.append(`${'<li class="separator single-selectable-section"></li>' +
           '<li class="heading">'}${Locale.translate('RowHeight')}</li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'short' ? ' is-checked' : ''}"><a href="#" data-option="row-short">${Locale.translate('Short')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'extra-small' ? ' is-checked' : ''}"><a href="#" data-option="row-extra-small">${Locale.translate('ExtraSmall')}</a></li>` +
+          `<li class="is-selectable${this.settings.rowHeight === 'short' || this.settings.rowHeight === 'small' ? ' is-checked' : ''}"><a href="#" data-option="row-small">${Locale.translate('Small')}</a></li>` +
           `<li class="is-selectable${this.settings.rowHeight === 'medium' ? ' is-checked' : ''}"><a href="#" data-option="row-medium">${Locale.translate('Medium')}</a></li>` +
-          `<li class="is-selectable${this.settings.rowHeight === 'normal' ? ' is-checked' : ''}"><a href="#" data-option="row-normal">${Locale.translate('Normal')}</a></li>`);
+          `<li class="is-selectable${this.settings.rowHeight === 'normal' || this.settings.rowHeight === 'large' ? ' is-checked' : ''}"><a href="#" data-option="row-large">${Locale.translate('Large')}</a></li>`);
       }
 
       if (this.settings.toolbar.filterRow === true) {
@@ -6545,7 +6584,12 @@ Datagrid.prototype = {
 
     toolbar.find('.btn-actions').popupmenu().on('selected', (e, args) => {
       const action = args.attr('data-option');
-      if (action === 'row-short' || action === 'row-medium' || action === 'row-normal') {
+      if (!action) {
+        return;
+      }
+
+      if (action === 'row-extra-small' || action === 'row-small' || action === 'row-short' ||
+        action === 'row-medium' || action === 'row-normal' || action === 'row-large') {
         self.rowHeight(action.substr(4));
       }
 
@@ -6616,7 +6660,7 @@ Datagrid.prototype = {
 
   /**
    * Get or Set the Row Height.
-   * @param  {string} height The row height to use, can be 'short', 'normal' or 'medium'
+   * @param  {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
    * @Returns {string} The current row height
    */
   rowHeight(height) {
@@ -6628,15 +6672,27 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
+    let rowHeightClass = this.settings.rowHeight;
+    if (rowHeightClass === 'short') {
+      rowHeightClass = 'small';
+    }
+    if (rowHeightClass === 'large') {
+      rowHeightClass = 'normal';
+    }
+
     this.element
       .add(this.table)
       .add(this.tableLeft)
       .add(this.tableRight)
-      .removeClass('short-rowheight medium-rowheight normal-rowheight')
-      .addClass(`${this.settings.rowHeight}-rowheight`);
+      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
+      .addClass(`${rowHeightClass}-rowheight`);
 
     if (this.virtualRange && this.virtualRange.rowHeight) {
-      this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
+      this.virtualRange.rowHeight = (height === 'normal' || height === 'large') ? 40 : (height === 'medium' ? 30 : 25);
+
+      if (height === 'extra-small') {
+        this.virtualRange.rowHeight = 22;
+      }
     }
 
     this.saveUserSettings();
