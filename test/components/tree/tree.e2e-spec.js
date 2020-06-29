@@ -52,7 +52,7 @@ describe('Tree example-index tests', () => {
       const link = await element.all(by.css('a[role="treeitem"]')).first();
       await link.click();
 
-      const containerEl = await element(by.id('maincontent'));
+      const containerEl = await element(by.css('.two-column'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'tree-index')).toEqual(0);
@@ -71,7 +71,7 @@ describe('Tree badges tests', () => {
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.round')).count()).toBe(3);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.info')).count()).toBe(2);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.alert')).count()).toBe(1);
-    expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge.good')).count()).toBe(1);
+    expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge.good')).count()).toBe(0);
   });
 });
 

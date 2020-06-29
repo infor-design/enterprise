@@ -86,7 +86,8 @@ body.no-scroll {
   > .main {
     border-right: 1px solid $panel-border-color;
     height: 100%;
-    width: calc(75%);
+    vertical-align: top;
+    width: 75%;
 
     + .sidebar {
       border-right: 0;
@@ -98,7 +99,8 @@ body.no-scroll {
     background-color: $body-color-primary-background;
     border-right: 1px solid $panel-border-color;
     height: 100%;
-    width: calc(25%);
+    vertical-align: top;
+    width: 25%;
 
     + .main {
       border-right: 0;

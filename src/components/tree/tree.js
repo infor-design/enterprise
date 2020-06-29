@@ -131,7 +131,10 @@ Tree.prototype = {
   */
   initSelected() {
     const listItems = [].slice.call(this.element[0].querySelectorAll('li'));
-    listItems.forEach(li => this.setNodeStatus($(li.querySelector('a'))));
+    listItems.forEach((li) => {
+      li.setAttribute('role', 'none');
+      this.setNodeStatus($(li.querySelector('a')));
+    });
     this.syncDataset();
   },
 
@@ -1892,6 +1895,7 @@ Tree.prototype = {
     }
 
     let li = document.createElement('li');
+    li.setAttribute('role', 'none');
 
     if (nodeData.open) {
       DOM.addClass(li, 'is-open');
