@@ -171,7 +171,7 @@ FieldOptions.prototype = {
           returns += diff ? (diff / 2) : 0;
         } else {
           this.element.addClass('is-singleline');
-          returns = 1.5;
+          returns = 2;
         }
       } else if (isRadio) {
         returns = ((height - this.trigger.height()) / 2) * -1;
