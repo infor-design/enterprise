@@ -258,6 +258,10 @@
   tbody tr td.datagrid-trigger-cell .dropdown-trigger + .icon {
     top: 4px !important;
   }
+
+  .datagrid-checkbox-wrapper {
+    margin-top: -15px;
+  }
 }
 
 .datagrid.small-rowheight {

@@ -1546,6 +1546,10 @@ $datagrid-small-row-height: 25px;
       padding: 2px 5px 0;
     }
 
+    .datagrid-checkbox-wrapper {
+      margin-top: -14px;
+    }
+
     tbody tr td {
       .hyperlink {
         font-size: $input-size-compact-font-size;
