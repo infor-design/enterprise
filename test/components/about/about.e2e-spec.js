@@ -35,7 +35,7 @@ describe('About index tests', () => {
     });
   }
 
-  fit('should destroy and reinvoke properly', async () => {
+  it('should destroy and reinvoke properly', async () => {
     // Open the About dialog
     await element(by.id('about-trigger')).click();
     await browser.driver
