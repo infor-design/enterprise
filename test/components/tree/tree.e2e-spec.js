@@ -71,7 +71,7 @@ describe('Tree badges tests', () => {
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.round')).count()).toBe(3);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.info')).count()).toBe(2);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.alert')).count()).toBe(1);
-    expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge.good')).count()).toBe(1);
+    expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge.good')).count()).toBe(0);
   });
 });
 
