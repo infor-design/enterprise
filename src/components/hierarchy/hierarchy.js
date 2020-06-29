@@ -223,7 +223,7 @@ Hierarchy.prototype = {
         return;
       }
 
-      $('.is-selected').removeClass('is-selected');
+      $('.leaf.is-selected').removeClass('is-selected');
       $(`#${nodeId}`).addClass('is-selected');
 
       // Is collapse event
@@ -290,7 +290,7 @@ Hierarchy.prototype = {
    */
   selectLeaf(nodeId) {
     const leaf = $(`#${nodeId}`);
-    $('.is-selected').removeClass('is-selected');
+    $('.leaf.is-selected').removeClass('is-selected');
     leaf.addClass('is-selected');
 
     const eventInfo = {

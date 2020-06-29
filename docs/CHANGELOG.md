@@ -51,6 +51,7 @@
 - `[Dropdown]` Fixed an issue where the search field does not stay in the initial position. ([#2659](https://github.com/infor-design/enterprise/issues/2659))
 - `[Editor]` Fixed missing tooltips. ([#issues](https://github.com/infor-design/enterprise/issues/issues))
 - `[Field Options]` Fixed an issue where the focus style was not aligning. ([#3628](https://github.com/infor-design/enterprise/issues/3628))
+- `[Hierarchy]` Fixed an issue selection causes tab selection to be removed. ([#3597](https://github.com/infor-design/enterprise/issues/3597))
 - `[Icons]` Fixed an issue with the amend icon in uplift theme. The meaning was lost on a design change and it has been updated. ([#3613](https://github.com/infor-design/enterprise/issues/3613))
 - `[Locale]` Changed results text to lower case. ([#3974](https://github.com/infor-design/enterprise/issues/3974))
 - `[Locale]` Fixed abbreviated chinese month translations. ([#4034](https://github.com/infor-design/enterprise/issues/4034))
