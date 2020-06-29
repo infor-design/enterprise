@@ -73,6 +73,8 @@
 - `[Tooltip]` Fixed tooltip behavior so clicking and mousing out will not show the tooltip and fixed tooltip delay. ([#4050](https://github.com/infor-design/enterprise/issues/#4050))
 - `[Tree]` Fixed an issue where previous text selection was not clearing after clicked to any tree-node. ([#3794](https://github.com/infor-design/enterprise/issues/3794))
 
+(75 Issues Solved This Release, Backlog Enterprise 235, Backlog Ng 62, 1071 Functional Tests, 1448 e2e Tests)
+
 ## v4.29.0
 
 ### v4.29.0 Announcements
@@ -143,7 +145,7 @@
 - `[Tabs]` Fixed an issue where calling destroy did not remove the add tab button. ([#1439](https://github.com/infor-design/enterprise/issues/1439))
 - `[Vertical Tabs]` Made personalization possible. ([#3029](https://github.com/infor-design/enterprise/issues/3029))
 
-(64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Testss)
+(64 Issues Solved This Release, Backlog Enterprise 248, Backlog Ng 69, 1149 Functional Tests, 1404 e2e Tests)
 
 ## v4.28.5
 
@@ -1019,7 +1021,7 @@
 - `[Fileuploader]` Fixed an issue where the fileuploader icon and close icon were misplaced and not visible in RTL after uploading a file. ([#2098](https://github.com/infor-design/enterprise/issues/2098))
 - `[Fileuploader]` Fixed an issue where backspace in IE11 caused the browser to go back instead of removing the uploaded file from the input. ([#2184](https://github.com/infor-design/enterprise/issues/2184))
 - `[Input]` Improved alignment of icons in the uplift theme input components. ([#2072](https://github.com/infor-design/enterprise/issues/2072))
-- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e Testss. ([#403](https://github.com/infor-design/enterprise/issues/403))
+- `[Listview]` Improved accessibility when configured as selectable (all types), as well as re-enabled accessibility e2e Tests. ([#403](https://github.com/infor-design/enterprise/issues/403))
 - `[Locale]` Synced up date and time patterns with the CLDR several time patterns in particular were corrected. ([#2022](https://github.com/infor-design/enterprise/issues/2022))
 - `[Locale]` Fixed an issue loading duplicate locales such as en-GB where the strings are copies, before you might get undefined strings. ([#2216](https://github.com/infor-design/enterprise/issues/2216))
 - `[Locale]` Added support for es-419 locale. ([#2204](https://github.com/infor-design/enterprise/issues/2204))
@@ -1722,10 +1724,10 @@
 ### v4.8.0 Chore & Maintenance
 
 - `[Npm Package]` Added back sass files in correct folder structure. ([#SOHO-7583](https://jira.infor.com/browse/SOHO-7583))
-- `[Menu Button]` Added button functional and e2e Testss. ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
-- `[Textarea]` Added Textarea functional and e2e Testss. ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
-- `[ListFilter]` Added ListFilter functional and e2e Testss. ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
-- `[Colorpicker]` Added Colorpicker functional and e2e Testss. ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
+- `[Menu Button]` Added button functional and e2e Tests. ([#SOHO-7600](https://jira.infor.com/browse/SOHO-7600))
+- `[Textarea]` Added Textarea functional and e2e Tests. ([#SOHO-7929](https://jira.infor.com/browse/SOHO-7929))
+- `[ListFilter]` Added ListFilter functional and e2e Tests. ([#SOHO-7975](https://jira.infor.com/browse/SOHO-7975))
+- `[Colorpicker]` Added Colorpicker functional and e2e Tests. ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
 - `[Site / Docs]` Fixed a few broken links ([#SOHO-7993](https://jira.infor.com/browse/SOHO-7993))
 
 (62 Jira Issues Solved This Release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
@@ -1788,7 +1790,7 @@
 
 ### v4.7.0 Chore & Maintenance
 
-- `[Timepicker]` Added functional and e2e Testss ([#SOHO-7809](https://jira.infor.com/browse/SOHO-7809))
+- `[Timepicker]` Added functional and e2e Tests ([#SOHO-7809](https://jira.infor.com/browse/SOHO-7809))
 - `[General]` Restructured the project to clean up and separate the demo app from code. ([#SOHO-7803](https://jira.infor.com/browse/SOHO-7803))
 
 (56 Jira Issues Solved This Release, Backlog Dev 218, Design 101, Unresolved 391, Test Count 232 Functional, 117 e2e )
