@@ -29,6 +29,8 @@ Hyperlink.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, previousSettings);
     }
 
+    this.element.classList.add('hyperlink');
+
     if (!this.focusBehavior) {
       this.focusBehavior = new HideFocus(this.element);
     }

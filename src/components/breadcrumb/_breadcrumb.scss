@@ -1,7 +1,14 @@
 // Buttons
 //================================================== //
 
+$breadcrumb-container-height: $theme-size-font-xl;
+
 .breadcrumb {
+  ul,
+  ol {
+    min-height: $breadcrumb-container-height;
+  }
+
   li {
     @include antialiased();
 
@@ -12,7 +19,7 @@
     &::after {
       content: '\002F';
       font-size: $theme-size-font-xs;
-      padding: 0 10px;
+      padding: 0 8px;
     }
 
     &:last-child::after {
@@ -25,8 +32,56 @@
       color: $breadcrumb-color;
       font-size: $theme-size-font-sm;
       font-weight: $theme-number-font-weight-bold;
+
+      a {
+        color: inherit;
+      }
+    }
+  }
+
+  // Truncated behavior forces all breadcrumbs onto one line and some to become collapsible.
+  // Currently not fully implemented -- see infor-design/enterprise#4091
+  &.truncated {
+    ul,
+    ol {
+      display: flex;
+      overflow: hidden;
     }
 
+    li {
+      overflow: hidden;
+      white-space: nowrap;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      a {
+        display: inline-block;
+        margin-left: 4px;
+        overflow: hidden;
+        padding: 0 3px;
+        text-overflow: ellipsis;
+        width: calc(100% - 18px); // accounts for the pseudo-element "/" delimeter
+      }
+
+      &:first-child,
+      &.current,
+      &:last-child {
+        flex-shrink: 0;
+
+        a {
+          overflow: auto;
+          width: auto;
+        }
+      }
+
+      &:last-child {
+        a {
+          margin-right: 4px;
+        }
+      }
+    }
   }
 
   .hyperlink {
