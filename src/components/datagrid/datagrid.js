@@ -423,7 +423,7 @@ Datagrid.prototype = {
     // initialize row height by a setting
     if (this.settings.rowHeight !== 'normal' && this.settings.rowHeight !== 'large') {
       let rowHeight = this.settings.rowHeight === 'short' ? 'small' : this.settings.rowHeight;
-      rowHeight = this.settings.rowHeight === 'normal' ? 'large' : this.settings.rowHeight;
+      rowHeight = this.settings.rowHeight === 'normal' ? 'large' : rowHeight;
 
       if (this.hasLeftPane) {
         self.tableLeft.addClass(`${rowHeight}-rowheight`);
@@ -6401,7 +6401,7 @@ Datagrid.prototype = {
   refreshSelectedRowHeight() {
     const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
     const actions = toolbar.find('.btn-actions').data('popupmenu');
-    if (!actions.wrapper) {
+    if (!actions?.wrapper) {
       return;
     }
 
