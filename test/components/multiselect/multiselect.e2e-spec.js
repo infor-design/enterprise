@@ -392,7 +392,7 @@ describe('Multiselect with Tags tests', () => {
   }
 });
 
-describe('Multiselect `showSearchUnderSelected` tests', () => {
+fdescribe('Multiselect `showSearchUnderSelected` tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-search-under-selected?layout=nofrills');
   });

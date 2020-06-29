@@ -2,7 +2,7 @@
 
 ## v4.30.0
 
-### v4.29.0 Announcements
+### v4.30.0 Announcements
 
 - `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. ([#3755](https://github.com/infor-design/enterprise/issues/3755))
 
