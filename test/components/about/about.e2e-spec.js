@@ -48,8 +48,6 @@ describe('About index tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('about-modal'))), config.waitsFor);
 
-    expect(await element(by.id('about-modal')).isDisplayed()).toBeFalsy();
-
     // Reopen the About Dialog (creates a new instance)
     await element(by.id('about-trigger')).click();
     await browser.driver

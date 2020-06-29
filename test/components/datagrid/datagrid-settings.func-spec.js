@@ -65,7 +65,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       headerMenuSelected: null,
       headerMenuBeforeOpen: null,
       uniqueId: null,
-      rowHeight: 'normal',
+      rowHeight: 'large',
       fixedRowHeight: null,
       selectable: false,
       onBeforeSelect: null,

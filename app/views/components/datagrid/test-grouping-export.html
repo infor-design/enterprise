@@ -1,0 +1,87 @@
+
+<div class="row bottom-padding">
+  <div class="twelve columns">
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(10 Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" id="export-to-csv">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-export-spreadsheet"></use>
+          </svg>
+          <span>Export To Csv</span>
+        </button>
+        <button type="button" class="btn" id="export-to-excel">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-export-spreadsheet"></use>
+          </svg>
+          <span>Export To Excel</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button type="button" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+          <li class="separator"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Formatters.Drilldown, click: function(e, args) {
+      console.log('Drilldown ', args[0]);
+    }, align: 'center', sortable: false});
+    columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+    columns.push({ id: 'type', name: 'Type', field: 'type'});
+    columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
+    columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
+    columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+    columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
+
+    //Get some data via ajax
+    var url = '{{basepath}}api/accounts';
+
+    $.getJSON(url, function(res) {
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        groupable: {
+          fields: ['type'],
+          expanded: true
+        },
+        toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+      });
+    });
+    $('#export-to-csv').on('click', function () {
+      grid.data('datagrid').exportToCsv('myExport');
+    });
+    $('#export-to-excel').on('click', function () {
+      grid.data('datagrid').exportToExcel('myExport');
+    });
+  });
+</script>

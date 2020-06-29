@@ -2,11 +2,16 @@
 
 ## v4.30.0
 
+### v4.30.0 Announcements
+
+- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. ([#3755](https://github.com/infor-design/enterprise/issues/3755))
+
 ### v4.30.0 Features
 
 - `[Breadcrumb]` Javascript Component API is now available. ([infor-design/enterprise-ng#700](https://github.com/infor-design/enterprise-ng/issues/700))
 - `[Custom Builds]` The build script can now produce an ES Module version of the components that can be imported by your application. ([#3771](https://github.com/infor-design/enterprise/issues/3771))
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
+- `[Datagrid]` Added an additional row size extra-small. This row size may need a bit of further fleshing out. All of the previous row sizes have been renamed but using the old settings are supported but deprecated. The new sizes are Extra Small, Small, Medium, Large (Normal). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Icons]` Changed the tree node icon to be more meaningful in uplift theme. Added a print-preview icon. This replaces the update-preview icon which has confusing meaning but was not removed.

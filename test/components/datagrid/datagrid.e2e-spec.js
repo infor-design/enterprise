@@ -67,6 +67,39 @@ describe('Datagrid Colspan Tests', () => {
   }
 });
 
+describe('Datagrid Compact Row Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-compact-mode?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on compact', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-compact')).toEqual(0);
+    });
+  }
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress after toggle', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+      await element(by.id('toggle-compact')).click();
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-compact-toggle')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Colspan Frozen Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?layout=nofrills');

@@ -14,8 +14,8 @@
       $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text, width: 100});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, width: 300, minWidth: 100});
+        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
         columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
