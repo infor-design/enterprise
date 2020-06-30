@@ -49,6 +49,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
 * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
 * @param {htmlObject|jqueryObject|srting} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
+* @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -68,7 +69,8 @@ const MODAL_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   overlayOpacity: 0.7,
   noRefocus: false,
-  triggerButton: null
+  triggerButton: null,
+  hideUnderneath: false,
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -285,6 +287,10 @@ Modal.prototype = {
       // Adds the modal buttonset, if applicable
       this.renderButtonset();
     }
+
+    // Decide whether or not this Modal instance should hide when displayed
+    // beneath another modal in the stack
+    this.element[0].classList[this.settings.hideUnderneath ? 'add' : 'remove']('hide-underneath');
 
     this.registerModal();
 
