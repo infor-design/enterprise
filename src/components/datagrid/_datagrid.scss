@@ -256,7 +256,8 @@ $datagrid-small-row-height: 25px;
       }
 
       + .datagrid-filter-wrapper.is-empty {
-        pointer-events: none;
+        left: -60px;
+        //pointer-events: none;
       }
     }
   }
