@@ -14,11 +14,11 @@ Soho.Locale.addCulture('lv-LV', {
       separator: '.', // Infered
       timeSeparator: ':',
       short: 'dd.MM.yyyy', // use four digit year
-      medium: 'y. gada d. MMM',
-      long: 'y. gada d. MMMM',
+      medium: 'MMM yyyy',
+      long: 'd. MMMM yyyy',
       full: 'EEEE, y. gada d. MMMM',
       month: 'd. MMMM',
-      year: 'yyyy. gada MMMM',
+      year: 'MMMM yyyy',
       dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
       hour: 'HH:mm',

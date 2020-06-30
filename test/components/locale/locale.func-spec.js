@@ -2041,4 +2041,29 @@ describe('Locale API', () => {
     expect(Locale.isIslamic('ar-SA')).toEqual(true);
     expect(Locale.isIslamic('xx-XX')).toEqual(false);
   });
+
+  it('Should correct placeholder missing translations', () => {
+    Locale.set('th-TH');
+
+    expect(Locale.translate('Locale')).toEqual('สถานที่เกิดเหตุ');
+    Locale.set('fr-FR');
+
+    expect(Locale.translate('SetTime')).toEqual('Fixer l\'heure');
+    Locale.set('fr-CA');
+
+    expect(Locale.translate('SetTime')).toEqual('Fixer l\'heure');
+    Locale.set('el-GR');
+
+    expect(Locale.translate('Blockquote')).toEqual('Αποκλεισμός προσφοράς');
+    expect(Locale.translate('ViewSource')).toEqual('Προβολή πηγής');
+    expect(Locale.translate('CssClass')).toEqual('Τάξη Css');
+    Locale.set('lt-LT');
+
+    expect(Locale.translate('CssClass')).toEqual('Css klasė');
+
+    Locale.set('zh-CN');
+
+    expect(Locale.translate('StrikeThrough')).toEqual('罢工');
+    expect(Locale.translate('InsertAnchor')).toEqual('插入锚');
+  });
 });

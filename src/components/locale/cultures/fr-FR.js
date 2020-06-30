@@ -341,7 +341,7 @@ Soho.Locale.addCulture('fr-FR', {
     Selected: { id: 'Selected', value: 'Sélectionné', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Sélectionner tout', comment: 'describes the action of selecting all items available in a list' },
     Send: { id: 'Send', value: 'Envoyer', comment: 'Send tooltip' },
-    SetTime: { id: 'SetTime', value: 'Régler l\'heure', comment: 'button text that inserts time when clicked' },
+    SetTime: { id: 'SetTime', value: 'Fixer l\'heure', comment: 'button text that inserts time when clicked' },
     Settings: { id: 'Settings', value: 'Paramètres', comment: 'Settings tooltip' },
     Short: { id: 'Short', value: 'Court', comment: 'Describes a Shorted Row Height in a grid/list' },
     ShowEvent: { id: 'ShowEvent', value: 'Afficher l\'événement', comment: 'Show an event (in a calendar)' },
