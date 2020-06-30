@@ -4,10 +4,11 @@
 
 ### v4.31.0 Fixes
 
-- `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
-- `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
+- `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
 - `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
+- `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
+- `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 
 ## v4.30.0
 
