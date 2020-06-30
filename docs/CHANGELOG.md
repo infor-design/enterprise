@@ -4,6 +4,8 @@
 
 ### v4.31.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
+
 ## v4.30.0
 
 ### v4.30.0 Announcements
