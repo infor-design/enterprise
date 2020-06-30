@@ -700,7 +700,7 @@ describe('Locale API', () => {
 
     Locale.set('lt-LT');
 
-    expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('2015 m. sausis 1 d.');
+    expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('2015 m. sausis 1');
 
     Locale.set('vi-VN');
 
@@ -1358,8 +1358,8 @@ describe('Locale API', () => {
   it('Should format dates in Slovak', () => {
     Locale.set('sk-SK');
 
-    expect(Locale.formatDate(new Date(2019, 7, 15), { pattern: Locale.currentLocale.data.calendars[0].dateFormat.full })).toEqual('štvrtok 15. augusta 2019');
-    expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. augusta 2019');
+    expect(Locale.formatDate(new Date(2019, 7, 15), { pattern: Locale.currentLocale.data.calendars[0].dateFormat.full })).toEqual('štvrtok 15. august 2019');
+    expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. august 2019');
   });
 
   it('Should format dates with long timezones', () => {
