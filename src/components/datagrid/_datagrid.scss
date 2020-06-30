@@ -249,6 +249,16 @@ $datagrid-small-row-height: 25px;
       height: 24px;
       margin: 3px 0;
     }
+
+    .datagrid-header th .datagrid-checkbox-wrapper {
+      .datagrid-checkbox {
+        top: 14px;
+      }
+
+      + .datagrid-filter-wrapper.is-empty {
+        pointer-events: none;
+      }
+    }
   }
 
   &.has-filterable-columns {
@@ -713,6 +723,10 @@ $datagrid-small-row-height: 25px;
           left: 4px;
           padding-top: 1px;
         }
+      }
+
+      .datagrid-header th .datagrid-checkbox-wrapper .datagrid-checkbox {
+        top: 12px;
       }
     }
 
@@ -1546,14 +1560,14 @@ $datagrid-small-row-height: 25px;
       padding: 2px 5px 0;
     }
 
-    .datagrid-checkbox-wrapper {
-      margin-top: -14px;
-    }
-
     tbody tr td {
       .hyperlink {
         font-size: $input-size-compact-font-size;
         margin-top: -1px;
+      }
+
+      .datagrid-checkbox-wrapper {
+        margin-top: -14px;
       }
 
       &.datagrid-trigger-cell {
@@ -2716,7 +2730,6 @@ $datagrid-small-row-height: 25px;
 
       .datagrid-checkbox {
         height: 16px;
-        top: 0;
       }
     }
 
@@ -3230,6 +3243,10 @@ td .btn-actions {
     min-height: $datagrid-medium-row-height;
     padding: 5px 20px;
   }
+
+  &.has-filterable-columns .datagrid-header th .datagrid-checkbox-wrapper .datagrid-checkbox {
+    top: 14px;
+  }
 }
 
 .small-rowheight,
@@ -3237,6 +3254,10 @@ td .btn-actions {
   .datagrid-multiline-text {
     min-height: $datagrid-small-row-height;
     padding: 2px 20px;
+  }
+
+  &.has-filterable-columns .datagrid-header th .datagrid-checkbox-wrapper .datagrid-checkbox {
+    top: 14px;
   }
 }
 
@@ -3427,13 +3448,7 @@ td .btn-actions {
   }
 }
 
-.datagrid-checkbox-wrapper {
-  & + .datagrid-filter-wrapper {
-    display: none;
-  }
-}
-
-//Grid Expand Button
+// Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
   height: 28px;
