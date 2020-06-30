@@ -4,7 +4,7 @@
 
 ### v4.31.0 Fixes
 
-- `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise/issues/827))
+- `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 
 ## v4.30.0
 
