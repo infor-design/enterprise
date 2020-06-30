@@ -10,7 +10,7 @@
   $('body').one('initialized', function () {
     var columns = [];
     var dynamicFunction = function(row, cell, value, column, dataset, api) {
-      return 'Ordered at '+ dataset.time + ' This is cell: ' + cell;
+      return 'Ordered at '+ dataset.time + ' This is row: ' + row + ' and cell: ' + cell;
     };
 
     //Define Columns for the Grid.

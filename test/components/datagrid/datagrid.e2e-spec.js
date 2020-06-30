@@ -4454,7 +4454,7 @@ describe('Datagrid treegrid Tooltip tests', () => {
     const tooltip = await element(by.css('.grid-tooltip'));
 
     expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
-    expect(await tooltip.getText()).toEqual('Ordered at 7:04 AM This is cell: 3');
+    expect(await tooltip.getText()).toEqual('Ordered at 7:04 AM This is row: 9 and cell: 3');
   });
 
   it('Should show tooltip on text cut off for indented area', async () => {
