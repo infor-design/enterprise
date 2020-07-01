@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="twelve columns">
+    <button id="open-first-modal" class="btn-secondary" type="button" data-modal="modal-2">Show Nested Modal</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-2" data-options="{ hideUnderneath: true }">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Top Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the top modal in the nest!  Open another one?</p><br />
+      <div class="field">
+        <button id="open-second-modal" class="btn-secondary" type="button" data-modal="modal-3">Show Another Modal</button>
+      </div>
+      <div class="field">
+        <button id="open-message" class="btn-secondary" type="button">Show Message</button>
+      </div>
+      <div class="modal-buttonset">
+        <button type="button" class="btn-default btn-close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-3" data-options="{ hideUnderneath: true }">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Middle Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the middle modal in the nest!  Open one more?</p>
+      <button id="open-third-modal" class="btn-secondary" type="button" data-modal="modal-4">Show One More Modal</button>
+      <div class="modal-buttonset">
+        <button type="button" class="btn-default btn-close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-4" data-options="{ hideUnderneath: true }">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Lowest Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the lowest modal in the nest!  Now start closing them!</p>
+      <div class="modal-buttonset">
+        <button type="button" class="btn-default btn-close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#open-message').on('click', function() {
+    $('body').message({
+      title: 'Example Message',
+      status: 'error',
+      returnFocus: $(this),
+      message: 'This application has experienced a problem.',
+      audibleAlert: 'Error',
+      buttons: [{
+        text: 'Close',
+        click: function() {
+          $(this).data('modal').close();
+        },
+        isDefault: true
+      }],
+      hideUnderneath: true
+    });
+  });
+</script>

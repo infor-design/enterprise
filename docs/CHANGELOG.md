@@ -5,6 +5,7 @@
 ### v4.31.0 Fixes
 
 - `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
+- `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 
 ## v4.30.0
 

@@ -874,7 +874,7 @@ Modal.prototype = {
       }
     }
 
-    // Temporary
+    // Tell the modal manager that this instance is active
     modalManager.currentlyActive = this;
 
     // Ensure aria-labelled by points to the id
