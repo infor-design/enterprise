@@ -34,7 +34,7 @@ Soho.Locale.addCulture('el-GR', {
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου', 'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'],
+      wide: ['Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος'],
       abbreviated: ['Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαΐ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
@@ -127,7 +127,7 @@ Soho.Locale.addCulture('el-GR', {
     Contrast: { id: 'Contrast', value: 'Αντίθεση', comment: 'Name of the high contrast theme' },
     CookiesEnabled: { id: 'CookiesEnabled', value: 'Ενεργοποιημένα Cookie', comment: 'Returns if browser cookies are enabled or not.' },
     Contains: { id: 'Contains', value: 'Περιέχει', comment: 'Contains in icons for filtering' },
-    CssClass: { id: 'CssClass', value: 'Css Class', comment: 'Label for entering a Css Class name' },
+    CssClass: { id: 'CssClass', value: 'Τάξη Css', comment: 'Label for entering a Css Class name' },
     Cut: { id: 'Cut', value: 'Αποκοπή', comment: 'Cut tooltip' },
     Dark: { id: 'Dark', value: 'Σκουρόχρωμο', comment: 'The name of one of the application theme variants.' },
     Date: { id: 'Date', value: 'Ημερομηνία', comment: 'Describes filtering by a date data type' },
