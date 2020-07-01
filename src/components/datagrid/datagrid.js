@@ -10078,7 +10078,9 @@ Datagrid.prototype = {
    * @returns {object} The row index in the dataset.
    */
   actualRowIndex(row) {
-    return row.attr('aria-rowindex') - 1;
+    row = row instanceof jQuery ? row[0] : row;
+    const index = row ? parseInt(row.getAttribute('aria-rowindex'), 10) : 0;
+    return index - 1;
   },
 
   /**
@@ -10130,7 +10132,8 @@ Datagrid.prototype = {
    * @returns {number} The row index in the dataset.
    */
   dataRowIndex(row) {
-    return parseInt(row.attr('data-index'), 10);
+    row = row instanceof jQuery ? row[0] : row;
+    return row ? parseInt(row.getAttribute('data-index'), 10) : 0;
   },
 
   /**
@@ -11257,7 +11260,16 @@ Datagrid.prototype = {
           }
         } else {
           // Default use wrapper content
-          tooltip.content = xssUtils.stripHTML(tooltip.wrapper.textContent).trim();
+          if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
+            Array.prototype.filter
+              .call(tooltip.wrapper.children, node => !node.matches('.datagrid-expand-btn'))
+              .forEach((node) => {
+                tooltip.content = node.textContent;
+              });
+          } else {
+            tooltip.content = tooltip.wrapper.textContent;
+          }
+          tooltip.content = xssUtils.stripHTML(tooltip.content).trim();
         }
       }
 
@@ -11278,8 +11290,22 @@ Datagrid.prototype = {
         const icons = [].slice.call(elem.querySelectorAll('.icon'));
         let extraWidth = isEllipsis ? 8 : 0;
         icons.forEach((icon) => {
-          extraWidth += icon.getBBox().width + 8;
+          const rect = typeof icon.getBBox === 'function' ? icon.getBBox() : icon.getBoundingClientRect();
+          extraWidth += rect.width + 8;
         });
+
+        // Treegrid handle indented area (1st column)
+        if (this.settings.treeGrid) {
+          const presenceOf = selector => !!tooltip.wrapper.querySelector(selector);
+          if (presenceOf('.datagrid-tree-node') || presenceOf('.datagrid-expand-btn')) {
+            const rowElem = this.closest(tooltip.wrapper, el => DOM.hasClass(el, 'datagrid-row'));
+            const level = parseInt(rowElem.getAttribute('aria-level'), 10);
+            if (level) {
+              extraWidth += (level * 30); // Each level 30px margin
+            }
+          }
+        }
+
         if (isEllipsis && isHeaderColumn) {
           const textEl = elem.querySelector('.datagrid-header-text');
           tooltip.textwidth = textEl.scrollWidth + (select ? 0 : extraWidth);
@@ -11298,10 +11324,19 @@ Datagrid.prototype = {
       }
 
       if (typeof col.tooltip === 'function') {
-        const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
-        const rowIdx = rowNode.getAttribute('data-index');
-        const rowData = this.settings.dataset[rowIdx];
-        const value = this.fieldValue(this.settings.dataset[rowIdx], col.field);
+        const rowElem = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
+        let rowIdx;
+        let rowData;
+
+        if (this.settings.treeGrid && this.settings.treeDepth) {
+          rowIdx = this.actualRowIndex(rowElem);
+          rowData = this.settings.treeDepth[rowIdx].node;
+        } else {
+          rowIdx = this.dataRowIndex(rowElem);
+          rowData = this.settings.dataset[rowIdx];
+        }
+
+        const value = this.fieldValue(rowData, col.field);
         tooltip.content = col.tooltip(rowIdx, cell, value, col, rowData, this);
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
       }
