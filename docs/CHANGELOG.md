@@ -4,6 +4,7 @@
 
 ### v4.31.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 
 ## v4.30.0

@@ -33,6 +33,14 @@
         top: 0;
       }
     }
+
+    .accordion-header {
+      &.is-focused {
+        &:not(.hide-focus) {
+          border-top-color: $accordion-focused-border-color;
+        }
+      }
+    }
   }
 
   .calendar-event-legend {
