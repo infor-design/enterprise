@@ -299,7 +299,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .searchfield {
-        border-color: transparent transparent rgba($searchfield-border-color, 1);
+        border-color: transparent transparent rgba($input-color-focus-border, 1);
       }
 
       .btn {
