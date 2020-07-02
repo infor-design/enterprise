@@ -197,8 +197,12 @@ CalendarToolbar.prototype = {
     const yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
     if (yearFirst) {
       const translation = Locale.formatDate(this.currentDate, { date: 'year', locale: this.locale.name });
-      const justYear = translation.split(' ')[0];
+      const split = translation.split(' ');
+      const justYear = split[0];
 
+      if (split.length === 3) {
+        this.element.find('span.month').attr('data-month', this.currentMonth).text(`${split[1]} ${split[2]}`);
+      }
       this.element.find('span.year').text(`${justYear} `);
       this.element.find('span.year').insertBefore(this.element.find('span.month'));
     }
