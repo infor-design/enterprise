@@ -499,6 +499,8 @@ body.no-scroll {
 
         height: 60px;
         padding: 18px 40px;
+        border: 1px solid transparent;
+        box-shadow: $focus-box-shadow-transparent;
 
         &::-webkit-input-placeholder {
           @include font-size(16);
@@ -514,6 +516,11 @@ body.no-scroll {
 
         &:-ms-input-placeholder {
           @include font-size(16);
+        }
+
+        &:focus {
+          border: 1px solid $header-button-focus-color;
+          box-shadow: $header-focus-box-shadow;
         }
       }
 
