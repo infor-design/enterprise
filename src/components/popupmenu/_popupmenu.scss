@@ -548,6 +548,13 @@
   &.is-multiselectable {
     li {
       @include multiselectable-list-item();
+
+      &.heading,
+      &.separator {
+        &::before {
+          content: none;
+        }
+      }
     }
   }
 }
