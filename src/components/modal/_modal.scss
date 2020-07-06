@@ -69,6 +69,14 @@
     opacity: 1;
   }
 
+  &:not(.hide-underneath) {
+    &.is-visible {
+      @include css3(transform, scale(1, 1));
+
+      opacity: 1;
+    }
+  }
+
   &.is-active {
     pointer-events: auto;
   }

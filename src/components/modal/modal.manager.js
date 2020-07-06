@@ -1,5 +1,8 @@
 const EVENT_NAMESPACE = 'modalmanager';
 
+// Used for z-index tracking
+const zCounter = 1020;
+
 // Checks to see if an object can be identified as a Modal instance.
 // NOTE: This is not 100% accurate, we should find a better way to do this.
 // Pulling in an import of the Modal prototype causes circular dependencies.
@@ -57,8 +60,20 @@ ModalManager.prototype = {
       throw new Error('Cannot set the provided Modal API to currently displayed.');
     }
 
-    this.modals.forEach((thisAPI) => {
+    this.modals.forEach((thisAPI, i) => {
+      // Set Active
       thisAPI.active = ($(thisAPI.element).is(api.element));
+
+      if (thisAPI.active) {
+        // Active Modal sits at the top
+        thisAPI.element[0].style.zIndex = `${(zCounter + i)}`;
+      } else if (thisAPI.visible) {
+        // Inactive Modals are open, but sit behind the overlay
+        thisAPI.element[0].style.zIndex = `${(zCounter - 100 + i)}`;
+      } else {
+        // All others disappear
+        thisAPI.element[0].style.zIndex = '';
+      }
     });
     this.refresh();
   },
@@ -290,7 +305,7 @@ ModalManager.prototype = {
   activateLast() {
     const api = this.last;
     if (api) {
-      api.active = true;
+      this.currentlyActive = api;
     }
     return api;
   },

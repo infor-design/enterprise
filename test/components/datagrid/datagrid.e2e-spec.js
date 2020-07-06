@@ -1224,7 +1224,7 @@ describe('Datagrid paging tests', () => {
   });
 
   it('Should have correct header checkbox states', async () => {
-    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 
@@ -3402,7 +3402,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 

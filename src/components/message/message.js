@@ -35,7 +35,8 @@ const MESSAGE_DEFAULTS = {
   returnFocus: null,
   allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
   audibleLabel: '',
-  overlayOpacity: 0.7
+  overlayOpacity: 0.7,
+  hideUnderneath: false
 };
 
 function Message(element, settings) {
@@ -82,7 +83,8 @@ Message.prototype = {
       resizable: this.settings.resizable,
       close: this.settings.close,
       isAlert: true,
-      overlayOpacity: this.settings.overlayOpacity
+      overlayOpacity: this.settings.overlayOpacity,
+      hideUnderneath: this.settings.hideUnderneath
     });
 
     // Adjust Width if Set as a Setting
