@@ -519,8 +519,7 @@ body.no-scroll {
         }
 
         &:focus {
-          border: 1px solid $header-button-focus-color;
-          box-shadow: $header-focus-box-shadow;
+          box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $button-color-secondary-focus-border, $header-focus-box-shadow;
         }
       }
 
