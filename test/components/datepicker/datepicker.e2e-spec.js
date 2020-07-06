@@ -1827,14 +1827,4 @@ describe('Datepicker translation tests', () => {
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
   });
-
-  it('Should format hu-HU correctly', async () => {
-    await utils.setPage('/components/datepicker/example-index?locale=hu-HU');
-    const datepickerEl = await element(by.id('date-field-normal'));
-    await datepickerEl.sendKeys('2020. 06. 30.');
-    await element(by.css('#date-field-normal + .icon')).click();
-
-    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020. június');
-    expect(await element(by.css('.monthview-table thead')).getText()).toBe('H K SZ CS P SZ V');
-  });
 });
