@@ -236,7 +236,7 @@ Soho.Locale.addCulture('th-TH', {
     Link: { id: 'Link', value: 'ลิงก์', comment: 'Link - as in hyperlink - icon tooltop' },
     Load: { id: 'Load', value: 'โหลด', comment: 'Load icon tooltip' },
     Loading: { id: 'Loading', value: 'กำลังโหลด', comment: 'Text below spinning indicator to indicate loading' },
-    Locale: { id: 'Locale', value: 'Locale', comment: 'The users locale string for example en-US, it-It' },
+    Locale: { id: 'Locale', value: 'สถานที่เกิดเหตุ', comment: 'The users locale string for example en-US, it-It' },
     Locked: { id: 'Locked', value: 'ล็อกแล้ว', comment: 'Locked tooltip' },
     Logout: { id: 'Logout', value: 'ออกจากระบบ', comment: 'Log out of the application' },
     Lookup: { id: 'Lookup', value: 'ค้นหา', comment: 'Lookup - As in looking up a record or value' },

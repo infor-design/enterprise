@@ -30,7 +30,7 @@ Soho.Locale.addCulture('ro-RO', {
     days: {
       wide: ['duminică', 'luni', 'marți', 'miercuri', 'joi', 'vineri', 'sâmbătă'],
       abbreviated: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm'],
-      narrow: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+      narrow: ['D', 'L', 'Ma', 'Mi', 'J', 'V', 'S']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {

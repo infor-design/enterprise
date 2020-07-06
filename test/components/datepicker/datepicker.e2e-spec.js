@@ -1758,3 +1758,83 @@ describe('Datepicker specific language tests', () => {
     expect(await element(by.css('.monthview-table thead th:first-child')).getText()).toEqual('L');
   });
 });
+
+describe('Datepicker translation tests', () => {
+  it('Should format lt-LT correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=lt-lT');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('2020-06-30');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020 m. birželis');
+  });
+
+  it('Should format lv-LV correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=lv-LV');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('30.06.2020');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('Jūnijs 2020');
+  });
+
+  it('Should format ro-RO correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=ro-RO');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('30.06.2020');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('iunie 2020');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('L MA MI J V S D');
+  });
+
+  it('Should format sk-SK correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=sk-SK');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('30. 6. 2020');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('jún 2020');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('P U S Š P S N');
+  });
+
+  it('Should format el-GR correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=el-GR');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('30/6/2020');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('Ιούνιος 2020');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('Δ Τ Τ Π Π Σ Κ');
+  });
+
+  it('Should format zh-TW correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=zh-TW');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('2020/6/30');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
+  });
+
+  it('Should format zh-CN correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=zh-CN');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('2020/6/30');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
+  });
+
+  it('Should format hu-HU correctly', async () => {
+    await utils.setPage('/components/datepicker/example-index?locale=hu-HU');
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('2020. 06. 30.');
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020. június');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('H K SZ CS P SZ V');
+  });
+});

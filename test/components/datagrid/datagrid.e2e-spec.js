@@ -1224,7 +1224,7 @@ describe('Datagrid paging tests', () => {
   });
 
   it('Should have correct header checkbox states', async () => {
-    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 
@@ -3402,7 +3402,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(0);
 
-    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
 
@@ -4431,5 +4431,43 @@ describe('Datagrid with select rows across pages tests', () => {
     expect(await element.all(by.css(allRows)).count()).toEqual(5);
     expect(await element.all(by.css(textSel)).first().getText()).toEqual('2 Selected');
     expect(await element(by.css(row2)).getAttribute('class')).toMatch('is-selected');
+  });
+});
+
+describe('Datagrid treegrid Tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-tooltip?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show tooltip get data with callback', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="10"] td[aria-colindex="4"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Ordered at 7:04 AM This is row: 9 and cell: 3');
+  });
+
+  it('Should show tooltip on text cut off for indented area', async () => {
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="10"] td[aria-colindex="1"]'))).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.grid-tooltip'))), config.waitsFor);
+    const tooltip = await element(by.css('.grid-tooltip'));
+
+    expect(await tooltip.getAttribute('class')).not.toContain('is-hidden');
+    expect(await tooltip.getText()).toEqual('Follow up action with Residental New York');
+    await browser.actions().mouseMove(element(by.css('tbody tr[aria-rowindex="11"] td[aria-colindex="1"]'))).perform();
+    await browser.driver.sleep(config.waitsFor);
+
+    expect(await tooltip.getAttribute('class')).toContain('is-hidden');
   });
 });
