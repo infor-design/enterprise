@@ -10,6 +10,7 @@
 - `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
+- `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 
 ## v4.30.0
