@@ -355,7 +355,7 @@ Breadcrumb.prototype = {
     });
 
     // If markup needs to change, rebind events
-    if (html.children.length) {
+    if (html.children?.length) {
       this.list.appendChild(html);
     }
 
