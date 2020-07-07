@@ -1,3 +1,21 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Tree - Add Node</h2>
+    <p>&bull; Select any tree node and click button below to see in action.<br>
+      &bull; Add to (Top/Bottom) will change type to folder, if parent node not already as folder type.</p>
+    <div class="field">
+      <button id="btn-add" class="btn-secondary btn-menu">
+        <span>Add Node</span>
+      </button>
+      <ul id="popupmenu-add" class="popupmenu">
+        <li><a href="#" data-action="before">Before</a></li>
+        <li><a href="#" data-action="after">After</a></li>
+        <li><a href="#" data-action="top">Top</a></li>
+        <li><a href="#" data-action="bottom">Bottom</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
 <div class="row top-padding">
   <div class="twelve columns">
 
@@ -12,7 +30,7 @@
           <li class="is-open">
               <a href="#" id="leadership">Leadership</a>
               <ul class="is-open">
-                <li class="is-selected">
+                <li>
                   <a href="#" id="managers" class="icon-tree-image">Managers</a>
                 </li>
                 <li>
@@ -78,5 +96,58 @@
   //Wrong escape markup
   api.addNode({text: '<h1>New Item 3</h1>', id: 'new7'});
   api.updateNode({node: $('#new3'), text: '<h1>Changed Item 2</h1>'});
+
+  // ===================================================
+  var tempId = 0;
+
+  function capitalizeFirstLetter(str) {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
+  function getNodeData(option, parentId) {
+    var id = 'addnew-'+ option + tempId;
+    var text = 'New at '+ capitalizeFirstLetter(option) +' ('+ tempId +')';
+    var nodeData = parentId ?
+      { id: id, text: text, parent: parentId } :
+      { id: id, text: text };
+    tempId++;
+    return nodeData;
+  }
+
+  $('#btn-add').on('selected', function(e, anchor) {
+    if (api) {
+      var action = anchor.attr('data-action');
+      var selected = api.getSelectedNodes();
+      var selectedId = selected && selected[0] && selected[0].data ? selected[0].data.id : null;
+      var nodeData;
+
+      switch(action) {
+        case 'bottom':
+          nodeData = getNodeData(action, selectedId);
+          api.addNode(nodeData, 'bottom');
+          break;
+        case 'top':
+          nodeData = getNodeData(action, selectedId);
+          api.addNode(nodeData, 'top');
+          break;
+        case 'before':
+          nodeData = getNodeData(action);
+          if (selectedId) {
+            api.addNode(nodeData, ('#'+ selectedId), 'before');
+          } else {
+            api.addNode(nodeData, 'top'); // top of tree root
+          }
+          break;
+        case 'after':
+          nodeData = getNodeData(action);
+          if (selectedId) {
+            api.addNode(nodeData, ('#'+ selectedId), 'after');
+          } else {
+            api.addNode(nodeData, 'bottom'); // bottom of tree root
+          }
+          break;
+      }
+    }
+  });
 
 </script>
