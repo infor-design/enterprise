@@ -1204,13 +1204,13 @@ describe('Datepicker Umalqura Tests', () => {
   });
 
   it('Should render Umalqura monthview', async () => {
-    await await element(by.id('islamic-date')).sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('islamic-date')).sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver.sleep(config.sleepShort);
 
     expect(await element(by.css('.popup-footer .is-cancel')).getText()).toEqual('مسح');
 
-    await await element(by.css('.hyperlink.today')).click();
+    await element(by.css('.hyperlink.today')).click();
     const value = await element(by.id('islamic-date')).getAttribute('value');
 
     expect([8, 9, 10]).toContain(value.length);
@@ -1786,7 +1786,7 @@ describe('Datepicker specific language tests', () => {
 describe('Datepicker translation tests', () => {
   it('Should format lt-LT correctly', async () => {
     await utils.setPage('/components/datepicker/example-index?locale=lt-lT');
-    await await element(by.id('date-field-normal')).sendKeys('2020-06-30');
+    await element(by.id('date-field-normal')).sendKeys('2020-06-30');
     await element(by.css('#date-field-normal + .icon')).click();
 
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020 m. birželis');

@@ -351,7 +351,7 @@ DatePicker.prototype = {
     elem.off('keydown.datepicker').on('keydown.datepicker', (e) => {
       let handled = false;
       const key = e.keyCode || e.charCode || 0;
-      const value = this.element?.val()?.length || 0;
+      const hasMinusPattern = this.settings?.dateFormat?.indexOf('-') > -1;
 
       // Arrow Down or Alt first opens the dialog
       if (key === 40 && !this.isOpen()) {
@@ -370,13 +370,13 @@ DatePicker.prototype = {
       }
 
       // '-' decrements day
-      if (key === 189 && !e.shiftKey && (value === 0 || value > 9)) {
+      if (key === 189 && !e.shiftKey && (!hasMinusPattern)) {
         handled = true;
         this.adjustDay(false);
       }
 
       // '+' increments day
-      if (key === 187 && e.shiftKey && (value === 0 || value > 9)) {
+      if (key === 187 && e.shiftKey && (!hasMinusPattern)) {
         handled = true;
         this.adjustDay(true);
       }
