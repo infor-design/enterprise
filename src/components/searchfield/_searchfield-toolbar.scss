@@ -294,10 +294,12 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &.active {
-      box-shadow: $focus-box-shadow-bottom;
-
       .inline ~ .icon {
         top: 15px;
+      }
+
+      &.toolbar-searchfield-wrapper {
+        box-shadow: $focus-box-shadow-bottom;
       }
 
       .searchfield {
