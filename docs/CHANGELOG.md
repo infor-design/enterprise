@@ -17,6 +17,7 @@
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
+- `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 
 ## v4.30.0
