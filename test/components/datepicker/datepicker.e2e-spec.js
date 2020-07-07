@@ -1786,8 +1786,7 @@ describe('Datepicker specific language tests', () => {
 describe('Datepicker translation tests', () => {
   it('Should format lt-LT correctly', async () => {
     await utils.setPage('/components/datepicker/example-index?locale=lt-lT');
-    const datepickerEl = await element(by.id('date-field-normal'));
-    await datepickerEl.sendKeys('2020-06-30');
+    await await element(by.id('date-field-normal')).sendKeys('2020-06-30');
     await element(by.css('#date-field-normal + .icon')).click();
 
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020 m. birželis');

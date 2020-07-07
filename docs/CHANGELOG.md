@@ -2,7 +2,7 @@
 
 ## v4.31.0
 
-### v4.30.0 Features
+### v4.31.0 Features
 
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 
