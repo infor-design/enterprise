@@ -34,7 +34,7 @@ describe('Editor example-index tests', () => {
     await sourceElem.sendKeys('<b>Test</b>');
     await element(by.css('button[data-action=visual]')).click();
     await browser.driver.sleep(config.sleep);
-    testText = await await element(by.css('.editor')).getText();
+    testText = await element(by.css('.editor')).getText();
 
     expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('TestTest');
   });

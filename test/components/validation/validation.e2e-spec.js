@@ -625,7 +625,7 @@ describe('Validation just error class tests', () => {
     const field = await element(by.id('test-input'));
 
     expect(await field.getAttribute('class')).toContain('error');
-    await await element(by.id('clear')).click();
+    await element(by.id('clear')).click();
 
     expect(await field.getAttribute('class')).not.toContain('error');
   });
