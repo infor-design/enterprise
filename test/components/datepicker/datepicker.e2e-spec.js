@@ -72,6 +72,30 @@ describe('Datepicker example-index tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual('');
   });
 
+  it('Should show correct number of selected days', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await element(by.css('#date-field-normal + .icon')).click();
+
+    let focusTD = await element(by.css('#monthview-popup td.is-selected'));
+    await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
+    focusTD = await element(by.css('#monthview-popup td.is-selected'));
+    await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.css('.btn-icon.next')).click();
+    await element(by.css('.btn-icon.prev')).click();
+
+    expect(await element.all(by.css('#monthview-popup td.is-selected')).count()).toEqual(1);
+  });
+
+  it('Should advance on +/-', async () => {
+    await element(by.id('date-field-normal')).sendKeys('7/4/2020');
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
+
+    await element(by.id('date-field-normal')).sendKeys(protractor.Key.ADD);
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
+  });
+
   if (!utils.isBS()) {
     it('Should be able to select with arrows and enter', async () => {
       const datepickerEl = await element(by.id('date-field-normal'));

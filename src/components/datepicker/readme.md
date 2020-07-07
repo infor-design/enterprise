@@ -61,7 +61,8 @@ The Date Picker is a complex control to code for accessibility.
 - <kbd>Tab</kbd> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second <kbd>Tab</kbd> will take the user out of the date picker widget. Focus is initially placed on today's date when the calendar is opened.
 - <kbd>Shift + Tab</kbd> reverses the direction of the tab order. Once in the widget, a <kbd>Shift + Tab</kbd> will take the user to the previous focusable element in the tab order
 - <kbd>Up</kbd> and <kbd>Down</kbd> goes to the same day of the week in the previous or next week respectively. If the user advances past the end of the month they continue into the next or previous month as appropriate
-- <kbd>Left</kbd> and <kbd>Right</kbd> advances one day to the next, also in a continuum. Visually, focus is moved from day to day and wraps from row to row in a grid of days and weeks
+- <kbd>Left</kbd> Go to the previous day. Visually, focus is moved from day to day and wraps from row to row in a grid of days and weeks
+- <kbd>Right</kbd> Advances to the next day. Visually, focus is moved from day to day and wraps from row to row in a grid of days and weeks
 - <kbd>Control + Page Up</kbd> moves to the same date in the previous year
 - <kbd>Control + Page Down</kbd> moves to the same date in the next year
 - <kbd>Space</kbd>, in singleton mode, acts as a toggle either selecting or de-selecting the date. In contiguous mode, it behaves similar to selecting a range of text: <kbd>Space</kbd> selects the first date. <kbd>Shift + Arrows</kbd> add to the selection. Pressing <kbd>Space</kbd> again de-selects the previous selections and selects the current focused date. In non-contiguous mode, <kbd>Space</kbd> may be used to select multiple non-contiguous dates
@@ -72,6 +73,8 @@ The Date Picker is a complex control to code for accessibility.
 - <kbd>Enter</kbd> submits the form
 - <kbd>Escape</kbd>, in the case of a popup date picker, closes the widget without any action
 - <kbd>T</kbd> inserts today's date
+- <kbd>+</kbd> Is used to increment the day in the calendar. This is in addition to the <kbd>Right</kbd>. This works both when in the input field or when the calendar picker is open.
+- <kbd>-</kbd>  Is used to increment the day in the calendar. This is in addition to the <kbd>Left</kbd>. This works both when in the input field or when the calendar picker is open.
 
 ## Upgrading from 3.X
 

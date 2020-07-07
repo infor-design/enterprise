@@ -470,7 +470,8 @@ MonthView.prototype = {
           const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
           const newDate = setHours(new Date(year, month, dayCnt));
-          if (newDate === setHours(elementDate) || newDate === setHours(self.currentDate)) {
+          const comparisonDate = self.currentDate || elementDate;
+          if (newDate === setHours(comparisonDate)) {
             setSelected(th, true);
           }
         }
@@ -1378,8 +1379,8 @@ MonthView.prototype = {
         }
       }
 
-      // Arrow Left
-      if (key === 37) {
+      // Arrow Left or - key
+      if (key === 37 || (key === 189 && !e.shiftKey)) {
         handled = true;
         if (s.range.useRange) {
           idx = allCell.index(e.target) - 1;
@@ -1403,8 +1404,8 @@ MonthView.prototype = {
         }
       }
 
-      // Arrow Right
-      if (key === 39) {
+      // Arrow Right or + key
+      if (key === 39 || (key === 187 && e.shiftKey)) {
         handled = true;
         if (s.range.useRange) {
           idx = allCell.index(e.target) + 1;

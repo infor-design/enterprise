@@ -368,6 +368,21 @@ DatePicker.prototype = {
         this.setToday();
       }
 
+      // '-' decrements day
+      if (key === 189 && !e.shiftKey) {
+        handled = true;
+        this.adjustDay(false);
+      }
+
+      console.log('x', key);
+      console.log('x', e.shiftKey);
+
+      // '+' increments day
+      if (key === 187 && e.shiftKey) {
+        handled = true;
+        this.adjustDay(true);
+      }
+
       if (handled) {
         e.stopPropagation();
         e.preventDefault();
@@ -1687,6 +1702,14 @@ DatePicker.prototype = {
   },
 
   /**
+   * Detects whether or not the component is readonly
+   * @returns {boolean} whether or not the component is readonly
+   */
+  isReadonly() {
+    return this.element.prop('readonly');
+  },
+
+  /**
    * Set to todays date in current format.
    * @private
    * @param {boolean} keepFocus if true keep focus on calendar
@@ -1696,6 +1719,10 @@ DatePicker.prototype = {
     const s = this.settings;
     this.lastValue = null;
     this.currentDate = new Date();
+
+    if (this.isReadonly() || this.isDisabled()) {
+      return;
+    }
 
     if (!this.settings.useCurrentTime) {
       this.currentDate = this.setTime(this.currentDate);
@@ -1756,6 +1783,40 @@ DatePicker.prototype = {
         this.element.trigger('change').trigger('input');
       }
     }
+  },
+
+  /**
+   * Set the date to one more or one less day.
+   * @param  {boolean} plusMinus True for increment, false for decrement
+   */
+  adjustDay(plusMinus) {
+    if (this.isReadonly() || this.isDisabled()) {
+      return;
+    }
+
+    if (!this.currentDate) {
+      this.setToday();
+    }
+    const options = { pattern: this.pattern, locale: this.locale.name };
+    let currentDate = this.isIslamic ? this.currentDateIslamic : this.currentDate;
+    if (this.isIslamic) {
+      currentDate[2] += (plusMinus ? 1 : -1);
+      currentDate = Locale.umalquraToGregorian(
+        this.currentDateIslamic[0],
+        this.currentDateIslamic[1],
+        this.currentDateIslamic[2],
+        this.currentDateIslamic[3],
+        this.currentDateIslamic[4],
+        this.currentDateIslamic[5],
+        this.currentDateIslamic[6]
+      );
+      currentDate.setDate(currentDate.getDate() + (plusMinus ? 1 : -1));
+      currentDate = Locale.gregorianToUmalqura(currentDate);
+    } else {
+      currentDate.setDate(currentDate.getDate() + (plusMinus ? 1 : -1));
+    }
+    this.element.val(Locale.formatDate(currentDate, options));
+    this.element.trigger('change').trigger('input');
   },
 
   /**
