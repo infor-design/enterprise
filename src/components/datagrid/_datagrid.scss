@@ -2724,7 +2724,7 @@ $datagrid-small-row-height: 25px;
       background-color: $datagrid-header-active-color;
     }
 
-    //Editing and Focus State
+    // Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
       color: $datagrid-header-color;
@@ -2755,7 +2755,7 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  //Grouped Headers
+  // Grouped Headers
   thead tr + tr th {
     border-top: 1px solid $datagrid-header-border-color;
   }
@@ -2796,7 +2796,7 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  //Column Resize
+  // Column Resize
   .datagrid-column-wrapper {
     display: table;
     height: 35px;
@@ -2817,7 +2817,7 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  //Datagrid filterrow
+  // Datagrid filterrow
   .is-filterable {
     .datagrid-column-wrapper {
       &.l-right-text {
@@ -3266,6 +3266,11 @@ td .btn-actions {
 
   &.is-checked::before {
     @include checkbox-checked-before-style;
+  }
+
+  &:focus::before {
+    border: solid 1px $theme-color-palette-azure-40 !important;
+    box-shadow: 0 0 4px 3px rgba(105, 181, 221, 0.3);
   }
 
   &.is-checked::after {

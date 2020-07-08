@@ -244,6 +244,7 @@ PopupMenu.prototype = {
             this.menu.attr('id', `popupmenu-${this.id}`);
             id = this.menu.attr('id');
           }
+          triggerId = this.element.attr('id');
           break;
         default:
           break;
@@ -282,7 +283,8 @@ PopupMenu.prototype = {
 
     if (!this.menu.is('.popupmenu')) {
       this.menu.addClass('popupmenu')
-        .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'));
+        .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
+        .attr('aria-labelledby', triggerId);
     }
 
     // Always store a reference to the trigger element under jQuery data.
@@ -679,6 +681,7 @@ PopupMenu.prototype = {
     const lis = contextElement.find('li:not(.heading):not(.separator)');
     let hasIcons = false;
     contextElement[0].setAttribute('role', 'menu');
+    contextElement[0].setAttribute('aria-labelledby', this.element.attr('id'));
 
     lis.each((i, li) => {
       const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
@@ -687,9 +690,10 @@ PopupMenu.prototype = {
       const icon = $(li).find('.icon:not(.close):not(.icon-dropdown)');
       const submenuWrapper = $(li).children('.wrapper')[0];
 
-      li.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
+      li.setAttribute('role', 'none');
 
       if (a) {
+        a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
         a.setAttribute('tabindex', '-1');
 
         // disabled menu items, by prop and by className
@@ -2423,6 +2427,7 @@ PopupMenu.prototype = {
     if (document.activeElement && document.activeElement.tagName === 'INPUT') {
       return;
     }
+
     if (this.element) {
       this.element.focus();
     }

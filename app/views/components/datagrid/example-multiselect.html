@@ -33,8 +33,8 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
@@ -43,8 +43,9 @@
       gridApi = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
+        filterable: true,
         selectable: 'multiple',
-        toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, actions: true, rowHeight: true, selectCount: true}
+        toolbar: {title: 'Data Grid Header Title', filterRow: true, personalize: true, results: true, actions: true, rowHeight: true, selectCount: true}
       }).on('selected', function (e, args, action) {
         console.log(args, action);
       }).data('datagrid');

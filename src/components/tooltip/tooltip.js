@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { keyboard } from '../../utils/keyboard';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
@@ -25,7 +26,8 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string|function} [settings.content] Takes title attribute or feed content. Can be a string or jQuery markup.
  * @param {object} [settings.offset={top: 10, left: 10}] How much room to leave.
  * @param {string} [settings.placement='top'] Supports 'top'|'bottom'|'right'|'offset'.
- * @param {string} [settings.trigger='hover'] Supports click and immediate and hover (and maybe in future focus).
+ * @param {string} [settings.trigger='hover'] Supports click and immediate and hover and focus
+ * @param {string} [settings.showOnKeyboardFocus] If the object with the tooltip is tabbed to, will also show the tooltip.
  * @param {string} [settings.title] Title for Infor Tips.
  * @param {string} [settings.beforeShow] Call back for ajax tooltip.
  * @param {string} [settings.onHidden] Call back for hiding.
@@ -44,12 +46,12 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  * @param {string} [settings.delay] The delay before showing the tooltip
  */
-
 const TOOLTIP_DEFAULTS = {
   content: null,
   offset: { top: 10, left: 10 },
   placement: 'top',
   trigger: TOOLTIP_TRIGGER_METHODS[0],
+  showOnKeyboardFocus: true,
   title: null,
   beforeShow: null,
   popover: null,
@@ -313,6 +315,21 @@ Tooltip.prototype = {
         .on(`updated.${COMPONENT_NAME}`, () => {
           self.updated();
         });
+
+      if (this.settings.showOnKeyboardFocus) {
+        ((this.element.is('.dropdown, .multiselect, span.longpress-target')) ? this.activeElement : this.element)
+          .on(`focus.${COMPONENT_NAME}`, () => {
+            if (self.isTouch && !keyboard.pressedKeys.get('Tab')) {
+              return;
+            }
+            showOnTimer();
+          })
+          .on(`blur.${COMPONENT_NAME}`, () => {
+            if (!self.settings.keepOpen) {
+              hideImmediately();
+            }
+          });
+      }
     }
 
     function toggleTooltipDisplay() {

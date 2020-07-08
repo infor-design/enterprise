@@ -1085,6 +1085,24 @@ describe('Datagrid multiselect tests', () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
   });
 
+  it('Should have aria-checked and not aria-selected', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-selected')).toEqual(null);
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('aria-selected')).toEqual('true');
+  });
+
+  it('Should be able to tab into the header checkbox.', async () => {
+    await element.all(by.css('.container .toolbar .btn-actions')).first().click();
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+    const cellEl = await browser.driver.switchTo().activeElement();
+
+    await cellEl.sendKeys(protractor.Key.SPACE);
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('7 Selected');
+  });
+
   it('Should work with sort', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
@@ -2472,6 +2490,19 @@ describe('Datagrid contextmenu tests', () => {
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
+  });
+
+  it('Should focus return to the cell on escape', async () => {
+    const td = await element(by.css('#readonly-datagrid .datagrid-row:nth-child(4) td:nth-child(5)')).getLocation();
+    await browser.actions().mouseMove(td).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#grid-actions-menu'))), config.waitsFor);
+    await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    const cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getText()).toEqual('9');
   });
 
   if (!utils.isCI() && !utils.isBS()) {
