@@ -87,8 +87,9 @@ BreadcrumbItem.prototype = {
 
     // href
     if (typeof this.settings.href === 'string') {
-      a.href = this.settings.href;
-      a.setAttribute('href', this.settings.href);
+      const cleanHref = typeof this.settings.href === 'string' ? xssUtils.stripHTML(this.settings.href) : undefined;
+      a.href = cleanHref;
+      a.setAttribute('href', cleanHref);
     } else {
       a.href = undefined;
       a.removeAttribute('href');

@@ -896,10 +896,10 @@ TimePicker.prototype = {
    * @returns {void}
    */
   setTimeOnField() {
-    const hours = $(`#${this.hoursId}`).val() || '';
-    const minutes = $(`#${this.minutesId}`).val() || '';
-    const seconds = $(`#${this.secondsId}`).val() || '';
-    let period = ($(`#${this.periodId}`).val() || '').toUpperCase();
+    const hours = this.hourSelect ? this.hourSelect[0]?.value : '';
+    const minutes = this.minuteSelect ? this.minuteSelect[0]?.value : '';
+    const seconds = this.secondSelect ? this.secondSelect[0]?.value : '';
+    let period = (this.periodSelect ? this.periodSelect[0]?.value : '').toUpperCase();
     const sep = this.getTimeSeparator();
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
@@ -981,10 +981,10 @@ TimePicker.prototype = {
    */
   onPopupHide() {
     if (this.settings.mode === 'standard') {
-      const ddHours = $(`#${this.hoursId}`);
-      const ddMinutes = $(`#${this.minutesId}`);
-      const ddSeconds = $(`#${this.secondsId}`);
-      const ddPeriod = $(`#${this.periodId}`);
+      const ddHours = this.hourSelect;
+      const ddMinutes = this.minuteSelect;
+      const ddSeconds = this.secondSelect;
+      const ddPeriod = this.periodSelect;
 
       if (ddHours && ddHours.data('dropdown') &&
         typeof ddHours.data('dropdown').destroy === 'function') {
