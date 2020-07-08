@@ -253,7 +253,7 @@ describe('Listview example-mixed selection tests', () => {
   });
 
   it('Should activate element on click outside of checkbox', async () => {
-    await await element(by.css('li[aria-posinset="1"]')).click();
+    await element(by.css('li[aria-posinset="1"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-activated'))), config.waitsFor);
 
@@ -368,7 +368,7 @@ describe('Listview example-index tests', () => {
   });
 
   it('Should do nothing on a disabled item', async () => {
-    await await element(by.css('li.is-disabled')).click();
+    await element(by.css('li.is-disabled')).click();
 
     expect(await element(by.css('li.is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
   });

@@ -1,0 +1,52 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <h2>Tree - Remove all children & update</h2>
+    <p>&bull; After pressing button below will remove all children from `Leadership`.<br>
+    &bull; As the node no longer has any children, it will show as a leaf node.</p>
+    <button type="button" id="btn-remove-update-node" class="btn-secondary">Remove all children &amp; update</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <ul id="tree" class="tree" role="tree" aria-label="Asset Types" data-init="false">
+      <li><a href="#" id="home">Home</a></li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li><a href="#" id="new1">New Item 1</a></li>
+                <li><a href="#" id="new2">New Item 2</a></li>
+              </ul>
+          </li>
+          <li class="is-open">
+            <a href="#" id="hr">HR</a>
+        </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var tree = $('#tree').tree().data('tree');
+
+  // Remove node
+  $('#btn-remove-update-node').on('click', function () {
+    tree.removeNode({id: 'new1'});
+    tree.removeNode({id: 'new2'});
+    const node = tree.findById('leadership');
+
+    // children: null|[] - To show as leaf node, has to pass children property and value can be `null` or `[] -an empty array`.
+    node.children = null;
+
+    tree.updateNode(node);
+    $(this).disable(); // let it trigger onetime only
+    console.log('Node Removed');
+  });
+
+</script>

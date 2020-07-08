@@ -87,8 +87,9 @@ BreadcrumbItem.prototype = {
 
     // href
     if (typeof this.settings.href === 'string') {
-      a.href = this.settings.href;
-      a.setAttribute('href', this.settings.href);
+      const cleanHref = typeof this.settings.href === 'string' ? xssUtils.stripHTML(this.settings.href) : undefined;
+      a.href = cleanHref;
+      a.setAttribute('href', cleanHref);
     } else {
       a.href = undefined;
       a.removeAttribute('href');
@@ -355,7 +356,7 @@ Breadcrumb.prototype = {
     });
 
     // If markup needs to change, rebind events
-    if (html.children.length) {
+    if (html.children?.length) {
       this.list.appendChild(html);
     }
 

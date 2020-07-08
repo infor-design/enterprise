@@ -94,7 +94,7 @@ describe('Busy Indicator test-block-entire-ui tests', () => {
     const bodyEl = await element(by.tagName('body'));
     await bodyEl.sendKeys(protractor.Key.NUMPAD1);
 
-    expect(await await element(by.id('busy-field-address')).getAttribute('value')).not.toEqual('1');
+    expect(await element(by.id('busy-field-address')).getAttribute('value')).not.toEqual('1');
   });
 });
 

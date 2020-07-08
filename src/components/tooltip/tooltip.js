@@ -45,6 +45,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {boolean} [settings.initializeContent] Init the content in the tooltip.
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  * @param {string} [settings.delay] The delay before showing the tooltip
+ * @param {string} [settings.attachToBody] The if true (default) the popup is added to the body. In some cases like popups with tab stops you may want to append the element next to the item.
  */
 const TOOLTIP_DEFAULTS = {
   content: null,
@@ -67,7 +68,8 @@ const TOOLTIP_DEFAULTS = {
   initializeContent: true,
   headerClass: null,
   delay: 500,
-  onHidden: null
+  onHidden: null,
+  attachToBody: true
 };
 
 function Tooltip(element, settings) {
@@ -444,7 +446,9 @@ Tooltip.prototype = {
       // Could be an ID attribute.
       // If it matches an element already on the page, grab that element's content
       // and store the reference only.
-      if (content.indexOf('#') === 0) {
+      // Adding a condition if it's really uses the ID attribute.
+      const idAttr = this.element[0].id;
+      if (content.indexOf('#') === 0 && idAttr === content.split('#').pop()) {
         const contentCheck = $(`${content}`);
         if (contentCheck.length) {
           this.content = contentCheck;
@@ -822,7 +826,7 @@ Tooltip.prototype = {
     // If the tooltip/popover is located inside a Modal, contain it within the modal, but
     // place its markup directly after its target element.
     const modalParent = this.element.closest('.modal');
-    if (modalParent.length) {
+    if (!this.settings.attachToBody) {
       attachAfterTriggerElem = true;
       targetContainer = modalParent;
     }

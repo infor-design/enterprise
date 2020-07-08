@@ -2,6 +2,11 @@
 
 ## v4.31.0
 
+### v4.31.0 Features
+
+- `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
+- `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
+
 ### v4.31.0 Fixes
 
 - `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
@@ -19,6 +24,15 @@
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Popupmenu]` Fixed a bug that the aria items are in the wrong place. Its now using [this guide](https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html). ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Tooltip]` Fixed an issue where the tooltip would not show up if you focus a button with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
+- `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
+- `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
+- `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
+- `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
+- `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
+- `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
+- `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
+- `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
+- `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
 
 ## v4.30.0
 
