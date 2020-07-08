@@ -40,11 +40,11 @@
 
 					<div class="field">
 						<button id="popover-trigger" class="btn-secondary" type="button">
-			        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-			          <use href="#icon-upload"></use>
-			        </svg>
-			        <span>Click To Show Popover</span>
-			      </button>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-upload"></use>
+              </svg>
+              <span>Click To Show Popover</span>
+              </button>
 					</div>
 
 					<div class="field">
@@ -53,15 +53,15 @@
 					</div>
 				</div>
 				<div class="six columns">
-					<div class="field">
-			      <label for="searchfield">Search</label>
-			      <input id="searchfield" class="searchfield" placeholder="Type a search term" data-options="{ clearable: true, source: '{{basepath}}api/states?term='  }"/>
-			    </div>
+          <div class="field">
+            <label for="searchfield">Search</label>
+            <input id="searchfield" class="searchfield" placeholder="Type a search term" data-options="{ clearable: true, source: '{{basepath}}api/states?term='  }"/>
+          </div>
 
 					<div class="field">
-			      <label for="colorpicker">Colorpicker</label>
-			      <input class="colorpicker" id="colorpicker" type="text" />
-			    </div>
+            <label for="colorpicker">Colorpicker</label>
+            <input class="colorpicker" id="colorpicker" type="text" />
+          </div>
 
 					<div class="field">
 						<label for="datepicker" class="label">Datepicker</label>
@@ -69,9 +69,9 @@
 					</div>
 
 					<div class="field">
-			      <label for="timepicker" class="label">Timepicker</label>
-			      <input id="timepicker" class="timepicker" type="text"/>
-			    </div>
+            <label for="timepicker" class="label">Timepicker</label>
+            <input id="timepicker" class="timepicker" type="text"/>
+          </div>
 				</div>
 			</div>
 		</div>
@@ -117,7 +117,8 @@
 			y: 10
 		},
 		title: 'ABC Engine Company',
-		trigger: 'click'
+		trigger: 'click',
+    attachToBody: false
 	};
 
 	$('#popover-trigger').popover(POPOVER_OPTIONS);
