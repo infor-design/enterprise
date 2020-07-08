@@ -1231,10 +1231,10 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = xssUtils.stripTags($(`[name="em-url-${this.id}"]`).val());
-    const emClass = xssUtils.stripTags($(`[name="em-class-${this.id}"]`).val());
-    const emTarget = xssUtils.stripTags($(`[name="em-target-${this.id}"]`).val());
-    const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
+    const emUrl = xssUtils.stripTags(document.querySelector(`[name="em-url-${this.id}"]`).value);
+    const emClass = xssUtils.stripTags(document.querySelector(`[name="em-class-${this.id}"]`).value);
+    const emTarget = xssUtils.stripTags(document.querySelector(`[name="em-target-${this.id}"]`).value);
+    const emIsClickable = this.settings.anchor.showIsClickable ? document.querySelector(`[name="em-isclickable-${this.id}"]`).checked : this.settings.anchor.isClickable;
 
     if (alink) {
       alink[0].setAttribute('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));

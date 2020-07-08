@@ -72,6 +72,22 @@
   }
 }
 
+.lookup-modal {
+  .toolbar-searchfield-wrapper {
+    &.has-focus {
+      &.active {
+        &.toolbar-searchfield-wrapper {
+          box-shadow: none;
+        }
+
+        .searchfield {
+          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        }
+      }
+    }
+  }
+}
+
 .field,
 .field-short {
   .lookup-wrapper {
