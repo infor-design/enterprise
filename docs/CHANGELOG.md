@@ -5,6 +5,7 @@
 ### v4.31.0 Features
 
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
+- `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
 
 ### v4.31.0 Fixes
 
@@ -19,6 +20,7 @@
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
+- `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
 
 ## v4.30.0
 

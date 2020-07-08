@@ -302,8 +302,10 @@ Tree.prototype = {
 
       if (this.hasIconClass(a)) {
         aClass = a[0].getAttribute('class');
-        this.setTreeIcon(a.find('svg.icon-tree'), DOM.hasClass(subNode[0], 'is-open') ?
-          aClass : aClass.replace('open', 'closed'));
+        if (/open|close/g.test(aClass) || !subNode[0] || this.settings.useExpandTarget) {
+          this.setTreeIcon(a.find('svg.icon-tree'), DOM.hasClass(subNode[0], 'is-open') ?
+            aClass : aClass.replace('open', 'closed'));
+        }
       }
     }
 
@@ -323,7 +325,7 @@ Tree.prototype = {
     }
     svg = this.isjQuery(svg) ? svg : $(svg);
     // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
-    const iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
+    const iconStr = icon.replace(/#?icon-|hide-focus|is-selected|is-active|\s?/gi, '');
     svg.changeIcon(iconStr);
   },
 
@@ -720,13 +722,13 @@ Tree.prototype = {
         node.closest('.folder').removeClass('is-open');
         self.setFolderIcon(node, false, false, s.expandPlusminusRotate);
 
-        if (self.hasIconClass(node.closest('.folder a'))) {
-          self.setTreeIcon(
-            node.closest('.folder a').find('svg.icon-tree'),
-            node.closest('.folder a').attr('class')
-              .replace('open', 'closed')
-              .replace(/\s?is-selected/, '')
-          );
+        const parentNode = node.closest('.folder a');
+        if (self.hasIconClass(parentNode)) {
+          const nodeClass = parentNode.attr('class');
+          if (/open|close/g.test(nodeClass) || this.settings.useExpandTarget) {
+            self.setTreeIcon(parentNode.find('svg.icon-tree'),
+              nodeClass.replace('open', 'closed').replace(/\s?is-selected/, ''));
+          }
         }
 
         self.isAnimating = true;
@@ -813,7 +815,10 @@ Tree.prototype = {
     this.setFolderIcon(node, true, false, this.settings.expandPlusminusRotate);
 
     if (this.hasIconClass(nodeClass)) {
-      this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
+      const isTypeFolder = next[0] && next[0].tagName.toLowerCase() === 'ul';
+      if (/open|close/g.test(nodeClass) || !isTypeFolder || this.settings.useExpandTarget) {
+        this.setTreeIcon(node.find('svg.icon-tree'), nodeClass.replace('is-selected', ''));
+      }
     }
 
     this.isAnimating = true;
@@ -1947,17 +1952,34 @@ Tree.prototype = {
     }
 
     // Insert node in between the node
-    if (location instanceof jQuery && isBeforeOrAfter === 'before') {
-      $(li).insertBefore(location);
-      found = true;
-    } else if (location instanceof jQuery && isBeforeOrAfter === 'after') {
-      $(li).insertAfter(location);
-      found = true;
+    if (location) {
+      let locationToAdd;
+      if (typeof location === 'string' &&
+        !/^(top|bottom|before|after)$/g.test(location)) {
+        locationToAdd = $(/\.|#/.test(location[0]) ? location : `#${location}`).first();
+      } else {
+        locationToAdd = location instanceof jQuery ? location : $(location);
+      }
+
+      if (locationToAdd.length) {
+        if (isBeforeOrAfter === 'before') {
+          $(li).insertBefore(locationToAdd.is('li') ? locationToAdd : locationToAdd.closest('li'));
+          found = true;
+        }
+        if (isBeforeOrAfter === 'after') {
+          $(li).insertAfter(locationToAdd.is('li') ? locationToAdd : locationToAdd.closest('li'));
+          found = true;
+        }
+        if (isBeforeOrAfter === 'top' && locationToAdd.is('ul')) {
+          locationToAdd.prepend(li);
+          found = true;
+        }
+      }
     }
 
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery) &&
-      !(isBeforeOrAfter === 'before' || isBeforeOrAfter === 'after')) {
+      !/^(top|bottom|before|after)$/g.test(isBeforeOrAfter)) {
       location[0].appendChild(li);
       found = true;
     }
@@ -1972,13 +1994,14 @@ Tree.prototype = {
 
     // Support ParentId in JSON Like jsTree
     if (nodeData.parent) {
+      const locationToAdd = location === 'top' ? location : null;
       if (found && typeof nodeData.parent === 'string') {
         li = this.element.find(`#${nodeData.parent}`).parent();
 
         if (!nodeData.disabled && li.is('.is-selected') && typeof nodeData.selected === 'undefined') {
           nodeData.selected = true;
         }
-        this.addAsChild(nodeData, li);
+        this.addAsChild(nodeData, li, locationToAdd);
       }
 
       if (nodeData.parent && nodeData.parent instanceof jQuery) {
@@ -1986,7 +2009,7 @@ Tree.prototype = {
         if (nodeData.parent.is('a')) {
           li = nodeData.parent.parent();
         }
-        this.addAsChild(nodeData, li);
+        this.addAsChild(nodeData, li, locationToAdd);
       }
       if (this.isjQuery(li)) {
         nodeData.node = li.find(`ul li a#${nodeData.id}`);
@@ -2016,9 +2039,10 @@ Tree.prototype = {
    * @private
    * @param {object} nodeData data for node to be added.
    * @param {object} li parent node to add node.
+   * @param {string} location top|bottom optional.
    * @returns {void}
    */
-  addAsChild(nodeData, li) {
+  addAsChild(nodeData, li, location) {
     li = this.isjQuery(li) ? li[0] : li;
     let ul = li.querySelector('ul');
     const isFolder = !!ul;
@@ -2037,7 +2061,7 @@ Tree.prototype = {
     }
 
     nodeData.parent = '';
-    this.addNode(nodeData, $(ul));
+    this.addNode(nodeData, $(ul), location);
   },
 
   /**
@@ -2097,6 +2121,7 @@ Tree.prototype = {
     const nodetext = elem.node[0].querySelector('.tree-text');
     const isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled);
     const isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
+    const isChildrenNull = nodeData.children === null;
 
     // Update badge
     if (nodeData.badge) {
@@ -2200,8 +2225,9 @@ Tree.prototype = {
       this.syncDataset();
     }
 
-    if (nodeData.children) {
-      if (nodeData.children.length) {
+    // children: null|[] - To remove children key/value and show as leaf node, has to pass children property and value can be `null` or `[] -an empty array`.
+    if (nodeData.children || isChildrenNull) {
+      if (nodeData.children?.length) {
         this.addChildNodes(nodeData, parent);
       } else {
         this.removeChildren(nodeData, parent);
