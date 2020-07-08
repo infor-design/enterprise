@@ -56,8 +56,13 @@ excel.cleanExtra = function (customDs, self) {
         const innerElements = [].slice.call(el.querySelectorAll('.is-hidden, .datagrid-expand-btn, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper'));
         innerElements.forEach(innerEl => removeNode(innerEl));
 
-        while (el.attributes.length > 0) {
-          el.removeAttribute(el.attributes[0].name);
+        let keepAttributes = 0;
+        while (el.attributes.length > keepAttributes) {
+          if (el.attributes[keepAttributes].name === 'colspan') {
+            keepAttributes++;
+          } else {
+            el.removeAttribute(el.attributes[keepAttributes].name);
+          }
         }
 
         // White Hat Security Violation. Remove Excel formulas
@@ -205,9 +210,121 @@ excel.appendRows = function (dataset, table, self) {
     }
   };
 
-  dataset.forEach((d, i) => {
-    appendRow(d, i);
-  });
+  // Handle Grouping
+  if (self.settings.groupable) {
+    let recordCount = 0;
+
+    for (let i = 0; i < dataset.length; i++) {
+      let tableHtmlCenter = '';
+      let tableHtmlLeft = '';
+      let tableHtmlRight = '';
+
+      // Filter and sorted
+      if (dataset[i].values) {
+        const thisLength = dataset[i].values.length;
+        let thisFilterCount = 0;
+        for (let k = 0; k < thisLength; k++) {
+          if (dataset[i].values[k]._isFilteredOut) {
+            thisFilterCount++;
+          }
+        }
+        if (thisFilterCount === thisLength) {
+          continue;
+        }
+      }
+
+      // First push group row
+      if (!self.settings.groupable.suppressGroupRow) {
+        // Show the grouping row
+        const groupHtml = self.rowHtml(dataset[i], recordCount, i, true);
+        if (self.hasLeftPane && groupHtml.left) {
+          tableHtmlLeft += groupHtml.left;
+        }
+        if (groupHtml.center) {
+          tableHtmlCenter += groupHtml.center;
+        }
+        if (self.hasRightPane && groupHtml.right) {
+          tableHtmlRight += groupHtml.right;
+        }
+        const tr = document.createElement('tr');
+        tr.innerHTML = tableHtmlLeft + tableHtmlCenter + tableHtmlRight;
+        tableHtml += tr.outerHTML;
+      }
+
+      if (self.settings.groupable.showOnlyGroupRow && dataset[i].values[0]) {
+        const rowData = dataset[i].values[0];
+
+        if (dataset[i].list) {
+          rowData.list = dataset[i].list;
+        }
+
+        rowData.values = dataset[i].values;
+        const groupHtml = self.rowHtml(rowData, recordCount, i);
+        if (self.hasLeftPane && groupHtml.left) {
+          tableHtmlLeft += groupHtml.left;
+        }
+        if (groupHtml.center) {
+          tableHtmlCenter += groupHtml.center;
+        }
+        if (self.hasRightPane && groupHtml.right) {
+          tableHtmlRight += groupHtml.right;
+        }
+        const tr = document.createElement('tr');
+        tr.innerHTML = tableHtmlLeft + tableHtmlCenter + tableHtmlRight;
+        tableHtml += tr.outerHTML;
+
+        recordCount++;
+        continue;
+      }
+
+      // Now Push Groups
+      for (let k = 0; k < dataset[i].values.length; k++) {
+        if (!dataset[i].values[k]._isFilteredOut) {
+          const rowHtml = self.rowHtml(
+            dataset[i].values[k],
+            recordCount,
+            dataset[i].values[k].idx
+          );
+          if (self.hasLeftPane && rowHtml.left) {
+            tableHtmlLeft = rowHtml.left;
+          }
+          if (rowHtml.center) {
+            tableHtmlCenter = rowHtml.center;
+          }
+          if (self.hasRightPane && rowHtml.right) {
+            tableHtmlRight = rowHtml.right;
+          }
+          const tr = document.createElement('tr');
+          tr.innerHTML = tableHtmlLeft + tableHtmlCenter + tableHtmlRight;
+          tableHtml += tr.outerHTML;
+
+          recordCount++;
+        }
+      }
+
+      // Now Push summary rowHtml
+      if (self.settings.groupable.groupFooterRow) {
+        const rowHtml = self.rowHtml(dataset[i], recordCount, i, true, true);
+        if (self.hasLeftPane && rowHtml.left) {
+          tableHtmlLeft += rowHtml.left;
+        }
+        if (rowHtml.center) {
+          tableHtmlCenter += rowHtml.center;
+        }
+        if (self.hasRightPane && rowHtml.right) {
+          tableHtmlRight += rowHtml.right;
+        }
+        const tr = document.createElement('tr');
+        tr.innerHTML = tableHtmlLeft + tableHtmlCenter + tableHtmlRight;
+        tableHtml += tr.outerHTML;
+      }
+    }
+  } else {
+    // Non-Grouping settings
+    dataset.forEach((d, i) => {
+      appendRow(d, i);
+    });
+  }
 
   body.insertAdjacentHTML('beforeend', tableHtml);
   return tableJq;
