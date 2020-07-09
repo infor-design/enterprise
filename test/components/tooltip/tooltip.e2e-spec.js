@@ -23,11 +23,7 @@ describe('Tooltips index page tests', () => {
   });
 
   it('should display when tabbing in', async () => {
-    await browser.actions()
-      .mouseMove(await element(by.css('.six h2')))
-      .click().perform();
-
-    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.driver.switchTo().activeElement().sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
 
