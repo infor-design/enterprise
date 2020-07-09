@@ -1288,9 +1288,9 @@ Datagrid.prototype = {
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
-          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" tabindex="0"></span>';
         } else {
-          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none" tabindex="0"></span>';
         }
       }
 
@@ -4720,12 +4720,12 @@ Datagrid.prototype = {
 
     // Bind events
     this.element
-      .off('mouseenter.gridtooltip', selector.str)
-      .on('mouseenter.gridtooltip', selector.str, function () {
+      .off('mouseenter.gridtooltip focus.gridtooltip', selector.str)
+      .on('mouseenter.gridtooltip focus.gridtooltip', selector.str, function () {
         handleShow(this);
       })
-      .off('mouseleave.gridtooltip click.gridtooltip', selector.str)
-      .on('mouseleave.gridtooltip click.gridtooltip', selector.str, function () {
+      .off('mouseleave.gridtooltip click.gridtooltip blur.gridtooltip', selector.str)
+      .on('mouseleave.gridtooltip click.gridtooltip blur.gridtooltip', selector.str, function () {
         handleHide(this);
       })
       .off('longpress.gridtooltip', selector.str)
@@ -4736,7 +4736,6 @@ Datagrid.prototype = {
       .on('keydown.gridtooltip', selector.str, function (e) {
         const key = e.which || e.keyCode || e.charCode || 0;
         let handle = false;
-
         if (e.shiftKey && key === 112) { // Shift + F1
           handleShow(this, 0);
         } else if (key === 27) { // Escape
@@ -6213,7 +6212,8 @@ Datagrid.prototype = {
     * @property {object} args.item The current sort column.
     * @property {object} args.originalEvent The original event object.
     */
-    this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody tr', (e) => {
+    this.element.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tbody td', (e) => {
+      const td = $(e.currentTarget);
       e.stopPropagation();
       self.closePrevPopupmenu();
       self.triggerRowEvent('contextmenu', e, (!!self.settings.menuId));
@@ -6224,7 +6224,13 @@ Datagrid.prototype = {
       }
       e.preventDefault();
 
-      $(e.currentTarget).popupmenu({
+      self.setActiveCell(
+        parseInt(td.parent().attr('aria-rowindex'), 10) - 1,
+        parseInt(td.attr('aria-colindex'), 10) - 1
+      );
+      self.activeCell.node.focus();
+
+      td.popupmenu({
         menuId: self.settings.menuId,
         eventObj: e,
         beforeOpen: self.settings.menuBeforeOpen,
@@ -7066,7 +7072,6 @@ Datagrid.prototype = {
     elem.addClass(selectClasses).attr('aria-selected', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
       .addClass('is-checked').attr('aria-checked', 'true')
-      .attr('aria-selected', 'true')
       .attr('aria-label', 'Selected');
 
     if (data) {
@@ -7522,7 +7527,9 @@ Datagrid.prototype = {
     }
 
     if (this._selectedRows.length === 0) {
-      this.contextualToolbar.animateClosed();
+      this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+        this.contextualToolbar.css('display', 'none');
+      }).animateClosed();
     }
 
     if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
@@ -7853,7 +7860,6 @@ Datagrid.prototype = {
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked no-animate')
           .attr('aria-checked', 'false')
-          .removeAttr('aria-selected')
           .removeAttr('aria-label');
       }
 
@@ -9827,7 +9833,8 @@ Datagrid.prototype = {
         target: cellNode,
         value: coercedVal,
         oldValue: oldVal,
-        column: col
+        column: col,
+        api: this
       };
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
@@ -10287,7 +10294,7 @@ Datagrid.prototype = {
     * @property {number} args.cell The selected cell
     * @property {number} args.row The selected row
     */
-    self.element.trigger('activecellchange', [{ node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell }]);
+    self.element.trigger('activecellchange', { node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell, api: self });
   },
 
   /**

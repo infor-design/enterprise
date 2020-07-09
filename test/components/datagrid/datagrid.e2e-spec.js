@@ -1085,6 +1085,23 @@ describe('Datagrid multiselect tests', () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
   });
 
+  it('Should have aria-checked and not aria-selected', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
+
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-selected')).toEqual(null);
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('aria-selected')).toEqual('true');
+  });
+
+  it('Should be able to tab into the header checkbox.', async () => {
+    await browser.driver.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+    await browser.driver.switchTo().activeElement().sendKeys(protractor.Key.TAB);
+    await browser.driver.switchTo().activeElement().sendKeys(protractor.Key.SPACE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.selection-count')).getText()).toEqual('7 Selected');
+  });
+
   it('Should work with sort', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
@@ -2500,6 +2517,22 @@ describe('Datagrid contextmenu tests', () => {
 
       expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).getText()).toBe('Action Four');
       expect(await element(by.css('#grid-actions-menu .submenu ul > li:nth-child(1)')).isDisplayed()).toBeTruthy();
+    });
+
+    it('Should focus cell on escape', async () => {
+      const td = await element(by.css('#readonly-datagrid tr:first-child td:first-child')).getLocation();
+      await browser.actions()
+        .mouseMove(td)
+        .click(protractor.Button.RIGHT)
+        .perform();
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#grid-actions-menu'))), config.waitsFor);
+
+      await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+      const cellEl = await browser.driver.switchTo().activeElement();
+
+      expect(await cellEl.getAttribute('aria-colindex')).not.toEqual('');
     });
   }
 });

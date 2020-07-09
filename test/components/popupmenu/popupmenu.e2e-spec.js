@@ -36,6 +36,21 @@ describe('Contextmenu index tests', () => {
 
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
   });
+
+  it('Should add correct aria', async () => {
+    // as per https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html
+    const input = await element(by.id('input-menu2'));
+    await browser.actions().mouseMove(input).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('action-popupmenu'))), config.waitsFor);
+
+    expect(await element(by.id('action-popupmenu')).getAttribute('role')).toEqual('menu');
+    expect(await element(by.id('action-popupmenu')).getAttribute('aria-labelledby')).toEqual('input-menu2');
+    expect(await element.all(by.css('#action-popupmenu li')).first().getAttribute('role')).toEqual('none');
+    expect(await element.all(by.css('#action-popupmenu li a')).first().getAttribute('role')).toEqual('menuitem');
+  });
 });
 
 describe('Popupmenu example-selectable tests', () => {
