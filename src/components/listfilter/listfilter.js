@@ -185,7 +185,7 @@ ListFilter.prototype = {
     function searchItemIterator(item) {
       let text = getSearchableContent(item);
       if (!self.settings.caseSensitive) {
-        text = text.toLowerCase();
+        text = text.toLowerCase().trim();
       }
 
       let match = false;

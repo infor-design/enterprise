@@ -923,6 +923,21 @@ describe('Datepicker Month Year Changer Tests', () => {
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('10/1/2021');
   });
 
+  it('Should focus apply on closing the month/year pane', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('10/1/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.cssContainingText('.picklist-item', '2021')).click();
+    await element(by.css('.is-select-month-pane')).click();
+
+    const activeElement = await browser.driver.switchTo().activeElement();
+
+    expect(await activeElement.getText()).toEqual('Apply');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress when closed', async () => {
       await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
