@@ -20,6 +20,7 @@
 - `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
+- `[Textarea]` Fixed inconsistencies on styling of disabled field when using disable function. ([#3917](https://github.com/infor-design/enterprise/issues/3917))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 - `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
 

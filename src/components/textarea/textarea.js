@@ -47,6 +47,11 @@ Textarea.prototype = {
    * @private
    */
   init() {
+    // Add "is-disabled" class to greyed-out the field
+    if (this.element.is(':disabled')) {
+      this.element.closest('.field').addClass('is-disabled');
+    }
+
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     this.isSafari = (
       navigator.userAgent.indexOf('Safari') !== -1 &&
@@ -223,13 +228,16 @@ Textarea.prototype = {
    */
   enable() {
     this.element.prop('disabled', false).prop('readonly', false);
+    this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
   },
 
   /**
    * Disables this component instance.
    */
   disable() {
+    this.enable();
     this.element.prop('disabled', true);
+    this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
   },
 
   /**

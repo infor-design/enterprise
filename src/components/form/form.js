@@ -21,7 +21,12 @@ $.fn.disable = function () {
       value.disable();
     }
   });
+  this.enable();
   this.prop('disabled', true);
+  this
+    .attr('disabled', 'disabled')
+    .closest('.field')
+    .addClass('is-disabled');
   return this;
 };
 
@@ -42,6 +47,9 @@ $.fn.enable = function () {
     }
   });
   this.prop({ disabled: false, readonly: false });
+  this.removeAttr('disabled readonly')
+    .closest('.field')
+    .removeClass('is-disabled');
   return this;
 };
 
