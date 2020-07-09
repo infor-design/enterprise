@@ -10,6 +10,7 @@
 ### v4.31.0 Fixes
 
 - `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
+- `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
 - `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
