@@ -1048,7 +1048,7 @@ describe('Datagrid mixed selection tests', () => {
   }
 });
 
-fdescribe('Datagrid multiselect tests', () => {
+describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?layout=nofrills');
 
@@ -2478,7 +2478,7 @@ describe('Datagrid Frozen Column Card (fixed) tests', () => {
   }
 });
 
-fdescribe('Datagrid contextmenu tests', () => {
+describe('Datagrid contextmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu');
 
