@@ -946,12 +946,16 @@ DatePicker.prototype = {
           self.insertSelectedDate();
           self.closeCalendar();
         }
+
+        if (!btn.hasClass('is-select-month-pane')) {
+          self.element.focus();
+        }
       }
-      self.element.focus();
       e.preventDefault();
 
       if (btn.hasClass('is-select-month-pane')) {
         self.calendarAPI.monthYearPane.data('expandablearea').close();
+        self.popup.find('.btn-primary.is-select').focus();
       }
     });
 
