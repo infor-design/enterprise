@@ -2,7 +2,7 @@
 //================================================== //
 
 // Reset standard button alignments.
-[class*='btn'] {
+[class^='btn'] {
   height: auto;
   line-height: normal;
   min-height: 34px;
@@ -37,7 +37,7 @@
 // IE11's `middle`, `sub`, and `text-bottom` alignments don't jive
 // well with our iconography.
 .ie11 {
-  [class*='btn'] {
+  [class^='btn'] {
     > .icon {
       vertical-align: -20%;
     }
@@ -48,15 +48,15 @@
 // well with our iconography
 .is-safari,
 .is-firefox {
-  [class*='btn'] {
+  [class^='btn'] {
     > .icon {
       margin-top: -2px;
     }
   }
 }
 
-.field-short [class*='btn']:not(.btn-editor),
-.form-layout-compact .field [class*='btn']:not(.btn-editor) {
+.field-short [class^='btn']:not(.btn-editor),
+.form-layout-compact .field [class^='btn']:not(.btn-editor) {
   min-height: $button-size-compact-height;
 
   > .icon + span:not(.audible):not(:empty) {

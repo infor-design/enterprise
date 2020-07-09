@@ -12,6 +12,6 @@
   padding: 0 5px;
 }
 
-.masthead .toolbar [class*='btn'] > .icon + span + .icon {
+.masthead .toolbar [class^='btn'] > .icon + span + .icon {
   margin-left: -2px;
 }

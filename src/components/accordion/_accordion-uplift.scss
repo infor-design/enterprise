@@ -10,7 +10,7 @@
       padding-top: 6px;
     }
 
-    > [class*='btn'] {
+    > [class^='btn'] {
       height: 23px;
       min-height: 23px;
 
@@ -37,7 +37,7 @@ html {
   &:not([dir='rtl']):not(.is-firefox):not(.ie11) {
     .accordion-pane {
       .accordion-header {
-        > [class*='btn'] {
+        > [class^='btn'] {
           height: 24px;
           min-height: 24px;
         }
