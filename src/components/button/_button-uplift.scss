@@ -64,6 +64,7 @@
   }
 
   > .icon {
+    top: 0;
     vertical-align: sub;
 
     &:not(.icon-dropdown) {
@@ -74,6 +75,25 @@
 
       + span:not(.audible) {
         position: relative;
+      }
+    }
+  }
+}
+
+.form-layout-compact .field {
+  .tag {
+    .dismissible-btn {
+      align-items: center;
+      display: flex;
+      height: inherit;
+      line-height: inherit;
+      margin-bottom: 0;
+      min-height: inherit;
+
+      > .icon {
+        &:not(.icon-dropdown) {
+          top: 0;
+        }
       }
     }
   }
