@@ -94,6 +94,21 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  // Add back hidden first borders
+  .datagrid-wrapper.left + .datagrid-wrapper.center {
+    th:first-child {
+      border-left-color: $datagrid-header-border-color;
+    }
+
+    td:first-child {
+      border-left-color: $datagrid-cell-border-color;
+
+      &.is-invisible {
+        border-left-color: transparent;
+      }
+    }
+  }
+
   &.has-vertical-scroll {
     .datagrid-wrapper.right {
       overflow-x: scroll;
@@ -193,13 +208,8 @@ $datagrid-small-row-height: 25px;
       background-color: $datagrid-empty-bg-color;
     }
 
-    &:not(.left) td:last-child,
-    &:not(.left) td.is-last-visible {
-      border-right-color: transparent;
-    }
-
-    &.left td.is-last-visible {
-      border-right-color: transparent;
+    td:first-child {
+      border-left-color: transparent;
     }
 
     &.left {
@@ -757,7 +767,7 @@ $datagrid-small-row-height: 25px;
         height: $datagrid-medium-header-height;
 
         .icon {
-          left: -2px !important;
+          left: -3px !important;
           top: 5px !important;
         }
       }
@@ -1975,11 +1985,9 @@ $datagrid-small-row-height: 25px;
 
   //Table Body
   td {
-    @include transition(none);
-
     background-color: $datagrid-cell-bg-color;
     border-bottom: 1px solid $datagrid-cell-border-color;
-    border-right: 1px solid $datagrid-cell-border-color;
+    border-left: 1px solid $datagrid-cell-border-color;
     color: $datagrid-data-color;
     -webkit-font-smoothing: antialiased;
     height: inherit;
@@ -2628,9 +2636,10 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &.center {
-    th:last-child {
-      border-right-color: transparent;
+  &.center,
+  &.left {
+    th:first-child {
+      border-left-color: transparent;
     }
   }
 
@@ -2646,7 +2655,7 @@ $datagrid-small-row-height: 25px;
   th {
     background-clip: padding-box;
     background-color: $datagrid-header-bg-color;
-    border-right: 1px solid $datagrid-header-border-color;
+    border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     overflow: hidden;
     position: -webkit-sticky;
@@ -3477,7 +3486,7 @@ td .btn-actions {
   }
 
   .plus-minus {
-    left: -6px;
+    left: -10px;
     position: relative;
     top: -6px;
   }
@@ -3492,7 +3501,7 @@ td .btn-actions {
   .icon.plus-minus::after {
     left: 12px;
     top: 14px;
-    width: 15px;
+    width: 14px;
   }
 
   &:hover:not([disabled]) {
@@ -4261,7 +4270,7 @@ html[dir='rtl'] {
           color: $datagrid-sort-icon-color;
           height: 20px;
           left: -1px;
-          top: 9px;
+          top: 7px;
           width: 21px;
         }
 

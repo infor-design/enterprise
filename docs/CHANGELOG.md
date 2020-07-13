@@ -4,6 +4,7 @@
 
 ### v4.31.0 Features
 
+- `[Datagrid]` Added a spacerColumn setting, with this setting the last column fills any empty space instead of stretching everything out. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
 

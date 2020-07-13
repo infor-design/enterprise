@@ -51,9 +51,9 @@ function addStandardInputFeatures(input, row, cell, value, container, column, e,
       integerLimit: 4,
       decimalLimit: 2,
       symbols: {
-        thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
-        decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
-        negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
+        thousands: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.group : ',',
+        decimal: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.decimal : '.',
+        negative: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.minusSign : '-'
       }
     },
     process: 'number'

@@ -79,6 +79,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
  * @param {string}   [settings.stretchColumn=null] If 'last' the last column will stretch to the end, otherwise specific columns can be targetted.
  * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
+ * @param {boolean}  [settings.spacerColumn=false] If true an extra column will be added to the end that fills the space. This allows columns to not stretch to fill so they are a constant size. This setting cannot be used with percent columns.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -178,6 +179,7 @@ const DATAGRID_DEFAULTS = {
   showNewRowIndicator: true,
   stretchColumn: null,
   stretchColumnOnChange: false,
+  spacerColumn: false,
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -1227,6 +1229,11 @@ Datagrid.prototype = {
           headerRows.center += `<th${colspanStr}></th>`;
         }
       }
+
+      if (this.settings.spacerColumn) {
+        headerRows.center += '<th class="datagrid-header-groups-spacer-column"></th>';
+      }
+
       headerRows.left += '</tr><tr>';
       headerRows.center += '</tr><tr>';
       headerRows.right += '</tr><tr>';
@@ -1303,6 +1310,12 @@ Datagrid.prototype = {
 
       headerRows[container] += `</div>${self.filterRowHtml(column, j)}</th>`;
     }
+
+    // Set Up Spacer column
+    if (this.settings.spacerColumn) {
+      headerRows.center += '<th class="datagrid-header-spacer-column"></th>';
+    }
+
     headerRows.left += '</tr>';
     headerRows.center += '</tr>';
     headerRows.right += '</tr>';
@@ -1463,9 +1476,9 @@ Datagrid.prototype = {
               allowThousandsSeparator: false,
               allowDecimal: false,
               symbols: {
-                thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
-                decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
-                negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
+                thousands: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.group : ',',
+                decimal: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.decimal : '.',
+                negative: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.minusSign : '-'
               }
             },
             process: 'number'
@@ -2602,7 +2615,7 @@ Datagrid.prototype = {
   */
   createDraggableColumns() {
     const self = this;
-    const headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]');
+    const headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]').not('.datagrid-header-spacer-column');
     let showTarget = $('.drag-target-arrows', self.element);
 
     if (!showTarget.length) {
@@ -2682,7 +2695,11 @@ Datagrid.prototype = {
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
-                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
+                  let lastAdjustment = 0;
+                  if (target.el.hasClass('last')) {
+                    lastAdjustment = -(header.height() - 3);
+                  }
+                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos + lastAdjustment}px`;
                 }
               }
             }
@@ -2745,7 +2762,9 @@ Datagrid.prototype = {
   setDraggableColumnTargets() {
     const self = this;
     const headers = self.headerNodes()
-      .not('.is-hidden').not('[data-column-id="selectionCheckbox"]');
+      .not('.is-hidden')
+      .not('[data-column-id="selectionCheckbox"]')
+      .not('.datagrid-header-spacer-column');
     let target;
     let pos;
     let extra;
@@ -3315,6 +3334,9 @@ Datagrid.prototype = {
     }
 
     if (self.bodyColGroupHtml !== '<colgroup>') {
+      if (this.settings.spacerColumn) {
+        self.bodyColGroupHtml += '<col style="width: 100%">';
+      }
       self.bodyColGroupHtmlLeft += '</colgroup>';
       self.bodyColGroupHtml += '</colgroup>';
       self.bodyColGroupHtmlRight += '</colgroup>';
@@ -3982,10 +4004,6 @@ Datagrid.prototype = {
           if (j === this.settings.frozenColumns.left.length) {
             cssClass = cssClass.replace(' is-hidden', ' is-invisible');
             colspanLeft = rowColspan - this.settings.frozenColumns.left.length + 1;
-
-            if (colspanLeft + 1 === this.settings.columns.length - j) {
-              cssClass += ' is-last-visible';
-            }
           }
 
           if (skipColumns === 0 && this.settings.frozenColumns.left.length === 1 &&
@@ -4014,23 +4032,10 @@ Datagrid.prototype = {
             colspan - leftLength > 0) {
             colspan -= leftLength === 1 &&
               colspan === this.visibleColumns().length - 1 ? 0 : leftLength;
-
-            if (colspan === j || leftLength + j === colspan || leftLength > j && colspan > j) {
-              cssClass += ' is-last-visible';
-            }
           }
 
           if (col.align) {
             cssClass = cssClass.replace(` l-${col.align}-text`, '');
-          }
-
-          if (this.settings.frozenColumns.left && leftLength > 0 &&
-            leftLength === colspan) {
-            cssClass += ' is-last-visible';
-          }
-
-          if (this.visibleColumns().length === j + colspan) {
-            cssClass += ' is-last-visible';
           }
           cssClass += ' l-left-text';
         } else {
@@ -4085,6 +4090,11 @@ Datagrid.prototype = {
       containerHtml[container] += `${formatted}</div></td>`;
     }
 
+    // Set Up Spacer column
+    if (this.settings.spacerColumn) {
+      containerHtml.center += '<td class="datagrid-spacer-column"></td>';
+    }
+
     containerHtml.left += '</tr>';
     containerHtml.center += '</tr>';
     containerHtml.right += '</tr>';
@@ -4104,7 +4114,7 @@ Datagrid.prototype = {
           <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
         <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
@@ -5564,7 +5574,7 @@ Datagrid.prototype = {
         }
       })
       .on('drag.datagrid', (e, ui) => {
-        if (!self.currentHeader) {
+        if (!self.currentHeader || !column) {
           return;
         }
 
@@ -6171,6 +6181,7 @@ Datagrid.prototype = {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
       });
+
       $(window).on('resize.datagrid', () => {
         let j = 0;
         this.clearCache();
@@ -6264,7 +6275,7 @@ Datagrid.prototype = {
 
         self.currentHeader = $(e.target).closest('th');
 
-        if (!self.currentHeader.hasClass('is-resizable')) {
+        if (!self.currentHeader.hasClass('is-resizable') || self.currentHeader.hasClass('datagrid-header-spacer-column')) {
           return;
         }
 

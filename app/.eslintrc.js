@@ -6,7 +6,9 @@ module.exports = {
   env: {
     node: true
   },
-
+  globals: {
+    Soho: true
+  },
   rules: {
     // Forbid the use of extraneous packages
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md

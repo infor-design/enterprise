@@ -3,7 +3,7 @@
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
 module.exports = {
-  // All scripts in this folder should be compatible with Node 10+, so make everything ES6-friendly.
+  // All scripts in this folder should be compatible with Node 12+, so make everything ES6-friendly.
   'env': {
     'es6': true,
     'node': true

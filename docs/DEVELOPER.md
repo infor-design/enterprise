@@ -131,9 +131,9 @@ npm run build -- --types="es,iife"
 
 #### Node.js
 
-![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2010.9.0-green.svg);
+![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2012.16.3-green.svg);
 
-All of our build tools run in [Node.JS](https://nodejs.org/en/). We are currently pinned to version 10 of node, **so be sure to use that version**. We have a script that tests for this during `npm install`. You'll also need all the requirements [node-gyp](https://github.com/nodejs/node-gyp#installation) suggests installing for your operating system.
+All of our build tools run in [Node.JS](https://nodejs.org/en/). We are currently all using Node 12. We have a script that tests for this during `npm install`. You'll also need all the requirements [node-gyp](https://github.com/nodejs/node-gyp#installation) suggests installing for your operating system. We suggest a node version manager like [nvm](https://github.com/nvm-sh/nvm) or [nvm windows](https://github.com/coreybutler/nvm-windows)
 
 #### Git
 

@@ -21,7 +21,7 @@
       columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: '20%'});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

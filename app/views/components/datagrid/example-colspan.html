@@ -18,7 +18,7 @@
           bar3Color = value === 'Error' ? '#E84F4F' : '#FD9437',
           bar4Color = value === 'Error' ? '#E84F4F' : '#FD9437'; //alert
 
-        return '<div class="list-exceptions" title="'+message+'" style="position:relative; top: 12px; left: 20px; width: 18px;">'+
+        return '<div class="list-exceptions" title="'+message+'" style="position:relative; top: 11px; left: 24px; width: 18px;">'+
         '<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" >'+
         '<polygon fill="white" points="0 16 16 16 16 0 0 0"></polygon>'+
         '<path d="M13.7142857,16 L2.28571429,16 C1.02285714,16 0,14.9771429 0,13.7142857 L0,13.7142857 L16,13.7142857 L16,13.7142857 C16,14.9771429 14.9771429,16 13.7142857,16" id="bar-4" fill="'+ bar4Color +'"></path>'+
@@ -48,7 +48,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', hideable: false, colspan: customGetColSpan });
       columns.push({ id: 'productDesc', name: 'Product Desc',  hideable: false, hidden: true, sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity',  hideable: false, field: 'activity', width: 160});
-      columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom, tooltip: 'Error Info', width: 45});
+      columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom, tooltip: 'Error Info', width: 37});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
 
       // Init and get the api for the grid
