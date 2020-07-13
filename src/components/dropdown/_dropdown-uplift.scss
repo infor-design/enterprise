@@ -27,6 +27,10 @@ div.multiselect {
   &.has-tags {
     padding: 0;
 
+    .tag-content {
+      line-height: 19px;
+    }
+
     + .icon {
       height: 30px;
     }
@@ -107,6 +111,12 @@ div.multiselect {
       top: 50%;
       transform: translateY(-50%);
       width: 16px;
+    }
+
+    &.has-tags {
+      .tag-content {
+        line-height: 17px;
+      }
     }
   }
 }
@@ -390,6 +400,12 @@ html.is-firefox:not([dir='rtl']) {
 
       + .icon {
         top: 0;
+      }
+
+      &.has-tags {
+        .tag-content {
+          line-height: 17px;
+        }
       }
     }
   }
