@@ -221,8 +221,8 @@ div.multiselect {
       padding: 16px 0 15px;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         vertical-align: baseline;
       }
@@ -1011,8 +1011,8 @@ div.dropdown-xs,
       padding: 0;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: 1px;
       }
@@ -1066,8 +1066,8 @@ div.dropdown-xs,
 .ie {
   div.dropdown,
   div.multiselect {
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: -1px;
       }
@@ -1079,8 +1079,8 @@ div.dropdown-xs,
 .is-mac {
   div.dropdown,
   div.multiselect {
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: 0;
       }

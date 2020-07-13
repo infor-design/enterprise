@@ -502,7 +502,7 @@ const formatters = {
   Tag(row, cell, value, col) {
     const ranges = formatters.ClassRange(row, cell, value, col);
     if (col?.editorOptions?.clickable) {
-      return `<span class="tag is-linkable hide-focus ${ranges.classes}"><a class="tag-content" href="#">#${value}</a><button class="linkable-btn" focusable="false" tabindex="-1">
+      return `<span class="tag is-linkable hide-focus ${ranges.classes}"><a class="tag-content" href="#">#${value}</a><button class="btn-linkable" focusable="false" tabindex="-1">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
       </button></span>`;
     }

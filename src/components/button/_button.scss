@@ -14,7 +14,7 @@ button {
 }
 
 // How all button types will deal with iconography
-[class*='btn'] {
+[class^='btn'] {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
@@ -589,7 +589,7 @@ a.btn-close {
 // Short field buttons
 .field-short,
 .form-layout-compact .field {
-  [class*='btn']:not(.btn-editor) {
+  [class^='btn']:not(.btn-editor) {
     height: $button-size-compact-height;
     margin-bottom: 10px;
     min-height: $button-size-compact-height;
@@ -650,7 +650,7 @@ html[dir='rtl'] {
   }
 
   // How all button types will deal with iconography
-  [class*='btn'] {
+  [class^='btn'] {
     > .icon {
       + span:not(.audible):not(:empty) {
         padding-left: 0;
@@ -703,7 +703,7 @@ html[dir='rtl'] {
 
 //Do not allow upper case in french
 html[lang^='fr-'] {
-  [class*='btn'] {
+  [class^='btn'] {
     text-transform: none;
   }
 }
@@ -748,7 +748,7 @@ html[lang^='fr-'] {
 .is-mac.is-firefox {
   .field-short,
   .form-layout-compact .field {
-    [class*='btn'] {
+    [class^='btn'] {
       line-height: $button-size-compact-height;
 
       > .icon:not(.icon-dropdown) {

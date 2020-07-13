@@ -21,7 +21,7 @@
     vertical-align: middle;
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     background-color: $module-tabs-bg-color;
     border: 0;
     color: $module-tabs-inactive-text-color;
@@ -286,7 +286,7 @@
       height: 34px;
     }
 
-    [class*='btn'],
+    [class^='btn'],
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       background-color: transparent;
       color: $module-tabs-inactive-text-color;
@@ -385,7 +385,7 @@
       }
     }
 
-    [class*='btn'] {
+    [class^='btn'] {
       background-color: transparent;
 
       &.active,
@@ -526,7 +526,7 @@
     border-bottom: 1px solid $module-tabs-disabled-y-border-color;
     border-top: 1px solid $module-tabs-disabled-y-border-color;
 
-    [class*='btn'] {
+    [class^='btn'] {
       background-color: $module-tabs-disabled-bg-color;
       color: $module-tabs-disabled-text-color;
 
@@ -602,7 +602,7 @@
     }
 
     .toolbar {
-      [class*='btn'],
+      [class^='btn'],
       .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
         color: $module-tabs-disabled-text-color;
         cursor: default !important;

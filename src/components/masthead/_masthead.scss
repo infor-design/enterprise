@@ -25,7 +25,7 @@
     }
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     height: 32px;
     min-width: 32px;
 
@@ -100,7 +100,7 @@
   }
 
   .toolbar {
-    [class*='btn'] {
+    [class^='btn'] {
       margin: 3px 3px 2px 0;
       vertical-align: top;
     }
@@ -118,7 +118,7 @@
       }
     }
 
-    [class*='btn'] {
+    [class^='btn'] {
       background-color: transparent;
       border-left-color: transparent;
       border-right-color: transparent;

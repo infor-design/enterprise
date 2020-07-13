@@ -39,8 +39,8 @@ div.multiselect {
       padding: 16px 0 15px;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         vertical-align: middle;
       }
@@ -216,8 +216,8 @@ div.multiselect {
 .is-mac {
   div.dropdown,
   div.multiselect {
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: -2px;
       }
@@ -230,8 +230,8 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     .tag-list {
-      .dismissible-btn,
-      .linkable-btn {
+      .btn-dismissible,
+      .btn-linkable {
         .icon {
           top: -1px;
         }
@@ -245,8 +245,8 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     .tag-list {
-      .dismissible-btn,
-      .linkable-btn {
+      .btn-dismissible,
+      .btn-linkable {
         .icon {
           top: -1px;
         }
@@ -271,8 +271,8 @@ div.multiselect {
       line-height: normal;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: -1px;
       }

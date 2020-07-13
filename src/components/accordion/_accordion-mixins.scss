@@ -9,7 +9,7 @@
   }
 
   > .icon,
-  > [class*='btn'] {
+  > [class^='btn'] {
     margin-left: $icon-margin;
 
     + a {
@@ -55,7 +55,7 @@
   }
 
   > .icon,
-  > [class*='btn'] {
+  > [class^='btn'] {
     margin-left: auto;
     margin-right: $icon-margin;
 
