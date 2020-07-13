@@ -17,11 +17,11 @@
 
 // Firefox behaves odd
 .is-firefox {
-  .tag.is-linkable .linkable-btn .icon {
+  .tag.is-linkable .btn-linkable .icon {
     vertical-align: baseline;
   }
 
-  .tag.is-dismissible .dismissible-btn .icon {
+  .tag.is-dismissible .btn-dismissible .icon {
     vertical-align: baseline;
   }
 }

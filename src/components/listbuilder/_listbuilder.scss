@@ -28,7 +28,7 @@
     margin-bottom: -1px;
 
     .buttonset {
-      [class*='btn'] {
+      [class^='btn'] {
         height: 24px;
         margin-left: 1px;
         margin-right: 10px;

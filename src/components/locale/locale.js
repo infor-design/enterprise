@@ -927,6 +927,7 @@ const Locale = {  // eslint-disable-line
     let dateFormat = options;
     let locale = this.currentLocale.name;
     let thisLocaleCalendar = this.calendar();
+
     if (typeof options === 'object') {
       locale = options.locale || locale;
       dateFormat = options.dateFormat || this.calendar(locale).dateFormat[dateFormat.date];
@@ -937,7 +938,7 @@ const Locale = {  // eslint-disable-line
     }
 
     if (typeof options === 'object' && options.calendarName && options.locale) {
-      thisLocaleCalendar = this.calendar(options.locale, options.calendarName);
+      thisLocaleCalendar = this.calendar(options.locale, options.language, options.calendarName);
     }
 
     if (!dateFormat) {
