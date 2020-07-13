@@ -3159,11 +3159,10 @@ Dropdown.prototype = {
     this.element
       .prop('disabled', true)
       .prop('readonly', false);
-    
-    this.element
-      .attr('disabled', 'disabled')
-      .closest('.field')
-      .addClass('is-disabled');
+
+    setTimeout(() => {
+      this.pseudoElem.addClass('is-disabled');
+    });
 
     if (this.pseudoElem.is($(document.activeElement))) {
       this.pseudoElem.blur();

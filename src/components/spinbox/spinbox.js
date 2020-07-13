@@ -558,7 +558,10 @@ Spinbox.prototype = {
    */
   disable() {
     this.element.prop('disabled', true);
-    this.element.parent('.spinbox-wrapper').addClass('is-disabled');
+
+    setTimeout(() => {
+      this.element.parent('.spinbox-wrapper').addClass('is-disabled');
+    });
   },
 
   /**

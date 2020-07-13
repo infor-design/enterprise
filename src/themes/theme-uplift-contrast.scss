@@ -286,8 +286,9 @@ $datepicker-readonly-icon-color: $theme-color-palette-slate-30;
 }
 
 //Time Picker
-$timepicker-disabled-border-color: $theme-color-brand-secondary-alt;
+$timepicker-disabled-border-color: $input-color-disabled-border;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
+$timepicker-disabled-icon-color: $input-disabled-color;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);

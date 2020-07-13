@@ -23,7 +23,12 @@
   &.is-readonly,
   &.is-disabled {
     .editor {
+      background-color: transparent;
       border-top: 1px solid $editor-border-color;
+
+      > * {
+        color: $input-disabled-color;
+      }
     }
 
     .editor-toolbar {

@@ -216,6 +216,7 @@ ColorPicker.prototype = {
 
     if (this.element.is(':disabled') || this.settings.disabled) {
       this.disable();
+      this.element.closest('.field').addClass('is-disabled');
     }
 
     if (this.element.prop('readonly')) {
@@ -603,6 +604,9 @@ ColorPicker.prototype = {
   */
   disable() {
     this.element.prop('disabled', true);
+    setTimeout(() => {
+      this.element.parent().addClass('is-disabled');
+    });
     if (!this.settings.placeIn) {
       this.element.parent().addClass('is-disabled');
     }
