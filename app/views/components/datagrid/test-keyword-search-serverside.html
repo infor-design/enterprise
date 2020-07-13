@@ -18,15 +18,6 @@
     columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
-    // var columns = [];
-    // columns.push({ id: 'id', name: 'Id', field: 'id' });
-    // columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140 });
-    // columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink });
-    // columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input });
-    // columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125 });
-    // columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal });
-    // columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
-
     // Initialize the grid
     $('#datagrid').datagrid({
       columns: columns,
