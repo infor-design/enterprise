@@ -1505,6 +1505,22 @@ describe('Datepicker Gregorian SA Tests', () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
 
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to select a day and tab out', async () => {
+    const datepickerEl = await element(by.id('islamic-date'));
+    await datepickerEl.sendKeys('15/07/2020');
+    await element(by.css('#islamic-date + .icon')).click();
+    const focusTD = await element(by.css('#monthview-popup td.is-selected'));
+    await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
+    await focusTD.sendKeys(protractor.Key.ENTER);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('14/07/2020');
+    await utils.checkForErrors();
+  });
+
   it('Should render gregorian on ar-SA time', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
