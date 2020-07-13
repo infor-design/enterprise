@@ -337,7 +337,6 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 
   fileName = `${fileName || self.element[0].id || 'Export'}.xls`;
   excel.save(formatExcel(template, ctx), fileName);
-  // console.log(formatExcel(template, ctx));
 };
 
 /**
