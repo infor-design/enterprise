@@ -156,7 +156,7 @@
 
 .ie {
   .splitter-container {
-    .toolbar .buttonset > [class*='btn'] {
+    .toolbar .buttonset > [class^='btn'] {
       line-height: normal;
     }
   }
