@@ -1,0 +1,76 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Define Columns for the Grid.
+    var columns = [];
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'id', name: 'Id', field: 'id'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input, filterType: 'text'});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input, filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+    columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+    // var columns = [];
+    // columns.push({ id: 'id', name: 'Id', field: 'id' });
+    // columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140 });
+    // columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink });
+    // columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input });
+    // columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125 });
+    // columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal });
+    // columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
+
+    // Initialize the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      columnReorder: true,
+      filterable: true,
+      selectable: 'multiple',
+      allowSelectAcrossPages: true,
+      paging: true,
+      columnIds: ['productName', 'activity', 'productId'], // Required, in order to work server-side keyword search
+      pagesize: 10,
+      pagesizes: [5, 10, 15, 20],
+      toolbar: { title: 'Data Grid Header Title', results: true, keywordFilter: true, actions: true, rowHeight: true, collapsibleFilter: true },
+      source: function(req, response) {
+        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+        if (req.sortField) {
+          url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+        }
+
+        if (req.filterExpr && req.filterExpr[0]) {
+          url += '&filterValue=' + req.filterExpr[0].value;
+          url += '&filterOp=' + req.filterExpr[0].operator;
+
+          if (req.filterExpr[0].columnId) {
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          } else if (req.filterExpr[0].column === 'all') {
+            var columnsStr = columns
+              .filter(function (col) { return col.field !== undefined; })
+              .map(function (col) { return col.field; })
+              .join('|');
+            // console.log(columnsStr);
+            // id|productId|productName|activity|quantity|price|orderDate
+            url += '&filterColumn=' + columnsStr;
+          } else {
+            url += '&filterColumn=' + req.filterExpr[0].column;
+          }
+        }
+
+        // Get Page Based on info in Req, return results into response;
+        $.getJSON(url, function(res) {
+          req.total = res.total;
+          response(res.data, req);
+        });
+      }
+    });
+
+  });
+</script>
