@@ -74,11 +74,6 @@ Textarea.prototype = {
       this.settings.autoGrow = true;
     }
 
-    // Add "is-disabled" class to greyed-out the field
-    if (this.element.is(':disabled')) {
-      this.element.closest('.field').addClass('is-disabled');
-    }
-
     this.setupAutoGrow();
     this.handleEvents();
     this.updateCounter();

@@ -216,7 +216,10 @@ ColorPicker.prototype = {
 
     if (this.element.is(':disabled') || this.settings.disabled) {
       this.disable();
-      this.element.closest('.field').addClass('is-disabled');
+    }
+
+    if (this.element.is(':disabled') && this.container) {
+      this.container.closest('.field').addClass('is-disabled');
     }
 
     if (this.element.prop('readonly')) {
