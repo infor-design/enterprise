@@ -248,6 +248,7 @@ $datagrid-small-row-height: 25px;
     .datagrid-filter-wrapper {
       height: 24px;
       margin: 3px 0;
+      text-align: left;
     }
 
     .datagrid-header th .datagrid-checkbox-wrapper {
@@ -257,7 +258,6 @@ $datagrid-small-row-height: 25px;
 
       + .datagrid-filter-wrapper.is-empty {
         left: -60px;
-        //pointer-events: none;
       }
     }
   }
@@ -649,7 +649,8 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper .trigger {
-            margin-left: -25px;
+            margin-left: -24px;
+            margin-top: 0;
           }
         }
       }
@@ -670,20 +671,20 @@ $datagrid-small-row-height: 25px;
         width: calc(100% - 42px) !important;
       }
 
-      .datepicker + .icon {
-        margin-left: -17px;
-        top: -5px;
-      }
-
       .dropdown {
         font-size: $input-size-compact-font-size;
         height: 22px;
         line-height: 20px;
 
         + .icon {
-          margin-left: -21px;
-          top: 4px !important;
+          top: -4px !important;
         }
+      }
+
+      .datepicker + .icon,
+      .timepicker + .icon {
+        right: 4px;
+        top: -4px;
       }
 
       .dropdown-wrapper {
@@ -723,6 +724,15 @@ $datagrid-small-row-height: 25px;
         .btn-filter {
           left: 4px;
           padding-top: 1px;
+
+          &.btn-filter-checkbox {
+            left: calc(50% - 10px) !important;
+          }
+        }
+
+        .lookup-wrapper .trigger {
+          margin-left: -25px;
+          margin-top: -1px;
         }
       }
 
@@ -1548,7 +1558,7 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
-      line-height: $datagrid-extra-small-row-height;
+      line-height: $datagrid-extra-small-row-height - 2;
 
       .datagrid-reorder-icon .icon {
         height: 18px;
@@ -1630,10 +1640,6 @@ $datagrid-small-row-height: 25px;
   // Table Rows
   > tbody > tr {
     line-height: $datagrid-row-height;
-
-    &:last-child td {
-      border-bottom: 0;
-    }
 
     &.is-active-row {
       outline: 1px solid $theme-color-brand-primary-base;
@@ -2681,8 +2687,9 @@ $datagrid-small-row-height: 25px;
         width: 100%;
       }
 
-      .datagrid-filter-wrapper .btn-filter {
-        left: 15px !important;
+      .datagrid-filter-wrapper .btn-filter.btn-filter-checkbox {
+        left: calc(50% - 4px) !important;
+        text-align: center;
       }
     }
 
@@ -2971,9 +2978,7 @@ $datagrid-small-row-height: 25px;
       + .icon {
         color: $datagrid-filter-icon-color;
         height: 13px;
-        margin-left: -10px;
-        position: relative;
-        right: -2px;
+        right: 0;
         top: -3px;
         width: 13px;
       }
@@ -2993,8 +2998,8 @@ $datagrid-small-row-height: 25px;
     .dropdown {
       + .icon {
         height: 16px;
-        margin-left: -22px;
-        top: 4px !important;
+        right: 4px;
+        top: -2px !important;
         width: 16px;
       }
     }
@@ -3031,7 +3036,7 @@ $datagrid-small-row-height: 25px;
           color: $datagrid-filter-icon-color;
           height: 30px;
           right: -6px;
-          top: -3px;
+          top: -2px;
           width: 16px;
         }
       }
@@ -4460,7 +4465,7 @@ html[dir='rtl'] {
   .trigger .icon {
     height: 16px;
     left: 6px;
-    top: 5px;
+    top: 6px;
     width: 16px;
   }
 

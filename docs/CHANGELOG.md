@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.30.1
+
+### v4.30.1 Fixes
+
+- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. ([#3755](https://github.com/infor-design/enterprise/issues/3755))
+
 ## v4.30.0
 
 ### v4.30.0 Announcements

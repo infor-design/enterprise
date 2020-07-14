@@ -1,0 +1,221 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var grid, pageSize = 10, pageData, beginIndex, endIndex, PAGING_COLUMNS, PAGING_DATA;
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: getColumns(),
+      selectable: 'single',
+      paging: true,
+      pagesize: 10,
+      rowHeight: 'small',
+      indeterminate: true,
+      filterable: false,
+      frozenColumns: {
+        left: ['productType'],
+        // left: ['selectionCheckbox', 'productType'],
+      },
+      source: datagridPagingFunction,
+      toolbar: { title: 'Groups & Colspans', results: true, actions: true, rowHeight: true },
+      resultsText: function(a, b, c, d) {
+        return '(' + a.settings.dataset.length + ' Results)';
+      }
+    })
+    .data('datagrid');
+
+    function customColSpan(row, cell, value, col, item) {
+      if (item && item.isTotalRow) {
+        // landmark would calculate this based on totaling columns that we get in the dataview
+        if (col.id === 'productType') {
+          return 1;
+        } else {
+          return 0;
+        }
+      } else if (item && item.isSummaryRow) {
+        // landmark would calculate this
+        // return gridColumns.length - columnIndex - hiddenColumns.length;
+        return grid.visibleColumns().length - 1;
+      }
+      return 0;
+    }
+
+    function datagridPagingFunction(request, response) {
+      // -------------------------------------------------------------------------------------------------
+      // call async function to get first/last/previous/next page of data.
+      // -------------------------------------------------------------------------------------------------
+      getDataPage(request).then(function(result) {
+        if (request.type === 'initial') {
+          grid.hideColumn('quantity');
+        }
+        var activatedRow = grid.activatedRow();
+
+        var activatedRowIndex = -1;
+        if (activatedRow &&
+          activatedRow.length === 1 &&
+          activatedRow[0].row > -1) {
+          activateRowIndex = activatedRow[0].row;
+          grid.deactivateRow();
+        }
+
+        // -------------------------------------------------------------------------------------------------
+        // activePage of -1 means only using firstPage, lastPage for the pager button enable/disable state.
+        // Also indexing should only be from 0 to pageSize. Any multiple selection across pages will have
+        // to have another strategy. For now only selecting records on the current page is acceptable.
+        // -------------------------------------------------------------------------------------------------
+        request.activePage = -1;
+
+        // -------------------------------------------------------------------------------------------------
+        // pager buttons should enable/disable based on firstPaget and lastPage only when activePage === -1;
+        // -------------------------------------------------------------------------------------------------
+        request.firstPage = result.firstPage;
+        request.lastPage = result.lastPage;
+
+        // -------------------------------------------------------------------------------------------------
+        // put the new page of data back into the datagrid
+        // -------------------------------------------------------------------------------------------------
+        response(result.data, request);
+
+        if (activatedRow &&
+          activatedRow.length === 1 &&
+          activatedRow[0].row > -1) {
+          grid.activateRow(activateRowIndex);
+        }
+      });
+    }
+
+    /**
+     * Returns a promise to get data spoofing an async call to the back end.
+     */
+    function getDataPage(request) {
+      var dfd = $.Deferred();
+
+      setTimeout(function () {
+
+        switch (request.type) {
+          case 'initial': beginIndex = 0; break;
+          case 'first':   beginIndex = 0; break;
+          case 'last':    beginIndex = getData().length - request.pagesize; break;
+          case 'next':    beginIndex = beginIndex + request.pagesize; break;
+          case 'prev':    beginIndex = beginIndex - request.pagesize; break;
+
+          case 'sorted':   console.log('sorted stub called - implement me'); break;
+          case 'filtered': console.log('filtered stub called - implement me'); break;
+        }
+
+        endIndex = beginIndex + request.pagesize;
+
+        var result = {
+          data: getData().slice(beginIndex, endIndex),
+          firstPage: beginIndex === 0,
+          lastPage: endIndex >= getData().length - 1
+        };
+
+        dfd.resolve(result);
+      }, 100);
+
+      return dfd.promise();
+    }
+
+    function getColumns() {
+      if (!PAGING_COLUMNS) {
+        PAGING_COLUMNS = [
+          // { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
+          { id: 'productType', name: 'Product Type', field: 'productType', sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
+          { id: 'productId', name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text', formatter: Formatters.Hyperlink, colspan: customColSpan },
+          { id: 'price', name: 'Price', field: 'price', sortable: false, filterType: 'decimal', formatter: Formatters.Decimal, colspan: customColSpan },
+          { id: 'quantity', name: 'Quantity', field: 'quantity', sortable: false, colspan: customColSpan },
+          { id: 'orderDate', name: 'Order Date', field: 'orderDate', sortable: false, filterType: 'date',  formatter: Formatters.Date, dateFormat: 'M/d/yyyy', colspan: customColSpan },
+          { id: 'status', name: 'Status', field: 'status', sortable: false, filterType: 'text', formatter: Formatters.Text, colspan: customColSpan },
+          { id: 'rated', name: 'Rated', field: 'rated', sortable: false, filterType: 'decimal', formatter: Formatters.Decimal, colspan: customColSpan }
+        ];
+      }
+
+      return PAGING_COLUMNS;
+    }
+
+    function getData() {
+      if (!PAGING_DATA) {
+        PAGING_DATA = [
+          { productType: 1, productId: 214220, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 1,    price: 210.99,             status: 'Active',   orderDate: '2015-01-01T06:00:00.000Z', action: 'Action', rated: .32  },
+          { productType: 1, productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 209.99,             status: 'Late',     orderDate: '2015-01-02T06:00:00.000Z', action: 'Action', rated: .76  },
+          { productType: 'Total for Product Type 1', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 420.98,             status: '',     orderDate: '', action: 'Action', rated: .54, isTotalRow: true  },
+          { productType: 'Record Count of Product Type 1 is 2', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 420.98,             status: '',     orderDate: '', action: 'Action', rated: .54, isSummaryRow: true  },
+
+          { productType: 2, productId: 214222, productName: 'Compressor 3',  activity: 'Assemble Paint', quantity: 2,    price: 208.99,             status: 'Active',   orderDate: '2015-01-03T06:00:00.000Z', action: 'Action', rated: .32  },
+          { productType: 2, productId: 214223, productName: 'Compressor 4',  activity: 'Assemble Paint', quantity: 2.5,  price: 207.99,             status: 'Inactive', orderDate: '2015-01-04T06:00:00.000Z', action: 'Action', rated: .53  },
+          { productType: 2, productId: 214224, productName: 'Compressor 5',  activity: 'Assemble Paint', quantity: 3,    price: 206.99,             status: 'Inactive', orderDate: '2015-01-05T06:00:00.000Z', action: 'Action', rated: .42  },
+          { productType: 'Total for Product Type 2', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 623.97,             status: '',     orderDate: '', action: 'Action', rated: .42, isTotalRow: true  },
+          { productType: 'Record Count of Product Type 2 is 3', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 420.98,             status: '',     orderDate: '', action: 'Action', rated: .54, isSummaryRow: true  },
+
+          { productType: 3, productId: 214225, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 3.5,  price: 205.99,             status: 'Inactive', orderDate: '2015-01-06T06:00:00.000Z', action: 'Action', rated: .88  },
+          { productType: 3, productId: 214226, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 4,    price: 204.99,             status: 'Active',   orderDate: '2015-01-07T06:00:00.000Z', action: 'Action', rated: .54  },
+          { productType: 3, productId: 214227, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 4.5,  price: 203.99,             status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action', rated: .41  },
+          { productType: 3, productId: 214228, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 5,    price: 202.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action', rated: .21  },
+          { productType: 3, productId: 214229, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 5.5,  price: 201.99,             status: 'Late',     orderDate: '2015-01-10T06:00:00.000Z', action: 'Action', rated: .23  },
+          { productType: 'Total for Product Type 3', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 1019.95,             status: '',     orderDate: '', action: 'Action', rated: .45, isTotalRow: true  },
+          { productType: 'Record Count of Product Type 3 is 5', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 420.98,             status: '',     orderDate: '', action: 'Action', rated: .54, isSummaryRow: true  },
+
+          { productType: 4, productId: 214230, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 6,    price: 200.99,             status: 'Late',     orderDate: '2015-01-01T06:00:00.000Z', action: 'Action', rated: .76  },
+          { productType: 4, productId: 214231, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 6.5,  price: 199.99,             status: 'Late',     orderDate: '2015-01-02T06:00:00.000Z', action: 'Action', rated: .23  },
+          { productType: 4, productId: 214232, productName: 'Compressor 3',  activity: 'Assemble Paint', quantity: 7,    price: 198.99,             status: 'Active',   orderDate: '2015-01-03T06:00:00.000Z', action: 'Action', rated: 1.00 },
+          { productType: 4, productId: 214233, productName: 'Compressor 4',  activity: 'Assemble Paint', quantity: 7.5,  price: 197.99,             status: 'Late',     orderDate: '2015-01-04T06:00:00.000Z', action: 'Action', rated: .36  },
+          { productType: 4, productId: 214234, productName: 'Compressor 5',  activity: 'Assemble Paint', quantity: 8,    price: 196.99,             status: 'On Hold',  orderDate: '2015-01-05T06:00:00.000Z', action: 'Action', rated: 1.00 },
+          { productType: 4, productId: 214235, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 8.5,  price: 195.99,             status: 'Active',   orderDate: '2015-01-06T06:00:00.000Z', action: 'Action', rated: .96  },
+          { productType: 4, productId: 214236, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 9,    price: 194.99,                                 orderDate: '2015-01-07T06:00:00.000Z', action: 'Action', rated: .72  },
+          { productType: 4, productId: 214237, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 9.5,  price: 193.99,             status: 'Active',   orderDate: '2015-01-08T06:00:00.000Z', action: 'Action', rated: .35  },
+          { productType: 4, productId: 214238, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 10,   price: 192.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action', rated: .44  },
+          { productType: 4, productId: 214239, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 10.5, price: 191.99,             status: 'On Hold',  orderDate: '2015-01-10T06:00:00.000Z', action: 'Action', rated: .24  },
+
+          { productType: 4, productId: 214240, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 11,   price: 190.99,                                 orderDate: '2015-01-01T06:00:00.000Z', action: 'Action', rated: .22  },
+          { productType: 4, productId: 214241, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 11.5, price: 189.99,             status: 'Late',     orderDate: '2015-01-02T06:00:00.000Z', action: 'Action', rated: .67  },
+          { productType: 4, productId: 214242, productName: 'Compressor 3',  activity: 'Assemble Paint', quantity: 12,   price: 188.99,             status: 'Active',   orderDate: '2015-01-03T06:00:00.000Z', action: 'Action', rated: .66  },
+          { productType: 4, productId: 214243, productName: 'Compressor 4',  activity: 'Assemble Paint', quantity: 12.5, price: 187.99,             status: 'Inactive', orderDate: '2015-01-04T06:00:00.000Z', action: 'Action',rated:  .24  },
+          { productType: 4, productId: 214244, productName: 'Compressor 5',  activity: 'Assemble Paint', quantity: 13,   price: 186.99,             status: 'Inactive', orderDate: '2015-01-05T06:00:00.000Z', action: 'Action',rated:  .33  },
+          { productType: 4, productId: 214245, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 13.5, price: 185.99,             status: 'Inactive', orderDate: '2015-01-06T06:00:00.000Z', action: 'Action',rated:  .54  },
+          { productType: 4, productId: 214246, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 14,   price: 184.99,             status: 'On Hold',  orderDate: '2015-01-07T06:00:00.000Z', action: 'Action',rated:  .42  },
+          { productType: 4, productId: 214247, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 14.5, price: 183.99,             status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action',rated:  .46  },
+          { productType: 4, productId: 214248, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 15,   price: 182.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action',rated:  .33  },
+          { productType: 4, productId: 214249, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 15.5, price: 181.99,             status: 'On Hold',  orderDate: '2015-01-10T06:00:00.000Z', action: 'Action',rated:  .23  },
+
+          { productType: 4, productId: 214250, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 16,   price: 180.99,                                 orderDate: '2015-01-01T06:00:00.000Z', action: 'Action',rated:  .37  },
+          { productType: 4, productId: 214251, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 16.5, price: 179.99,             status: 'Late',     orderDate: '2015-01-02T06:00:00.000Z', action: 'Action',rated:  .23  },
+          { productType: 4, productId: 214252, productName: 'Compressor 3',  activity: 'Assemble Paint', quantity: 17,   price: 178.99,             status: 'Active',   orderDate: '2015-01-03T06:00:00.000Z', action: 'Action',rated:  .47  },
+          { productType: 4, productId: 214253, productName: 'Compressor 4',  activity: 'Assemble Paint', quantity: 17.5, price: 177.99,             status: 'Inactive', orderDate: '2015-01-04T06:00:00.000Z', action: 'Action',rated:  .26  },
+          { productType: 4, productId: 214254, productName: 'Compressor 5',  activity: 'Assemble Paint', quantity: 18,   price: 176.99,             status: 'Inactive', orderDate: '2015-01-05T06:00:00.000Z', action: 'Action',rated:  .12  },
+          { productType: 4, productId: 214255, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 18.5, price: 175.99,             status: 'Inactive', orderDate: '2015-01-06T06:00:00.000Z', action: 'Action',rated:  .71  },
+          { productType: 4, productId: 214256, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 19,   price: 174.99,             status: 'On Hold',  orderDate: '2015-01-07T06:00:00.000Z', action: 'Action',rated:  .11  },
+          { productType: 4, productId: 214257, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 19.5, price: 173.99,             status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action',rated:  .23  },
+          { productType: 4, productId: 214258, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 20,   price: 172.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action',rated:  .62  },
+          { productType: 4, productId: 214259, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 20.5, price: 171.99,             status: 'On Hold',  orderDate: '2015-01-10T06:00:00.000Z', action: 'Action',rated:  .45  },
+
+          { productType: 4, productId: 214260, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 21,   price: 170.99,                                 orderDate: '2015-01-01T06:00:00.000Z', action: 'Action',rated:  .32  },
+          { productType: 4, productId: 214261, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 21.5, price: 169.99,             status: 'Late',     orderDate: '2015-01-02T06:00:00.000Z', action: 'Action',rated:  .23  },
+          { productType: 4, productId: 214262, productName: 'Compressor 3',  activity: 'Assemble Paint', quantity: 22,   price: 168.99,             status: 'Active',   orderDate: '2015-01-03T06:00:00.000Z', action: 'Action',rated:  .67  },
+          { productType: 4, productId: 214263, productName: 'Compressor 4',  activity: 'Assemble Paint', quantity: 22.5, price: 167.99,             status: 'Inactive', orderDate: '2015-01-04T06:00:00.000Z', action: 'Action',rated:  .45  },
+          { productType: 4, productId: 214264, productName: 'Compressor 5',  activity: 'Assemble Paint', quantity: 23,   price: 166.99,             status: 'Inactive', orderDate: '2015-01-05T06:00:00.000Z', action: 'Action',rated:  .24  },
+          { productType: 4, productId: 214265, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 23.5, price: 165.99,             status: 'Inactive', orderDate: '2015-01-06T06:00:00.000Z', action: 'Action',rated:  .12  },
+          { productType: 4, productId: 214266, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 24,   price: 164.99,             status: 'On Hold',  orderDate: '2015-01-07T06:00:00.000Z', action: 'Action',rated:  .31  },
+          { productType: 4, productId: 214267, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 24.5, price: 163.99,             status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action',rated:  .71  },
+          { productType: 4, productId: 214268, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 25,   price: 162.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action',rated:  .53  },
+          { productType: 4, productId: 214269, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 25.5, price: 161.99,             status: 'On Hold',  orderDate: '2015-01-10T06:00:00.000Z', action: 'Action',rated:  .73  },
+
+          { productType: 4, productId: 214270, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 26,   price: 160.99,                                 orderDate: '2015-01-01T06:00:00.000Z', action: 'Action',rated:  .36  },
+          { productType: 'Total for Product Type 4', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 7865.58,             status: '',     orderDate: '', action: 'Action', rated: .41, isTotalRow: true  },
+          { productType: 'Record Count of Product Type 4 is 41', productId: 214221, productName: 'Compressor 2',  activity: 'Assemble Paint', quantity: 1.5,  price: 420.98,             status: '',     orderDate: '', action: 'Action', rated: .54, isSummaryRow: true  },
+        ];
+      }
+
+      return PAGING_DATA;
+    }
+  });
+</script>

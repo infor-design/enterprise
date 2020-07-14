@@ -1791,8 +1791,8 @@ Datagrid.prototype = {
       return filterConditions.length && !inArray(icon) ?
         '' : self.filterItemHtml(icon, text, isChecked);
     };
-    const renderButton = function (defaultValue) {
-      return `<button type="button" class="btn-menu btn-filter" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
+    const renderButton = function (defaultValue, extraClass) {
+      return `<button type="button" class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
@@ -1857,7 +1857,7 @@ Datagrid.prototype = {
 
     if (col.filterType === 'checkbox') {
       btnDefault = filterConditions.length ? filterConditions[0] : 'selected-notselected';
-      btnMarkup += renderButton(btnDefault) +
+      btnMarkup += renderButton(btnDefault, 'btn-filter-checkbox') +
         render('selected-notselected', 'All', true) +
         render('selected', 'Selected') +
         render('not-selected', 'NotSelected');
