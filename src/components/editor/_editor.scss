@@ -69,7 +69,7 @@
     margin-bottom: 0;
     z-index: 20;
 
-    [class*='btn'] {
+    [class^='btn'] {
       border-radius: 2px;
     }
   }
@@ -326,7 +326,7 @@
     width: 100%;
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     margin-top: 5px;
   }
 
@@ -358,7 +358,7 @@
   text-align: left;
 
   .buttonset {
-    [class*='btn'] {
+    [class^='btn'] {
       &:first-child {
         margin-left: 16px;
 
@@ -392,7 +392,7 @@
     }
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     color: $editor-btn-color;
@@ -767,7 +767,7 @@ html[dir='rtl'] {
   .flex-toolbar {
     &.formatter-toolbar {
       .buttonset {
-        [class*='btn'] {
+        [class^='btn'] {
           &:first-child {
             margin-left: auto;
             margin-right: 16px;

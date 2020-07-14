@@ -96,7 +96,7 @@
     }
 
     .buttonset {
-      button[class*='btn'] {
+      button[class^='btn'] {
         color: $contextual-panel-button-color;
 
         &:hover {
@@ -154,7 +154,7 @@
   }
 
   .buttonset {
-    [class*='btn']:last-child {
+    [class^='btn']:last-child {
       margin-right: 1px;
     }
   }

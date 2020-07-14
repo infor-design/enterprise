@@ -923,6 +923,21 @@ describe('Datepicker Month Year Changer Tests', () => {
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('10/1/2021');
   });
 
+  it('Should focus apply on closing the month/year pane', async () => {
+    const datepickerEl = await element(by.id('date-field-normal'));
+    await datepickerEl.sendKeys('10/1/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element(by.cssContainingText('.picklist-item', '2021')).click();
+    await element(by.css('.is-select-month-pane')).click();
+
+    const activeElement = await browser.driver.switchTo().activeElement();
+
+    expect(await activeElement.getText()).toEqual('Apply');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress when closed', async () => {
       await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
@@ -1488,6 +1503,22 @@ describe('Datepicker Umalqura EG Tests', () => {
 describe('Datepicker Gregorian SA Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to select a day and tab out', async () => {
+    const datepickerEl = await element(by.id('islamic-date'));
+    await datepickerEl.sendKeys('15/07/2020');
+    await element(by.css('#islamic-date + .icon')).click();
+    const focusTD = await element(by.css('#monthview-popup td.is-selected'));
+    await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
+    await focusTD.sendKeys(protractor.Key.ENTER);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('14/07/2020');
+    await utils.checkForErrors();
   });
 
   it('Should render gregorian on ar-SA time', async () => {

@@ -10,7 +10,7 @@
     margin: 1px 11px 0 7px;
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     margin-top: 3px;
     min-height: 24px;
 
@@ -139,7 +139,7 @@
 .ie-edge {
   .toolbar.formatter-toolbar,
   .flex-toolbar.formatter-toolbar {
-    [class*='btn'] {
+    [class^='btn'] {
       &[data-action='visual'] {
         width: 85px;
       }

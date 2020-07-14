@@ -162,7 +162,7 @@ Tag.prototype = {
     }
     if (this.settings.clickable || typeof this.settings.clickHandler === 'function') {
       elemClasses.add('is-linkable');
-      linkableBtn = `<button class="linkable-btn" focusable="false" tabIndex="-1">
+      linkableBtn = `<button class="btn-linkable" focusable="false" tabIndex="-1">
         ${$.createIcon('caret-right')}
       </button>`;
     }
@@ -172,7 +172,7 @@ Tag.prototype = {
     let dismissibleBtn = '';
     if (this.settings.dismissible) {
       elemClasses.add('is-dismissible');
-      dismissibleBtn = `<button class="dismissible-btn" focusable="false" tabIndex="-1">
+      dismissibleBtn = `<button class="btn-dismissible" focusable="false" tabIndex="-1">
         ${$.createIcon('close')}
         <span class="audible">${Locale.translate('Close')}</span>
       </button>`;
@@ -189,7 +189,7 @@ Tag.prototype = {
    * @returns {HTMLElement} containing a reference to a dismissible button on a tag, if applicable.
    */
   get dismissibleBtn() {
-    return this.element.querySelector('.dismissible-btn');
+    return this.element.querySelector('.btn-dismissible');
   },
 
   /**
@@ -225,7 +225,7 @@ Tag.prototype = {
     // Hyperlink State, href, show/hide the "clickable" icon
     const hyperlink = this.element.querySelector('a');
     const hasHyperlinkCss = this.element.className.indexOf('is-linkable') > -1;
-    const hasLinkableIcon = this.element.querySelector('.linkable-btn');
+    const hasLinkableIcon = this.element.querySelector('.btn-linkable');
     if (hyperlink || hasHyperlinkCss || hasLinkableIcon) {
       this.originallyAnchor = true;
       let href = hyperlink.getAttribute('href');
@@ -413,7 +413,7 @@ Tag.prototype = {
 
     // Handle clicks on tags, and setup a callback, if applicable.
     const self = this;
-    $(this.element).on('click.tag', 'a, .linkable-btn', (e) => {
+    $(this.element).on('click.tag', 'a, .btn-linkable', (e) => {
       let handlerResult;
       if (typeof self.settings.clickHandler === 'function') {
         handlerResult = self.settings.clickHandler(self);
@@ -435,7 +435,7 @@ Tag.prototype = {
        * @type {object}
        * @property {object} e - The jquery event object
        */
-      $(this.element).on('click.tag', '.dismissible-btn', (e) => {
+      $(this.element).on('click.tag', '.btn-dismissible', (e) => {
         this.dismiss(e);
       });
 
