@@ -4,7 +4,8 @@
 
 ### v4.30.1 Fixes
 
-- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. ([#3755](https://github.com/infor-design/enterprise/issues/3755))
+- `[Datagrid]` The last row border was removed but this was incorrect, reverted this. ([#4140](https://github.com/infor-design/enterprise/issues/4140))
+- `[Datagrid]` Fixed an alignment issue in datagrid filter that caused some fields to be misaligned. ([#4151](https://github.com/infor-design/enterprise/issues/4151))
 
 ## v4.30.0
 
