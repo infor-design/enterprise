@@ -30,7 +30,7 @@
 - `[Popupmenu]` Fixed a bug that the aria items are in the wrong place. Its now using [this guide](https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html). ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
-- `[Textarea]` Fixed inconsistencies on styling of disabled field when using disable function. ([#3917](https://github.com/infor-design/enterprise/issues/3917))
+- `[Textarea]` Fixed inconsistencies on styling of disabled field when using disable function, now the label will disable on all components when using this function. In general the label should be dimmed on disabled fields as per the design. ([#3917](https://github.com/infor-design/enterprise/issues/3917))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 - `[Tooltip]` Fixed an issue where the tooltip would not show up if you focus a button with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
