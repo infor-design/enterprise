@@ -3159,6 +3159,8 @@ Dropdown.prototype = {
     this.element
       .prop('disabled', true)
       .prop('readonly', false);
+      
+    this.pseudoElem.addClass('is-disabled');
 
     setTimeout(() => {
       this.pseudoElem.addClass('is-disabled');

@@ -21,10 +21,9 @@ $.fn.disable = function () {
       value.disable();
     }
   });
-  this.enable();
   this.prop('disabled', true);
   this
-    .attr('disabled', 'disabled')
+    .attr('disabled', true)
     .closest('.field')
     .addClass('is-disabled');
   return this;
