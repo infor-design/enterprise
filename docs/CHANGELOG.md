@@ -13,6 +13,7 @@
 - `[Application Menu]` Fixed a bug where some buttons did not have labels for the icon buttons in toolbars. Check your application if you use this pattern. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
+- `[Datagrid]` Fixed an issue where the data was not exporting to excel when using the groupable setting. ([#4081](https://github.com/infor-design/enterprise/issues/4081))
 - `[Datagrid]` Fixed an issue where if a context menu is opened and then closed with ESC the focus would be reset to the top of the page. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Fixed an issue where the tooltip would not show up if you focus a cell with ellipsis text with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Made the header checkbox focusable. ([#4085](https://github.com/infor-design/enterprise/issues/4085))

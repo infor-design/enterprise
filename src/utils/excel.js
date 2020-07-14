@@ -76,7 +76,8 @@ excel.cleanExtra = function (customDs, self) {
   if (!self && customDs) {
     table = excel.datasetToHtml(customDs);
   } else {
-    table = excel.appendRows(self.settings.dataset, self.table[0].cloneNode(true), self);
+    const dataset = self.settings.groupable ? self.originalDataset : self.settings.dataset;
+    table = excel.appendRows(dataset, self.table[0].cloneNode(true), self);
   }
 
   // Create the header row
