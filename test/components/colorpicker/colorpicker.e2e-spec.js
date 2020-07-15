@@ -26,7 +26,7 @@ describe('Colorpicker example-index tests', () => {
       await element(by.css('#background-color + .trigger .icon')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(colorpickerSection, 'colorpicker-open-trigger')).toEqual(0);
     });
   }
 
