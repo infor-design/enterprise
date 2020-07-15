@@ -22,7 +22,8 @@
       filterable: false,
       frozenColumns: {
         left: ['productType'],
-        // left: ['selectionCheckbox', 'productType'],
+        // left: ['productType', 'productId']
+        // left: ['productType', 'productId', 'productName']
       },
       source: datagridPagingFunction,
       toolbar: { title: 'Groups & Colspans', results: true, actions: true, rowHeight: true },
@@ -36,14 +37,14 @@
       if (item && item.isTotalRow) {
         // landmark would calculate this based on totaling columns that we get in the dataview
         if (col.id === 'productType') {
-          return 1;
+          return 3;
         } else {
           return 0;
         }
       } else if (item && item.isSummaryRow) {
         // landmark would calculate this
-        // return gridColumns.length - columnIndex - hiddenColumns.length;
-        return grid.visibleColumns().length - 1;
+        // Span all the visible columns
+        return grid.visibleColumns().length;
       }
       return 0;
     }
@@ -128,7 +129,6 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          // { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
           { id: 'productType', name: 'Product Type', field: 'productType', sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
           { id: 'productId', name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
           { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text', formatter: Formatters.Hyperlink, colspan: customColSpan },

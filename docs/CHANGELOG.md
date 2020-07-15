@@ -6,6 +6,7 @@
 
 - `[Datagrid]` The last row border was removed but this was incorrect, reverted this. ([#4140](https://github.com/infor-design/enterprise/issues/4140))
 - `[Datagrid]` Fixed an alignment issue in datagrid filter that caused some fields to be misaligned. ([#4151](https://github.com/infor-design/enterprise/issues/4151))
+- `[Datagrid]` Fixed an alignment issue with column colspan. In some situations it was not rendering correctly causing some cells to be misaligned. ([#4109](https://github.com/infor-design/enterprise/issues/ 4109))
 
 ## v4.30.0
 

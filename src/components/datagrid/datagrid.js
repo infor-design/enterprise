@@ -3717,7 +3717,6 @@ Datagrid.prototype = {
     let j = 0;
     let isHidden = false;
     let skipColumns;
-    let rowColspan;
 
     if (!rowData) {
       return '';
@@ -3968,78 +3967,58 @@ Datagrid.prototype = {
         continue;
       }
 
-      // Run an optional function to calculate a colspan
-      let colspan = null;
-      let colspanLeft = null;
+      // Run an optional function to calculate a colspan - the spanning is the next N columns given in the function
+      let colspan = 0;
 
       if (skipColumns > 0 && !col.hidden) {
+        // From the previous run and a colspan is set then we are skipping columns
         skipColumns -= 1;
-        cssClass += ' is-hidden';
+        cssClass += ' is-spanned-hidden';
 
-        // Set the first column on center back to visible
-        if (this.settings.frozenColumns.left && this.settings.frozenColumns.left.length > 0 &&
-          this.getContainer(col.id) === 'center') {
-          if (j === this.settings.frozenColumns.left.length) {
-            cssClass = cssClass.replace(' is-hidden', ' is-invisible');
-            colspanLeft = rowColspan - this.settings.frozenColumns.left.length + 1;
+        // Hide or make some cells invisble which are spanned
+        const leftColumns = this.settings?.frozenColumns?.left.length;
+        if (leftColumns > 0 && j === leftColumns) {
+          cssClass = cssClass.replace(' is-spanned-hidden', ' is-spanned-invisible');
+          colspan = skipColumns + 1;
 
-            if (colspanLeft + 1 === this.settings.columns.length - j) {
-              cssClass += ' is-last-visible';
-            }
+          if (colspan > 0 && (this.visibleColumns().length - j === colspan)) {
+            cssClass += ' is-spanned-last';
           }
+        }
 
-          if (skipColumns === 0 && this.settings.frozenColumns.left.length === 1 &&
-            j < this.visibleColumns().length) {
-            cssClass = cssClass.replace(' is-hidden', '');
-          }
-
-          if (skipColumns === 0 && rowColspan === j) {
-            cssClass += ' is-invisible';
-          }
+        if (leftColumns > 0 && j < leftColumns) {
+          cssClass = cssClass.replace(' is-spanned-hidden', ' is-spanned-last');
         }
       }
 
-      const leftLength = this.settings.frozenColumns.left.length;
-      if (col.colspan && typeof col.colspan === 'function') {
+      if (col.colspan && typeof col.colspan === 'function' && !skipColumns) {
         const fieldVal = self.fieldValue(rowData, self.settings.columns[j].field);
         colspan = col.colspan(ariaRowindex - 1, j, fieldVal, col, rowData, self);
 
-        const max = self.settings.columns.length - j;
-        colspan = (colspan && colspan > max) ? max : colspan;
-        if (colspan && colspan > 1) {
-          rowColspan = colspan;
+        // Hide border on the first spanned cell
+        if (colspan > 0) {
           skipColumns = colspan - 1;
 
-          if (leftLength > 0 &&
-            colspan - leftLength > 0) {
-            colspan -= leftLength === 1 &&
-              colspan === this.visibleColumns().length - 1 ? 0 : leftLength;
-
-            if (colspan === j || leftLength + j === colspan || leftLength > j && colspan > j) {
-              cssClass += ' is-last-visible';
-            }
+          const leftColumns = this.settings?.frozenColumns?.left.length;
+          if (leftColumns > 0 && j < leftColumns) {
+            cssClass += ' is-spanned-last';
           }
-
-          if (col.align) {
-            cssClass = cssClass.replace(` l-${col.align}-text`, '');
-          }
-
-          if (this.settings.frozenColumns.left && leftLength > 0 &&
-            leftLength === colspan) {
-            cssClass += ' is-last-visible';
-          }
-
-          if (this.visibleColumns().length === j + colspan) {
-            cssClass += ' is-last-visible';
-          }
-          cssClass += ' l-left-text';
-        } else {
-          colspan = null;
         }
-      }
 
-      if (colspanLeft) {
-        colspan = colspanLeft;
+        // Hide border on the last frozen span column
+        if (colspan > 0) {
+          skipColumns = colspan - 1;
+
+          const leftColumns = this.settings?.frozenColumns?.left.length;
+          if (leftColumns > 0 && j < leftColumns && cssClass.indexOf('is-spanned-last') === -1) {
+            cssClass += ' is-spanned-last';
+          }
+        }
+
+        // Hide border on the last span if it spans the rest
+        if (colspan > 0 && cssClass.indexOf('is-spanned-last') === -1 && (this.visibleColumns().length - 1 === colspan)) {
+          cssClass += ' is-spanned-last';
+        }
       }
 
       // Set rowStatus info
