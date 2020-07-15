@@ -345,7 +345,7 @@ masks.dateMask = function dateMask(rawValue, options) {
   const format = options.format;
   const splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, ''));
   const splitterRegex = new RegExp(`[${splitterStr}]+`);
-  const formatArray = format.split(/[^dMyHhmsa]+/);
+  const formatArray = format.match(/(d{1,2}|M{1,3}|y{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|a{1})/g);
   const rawValueArray = rawValue.split(splitterRegex);
   const maxValue = DATE_MAX_VALUES;
 
