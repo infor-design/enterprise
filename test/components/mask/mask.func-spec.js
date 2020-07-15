@@ -370,10 +370,10 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('-00000.123');
   });
 
-  it('Should process short dates', () => {
+  fit('Should process short dates', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';
-    settings.pattern = masks.shortDateMask;
+    settings.pattern = masks.dateMask;
     const api = new MaskAPI(settings);
 
     const textValue = '1111111111';
@@ -390,7 +390,53 @@ describe('Mask API', () => {
     };
     const result = api.process(textValue, opts);
 
-    expect(result.maskResult).toBeFalsy();
+    expect(result.maskResult).toBeTruthy();
+    expect(result.conformedValue).toEqual('11/11/1111');
+  });
+
+  fit('Should process short dates with no separators or other literals present', () => {
+    const settings = DEFAULT_SETTINGS;
+    settings.process = 'date';
+    settings.pattern = masks.dateMask;
+    const api = new MaskAPI(settings);
+
+    let textValue = '12122012';
+    let opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        format: 'ddMMyyyy'
+      }
+    };
+    let result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('12122012');
+
+    opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        format: 'Mdyyyy'
+      }
+    };
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('12122012');
+
+    textValue = '12122012 1212 pm';
+    opts = {
+      selection: {
+        start: 0
+      },
+      patternOptions: {
+        format: 'Mdyyyy hmm a'
+      }
+    };
+    result = api.process(textValue, opts);
+
+    expect(result.conformedValue).toEqual('12122012 1212 pm');
   });
 
   it('Should properly identify caret traps in a pattern array', () => {
