@@ -577,7 +577,18 @@ Editor.prototype = {
     html = this.element.html().toString().trim();
     this.textarea.html(xssUtils.sanitizeHTML(html));
 
-    this.restoreSelection(this.savedSelection);
+    const newSelection = this.saveSelection();
+    const isNumber = n => typeof n === 'number';
+    const isPresent = obj => obj && obj[0] &&
+      isNumber(obj[0].startOffset) && isNumber(obj[0].endOffset);
+    const getOffset = obj => (isPresent(obj) ?
+      { start: obj[0].startOffset, end: obj[0].endOffset } : null);
+    const offset = { old: getOffset(this.savedSelection), new: getOffset(newSelection) };
+
+    if (!((offset.old !== null && offset.new !== null) &&
+        (offset.old.start === offset.new.start) && (offset.old.end === offset.new.end))) {
+      this.restoreSelection(this.savedSelection);
+    }
   },
 
   /**
