@@ -1,0 +1,35 @@
+<form class="form-layout-compact">
+  <div class="row">
+    <div class="twelve columns">
+      <div class="toolbar" role="toolbar">
+        <div class="title">
+        </div>
+        <div class="buttonset">
+          <button class="btn btn-toggle no-ripple hide-focus is-pressed" type="button" aria-pressed="true" id="toggle-compact">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-change-row-line-height"></use>
+            </svg>
+            <span>Compact Mode</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <h2 class="fieldset-title">Multiselect (Standard)</h2>
+      {{> components/multiselect/_samples-standard}}
+    </div>
+    <div class="six columns">
+      <h2 class="fieldset-title">Multiselect (with Tags)</h2>
+      {{> components/multiselect/_samples-tagged}}
+    </div>
+  </div>
+</form>
+
+<script>
+  $('#toggle-compact').on('click', function () {
+    Soho.utils.toggleCompactMode(document.querySelector('form'));
+  });
+</script>

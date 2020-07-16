@@ -766,14 +766,31 @@ input.dropdown.error:focus {
         padding-left: 20px;
       }
     }
+
+    &.has-tags {
+      padding: 0;
+
+      .tag-list {
+        padding: 2px 30px 3px 5px;
+      }
+
+      .tag {
+        height: 20px;
+      }
+
+      .tag-content {
+        line-height: 19px;
+      }
+    }
   }
 
   div.dropdown,
   div.multiselect {
     + .icon {
-      height: 30px;
+      height: 25px;
       right: 4px;
-      top: -2px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 16px;
     }
 
@@ -783,9 +800,7 @@ input.dropdown.error:focus {
       right: auto;
       top: 0;
     }
-
   }
-
 }
 
 // Compound field icon adjustments
