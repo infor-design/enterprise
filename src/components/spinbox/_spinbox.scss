@@ -84,7 +84,7 @@ input::-webkit-inner-spin-button {
   &.is-disabled {
     background-color: $input-color-disabled-background;
     border-color: $input-color-disabled-border;
-    color: $disabled-color;
+    color: $spinbox-disabled-icon-color;
     cursor: default;
   }
 }
@@ -126,7 +126,7 @@ input::-webkit-inner-spin-button {
       &.is-disabled {
         background-color: $input-color-disabled-background;
         border-color: $input-color-disabled-border;
-        color: $disabled-color;
+        color: $spinbox-disabled-icon-color;
         cursor: default;
       }
     }
@@ -137,7 +137,7 @@ input::-webkit-inner-spin-button {
     > .spinbox-control {
       background-color: $input-color-disabled-background;
       border-color: $input-color-disabled-border;
-      color: $disabled-color;
+      color: $spinbox-disabled-icon-color;
       cursor: default;
     }
   }
