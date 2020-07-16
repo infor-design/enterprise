@@ -526,7 +526,7 @@ Editor.prototype = {
       this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
       this.resetEmptyEditor(e);
       this.element.trigger('change');
-    }, 300));
+    }, 400));
 
     $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
       this.setRowsHeight();
