@@ -370,7 +370,7 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('-00000.123');
   });
 
-  fit('Should process short dates', () => {
+  it('Should process short dates', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';
     settings.pattern = masks.dateMask;
@@ -394,7 +394,7 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('11/11/1111');
   });
 
-  fit('Should process short dates with no separators or other literals present', () => {
+  it('Should process short dates with no separators or other literals present', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';
     settings.pattern = masks.dateMask;
