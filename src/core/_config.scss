@@ -413,6 +413,10 @@ $fieldset-border-top-color: $theme-color-palette-graphite-30;
 $fieldset-border-bottom-color: $button-color-primary-initial-font;
 $fieldset-title-color: $theme-color-font-base;
 
+// Radios
+$radio-color-disabled-border: $input-color-disabled-border;
+$radio-color-disabled-label: $input-disabled-color;
+
 // Expandable Area
 $expandable-area-border-color: $theme-color-palette-graphite-30;
 $expandable-area-title-color: $theme-color-font-base;
@@ -427,7 +431,7 @@ $cardlist-text-color: $font-color;
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-checked-disabled-background;
-$checkbox-color-disabled-font: $input-color-disabled-font;
+$checkbox-color-disabled-font: $input-disabled-color;
 
 // Switch
 $focus-color: #cbdce6;
@@ -443,7 +447,7 @@ $switch-unchecked-pressed-bg-color: $theme-color-palette-white;
 $switch-disabled-border-color: $theme-color-palette-graphite-30;
 $switch-disabled-bg-color: $theme-color-palette-graphite-20;
 $switch-disabled-bar-color: $theme-color-palette-graphite-30;
-$switch-disabled-label-color: $theme-color-brand-secondary-alt;
+$switch-disabled-label-color: $input-disabled-color;
 $switch-focus-box-shadow: 0 0 0 3px $focus-color, 0 0 0 4px $theme-color-brand-primary-base, 0 0 4px 6px rgba(54, 138, 192, 0.3);
 $switch-hover-box-shadow: 0 2px 5px $focus-shadow;
 
@@ -477,7 +481,7 @@ $slider-active-bg-color: $theme-color-brand-primary-base;
 $slider-labels-color: $theme-color-palette-graphite-60;
 $slider-disabled-color: $theme-color-palette-graphite-20;
 $slider-disabled-active-bg-color: $theme-color-palette-graphite-30;
-$slider-disabled-labels-color: $theme-color-brand-secondary-alt;
+$slider-disabled-labels-color: $input-disabled-color;
 $slider-disabled-handle-color: $theme-color-palette-graphite-30;
 $slider-disabled-range-color: $theme-color-palette-graphite-30;
 $slider-readonly-color: $theme-color-palette-graphite-50;
@@ -486,6 +490,9 @@ $slider-readonly-labels-color: $theme-color-palette-graphite-60;
 $slider-readonly-handle-color: $theme-color-palette-graphite-50;
 $slider-readonly-range-color: $theme-color-brand-secondary-alt;
 $slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.2);
+
+// Lookup
+$lookup-disabled-color: $input-disabled-color;
 
 //Modal
 $modal-bg-color: $theme-color-palette-white;
