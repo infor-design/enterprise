@@ -10085,9 +10085,8 @@ Datagrid.prototype = {
    * @returns {object} The row index in the dataset.
    */
   actualRowIndex(row) {
-    row = row instanceof jQuery ? row[0] : row;
-    const index = row ? parseInt(row.getAttribute('aria-rowindex'), 10) : 0;
-    return index - 1;
+    row = row instanceof jQuery ? row : $(row);
+    return row.attr('aria-rowindex') - 1;
   },
 
   /**
@@ -10139,8 +10138,8 @@ Datagrid.prototype = {
    * @returns {number} The row index in the dataset.
    */
   dataRowIndex(row) {
-    row = row instanceof jQuery ? row[0] : row;
-    return row ? parseInt(row.getAttribute('data-index'), 10) : 0;
+    row = row instanceof jQuery ? row : $(row);
+    return parseInt(row.attr('data-index'), 10);
   },
 
   /**
@@ -10957,8 +10956,12 @@ Datagrid.prototype = {
   * @private
   */
   syncDatasetWithSelectedRows() {
-    this._selectedRows = [];
     const s = this.settings;
+    if (s.source && s.paging && s.allowSelectAcrossPages && s.columnIds?.length) {
+      return;
+    }
+
+    this._selectedRows = [];
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let idx = -1;
 

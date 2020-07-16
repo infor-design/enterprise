@@ -14,6 +14,150 @@ module.exports = (req, res) => {
   let seed = 1;
   const statuses = ['OK', 'On Hold', 'Inactive', 'Active', 'Late', 'Complete'];
 
+  const checkColumn = (filterColumn, conditionValue, status) => {
+    let isMatch = true;
+    let rowValue;
+    let rowValueStr = '';
+
+    if (filterColumn === 'id') {
+      rowValue = j;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'productId') {
+      rowValue = 214220 + j;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'productSku') {
+      rowValue = 999101 + j;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'weight') {
+      rowValue = '68 lb.';
+    } else if (filterColumn === 'maxPressure') {
+      rowValue = '125 psi';
+    } else if (filterColumn === 'rpm') {
+      rowValue = 1750;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'capacity') {
+      rowValue = 10 + j;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'ratedTemp') {
+      rowValue = '-25';
+    } else if (filterColumn === 'productName') {
+      rowValue = `Compressor ${j}`;
+    } else if (filterColumn === 'activity') {
+      rowValue = 'Induction';
+    } else if (filterColumn === 'pumpLife') {
+      rowValue = '2,000 hr';
+    } else if (filterColumn === 'quantity') {
+      rowValue = 1 + j;
+      conditionValue = parseFloat(conditionValue);
+    } else if (filterColumn === 'price') {
+      rowValue = +(Math.abs(210.99 - j).toFixed(2));
+      conditionValue = +(Math.abs(parseFloat(conditionValue)).toFixed(2));
+    } else if (filterColumn === 'status') {
+      rowValue = statuses[status] || 'None';
+    } else if (filterColumn === 'orderDate') {
+      rowValue = new Date(2014, 12, seed).getTime();
+      conditionValue = new Date(conditionValue).getTime();
+    } else if (filterColumn === 'action') {
+      rowValue = 'Action';
+    }
+
+    rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
+
+    switch (req.query.filterOp) {
+      case 'equals':
+        isMatch = (rowValue === conditionValue && rowValue !== '');
+        break;
+      case 'does-not-equal':
+        isMatch = (rowValue !== conditionValue);
+        break;
+      case 'contains':
+        isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+        break;
+      case 'does-not-contain':
+        isMatch = (rowValueStr.indexOf(conditionValue) === -1);
+        break;
+      case 'end-with':
+        isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length) && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
+        break;
+      case 'start-with':
+        isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
+        break;
+      case 'does-not-end-with':
+        isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length) && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
+        isMatch = !isMatch;
+        break;
+      case 'does-not-start-with':
+        isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
+        break;
+      case 'is-empty':
+        isMatch = (rowValueStr === '');
+        break;
+      case 'is-not-empty':
+        if (rowValue === '') {
+          isMatch = (rowValue !== '');
+          break;
+        }
+        isMatch = !(rowValue === null);
+        break;
+      case 'less-than':
+        isMatch = (rowValue < conditionValue && rowValue !== '');
+        break;
+      case 'less-equals':
+        isMatch = (rowValue <= conditionValue && rowValue !== '');
+        break;
+      case 'greater-than':
+        isMatch = (rowValue > conditionValue && rowValue !== '');
+        break;
+      case 'greater-equals':
+        isMatch = (rowValue >= conditionValue && rowValue !== '');
+        break;
+      case 'selected':
+        isMatch = (rowValueStr === '1' || rowValueStr === 'true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
+        break;
+      case 'not-selected':
+        isMatch = (rowValueStr === '0' || rowValueStr === 'false' || rowValue === false || rowValue === 0 || rowValueStr === '');
+        break;
+      case 'selected-notselected':
+        isMatch = true;
+        break;
+      default:
+    }
+    return isMatch;
+  };
+
+  let columns;
+  let filterValue;
+  let isMultiColumn = false;
+  if (req.query.filterValue) {
+    filterValue = req.query.filterValue.replace('\'', '').toLowerCase();
+    if (req.query.filterColumn &&
+      (req.query.filterColumn === 'all' || req.query.filterColumn.indexOf('|') > -1)) {
+      isMultiColumn = true;
+      if (req.query.filterColumn === 'all') {
+        columns = [
+          'id',
+          'productId',
+          'productSku',
+          'weight',
+          'maxPressure',
+          'rpm',
+          'capacity',
+          'ratedTemp',
+          'productName',
+          'activity',
+          'pumpLife',
+          'quantity',
+          'price',
+          'status',
+          'orderDate',
+          'action'
+        ];
+      } else {
+        columns = req.query.filterColumn.split('|');
+      }
+    }
+  }
+
   for (j = 0; j < total; j++) {
     const status = Math.floor(statuses.length / (start + seed));
     let filteredOut = false;
@@ -42,112 +186,19 @@ module.exports = (req, res) => {
     // Filter Row simulation
     if (req.query.filterValue) {
       let isMatch = true;
-      let conditionValue = req.query.filterValue.replace('\'', '').toLowerCase();
-      let rowValue;
-      let rowValueStr = '';
-
-      if (req.query.filterColumn === 'id') {
-        rowValue = j;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'productId') {
-        rowValue = 214220 + j;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'productSku') {
-        rowValue = 999101 + j;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'weight') {
-        rowValue = '68 lb.';
-      } else if (req.query.filterColumn === 'maxPressure') {
-        rowValue = '125 psi';
-      } else if (req.query.filterColumn === 'rpm') {
-        rowValue = 1750;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'capacity') {
-        rowValue = 10 + j;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'ratedTemp') {
-        rowValue = '-25';
-      } else if (req.query.filterColumn === 'productName') {
-        rowValue = `Compressor ${j}`;
-      } else if (req.query.filterColumn === 'activity') {
-        rowValue = 'Induction';
-      } else if (req.query.filterColumn === 'pumpLife') {
-        rowValue = '2,000 hr';
-      } else if (req.query.filterColumn === 'quantity') {
-        rowValue = 1 + j;
-        conditionValue = parseFloat(conditionValue);
-      } else if (req.query.filterColumn === 'price') {
-        rowValue = +(Math.abs(210.99 - j).toFixed(2));
-        conditionValue = +(Math.abs(parseFloat(conditionValue)).toFixed(2));
-      } else if (req.query.filterColumn === 'status') {
-        rowValue = statuses[status] || 'None';
-      } else if (req.query.filterColumn === 'orderDate') {
-        rowValue = new Date(2014, 12, seed).getTime();
-        conditionValue = new Date(conditionValue).getTime();
-      } else if (req.query.filterColumn === 'action') {
-        rowValue = 'Action';
-      }
-
-      rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
-
-      switch (req.query.filterOp) {
-        case 'equals':
-          isMatch = (rowValue === conditionValue && rowValue !== '');
-          break;
-        case 'does-not-equal':
-          isMatch = (rowValue !== conditionValue);
-          break;
-        case 'contains':
-          isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
-          break;
-        case 'does-not-contain':
-          isMatch = (rowValueStr.indexOf(conditionValue) === -1);
-          break;
-        case 'end-with':
-          isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length) && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
-          break;
-        case 'start-with':
-          isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
-          break;
-        case 'does-not-end-with':
-          isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length) && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
-          isMatch = !isMatch;
-          break;
-        case 'does-not-start-with':
-          isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
-          break;
-        case 'is-empty':
-          isMatch = (rowValueStr === '');
-          break;
-        case 'is-not-empty':
-          if (rowValue === '') {
-            isMatch = (rowValue !== '');
-            break;
+      if (isMultiColumn) {
+        if (filterValue.indexOf('/') > -1 && columns.indexOf('orderDate') > -1) {
+          isMatch = checkColumn('orderDate', filterValue, status);
+        } else {
+          for (let idx = 0, len = columns.length; idx < len; idx++) {
+            isMatch = checkColumn(columns[idx], filterValue, status);
+            if (isMatch) {
+              break;
+            }
           }
-          isMatch = !(rowValue === null);
-          break;
-        case 'less-than':
-          isMatch = (rowValue < conditionValue && rowValue !== '');
-          break;
-        case 'less-equals':
-          isMatch = (rowValue <= conditionValue && rowValue !== '');
-          break;
-        case 'greater-than':
-          isMatch = (rowValue > conditionValue && rowValue !== '');
-          break;
-        case 'greater-equals':
-          isMatch = (rowValue >= conditionValue && rowValue !== '');
-          break;
-        case 'selected':
-          isMatch = (rowValueStr === '1' || rowValueStr === 'true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
-          break;
-        case 'not-selected':
-          isMatch = (rowValueStr === '0' || rowValueStr === 'false' || rowValue === false || rowValue === 0 || rowValueStr === '');
-          break;
-        case 'selected-notselected':
-          isMatch = true;
-          break;
-        default:
+        }
+      } else {
+        isMatch = checkColumn(req.query.filterColumn, filterValue, status);
       }
       filteredOut = !isMatch;
     }
