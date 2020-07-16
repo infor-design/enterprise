@@ -194,11 +194,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &:not(.left) td:last-child,
-    &:not(.left) td.is-last-visible {
-      border-right-color: transparent;
-    }
-
-    &.left td.is-last-visible {
+    &:not(.left) td.is-spanned-last {
       border-right-color: transparent;
     }
 
@@ -2016,12 +2012,19 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    &.is-invisible .datagrid-cell-wrapper {
-      visibility: hidden;
+    // For column spanning
+    &.is-spanned-hidden {
+      display: none;
     }
 
-    &.is-spacer {
-      border-bottom-color: transparent;
+    &.is-spanned-last {
+      border-right-color: transparent;
+    }
+
+    &.is-spanned-invisible {
+      .datagrid-cell-wrapper {
+        visibility: hidden;
+      }
     }
 
     .word-wrap {

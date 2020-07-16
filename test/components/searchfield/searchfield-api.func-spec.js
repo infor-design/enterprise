@@ -65,11 +65,11 @@ describe('Searchfield API', () => {
 
     searchfieldAPI.clear();
 
-    const closeButtonEl = document.body.querySelector('svg.close');
-    const spyEvent = spyOnEvent(closeButtonEl, 'click');
-
     setTimeout(() => {
+      const closeButtonEl = document.body.querySelector('svg.close');
+      const spyEvent = spyOnEvent(closeButtonEl, 'click');
       closeButtonEl.click();
+
       expect(spyEvent).toHaveBeenTriggered();
       expect(searchfieldInputEl.getAttribute('value')).toEqual('');
     }, 1);

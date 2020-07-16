@@ -14,7 +14,7 @@
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({
       columns: getColumns(),
-      selectable: 'mixed',
+      selectable: 'multiple',
       paging: true,
       pagesize: 10,
       rowHeight: 'small',
@@ -42,9 +42,8 @@
           return 0;
         }
       } else if (item && item.isSummaryRow) {
-        // landmark would calculate this
-        // return gridColumns.length - columnIndex - hiddenColumns.length;
-        return 7;
+        // Span the rest of the visible columns minus the first selection checkbox
+        return grid.visibleColumns().length - 1;
       }
       return 0;
     }
