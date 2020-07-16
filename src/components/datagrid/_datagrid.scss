@@ -4564,14 +4564,14 @@ html[dir='rtl'] {
     width: 300px;
     width: -moz-available;
     width: -webkit-fill-available;
-    width: fill-available;
+    width: stretch;
   }
 
   .paginated table {
     width: 466px;
     width: -moz-available;
     width: -webkit-fill-available;
-    width: fill-available;
+    width: stretch;
   }
 }
 
