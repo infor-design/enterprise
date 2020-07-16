@@ -703,6 +703,8 @@ Tree.prototype = {
     const s = this.settings;
     let result;
     if (next[0] && next[0].tagName.toLowerCase() === 'ul' && next[0].getAttribute('role') === 'group') {
+      const currentIcon = node.find('svg.icon-tree').getIconName();
+
       if (DOM.hasClass(next[0], 'is-open')) {
         if (typeof s.onCollapse === 'function') {
           result = s.onCollapse(node);
@@ -720,12 +722,17 @@ Tree.prototype = {
         }
 
         node.closest('.folder').removeClass('is-open');
-        self.setFolderIcon(node, false, false, s.expandPlusminusRotate);
+        if (currentIcon === s.folderIconOpen || s.useExpandTarget) {
+          self.setFolderIcon(node, false, false, s.expandPlusminusRotate);
+        } else if (/open|close/g.test(currentIcon) && !s.useExpandTarget) {
+          self.setTreeIcon(node.find('svg.icon-tree'),
+            currentIcon.replace('open', 'closed').replace(/\s?is-selected/, ''));
+        }
 
         const parentNode = node.closest('.folder a');
         if (self.hasIconClass(parentNode)) {
           const nodeClass = parentNode.attr('class');
-          if (/open|close/g.test(nodeClass) || this.settings.useExpandTarget) {
+          if (/open|close/g.test(nodeClass) || s.useExpandTarget) {
             self.setTreeIcon(parentNode.find('svg.icon-tree'),
               nodeClass.replace('open', 'closed').replace(/\s?is-selected/, ''));
           }
@@ -796,7 +803,12 @@ Tree.prototype = {
 
           return;
         }
-        self.setFolderIcon(node, true, false, s.expandPlusminusRotate);
+        if (currentIcon === s.folderIconClosed || s.useExpandTarget) {
+          self.setFolderIcon(node, true, false, s.expandPlusminusRotate);
+        } else if (/open|close/g.test(currentIcon) && !s.useExpandTarget) {
+          self.setTreeIcon(node.find('svg.icon-tree'),
+            currentIcon.replace('closed', 'open').replace(/\s?is-selected/, ''));
+        }
         self.accessNode(next, node);
       }
     }
@@ -812,7 +824,13 @@ Tree.prototype = {
     const nodeClass = node.attr('class');
 
     node.closest('.folder').addClass('is-open');
-    this.setFolderIcon(node, true, false, this.settings.expandPlusminusRotate);
+    const currentIcon = node.find('svg.icon-tree').getIconName();
+    if (currentIcon === this.settings.folderIconClosed || this.settings.useExpandTarget) {
+      this.setFolderIcon(node, true, false, this.settings.expandPlusminusRotate);
+    } else if (/open|close/g.test(currentIcon) && !this.settings.useExpandTarget) {
+      this.setTreeIcon(node.find('svg.icon-tree'),
+        currentIcon.replace('closed', 'open').replace(/\s?is-selected/, ''));
+    }
 
     if (this.hasIconClass(nodeClass)) {
       const isTypeFolder = next[0] && next[0].tagName.toLowerCase() === 'ul';
@@ -2174,7 +2192,14 @@ Tree.prototype = {
       elem.text = nodeData.text;
     }
 
-    if (nodeData.icon) {
+    if (nodeData.icon === null) {
+      const next = elem.node[0].nextElementSibling;
+      if (next && next.tagName.toLowerCase() === 'ul') {
+        this.setFolderIcon(elem.node[0], DOM.hasClass(next, 'is-open'), false, this.settings.expandPlusminusRotate);
+      } else {
+        this.setTreeIcon(elem.node[0].querySelector('svg.icon-tree'), 'icon-tree-node');
+      }
+    } else if (nodeData.icon) {
       this.setTreeIcon(elem.node[0].querySelector('svg.icon-tree'), nodeData.icon);
       elem.icon = nodeData.icon;
       const jsonData = elem.node.data('jsonData');
