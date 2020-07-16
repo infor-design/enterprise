@@ -28,6 +28,7 @@
 - `[Datepicker]` Fixed a bug where an error may occur if using the gregorian calendar on ar-SA locale. ([#4130](https://github.com/infor-design/enterprise/issues/4130))
 - `[Dropdown]` Fixed an issue where "phraseStartsWith" does not filter the list after deleting a character. ([#4047](https://github.com/infor-design/enterprise/issues/4047))
 - `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
+- `[Editor]` Fixed an issue where the selection for shift + arrow keys was not working properly. ([#4070](https://github.com/infor-design/enterprise/issues/4070))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
