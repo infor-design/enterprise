@@ -41,6 +41,18 @@
 - `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
 - `[Tree]` Fixed an issue where the custom icon was changing back to default on toggle after use of method updateNode(). ([#4027](https://github.com/infor-design/enterprise/issues/4027))
 
+## v4.30.1
+
+### v4.30.1 Fixes
+
+- `[Datepicker]` Fixed the datepicker in ar-SA setting timestamps would null the times in some situations. ([#4160](https://github.com/infor-design/enterprise/issues/4160))
+- `[Datagrid]` The last row border was removed but this was incorrect, reverted this. ([#4140](https://github.com/infor-design/enterprise/issues/4140))
+- `[Datagrid]` Fixed an alignment issue in datagrid filter that caused some fields to be misaligned. ([#4151](https://github.com/infor-design/enterprise/issues/4151))
+- `[Datagrid]` Fixed an alignment issue with column colspan. In some situations it was not rendering correctly causing some cells to be misaligned. ([#4109](https://github.com/infor-design/enterprise/issues/4109))
+- `[Datagrid]` Changed invalid css fill-available property. ([#4133](https://github.com/infor-design/enterprise/issues/4133))
+- `[Locale]` Fixed a bug with MMMM dd format in ar-SA. ([#4160](https://github.com/infor-design/enterprise/issues/4160))
+- `[Locale]` Changed the arguments names for better symmetry fromGregorian == toUmalqura and toGregorian === options.fromUmalqura. ([#4160](https://github.com/infor-design/enterprise/issues4160))
+
 ## v4.30.0
 
 ### v4.30.0 Announcements

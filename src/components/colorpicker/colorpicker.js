@@ -380,6 +380,12 @@ ColorPicker.prototype = {
         this.element.parent().removeClass('is-open');
         this.isPickerOpen = false;
 
+        /**
+        *  Fires after the color picker popup is closed
+        * @event listclosed
+        * @memberof ColorPicker
+        * @property {object} event The jquery event object
+        */
         this.element.trigger('listclosed', 'select');
       })
       .on('selected.colorpicker', (e, item) => {
@@ -387,6 +393,13 @@ ColorPicker.prototype = {
           this.setColor(item.data('value'), item.data('label'));
         }
         this.element.focus();
+
+        /**
+        *  Fires after the color picker is changed
+        * @event change
+        * @memberof ColorPicker
+        * @property {object} event The jquery event object
+        */
         this.element.trigger('change');
       });
 

@@ -30,8 +30,9 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text', filterDisabled: true});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', align: 'center', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'lookup'});
+      columns.push({ id: 'orderDate', name: 'Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+      columns.push({ id: 'orderDate', name: 'Date (Centered)', field: 'orderDate', align: 'center', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
