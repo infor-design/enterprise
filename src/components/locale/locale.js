@@ -1253,6 +1253,11 @@ const Locale = {  // eslint-disable-line
       if (dateObj.isUndefindedYear) {
         const isFeb29 = parseInt(dateObj.day, 10) === 29 && parseInt(dateObj.month, 10) === 1;
         dateObj.year = isFeb29 ? closestLeap() : (new Date()).getFullYear();
+
+        if (thisLocaleCalendar.name === 'islamic-umalqura') {
+          const umDate = this.gregorianToUmalqura(new Date(dateObj.year, 0, 1));
+          dateObj.year = umDate[0];
+        }
       } else {
         delete dateObj.year;
       }

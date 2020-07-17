@@ -30,7 +30,7 @@
         <input class="input-sm" id="input-date-field-MMdd" readonly/>
       </div>
       <div class="field">
-        <label for="date-field-MMdd" class="label">MMMMdd Field</label>
+        <label for="date-field-MMdd" class="label">MMdd Field</label>
         <input id="date-field-MMdd" class="datepicker" type="text">
       </div>
       <div class="field">
@@ -45,7 +45,7 @@
         <input class="input-sm" id="input-date-field-yyyyMM" readonly/>
       </div>
       <div class="field">
-        <label for="date-field-yyyyMM" class="label">yyyyMMMM Field</label>
+        <label for="date-field-yyyyMM" class="label">yyyyMM Field</label>
         <input id="date-field-yyyyMM" class="datepicker" type="text">
       </div>
       <div class="field">
@@ -81,6 +81,21 @@
       <div class="field">
         <label for="output-date-field-timestamp">Transformed Database Value (en-US)</label>
         <input class="input-md" id="output-date-field-timestamp" readonly/>
+      </div>
+    </div>
+
+    <div class="two columns">
+      <div class="field">
+        <label for="input-date-field-time">Beginning Database Value (en-US)</label>
+        <input class="input-sm" id="input-date-field-time" readonly/>
+      </div>
+      <div class="field">
+        <label for="date-field-time" class="label">time Field</label>
+        <input id="date-field-time" class="timepicker" type="text">
+      </div>
+      <div class="field">
+        <label for="output-date-field-time">Transformed Database Value (en-US)</label>
+        <input class="input-sm" id="output-date-field-time" readonly/>
       </div>
     </div>
   </div>
@@ -147,59 +162,33 @@
             showTime: true,
             useCurrentTime: true
           }
+        },
+        time: {
+          dataPattern:      'HHmmss',
+          displayPattern:   Soho.Locale.calendar().dateFormat.timestamp,
+          dbValue:          '104530',
+          fieldId:          'date-field-time',
+          options: {
+            mode: 'standard',
+            timeFormat: Soho.Locale.calendar().dateFormat.timestamp
+          }
         }
       };
 
-      // AFTER
-      // transformation of date value from database format (en-US) to current locale for display
-      var modelKeys = Object.keys(model)
-      .forEach( (key) => {
-        var modelItem = model[key];
-
-        var datepicker = $('#' + modelItem.fieldId).datepicker(modelItem.options);
-        $('#input-' + modelItem.fieldId).val(modelItem.dbValue);
-
-        var fromPattern = modelItem.dataPattern;
-        var toPattern = modelItem.displayPattern;
-
-        var parseDateOptions = {
-          // pattern: toPattern,
-          dateFormat: fromPattern,
-          locale: 'en-US',
-          calendarName: 'gregorian'
-        };
-        var date = Soho.Locale.parseDate(modelItem.dbValue, parseDateOptions, false);
-
-        // dateTimeDisplayRule
-        var formatDateOptions = {
-          pattern: toPattern,
-          fromGregorian: (Soho.Locale.calendar().name === 'islamic-umalqura') ? true : undefined,
-          // locale: 'en-US',
-          // calendarName: 'gregorian'
-        };
-        var value = Soho.Locale.formatDate(date, formatDateOptions);
-
-        datepicker.data('datepicker').setValue(value);
-        // datepicker.data('datepicker').setValue(date);
-
-        console.log([modelItem.fieldId + ' value transformed', modelItem.dbValue, value]);
-      });
-
-      $('.datepicker').on('change', function (e, args) {
+      $('.datepicker, .timepicker').on('change', function (e, args) {
         var key = e.currentTarget.id.substr(e.currentTarget.id.lastIndexOf('-')+1);
         var modelItem = model[key];
 
         // transformation of date value in current locale format to database format (en-US)
-        var elemValue = $('#' + modelItem.fieldId).data('datepicker').element.val();
+        var elemValue = (key === 'time')
+          ? $('#' + modelItem.fieldId).data('timepicker').element.val()
+          : $('#' + modelItem.fieldId).data('datepicker').element.val();
 
         var fromPattern = modelItem.displayPattern;
         var toPattern = modelItem.dataPattern;
 
         var parseDateOptions = {
-          // pattern: toPattern,
-          dateFormat: fromPattern,
-          // locale: 'en-US',
-          // calendarName: 'gregorian'
+          dateFormat: fromPattern
         };
         var date = Soho.Locale.parseDate(elemValue, parseDateOptions, false);
 
@@ -216,6 +205,93 @@
 
         console.log([modelItem.fieldId + '.onchange value transformed', elemValue, value]);
 
+      });
+      // BEFORE 4.30
+      // transformation of date value from database format (en-US) to current locale for display
+      // var modelKeys = Object.keys(model)
+      // .forEach( (key) => {
+      //   var modelItem = model[key];
+      //
+      //   var datepicker = $('#' + modelItem.fieldId).datepicker(modelItem.options);
+      //   $('#input-' + modelItem.fieldId).val(modelItem.dbValue);
+      //
+      //   var fromPattern = modelItem.dataPattern;
+      //   var toPattern = modelItem.displayPattern;
+      //
+      //   var date = Soho.Locale.parseDate(modelItem.dbValue, fromPattern, false);
+      //
+      //   var formatDateOptions = {
+      //     pattern: toPattern,
+      //     // fromGregorian: true   // comment to fix en-US issue
+      //   };
+      //   var value = Soho.Locale.formatDate(date, formatDateOptions);
+      //
+      //   datepicker.data('datepicker').setValue(value);
+      //
+      //   console.log([modelItem.fieldId + ' value transformed', modelItem.dbValue, value]);
+      // });
+      //
+      // $('.datepicker').on('change', function (e, args) {
+      //   // transformation of date value in current locale format to database format (en-US)
+      //   var key = e.currentTarget.id.substr(e.currentTarget.id.lastIndexOf('-')+1);
+      //   var modelItem = model[key];
+      //
+      //   var elemValue = $('#' + modelItem.fieldId).data('datepicker').element.val();
+      //
+      //   var fromPattern = modelItem.displayPattern;
+      //   var toPattern = modelItem.dataPattern;
+      //
+      //   var date = Soho.Locale.parseDate(elemValue, fromPattern, false);
+      //
+      //   var formatDateOptions = {
+      //     pattern: toPattern,
+      //     // toGregorian: true   // comment to fix en-US issue
+      //   };
+      //   var value = Soho.Locale.formatDate(date, formatDateOptions);
+      //
+      //   $('#output-' + modelItem.fieldId).val(value);
+      //
+      //   console.log([modelItem.fieldId + '.onchange value transformed', elemValue, value]);
+      // });
+
+      // -----------------------------------
+
+      // AFTER
+      // transformation of date value from database format (en-US) to current locale for display
+      var modelKeys = Object.keys(model)
+      .forEach( (key) => {
+        var modelItem = model[key];
+        var control = (key === 'time')
+          ? $('#' + modelItem.fieldId).timepicker(modelItem.options)
+          : $('#' + modelItem.fieldId).datepicker(modelItem.options);
+
+        $('#input-' + modelItem.fieldId).val(modelItem.dbValue);
+
+        var fromPattern = modelItem.dataPattern;
+        var toPattern = modelItem.displayPattern;
+
+        var parseDateOptions = {
+          dateFormat: fromPattern,
+          locale: 'en-US',
+          calendarName: 'gregorian'
+        };
+        var date = Soho.Locale.parseDate(modelItem.dbValue, parseDateOptions, false);
+
+        // dateTimeDisplayRule
+        var formatDateOptions = {
+          pattern: toPattern,
+          fromGregorian: (Soho.Locale.calendar().name === 'islamic-umalqura') ? true : undefined
+        };
+        var value = Soho.Locale.formatDate(date, formatDateOptions);
+
+        if (key === 'time') {
+          control.data('timepicker').element.val(value);
+        } else {
+          control.data('datepicker').setValue(value);
+        }
+
+        control.trigger('change');
+        console.log([modelItem.fieldId + ' value transformed', modelItem.dbValue, value]);
       });
     });
 

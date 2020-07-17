@@ -1786,7 +1786,7 @@ DatePicker.prototype = {
     if (date instanceof Array) {
       date[3] = hours ? parseInt(hours, 10) : date[3];
       date[4] = minutes ? parseInt(minutes, 10) : date[4];
-      date[5] = seconds ? parseInt(seconds, 10) : date[4];
+      date[5] = seconds ? parseInt(seconds, 10) : date[5];
     } else {
       date = new Date(date);
       date.setHours(hours, minutes, seconds);

@@ -1271,16 +1271,27 @@ describe('Locale API', () => {
       locale: 'ar-SA'
     });
 
-    expect(testDate[0]).toEqual(2020);
+    expect(testDate[0]).toEqual(1441);
     expect(testDate[1]).toEqual(6);
     expect(testDate[2]).toEqual(5);
 
-    const testDate2 = Locale.formatDate('May 01', {
+    const formatDateOptions = {
+      pattern: 'MMdd',
+      toGregorian: true,
+      locale: 'en-US',
+      calendarName: 'gregorian'
+    };
+
+    const testDate2 = Soho.Locale.formatDate([1441, 6, 5, 0, 0, 0, 0], formatDateOptions);
+
+    expect(testDate2).toEqual('0915');
+
+    const testDate3 = Locale.formatDate('May 01', {
       pattern: 'MMMM dd',
       locale: 'en-US'
     });
 
-    expect(testDate2).toEqual('May 01');
+    expect(testDate3).toEqual('May 01');
   });
 
   it('Should handle numbers passed to parseNumber', () => {
