@@ -35,6 +35,7 @@ describe('Locale Set Value Tests', () => {
     expect(await element(by.id('date-field-MMdd')).getAttribute('value')).toEqual('February 29');
     expect(await element(by.id('date-field-yyyyMM')).getAttribute('value')).toEqual('February 2020');
     expect(await element(by.id('date-field-yyyy')).getAttribute('value')).toEqual('2020');
+    expect(await element(by.id('date-field-timestamp')).getAttribute('value')).toEqual('2/29/2020 10:45:30 AM');
   });
 
   it('Should format dates in ar-SA', async () => {
@@ -45,5 +46,6 @@ describe('Locale Set Value Tests', () => {
     expect(await element(by.id('date-field-MMdd')).getAttribute('value')).toEqual('05 رجب');
     expect(await element(by.id('date-field-yyyyMM')).getAttribute('value')).toEqual('جمادى الآخرة 1441');
     expect(await element(by.id('date-field-yyyy')).getAttribute('value')).toEqual('1441');
+    expect(await element(by.id('date-field-timestamp')).getAttribute('value')).toEqual('1441/07/05 10:45:30 ص');
   });
 });
