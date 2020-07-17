@@ -1264,6 +1264,25 @@ describe('Locale API', () => {
     expect(time).toEqual(new Date(2010, 11, 1, 0, 0, 0).getTime());
   });
 
+  it('Should properly parseDate on ddMM format to the current same format', () => {
+    Locale.set('ar-SA');
+    const testDate = Locale.parseDate('05 رجب', {
+      pattern: 'dd MMMM',
+      locale: 'ar-SA'
+    });
+
+    expect(testDate[0]).toEqual(2020);
+    expect(testDate[1]).toEqual(6);
+    expect(testDate[2]).toEqual(5);
+
+    const testDate2 = Locale.formatDate('May 01', {
+      pattern: 'MMMM dd',
+      locale: 'en-US'
+    });
+
+    expect(testDate2).toEqual('May 01');
+  });
+
   it('Should handle numbers passed to parseNumber', () => {
     Locale.set('en-US');
 

@@ -1207,7 +1207,7 @@ DatePicker.prototype = {
   /**
    * Set the Formatted value in the input
    * @private
-   * @param {object} date The date to set in date format.
+   * @param {object|string} date The date to set in date format or a valid datestring
    * @param {boolean} trigger If true will trigger the change event.
    * @param {boolean} isTime will pass to set range.
    * @returns {void}

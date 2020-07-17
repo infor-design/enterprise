@@ -25,3 +25,25 @@ describe('Locale Format Date Tests', () => {
     expect(await element(by.id('date-field4')).getAttribute('value')).toEqual('05/12/2019');
   });
 });
+
+describe('Locale Set Value Tests', () => {
+  it('Should format dates in en-US', async () => {
+    await utils.setPage('/components/locale/test-set-value?layout=nofrills');
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('date-field-yyyy'))), config.waitsFor);
+
+    expect(await element(by.id('date-field-yyyyMMdd')).getAttribute('value')).toEqual('2/29/2020');
+    expect(await element(by.id('date-field-MMdd')).getAttribute('value')).toEqual('February 29');
+    expect(await element(by.id('date-field-yyyyMM')).getAttribute('value')).toEqual('February 2020');
+    expect(await element(by.id('date-field-yyyy')).getAttribute('value')).toEqual('2020');
+  });
+
+  it('Should format dates in ar-SA', async () => {
+    await utils.setPage('/components/locale/test-set-value?layout=nofrills&locale=ar-SA');
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('date-field-yyyy'))), config.waitsFor);
+
+    expect(await element(by.id('date-field-yyyyMMdd')).getAttribute('value')).toEqual('1441/07/05');
+    expect(await element(by.id('date-field-MMdd')).getAttribute('value')).toEqual('05 رجب');
+    expect(await element(by.id('date-field-yyyyMM')).getAttribute('value')).toEqual('جمادى الآخرة 1441');
+    expect(await element(by.id('date-field-yyyy')).getAttribute('value')).toEqual('1441');
+  });
+});

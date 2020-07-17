@@ -596,13 +596,13 @@ const Locale = {  // eslint-disable-line
     const seconds = (value instanceof Array ? value[5] : value.getSeconds());
     const millis = (value instanceof Array ? value[6] : value.getMilliseconds());
 
-    if (options.fromGregorian) {
+    if (options.fromGregorian || options.toUmalqura) {
       const islamicParts = this.gregorianToUmalqura(value);
       day = islamicParts[2];
       month = islamicParts[1];
       year = islamicParts[0];
     }
-    if (options.toGregorian) {
+    if (options.toGregorian || options.fromUmalqura) {
       const gregorianDate = this.umalquraToGregorian(year, month, day);
       day = gregorianDate.getDate();
       month = gregorianDate.getMonth();
@@ -1010,8 +1010,9 @@ const Locale = {  // eslint-disable-line
       dateString = dateString.replace(regex, '/');
     }
 
-    // Extra Check incase month has spaces
-    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat) {
+    // Extra Check in case month has spaces
+    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat &&
+      dateFormat !== 'MMMM/dd' && dateFormat !== 'dd/MMMM') {
       const lastIdx = dateString.lastIndexOf('/');
       dateString = dateString.substr(0, lastIdx - 1).replace('/', ' ') + dateString.substr(lastIdx);
     }
