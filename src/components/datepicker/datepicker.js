@@ -1603,7 +1603,7 @@ DatePicker.prototype = {
 
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
-    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'd MMMM' || dateFormat === 'yyyy' ||
+    const isStrict = !(dateFormat.indexOf('MMMM') > -1 || dateFormat.indexOf('MMM') > -1 || dateFormat === 'yyyy' ||
       dateFormat === 'MMMM' || dateFormat === 'MMM' || dateFormat === 'MM');
     const fieldValueTrimmed = self.element.val().trim();
 
