@@ -8,8 +8,8 @@
     color: $badge-disabled-text-color;
     pointer-events: none;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-disabled-text-color;
     }
 
@@ -43,7 +43,7 @@
     text-decoration: none;
   }
 
-  [class*='btn'] {
+  [class^='btn'] {
     cursor: pointer;
     height: auto;
     margin-right: 0;
@@ -51,8 +51,8 @@
     min-width: 0;
   }
 
-  .dismissible-btn,
-  .linkable-btn {
+  .btn-dismissible,
+  .btn-linkable {
     color: $badge-neutral-icon-color;
 
     .icon {
@@ -88,7 +88,7 @@
       cursor: pointer;
     }
 
-    .linkable-btn {
+    .btn-linkable {
       height: 20px;
       padding-left: 5px;
       vertical-align: top;
@@ -118,7 +118,7 @@
     line-height: 20px;
     padding: 0 10px;
 
-    .dismissible-btn {
+    .btn-dismissible {
       height: 20px;
       padding-left: 5px;
       vertical-align: top;
@@ -150,8 +150,8 @@
     background-color: $badge-neutral-bg-color;
     color: $badge-neutral-color;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-neutral-icon-color;
 
       &:hover {
@@ -178,8 +178,8 @@
     color: $badge-secondary-color;
     line-height: 20px;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-secondary-icon-color;
 
       &:hover {
@@ -217,8 +217,8 @@
     background-color: $badge-error-bg-color;
     color: $badge-error-color;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-error-icon-color;
 
       &:hover {
@@ -243,8 +243,8 @@
     background-color: $badge-alert-bg-color;
     color: $badge-alert-color;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-alert-icon-color;
 
       &:hover {
@@ -269,8 +269,8 @@
     background-color: $badge-good-bg-color;
     color: $badge-good-color;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-good-icon-color;
 
       &:hover {
@@ -297,8 +297,8 @@
     background-color: $badge-info-bg-color;
     color: $badge-info-color;
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       color: $badge-info-icon-color;
 
       &:hover {
@@ -454,11 +454,11 @@ html.theme-uplift-contrast {
 
 // Firefox behaves odd
 .is-firefox {
-  .tag.is-linkable .linkable-btn .icon {
+  .tag.is-linkable .btn-linkable .icon {
     vertical-align: middle;
   }
 
-  .tag.is-dismissible .dismissible-btn .icon {
+  .tag.is-dismissible .btn-dismissible .icon {
     vertical-align: middle;
   }
 }
@@ -473,14 +473,14 @@ html[dir='rtl'] {
   .tag,
   .badge {
     &.is-dismissible {
-      .dismissible-btn {
+      .btn-dismissible {
         .icon {
           left: -6px;
         }
       }
     }
 
-    &.is-linkable .linkable-btn {
+    &.is-linkable .btn-linkable {
       margin-left: -6px;
       padding: 0 5px;
 

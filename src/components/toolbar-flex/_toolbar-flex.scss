@@ -85,7 +85,7 @@
   &.buttonset {
     padding: 4px;
 
-    [class*='btn'] {
+    [class^='btn'] {
       margin-right: 0;
 
       @media (max-width: $breakpoint-slim) {

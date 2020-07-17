@@ -316,7 +316,7 @@ small,
 }
 
 .form-layout-compact {
-  .field-flex [class*='btn'] {
+  .field-flex [class^='btn'] {
     margin-bottom: 0 !important;
   }
 }

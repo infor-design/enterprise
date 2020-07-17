@@ -27,6 +27,10 @@ div.multiselect {
   &.has-tags {
     padding: 0;
 
+    .tag-content {
+      line-height: 19px;
+    }
+
     + .icon {
       height: 30px;
     }
@@ -39,8 +43,8 @@ div.multiselect {
       padding: 16px 0 15px;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         vertical-align: middle;
       }
@@ -103,8 +107,16 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     + .icon {
-      top: -1px;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 16px;
+    }
+
+    &.has-tags {
+      .tag-content {
+        line-height: 17px;
+      }
     }
   }
 }
@@ -214,8 +226,8 @@ div.multiselect {
 .is-mac {
   div.dropdown,
   div.multiselect {
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: -2px;
       }
@@ -228,8 +240,8 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     .tag-list {
-      .dismissible-btn,
-      .linkable-btn {
+      .btn-dismissible,
+      .btn-linkable {
         .icon {
           top: -1px;
         }
@@ -243,8 +255,8 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     .tag-list {
-      .dismissible-btn,
-      .linkable-btn {
+      .btn-dismissible,
+      .btn-linkable {
         .icon {
           top: -1px;
         }
@@ -269,8 +281,8 @@ div.multiselect {
       line-height: normal;
     }
 
-    .dismissible-btn,
-    .linkable-btn {
+    .btn-dismissible,
+    .btn-linkable {
       .icon {
         top: -1px;
       }
@@ -388,6 +400,12 @@ html.is-firefox:not([dir='rtl']) {
 
       + .icon {
         top: 0;
+      }
+
+      &.has-tags {
+        .tag-content {
+          line-height: 17px;
+        }
       }
     }
   }

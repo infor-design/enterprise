@@ -12,26 +12,48 @@
 
 - `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
 - `[Application Menu]` Fixed a bug where some buttons did not have labels for the icon buttons in toolbars. Check your application if you use this pattern. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
+- `[Autocomplete]` Fixed an issue where the JavaScript error was thrown for ie11. ([#4148](https://github.com/infor-design/enterprise/issues/4148))
+- `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
+- `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
+- `[Datagrid]` Fixed an issue where the data was not exporting to excel when using the groupable setting. ([#4081](https://github.com/infor-design/enterprise/issues/4081))
 - `[Datagrid]` Fixed an issue where if a context menu is opened and then closed with ESC the focus would be reset to the top of the page. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Fixed an issue where the tooltip would not show up if you focus a cell with ellipsis text with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Made the header checkbox focusable. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` The selection checkbox cell had aria-selected on it which was incorrect. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Changed the auto width sizing of columns to use the padding of the rowHeight, this makes small, medium ect render the columns less wide than normal now as it was using normal (20px each side) padding for all rowHeights. As a consequence of this the grid is now rerendered when calling `rowHeight(mode)` to set the row height. ([#4016](https://github.com/infor-design/enterprise/issues/4016))
+- `[Datagrid]` Fixed an issue where the client side selection was not working. ([#4138](https://github.com/infor-design/enterprise/issues/4138))
+- `[Datagrid]` Changed invalid css fill-available property. ([#4133](https://github.com/infor-design/enterprise/issues/4133))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
 - `[Datepicker]` Fixed a bug that the datepicker would focus the field when closing the month and year pane. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
+- `[Datepicker]` Fixed a bug where an error may occur if using the gregorian calendar on ar-SA locale. ([#4130](https://github.com/infor-design/enterprise/issues/4130))
 - `[Dropdown]` Fixed an issue where "phraseStartsWith" does not filter the list after deleting a character. ([#4047](https://github.com/infor-design/enterprise/issues/4047))
 - `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
+- `[Editor]` Fixed an issue where the selection for shift + arrow keys was not working properly. ([#4070](https://github.com/infor-design/enterprise/issues/4070))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
+- `[Multiselect]` Fixed an issue where multiselect fields with tags were not rendering properly. ([#4139](https://github.com/infor-design/enterprise/issues/4139))
 - `[Popupmenu]` Fixed a bug that the aria items are in the wrong place. Its now using [this guide](https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html). ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 - `[Tooltip]` Fixed an issue where the tooltip would not show up if you focus a button with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
+- `[Tree]` Fixed an issue where the custom icon was changing back to default on toggle after use of method updateNode(). ([#4027](https://github.com/infor-design/enterprise/issues/4027))
+
+## v4.30.1
+
+### v4.30.1 Fixes
+
+- `[Datepicker]` Fixed the datepicker in ar-SA setting timestamps would null the times in some situations. ([#4160](https://github.com/infor-design/enterprise/issues/4160))
+- `[Datagrid]` The last row border was removed but this was incorrect, reverted this. ([#4140](https://github.com/infor-design/enterprise/issues/4140))
+- `[Datagrid]` Fixed an alignment issue in datagrid filter that caused some fields to be misaligned. ([#4151](https://github.com/infor-design/enterprise/issues/4151))
+- `[Datagrid]` Fixed an alignment issue with column colspan. In some situations it was not rendering correctly causing some cells to be misaligned. ([#4109](https://github.com/infor-design/enterprise/issues/4109))
+- `[Datagrid]` Changed invalid css fill-available property. ([#4133](https://github.com/infor-design/enterprise/issues/4133))
+- `[Locale]` Fixed a bug with MMMM dd format in ar-SA. ([#4160](https://github.com/infor-design/enterprise/issues/4160))
+- `[Locale]` Changed the arguments names for better symmetry fromGregorian == toUmalqura and toGregorian === options.fromUmalqura. ([#4160](https://github.com/infor-design/enterprise/issues4160))
 
 ## v4.30.0
 

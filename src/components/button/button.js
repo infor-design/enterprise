@@ -390,7 +390,7 @@ Button.prototype = {
     }
 
     // Hide/Show Ripple Effect
-    elemClasses[this.settings.ripple ? 'add' : 'remove']('no-ripple');
+    elemClasses[this.settings.ripple ? 'remove' : 'add']('no-ripple');
     if (this.settings.ripple) {
       this.element.on('touchstart.button click.button', (e) => {
         this.createRipple(e);

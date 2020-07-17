@@ -14,16 +14,16 @@
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({
       columns: getColumns(),
-      selectable: 'multiple',
+      selectable: 'single',
       paging: true,
       pagesize: 10,
       rowHeight: 'small',
       indeterminate: true,
       filterable: false,
       frozenColumns: {
-        // left: ['selectionCheckbox'],
-        left: ['selectionCheckbox', 'productType'],
-        // left: ['selectionCheckbox', 'productType', 'productId']
+        left: ['productType'],
+        // left: ['productType', 'productId']
+        // left: ['productType', 'productId', 'productName']
       },
       source: datagridPagingFunction,
       toolbar: { title: 'Groups & Colspans', results: true, actions: true, rowHeight: true },
@@ -42,8 +42,9 @@
           return 0;
         }
       } else if (item && item.isSummaryRow) {
-        // Span the rest of the visible columns minus the first selection checkbox
-        return grid.visibleColumns().length - 1;
+        // landmark would calculate this
+        // Span all the visible columns
+        return grid.visibleColumns().length;
       }
       return 0;
     }
@@ -128,7 +129,6 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
           { id: 'productType', name: 'Product Type', field: 'productType', sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
           { id: 'productId', name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
           { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text', formatter: Formatters.Hyperlink, colspan: customColSpan },
