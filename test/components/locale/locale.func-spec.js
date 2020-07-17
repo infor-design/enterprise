@@ -1284,7 +1284,7 @@ describe('Locale API', () => {
 
     const testDate2 = Soho.Locale.formatDate([1441, 6, 5, 0, 0, 0, 0], formatDateOptions);
 
-    expect(testDate2).toEqual('0915');
+    expect(testDate2).toEqual('0229');
 
     const testDate3 = Locale.formatDate('May 01', {
       pattern: 'MMMM dd',
