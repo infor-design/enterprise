@@ -1091,6 +1091,7 @@ Dropdown.prototype = {
   ignoreKeys(input, e) {
     const charCode = e.which;
 
+    console.log(input[0].element);
     // Needed for browsers that use keypress events to manipulate the window.
     if (e.altKey && (charCode === 38)) {
       e.stopPropagation();
@@ -1133,6 +1134,7 @@ Dropdown.prototype = {
       this.searchKeyMode = false;
     }
 
+    console.log(this.searchInput);
     this.searchInput
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
         const searchInput = $(this);
