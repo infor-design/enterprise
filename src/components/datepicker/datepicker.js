@@ -1207,7 +1207,7 @@ DatePicker.prototype = {
   /**
    * Set the Formatted value in the input
    * @private
-   * @param {object} date The date to set in date format.
+   * @param {object|string} date The date to set in date format or a valid datestring
    * @param {boolean} trigger If true will trigger the change event.
    * @param {boolean} isTime will pass to set range.
    * @returns {void}
@@ -1603,7 +1603,7 @@ DatePicker.prototype = {
 
     // Check and fix two digit year for main input element
     const dateFormat = self.pattern;
-    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'd MMMM' || dateFormat === 'yyyy' ||
+    const isStrict = !(dateFormat.indexOf('MMMM') > -1 || dateFormat.indexOf('MMM') > -1 || dateFormat === 'yyyy' ||
       dateFormat === 'MMMM' || dateFormat === 'MMM' || dateFormat === 'MM');
     const fieldValueTrimmed = self.element.val().trim();
 
@@ -1784,9 +1784,9 @@ DatePicker.prototype = {
       !periodValue) && parseInt(hours, 10) === 12) ? 0 : hours;
 
     if (date instanceof Array) {
-      date[3] = hours;
-      date[4] = minutes;
-      date[5] = seconds;
+      date[3] = hours ? parseInt(hours, 10) : date[3];
+      date[4] = minutes ? parseInt(minutes, 10) : date[4];
+      date[5] = seconds ? parseInt(seconds, 10) : date[5];
     } else {
       date = new Date(date);
       date.setHours(hours, minutes, seconds);
