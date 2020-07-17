@@ -1476,9 +1476,9 @@ Datagrid.prototype = {
               allowThousandsSeparator: false,
               allowDecimal: false,
               symbols: {
-                thousands: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.group : ',',
-                decimal: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.decimal : '.',
-                negative: Soho.Locale.currentLocale.data.numbers ? Soho.Locale.currentLocale.data.numbers.minusSign : '-'
+                thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+                decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
+                negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
               }
             },
             process: 'number'
@@ -2607,6 +2607,16 @@ Datagrid.prototype = {
         heights.filterable[prop] : heights.default[prop];
     }
     return height;
+  },
+
+  /**
+  * Get padding for a row height
+  * @private
+  * @returns {number} padding (left and right) for the current rowHeight
+  */
+  getCellPadding() {
+    const padding = { 'extra-small': 6, short: 9, small: 9, medium: 15, normal: 20, large: 20 };
+    return padding[this.settings.rowHeight];
   },
 
   /**
@@ -4287,7 +4297,7 @@ Datagrid.prototype = {
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
-    padding += 45;
+    padding += this.getCellPadding() * 2;
 
     if (hasAlert) {
       padding += 20;
@@ -4321,23 +4331,23 @@ Datagrid.prototype = {
     }
     // Calculate the Header with the correct font.
     const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
-    const headerPadding = isSortable ? 48 : 40;
+    const headerPadding = isSortable ? (this.getCellPadding() * 2) + 15 : this.getCellPadding() * 2;
     let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
 
     // Calculate the width required for the filter
     // Field plus
     if (columnDef.filterType && this.settings.filterable) {
       if (minHeaderWidth < 40) {
-        minHeaderWidth = 40;
+        minHeaderWidth = this.getCellPadding() * 2;
       }
 
       if (columnDef.filterType !== 'checkbox') {
         if (maxText !== '') {
           if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
-            minHeaderWidth = maxWidth + 55;
+            minHeaderWidth = maxWidth + this.getCellPadding() * 2;
           }
-        } else if (minHeaderWidth < 120) {
-          minHeaderWidth = 120;
+        } else if (minHeaderWidth < this.getCellPadding() * 4) {
+          minHeaderWidth = this.getCellPadding() * 4;
         }
       }
     }
@@ -4361,6 +4371,13 @@ Datagrid.prototype = {
         '400 16px arial' : '400 14px arial';
       this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
         '600 14px arial' : '700 12px arial';
+
+      if (this.settings.rowHeight === 'extra-small') {
+        this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+          '400 14px arial' : '400 12px arial';
+        this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+          '600 14px arial' : '700 12px arial';
+      }
     }
 
     context.font = this.fontCached;
@@ -6715,6 +6732,7 @@ Datagrid.prototype = {
 
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+    this.rerender();
 
     if (args.length) {
       this.element.triggerHandler('rowheightchanged', args);

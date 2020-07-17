@@ -112,6 +112,7 @@
         },
         toolbar: {title: 'Data Grid Header Title', filterRow: true, personalize: true, results: true, actions: true, rowHeight: true}
       });
+
       $('#update-datagrid').on('click', function() {
         let api = $('#datagrid').data('datagrid');
         let columns = api.settings.columns;
@@ -124,6 +125,7 @@
           editable: $('#editable')[0].checked,
           filterable: $('#filterable')[0].checked
         };
+
         api = api.updated(settings);
 
         // Workaround as rerender does not work as expected if it's still initial

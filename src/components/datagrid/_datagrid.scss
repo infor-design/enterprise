@@ -677,7 +677,7 @@ $datagrid-small-row-height: 25px;
         font-size: $input-size-compact-font-size;
         height: 22px;
         left: 3px !important;
-        width: calc(100% - 42px) !important;
+        width: calc(100% - 43px) !important;
       }
 
       .datepicker + .icon {
@@ -824,6 +824,10 @@ $datagrid-small-row-height: 25px;
         input {
           left: 11px;
           width: calc(100% - 45px);
+        }
+
+        .lookup-wrapper input.lookup {
+          width: calc(100% - 44px);
         }
       }
 
@@ -974,8 +978,12 @@ $datagrid-small-row-height: 25px;
 
             &.lookup {
               height: inherit;
-              padding: 7px 15px 7px 0;
-              width: calc(100% - 13px);
+              padding: 8px 0 0;
+              width: 100%;
+
+              + .trigger {
+                margin-left: -22px;
+              }
 
               ~ .trigger .icon {
                 top: calc(50% - 4px);
@@ -1110,8 +1118,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .lookup-wrapper {
-      padding-left: 0 !important;
-      padding-top: 2px !important;
+      padding-left: 14px !important;
+      padding-top: 3px !important;
 
       .align-text-right {
         + .trigger {
@@ -2345,7 +2353,7 @@ $datagrid-small-row-height: 25px;
 
         &.timepicker {
           margin-top: 8px;
-          padding: 0 19px;
+          padding: 0 0 0 18px;
           width: calc(100% - 26px);
 
           ~ .icon {
@@ -2483,7 +2491,7 @@ $datagrid-small-row-height: 25px;
         }
 
         input {
-          padding: 25px 0 8px;
+          padding: 13px 0 8px;
           width: calc(100% - 38px);
         }
 
@@ -3011,14 +3019,14 @@ $datagrid-small-row-height: 25px;
     .lookup-wrapper {
       background-color: transparent;
       display: inline;
-      left: 2px;
+      left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
 
       input.lookup {
         left: 10px;
         padding-right: 24px;
-        width: calc(100% - 41px);
+        width: calc(100% - 44px);
 
         &:not(:disabled) + .trigger > .icon:hover,
         &:hover:not(:disabled) + .trigger > .icon {

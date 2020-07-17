@@ -17,6 +17,7 @@
 - `[Datagrid]` Fixed an issue where the tooltip would not show up if you focus a cell with ellipsis text with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Made the header checkbox focusable. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` The selection checkbox cell had aria-selected on it which was incorrect. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
+- `[Datagrid]` Changed the auto width sizing of columns to use the padding of the rowHeight, this makes small, medium ect render the columns less wide than normal now as it was using normal (20px each side) padding for all rowHeights. As a consequence of this the grid is now rerendered when calling `rowHeight(mode)` to set the row height. ([#4016](https://github.com/infor-design/enterprise/issues/4016))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
 - `[Datepicker]` Fixed a bug that the datepicker would focus the field when closing the month and year pane. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
@@ -36,7 +37,7 @@
 
 ### v4.30.0 Announcements
 
-- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. ([#3755](https://github.com/infor-design/enterprise/issues/3755))
+- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. If you have a custom toolbar you may need to update your [markup](https://github.com/infor-design/enterprise/blob/master/app/views/components/datagrid/example-custom-toolbar.html#L40-L44). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
 
 ### v4.30.0 Features
 

@@ -1,0 +1,47 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+      var columns = [];
+
+      $.getJSON('{{basepath}}api/books', function(res) {
+
+        // Define Columns for the Grid.
+        var filterOptions = [{id: 'NA', value: 'NA', label: 'Not Implemented'} ];
+
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'book', name: 'Book', field: 'book', formatter: Formatters.Text, filterType: 'text' });
+        columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Text, filterType: 'text' });
+	      columns.push({ id: 'ledger', name: 'Ledger', field: 'ledger', formatter: Formatters.Lookup, filterType: 'lookup' });
+	      columns.push({ id: 'bookCurrency', name: 'Book Currency', field: 'bookCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'transactionCurrency', name: 'Transaction Currency', field: 'transactionCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'postHistory', name: 'Post History', field: 'postHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+        columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions });
+
+        // Init and get the api for the grid
+        var api = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          saveColumns: false,
+          filterable: true,
+          selectable: 'multiple',
+          rowHeight: 'large',
+          toolbar: {title: 'Books', results: true, actions: true, rowHeight: true, personalize: true}
+        }).data('datagrid');
+
+        api.setSortColumn('description');
+      });
+ });
+</script>
