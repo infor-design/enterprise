@@ -1201,7 +1201,7 @@ const Locale = {  // eslint-disable-line
            (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
 
-            if (!dateObj.h && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
+            if (!dateObj.h && formatParts[i + 1] && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
               // in a few cases am/pm is before hours
               dateObj.h = dateStringParts[i + 1];
               hasAmFirst = true;
