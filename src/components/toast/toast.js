@@ -111,8 +111,14 @@ Toast.prototype = {
     self.createDraggable(toast, container);
 
     // Get the number of toasts
-    const toastsIndex = container.children().length;
+    let toastsIndex = container.children().length;
     this.toastsIndex = toastsIndex;
+
+    // Get the number of unique toast container
+    const toastUniqueContainer = this.element.find('.toast-container');
+    for (let i = 0, len = toastUniqueContainer.children(); i < len.length; i++) {
+      toastsIndex = len.length;
+    }
 
     // Build the RenderLoop integration
     const timer = new RenderLoopItem({
