@@ -27,6 +27,7 @@
 - `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
 - `[Datepicker]` Fixed a bug where an error may occur if using the gregorian calendar on ar-SA locale. ([#4130](https://github.com/infor-design/enterprise/issues/4130))
 - `[Dropdown]` Fixed an issue where "phraseStartsWith" does not filter the list after deleting a character. ([#4047](https://github.com/infor-design/enterprise/issues/4047))
+- `[Dropdown]` Fixed a bug when backspacing in windows or fn + delete in Mac OS would render a ascii character in the input field. ([#4020](https://github.com/infor-design/enterprise/issues/4020))
 - `[Editor]` Fixed a number of translation issues in the editor component. ([#4049](https://github.com/infor-design/enterprise/issues/4049))
 - `[Editor]` Fixed an issue where the selection for shift + arrow keys was not working properly. ([#4070](https://github.com/infor-design/enterprise/issues/4070))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
