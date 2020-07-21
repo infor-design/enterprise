@@ -9802,7 +9802,6 @@ Datagrid.prototype = {
     // Sanitize console methods
     oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
     coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
-    coercedVal = xssUtils.escapeHTML(coercedVal);
 
     if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
