@@ -2225,7 +2225,6 @@ Datagrid.prototype = {
       let dataSetLen;
 
       if (this.settings.treeGrid) {
-        console.log('t1', 'tree');
         dataset = this.settings.dataset;
 
         const checkChildNodes = function (nodeData, parentNode) {
@@ -2258,7 +2257,6 @@ Datagrid.prototype = {
           dataset[i]._isFilteredOut = isFiltered;
         }
       } else if (this.settings.groupable) {
-        console.log('t2', 'groupable');
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
           for (i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
@@ -2273,7 +2271,6 @@ Datagrid.prototype = {
           this.settings.dataset[i]._isFilteredOut = isGroupFiltered;
         }
       } else {
-        console.log('t3', 'else');
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           isFiltered = !checkRow(this.settings.dataset[i]);
           this.settings.dataset[i]._isFilteredOut = isFiltered;
