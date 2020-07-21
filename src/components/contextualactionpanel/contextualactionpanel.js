@@ -106,6 +106,21 @@ ContextualActionPanel.prototype = {
   },
 
   /**
+   * @returns {Toolbar|ToolbarFlex|undefined} instance of an IDS Toolbar, IDS Toolbar Flex, or undefined if one doesn't exist.
+   */
+  get toolbarAPI() {
+    let api;
+    if (this.toolbar && this.toolbar.length) {
+      if (this.toolbar[0].classList.contains('flex-toolbar')) {
+        api = this.toolbar.data('toolbar-flex');
+      } else {
+        api = this.toolbar.data('toolbar');
+      }
+    }
+    return api;
+  },
+
+  /**
   * Initialize the CAP.
   * @private
   */
