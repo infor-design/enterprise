@@ -596,13 +596,13 @@ const Locale = {  // eslint-disable-line
     const seconds = (value instanceof Array ? value[5] : value.getSeconds());
     const millis = (value instanceof Array ? value[6] : value.getMilliseconds());
 
-    if (options.fromGregorian) {
+    if (options.fromGregorian || options.toUmalqura) {
       const islamicParts = this.gregorianToUmalqura(value);
       day = islamicParts[2];
       month = islamicParts[1];
       year = islamicParts[0];
     }
-    if (options.toGregorian) {
+    if (options.toGregorian || options.fromUmalqura) {
       const gregorianDate = this.umalquraToGregorian(year, month, day);
       day = gregorianDate.getDate();
       month = gregorianDate.getMonth();
@@ -992,17 +992,22 @@ const Locale = {  // eslint-disable-line
     dateFormat = dateFormat.replace(',', '');
     dateString = dateString.replace(',', '');
 
-    if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
-      dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
-      dateString = `${dateString.substr(0, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2)}`;
+    // Adjust short dates where no separators or special characters are present.
+    const hasMdyyyy = dateFormat.indexOf('Mdyyyy');
+    const hasdMyyyy = dateFormat.indexOf('dMyyyy');
+    let startIndex = -1;
+    let endIndex = -1;
+    if (hasMdyyyy > -1 || hasdMyyyy > -1) {
+      startIndex = hasMdyyyy > -1 ? hasMdyyyy : hasdMyyyy > -1 ? hasdMyyyy : 0;
+      endIndex = startIndex + dateString.indexOf('/') > -1 ? dateString.indexOf('/') : dateString.length;
+      dateString = `${dateString.substr(startIndex, endIndex - 4)}/${dateString.substr(endIndex - 4, dateString.length)}`;
+      dateString = `${dateString.substr(startIndex, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2, dateString.length)}`;
     }
-
-    if (dateFormat === 'Mdyyyy') {
-      dateFormat = 'M/d/yyyy';
+    if (hasMdyyyy > -1) {
+      dateFormat = dateFormat.replace('Mdyyyy', 'M/d/yyyy');
     }
-
-    if (dateFormat === 'dMyyyy') {
-      dateFormat = 'd/M/yyyy';
+    if (hasdMyyyy > -1) {
+      dateFormat = dateFormat.replace('dMyyyy', 'd/M/yyyy');
     }
 
     if (dateFormat.indexOf(' ') !== -1) {
@@ -1011,8 +1016,9 @@ const Locale = {  // eslint-disable-line
       dateString = dateString.replace(regex, '/');
     }
 
-    // Extra Check incase month has spaces
-    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat) {
+    // Extra Check in case month has spaces
+    if (dateFormat.indexOf('MMMM') > -1 && Locale.isRTL() && dateFormat &&
+      dateFormat !== 'MMMM/dd' && dateFormat !== 'dd/MMMM') {
       const lastIdx = dateString.lastIndexOf('/');
       dateString = dateString.substr(0, lastIdx - 1).replace('/', ' ') + dateString.substr(lastIdx);
     }
@@ -1195,7 +1201,7 @@ const Locale = {  // eslint-disable-line
            (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
 
-            if (!dateObj.h && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
+            if (!dateObj.h && formatParts[i + 1] && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
               // in a few cases am/pm is before hours
               dateObj.h = dateStringParts[i + 1];
               hasAmFirst = true;
@@ -1253,6 +1259,11 @@ const Locale = {  // eslint-disable-line
       if (dateObj.isUndefindedYear) {
         const isFeb29 = parseInt(dateObj.day, 10) === 29 && parseInt(dateObj.month, 10) === 1;
         dateObj.year = isFeb29 ? closestLeap() : (new Date()).getFullYear();
+
+        if (thisLocaleCalendar.name === 'islamic-umalqura') {
+          const umDate = this.gregorianToUmalqura(new Date(dateObj.year, 0, 1));
+          dateObj.year = umDate[0];
+        }
       } else {
         delete dateObj.year;
       }

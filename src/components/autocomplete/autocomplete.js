@@ -433,7 +433,7 @@ Autocomplete.prototype = {
     // added and will remove soon popup close that includes aria-live="polite"
     // which have the first suggested item automatically announced when it
     // appears without moving focus.
-    const previousLiveMessages = document.querySelectorAll('#ac-is-arialive');
+    const previousLiveMessages = utils.getArrayFromList(document.querySelectorAll('#ac-is-arialive'));
     if (previousLiveMessages) {
       previousLiveMessages.forEach((messageElem) => {
         messageElem.parentNode.removeChild(messageElem);

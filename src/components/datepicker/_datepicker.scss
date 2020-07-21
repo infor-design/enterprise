@@ -94,6 +94,10 @@
 .monthview-popup.popover {
   max-width: inherit;
 
+  .monthview .monthview-table {
+    max-width: 330px;
+  }
+
   // Week picker adjustments
   &.is-range-week {
     .monthview td .day-text {

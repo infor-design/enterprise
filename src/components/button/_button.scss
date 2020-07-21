@@ -624,6 +624,17 @@ a.btn-close {
   .btn-close {
     border-radius: 12px;
   }
+
+  .tag {
+    .btn-dismissible {
+      align-items: center;
+      display: flex;
+      height: inherit;
+      line-height: inherit;
+      margin-bottom: 0;
+      min-height: inherit;
+    }
+  }
 }
 
 // RTL Styles

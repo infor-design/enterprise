@@ -1,0 +1,50 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <h2>Tree - Update Folder Icon</h2>
+    <p>Press button below will Toggle (Update/Restore) folder icon for node `Leadership`.</p>
+    <button type="button" id="btn-toggle" class="btn-secondary">Update Icon</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <ul id="tree" class="tree" role="tree" aria-label="Asset Types" data-init="false">
+      <li><a href="#" id="home">Home</a></li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li><a href="#" id="new1">New Item 1</a></li>
+                <li><a href="#" id="new2">New Item 2</a></li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script id="test-script">
+  var tree = $('#tree').tree().data('tree');
+  var btnToggle = $('#btn-toggle');
+  var isCustomIcon = false;
+
+  // Update node
+  btnToggle.on('click', function () {
+    if (tree) {
+      // var update = { icon: 'plusminus-folder-open', text: 'Just Updated' };
+      var update = { icon: 'icon-tree-code', text: 'Just Updated' };
+      if (isCustomIcon) {
+        update.icon = null; // Restore to default
+        update.text = 'Just Restored';
+      }
+      tree.updateNode({ id: 'leadership', icon: update.icon, text: update.text });
+      isCustomIcon = !isCustomIcon;
+      btnToggle.text(isCustomIcon ? 'Restore Icon' : 'Update Icon');
+    }
+  });
+</script>
