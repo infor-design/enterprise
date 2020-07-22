@@ -23,6 +23,7 @@
 - `[Datagrid]` The selection checkbox cell had aria-selected on it which was incorrect. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Fixed an issue where the client side selection was not working. ([#4138](https://github.com/infor-design/enterprise/issues/4138))
 - `[Datagrid]` Changed invalid css fill-available property. ([#4133](https://github.com/infor-design/enterprise/issues/4133))
+- `[Datagrid]` Fixed an issue where the time picker editor was switching between AM and PM when set to 12:00. ([#4149](https://github.com/infor-design/enterprise/issues/4149))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
 - `[Datepicker]` Fixed a bug that the datepicker would focus the field when closing the month and year pane. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datepicker]` Fixed a bug where two dates may appear selected when moving forward/back in the picker dialog. ([#4018](https://github.com/infor-design/enterprise/issues/4018))
