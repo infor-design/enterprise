@@ -32,7 +32,7 @@
 - `[Editor]` Fixed an issue where the selection for shift + arrow keys was not working properly. ([#4070](https://github.com/infor-design/enterprise/issues/4070))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
-- `[Lookup]` Fixed a bug where values are duplicated when paging is activated. ([#758](https://github.com/infor-design/enterprise-ng/issues/758))
+- `[Lookup]` Fixed a bug where values are duplicated when selecting row on other pages and when paging is activated. ([#758](https://github.com/infor-design/enterprise-ng/issues/758))
 - `[Mask]` Added the ability to pass date/time formats to the Mask API that do not contain separators or other literals. ([#3963](https://github.com/infor-design/enterprise/issues/3963))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 - `[Multiselect]` Fixed an issue where multiselect fields with tags were not rendering properly. ([#4139](https://github.com/infor-design/enterprise/issues/4139))
