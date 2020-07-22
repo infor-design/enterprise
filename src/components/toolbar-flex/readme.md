@@ -81,7 +81,7 @@ By default a `.toolbar-section` element will take on the Flexbox alignment rules
 
 Using a `.fluid` CSS class adds a property `flex-grow: 1;` to the section, which will cause it to grow if there is space to do so.
 
-#### Backwards compatibility
+#### Backwards compatibility for alignment
 
 To provide compatibility with the legacy Toolbar, you can add `.title` and `.buttonset` CSS classes to your toolbar sections, as seen in the main sample above.  These section types automatically grow with `flex-grow: 1;` to provide similar layout to the legacy Toolbar.
 
@@ -201,6 +201,16 @@ Alternatively, it's possible to always display a "More Actions" button by pre-de
   </ul>
 </div>
 ```
+
+## Backwards Compatibility with the IDS Toolbar
+
+The legacy IDS toolbar component's visual design is heavily driven by Javascript and has very specific use cases for its layout.  It's overflow system and resize algorithm were heavily JS-based, which was very heavy on browser repainting.  Additionally it had many problems addressing the layout needs of many consumers of our library.
+
+Flex Toolbar does a lot in the way of fixing the layout and performance issues.  However, not all of the legacy components JS settings have carried over 1-to-1 with the Flex Toolbar.  Some discrepancies are listed below.  Please note that while these settings might not exist on the new component, the configuration necessary to make these customizations exists, and is possibly easier to implement:
+
+- `resizeContainers()` is an internal method in the legacy Toolbar that shouldn't really ever be called directly, except for some very specific cases where resizing needs to happen outside the normal toolbar lifecycle.  Previously, it may have been necessary to interact with this method for specific reasons.  This method no longer exists due to the CSS-based nature of the toolbar layout, so any references to it should be removed.
+- The `favorButtonset`, `favorTitle`, and `rightAligned` settings are all now controlled with built-in CSS classes, or can be controlled with user-defined CSS instead.
+- The `maxVisibleButtons` setting that was present on the previous toolbar no longer exists. Due to the sheer number of cases we couldn't make a configuration for this that worked for everyone, so instead we removed it in favor of user-definable sections and pre-defined menu items.  The Flex Toolbar allows for multiple, indeterminate numbers of `buttonset`-style sections. However, it's still possible to limit the number of items shown in a section.  For example, in a case where 10 buttons would be available in a section, but we only want to show three of them, setting a hard CSS max-width on the toolbar section in question that contains space for the first three.  You could also only explicitly create three buttons, and preload the rest of the items as "More Actions" menu list items, since that's where they'll end up anyway.
 
 ## Accessibility
 
