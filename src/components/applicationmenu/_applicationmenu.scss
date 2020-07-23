@@ -560,6 +560,13 @@ html[dir='rtl'] {
 
   }
 
+  &.ie11 {
+    .application-menu {
+      + .page-container {
+        right: auto;
+      }
+    }
+  }
 }
 
 // On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
