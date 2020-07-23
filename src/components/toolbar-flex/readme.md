@@ -226,6 +226,7 @@ The Flex Toolbar is different in that it allows for multiple, indeterminate numb
 
 - The toolbar automatically appends the WAI-ARIA role "toolbar" to its base element.
 - There is only ever one element inside of a toolbar at a time that can receive focus. The Flex Toolbar allows for navigation among all of its buttons with the arrow keys.
+- Handles the correct accessible keyboard navigation with left and right arrow (vs tabs)
 
 ## Keyboard Shortcuts
 
