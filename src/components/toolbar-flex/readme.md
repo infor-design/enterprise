@@ -184,7 +184,7 @@ The same behavior will occur when a "More Actions" button is present on the Flex
 
 #### Always Display a More Actions button
 
-Alternatively, it's possible to always display a "More Actions" button by pre-defining menu items in its attached [Popupmenu]('./popupmenu').  While the Flex Toolbar automatically converts its inline buttons into overflowed menu items if it can't display those buttons, it's more performant and preferable to pre-define "More Actions" menu items instead if these menu items may be overflowed most or all of the time.
+Alternatively, it's possible to always display a "More Actions" button by pre-defining menu items in its attached [Popupmenu]('./popupmenu'). While the Flex Toolbar automatically converts its inline buttons into overflowed menu items if it can't display those buttons, it's more performant and preferable to pre-define "More Actions" menu items instead if these menu items may be overflowed most or all of the time.
 
 ```html
 <div class="toolbar-section more">
