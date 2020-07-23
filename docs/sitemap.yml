@@ -151,6 +151,8 @@ sections:
     slug: toast
   - name: Toolbar
     slug: toolbar
+  - name: Toolbar Flex
+    slug: toolbar-flex
   - name: Toolbar Searchfield
     slug: toolbarsearchfield
   - name: Tooltip
