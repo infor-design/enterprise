@@ -44,6 +44,7 @@
 - `[Popupmenu]` Fixed a bug that the aria items are in the wrong place. Its now using [this guide](https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html). ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Popupmenu]` Fixed a bug where the heading doesn't display properly with multi-select menu. ([#3926](https://github.com/infor-design/enterprise/issues/3926))
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
+- `[Searchfield]` The `clear` function was misnamed as it didnt clear, it made the field clearable. Now we have a `clear` and `makeClearable` function. ([#4173](https://github.com/infor-design/enterprise/issues/4173))
 - `[Textarea]` Fixed inconsistencies on styling of disabled field when using disable function, now the label will disable on all components when using this function. In general the label should be dimmed on disabled fields as per the design. ([#3917](https://github.com/infor-design/enterprise/issues/3917))
 - `[Toast]` Fixed a bug where the toast message doesn't close when pressing escape, and when it has multiple trigger elements and uses unique id's. ([#3986](https://github.com/infor-design/enterprise/issues/3986))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))

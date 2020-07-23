@@ -434,7 +434,7 @@ SearchField.prototype = {
     }
 
     if (this.settings.clearable) {
-      this.clear();
+      this.makeClearable();
     }
 
     // Stagger a calculation for setting the size of the Searchfield element, if applicable
@@ -2071,13 +2071,25 @@ SearchField.prototype = {
   },
 
   /**
+   * Make the search field have an x button.
+   * @public
+   * @returns {void} adds 'x' button to clear the searchfield.
+   */
+  makeClearable() {
+    this.element.clearable();
+    this.wrapper.addClass('has-close-icon-button');
+    this.xButton = this.wrapper.children('.icon.close');
+  },
+
+  /**
+   * Clear the search field.
    * @public
    * @returns {void} adds 'x' button to clear the searchfield.
    */
   clear() {
-    this.element.clearable();
-    this.wrapper.addClass('has-close-icon-button');
-    this.xButton = this.wrapper.children('.icon.close');
+    if (this.xButton) {
+      this.xButton.click();
+    }
   },
 
   /**
