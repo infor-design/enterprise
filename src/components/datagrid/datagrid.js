@@ -6850,9 +6850,11 @@ Datagrid.prototype = {
           const th = $(this);
           const columnId = th.attr('data-column-id');
 
-          isMatch = checkColumn(columnId);
-          if (isMatch) {
-            return false;
+          if (columnId) {
+            isMatch = checkColumn(columnId);
+            if (isMatch) {
+              return false;
+            }
           }
         });
       } else if (filterExpr.columnId) { // Check in only one column, given by columnId

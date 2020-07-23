@@ -15,6 +15,7 @@
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
+- `[Datagrid]` Fixed an issue where the keyword search was not working for group headers. ([#4068](https://github.com/infor-design/enterprise/issues/4068))
 - `[Datagrid]` Fixed an issue where the column filter results were inconsistent for tree grid. ([#4031](https://github.com/infor-design/enterprise/issues/4031))
 - `[Datagrid]` Fixed an issue where the data was not exporting to excel when using the groupable setting. ([#4081](https://github.com/infor-design/enterprise/issues/4081))
 - `[Datagrid]` Fixed an issue where if a context menu is opened and then closed with ESC the focus would be reset to the top of the page. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
