@@ -23,7 +23,16 @@
   &.is-readonly,
   &.is-disabled {
     .editor {
+      background-color: transparent;
       border-top: 1px solid $editor-border-color;
+
+      &[disabled] {
+        border-color: $input-color-disabled-border;
+      }
+
+      > * {
+        color: $input-disabled-color;
+      }
     }
 
     .editor-toolbar {
@@ -37,6 +46,7 @@
 
   &.is-disabled .editor {
     cursor: default;
+    pointer-events: none;
   }
 
   &.is-readonly .editor {
