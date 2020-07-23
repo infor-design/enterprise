@@ -287,6 +287,7 @@ $datepicker-readonly-icon-color: $theme-color-palette-graphite-50;
 //Time Picker
 $timepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
+$timepicker-disabled-icon-color: $disabled-color;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);
@@ -406,8 +407,8 @@ $slider-active-bg-color: $theme-color-brand-primary-base;
 $slider-labels-color: $theme-color-palette-graphite-90;
 $slider-disabled-color: $theme-color-brand-secondary-alt;
 $slider-disabled-active-bg-color: $theme-color-palette-graphite-60;
-$slider-disabled-labels-color: $theme-color-palette-graphite-50;
 $slider-disabled-handle-color: $theme-color-palette-graphite-60;
+$slider-disabled-labels-color: $theme-color-palette-graphite-80;
 $slider-disabled-range-color: $theme-color-palette-graphite-60;
 $slider-readonly-color: $theme-color-palette-graphite-60;
 $slider-readonly-active-bg-color: $theme-color-palette-graphite-80;

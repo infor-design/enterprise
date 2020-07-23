@@ -1059,11 +1059,14 @@ Slider.prototype = {
     this.element.prop('disabled', true);
     this.element.prop('readonly', false);
     this.wrapper.removeClass('is-readonly');
-    this.wrapper.addClass('is-disabled');
 
-    const self = this;
-    $.each(this.handles, (i, handle) => {
-      self.disableHandleDrag(handle);
+    setTimeout(() => {
+      this.wrapper.addClass('is-disabled');
+
+      const self = this;
+      $.each(this.handles, (i, handle) => {
+        self.disableHandleDrag(handle);
+      });
     });
 
     return this;

@@ -200,10 +200,10 @@ describe('Multiselect example-index tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
 
-    expect(await element.all(by.className('is-disabled')).first().getAttribute('disabled')).toBeTruthy();
+    expect(await element.all(by.css('.is-disabled'))).toBeTruthy();
     await multiselectEl.click();
 
-    expect(await element.all(by.className('is-disabled')).first().getAttribute('disabled')).toBeTruthy();
+    expect(await element.all(by.css('.is-disabled'))).toBeTruthy();
   });
 });
 

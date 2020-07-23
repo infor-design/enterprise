@@ -156,7 +156,7 @@ label.inline .checkbox:disabled ~ .label-text,
 input.checkbox:disabled + label,
 input.checkbox:disabled + input[type='hidden'] + label,
 span.checkbox > input:disabled + label {
-  color: $checkbox-color-unchecked-disabled-font;
+  color: $checkbox-color-disabled-font;
   cursor: default;
 }
 
