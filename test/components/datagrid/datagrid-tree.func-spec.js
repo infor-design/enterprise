@@ -183,6 +183,13 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     datagridObj.clearFilter();
 
     expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
+    filter[0].value = 'more';
+    datagridObj.applyFilter(filter);
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(16);
+    datagridObj.clearFilter();
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
   });
 
   it('Should be able to set children by allowChildExpandOnMatch:false', () => {
@@ -209,6 +216,13 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     expandBtn = document.querySelector('tr:nth-child(1) .datagrid-expand-btn');
 
     expect(expandBtn.disabled).toBeFalsy();
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
+    filter[0].value = 'more';
+    datagridObj.applyFilter(filter);
+
+    expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(10);
+    datagridObj.clearFilter();
+
     expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
   });
 

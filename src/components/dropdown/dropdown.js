@@ -1133,6 +1133,18 @@ Dropdown.prototype = {
       this.searchKeyMode = false;
     }
 
+    const searchInputVal = this.searchInput[0].value;
+    const isIE11 = env.browser.name === 'ie' && env.browser.version === '11';
+    let rectStr;
+    if (!isIE11) {
+      /* eslint-disable */
+      rectStr = String.fromCodePoint(8);
+      /* eslint-enable no-alert, no-console */
+    }
+    if (searchInputVal === '.' || searchInputVal === rectStr) {
+      this.searchInput[0].value = '';
+    }
+
     this.searchInput
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
         const searchInput = $(this);
