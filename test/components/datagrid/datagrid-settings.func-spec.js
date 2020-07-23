@@ -75,6 +75,8 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       showNewRowIndicator: true,
       stretchColumn: null,
       stretchColumnOnChange: false,
+      spacerColumn: false,
+      columnSizing: 'all',
       twoLineHeader: false,
       clickToSelect: true,
       toolbar: false,

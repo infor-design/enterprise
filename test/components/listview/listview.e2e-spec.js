@@ -495,30 +495,6 @@ describe('Listview remove-clear tests', () => {
   });
 });
 
-describe('Listview example-header-totals tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/listview/example-header-totals');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview-footer'))), config.waitsFor);
-  });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
-
-  it('Should toggle listview on listviewer-header button click', async () => {
-    await element(by.css('.listview-header button')).click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.className('listview')).getCssValue('height')).toEqual('0px');
-  });
-});
-
 describe('Listview inside of List/Detail Pattern', () => {
   beforeEach(async () => {
     await utils.setPage('/patterns/list-detail-paging');

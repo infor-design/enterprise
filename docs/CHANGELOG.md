@@ -4,7 +4,8 @@
 
 ### v4.31.0 Features
 
-- `[Datagrid]` Added a spacerColumn setting, with this setting the last column fills any empty space instead of stretching everything out. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
+- `[Datagrid]` Added a `spacerColumn` setting, with this setting the last column fills any empty space instead of stretching everything out. ([#4032](https://github.com/infor-design/enterprise/issues/4032))
+- `[Datagrid]` Added a `columnSizing` setting which impacts how the column widths are auto calculated. Options are: `both` (default), `data` or `header` (including filter). ([#4017](https://github.com/infor-design/enterprise/issues/4017))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
 
@@ -22,7 +23,8 @@
 - `[Datagrid]` Fixed an issue where the tooltip would not show up if you focus a cell with ellipsis text with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` Made the header checkbox focusable. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Datagrid]` The selection checkbox cell had aria-selected on it which was incorrect. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
-- `[Datagrid]` Changed the auto width sizing of columns to use the padding of the rowHeight, this makes small, medium ect render the columns less wide than normal now as it was using normal (20px each side) padding for all rowHeights. As a consequence of this the grid is now rerendered when calling `rowHeight(mode)` to set the row height. ([#4016](https://github.com/infor-design/enterprise/issues/4016))
+- `[Datagrid]` Changed the auto width sizing of columns to include the padding of the rowHeight (16 16 8 8). So the column sizes are now more compact in lower rowHeight settings. Also to do this the grid is now rerendered when changing rowHeight. ([#4016](https://github.com/infor-design/enterprise/issues/4016))
+- `[Datagrid]` Fixed a design QA bug where the column and data cell padding was not following the design system. Its now using 16px large, 16px medium, 8 px short and 8 px extar-short for text indenting. ([#4154](https://github.com/infor-design/enterprise/issues/4154))
 - `[Datagrid]` Fixed an issue where the client side selection was not working. ([#4138](https://github.com/infor-design/enterprise/issues/4138))
 - `[Datagrid]` Changed invalid css fill-available property. ([#4133](https://github.com/infor-design/enterprise/issues/4133))
 - `[Datepicker]` Fixed a number of translation issues in the datepicker component. ([#4046](https://github.com/infor-design/enterprise/issues/4046))
