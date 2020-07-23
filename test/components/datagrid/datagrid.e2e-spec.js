@@ -4430,7 +4430,7 @@ fdescribe('Datagrid columns width test', () => {
   });
 
   it('Should not change columns width after reset layout', async () => {
-    const width = [400, 420];
+    const width = [400, 420, 423];
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {
       expect(width).toContain(size.width);
