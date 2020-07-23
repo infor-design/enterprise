@@ -107,9 +107,6 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     + .icon {
-      right: 4px;
-      top: 50%;
-      transform: translateY(-50%);
       width: 16px;
     }
 

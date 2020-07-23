@@ -789,8 +789,7 @@ input.dropdown.error:focus {
     + .icon {
       height: 25px;
       right: 4px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 3px;
       width: 16px;
     }
 
@@ -799,6 +798,14 @@ input.dropdown.error:focus {
       position: absolute;
       right: auto;
       top: 0;
+    }
+
+    &.has-scrollbar {
+      + .icon {
+        right: 18px;
+        top: 3px;
+        transform: translate(0);
+      }
     }
   }
 }
