@@ -107,8 +107,8 @@ div.multiselect {
   div.dropdown,
   div.multiselect {
     + .icon {
-      width: 16px;
       top: 3px;
+      width: 16px;
     }
 
     &.has-tags {
