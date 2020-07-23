@@ -335,7 +335,12 @@ ContextualActionPanel.prototype = {
       this.panel.detach().appendTo('body');
     }
 
-    this.element.attr('data-modal', this.settings.modalSettings.id);
+    // Creates a link to a Modal panel if one isn't present.
+    // (Usually needed for linking to a jQuery settings-defined CAP)
+    if (!this.element.attr('data-modal')) {
+      this.element.attr('data-modal', this.settings.modalSettings.id);
+    }
+
     if (!this.panel.attr('id')) {
       this.panel.attr('id', this.settings.modalSettings.id);
     }
