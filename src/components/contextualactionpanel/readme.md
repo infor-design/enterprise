@@ -1,6 +1,6 @@
 ---
 title: Contextual Action Panel
-description: null
+description: The Contextual Action Panel (CAP) is used for displaying entire workflows in a Modal-style setting.
 demo:
   embedded:
   - name: Default CAP Example
@@ -14,6 +14,8 @@ demo:
     slug: example-trigger
   - name: Destroy Test
     slug: test-destroy
+  - name: Disable a button on a CAP Toolbar
+    slug: test-disable-button
   - name: Launching From a Menu
     slug: test-from-menu
   - name: IFrame for Contents
@@ -55,6 +57,19 @@ $('body').contextualactionpanel({
   ]
   }
 });
+```
+
+### Interacting with the Internal Toolbar
+
+If configured with the `useFlexToolbar: true;` setting, it's possible to get access to the Contextual Action Panel's inner [Flex Toolbar API]('./toolbar-flex').  This will allow for any toolbar-wide operations, as well as interacting with each individual item directly:
+
+```js
+// Access the toolbar API on the CAP
+const capAPI = $('body').data('contextualactionpanel');
+const flexToolbarAPI = capAPI.toolbarAPI;
+
+// Disable the close button using its `FlexToolbarItem` API
+flexToolbarAPI.items[0].disabled = true;
 ```
 
 ## Keyboard Shortcuts
