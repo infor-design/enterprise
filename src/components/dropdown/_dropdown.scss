@@ -1130,6 +1130,18 @@ div.dropdown-xs,
     }
   }
 
+  .field-short,
+  .form-layout-compact .field {
+    div.dropdown,
+    div.multiselect {
+      &.has-scrollbar {
+        + .icon {
+          right: 4px;
+        }
+      }
+    }
+  }
+
   .dropdown-list {
     > .trigger {
       .icon {
