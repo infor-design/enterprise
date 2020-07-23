@@ -128,7 +128,7 @@ Note that while Searchfield components are supported by the Flex Toolbar, they w
 
 The legacy IDS Toolbar had a design that forced an included IDS Searchfield to sit to the left of all buttons in the Buttonset area (or the right in RTL scenarios).
 
-Conversely, the Flex Toolbar allows for more configurable placement of the Searchfield:
+Conversely, the Flex Toolbar allows for a more configurable placement of the Searchfield:
 
 ```html
 <div class="flex-toolbar">
