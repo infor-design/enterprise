@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="six columns">
+
+    <button type="button" id="open-test-panel" class="btn-secondary contextual-action-panel-trigger" data-init="false">
+      Open the CAP Flex Toolbar API Test
+    </button>
+    <div class="contextual-action-panel" data-init="false" style="min-width: 400px;">
+      <div class="row">
+        <div class="twelve columns">
+          <div class="field">
+            <p>Click the button below to toggle Enable/Disable on the Close button above.</p>
+          </div>
+          <div class="field">
+            <button id="disable-toggle-btn" class="btn-primary">
+              <span>Disable the Close Button</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+
+    // Build the Settings-based Contextual Action Panel
+    var triggerBtn = $('#open-test-panel');
+    triggerBtn.button();
+    triggerBtn.contextualactionpanel({
+      title: 'Flex Toolbar API Test',
+      useFlexToolbar: true,
+      buttons: [
+        {
+          text: 'Mail',
+          cssClass: 'btn',
+          icon: '#icon-mail',
+          click: function() {
+            //nothing
+          }
+        },
+        {
+          text: 'Filter',
+          cssClass: 'btn',
+          icon: '#icon-filter',
+          click: function() {
+            //nothing
+          }
+        },
+        {
+          text: 'Close',
+          cssClass: 'btn close-button',
+          icon: '#icon-close',
+          click: function() {
+            $(this).data('modal').close();
+          }
+        }
+      ],
+    });
+
+    // Inner-texts
+    var DISABLED_TXT = 'Disable the Close Button';
+    var ENABLED_TXT = 'Enable the Close Button';
+
+    // Get reference to the Flex Toolbar API and the close button
+    var capAPI = triggerBtn.data('contextualactionpanel');
+    var toolbarAPI = capAPI.toolbarAPI;
+    var btn3 = toolbarAPI.items[2]; // `FlexToolbarItem` API
+
+    // References to inner CAP controls
+    var disableToggleBtn = $('#disable-toggle-btn');
+    var disableToggleSpan = disableToggleBtn.children('span');
+
+    // Enable/Disable the Close button on the CAP's inner Flex Toolbar
+    disableToggleBtn.on('click.test', function () {
+      const btnIsDisabled = btn3.disabled;
+      if (btnIsDisabled) {
+        btn3.disabled = false;
+        disableToggleSpan.text(DISABLED_TXT);
+        return;
+      }
+
+      btn3.disabled = true;
+      disableToggleSpan.text(ENABLED_TXT);
+    });
+  });
+</script>

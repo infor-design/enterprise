@@ -106,6 +106,21 @@ ContextualActionPanel.prototype = {
   },
 
   /**
+   * @returns {Toolbar|ToolbarFlex|undefined} instance of an IDS Toolbar, IDS Toolbar Flex, or undefined if one doesn't exist.
+   */
+  get toolbarAPI() {
+    let api;
+    if (this.toolbar && this.toolbar.length) {
+      if (this.toolbar[0].classList.contains('flex-toolbar')) {
+        api = this.toolbar.data('toolbar-flex');
+      } else {
+        api = this.toolbar.data('toolbar');
+      }
+    }
+    return api;
+  },
+
+  /**
   * Initialize the CAP.
   * @private
   */
@@ -320,7 +335,12 @@ ContextualActionPanel.prototype = {
       this.panel.detach().appendTo('body');
     }
 
-    this.element.attr('data-modal', this.settings.modalSettings.id);
+    // Creates a link to a Modal panel if one isn't present.
+    // (Usually needed for linking to a jQuery settings-defined CAP)
+    if (!this.element.attr('data-modal')) {
+      this.element.attr('data-modal', this.settings.modalSettings.id);
+    }
+
     if (!this.panel.attr('id')) {
       this.panel.attr('id', this.settings.modalSettings.id);
     }
