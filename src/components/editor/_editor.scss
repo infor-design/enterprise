@@ -46,6 +46,7 @@
 
   &.is-disabled .editor {
     cursor: default;
+    pointer-events: none;
   }
 
   &.is-readonly .editor {
