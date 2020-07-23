@@ -61,7 +61,7 @@ $('body').contextualactionpanel({
 
 ### Interacting with the Internal Toolbar
 
-If configured with the `useFlexToolbar: true;` setting, it's possible to get access to the Contextual Action Panel's inner [Flex Toolbar API]('./toolbar-flex').  This will allow for any toolbar-wide operations, as well as interacting with each individual item directly:
+If configured with the `useFlexToolbar: true;` setting, it's possible to get access to the Contextual Action Panel's inner [Flex Toolbar API]('./toolbar-flex'). This will allow for any toolbar-wide operations, as well as interacting with each individual item directly:
 
 ```js
 // Access the toolbar API on the CAP
