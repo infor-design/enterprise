@@ -285,6 +285,15 @@ frozenColumns: {
 - Will not work with nested grids
 - Will not work with clickToSelect setting
 
+### Columns Padding Rules
+
+The grid column text and headers follows the following padding rules, using an multiples of 4 system. This represents the padding on the left or right of a cell or header.
+
+- Large: 16px , Filter Row 8px
+- Medium: 16px , Filter Row 8px
+- Small: 8px , Filter Row 4px
+- Extra: 8px , Filter Row 4px
+
 ## Testability
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

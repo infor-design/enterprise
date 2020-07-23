@@ -56,11 +56,11 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', mask: '#######' });
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
-      columns.push({ id: 'activity1', name: 'Activity (Contents Filter)', field: 'activity', filterType: 'contents', options: activities});
-      columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}, width: 250});
-      columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, width: 160, filterType: 'time' });
-      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+      columns.push({ id: 'activity1', name: 'Activity (Multi)', field: 'activity', filterType: 'contents', options: activities});
+      columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer', minWidth: 95});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
+      columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, sortable: false, align: 'center', filterType: 'checkbox'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
 
@@ -70,8 +70,10 @@
         dataset: data,
         filterable: true,
         filterWhenTyping: false,
+        columnReorder: true,
         selectable: 'single',
         editable: true,
+        rowHeight: 'extra-small',
         frozenColumns: {left: ['id', 'productId']},
         emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}

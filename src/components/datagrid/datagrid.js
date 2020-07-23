@@ -80,6 +80,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.stretchColumn=null] If 'last' the last column will stretch to the end, otherwise specific columns can be targetted.
  * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
  * @param {boolean}  [settings.spacerColumn=false] If true an extra column will be added to the end that fills the space. This allows columns to not stretch to fill so they are a constant size. This setting cannot be used with percent columns.
+ * @param {boolean}  [settings.columnSizing='both'] Determines the sizing method for the auto sizing columns. Options are: both | data | header (including filter)
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -180,6 +181,7 @@ const DATAGRID_DEFAULTS = {
   stretchColumn: null,
   stretchColumnOnChange: false,
   spacerColumn: false,
+  columnSizing: 'all',
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -2615,7 +2617,7 @@ Datagrid.prototype = {
   * @returns {number} padding (left and right) for the current rowHeight
   */
   getCellPadding() {
-    const padding = { 'extra-small': 6, short: 9, small: 9, medium: 15, normal: 20, large: 20 };
+    const padding = { 'extra-small': 8, short: 8, small: 8, medium: 16, normal: 16, large: 16 };
     return padding[this.settings.rowHeight];
   },
 
@@ -4207,9 +4209,10 @@ Datagrid.prototype = {
     let hasButton = false;
     const self = this;
 
+    // Get Data width
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
-    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
+    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options && this.settings.columnSizing !== 'data') {
       const row = null;
       let val = '';
       // Find Longest option label
@@ -4293,6 +4296,10 @@ Datagrid.prototype = {
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
+    const hasTrigger = columnDef.formatter === Formatters.Date || columnDef.formatter === Formatters.Time ||
+      columnDef.formatter === Formatters.Lookup || columnDef.formatter === Formatters.Colorpicker ||
+      columnDef.formatter === Formatters.Dropdown;
+
     padding += this.getCellPadding() * 2;
 
     if (hasAlert) {
@@ -4322,30 +4329,38 @@ Datagrid.prototype = {
     }
 
     maxWidth = this.calculateTextRenderWidth(maxText) + padding;
+
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxWidth = 150;
     }
-    // Calculate the Header with the correct font.
+
     const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
     const headerPadding = isSortable ? (this.getCellPadding() * 2) + 15 : this.getCellPadding() * 2;
     let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
 
-    // Calculate the width required for the filter
-    // Field plus
+    // Calculate the width required for the filter field
     if (columnDef.filterType && this.settings.filterable) {
-      if (minHeaderWidth < 40) {
-        minHeaderWidth = this.getCellPadding() * 2;
+      if (minHeaderWidth < (this.getCellPadding() * 2)) {
+        minHeaderWidth = (this.getCellPadding() * 5) + maxWidth + 36;
       }
 
       if (columnDef.filterType !== 'checkbox') {
         if (maxText !== '') {
-          if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
-            minHeaderWidth = maxWidth + this.getCellPadding() * 2;
+          if (minHeaderWidth < maxWidth + (this.getCellPadding() * 2 + 32) && maxText !== '') {
+            minHeaderWidth = maxWidth + (this.getCellPadding() * 2 + 32);
           }
-        } else if (minHeaderWidth < this.getCellPadding() * 4) {
-          minHeaderWidth = this.getCellPadding() * 4;
+        } else if (minHeaderWidth < 100) {
+          minHeaderWidth = 100;
         }
       }
+    }
+
+    if (this.settings.columnSizing === 'data') {
+      minHeaderWidth = 50 + (this.getCellPadding() * 2) + (hasTrigger ? 25 : 0);
+    }
+
+    if (this.settings.columnSizing === 'header') {
+      maxWidth = 0;
     }
 
     return Math.ceil(Math.max(maxWidth, minHeaderWidth));
@@ -4389,15 +4404,22 @@ Datagrid.prototype = {
    * @private
    */
   setScrollClass() {
+    const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
+    const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
+    const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);
+    this.element.removeClass('has-vertical-scroll has-visible-last-row');
+
+    if (tableHeight < height - headerHeight) {
+      this.element.addClass('has-visible-last-row');
+    }
+
     if (!this.hasLeftPane && !this.hasRightPane) {
       return;
     }
-    this.element.removeClass('has-vertical-scroll has-less-rows');
 
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
     const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
     const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
-    const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
 
     if (hasScrollBarV) {
       this.element.addClass('has-vertical-scroll');
@@ -4420,6 +4442,8 @@ Datagrid.prototype = {
     this.stretchColumnWidth = 0;
     this.stretchColumnDiff = 0;
     this.stretchColumnIdx = -1;
+    this.fontCached = null;
+    this.fontHeaderCached = null;
     this.fixColumnIds();
   },
 

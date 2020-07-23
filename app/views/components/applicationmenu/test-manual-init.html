@@ -3,7 +3,7 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
-  <nav id="application-menu" class="application-menu is-personalizable">
+  <nav id="application-menu" class="application-menu is-personalizable" data-init="false">
 
     <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
 
@@ -88,6 +88,11 @@
 
   </div>
 
+  <script>
+      $('nav#application-menu').applicationmenu({
+        triggers: $('.application-menu-trigger')
+      });
+  </script>
   {{> includes/footer}}
 </body>
 </html>

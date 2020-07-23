@@ -1,0 +1,68 @@
+<div class="full-height full-width">
+    <div id="datagrid" class="datagrid">
+    </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+
+        //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          filterable: true,
+          expandableRow: true,
+          toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
+            results: true, actions: true, exportToExcel: true, personalize: true, rowHeight: true}
+        });
+
+        grid.on('expandrow', function (e, args) {
+          args.detail.find('.datagrid-row-detail-padding').empty();
+
+          // Create Nested Grid
+          var datagridHtml = $('<div class="datagrid"></div>');
+          args.detail.find('.datagrid-row-detail-padding').append(datagridHtml);
+
+          var subColumns = [];
+          subColumns.push({ id: 'id', name: 'Part Id', field: 'id', width: 200});
+          subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Formatters.Hyperlink});
+          subColumns.push({ id: 'price', name: 'Price', field: 'price'});
+          subColumns.push({ id: 'amount', name: 'Amount', field: 'amount'});
+          subColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Formatters.Button, icon: 'delete', tooltip: 'Delete', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
+
+          var subData = [];
+
+          subData.push({ id: args.row + '-121225', partName: 'Large Cooling Fan', quantity: 1*args.row, price: .34*args.row, amount: 1.34*args.row});
+          subData.push({ id: args.row + '-121226', partName: 'Extra Cooling System', quantity: 1*args.row, price: .04*args.row, amount: 1.14*args.row});
+          subData.push({ id: args.row + '-121227', partName: 'Electronics / Hardware', quantity: 1*args.row, price: .14*args.row, amount: 1.24*args.row});
+          subData.push({ id: args.row + '-121228', partName: 'Resilant Sub-Compressor', quantity: 1*args.row, price: .24*args.row, amount: 1.34*args.row});
+
+          datagridHtml.datagrid({stretchColumn: 'partName', filterable: false, columns: subColumns, dataset: subData});
+        });
+
+        grid.on('collapserow', function (e, args) {
+          // Destroy Nested Grid
+          var datagrid = args.detail.find('.datagrid');
+          if (datagrid.data('datagrid')) {
+            datagrid.data('datagrid').destroy();
+          }
+
+          args.detail.find('.datagrid-row-detail-padding').empty();
+        });
+
+      });
+  });
+</script>
