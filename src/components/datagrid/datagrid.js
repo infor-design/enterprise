@@ -8265,6 +8265,16 @@ Datagrid.prototype = {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
+      console.log(self.element.find('select.dropdown'));
+      console.log(self.activeCell.node.closest('select.dropdown'));
+
+      self.element.find('select.dropdown').each(function () {
+        const dropdown = $(this);
+        console.log(dropdown);
+        // const api = dropdown.data('dropdown');
+        // api.open();
+      });
+
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
