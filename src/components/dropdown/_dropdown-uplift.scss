@@ -311,6 +311,18 @@ div.multiselect {
       }
     }
   }
+
+  &.android {
+    .field-short,
+    .form-layout-compact .field {
+      div.dropdown,
+      div.multiselect {
+        + .icon {
+          top: 2px;
+        }
+      }
+    }
+  }
 }
 
 // Icon placement isn't quite right on Firefox

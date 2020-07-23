@@ -1165,6 +1165,53 @@ div.dropdown-xs,
         top: 4px;
       }
     }
+
+    .field-short,
+    .form-layout-compact .field {
+      div.dropdown,
+      div.multiselect {
+        + .icon {
+          top: 1px;
+        }
+
+        &.has-tags {
+          + .icon {
+            top: 10px;
+          }
+        }
+
+        &.has-scrollbar {
+          + .icon {
+            right: 4px;
+          }
+        }
+      }
+    }
+
+    .dropdown-list {
+      > .trigger {
+        .icon {
+          &.close {
+            top: 10px;
+          }
+
+          &.search {
+            top: 5px;
+          }
+        }
+      }
+
+      &.dropdown-short {
+        > .trigger {
+          .icon {
+            &.close {
+              height: 15px;
+              top: 5px;
+            }
+          }
+        }
+      }
+    }
   }
 
   .dropdown-list.is-ontop {
