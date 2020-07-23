@@ -99,7 +99,7 @@
             margin-top: 0;
 
             ~ .icon {
-              top: calc(50% - 17px);
+              top: calc(50% - 18px);
             }
           }
         }
@@ -237,7 +237,7 @@
   }
 
   tbody tr td.is-editing .datepicker {
-    height: 28px;
+    height: 27px;
   }
 
   div.dropdown + .icon,
@@ -287,4 +287,9 @@
   &.has-filterable-columns .is-filterable .datagrid-column-wrapper.l-right-text {
     top: -3px;
   }
+}
+
+.datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
+  left: 1px !important;
+  top: 6px;
 }

@@ -956,7 +956,8 @@ $datagrid-small-row-height: 25px;
             padding: 0 5px 0 15px;
 
             ~ .icon {
-              top: calc(50% - 16px);
+              margin-left: -5px;
+              top: calc(50% - 17px);
             }
           }
 
@@ -1083,7 +1084,7 @@ $datagrid-small-row-height: 25px;
 
       .icon-calendar,
       .icon-fileupload {
-        left: 0 !important;
+        left: 6px !important;
       }
 
       .colorpicker-container {
@@ -1348,7 +1349,7 @@ $datagrid-small-row-height: 25px;
 
             + .icon {
               height: 15px;
-              margin-left: -5px;
+              margin-left: -7px;
               top: -2px;
             }
           }
@@ -1600,6 +1601,11 @@ $datagrid-small-row-height: 25px;
           font-size: $input-size-compact-font-size;
           height: $datagrid-extra-small-row-height + 2px;
           padding: 2px 22px 0 6px;
+        }
+
+        .datepicker + .icon {
+          margin-left: -5px;
+          top: -3px;
         }
       }
 
@@ -3710,9 +3716,10 @@ td .btn-actions {
     }
 
     .trigger .icon {
-      left: 4px !important;
-      margin-top: -2px;
-      top: 8px;
+      height: 16px;
+      left: 2px !important;
+      margin-top: -1px;
+      top: 9px;
     }
   }
 
@@ -3725,6 +3732,11 @@ td .btn-actions {
     ul {
       font-size: $input-size-compact-font-size;
       text-indent: 6px;
+    }
+
+    .trigger .icon {
+      left: 1px !important;
+      margin-top: -2px;
     }
   }
 
