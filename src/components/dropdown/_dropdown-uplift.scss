@@ -108,6 +108,7 @@ div.multiselect {
   div.multiselect {
     + .icon {
       width: 16px;
+      top: 3px;
     }
 
     &.has-tags {
@@ -122,7 +123,7 @@ div.multiselect {
   .trigger {
     .icon {
       left: -1px;
-      top: 5px;
+      top: 6px;
       width: 16px;
     }
   }
