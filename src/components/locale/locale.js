@@ -992,17 +992,22 @@ const Locale = {  // eslint-disable-line
     dateFormat = dateFormat.replace(',', '');
     dateString = dateString.replace(',', '');
 
-    if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
-      dateString = `${dateString.substr(0, dateString.length - 4)}/${dateString.substr(dateString.length - 4, dateString.length)}`;
-      dateString = `${dateString.substr(0, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2)}`;
+    // Adjust short dates where no separators or special characters are present.
+    const hasMdyyyy = dateFormat.indexOf('Mdyyyy');
+    const hasdMyyyy = dateFormat.indexOf('dMyyyy');
+    let startIndex = -1;
+    let endIndex = -1;
+    if (hasMdyyyy > -1 || hasdMyyyy > -1) {
+      startIndex = hasMdyyyy > -1 ? hasMdyyyy : hasdMyyyy > -1 ? hasdMyyyy : 0;
+      endIndex = startIndex + dateString.indexOf('/') > -1 ? dateString.indexOf('/') : dateString.length;
+      dateString = `${dateString.substr(startIndex, endIndex - 4)}/${dateString.substr(endIndex - 4, dateString.length)}`;
+      dateString = `${dateString.substr(startIndex, dateString.indexOf('/') / 2)}/${dateString.substr(dateString.indexOf('/') / 2, dateString.length)}`;
     }
-
-    if (dateFormat === 'Mdyyyy') {
-      dateFormat = 'M/d/yyyy';
+    if (hasMdyyyy > -1) {
+      dateFormat = dateFormat.replace('Mdyyyy', 'M/d/yyyy');
     }
-
-    if (dateFormat === 'dMyyyy') {
-      dateFormat = 'd/M/yyyy';
+    if (hasdMyyyy > -1) {
+      dateFormat = dateFormat.replace('dMyyyy', 'd/M/yyyy');
     }
 
     if (dateFormat.indexOf(' ') !== -1) {
@@ -1196,7 +1201,7 @@ const Locale = {  // eslint-disable-line
            (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
 
-            if (!dateObj.h && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
+            if (!dateObj.h && formatParts[i + 1] && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
               // in a few cases am/pm is before hours
               dateObj.h = dateStringParts[i + 1];
               hasAmFirst = true;

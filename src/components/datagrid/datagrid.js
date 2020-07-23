@@ -2232,49 +2232,66 @@ Datagrid.prototype = {
     };
 
     if (!this.settings.disableClientFilter) {
-      let dataset;
-      let isFiltered;
-      let i;
-      let i2;
-      let len;
-      let dataSetLen;
-
       if (this.settings.treeGrid) {
-        dataset = this.settings.dataset;
-
-        const checkChildNodes = function (nodeData, parentNode) {
-          for (let j = 0; j < nodeData.length; j++) {
-            const childNode = nodeData[j];
-
-            if (isFiltered) {
-              isFiltered = !checkRow(childNode);
+        // Check nodes and set key/value `_isFilteredOut` in given dataset
+        const checkNodes = (dataset) => {
+          let isFiltered = true;
+          for (let i = 0, len = dataset.length; i < len; i++) {
+            const nodeData = dataset[i];
+            let isChildFiltered = true;
+            if (nodeData.children) {
+              isChildFiltered = checkNodes(nodeData.children);
+              if (isChildFiltered) {
+                nodeData._isFilteredOut = !checkRow(nodeData);
+                if (!nodeData._isFilteredOut) {
+                  isFiltered = false;
+                }
+              } else {
+                isFiltered = false;
+              }
+            } else {
+              nodeData._isFilteredOut = !checkRow(nodeData);
+              if (!nodeData._isFilteredOut) {
+                isFiltered = false;
+              }
             }
+          }
+          return isFiltered;
+        };
 
-            childNode._isFilteredOut = !checkRow(childNode);
-
-            if (parentNode && !childNode._isFilteredOut) {
-              parentNode._isFilteredOut = false;
+        // Check empty filter conditions
+        const isFilterEmpty = () => {
+          let isEmpty = true;
+          for (let i = 0, len = conditions.length; i < len; i++) {
+            if (conditions[i].value.toString().trim() !== '') {
+              isEmpty = false;
             }
+          }
+          return isEmpty;
+        };
 
-            if (childNode.children && childNode.children.length) {
-              checkChildNodes(childNode.children, childNode);
+        // Remove all nested key/value `_isFilteredOut` from given dataset
+        const removeFilteredOut = (dataset) => {
+          for (let i = 0, len = dataset.length; i < len; i++) {
+            if (typeof dataset[i]._isFilteredOut !== 'undefined') {
+              delete dataset[i]._isFilteredOut;
+            }
+            if (dataset[i].children) {
+              removeFilteredOut(dataset[i].children);
             }
           }
         };
 
-        for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i]);
-
-          if (dataset[i].children && dataset[i].children.length) {
-            checkChildNodes(dataset[i].children);
-          }
-
-          dataset[i]._isFilteredOut = isFiltered;
+        if (isFilterEmpty()) {
+          removeFilteredOut(this.settings.dataset);
+        } else {
+          checkNodes(this.settings.dataset);
         }
       } else if (this.settings.groupable) {
-        for (i = 0, len = this.settings.dataset.length; i < len; i++) {
+        let isFiltered;
+        for (let i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
-          for (i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
+          for (let i2 = 0, dataSetLen = this.settings.dataset[i].values.length; i2 < dataSetLen; i2++) {
             isFiltered = !checkRow(this.settings.dataset[i].values[i2]);
             this.settings.dataset[i].values[i2]._isFilteredOut = isFiltered;
 
@@ -2286,7 +2303,8 @@ Datagrid.prototype = {
           this.settings.dataset[i]._isFilteredOut = isGroupFiltered;
         }
       } else {
-        for (i = 0, len = this.settings.dataset.length; i < len; i++) {
+        let isFiltered;
+        for (let i = 0, len = this.settings.dataset.length; i < len; i++) {
           isFiltered = !checkRow(this.settings.dataset[i]);
           this.settings.dataset[i]._isFilteredOut = isFiltered;
         }
@@ -3752,6 +3770,17 @@ Datagrid.prototype = {
     let isHidden = false;
     let skipColumns;
 
+    // Calculate all nested children
+    const calculateChildren = (ds, count = 0) => {
+      count += ds.length;
+      for (let i = 0, l = ds.length; i < l; i++) {
+        if (ds[i].children) {
+          count = calculateChildren(ds[i].children, count);
+        }
+      }
+      return count;
+    };
+
     if (!rowData) {
       return '';
     }
@@ -4165,6 +4194,13 @@ Datagrid.prototype = {
         containerHtml.left += childRowHtml.left;
         containerHtml.center += childRowHtml.center;
         containerHtml.right += childRowHtml.right;
+      }
+    } else if (this.settings.treeGrid && !skipChildren && rowData._isFilteredOut) {
+      if (rowData.children) {
+        const count = calculateChildren(rowData.children);
+        this.recordCount += count + (rowData._isFilteredOut && depth === 1 ? 1 : 0);
+      } else if (depth === 1) {
+        this.recordCount++;
       }
     }
 
