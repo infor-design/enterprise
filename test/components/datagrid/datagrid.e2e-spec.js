@@ -35,6 +35,52 @@ describe('Datagrid Alternate Row Tests', () => {
   });
 });
 
+fdescribe('Datagrid Column Sizing Setting Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-columnsizing?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-columnsizing')).toEqual(0);
+    });
+  }
+});
+
+fdescribe('Datagrid Default Column Width Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-books?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-books')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Colspan Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
