@@ -8303,7 +8303,7 @@ Datagrid.prototype = {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
-      // Make sure the first keydown gets captured and Trigger the dropdown
+      // Make sure the first keydown gets captured and trigger the dropdown
       setTimeout(() => {
         self.activeCell.node.find('select.dropdown').each(function () {
           const dropdown = $(this);
