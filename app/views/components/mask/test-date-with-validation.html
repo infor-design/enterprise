@@ -14,7 +14,7 @@
 
     <div class="field">
       <label for="date">Date Input - Error Handling</label>
-      <input id="date" name="date" type="text" placeholder="M/d/yyyy" data-mask data-options="{ pattern: '##/##/####', mode: 'date' }" data-validate="date"/>
+      <input id="date" name="date" type="text" placeholder="M/d/yyyy" data-mask data-options="{ 'patternOptions' : { 'format' : 'M/d/yyyy' }, 'process' : 'date' }" data-validate="date"/>
     </div>
 
     <div class="field">

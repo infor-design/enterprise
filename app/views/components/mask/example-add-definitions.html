@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Add Mask Definitions</h2>
+    <p>It's possible to add pattern characters to a Mask that will match a user-determined regex pattern.  The example below only matches 3 capital letters.  It's pre-defined value is "aa" which will be thrown out on initialization.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="upper">Upper Case</label>
+      <input id="upper" name="upper" val="aa" />
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#upper').mask({
+    definitions: {
+      'U': /[A-Z]/
+    },
+    pattern: 'UUU'
+  });
+</script>

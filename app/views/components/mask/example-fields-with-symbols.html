@@ -1,19 +1,29 @@
 <div class="row">
   <div class="six columns">
     <h2>Mask-Controlled Fields with Symbols</h2>
+    <p>JIRA Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a></p>
   </div>
 </div>
 
 <div class="row">
-  <div class="twelve columns">
-    <div class="field">
-      <label for="currency-input">Currency Input</label>
-      <input id="currency-input" class="new-mask" data-options="{ process: number, patternOptions: { prefix: '$', integerLimit: 3, decimalLimit: 2, allowDecimal: true } }"/>
-    </div>
+  <div class="six columns">
+
+    <h3>Prefixes</h3>
 
     <div class="field">
-      <label for="percentage-input">Percentage Input</label>
-      <input id="percentage-input" class="new-mask" data-options="{ process: number, patternOptions: { suffix: '%', integerLimit: 3 } }"/>
+      <label for="dollar-prefix-number">Dollar Prefix</label>
+      <input id="dollar-prefix-number" class="new-mask" data-options='{ "pattern": "#,###.00", "process": "number", "patternOptions": { "allowDecimal": true, "allowThousandsSeparator": true, "integerLimit": 4, "prefix": "$" } }' />
     </div>
+
+  </div>
+  <div class="six columns">
+
+    <h3>Suffixes</h3>
+
+    <div class="field">
+      <label for="percentage-suffix-number">Percentage Suffix</label>
+      <input id="percentage-suffix-number" class="new-mask" data-options='{ "pattern": "###", "process": "number", "patternOptions": { "allowDecimal": false, "integerLimit": 3, "suffix" : "%" } }' />
+    </div>
+
   </div>
 </div>
