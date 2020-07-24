@@ -8267,7 +8267,7 @@ Datagrid.prototype = {
 
       // Trigger the dropdown on first keydown
       setTimeout(() => {
-        self.activeCell.node.find('select.dropdown').each(function() {
+        self.activeCell.node.find('select.dropdown').each(function () {
           const dropdown = $(this);
           const dropdownApi = dropdown.data('dropdown');
           dropdownApi.handleAutoComplete(e);
