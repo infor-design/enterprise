@@ -126,10 +126,14 @@ const formatters = {
       if (time === null) {
         return null;
       }
+      const getValue = v => (!isNaN(parseInt(v, 10)) ? parseInt(v, 10) : 0);
       const d = new Date();
-      d.setHours(parseInt(time[1], 10) + (time[4] ? 12 : 0));
-      d.setMinutes(parseInt(time[2], 10) || 0);
-      d.setSeconds(parseInt(time[3], 10) || 0);
+      let hours = getValue(time[1]);
+      hours -= (hours === 12 ? 12 : 0);
+      hours += (time[4] ? 12 : 0);
+      d.setHours(hours);
+      d.setMinutes(getValue(time[2]));
+      d.setSeconds(getValue(time[3]));
       return d;
     };
 

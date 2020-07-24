@@ -454,6 +454,10 @@ Autocomplete.prototype = {
   },
 
   closeList(dontClosePopup) {
+    if (!this.list) {
+      return;
+    }
+
     // Remove events
     this.list.off([
       `click.${COMPONENT_NAME}`,

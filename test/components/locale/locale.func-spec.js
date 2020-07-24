@@ -2075,7 +2075,7 @@ describe('Locale API', () => {
   it('Should correct placeholder missing translations', () => {
     Locale.set('th-TH');
 
-    expect(Locale.translate('Locale')).toEqual('สถานที่เกิดเหตุ');
+    expect(Locale.translate('Locale')).toEqual('ตำแหน่งที่ตั้ง');
     Locale.set('fr-FR');
 
     expect(Locale.translate('SetTime')).toEqual('Fixer l\'heure');
@@ -2089,11 +2089,11 @@ describe('Locale API', () => {
     expect(Locale.translate('CssClass')).toEqual('Τάξη Css');
     Locale.set('lt-LT');
 
-    expect(Locale.translate('CssClass')).toEqual('Css klasė');
+    expect(Locale.translate('CssClass')).toEqual('Css Klasė');
 
     Locale.set('zh-CN');
 
-    expect(Locale.translate('StrikeThrough')).toEqual('罢工');
-    expect(Locale.translate('InsertAnchor')).toEqual('插入锚');
+    expect(Locale.translate('StrikeThrough')).toEqual('穿透');
+    expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
   });
 });

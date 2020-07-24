@@ -62,6 +62,13 @@
 
     @include transition(background-color 300ms $cubic-ease,
     border-color 300ms $cubic-ease);
+
+    &[disabled] {
+      ~ svg.icon {
+        color: $searchfield-disabled-icon-color;
+        pointer-events: none;
+      }
+    }
   }
 
   // This rule will only work when searchfield is clearable.

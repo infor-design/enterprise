@@ -61,18 +61,27 @@ describe('Searchfield API', () => {
   });
 
   it('can clear the searchfield via clear API', () => {
-    searchfieldInputEl.setAttribute('value', 'Alaska');
-
+    searchfieldInputEl.value = 'Alaska';
+    const spyEvent = spyOnEvent(searchfieldInputEl, 'cleared');
+    searchfieldAPI.makeClearable();
     searchfieldAPI.clear();
 
-    setTimeout(() => {
-      const closeButtonEl = document.body.querySelector('svg.close');
-      const spyEvent = spyOnEvent(closeButtonEl, 'click');
-      closeButtonEl.click();
+    expect(spyEvent).toHaveBeenTriggered();
+    expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
+  });
 
-      expect(spyEvent).toHaveBeenTriggered();
-      expect(searchfieldInputEl.getAttribute('value')).toEqual('');
-    }, 1);
+  it('can clear the searchfield via click', () => {
+    searchfieldInputEl.value = 'Alaska';
+    searchfieldAPI.makeClearable();
+
+    const closeButtonEl = document.body.querySelector('.searchfield-wrapper svg.close');
+    const spyEvent = spyOnEvent(closeButtonEl, 'click');
+    const spyEvent2 = spyOnEvent(searchfieldInputEl, 'cleared');
+    $(closeButtonEl).click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent2).toHaveBeenTriggered();
+    expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 
   it('can add an extra "More Results" link to the results list', () => {

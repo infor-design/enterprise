@@ -59,6 +59,40 @@ const legacyCAPSettings = {
   ]
 };
 
+// This settings object simplifies the content area and only defines the buttons
+const simpleCAPSettings = {
+  title: 'Simple CAP',
+  content: '<div class="row"><div class="six columns"><p>Simple CAP Content Area</p></div></div>',
+  modalSettings: {
+    id: 'simple-cap',
+    trigger: 'immediate',
+    buttons: [
+      {
+        text: 'Settings',
+        cssClass: 'btn',
+        id: 'settings',
+        icon: '#icon-settings'
+      },
+      {
+        type: 'input',
+        text: 'Keyword',
+        id: 'filter',
+        name: 'filter',
+        cssClass: 'searchfield',
+        searchfieldSettings: {
+          clearable: false,
+          collapsible: true
+        }
+      }, {
+        text: 'Close',
+        cssClass: 'btn',
+        icon: '#icon-close'
+      }
+    ],
+    useFlexToolbar: true
+  }
+};
+
 let capAPI;
 
 describe('Contexual Action Panel - Defined Through Settings', () => {
@@ -161,5 +195,68 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
 
     expect(modalSettings.fullsize).toEqual('always');
     expect(modalSettings.breakpoint).toEqual('phone');
+  });
+});
+
+describe('Contextual Action Panel - Button API Access', () => {
+  beforeEach(() => {
+    capAPI = null;
+    document.body.insertAdjacentHTML('afterbegin', svgHTML);
+    document.body.insertAdjacentHTML('afterbegin', triggerHTML);
+  });
+
+  afterEach((done) => {
+    cleanup([
+      '.svg-icons',
+      '#tooltip',
+      '.modal',
+      '.row',
+      '#test-script'
+    ]);
+
+    if (capAPI) {
+      capAPI.destroy();
+    }
+    document.body.removeAttribute('data-modal');
+    setTimeout(() => {
+      done();
+    }, 500);
+  });
+
+  it('can provide access to its Toolbar API', () => {
+    capAPI = new ContextualActionPanel(document.body, simpleCAPSettings);
+
+    expect(capAPI.toolbarAPI).toBeDefined();
+    expect(capAPI.toolbarAPI.items).toBeDefined();
+    expect(capAPI.toolbarAPI.items.length).toEqual(3);
+  });
+
+  it('can disable/enable single buttons on the inner Toolbar', () => {
+    capAPI = new ContextualActionPanel(document.body, simpleCAPSettings);
+    const toolbarAPI = capAPI.toolbarAPI;
+
+    // Access and disable the first button via its API.
+    const b1 = toolbarAPI.items[0];
+    b1.disabled = true;
+
+    expect(b1.element.disabled).toBeTruthy();
+
+    b1.disabled = false;
+
+    expect(b1.element.disabled).toBeFalsy();
+  });
+
+  it('can disable/enable the entire Toolbar', () => {
+    capAPI = new ContextualActionPanel(document.body, simpleCAPSettings);
+    const toolbarAPI = capAPI.toolbarAPI;
+    const toolbarEl = toolbarAPI.element;
+
+    toolbarAPI.disabled = true;
+
+    expect(toolbarEl.className.indexOf('is-disabled')).toBeGreaterThan(-1);
+
+    toolbarAPI.disabled = false;
+
+    expect(toolbarEl.className.indexOf('is-disabled')).toEqual(-1);
   });
 });

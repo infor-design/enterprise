@@ -202,6 +202,11 @@ Dropdown.prototype = {
       this.settings.noSearch = true;
     }
 
+    // Add "is-disabled" class to greyed-out the field
+    if (this.element.is(':disabled')) {
+      this.element.closest('.field').addClass('is-disabled');
+    }
+
     // convert <select> tag's size css classes for the pseudo element
     const elemClassList = this.element[0].classList;
     if (elemClassList.length === 0) {
@@ -3166,6 +3171,12 @@ Dropdown.prototype = {
     this.element
       .prop('disabled', true)
       .prop('readonly', false);
+      
+    this.pseudoElem.addClass('is-disabled');
+
+    setTimeout(() => {
+      this.pseudoElem.addClass('is-disabled');
+    });
 
     if (this.pseudoElem.is($(document.activeElement))) {
       this.pseudoElem.blur();

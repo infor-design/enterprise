@@ -207,8 +207,13 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     it('Can be individually disabled and re-enabled', () => {
       const item = toolbarAPI.items[2];
 
-      expect(item.disabled).toBeTruthy();
+      expect(item.element.disabled).toBeTruthy();
       expect(item.element.getAttribute('aria-disabled')).toBeTruthy();
+
+      item.disabled = false;
+
+      expect(item.element.disabled).toBeFalsy();
+      expect(item.element.getAttribute('aria-disabled')).toBeFalsy();
     });
 
     it('Can individually become hidden and re-displayed', () => {

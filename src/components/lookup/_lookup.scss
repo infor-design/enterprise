@@ -21,7 +21,7 @@
     }
 
     &[disabled] + .trigger > .icon {
-      color: $input-disabled-color;
+      color: $lookup-disabled-color;
     }
 
     &.is-not-editable {

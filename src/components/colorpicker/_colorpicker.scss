@@ -82,6 +82,10 @@
       color: $input-color-disabled-border !important;
       cursor: default;
     }
+
+    .trigger {
+      cursor: default;
+    }
   }
 
   &.color-only {
