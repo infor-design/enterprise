@@ -684,15 +684,13 @@ function renderTargetJSFile(key, targetFilePath) {
       .replace('../src/behaviors/behaviors', './behaviors')
       .replace('../src/core/rules', './rules')
       .replace('../src/components/components', './components')
-      .replace('../src/patterns/patterns', './patterns')
       .replace('../src/behaviors/initialize/initialize.jquery', './initialize.jquery');
   } else if (key === 'initialize') {
     targetFile = getFileContents(filePaths.src.js.initialize);
     targetFile = targetFile
       .replace(/('\.\.\/)((?!\.))/g, '\'./')
       .replace(/('\.\.\/\.\.\/)/g, '\'../src/')
-      .replace('../src/components/components.jquery', './components.jquery')
-      .replace('../src/patterns/patterns.jquery', './patterns.jquery');
+      .replace('../src/components/components.jquery', './components.jquery');
   } else if (key === 'components') {
     // 'component' source code files are comprised of three buckets that need to
     // be written to the target file in a specific order.

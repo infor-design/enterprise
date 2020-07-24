@@ -150,25 +150,25 @@
 @import '../components/line/line';
 
 // Patterns ====/
-@import '../patterns/builder';
-@import '../patterns/call-to-action-container';
-@import '../patterns/card-deck';
-@import '../patterns/commonnav';
-@import '../patterns/full-width';
-@import '../patterns/header-detail';
+@import '../components/page-patterns/builder';
+@import '../components/page-patterns/call-to-action-container';
+@import '../components/page-patterns/card-deck';
+@import '../components/page-patterns/commonnav';
+@import '../components/page-patterns/full-width';
+@import '../components/page-patterns/header-detail';
 @import '../components/homepage/homepage';
-@import '../patterns/list-detail/list-detail';
-@import '../patterns/master-detail';
+@import '../components/list-detail/list-detail';
+@import '../components/page-patterns/master-detail';
 @import '../components/signin/signin';
 @import '../components/signin/signin-uplift';
-@import '../patterns/stepprocess/stepprocess';
+@import '../components/stepprocess/stepprocess';
 
 // Layouts ====/
-@import '../layouts/object-summary';
-@import '../layouts/panes';
-@import '../layouts/scrollable-flex';
-@import '../layouts/summary-form';
-@import '../layouts/top-bottom-anchored';
+@import '../components/layouts/object-summary';
+@import '../components/layouts/panes';
+@import '../components/layouts/scrollable-flex';
+@import '../components/layouts/summary-form';
+@import '../components/layouts/top-bottom-anchored';
 
 // These controls must come last
 @import '../components/colors/colors';

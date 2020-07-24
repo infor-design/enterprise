@@ -6,9 +6,7 @@ module.exports = {
         'src/behaviors/**/*.scss',
         'src/themes/*.scss',
         'src/core/**/*.scss',
-        'src/layouts/**/*.scss',
-        'src/components/**/*.scss',
-        'src/patterns/**/*.scss'
+        'src/components/**/*.scss'
       ],
       tasks: ['exec:sass:dist'],
       options: {

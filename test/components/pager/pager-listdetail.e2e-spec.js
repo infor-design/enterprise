@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Pager (List/Detail, no page size selector)', () => {
   beforeEach(async () => {
-    await utils.setPage('/patterns/list-detail-paging.html');
+    await utils.setPage('/components/page-patterns/test-list-detail-paging');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.pager-toolbar'))), config.waitsFor);
   });
@@ -31,7 +31,7 @@ describe('Pager (List/Detail, no page size selector)', () => {
 
 describe('Pager (List/Detail, with page size selector)', () => {
   beforeEach(async () => {
-    await utils.setPage('/patterns/list-detail-paging-pagesize-selector.html');
+    await utils.setPage('/components/page-patterns/test-list-detail-paging-pagesize-selector');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.pager-toolbar'))), config.waitsFor);
   });

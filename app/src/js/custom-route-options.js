@@ -36,15 +36,6 @@ module.exports = function customRouteOptions(req, res) {
     SohoConfig.minifyCultures = true;
   }
 
-  // All patterns will use the "empty" layout
-  if (url.match(/patterns\//)) {
-    if (url.includes('tree-detail') || url.includes('master-detail')) {
-      customOpts.setOption('layout', 'layout');
-    } else if (!url.endsWith('/list')) {
-      customOpts.setOption('layout', 'layout-empty');
-    }
-  }
-
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1 && url !== '/components/applicationmenu') {

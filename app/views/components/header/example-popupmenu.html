@@ -1,0 +1,49 @@
+<header class="header is-personalizable" data-options="{usePopupmenu: true}">
+  <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
+    {{#useFlexToolbar}}
+    <div class="toolbar-section">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header go-back">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+    </div>
+    {{/useFlexToolbar}}
+
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+      {{^useFlexToolbar}}
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header go-back">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+      {{/useFlexToolbar}}
+
+      <button type="button" id="header-menu" class="btn-menu">
+        <h1>Page Two Title</h1>
+      </button>
+      <ul class="popupmenu is-selectable">
+        <li><a href="#">Page One Title</a></li>
+        <li class="is-checked"><a href="#">Page Two Title</a></li>
+        <li><a href="#">Page Three Title</a></li>
+        <li class="is-disabled"><a href="#">Page Four Title</a></li>
+        <li><a href="#">Page Five EXTRA Long Title</a></li>
+      </ul>
+    </div>
+
+    <div class="{{#useFlexToolbar}}toolbar-section search{{/useFlexToolbar}}{{^useFlexToolbar}}buttonset{{/useFlexToolbar}}">
+      <input class="searchfield" data-options='{ clearable: true, collapsible: true }'/>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div id="maincontent" class="page-container scrollable" role="main">
+</div>

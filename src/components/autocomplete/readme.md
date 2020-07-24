@@ -39,6 +39,30 @@ This example shows how to invoke the autocomplete and its starting markup. Remem
 </script>
 ```
 
+Its also possible to use ajax to populate the auto complete when the user types. To do this use the `source` callback function. For example:
+
+```js
+ $('#autocomplete-default').autocomplete({
+    source: function autocompleteAjaxSource(term, response, args) {
+      $.getJSON('//localhost:4000/api/states?term=', function(data) {
+        response(term, data);
+      });
+    },
+    sourceArguments: {
+      'cheese': 'cheddar',
+      'strength': 'sharp'
+    }
+  });
+```
+
+The `sourceArguments` can be used as a flexible object that can be passed into the source method, and augmented with parameters specific to the implementation.
+
+The data returned should be an array with a specific data structure containing `id`, `value` and `label`. For example:
+
+```js
+{ value: 'AL', label: 'Alabama', id: ‘AL’}
+```
+
 ## Keyboard Shortcuts
 
 - <kbd>Arrow Down</kbd> When closed will display the list of choices, if open will move down to the next item in the last. At the bottom it should wrap around to the top again.

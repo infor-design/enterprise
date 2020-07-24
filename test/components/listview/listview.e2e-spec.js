@@ -521,7 +521,7 @@ describe('Listview example-header-totals tests', () => {
 
 describe('Listview inside of List/Detail Pattern', () => {
   beforeEach(async () => {
-    await utils.setPage('/patterns/list-detail-paging');
+    await utils.setPage('/components/page-patterns/example-list-detail');
     const listviewItem = await element(by.css('.listview li[role="option"]'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
@@ -547,7 +547,7 @@ describe('Listview inside of List/Detail Pattern', () => {
 
 describe('Listview with indeterminate paging inside of List/Detail Pattern', () => {
   beforeEach(async () => {
-    await utils.setPage('/patterns/list-detail-paging-indeterminate');
+    await utils.setPage('/components/page-patterns/test-list-detail-paging-indeterminate.html');
     const listviewItem = await element(by.css('.listview li[role="option"]'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);

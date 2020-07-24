@@ -61,6 +61,5 @@ export * from './core/rules';
 
 // Components ================================= /
 import * as components from './components/components';
-import * as patterns from './patterns/patterns';
 
-export { components, patterns };
+export { components };

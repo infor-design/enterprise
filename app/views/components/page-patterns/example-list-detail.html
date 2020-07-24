@@ -1,0 +1,139 @@
+<div id="list-detail-container" class="list-detail two-column page-container fixed" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
+
+  <div class="sidebar" role="complementary">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <h1>Deployments</h1>
+        </div>
+      </div>
+    </header>
+    <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+  </div>
+
+  <div id="maincontent" class="main" role="main">
+
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+
+          <button id="header-hamburger" class="btn-icon list-detail-back-button go-back" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <span>Auto Suite - PRD</span>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+
+    <div class="page-container scrollable">
+      <div id="regular-toolbar-example" class="toolbar" role="toolbar">
+        <div class="title">
+          Toolbar Title
+        </div>
+        <div class="buttonset">
+
+          <div class="searchfield-wrapper toolbar-searchfield-wrapper">
+            <label class="audible" for="regular-toolbar-searchfield">Toolbar Searchfield</label>
+            <input class="searchfield" placeholder="keyword" id="regular-toolbar-searchfield" name="regular-toolbar-searchfield" />
+          </div>
+
+          <button id="btn-category" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Category</span>
+          </button>
+
+          <button id="btn-date" class="btn-tertiary" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-calendar"></use>
+            </svg>
+            <span>Date</span>
+          </button>
+
+          <button id="btn-share" class="btn" disabled type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-mingle-share"></use>
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button id="option-1" class="btn" type="button">
+            <span>Option #1</span>
+          </button>
+
+          <button id="option-2" class="btn-menu" type="button">
+            <span>Option #2</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a id="option2-1" href="#">Sub Option #1</a></li>
+            <li><a id="option2-2" href="#">Sub Option #2</a></li>
+            <li><a id="option2-3" href="#">Sub Option #3</a></li>
+            <li><a id="option2-4" href="#">Sub Option #4</a></li>
+            <li><a id="option2-5" href="#">Sub Option #5</a></li>
+            <li><a id="option2-6" href="#">Sub Option #6</a></li>
+          </ul>
+
+          <button id="option-3" class="btn-menu" type="button">
+            <span>Option #3</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a id="option3-1" href="#">Sub Option #1</a></li>
+            <li><a id="option3-2" href="#">Sub Option #2</a></li>
+            <li><a id="option3-3" href="#">Sub Option #3</a></li>
+            <li><a id="option3-4" href="#">Sub Option #4</a></li>
+            <li><a id="option3-5" href="#">Sub Option #5</a></li>
+            <li><a id="option3-6" href="#">Sub Option #6</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="content" style="padding: 10px; height: 10000px;">
+        <p>Action-items holistic bandwidth paradigms networking reinvent A-list impactful technologies seamless back-end mashups; one-to-one generate mesh niches communities leading-edge revolutionary--interfaces, repurpose iterate." Synergies drive target, integrated enable widgets disintermediate B2B long-tail deliverables mindshare one-to-one whiteboard experiences. Synergize, generate aggregate platforms content. Back-end viral benchmark holistic enable platforms collaborative scalable, maximize networkeffects networks B2C methodologies web-readiness user-centric embrace. Create synergistic expedite.</p>
+
+        <p>E-enable extensible, networks synergies reinvent feeds cross-platform deliver disintermediate cross-platform widgets e-tailers e-commerce social functionalities widgets mashups collaborative. Best-of-breed; magnetic proactive target: extend? Users social reinvent transition folksonomies applications vortals cultivate e-commerce grow platforms bricks-and-clicks user-centred--eyeballs experiences communities, methodologies ecologies. Viral; whiteboard: viral remix social ubiquitous vortals, reinvent reinvent monetize markets disintermediate transition global.</p>
+
+        <p>Blogospheres drive; functionalities data-driven e-commerce extensible peer-to-peer repurpose rich applications synergistic enterprise recontextualize harness back-end. IntegrateAJAX-enabled drive reintermediate extend architectures weblogs weblogs, enhance solutions orchestrate embedded peer-to-peer incentivize standards-compliant implement reinvent incentivize mesh, incentivize networks. Beta-test productize web-enabled mashups, initiatives facilitate out-of-the-box tagclouds: B2B.</p>
+
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<!-- Change Colors -->
+<script>
+  $('body').on('initialized', function() {
+    $(this).personalize({
+      startingColor: '#2578A9' // Azure07
+    });
+  });
+</script>

@@ -72,3 +72,7 @@ export { Lookup } from './lookup/lookup';
 export { MonthView } from './monthview/monthview';
 export { WeekView } from './week-view/week-view';
 export { MultiTabs } from './tabs-multi/multi-tabs';
+
+// JS Patterns ====/
+export { ListDetail } from './list-detail/list-detail';
+export { Stepprocess } from './stepprocess/stepprocess';
