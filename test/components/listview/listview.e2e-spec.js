@@ -529,7 +529,7 @@ describe('Listview inside of List/Detail Pattern', () => {
 
   // Added for #922
   it('should handle paging', async () => {
-    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(10);
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(6);
     expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
     expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
@@ -539,38 +539,9 @@ describe('Listview inside of List/Detail Pattern', () => {
     await element(by.css('.pager-toolbar .pager-next')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(2);
+    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(6);
     expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
     expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeTruthy();
-  });
-});
-
-describe('Listview with indeterminate paging inside of List/Detail Pattern', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/page-patterns/test-list-detail-paging-indeterminate.html');
-    const listviewItem = await element(by.css('.listview li[role="option"]'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(listviewItem), config.waitsFor);
-  });
-
-  it('should handle indeterminate paging', async () => {
-    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
-    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 0');
-    expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 19');
-    expect(await element(by.css('.pager-toolbar.is-listview')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next')).isPresent()).toBeTruthy();
-    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
-
-    await element(by.css('.pager-toolbar .pager-next')).click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element.all(by.css('.listview li[role="option"]')).count()).toEqual(20);
-    expect(await element(by.css('.listview li[role="option"]:first-child .listview-heading')).getText()).toEqual('Compressor 20');
-    expect(await element(by.css('.listview li[role="option"]:last-child .listview-heading')).getText()).toEqual('Compressor 39');
-    expect(await element(by.css('.pager-toolbar .pager-prev .btn-icon')).getAttribute('disabled')).toBeFalsy();
-    expect(await element(by.css('.pager-toolbar .pager-next .btn-icon')).getAttribute('disabled')).toBeFalsy();
   });
 });
 
