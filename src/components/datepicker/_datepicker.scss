@@ -94,6 +94,10 @@
 .monthview-popup.popover {
   max-width: inherit;
 
+  .monthview {
+    min-width: 330px;
+  }
+
   .monthview .monthview-table {
     max-width: 330px;
   }

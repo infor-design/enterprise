@@ -81,7 +81,7 @@ Soho.Locale.addCulture('sv-SE', {
     Azure: { id: 'Azure', value: 'Azur', comment: 'Color in our color palette' },
     BackgroundColor: { id: 'BackgroundColor', value: 'Bakgrundsfärg', comment: 'add or edit text background color in the editor' },
     Between: { id: 'Between', value: 'Mellan', comment: 'Between in icons for filtering' },
-    Blockquote: { id: 'Blockquote', value: 'Blockcitat', comment: 'insert a block quote in the editor' },
+    Blockquote: { id: 'Blockquote', value: 'Blockcitat', comment: 'Term for Block Quotations in editing' },
     Bold: { id: 'Bold', value: 'Fetstil', comment: 'Make text Bold' },
     Bookmarked: { id: 'Bookmarked', value: 'Bokmärkt', comment: 'Bookmark filled - Element is already bookmarked' },
     BookmarkThis: { id: 'BookmarkThis', value: 'Bokmärk detta', comment: 'Bookmark an element' },

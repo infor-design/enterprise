@@ -12,7 +12,7 @@
 
     <div class="field">
       <label for="searchfield">clearable: false (but will override by the clear API)</label>
-      <input data-options="{clearable: false}" data-autocomplete="{{basepath}}api/states?term=" id="searchfield" placeholder="Search" type="text" class="searchfield"/>
+      <input data-options="{clearable: false}" value="test" data-autocomplete="{{basepath}}api/states?term=" id="searchfield" placeholder="Search" type="text" class="searchfield"/>
     </div>
 
   </div>
@@ -21,8 +21,9 @@
 <script>
   $('body').on('initialized', function () {
     var api = $('#searchfield').data('searchfield');
-    
+
     // overrule the clearable setting
+    api.makeClearable();
     api.clear();
 
     console.log(`Clearable Setting Value: ${api.settings.clearable}`);

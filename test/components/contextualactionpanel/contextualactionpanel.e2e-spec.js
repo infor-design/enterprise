@@ -230,3 +230,26 @@ describe('Contextual Action Panel Nested tests', () => {
     await element(by.css('#cap-2 #close-button')).click();
   });
 });
+
+describe('CAP Flex Toolbar API Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-disable-button.html');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Can disable the close button', async () => {
+    // Open the panel
+    await element(by.id('open-test-panel')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Click the control button inside the panel to disable the `close` button
+    await element(by.id('disable-toggle-btn')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Check the close button
+    expect(await element(by.id('modal-button-3')).getAttribute('disabled')).toBeTruthy();
+  });
+});

@@ -53,8 +53,6 @@
   }
 
   &:disabled {
-    border-color: $timepicker-disabled-border-color;
-
     + .icon {
       color: $timepicker-disabled-icon-color;
       cursor: default;

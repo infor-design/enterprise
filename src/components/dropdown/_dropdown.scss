@@ -772,6 +772,10 @@ input.dropdown.error:focus {
 
       .tag-list {
         padding: 2px 30px 3px 5px;
+
+        &.empty {
+          padding: 16px 0 15px;
+        }
       }
 
       .tag {
@@ -787,11 +791,16 @@ input.dropdown.error:focus {
   div.dropdown,
   div.multiselect {
     + .icon {
-      height: 25px;
+      height: 24px;
       right: 4px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 1px;
       width: 16px;
+    }
+
+    &.has-tags {
+      + .icon {
+        top: 5px;
+      }
     }
 
     ~ .icon-error {
@@ -799,6 +808,12 @@ input.dropdown.error:focus {
       position: absolute;
       right: auto;
       top: 0;
+    }
+
+    &.has-scrollbar {
+      + .icon {
+        right: 18px;
+      }
     }
   }
 }
@@ -1115,6 +1130,18 @@ div.dropdown-xs,
     }
   }
 
+  .field-short,
+  .form-layout-compact .field {
+    div.dropdown,
+    div.multiselect {
+      &.has-scrollbar {
+        + .icon {
+          right: 4px;
+        }
+      }
+    }
+  }
+
   .dropdown-list {
     > .trigger {
       .icon {
@@ -1148,6 +1175,53 @@ div.dropdown-xs,
 
       + .icon {
         top: 4px;
+      }
+    }
+
+    .field-short,
+    .form-layout-compact .field {
+      div.dropdown,
+      div.multiselect {
+        + .icon {
+          top: 1px;
+        }
+
+        &.has-tags {
+          + .icon {
+            top: 10px;
+          }
+        }
+
+        &.has-scrollbar {
+          + .icon {
+            right: 4px;
+          }
+        }
+      }
+    }
+
+    .dropdown-list {
+      > .trigger {
+        .icon {
+          &.close {
+            top: 10px;
+          }
+
+          &.search {
+            top: 5px;
+          }
+        }
+      }
+
+      &.dropdown-short {
+        > .trigger {
+          .icon {
+            &.close {
+              height: 15px;
+              top: 5px;
+            }
+          }
+        }
       }
     }
   }
