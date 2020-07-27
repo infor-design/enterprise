@@ -18,6 +18,16 @@
   }
 }
 
+.empty-message-height-small {
+  .empty-message {
+    .empty-icon,
+    .empty-info,
+    .empty-actions {
+      display: none !important;
+    }
+  }
+}
+
 .icon-empty-state {
   color: $theme-color-brand-primary-base;
   display: inline-block;

@@ -84,6 +84,47 @@ $datagrid-small-row-height: 25px;
     .datagrid-wrapper {
       min-height: 300px;
     }
+
+    &.empty-message-height-small {
+      height: 95px;
+
+      &.medium-rowheight {
+        height: 88px;
+
+        .empty-message {
+          top: calc(50% + 30px) !important;
+        }
+      }
+
+      &.small-rowheight {
+        height: 81px;
+
+        .empty-message {
+          top: calc(50% + 27px) !important;
+        }
+      }
+
+      &.extra-small-rowheight {
+        height: 75px;
+
+        .empty-message {
+          top: calc(50% + 25px) !important;
+        }
+      }
+
+      .datagrid-wrapper {
+        min-height: auto;
+      }
+
+      .empty-message {
+        min-height: auto;
+        padding-bottom: 0;
+
+        .empty-title {
+          padding-bottom: 0;
+        }
+      }
+    }
   }
 
   &.has-horizontal-scroll {
