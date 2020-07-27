@@ -8303,6 +8303,15 @@ Datagrid.prototype = {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
+      // Make sure the first keydown gets captured and trigger the dropdown
+      setTimeout(() => {
+        self.activeCell.node.find('select.dropdown').each(function () {
+          const dropdown = $(this);
+          const dropdownApi = dropdown.data('dropdown');
+          dropdownApi.handleAutoComplete(e);
+        });
+      });
+
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
