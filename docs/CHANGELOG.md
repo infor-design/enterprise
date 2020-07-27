@@ -16,6 +16,7 @@
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
+- `[Datagrid]` Fixed a bug that nested datagrid columns could not be clicked. ([#4197](https://github.com/infor-design/enterprise/issues/4197))
 - `[Datagrid]` Fixed an issue where the 'value' and 'oldValue' on cell change event were showing escaped. ([#4028](https://github.com/infor-design/enterprise/issues/4028))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for group headers. ([#4068](https://github.com/infor-design/enterprise/issues/4068))
 - `[Datagrid]` Fixed an issue where the column filter results were inconsistent for tree grid. ([#4031](https://github.com/infor-design/enterprise/issues/4031))

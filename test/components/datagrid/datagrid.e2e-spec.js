@@ -1193,6 +1193,41 @@ describe('Datagrid multiselect tests', () => {
   }
 });
 
+describe('Datagrid Nested Datagrid tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-nested-grids?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should expand and be clickable', async () => {
+    await element(by.css('[aria-rowindex="1"] [aria-colindex="1"] button')).click();
+    await browser.driver.sleep(config.sleep);
+
+    await element.all(by.css('.row-btn')).first().click();
+
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.css('.toast-message')).getText()).toEqual('The row #0 cell # 5 was clicked');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await element(by.css('[aria-rowindex="1"] [aria-colindex="1"] button')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-nested')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid paging tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-paging');
