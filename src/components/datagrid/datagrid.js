@@ -5688,7 +5688,7 @@ Datagrid.prototype = {
     let count = self.tableBody.find('tr:visible').length;
     let groupCount = 0;
     let groupCountText = '';
-    let selectedRowIdx = [];
+    const selectedRowIdx = [];
     const isClientSide = self.settings.paging && !(self.settings.source);
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
 
