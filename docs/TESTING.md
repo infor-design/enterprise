@@ -230,6 +230,7 @@ In order to do this we clean the folders, update chrome and do a fresh `npm i`.
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome*.deb
   npm i
+  rm google-chrome-stable_current_amd64.deb
   ```
 
 This is good step to follow if you see an error similar to this one when running the test suite:

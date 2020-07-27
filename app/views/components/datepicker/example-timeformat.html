@@ -3,16 +3,20 @@
   <div class="twelve columns">
     <form >
       <div class="field">
-        <label for="dp1" class="label">Date-Time Picker with Custom Pattern</label>
+        <label for="dp1" class="label">Date Time Picker with Custom Pattern</label>
         <input id="dp1" data-init="false" class="datepicker datetime" name="dp1" type="text" />
       </div>
       <div class="field">
-        <label for="dp2" class="label">Date-Time Picker in Locale (Time to Midnight)</label>
+        <label for="dp2" class="label">Date Time Picker in Locale (Time to Midnight)</label>
         <input id="dp2" data-init="false" class="datepicker datetime" name="dp2" type="text"/>
       </div>
       <div class="field">
-        <label for="dp3" class="label">Date-Time Picker in Locale (Time to Current)</label>
+        <label for="dp3" class="label">Date Time Picker in Locale (Time to Current)</label>
         <input id="dp3" data-init="false" class="datepicker datetime" name="dp3" type="text"/>
+      </div>
+      <div class="field">
+        <label for="dp4" class="label">Date Time Timestamp</label>
+        <input id="dp4" data-init="false" class="datepicker datetime" name="dp4" type="text"/>
       </div>
     </form>
   </div>
@@ -33,6 +37,14 @@ $('body').on('initialized', function () {
   $('#dp3').datepicker({
     showTime: true,
     useCurrentTime: true
+  });
+
+  $('#dp4').datepicker({
+    showTime: true,
+    useCurrentTime: true,
+    dateFormat: Soho.Locale.calendar().dateFormat['short'] + ' ' + Soho.Locale.calendar().dateFormat['timestamp'],
+    minuteInterval: 1,
+    secondInterval: 1
   });
 });
 </script>

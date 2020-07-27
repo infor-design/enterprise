@@ -29,8 +29,8 @@
   // Adjust some icons
   .datagrid-filter-wrapper {
     .dropdown + .icon {
-      right: 4px;
-      top: 0 !important;
+      right: 5px;
+      top: 1px;
     }
 
     .datepicker + .icon {
@@ -60,10 +60,6 @@
 
 // Main Grid
 .datagrid {
-  > tbody > tr .datagrid-cell-wrapper {
-    padding: 3px 19px 0;
-  }
-
   > tbody > tr .icon.plus-minus::before,
   > tbody > tr .icon.plus-minus::after {
     color: $font-color-highcontrast;
@@ -103,7 +99,7 @@
             margin-top: 0;
 
             ~ .icon {
-              top: calc(50% - 17px);
+              top: calc(50% - 18px);
             }
           }
         }
@@ -117,7 +113,7 @@
   }
 
   // Short Row Height
-  &.short-rowheight {
+  &.small-rowheight {
     tbody {
       tr {
         td {
@@ -158,7 +154,8 @@
     margin: 7px 0 0 !important;
   }
 
-  &.short-rowheight th.text-ellipsis .datagrid-header-text {
+  &.small-rowheight th.text-ellipsis .datagrid-header-text,
+  &.extra-small-rowheight th.text-ellipsis .datagrid-header-text {
     margin: 3px 0 0 !important;
   }
 
@@ -167,11 +164,11 @@
   }
 }
 
-.datagrid.short-rowheight tbody tr td.datagrid-trigger-cell .icon {
+.datagrid.small-rowheight tbody tr td.datagrid-trigger-cell .icon {
   top: 4px;
 }
 
-.datagrid.short-rowheight tbody tr td .hyperlink,
+.datagrid.small-rowheight tbody tr td .hyperlink,
 .datagrid.medium-rowheight tbody tr td .hyperlink {
   margin-top: -4px;
 }
@@ -240,7 +237,7 @@
   }
 
   tbody tr td.is-editing .datepicker {
-    height: 28px;
+    height: 27px;
   }
 
   div.dropdown + .icon,
@@ -284,4 +281,15 @@
   tbody tr td.is-editing .datepicker + .icon {
     top: -3px;
   }
+}
+
+.datagrid-container.medium-rowheight {
+  &.has-filterable-columns .is-filterable .datagrid-column-wrapper.l-right-text {
+    top: -3px;
+  }
+}
+
+.datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
+  left: 1px !important;
+  top: 6px;
 }

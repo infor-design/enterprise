@@ -79,6 +79,8 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showNewRowIndicator=true] If true, the new row indicator will display after adding a row.
  * @param {string}   [settings.stretchColumn=null] If 'last' the last column will stretch to the end, otherwise specific columns can be targetted.
  * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
+ * @param {boolean}  [settings.spacerColumn=false] If true an extra column will be added to the end that fills the space. This allows columns to not stretch to fill so they are a constant size. This setting cannot be used with percent columns.
+ * @param {boolean}  [settings.columnSizing='both'] Determines the sizing method for the auto sizing columns. Options are: both | data | header (including filter)
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
@@ -178,6 +180,8 @@ const DATAGRID_DEFAULTS = {
   showNewRowIndicator: true,
   stretchColumn: null,
   stretchColumnOnChange: false,
+  spacerColumn: false,
+  columnSizing: 'all',
   twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
@@ -1227,6 +1231,11 @@ Datagrid.prototype = {
           headerRows.center += `<th${colspanStr}></th>`;
         }
       }
+
+      if (this.settings.spacerColumn) {
+        headerRows.center += '<th class="datagrid-header-groups-spacer-column"></th>';
+      }
+
       headerRows.left += '</tr><tr>';
       headerRows.center += '</tr><tr>';
       headerRows.right += '</tr><tr>';
@@ -1303,6 +1312,12 @@ Datagrid.prototype = {
 
       headerRows[container] += `</div>${self.filterRowHtml(column, j)}</th>`;
     }
+
+    // Set Up Spacer column
+    if (this.settings.spacerColumn) {
+      headerRows.center += '<th class="datagrid-header-spacer-column"></th>';
+    }
+
     headerRows.left += '</tr>';
     headerRows.center += '</tr>';
     headerRows.right += '</tr>';
@@ -2615,12 +2630,22 @@ Datagrid.prototype = {
   },
 
   /**
+  * Get padding for a row height
+  * @private
+  * @returns {number} padding (left and right) for the current rowHeight
+  */
+  getCellPadding() {
+    const padding = { 'extra-small': 8, short: 8, small: 8, medium: 16, normal: 16, large: 16 };
+    return padding[this.settings.rowHeight];
+  },
+
+  /**
   * Create draggable columns
   * @private
   */
   createDraggableColumns() {
     const self = this;
-    const headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]');
+    const headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]').not('.datagrid-header-spacer-column');
     let showTarget = $('.drag-target-arrows', self.element);
 
     if (!showTarget.length) {
@@ -2700,7 +2725,11 @@ Datagrid.prototype = {
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
-                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos}px`;
+                  let lastAdjustment = 0;
+                  if (target.el.hasClass('last')) {
+                    lastAdjustment = -(header.height() - 3);
+                  }
+                  showTarget[0].style.top = `${(parseInt(rect.top, 10) + 1) + extraTopPos + lastAdjustment}px`;
                 }
               }
             }
@@ -2763,7 +2792,9 @@ Datagrid.prototype = {
   setDraggableColumnTargets() {
     const self = this;
     const headers = self.headerNodes()
-      .not('.is-hidden').not('[data-column-id="selectionCheckbox"]');
+      .not('.is-hidden')
+      .not('[data-column-id="selectionCheckbox"]')
+      .not('.datagrid-header-spacer-column');
     let target;
     let pos;
     let extra;
@@ -3333,6 +3364,9 @@ Datagrid.prototype = {
     }
 
     if (self.bodyColGroupHtml !== '<colgroup>') {
+      if (this.settings.spacerColumn) {
+        self.bodyColGroupHtml += '<col style="width: 100%">';
+      }
       self.bodyColGroupHtmlLeft += '</colgroup>';
       self.bodyColGroupHtml += '</colgroup>';
       self.bodyColGroupHtmlRight += '</colgroup>';
@@ -4093,6 +4127,11 @@ Datagrid.prototype = {
       containerHtml[container] += `${formatted}</div></td>`;
     }
 
+    // Set Up Spacer column
+    if (this.settings.spacerColumn) {
+      containerHtml.center += '<td class="datagrid-spacer-column"></td>';
+    }
+
     containerHtml.left += '</tr>';
     containerHtml.center += '</tr>';
     containerHtml.right += '</tr>';
@@ -4112,7 +4151,7 @@ Datagrid.prototype = {
           <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter}">
+      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
         <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
@@ -4206,9 +4245,10 @@ Datagrid.prototype = {
     let hasButton = false;
     const self = this;
 
+    // Get Data width
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxText = '';
-    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options) {
+    } else if (columnDef.formatter === Formatters.Dropdown && columnDef.options && this.settings.columnSizing !== 'data') {
       const row = null;
       let val = '';
       // Find Longest option label
@@ -4292,7 +4332,11 @@ Datagrid.prototype = {
     const hasAlert = columnDef.formatter ?
       columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
 
-    padding += 45;
+    const hasTrigger = columnDef.formatter === Formatters.Date || columnDef.formatter === Formatters.Time ||
+      columnDef.formatter === Formatters.Lookup || columnDef.formatter === Formatters.Colorpicker ||
+      columnDef.formatter === Formatters.Dropdown;
+
+    padding += this.getCellPadding() * 2;
 
     if (hasAlert) {
       padding += 20;
@@ -4321,30 +4365,38 @@ Datagrid.prototype = {
     }
 
     maxWidth = this.calculateTextRenderWidth(maxText) + padding;
+
     if (columnDef.formatter === Formatters.Colorpicker) {
       maxWidth = 150;
     }
-    // Calculate the Header with the correct font.
+
     const isSortable = (columnDef.sortable === undefined ? true : columnDef.sortable);
-    const headerPadding = isSortable ? 48 : 40;
+    const headerPadding = isSortable ? (this.getCellPadding() * 2) + 15 : this.getCellPadding() * 2;
     let minHeaderWidth = this.calculateTextRenderWidth(title, true) + headerPadding;
 
-    // Calculate the width required for the filter
-    // Field plus
+    // Calculate the width required for the filter field
     if (columnDef.filterType && this.settings.filterable) {
-      if (minHeaderWidth < 40) {
-        minHeaderWidth = 40;
+      if (minHeaderWidth < (this.getCellPadding() * 2)) {
+        minHeaderWidth = (this.getCellPadding() * 5) + maxWidth + 36;
       }
 
       if (columnDef.filterType !== 'checkbox') {
         if (maxText !== '') {
-          if (minHeaderWidth < maxWidth + 40 && maxText !== '') {
-            minHeaderWidth = maxWidth + 55;
+          if (minHeaderWidth < maxWidth + (this.getCellPadding() * 2 + 32) && maxText !== '') {
+            minHeaderWidth = maxWidth + (this.getCellPadding() * 2 + 32);
           }
-        } else if (minHeaderWidth < 120) {
-          minHeaderWidth = 120;
+        } else if (minHeaderWidth < 100) {
+          minHeaderWidth = 100;
         }
       }
+    }
+
+    if (this.settings.columnSizing === 'data') {
+      minHeaderWidth = 50 + (this.getCellPadding() * 2) + (hasTrigger ? 25 : 0);
+    }
+
+    if (this.settings.columnSizing === 'header') {
+      maxWidth = 0;
     }
 
     return Math.ceil(Math.max(maxWidth, minHeaderWidth));
@@ -4366,6 +4418,13 @@ Datagrid.prototype = {
         '400 16px arial' : '400 14px arial';
       this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
         '600 14px arial' : '700 12px arial';
+
+      if (this.settings.rowHeight === 'extra-small') {
+        this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+          '400 14px arial' : '400 12px arial';
+        this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+          '600 14px arial' : '700 12px arial';
+      }
     }
 
     context.font = this.fontCached;
@@ -4381,15 +4440,22 @@ Datagrid.prototype = {
    * @private
    */
   setScrollClass() {
+    const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
+    const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
+    const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);
+    this.element.removeClass('has-vertical-scroll has-visible-last-row');
+
+    if (tableHeight < height - headerHeight) {
+      this.element.addClass('has-visible-last-row');
+    }
+
     if (!this.hasLeftPane && !this.hasRightPane) {
       return;
     }
-    this.element.removeClass('has-vertical-scroll has-less-rows');
 
+    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
     const width = parseInt(this.bodyWrapperCenter[0].offsetWidth, 10);
     const hasScrollBarH = parseInt(this.bodyWrapperCenter[0].scrollWidth, 10) > width;
-    const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasScrollBarV = parseInt(this.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
 
     if (hasScrollBarV) {
       this.element.addClass('has-vertical-scroll');
@@ -4412,6 +4478,8 @@ Datagrid.prototype = {
     this.stretchColumnWidth = 0;
     this.stretchColumnDiff = 0;
     this.stretchColumnIdx = -1;
+    this.fontCached = null;
+    this.fontHeaderCached = null;
     this.fixColumnIds();
   },
 
@@ -5579,7 +5647,7 @@ Datagrid.prototype = {
         }
       })
       .on('drag.datagrid', (e, ui) => {
-        if (!self.currentHeader) {
+        if (!self.currentHeader || !column) {
           return;
         }
 
@@ -6186,6 +6254,7 @@ Datagrid.prototype = {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
       });
+
       $(window).on('resize.datagrid', () => {
         let j = 0;
         this.clearCache();
@@ -6279,7 +6348,7 @@ Datagrid.prototype = {
 
         self.currentHeader = $(e.target).closest('th');
 
-        if (!self.currentHeader.hasClass('is-resizable')) {
+        if (!self.currentHeader.hasClass('is-resizable') || self.currentHeader.hasClass('datagrid-header-spacer-column')) {
           return;
         }
 
@@ -6719,6 +6788,7 @@ Datagrid.prototype = {
 
     this.saveUserSettings();
     this.refreshSelectedRowHeight();
+    this.rerender();
 
     if (args.length) {
       this.element.triggerHandler('rowheightchanged', args);

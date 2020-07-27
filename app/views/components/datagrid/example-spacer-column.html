@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+    var columns = [];
+
+    $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
+      columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text, filterType: 'text' });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text' });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+      columns.push({ id: 'hidden1', hidden: true, name: 'Hidden 1', field: 'hidden' });
+      columns.push({ id: 'hidden2', hidden: true, name: 'Hidden 2', field: 'hidden' });
+      columns.push({ id: 'hidden3', hidden: true, name: 'Hidden 3', field: 'hidden' });
+      columns.push({ id: 'hidden4', hidden: true, name: 'Hidden 4', field: 'hidden' });
+      columns.push({ id: 'hidden5', hidden: true, name: 'Hidden 5', field: 'hidden' });
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' }});
+      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' }});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
+      columns.push({ id: 'phone', hideable: false, name: 'Phone', field: 'phone', formatter: Formatters.Text });
+
+      // Init the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        saveColumns: false,
+        filterable: true,
+        selectable: 'multiple',
+        spacerColumn: true,
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+    });
+ });
+</script>

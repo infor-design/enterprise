@@ -56,7 +56,7 @@
         }
 
         data.push(columnObj);
-        columns.push({ id: colName, name: colName, filterType: 'text', field: colName, width: 100, formatter: Formatters.Input});
+        columns.push({ id: colName, name: colName, filterType: 'text', field: colName, formatter: Formatters.Input});
       }
 
       //Init and get the api for the grid
@@ -65,7 +65,6 @@
         columnReorder: true,
         dataset: data,
         filterable: true,
-        //virtualized: true,
         toolbar: {personalize: true, results: true}
       });
     });
