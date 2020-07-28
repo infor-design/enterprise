@@ -6,7 +6,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Masthead tests', () => {
+describe('Masthead tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/masthead/example-index?theme=soho&layout=nofrills');
   });
