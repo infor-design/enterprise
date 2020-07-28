@@ -752,7 +752,7 @@ Lookup.prototype = {
    * @returns {void}
    */
   insertRows() {
-    let value = '';
+    let value = [];
 
     this.selectedRows = this.grid.selectedRows();
 
@@ -765,7 +765,8 @@ Lookup.prototype = {
         currValue = this.selectedRows[i].data[this.settings.field];
       }
 
-      value += (i !== 0 ? this.settings.delimiter : '') + currValue;
+      // Push the value/s to the Array.
+      value.push(currValue);
 
       // Clear _selected tag
       const idx = this.selectedRows[i].idx;
@@ -773,6 +774,9 @@ Lookup.prototype = {
         delete this.settings.options.dataset[idx]._selected;
       }
     }
+
+    // Eliminate duplicate values.
+    value = value.filter((a, b) => value.indexOf(a) === b);
 
     /**
       * Fires on input value change.
@@ -782,7 +786,7 @@ Lookup.prototype = {
       * @property {object} event - The jquery event object
       * @property {object} selected rows
       */
-    this.element.val(value).trigger('change', [this.selectedRows]);
+    this.element.val(value.join(this.settings.delimiter)).trigger('change', [this.selectedRows]);
     this.element.trigger('input', [this.selectedRows]);
     this.applyAutoWidth();
     this.element.focus();

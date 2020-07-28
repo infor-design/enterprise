@@ -44,6 +44,7 @@
 - `[Editor]` Fixed an issue where the selection for shift + arrow keys was not working properly. ([#4070](https://github.com/infor-design/enterprise/issues/4070))
 - `[Locale]` The Added placeholder for missing Thai `Locale` translation. ([#4041](https://github.com/infor-design/enterprise/issues/4041))
 - `[Locale]` The Added placeholder for incorrect French `SetTime` translation. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
+- `[Lookup]` Fixed a bug where values are duplicated when selecting row on other pages and when paging is activated. ([#758](https://github.com/infor-design/enterprise-ng/issues/758))
 - `[Locale]` Added July 2020 translation strings from the translation team. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Mask]` Added the ability to pass date/time formats to the Mask API that do not contain separators or other literals. ([#3963](https://github.com/infor-design/enterprise/issues/3963))
 - `[Mask]` Improved example pages in the demoapp, added some to the documentation index page for Mask. ([#556](https://github.com/infor-design/enterprise/issues/556))

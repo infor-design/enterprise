@@ -5756,6 +5756,7 @@ Datagrid.prototype = {
     let count = self.tableBody.find('tr:visible').length;
     let groupCount = 0;
     let groupCountText = '';
+    const selectedRowIdx = [];
     const isClientSide = self.settings.paging && !(self.settings.source);
     const formatInteger = v => Locale.formatNumber(v, { style: 'integer' });
 
@@ -5779,7 +5780,11 @@ Datagrid.prototype = {
 
     // Update Selected
     if (self.contextualToolbar && self.contextualToolbar.length) {
-      self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
+      self._selectedRows.forEach((i) => {
+        selectedRowIdx.push(i.idx);
+        const selectedCount = selectedRowIdx.filter((a, b) => selectedRowIdx.indexOf(a) === b);
+        self.contextualToolbar.find('.selection-count').text(`${selectedCount.length} ${Locale.translate('Selected')}`);
+      });
     }
 
     if (totals && totals !== -1) {
