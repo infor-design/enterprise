@@ -592,7 +592,7 @@ PopupMenu.prototype = {
       }
 
       const a = li.children('a');
-      const icon = a.children('.icon:not(.close):not(.icon-dropdown)');
+      const icon = a.children('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
       const id = a.attr('id');
 
       liData.text = a.text().trim();
@@ -687,7 +687,7 @@ PopupMenu.prototype = {
       const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
       let span = $(a).children('span')[0];
       let submenu = $(li).children('ul')[0];
-      const icon = $(li).find('.icon:not(.close):not(.icon-dropdown)');
+      const icon = $(li).find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
       const submenuWrapper = $(li).children('.wrapper')[0];
 
       li.setAttribute('role', 'none');

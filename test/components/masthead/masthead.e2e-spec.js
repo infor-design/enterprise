@@ -31,15 +31,29 @@ describe('Masthead tests', () => {
 
       expect(await browser.imageComparison.checkElement(containerEl, 'masthead-soho')).toEqual(0);
     });
-  }
 
-  if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on uplift theme', async () => {
       await utils.setPage('/components/masthead/example-index?theme=uplift&variant=dark&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'masthead-uplift')).toEqual(0);
+    });
+
+    it('Should not visual regress on soho theme for images', async () => {
+      await utils.setPage('/components/masthead/example-photos');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-soho-images')).toEqual(0);
+    });
+
+    it('Should not visual regress on uplift theme for images', async () => {
+      await utils.setPage('/components/masthead/example-photos?theme=uplift&layout=nofrills');
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-uplift-images')).toEqual(0);
     });
   }
 });

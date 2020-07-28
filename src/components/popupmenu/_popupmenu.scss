@@ -298,6 +298,37 @@
     }
   }
 
+  // Support image classes see images/example-photos
+  .image-user-status {
+    height: 32px;
+    vertical-align: middle;
+
+    .icon {
+      height: 10px;
+      margin-left: -11px;
+      margin-top: 21px;
+      width: 10px;
+    }
+
+    + span {
+      padding: 0 4px;
+    }
+  }
+
+  .image-initials,
+  .image-round {
+    font-size: 1.2rem;
+    height: 29px;
+    line-height: 29px;
+    position: relative;
+    top: 1px;
+    width: 29px;
+
+    + span {
+      padding-left: 4px;
+    }
+  }
+
   &.is-open {
     display: block;
   }
@@ -703,6 +734,12 @@ html[dir='rtl'] {
       li {
         @include rtl-multiselectable-list-item();
       }
+    }
+
+    // Inline status images
+    .image-user-status .icon {
+      margin-left: 0;
+      margin-right: -7px;
     }
   }
 

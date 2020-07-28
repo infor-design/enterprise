@@ -1,0 +1,61 @@
+<section class="masthead">
+  <div class="flex-toolbar" data-options="{maxVisibleButtons: 6}">
+    <div class="toolbar-section">
+      <button type="button" class="masthead-icon">
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-logo"></use>
+        </svg>
+         <span class="audible">Go To Home</span>
+      </button>
+    </div>
+
+    <div class="toolbar-section title">
+      <h1 class="masthead-appname">Infor Application</h1>
+    </div>
+
+    <div class="toolbar-section buttonset">
+
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-mingle-share"></use>
+        </svg>
+        <span class="audible">Share</span>
+      </button>
+
+      <button type="button" class="btn btn-menu">
+        <div class="image-initials">TM</div>
+        <span class="audible">Profile</span>
+      </button>
+
+      <ul class="popupmenu">
+        <li>
+          <a href="#">
+            <div class="image-user-status">
+              <img class="image-round" src="{{basepath}}images/10.jpg" alt="Photo of Evyn" tabindex="0"/>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-user-status-available"></use>
+              </svg>
+            </div>
+          <span>Option 1</span>
+        </a></li>
+        <li>
+          <a href="#">
+            <div class="image-initials">TM</div>
+            <span>Option 2</span>
+          </a>
+      </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  $('.btn-menu').off('selected').on('selected', function(e, args) {
+    const image = $(args[0]).find('.image-user-status, .image-initials');
+    if (image.length) {
+      $(this).find('.image-user-status, .image-initials').remove();
+      $(this).prepend(image.clone());
+    }
+  });
+</script>

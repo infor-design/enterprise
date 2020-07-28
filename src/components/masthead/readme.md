@@ -5,6 +5,8 @@ demo:
   embedded:
   - name: Default Masthead Example
     slug: example-index
+  - name: Photos in Masthead
+    slug: example-photos
 ---
 
 ## Code Example

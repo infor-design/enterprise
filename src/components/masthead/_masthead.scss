@@ -11,7 +11,7 @@
   .masthead-icon {
     border-radius: 0;
     height: 32px;
-    margin-top: 4px;
+    margin: 4px 2px !important;
     padding: 0;
     width: 32px;
 
@@ -35,7 +35,7 @@
   }
 
   .btn {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .btn-icon,
@@ -88,6 +88,10 @@
         margin: 3px 3px 2px 0;
       }
 
+      .btn-menu {
+        margin-right: -6px;
+      }
+
       .toolbar-searchfield-wrapper {
         margin: 2px 5px 1px 0;
       }
@@ -108,15 +112,28 @@
 
   .flex-toolbar {
     height: inherit;
+
+    .toolbar-section {
+      &.buttonset [class^='btn'] {
+        &.btn-menu {
+          margin-right: -8px;
+        }
+
+        &:last-child.btn-menu {
+          margin-right: -3px;
+          vertical-align: top;
+        }
+      }
+
+      .masthead-icon > .icon {
+        margin: 1px 0;
+      }
+    }
   }
 
   .toolbar,
   .flex-toolbar {
-    .toolbar-section.logo {
-      > *:first-child {
-        margin-left: 10px;
-      }
-    }
+    padding: 0 8px;
 
     [class^='btn'] {
       background-color: transparent;
@@ -183,6 +200,28 @@
       }
     }
   }
+
+  // Support image classes see images/example-photos
+  .image-initials,
+  .image-round {
+    font-size: 1.2rem;
+    height: 29px;
+    line-height: 29px;
+    margin-right: 0;
+    width: 29px;
+  }
+
+  .image-user-status {
+    height: 31px;
+    vertical-align: middle;
+
+    .icon {
+      height: 10px;
+      margin-left: -9px;
+      margin-top: 19px;
+      width: 10px;
+    }
+  }
 }
 
 .twelve {
@@ -194,9 +233,38 @@
 .masthead-appname {
   color: $masthead-text-color;
   display: inline-block;
-  font-size: $theme-size-font-sm;
-  font-weight: $theme-number-font-weight-bold;
+  font-size: $theme-size-font-px-12;
+  font-weight: 600;
   line-height: 38px;
   margin: 0;
   vertical-align: top;
+}
+
+// Right to Left Adjustments
+html[dir='rtl'] {
+  .masthead {
+    button {
+      margin-left: -3px;
+    }
+
+    .image-user-status .icon {
+      margin-right: -7px;
+    }
+
+    .flex-toolbar {
+      .toolbar-section {
+        &.buttonset [class^='btn'] {
+          &.btn-menu {
+            margin-left: -8px;
+            margin-right: 0;
+          }
+
+          &:last-child.btn-menu {
+            margin-left: -3px;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
 }

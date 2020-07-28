@@ -1,5 +1,6 @@
 <section class="masthead">
-  <div class="flex-toolbar" data-options="{maxVisibleButtons: 6}">
+  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}}" data-options="{maxVisibleButtons: 6}">
+    {{#useFlexToolbar}}
     <div class="toolbar-section logo">
       <button type="button" class="masthead-icon">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
@@ -8,12 +9,21 @@
          <span class="audible">Go To Home</span>
       </button>
     </div>
+    {{/useFlexToolbar}}
 
-    <div class="toolbar-section title">
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+      {{^useFlexToolbar}}
+      <button type="button" class="masthead-icon">
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-logo"></use>
+        </svg>
+         <span class="audible">Go To Home</span>
+      </button>
+      {{/useFlexToolbar}}
       <h1 class="masthead-appname">Infor Application</h1>
     </div>
 
-    <div class="toolbar-section buttonset">
+    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
 
       <button type="button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
