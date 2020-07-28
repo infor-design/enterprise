@@ -1619,6 +1619,48 @@ describe('Datepicker Modal Test', () => {
 
     expect(await element(by.id('modal-1')).isDisplayed()).toBeFalsy();
   });
+
+  it('Should work on a modal when partly scrolled', async () => {
+    await element(by.css('.btn-secondary')).click();
+    await browser.driver.sleep(config.sleep);
+
+    const result = await browser.executeScript('$(".modal-body-wrapper")[0].scroll(0, 185)');
+    await element(by.css('#date-field + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    await browser.driver.sleep(config.sleep);
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await element(by.id('date-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
+});
+
+describe('Datepicker Modal (No Autofocus) Test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-modal-no-autofocus');
+  });
+
+  it('Should work on a modal when partly scrolled in autofocus mode', async () => {
+    await element(by.css('.btn-secondary')).click();
+    await browser.driver.sleep(config.sleep);
+
+    const result = await browser.executeScript('$(".modal-body-wrapper")[0].scroll(0, 185)');
+    await element(by.css('#date-field + .icon')).click();
+    await element(by.css('.hyperlink.today')).click();
+
+    await browser.driver.sleep(config.sleep);
+
+    const testDate = new Date();
+    testDate.setHours(0);
+    testDate.setMinutes(0);
+    testDate.setSeconds(0);
+
+    expect(await element(by.id('date-field')).getAttribute('value')).toEqual(testDate.toLocaleDateString('en-US'));
+  });
 });
 
 describe('Datepicker Month Format Tests', () => {
