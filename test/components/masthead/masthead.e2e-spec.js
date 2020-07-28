@@ -6,7 +6,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Masthead tests', () => {
+fdescribe('Masthead tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/masthead/example-index?theme=soho&layout=nofrills');
   });
@@ -41,7 +41,7 @@ describe('Masthead tests', () => {
     });
 
     it('Should not visual regress on soho theme for images', async () => {
-      await utils.setPage('/components/masthead/example-photos');
+      await utils.setPage('/components/masthead/example-photos?theme=soho&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
