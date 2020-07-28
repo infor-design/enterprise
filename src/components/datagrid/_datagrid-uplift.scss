@@ -293,3 +293,24 @@
   left: 1px !important;
   top: 6px;
 }
+
+// EmptyMessage
+.datagrid-container.has-empty-message.is-empty {
+  &.empty-message-height-small {
+    .empty-message {
+      top: calc(50% + 33px) !important;
+    }
+
+    &.medium-rowheight .empty-message {
+      top: calc(50% + 31px) !important;
+    }
+
+    &.small-rowheight .empty-message {
+      top: calc(50% + 28px) !important;
+    }
+
+    &.extra-small-rowheight .empty-message {
+      top: calc(50% + 26px) !important;
+    }
+  }
+}

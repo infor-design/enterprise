@@ -1,0 +1,37 @@
+<div class="full-height full-width">
+  <div id="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var data = [];
+    var columns = [];
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text' });
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text' });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text' });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text' });
+    columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer' });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'text' });
+    columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox' });
+    columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert });
+    columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal' });
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      filterable: true,
+      selectable: 'single',
+      editable: true,
+      frozenColumns: {
+        left: ['productId', 'productName']
+      },
+      emptyMessage: { title: 'No data available', height: 'small' },
+      toolbar: { title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false }
+    });
+
+ });
+</script>

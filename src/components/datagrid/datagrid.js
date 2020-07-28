@@ -127,10 +127,12 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessage.info='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {object}   [settings.emptyMessage.height=null]
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
- * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}} set this to null for no message
+ * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
  * or will default to 'No Data Found with an icon.'
+ * height: The empty message container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
  * @param {boolean} [settings.allowChildExpandOnMatch=false] Used with filter
  * if true:
  * and if only parent has a match then add all children nodes too
@@ -224,7 +226,7 @@ const DATAGRID_DEFAULTS = {
   onExpandChildren: null, // Callback fires when expanding children with treeGrid
   onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' },
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
   searchExpandableRow: true,
   allowChildExpandOnMatch: false
 };
@@ -5838,6 +5840,7 @@ Datagrid.prototype = {
   * @param {object} emptyMessage The update empty message config object.
   */
   setEmptyMessage(emptyMessage) {
+    this.element[emptyMessage.height === 'small' ? 'addClass' : 'removeClass']('empty-message-height-small');
     if (!this.emptyMessage) {
       this.emptyMessageContainer = $('<div class="empty-message-container"><div></div></div>');
       this.element.append(this.emptyMessageContainer).addClass('has-empty-message');
