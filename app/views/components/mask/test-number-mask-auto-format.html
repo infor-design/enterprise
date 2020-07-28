@@ -13,7 +13,7 @@
 
     <div class="field">
       <label for="input-masked-number">Number</label>
-      <input id="input-masked-number" inputmode="numeric" data-mask data-options="{ pattern: '#,###.00', mode: 'number' }" placeholder="#,###.00"/>
+      <input id="input-masked-number" inputmode="numeric" data-mask data-options="{ 'process': 'number', 'patternOptions': { 'allowThousandsSeparator': true, 'allowDecimal': true, 'integerLimit': 4, 'decimalLimit': 2 } }" placeholder="#,###.00"/>
     </div>
 
   </div>

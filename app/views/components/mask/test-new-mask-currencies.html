@@ -1,12 +1,10 @@
 <div class="row">
   <div class="six columns">
-
     <h2>New Mask: Currencies</h2>
     <p>
       Jira Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a> |
       <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-4744" target="_blank">SOHO-4744</a>
     </p>
-
   </div>
 </div>
 
@@ -15,26 +13,25 @@
 
     <div class="field">
       <label for="dollar-american">Dollar (American)</label>
-      <input id="dollar-american" class="new-mask" data-options='{ "pattern": "#,###,###.00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' />
+      <input id="dollar-american" class="new-mask" placeholder="$#,###,###.00" data-options='{ "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' />
     </div>
 
     <div class="field">
       <label for="euro-france">Euro (France)</label>
-      <input id="euro-france" class="new-mask" data-options='{ "pattern": "# ### ###,00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": " " } } }' />
+      <input id="euro-france" class="new-mask" placeholder="# ### ###,00 €" data-options='{ "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": " " } } }' />
     </div>
 
     <div class="field">
       <label for="euro-germany">Euro (Germany)</label>
-      <input id="euro-germany" class="new-mask" data-options='{ "pattern": "#.###.###,00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": "." } } }' />
+      <input id="euro-germany" class="new-mask" placeholder="#.###.###,00 €" data-options='{ "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": "." } } }' />
     </div>
 
     <div class="field">
       <label for="franc-france">Franc (Switzerland/France)</label>
-      <input id="franc-france" class="new-mask" data-init="false" />
+      <input id="franc-france" class="new-mask" placeholder="fr. #'###'###,00" data-init="false" />
     </div>
     <script>
       $('#franc-france').mask({
-        pattern: "#'###'###,00",
         process: "number",
         patternOptions: {
           allowDecimal: true,

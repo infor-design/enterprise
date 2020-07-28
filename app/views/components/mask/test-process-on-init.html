@@ -26,25 +26,25 @@
     <div class="field">
       <label for="pos-number-2dec">Number (100.00)</label>
       <input id="pos-number-2dec" inputmode="numeric" value="75.00"
-        data-mask data-options="{ pattern: '###.##', mode: 'number' }" placeholder="###.##"/>
+        data-mask data-options="{ 'process': 'number', 'patternOptions': { 'allowDecimal': true, 'integerLimit': 3, 'decimalLimit': 2 } }" placeholder="###.##"/>
     </div>
 
     <div class="field">
       <label for="neg-number-2dec">Number (-100.00)</label>
       <input id="neg-number-2dec" inputmode="numeric" value="75.00"
-        data-mask data-options="{ pattern: '-###.##', mode: 'number' }" placeholder="-###.##"/>
+        data-mask data-options="{ 'process': 'number', 'patternOptions': { 'allowDecimal': true, 'allowNegative': true, 'integerLimit': 3, 'decimalLimit': 2 } }" placeholder="-###.##"/>
     </div>
 
     <div class="field">
       <label for="pos-number-3dec">Number (100.000)</label>
       <input id="pos-number-3dec" inputmode="numeric" value="75.00"
-        data-mask data-options="{ pattern: '###.###', mode: 'number' }" placeholder="###.###"/>
+        data-mask data-options="{ 'process': 'number', 'patternOptions': { 'allowDecimal': true, 'integerLimit': 3, 'decimalLimit': 3 } }" placeholder="###.###"/>
     </div>
 
     <div class="field">
       <label for="neg-number-3dec">Number (-100.000)</label>
       <input id="neg-number-3dec" inputmode="numeric" value="75.00"
-        data-mask data-options="{ pattern: '-###.###', mode: 'number' }" placeholder="-###.###"/>
+        data-mask data-options="{ 'process': 'number', 'patternOptions': { 'allowDecimal': true, 'allowNegative': true, 'integerLimit': 3, 'decimalLimit': 3 } }" placeholder="-###.###"/>
     </div>
 
   </div>
