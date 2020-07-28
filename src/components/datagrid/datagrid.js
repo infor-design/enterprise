@@ -4392,7 +4392,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnDef?.textOverflow === 'ellipsis') {
+      if (columnDef?.textOverflow === 'ellipsis' && (this.settings.rowHeight == 'small' || this.settings.rowHeight == 'extra-small')) {
         minHeaderWidth += 6;
       }
     }
