@@ -1,0 +1,132 @@
+{{> includes/header}}
+<div class="master-detail">
+  <div class="master">
+    <div class="toolbar" role="toolbar">
+      <div class="title">My Assets</div>
+      <div class="buttonset">
+        <button id="activate-selected-row" type="button" class="btn">
+          <span>Activate Selected Row</span>
+        </button>
+        <button id="deactivate-activated-row" type="button" class="btn">
+          <span>Deactivate Activated Row</span>
+        </button>
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">0 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-link"></use>
+          </svg>
+          <span>Example</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid-header">
+    </div>
+  </div>
+  <div class="detail">
+    <div id="datagrid-detail">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var columnsHeader = [], columnsDetail = [];
+
+    // Header Grid Columns
+    columnsHeader.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columnsHeader.push({ id: 'id', name: 'Number', field: 'id', width: 80});
+    columnsHeader.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Hyperlink});
+    columnsHeader.push({ id: 'description', name: 'Description', field: 'description'});
+    columnsHeader.push({ id: 'manufacturer', name: 'Manufacturer', field: 'manufacturer'});
+    columnsHeader.push({ id: 'serial', name: 'Serial', field: 'serial'});
+    columnsHeader.push({ id: 'status', name: 'Status', field: 'status'});
+
+    // Detail Grid Columns
+    columnsDetail.push({ id: 'action', name: 'Asset History', field: 'action'});
+    columnsDetail.push({ id: 'ticket', name: 'Ticket', field: 'ticket', formatter: Formatters.Hyperlink});
+    columnsDetail.push({ id: 'date', name: 'Date', field: 'date'});
+    columnsDetail.push({ id: 'description', name: 'Description', field: 'description'});
+    columnsDetail.push({ id: 'technician', name: 'Technician', field: 'technician'});
+    columnsDetail.push({ id: 'assignee', name: 'Assignee', field: 'assignee'});
+    columnsDetail.push({ id: 'status', name: 'Status', field: 'status'});
+
+    var url = '{{basepath}}api/assets',
+      selectedId = 0;
+
+    $.getJSON(url, function(res) {
+
+      var syncDetail = function(idx) {
+        detailGrid.settings.resultsText = res[idx].id;
+        detailGrid.loadData(res[idx].detail);
+      }
+
+      //Init The Header Grid
+      var headerGrid = $('#datagrid-header').datagrid({
+        dataset: res,
+        columns: columnsHeader,
+        editable: false,
+        selectable: 'mixed',
+        paging: true,
+        pagesize: 4,
+        pagesizes: [4, 8, 15]
+      }).on('rowactivated', function (e, args) {
+        console.log('Row ' + args.row + ' Was Activated');
+        syncDetail(args.row);
+      }).on('rowdeactivated', function (e, args) {
+        console.log('Row ' + args.row + ' Was Deactivated');
+        syncDetail(args.row);
+      }).on('selected', function (e, args) {
+        console.log(args);
+      }).data('datagrid');
+
+      $('#activate-selected-row').on('click', function(e) {
+        if (!headerGrid.selectedRows()[0]) {
+          return;
+        }
+
+        headerGrid.activateRow(headerGrid.selectedRows()[0].idx);
+      });
+
+      $('#deactivate-activated-row').on('click', function(e) {
+        console.log('activated row to be deactivated is ' + headerGrid.activatedRow());
+        headerGrid.deactivateRow();
+      });
+
+      //Init The Detail Grid
+      var detailGrid = $('#datagrid-detail').datagrid({
+        dataset: res[selectedId].detail,
+        columns: columnsDetail,
+        editable: false,
+        resultsText: res[selectedId].id,
+        toolbar: {results: true, actions: true, rowHeight: true, title: 'Detail for '}
+      }).data('datagrid');
+    });
+
+  });
+
+</script>

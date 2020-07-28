@@ -1,0 +1,95 @@
+{{> includes/header}}
+<div class="banner-detail">
+  <div class="banner">
+
+    <div class="row top-padding ">
+      <div class="twelve columns">
+        <div class="toolbar" role="toolbar">
+          <div class="title">
+            Details
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="six columns">
+        <div class="one-third column">
+          <div class="field">
+            <span class="label">Sales History From</span>
+            <span class="data">02/01/2016</span>
+          </div>
+        </div>
+        <div class="one-third column">
+          <div class="field">
+            <span class="label">Sales History To</span>
+            <span class="data">02/01/2017</span>
+          </div>
+        </div>
+        <div class="one-third column">
+          <div class="field">
+            <span class="label">Company ID</span>
+            <span class="data">50129</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <span class="tag">Includes inactive products</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="detail">
+    <div class="row top-padding">
+      <div class="twelve columns">
+        <div class="toolbar" role="toolbar">
+          <div class="title">
+            Content Report
+          </div>
+          <div class="buttonset">
+            <button type="button" class="btn" id="export">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-export-spreadsheet"></use>
+              </svg>
+              <span>Export All</span>
+            </button>
+          </div>
+        </div>
+      <div id="datagrid">
+      </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var grid,
+  columns = [];
+
+  //Define Columns for the Grid.
+  columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Formatters.Drilldown, click: function(e, args) {
+    console.log(args);
+  }, align: 'center', sortable: false});
+  columns.push({ id: 'entity', name: 'Entity', field: 'name', width: '85%'});
+  columns.push({ id: 'rowcount', name: 'Row Count', field: 'purchases'});
+
+  var url = '{{basepath}}api/accounts';
+
+  $.getJSON(url, function(res) {
+  //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      editable: false,
+      isList: true,
+      dataset: res,
+      toolbar: {results: true}
+    });
+  });
+
+});
+</script>

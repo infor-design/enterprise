@@ -17,6 +17,10 @@ sections:
     slug: grid
   - name: Forms
     slug: form
+  - name: Page Layouts
+    slug: layouts
+  - name: Page Patterns
+    slug: page-patterns
 - name: Components
   pages:
   - name: Accordion

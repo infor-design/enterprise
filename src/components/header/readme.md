@@ -10,7 +10,7 @@ demo:
     slug: example-disabled-buttons
   - name: Eyebrow Style (Emphasis on the ID)
     slug: example-emphasize-id
-  - name: Eyebrow Style (Default
+  - name: Eyebrow Style (Default)
     slug: example-eyebrow
   - name: No Title Button
     slug: example-no-title-button
@@ -22,6 +22,22 @@ demo:
     slug: example-searchfield-expanded
   - name: Expanded Search Field (Large)
     slug: example-searchfield-large
+  - name: Header Navigation Breadcrumbs
+    slug: example-breadcrumbs
+  - name: Header Navigation Breadcrumbs (Alternate)
+    slug: example-breadcrumbs-alternate
+  - name: Header with Drill Down Button (Back)
+    slug: example-drilldown
+  - name: Header Navigation with Popup menu
+    slug: example-popupmenu
+  - name: Header Navigation with Tabs
+    slug: example-tabs
+  - name: Header Navigation with Tabs (Alternate)
+    slug: example-tabs-alternate
+  - name: Header with Toolbar Below
+    slug: example-toolbar
+  - name: Header Navigation with Wizard
+    slug: example-wizard
 ---
 
 ## Code Example

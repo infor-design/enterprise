@@ -1,0 +1,87 @@
+
+<div class="page-container no-scroll">
+  <header class="header has-tabs">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Page Pane Patterns</h1>
+      </div>
+
+      <div class="buttonset">
+        <button class="btn-icon header-search" type="button">
+          <span class="audible">Search</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-search"></use>
+          </svg>
+        </button>
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+
+    <div class="tab-container" data-options="{ containerElement: '#maincontent' }">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+          <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+          <li class="tab"><a href="#header-tab3">Left Column</a></li>
+          <li class="tab"><a href="#header-tab4">Right Column</a></li>
+          <li class="tab"><a href="#header-tab5">Top Row</a></li>
+          <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+          <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div id="maincontent" class="page-container tab-panel-container scrollable" role="main">
+    <div id="header-tab1" class="tab-panel">
+      <div class="page-container">
+        <section class="pane left card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane right card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+      </div>
+    </div>
+    <div id="header-tab2">
+      <div class="page-container">
+        <section class="pane top card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane bottom card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+      </div>
+    </div>
+    <div id="header-tab3">
+      <div class="page-container">
+        <section class="pane left card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane top-right card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+        <section class="pane bottom-right card">{{> components/page-patterns/_test-landmark-pagepane-card3}}</section>
+      </div>
+    </div>
+    <div id="header-tab4">
+      <div class="page-container">
+        <section class="pane right card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane top-left card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+        <section class="pane bottom-left card">{{> components/page-patterns/_test-landmark-pagepane-card3}}</section>
+      </div>
+    </div>
+    <div id="header-tab5">
+      <div class="page-container">
+        <section class="pane top card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane bottom-left card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+        <section class="pane bottom-right card">{{> components/page-patterns/_test-landmark-pagepane-card3}}</section>
+      </div>
+    </div>
+    <div id="header-tab6">
+      <div class="page-container">
+        <section class="pane top-left card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+        <section class="pane top-right card">{{> components/page-patterns/_test-landmark-pagepane-card3}}</section>
+        <section class="pane bottom card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+      </div>
+    </div>
+    <div id="header-tab7">
+      <div class="page-container">
+        <section class="pane top-left card">{{> components/page-patterns/_test-landmark-pagepane-card1}}</section>
+        <section class="pane top-right card">{{> components/page-patterns/_test-landmark-pagepane-card2}}</section>
+        <section class="pane bottom-left card">{{> components/page-patterns/_test-landmark-pagepane-card3}}</section>
+        <section class="pane bottom-right card">{{> components/page-patterns/_test-landmark-pagepane-card4}}</section>
+      </div>
+    </div>
+  </div>
+
+</div>

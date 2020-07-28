@@ -1,0 +1,188 @@
+
+<div class="two-column page-container fixed no-scroll list-detail">
+
+  <div class="sidebar " role="complementary">
+
+      <header class="header azure07">
+        <div class="toolbar">
+          <div class="title">
+
+            <button class="btn-icon application-menu-trigger" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
+            <h1>Deployments</h1>
+          </div>
+
+          <div class="buttonset">
+            <button type="button" class="btn-icon">
+               <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                   <use href="#icon-add"/>
+               </svg>
+               <span>Add</span>
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      <div class="listview scrollable" id="task-listview" data-tmpl="task-tmpl" data-dataset="{{basepath}}api/deployments"></div>
+  </div>
+
+  <div class="main alternate" role="main">
+
+    <header class="header azure07 has-alternate-tabs">
+      <div class="toolbar">
+        <div class="title">
+          <h1>Auto Suite - PRD </h1>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+
+      <div class="tab-container alternate" data-options="{ containerElement: '#maincontent' }">
+        <div class="tab-list-container">
+          <ul class="tab-list">
+            <li class="tab"><a href="#header-tabs-details">Details</a></li>
+            <li class="tab is-selected" ><a href="#header-tabs-service">Service Requests</a></li>
+            <li class="tab"><a href="#header-tabs-access">Access Control</a></li>
+            <li class="tab"><a href="#header-tabs-logs">Logs</a></li>
+            <li class="tab"><a href="#header-tabs-uptime">Uptime Reports</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="scrollable" id="maincontent">
+
+      <div id="header-tabs-details" class="tab-panel alternate">
+        <div class="row" style="height: 10000px">
+        </div>
+      </div>
+
+      <div id="header-tabs-service" class="tab-panel alternate">
+
+        <div class="row">
+          <div class="twelve columns">
+            <div class="toolbar has-more-button" role="toolbar">
+                <div class="title"><span class="datagrid-row-count">8</span> Requests</div>
+                <div class="buttonset">
+
+                  <label class="audible" for="gridfilter">Keyword Search</label>
+                  <input class="searchfield" name="searchfield" placeholder="Keyword" id="gridfilter">
+
+                  <button class="btn-menu" type="button">
+                    <span>Deployment</span>
+                  </button>
+                  <ul class="popupmenu is-padded">
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">AutoSuite-PRD</a></li>
+                    <li><a href="#">AutoSuite-OD</a></li>
+                  </ul>
+
+                  <button class="btn-menu" type="button">
+                    <span>Status</span>
+                  </button>
+                  <ul class="popupmenu is-padded">
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">Success</a></li>
+                    <li><a href="#">Queued</a></li>
+                  </ul>
+                </div>
+
+                <div class="more">
+
+                  <button type="button" class="btn-actions">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-more"></use>
+                    </svg><span class="audible">Grid Features</span>
+                  </button>
+                  <ul class="popupmenu is-padded"></ul>
+                    <li><a href="#">Option One</a></li>
+                    <li><a href="#">Option Two</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div id="datagrid">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="header-tabs-access" class="tab-panel alternate">
+      </div>
+
+      <div id="header-tabs-logs" class="tab-panel alternate">
+      </div>
+
+      <div id="header-tabs-uptime" class="tab-panel alternate">
+      </div>
+
+    </div>
+
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Text, cssClass: 'uppercase'});
+      columns.push({ id: 'datetime', name: 'Time', field: 'datetime', formatter: Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
+      columns.push({ id: 'requestor', name: 'Requested By', field: 'requestor'});
+      columns.push({ id: 'deployment', name: 'Deployment', field: 'deployment'});
+      columns.push({ id: 'scheduled', name: 'Scheduled Time', field: 'scheduled', formatter: Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Color,
+        ranges: [{'value': 'Success', 'classes': 'alert-green'}, {'value': 'Queued', classes: ''}]});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200, formatter: Formatters.Button, text: 'Cancel', click: function () {
+          alert('test');
+        }, focusable: true, contentVisible: function (row, cell, data) {
+          return (data.status === 'Queued');
+        }});
+
+      var url = '{{basepath}}api/servicerequests';
+
+      $.getJSON(url, function(res) {
+         //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          editable: false,
+          isList: true,
+          dataset: res,
+          toolbar: {results: true}
+        });
+      });
+
+    });
+</script>
+
+{{={{{ }}}=}}
+
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      <li>
+        {{#success}}
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-error"><use href="#icon-error"/>
+          </svg>
+        {{/success}}
+        {{^success}}
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-confirm"><use href="#icon-confirm"/>
+          </svg>
+        {{/success}}
+        <div>
+          <p class="listview-heading">{{name}}</p>
+          <p class="listview-micro">Deployed On: {{date}}</p>
+        </div>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

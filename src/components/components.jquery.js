@@ -80,3 +80,7 @@ import './form-compact/form-compact.jquery';
 import './header/header.jquery';
 import './lookup/lookup.jquery';
 import './tabs-multi/multi-tabs.jquery';
+
+// Some Patterns /
+import './list-detail/list-detail.jquery';
+import './stepprocess/stepprocess.jquery';

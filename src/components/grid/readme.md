@@ -18,7 +18,7 @@ demo:
 
 ### Standard Grid
 
-Soho uses a 12 column grid for most designs. To setup a new 12 column grid, define a row element using `<div class="row">`. Then define the columns you want in that row. They should always add to 12. For example, below we have a 2 column and 10 column element.
+Soho uses a 12 column grid for most designs. To setup a new 12 column grid, define a row element using `<div class="row">`. Then define the columns you want in that row. They should always add to 12. For example, below we have a 2 column and 10 column element. This grid is fixed not fluid (like some grids like bootstrap are).
 
 ```html
 <div class="row">
@@ -44,6 +44,37 @@ You can also add class `one-half-mobile` and at the lowest breakpoint the grid w
   </div>
 </div>
 ```
+
+## Flex/Responsive Modifiers
+
+We added a few css flex modifiers for different ways to line up labels and act responsively. See [wrpaped labels](./demo/components/form/test-wrapped-labels) for an example. Adding the `form-responsive` class to the row or a parent will make all inputs become responsive in the grid rather than their default sizes. Adding the class `flex-align-bottom` to the row will make the bottoms align of the inputs and this will make longer labels line up as the page is resized.
+
+```html
+<div class="form-responsive">
+    <div class="row flex-align-bottom">
+      <div class="three columns">
+        <div class="field">
+          <label for="font-used">Font to be Used</label>
+          <input id="font-used" value="Arial Monospaced">
+        </div>
+      </div>
+```
+
+## Other Modifiers
+
+We added an class modifier of `no-indent`, this will removing all margin indents on the grid. This can be used to nest responsive grids without the added gutters. See [the nested grid example](./demo/components/grid/test-nesting) for an example.
+
+In addition we added a few extra class that can be added to the grid `row` element as follows:
+
+- `top-padding` - adds additional top padding for a row (30px) to give some extra spacing
+- `bottom-padding` - adds additional bottom padding for a row (30px) to give some extra spacing
+- `small-top-padding` - adds a bit of additional top padding for a row (10px)
+- `small-bottom-padding` - adds a bit of bottom top padding for a row (10px)
+- `extended-bottom-padding` - adds a lot of bottom top padding for a row (45px)
+- `no-top-padding` - removes all top padding
+- `no-bottom-margin` - removes all bottom margins
+- `full-height` - Makes the row have 100% height
+- `full-width` - Makes the column have 100% width except when below the responsive breakpoint
 
 ## Breakpoints
 

@@ -130,9 +130,7 @@ router.get('/kitchen-sink', (req, res) => {
 app.use('/behaviors', generalRoute);
 app.use('/components', customRoutes);
 app.use('/components', generalRoute);
-app.use('/patterns', generalRoute);
 app.use('/examples', generalRoute);
-app.use('/layouts', generalRoute);
 app.use('/utils', generalRoute);
 
 // =========================================

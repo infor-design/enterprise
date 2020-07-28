@@ -1,0 +1,26 @@
+{{> includes/head}}
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/header}}
+  <div class="page-container scrollable-flex" role="main">
+
+    <!-- Simulate some optional header content -->
+    <section class="scrollable-flex-header">
+      <div class="content fake-section-small"></div>
+    </section>
+
+    <!-- Because of css flex box this area will be scrollable -->
+    <section class="scrollable-flex-content">
+      <div class="content fake-contents"></div>
+    </section>
+
+    <!-- Simulate some optional footer content -->
+    <section class="scrollable-flex-footer">
+      <div class="content fake-section-small"></div>
+    </section>
+
+  </div>
+  {{> includes/footer}}
+</body>
+</html>

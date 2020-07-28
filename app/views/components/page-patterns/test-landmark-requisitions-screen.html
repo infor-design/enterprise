@@ -1,0 +1,183 @@
+<section id="maincontent" class="two-column page-container fixed-mm list-detail" data-options='{ "listElement": "#task-listview", "detailElement": "#main-detail-area", "backElement": "#app-menu-trigger" }'>
+
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+
+        <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button list-detail-back-button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+
+        <h1>All Requisitions</h1>
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+
+  <aside class="sidebar" role="complementary">
+    <div class="sidebar-content scrollable-flex">
+      <div class="scrollable-flex-header panel-header card-header">
+        <h2 class="card-title">Job List</h2>
+      </div>
+      <div class="scrollable-flex-content">
+        <div class="listview-search">
+          <label class="audible" for="list-detail-sidebar-search">Search Tasks</label>
+          <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
+        </div>
+
+        <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+      </div>
+    </div>
+  </aside>
+
+  <section id="main-detail-area" class="main" role="main">
+    <div class="main-content no-scroll">
+
+      <div class="tab-container header-tabs alternate">
+        <div class="tab-list-container">
+          <ul class="tab-list">
+            <li class="tab"><a href="#overview">Overview</a></li>
+            <li class="tab is-selected"><a href="#workflow">Workflow</a></li>
+            <li class="tab"><a href="#all-applicants">All Applicants (32)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="tab-panel-container">
+        <div class="tab-panel" id="overview">
+          <h3>Overview</h3>
+        </div>
+
+        <!-- begin overview tab -->
+        <section id="workflow" class="tab-panel list-detail two-column fixed-mm" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#detail-area-back-button", "listCloseElement": "#workflow-close-button", "edgeBleed": true, "edgeBleedBreakpoint": "tablet" }'>
+          <aside class="sidebar">
+            <div class="sidebar-content scrollable-flex">
+              <div class="scrollable-flex-header panel-header card-header">
+                <h2 class="card-title">Workflow Steps</h2>
+                <button id="workflow-close-button" class="btn-icon btn-close list-detail-list-close-button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-close"></use>
+                  </svg>
+                  <span class="audible">Close Workflow</span>
+                </button>
+              </div>
+              <div class="scrollable-flex-content">
+
+                <!-- begin accordion -->
+                <div id="workflow-accordion" class="accordion panel has-subheader-separators">
+                  <div class="accordion-header">
+                    <a href="#">
+                      <span>Candidates Expressing Interest</span>
+                    </a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#">
+                      <span>Attached Candidates</span>
+                    </a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#">
+                      <span>Recruiter Inbox</span>
+                    </a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-header">
+                      <a href="#">
+                        <span>Successfully Applied</span>
+                      </a>
+                    </div>
+                    <div class="accordion-header">
+                      <a href="#">
+                        <span>Screened Out Online</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#">
+                      <span>Not Considered</span>
+                    </a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#">
+                      <span>Hiring Manager Inbox</span>
+                    </a>
+                  </div>
+                </div>
+                <!-- end accordion -->
+              </div>
+            </div>
+
+          </aside>
+          <section class="main">
+            <!-- begin content area -->
+            <div class="main-content" id="workflow-content-area">
+
+              <div class="toolbar">
+                <div class="title">
+                  <button id="detail-area-back-button" class="btn-icon list-detail-back-button secondary">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-bullet-steps"></use>
+                    </svg>
+                    <span class="audible">Show Bulleted Steps</span>
+                  </button>
+                  <span>Recruiter Inbox</span>
+                </div>
+              </div>
+
+              <!-- NOTE: DON'T COPY THIS PART (demo purposes only) -->
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: calc(100% - 45px); position: relative;">
+                <div style="display: flex; align-items: center; justify-content: center; width: calc(100% - 40px); height: calc(100% - 40px); border: 3px dotted #d0d0d0;">
+                  <h3>Workflow Area Container</h3>
+                </div>
+              </div>
+              <!-- END DON'T COPY THIS PART -->
+
+            </div>
+            <!-- end content area -->
+          </section>
+
+        </section>
+        <!-- end overview tab -->
+
+        <div class="tab-panel" id="all-applicants">
+          <h3>All Applicants</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</section>
+
+{{={{{ }}}=}}
+
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<!-- Change Colors -->
+<script>
+  $('body').on('initialized', function() {
+    $(this).personalize({
+      startingColor: '#2578A9' // Azure07
+    });
+  });
+</script>

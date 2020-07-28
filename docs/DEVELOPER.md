@@ -190,7 +190,7 @@ http://localhost:4000/components/mask/test-number-mask-gauntlet?locale=es-ES&col
 
 #### Editor Plugins
 
-This project uses `eslint` and `editorconfig`. You may want to add linting plugins to your editor to help comply with our coding standards:
+This project uses `eslint` and `editorconfig`. You may want to add lint plugins to your editor to help comply with our coding standards:
 
 _For Atom:_
 
@@ -213,8 +213,7 @@ Documentation from within this project is deployed to [design.infor.com](https:/
 - From a component readme and linking to another component's documentation, use a relative link like `[Read about buttons](./button)`. Using a relative link like this will maintain the current version the website visitor has selected.
 - The design system website automatically sets `target="_blank"` for any code documentation link which contains `/demo/` in it. It's not necessary for you to add this within the documentation itself.
 - Paths for demo links use the same URL structure as on the local development app.
-    - For example, to create a link to a pattern page, take the URI from the dev app such as `/patterns/navigation-breadcrumbs` and from a component readme page, create a relative link like `[see pattern demo](./demo/patterns/navigation-breadcrumbs)`.
-    - This works for `/components/`, `/patterns/`, etc.
+    - For example, to create a link to a components page, take the URI from the dev app such as `/components/tabs/example-index` and from a component readme page, create a relative link like `[see example / demo](./demo/components/tabs/example-index)`.
 
 ## Guidelines for creating a new IDS Component
 

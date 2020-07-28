@@ -1,0 +1,120 @@
+<div id="list-detail-container" class="list-detail two-column page-container no-scroll builder" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
+
+  <div class="sidebar no-scroll" role="complementary">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <h1>Patterns</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks'}"></div>
+  </div>
+
+  <div id="maincontent" class="main no-scroll builder-pane" role="main">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+
+          <button id="header-hamburger" class="btn-icon list-detail-back-button go-back visible-sm hidden-md hidden-lg hidden-xl" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <h1>Builder</h1>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+
+    <div class="builder-header header subheader is-personalizable">
+      <div class="toolbar no-actions-button">
+        <div class="title">
+          <h2>
+            <span class="panel-title">Builder Panel Title</span><br>
+            <span class="panel-subhead">Builder Panel Subheader</span>
+          </h2>
+        </div>
+        <div class="buttonset"></div>
+      </div>
+    </div>
+
+    <div class="wizard-toolbar">
+      <a class="hyperlink" href="#">< Back to Order #627126128</a>
+      <div class="wizard">
+          <div class="wizard-header">
+            <div class="bar">
+              <div class="completed-range"></div>
+              <a href="#" class="tick complete">
+                <span class="label">Edit Cart</span>
+              </a>
+              <a href="#" class="tick complete">
+                <span class="label">Shipping</span>
+              </a>
+              <a href="#" class="tick current">
+                <span class="label">Payment</span>
+              </a>
+              <a href="#" class="tick">
+                <span class="label">Confirmation</span>
+              </a>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="builder-content scrollable no-sidebar">
+      <div class="builder-actions">
+        <div class="builder-actions-header">
+          <h3>Main Panel Contents</h3>
+        </div>
+        <div class="builder-actions-content">
+          <p>
+            Web-enabled networks engage strategic bleeding-edge, e-services reinvent syndicate beta-test initiatives. Experiences optimize dynamic scalable dynamic mindshare communities dot-com reintermediate e-tailers deliverables, engage customized dynamic mission-critical.
+          </p>
+          <p>
+            A-list, social, citizen-media?" Real-time orchestrate ubiquitous addelivery A-list cutting-edge sexy innovate folksonomies: paradigms feeds. Platforms cross-platform. Wireless data-driven productize, cultivate web-readiness integrateAJAX-enabled, mashups? Embrace cultivate action-items, infrastructures authentic. Rss-capable weblogs whiteboard schemas embedded harness optimize disintermediate eyeballs morph peer-to-peer, networkeffects markets tagclouds semantic, customized ecologies channels, initiatives, scalable magnetic.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- #maincontent.main.scrollable.builder-pane -->
+
+</div>
+<!-- END Actual Layout Markup -->
+
+<!-- Layout Template for Listview -->
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<!-- Change Colors -->
+<script>
+  $('body').on('initialized', function() {
+    $(this).personalize({
+      startingColor: '#2578A9' // Azure07
+    });
+  });
+</script>

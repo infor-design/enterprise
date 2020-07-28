@@ -9,7 +9,7 @@ const utils = require('../utils');
 
 // Excluded file names that should never appear in the DemoApp List Pages
 const GENERAL_LISTING_EXCLUDES = [
-  /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+  /(_)?(layout)(\s)(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
   /^_/, // anything beginning with an underscore
   /listing\.html/,
   /footer\.html/,
