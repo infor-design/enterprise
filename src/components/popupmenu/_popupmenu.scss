@@ -740,6 +740,18 @@ html[dir='rtl'] {
     .image-user-status .icon {
       margin-left: 0;
       margin-right: -7px;
+      margin-top: 19px;
+    }
+
+    .image-initials + span,
+    .popupmenu .image-round + span {
+      padding-left: 0;
+      padding-right: 4px;
+    }
+
+    .popupmenu .image-initials,
+    .popupmenu .image-round {
+      top: -2px;
     }
   }
 
