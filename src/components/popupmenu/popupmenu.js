@@ -2168,7 +2168,7 @@ PopupMenu.prototype = {
     const returnObj = [anchor];
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
-    if (parent.hasClass('is-selectable') || singleMenu || singleSection) {
+    if ((parent.hasClass('is-selectable') && !anchor.find('.icon').length) || singleMenu || singleSection) {
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
       returnObj.push('selected');
