@@ -37,13 +37,20 @@
           var datagridHtml = $('<div class="datagrid"></div>');
           args.detail.find('.datagrid-row-detail-padding').append(datagridHtml);
 
+          var clickHandler = function (e, args) {
+            $('body').toast({
+              title: 'Nested Datagrid Row <span style="font-weight: bold;">#' + args[0].item.id + '</span> Clicked!',
+              message: 'The row #' + args[0].row + ' cell # ' + args[0].cell + ' was clicked'
+            });
+          };
+
           var subColumns = [];
           subColumns.push({ id: 'id', name: 'Part Id', field: 'id', width: 200});
           subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Formatters.Hyperlink});
           subColumns.push({ id: 'price', name: 'Price', field: 'price'});
           subColumns.push({ id: 'amount', name: 'Amount', field: 'amount'});
           subColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Formatters.Button, icon: 'delete', tooltip: 'Delete', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
+          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Formatters.Button, icon: 'delete', tooltip: 'Delete', click: clickHandler });
 
           var subData = [];
 
