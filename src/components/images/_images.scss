@@ -80,10 +80,9 @@ $images-size: (
   display: inline-block;
 
   .icon {
-    left: 3px;
-    margin-left: -22px;
-    position: relative;
-    top: 6px;
+    margin-left: -17px;
+    margin-top: 35px;
+    position: absolute;
   }
 }
 
@@ -100,12 +99,6 @@ $images-size: (
   text-align: center;
   vertical-align: middle;
   width: 4.8rem;
-
-  + .icon {
-    left: 6px;
-    position: relative;
-    top: 22px;
-  }
 
   &:focus {
     @include focus-state();

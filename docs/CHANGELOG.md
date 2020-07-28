@@ -8,6 +8,7 @@
 - `[Datagrid]` Added a `columnSizing` setting which impacts how the column widths are auto calculated. Options are: `both` (default), `data` or `header` (including filter). ([#4017](https://github.com/infor-design/enterprise/issues/4017))
 - `[Datagrid]` Added the setting for empty message small height. ([#3609](https://github.com/infor-design/enterprise/issues/3609))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
+- `[Masthead]` Added the ability use user images, status and initials in the masthead and masthead menu buttons. ([#800](https://github.com/infor-design/enterprise-ng/issues/800))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
 - `[General]` Moved all the examples, patterns and layouts into their own sections or with the components they live with page patterns can now be found at `components/page-patterns` and layouts at `components/page-layouts`. Added a first pass of docs about these as well as more doc updates to forms, autocomplete and grid. ([#428](https://github.com/infor-design/enterprise/issues/428))
 
@@ -49,6 +50,7 @@
 - `[Lookup]` Fixed a bug where values are duplicated when selecting row on other pages and when paging is activated. ([#758](https://github.com/infor-design/enterprise-ng/issues/758))
 - `[Locale]` Added July 2020 translation strings from the translation team. ([#4045](https://github.com/infor-design/enterprise/issues/4045))
 - `[Mask]` Added the ability to pass date/time formats to the Mask API that do not contain separators or other literals. ([#3963](https://github.com/infor-design/enterprise/issues/3963))
+- `[Masthead]` Added updated color and styles for uplift theme. ([#800](https://github.com/infor-design/enterprise-ng/issues/800))
 - `[Mask]` Improved example pages in the demoapp, added some to the documentation index page for Mask. ([#556](https://github.com/infor-design/enterprise/issues/556))
 - `[Modal]` Reverted nested modal behavior to being visually stacked, instead of one-at-a-time. Made it possible to show one-at-a-time via `hideUnderneath` setting. ([#3910](https://github.com/infor-design/enterprise/issues/3910))
 - `[Multiselect]` Fixed an issue where multiselect fields with tags were not rendering properly. ([#4139](https://github.com/infor-design/enterprise/issues/4139))

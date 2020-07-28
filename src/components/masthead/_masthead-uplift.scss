@@ -1,17 +1,51 @@
 // Masthead Uplift styles
 // ==========================================
 
-.masthead-appname {
+.masthead-appname,
+.masthead .toolbar-section.title h1 {
   @include font-size(14);
+
+  color: $theme-color-palette-slate-10;
+  margin: 0 14px;
+}
+
+.masthead .masthead-icon > .icon {
+  border-radius: 4px;
+  margin: 0 8px;
+}
+
+.masthead .flex-toolbar .toolbar-section {
+  .masthead-icon > .icon {
+    margin: 1px 6px;
+  }
+
+  &.title h1 {
+    margin: 0 6px;
+  }
 }
 
 .masthead .toolbar .buttonset > *:not(.toolbar-searchfield-wrapper) {
   height: 26px;
-  margin: 5px;
+  margin: 4px;
   min-height: 26px;
-  padding: 0 5px;
+  padding: 0 8px;
+
+  &.btn-menu {
+    margin-right: -6px !important;
+  }
+
+  .icon {
+    color: $theme-color-palette-slate-40;
+  }
 }
 
-.masthead .toolbar [class^='btn'] > .icon + span + .icon {
-  margin-left: -2px;
+.masthead .toolbar.has-title,
+.masthead .formatter-toolbar.has-title {
+  padding: 0 8px;
+}
+
+// Image in masthead corrections
+.masthead .image-initials,
+.masthead .image-round {
+  line-height: 28px;
 }
