@@ -34,12 +34,12 @@
 
     <div class="field">
       <label for="date">Date</label>
-      <input id="date" data-mask data-options="{ 'pattern': '##/##/####', 'mode': 'date' }" data-validate="date" value="08142012"/>
+      <input id="date" data-mask data-options="{ 'process': 'date', 'patternOptions' : { 'format' : 'M/d/yyyy' } }" data-validate="date" value="08142012"/>
     </div>
 
     <div class="field">
       <label for="time">Time</label>
-      <input id="time" data-mask data-options="{ 'pattern': '##:## am', 'mode': 'time' }" data-validate="time" value="1235pm"/>
+      <input id="time" data-mask data-options="{ 'process' : 'date', 'patternOptions' : { 'format' : 'hh:mm a' } }" data-validate="time" value="1235pm"/>
     </div>
 
   </div>
@@ -47,22 +47,27 @@
 
     <div class="field">
       <label for="currency">Currency (US Dollars)</label>
-      <input id="currency" type="text" data-mask data-options='{ "pattern": "###.00", "mode": "number", "showSymbol": "currency" }' value="10000" />
+      <input id="currency" class="new-mask" type="text" data-options='{ "pattern": "###.00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' value="100.00" />
     </div>
 
     <div class="field">
       <label for="percent">Percentage</label>
-      <input id="percent" type="text" data-mask data-options='{ "pattern": "###", "mode": "number", "showSymbol": "percent" }' value="100" />
+      <input id="percent" type="text" class="new-mask" data-options='{ "pattern": "###", "process": "number", "patternOptions": { "allowDecimal": false, "integerLimit": 3, "suffix" : " %" } }' value="100" />
     </div>
 
     <div class="field">
       <label for="negative-decimal-1">Decimal Number (negative-capable mask, thousands separator active)</label>
-      <input id="negative-decimal-1" type="text" data-mask data-options='{ "pattern": "-###,###.00", "mode": "number" }' value="12345678" />
+      <input id="negative-decimal-1" type="text" class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowDecimal": true, "allowNegative": true, "integerLimit": 6, "decimalLimit": 2 } }' value="-123456.78" />
     </div>
 
     <div class="field">
       <label for="negative-decimal-2">Negative-capable Decimal Number with no thousands separator</label>
-      <input id="negative-decimal-2" type="text" data-mask data-options='{ "pattern": "-######.00", "mode": "number" }' value="-12345678" />
+      <input id="negative-decimal-2" type="text"  class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowThousandsSeparator": false, "allowDecimal": true, "allowNegative": true, "integerLimit": 6, "decimalLimit": 2 } }' value="-123456.78" />
+    </div>
+
+    <div class="field">
+      <label for="seven-digit-number">Seven Digit Number (inits with 10 numbers)</label>
+      <input id="seven-digit-number" class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowThousands": true, "allowDecimal": false, "integerLimit": 7 } }' value="1234567890" />
     </div>
 
   </div>

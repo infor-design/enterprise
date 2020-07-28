@@ -6,10 +6,16 @@ demo:
   - name: Main Example
     slug: example-index
   pages:
-  - name: Common Mask Patterns
-    slug: example-common-patterns
+  - name: Add custom definitions
+    slug: example-add-definitions
   - name: Fields with Symbols
     slug: example-fields-with-symbols
+  - name: Initialized with Values
+    slug: example-initialized-with-values
+  - name: Patterns with Guides
+    slug: example-patterns-with-guides
+  - name: Write Event Example
+    slug: example-write-event
   - name: The Number Mask Gauntlet
     slug: test-number-mask-gauntlet
 ---

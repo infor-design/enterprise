@@ -6105,7 +6105,8 @@ Datagrid.prototype = {
       const target = $(e.target);
       const td = target.closest('td');
 
-      if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1) {
+      if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1 &&
+        $(e.currentTarget).attr('role') !== 'gridcell') {
         return;
       }
 

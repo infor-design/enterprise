@@ -8,7 +8,7 @@
     <div class="contextual-action-panel" style="display:none;">
       <div class="flex-toolbar">
         <div class="toolbar-section">
-          <button id="cancel" class="btn close-button">
+          <button id="cancel" class="btn">
             <span>Cancel</span>
           </button>
         </div>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="toolbar-section">
-          <button id="submit" class="btn close-button">
+          <button id="submit" class="btn">
             <span>Submit</span>
           </button>
         </div>
@@ -117,3 +117,10 @@
   </div>
 
 </div>
+
+<script>
+  // Close modal on click
+  $('#submit, #cancel').on('click', function() {
+    $('#contextual-action-modal-1').data('modal').close();
+  });
+</script>
