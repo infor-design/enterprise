@@ -273,7 +273,7 @@ Blockgrid.prototype = {
         // If the dataset doesn't actually have IDs, set temporary ones for
         // tracking selected/deselected
         if (displayedDataset.length !== this.settings.dataset.length) {
-          for (let j = 0; j < (lastRecordIdx - firstRecordIdx) + 1; j++) {
+          for (let j = 0; j < displayedDataset.length; j++) {
             if (displayedDataset[j].id) {
               break;
             }
