@@ -5714,7 +5714,7 @@ Datagrid.prototype = {
     if (self.contextualToolbar && self.contextualToolbar.length) {
       self._selectedRows.forEach((i) => {
         selectedRowIdx.push(i.idx);
-        const selectedCount = [...new Set(selectedRowIdx)];
+        const selectedCount = selectedRowIdx.filter((a, b) => selectedRowIdx.indexOf(a) === b);
         self.contextualToolbar.find('.selection-count').text(`${selectedCount.length} ${Locale.translate('Selected')}`);
       });
     }

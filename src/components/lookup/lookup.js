@@ -768,15 +768,15 @@ Lookup.prototype = {
       // Push the value/s to the Array.
       value.push(currValue);
 
-      // Passing unique values to eliminate duplicates.
-      value = [...new Set(value)];
-
       // Clear _selected tag
       const idx = this.selectedRows[i].idx;
       if (this.settings.options.dataset && this.settings.options.dataset[idx]) {
         delete this.settings.options.dataset[idx]._selected;
       }
     }
+
+    // Eliminate duplicate values.
+    value = value.filter((a, b) => value.indexOf(a) === b);
 
     /**
       * Fires on input value change.
