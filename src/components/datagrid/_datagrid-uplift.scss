@@ -296,6 +296,10 @@
 
 // EmptyMessage
 .datagrid-container.has-empty-message.is-empty {
+  .empty-title {
+    font-size: 1.8rem !important;
+  }
+
   &.empty-message-height-small {
     .empty-message {
       top: calc(50% + 33px) !important;
