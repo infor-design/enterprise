@@ -307,10 +307,18 @@
 
     &.small-rowheight .empty-message {
       top: calc(50% + 28px) !important;
+
+      .empty-title {
+        font-size: 1.8rem;
+      }
     }
 
     &.extra-small-rowheight .empty-message {
       top: calc(50% + 26px) !important;
+
+      .empty-title {
+        font-size: 1.8rem;
+      }
     }
   }
 }
