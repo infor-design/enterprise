@@ -4649,14 +4649,12 @@ html[dir='rtl'] {
   // Modal Lists
   table {
     width: 300px;
-    width: -moz-available;
     width: -webkit-fill-available;
     width: stretch;
   }
 
   .paginated table {
     width: 466px;
-    width: -moz-available;
     width: -webkit-fill-available;
     width: stretch;
   }
