@@ -80,6 +80,8 @@
 - `[Locale]` Fixed a bug with MMMM dd format in ar-SA. ([#4160](https://github.com/infor-design/enterprise/issues/4160))
 - `[Locale]` Changed the arguments names for better symmetry fromGregorian == toUmalqura and toGregorian === options.fromUmalqura. ([#4160](https://github.com/infor-design/enterprise/issues4160))
 
+(71 Issues Solved This Release, Backlog Enterprise 197, Backlog Ng 53, 1078 Functional Tests, 1482 e2e Tests)
+
 ## v4.30.0
 
 ### v4.30.0 Announcements
