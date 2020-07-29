@@ -138,6 +138,16 @@
         a {
           padding: 10px 30px;
         }
+
+        .icon-error,
+        .icon-info,
+        .icon-alert {
+          height: 14px;
+          left: 6px;
+          position: absolute;
+          top: calc(50% - 7px);
+          width: 18px;
+        }
       }
     }
 
