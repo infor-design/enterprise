@@ -5,6 +5,7 @@
 ### v4.32.0 Fixes
 
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+- `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
 
 ## v4.31.0
 
