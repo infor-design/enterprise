@@ -4,6 +4,8 @@
 
 ### v4.31.0 Features
 
+- `[Calendar]` Added the ability to override an event `color` and `borderColor` see docs for details. ([#3923](https://github.com/infor-design/enterprise/issues/3923))
+- `[Calendar]` Added the ability to use the monthview legend setting to colorsize day backgrounds. To use this set the `dayLegend` property. And this uses the same format for legend in the monthView. Just renamed it to avoid confusing with the event legend. ([#3893](https://github.com/infor-design/enterprise/issues/3893))
 - `[Datagrid]` Added a `spacerColumn` setting, with this setting the last column fills any empty space instead of stretching everything out. ([#4032](https://github.com/infor-design/enterprise/issues/4032))
 - `[Datagrid]` Added a `columnSizing` setting which impacts how the column widths are auto calculated. Options are: `both` (default), `data` or `header` (including filter). ([#4017](https://github.com/infor-design/enterprise/issues/4017))
 - `[Datagrid]` Added the setting for empty message small height. ([#3609](https://github.com/infor-design/enterprise/issues/3609))
