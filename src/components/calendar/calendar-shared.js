@@ -33,7 +33,7 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   };
   const translate = str => Locale.translate(str, { locale: locale.name, language });
 
-  event.color = this.getEventTypeColor(event.type, eventTypes);
+  event.color = this.getEventTypeColor(event, eventTypes);
   event.duration = Math.abs(dateUtils.dateDiff(
     new Date(event.ends),
     new Date(event.starts),
@@ -211,17 +211,21 @@ calendarShared.formateTimeString = function formateTimeString(event, locale, lan
 
 /**
  * Find the matching type and get the color.
- * @param {object} id The eventType id to find.
+ * @param {object} event The eventType type or color to find.
  * @param {object} eventTypes The event types to use
  * @returns {object} The Calendar prototype, useful for chaining.
  */
-calendarShared.getEventTypeColor = function getEventTypeColor(id, eventTypes) {
+calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes) {
   let color = 'azure';
-  if (!id) {
+  if (!event.type && !event.color) {
     return color;
   }
 
-  const eventInfo = eventTypes.filter(eventType => eventType.id === id);
+  if (event.color) {
+    return event.color;
+  }
+
+  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (eventInfo.length === 1) {
     color = eventInfo[0].color || 'azure';
   }

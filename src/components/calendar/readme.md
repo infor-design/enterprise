@@ -88,8 +88,10 @@ The following data fields are used.
 - ends - The date/time when the event ends
 - type - The eventType key, this must have a match in the eventTypes array
 - isAllDay - Determines if the event is all day or not
+- color - Normally the color is determined by the eventType color. But you can override this by providing a hex value starting with the `#`. Where possible its recommended to use a color in range 0-1 in the color palette. This has the side effect that the legend wont be correct for this event.
+- borderColor - Normally the borderColor on the left is determined by the eventType color. But you can override this by providing a hex value starting with the `#`. Where possible its recommended to use a color in range 9-10 in the color palette or the hex code of the theme alert colors. This has the side effect that the legend wont be correct for this event.
 
-The event types is a seperate data structure that looks like this:
+The event types is a separate data structure that looks like this:
 
 ```JSON
 {

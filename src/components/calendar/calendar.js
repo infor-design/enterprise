@@ -47,7 +47,18 @@ const COMPONENT_NAME_DEFAULTS = {
     endHour: 19,
     showAllDay: true,
     showTimeLine: true
-  }
+  },
+  disable: {
+    callback: null,
+    dates: [],
+    years: [],
+    minDate: '',
+    maxDate: '',
+    dayOfWeek: [],
+    isEnable: false,
+    restrictMonths: false
+  },
+  dayLegend: null
 };
 
 /**
@@ -82,6 +93,27 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.weekViewSettings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.weekViewSettings.showAllDay=true] Detemines if the all day events row should be shown.
  * @param {boolean} [settings.weekViewSettings.showTimeLine=true] Shows a bar across the current time.
+ * @param {object} [settings.disable] Disable dates in various ways.
+ * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
+ * or be a Date() object or string that can be converted to a date with new Date().
+ * @param {function} [settings.disable.callback] return true to disable passed dates.
+ * @param {array} [settings.disable.dates] Disable specific dates.
+ * Example `{dates: ['12/31/2018', '01/01/2019']}`.
+ * @param {array} [settings.disable.years] Disable specific years.
+ * Example `{years: [2018, 2019]}`.
+ * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
+ * Example `{minDate: '12/31/2016'}`.
+ * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
+ * Example `{minDate: '12/31/2019'}`.
+ * @param {array} [settings.disable.dayOfWeek] Disable a specific of days of the week 0-6.
+ * Example `{dayOfWeek: [0,6]}`.
+ * @param {boolean} [settings.disable.isEnable=false] Inverse the disable settings.
+ * If true all the disable settings will be enabled and the rest will be disabled.
+ * So you can inverse the settings.
+ * @param {boolean} [settings.disable.retrictMonths=false] Restrict month selections on datepicker.
+ * It requires minDate and maxDate for the feature to activate.
+ * For example if you have more non specific dates to disable then enable ect.
+ * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
  */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -223,7 +255,10 @@ Calendar.prototype = {
       iconTooltip: this.iconTooltip,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
-      onChangeView: this.onChangeToMonth
+      onChangeView: this.onChangeToMonth,
+      disable: this.settings.disable,
+      showLegend: this.settings.dayLegend !== null,
+      legend: this.settings.dayLegend
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();
@@ -755,6 +790,16 @@ Calendar.prototype = {
     node.setAttribute('data-id', event.id);
     node.setAttribute('data-key', event.startKey);
 
+    // Let the border color / color be overriden
+    if (event.color?.substr(0, 1) === '#') {
+      node.style.backgroundColor = event.color;
+      node.classList.remove(event.color);
+    }
+
+    if (event.borderColor?.substr(0, 1) === '#') {
+      node.style.borderLeftColor = event.borderColor;
+    }
+
     node.innerHTML = `<div class="calendar-event-content">
       ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
       <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
@@ -1164,7 +1209,7 @@ Calendar.prototype = {
       }
     }
 
-    event.color = calendarShared.getEventTypeColor(event.type, this.settings.eventTypes);
+    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes);
     event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;

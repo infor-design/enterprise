@@ -731,5 +731,25 @@
     "ends": "2020-06-17T23:59:59.999",
     "type": "dto",
     "isAllDay": "sick"
+  },
+  {
+    "id": "74",
+    "subject": "Super Fun Party Day",
+    "starts": "2020-07-29T00:00:00.000",
+    "ends": "2020-07-29T23:59:59.999",
+    "icon": "icon-success-alert",
+    "type": "dto",
+    "color": "#D5F6C0",
+    "borderColor": "#80ce4d"
+  },
+  {
+    "id": "75",
+    "subject": "Emergency Meeting",
+    "starts": "2020-07-30T00:00:00.000",
+    "ends": "2020-07-30T23:59:59.999",
+    "type": "admin",
+    "icon": "icon-error-alert",
+    "color": "#F6CACA",
+    "borderColor": "#e84f4f"
   }
 ]
