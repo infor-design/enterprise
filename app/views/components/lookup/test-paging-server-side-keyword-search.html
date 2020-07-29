@@ -13,15 +13,22 @@
   var columns = [];
 
   // Define Columns for the Grid.
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId' });
   columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+  columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Integer });
+  columns.push({ id: 'price', name: 'price', field: 'price', formatter: Formatters.Decimal });
+  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date});
 
   // Init and get the api for the grid
   $('#product-lookup').lookup({
-    field: 'productName',
+    field: 'productId',
     options: {
       columns: columns,
       disableClientFilter: true,
       disableClientSort: true,
+      allowSelectAcrossPages: true,
+      columnIds: ['productId'],
       columnReorder: true,
       paging: true,
       pagesize: 10,
@@ -46,7 +53,7 @@
           if (req.filterExpr[0].columnId) {
             url += '&filterColumn=' + req.filterExpr[0].columnId;
           } else if (req.filterExpr[0].column === 'all') {
-            url += '&filterColumn=' + columns[0].id;
+            url += '&filterColumn=' + columns[2].id;
           }
         }
 
