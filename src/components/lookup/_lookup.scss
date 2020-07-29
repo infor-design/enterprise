@@ -125,8 +125,8 @@
 
   &.lookup-no-search {
     .toolbar {
-      margin-bottom: 5px;
-      margin-top: -40px;
+      margin-bottom: -5px !important;
+      margin-top: -15px !important;
       vertical-align: top;
     }
 
