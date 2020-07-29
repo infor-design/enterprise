@@ -296,6 +296,10 @@
 
 // EmptyMessage
 .datagrid-container.has-empty-message.is-empty {
+  .empty-title {
+    font-size: 1.8rem !important;
+  }
+
   &.empty-message-height-small {
     .empty-message {
       top: calc(50% + 33px) !important;
@@ -307,18 +311,10 @@
 
     &.small-rowheight .empty-message {
       top: calc(50% + 28px) !important;
-
-      .empty-title {
-        font-size: 1.8rem;
-      }
     }
 
     &.extra-small-rowheight .empty-message {
       top: calc(50% + 26px) !important;
-
-      .empty-title {
-        font-size: 1.8rem;
-      }
     }
   }
 }

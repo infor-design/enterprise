@@ -121,6 +121,9 @@ $datagrid-small-row-height: 25px;
         padding-bottom: 0;
 
         .empty-title {
+          font-size: $theme-size-font-px-16;
+          -webkit-font-smoothing: antialiased;
+          font-weight: 400;
           padding-bottom: 0;
         }
       }
