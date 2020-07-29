@@ -4,6 +4,8 @@
 
 ### v4.32.0 Fixes
 
+- `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+
 ## v4.31.0
 
 ### v4.31.0 Features

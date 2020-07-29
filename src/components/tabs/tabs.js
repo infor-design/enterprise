@@ -3462,6 +3462,9 @@ Tabs.prototype = {
    * @returns {void}
    */
   sizeBar(target) {
+    if ((!this.animatedBar || (this.animatedBar && !this.animatedBar[0]))) {
+      return;
+    }
     target = target || this.element.find('.tab.is-selected');
     const style = this.animatedBar[0].style;
     const scrollingTablist = this.tablistContainer;
