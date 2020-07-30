@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Lookup example tests', () => {
+fdescribe('Lookup example tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index?layout=nofrills');
   });
@@ -472,7 +472,7 @@ describe('Lookup single select serverside tests', () => {
   }
 });
 
-describe('Lookup minWidth tests', () => {
+fdescribe('Lookup minWidth tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-minwidth');
   });

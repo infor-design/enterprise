@@ -132,7 +132,7 @@ describe('Application Menu accordion truncated text tooltip tests', () => {
   });
 });
 
-describe('Application Menu personalize tests', () => {
+fdescribe('Application Menu personalize tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-personalized');
   });
