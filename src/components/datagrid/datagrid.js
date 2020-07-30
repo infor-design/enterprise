@@ -7068,7 +7068,7 @@ Datagrid.prototype = {
 
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
-        if (!dataset[i]._isFilteredOut) {
+        if (!dataset[i]._isFilteredOut && !dataset[i]._selected) {
           rows.push(idx);
         }
       } else if (!dataset[i]._selected) {
