@@ -32,6 +32,10 @@ const BLOCKGRID_DEFAULTS = {
 
 // Moves/Converts certain settings
 function handleLegacySettings(storedSettings, incomingSettings) {
+  if (!incomingSettings) {
+    return storedSettings;
+  }
+
   // Bypasses deep copy issues with `mergeSettings`
   if (incomingSettings.dataset) {
     storedSettings.dataset = incomingSettings.dataset;
