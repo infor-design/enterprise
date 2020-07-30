@@ -4,7 +4,7 @@
 
 ### v4.32.0 Fixes
 
-- `[Datagrid]` Fixed an issue where select all rows were keep adding to selected array every time method `selectAllRows()` run. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
+- `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 
 ## v4.31.0
