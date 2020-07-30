@@ -1,5 +1,5 @@
 import * as debug from '../../utils/debug';
-import { deprecateMethod } from '../../utils/deprecated';
+import { deprecateMethod, warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -7,31 +7,53 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'blockgrid';
 
 /**
- * Component Name - Does this and that.
+ * The Blockgrid Component displays data as selectable blocks within a simple grid.
  * @class Blockgrid
- * @param {string} element The plugin element for the constuctor
- * @param {string} [settings] The settings element.
- * @param {array} [settings.dataset=[]] An array of data objects
- * @param {string} [settings.selectable=false] Controls the selection mode this can be:
+ * @param {string} element The element for the constuctor
+ * @param {string} [settings] Incoming Blockgrid settings
+ * @param {array} [settings.dataset=[]] An array of data objects that will be represented as blocks.
+ * @param {string} [settings.selectable=false] Controls the selection mode this can be: false, 'single' or 'multiple' or 'mixed'
  * @param {boolean} paging Enable paging mode
- * @param {number} pagesize Number of rows per page
- * @param {array} pagesizes Array of page sizes to show in the page size dropdown.
- * false, 'single' or 'multiple' or 'mixed'
+ * @param {object} [settings.pagerSettings={}] if paging is enabled, the settings inside this object will be passed to the pager for configuration.
+ * @param {number} [settings.pagerSettings.pagesize=25] Number of rows per page
+ * @param {array} [settings.pagerSettings.pagesizes=[]] Array of page sizes to show in the page size dropdown.
  */
 const BLOCKGRID_DEFAULTS = {
   dataset: [],
   selectable: false, // false, 'single' or 'multiple' or mixed
   paging: false,
-  pagesize: 25,
-  pagesizes: [10, 25, 50, 75]
+  pagerSettings: {
+    pagesize: 25,
+    pagesizes: [10, 25, 50, 75],
+    showFirstButton: false,
+    showLastButton: false
+  }
 };
+
+// Moves/Converts certain settings
+function handleLegacySettings(storedSettings, incomingSettings) {
+  // Bypasses deep copy issues with `mergeSettings`
+  if (incomingSettings.dataset) {
+    storedSettings.dataset = incomingSettings.dataset;
+  }
+  if (incomingSettings.pagesize) {
+    warnAboutDeprecation('`pagerSettings.pagesize` setting', '`pagesize` setting');
+    storedSettings.pagerSettings.pagesize = incomingSettings.pagesize;
+    delete storedSettings.pagesize;
+  }
+  if (incomingSettings.pagesizes) {
+    warnAboutDeprecation('`pagerSettings.pagesizes` setting', '`pagesizes` setting');
+    storedSettings.pagerSettings.pagesizes = incomingSettings.pagesizes;
+    delete storedSettings.pagesizes;
+  }
+
+  return storedSettings;
+}
 
 function Blockgrid(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BLOCKGRID_DEFAULTS);
-  if (settings.dataset) {
-    this.settings.dataset = settings.dataset;
-  }
+  this.settings = handleLegacySettings(this.settings, settings);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -50,7 +72,7 @@ Blockgrid.prototype = {
   /**
    * Do initialization, build up and / or add events ect.
    * @private
-   * @returns {object} The Component prototype, useful for chaining.
+   * @returns {Blockgrid} The Component prototype, useful for chaining.
    */
   init() {
     this.selectedRows = [];
@@ -63,7 +85,7 @@ Blockgrid.prototype = {
 
   /**
    * Add any needed markup to the component.
-   * @returns {object} The Component prototype, useful for chaining.
+   * @returns {Blockgrid} The Component prototype, useful for chaining.
    * @private
    */
   build() {
@@ -77,7 +99,7 @@ Blockgrid.prototype = {
 
   /**
    * Sets up event handlers for this component and its sub-elements.
-   * @returns {object} The Component prototype, useful for chaining.
+   * @returns {Blockgrid} The Component prototype, useful for chaining.
    * @private
    */
   handleEvents() {
@@ -132,18 +154,22 @@ Blockgrid.prototype = {
     return this;
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   handlePaging() {
     if (!this.settings.paging) {
       return;
     }
 
-    this.element.addClass('paginated');
-    this.element.pager({
+    const pagerSettings = utils.extend({}, this.settings.pagerSettings, {
       componentAPI: this,
-      dataset: this.settings.dataset,
-      pagesize: this.settings.pagesize,
-      pagesizes: this.settings.pagesizes
+      dataset: this.settings.dataset
     });
+
+    this.element.addClass('paginated');
+    this.element.pager(pagerSettings);
   },
 
   /**
@@ -337,9 +363,7 @@ Blockgrid.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-    if (settings && settings.dataset) {
-      this.settings.dataset = settings.dataset;
-    }
+    this.settings = handleLegacySettings(this.settings, settings);
 
     this.teardown();
     this.init();
