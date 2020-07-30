@@ -691,6 +691,28 @@ describe('Datagrid frozen column grouped rows show row tests', () => {
   });
 });
 
+describe('Datagrid frozen column grouped rows hide columns tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-hide-column');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:first-child'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render grouped headers with hidden columns', async () => {
+    expect(await element.all(by.css('.datagrid-header-groups')).count()).toEqual(2);
+    expect(await element.all(by.css('[colspan]')).count()).toEqual(9);
+    expect(await element.all(by.css('.datagrid-header.left th')).count()).toEqual(8);
+    expect(await element.all(by.css('.datagrid-header.center th')).count()).toEqual(13);
+    expect(await element(by.css('.datagrid-header.center .datagrid-header-groups th:nth-child(4)')).getText()).toEqual('Group Header 1');
+  });
+});
+
 describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');

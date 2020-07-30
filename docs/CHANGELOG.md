@@ -22,6 +22,7 @@
 - `[Autocomplete]` Fixed an issue where the JavaScript error was thrown for ie11. ([#4148](https://github.com/infor-design/enterprise/issues/4148))
 - `[Blockgrid]` Fixed an issue with paged datasets that would occasionally cause a JS console error. ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
+- `[Datagrid]` Fixed an issue when hiding columns after loading a datagrid up with grouped headers and frozen columns. ([#4218](https://github.com/infor-design/enterprise/issues/4218))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
 - `[Datagrid]` Fixed a bug that nested datagrid columns could not be clicked. ([#4197](https://github.com/infor-design/enterprise/issues/4197))
