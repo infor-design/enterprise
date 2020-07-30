@@ -22,6 +22,7 @@
 
 ### v4.31.0 Fixes
 
+- `[Accordion]` Fixed a bug where disabled headers texts and icons were barely recognizable as disabled in uplift theme. ([#4065](https://github.com/infor-design/enterprise/issues/4065))
 - `[Application Menu]` Fixed an issue where the Header was unable to hide for RTL and ie11. ([#2154](https://github.com/infor-design/enterprise/issues/2154))
 - `[Application Menu]` Fixed a bug where the border top color is wrong in uplift dark and high contrast theme. ([#4042](https://github.com/infor-design/enterprise/issues/4042))
 - `[Application Menu]` Fixed a bug where some buttons did not have labels for the icon buttons in toolbars. Check your application if you use this pattern. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
