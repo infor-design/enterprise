@@ -1074,12 +1074,14 @@ Datagrid.prototype = {
       }
 
       const groupHeaderEl = headGroups[k];
-      groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
+      if (groupHeaderEl) {
+        groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
 
-      if ((colGroups[k].hidden || colspan < 1)) {
-        groupHeaderEl.classList.add('hidden');
-      } else {
-        groupHeaderEl.classList.remove('hidden');
+        if ((colGroups[k].hidden || colspan < 1)) {
+          groupHeaderEl.classList.add('hidden');
+        } else {
+          groupHeaderEl.classList.remove('hidden');
+        }
       }
     });
 
@@ -2592,7 +2594,7 @@ Datagrid.prototype = {
       default: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
       filterable: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
       group: { extraSmall: -22, short: -25, small: -25, medium: -30, normal: -39, large: -39 },
-      groupFilter: { extraSmall: -27, short: -29, small: -29, medium: -30, normal: -41, large: -41 }
+      groupFilter: { extraSmall: -28, short: -29, small: -29, medium: -32, normal: -39, large: -39 }
     };
     let extraTop = 0;
     const prop = s.rowHeight === 'extra-small' ? 'extraSmall' : s.rowHeight;
