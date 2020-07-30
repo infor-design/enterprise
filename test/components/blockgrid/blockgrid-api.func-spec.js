@@ -21,8 +21,10 @@ const settings = {
   }],
   selectable: 'single', // false, 'single' or 'multiple' or mixed
   paging: false,
-  pagesize: 25,
-  pagesizes: [10, 25, 50, 75]
+  pagerSettings: {
+    pagesize: 25,
+    pagesizes: [10, 25, 50, 75]
+  }
 };
 
 describe('Blockgrid API', () => {
