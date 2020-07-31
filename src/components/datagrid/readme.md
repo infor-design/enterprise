@@ -179,6 +179,7 @@ $('#datagrid').datagrid({
 |`Spinbox` | Formats the cell as text for use with a Spinbox editor. Also supports the `inlineEditor` option as well for list grids.|
 |`Favorite` | Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.|
 |`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-targeted-achievement.html?font=source-sans" target="_blank">targeted achievement example</a>|
+|`RowNumber` | Formats the cell with a row number column that is shown 1 to n no matter the sort order. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-row-numbers?font=source-sans" target="_blank">row numbers example</a>|
 
 ## Creating Custom Formatters
 
