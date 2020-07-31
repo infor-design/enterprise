@@ -462,7 +462,7 @@ ContextualActionPanel.prototype = {
   * @returns {void}
   */
   handleToolbarSelected() {
-    this.close();
+    this.close(true);
   },
 
   /**
@@ -510,14 +510,14 @@ ContextualActionPanel.prototype = {
   * Close the Contextual Action Panel if open and call destroy.
   * @returns {void}
   */
-  close() {
+  close(doForce) {
     let destroy;
     if (this.settings.modalSettings.trigger === 'immediate') {
       destroy = true;
     }
 
     if (this.modalAPI) {
-      this.modalAPI.close(destroy);
+      this.modalAPI.close(destroy, false, true);
     }
   },
 
