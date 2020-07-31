@@ -2,7 +2,7 @@
 
 ## v4.32.0
 
-### v4.31.0 Features
+### v4.32.0 Features
 
 - `[Datagrid]` Add a new `RowNumber` formatter that will show a row number column that remains the same no matter how the grid is sorted. ([#1904](https://github.com/infor-design/enterprise/issues/1904))
 
