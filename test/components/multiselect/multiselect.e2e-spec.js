@@ -280,6 +280,33 @@ describe('Multiselect typeahead-reloading tests', () => {
     await utils.setPage('/components/multiselect/test-reload-typeahead');
   });
 
+  // Added to check highlighting of text characters
+  // See Github #4141
+  if (utils.isChrome() && utils.isCI()) {
+    it('Highlights matched filter terms and should not visually regress', async () => {
+      const multiselectEl = await element(by.css('div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepShort);
+
+      // Open the list
+      await multiselectEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      const multiselectSearchEl = await element(by.id('dropdown-search'));
+
+      // Filter for "New"
+      await multiselectSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+
+      // Find the list element
+      const listEl = await element(by.css('.dropdown-list.multiple'));
+
+      // Make sure the matching text is highlighted and all results contain the match
+      expect(await browser.imageComparison.checkElement(listEl, 'multiselect-highlight-filtered')).toEqual(0);
+    });
+  }
+
   if (!utils.isSafari()) {
     // Edited for #920
     it('Should make ajax calls properly on typeahead for multiple items', async () => {

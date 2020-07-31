@@ -852,7 +852,7 @@ Dropdown.prototype = {
       // Highlight search term
       if (term && term.length > 0) {
         const exp = self.getSearchRegex(term);
-        text = text.replace(exp, '<i>$1</i>').trim();
+        text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
       }
 
       if (self.listIcon.hasIcons &&
@@ -3171,7 +3171,7 @@ Dropdown.prototype = {
     this.element
       .prop('disabled', true)
       .prop('readonly', false);
-      
+
     this.pseudoElem.addClass('is-disabled');
 
     setTimeout(() => {
