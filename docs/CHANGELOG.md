@@ -23,6 +23,7 @@
 - `[Blockgrid]` Fixed an issue with paged datasets that would occasionally cause a JS console error. ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
 - `[Blockgrid]` Fixed a bug where first/last pager buttons would show and be disabled by default (buttons are now hidden by default). ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
+- `[Datagrid]` Fixed an issue when hiding columns after loading a datagrid up with grouped headers and frozen columns. ([#4218](https://github.com/infor-design/enterprise/issues/4218))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
 - `[Datagrid]` Fixed a bug that nested datagrid columns could not be clicked. ([#4197](https://github.com/infor-design/enterprise/issues/4197))

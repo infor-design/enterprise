@@ -168,7 +168,7 @@ $datagrid-small-row-height: 25px;
     }
 
     tr:not(.datagrid-header-groups) th {
-      top: 39px;
+      top: $datagrid-header-height - 5;
     }
 
     &.small-rowheight tr:not(.datagrid-header-groups) th,
@@ -1594,7 +1594,7 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
-      line-height: $datagrid-extra-small-row-height - 2;
+      line-height: $datagrid-extra-small-row-height - 3;
 
       .datagrid-reorder-icon .icon {
         height: 18px;
@@ -1608,6 +1608,10 @@ $datagrid-small-row-height: 25px;
     }
 
     tbody tr td {
+      span {
+        line-height: $datagrid-extra-small-row-height - 3;
+      }
+
       .hyperlink {
         font-size: $input-size-compact-font-size;
         margin-top: -1px;
@@ -2703,7 +2707,7 @@ $datagrid-small-row-height: 25px;
     background-clip: padding-box;
     background-color: $datagrid-header-bg-color;
     border-left: 1px solid $datagrid-header-border-color;
-    height: $datagrid-header-height;
+    height: $datagrid-header-height - 4;
     overflow: hidden;
     position: -webkit-sticky;
     position: sticky;

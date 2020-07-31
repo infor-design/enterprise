@@ -39,16 +39,6 @@ describe('TimePicker API', () => {
     expect(timepickerObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should open timepicker', (done) => {
-    timepickerObj.openTimePopup();
-
-    setTimeout(() => {
-      expect(timepickerObj.isOpen()).toBeTruthy();
-      expect(document.body.querySelector('.timepicker.is-open')).toBeTruthy();
-      done();
-    }, 650);
-  });
-
   it('Should render based on locale setting', (done) => {
     timepickerObj.destroy();
     timepickerObj = new TimePicker(timepickerEl, {
