@@ -1,0 +1,101 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').one('initialized', function () {
+
+    var columns = [];
+    var initData = [{
+      id: 1,
+      demoDataId: 0,
+      depth: 1,
+      expanded: false,
+      name: 'A',
+      children: []
+    }];
+
+    var mockChildDataSets = {
+      0: [
+        {
+          id: 2,
+          demoDataId: 1,
+          depth: 2,
+          expanded: false,
+          name: 'AA',
+          children: []
+        },
+        {
+          id: 3,
+          demoDataId: 2,
+          depth: 2,
+          expanded: false,
+          name: 'BB',
+          children: []
+        }
+      ],
+      1: [
+        {
+          id: 4,
+          depth: 3,
+          expanded: false,
+          name: 'AAA'
+        },
+        {
+          id: 5,
+          depth: 3,
+          expanded: false,
+          name: 'BBB'
+        }
+      ],
+      2: [
+        {
+          id: 6,
+          depth: 3,
+          expanded: false,
+          name: 'AAA'
+        },
+        {
+          id: 7,
+          depth: 3,
+          expanded: false,
+          name: 'BBB'
+        }
+      ]
+    }
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'name', name: 'Name', field: 'name', formatter: Formatters.Tree });
+    columns.push({ id: 'id', name: 'Id', field: 'id' });
+
+    // Initialize the Grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: initData,
+      treeGrid: true,
+      toolbar: {title: 'Test Updating Data using updateDataSet()', results: true, personalize: true}
+    })
+    // Bind on Expand Row
+    .on('expandrow', function (e, args) {
+      initData.map(function callback(v) {
+        if (v.children && v.children.length > 0) {
+          v.children.map(callback);
+        }
+
+        if (v.id === args.rowData.id) {
+          v.children = mockChildDataSets[args.rowData.demoDataId];
+        }
+      });
+      // Mock ajax call
+      setTimeout(function() {
+        var grid = $('#datagrid').data('datagrid');
+        grid.updateDataset(initData)
+      });
+    });
+
+  });
+</script>
