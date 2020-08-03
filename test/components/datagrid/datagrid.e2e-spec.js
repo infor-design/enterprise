@@ -1621,6 +1621,38 @@ describe('Datagrid Row Row Reorder', () => {
   }
 });
 
+describe('Datagrid Row Numbers', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/example-row-numbers?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should number rows', async () => {
+    expect(await element(by.css('#datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toBe('1');
+    expect(await element(by.css('#datagrid tr:nth-child(1) td:nth-child(2)')).getText()).toBe('214220');
+    expect(await element(by.css('#datagrid tr:nth-child(20) td:nth-child(1)')).getText()).toBe('20');
+    expect(await element(by.css('#datagrid tr:nth-child(20) td:nth-child(2)')).getText()).toBe('214239');
+  });
+
+  it('Should number rows on sort', async () => {
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+    await browser.driver.sleep(350);
+    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
+
+    expect(await element(by.css('#datagrid tr:nth-child(1) td:nth-child(1)')).getText()).toBe('1');
+    expect(await element(by.css('#datagrid tr:nth-child(1) td:nth-child(2)')).getText()).toBe('214319');
+    expect(await element(by.css('#datagrid tr:nth-child(20) td:nth-child(1)')).getText()).toBe('20');
+    expect(await element(by.css('#datagrid tr:nth-child(20) td:nth-child(2)')).getText()).toBe('214300');
+  });
+});
+
 describe('Datagrid Date default values', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-accept-default-date-value?layout=nofrills');

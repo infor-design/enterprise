@@ -1,0 +1,39 @@
+<div class="full-height full-width">
+    <div id="datagrid" class="datagrid">
+    </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+    $.getJSON(url, function(res) {
+      data = res.data;
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'rowNumbers', name: '', field: '', formatter: Formatters.RowNumber, sortable: false, align: 'center', reorderable: false });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text' });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text' });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        columnReorder: true,
+        dataset: data,
+        paging: true,
+        filterable: false,
+        pagesize: 20,
+        toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true, filterRow: true }
+      });
+    });
+ });
+</script>
