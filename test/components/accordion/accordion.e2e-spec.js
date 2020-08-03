@@ -123,6 +123,17 @@ describe('Accordion example-disabled tests', () => {
     expect(await element.all(by.css('.accordion-header.is-disabled')).count()).toEqual(4);
     expect(await element.all(by.css('.accordion.is-disabled')).count()).toEqual(1);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-disabled', async () => {
+      const mainEl = await element(by.css('div[role=main]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkScreen('accordion-disabled')).toEqual(0);
+    });
+  }
 });
 
 describe('Accordion example-index tests', () => {
