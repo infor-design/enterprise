@@ -426,6 +426,33 @@ describe('Dropdown typeahead-reloading tests', () => {
     await utils.setPage('/components/dropdown/test-reload-typeahead');
   });
 
+  // Added to check highlighting of text characters
+  // See Github #4141
+  if (utils.isChrome() && utils.isCI()) {
+    it('Highlights matched filter terms and should not visually regress', async () => {
+      const dropdownEl = await element(by.css('div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleepShort);
+
+      // Open the list
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
+
+      // Filter for "New"
+      await dropdownSearchEl.sendKeys('New');
+      await browser.driver.sleep(config.sleep);
+
+      // Find the list element
+      const listEl = await element(by.css('.dropdown-list'));
+
+      // Make sure the matching text is highlighted and all results contain the match
+      expect(await browser.imageComparison.checkElement(listEl, 'dropdown-highlight-filtered')).toEqual(0);
+    });
+  }
+
   if (!utils.isSafari()) {
     it('Should open with down arrow, make ajax request, filter to "new", make ajax request, down arrow to New Jersey, and focus', async () => {
       // Open the list
