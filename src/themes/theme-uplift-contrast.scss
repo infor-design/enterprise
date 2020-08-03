@@ -177,7 +177,7 @@ $secondary-border-btn-ripple-color: $theme-color-brand-primary-alt;
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $input-color-initial-placeholder;
-$input-readonly-color: $input-color-readonly-font;
+$input-readonly-color: $theme-color-palette-slate-40;
 
 //States
 $error-color: $theme-color-status-danger;
@@ -263,7 +263,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
-$dropdown-readonly-icon-color: $theme-color-palette-slate-30;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
