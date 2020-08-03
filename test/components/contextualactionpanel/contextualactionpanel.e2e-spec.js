@@ -84,6 +84,26 @@ describe('Contextual Action Panel example-index tests', () => {
       expect(await browser.imageComparison.checkElement(panelEl, 'contextual-action-index')).toEqual(0);
     });
   }
+
+  // See Github #4112
+  it('can close the CAP while a subcomponent is open', async () => {
+    // Open the Modal
+    const actionButtonEl = await element(by.css('.btn-secondary'));
+    await actionButtonEl.click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    // Open the "Ship Terms" dropdown
+    const ddEl = await element(by.css('#ship-terms + .dropdown-wrapper > .dropdown'));
+    await ddEl.click();
+    await browser.driver.sleep(config.sleep);
+
+    // Click the modal's "Close" button
+    const closeBtnEl = await element(by.css('.modal .btn[name="close"]'));
+    await closeBtnEl.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBeFalsy();
+  });
 });
 
 describe('Contextual Action Panel example-workspace tests', () => {
