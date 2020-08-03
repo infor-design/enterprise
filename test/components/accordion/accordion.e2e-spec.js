@@ -112,7 +112,7 @@ describe('Accordion Collapse Children tests', () => {
 
 describe('Accordion example-disabled tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-disabled');
+    await utils.setPage('/components/accordion/example-disabled?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -129,7 +129,7 @@ describe('Accordion example-disabled tests', () => {
       const mainEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkScreen('accordion-disabled')).toEqual(0);
     });
