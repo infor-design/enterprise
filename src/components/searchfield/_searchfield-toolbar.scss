@@ -138,7 +138,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       border: 1px solid transparent;
 
       &:not(.hide-focus) {
-        box-shadow: none;
+        box-shadow: none !important;
         color: $button-color-secondary-initial-font;
 
         &::after {
@@ -299,19 +299,23 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       &.toolbar-searchfield-wrapper {
-        box-shadow: $focus-box-shadow-bottom;
+        box-shadow: $focus-box-shadow-input;
 
         &.has-categories {
-          box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-
           .searchfield {
-            border-left-color: rgba($input-color-focus-border, 1);
+            border-bottom-color: rgba($searchfield-border-color, 1);
+
+            &:focus {
+              border-color: rgba($input-color-focus-border, 1);
+            }
           }
         }
       }
 
       .searchfield {
-        border-color: rgba($input-color-focus-border, 1);
+        &:focus {
+          border-color: rgba($input-color-focus-border, 1);
+        }
       }
 
       .btn {
@@ -398,12 +402,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield {
         border-left-color: transparent;
       }
-    }
-  }
-
-  &.has-go-button {
-    .searchfield {
-      width: auto !important;
     }
   }
 
