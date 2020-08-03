@@ -1283,10 +1283,11 @@ Modal.prototype = {
    * Close the modal.
    * @param {boolean} destroy Call the destroy method.
    * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
+   * @param {boolean} [force = false] if true, forces the modal closed and ignores open subcomponents/visibility.
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
-  close(destroy, noRefresh) {
-    if (!this.visible || this.openSubComponents.length) {
+  close(destroy, noRefresh, force = false) {
+    if (!force && (!this.visible || this.openSubComponents.length)) {
       return true;
     }
 
