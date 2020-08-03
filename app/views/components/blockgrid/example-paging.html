@@ -86,8 +86,10 @@
       dataset: data,
       selectable: 'multiple',
       paging: true,
-      pagesize: 3,
-      pagesizes: [3, 10, 25, 50, 75]
+      pagerSettings: {
+        pagesize: 3,
+        pagesizes: [3, 10, 25, 50, 75]
+      }
     }).on('selected', function (e, args) {
       console.log(args);
     }).on('unselected', function (e, args) {
