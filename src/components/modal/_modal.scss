@@ -141,25 +141,6 @@
     }
   }
 
-  .field:last-child input:not(.spinbox):not(.colorpicker):not(.searchfield),
-  .field:last-child textarea,
-  .field:last-child .spinbox-wrapper,
-  .field:last-child .colorpicker-container {
-    margin-bottom: 10px;
-
-    + .error-message {
-      margin-top: -3px;
-    }
-  }
-
-  .field:last-child input.error {
-    margin-bottom: 0 !important;
-
-    + .error-message {
-      margin-top: 7px !important;
-    }
-  }
-
   .textarea-wordcount {
     width: auto;
   }
@@ -456,8 +437,9 @@ body.modal-engaged {
     .field:last-child {
       margin-bottom: 0;
 
-      .textarea-wordcount {
-        margin-bottom: 0;
+      label,
+      .label {
+        margin-top: 20px;
       }
     }
   }
