@@ -82,6 +82,10 @@
 
         .searchfield {
           border-color: transparent transparent rgba($searchfield-border-color, 1);
+
+          &:focus {
+            border-color: transparent transparent rgba($searchfield-border-color, 1);
+          }
         }
       }
     }
