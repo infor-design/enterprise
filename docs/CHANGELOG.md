@@ -2,12 +2,20 @@
 
 ## v4.32.0
 
+### v4.32.0 Features
+
+- `[Datagrid]` Add a new `RowNumber` formatter that will show a row number column that remains the same no matter how the grid is sorted. ([#1904](https://github.com/infor-design/enterprise/issues/1904))
+
 ### v4.32.0 Fixes
 
 - `[Accordion]` Fixed a bug where disabled headers texts and icons were barely recognizable as disabled in uplift theme. ([#4065](https://github.com/infor-design/enterprise/issues/4065))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 - `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
+- `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+- `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
+- `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
+- `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 
 ## v4.31.0
@@ -31,7 +39,10 @@
 - `[Application Menu]` Fixed a bug where some buttons did not have labels for the icon buttons in toolbars. Check your application if you use this pattern. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
 - `[Autocomplete]` Fixed an issue where the JavaScript error was thrown for ie11. ([#4148](https://github.com/infor-design/enterprise/issues/4148))
 - `[Blockgrid]` Fixed an issue with paged datasets that would occasionally cause a JS console error. ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
+- `[Blockgrid]` Fixed a bug where first/last pager buttons would show and be disabled by default (buttons are now hidden by default). ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
+- `[Datagrid]` Fixed an issue when hiding columns after loading a datagrid up with grouped headers and frozen columns. ([#4218](https://github.com/infor-design/enterprise/issues/4218))
+- `[Datagrid]` Fixed an issue where the rows were not render properly when use method `updateDataset()` for treegrid. ([#4213](https://github.com/infor-design/enterprise/issues/4213))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
 - `[Datagrid]` Fixed a bug that nested datagrid columns could not be clicked. ([#4197](https://github.com/infor-design/enterprise/issues/4197))

@@ -81,6 +81,10 @@ const formatters = {
     return `<span class="is-readonly">${((value === null || value === undefined) ? '' : value)}</span>`;
   },
 
+  RowNumber(row) {
+    return `<span class="is-readonly">${row + 1}</span>`;
+  },
+
   Date(row, cell, value, col, isReturnValue) {
     let formatted = ((value === null || value === undefined) ? '' : value);
     let value2;

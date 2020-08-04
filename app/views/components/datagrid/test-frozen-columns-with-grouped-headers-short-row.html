@@ -33,7 +33,7 @@
       frozenColumns: {
         left: ['selectionCheckbox', 'id', 'productId', 'productName']
       },
-      source: datagridPagingFucntion,
+      source: datagridPagingFunction,
       toolbar: { title: 'Groups', actions: true, rowHeight: true }
     })
     .on('selected', function(e, args) {
@@ -58,7 +58,7 @@
     })
     .data('datagrid');
 
-    function datagridPagingFucntion(request, response) {
+    function datagridPagingFunction(request, response) {
       // -------------------------------------------------------------------------------------------------
       // call async function to get first/last/previous/next page of data.
       // -------------------------------------------------------------------------------------------------

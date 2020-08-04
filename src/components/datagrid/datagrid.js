@@ -1074,12 +1074,14 @@ Datagrid.prototype = {
       }
 
       const groupHeaderEl = headGroups[k];
-      groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
+      if (groupHeaderEl) {
+        groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
 
-      if ((colGroups[k].hidden || colspan < 1)) {
-        groupHeaderEl.classList.add('hidden');
-      } else {
-        groupHeaderEl.classList.remove('hidden');
+        if ((colGroups[k].hidden || colspan < 1)) {
+          groupHeaderEl.classList.add('hidden');
+        } else {
+          groupHeaderEl.classList.remove('hidden');
+        }
       }
     });
 
@@ -2592,7 +2594,7 @@ Datagrid.prototype = {
       default: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
       filterable: { extraSmall: 0, short: 0, small: 0, medium: 0, normal: 0, large: 0 },
       group: { extraSmall: -22, short: -25, small: -25, medium: -30, normal: -39, large: -39 },
-      groupFilter: { extraSmall: -27, short: -29, small: -29, medium: -30, normal: -41, large: -41 }
+      groupFilter: { extraSmall: -28, short: -29, small: -29, medium: -32, normal: -39, large: -39 }
     };
     let extraTop = 0;
     const prop = s.rowHeight === 'extra-small' ? 'extraSmall' : s.rowHeight;
@@ -3012,12 +3014,15 @@ Datagrid.prototype = {
     }
     const self = this;
     let idx = 0;
-    const iterate = function (node, depth) {
+    const iterate = function (node, depth, parent = []) {
       idx++;
-      self.settings.treeDepth.push({ idx, depth, node });
-      const children = node.children || [];
-      for (let i = 0, len = children.length; i < len; i++) {
-        iterate(children[i], depth + 1);
+      self.settings.treeDepth.push({ idx, depth, parents: parent.slice(), node });
+      const len = node.children?.length;
+      if (len) {
+        parent.push(idx - 1);
+        for (let i = 0; i < len; i++) {
+          iterate(node.children[i], depth + 1, parent.slice());
+        }
       }
     };
 
@@ -3809,34 +3814,19 @@ Datagrid.prototype = {
 
     // Determine if the tree rows should be hidden or not
     if (self.settings.treeDepth && self.settings.treeDepth.length) {
-      for (let i = 0; i < self.settings.treeDepth.length; i++) {
-        const treeDepthItem = self.settings.treeDepth[i];
-
-        if (dataRowIdx === (treeDepthItem.idx - 1)) {
-          let parentNode = null;
-          let currentDepth = 0;
-          for (let i2 = i; i2 >= 0; i2--) {
-            currentDepth = self.settings.treeDepth[i2].depth < currentDepth ||
-            currentDepth === 0 ? self.settings.treeDepth[i2].depth : currentDepth;
-            if (currentDepth < treeDepthItem.depth) {
-              parentNode = self.settings.treeDepth[i2];
-
-              if (currentDepth === 1 ||
-                parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
-                break;
-              }
+      if (rowData._isFilteredOut) {
+        isHidden = true;
+      } else {
+        const nodeData = self.settings.treeDepth[dataRowIdx];
+        if (nodeData && nodeData.depth > 1 && nodeData.parents?.length) {
+          for (let i = 0, l = nodeData.parents.length; i < l; i++) {
+            const parentIdx = nodeData.parents[i];
+            const parent = self.settings.treeDepth[parentIdx];
+            if (parent.node && parent.node.expanded !== undefined && !parent.node.expanded) {
+              isHidden = true;
+              break;
             }
           }
-
-          if (parentNode && parentNode.node.expanded !== undefined && !parentNode.node.expanded) {
-            isHidden = true;
-          } else {
-            isHidden = rowData._isFilteredOut;
-          }
-
-          depth = treeDepthItem.depth;
-
-          break;
         }
       }
     }
