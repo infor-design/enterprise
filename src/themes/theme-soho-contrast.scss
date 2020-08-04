@@ -263,7 +263,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
-$dropdown-readonly-icon-color: $theme-color-palette-graphite-50;
+$dropdown-readonly-icon-color: $theme-color-palette-graphite-80;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
@@ -278,7 +278,7 @@ $datepicker-hover-bg-color: $theme-color-palette-graphite-30;
 $datepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $datepicker-disabled-bg-color: $theme-color-palette-graphite-20;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
-$datepicker-readonly-icon-color: $theme-color-palette-graphite-50;
+$datepicker-readonly-icon-color: $theme-color-palette-graphite-80;
 
 .calendar-table .is-today {
   text-decoration: underline;
@@ -288,7 +288,7 @@ $datepicker-readonly-icon-color: $theme-color-palette-graphite-50;
 $timepicker-disabled-border-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-icon-color: $disabled-color;
-$timepicker-readonly-icon-color: $theme-color-palette-graphite-50;
+$timepicker-readonly-icon-color: $theme-color-palette-graphite-80;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);
@@ -298,7 +298,7 @@ $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-60;
 $colorpicker-checkmark-one-color: $theme-color-palette-black;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
-$colorpicker-readonly-icon-color: $theme-color-palette-graphite-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-graphite-80;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-graphite-50;
@@ -320,6 +320,10 @@ $fileupload-droparea-dd-hover-border-color: $theme-color-brand-primary-base;
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $theme-color-palette-graphite-30;
 $spinbox-button-color: $theme-color-palette-white;
+$spinbox-readonly-icon-color: $theme-color-palette-graphite-80;
+
+// Lookup
+$lookup-readonly-icon-color: $theme-color-palette-graphite-80;
 
 // Error Page
 $error-page-bg-color: $theme-color-palette-graphite-20;
@@ -381,6 +385,7 @@ $editor-btn-color: $theme-color-palette-graphite-80;
 $editor-btn-hover-color: $theme-color-palette-graphite-50;
 $editor-btn-active-color: $theme-color-palette-azure-60;
 $editor-btn-disabled-color: $theme-color-palette-graphite-40;
+$editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
 $editor-blockquote-color: $theme-color-palette-graphite-70;
@@ -674,6 +679,7 @@ $searchfield-header-border-color: $theme-color-palette-graphite-90;
 $searchfield-header-text-color: $theme-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
 $searchfield-header-icon-color: $header-button-color;
+$searchfield-readonly-icon-color: $theme-color-palette-graphite-80;
 
 //Image Border Color
 $image-border-color: $theme-color-palette-graphite-30;

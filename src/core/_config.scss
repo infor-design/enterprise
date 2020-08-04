@@ -203,7 +203,7 @@ $menubutton-height: $button-size-height;
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $input-color-initial-placeholder;
-$input-readonly-color: $input-color-readonly-font;
+$input-readonly-color: $theme-color-palette-graphite-40;
 
 //States
 $error-color: $theme-color-status-danger;
@@ -237,7 +237,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-graphite-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-graphite-30;
 $dropdown-box-shadow-top: 0 0 5px $drop-shadow-depth;
-$dropdown-readonly-icon-color: $theme-color-palette-graphite-30;
+$dropdown-readonly-icon-color: $theme-color-palette-graphite-40;
 
 //List View
 $listview-bg-color: $theme-color-palette-white;
@@ -339,14 +339,14 @@ $datepicker-disabled-icon-color: $input-color-disabled-font;
 $datepicker-disabled-border-color: $input-color-disabled-border;
 $datepicker-disabled-bg-color: $theme-color-palette-graphite-10;
 $datepicker-disabled-color: $input-color-disabled-font;
-$datepicker-readonly-icon-color: $theme-color-palette-graphite-30;
+$datepicker-readonly-icon-color: $theme-color-palette-graphite-40;
 $datepicker-default-width: 150px;
 
 //Time Picker
-$timepicker-disabled-icon-color: $theme-color-brand-secondary-alt;
+$timepicker-disabled-icon-color: $theme-color-palette-graphite-30;
 $timepicker-disabled-border-color: $theme-color-palette-graphite-30;
 $timepicker-disabled-color: $theme-color-palette-graphite-30;
-$timepicker-readonly-icon-color: $theme-color-palette-graphite-30;
+$timepicker-readonly-icon-color: $theme-color-palette-graphite-40;
 
 // Color Picker
 $colorpicker-is-empty-bg-color: $theme-color-palette-white;
@@ -354,7 +354,7 @@ $colorpicker-initial-bg-color: $theme-color-brand-secondary-base;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-20;
 $colorpicker-checkmark-one-color: $theme-color-palette-graphite-50;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
-$colorpicker-readonly-icon-color: $theme-color-palette-graphite-30;
+$colorpicker-readonly-icon-color: $theme-color-palette-graphite-40;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);
@@ -392,6 +392,7 @@ $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-button-color: transparent;
 $spinbox-hover-color: $theme-color-font-base;
 $spinbox-disabled-icon-color: $input-disabled-color;
+$spinbox-readonly-icon-color: $theme-color-palette-graphite-40;
 
 // Error Page
 $error-page-bg-color: $theme-color-palette-graphite-30;
@@ -466,6 +467,7 @@ $editor-btn-color: $theme-color-palette-graphite-60;
 $editor-btn-hover-color: $theme-color-font-base;
 $editor-btn-active-color: $theme-color-brand-primary-base;
 $editor-btn-disabled-color: $theme-color-palette-graphite-40;
+$editor-readonly-color: $input-disabled-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $theme-color-palette-graphite-60;
@@ -495,6 +497,7 @@ $slider-hover-shadow: 0 2px 5px 0 rgba($theme-color-palette-black, 0.2);
 
 // Lookup
 $lookup-disabled-color: $input-disabled-color;
+$lookup-readonly-icon-color: $theme-color-palette-graphite-40;
 
 //Modal
 $modal-bg-color: $theme-color-palette-white;
@@ -790,6 +793,7 @@ $searchfield-moduletabs-bg-color: $theme-color-palette-slate-90;
 $searchfield-moduletabs-border-color: $theme-color-palette-slate-100;
 $searchfield-moduletabs-disabled-bg-color: $theme-color-palette-slate-70;
 $searchfield-moduletabs-disabled-border-color: $theme-color-palette-slate-80;
+$searchfield-readonly-icon-color: $theme-color-palette-graphite-40;
 
 //Image Border Color
 $image-border-color: $theme-color-palette-graphite-20;

@@ -224,7 +224,7 @@ $color-border-color: rgba(255, 255, 255, 0.2);
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
 $colorpicker-swatch-border-color: $theme-color-palette-slate-50;
-$colorpicker-readonly-icon-color: $theme-color-palette-slate-60;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
@@ -251,6 +251,7 @@ $datepicker-disabled-color: $theme-color-palette-slate-10;
 $datepicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Time Picker
+$timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
 $timepicker-readonly-icon-color: $theme-color-palette-slate-40;
@@ -353,6 +354,7 @@ $editor-btn-color: $theme-color-palette-slate-70;
 $editor-btn-hover-color: $theme-color-palette-slate-100;
 $editor-btn-active-color: $theme-color-brand-primary-lighter;
 $editor-btn-disabled-color: $theme-color-palette-graphite-30;
+$editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $theme-color-palette-slate-40;
