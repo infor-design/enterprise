@@ -789,7 +789,7 @@ html[dir='rtl'] {
           border-radius: 0 50% 50% 0;
 
           &::before {
-            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
+            background: radial-gradient(circle at -10px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
             left: -100%;
           }
         }
