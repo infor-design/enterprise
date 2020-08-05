@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { dateUtils } from '../../utils/date';
+import { stringUtils } from '../../utils/string';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
 
@@ -668,8 +669,9 @@ DatePicker.prototype = {
       this.todayDay = this.todayDateIslamic[2];
     }
 
-    this.settings.month = this.currentMonth;
-    this.settings.year = this.currentYear;
+    this.settings.year = this.isIslamic ? this.todayDateIslamic[0] : this.currentYear;
+    this.settings.month = this.isIslamic ? this.todayDateIslamic[1] : this.currentMonth;
+
     if (this.isIslamic) {
       this.settings.activeDateIslamic = this.activeDate instanceof Date ?
         Locale.gregorianToUmalqura(this.activeDate) : this.activeDate;
@@ -1131,15 +1133,21 @@ DatePicker.prototype = {
   setRangeFirstPart(date) {
     const s = this.settings;
     const dateObj = d => new Date(d.year, d.month, d.day);
-    const labelDate = d => Locale.formatDate(d, { date: 'full', locale: this.locale.name });
     const minCell = this.calendarAPI.days.find('td:visible:first');
     const maxCell = this.calendarAPI.days.find('td:visible:last');
-    const label = labelDate(date);
-    const cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+    const key = this.isIslamic ? stringUtils.padDate(date[0], date[1], date[2]) :
+      stringUtils.padDate(date.getFullYear(), date.getMonth(), date.getDate());
+    const cell = this.calendarAPI.days.find(`[data-key="${key}"]`);
     const row = cell.closest('tr');
-    this.currentDate = date;
 
-    s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+    if (this.isIslamic) {
+      this.currentDate = Locale.umalquraToGregorian(date[0], date[1], date[2], date[3], date[4], date[5], date[6]);
+      this.currentDateIslamic = date;
+    } else {
+      this.currentDate = date;
+    }
+
+    s.range.first = { date: this.isIslamic ? [...date] : date, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
     s.range.extra = {
       minCell,
       maxCell,
@@ -1168,7 +1176,7 @@ DatePicker.prototype = {
       year = date[0];
       month = date[1];
       day = (date[2]).toString();
-    } else if (date instanceof Date && !isNaN(date.getTime())) {
+    } else if (date instanceof Date && !isNaN(this.getTime(date))) {
       year = date.getFullYear();
       month = date.getMonth();
       day = (date.getDate()).toString();
@@ -1270,6 +1278,15 @@ DatePicker.prototype = {
   },
 
   /**
+    * Get a unqiue and comparable time from the date.
+    * @param  {[type]} date [description]
+    * @returns {string} comparable time string
+    */
+  getTime(date) {
+    return Array.isArray(date) ? date.join('') : date.getTime();
+  },
+
+  /**
    * Set range value to element
    * @private
    * @param {object} date .
@@ -1282,7 +1299,6 @@ DatePicker.prototype = {
       pattern: this.pattern,
       locale: this.locale.name
     });
-    const labelDate = d => Locale.formatDate(d, { date: 'full', locale: this.locale.name });
     let value = formatDate(date);
     let handled = false;
 
@@ -1304,8 +1320,10 @@ DatePicker.prototype = {
       }
     } else {
       // Opened calendar
-      const label = labelDate(date);
-      let cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+      let key = this.isIslamic ?
+        stringUtils.padDate(date[0], date[1], date[2]) :
+        stringUtils.padDate(date.getFullYear(), date.getMonth(), date.getDate());
+      let cell = this.calendarAPI.days.find(`[data-key="${key}"]`);
       let row = cell.closest('tr');
 
       if (s.range.second) {
@@ -1321,8 +1339,8 @@ DatePicker.prototype = {
 
       const time = {};
       if (s.range.first) {
-        time.date = date.getTime();
-        time.firstdate = s.range.first.date.getTime();
+        time.date = this.getTime(date);
+        time.firstdate = this.getTime(s.range.first.date);
         time.min = this.calendarAPI.getDifferenceToDate(s.range.first.date, s.range.minDays);
         time.max = this.calendarAPI.getDifferenceToDate(s.range.first.date, s.range.maxDays);
       }
@@ -1343,25 +1361,36 @@ DatePicker.prototype = {
       } else {
         // Set second part for range
         handled = true;
-        this.currentDate = date;
+        if (this.isIslamic) {
+          this.currentDate = Locale.umalquraToGregorian(date[0], date[1], date[2], date[3], date[4], date[5], date[6]);
+          this.currentDateIslamic = date;
+        } else {
+          this.currentDate = date;
+        }
+
         // minDays
         if (s.range.minDays > 0) {
           if (time.date >= time.firstdate && time.date < time.min.aftertime) {
             date = time.min.after;
             if (time.date === time.firstdate) {
-              time.date = date.getTime();
+              time.date = this.getTime(date);
             }
           } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
             date = time.min.before;
           }
-          cell = this.calendarAPI.days.find(`[aria-label="${label}"]`);
+          key = this.isIslamic ?
+            stringUtils.padDate(date[0], date[1], date[2]) :
+            stringUtils.padDate(date.getFullYear(), date.getMonth(), date.getDate());
+
+          cell = this.calendarAPI.days.find(`[data-key="${key}"]`);
+
           row = cell.closest('tr');
         }
         if (time.date > time.firstdate) {
-          s.range.second = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+          s.range.second = { date, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
         } else {
           s.range.second = s.range.first;
-          s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+          s.range.first = { date, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
         }
         value = this.getRangeValue();
       }
@@ -1443,13 +1472,13 @@ DatePicker.prototype = {
       pattern: this.pattern,
       locale: this.locale.name
     }, false);
-    const getTime = d => ((d && typeof d.getTime === 'function') ? d.getTime() : (new Date()).getTime());
+    const getDateTime = d => ((d && typeof d.getTime === 'function') ? d : (new Date()));
     const alignDates = (dates) => {
       let d1 = parseDate(dates[0]);
       let d2 = parseDate(dates[1]);
       if (d1 && d2) {
-        d1 = getTime(d1);
-        d2 = getTime(d2);
+        d1 = this.getTime(getDateTime(d1));
+        d2 = this.getTime(getDateTime(d2));
         return (d1 > d2) ? [dates[1], dates[0]] : [dates[0], dates[1]];
       }
       return dates;

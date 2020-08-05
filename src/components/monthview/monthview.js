@@ -321,7 +321,12 @@ MonthView.prototype = {
     now.setMinutes(0);
     now.setSeconds(0);
 
-    let elementDate = (s.activeDate && s.activeDate.getDate()) ? s.activeDate : now;
+    let elementDate;
+    if (this.isIslamic) {
+      elementDate = s.activeDate || Locale.gregorianToUmalqura(now);
+    } else {
+      elementDate = (s.activeDate && s.activeDate.getDate()) ? s.activeDate : now;
+    }
     this.setCurrentCalendar();
 
     if (this.isIslamic) {
@@ -576,6 +581,25 @@ MonthView.prototype = {
   },
 
   /**
+    * Get a unqiue and comparable time from the date.
+    * @param  {date|Array} date The arabic array or date
+    * @param  {boolean} zeroMinutes set the minutes part to zero
+    * @returns {string} comparable time string
+    */
+  getTime(date, zeroMinutes) {
+    if (this.isIslamic) {
+      return date.join('');
+    }
+
+    if (zeroMinutes) {
+      const d = new Date(date);
+      d.setHours(0, 0, 0);
+      return d.getTime();
+    }
+    return date.getTime();
+  },
+
+  /**
    * Set range selection
    * @private
    * @returns {void}
@@ -585,8 +609,11 @@ MonthView.prototype = {
       const range = {};
       range.date = new Date(this.currentYear, this.currentMonth, 1);
       range.date.setDate(range.date.getDate() - (this.days.find('.prev-month:visible').length + 1));
-      range.formatedDate = Locale.formatDate(range.date, { date: 'full', locale: this.locale.name });
-      range.cell = this.days.find(`[aria-label="${range.formatedDate}"]`);
+      const key = stringUtils.padDate(range.date.year ||
+        range.date[0], range.date.month ||
+        range.date[1], range.date.day || range.date[2]);
+      range.cell = this.days.find(`[data-key="${key}"]`);
+
       this.setRangeOnCell(this.settings.range.second ? false : range.cell);
     }
   },
@@ -800,16 +827,28 @@ MonthView.prototype = {
    */
   getDateRange(startDate, endDate, includeDisabled) {
     const dates = [];
-    const current = new Date(startDate);
+    const current = this.isIslamic ? [...startDate] : new Date(startDate);
 
     includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
 
-    while (endDate.getTime() >= current.getTime()) {
+    while (this.getTime(endDate) >= this.getTime(current)) {
       if (includeDisabled || (!includeDisabled &&
-        !this.isDateDisabled(current.getFullYear(), current.getMonth(), current.getDate()))) {
-        dates.push(new Date(current));
+        !this.isDateDisabled(
+          this.isIslamic ? current[0] : current.getFullYear(),
+          this.isIslamic ? current[1] : current.getMonth(),
+          this.isIslamic ? current[2] : current.getDate()
+        ))) {
+        if (this.isIslamic) {
+          dates.push(current);
+        } else {
+          dates.push(new Date(current));
+        }
       }
-      current.setDate(current.getDate() + 1);
+      if (this.isIslamic) {
+        current[2] += 1;
+      } else {
+        current.setDate(current.getDate() + 1);
+      }
     }
     return dates;
   },
@@ -1662,7 +1701,7 @@ MonthView.prototype = {
       const extra = s.range.extra;
       const len = extra.cellLength - 1;
       const firstCell = first.rowIdx + first.cellIdx + (len * first.rowIdx);
-      cell = $(cell);// First date selected cell element
+      cell = $(cell); // First date selected cell element
 
       if (cell.length && !cell.is('.is-disabled, .is-selected')) {
         const row = cell.closest('tr');
@@ -1670,17 +1709,18 @@ MonthView.prototype = {
         const rowIdx = row.index();
         const thisCell = rowIdx + cellIdx + (len * rowIdx);
         const d = self.getCellDate(cell);
-        const cellDate = new Date(d.year, d.month, d.day);
+        const cellDate = this.getTime(this.isIslamic ? [d.year, d.month, d.day] :
+          new Date(d.year, d.month, d.day));
         const max = this.getDifferenceToDate(s.range.first.date, s.range.maxDays);
 
         self.days.find('td:visible').each(function (i) {
           const thisTd = $(this);
-          if (cellDate > s.range.first.date && !s.range.selectBackward &&
-            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() <= max.aftertime)) &&
+          if (cellDate > self.getTime(s.range.first.date) && !s.range.selectBackward &&
+            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate <= max.aftertime)) &&
             ((i > firstCell && i <= thisCell) || (cellDate > extra.max && i <= thisCell))) {
             thisTd.addClass('range-next');
-          } else if (cellDate < s.range.first.date && !s.range.selectForward &&
-            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() >= max.beforetime)) &&
+          } else if (cellDate < self.getTime(s.range.first.date) && !s.range.selectForward &&
+            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate >= max.beforetime)) &&
             ((i < firstCell && i >= thisCell) || (cellDate < extra.min && i >= thisCell))) {
             thisTd.addClass('range-prev');
           } else {
@@ -1717,9 +1757,9 @@ MonthView.prototype = {
         }
       }
       if (isNext && difference.after) {
-        difference.aftertime = difference.after.getTime();
+        difference.aftertime = this.getTime(difference.after);
       } else if (difference.before) {
-        difference.beforetime = difference.before.getTime();
+        difference.beforetime = this.getTime(difference.before);
       }
     };
     includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
@@ -1736,7 +1776,7 @@ MonthView.prototype = {
   setRangeSelected() {
     const self = this;
     const s = this.settings;
-    const dateObj = d => new Date(d.year, d.month, d.day);
+    const dateObj = d => (this.isIslamic ? [d.year, d.month, d.day] : new Date(d.year, d.month, d.day));
 
     if (s.range.useRange && s.range.second && s.range.second.date &&
       this.days && this.days.length) {
@@ -1746,14 +1786,9 @@ MonthView.prototype = {
         const isDisabled = cell.is('.is-disabled') && !s.range.includeDisabled;
         const includeDisabled = cell.is('.is-disabled') && s.range.includeDisabled;
         const includeDisableClass = includeDisabled ? ' include-disabled' : '';
-        const getTime = (d) => {
-          d = new Date(d);
-          d.setHours(0, 0, 0);
-          return d.getTime();
-        };
-        const date = getTime(dateObj(self.getCellDate(cell)));
-        const d1 = getTime(s.range.first.date);
-        const d2 = getTime(s.range.second.date);
+        const date = self.getTime(dateObj(self.getCellDate(cell)));
+        const d1 = self.getTime(s.range.first.date, true);
+        const d2 = self.getTime(s.range.second.date, true);
 
         if ((date === d1 || date === d2) && !isDisabled) {
           cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 ? ' end-date' : ''}` : ''}`);
@@ -1780,14 +1815,13 @@ MonthView.prototype = {
     if (s.range.useRange) {
       if (s.range.first && s.range.first.date && s.range.second && s.range.second.date) {
         if (s.showTime && this.datepickerApi) {
-          const getTime = d => (new Date(d)).getTime();
           const d = {
-            time1: getTime(s.range.first.date),
-            time2: getTime(s.range.second.date),
+            time1: this.getTime(s.range.first.date),
+            time2: this.getTime(s.range.second.date),
             first: this.datepickerApi.setTime(s.range.first.date),
             second: this.datepickerApi.setTime(s.range.second.date)
           };
-          if (d.time1 !== getTime(d.first)) {
+          if (d.time1 !== this.getTime(d.first)) {
             this.datepickerApi.setRangeToElem(d.first, true);
             this.datepickerApi.setRangeToElem(d.second, false);
             status = 2; // 2: cell found and changed but not clicked

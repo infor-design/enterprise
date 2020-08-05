@@ -67,5 +67,9 @@
       console.log(this.value);
     });
 
+    if (Locale.currentLocale.name === 'ar-SA') {
+      var umDate = Locale.formatDate(Locale.gregorianToUmalqura(new Date('2/7/2018'))) + ' - ' + Locale.formatDate(Locale.gregorianToUmalqura(new Date('2/22/2018')));
+      $('#range-valuebyelem').val(umDate);
+    }
   });
 </script>
