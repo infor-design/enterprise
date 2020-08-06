@@ -1147,12 +1147,15 @@ DatePicker.prototype = {
       this.currentDate = date;
     }
 
+    const min = this.calendarAPI.getCellDate(minCell);
+    const max = this.calendarAPI.getCellDate(maxCell);
     s.range.first = { date: this.isIslamic ? [...date] : date, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+
     s.range.extra = {
       minCell,
       maxCell,
-      min: dateObj(this.calendarAPI.getCellDate(minCell)),
-      max: dateObj(this.calendarAPI.getCellDate(maxCell)),
+      min: this.isIslamic ? [min.year, min.month, min.day] : dateObj(min),
+      max: this.isIslamic ? [max.year, max.month, max.day] : dateObj(max),
       cellLength: row.children('td').length
     };
     this.calendarAPI.settings.range.first = s.range.first;
