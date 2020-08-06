@@ -638,7 +638,7 @@ describe('Validation message types', () => {
     error: { field: '#e84f4f', icon: '#5c5c5c' },
     alert: { field: '#ff9426', icon: '#5c5c5c' },
     success: { field: '#80ce4d', icon: '#5c5c5c' },
-    info: { field: '#368ac0', icon: '#5c5c5c' },
+    info: { field: '#368AC0', icon: '#5c5c5c' },
     customIcon: { field: '#1a1a1a', icon: '#5c5c5c' },
     isHelpMessage: { field: '#1a1a1a', icon: '#5c5c5c' }
   };
@@ -731,8 +731,8 @@ describe('Validation message types', () => {
 
     expect(await dateField.getAttribute('class')).toContain('info');
     expect(await dateFieldParent.all(by.css('.info-message')).count()).toEqual(1);
-    expect(utils.rgb2hex(await dateField.getCssValue('color'))).toEqual(color.info.field);
-    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.info.icon);
+    expect(utils.rgb2hex(await dateField.getCssValue('color')).toLowerCase()).toEqual(color.info.field.toLowerCase());
+    expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color')).toLowerCase()).toEqual(color.info.icon.toLowerCase());
   });
 
   it('Should be able to set message types custom icon', async () => {

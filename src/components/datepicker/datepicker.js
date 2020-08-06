@@ -669,8 +669,8 @@ DatePicker.prototype = {
       this.todayDay = this.todayDateIslamic[2];
     }
 
-    this.settings.year = this.isIslamic ? this.todayDateIslamic[0] : this.currentYear;
-    this.settings.month = this.isIslamic ? this.todayDateIslamic[1] : this.currentMonth;
+    this.settings.year = this.currentYear;
+    this.settings.month = this.currentMonth;
 
     if (this.isIslamic) {
       this.settings.activeDateIslamic = this.activeDate instanceof Date ?
@@ -1476,6 +1476,7 @@ DatePicker.prototype = {
     const alignDates = (dates) => {
       let d1 = parseDate(dates[0]);
       let d2 = parseDate(dates[1]);
+
       if (d1 && d2) {
         d1 = this.getTime(getDateTime(d1));
         d2 = this.getTime(getDateTime(d2));
@@ -1571,6 +1572,11 @@ DatePicker.prototype = {
           this.currentMonth = this.currentDate.getMonth();
           this.currentYear = this.currentDate.getFullYear();
           this.currentDay = this.currentDate.getDate();
+        }
+        if (this.currentDate && this.isIslamic) {
+          this.currentYear = this.currentDateIslamic[0];
+          this.currentMonth = this.currentDateIslamic[1];
+          this.currentDay = this.currentDateIslamic[2];
         }
         return;
       }

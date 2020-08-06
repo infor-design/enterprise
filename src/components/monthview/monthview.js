@@ -1791,8 +1791,10 @@ MonthView.prototype = {
         const d2 = self.getTime(s.range.second.date, true);
 
         if ((date === d1 || date === d2) && !isDisabled) {
-          cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 ? ' end-date' : ''}` : ''}`);
-        } else if ((date > d1 && date < d2) && !isDisabled) {
+          cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 && !self.isIslamic ? ' end-date' : ''}` : ''}`);
+        } else if (!self.isIslamic && (date > d1 && date < d2) && !isDisabled) {
+          cell.addClass(`range-selection${includeDisableClass}`);
+        } else if (self.isIslamic && ((d1 > date && d2 < date) || (d1 < date && d2 > date)) && !isDisabled) {
           cell.addClass(`range-selection${includeDisableClass}`);
         }
       });
