@@ -1479,10 +1479,20 @@ DatePicker.prototype = {
     const alignDates = (dates) => {
       let d1 = parseDate(dates[0]);
       let d2 = parseDate(dates[1]);
+      if (this.isIslamic) {
+        d1 = Locale.gregorianToUmalqura(new Date(dates[0]));
+        d2 = Locale.gregorianToUmalqura(new Date(dates[1]));
+      }
 
       if (d1 && d2) {
         d1 = this.getTime(getDateTime(d1));
         d2 = this.getTime(getDateTime(d2));
+
+        if (this.isIslamic) {
+          dates[0] = Locale.gregorianToUmalqura(new Date(dates[0]));
+          dates[1] = Locale.gregorianToUmalqura(new Date(dates[1]));
+        }
+
         return (d1 > d2) ? [dates[1], dates[0]] : [dates[0], dates[1]];
       }
       return dates;
@@ -1527,7 +1537,7 @@ DatePicker.prototype = {
     } else if (s.range.start && typeof s.range.start === 'string') {
       s.range.first.date = parseDate(s.range.start);
     } else if (field.dates) {
-      s.range.first.date = parseDate(field.dates[0]);
+      s.range.first.date = this.isIslamic ? field.dates[0] : parseDate(field.dates[0]);
     }
 
     // End date
@@ -1536,7 +1546,7 @@ DatePicker.prototype = {
     } else if (s.range.end && typeof s.range.end === 'string') {
       s.range.second.date = parseDate(s.range.end);
     } else if (field.dates) {
-      s.range.second.date = parseDate(field.dates[1]);
+      s.range.second.date = this.isIslamic ? field.dates[1] : parseDate(field.dates[1]);
     }
 
     if (this.calendarAPI) {
