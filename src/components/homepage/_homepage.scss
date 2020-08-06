@@ -159,7 +159,9 @@
 .card.triple-width.to-single,
 .widget.triple-width.to-single,
 .card.quad-width.to-single,
-.widget.quad-width.to-single {
+.widget.quad-width.to-single,
+.card.quinte-width.to-single,
+.widget.quinte-width.to-single {
   width: 360px; // 320 (single)
 }
 
@@ -168,20 +170,31 @@
 .card.triple-width.to-double,
 .widget.triple-width.to-double,
 .card.quad-width.to-double,
-.widget.quad-width.to-double {
+.widget.quad-width.to-double,
+.card.quinte-width.to-double,
+.widget.quinte-width.to-double {
   width: 740px; // 660 (double: 380 + single)
 }
 
 .card.triple-width,
 .widget.triple-width,
 .card.quad-width.to-triple,
-.widget.quad-width.to-triple {
+.widget.quad-width.to-triple,
+.card.quinte-width.to-triple,
+.widget.quinte-width.to-triple {
   width: 1120px; //1000 (triple: 380 + double)
 }
 
 .card.quad-width,
-.widget.quad-width {
+.widget.quad-width,
+.card.quinte-width.to-quad,
+.widget.quinte-width.to-quad {
   width: 1500px; //1340 (quad: 380 + triple)
+}
+
+.card.quinte-width,
+.widget.quinte-width {
+  width: 1880px; //1680 (quinte: 380 + quad)
 }
 
 .card.half-height,
