@@ -1745,7 +1745,7 @@ MonthView.prototype = {
    * @returns {object} Dates/and difference before/afterto given date
    */
   getDifferenceToDate(date, days, includeDisabled) {
-    let difference = {};
+    const difference = {};
     const move = (d, daystomove, isNext) => {
       d = this.isIslamic ? Locale.umalquraToGregorian(d) : new Date(d);
       while (daystomove > 0) {
