@@ -1693,7 +1693,7 @@ describe('Datagrid Alert and Badges Tests', () => {
   }
 });
 
-fdescribe('Datagrid Alert and Badges Frozen Column Tests', () => {
+describe('Datagrid Alert and Badges Frozen Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-alert?layout=nofrills');
 
