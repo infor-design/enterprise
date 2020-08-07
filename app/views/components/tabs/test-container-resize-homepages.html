@@ -1,19 +1,12 @@
 <div class="row">
   <div class="six columns">
-
-    <!-- Fill out all the information about this test page below, in plain English -->
-    <h2>Tabs Test: Resizable Tab Containers</h2>
-
-    <p>A <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3707" target="_blank">bug was reported</a> where the Tabs Control would not re-evaluate its number of overflowed tabs when an element containing the Tab Container was resized.  This test attempts to demonstrate that this functionality works as intended.</p>
-
-    <p>Use the slider control below to adjust the width of the Tab Container.  If it's working properly, the spillover menu should always show the correct number of invisible tabs.</p>
-
-    <p></p>
-
+    <h2>Tabs Test: Resizable Tab Containers (Homepages)</h2>
+    <p>Github Issue: <a class="hyperlink" href="https://github.com/infor-design/enterprise-ng/issues/860" target="_blank">NG#860</a>.</p>
+    <p>Use the Slider below to resize the component.  When releasing the drag handle, the state of the Tabs List (overflowed items) should update as expected.</p>
   </div>
 </div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="six columns">
 
     <div class="field">
@@ -25,9 +18,8 @@
 </div>
 
 <div class="row">
-  <div class="twelve columns">
+  <div id="resize-container" class="twelve columns">
 
-    <!-- Tabs Container -->
     <div id="sizeable-tabs" class="tab-container">
       <ul class="tab-list">
         <li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
@@ -102,15 +94,16 @@
 
 <script>
   $('body').on('initialized', function() {
-    var tabset = $('#sizeable-tabs'),
-      slider = $('#container-width');
+    var container = $('#resize-container');
+    var slider = $('#container-width');
+    var tabsAPI = $('#sizeable-tabs').data('tabs');
 
     // Change the width of the tabset whenever the slider is adjusted.
     slider.on('change.test', function() {
       var api = $(this).data('slider'),
         val = api.value();
 
-      tabset.css('width', val[0] + '%');
+      container.css('width', val[0] + '%');
 
       // On IE, need to trigger the resize event manually
       if (Soho.env.isIE10 || Soho.env.isIE11) {

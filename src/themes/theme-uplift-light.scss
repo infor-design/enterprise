@@ -64,6 +64,7 @@ $calendar-disabled-color: $theme-color-brand-secondary-contrast;
 
 // Time Picker
 $timepicker-disabled-icon-color: $input-disabled-color;
+$timepicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Color Picker
 $colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
@@ -90,6 +91,7 @@ $editor-btn-color: $theme-color-palette-graphite-10;
 $editor-btn-hover-color: $theme-color-palette-white;
 $editor-btn-active-color: $theme-color-palette-azure-40;
 $editor-btn-disabled-color: $theme-color-palette-graphite-40;
+$editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-palette-azure-40, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $theme-color-palette-graphite-40;

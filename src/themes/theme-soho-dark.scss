@@ -239,7 +239,7 @@ $contextual-panel-seperator-bg-color: $theme-color-palette-slate-30;
 $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-50;
-$dropdown-readonly-icon-color: $theme-color-palette-slate-50;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -254,11 +254,16 @@ $datepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $datepicker-disabled-border-color: $theme-color-palette-slate-50;
 $datepicker-disabled-bg-color: $theme-color-palette-slate-60;
 $datepicker-disabled-color: $theme-color-palette-slate-40;
-$datepicker-readonly-icon-color: $theme-color-palette-slate-50;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-40;
+
+// Lookup
+$lookup-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Time Picker
+$timepicker-disabled-icon-color: $theme-color-palette-slate-50;
 $timepicker-disabled-border-color: $theme-color-palette-slate-50;
 $timepicker-disabled-color: $theme-color-palette-slate-40;
+$timepicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Color Palette Background
 $color-border-color: rgba(255, 255, 255, 0.2);
@@ -266,7 +271,7 @@ $color-border-color: rgba(255, 255, 255, 0.2);
 // Color Picker
 $colorpicker-initial-bg-color: $theme-color-palette-slate-40;
 $colorpicker-swatch-border-color: $theme-color-palette-slate-50;
-$colorpicker-readonly-icon-color: $theme-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-slate-50;
@@ -287,6 +292,7 @@ $fileupload-droparea-dd-hover-bg-color: rgba($theme-color-palette-slate-100, 0.3
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $theme-color-palette-slate-60;
 $spinbox-button-color: $body-color-primary-background;
+$spinbox-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Error Pge
 $error-page-bg-color: $theme-color-palette-slate-100;
@@ -365,6 +371,7 @@ $editor-btn-color: $theme-color-palette-graphite-30;
 $editor-btn-hover-color: $theme-color-palette-white;
 $editor-btn-active-color: $theme-color-brand-primary-lighter;
 $editor-btn-disabled-color: $theme-color-palette-slate-50;
+$editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
 $editor-blockquote-color: $theme-color-palette-slate-40;
@@ -652,6 +659,7 @@ $searchfield-header-border-color: $theme-color-palette-slate-70;
 $searchfield-header-text-color: $theme-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
 $searchfield-header-icon-color: $header-button-color;
+$searchfield-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Image Border Color
 $image-border-color: $theme-color-palette-slate-40;

@@ -171,7 +171,11 @@
         val = api.value();
 
       tabset.css('width', val[0] + '%');
-      $('body').triggerHandler('resize');
+
+      // On IE, need to trigger the resize event manually
+      if (Soho.env.isIE10 || Soho.env.isIE11) {
+        $('body').triggerHandler('resize');
+      }
     });
   });
 </script>
