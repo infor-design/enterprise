@@ -297,6 +297,26 @@ describe('Tabs click example-add-tab button tests', () => {
     await utils.checkForErrors();
   });
 
+  // See issue #4093
+  it('Should insert tabs at the end of the tab list when applicable', async () => {
+    const inputNameEl = await element(by.css('#tab-name'));
+    const inputContentEl = await element(by.css('#tab-content'));
+    const inputTabIndexEl = await element(by.css('#tab-index'));
+    const addBtn = await element(by.css('#add-capable-tabs .add-tab-button'));
+
+    // Fill out form fields
+    await inputNameEl.sendKeys('Riya');
+    await inputContentEl.sendKeys('Riya');
+    await inputTabIndexEl.sendKeys('3');
+
+    // Click Add button
+    await addBtn.click();
+
+    // Analyze the list and ensure we have 4 tabs, with our new tab at the end
+    expect(element.all(by.className('tab')).get(3)).toBeDefined();
+    expect(element.all(by.className('tab')).get(3).getText()).toEqual('Riya');
+  });
+
   it('Should remove add on destroy', async () => {
     expect(await element.all(by.css('.add-tab-button')).count()).toEqual(1);
     await element(by.id('reinvoke')).click();

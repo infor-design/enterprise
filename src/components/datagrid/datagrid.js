@@ -5958,10 +5958,12 @@ Datagrid.prototype = {
     if (!self.settings.cellNavigation && self.settings.rowNavigation) {
       self.element
         .on('focus.datagrid', 'tbody > tr', function () {
-          $(this).addClass('is-active-row');
+          const rowNodes = self.rowNodes($(this));
+          rowNodes.addClass('is-active-row');
         })
-        .on('blur.datagrid', 'tbody > tr', () => {
-          $('tbody > tr', self.table).removeClass('is-active-row');
+        .on('blur.datagrid', 'tbody > tr', function () {
+          const rowNodes = self.rowNodes($(this));
+          rowNodes.removeClass('is-active-row');
         });
     }
 
