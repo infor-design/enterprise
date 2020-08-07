@@ -236,6 +236,10 @@
     height: 25px;
   }
 
+  .datagrid-cell-wrapper {
+    min-height: 28px;
+  }
+
   tbody tr td.is-editing .datepicker {
     height: 27px;
   }
