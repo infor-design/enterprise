@@ -1693,9 +1693,9 @@ describe('Datagrid Alert and Badges Tests', () => {
   }
 });
 
-describe('Datagrid Alert and Badges Tests', () => {
+fdescribe('Datagrid Alert and Badges Frozen Column Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-alert?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
