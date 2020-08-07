@@ -18,6 +18,7 @@
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
+- `[Tabs]` Fixed a small error by removing a - 1 involved with testing. ([#4093](https://github.com/infor-design/enterprise/issues/4093))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 - `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
 
