@@ -23,7 +23,7 @@ module.exports = {
 
   rules: {
     // Browser compatibility
-    'compat/compat': 'error',
+    'compat/compat': 'warn',
 
     // ensure JSDoc comments are valid
     // https://eslint.org/docs/rules/valid-jsdoc
