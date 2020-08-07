@@ -13,7 +13,7 @@
 
     &.close {
       right: 9px;
-      top: 10px;
+      top: 11px;
     }
   }
 
@@ -61,13 +61,23 @@
   }
 }
 
+.toolbar-searchfield-wrapper {
+  &.searchfield-wrapper {
+    &.non-collapsible {
+      svg.icon {
+        top: 11px;
+      }
+    }
+  }
+}
+
 // Firefox needs some help
 html.is-firefox {
   .searchfield-wrapper {
     height: 34px;
 
     &.toolbar-searchfield-wrapper {
-      height: 36px;
+      height: 34px;
     }
 
     > .icon {
@@ -82,7 +92,7 @@ html.is-firefox {
   .toolbar-searchfield-wrapper {
     &:not(.is-open):not(.non-collapsible) {
       .searchfield {
-        height: 35px;
+        height: 34px;
         padding-bottom: 5px;
         padding-top: 7px;
       }
@@ -103,7 +113,7 @@ html.is-firefox {
     &.is-open,
     &.non-collapsible {
       .searchfield {
-        height: 35px;
+        height: 34px;
         padding-bottom: 6px;
         padding-top: 6px;
       }
