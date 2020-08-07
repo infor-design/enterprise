@@ -1693,7 +1693,7 @@ describe('Datagrid Alert and Badges Tests', () => {
   }
 });
 
-fdescribe('Datagrid Alert and Badges Tests', () => {
+describe('Datagrid Alert and Badges Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
 
