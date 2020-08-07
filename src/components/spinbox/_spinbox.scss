@@ -145,7 +145,7 @@ input::-webkit-inner-spin-button {
   &.is-readonly {
     > .spinbox-control {
       background-color: $input-color-readonly-background;
-      color: $input-readonly-color;
+      color: $spinbox-readonly-icon-color;
       cursor: default;
     }
   }

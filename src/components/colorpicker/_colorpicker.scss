@@ -129,10 +129,6 @@
     .icon:not(.icon-error) {
       color: $colorpicker-readonly-icon-color;
       cursor: default;
-
-      &:hover {
-        color: $trigger-hover-color;
-      }
     }
   }
 
@@ -156,10 +152,6 @@
     position: relative;
     top: 9px;
     width: 16px;
-
-    &:hover {
-      color: $trigger-hover-color;
-    }
   }
 
   .icon-error {

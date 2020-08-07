@@ -19,6 +19,7 @@
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+- `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
 
 ## v4.31.0
 
@@ -85,6 +86,7 @@
 - `[Searchfield]` Fixed an issue where some of the searchfield examples did not have focus states. ([#1060](https://github.com/infor-design/enterprise/issues/1060))
 - `[Searchfield]` The `clear` function was misnamed as it didnt clear, it made the field clearable. Now we have a `clear` and `makeClearable` function. ([#4173](https://github.com/infor-design/enterprise/issues/4173))
 - `[Textarea]` Fixed inconsistencies on styling of disabled field when using disable function, now the label will disable on all components when using this function. In general the label should be dimmed on disabled fields as per the design. ([#3917](https://github.com/infor-design/enterprise/issues/3917))
+- `[Timepicker]` Fixed inconsistencies on readonly styling throughout different themes and variants. ([#4152](https://github.com/infor-design/enterprise/issues/4152))
 - `[Toast]` Fixed a bug where the toast message doesn't close when pressing escape, and when it has multiple trigger elements and uses unique id's. ([#3986](https://github.com/infor-design/enterprise/issues/3986))
 - `[Tooltip]` Fixed a bug where the title doesn't display when the title starts with '#'. ([#2512](https://github.com/infor-design/enterprise/issues/2512))
 - `[Tooltip]` Fixed an issue where the tooltip would not show up if you focus a button with the keyboard. ([#4085](https://github.com/infor-design/enterprise/issues/4085))
