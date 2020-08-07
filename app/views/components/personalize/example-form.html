@@ -6,29 +6,44 @@
 
     <div class="buttonset">
     </div>
-
-    {{> includes/header-actionbutton}}
-  </div>
-</header>
-<section id="maincontent" class="page-container scrollable-flex is-personalizable" role="main">
-  <section class="scrollable-flex-header personalize-header">
-    <div class="content">
-      <div class="row no-bottom-margin bottom-padding">
-        <div class="one-fifth column one-half-mobile">
-          <label class="personalize-text">Item</label>
-          <p class="name-xl personalize-text">2000 LGE Incorporated</p>
+  </header>
+  <section id="maincontent" class="page-container scrollable-flex is-personalizable" role="main">
+    <section class="scrollable-flex-header personalize-header">
+      <div class="content">
+        <div class="row no-bottom-margin bottom-padding">
+          <div class="one-fifth column one-half-mobile">
+            <label class="personalize-text">Item</label>
+            <p class="name-xl personalize-text">2000 LGE Incorporated</p>
+          </div>
+          <div class="one-fifth column one-half-mobile">
+            <label class="personalize-text">Purchase Order Date</label>
+            <p class="name-xl personalize-text">7/14/2006</p>
+          </div>
+          <div class="one-fifth column one-half-mobile">
+            <label class="personalize-text">Vendor</label>
+            <p class="name-xl personalize-text">116</p>
+          </div>
+          <div class="one-fifth column one-half-mobile">
+            <label class="personalize-text">Purchase Order</label>
+            <p class="name-xl personalize-text">1096</p>
+          </div>
+          <div class="one-fifth column one-half-mobile">
+            <label class="personalize-text">Delivery Order</label>
+            <p class="name-xl personalize-text">7/14/2006</p>
+          </div>
         </div>
-        <div class="one-fifth column one-half-mobile">
-          <label class="personalize-text">Purchase Order Date</label>
-          <p class="name-xl personalize-text">7/14/2006</p>
-        </div>
-        <div class="one-fifth column one-half-mobile">
-          <label class="personalize-text">Vendor</label>
-          <p class="name-xl personalize-text">116</p>
-        </div>
-        <div class="one-fifth column one-half-mobile">
-          <label class="personalize-text">Purchase Order</label>
-          <p class="name-xl personalize-text">1096</p>
+      </div>
+      <div class="tab-container header-tabs personalize-header" data-options="{ containerElement: '#scrollable-tab-panels' }">
+        <div class="tab-list-container">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a id="detail" href="#composite-form-detail">Detail</a></li>
+            <li class="tab"><a id="options" href="#composite-form-options">Options</a></li>
+            <li class="tab"><a id="quantity-detail" href="#composite-form-quantity-detail">Quantity Detail</a></li>
+            <li class="tab"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
+            <li class="tab"><a id="messages" href="#composite-form-messages">Messages</a></li>
+            <li class="tab"><a id="add-on-changes" href="#composite-form-addon-changes">Add-On Changes</a></li>
+            <li class="tab"><a id="sources" href="#composite-form-sources">Sources</a></li>
+          </ul>
         </div>
         <div class="one-fifth column one-half-mobile">
           <label class="personalize-text">Delivery Order</label>
@@ -48,17 +63,17 @@
           <li class="tab"><a id="sources" href="#composite-form-sources">Sources</a></li>
         </ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="is-personalizable scrollable-flex-content">
-    <div id="scrollable-tab-panels" class="tab-panel-container">
-      <div id="composite-form-detail" class="tab-panel" role="tabpanel">
-        <div class="row form-responsive">
-          <div class="six columns">
-            <div class="field">
-              <label for="composite-form-detail-item">Item</label>
-              <input id="composite-form-detail-item" class="lookup"/>
+    <section class="is-personalizable scrollable-flex-content">
+      <div id="scrollable-tab-panels" class="tab-panel-container">
+        <div id="composite-form-detail" class="tab-panel" role="tabpanel">
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="composite-form-detail-item">Item</label>
+                <input id="composite-form-detail-item" class="lookup"/>
+              </div>
             </div>
           </div>
           <div class="six columns">
@@ -158,4 +173,4 @@
       </div>
     </div>
   </section>
-</section>
+</div>
