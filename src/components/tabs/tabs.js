@@ -433,6 +433,19 @@ Tabs.prototype = {
       this.renderEdgeFading();
     }
 
+    // Setup a resize observer on both the tab panel container and the tab list container (if applicable)
+    // to auto-refresh the state of the Tabs on resize.  ResizeObserver doesn't work in IE.
+    if (typeof ResizeObserver !== 'undefined') {
+      this.ro = new ResizeObserver(() => {
+        $('body').triggerHandler('resize');
+      });
+
+      this.ro.observe(this.element[0]);
+      if (this.containerElement) {
+        this.ro.observe(this.containerElement[0]);
+      }
+    }
+
     return this;
   },
 
@@ -1461,7 +1474,7 @@ Tabs.prototype = {
   },
 
   /**
-   * @private
+   * Resets the visual state of the Tab List and Tab Panel Container to match current width/height and responsive.
    * @param {boolean} ignoreResponsiveCheck if true, doesn't run `this.checkResponsive()`
    * @returns {void}
    */
@@ -3925,6 +3938,11 @@ Tabs.prototype = {
       .removeAttr('aria-expanded')
       .removeAttr('aria-selected')
       .removeAttr('tabindex');
+
+    if (this.ro) {
+      this.ro.disconnect();
+      delete this.ro;
+    }
 
     if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
       this.anchors.each(function () {
