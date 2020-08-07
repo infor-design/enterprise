@@ -61,7 +61,7 @@
 
   &[readonly] {
     + .icon {
-      color: $trigger-icon-fill-color;
+      color: $timepicker-readonly-icon-color;
       cursor: default;
     }
   }

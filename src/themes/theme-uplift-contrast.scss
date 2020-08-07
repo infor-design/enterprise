@@ -263,7 +263,7 @@ $dropdown-menu-border-color: $theme-color-brand-primary-base;
 $dropdown-selected-bg-color: $theme-color-brand-primary-base;
 $dropdown-menu-separator-color: $theme-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $theme-color-palette-slate-60;
-$dropdown-readonly-icon-color: $theme-color-palette-slate-30;
+$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $theme-color-palette-black;
@@ -279,7 +279,7 @@ $datepicker-hover-bg-color: $theme-color-palette-graphite-30;
 $datepicker-disabled-border-color: $input-color-disabled-border;
 $datepicker-disabled-bg-color: $theme-color-palette-graphite-20;
 $datepicker-disabled-color: $theme-color-brand-secondary-alt;
-$datepicker-readonly-icon-color: $theme-color-palette-slate-30;
+$datepicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 .calendar-table .is-today {
   text-decoration: underline;
@@ -289,6 +289,7 @@ $datepicker-readonly-icon-color: $theme-color-palette-slate-30;
 $timepicker-disabled-border-color: $input-color-disabled-border;
 $timepicker-disabled-color: $theme-color-brand-secondary-alt;
 $timepicker-disabled-icon-color: $input-disabled-color;
+$timepicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);
@@ -298,7 +299,7 @@ $colorpicker-initial-bg-color: $theme-color-palette-graphite-60;
 $colorpicker-swatch-border-color: $theme-color-palette-graphite-60;
 $colorpicker-checkmark-one-color: $theme-color-palette-black;
 $colorpicker-checkmark-two-color: $theme-color-palette-white;
-$colorpicker-readonly-icon-color: $theme-color-palette-slate-30;
+$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
 
 // Fileupload
 $fileupload-border-color: $theme-color-palette-graphite-50;
@@ -381,6 +382,7 @@ $editor-btn-color: $theme-color-palette-graphite-20;
 $editor-btn-hover-color: $theme-color-palette-white;
 $editor-btn-active-color: $theme-color-palette-azure-40;
 $editor-btn-disabled-color: $theme-color-palette-graphite-40;
+$editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-brand-primary-base, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
 $editor-blockquote-color: $theme-color-palette-graphite-70;

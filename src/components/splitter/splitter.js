@@ -83,8 +83,76 @@ Splitter.prototype = {
     s.uniqueId = utils.uniqueId(this.element, 'splitter');
     dragHandle.appendTo(splitter);
 
+    const handleCollapseButton = () => {
+      let savedOffset = 0;
+      let isClickedOnce = false;
+      const splitAndRotate = (splitVal, el, isRotate) => {
+        self.splitTo(splitVal, parentHeight);
+        $(el)[isRotate ? 'addClass' : 'removeClass']('rotate');
+      };
+      this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
+      this.splitterCollapseButton.appendTo(splitter);
+      if (splitter[0].offsetLeft > 10) {
+        this.splitterCollapseButton.addClass('rotate');
+      }
+      this.splitterCollapseButton.click(function () {
+        const isDragging = splitter.is('is-dragging');
+        if (isDragging) {
+          return;
+        }
+        if (
+          self.isRTL && !self.isSplitterHorizontal ||
+          !self.isSplitterRightSide && s.side === 'left' ||
+          self.isSplitterRightSide && s.side === 'right'
+        ) {
+          const containerWidth = self.getContainerWidth() - splitter.outerWidth();
+          const x = containerWidth;
+          if (!isClickedOnce) {
+            savedOffset = containerWidth - savedOffset;
+            defaultOffset = containerWidth - defaultOffset;
+          }
+          let left = splitter[0].offsetLeft;
+          if (self.isSplitterRightSide && s.side === 'right') {
+            left = splitter[0].offsetLeft + 1;
+          }
+          if (savedOffset >= x) {
+            if (left >= containerWidth) {
+              splitAndRotate(defaultOffset, this, true);
+            } else {
+              savedOffset = left;
+              splitAndRotate(x, this, false);
+            }
+          } else if (left < containerWidth) {
+            savedOffset = left;
+            splitAndRotate(x, this, false);
+          } else {
+            splitAndRotate(savedOffset, this, true);
+            savedOffset = x;
+          }
+        } else {
+          const left = splitter[0].offsetLeft;
+          if (savedOffset <= 0) {
+            if (left <= 10) {
+              splitAndRotate(defaultOffset, this, true);
+            } else {
+              savedOffset = left;
+              splitAndRotate(0, this, false);
+            }
+          } else if (left > 10) {
+            savedOffset = left;
+            splitAndRotate(0, this, false);
+          } else {
+            splitAndRotate(savedOffset, this, true);
+            savedOffset = 0;
+          }
+        }
+        isClickedOnce = true;
+      });
+    };
+
     if (this.isSplitterRightSide) {
       const thisPrev = thisSide.prev();
+
       if (thisPrev.is('.main')) {
         this.leftSide = thisPrev;
         w = thisSide.parent().outerWidth() - w;
@@ -99,59 +167,7 @@ Splitter.prototype = {
         .addClass('splitter-container');
 
       if (s.collapseButton) {
-        let savedOffset = 0;
-        let isClickedOnce = false;
-        const splitAndRotate = (splitVal, el, isRotate) => {
-          self.splitTo(splitVal, parentHeight);
-          $(el)[isRotate ? 'addClass' : 'removeClass']('rotate');
-        };
-        this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
-        this.splitterCollapseButton.appendTo(splitter);
-        if (splitter[0].offsetLeft > 10) {
-          this.splitterCollapseButton.addClass('rotate');
-        }
-        this.splitterCollapseButton.click(function () {
-          if (self.isRTL && !self.isSplitterHorizontal) {
-            const containerWidth = self.getContainerWidth() - 20;
-            const x = containerWidth;
-            if (!isClickedOnce) {
-              savedOffset = containerWidth - savedOffset;
-              defaultOffset = containerWidth - defaultOffset;
-            }
-            const left = splitter[0].offsetLeft;
-            if (savedOffset >= x) {
-              if (left >= containerWidth) {
-                splitAndRotate(defaultOffset, this, true);
-              } else {
-                savedOffset = left;
-                splitAndRotate(x, this, false);
-              }
-            } else if (left < containerWidth) {
-              savedOffset = left;
-              splitAndRotate(x, this, false);
-            } else {
-              splitAndRotate(savedOffset, this, true);
-              savedOffset = x;
-            }
-          } else {
-            const left = splitter[0].offsetLeft;
-            if (savedOffset <= 0) {
-              if (left <= 10) {
-                splitAndRotate(defaultOffset, this, true);
-              } else {
-                savedOffset = left;
-                splitAndRotate(0, this, false);
-              }
-            } else if (left > 10) {
-              savedOffset = left;
-              splitAndRotate(0, this, false);
-            } else {
-              splitAndRotate(savedOffset, this, true);
-              savedOffset = 0;
-            }
-          }
-          isClickedOnce = true;
-        });
+        handleCollapseButton();
       }
       this.setSplitterContainer(thisSide.parent());
     } else if (this.isSplitterHorizontal) {
@@ -168,6 +184,10 @@ Splitter.prototype = {
       thisSide.prev()
         .addClass('flex-grow-shrink')
         .parent().addClass('splitter-container');
+
+      if (s.collapseButton) {
+        handleCollapseButton();
+      }
 
       this.setSplitterContainer(thisSide.parent());
     }
