@@ -1926,7 +1926,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Convert umalqura to gregorian date.
-   * @param {number} year the year
+   * @param {number|array} year the year
    * @param {number} month the month
    * @param {number} day the day
    * @param {number} hours the day
@@ -1936,8 +1936,19 @@ const Locale = {  // eslint-disable-line
    * @returns {object} the date
    */
   umalquraToGregorian(year, month, day, hours = 0, mins = 0, secs = 0, mills = 0) {
-    // toGregorian
     // Modified version of Amro Osama's code. From at https://github.com/kbwood/calendars/blob/master/src/js/jquery.calendars.ummalqura.js
+
+    // Handle if an array is passed
+    if (Array.isArray(year)) {
+      month = year[1];
+      day = year[2] || 0;
+      hours = year[3] || 0;
+      mins = year[4] || 0;
+      secs = year[5] || 0;
+      mills = year[6] || 0;
+      year = year[0];
+    }
+
     const isNumber = n => typeof n === 'number' && !isNaN(n);
     if (!isNumber(year) || !isNumber(month) || !isNumber(day)) {
       return null;

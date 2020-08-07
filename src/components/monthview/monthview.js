@@ -1737,25 +1737,27 @@ MonthView.prototype = {
   },
 
   /**
-   * Get difference to given date
+   * Get Dates with in the min and max range for the range picker.
    * @private
-   * @param {object} date .
-   * @param {number} days .
-   * @param {boolean} includeDisabled .
-   * @returns {object} before/after difference to given date
+   * @param {object} date Date to focus around
+   * @param {number} days Number of days +/-
+   * @param {boolean} includeDisabled Use the disabled setting.
+   * @returns {object} Dates/and difference before/afterto given date
    */
   getDifferenceToDate(date, days, includeDisabled) {
-    const difference = {};
+    let difference = {};
     const move = (d, daystomove, isNext) => {
-      d = new Date(d);
+      d = this.isIslamic ? Locale.umalquraToGregorian(d) : new Date(d);
       while (daystomove > 0) {
         d.setDate(d.getDate() + (isNext ? 1 : -1));
         if (includeDisabled || (!includeDisabled &&
           !this.isDateDisabled(d.getFullYear(), d.getMonth(), d.getDate()))) {
           daystomove--;
-          difference[isNext ? 'after' : 'before'] = new Date(d);
+          difference[isNext ? 'after' : 'before'] = this.isIslamic ?
+            Locale.gregorianToUmalqura(new Date(d)) : new Date(d);
         }
       }
+
       if (isNext && difference.after) {
         difference.aftertime = this.getTime(difference.after);
       } else if (difference.before) {

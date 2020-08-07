@@ -817,6 +817,17 @@ html[dir='rtl'] {
           }
         }
       }
+
+      &.is-disabled:not(.include-disabled),
+      &.is-disabled:not(.include-disabled):active {
+        .day-text {
+          border-radius: 50%;
+
+          &::before {
+            background: none !important;
+          }
+        }
+      }
     }
 
     &.is-fullsize {

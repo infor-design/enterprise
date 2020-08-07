@@ -898,6 +898,7 @@ DatePicker.prototype = {
           self.clearRangeDates();
         }
         self.closeCalendar();
+        self.element.focus();
       }
 
       if (btn.hasClass('is-cancel-month-pane')) {
@@ -1479,7 +1480,9 @@ DatePicker.prototype = {
     const alignDates = (dates) => {
       let d1 = parseDate(dates[0]);
       let d2 = parseDate(dates[1]);
-      if (this.isIslamic) {
+      const isAlreadyIslamic = this.isIslamic && Array.isArray(d1);
+
+      if (!isAlreadyIslamic) {
         d1 = Locale.gregorianToUmalqura(new Date(dates[0]));
         d2 = Locale.gregorianToUmalqura(new Date(dates[1]));
       }
@@ -1488,7 +1491,7 @@ DatePicker.prototype = {
         d1 = this.getTime(getDateTime(d1));
         d2 = this.getTime(getDateTime(d2));
 
-        if (this.isIslamic) {
+        if (this.isIslamic && !isAlreadyIslamic) {
           dates[0] = Locale.gregorianToUmalqura(new Date(dates[0]));
           dates[1] = Locale.gregorianToUmalqura(new Date(dates[1]));
         }
@@ -1537,7 +1540,7 @@ DatePicker.prototype = {
     } else if (s.range.start && typeof s.range.start === 'string') {
       s.range.first.date = parseDate(s.range.start);
     } else if (field.dates) {
-      s.range.first.date = this.isIslamic ? field.dates[0] : parseDate(field.dates[0]);
+      s.range.first.date = this.isIslamic && Array.isArray(field.dates[0]) ? field.dates[0] : parseDate(field.dates[0]);
     }
 
     // End date
@@ -1546,7 +1549,8 @@ DatePicker.prototype = {
     } else if (s.range.end && typeof s.range.end === 'string') {
       s.range.second.date = parseDate(s.range.end);
     } else if (field.dates) {
-      s.range.second.date = this.isIslamic ? field.dates[1] : parseDate(field.dates[1]);
+      s.range.second.date = this.isIslamic && Array.isArray(field.dates[1]) ?
+        field.dates[1] : parseDate(field.dates[1]);
     }
 
     if (this.calendarAPI) {

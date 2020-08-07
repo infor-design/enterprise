@@ -898,7 +898,7 @@ html[dir='rtl'] {
   }
 
   &:focus {
-    border-color: #368AC0;
+    border-color: $theme-color-palette-azure-60;
     box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
     outline: none;
     outline-color: transparent;
