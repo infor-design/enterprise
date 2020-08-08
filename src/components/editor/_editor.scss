@@ -20,6 +20,18 @@
     }
   }
 
+  &.is-readonly {
+    .editor {
+      a {
+        pointer-events: none;
+      }
+
+      > * {
+        color: $input-readonly-color !important;
+      }
+    }
+  }
+
   &.is-readonly,
   &.is-disabled {
     .editor {

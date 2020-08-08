@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="full-width">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, productName: '1 Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: 'http://www.google.com' });
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+      columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': ' Alert Text'}]});
+      columns.push({ id: 'price', name: 'Alert Choose Header', field: 'price', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
+      columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'alert', text: ' '}]});
+      columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
+      columns.push({ id: 'price3', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+      columns.push({ id: 'price4', name: 'Tag (Clickable)', field: 'price', align: 'center', formatter: Formatters.Tag, editorOptions: {clickable: true}, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+      columns.push({ id: 'price5', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        enableTooltips: true,
+        selectable: 'single',
+        cellNavigation: false,
+        clickToSelect: true,
+        rowHeight: 'extra-small',
+        frozenColumns: {
+          left: ['productId']
+        },
+        toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+      }).on('click', function (e, args) {
+        if (args) {
+          $('body').toast({ title: 'Row ' + args.row + ' was clicked', message: 'Tag Data: ' + args.cellElem.text().trim() });
+        }
+      });
+ });
+</script>
