@@ -5,8 +5,8 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-async function checkLeftAndTop(elem, pos) {
-  const elemStyle = await elem.getAttribute('style');
+function checkLeftAndTop(elem, pos) {
+  const elemStyle = elem.getAttribute('style');
   expect(elemStyle).toContain(`left: ${pos.left};`);
   expect(elemStyle).toContain(`top: ${pos.top};`);
 }
@@ -82,27 +82,17 @@ describe('Homepage example five column tests', () => {
       { left: '1140px', top: '780px' },
       { left: '1520px', top: '780px' }
     ];
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1920, 1080);
     await browser.driver.sleep(config.sleep);
-    const widgets = await element.all(await by.css('.homepage .widget'));
-    const len = await widgets.length;
+    const widgets = await element.all(by.css('.homepage .widget'));
+    const len = widgets.length;
 
-    expect(await len).toEqual(pos.length);
-    await checkLeftAndTop(widgets[0], pos[0]);
-    await checkLeftAndTop(widgets[1], pos[1]);
-    await checkLeftAndTop(widgets[2], pos[2]);
-    await checkLeftAndTop(widgets[3], pos[3]);
-    await checkLeftAndTop(widgets[4], pos[4]);
-    await checkLeftAndTop(widgets[5], pos[5]);
-    await checkLeftAndTop(widgets[6], pos[6]);
-    await checkLeftAndTop(widgets[7], pos[7]);
-    await checkLeftAndTop(widgets[8], pos[8]);
-    await checkLeftAndTop(widgets[9], pos[9]);
-    await checkLeftAndTop(widgets[10], pos[10]);
-    await checkLeftAndTop(widgets[11], pos[11]);
-    await checkLeftAndTop(widgets[12], pos[12]);
-    await checkLeftAndTop(widgets[13], pos[13]);
-    await checkLeftAndTop(widgets[14], pos[14]);
+    expect(len).toEqual(pos.length);
+    for (let i = 0; i < len; i++) {
+      checkLeftAndTop(widgets[i], pos[i]);
+    }
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
   it('Should position widgets properly at 1680px x 1050px', async () => {
@@ -123,27 +113,17 @@ describe('Homepage example five column tests', () => {
       { left: '380px', top: '1170px' },
       { left: '760px', top: '1170px' }
     ];
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1680, 1050);
     await browser.driver.sleep(config.sleep);
-    const widgets = await element.all(await by.css('.homepage .widget'));
-    const len = await widgets.length;
+    const widgets = await element.all(by.css('.homepage .widget'));
+    const len = widgets.length;
 
-    expect(await len).toEqual(pos.length);
-    await checkLeftAndTop(widgets[0], pos[0]);
-    await checkLeftAndTop(widgets[1], pos[1]);
-    await checkLeftAndTop(widgets[2], pos[2]);
-    await checkLeftAndTop(widgets[3], pos[3]);
-    await checkLeftAndTop(widgets[4], pos[4]);
-    await checkLeftAndTop(widgets[5], pos[5]);
-    await checkLeftAndTop(widgets[6], pos[6]);
-    await checkLeftAndTop(widgets[7], pos[7]);
-    await checkLeftAndTop(widgets[8], pos[8]);
-    await checkLeftAndTop(widgets[9], pos[9]);
-    await checkLeftAndTop(widgets[10], pos[10]);
-    await checkLeftAndTop(widgets[11], pos[11]);
-    await checkLeftAndTop(widgets[12], pos[12]);
-    await checkLeftAndTop(widgets[13], pos[13]);
-    await checkLeftAndTop(widgets[14], pos[14]);
+    expect(len).toEqual(pos.length);
+    for (let i = 0; i < len; i++) {
+      checkLeftAndTop(widgets[i], pos[i]);
+    }
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
   it('Should position widgets properly at 1200px x 1600px', async () => {
@@ -164,27 +144,17 @@ describe('Homepage example five column tests', () => {
       { left: '380px', top: '1560px' },
       { left: '760px', top: '1560px' }
     ];
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1200, 1600);
     await browser.driver.sleep(config.sleep);
-    const widgets = await element.all(await by.css('.homepage .widget'));
-    const len = await widgets.length;
+    const widgets = await element.all(by.css('.homepage .widget'));
+    const len = widgets.length;
 
-    expect(await len).toEqual(pos.length);
-    await checkLeftAndTop(widgets[0], pos[0]);
-    await checkLeftAndTop(widgets[1], pos[1]);
-    await checkLeftAndTop(widgets[2], pos[2]);
-    await checkLeftAndTop(widgets[3], pos[3]);
-    await checkLeftAndTop(widgets[4], pos[4]);
-    await checkLeftAndTop(widgets[5], pos[5]);
-    await checkLeftAndTop(widgets[6], pos[6]);
-    await checkLeftAndTop(widgets[7], pos[7]);
-    await checkLeftAndTop(widgets[8], pos[8]);
-    await checkLeftAndTop(widgets[9], pos[9]);
-    await checkLeftAndTop(widgets[10], pos[10]);
-    await checkLeftAndTop(widgets[11], pos[11]);
-    await checkLeftAndTop(widgets[12], pos[12]);
-    await checkLeftAndTop(widgets[13], pos[13]);
-    await checkLeftAndTop(widgets[14], pos[14]);
+    expect(len).toEqual(pos.length);
+    for (let i = 0; i < len; i++) {
+      checkLeftAndTop(widgets[i], pos[i]);
+    }
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
   it('Should position widgets properly at 768px x 1024px', async () => {
@@ -205,27 +175,17 @@ describe('Homepage example five column tests', () => {
       { left: '380px', top: '2340px' },
       { left: '0px', top: '2730px' }
     ];
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(768, 1024);
     await browser.driver.sleep(config.sleep);
-    const widgets = await element.all(await by.css('.homepage .widget'));
-    const len = await widgets.length;
+    const widgets = await element.all(by.css('.homepage .widget'));
+    const len = widgets.length;
 
-    expect(await len).toEqual(pos.length);
-    await checkLeftAndTop(widgets[0], pos[0]);
-    await checkLeftAndTop(widgets[1], pos[1]);
-    await checkLeftAndTop(widgets[2], pos[2]);
-    await checkLeftAndTop(widgets[3], pos[3]);
-    await checkLeftAndTop(widgets[4], pos[4]);
-    await checkLeftAndTop(widgets[5], pos[5]);
-    await checkLeftAndTop(widgets[6], pos[6]);
-    await checkLeftAndTop(widgets[7], pos[7]);
-    await checkLeftAndTop(widgets[8], pos[8]);
-    await checkLeftAndTop(widgets[9], pos[9]);
-    await checkLeftAndTop(widgets[10], pos[10]);
-    await checkLeftAndTop(widgets[11], pos[11]);
-    await checkLeftAndTop(widgets[12], pos[12]);
-    await checkLeftAndTop(widgets[13], pos[13]);
-    await checkLeftAndTop(widgets[14], pos[14]);
+    expect(len).toEqual(pos.length);
+    for (let i = 0; i < len; i++) {
+      checkLeftAndTop(widgets[i], pos[i]);
+    }
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
   it('Should position widgets properly at 320px x 480px', async () => {
@@ -246,26 +206,16 @@ describe('Homepage example five column tests', () => {
       { left: '0px', top: '5070px' },
       { left: '0px', top: '5460px' }
     ];
+    const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(320, 480);
     await browser.driver.sleep(config.sleep);
-    const widgets = await element.all(await by.css('.homepage .widget'));
-    const len = await widgets.length;
+    const widgets = await element.all(by.css('.homepage .widget'));
+    const len = widgets.length;
 
-    expect(await len).toEqual(pos.length);
-    await checkLeftAndTop(widgets[0], pos[0]);
-    await checkLeftAndTop(widgets[1], pos[1]);
-    await checkLeftAndTop(widgets[2], pos[2]);
-    await checkLeftAndTop(widgets[3], pos[3]);
-    await checkLeftAndTop(widgets[4], pos[4]);
-    await checkLeftAndTop(widgets[5], pos[5]);
-    await checkLeftAndTop(widgets[6], pos[6]);
-    await checkLeftAndTop(widgets[7], pos[7]);
-    await checkLeftAndTop(widgets[8], pos[8]);
-    await checkLeftAndTop(widgets[9], pos[9]);
-    await checkLeftAndTop(widgets[10], pos[10]);
-    await checkLeftAndTop(widgets[11], pos[11]);
-    await checkLeftAndTop(widgets[12], pos[12]);
-    await checkLeftAndTop(widgets[13], pos[13]);
-    await checkLeftAndTop(widgets[14], pos[14]);
+    expect(len).toEqual(pos.length);
+    for (let i = 0; i < len; i++) {
+      checkLeftAndTop(widgets[i], pos[i]);
+    }
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 });
