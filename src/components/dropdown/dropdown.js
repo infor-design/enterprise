@@ -3022,13 +3022,13 @@ Dropdown.prototype = {
 
           self.element.append(list);
         }
-        self.updateList(searchTerm);
       }
 
       self.element.triggerHandler('complete'); // For Busy Indicator
       self.element.trigger('requestend', [searchTerm, data]);
 
       if (typeof callback !== 'function') {
+        self.updateList(searchTerm);
         return;
       }
       callback();
