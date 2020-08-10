@@ -47,6 +47,7 @@ describe('Searchfield with Toolbar alignment tests', () => {
       expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'toolbar-searchfield-init')).toEqual(0);
 
       await searchfieldInputEl.click();
+      await browser.driver.sleep(config.sleep);
       expect(await browser.imageComparison.checkElement(searchfieldToolbarContainer, 'toolbar-searchfield-alignment')).toEqual(0);
     });
   }
