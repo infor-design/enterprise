@@ -11,9 +11,8 @@
       {{> includes/header-actionbutton}}
     </div>
   </header>
-
-  <section id="maincontent" class="is-personalizable" role="main">
-    <section class="personalize-header">
+  <section id="maincontent" class="page-container scrollable-flex is-personalizable" role="main">
+    <section class="scrollable-flex-header personalize-header">
       <div class="content">
         <div class="row no-bottom-margin bottom-padding">
           <div class="one-fifth column one-half-mobile">
@@ -38,10 +37,7 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="is-personalizable">
-      <div class="tab-container header-tabs personalize-header">
+      <div class="tab-container header-tabs personalize-header" data-options="{ containerElement: '#scrollable-tab-panels' }">
         <div class="tab-list-container">
           <ul class="tab-list">
             <li class="tab is-selected"><a id="detail" href="#composite-form-detail">Detail</a></li>
@@ -54,7 +50,10 @@
           </ul>
         </div>
       </div>
-      <div class="tab-panel-container">
+    </section>
+
+    <section class="is-personalizable scrollable-flex-content">
+      <div id="scrollable-tab-panels" class="tab-panel-container">
         <div id="composite-form-detail" class="tab-panel" role="tabpanel">
           <div class="row form-responsive">
             <div class="six columns">
@@ -161,5 +160,4 @@
       </div>
     </section>
   </section>
-
 </div>

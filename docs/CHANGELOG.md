@@ -22,6 +22,7 @@
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
 - `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
+- `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 
 ## v4.31.0
 
