@@ -27,7 +27,7 @@ describe('Toolbar Searchfield (no-reinvoke)', () => {
 
 describe('Searchfield with Toolbar alignment tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?layout=nofrills');
+    await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldInput))), config.waitsFor);
