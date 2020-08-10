@@ -1696,9 +1696,6 @@ MonthView.prototype = {
     const self = this;
     const s = this.settings;
 
-    if ($(cell).text() === '12')
-      debugger;
-
     if (s.range.useRange && s.range.first && !s.range.second) {
       const first = s.range.first;
       const extra = s.range.extra;
@@ -1720,11 +1717,11 @@ MonthView.prototype = {
           const thisTd = $(this);
           if (cellDate > self.getTime(s.range.first.date) && !s.range.selectBackward &&
             (!s.range.maxDays || (s.range.maxDays > 0 && cellDate <= max.aftertime)) &&
-            ((i > firstCell && i <= thisCell) || (cellDate > extra.max && i <= thisCell))) {
+            ((i > firstCell && i <= thisCell) || (cellDate > self.getTime(extra.max) && i <= thisCell))) {
             thisTd.addClass('range-next');
           } else if (cellDate < self.getTime(s.range.first.date) && !s.range.selectForward &&
             (!s.range.maxDays || (s.range.maxDays > 0 && cellDate >= max.beforetime)) &&
-            ((i < firstCell && i >= thisCell) || (cellDate < extra.min && i >= thisCell))) {
+            ((i < firstCell && i >= thisCell) || (cellDate < self.getTime(extra.min) && i >= thisCell))) {
             thisTd.addClass('range-prev');
           } else {
             thisTd.removeClass('range-next range-prev');

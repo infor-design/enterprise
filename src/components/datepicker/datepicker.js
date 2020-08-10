@@ -1155,8 +1155,8 @@ DatePicker.prototype = {
     s.range.extra = {
       minCell,
       maxCell,
-      min: this.isIslamic ? stringUtils.padDate(min.year, min.month, min.day) : dateObj(min),
-      max: this.isIslamic ? stringUtils.padDate(max.year, max.month, max.day) : dateObj(max),
+      min: this.isIslamic ? [min.year, min.month, min.day] : dateObj(min),
+      max: this.isIslamic ? [max.year, max.month, max.day] : dateObj(max),
       cellLength: row.children('td').length
     };
     this.calendarAPI.settings.range.first = s.range.first;

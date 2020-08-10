@@ -214,3 +214,9 @@ html[dir='rtl'] {
     margin-left: 8px;
   }
 }
+
+@include respond-to(tabletdown) {
+  .monthview-popup.popover .monthview {
+    min-width: 310px;
+  }
+}
