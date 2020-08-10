@@ -12,6 +12,7 @@
 - `[Datagrid]` Fixed an alignment issue on rows when using alerts and tags with frozen columns and short row. ([#4237](https://github.com/infor-design/enterprise/issues/4237))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Masthead]` Added the ability use user images, status and initials in the masthead and masthead menu buttons. ([#800](https://github.com/infor-design/enterprise-ng/issues/800))
+- `[MultiSelect]` Fixed an issue update multiselect on ajax with values already selected. ([#885](https://github.com/infor-design/enterprise-ng/issues/885))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
 - `[General]` Moved all the examples, patterns and layouts into their own sections or with the components they live with page patterns can now be found at `components/page-patterns` and layouts at `components/page-layouts`. Added a first pass of docs about these as well as more doc updates to forms, autocomplete and grid. ([#428](https://github.com/infor-design/enterprise/issues/428))
 
