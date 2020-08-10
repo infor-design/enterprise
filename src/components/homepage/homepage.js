@@ -222,10 +222,10 @@ Homepage.prototype = {
                     .off('mousemove.handle')
                     .off('mouseup.handle');
 
-                  card.removeClass('double-width triple-width quad-width quinte-width');
+                  card.removeClass('double-width triple-width quad-width quintuple-width');
                   const widthUnits = card.width() / homepage.settings.widgetWidth;
                   if (widthUnits > 4.5) {
-                    card.addClass('quinte-width');
+                    card.addClass('quintuple-width');
                   } else if (widthUnits > 3.5) {
                     card.addClass('quad-width');
                   } else if (widthUnits > 2.5) {
@@ -485,7 +485,7 @@ Homepage.prototype = {
       const h = card.hasClass('double-height') ? 2 : 1;
       let w;
 
-      if (card.hasClass('quinte-width')) {
+      if (card.hasClass('quintuple-width')) {
         w = 5;
       } else if (card.hasClass('quad-width')) {
         w = 4;
