@@ -11,7 +11,7 @@ const searchfieldInput = 'toolbar-searchfield-01';
 
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toolbar/test-searchfield-no-reinvoke-update?layout=nofrills');
+    await utils.setPage('/components/toolbar/test-searchfield-no-reinvoke-update?layout=nfrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(sfId))), config.waitsFor);
@@ -43,7 +43,7 @@ describe('Searchfield with Toolbar alignment tests', () => {
       const searchfieldToolbarContainer = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
-      await browser.driver.slee(config.sleep);
+      await browser.driver.sleep(config.sleep);
       expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'toolbar-searchfield-init')).toEqual(0);
 
       await searchfieldInputEl.click();
