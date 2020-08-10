@@ -1696,6 +1696,9 @@ MonthView.prototype = {
     const self = this;
     const s = this.settings;
 
+    if ($(cell).text() === '12')
+      debugger;
+
     if (s.range.useRange && s.range.first && !s.range.second) {
       const first = s.range.first;
       const extra = s.range.extra;
