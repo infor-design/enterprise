@@ -7,6 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 // Searchfield IDs
 const sfId = 'regular-toolbar-searchfield';
+const searchfieldInput = 'toolbar-searchfield-01';
 
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
@@ -24,13 +25,12 @@ describe('Toolbar Searchfield (no-reinvoke)', () => {
   });
 });
 
-fdescribe('Searchfield with Toolbar alignment tests', () => {
+describe('Searchfield with Toolbar alignment tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id('maincontent'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
+        .presenceOf(element(by.id(searchfieldInput))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -39,11 +39,15 @@ fdescribe('Searchfield with Toolbar alignment tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-flex-toolbar-align-with-searchfield', async () => {
-      const searchfieldInput = element(by.id('toolbar-searchfield-01'));
+      const searchfieldInputEl = await element(by.id(searchfieldInput));
       const searchfieldToolbarContainer = await element(by.id('maincontent'));
-      await searchfieldInput.click();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      await browser.driver.slee(config.sleep);
+      expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'toolbar-searchfield-init')).toEqual(0);
 
-      expect(await browser.imageComparison.checkElement(searchfieldToolbarContainer, 'searchfield-toolbar-alignment')).toEqual(0);
+      await searchfieldInputEl.click();
+      expect(await browser.imageComparison.checkElement(searchfieldToolbarContainer, 'toolbar-searchfield-alignment')).toEqual(0);
     });
   }
 });
