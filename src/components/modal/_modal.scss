@@ -434,7 +434,7 @@ body.modal-engaged {
     overflow: auto;
     padding: 5px 20px;
 
-    .field:last-child {
+    .field:not(.label-left).last-child {
       margin-bottom: 0;
 
       label,

@@ -1232,6 +1232,7 @@ $datagrid-small-row-height: 25px;
 
         span {
           line-height: $datagrid-small-row-height;
+          top: -1px;
         }
 
         .code-block span {
@@ -1594,7 +1595,7 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
-      line-height: $datagrid-extra-small-row-height - 3;
+      line-height: $datagrid-extra-small-row-height - 2;
 
       .datagrid-reorder-icon .icon {
         height: 18px;
@@ -1603,13 +1604,18 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: $datagrid-extra-small-row-height;
+      min-height: $datagrid-extra-small-row-height + 1;
       padding: 2px 5px 0;
     }
 
     tbody tr td {
       span {
-        line-height: $datagrid-extra-small-row-height - 3;
+        line-height: $datagrid-extra-small-row-height - 2;
+
+        &.tag {
+          height: $datagrid-extra-small-row-height - 53;
+          line-height: $datagrid-extra-small-row-height - 5;
+        }
       }
 
       .hyperlink {

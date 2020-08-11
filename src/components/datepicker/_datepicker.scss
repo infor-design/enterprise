@@ -135,6 +135,37 @@
   }
 }
 
+// Adjust for IOS
+@media only screen
+  and (max-width: $breakpoint-phone-to-tablet - 1)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+  .monthview-popup.popover {
+    .monthview {
+      min-width: 305px;
+    }
+
+    .monthview .monthview-table {
+      max-width: 305px;
+    }
+  }
+}
+
+@media only screen
+  and (max-width: $breakpoint-phone-to-tablet - 1)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+  .monthview-popup.popover {
+    .monthview {
+      min-width: 305px;
+    }
+
+    .monthview .monthview-table {
+      max-width: 305px;
+    }
+  }
+}
+
 // Short fields
 .field-short,
 .form-layout-compact .field {

@@ -49,7 +49,7 @@
 
       .picklist-section.is-month::after {
         height: calc(100% - 80px);
-        left: 150px;
+        left: 50%;
       }
     }
 
@@ -227,20 +227,21 @@
     height: 42px;
     width: 42px;
 
+    // Adjust cell size for IOS
     @media only screen
       and (max-width: $breakpoint-phone-to-tablet - 1)
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: landscape) {
-      height: 32px;
-      width: 32px;
+      height: 36px;
+      width: 36px;
     }
 
     @media only screen
       and (max-width: $breakpoint-phone-to-tablet - 1)
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
-      height: 32px;
-      width: 32px;
+      height: 36px;
+      width: 36px;
     }
 
     .day-text {
@@ -256,24 +257,6 @@
       margin: 2px;
       transition: 0.2s background-color ease;
       width: 36px;
-
-      @media only screen
-        and (max-width: $breakpoint-phone-to-tablet - 1)
-        and (-webkit-min-device-pixel-ratio: 2)
-        and (orientation: landscape) {
-        height: 32px;
-        line-height: 32px;
-        width: 32px;
-      }
-
-      @media only screen
-        and (max-width: $breakpoint-phone-to-tablet - 1)
-        and (-webkit-min-device-pixel-ratio: 2)
-        and (orientation: portrait) {
-        height: 32px;
-        line-height: 32px;
-        width: 32px;
-      }
     }
 
     &.is-selected.range {

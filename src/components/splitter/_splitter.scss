@@ -70,7 +70,7 @@
     margin-top: -2px;
     min-width: 30px;
     position: absolute;
-    transform: none;
+    transform: rotate(180deg);
     width: 30px;
     z-index: 101;
 
@@ -81,9 +81,8 @@
     }
 
     &.rotate {
-      left: -6px;
-      margin-top: -5px;
-      transform: rotate(180deg);
+      left: -5px;
+      transform: rotate(0deg);
     }
   }
 
@@ -117,6 +116,16 @@
 
     &.is-dragging {
       box-shadow: 2px 0 3px 0 $splitter-box-shadow-color;
+    }
+
+    .splitter-btn {
+      transform: none;
+
+      &.rotate {
+        left: -6px;
+        margin-top: -5px;
+        transform: rotate(180deg);
+      }
     }
   }
 

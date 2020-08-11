@@ -69,6 +69,14 @@
         pointer-events: none;
       }
     }
+
+    &.autocomplete {
+      &[readonly] {
+        ~ svg {
+          color: $searchfield-readonly-icon-color;
+        }
+      }
+    }
   }
 
   // This rule will only work when searchfield is clearable.
