@@ -11,7 +11,7 @@ const searchfieldInput = 'toolbar-searchfield-01';
 
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toolbar/test-searchfield-no-reinvoke-update?layout=nfrills');
+    await utils.setPage('/components/toolbar/test-searchfield-no-reinvoke-update?layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(sfId))), config.waitsFor);
