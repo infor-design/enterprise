@@ -224,9 +224,7 @@ describe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tes
   });
 
   it('Should not have errors', async () => {
-    debugger;
     await utils.checkForErrors();
-    debugger;
   });
 
   it('Should markup frozen colspan columns', async () => {
