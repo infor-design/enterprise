@@ -214,7 +214,7 @@ describe('Datagrid Colspan Frozen Column and Single Select Tests', () => {
   }
 });
 
-fdescribe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tests', () => {
+describe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-hide-show-columns?layout=nofrills');
 
