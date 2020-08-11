@@ -14,6 +14,7 @@
 - `[Datagrid]` Added a `columnSizing` setting which impacts how the column widths are auto calculated. Options are: `both` (default), `data` or `header` (including filter). ([#4017](https://github.com/infor-design/enterprise/issues/4017))
 - `[Datagrid]` Added the setting for empty message small height. ([#3609](https://github.com/infor-design/enterprise/issues/3609))
 - `[Datagrid]` Fixed an alignment issue on rows when using alerts and tags with frozen columns and short row. ([#4237](https://github.com/infor-design/enterprise/issues/4237))
+- `[Datagrid]` Fixed an alignment issue on hiding and showing rows when using grouped headers and frozen columns together. ([#4247](https://github.com/infor-design/enterprise/issues/4247))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Masthead]` Added the ability use user images, status and initials in the masthead and masthead menu buttons. ([#800](https://github.com/infor-design/enterprise-ng/issues/800))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))
