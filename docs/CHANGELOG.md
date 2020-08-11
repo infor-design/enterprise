@@ -2,6 +2,10 @@
 
 ## v4.31.0
 
+### v4.31.0 Important Notes
+
+- `[Buttons]` We reverted an inner Css rule that set all 'btn' classes to use contains vs starts with since this caused issues. One consequence is that if you use a class `dismissible-btn` it should now be `btn-dismissible`. This is a possible breaking change but for most cases this button is added by the tags component. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
+
 ### v4.31.0 Features
 
 - `[Calendar]` Added the ability to override an event `color` and `borderColor` see docs for details. ([#3923](https://github.com/infor-design/enterprise/issues/3923))
