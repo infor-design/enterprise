@@ -19,8 +19,11 @@
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
 - `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
+- `[Tabs]` Fixed a small error by removing a - 1 involved with testing. ([#4093](https://github.com/infor-design/enterprise/issues/4093))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+- `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
 - `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
+- `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 
 ## v4.31.0
 
@@ -31,6 +34,7 @@
 - `[Datagrid]` Added a `spacerColumn` setting, with this setting the last column fills any empty space instead of stretching everything out. ([#4032](https://github.com/infor-design/enterprise/issues/4032))
 - `[Datagrid]` Added a `columnSizing` setting which impacts how the column widths are auto calculated. Options are: `both` (default), `data` or `header` (including filter). ([#4017](https://github.com/infor-design/enterprise/issues/4017))
 - `[Datagrid]` Added the setting for empty message small height. ([#3609](https://github.com/infor-design/enterprise/issues/3609))
+- `[Datagrid]` Fixed an alignment issue on rows when using alerts and tags with frozen columns and short row. ([#4237](https://github.com/infor-design/enterprise/issues/4237))
 - `[Datepicker]` Added the ability to use +/- to increment the day in the calendar. This is in addition to arrow key functionality. This works in the field or when the calendar is open. ([#4001](https://github.com/infor-design/enterprise/issues/4001))
 - `[Masthead]` Added the ability use user images, status and initials in the masthead and masthead menu buttons. ([#800](https://github.com/infor-design/enterprise-ng/issues/800))
 - `[Tree]` Added option to add new child node on top or bottom. ([#3915](https://github.com/infor-design/enterprise/issues/3915))

@@ -767,3 +767,14 @@ html[dir='rtl'] {
     }
   }
 }
+
+// Fixing minor issue with shortcut text on small phones
+@media (max-width: $breakpoint-phone) {
+  .popupmenu {
+    .shortcut-text {
+      font-size: 12px;
+      margin-left: $theme-number-spacing-base * 1.5;
+      margin-top: 1px;
+    }
+  }
+}

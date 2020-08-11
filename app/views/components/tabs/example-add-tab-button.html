@@ -93,7 +93,7 @@
         formIndex = Number($('#tab-index').val()),
         formIsDismissible = $('#dismissible').prop('checked'),
         id = Soho.utils.uniqueId($('a'), 'tab'),
-        tabsLength = tabsAPI.tablist.children('li:not(.separator)').length - 1;
+        tabsLength = tabsAPI.tablist.children('li:not(.separator)').length;
 
       if (!formName || !formName.length || !formContent || !formContent.length) {
         return;
