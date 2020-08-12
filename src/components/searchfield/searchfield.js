@@ -2079,6 +2079,9 @@ SearchField.prototype = {
     this.element.clearable();
     this.wrapper.addClass('has-close-icon-button');
     this.xButton = this.wrapper.children('.icon.close');
+
+    // Ignoring the close button from tabbing
+    this.xButton[0].setAttribute('tabindex', '-1');
   },
 
   /**

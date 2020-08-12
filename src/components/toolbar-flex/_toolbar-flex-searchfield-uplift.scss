@@ -2,6 +2,14 @@
 // Uplift Flexible Toolbar - Searchfield Component
 // ==================================================
 
+.flex-toolbar {
+  .toolbar-section {
+    .searchfield-wrapper {
+      bottom: 0;
+    }
+  }
+}
+
 @include respond-to(phone) {
   .toolbar-section {
     .searchfield-wrapper {
