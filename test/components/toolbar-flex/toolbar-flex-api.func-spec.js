@@ -347,24 +347,5 @@ describe('Flex Toolbar', () => { //eslint-disable-line
         done();
       }, 500);
     });
-
-    it('Should trigger "selected" event for menu button in the overflow menu', (done) => {
-      rowEl.style.width = '700px';
-      const moreMenuButton = toolbarAPI.items[5];
-      const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const overflowedMenuButton = document.body.querySelector('ul#popupmenu-2 li:nth-child(2)');
-      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(2) a#item-one');
-
-      moreMenuButton.componentAPI.open();
-      setTimeout(() => {
-        $(overflowedMenuButton).trigger('mouseover');
-        firstMoreMenuEntry.click();
-
-        setTimeout(() => {
-          expect(moreActionsSpyEvent).toHaveBeenTriggered();
-          done();
-        }, 300);
-      }, 450);
-    });
   });
 });
