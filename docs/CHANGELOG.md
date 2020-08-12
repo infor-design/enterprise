@@ -78,6 +78,8 @@
 - `[Tree]` Fixed an issue where the tree node still shows folder icon after all children and `children` property deleted. ([#4026](https://github.com/infor-design/enterprise/issues/4026))
 - `[Tree]` Fixed an issue where the custom icon was changing back to default on toggle after use of method updateNode(). ([#4027](https://github.com/infor-design/enterprise/issues/4027))
 
+(81 Issues Solved This Release, Backlog Enterprise 183, Backlog Ng 48, 1077 Functional Tests, 1489 e2e Tests)
+
 ## v4.30.1
 
 ### v4.30.1 Fixes
