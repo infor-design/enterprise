@@ -14,6 +14,7 @@
 - `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
+- `[Input]` Fixed a bug where the text input error state border color would be wrong in the vibrant, dark and high contrast. ([#4248](https://github.com/infor-design/enterprise/issues/4248)) 
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
 - `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
