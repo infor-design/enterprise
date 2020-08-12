@@ -338,7 +338,7 @@
         border-radius: 0 50% 50% 0;
 
         &::before {
-          background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+          background: radial-gradient(circle at -10px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
           left: -100%;
         }
       }
@@ -351,8 +351,8 @@
           border-radius: 50%;
 
           &::before {
-            background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
-            left: -50%;
+            background: radial-gradient(circle at 45px 50%, transparent 45%, $datepicker-hover-bg-color 50%);
+            left: -65%;
           }
         }
       }
@@ -706,8 +706,19 @@ html[dir='rtl'] {
           border-radius: 0 50% 50% 0;
 
           &::before {
-            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+            background: radial-gradient(circle at -10px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
             left: -100%;
+          }
+        }
+
+        &:active {
+          .day-text {
+            border-radius: 50%;
+
+            &::before {
+              background: radial-gradient(circle at 43px 50%, transparent 50%, #d8d8d8 50%);
+              left: -60%;
+            }
           }
         }
 
@@ -772,7 +783,7 @@ html[dir='rtl'] {
           border-radius: 0 50% 50% 0;
 
           &::before {
-            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
+            background: radial-gradient(circle at -10px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
             left: -100%;
           }
         }
@@ -786,6 +797,17 @@ html[dir='rtl'] {
             &::before {
               background: none;
             }
+          }
+        }
+      }
+
+      &.is-disabled:not(.include-disabled),
+      &.is-disabled:not(.include-disabled):active {
+        .day-text {
+          border-radius: 50%;
+
+          &::before {
+            background: none !important;
           }
         }
       }

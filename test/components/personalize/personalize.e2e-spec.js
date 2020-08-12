@@ -135,6 +135,7 @@ describe('Personalization form tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkScreen('personalize-form')).toEqual(0);
