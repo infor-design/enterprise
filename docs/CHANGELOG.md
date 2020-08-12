@@ -11,21 +11,17 @@
 ### v4.32.0 Fixes
 
 - `[Accordion]` Fixed a bug where disabled headers texts and icons were barely recognizable as disabled in uplift theme. ([#4065](https://github.com/infor-design/enterprise/issues/4065))
-- `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
-- `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
-- `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
-- `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 - `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
-- `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
+- `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
+- `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
+- `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
-- `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
+- `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
 - `[Tabs]` Fixed a small error by removing a - 1 involved with testing. ([#4093](https://github.com/infor-design/enterprise/issues/4093))
+- `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
-- `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
-- `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
-- `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 
 ## v4.31.0
 
