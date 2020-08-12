@@ -219,7 +219,7 @@
     }
 
     .large-txt {
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
     }
 
     .line-through {
@@ -245,7 +245,7 @@
       position: relative;
 
       &::after {
-        border-right: 1px solid $theme-color-palette-graphite-30;
+        border-right: 1px solid $ids-color-palette-slate-30;
         bottom: 15px;
         content: ' ';
         position: absolute;
@@ -290,7 +290,7 @@
     }
 
     &:not(:first-child) {
-      border-top: 1px solid $theme-color-palette-graphite-30;
+      border-top: 1px solid $ids-color-palette-slate-30;
       padding-top: 15px;
     }
 

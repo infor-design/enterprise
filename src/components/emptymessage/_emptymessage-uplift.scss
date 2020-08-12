@@ -15,8 +15,8 @@
 .card-empty-title,
 .widget-empty-title,
 .empty-title {
-  font-size: $theme-size-font-px-20;
-  font-weight: $theme-number-font-weight-bold;
+  font-size: $ids-size-font-px-20;
+  font-weight: $ids-number-font-weight-bold;
   margin-top: -5px;
   padding: 0 0 10px;
 }
@@ -36,5 +36,5 @@
 
 .empty-icon,
 .card-empty-icon {
-  padding-bottom: $theme-number-spacing-base;
+  padding-bottom: $ids-number-spacing-base;
 }

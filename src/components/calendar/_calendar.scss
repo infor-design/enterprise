@@ -93,35 +93,35 @@
           width: 12px;
 
           &.ruby {
-            background-color: $theme-color-palette-ruby-60;
+            background-color: $ids-color-palette-ruby-60;
           }
 
           &.amber {
-            background-color: $theme-color-palette-amber-60;
+            background-color: $ids-color-palette-amber-60;
           }
 
           &.emerald {
-            background-color: $theme-color-palette-emerald-60;
+            background-color: $ids-color-palette-emerald-60;
           }
 
           &.azure {
-            background-color: $theme-color-palette-azure-60;
+            background-color: $ids-color-palette-azure-60;
           }
 
           &.turquoise {
-            background-color: $theme-color-palette-turquoise-60;
+            background-color: $ids-color-palette-turquoise-60;
           }
 
           &.amethyst {
-            background-color: $theme-color-palette-amethyst-60;
+            background-color: $ids-color-palette-amethyst-60;
           }
 
           &.slate {
-            background-color: $theme-color-palette-slate-60;
+            background-color: $ids-color-palette-slate-60;
           }
 
           &.graphite {
-            background-color: $theme-color-palette-graphite-60;
+            background-color: $ids-color-palette-graphite-60;
           }
         }
 
@@ -180,19 +180,19 @@
     text-decoration: none;
 
     &:focus {
-      border-color: $theme-color-brand-primary-base !important;
+      border-color: $ids-color-brand-primary-base !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
 
     .calendar-upcoming-date {
       display: block;
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       padding: 10px;
     }
 
     .calendar-upcoming-event-color {
-      background-color: $theme-color-palette-azure-60;
+      background-color: $ids-color-palette-azure-60;
       border: 1px solid transparent;
       border-radius: 50%;
       color: transparent;
@@ -204,41 +204,41 @@
       width: 8px;
 
       &.ruby {
-        background-color: $theme-color-palette-ruby-60;
+        background-color: $ids-color-palette-ruby-60;
       }
 
       &.amber {
-        background-color: $theme-color-palette-amber-60;
+        background-color: $ids-color-palette-amber-60;
       }
 
       &.emerald {
-        background-color: $theme-color-palette-emerald-60;
+        background-color: $ids-color-palette-emerald-60;
       }
 
       &.azure {
-        background-color: $theme-color-palette-azure-60;
+        background-color: $ids-color-palette-azure-60;
       }
 
       &.turquoise {
-        background-color: $theme-color-palette-turquoise-60;
+        background-color: $ids-color-palette-turquoise-60;
       }
 
       &.amethyst {
-        background-color: $theme-color-palette-amethyst-60;
+        background-color: $ids-color-palette-amethyst-60;
       }
 
       &.slate {
-        background-color: $theme-color-palette-slate-60;
+        background-color: $ids-color-palette-slate-60;
       }
 
       &.graphite {
-        background-color: $theme-color-palette-graphite-60;
+        background-color: $ids-color-palette-graphite-60;
       }
     }
 
     .calendar-upcoming-description {
       display: inline-block;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       left: 5px;
       overflow-wrap: break-word;
       position: relative;
@@ -248,7 +248,7 @@
 
     .calendar-upcoming-status-text {
       display: block;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       font-style: italic;
       left: 25px;
       position: relative;
@@ -262,7 +262,7 @@
     .calendar-upcoming-duration {
       display: block;
       float: right;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       font-style: italic;
       position: relative;
       right: 0;
@@ -317,7 +317,7 @@
     background-color: $calendar-bg-color;
 
     .data {
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
     }
 
     .icon {
@@ -351,8 +351,8 @@
     }
 
     a {
-      color: $theme-color-palette-white;
-      font-size: $theme-size-font-lg;
+      color: $ids-color-palette-white;
+      font-size: $ids-size-font-lg;
       -webkit-font-smoothing: antialiased;
       font-weight: 400;
     }
@@ -362,40 +362,40 @@
       margin-top: 3px;
 
       .chevron {
-        color: $theme-color-palette-white;
+        color: $ids-color-palette-white;
       }
     }
 
     &.ruby {
-      background-color: $theme-color-palette-ruby-60;
+      background-color: $ids-color-palette-ruby-60;
     }
 
     &.amber {
-      background-color: $theme-color-palette-amber-60;
+      background-color: $ids-color-palette-amber-60;
     }
 
     &.emerald {
-      background-color: $theme-color-palette-emerald-60;
+      background-color: $ids-color-palette-emerald-60;
     }
 
     &.azure {
-      background-color: $theme-color-palette-azure-60;
+      background-color: $ids-color-palette-azure-60;
     }
 
     &.turquoise {
-      background-color: $theme-color-palette-turquoise-60;
+      background-color: $ids-color-palette-turquoise-60;
     }
 
     &.amethyst {
-      background-color: $theme-color-palette-amethyst-60;
+      background-color: $ids-color-palette-amethyst-60;
     }
 
     &.slate {
-      background-color: $theme-color-palette-slate-60;
+      background-color: $ids-color-palette-slate-60;
     }
 
     &.graphite {
-      background-color: $theme-color-palette-graphite-60;
+      background-color: $ids-color-palette-graphite-60;
     }
   }
 }
@@ -526,35 +526,35 @@
         }
 
         &.ruby {
-          background-color: $theme-color-palette-ruby-60;
+          background-color: $ids-color-palette-ruby-60;
         }
 
         &.amber {
-          background-color: $theme-color-palette-amber-60;
+          background-color: $ids-color-palette-amber-60;
         }
 
         &.emerald {
-          background-color: $theme-color-palette-emerald-60;
+          background-color: $ids-color-palette-emerald-60;
         }
 
         &.azure {
-          background-color: $theme-color-palette-azure-60;
+          background-color: $ids-color-palette-azure-60;
         }
 
         &.turquoise {
-          background-color: $theme-color-palette-turquoise-60;
+          background-color: $ids-color-palette-turquoise-60;
         }
 
         &.amethyst {
-          background-color: $theme-color-palette-amethyst-60;
+          background-color: $ids-color-palette-amethyst-60;
         }
 
         &.slate {
-          background-color: $theme-color-palette-slate-60;
+          background-color: $ids-color-palette-slate-60;
         }
 
         &.graphite {
-          background-color: $theme-color-palette-graphite-60;
+          background-color: $ids-color-palette-graphite-60;
         }
       }
     }
@@ -627,35 +627,35 @@
         }
 
         &.ruby {
-          background-color: $theme-color-palette-ruby-60;
+          background-color: $ids-color-palette-ruby-60;
         }
 
         &.amber {
-          background-color: $theme-color-palette-amber-60;
+          background-color: $ids-color-palette-amber-60;
         }
 
         &.emerald {
-          background-color: $theme-color-palette-emerald-60;
+          background-color: $ids-color-palette-emerald-60;
         }
 
         &.azure {
-          background-color: $theme-color-palette-azure-60;
+          background-color: $ids-color-palette-azure-60;
         }
 
         &.turquoise {
-          background-color: $theme-color-palette-turquoise-60;
+          background-color: $ids-color-palette-turquoise-60;
         }
 
         &.amethyst {
-          background-color: $theme-color-palette-amethyst-60;
+          background-color: $ids-color-palette-amethyst-60;
         }
 
         &.slate {
-          background-color: $theme-color-palette-slate-60;
+          background-color: $ids-color-palette-slate-60;
         }
 
         &.graphite {
-          background-color: $theme-color-palette-graphite-60;
+          background-color: $ids-color-palette-graphite-60;
         }
       }
     }
@@ -691,7 +691,7 @@ html[dir='rtl'] {
 
   .calendar-event {
     border-left: 0;
-    border-right: 5px solid $theme-color-brand-primary-alt;
+    border-right: 5px solid $ids-color-brand-primary-alt;
 
     &.event-day-end {
       border-radius: 3px 0 0 3px;
@@ -710,31 +710,31 @@ html[dir='rtl'] {
     }
 
     &.ruby {
-      border-right: 5px solid $theme-color-palette-ruby-70;
+      border-right: 5px solid $ids-color-palette-ruby-70;
     }
 
     &.amber {
-      border-right: 5px solid $theme-color-palette-amber-70;
+      border-right: 5px solid $ids-color-palette-amber-70;
     }
 
     &.emerald {
-      border-right: 5px solid $theme-color-palette-emerald-70;
+      border-right: 5px solid $ids-color-palette-emerald-70;
     }
 
     &.turquoise {
-      border-right: 5px solid $theme-color-palette-turquoise-70;
+      border-right: 5px solid $ids-color-palette-turquoise-70;
     }
 
     &.amethyst {
-      border-right: 5px solid $theme-color-palette-amethyst-70;
+      border-right: 5px solid $ids-color-palette-amethyst-70;
     }
 
     &.slate {
-      border-right: 5px solid $theme-color-palette-slate-70;
+      border-right: 5px solid $ids-color-palette-slate-70;
     }
 
     &.graphite {
-      border-right: 5px solid $theme-color-palette-graphite-70;
+      border-right: 5px solid $ids-color-palette-graphite-70;
     }
 
     .calendar-event-content {
@@ -790,9 +790,9 @@ html[dir='rtl'] {
 .calendar-event {
   @include font-size(11);
 
-  background-color: $theme-color-palette-azure-20;
+  background-color: $ids-color-palette-azure-20;
   border: 1px solid transparent;
-  border-left: 5px solid $theme-color-brand-primary-alt;
+  border-left: 5px solid $ids-color-brand-primary-alt;
   border-radius: 3px;
   color: $font-color-extrahighcontrast;
   cursor: pointer;
@@ -863,42 +863,42 @@ html[dir='rtl'] {
   }
 
   &.ruby {
-    background-color: $theme-color-palette-ruby-20;
-    border-left: 5px solid $theme-color-palette-ruby-70;
+    background-color: $ids-color-palette-ruby-20;
+    border-left: 5px solid $ids-color-palette-ruby-70;
   }
 
   &.amber {
-    background-color: $theme-color-palette-amber-30;
-    border-left: 5px solid $theme-color-palette-amber-70;
+    background-color: $ids-color-palette-amber-30;
+    border-left: 5px solid $ids-color-palette-amber-70;
   }
 
   &.emerald {
-    background-color: $theme-color-palette-emerald-30;
-    border-left: 5px solid $theme-color-palette-emerald-70;
+    background-color: $ids-color-palette-emerald-30;
+    border-left: 5px solid $ids-color-palette-emerald-70;
   }
 
   &.turquoise {
-    background-color: $theme-color-palette-turquoise-30;
-    border-left: 5px solid $theme-color-palette-turquoise-70;
+    background-color: $ids-color-palette-turquoise-30;
+    border-left: 5px solid $ids-color-palette-turquoise-70;
   }
 
   &.amethyst {
-    background-color: $theme-color-palette-amethyst-30;
-    border-left: 5px solid $theme-color-palette-amethyst-70;
+    background-color: $ids-color-palette-amethyst-30;
+    border-left: 5px solid $ids-color-palette-amethyst-70;
   }
 
   &.slate {
-    background-color: $theme-color-palette-slate-30;
-    border-left: 5px solid $theme-color-palette-slate-70;
+    background-color: $ids-color-palette-slate-30;
+    border-left: 5px solid $ids-color-palette-slate-70;
   }
 
   &.graphite {
-    background-color: $theme-color-palette-graphite-30;
-    border-left: 5px solid $theme-color-palette-graphite-70;
+    background-color: $ids-color-palette-graphite-30;
+    border-left: 5px solid $ids-color-palette-graphite-70;
   }
 
   &:focus {
-    border-color: $theme-color-palette-azure-60;
+    border-color: $ids-color-palette-azure-60;
     box-shadow: 0 0 4px 3px rgba(54, 138, 192, 0.3);
     outline: none;
     outline-color: transparent;

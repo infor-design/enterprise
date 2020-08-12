@@ -330,7 +330,7 @@
 .overlay {
   @include css3(transition, all 0.2s);
 
-  background: $theme-color-palette-black;
+  background: $ids-color-palette-black;
   height: 100%;
   left: 0;
   opacity: 0;
@@ -368,8 +368,8 @@ body.modal-engaged {
     @include line-clamp(1);
 
     color: $modal-primary-color;
-    font-size: $theme-size-font-lg;
-    font-weight: $theme-number-font-weight-base;
+    font-size: $ids-size-font-lg;
+    font-weight: $ids-number-font-weight-base;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -413,7 +413,7 @@ body.modal-engaged {
     @include font-size(16);
 
     color: $modal-primary-color;
-    font-weight: $theme-number-font-weight-base;
+    font-weight: $ids-number-font-weight-base;
     -webkit-margin-after: 0;
     text-align: left;
 
@@ -466,7 +466,7 @@ body.modal-engaged {
 
   .message {
     color: $modal-color;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     line-height: 20px;
     max-width: 369px;
     padding: 15px 0 25px;
@@ -517,8 +517,8 @@ body.modal-engaged {
     color: $modal-btn-color;
     cursor: pointer;
     float: left;
-    font-size: $theme-size-font-base;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-base;
+    font-weight: $ids-number-font-weight-bold;
     height: 49px;
     line-height: 49px;
     margin-right: 0;

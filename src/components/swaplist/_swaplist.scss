@@ -11,13 +11,13 @@
   @include is-dragging();
 
   background-color: $swaplist-bg-color-selected;
-  color: $theme-color-palette-white;
+  color: $ids-color-palette-white;
   opacity: 0.7;
   position: fixed;
   z-index: 2;
 
   p {
-    color: $theme-color-palette-white;
+    color: $ids-color-palette-white;
   }
 }
 
@@ -164,7 +164,7 @@
 
     .card-title {
       color: $swaplist-title-text-color;
-      font-weight: $theme-number-font-weight-base;
+      font-weight: $ids-number-font-weight-base;
     }
 
     p {
@@ -295,7 +295,7 @@
 
         p {
           color: $swaplist-text-color-selected;
-          font-weight: $theme-number-font-weight-bold;
+          font-weight: $ids-number-font-weight-bold;
         }
 
         &:hover:not(.is-disabled),

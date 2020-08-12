@@ -42,7 +42,7 @@
 
   .content {
     background-color: $inverse-color;
-    border: 1px solid $theme-color-palette-graphite-20;
+    border: 1px solid $ids-color-palette-slate-20;
   }
 }
 
@@ -59,7 +59,7 @@ body.no-scroll {
 }
 
 .fake-section-small {
-  background-color: $theme-color-palette-white;
+  background-color: $ids-color-palette-white;
   height: 50px;
 }
 
@@ -248,8 +248,8 @@ body.no-scroll {
 
   .main {
     background-color: $panel-bg-color;
-    border-left: 1px solid $theme-color-palette-graphite-20;
-    border-right: 1px solid $theme-color-palette-graphite-20;
+    border-left: 1px solid $ids-color-palette-slate-20;
+    border-right: 1px solid $ids-color-palette-slate-20;
     width: calc(60% - 3px);
 
     &.scrollable,
@@ -334,7 +334,7 @@ body.no-scroll {
 
     > .main {
       border: 0;
-      border-bottom: 1px solid $theme-color-palette-graphite-20;
+      border-bottom: 1px solid $ids-color-palette-slate-20;
     }
 
     > .sidebar + .main {
@@ -788,7 +788,7 @@ body.no-scroll {
 
   .hero {
     background-color: $body-color-primary-background;
-    border-bottom: 1px solid $theme-color-palette-graphite-20;
+    border-bottom: 1px solid $ids-color-palette-slate-20;
     height: 350px;
   }
 
@@ -798,7 +798,7 @@ body.no-scroll {
     a {
       border-bottom: medium none;
       border-left: 3px solid transparent;
-      color: $theme-color-palette-graphite-50;
+      color: $ids-color-palette-slate-50;
       height: auto;
       line-height: 25px;
       padding: 5px 10px;
@@ -808,8 +808,8 @@ body.no-scroll {
       &:focus,
       &.is-active {
         border-bottom: 0;
-        border-left: 3px solid $theme-color-brand-primary-base;
-        color: $theme-color-brand-primary-base;
+        border-left: 3px solid $ids-color-brand-primary-base;
+        color: $ids-color-brand-primary-base;
         outline: none;
       }
     }
@@ -929,7 +929,7 @@ body.no-scroll {
 .sticky-footer {
   background-color: $body-color-primary-background;
   bottom: 0;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   left: 50%;
   max-width: 1280px;
   padding: 20px;

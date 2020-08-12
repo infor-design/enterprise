@@ -6,7 +6,7 @@
   border: 1px solid transparent;
   color: $hyperlink-color;
   cursor: pointer;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.5rem;
   margin-left: -4px;
   padding: 3px;
@@ -55,7 +55,7 @@
   &.back,
   &.directional {
     color: $hyperlink-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
 
     .icon {
       color: $hyperlink-color;
@@ -93,7 +93,7 @@
 
 // Inline text should be 14px to match content
 p .hyperlink {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   white-space: nowrap;
 }
 
@@ -105,7 +105,7 @@ p .hyperlink {
     line-height: 25px;
 
     svg {
-      color: $theme-color-brand-primary-base;
+      color: $ids-color-brand-primary-base;
       height: 16px;
       left: 6px;
       margin-right: 2px;
@@ -137,7 +137,7 @@ p .hyperlink {
   .timestamp {
     color: $link-color-disabled-font;
     display: block;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     margin: 0;
     padding: 0;
     position: static;

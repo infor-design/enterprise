@@ -44,7 +44,7 @@
     margin-top: 5px;
 
     .completed {
-      background-color: $theme-color-palette-turquoise-60;
+      background-color: $ids-color-palette-turquoise-60;
 
       &.error-color,
       &.error {
@@ -58,7 +58,7 @@
   }
 
   span:not(.audible) {
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     position: absolute;
     right: 2px;
     text-align: right;
@@ -74,7 +74,7 @@
 
   .chart-percent-text {
     cursor: default;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     height: 25px;
     margin-top: -25px;
     position: relative;
@@ -86,11 +86,11 @@
     }
 
     &.alert {
-      color: $theme-color-status-warning;
+      color: $ids-color-status-warning;
     }
 
     &.alert-yellow {
-      color: $theme-color-status-caution;
+      color: $ids-color-status-caution;
     }
 
     &.alert-neutral {
@@ -102,7 +102,7 @@
     }
 
     &.good {
-      color: $theme-color-status-success;
+      color: $ids-color-status-success;
     }
 
     &.primary {
@@ -156,18 +156,18 @@
     }
 
     &.alert {
-      background-color: $theme-color-status-warning;
+      background-color: $ids-color-status-warning;
 
       span {
-        color: $theme-color-status-warning;
+        color: $ids-color-status-warning;
       }
     }
 
     &.alert-yellow {
-      background-color: $theme-color-status-caution;
+      background-color: $ids-color-status-caution;
 
       span {
-        color: $theme-color-status-caution;
+        color: $ids-color-status-caution;
       }
     }
 
@@ -180,10 +180,10 @@
     }
 
     &.good {
-      background-color: $theme-color-status-success;
+      background-color: $ids-color-status-success;
 
       span {
-        color: $theme-color-status-success;
+        color: $ids-color-status-success;
       }
     }
 
@@ -223,7 +223,7 @@
 
     span {
       color: $label-color;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       position: absolute;
       text-align: right;
       top: 34px;
@@ -258,7 +258,7 @@
   }
 
   .target-line {
-    background-color: $theme-color-palette-amethyst-70;
+    background-color: $ids-color-palette-amethyst-70;
     border-radius: 1px;
     color: transparent;
     height: 20px;
@@ -286,11 +286,11 @@
       }
 
       &.alert {
-        background-color: $theme-color-status-warning;
+        background-color: $ids-color-status-warning;
       }
 
       &.alert-yellow {
-        background-color: $theme-color-status-caution;
+        background-color: $ids-color-status-caution;
       }
 
       &.alert-neutral {
@@ -302,7 +302,7 @@
       }
 
       &.good {
-        background-color: $theme-color-status-success;
+        background-color: $ids-color-status-success;
       }
 
       &.primary {
@@ -318,11 +318,11 @@
       }
 
       &.alert {
-        color: $theme-color-status-warning;
+        color: $ids-color-status-warning;
       }
 
       &.alert-yellow {
-        color: $theme-color-status-caution;
+        color: $ids-color-status-caution;
       }
 
       &.alert-neutral {
@@ -334,7 +334,7 @@
       }
 
       &.good {
-        color: $theme-color-status-success;
+        color: $ids-color-status-success;
       }
 
       &.primary {
@@ -362,11 +362,11 @@
     }
 
     .alert {
-      color: $theme-color-status-warning;
+      color: $ids-color-status-warning;
     }
 
     .alert-yellow {
-      color: $theme-color-status-caution;
+      color: $ids-color-status-caution;
     }
 
     .alert-neutral {
@@ -378,7 +378,7 @@
     }
 
     .good {
-      color: $theme-color-status-success;
+      color: $ids-color-status-success;
     }
 
     .primary {
@@ -401,7 +401,7 @@
   }
 
   .hyperlink {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 }
 

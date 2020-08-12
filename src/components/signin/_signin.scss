@@ -31,7 +31,7 @@
 
   h1 {
     color: $signin-title-color;
-    font-size: $theme-size-font-xl;
+    font-size: $ids-size-font-xl;
     margin-bottom: 30px;
     margin-top: -20px;
     padding: 0;
@@ -95,7 +95,7 @@
 
 .password-hint {
   strong {
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   li {

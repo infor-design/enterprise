@@ -1,7 +1,7 @@
 // Buttons
 //================================================== //
 
-$breadcrumb-container-height: $theme-size-font-xl;
+$breadcrumb-container-height: $ids-size-font-xl;
 
 .breadcrumb {
   ul,
@@ -18,7 +18,7 @@ $breadcrumb-container-height: $theme-size-font-xl;
 
     &::after {
       content: '\002F';
-      font-size: $theme-size-font-xs;
+      font-size: $ids-size-font-xs;
       padding: 0 8px;
     }
 
@@ -30,8 +30,8 @@ $breadcrumb-container-height: $theme-size-font-xl;
     .current,
     &.current {
       color: $breadcrumb-color;
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-sm;
+      font-weight: $ids-number-font-weight-bold;
 
       a {
         color: inherit;
@@ -88,7 +88,7 @@ $breadcrumb-container-height: $theme-size-font-xl;
     @include antialiased();
 
     color: $breadcrumb-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     line-height: 2em;
     text-decoration: none;
 
@@ -116,7 +116,7 @@ $breadcrumb-container-height: $theme-size-font-xl;
     }
 
     &.current {
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
     }
 
     &[disabled] {
@@ -134,7 +134,7 @@ $breadcrumb-container-height: $theme-size-font-xl;
 
   a,
   span {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 }
 

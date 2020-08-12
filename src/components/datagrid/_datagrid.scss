@@ -37,7 +37,7 @@
       }
 
       .icon-rowstatus {
-        color: $theme-color-palette-white;
+        color: $ids-color-palette-white;
         height: 10px;
         left: 1px;
         position: absolute;
@@ -121,7 +121,7 @@ $datagrid-small-row-height: 25px;
         padding-bottom: 0;
 
         .empty-title {
-          font-size: $theme-size-font-px-16;
+          font-size: $ids-size-font-px-16;
           -webkit-font-smoothing: antialiased;
           font-weight: 400;
           padding-bottom: 0;
@@ -190,7 +190,7 @@ $datagrid-small-row-height: 25px;
   .datagrid-wrapper {
     &:first-of-type {
       tr.rowstatus-row-error td:first-child {
-        @include rowstatusEndBorders($theme-color-status-danger);
+        @include rowstatusEndBorders($ids-color-status-danger);
       }
 
       tr.rowstatus-row-dirty td:first-child {
@@ -202,7 +202,7 @@ $datagrid-small-row-height: 25px;
       }
 
       tr.rowstatus-row-info td:first-child {
-        @include rowstatusEndBorders($theme-color-brand-primary-base);
+        @include rowstatusEndBorders($ids-color-brand-primary-base);
       }
 
       tr.rowstatus-row-in-progress td:first-child {
@@ -210,7 +210,7 @@ $datagrid-small-row-height: 25px;
       }
 
       tr.rowstatus-row-success td:first-child {
-        @include rowstatusEndBorders($theme-color-status-success);
+        @include rowstatusEndBorders($ids-color-status-success);
       }
 
       tr.rowstatus-row-new td:first-child {
@@ -220,7 +220,7 @@ $datagrid-small-row-height: 25px;
 
     &:last-of-type {
       tr.rowstatus-row-error td:last-child {
-        @include rowstatusEndBorders($theme-color-status-danger);
+        @include rowstatusEndBorders($ids-color-status-danger);
       }
 
       tr.rowstatus-row-dirty td:last-child {
@@ -232,7 +232,7 @@ $datagrid-small-row-height: 25px;
       }
 
       tr.rowstatus-row-info td:last-child {
-        @include rowstatusEndBorders($theme-color-brand-primary-base);
+        @include rowstatusEndBorders($ids-color-brand-primary-base);
       }
 
       tr.rowstatus-row-in-progress td:last-child {
@@ -240,7 +240,7 @@ $datagrid-small-row-height: 25px;
       }
 
       tr.rowstatus-row-success td:last-child {
-        @include rowstatusEndBorders($theme-color-status-success);
+        @include rowstatusEndBorders($ids-color-status-success);
       }
 
       tr.rowstatus-row-new td:last-child {
@@ -941,7 +941,7 @@ $datagrid-small-row-height: 25px;
   background-color: transparent;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
   width: 100%;
@@ -1688,7 +1688,7 @@ $datagrid-small-row-height: 25px;
     line-height: $datagrid-row-height;
 
     &.is-active-row {
-      outline: 1px solid $theme-color-brand-primary-base;
+      outline: 1px solid $ids-color-brand-primary-base;
       outline-offset: -1px;
     }
 
@@ -1912,7 +1912,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &.info .audible {
-        background-color: $theme-color-palette-graphite-50;
+        background-color: $ids-color-palette-slate-50;
       }
     }
 
@@ -1922,7 +1922,7 @@ $datagrid-small-row-height: 25px;
       vertical-align: middle;
 
       &[class*='azure'] {
-        color: $theme-color-palette-white;
+        color: $ids-color-palette-white;
       }
     }
 
@@ -1998,7 +1998,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &.rowstatus-row-error {
-      @include rowstatus($theme-color-status-danger);
+      @include rowstatus($ids-color-status-danger);
     }
 
     &.rowstatus-row-dirty {
@@ -2010,7 +2010,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &.rowstatus-row-info {
-      @include rowstatus($theme-color-brand-primary-base);
+      @include rowstatus($ids-color-brand-primary-base);
     }
 
     &.rowstatus-row-in-progress {
@@ -2018,7 +2018,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &.rowstatus-row-success {
-      @include rowstatus($theme-color-status-success);
+      @include rowstatus($ids-color-status-success);
     }
 
     &.rowstatus-row-new {
@@ -2045,7 +2045,7 @@ $datagrid-small-row-height: 25px;
     &:focus,
     &.is-focused {
       box-shadow: $datagrid-cell-focus-box-shadow;
-      outline: 1px solid $theme-color-brand-primary-base;
+      outline: 1px solid $ids-color-brand-primary-base;
       outline-offset: -1px;
       transform: scale(1);
     }
@@ -2110,7 +2110,7 @@ $datagrid-small-row-height: 25px;
       vertical-align: middle;
 
       .chart-targeted-text {
-        color: $theme-color-palette-white;
+        color: $ids-color-palette-white;
       }
     }
 
@@ -2137,7 +2137,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $theme-color-status-danger;
+        border-color: $ids-color-status-danger;
       }
 
       &.l-right-text {
@@ -2165,7 +2165,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $theme-color-status-warning;
+        border-color: $ids-color-status-warning;
       }
 
       &.l-right-text {
@@ -2193,7 +2193,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $theme-color-status-success;
+        border-color: $ids-color-status-success;
       }
 
       &.l-right-text {
@@ -2221,7 +2221,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:focus .datagrid-cell-wrapper {
-        border-color: $theme-color-status-base;
+        border-color: $ids-color-status-base;
       }
 
       &.l-right-text {
@@ -2240,7 +2240,7 @@ $datagrid-small-row-height: 25px;
     .hyperlink {
       color: $hyperlink-color;
       display: inline-block;
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
 
       &:hover {
         color: $hyperlink-hover-color;
@@ -2251,7 +2251,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &.micro-text {
-        font-size: $theme-size-font-sm;
+        font-size: $ids-size-font-sm;
       }
     }
 
@@ -2259,7 +2259,7 @@ $datagrid-small-row-height: 25px;
     .search-mode {
       i {
         font-style: normal;
-        font-weight: $theme-number-font-weight-bold;
+        font-weight: $ids-number-font-weight-bold;
       }
     }
 
@@ -2310,7 +2310,7 @@ $datagrid-small-row-height: 25px;
       }
 
       .datagrid-cell-wrapper {
-        border: 1px solid $theme-color-brand-primary-base;
+        border: 1px solid $ids-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: clip;
@@ -2519,7 +2519,7 @@ $datagrid-small-row-height: 25px;
         }
 
         &:disabled .icon {
-          color: $theme-color-palette-slate-50;
+          color: $ids-color-palette-slate-50;
         }
       }
 
@@ -2764,8 +2764,8 @@ $datagrid-small-row-height: 25px;
       color: $datagrid-header-color;
       direction: ltr;
       display: table-cell;
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-sm;
+      font-weight: $ids-number-font-weight-bold;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
@@ -3167,13 +3167,13 @@ $datagrid-small-row-height: 25px;
 
     &:focus,
     &.is-focused {
-      border: 1px solid $theme-color-brand-primary-base;
+      border: 1px solid $ids-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
     }
 
     span {
       color: $datagrid-rowgroup-color;
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
       vertical-align: middle;
     }
 
@@ -3260,14 +3260,14 @@ $datagrid-small-row-height: 25px;
 
 .datagrid-row-subheading {
   color: $datagrid-cell-color;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   line-height: 22px;
   margin-top: -4px;
 }
 
 .datagrid-row-micro {
   color: $datagrid-cell-color;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 2rem;
 }
 
@@ -3333,7 +3333,7 @@ td .btn-actions {
 .datagrid-checkbox {
   cursor: pointer;
   display: inline-block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   left: -7px;
   position: relative;
 
@@ -3349,7 +3349,7 @@ td .btn-actions {
   }
 
   &:focus::before {
-    border: solid 1px $theme-color-palette-azure-40 !important;
+    border: solid 1px $ids-color-palette-azure-40 !important;
     box-shadow: 0 0 4px 3px rgba(105, 181, 221, 0.3);
   }
 
@@ -3600,7 +3600,7 @@ td .btn-actions {
 
   .datagrid-row-micro-text {
     color: $font-color-lowcontrast;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
   }
 
   .datagrid-cell-layout {
@@ -3613,7 +3613,7 @@ td .btn-actions {
 .datagrid-result-count,
 .datagrid-group-count {
   display: inline-block;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   position: relative;
   top: 0;
 }
@@ -3713,7 +3713,7 @@ td .btn-actions {
     }
 
     tbody tr.arrange-dragging td {
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       height: $datagrid-row-height;
     }
   }
@@ -3809,7 +3809,7 @@ td .btn-actions {
   }
 
   .icon {
-    color: $theme-color-font-base;
+    color: $ids-color-font-base;
     left: 0 !important;
     margin-top: 8px;
 
@@ -4075,7 +4075,7 @@ html[dir='rtl'] {
 
   th.is-dragging-clone {
     .handle {
-      color: $theme-color-palette-white;
+      color: $ids-color-palette-white;
       top: -1px;
     }
 
@@ -4532,7 +4532,7 @@ html[dir='rtl'] {
 // Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 
   label.inline {
@@ -4717,7 +4717,7 @@ html[dir='rtl'] {
 .content-tooltip {
   &.popover.alternate {
     background-color: $datagrid-cell-bg-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     padding-bottom: inherit;
 
     &.top .arrow::after {
@@ -4784,8 +4784,8 @@ html[dir='rtl'] {
   .datagrid-wrapper {
     tbody tr {
       &.is-active-row td {
-        border-bottom: 1px solid $theme-color-brand-primary-base;
-        border-top: 1px solid $theme-color-brand-primary-base;
+        border-bottom: 1px solid $ids-color-brand-primary-base;
+        border-top: 1px solid $ids-color-brand-primary-base;
         outline: 0;
 
         .datagrid-cell-wrapper {
@@ -4794,7 +4794,7 @@ html[dir='rtl'] {
         }
 
         &:first-child {
-          border-left: 1px solid $theme-color-brand-primary-base;
+          border-left: 1px solid $ids-color-brand-primary-base;
 
           .datagrid-cell-wrapper {
             margin-left: -1px;
@@ -4802,7 +4802,7 @@ html[dir='rtl'] {
         }
 
         &:last-child {
-          border-right: 1px solid $theme-color-brand-primary-base;
+          border-right: 1px solid $ids-color-brand-primary-base;
         }
       }
     }

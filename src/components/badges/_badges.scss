@@ -29,8 +29,8 @@
   background-color: $badge-neutral-bg-color;
   border-radius: 15px;
   color: $badge-neutral-color;
-  font-size: $theme-size-font-sm;
-  font-weight: $theme-number-font-weight-base;
+  font-size: $ids-size-font-sm;
+  font-weight: $ids-number-font-weight-base;
   height: 22px;
   line-height: 22px;
   padding: 0 10px;
@@ -102,7 +102,7 @@
     }
 
     &:not(.hide-focus) {
-      border-color: $theme-color-brand-primary-base;
+      border-color: $ids-color-brand-primary-base;
       box-shadow: $focus-box-shadow;
     }
 
@@ -133,7 +133,7 @@
   }
 
   &.is-focused:not(.hide-focus) {
-    border-color: $theme-color-brand-primary-base;
+    border-color: $ids-color-brand-primary-base;
     box-shadow: $focus-box-shadow;
 
     a {
@@ -205,7 +205,7 @@
     &.is-linkable.is-focused,
     &.is-dismissible.is-focused {
       &:not(.hide-focus) {
-        border-color: $theme-color-brand-primary-base;
+        border-color: $ids-color-brand-primary-base;
       }
     }
 
@@ -319,11 +319,6 @@
 
     @include disabled-tag();
   }
-
-  &.graphite03,
-  &.graphite02 {
-    color: $theme-color-palette-graphite-20;
-  }
 }
 
 .tag {
@@ -368,7 +363,7 @@
     }
 
     &.current {
-      background-color: $theme-color-status-warning;
+      background-color: $ids-color-status-warning;
     }
   }
 
@@ -394,7 +389,7 @@
       content: '!';
       display: inline-block;
       font-size: 1.3em;
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
       height: 100%;
       left: 0;
       position: absolute;
@@ -416,7 +411,7 @@
     background-color: transparent;
 
     svg {
-      color: $theme-color-palette-slate-30;
+      color: $ids-color-palette-slate-30;
     }
   }
 }
@@ -495,7 +490,7 @@ html[dir='rtl'] {
       // Clock Hands
       &::after {
         border-left: 0;
-        border-right: 1px solid $theme-color-palette-white;
+        border-right: 1px solid $ids-color-palette-white;
         left: 8px;
       }
     }

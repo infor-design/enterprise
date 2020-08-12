@@ -21,11 +21,11 @@
 
 // Css variables for Primary Colors
 .primary-bg-color {
-  background: $theme-color-brand-primary-base;
+  background: $ids-color-brand-primary-base;
 }
 
 .primary-color {
-  color: $theme-color-brand-primary-base !important;
+  color: $ids-color-brand-primary-base !important;
 }
 
 // Palette Shapes
@@ -52,14 +52,14 @@
   @include antialiased();
 
   display: table-cell;
-  font-size: $theme-size-font-md;
+  font-size: $ids-size-font-md;
   text-align: center;
   text-transform: uppercase;
   vertical-align: top;
 
   .palette-color {
     border: 1px solid $color-border-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     height: 55px;
     margin: 10px;
     margin-bottom: 40px;
@@ -92,9 +92,17 @@
   }
 }
 
+.theme-uplift-light,
+.theme-uplift-dark,
+.theme-uplift-contrast {
+  .palette-column:nth-child(9) {
+    display: none;
+  }
+}
+
 // Personalization Colors
 .personalization-bg-color {
-  background-color: $theme-color-palette-white;
+  background-color: $ids-color-palette-white;
 }
 
 // RTL Styles

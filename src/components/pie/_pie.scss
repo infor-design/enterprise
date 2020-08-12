@@ -16,7 +16,7 @@
   }
 
   .label-text {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 
   .label-line {
@@ -31,7 +31,7 @@
 
   .labels text {
     color: $chart-font-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
   }
 
   .slices path {
@@ -89,7 +89,7 @@
 
 // A bit different tooltip style
 .is-pie.tooltip {
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
 
   b {
     display: block;

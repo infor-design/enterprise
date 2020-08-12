@@ -340,7 +340,7 @@
 .empty-actions,
 .empty-info {
   -webkit-font-smoothing: antialiased;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   line-height: normal;
   text-align: center;
 }
@@ -366,7 +366,7 @@
 .card-empty-info,
 .widget-empty-info,
 .empty-info {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   padding: 0 20px 40px;
 
   &:last-child {

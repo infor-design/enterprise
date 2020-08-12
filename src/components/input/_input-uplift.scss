@@ -16,12 +16,12 @@ label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
 .label.required:not(.inline):not(.accessible):not(.checkbox-label)::after,
 label.required .label-text:not(.accessible):not(.checkbox-label)::after,
 .label.required .label-text:not(.accessible):not(.checkbox-label)::after {
-  font-size: $theme-size-font-md !important;
+  font-size: $ids-size-font-md !important;
   top: 3px !important;
 }
 
 span.required::after {
-  font-size: $theme-size-font-md;
+  font-size: $ids-size-font-md;
 }
 
 .field-info {

@@ -2,6 +2,10 @@
 
 ## v4.32.0
 
+### v4.32.0 Important Notes
+
+- `[Colors]` In Uplift (Vibrant) theme there is no longer any colors in graphite. All are slate. This involved bringing in a new version 3.0 of the design system with some breaking changes you should not if using the tokens directly. See the [design system change log](https://github.com/infor-design/design-system/blob/master/docs/CHANGELOG.md) for details. ([#4206](https://github.com/infor-design/enterprise/issues/4206))
+
 ### v4.32.0 Features
 
 - `[Datagrid]` Add a new `RowNumber` formatter that will show a row number column that remains the same no matter how the grid is sorted. ([#1904](https://github.com/infor-design/enterprise/issues/1904))

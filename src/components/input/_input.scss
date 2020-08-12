@@ -271,7 +271,7 @@ textarea {
   @include rem(line-height, 2rem);
 
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   min-height: auto;
   width: $textarea-size;
 
@@ -368,7 +368,7 @@ span.required::after {
 
   .searchfield {
     &[disabled] {
-      -webkit-text-fill-color: $theme-color-palette-graphite-70;
+      -webkit-text-fill-color: $ids-color-palette-slate-70;
     }
   }
 }
@@ -479,12 +479,12 @@ span.required::after {
 
 // Text Selection
 ::selection {
-  background: $theme-color-brand-primary-base;
+  background: $ids-color-brand-primary-base;
   color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $theme-color-brand-primary-base;
+  background: $ids-color-brand-primary-base;
   color: $inverse-color;
 }
 
@@ -700,7 +700,7 @@ span.required::after {
   $this-icon-width: 15px;
 
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.2rem;
   margin-bottom: 12px;
   margin-top: 7px;
@@ -740,7 +740,7 @@ span.required::after {
 
   color: $error-color;
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -770,7 +770,7 @@ span.required::after {
 
   color: $alert-color;
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -800,7 +800,7 @@ span.required::after {
 
   color: $success-color;
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;
@@ -831,7 +831,7 @@ span.required::after {
 
   color: $info-color;
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   line-height: 1.2rem;
   margin-top: 7px;
   max-width: 300px;

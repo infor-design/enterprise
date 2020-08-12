@@ -77,7 +77,7 @@
     margin-bottom: 0;
 
     .title {
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       height: inherit;
       margin-left: 15px;
       margin-top: 1px;
@@ -201,12 +201,12 @@ html[dir='rtl'] {
       .flex-toolbar {
         .toolbar-section {
           &.title {
-            font-size: $theme-size-font-lg;
+            font-size: $ids-size-font-lg;
             padding-left: 0;
             padding-right: 15px;
 
             h2 {
-              font-size: $theme-size-font-lg;
+              font-size: $ids-size-font-lg;
             }
           }
         }

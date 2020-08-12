@@ -12,10 +12,10 @@ body.is-open-touch {
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
   box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-  background-color: $theme-color-palette-slate-80;
+  background-color: $ids-color-palette-slate-80;
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
-  color: $theme-color-palette-white;
+  color: $ids-color-palette-white;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -35,7 +35,7 @@ body.is-open-touch {
   }
 
   .audible {
-    color: $theme-color-palette-white !important;
+    color: $ids-color-palette-white !important;
   }
 
   &.show-shadow.is-open {
@@ -95,7 +95,7 @@ body.is-open-touch {
         }
 
         .content {
-          font-size: $theme-size-font-base;
+          font-size: $ids-size-font-base;
           max-width: calc(100% - 52px);
           padding-left: 0.5em;
 
@@ -118,7 +118,7 @@ body.is-open-touch {
 
   .searchfield-wrapper {
     background-color: $accordion-inverse-pane-bg-color;
-    border-bottom-color: $theme-color-palette-slate-90 !important;
+    border-bottom-color: $ids-color-palette-slate-90 !important;
     margin-bottom: 0;
     width: 100%;
 
@@ -228,14 +228,14 @@ body.is-open-touch {
 
   .accordion-static-panel {
     background-color: $accordion-static-panel-bg-color;
-    border-bottom-color: $theme-color-palette-slate-90 !important;
+    border-bottom-color: $ids-color-palette-slate-90 !important;
     margin: 0 auto;
     min-height: 85px;
     padding: 10px 0 10px 30px;
 
     .name {
       display: block;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       line-height: 1.5em;
       padding: 15px 10px 10px;
       position: relative;
@@ -279,7 +279,7 @@ body.is-open-touch {
     h3,
     h4,
     p {
-      color: $theme-color-palette-slate-10;
+      color: $ids-color-palette-slate-10;
     }
   }
 
@@ -313,8 +313,8 @@ body.is-open-touch {
 
   .application-menu-header,
   .application-menu-footer {
-    background-color: $theme-color-palette-slate-70;
-    border-bottom-color: $theme-color-palette-slate-90 !important;
+    background-color: $ids-color-palette-slate-70;
+    border-bottom-color: $ids-color-palette-slate-90 !important;
     flex: 0 0 auto;
     padding: 10px 0 10px 20px;
 
@@ -346,14 +346,14 @@ body.is-open-touch {
     .name,
     .name-xl {
       display: block;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       line-height: 1.5em;
       padding: 15px 10px 10px;
       position: relative;
     }
 
     .name-xl {
-      font-size: $theme-size-font-xl;
+      font-size: $ids-size-font-xl;
       line-height: normal;
       padding-left: 0;
       padding-top: 2.5rem;
@@ -366,8 +366,8 @@ body.is-open-touch {
   }
 
   .application-menu-footer {
-    border-bottom-color: $theme-color-palette-slate-70 !important;
-    border-top-color: $theme-color-palette-slate-90 !important;
+    border-bottom-color: $ids-color-palette-slate-70 !important;
+    border-top-color: $ids-color-palette-slate-90 !important;
 
     .hyperlink {
       margin-left: 5px;
@@ -390,7 +390,7 @@ body.is-open-touch {
   }
 
   .application-menu-switcher-panel {
-    background-color: $theme-color-palette-slate-80;
+    background-color: $ids-color-palette-slate-80;
     border-top: 1px solid $application-menu-border-color;
     height: 100%;
     left: 0;
@@ -409,8 +409,8 @@ body.is-open-touch {
 
   .accordion-heading {
     border-top: 1px solid $application-menu-border-color;
-    color: $theme-color-palette-white;
-    font-size: $theme-size-font-sm;
+    color: $ids-color-palette-white;
+    font-size: $ids-size-font-sm;
     font-weight: 400;
     opacity: 0.9;
     padding-bottom: 5px;
@@ -509,7 +509,7 @@ html[dir='rtl'] {
     @include transition(right 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
     box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-    background-color: $theme-color-palette-slate-80;
+    background-color: $ids-color-palette-slate-80;
     border-left: 1px solid $application-menu-border-color;
     border-right: 0;
     left: unset;
