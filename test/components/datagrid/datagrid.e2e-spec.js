@@ -214,6 +214,35 @@ describe('Datagrid Colspan Frozen Column and Single Select Tests', () => {
   }
 });
 
+describe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-hide-show-columns?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should markup frozen colspan columns', async () => {
+    expect(await element.all(by.css('.datagrid-header-groups th')).count()).toEqual(7);
+    expect(await element.all(by.css('#datagrid th[role="columnheader"]')).count()).toEqual(9);
+    expect(await element.all(by.css('#datagrid tr:nth-child(5) td')).count()).toEqual(9);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen-group-hide-sow')).toEqual(0);
+    });
+  }
+});
+
 describe('Datagrid Comments Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-comments?layout=nofrills');

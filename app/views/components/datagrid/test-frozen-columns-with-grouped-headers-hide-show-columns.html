@@ -1,9 +1,8 @@
-<div class="row">
-  <div class="twelve columns">
-    <div id="datagrid">
+<div class="full-height full-width">
+    <div id="datagrid" class="datagrid">
     </div>
-  </div>
 </div>
+
 
 <script id="datagrid-script">
   $('body').one('initialized', function () {
@@ -27,38 +26,10 @@
           "field": "fields.Manufacturer.value",
           "sortable": false,
           "fieldId": "Manufacturer",
-          "displayField": {
-            "filterable": true,
-            "isSymbolicKey": true,
-            "size": 4,
-            "columnId": "Manufacturer0",
-            "isKey": true,
-            "label": {
-              "resourceValue": "Number"
-            },
-            "type": "NUMERIC",
-            "fieldId": "Manufacturer"
-          },
           "isRequiredSearch": false,
           "name": "Number",
           "textOverflow": "ellipsis",
           "filterType": "integer",
-          "maskOptions": {
-            "patternOptions": {
-              "allowNegative": true,
-              "allowThousandsSeparator": false,
-              "allowDecimal": false,
-              "symbols": {
-                "thousands": ",",
-                "decimal": ".",
-                "negative": "-"
-              },
-              "integerLimit": 4,
-              "decimalLimit": 0,
-              "allowLeadingZeros": true
-            },
-            "process": "number"
-          },
           "align": "left",
           "hideable": false
         },
@@ -67,20 +38,6 @@
           "field": "fields.ManufacturerName.value",
           "sortable": false,
           "fieldId": "ManufacturerName",
-          "displayField": {
-            "filterable": true,
-            "size": 30,
-            "columnId": "ManufacturerName1",
-            "groupLabelId": "Testing",
-            "groupLabel": {
-              "resourceValue": "Testing"
-            },
-            "label": {
-              "resourceValue": "Name"
-            },
-            "type": "ALPHALOWER",
-            "fieldId": "ManufacturerName"
-          },
           "isRequiredSearch": false,
           "name": "Name",
           "textOverflow": "ellipsis",
@@ -93,44 +50,10 @@
           "field": "fields.InventoryValue.value",
           "sortable": true,
           "fieldId": "InventoryValue",
-          "displayField": {
-            "decSize": 6,
-            "filterable": true,
-            "sortUrl": "http://usspnclaudenba1.infor.com:2013/uitest/PatternTest/list/Manufacturer.ListPatternOne?pageop=sort&pagesize=20&sortOrderName=Manufacturer.SortByStatus&isAscending=true&csk.cli=true&csk.developer=true",
-            "sortOrderName": "Manufacturer.SortByStatus",
-            "size": 18,
-            "columnId": "InventoryValue2",
-            "groupLabelId": "Testing",
-            "groupLabel": {
-              "resourceValue": "Testing"
-            },
-            "label": {
-              "resourceValue": "Inventory Value"
-            },
-            "type": "BCD",
-            "isAscending": true,
-            "fieldId": "InventoryValue"
-          },
           "isRequiredSearch": false,
           "name": "Inventory Value",
           "textOverflow": "ellipsis",
           "filterType": "decimal",
-          "maskOptions": {
-            "patternOptions": {
-              "allowNegative": true,
-              "allowDecimal": true,
-              "symbols": {
-                "thousands": ",",
-                "decimal": ".",
-                "negative": "-"
-              },
-              "integerLimit": 12,
-              "decimalLimit": 6,
-              "allowLeadingZeros": true,
-              "allowThousandsSeparator": false
-            },
-            "process": "number"
-          },
           "align": "right",
           "headerAlign": "right",
           "hideable": true
@@ -140,31 +63,6 @@
           "field": "fields.NumericProduct.value",
           "sortable": false,
           "fieldId": "NumericProduct",
-          "displayField": {
-            "filterable": true,
-            "size": 1,
-            "columnId": "NumericProduct3",
-            "label": {
-              "resourceValue": "Numeric Product"
-            },
-            "type": "ALPHAUPPER",
-            "isStaticStateField": true,
-            "fieldId": "NumericProduct",
-            "states": [
-              {
-                "label": " ",
-                "value": ""
-              },
-              {
-                "label": "Alpha",
-                "value": "A"
-              },
-              {
-                "label": "Numeric",
-                "value": "N"
-              }
-            ]
-          },
           "isRequiredSearch": false,
           "name": "Numeric Product",
           "textOverflow": "ellipsis",
@@ -194,31 +92,6 @@
           "field": "fields.ManufacturerStatus.value",
           "sortable": false,
           "fieldId": "ManufacturerStatus",
-          "displayField": {
-            "filterable": true,
-            "size": 1,
-            "columnId": "ManufacturerStatus4",
-            "label": {
-              "resourceValue": "Status"
-            },
-            "type": "NUMERIC",
-            "isStaticStateField": true,
-            "fieldId": "ManufacturerStatus",
-            "states": [
-              {
-                "label": "Status Not Set",
-                "value": "0"
-              },
-              {
-                "label": "Active",
-                "value": "1"
-              },
-              {
-                "label": "Inactive",
-                "value": "2"
-              }
-            ]
-          },
           "isRequiredSearch": false,
           "name": "Status",
           "textOverflow": "ellipsis",
@@ -248,49 +121,10 @@
           "field": "fields.AutoNumberProduct.value",
           "sortable": false,
           "fieldId": "AutoNumberProduct",
-          "displayField": {
-            "filterable": true,
-            "size": 1,
-            "columnId": "AutoNumberProduct5",
-            "label": {
-              "resourceValue": "Auto Number Product"
-            },
-            "type": "ALPHAUPPER",
-            "isStaticStateField": true,
-            "fieldId": "AutoNumberProduct",
-            "states": [
-              {
-                "label": " ",
-                "value": ""
-              },
-              {
-                "label": "Yes",
-                "value": "Y"
-              },
-              {
-                "label": "No",
-                "value": "N"
-              }
-            ]
-          },
           "isRequiredSearch": false,
           "name": "Auto Number Product",
           "textOverflow": "ellipsis",
           "filterType": "multiselect",
-          "filterRowEditorOptions": [
-            {
-              "value": "Not Entered",
-              "label": "ListStaticFieldFilterNotEntered"
-            },
-            {
-              "value": "Y",
-              "label": "Yes"
-            },
-            {
-              "value": "N",
-              "label": "No"
-            }
-          ],
           "editorOptions": {
             "showSelectAll": true
           },
@@ -371,22 +205,6 @@
           "name": "Company Value",
           "textOverflow": "ellipsis",
           "filterType": "decimal",
-          "maskOptions": {
-            "patternOptions": {
-              "allowNegative": true,
-              "allowDecimal": true,
-              "symbols": {
-                "thousands": ",",
-                "decimal": ".",
-                "negative": "-"
-              },
-              "integerLimit": 12,
-              "decimalLimit": 6,
-              "allowLeadingZeros": true,
-              "allowThousandsSeparator": false
-            },
-            "process": "number"
-          },
           "align": "right",
           "headerAlign": "right",
           "hideable": true,
@@ -405,21 +223,7 @@
         {
           "resourceId": "Manufacturer(89)",
           "busClassName": "Manufacturer",
-          "navigations": [],
-          "actionMeta": {},
           "name": "Manufacturer",
-          "actionIndexes": [
-            0,
-            27,
-            26,
-            18,
-            17,
-            16,
-            11
-          ],
-          "posToViewKey": {
-            "pk": "Manufacturer[SortByStatus](0,89)"
-          },
           "id": 1,
           "fields": {
             "InventoryValue": {
@@ -523,18 +327,6 @@
           "navigations": [],
           "actionMeta": {},
           "name": "Manufacturer",
-          "actionIndexes": [
-            0,
-            27,
-            26,
-            18,
-            17,
-            16,
-            11
-          ],
-          "posToViewKey": {
-            "pk": "Manufacturer[SortByStatus](0,93)"
-          },
           "id": 2,
           "fields": {
             "InventoryValue": {
@@ -638,18 +430,6 @@
           "navigations": [],
           "actionMeta": {},
           "name": "Manufacturer",
-          "actionIndexes": [
-            0,
-            27,
-            26,
-            18,
-            17,
-            16,
-            11
-          ],
-          "posToViewKey": {
-            "pk": "Manufacturer[SortByStatus](0,94)"
-          },
           "id": 3,
           "fields": {
             "InventoryValue": {
@@ -1836,7 +1616,7 @@
             "ManufacturerName": {
               "size": 30,
               "mutable": true,
-              "value": "Mike 121",
+              "value": "M 121",
               "required": true
             },
             "CompanyValue": {
@@ -1897,7 +1677,7 @@
               ]
             }
           },
-          "representativeText": "Mike 121"
+          "representativeText": "M 121"
         },
         {
           "resourceId": "Manufacturer(122)",
@@ -2296,7 +2076,7 @@
             "ManufacturerName": {
               "size": 30,
               "mutable": true,
-              "value": "Manu 399",
+              "value": "M 399",
               "required": true
             },
             "CompanyValue": {
@@ -2707,73 +2487,19 @@
       ],
       "columnReorder": false,
       "saveColumns": false,
-      "saveUserSettings": {
-        "columns": false,
-        "rowHeight": false,
-        "sortOrder": false,
-        "pagesize": false,
-        "activePage": false,
-        "filter": false
+      "toolbar": {
+        "title": "Books",
+        "results": true,
+        "actions": true,
+        "rowHeight": true,
+        "personalize": true
       },
-      "focusAfterSort": false,
-      "editable": true,
-      "isRowDisabled": null,
-      "isList": false,
-      "menuId": "ListPatternOne_ContextMenu",
-      "headerMenuId": null,
-      "menuSelected": null,
-      "menuBeforeOpen": null,
-      "headerMenuSelected": null,
-      "headerMenuBeforeOpen": null,
-      "uniqueId": null,
-      "rowHeight": "small",
-      "fixedRowHeight": null,
-      "selectable": "mixed",
-      "selectChildren": true,
-      "onBeforeSelect": null,
-      "allowSelectAcrossPages": null,
-      "groupable": null,
-      "showNewRowIndicator": true,
-      "stretchColumn": null,
-      "stretchColumnOnChange": false,
-      "spacerColumn": false,
-      "columnSizing": "both",
-      "twoLineHeader": false,
-      "clickToSelect": true,
-      "toolbar": null,
-      "initializeToolbar": true,
-      "columnIds": [],
-      "paging": false,
-      "pagesize": 25,
-      "pagesizes": [
-        10,
-        25,
-        50,
-        75
-      ],
-      "showPageSizeSelector": true,
-      "indeterminate": false,
-      "source": null,
-      "hidePagerOnOnePage": false,
-      "filterable": false,
-      "filterWhenTyping": false,
       "disableClientFilter": true,
       "disableClientSort": true,
-      "resultsText": null,
-      "showFilterTotal": true,
-      "virtualized": false,
-      "virtualRowBuffer": 10,
       "rowReorder": false,
       "showDirty": false,
-      "resizeMode": "flex",
       "showSelectAllCheckBox": true,
-      "allowOneExpandedRow": true,
       "enableTooltips": true,
-      "disableRowDeactivation": true,
-      "disableRowDeselection": false,
-      "sizeColumnsEqually": false,
-      "expandableRow": false,
-      "exportConvertNegative": false,
       "columnGroups": [
         {
           "colspan": 1,
@@ -2809,25 +2535,15 @@
         {
           "colspan": 2,
           "id": "Hide_spc_Group_spc_Header",
-          "name": "Hide Group Header",
+          "name": "Initially Hidden Group Header",
           "align": "center"
         }
-      ],
-      "treeGrid": false,
-      "onExpandRow": null,
-      "onExpandChildren": null,
-      "onCollapseChildren": null,
-      "emptyMessage": {
-        "title": "NoDataAvailable",
-        "icon": "icon-empty-no-data",
-        "color": "azure"
-      },
-      "searchExpandableRow": true,
-      "allowChildExpandOnMatch": false,
-      "redrawOnResize": false
+      ]
     }).data('datagrid');
 
     api.showColumn('CompanyValue7_7');
     api.showColumn('OnHold6_6');
+    // api.hideColumn('CompanyValue7_7');
+    //api.hideColumn('ManufacturerName1_1');
  });
 </script>

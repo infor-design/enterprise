@@ -168,16 +168,16 @@ $datagrid-small-row-height: 25px;
     }
 
     tr:not(.datagrid-header-groups) th {
-      top: $datagrid-header-height - 5;
+      top: $datagrid-header-height - 3;
     }
 
     &.small-rowheight tr:not(.datagrid-header-groups) th,
     &.extra-small-rowheight tr:not(.datagrid-header-groups) th {
-      top: 25px;
+      top: 26px;
     }
 
     &.medium-rowheight tr:not(.datagrid-header-groups) th {
-      top: 30px;
+      top: 31px;
     }
   }
 

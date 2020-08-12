@@ -310,7 +310,7 @@ Datagrid.prototype = {
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
-    this.element.trigger('rendered', [this.element, this.element.find('thead'), this.pagerBar]);
+    this.element.trigger('rendered', [this.element, this.element.find('thead'), this.pagerAPI]);
   },
 
   /**
@@ -1002,19 +1002,19 @@ Datagrid.prototype = {
   },
 
   /**
-  * Gets an if for the column group used for grouped headers.
+  * Adjust the group row and header groups on column/hide show
   * @private
-  * @param {number} idx The index of the column group
-  * @param {boolean} show Did we show or hide the col.
+  * @param {number} colIndex The index of the column effected
+  * @param {boolean} hideShow True if we showed the column, false if we hid it.
   */
-  updateColumnGroup() {
+  updateColumnGroup(colIndex, hideShow) {
     const colGroups = this.settings.columnGroups;
     if (!this.originalColGroups) {
       this.originalColGroups = utils.deepCopy(colGroups);
     }
 
+    // Extend the Group Row to fill the grid for the new totals
     if (this.settings.groupable) {
-      // need to rerender here to get the colspans correct.
       const groupHeaders = this.tableBody.find('.datagrid-rowgroup-header');
       const newColspan = this.visibleColumns().length;
 
@@ -1033,63 +1033,34 @@ Datagrid.prototype = {
       return;
     }
 
-    const headGroups = [].slice.call(this.colGroups[0].querySelectorAll('th'));
-    const columns = this.settings.columns;
-    const columnsLen = columns.length;
-    const visibleColumnsLen = this.visibleColumns().length;
-    const groups = colGroups.map(group => parseInt(group.colspan, 10));
-    const getGroupsTotal = () => groups.reduce((a, b) => a + b, 0);
-    const getDiff = () => {
-      const groupsTotal = getGroupsTotal();
-      return groupsTotal > columnsLen ? groupsTotal - columnsLen : columnsLen - groupsTotal;
-    };
-
-    const groupsTotal = getGroupsTotal();
-    let diff;
-    if (groupsTotal > columnsLen) {
-      let move = true;
-      for (let i = groups.length - 1; i >= 0 && move; i--) {
-        diff = getDiff();
-        if (groups[i] >= diff) {
-          groups[i] -= diff;
-          move = false;
-        } else {
-          groups[i] = 0;
-        }
-      }
-    }
-
-    let i = 0;
     let total = 0;
-    groups.forEach((groupColspan, k) => {
-      let colspan = groupColspan;
-      for (let l = i + groupColspan; i < l; i++) {
-        if (i < columnsLen && columns[i].hidden) {
-          colspan--;
-        }
+    let groupIdx = -1;
+    this.originalColGroups.forEach((group, i) => {
+      const colSpan = parseInt(group.colspan, 10);
+      if (colIndex >= total && colIndex <= total + colSpan) {
+        groupIdx = i;
       }
-
-      if (colspan > 0) {
-        total += colspan;
-      }
-
-      const groupHeaderEl = headGroups[k];
-      if (groupHeaderEl) {
-        groupHeaderEl.setAttribute('colspan', colspan > 0 ? colspan : 1);
-
-        if ((colGroups[k].hidden || colspan < 1)) {
-          groupHeaderEl.classList.add('hidden');
-        } else {
-          groupHeaderEl.classList.remove('hidden');
-        }
-      }
+      total += colSpan;
     });
 
-    if (total < visibleColumnsLen) {
-      const groupHeaderEl = headGroups[headGroups.length - 1];
-      diff = visibleColumnsLen - total;
-      groupHeaderEl.setAttribute('colspan', diff > 0 ? diff : 1);
+    const currColspan = parseInt(this.colGroups[groupIdx].getAttribute('colspan'), 10);
+    const wasHidden = this.colGroups[groupIdx].classList.contains('is-hidden');
+    if (hideShow && wasHidden) {
+      this.colGroups[groupIdx].classList.remove('is-hidden');
+      return;
     }
+
+    if (hideShow && !wasHidden) {
+      this.colGroups[groupIdx].classList.remove('is-hidden');
+      this.colGroups[groupIdx].setAttribute('colspan', currColspan + 1);
+      return;
+    }
+
+    if (currColspan - 1 === 0) {
+      this.colGroups[groupIdx].classList.add('is-hidden');
+      return;
+    }
+    this.colGroups[groupIdx].setAttribute('colspan', currColspan - 1);
   },
 
   /**
@@ -1214,7 +1185,7 @@ Datagrid.prototype = {
             colspan--;
           }
         }
-        const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="hidden"' : '';
+        const hiddenStr = colGroups[k].hidden || colspan < 1 ? ' class="is-hidden"' : '';
         const colspanStr = ` colspan="${colspan > 0 ? colspan : 1}"`;
         const groupedHeaderAlignmentClass = colGroups[k].align ? `l-${colGroups[k].align}-text` : '';
         uniqueId = self.uniqueId(`-header-group-${k}`);
@@ -1353,7 +1324,7 @@ Datagrid.prototype = {
     }
 
     if (colGroups && self.headerRow) {
-      self.colGroups = self.headerRow.find('.datagrid-header-groups');
+      self.colGroups = $.makeArray(this.container.find('.datagrid-header-groups th'));
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
@@ -3554,7 +3525,7 @@ Datagrid.prototype = {
     * @property {HTMLElement} pager Object pager body area
     */
     setTimeout(() => {
-      self.element.trigger('afterrender', { body: self.bodyContainer, header: self.headerContainer, pager: self.pagerBar });
+      self.element.trigger('afterrender', { body: self.container.find('tbody'), header: self.container.find('thead'), pager: self.pagerAPI });
       this.activateFirstCell();
     });
   },
@@ -5294,9 +5265,13 @@ Datagrid.prototype = {
     this.settings.columns[idx].hidden = true;
     this.headerNodes().eq(idx).addClass('is-hidden');
     this.colGroupNodes().eq(idx).addClass('is-hidden');
-    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
+
+    const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
+    this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).addClass('is-hidden');
+    this.bodyColGroup.find('col').eq(idx - frozenLeft).addClass('is-hidden');
+
     // Shrink or remove colgroups
-    this.updateColumnGroup();
+    this.updateColumnGroup(idx, false);
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -5336,20 +5311,20 @@ Datagrid.prototype = {
   showColumn(id) {
     let idx = this.columnIdxById(id);
 
-    if (idx === -1) {
+    if (idx === -1 || !this.settings.columns[idx].hidden) {
       return;
     }
 
     this.settings.columns[idx].hidden = false;
     this.headerNodes().eq(idx).removeClass('is-hidden');
-    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
+    this.colGroupNodes().eq(idx).removeClass('is-hidden');
 
-    if (this.bodyColGroup) {
-      this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
-    }
+    const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
+    this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).removeClass('is-hidden');
+    this.bodyColGroup.find('col').eq(idx - frozenLeft).removeClass('is-hidden');
 
     // Shrink or add colgroups
-    this.updateColumnGroup();
+    this.updateColumnGroup(idx, true);
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -8360,8 +8335,6 @@ Datagrid.prototype = {
 
         // Making moves
         th.removeAttr('tabindex').removeClass('is-active');
-        $('th:not(.is-hidden)', this.headerContainer).eq(move).attr('tabindex', '0').addClass('is-active')
-          .focus();
         e.preventDefault();
       }
 
