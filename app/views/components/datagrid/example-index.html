@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
     <div id="datagrid" class="datagrid">
@@ -13,7 +12,7 @@
 
       $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
 
-        //Define Columns for the Grid.
+        // Define Columns for the Grid.
         columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text });
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
@@ -23,7 +22,7 @@
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
         columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
 
-        //Init and get the api for the grid
+        // Init and get the api for the grid
         $('#datagrid').datagrid({
           columns: columns,
           dataset: res,

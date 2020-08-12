@@ -27,7 +27,6 @@
  * - Mid-Level Components (includes Charts)
  * - Complex Components
  */
-debugger;
 const commandLineArgs = require('yargs')
   .option('verbose', {
     alias: 'v',
