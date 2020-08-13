@@ -2239,7 +2239,7 @@ describe('Datagrid editor dropdown source tests', () => {
   });
 });
 
-describe('Datagrid onKeyDown Tests', () => { //eslint-disable-line
+describe('Datagrid onKeyDown Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-onkeydown?layout=nofrills');
 

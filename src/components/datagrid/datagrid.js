@@ -8959,7 +8959,7 @@ Datagrid.prototype = {
     this.editor.focus();
 
     // Make sure the first keydown gets captured and trigger the dropdown
-    if (this.editor?.input.is('.dropdown') && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
+    if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
       const dropdownApi = this.editor.input.data('dropdown');
       dropdownApi.handleAutoComplete(event);
     }
