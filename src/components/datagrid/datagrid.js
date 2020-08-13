@@ -3157,6 +3157,7 @@ Datagrid.prototype = {
 
     self.recordCount = 0;
     self.filteredCount = 0;
+    self.runningCount = 0;
 
     // Reset recordCount for paging
     if (s.treeGrid && s.paging && !s.source && activePage > 1) {
@@ -3305,6 +3306,7 @@ Datagrid.prototype = {
         currentCount = this.recordCount;
       }
 
+      self.runningCount++;
       const rowHtml = self.rowHtml(s.dataset[i], currentCount, i);
       if (self.hasLeftPane && rowHtml.left) {
         tableHtmlLeft += rowHtml.left;

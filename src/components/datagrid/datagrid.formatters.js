@@ -81,8 +81,13 @@ const formatters = {
     return `<span class="is-readonly">${((value === null || value === undefined) ? '' : value)}</span>`;
   },
 
-  RowNumber(row) {
-    return `<span class="is-readonly">${row + 1}</span>`;
+  RowNumber(row, cell, value, col, item, api) {
+    let rowNumber = api.runningCount || 1;
+    if (api?.pagerAPI?.activePage > 1) {
+      rowNumber += (api.pagerAPI.activePage - 1) * api.pagerAPI.settings.pagesize;
+    }
+
+    return `<span class="is-readonly">${rowNumber}</span>`;
   },
 
   Date(row, cell, value, col, isReturnValue) {

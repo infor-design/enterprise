@@ -588,7 +588,7 @@ MonthView.prototype = {
     */
   getTime(date, zeroMinutes) {
     if (this.isIslamic) {
-      return date[0] + date[1].toString().padStart(2, '0') + date[2].toString().padStart(2, '0');
+      return date[0] + `0${date[1]}`.slice(-2) + `0${date[2]}`.slice(-2);
     }
 
     if (zeroMinutes) {
