@@ -11424,6 +11424,9 @@ Datagrid.prototype = {
         const value = this.fieldValue(rowData, col.field);
         tooltip.content = col.tooltip(rowIdx, cell, value, col, rowData, this);
         tooltip.textwidth = stringUtils.textWidth(tooltip.content) + 20;
+        if (tooltip.content !== undefined && tooltip.content !== null && tooltip.content !== '') {
+          tooltip.forced = true;
+        }
       }
     }
 
