@@ -10,9 +10,12 @@
   }
 
   // Label and Line Colors
-  .tspan,
-  .lines circle {
+  .tspan {
     color: $chart-font-color;
+  }
+
+  .lines circle {
+    fill: $chart-font-color;
   }
 
   .label-text {
