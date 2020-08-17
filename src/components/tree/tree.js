@@ -1132,6 +1132,9 @@ Tree.prototype = {
       if (data.selected) {
         self.selectNode(a, data.focus);
       }
+      if (a.is('.hide-focus')) {
+        a.hideFocus();
+      }
     });
     const dropdowns = [].slice.call(self.element[0].querySelectorAll('select.dropdown'));
     for (let i = 0; i < dropdowns.length; i++) {
@@ -2320,10 +2323,17 @@ Tree.prototype = {
       return;
     }
 
+    // Handle focus state after closing contextmenu
+    function returnFocus(popupmenuApi, args) {
+      if (typeof $(':focus')[0] === 'undefined' && args) {
+        args.triggerElement?.focus();
+      }
+    }
+
     this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
       const node = $(this);
       e.preventDefault();
-      self.popupEl = $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
+      self.popupEl = $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true, returnFocus }).off('selected').on('selected', (event, args) => {
         /**
         * Fires when the an attached context menu item is selected.
         *
