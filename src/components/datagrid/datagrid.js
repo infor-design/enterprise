@@ -8351,15 +8351,6 @@ Datagrid.prototype = {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
-      // Make sure the first keydown gets captured and trigger the dropdown
-      setTimeout(() => {
-        self.activeCell.node.find('select.dropdown').each(function () {
-          const dropdown = $(this);
-          const dropdownApi = dropdown.data('dropdown');
-          dropdownApi.handleAutoComplete(e);
-        });
-      });
-
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
@@ -8966,6 +8957,12 @@ Datagrid.prototype = {
     }
 
     this.editor.focus();
+
+    // Make sure the first keydown gets captured and trigger the dropdown
+    if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
+      const dropdownApi = this.editor.input.data('dropdown');
+      dropdownApi.handleAutoComplete(event);
+    }
 
     /**
     * Fires after a cell goes into edit mode.
