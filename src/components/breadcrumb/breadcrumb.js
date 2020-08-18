@@ -168,18 +168,23 @@ BreadcrumbItem.prototype = {
    * of its container element.
    */
   get overflowed() {
-    const a = this.element.querySelector('a');
-    const fullsizeA = document.createElement('a');
+    // NOTE: the first and last breadcrumbs in the list have no "flex-shrink" property applied,
+    // therefore the sizing of the "last" breadcrumb in this calculation should be correct
+    // when comparing the two.
+    const li = this.element;
+    const lastLi = this.element.cloneNode(true);
+    const a = li.querySelector('a');
+    const lastA = lastLi.querySelector('a');
 
     // Get original size first
     const aRect = a.getBoundingClientRect();
 
     // Append temp anchor to the breadcrumb, get the size, remove it
-    this.element.appendChild(fullsizeA);
-    const newARect = fullsizeA.getBoundingClientRect();
-    this.element.removeChild(fullsizeA);
+    this.element.appendChild(lastLi);
+    const lastARect = lastA.getBoundingClientRect();
+    this.element.removeChild(lastLi);
 
-    return newARect.width > aRect.width;
+    return lastARect.width > aRect.width;
   },
 
   /**
