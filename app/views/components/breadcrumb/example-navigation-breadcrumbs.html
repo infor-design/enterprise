@@ -1,18 +1,23 @@
 <div class="page-container no-scroll">
   <div class="page-container scrollable-flex" role="main">
     <section class="scrollable-flex-header has-breadcrumb">
-      <div class="breadcrumb">
-        <ol aria-label="breadcrumb">
-          <li><a href="#" class="hyperlink">SoHo Xi&nbsp;&nbsp;|&nbsp;&nbsp;Style</a></li>
-          <li><a href="#" class="hyperlink">Level One Detail View</a></li>
-          <li class="current"><a href="#" class="hyperlink">Level Two Detail View</a></li>
-        </ol>
+      <div id="test-breadcrumb" class="breadcrumb">
+        <ol aria-label="breadcrumb"></ol>
       </div>
     </section>
     <section class="scrollable-flex-content">
-      <div class="content">
-
-      </div>
+      <div class="content"></div>
     </section>
   </div>
 </div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    const $el = $('#test-breadcrumb');
+    $.getJSON('{{basepath}}api/breadcrumbs-demos', function(breadcrumbData) {
+      $el.breadcrumb({
+        breadcrumbs: breadcrumbData
+      });
+    });
+  });
+</script>
