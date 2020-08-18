@@ -2,6 +2,12 @@
 //================================================== //
 
 .breadcrumb {
+  a {
+    display: inline-block;
+    height: 24px;
+    padding: 0 3px;
+  }
+
   ul,
   ol {
     min-height: $breadcrumb-container-height;
@@ -56,20 +62,16 @@
       padding-top: 2px;
       white-space: nowrap;
 
-      a {
-        display: inline-block;
-        height: 24px;
-        margin-left: 0;
-        overflow: hidden;
-        padding: 0 3px;
-        text-overflow: ellipsis;
-        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter
-      }
-
       &::after {
         display: inline-block;
         margin-top: 7px;
         vertical-align: top;
+      }
+
+      a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter
       }
 
       &:first-child,
@@ -79,6 +81,7 @@
 
         a {
           overflow: auto;
+          text-overflow: clip;
           width: auto;
         }
       }

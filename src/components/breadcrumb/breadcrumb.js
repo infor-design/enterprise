@@ -3,6 +3,7 @@ import { xssUtils } from '../../utils/xss';
 
 // jQuery components
 import '../hyperlinks/hyperlinks.jquery';
+import '../tooltip/tooltip.jquery';
 
 // Breadcrumb Item default settings
 const BREADCRUMB_ITEM_DEFAULTS = {
@@ -163,6 +164,25 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the Breadcrumb Item is pushed into overflow by the boundaries
+   * of its container element.
+   */
+  get overflowed() {
+    const a = this.element.querySelector('a');
+    const fullsizeA = document.createElement('a');
+
+    // Get original size first
+    const aRect = a.getBoundingClientRect();
+
+    // Append temp anchor to the breadcrumb, get the size, remove it
+    this.element.appendChild(fullsizeA);
+    const newARect = fullsizeA.getBoundingClientRect();
+    this.element.removeChild(fullsizeA);
+
+    return newARect.width > aRect.width;
+  },
+
+  /**
    * Triggers a callback function that is associated with
    * @param {jQuery.Event} e the original jQuery-wrapped 'click' event
    * @param {...object} [args] any extra number of arguments to apply to the callback
@@ -261,9 +281,10 @@ const BREADCRUMB_STYLES = ['default', 'alternate'];
 
 // Breadcrumb default settings
 const BREADCRUMB_DEFAULTS = {
+  breadcrumbs: [],
   style: BREADCRUMB_STYLES[0],
+  tooltipSettings: {},
   truncate: true,
-  breadcrumbs: []
 };
 
 /**
@@ -272,9 +293,10 @@ const BREADCRUMB_DEFAULTS = {
  * @class Breadcrumb
  * @param {HTMLElement} element the base breadcrumb element
  * @param {string} [settings] The component settings.
- * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
- * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.
  * @param {array} [settings.breadcrumbs=[]] predefines breadcrumb items as plain objects.  All properties in these objects correspond to the settings available in the `BreadcrumbItem` type.
+ * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
+ * @param {object} [settings.tooltipSettings] if defined, passes settings to the internal Tooltip component.
+ * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.
  * @returns {this} component instance
  */
 function Breadcrumb(element, settings) {
@@ -512,6 +534,15 @@ Breadcrumb.prototype = {
       item.api.callback(e, args);
     });
 
+    // Setup Tooltip/detection for Overflow on each Breadcrumb Item.
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      const el = breadcrumbAPI.element;
+      $(el).tooltip(utils.extend({}, this.settings.tooltipSettings, {
+        content: `${el.innerText}`
+      }));
+      $(el).on(`beforeshow.${COMPONENT_NAME}`, () => breadcrumbAPI.overflowed);
+    });
+
     this.hasEvents = true;
   },
 
@@ -599,7 +630,17 @@ Breadcrumb.prototype = {
    * @returns {void}
    */
   teardownBreadcrumbs() {
-    this.breadcrumbs.forEach(breadcrumb => breadcrumb.destroy());
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      const el = breadcrumbAPI.element;
+      const tooltipAPI = $(el).data('tooltip');
+
+      if (tooltipAPI) {
+        tooltipAPI.destroy();
+      }
+      $(el).off(`beforeshow.${COMPONENT_NAME}`);
+
+      breadcrumbAPI.destroy();
+    });
   },
 
   /**
