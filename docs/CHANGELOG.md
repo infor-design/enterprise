@@ -11,6 +11,7 @@
 ### v4.32.0 Fixes
 
 - `[Accordion]` Fixed a bug where disabled headers texts and icons were barely recognizable as disabled in uplift theme. ([#4065](https://github.com/infor-design/enterprise/issues/4065))
+- `[Accordion]` Fixed a bug in the vibrant theme where level 3 header text was not showing because the width was pushing it to the next line. ([#4145](https://github.com/infor-design/enterprise/issues/4145))
 - `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Datagrid]` Fixed an issue where the dynamic tooltip was not working properly. ([#4260](https://github.com/infor-design/enterprise/issues/4260))
