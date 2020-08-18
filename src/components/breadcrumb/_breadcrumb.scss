@@ -71,7 +71,7 @@
       a {
         overflow: hidden;
         text-overflow: ellipsis;
-        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter
+        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter + padding
       }
 
       &:first-child,
