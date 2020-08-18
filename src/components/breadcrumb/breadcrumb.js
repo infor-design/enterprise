@@ -262,7 +262,7 @@ const BREADCRUMB_STYLES = ['default', 'alternate'];
 // Breadcrumb default settings
 const BREADCRUMB_DEFAULTS = {
   style: BREADCRUMB_STYLES[0],
-  truncate: false,
+  truncate: true,
   breadcrumbs: []
 };
 
@@ -273,7 +273,7 @@ const BREADCRUMB_DEFAULTS = {
  * @param {HTMLElement} element the base breadcrumb element
  * @param {string} [settings] The component settings.
  * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
- * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that specifically
+ * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.
  * @param {array} [settings.breadcrumbs=[]] predefines breadcrumb items as plain objects.  All properties in these objects correspond to the settings available in the `BreadcrumbItem` type.
  * @returns {this} component instance
  */

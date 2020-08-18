@@ -1,12 +1,14 @@
-// Buttons
+// Breadcrumbs
 //================================================== //
-
-$breadcrumb-container-height: $theme-size-font-xl;
 
 .breadcrumb {
   ul,
   ol {
     min-height: $breadcrumb-container-height;
+
+    &:empty {
+      min-height: $breadcrumb-empty-container-height;
+    }
   }
 
   li {
@@ -50,19 +52,24 @@ $breadcrumb-container-height: $theme-size-font-xl;
 
     li {
       overflow: hidden;
+      padding-left: 4px;
+      padding-top: 2px;
       white-space: nowrap;
-
-      > * {
-        vertical-align: middle;
-      }
 
       a {
         display: inline-block;
-        margin-left: 4px;
+        height: 24px;
+        margin-left: 0;
         overflow: hidden;
         padding: 0 3px;
         text-overflow: ellipsis;
-        width: calc(100% - 18px); // accounts for the pseudo-element "/" delimeter
+        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter
+      }
+
+      &::after {
+        display: inline-block;
+        margin-top: 7px;
+        vertical-align: top;
       }
 
       &:first-child,
@@ -126,7 +133,7 @@ $breadcrumb-container-height: $theme-size-font-xl;
   }
 }
 
-//Breadcrumb on a toolbar (see grid example)
+// Breadcrumb on a toolbar (see grid example)
 .toolbar .breadcrumb {
   display: inline-block;
   padding-top: 8px;
@@ -138,9 +145,93 @@ $breadcrumb-container-height: $theme-size-font-xl;
   }
 }
 
+// Scrollable-Flex Headers can change background color of the breadcrumb list
+.scrollable-flex-header {
+  .breadcrumb {
+    background-color: $header-bg-color;
+    display: block;
+    padding: 1px 20px 0;
+
+    ol {
+      padding: 15px 0;
+    }
+
+    .hyperlink {
+      color: $header-breadcrumb-color;
+
+      &:active:not([disabled]),
+      &:hover:not([disabled]),
+      &:focus:not([disabled]) {
+        color: $header-breadcrumb-color;
+      }
+
+      &:focus:not([disabled]):not(.hide-focus) {
+        border-color: transparent;
+        box-shadow: none;
+        outline: 1px solid $header-breadcrumb-color;
+      }
+
+      &:hover:not([disabled]) {
+        border-bottom: 1px solid $header-breadcrumb-color;
+      }
+    }
+
+    li {
+      color: $header-breadcrumb-color;
+
+      &::after {
+        color: $header-breadcrumb-color;
+      }
+    }
+
+    &.alternate {
+      background-color: $header-breadcrumb-alt-bg-color;
+      border-bottom: 1px solid $header-breadcrumb-border-color;
+
+      ol {
+        padding: 15px 0;
+      }
+
+      .hyperlink {
+        color: $header-breadcrumb-alt-color;
+
+        &:active:not([disabled]),
+        &:hover:not([disabled]),
+        &:focus:not([disabled]) {
+          color: $header-breadcrumb-alt-color;
+        }
+
+        &:focus:not([disabled]):not(.hide-focus) {
+          outline: 1px solid $header-breadcrumb-alt-color;
+        }
+
+        &:hover:not([disabled]) {
+          border-bottom: 1px solid $header-breadcrumb-alt-color;
+        }
+
+      }
+
+      li {
+        color: $header-breadcrumb-alt-color;
+
+        &::after {
+          color: $header-breadcrumb-alt-color;
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .breadcrumb {
+    ul,
+    ol {
+      &:empty {
+        min-height: calc(#{$breadcrumb-container-height} + 4px);
+      }
+    }
+
     li {
       &::after {
         content: '\005C';
@@ -148,6 +239,17 @@ html[dir='rtl'] {
 
       &:last-child::after {
         content: '';
+      }
+    }
+
+    &.truncated {
+      li {
+        padding-left: 0;
+        padding-right: 4px;
+
+        a {
+          margin-right: 0;
+        }
       }
     }
   }

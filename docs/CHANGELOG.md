@@ -4,6 +4,8 @@
 
 ### v4.32.0 Features
 
+
+- `[Breadcrumb]` Add truncation/single line feature. ([#4091](https://github.com/infor-design/enterprise/issues/4091))
 - `[Datagrid]` Add a new `RowNumber` formatter that will show a row number column that remains the same no matter how the grid is sorted. ([#1904](https://github.com/infor-design/enterprise/issues/1904))
 - `[Datepicker]` Added the ability to use the range selection in date picker when using the UmAlQura Calendar (RTL). `TJM` ([#4227](https://github.com/infor-design/enterprise/issues/4227))
 - `[Homepage]` Added ability to support a 5 column option. ([#4101](https://github.com/infor-design/enterprise/issues/4101))
