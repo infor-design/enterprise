@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.31.1
+
+### v4.31.1 Fixes
+
+- `[Datagrid]` Added an option to frozen columns to allow the left side to be scrollable for trees. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Datagrid]` Fixed a bug with icon alignment in editors in small or xtra small layout. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
+- `[Datagrid]` Fixed selection checkbox alignment. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
+
 ## v4.31.0
 
 ### v4.31.0 Important Notes

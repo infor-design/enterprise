@@ -1,0 +1,118 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var numericFilterConditions= [ 'equals', 'does-not-equal', 'is-empty', 'is-not-empty', 'less-than', 'less-equals', 'greater-than', 'greater-equals' ];
+
+    // Define Some Sample Data
+    data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
+    data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
+    data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
+    data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Error'});
+    data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
+    data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+    data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+
+    var statuses = [{id: '', value: '', label:'&nbsp;'},
+      {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+      {id:'Error', value:'Error', label:'Error'}];
+
+    var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+      {id: '', value: '', label: 'Default Activity'},
+      {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
+
+    //lookup data
+    var idLookupOptions, nameLookupOptions;
+
+    idLookupOptions = {
+      // field: 'productId',
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      click: function (event, lookup, clickArguments) {
+        console.log(event, lookup, clickArguments);
+        if ($.isEmptyObject(clickArguments)) {
+          alert('No click arguments returned');
+        } else {
+          if (!$.isEmptyObject(clickArguments.grid)) {
+            alert('Grid information found');
+          }
+        }
+      },
+
+      options: {
+        selectable: 'single', //multiselect or single
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+      }
+    };
+
+    nameLookupOptions = {
+      // field: 'productName',
+      field: function (row, field, grid) {
+        return row.productName;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productName) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          response();
+        });
+      },
+
+      options: {
+        selectable: 'single', //multiselect or single
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+      }
+    };
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: idLookupOptions, filterType: 'lookup', filterConditions: numericFilterConditions });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Text, editor: Editors.Lookup, editorOptions: nameLookupOptions, filterType: 'lookup'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
+    columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editor: Editors.Date});
+    columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+    columns.push({ id: 'status', name: 'Status', align: 'center', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+    columns.push({ id: 'status2', name: 'Status2', align: 'center', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'price2',  name: 'Price2', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+    columns.push({ id: 'status3', name: 'Status3', align: 'center', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'price3',  name: 'Price3', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      filterable: true,
+      selectable: 'single',
+      columnSizing: 'both',
+      editable: true,
+      emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+      toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+    }).on('filtered', function (e, args) {
+      console.log('filter ran', args);
+    });
+  });
+
+</script>
