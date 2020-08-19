@@ -597,17 +597,23 @@ DatePicker.prototype = {
       } else {
         timeOptions.timeFormat = s.timeFormat;
       }
-      if (s.minuteInterval !== undefined) {
-        timeOptions.minuteInterval = s.minuteInterval;
-      }
-      if (s.secondInterval !== undefined) {
-        timeOptions.secondInterval = s.minuteInterval;
+      if (s.useCurrentTime) {
+        timeOptions.minuteInterval = 1;
+        timeOptions.secondInterval = 1;
+        timeOptions.roundToInterval = false;
+      } else {
+        if (s.minuteInterval !== undefined) {
+          timeOptions.minuteInterval = s.minuteInterval;
+        }
+        if (s.secondInterval !== undefined) {
+          timeOptions.secondInterval = s.secondInterval;
+        }
+        if (s.roundToInterval !== undefined) {
+          timeOptions.roundToInterval = s.roundToInterval;
+        }
       }
       if (s.mode !== undefined) {
         timeOptions.mode = s.mode;
-      }
-      if (s.roundToInterval !== undefined) {
-        timeOptions.roundToInterval = s.roundToInterval;
       }
     }
 
