@@ -3,9 +3,19 @@
 
 .breadcrumb {
   a {
+    border: 0;
     display: inline-block;
     height: 24px;
     padding: 0 3px;
+  }
+
+  .btn-actions {
+    @include antialiased();
+
+    color: $breadcrumb-color;
+    font-size: $theme-size-font-sm;
+    line-height: 1.8em;
+    margin-right: 0;
   }
 
   ul,
@@ -17,23 +27,17 @@
     }
   }
 
+  .condense-container {
+    display: none;
+    white-space: nowrap;
+  }
+
   li {
     @include antialiased();
 
     color: $breadcrumb-color;
     display: inline-block;
     list-style: none;
-
-    &::after {
-      content: '\002F';
-      font-size: $theme-size-font-xs;
-      padding: 0 8px;
-    }
-
-    &:last-child::after {
-      content: '';
-      padding: 0;
-    }
 
     .current,
     &.current {
@@ -47,35 +51,74 @@
     }
   }
 
+  li,
+  .condense-container {
+    &::after {
+      @include antialiased();
+
+      color: $breadcrumb-color;
+      content: '\002F';
+      font-size: $theme-size-font-sm;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+
+    &:last-child::after {
+      content: '';
+      padding: 0;
+    }
+  }
+
   // Truncated behavior forces all breadcrumbs onto one line and some to become collapsible.
   // Currently not fully implemented -- see infor-design/enterprise#4091
   &.truncated {
+    align-items: center;
+    display: flex;
+
     ul,
     ol {
       display: flex;
+      justify-content: flex-end;
       overflow: hidden;
     }
 
-    li {
-      overflow: hidden;
-      padding-left: 4px;
-      padding-top: 2px;
-      white-space: nowrap;
+    li,
+    .condense-container {
+      display: inline-block;
 
       &::after {
         display: inline-block;
-        margin-top: 7px;
         vertical-align: top;
       }
+    }
+
+    li::after {
+      margin-top: 6px;
+    }
+
+    .condense-container::after {
+      margin-top: 11px;
+    }
+
+    > .btn-actions {
+      flex-shrink: 0;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    li {
+      padding-left: 6px;
+      white-space: nowrap;
 
       a {
         overflow: hidden;
         text-overflow: ellipsis;
-        width: calc(100% - 14px); // accounts for the pseudo-element "/" delimeter + padding
+        width: calc(100% - 7px); // accounts for the pseudo-element "/" delimeter + padding
       }
 
       &:first-child,
       &.current,
+      &.condense-btn,
       &:last-child {
         flex-shrink: 0;
 
@@ -100,6 +143,7 @@
     color: $breadcrumb-color;
     font-size: $theme-size-font-sm;
     line-height: 2em;
+    padding-top: 1px;
     text-decoration: none;
 
     &:visited {
@@ -156,7 +200,8 @@
     padding: 1px 20px 0;
 
     ol {
-      padding: 15px 0;
+      padding-bottom: 15px;
+      padding-top: 15px;
     }
 
     .hyperlink {
@@ -179,12 +224,22 @@
       }
     }
 
+    .btn-actions {
+      .icon {
+        color: $header-breadcrumb-color;
+      }
+    }
+
     li {
       color: $header-breadcrumb-color;
 
       &::after {
         color: $header-breadcrumb-color;
       }
+    }
+
+    .condense-container::after {
+      color: $header-breadcrumb-color;
     }
 
     &.alternate {
@@ -211,7 +266,12 @@
         &:hover:not([disabled]) {
           border-bottom: 1px solid $header-breadcrumb-alt-color;
         }
+      }
 
+      .btn-actions {
+        .icon {
+          color: $header-breadcrumb-alt-color;
+        }
       }
 
       li {
@@ -220,6 +280,18 @@
         &::after {
           color: $header-breadcrumb-alt-color;
         }
+      }
+
+      .condense-container::after {
+        color: $header-breadcrumb-alt-color;
+      }
+    }
+
+    &.truncated {
+      display: flex;
+
+      .condense-container::after {
+        margin-top: 10px;
       }
     }
   }
@@ -235,7 +307,8 @@ html[dir='rtl'] {
       }
     }
 
-    li {
+    li,
+    .condense-container {
       &::after {
         content: '\005C';
       }

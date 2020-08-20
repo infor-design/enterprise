@@ -382,6 +382,26 @@ Breadcrumb.prototype = {
       }
     });
 
+    // Render/Refresh a condense button
+    if (!this.condenseBtn) {
+      const condenseContainer = document.createElement('div');
+      const condenseBtn = document.createElement('button');
+      const condenseSpan = document.createElement('span');
+
+      condenseContainer.classList.add('condense-container');
+      condenseBtn.classList.add('btn-actions');
+      condenseBtn.classList.add('condense-btn');
+      condenseSpan.innerText = 'More Breadcrumbs';
+      condenseSpan.classList.add('audible');
+
+      condenseBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
+      condenseBtn.appendChild(condenseSpan);
+      condenseContainer.appendChild(condenseBtn);
+      this.condenseContainerElem = condenseContainer;
+      this.condenseBtn = condenseBtn;
+    }
+    this.element.insertBefore(this.condenseContainerElem, this.list);
+
     // If markup needs to change, rebind events
     if (html.children?.length) {
       this.list.appendChild(html);
@@ -391,7 +411,19 @@ Breadcrumb.prototype = {
     this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
 
     // Setup truncation, if applicable
+    // Truncation only occurs when the list of breadcrumbs is larger than the container
     this.element.classList[this.settings.truncate ? 'add' : 'remove']('truncated');
+    /*
+    if (this.settings.truncate) {
+      this.element.classList.remove('truncated');
+      const listIsTooBig = this.element.getBoundingClientRect().width > this.previousSize?.width;
+      if (listIsTooBig) {
+        this.element.classList.add('truncated');
+      }
+    } else {
+      this.element.classList.remove('truncated');
+    }
+    */
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
@@ -548,6 +580,20 @@ Breadcrumb.prototype = {
       $(el).on(`beforeshow.${COMPONENT_NAME}`, () => breadcrumbAPI.overflowed);
     });
 
+    // Setup a resize observer for detection
+    if (typeof ResizeObserver !== 'undefined') {
+      this.previousSize = this.element.getBoundingClientRect();
+      this.ro = new ResizeObserver(() => {
+        const newSize = this.element.getBoundingClientRect();
+        if (newSize.width !== this.previousSize.width) {
+          console.log(`newSize.width: ${newSize.width} | this.previousSize.width: ${this.previousSize.width}`);
+          this.previousSize = newSize;
+          this.render();
+        }
+      });
+      this.ro.observe(this.element);
+    }
+
     this.hasEvents = true;
   },
 
@@ -610,6 +656,10 @@ Breadcrumb.prototype = {
     this.teardownBreadcrumbs();
     this.breadcrumbs = [];
 
+    if (this.condenseContainerElem) {
+      this.element.removeChild(this.condenseContainerElem);
+    }
+
     return this;
   },
 
@@ -621,6 +671,11 @@ Breadcrumb.prototype = {
   teardownEvents() {
     if (!this.hasEvents) {
       return;
+    }
+
+    if (this.ro) {
+      this.ro.disconnect();
+      delete this.ro;
     }
 
     $(this.list).off();
