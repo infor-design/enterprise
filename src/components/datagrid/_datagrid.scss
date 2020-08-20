@@ -141,11 +141,11 @@ $datagrid-small-row-height: 25px;
   // Add back hidden first borders
   .datagrid-wrapper.left + .datagrid-wrapper.center {
     th:first-child {
-      border-left-color: $datagrid-header-border-color;
+      border-left: 1px solid $datagrid-header-border-color;
     }
 
     td:first-child {
-      border-left-color: $datagrid-cell-border-color;
+      border-left: 1px solid $datagrid-cell-border-color;
 
       &.is-invisible {
         border-left-color: transparent;
@@ -253,7 +253,7 @@ $datagrid-small-row-height: 25px;
     }
 
     td:first-child {
-      border-left-color: transparent;
+      border-left: 0;
     }
 
     &.left {
@@ -815,6 +815,23 @@ $datagrid-small-row-height: 25px;
         top: 12px;
       }
     }
+
+    tbody tr td.datagrid-trigger-cell .icon.icon-clock {
+      left: -7px !important;
+      top: 3px !important;
+    }
+
+    tbody tr td.is-editing {
+      .timepicker {
+        margin-top: 2px !important;
+        padding: 0 6px !important;
+      }
+
+      .timepicker + .icon {
+        margin-left: 2px !important;
+        top: -4px !important;
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -1005,16 +1022,21 @@ $datagrid-small-row-height: 25px;
             }
           }
 
+          .lookup-wrapper {
+            padding-left: 15px;
+          }
+
           input {
             vertical-align: top;
 
             &.lookup {
               height: inherit;
-              padding: 8px 0 0;
+              padding: 2px 0 0;
               width: 100%;
 
               + .trigger {
-                margin-left: -22px;
+                margin-left: -26px;
+                margin-top: -10px;
               }
 
               ~ .trigger .icon {
@@ -1033,7 +1055,7 @@ $datagrid-small-row-height: 25px;
 
               ~ .icon {
                 left: auto;
-                margin-left: -4px;
+                margin-left: 0;
                 top: calc(50% - 17px);
               }
             }
@@ -1166,6 +1188,10 @@ $datagrid-small-row-height: 25px;
         left: 3px;
         top: 5px;
 
+        &.icon-search-list {
+          top: 4px;
+        }
+
         &.icon-calendar {
           top: 2px;
         }
@@ -1228,11 +1254,6 @@ $datagrid-small-row-height: 25px;
           .datagrid-cell-wrapper {
             padding: 3px 9px;
           }
-        }
-
-        span {
-          line-height: $datagrid-small-row-height;
-          top: -1px;
         }
 
         .code-block span {
@@ -1326,12 +1347,12 @@ $datagrid-small-row-height: 25px;
             &.icon-calendar,
             &.icon-fileupload {
               height: 15px;
-              left: -4px;
+              left: 1px;
               top: 2px;
             }
 
             &.icon-clock {
-              left: -9px;
+              left: -5px;
               top: 3px;
             }
 
@@ -1390,27 +1411,33 @@ $datagrid-small-row-height: 25px;
           .datepicker {
             height: 3rem;
             margin-top: 0;
-            padding: 0 10px;
+            padding: 0 0 0 10px;
 
             + .icon {
               height: 15px;
-              margin-left: -7px;
+              margin-left: -1px;
               top: -2px;
             }
           }
 
           .timepicker {
-            margin-top: 3px;
+            margin-top: 0;
             padding: 0 8px;
 
             + .icon {
-              margin-left: -2px;
-              top: -3px;
+              margin-left: 1px;
+              top: -2px;
             }
           }
 
           input {
-            height: 25px;
+            height: 29px;
+            margin-left: -1px;
+          }
+
+          input.lookup {
+            margin-left: -4px;
+            padding-right: 20px;
           }
 
           .dropdown-wrapper {
@@ -1429,11 +1456,11 @@ $datagrid-small-row-height: 25px;
 
           .lookup-wrapper {
             padding-left: 10px;
-            padding-top: 2px;
+            padding-top: 0;
 
             .trigger {
-              margin-left: -32px;
-              margin-top: -7px;
+              margin-left: -25px;
+              margin-top: -3px;
             }
           }
 
@@ -1563,7 +1590,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .icon-search-list {
-      left: -9px !important;
+      left: -3px !important;
+      top: 4px !important;
     }
 
     .chart-completion-target {
@@ -1595,8 +1623,6 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
-      line-height: $datagrid-extra-small-row-height - 2;
-
       .datagrid-reorder-icon .icon {
         height: 18px;
         width: 21px;
@@ -1604,50 +1630,65 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: $datagrid-extra-small-row-height + 1;
+      min-height: $datagrid-extra-small-row-height + 4;
       padding: 2px 5px 0;
     }
 
     tbody tr td {
       span {
-        line-height: $datagrid-extra-small-row-height - 2;
-
         &.tag {
           height: $datagrid-extra-small-row-height - 53;
           line-height: $datagrid-extra-small-row-height - 5;
         }
       }
 
+      .icon-search-list {
+        left: -5px !important;
+      }
+
       .hyperlink {
         font-size: $input-size-compact-font-size;
-        margin-top: -1px;
+        margin-top: -3px;
       }
 
       .datagrid-checkbox-wrapper {
-        margin-top: -14px;
+        margin-top: -13px;
       }
 
       &.datagrid-trigger-cell {
         .dropdown-trigger + .icon {
-          left: -7px !important;
-          top: 5px !important;
+          left: -4px !important;
+          top: 4px !important;
         }
 
         .icon.icon-calendar {
-          left: -5px;
-          top: 3px !important;
+          height: 14px;
+          left: -2px;
+          top: 2px !important;
         }
       }
 
       &.is-editing {
         input {
           font-size: $input-size-compact-font-size;
-          height: $datagrid-extra-small-row-height - 1px;
+          height: $datagrid-extra-small-row-height - 1;
           padding: 0;
         }
 
+        input.lookup {
+          height: 23px;
+          margin-left: -6px;
+          padding-top: 4px;
+        }
+
+        .lookup-wrapper .trigger {
+          height: 16px;
+          margin-left: -22px;
+          margin-top: 4px;
+        }
+
         .datepicker {
-          height: $datagrid-extra-small-row-height + 2px;
+          height: $datagrid-extra-small-row-height + 1px;
           padding: 0 5px;
         }
 
@@ -1658,7 +1699,8 @@ $datagrid-small-row-height: 25px;
         }
 
         .datepicker + .icon {
-          margin-left: -5px;
+          height: 14px;
+          margin-left: -1px;
           top: -3px;
         }
       }
@@ -2696,7 +2738,7 @@ $datagrid-small-row-height: 25px;
   &.center,
   &.left {
     th:first-child {
-      border-left-color: transparent;
+      border-left: 0;
     }
   }
 
@@ -2715,7 +2757,6 @@ $datagrid-small-row-height: 25px;
     border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height - 4;
     overflow: hidden;
-    position: -webkit-sticky;
     position: sticky;
     text-align: left;
     top: 0;
@@ -3334,7 +3375,7 @@ td .btn-actions {
   cursor: pointer;
   display: inline-block;
   font-size: $theme-size-font-sm;
-  left: -7px;
+  left: -9px;
   position: relative;
 
   &::before {
@@ -3789,7 +3830,7 @@ td .btn-actions {
     }
 
     .trigger .icon {
-      left: 1px !important;
+      left: 4px !important;
       margin-top: -2px;
     }
   }
@@ -3827,13 +3868,13 @@ td .btn-actions {
 // RTL Styles
 html[dir='rtl'] {
   .datagrid {
-    // Restore left Border
+    // Inverse left Border
     th:last-child {
-      border-left: 1px solid $datagrid-cell-border-color;
+      border-left: 0;
     }
 
     th:first-child {
-      border-left: 1px solid $datagrid-header-border-color;
+      border-right: 1px solid $datagrid-header-border-color;
     }
 
     .datagrid-rowgroup-header {
@@ -3847,6 +3888,10 @@ html[dir='rtl'] {
           right: 8px;
         }
       }
+    }
+
+    td .datagrid-expand-btn {
+      left: 2px;
     }
 
     &.small-rowheight,
@@ -4237,7 +4282,7 @@ html[dir='rtl'] {
 
     &.left {
       th:last-child {
-        border-left: 1px solid $datagrid-header-border-color;
+        border-right: 0;
       }
     }
 
@@ -4287,7 +4332,7 @@ html[dir='rtl'] {
     }
 
     .datagrid-wrapper:not(.left):not(.right) td:first-child {
-      border-left: 1px solid $datagrid-cell-border-color;
+      border-right: 1px solid $datagrid-cell-border-color;
     }
   }
 
