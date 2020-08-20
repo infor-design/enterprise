@@ -1251,7 +1251,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     const testDate3 = new Date(testDate2.getFullYear(), testDate2.getMonth() + 1, 0);
     await testDate2.setDate(testDate3.getDate());
 
-    expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual('1441/12/01 - 1441/12/29');
+    expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual('1442/01/01 - 1442/01/29');
   });
 
   it('Should be able to change open an initially set range (by field value)', async () => {
