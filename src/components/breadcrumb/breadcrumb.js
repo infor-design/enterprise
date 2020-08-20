@@ -1,8 +1,10 @@
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
+import { Environment as env } from '../../utils/environment';
 
 // jQuery components
 import '../hyperlinks/hyperlinks.jquery';
+import '../popupmenu/popupmenu.jquery';
 import '../tooltip/tooltip.jquery';
 
 // Breadcrumb Item default settings
@@ -59,8 +61,6 @@ BreadcrumbItem.prototype = {
     li.appendChild(a);
 
     this.element = li;
-    this.refresh();
-
     return li;
   },
 
@@ -101,6 +101,10 @@ BreadcrumbItem.prototype = {
 
     // invoke/update IDS Hyperlink
     $(a).hyperlink();
+
+    // set the anchor's tabIndex based on its current overflow state, if applicable
+    a.tabIndex = this.overflowed ? -1 : 0;
+    a.setAttribute('tabindex', a.tabIndex);
 
     return li;
   },
@@ -168,23 +172,17 @@ BreadcrumbItem.prototype = {
    * of its container element.
    */
   get overflowed() {
-    // NOTE: the first and last breadcrumbs in the list have no "flex-shrink" property applied,
-    // therefore the sizing of the "last" breadcrumb in this calculation should be correct
-    // when comparing the two.
     const li = this.element;
-    const lastLi = this.element.cloneNode(true);
     const a = li.querySelector('a');
-    const lastA = lastLi.querySelector('a');
 
     // Get original size first
     const aRect = a.getBoundingClientRect();
+    const containerRect = this.element.parentNode.getBoundingClientRect();
 
-    // Append temp anchor to the breadcrumb, get the size, remove it
-    this.element.appendChild(lastLi);
-    const lastARect = lastA.getBoundingClientRect();
-    this.element.removeChild(lastLi);
-
-    return lastARect.width > aRect.width;
+    if (env.rtl) {
+      return containerRect.right < aRect.right;
+    }
+    return containerRect.left > aRect.left;
   },
 
   /**
@@ -371,14 +369,12 @@ Breadcrumb.prototype = {
       this.teardownBreadcrumbs();
     }
 
-    // Build/invoke hyperlinks against each item
+    // Build all the list items
     const html = document.createDocumentFragment();
     this.breadcrumbs.forEach((breadcrumb) => {
       if (!breadcrumb.fromElement || !breadcrumb.element) {
         const li = breadcrumb.render();
         html.appendChild(li);
-      } else {
-        breadcrumb.refresh();
       }
     });
 
@@ -386,6 +382,7 @@ Breadcrumb.prototype = {
     if (!this.condenseBtn) {
       const condenseContainer = document.createElement('div');
       const condenseBtn = document.createElement('button');
+      const condenseMenu = document.createElement('ul');
       const condenseSpan = document.createElement('span');
 
       condenseContainer.classList.add('condense-container');
@@ -397,15 +394,38 @@ Breadcrumb.prototype = {
       condenseBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
       condenseBtn.appendChild(condenseSpan);
       condenseContainer.appendChild(condenseBtn);
+      condenseContainer.appendChild(condenseMenu);
       this.condenseContainerElem = condenseContainer;
       this.condenseBtn = condenseBtn;
+      this.condenseMenu = condenseMenu;
     }
     this.element.insertBefore(this.condenseContainerElem, this.list);
+
+    // Invoke popupmenu against the "More" button
+    function breadcrumbMoreMenuBeforeOpen(response) {
+      let menuHTML = '';
+      this.overflowed.forEach((breadcrumb, i) => {
+        const menuItemHTML = `<li>
+          <a href="#" data-breadcrumb-index="${i}">${breadcrumb.settings.content || ''}</a>
+        </li>`;
+        menuHTML += menuItemHTML;
+      });
+      response(menuHTML);
+    }
+    $(this.condenseBtn).popupmenu({
+      menu: $(this.condenseMenu),
+      beforeOpen: breadcrumbMoreMenuBeforeOpen.bind(this)
+    });
 
     // If markup needs to change, rebind events
     if (html.children?.length) {
       this.list.appendChild(html);
     }
+
+    // Refresh the state of all breadcrumb items
+    this.breadcrumbs.forEach((breadcrumb) => {
+      breadcrumb.refresh();
+    });
 
     // Add/remove the Alternate class, if applicable
     this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
@@ -557,6 +577,13 @@ Breadcrumb.prototype = {
   },
 
   /**
+   * @returns {array<BreadcrumbItem>} containing all currently-overflowed Breadcrumb items
+   */
+  get overflowed() {
+    return this.breadcrumbs.filter(item => item.overflowed);
+  },
+
+  /**
    * Sets up Breadcrumb list-level events
    * @private
    * @returns {void}
@@ -569,15 +596,6 @@ Breadcrumb.prototype = {
         return;
       }
       item.api.callback(e, args);
-    });
-
-    // Setup Tooltip/detection for Overflow on each Breadcrumb Item.
-    this.breadcrumbs.forEach((breadcrumbAPI) => {
-      const el = breadcrumbAPI.element;
-      $(el).tooltip(utils.extend({}, this.settings.tooltipSettings, {
-        content: `${el.innerText}`
-      }));
-      $(el).on(`beforeshow.${COMPONENT_NAME}`, () => breadcrumbAPI.overflowed);
     });
 
     // Setup a resize observer for detection
@@ -657,6 +675,10 @@ Breadcrumb.prototype = {
     this.breadcrumbs = [];
 
     if (this.condenseContainerElem) {
+      const popupmenuAPI = $(this.condenseBtn).data('popupmenu');
+      if (popupmenuAPI) {
+        popupmenuAPI.destroy();
+      }
       this.element.removeChild(this.condenseContainerElem);
     }
 
@@ -676,6 +698,10 @@ Breadcrumb.prototype = {
     if (this.ro) {
       this.ro.disconnect();
       delete this.ro;
+    }
+
+    if (this.condenseBtn) {
+      $(this.condenseBtn).off(`beforeopen.${COMPONENT_NAME}`);
     }
 
     $(this.list).off();
