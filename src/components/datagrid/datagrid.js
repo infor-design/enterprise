@@ -48,7 +48,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showHoverState=true] If false there will be no hover effect.
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
- * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
+ * @param {array}    [settings.frozenColumns={ left: [], right: [], leftScrollable: false }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side. Also you can set the left side to be scrollable.
  * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] Expand the expandable across all frozen columns.
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
@@ -4630,9 +4630,15 @@ Datagrid.prototype = {
         this.stretchColumnDiff = diff;
       }
 
-      if (this.hasLeftPane) {
+      if (this.hasLeftPane && this.settings.frozenColumns.leftScrollable) {
+        this.tableLeft.parent().css('width', this.totalWidths.left);
+        this.tableLeft.css('width', 'auto');
+      }
+
+      if (this.hasLeftPane && !this.settings.frozenColumns.leftScrollable) {
         this.tableLeft.css('width', this.totalWidths.left);
       }
+
       if (this.hasRightPane) {
         this.tableRight.css('width', this.totalWidths.right);
       }
@@ -8353,15 +8359,6 @@ Datagrid.prototype = {
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
 
-      // Make sure the first keydown gets captured and trigger the dropdown
-      setTimeout(() => {
-        self.activeCell.node.find('select.dropdown').each(function () {
-          const dropdown = $(this);
-          const dropdownApi = dropdown.data('dropdown');
-          dropdownApi.handleAutoComplete(e);
-        });
-      });
-
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
@@ -8968,6 +8965,12 @@ Datagrid.prototype = {
     }
 
     this.editor.focus();
+
+    // Make sure the first keydown gets captured and trigger the dropdown
+    if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
+      const dropdownApi = this.editor.input.data('dropdown');
+      dropdownApi.handleAutoComplete(event);
+    }
 
     /**
     * Fires after a cell goes into edit mode.

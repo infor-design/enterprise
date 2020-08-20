@@ -62,13 +62,10 @@ $('body').on('initialized', function () {
     type: 'column',
     dataset: dataset,
     yAxis: {
-      formatter: function (d, i) {
-        var locale = d3.formatLocale({
-          decimal: Soho.Locale.currentLocale.data.numbers.decimal,
-          thousands: Soho.Locale.currentLocale.data.numbers.group
-        });
-        return locale.format(',.2f')(d);
-      },
+      ticks: {
+        number: 5,
+        format: 'd'
+      }
     }
   });
 
