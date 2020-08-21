@@ -16,7 +16,7 @@ const COMPONENT_NAME = 'emptymessage';
 * @param {string} [settings.icon = null] The name of the icon to use. See {@link https://design.infor.com/code/ids-enterprise/latest/demo/icons/example-empty-widgets?font=source-sans} for options.
 * @param {boolean} [settings.button = null] The button settings to use (click, isPrimary, cssClass ect)
 * @param {string} [settings.height = null]  The container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
-* @param {string} [settings.color = 'graphite']  Defaults to 'graphite' but can also be azure. Later may be expanded to all personalization colors.
+* @param {string} [settings.color = 'slate']  Defaults to 'slate' but can also be azure. Later may be expanded to all personalization colors.
 */
 const EMPTYMESSAGE_DEFAULTS = {
   title: null,
@@ -24,7 +24,7 @@ const EMPTYMESSAGE_DEFAULTS = {
   icon: null,
   button: null,
   height: null, // null|'small'
-  color: 'graphite' // or azure for now until personalization works
+  color: 'slate' // or azure for now until personalization works
 };
 
 function EmptyMessage(element, settings) {
