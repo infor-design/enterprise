@@ -432,18 +432,11 @@ Breadcrumb.prototype = {
 
     // Setup truncation, if applicable
     // Truncation only occurs when the list of breadcrumbs is larger than the container
-    this.element.classList[this.settings.truncate ? 'add' : 'remove']('truncated');
-    /*
     if (this.settings.truncate) {
-      this.element.classList.remove('truncated');
-      const listIsTooBig = this.element.getBoundingClientRect().width > this.previousSize?.width;
-      if (listIsTooBig) {
-        this.element.classList.add('truncated');
-      }
+      this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
     } else {
       this.element.classList.remove('truncated');
     }
-    */
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
