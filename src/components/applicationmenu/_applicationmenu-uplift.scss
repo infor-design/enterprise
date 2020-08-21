@@ -609,57 +609,57 @@ html[dir='rtl'] {
 
     // Level 1 Pane
     .accordion-pane {
-      @include left-align-cascade-styles-pane(55px, 78px, 56px);
+      @include left-align-cascade-styles-pane(55px, 56px, 56px);
 
       .accordion-header {
-        @include left-align-cascade-styles-header(54px, 50px, 78px, 61px);
+        @include left-align-cascade-styles-header(54px, 30px, 78px, 41px);
       }
 
       // Level 2 Pane
       .accordion-pane {
-        @include left-align-cascade-styles-pane(55px, 102px, 78px);
+        @include left-align-cascade-styles-pane(59px, 76px, 60px);
 
         // Level 3 Header
         .accordion-header {
-          @include left-align-cascade-styles-header(59px, 74px, 102px, 85px);
+          @include left-align-cascade-styles-header(59px, 50px, 102px, 61px);
         }
 
         // Level 3 Pane
         .accordion-pane {
-          @include left-align-cascade-styles-pane(79px, 127px, 102px);
+          @include left-align-cascade-styles-pane(79px, 95px, 76px);
 
           // Level 4 Header
           .accordion-header {
-            @include left-align-cascade-styles-header(59px, 99px, 127px, 110px);
+            @include left-align-cascade-styles-header(59px, 68px, 127px, 80px);
           }
 
           // Level 4 Pane
           .accordion-pane {
-            @include left-align-cascade-styles-pane(104px, 152px, 128px);
+            @include left-align-cascade-styles-pane(98px, 114px, 128px);
 
             // Level 5 Header
             .accordion-header {
-              @include left-align-cascade-styles-header(78px, 124px, 152px, 135px);
+              @include left-align-cascade-styles-header(78px, 87px, 152px, 99px);
             }
 
             // Level 5 Pane
             .accordion-pane {
-              @include left-align-cascade-styles-pane(130px, 152px, 153px);
+              @include left-align-cascade-styles-pane(115px, 133px, 153px);
 
               // Level 6 Header
               .accordion-header {
-                @include left-align-cascade-styles-header(122px, 152px, 180px, 162px);
+                @include left-align-cascade-styles-header(122px, 106px, 180px, 118px);
 
                 &.no-icon {
                   > a {
-                    padding-left: 182px;
+                    padding-left: 114px;
                   }
                 }
               }
 
               // Level 6 Pane
               .accordion-pane {
-                @include left-align-cascade-styles-pane(158px, 182px, 122px);
+                @include left-align-cascade-styles-pane(135px, 182px, 122px);
               }
             }
           }

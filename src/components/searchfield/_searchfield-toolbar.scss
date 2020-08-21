@@ -68,13 +68,13 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &.non-collapsible {
     .searchfield {
-      padding-bottom: 7px;
-      padding-top: 7px;
+      padding-bottom: 6px !important;
+      padding-top: 4px !important;
     }
 
     .icon:not(.close) {
       height: 14px;
-      top: 10px;
+      top: 10px !important;
     }
   }
 

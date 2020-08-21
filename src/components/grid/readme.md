@@ -8,10 +8,6 @@ demo:
   pages:
   - name: Simplified Responsive Grid
     slug: example-simplified
-  - name: Inputs in the Responsive Grid
-    slug: example-inputs
-  - name: Inputs in the Responsive Simplified Grid
-    slug: example-inputs-simple
 ---
 
 ## Code Example
@@ -47,7 +43,7 @@ You can also add class `one-half-mobile` and at the lowest breakpoint the grid w
 
 ## Flex/Responsive Modifiers
 
-We added a few css flex modifiers for different ways to line up labels and act responsively. See [wrpaped labels](./demo/components/form/test-wrapped-labels) for an example. Adding the `form-responsive` class to the row or a parent will make all inputs become responsive in the grid rather than their default sizes. Adding the class `flex-align-bottom` to the row will make the bottoms align of the inputs and this will make longer labels line up as the page is resized.
+We added a few css flex modifiers for different ways to line up labels and act responsively. See [wrapped labels](./demo/components/form/test-wrapped-labels) for an example. Adding the `form-responsive` class to the row or a parent will make all inputs become responsive in the grid rather than their default sizes. Adding the class `flex-align-bottom` to the row will make the bottoms align of the inputs and this will make longer labels line up as the page is resized.
 
 ```html
 <div class="form-responsive">
@@ -59,6 +55,8 @@ We added a few css flex modifiers for different ways to line up labels and act r
         </div>
       </div>
 ```
+
+We have a few exmaples of input fields in the responsive grid. These can be found under the form layout examples. See [Inputs in the Responsive Grid](./demo/components/form/example-inputs) and [Inputs in the Responsive Simplified Grid](./demo/components/form/example-inputs-simple) for examples.
 
 ## Other Modifiers
 

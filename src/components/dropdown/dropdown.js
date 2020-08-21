@@ -2825,7 +2825,7 @@ Dropdown.prototype = {
    */
   deselectAll() {
     const allOptions = this.element.find('option');
-    allOptions.each((option) => {
+    allOptions.each((i, option) => {
       $(option).prop('selected', false);
       this.deselectValue(option);
     });

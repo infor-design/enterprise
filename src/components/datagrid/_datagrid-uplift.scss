@@ -53,6 +53,10 @@
   font-size: $ids-size-font-xs !important;
 }
 
+.datagrid-checkbox-wrapper {
+  margin-top: -15px;
+}
+
 // Adjust Filter Text
 .datagrid-header .datagrid-filter-wrapper .dropdown {
   padding: 1px 0 0 5px;
@@ -71,7 +75,7 @@
 
       .trigger {
         margin-left: -36px;
-        margin-top: 0;
+        margin-top: 1px;
       }
     }
 
@@ -83,32 +87,6 @@
           top: calc(50% - 18px);
         }
       }
-    }
-  }
-
-  // Medium Row Height
-  &.medium-rowheight {
-    tbody tr {
-      td {
-        &.is-editing {
-          &.has-singlecolumn {
-            min-height: $datagrid-medium-row-height + 10;
-          }
-
-          .datepicker {
-            margin-top: 0;
-
-            ~ .icon {
-              top: calc(50% - 18px);
-            }
-          }
-        }
-      }
-    }
-
-    .is-editing .lookup-wrapper .trigger {
-      margin-left: -10px !important;
-      margin-top: -3px !important;
     }
   }
 
@@ -134,18 +112,113 @@
           .row-btn {
             min-height: 25px;
           }
-
-          // Adjust editors
-          &.is-editing {
-            .lookup-wrapper .trigger {
-              margin-left: -34px;
-              margin-top: -6px;
-            }
-          }
         }
       }
     }
   }
+}
+
+// Fix Editor Alignment
+.datagrid.medium-rowheight {
+  tbody tr {
+    line-height: 26px;
+  }
+
+  > tbody > tr .datagrid-cell-wrapper {
+    padding: 7px 16px 4px !important;
+
+    .datagrid-checkbox-wrapper {
+      margin-top: -14px;
+    }
+  }
+
+  .is-editing .lookup-wrapper .trigger {
+    margin-left: -28px !important;
+    margin-top: -7px !important;
+  }
+
+  .datagrid-trigger-cell .icon.icon-calendar {
+    top: 1px;
+  }
+
+  tbody tr td.is-editing {
+    input {
+      height: 26px;
+    }
+
+    .datepicker {
+      margin-top: -1px;
+      padding-left: 1px;
+      padding-top: 0;
+    }
+
+    .datepicker ~ .icon {
+      margin-left: 11px;
+      top: calc(50% - 19px) !important;
+    }
+  }
+
+  .datagrid-trigger-cell .icon.icon-search-list {
+    top: 6px;
+  }
+}
+
+// Fix Editor Alignment
+.datagrid.small-rowheight {
+  .icon-search-list {
+    left: -1px !important;
+    top: 4px !important;
+  }
+
+  .datagrid-cell-wrapper, {
+    padding: 2px 8px 0;
+
+    .datagrid-checkbox-wrapper {
+      margin-top: -14px;
+    }
+  }
+
+  tbody tr td.is-editing {
+    .lookup-wrapper {
+      padding-left: 10px;
+      padding-top: 0;
+    }
+
+    input.lookup {
+      margin-left: -4px;
+      margin-top: 2px;
+      padding-right: 5px;
+    }
+
+    input {
+      height: 26px;
+    }
+
+    .lookup-wrapper .trigger {
+      margin-left: -25px;
+      margin-top: -3px !important;
+    }
+
+    .datepicker + .icon {
+      top: -4px;
+    }
+  }
+}
+
+// Fix Editor Alignment
+.datagrid.extra-small-rowheight {
+  tbody tr td .icon-search-list {
+    left: -3px !important;
+    top: 4px !important;
+  }
+
+  tbody tr td.is-editing .lookup-wrapper .trigger {
+    margin-top: 5px;
+  }
+}
+
+.datagrid-trigger-cell.is-editing .datagrid-cell-wrapper {
+  padding: 0 !important;
 }
 
 // Fix header alignment
@@ -168,8 +241,7 @@
   top: 4px;
 }
 
-.datagrid.small-rowheight tbody tr td .hyperlink,
-.datagrid.medium-rowheight tbody tr td .hyperlink {
+.datagrid.small-rowheight tbody tr td .hyperlink {
   margin-top: -4px;
 }
 
@@ -233,11 +305,11 @@
 // Adjustments for uplift mode
 .datagrid.extra-small-rowheight {
   tbody tr td.is-editing input {
-    height: 25px;
+    height: 24px;
   }
 
   .datagrid-cell-wrapper {
-    min-height: 28px;
+    min-height: 29px;
   }
 
   tbody tr td.is-editing .datepicker {
@@ -261,7 +333,7 @@
   }
 
   tbody tr td .datagrid-checkbox-wrapper {
-    margin-top: -15px;
+    margin-top: -13px;
   }
 }
 
@@ -281,12 +353,6 @@
   }
 }
 
-.datagrid.small-rowheight {
-  tbody tr td.is-editing .datepicker + .icon {
-    top: -3px;
-  }
-}
-
 .datagrid-container.medium-rowheight {
   &.has-filterable-columns .is-filterable .datagrid-column-wrapper.l-right-text {
     top: -3px;
@@ -294,8 +360,33 @@
 }
 
 .datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
-  left: 1px !important;
-  top: 6px;
+  left: 4px !important;
+  top: 7px;
+}
+
+.datagrid-dropdown-list.small-rowheight .trigger .icon {
+  top: 8px;
+}
+
+// Timepicker
+.datagrid td.is-editing input.timepicker {
+  margin-top: 5px;
+  padding: 0 0 0 15px;
+
+  ~ .icon {
+    left: auto;
+    margin-left: -4px;
+  }
+}
+
+.datagrid.medium-rowheight td.is-editing input.timepicker {
+  margin-top: -1px !important;
+  padding: 0 !important;
+
+  ~ .icon {
+    margin-left: 16px !important;
+    top: calc(50% - 18px) !important;
+  }
 }
 
 // EmptyMessage
