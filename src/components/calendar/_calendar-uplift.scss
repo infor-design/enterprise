@@ -21,8 +21,9 @@
 }
 
 .calendar-event .calendar-event-icon .icon {
-  height: 10px;
-  top: 1px;
+  height: 14px;
+  left: -1px;
+  top: 0;
 }
 
 @include respond-to(phabletdown) {

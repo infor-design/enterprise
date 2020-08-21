@@ -1,6 +1,18 @@
 // Uplift Listview
 //================================================== //
 
+.listview .alert-text {
+  font-size: 12px;
+  line-height: 25px;
+  position: relative;
+  text-transform: uppercase;
+  top: -2px;
+
+  &::before {
+    margin-top: 8px;
+  }
+}
+
 .listview-search {
   .searchfield {
     border-top-color: $listview-border-color;
