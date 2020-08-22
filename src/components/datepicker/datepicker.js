@@ -642,6 +642,7 @@ DatePicker.prototype = {
       });
 
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
+      this.setUseCurrentTime();
       this.timepickerContainer.find('.dropdown').dropdown();
 
       this.timepickerContainer.on('change.datepicker', () => {
@@ -979,6 +980,36 @@ DatePicker.prototype = {
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
     }, 50);
+  },
+
+  /**
+   * Set time picker options for `useCurrentTime` setting.
+   * @private
+   * @returns {void}
+   */
+  setUseCurrentTime() {
+    if (this.settings.useCurrentTime && this.timepicker.minuteSelect.length) {
+      const isSeconds = this.isSeconds && this.timepicker.secondSelect.length;
+      const leadingZero = n => (n < 10 ? '0' : '') + n;
+      const setOption = (elem, value) => {
+        if (!elem.find(`option:contains(${value})`).length) {
+          elem.find('option:selected').prop('selected', false);
+          elem.prepend($(`<option selected >${value}</option>`));
+        }
+      };
+      const d = new Date();
+      setOption(this.timepicker.minuteSelect, leadingZero(d.getMinutes()));
+      if (isSeconds) {
+        setOption(this.timepicker.secondSelect, leadingZero(d.getSeconds()));
+      }
+      if (typeof this.time === 'string' && this.time !== '' &&
+        this.currentDate && this.currentDate.getDate()) {
+        setOption(this.timepicker.minuteSelect, leadingZero(this.currentDate.getMinutes()));
+        if (isSeconds) {
+          setOption(this.timepicker.secondSelect, leadingZero(this.currentDate.getSeconds()));
+        }
+      }
+    }
   },
 
   /**

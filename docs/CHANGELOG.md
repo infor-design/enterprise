@@ -12,12 +12,17 @@
 
 - `[Accordion]` Fixed a bug where disabled headers texts and icons were barely recognizable as disabled in uplift theme. ([#4065](https://github.com/infor-design/enterprise/issues/4065))
 - `[Accordion]` Fixed a bug in the vibrant theme where nested header text was not showing because the width was pushing it to the next line. ([#4145](https://github.com/infor-design/enterprise/issues/4145))
+- `[Application Menu]` Fixed too much spacing level when there's an icon in accordion header in uplift theme. ([#4202](http://localhost:4000/components/applicationmenu/test-six-levels-icons.html?theme=uplift&variant=light&colors=0066D4))
 - `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Datagrid]` Fixed an issue where the dynamic tooltip was not working properly. ([#4260](https://github.com/infor-design/enterprise/issues/4260))
+- `[Datepicker]` Fixed an issue where the minute and second interval for timepicker was not working properly when use along useCurrentTime setting. ([#4230](https://github.com/infor-design/enterprise/issues/4230))
 - `[Dropdown]` Fixed a bug where italic-style highlighting would represent a matched filter term instead of bold-style on a Dropdown List item in some cases. ([#4141](https://github.com/infor-design/enterprise/issues/4141))
+- `[Homepage]` Fixed an issue where the columns were not showing properly after resize by using the maximize button. ([#894](https://github.com/infor-design/enterprise-ng/issues/894))
+- `[Homepage]` Fixed an issue where the columns were not showing properly after resize browser window. ([#895](https://github.com/infor-design/enterprise-ng/issues/895))
 - `[Input]` Fixed a bug where the text input error state border color would be wrong in the vibrant, dark and high contrast. ([#4248](https://github.com/infor-design/enterprise/issues/4248))
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
+- `[Popover]` Fixed a a regression where passing a popover content as a hash link to an ID no longer worked. ([#4281](https://github.com/infor-design/enterprise/issues/4281))
 - `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
 - `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))
@@ -26,6 +31,14 @@
 - `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Tree]` Fixed an issue where the return focus state was not working properly after closing the context menu. ([#4252](https://github.com/infor-design/enterprise/issues/4252))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+
+## v4.31.1
+
+### v4.31.1 Fixes
+
+- `[Datagrid]` Added an option to frozen columns to allow the left side to be scrollable for trees. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Datagrid]` Fixed a bug with icon alignment in editors in small or xtra small layout. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
+- `[Datagrid]` Fixed selection checkbox alignment. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
 
 ## v4.31.0
 

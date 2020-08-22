@@ -89,12 +89,27 @@ Homepage.prototype = {
    */
   init() {
     this.isTransitionsSupports = this.supportsTransitions();
+    this.setColumns();
     this.initHeroWidget();
     this.handleEvents();
     this.initEdit();
 
     // Initial Sizing
     this.resize(this, false);
+  },
+
+  /**
+   * Set max number of columns can be shown.
+   * @private
+   * @returns {void}
+   */
+  setColumns() {
+    let columns = this.settings.columns;
+    const columnsByAttr = parseInt(this.element.attr('data-columns'), 10);
+    if (!isNaN(columnsByAttr) && (columns !== columnsByAttr && columns === HOMEPAGE_DEFAULTS.columns)) {
+      columns = columnsByAttr;
+    }
+    this.columns = columns;
   },
 
   /**
@@ -107,7 +122,7 @@ Homepage.prototype = {
     row = row || 0;
     this.rowsAndCols[row] = [];
 
-    for (let i = 0, l = this.settings.columns; i < l; i++) {
+    for (let i = 0, l = this.columns; i < l; i++) {
       this.rowsAndCols[row][i] = true;// Make all columns available in first row[true]
     }
   },
@@ -501,16 +516,16 @@ Homepage.prototype = {
     }
 
     // Max sized columns brings to top
-    if (this.settings.columns > 1) {
+    if (this.columns > 1) {
       for (let i = 0, j = 0, w = 0, l = this.blocks.length; i < l; i++) {
-        if (this.blocks[i].w >= this.settings.columns && i &&
-          w && (w <= (this.settings.columns / 2))) {
+        if (this.blocks[i].w >= this.columns && i &&
+          w && (w <= (this.columns / 2))) {
           this.arrayIndexMove(this.blocks, i, j);
         }
         w += this.blocks[i].w;
-        if (w >= this.settings.columns) {
+        if (w >= this.columns) {
           w = 0; // reset
-          j = (this.blocks[j].w >= this.settings.columns) ? j + 1 : i; // record to move
+          j = (this.blocks[j].w >= this.columns) ? j + 1 : i; // record to move
         }
       }
     }
@@ -557,29 +572,30 @@ Homepage.prototype = {
     const tablet = (elemWidth >= bpTablet && elemWidth <= bpDesktop);
     const phone = (elemWidth <= bpTablet);
 
-    const maxAttr = this.element.attr('data-columns');
+    // const maxAttr = this.element.attr('data-columns');
     const content = self.element.find('> .content');
-    this.settings.columns = parseInt((maxAttr || this.settings.columns), 10);
+    this.setColumns();
+    // this.settings.columns = parseInt((maxAttr || this.settings.columns), 10);
 
     // Assign columns as breakpoint sizes
-    if (xxl && self.settings.columns === 5) {
-      self.settings.columns = 5;
+    if (xxl && self.columns === 5) {
+      self.columns = 5;
       bp = bpXXL;
     }
-    if (xl && /4|5/g.test(self.settings.columns)) {
-      self.settings.columns = 4;
+    if (xl && /4|5/g.test(self.columns)) {
+      self.columns = 4;
       bp = bpXL;
     }
-    if ((desktop) || ((xxl || xl) && self.settings.columns === 3)) {
-      self.settings.columns = 3;
+    if ((desktop) || ((xxl || xl) && self.columns === 3)) {
+      self.columns = 3;
       bp = bpDesktop;
     }
     if (tablet) {
-      self.settings.columns = 2;
+      self.columns = 2;
       bp = bpTablet;
     }
     if (phone) {
-      self.settings.columns = 1;
+      self.columns = 1;
       bp = bpPhone;
     }
 
@@ -601,16 +617,16 @@ Homepage.prototype = {
       block.elem.removeClass('to-single to-double to-triple to-quad');
 
       // If block more wider than available size, make as available size
-      if (block.w > self.settings.columns) {
-        block.w = self.settings.columns;
+      if (block.w > self.columns) {
+        block.w = self.columns;
 
-        if (self.settings.columns === 1) {
+        if (self.columns === 1) {
           block.elem.addClass('to-single');
-        } else if (self.settings.columns === 2) {
+        } else if (self.columns === 2) {
           block.elem.addClass('to-double');
-        } else if (self.settings.columns === 3) {
+        } else if (self.columns === 3) {
           block.elem.addClass('to-triple');
-        } else if (self.settings.columns === 4) {
+        } else if (self.columns === 4) {
           block.elem.addClass('to-quad');
         }
       }
@@ -620,7 +636,7 @@ Homepage.prototype = {
 
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
-      const totalWidth = box * self.settings.columns;
+      const totalWidth = box * self.columns;
 
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
       const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
@@ -665,7 +681,7 @@ Homepage.prototype = {
     * @param {number} columns The number of columns provided by this instance's settings
     * @param {object} metadata A compilation of current state information from the instance.
     */
-    self.element.triggerHandler('resize', [self.settings.columns, self.state]);
+    self.element.triggerHandler('resize', [self.columns, self.state]);
   },
 
   /**
