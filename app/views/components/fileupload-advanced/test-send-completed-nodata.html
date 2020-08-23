@@ -1,0 +1,43 @@
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="fileupload-advanced" data-init="false" id="expple-fileupload-adv">
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').one('initialized', function () {
+
+    var sendFileToServer = function (formData, status) {
+      var jqXHR = { abort: function() {} };
+      var percent = 0;
+      var total = parseFloat(status.file.size);
+      var timer = new $.fn.timer(() => {
+        status.setCompleted();
+      }, total);
+
+      $(timer.event)
+        .on('update', (e, data) => {
+          percent = Math.ceil((data.counter / total) * 100);
+          status.setProgress(percent);
+        });
+
+      status.setAbort(jqXHR);
+    };
+
+    // Initialize
+    $('#expple-fileupload-adv').fileuploadadvanced({
+      send: sendFileToServer
+    }).on('fileremoved', function (e, file) {
+      $('body').toast({
+        title: 'File removed',
+        message: file && file.name ? file.name : ''
+      });
+    });
+
+
+  });
+</script>
