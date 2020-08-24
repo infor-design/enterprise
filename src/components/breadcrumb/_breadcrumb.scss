@@ -113,6 +113,7 @@
     }
 
     li {
+      font-size: 0;
       padding-left: 6px;
       white-space: nowrap;
 
@@ -138,6 +139,7 @@
       &:last-child {
         a {
           margin-right: 4px;
+          overflow: hidden;
         }
       }
     }
@@ -301,7 +303,7 @@
       display: flex;
 
       .condense-container::after {
-        margin-top: 10px;
+        margin-top: 12px;
       }
     }
   }

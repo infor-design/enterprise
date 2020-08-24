@@ -110,6 +110,13 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * @returns {HTMLAnchorElement} reference to this breadcrumb item's anchor tag
+   */
+  get a() {
+    return this.element.querySelector('a');
+  },
+
+  /**
    * Sets whether or not this breadcrumb is currently active.
    * @param {boolean} state whether or not this breadcrumb item is disabled
    * @returns {void}
@@ -594,7 +601,7 @@ Breadcrumb.prototype = {
     // Setup a resize observer for detection
     if (typeof ResizeObserver !== 'undefined') {
       this.previousSize = this.element.getBoundingClientRect();
-      this.ro = new ResizeObserver(() => {
+      this.ro = new ResizeObserver(() => { // eslint-disable-line
         const newSize = this.element.getBoundingClientRect();
         if (newSize.width !== this.previousSize.width) {
           console.log(`newSize.width: ${newSize.width} | this.previousSize.width: ${this.previousSize.width}`);
@@ -603,6 +610,18 @@ Breadcrumb.prototype = {
         }
       });
       this.ro.observe(this.element);
+    }
+
+    // Picking an item from the overflow menu should cause the original breadcrumb item's operation to occur.
+    // This will either trigger the item's callback, or simply follow its `href` attribute.
+    if (this.condenseBtn) {
+      $(this.condenseBtn).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
+        // First argument is the clicked item from the `popupmenu.selected` event
+        const liItem = args[0];
+        const index = liItem[0].getAttribute('data-breadcrumb-index');
+        const breadcrumbAPI = this.overflowed[Number(index)];
+        $(breadcrumbAPI.a).trigger('click');
+      });
     }
 
     this.hasEvents = true;
@@ -694,7 +713,10 @@ Breadcrumb.prototype = {
     }
 
     if (this.condenseBtn) {
-      $(this.condenseBtn).off(`beforeopen.${COMPONENT_NAME}`);
+      $(this.condenseBtn).off([
+        `beforeopen.${COMPONENT_NAME}`,
+        `selected.${COMPONENT_NAME}`
+      ].join(' '));
     }
 
     $(this.list).off();
