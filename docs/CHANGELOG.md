@@ -22,6 +22,7 @@
 - `[Homepage]` Fixed an issue where the columns were not showing properly after resize by using the maximize button. ([#894](https://github.com/infor-design/enterprise-ng/issues/894))
 - `[Homepage]` Fixed an issue where the columns were not showing properly after resize browser window. ([#895](https://github.com/infor-design/enterprise-ng/issues/895))
 - `[Input]` Fixed a bug where the text input error state border color would be wrong in the vibrant, dark and high contrast. ([#4248](https://github.com/infor-design/enterprise/issues/4248))
+- `[Locale]` Fixed issues with some timezone and datetime formats. ([#4297](https://github.com/infor-design/enterprise/issues/4297))
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
 - `[Popover]` Fixed a a regression where passing a popover content as a hash link to an ID no longer worked. ([#4281](https://github.com/infor-design/enterprise/issues/4281))
 - `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
