@@ -584,6 +584,7 @@ $breadcrumb-color: $theme-color-palette-graphite-60;
 $breadcrumb-hover-color: $theme-color-palette-graphite-60;
 $breadcrumb-disabled-color: $disabled-color;
 $breadcrumb-container-height: 28px;
+$breadcrumb-separator-margin-top: 7px;
 $breadcrumb-empty-container-height: calc(#{$breadcrumb-container-height} + 5px);
 
 // Rating (Stars)

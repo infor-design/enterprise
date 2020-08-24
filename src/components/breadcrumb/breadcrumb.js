@@ -59,8 +59,11 @@ BreadcrumbItem.prototype = {
     const li = document.createElement('li');
     const a = document.createElement('a');
     li.appendChild(a);
-
     this.element = li;
+
+    // Base Class
+    this.element.classList.add('breadcrumb-item');
+
     return li;
   },
 
@@ -386,29 +389,29 @@ Breadcrumb.prototype = {
       }
     });
 
-    // Render/Refresh a condense button
-    const hasCondenseBtn = this.condenseBtn;
-    if (!hasCondenseBtn) {
-      const condenseContainer = document.createElement('div');
-      const condenseBtn = document.createElement('button');
-      const condenseMenu = document.createElement('ul');
-      const condenseSpan = document.createElement('span');
+    // Render/Refresh an overflow button
+    const hasoverflowBtn = this.overflowBtn;
+    if (!hasoverflowBtn) {
+      const overflowContainer = document.createElement('div');
+      const overflowBtn = document.createElement('button');
+      const overflowMenu = document.createElement('ul');
+      const overflowSpan = document.createElement('span');
 
-      condenseContainer.classList.add('condense-container');
-      condenseBtn.classList.add('btn-actions');
-      condenseBtn.classList.add('condense-btn');
-      condenseSpan.innerText = 'More Breadcrumbs';
-      condenseSpan.classList.add('audible');
+      overflowContainer.classList.add('breadcrumb-overflow-container');
+      overflowBtn.classList.add('btn-actions');
+      overflowBtn.classList.add('overflow-btn');
+      overflowSpan.innerText = 'More Breadcrumbs';
+      overflowSpan.classList.add('audible');
 
-      condenseBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
-      condenseBtn.appendChild(condenseSpan);
-      condenseContainer.appendChild(condenseBtn);
-      condenseContainer.appendChild(condenseMenu);
-      this.condenseContainerElem = condenseContainer;
-      this.condenseBtn = condenseBtn;
-      this.condenseMenu = condenseMenu;
+      overflowBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
+      overflowBtn.appendChild(overflowSpan);
+      overflowContainer.appendChild(overflowBtn);
+      overflowContainer.appendChild(overflowMenu);
+      this.overflowContainerElem = overflowContainer;
+      this.overflowBtn = overflowBtn;
+      this.overflowMenu = overflowMenu;
     }
-    this.element.insertBefore(this.condenseContainerElem, this.list);
+    this.element.insertBefore(this.overflowContainerElem, this.list);
 
     // Invoke popupmenu against the "More" button
     function breadcrumbMoreMenuBeforeOpen(response) {
@@ -421,8 +424,8 @@ Breadcrumb.prototype = {
       });
       response(menuHTML);
     }
-    $(this.condenseBtn).popupmenu({
-      menu: $(this.condenseMenu),
+    $(this.overflowBtn).popupmenu({
+      menu: $(this.overflowMenu),
       beforeOpen: breadcrumbMoreMenuBeforeOpen.bind(this)
     });
 
@@ -436,6 +439,10 @@ Breadcrumb.prototype = {
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
+
+    // Decorate
+    this.element.classList.add('breadcrumb');
+    this.list.classList.add('breadcrumb-list');
 
     this.handleEvents();
   },
@@ -603,8 +610,8 @@ Breadcrumb.prototype = {
 
     // Picking an item from the overflow menu should cause the original breadcrumb item's operation to occur.
     // This will either trigger the item's callback, or simply follow its `href` attribute.
-    if (this.condenseBtn) {
-      $(this.condenseBtn).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
+    if (this.overflowBtn) {
+      $(this.overflowBtn).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
         // First argument is the clicked item from the `popupmenu.selected` event
         const liItem = args[0];
         const index = liItem[0].getAttribute('data-breadcrumb-index');
@@ -706,12 +713,12 @@ Breadcrumb.prototype = {
     this.teardownBreadcrumbs();
     this.breadcrumbs = [];
 
-    if (this.condenseContainerElem) {
-      const popupmenuAPI = $(this.condenseBtn).data('popupmenu');
+    if (this.overflowContainerElem) {
+      const popupmenuAPI = $(this.overflowBtn).data('popupmenu');
       if (popupmenuAPI) {
         popupmenuAPI.destroy();
       }
-      this.element.removeChild(this.condenseContainerElem);
+      this.element.removeChild(this.overflowContainerElem);
     }
 
     return this;
@@ -732,8 +739,8 @@ Breadcrumb.prototype = {
       delete this.ro;
     }
 
-    if (this.condenseBtn) {
-      $(this.condenseBtn).off([
+    if (this.overflowBtn) {
+      $(this.overflowBtn).off([
         `beforeopen.${COMPONENT_NAME}`,
         `selected.${COMPONENT_NAME}`
       ].join(' '));

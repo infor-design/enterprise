@@ -21,44 +21,60 @@
     width: 28px;
   }
 
-  ul,
-  ol {
-    min-height: $breadcrumb-container-height;
-    vertical-align: middle;
-  }
-
-  .condense-container {
+  .breadcrumb-overflow-container {
     display: none;
     white-space: nowrap;
   }
 
-  li {
-    @include antialiased();
+  .breadcrumb-list {
+    min-height: $breadcrumb-container-height;
+    vertical-align: middle;
 
-    color: $breadcrumb-color;
-    display: inline-block;
-    list-style: none;
+    // Defines the faded edge of the `.breadcrumb-list`
+    &::before {
+      @include transition(width 200ms $cubic-ease);
 
-    .current,
-    &.current {
-      color: $breadcrumb-color;
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
-
-      a {
-        color: inherit;
-      }
+      background-color: transparent;
+      content: '';
+      display: inline-block;
+      height: inherit;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      width: 0;
+      z-index: 20;
     }
 
-    &:first-child {
-      .hyperlink {
-        margin-left: 0;
+    // Wraps each hyperlink
+    li {
+      @include antialiased();
+
+      color: $breadcrumb-color;
+      display: inline-block;
+      list-style: none;
+
+      .current,
+      &.current {
+        color: $breadcrumb-color;
+        font-size: $theme-size-font-sm;
+        font-weight: $theme-number-font-weight-bold;
+
+        a {
+          color: inherit;
+        }
+      }
+
+      &:first-child {
+        .hyperlink {
+          margin-left: 0;
+        }
       }
     }
   }
 
-  li,
-  .condense-container {
+  // Creates the "/" separator
+  .breadcrumb-list li,
+  .breadcrumb-overflow-container {
     &::after {
       @include antialiased();
 
@@ -80,67 +96,62 @@
   &.truncated {
     align-items: center;
     display: flex;
+    font-size: 0;
+    position: relative;
 
-    ul,
-    ol {
-      display: flex;
-      justify-content: flex-end;
-      overflow: hidden;
-    }
-
-    li,
-    .condense-container {
+    .breadcrumb-list li,
+    .breadcrumb-overflow-container {
       display: inline-block;
 
       &::after {
         display: inline-block;
+        margin-top: $breadcrumb-separator-margin-top;
         padding-right: 4px;
         vertical-align: top;
       }
     }
 
-    li::after {
-      margin-top: 7px;
-    }
-
-    .condense-container::after {
-      margin-top: 7px;
-    }
-
-    > .btn-actions {
-      flex-shrink: 0;
-      height: auto;
-      vertical-align: middle;
-    }
-
-    li {
-      font-size: 0;
-      padding-left: 6px;
-      white-space: nowrap;
-
-      a {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: calc(100% - 7px); // accounts for the pseudo-element "/" delimeter + padding
-      }
-
-      &:first-child,
-      &.current,
-      &.condense-btn,
-      &:last-child {
+    .breadcrumb-overflow-container {
+      > .btn-actions {
         flex-shrink: 0;
-
-        a {
-          overflow: auto;
-          text-overflow: clip;
-          width: auto;
-        }
+        height: auto;
+        vertical-align: middle;
       }
+    }
 
-      &:last-child {
+    .breadcrumb-list {
+      display: flex;
+      justify-content: flex-end;
+      overflow: hidden;
+
+      li {
+        font-size: 0;
+        padding-left: 6px;
+        white-space: nowrap;
+
         a {
-          margin-right: 4px;
           overflow: hidden;
+          text-overflow: ellipsis;
+          width: calc(100% - 7px); // accounts for the pseudo-element "/" delimeter + padding
+        }
+
+        &:first-child,
+        &.current,
+        &:last-child {
+          flex-shrink: 0;
+
+          a {
+            overflow: auto;
+            text-overflow: clip;
+            width: auto;
+          }
+        }
+
+        &:last-child {
+          a {
+            margin-right: 4px;
+            overflow: hidden;
+          }
         }
       }
     }
@@ -208,16 +219,8 @@
     display: block;
     padding: 1px 10px 0;
 
-    a {
-      border: 0;
-    }
-
-    ol {
-      padding-bottom: 15px;
-      padding-top: 15px;
-    }
-
     .hyperlink {
+      border: 0;
       color: $header-breadcrumb-color;
 
       &:active:not([disabled]),
@@ -243,15 +246,20 @@
       }
     }
 
-    li {
-      color: $header-breadcrumb-color;
+    .breadcrumb-list {
+      padding-bottom: 15px;
+      padding-top: 15px;
 
-      &::after {
+      li {
         color: $header-breadcrumb-color;
+
+        &::after {
+          color: $header-breadcrumb-color;
+        }
       }
     }
 
-    .condense-container::after {
+    .breadcrumb-overflow-container::after {
       color: $header-breadcrumb-color;
       margin-top: 9px;
     }
@@ -259,10 +267,6 @@
     &.alternate {
       background-color: $header-breadcrumb-alt-bg-color;
       border-bottom: 1px solid $header-breadcrumb-border-color;
-
-      ol {
-        padding: 15px 0;
-      }
 
       .hyperlink {
         color: $header-breadcrumb-alt-color;
@@ -288,15 +292,19 @@
         }
       }
 
-      li {
-        color: $header-breadcrumb-alt-color;
+      .breadcrumb-list {
+        padding: 15px 0;
 
-        &::after {
+        li {
           color: $header-breadcrumb-alt-color;
+
+          &::after {
+            color: $header-breadcrumb-alt-color;
+          }
         }
       }
 
-      .condense-container::after {
+      .breadcrumb-overflow-container::after {
         color: $header-breadcrumb-alt-color;
       }
     }
@@ -309,43 +317,41 @@
 
 // RTL Styles
 html[dir='rtl'] {
-  .breadcrumb {
-    li,
-    .condense-container {
+  .breadcrumb li,
+  .breadcrumb-overflow-container {
+    &::after {
+      content: '\005C';
+      padding-left: 8px;
+      padding-right: 4px;
+    }
+
+    &:last-child::after {
+      content: '';
+    }
+
+    &:first-child {
+      .hyperlink {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .breadcrumb.truncated {
+    .breadcrumb-list li {
+      padding-left: 0;
+      padding-right: 4px;
+
       &::after {
         content: '\005C';
-        padding-left: 8px;
-        padding-right: 4px;
+        padding-left: 4px;
+      }
+
+      a {
+        margin-right: 0;
       }
 
       &:last-child::after {
         content: '';
-      }
-
-      &:first-child {
-        .hyperlink {
-          margin-right: 0;
-        }
-      }
-    }
-
-    &.truncated {
-      li {
-        padding-left: 0;
-        padding-right: 4px;
-
-        &::after {
-          content: '\005C';
-          padding-left: 4px;
-        }
-
-        a {
-          margin-right: 0;
-        }
-
-        &:last-child::after {
-          content: '';
-        }
       }
     }
   }

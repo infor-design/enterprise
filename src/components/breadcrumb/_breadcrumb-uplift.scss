@@ -11,19 +11,12 @@
   }
 
   &.truncated {
-    li,
-    .condense-container {
+    .breadcrumb-list li,
+    .breadcrumb-overflow-container {
       &::after {
         font-size: 1.2rem;
+        margin-top: $breadcrumb-separator-margin-top;
       }
-    }
-
-    li::after {
-      margin-top: 4px;
-    }
-
-    .condense-container::after {
-      margin-top: 4px;
     }
   }
 }
@@ -31,7 +24,7 @@
 .scrollable-flex-header {
   .breadcrumb {
     &.truncated {
-      .condense-container::after {
+      .breadcrumb-overflow-container::after {
         margin-top: 8px;
       }
     }
