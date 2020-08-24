@@ -392,6 +392,7 @@ FileUploadAdvanced.prototype = {
 
     // Set completed state
     const setCompleted = function (data) {
+      data = data && typeof data.remove === 'function' ? data : { remove: () => {} };
       container.addClass('completed');
 
       // Add "Completed" icon
