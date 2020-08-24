@@ -3,7 +3,11 @@
 .breadcrumb {
   .hyperlink {
     font-size: 14px;
-    line-height: 1.8em;
+    line-height: 1.5em;
+  }
+
+  .btn-actions {
+    line-height: 1.6em;
   }
 
   &.truncated {
@@ -15,11 +19,11 @@
     }
 
     li::after {
-      margin-top: 5px;
+      margin-top: 4px;
     }
 
     .condense-container::after {
-      margin-top: 8px;
+      margin-top: 4px;
     }
   }
 }
@@ -29,18 +33,6 @@
     &.truncated {
       .condense-container::after {
         margin-top: 8px;
-      }
-    }
-  }
-}
-
-// RTL Styles
-html[dir='rtl'] {
-  .breadcrumb {
-    ul,
-    ol {
-      &:empty {
-        min-height: calc(#{$breadcrumb-container-height} + 4px);
       }
     }
   }

@@ -583,7 +583,7 @@ $contextual-panel-searchfield-border-color: $theme-color-palette-graphite-30;
 $breadcrumb-color: $theme-color-palette-graphite-60;
 $breadcrumb-hover-color: $theme-color-palette-graphite-60;
 $breadcrumb-disabled-color: $disabled-color;
-$breadcrumb-container-height: $theme-size-font-xl;
+$breadcrumb-container-height: 28px;
 $breadcrumb-empty-container-height: calc(#{$breadcrumb-container-height} + 5px);
 
 // Rating (Stars)

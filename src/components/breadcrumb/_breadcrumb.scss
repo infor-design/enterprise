@@ -13,17 +13,18 @@
 
     color: $breadcrumb-color;
     font-size: $theme-size-font-sm;
+    height: 28px;
     line-height: 1.8em;
     margin-right: 0;
+    min-height: 28px;
+    min-width: 28px;
+    width: 28px;
   }
 
   ul,
   ol {
     min-height: $breadcrumb-container-height;
-
-    &:empty {
-      min-height: $breadcrumb-empty-container-height;
-    }
+    vertical-align: middle;
   }
 
   .condense-container {
@@ -99,11 +100,11 @@
     }
 
     li::after {
-      margin-top: 6px;
+      margin-top: 7px;
     }
 
     .condense-container::after {
-      margin-top: 11px;
+      margin-top: 7px;
     }
 
     > .btn-actions {
@@ -252,6 +253,7 @@
 
     .condense-container::after {
       color: $header-breadcrumb-color;
+      margin-top: 9px;
     }
 
     &.alternate {
@@ -301,10 +303,6 @@
 
     &.truncated {
       display: flex;
-
-      .condense-container::after {
-        margin-top: 12px;
-      }
     }
   }
 }
@@ -312,13 +310,6 @@
 // RTL Styles
 html[dir='rtl'] {
   .breadcrumb {
-    ul,
-    ol {
-      &:empty {
-        min-height: calc(#{$breadcrumb-container-height} + 4px);
-      }
-    }
-
     li,
     .condense-container {
       &::after {
