@@ -373,6 +373,7 @@ Breadcrumb.prototype = {
       this.list = document.createElement('ol');
       this.element.appendChild(this.list);
     } else {
+      this.teardownEvents();
       this.teardownBreadcrumbs();
     }
 
@@ -386,7 +387,8 @@ Breadcrumb.prototype = {
     });
 
     // Render/Refresh a condense button
-    if (!this.condenseBtn) {
+    const hasCondenseBtn = this.condenseBtn;
+    if (!hasCondenseBtn) {
       const condenseContainer = document.createElement('div');
       const condenseBtn = document.createElement('button');
       const condenseMenu = document.createElement('ul');
@@ -429,26 +431,12 @@ Breadcrumb.prototype = {
       this.list.appendChild(html);
     }
 
-    // Refresh the state of all breadcrumb items
-    this.breadcrumbs.forEach((breadcrumb) => {
-      breadcrumb.refresh();
-    });
-
-    // Add/remove the Alternate class, if applicable
-    this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
-
-    // Setup truncation, if applicable
-    // Truncation only occurs when the list of breadcrumbs is larger than the container
-    if (this.settings.truncate) {
-      this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
-    } else {
-      this.element.classList.remove('truncated');
-    }
+    // Refresh the state of everything in the Breadcrumb list
+    this.refresh();
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
 
-    this.teardownEvents();
     this.handleEvents();
   },
 
@@ -495,7 +483,6 @@ Breadcrumb.prototype = {
     this.breadcrumbs.splice(target.i, 1);
 
     if (doRender) {
-      this.teardownBreadcrumbs();
       this.render();
     }
   },
@@ -513,6 +500,8 @@ Breadcrumb.prototype = {
 
     if (doRender) {
       this.render();
+    } else {
+      this.refresh();
     }
   },
 
@@ -606,7 +595,7 @@ Breadcrumb.prototype = {
         if (newSize.width !== this.previousSize.width) {
           console.log(`newSize.width: ${newSize.width} | this.previousSize.width: ${this.previousSize.width}`);
           this.previousSize = newSize;
-          this.render();
+          this.refresh();
         }
       });
       this.ro.observe(this.element);
@@ -673,6 +662,37 @@ Breadcrumb.prototype = {
       a,
       i: index
     };
+  },
+
+  /**
+   * Refreshes the state of the Breadcrumb list while re-rendering as little as possible.
+   * @param {boolean} [doHandleEvents = false] if true, causes all events to unbind/rebind
+   * @returns {void}
+   */
+  refresh(doHandleEvents = false) {
+    if (doHandleEvents) {
+      this.teardownEvents();
+    }
+
+    // Refresh the state of all breadcrumb items
+    this.breadcrumbs.forEach((breadcrumb) => {
+      breadcrumb.refresh();
+    });
+
+    // Add/remove the Alternate class, if applicable
+    this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
+
+    // Setup truncation, if applicable
+    // Truncation only occurs when the list of breadcrumbs is larger than the container
+    if (this.settings.truncate) {
+      this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
+    } else {
+      this.element.classList.remove('truncated');
+    }
+
+    if (doHandleEvents) {
+      this.handleEvents();
+    }
   },
 
   /**

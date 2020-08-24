@@ -351,6 +351,10 @@ html[dir='rtl'] {
         a {
           margin-right: 0;
         }
+
+        &:last-child::after {
+          content: '';
+        }
       }
     }
   }
