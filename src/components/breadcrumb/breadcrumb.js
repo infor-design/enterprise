@@ -5,7 +5,6 @@ import { Environment as env } from '../../utils/environment';
 // jQuery components
 import '../hyperlinks/hyperlinks.jquery';
 import '../popupmenu/popupmenu.jquery';
-import '../tooltip/tooltip.jquery';
 
 // Breadcrumb Item default settings
 const BREADCRUMB_ITEM_DEFAULTS = {
@@ -302,7 +301,6 @@ const BREADCRUMB_STYLES = ['default', 'alternate'];
 const BREADCRUMB_DEFAULTS = {
   breadcrumbs: [],
   style: BREADCRUMB_STYLES[0],
-  tooltipSettings: {},
   truncate: true,
 };
 
@@ -314,8 +312,7 @@ const BREADCRUMB_DEFAULTS = {
  * @param {string} [settings] The component settings.
  * @param {array} [settings.breadcrumbs=[]] predefines breadcrumb items as plain objects.  All properties in these objects correspond to the settings available in the `BreadcrumbItem` type.
  * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
- * @param {object} [settings.tooltipSettings] if defined, passes settings to the internal Tooltip component.
- * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.
+ * @param {boolean} [settings.truncate=true] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.  If false, causes breadcrumbs to wrap to subsequent lines.
  * @returns {this} component instance
  */
 function Breadcrumb(element, settings) {
@@ -395,31 +392,8 @@ Breadcrumb.prototype = {
       }
     });
 
-    // Render/Refresh an overflow button
-    const hasoverflowBtn = this.overflowBtn;
-    if (!hasoverflowBtn) {
-      const overflowContainer = document.createElement('div');
-      const overflowBtn = document.createElement('button');
-      const overflowMenu = document.createElement('ul');
-      const overflowSpan = document.createElement('span');
-
-      overflowContainer.classList.add('breadcrumb-overflow-container');
-      overflowBtn.classList.add('btn-actions');
-      overflowBtn.classList.add('overflow-btn');
-      overflowSpan.innerText = 'More Breadcrumbs';
-      overflowSpan.classList.add('audible');
-
-      overflowBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
-      overflowBtn.appendChild(overflowSpan);
-      overflowContainer.appendChild(overflowBtn);
-      overflowContainer.appendChild(overflowMenu);
-      this.overflowContainerElem = overflowContainer;
-      this.overflowBtn = overflowBtn;
-      this.overflowMenu = overflowMenu;
-    }
-    this.element.insertBefore(this.overflowContainerElem, this.list);
-
-    // Invoke popupmenu against the "More" button
+    // Used by the popupmenu below
+    // (linter doesn't like this being in the "if" block)
     function breadcrumbMoreMenuBeforeOpen(response) {
       let menuHTML = '';
       this.overflowed.forEach((breadcrumb, i) => {
@@ -430,13 +404,41 @@ Breadcrumb.prototype = {
       });
       response(menuHTML);
     }
-    $(this.overflowBtn).popupmenu({
-      menu: $(this.overflowMenu),
-      beforeOpen: breadcrumbMoreMenuBeforeOpen.bind(this)
-    });
+
+    // Render/Refresh an overflow button
+    if (this.canDetectResize) {
+      const hasoverflowBtn = this.overflowBtn;
+      if (!hasoverflowBtn) {
+        const overflowContainer = document.createElement('div');
+        const overflowBtn = document.createElement('button');
+        const overflowMenu = document.createElement('ul');
+        const overflowSpan = document.createElement('span');
+
+        overflowContainer.classList.add('breadcrumb-overflow-container');
+        overflowBtn.classList.add('btn-actions');
+        overflowBtn.classList.add('overflow-btn');
+        overflowSpan.innerText = 'More Breadcrumbs';
+        overflowSpan.classList.add('audible');
+
+        overflowBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
+        overflowBtn.appendChild(overflowSpan);
+        overflowContainer.appendChild(overflowBtn);
+        overflowContainer.appendChild(overflowMenu);
+        this.overflowContainerElem = overflowContainer;
+        this.overflowBtn = overflowBtn;
+        this.overflowMenu = overflowMenu;
+      }
+      this.element.insertBefore(this.overflowContainerElem, this.list);
+
+      // Invoke popupmenu against the "More" button
+      $(this.overflowBtn).popupmenu({
+        menu: $(this.overflowMenu),
+        beforeOpen: breadcrumbMoreMenuBeforeOpen.bind(this)
+      });
+    }
 
     // If markup needs to change, rebind events
-    if (html.children?.length) {
+    if (html.childNodes?.length) {
       this.list.appendChild(html);
     }
 
@@ -779,14 +781,6 @@ Breadcrumb.prototype = {
    */
   teardownBreadcrumbs() {
     this.breadcrumbs.forEach((breadcrumbAPI) => {
-      const el = breadcrumbAPI.element;
-      const tooltipAPI = $(el).data('tooltip');
-
-      if (tooltipAPI) {
-        tooltipAPI.destroy();
-      }
-      $(el).off(`beforeshow.${COMPONENT_NAME}`);
-
       breadcrumbAPI.destroy();
     });
   },

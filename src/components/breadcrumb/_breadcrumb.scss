@@ -409,40 +409,42 @@ html[dir='rtl'] {
     }
   }
 
-  // Added to the JS Component automatically when `truncate: false` is set.
-  &.no-truncate {
-    .breadcrumb-list li:first-child {
-      .hyperlink {
-        margin-right: -4px;
+  .breadcrumb {
+    // Added to the JS Component automatically when `truncate: false` is set.
+    &.no-truncate {
+      .breadcrumb-list li:first-child {
+        .hyperlink {
+          margin-right: -4px;
+        }
       }
     }
-  }
 
-  .breadcrumb.truncated {
-    .breadcrumb-list {
-      &::before {
-        background-image: linear-gradient(
-          to right,
-          rgba($body-color-primary-background, 0),
-          rgba($body-color-primary-background, 1)
-        );
-      }
-
-      li {
-        padding-left: 0;
-        padding-right: 4px;
-
-        &::after {
-          content: '\005C';
-          padding-left: 4px;
+    &.truncated {
+      .breadcrumb-list {
+        &::before {
+          background-image: linear-gradient(
+            to right,
+            rgba($body-color-primary-background, 0),
+            rgba($body-color-primary-background, 1)
+          );
         }
 
-        a {
-          margin-right: 0;
-        }
+        li {
+          padding-left: 0;
+          padding-right: 4px;
 
-        &:last-child::after {
-          content: '';
+          &::after {
+            content: '\005C';
+            padding-left: 4px;
+          }
+
+          a {
+            margin-right: 0;
+          }
+
+          &:last-child::after {
+            content: '';
+          }
         }
       }
     }
