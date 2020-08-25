@@ -1,0 +1,44 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+      <ul id="ui-tree" role="tree" aria-label="Asset Types" class="tree" data-init="false">
+      </ul>
+  </div>
+</div>
+
+<script>
+  var sampleData = [{
+      "id": "node1",
+      "text": "Node One",
+      "open": false,
+      "selected": false,
+      "href": '/somelink/'
+  }, {
+      "id": "node2",
+      "text": "Node Two",
+      "open": true,
+      "selected": false,
+      "children": [{
+          "id": "node3",
+          "text": "Node 2.1"
+      }, {
+          "id": "node4",
+          "text": "Node 2.2",
+          "children": [{
+              "id": "node5",
+              "text": "Node 2.2.1",
+              "children": [{
+                  "id": "node6",
+                  "text": "Node 2.2.1.1",
+                  "icon": "icon-tree-chart"
+              }]
+          }]
+      }]
+  }];
+
+  $('.tree').tree({
+    selectable: 'multiple',
+    dataset: sampleData,
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed'
+  });
+</script>
