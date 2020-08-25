@@ -28,6 +28,7 @@
 
   .breadcrumb-list {
     min-height: $breadcrumb-container-height;
+    position: relative;
     vertical-align: middle;
 
     // Defines the faded edge of the `.breadcrumb-list`
@@ -37,7 +38,8 @@
       background-color: transparent;
       content: '';
       display: inline-block;
-      height: inherit;
+      height: 100%;
+      left: 0;
       pointer-events: none;
       position: absolute;
       top: 0;
@@ -123,6 +125,16 @@
       display: flex;
       justify-content: flex-end;
       overflow: hidden;
+
+      // Enlarges the faded edge of the `.breadcrumb-list`
+      &::before {
+        background-image: linear-gradient(
+          to right,
+          rgba($body-color-primary-background, 1),
+          rgba($body-color-primary-background, 0)
+        );
+        width: 32px;
+      }
 
       li {
         font-size: 0;
@@ -295,6 +307,15 @@
       .breadcrumb-list {
         padding: 15px 0;
 
+        // Change the faded edge to match the header background color
+        &::before {
+          background-image: linear-gradient(
+            to right,
+            rgba($header-breadcrumb-alt-bg-color, 1),
+            rgba($header-breadcrumb-alt-bg-color, 0)
+          );
+        }
+
         li {
           color: $header-breadcrumb-alt-color;
 
@@ -311,6 +332,30 @@
 
     &.truncated {
       display: flex;
+
+      // Change the faded edge to match the header background color
+      .breadcrumb-list {
+        &::before {
+          background-image: linear-gradient(
+            to right,
+            rgba($header-bg-color, 1),
+            rgba($header-bg-color, 0)
+          );
+        }
+      }
+
+      // Change the faded edge to match the alternate header background color
+      &.alternate {
+        .breadcrumb-list {
+          &::before {
+            background-image: linear-gradient(
+              to right,
+              rgba($header-breadcrumb-alt-bg-color, 1),
+              rgba($header-breadcrumb-alt-bg-color, 0)
+            );
+          }
+        }
+      }
     }
   }
 }
@@ -336,22 +381,77 @@ html[dir='rtl'] {
     }
   }
 
+  .breadcrumb-list {
+    &::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
   .breadcrumb.truncated {
-    .breadcrumb-list li {
-      padding-left: 0;
-      padding-right: 4px;
-
-      &::after {
-        content: '\005C';
-        padding-left: 4px;
+    .breadcrumb-list {
+      &::before {
+        background-image: linear-gradient(
+          to right,
+          rgba($body-color-primary-background, 0),
+          rgba($body-color-primary-background, 1)
+        );
       }
 
-      a {
-        margin-right: 0;
+      li {
+        padding-left: 0;
+        padding-right: 4px;
+
+        &::after {
+          content: '\005C';
+          padding-left: 4px;
+        }
+
+        a {
+          margin-right: 0;
+        }
+
+        &:last-child::after {
+          content: '';
+        }
+      }
+    }
+  }
+
+  .scrollable-flex-header {
+    .breadcrumb.truncated {
+      .breadcrumb-list li {
+        &::after {
+          margin-top: 5px;
+        }
       }
 
-      &:last-child::after {
-        content: '';
+      .breadcrumb-overflow-container {
+        &::after {
+          margin-top: 7px;
+        }
+      }
+
+      .breadcrumb-list {
+        &::before {
+          background-image: linear-gradient(
+            to right,
+            rgba($header-bg-color, 0),
+            rgba($header-bg-color, 1)
+          );
+        }
+      }
+
+      &.alternate {
+        .breadcrumb-list {
+          &::before {
+            background-image: linear-gradient(
+              to right,
+              rgba($header-breadcrumb-alt-bg-color, 0),
+              rgba($header-breadcrumb-alt-bg-color, 1)
+            );
+          }
+        }
       }
     }
   }

@@ -30,3 +30,21 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .scrollable-flex-header {
+    .breadcrumb.truncated {
+      .breadcrumb-list li {
+        &::after {
+          margin-top: 4px;
+        }
+      }
+
+      .breadcrumb-overflow-container {
+        &::after {
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+}
