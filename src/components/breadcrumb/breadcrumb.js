@@ -740,7 +740,9 @@ Breadcrumb.prototype = {
       if (popupmenuAPI) {
         popupmenuAPI.destroy();
       }
-      this.element.removeChild(this.overflowContainerElem);
+      if (this.overflowContainerElem.parentNode) {
+        this.element.removeChild(this.overflowContainerElem);
+      }
     }
 
     return this;
