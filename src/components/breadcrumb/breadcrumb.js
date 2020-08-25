@@ -105,11 +105,17 @@ BreadcrumbItem.prototype = {
     // invoke/update IDS Hyperlink
     $(a).hyperlink();
 
-    // set the anchor's tabIndex based on its current overflow state, if applicable
+    return li;
+  },
+
+  /**
+   * Set the anchor's tabIndex based on its current overflow state, if applicable
+   * @returns {void}
+   */
+  checkFocus() {
+    const a = this.a;
     a.tabIndex = this.overflowed ? -1 : 0;
     a.setAttribute('tabindex', a.tabIndex);
-
-    return li;
   },
 
   /**
@@ -682,8 +688,13 @@ Breadcrumb.prototype = {
     }
 
     // Refresh the state of all breadcrumb items
-    this.breadcrumbs.forEach((breadcrumb) => {
-      breadcrumb.refresh();
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.refresh();
+    });
+
+    // Reset the tabindex separately (needs to be done after content renders for all breadcrumbs)
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.checkFocus();
     });
 
     // Add/remove the Alternate class, if applicable
