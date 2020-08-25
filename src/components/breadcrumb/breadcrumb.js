@@ -456,15 +456,15 @@ Breadcrumb.prototype = {
       this.list.appendChild(html);
     }
 
-    // Refresh the state of everything in the Breadcrumb list
-    this.refresh();
-
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
 
     // Decorate
     this.element.classList.add('breadcrumb');
     this.list.classList.add('breadcrumb-list');
+
+    // Refresh the state of everything in the Breadcrumb list
+    this.refresh();
 
     this.handleEvents();
   },
