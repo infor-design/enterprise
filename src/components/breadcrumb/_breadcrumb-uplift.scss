@@ -3,7 +3,7 @@
 .breadcrumb {
   .hyperlink {
     font-size: 14px;
-    line-height: 1.5em;
+    line-height: 1.6em;
   }
 
   .btn-actions {
@@ -23,6 +23,10 @@
 
 .scrollable-flex-header {
   .breadcrumb {
+    .hyperlink {
+      line-height: 1.5em;
+    }
+
     &.truncated {
       .breadcrumb-overflow-container::after {
         margin-top: 6px;

@@ -252,6 +252,10 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 .breadcrumb.is-personalizable .hyperlink:hover {
   color: ${colors.theme.text};
 }
+.is-personalizable .breadcrumb .hyperlink:focus:not(.hide-focus),
+.breadcrumb.is-personalizable .hyperlink:focus:not(.hide-focus) {
+  box-shadow: none;
+}
 
 .is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate),
 .scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) {

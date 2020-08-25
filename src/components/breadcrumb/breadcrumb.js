@@ -692,11 +692,6 @@ Breadcrumb.prototype = {
       breadcrumbAPI.refresh();
     });
 
-    // Reset the tabindex separately (needs to be done after content renders for all breadcrumbs)
-    this.breadcrumbs.forEach((breadcrumbAPI) => {
-      breadcrumbAPI.checkFocus();
-    });
-
     // Add/remove the Alternate class, if applicable
     this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
 
@@ -707,6 +702,11 @@ Breadcrumb.prototype = {
     } else {
       this.element.classList.remove('truncated');
     }
+
+    // Reset the tabindex separately (needs to be done after content renders for all breadcrumbs)
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.checkFocus();
+    });
 
     if (doHandleEvents) {
       this.handleEvents();
