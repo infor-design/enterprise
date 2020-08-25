@@ -153,6 +153,7 @@ Personalize.prototype = {
     colors.theme.bg = themeColors.components.body.primary.background.value;
     colors.theme.altbg = themeColors.components.body.secondary.background.value;
     colors.theme.text = themeColors.components.body.primary.font.value;
+    colors.theme.altText = themeColors.components.body.secondary.background.value;
 
     let dark = false;
     let contrast = false;

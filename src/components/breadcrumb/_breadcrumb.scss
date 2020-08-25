@@ -256,6 +256,12 @@
       .icon {
         color: $header-breadcrumb-color;
       }
+
+      &:focus:not(.hide-focus) {
+        box-shadow: 0 0 0 2px transparent,
+          0 0 0 1px $header-breadcrumb-color,
+          0 0 1px 2px rgba($header-breadcrumb-color, 0.3);
+      }
     }
 
     .breadcrumb-list {
@@ -301,6 +307,12 @@
       .btn-actions {
         .icon {
           color: $header-breadcrumb-alt-color;
+        }
+
+        &:focus:not(.hide-focus) {
+          box-shadow: 0 0 0 2px transparent,
+            0 0 0 1px $header-breadcrumb-alt-color,
+            0 0 1px 2px rgba($header-breadcrumb-alt-color, 0.3);
         }
       }
 
