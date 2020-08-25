@@ -74,6 +74,15 @@
     }
   }
 
+  // Added to the JS Component automatically when `truncate: false` is set.
+  &.no-truncate {
+    .breadcrumb-list li:first-child {
+      .hyperlink {
+        margin-left: -4px;
+      }
+    }
+  }
+
   // Creates the "/" separator
   .breadcrumb-list li,
   .breadcrumb-overflow-container {
@@ -397,6 +406,15 @@ html[dir='rtl'] {
     &::before {
       left: auto;
       right: 0;
+    }
+  }
+
+  // Added to the JS Component automatically when `truncate: false` is set.
+  &.no-truncate {
+    .breadcrumb-list li:first-child {
+      .hyperlink {
+        margin-right: -4px;
+      }
     }
   }
 

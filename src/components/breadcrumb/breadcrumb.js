@@ -586,6 +586,15 @@ Breadcrumb.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the breadcrumb list is capable of detecting a resize
+   * NOTE: This allows IE11 (and other browsers that don't support ResizeObserver) to gracefully
+   * degrade into a non-truncated mode.
+   */
+  get canDetectResize() {
+    return this.settings.truncate && env.features.resizeObserver;
+  },
+
+  /**
    * Sets up Breadcrumb list-level events
    * @private
    * @returns {void}
@@ -600,13 +609,12 @@ Breadcrumb.prototype = {
       item.api.callback(e, args);
     });
 
-    // Setup a resize observer for detection
-    if (typeof ResizeObserver !== 'undefined') {
+    // Setup a resize observer for detection when truncation is enabled
+    if (this.canDetectResize) {
       this.previousSize = this.element.getBoundingClientRect();
       this.ro = new ResizeObserver(() => { // eslint-disable-line
         const newSize = this.element.getBoundingClientRect();
         if (newSize.width !== this.previousSize.width) {
-          console.log(`newSize.width: ${newSize.width} | this.previousSize.width: ${this.previousSize.width}`);
           this.previousSize = newSize;
           this.refresh();
         }
@@ -697,10 +705,11 @@ Breadcrumb.prototype = {
 
     // Setup truncation, if applicable
     // Truncation only occurs when the list of breadcrumbs is larger than the container
-    if (this.settings.truncate) {
+    if (this.canDetectResize) {
       this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
     } else {
       this.element.classList.remove('truncated');
+      this.element.classList.add('no-truncate');
     }
 
     // Reset the tabindex separately (needs to be done after content renders for all breadcrumbs)
