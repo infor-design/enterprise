@@ -627,15 +627,15 @@ Breadcrumb.prototype = {
 
     // Setup a resize observer for detection when truncation is enabled
     if (this.canDetectResize) {
-      this.previousSize = this.element.getBoundingClientRect();
+      this.previousSize = this.list.getBoundingClientRect();
       this.ro = new ResizeObserver(() => { // eslint-disable-line
-        const newSize = this.element.getBoundingClientRect();
+        const newSize = this.list.getBoundingClientRect();
         if (newSize.width !== this.previousSize.width) {
           this.previousSize = newSize;
           this.refresh();
         }
       });
-      this.ro.observe(this.element);
+      this.ro.observe(this.list);
     }
 
     // Picking an item from the overflow menu should cause the original breadcrumb item's operation to occur.
