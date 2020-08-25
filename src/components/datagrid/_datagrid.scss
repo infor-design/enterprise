@@ -1450,7 +1450,8 @@ $datagrid-small-row-height: 25px;
             padding: 5px 27px 0 9px;
 
             + .icon {
-              top: 8px;
+              right: 2px;
+              top: 6px;
             }
           }
 
@@ -1632,6 +1633,10 @@ $datagrid-small-row-height: 25px;
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
       padding: 2px 5px 0;
+
+      .dropdown-trigger {
+        margin-top: -2px;
+      }
     }
 
     tbody tr td {
@@ -1658,7 +1663,7 @@ $datagrid-small-row-height: 25px;
       &.datagrid-trigger-cell {
         .dropdown-trigger + .icon {
           left: -4px !important;
-          top: 4px !important;
+          top: 5px !important;
         }
 
         .icon.icon-calendar {
@@ -1695,7 +1700,7 @@ $datagrid-small-row-height: 25px;
         .dropdown {
           font-size: $input-size-compact-font-size;
           height: $datagrid-extra-small-row-height + 2px;
-          padding: 2px 22px 0 6px;
+          padding: 7px 22px 0 6px;
         }
 
         .datepicker + .icon {
@@ -2632,6 +2637,10 @@ $datagrid-small-row-height: 25px;
 
     &.l-center-text {
       .datagrid-cell-wrapper {
+        text-align: center;
+      }
+
+      .dropdown-trigger {
         text-align: center;
       }
     }
