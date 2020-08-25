@@ -113,7 +113,7 @@ BreadcrumbItem.prototype = {
    */
   checkFocus() {
     const a = this.a;
-    a.tabIndex = this.overflowed ? -1 : 0;
+    a.tabIndex = (this.overflowed || this.disabled) ? -1 : 0;
     a.setAttribute('tabindex', a.tabIndex);
   },
 
@@ -158,12 +158,19 @@ BreadcrumbItem.prototype = {
     if (realState) {
       a.setAttribute('disabled', realState);
       a.setAttribute('aria-disabled', realState);
-      a.tabIndex = -1;
     } else {
       a.removeAttribute('disabled');
       a.removeAttribute('aria-disabled');
-      a.tabIndex = 0;
     }
+  },
+
+  /**
+   * @returns {boolean} `true` if this Breadcrumb item is currently disabled
+   */
+  get disabled() {
+    const aDisabled = this.a.getAttribute('disabled');
+    const liDisabled = this.element.getAttribute('is-disabled');
+    return aDisabled || liDisabled;
   },
 
   /**
@@ -397,8 +404,15 @@ Breadcrumb.prototype = {
     function breadcrumbMoreMenuBeforeOpen(response) {
       let menuHTML = '';
       this.overflowed.forEach((breadcrumb, i) => {
-        const menuItemHTML = `<li>
-          <a href="#" data-breadcrumb-index="${i}">${breadcrumb.settings.content || ''}</a>
+        let liDisabled = '';
+        let aDisabled = '';
+        if (breadcrumb.settings.disabled) {
+          liDisabled = ' is-disabled';
+          aDisabled = ' disabled';
+        }
+
+        const menuItemHTML = `<li class="${liDisabled}">
+          <a href="#" data-breadcrumb-index="${i}"${aDisabled}>${breadcrumb.settings.content || ''}</a>
         </li>`;
         menuHTML += menuItemHTML;
       });

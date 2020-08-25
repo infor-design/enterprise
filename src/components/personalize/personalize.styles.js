@@ -256,6 +256,12 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
 .breadcrumb.is-personalizable .hyperlink:focus:not(.hide-focus) {
   box-shadow: none;
 }
+.is-personalizable .breadcrumb .hyperlink[disabled],
+.breadcrumb.is-personalizable .hyperlink[disabled],
+.is-personalizable .breadcrumb .hyperlink[disabled]:hover,
+.breadcrumb.is-personalizable .hyperlink[disabled]:hover {
+  color: ${colors.theme.disabledText};
+}
 
 .is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate),
 .scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) {

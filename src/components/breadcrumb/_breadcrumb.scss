@@ -63,6 +63,10 @@
 
         a {
           color: inherit;
+
+          &[disabled] {
+            color: $breadcrumb-disabled-color;
+          }
         }
       }
 
