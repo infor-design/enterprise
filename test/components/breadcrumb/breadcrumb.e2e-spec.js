@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Breadcrumb example-index tests', () => {
+describe('Breadcrumb example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-index?layout=nofrills');
     await browser.driver
@@ -28,7 +28,7 @@ fdescribe('Breadcrumb example-index tests', () => {
   }
 });
 
-fdescribe('Breadcrumb as text tests', () => {
+describe('Breadcrumb as text tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-current-as-link?layout=nofrills');
   });
@@ -49,7 +49,7 @@ fdescribe('Breadcrumb as text tests', () => {
   }
 });
 
-fdescribe('Breadcrumb navigation alternate tests', () => {
+describe('Breadcrumb navigation alternate tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs-alternate?layout=nofrills');
   });
@@ -70,7 +70,7 @@ fdescribe('Breadcrumb navigation alternate tests', () => {
   }
 });
 
-fdescribe('Breadcrumb navigation tests', () => {
+describe('Breadcrumb navigation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs?layout=nofrills');
   });
