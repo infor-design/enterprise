@@ -1203,7 +1203,7 @@ describe('Datepicker Range Tests', () => {
   });
 });
 
-describe('Datepicker Range Tests UmAlQura', () => {
+xdescribe('Datepicker Range Tests UmAlQura', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-range?locale=ar-SA');
   });
