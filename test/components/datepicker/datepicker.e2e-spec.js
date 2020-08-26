@@ -1017,16 +1017,6 @@ describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disa
 
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2021/07/01');
   });
-
-  it('Should show the year span in the Datepicker button first to match the JP locale', async () => {
-    await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-    await element(by.css('#date-field-normal + .icon')).click();
-    const containerEl = await element(by.className('no-frills'));
-    const monthYearPaneFirstSpanEl = await element.all(by.css('.btn-monthyear-pane > *')).first();
-    await browser.driver.sleep(config.sleep);
-
-    expect(monthYearPaneFirstSpanEl.getText()).toEqual('2019');
-  });
 });
 
 describe('Datepicker Range Tests', () => {
