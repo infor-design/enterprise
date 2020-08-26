@@ -240,12 +240,19 @@ Splitter.prototype = {
       }
     }).on('dragend.splitter', (e, args) => {
       thisSide.parent().find('.splitter-overlay').remove();
+      const splitRect = splitter[0].getBoundingClientRect();
+      const splitOffset = window.innerWidth - splitRect.left;
+      const isRightSide = this.isSplitterRightSide && this.settings.side === 'right' ||
+        !this.isSplitterRightSide && this.settings.side === 'left';
+
+      // Prevent splitter content area to remain open if splitter is dragged rapidly.
+      // Make sure the width is reset when splitter is flush left.
+      if (splitRect.left === 0) {
+        thisSide[0].style.width = `0px`;
+        args[direction] = 10;
+      }
 
       if (s.collapseButton) {
-        const splitRect = splitter[0].getBoundingClientRect();
-        const splitOffset = window.innerWidth - splitRect.left;
-        const isRightSide = this.isSplitterRightSide && this.settings.side === 'right' ||
-        !this.isSplitterRightSide && this.settings.side === 'left';
         if (args[direction] <= 10 || isRightSide && splitOffset <= 21) {
           $('#splitter-collapse-btn').removeClass('rotate');
         } else {
