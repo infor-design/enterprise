@@ -242,7 +242,11 @@ Splitter.prototype = {
       thisSide.parent().find('.splitter-overlay').remove();
 
       if (s.collapseButton) {
-        if (args[direction] <= 10) {
+        const splitRect = splitter[0].getBoundingClientRect();
+        const splitOffset = window.innerWidth - splitRect.left;
+        const isRightSide = this.isSplitterRightSide && this.settings.side === 'right' ||
+        !this.isSplitterRightSide && this.settings.side === 'left';
+        if (args[direction] <= 10 || isRightSide && splitOffset <= 21) {
           $('#splitter-collapse-btn').removeClass('rotate');
         } else {
           $('#splitter-collapse-btn').addClass('rotate');
@@ -354,13 +358,22 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeRight(splitter, w) {
+    const parent = splitter.parent();
+    const thisSide = parent.is('.content') ? parent.parent() : parent;
     let width = w;
     let left = w - 1;
+
     if (this.isRTL && !this.isSplitterHorizontal) {
       const containerWidth = this.getContainerWidth();
       width = containerWidth >= w ? ((containerWidth - w) - 20) : w;
       left = w;
     }
+
+    if (!this.isSplitterRightSide && this.settings.side === 'left' ||
+        this.isSplitterRightSide && this.settings.side === 'right') {
+      thisSide[0].style.width = `0px`;
+    }
+
     // Adjust Left and Right Side
     this.leftSide[0].style.width = `${width}px`;
     splitter[0].style.left = `${left}px`;
