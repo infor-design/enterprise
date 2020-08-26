@@ -1018,30 +1018,15 @@ describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disa
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2021/07/01');
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress when closed', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-      await element(by.css('#date-field-normal + .icon')).click();
-      const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
+  it('Should show the year span in the Datepicker button first to match the JP locale', async () => {
+    await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
+    await element(by.css('#date-field-normal + .icon')).click();
+    const containerEl = await element(by.className('no-frills'));
+    const monthYearPaneFirstSpanEl = await element.all(by.css('.btn-monthyear-pane > *')).first();
+    await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed-yearfirst')).toEqual(0);
-    });
-  }
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress when open', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-      await element(by.css('#date-field-normal + .icon')).click();
-      await browser.driver.sleep(config.sleep);
-      await element(by.css('#btn-monthyear-pane')).click();
-
-      const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-yearfirst')).toEqual(0);
-    });
-  }
+    expect(monthYearPaneFirstSpanEl.getText()).toEqual('2019');
+  });
 });
 
 describe('Datepicker Range Tests', () => {
@@ -1053,7 +1038,8 @@ describe('Datepicker Range Tests', () => {
     const datepickerEl = await element(by.id('range-novalue'));
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
     const button1El = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await button1El.click();
 
@@ -1066,6 +1052,333 @@ describe('Datepicker Range Tests', () => {
     await testDate2.setDate(testDate3.getDate());
 
     expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/1/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
+  });
+
+  it('Should be able to change open an initially set range (by field value)', async () => {
+    const datepickerEl = await element(by.id('range-valuebyelem'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/7/2018 - 2/22/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(16);
+    expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('7');
+    expect(await element.all(by.css('.range-selection')).last().getText()).toEqual('22');
+  });
+
+  it('Should be able to change open an initially set range (by setting)', async () => {
+    const datepickerEl = await element(by.id('range-valuebysettings'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(24);
+    expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('5');
+    expect(await element.all(by.css('.range-selection')).last().getText()).toEqual('28');
+  });
+
+  it('Should be able to select with disabled not included', async () => {
+    const datepickerEl = await element(by.id('range-disablenotincluded'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '5')).first().click();
+    await element.all(by.cssContainingText('.monthview-table td', '10')).first().click();
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/10/2018');
+
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(4);
+    expect(await element.all(by.css('.is-disabled')).first().getText()).toEqual('7');
+    expect(await element.all(by.css('.is-disabled')).get(1).getText()).toEqual('9');
+  });
+
+  it('Should be able to select with disabled included', async () => {
+    const datepickerEl = await element(by.id('range-disableincluded'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '5')).first().click();
+    await element.all(by.cssContainingText('.monthview-table td', '10')).first().click();
+
+    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/10/2018');
+
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(6);
+    expect(await element.all(by.css('.is-disabled')).count()).toEqual(2);
+  });
+
+  it('Should be able to select forward', async () => {
+    const datepickerEl = await element(by.id('range-selectforward'));
+    await datepickerEl.sendKeys('81220208142020');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '3')).get(2).click();
+    await element.all(by.cssContainingText('.monthview-table td', '6')).get(1).click();
+
+    const testDate1 = new Date();
+    testDate1.setDate(3);
+    const testDate2 = new Date(testDate1);
+    testDate2.setDate(6);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/3/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
+  });
+
+  it('Should be able to select backward', async () => {
+    const datepickerEl = await element(by.id('range-selectbackward'));
+    await datepickerEl.sendKeys('81220208142020');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '7')).get(1).click();
+    await element.all(by.cssContainingText('.monthview-table td', '4')).get(0).click();
+
+    const testDate1 = new Date();
+    testDate1.setDate(4);
+    const testDate2 = new Date(testDate1);
+    testDate2.setDate(7);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/4/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
+  });
+
+  it('Should be able to select max 2 days', async () => {
+    const datepickerEl = await element(by.id('range-maxdays'));
+    await datepickerEl.sendKeys('822020832020');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '9')).get(1).click();
+    await element.all(by.cssContainingText('.monthview-table td', '12')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '11')).get(0).click();
+
+    const testDate1 = new Date();
+    testDate1.setDate(11);
+    const testDate2 = new Date(testDate1);
+    testDate2.setDate(12);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/11/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
+  });
+
+  it('Should be able to select min 5 days', async () => {
+    const datepickerEl = await element(by.id('range-mindays'));
+    await datepickerEl.sendKeys('8920208152020');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
+
+    const testDate1 = new Date();
+    testDate1.setDate(16);
+    const testDate2 = new Date(testDate1);
+    testDate2.setDate(21);
+
+    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/16/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
+  });
+
+  it('Should be able to select with time', async () => {
+    const datepickerEl = await element(by.id('range-withtime'));
+    await datepickerEl.sendKeys('81020201220AM81820201240AM');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('8/16/2020 12:20 AM - 8/17/2020 12:20 AM');
+  });
+});
+
+describe('Datepicker Range Tests UmAlQura', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/example-range?locale=ar-SA');
+  });
+
+  it('Should be able to change and set a range', async () => {
+    const datepickerEl = await element(by.id('range-novalue'));
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+
+    await datepickerEl.sendKeys('1441121014411212');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    const button1El = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
+    await button1El.click();
+
+    const button2El = await element.all(by.css('.monthview-table td:not(.alternate)')).last();
+    await button2El.click();
+
+    const testDate1 = new Date();
+    const testDate2 = new Date();
+    const testDate3 = new Date(testDate2.getFullYear(), testDate2.getMonth() + 1, 0);
+    await testDate2.setDate(testDate3.getDate());
+
+    expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual('1442/01/01 - 1442/01/29');
+  });
+
+  it('Should be able to change open an initially set range (by field value)', async () => {
+    const datepickerEl = await element(by.id('range-valuebyelem'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1441/12/11 - 1441/12/06');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(6);
+    expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('6');
+    expect(await element.all(by.css('.range-selection')).last().getText()).toEqual('11');
+  });
+
+  it('Should be able to change open an initially set range (by setting)', async () => {
+    const datepickerEl = await element(by.id('range-valuebysettings'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1439/05/19 - 1439/06/12');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(13);
+    expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('19');
+    expect(await element.all(by.css('.range-selection')).last().getText()).toEqual('1');
+  });
+
+  it('Should be able to select with disabled not included', async () => {
+    const datepickerEl = await element(by.id('range-disablenotincluded'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1439/05/19 - 1439/06/12');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '24')).first().click();
+    await element.all(by.cssContainingText('.monthview-table td', '18')).first().click();
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1439/05/18 - 1439/05/24');
+
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(5);
+    expect(await element.all(by.css('.is-disabled')).first().getText()).toEqual('21');
+    expect(await element.all(by.css('.is-disabled')).get(1).getText()).toEqual('23');
+  });
+
+  it('Should be able to select with disabled included', async () => {
+    const datepickerEl = await element(by.id('range-disableincluded'));
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1439/05/19 - 1439/06/12');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '24')).first().click();
+    await element.all(by.cssContainingText('.monthview-table td', '18')).first().click();
+
+    expect(datepickerEl.getAttribute('value')).toEqual('1439/05/18 - 1439/05/24');
+
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    expect(await element.all(by.css('.range-selection')).count()).toEqual(7);
+    expect(await element.all(by.css('.is-disabled')).count()).toEqual(2);
+  });
+
+  it('Should be able to select forward', async () => {
+    const datepickerEl = await element(by.id('range-selectforward'));
+    await datepickerEl.sendKeys('1441121414411215');
+
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '22')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '20')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '24')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('1441/12/20 - 1441/12/24');
+  });
+
+  it('Should be able to select backward', async () => {
+    const datepickerEl = await element(by.id('range-selectbackward'));
+    await datepickerEl.sendKeys('1441121414411215');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '22')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '24')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '20')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('1441/12/20 - 1441/12/24');
+  });
+
+  it('Should be able to select max 2 days', async () => {
+    const datepickerEl = await element(by.id('range-maxdays'));
+    await datepickerEl.sendKeys('1441121414411215');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td', '9')).get(1).click();
+    await element.all(by.cssContainingText('.monthview-table td', '12')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td', '11')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('1441/12/11 - 1441/12/12');
+  });
+
+  it('Should be able to select min 5 days', async () => {
+    const datepickerEl = await element(by.id('range-mindays'));
+    await datepickerEl.sendKeys('1441121414411215');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver.sleep(config.sleepShort);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td .day-text', '11')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td .day-text', '10')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('1441/12/06 - 1441/12/11');
+  });
+
+  it('Should be able to select with time', async () => {
+    const datepickerEl = await element(by.id('range-withtime'));
+    await datepickerEl.sendKeys('144112141220ص14411215124ص');
+    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+
+    await element.all(by.cssContainingText('.monthview-table td .day-text', '11')).get(0).click();
+    await element.all(by.cssContainingText('.monthview-table td .day-text', '10')).get(0).click();
+
+    expect(await datepickerEl.getAttribute('value')).toEqual('1441/12/10 12:20 ص - 1441/12/11 12:20 ص');
   });
 });
 
