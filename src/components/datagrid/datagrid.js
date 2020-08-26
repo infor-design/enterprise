@@ -1951,6 +1951,18 @@ Datagrid.prototype = {
     const self = this;
     let filterChanged = false;
 
+    // Remove all nested key/value `_isFilteredOut` from given dataset
+    const removeFilteredOut = (dataset) => {
+      for (let i = 0, len = dataset.length; i < len; i++) {
+        if (typeof dataset[i]._isFilteredOut !== 'undefined') {
+          delete dataset[i]._isFilteredOut;
+        }
+        if (dataset[i].children) {
+          removeFilteredOut(dataset[i].children);
+        }
+      }
+    };
+
     if (conditions) {
       this.setFilterConditions(conditions);
     } else {
@@ -1963,6 +1975,10 @@ Datagrid.prototype = {
     if (this.pagerAPI && JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
       this.filterExpr = conditions;
       filterChanged = true;
+
+      if (this.settings.treeGrid) {
+        removeFilteredOut(this.settings.dataset);
+      }
     }
 
     const checkRow = function (rowData) {
@@ -2243,18 +2259,6 @@ Datagrid.prototype = {
             }
           }
           return isEmpty;
-        };
-
-        // Remove all nested key/value `_isFilteredOut` from given dataset
-        const removeFilteredOut = (dataset) => {
-          for (let i = 0, len = dataset.length; i < len; i++) {
-            if (typeof dataset[i]._isFilteredOut !== 'undefined') {
-              delete dataset[i]._isFilteredOut;
-            }
-            if (dataset[i].children) {
-              removeFilteredOut(dataset[i].children);
-            }
-          }
         };
 
         if (isFilterEmpty()) {
@@ -3313,6 +3317,12 @@ Datagrid.prototype = {
       }
       if (rowHtml.center) {
         tableHtml += rowHtml.center;
+
+        if (s.treeGrid && this.filterExpr?.length) {
+          if ($(`<table>${rowHtml.center}</table>`).find('tr:first').is('.is-hidden')) {
+            this.filteredCount++;
+          }
+        }
       }
       if (self.hasRightPane && rowHtml.right) {
         tableHtmlRight += rowHtml.right;

@@ -1,0 +1,74 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+    var data = [
+      {id: 1, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Header', desc: '', comments: null, time: '', position: 1, children: [
+        {id: 2, parentId: 1, escalated: 1, depth: 2, taskName: 'Quotes due to expire',  desc: 'Update pending quotes and send out again to customers.', comments: 3, time: '7:10 AM', position: 2},
+        {id: 3, parentId: 1, escalated: 0, depth: 2, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '9:10 AM', position: 3},
+        {id: 4, parentId: 1, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Trucking', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '14:10 PM', position: 4},
+        {id: 5, parentId: 1, escalated: 0, depth: 2, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '18:10 PM', position: 2},
+        {id: 6, parentId: 1, escalated: 0, depth: 2, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '20:10 PM', position: 3},
+        {id: 7, parentId: 1, escalated: 0, depth: 2, expanded: false, taskName: 'First Child', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '22:10 PM', position: 4, children: [
+          {id: 8, parentId: 5, escalated: 0, depth: 3, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM', position: 5},
+          {id: 9, parentId: 5, escalated: 0, depth: 3, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM', position: 6},
+          {id: 10, parentId: 5, escalated: 0, depth: 3, expanded: false, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', position: 3, children: [
+            {id: 11, parentId: 10, escalated: 0, depth: 4, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM', position: 4},
+            {id: 12, parentId: 10, escalated: 0, depth: 4, expanded: false, taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', position: 5, children: [
+              {id: 13, parentId: 12, escalated: 0, depth: 5, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM', position: 6},
+              {id: 14, parentId: 12, escalated: 0, depth: 5, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', position: 2},
+            ]},
+          ]}
+        ]},
+        {id: 15, parentId: 0, escalated: 0, depth: 2, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order. This is a ver long description.', comments: 2, time: '18:10 PM', position: 3},
+        {id: 16, parentId: 0, escalated: 0, depth: 2, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order. This is a ver long description.', comments: 2, time: '20:10 PM', position: 4},
+        {id: 17, parentId: 0, escalated: 0, depth: 2, expanded: false, taskName: 'Second Child', desc: 'Contact sales representative with the updated purchase order.  This is a ver long description.', comments: 2, time: '22:10 PM', position: 5, children: [
+          {id: 18, parentId: 17, escalated: 0, depth: 3, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.  This is a ver long description.', comments: 2, time: '22:10 PM', position: 6},
+          {id: 19, parentId: 17, escalated: 0, depth: 3, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.  This is a ver long description.', comments: 2, time: '22:10 PM', position: 7},
+          {id: 20, parentId: 17, escalated: 0, depth: 3, expanded: false, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.  This is a ver long description.', comments: 2, time: '7:04 AM', position: 2, children: [
+            {id: 21, parentId: 20,  escalated: 0, depth: 4, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM', position: 3},
+            {id: 22, parentId: 20, escalated: 0, depth: 4, expanded: false, taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.  This is a ver long description.', comments: 2, time: '7:04 AM', position: 4, children: [
+              {id: 23, parentId: 22, escalated: 0, depth: 5, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM', position: 5},
+              {id: 24, parentId: 22, escalated: 0, depth: 5, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', position: 6},
+            ]},
+          ]}
+        ]}
+      ]},
+      {id: 25, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 1', desc: '', comments: null, time: '', position: 7},
+      {id: 26, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 2', desc: '', comments: null, time: '', position: 8},
+      {id: 27, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 3', desc: '', comments: null, time: '', position: 9},
+      {id: 28, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 4', desc: '', comments: null, time: '', position: 10},
+      {id: 29, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 5', desc: '', comments: null, time: '', position: 11},
+      {id: 30, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'No 6', desc: '', comments: null, time: '', position: 30},
+      {id: 31, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'No 7', desc: '', comments: null, time: '', position: 37},
+      {id: 32, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'No 8', desc: '', comments: null, time: '', position: 38},
+      {id: 33, parentId: 0, escalated: 2, depth: 1, expanded: false, taskName: 'Test 9', desc: '', comments: null, time: '', position: 40},
+    ];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', textOverflow: 'ellipsis', formatter: Formatters.Tree, filterType: 'text', width: 120 });
+    columns.push({ id: 'id', name: 'Id', field: 'id', filterType: 'text', width: 75 });
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', filterType: 'text', textOverflow: 'ellipsis' });
+    columns.push({ id: 'position', name: 'Position', field:'position', sortable: true, filterType: 'integer', filterConditions: ['equals', 'does-not-equal', 'less-than', 'less-equals', 'greater-than', 'greater-equals'] });
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      treeGrid: true,
+      filterable: true,
+      paging: true,
+      pagesize: 5,
+      stretchColumn: 'desc',
+      emptyMessage: {title: 'No Data Found', icon: 'icon-empty-generic'},
+      toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+    });
+
+  });
+</script>

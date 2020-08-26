@@ -645,6 +645,51 @@ describe('Datagrid filter short row tests', () => {
   }
 });
 
+describe('Datagrid filter treeGrid paging', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-tree-filter-paging?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should filter treeGrid with paging', async () => {
+    const sel = {
+      rows: '#datagrid .datagrid-wrapper tbody tr',
+      filter: '#datagrid th[data-field="position"] .datagrid-filter-wrapper',
+      filterGreaterThan: '.popupmenu.is-open .greater-than a'
+    };
+    const getVisibleRowsCount = async () => {
+      const all = await element.all(by.css(sel.rows)).count();
+      const hidden = await element.all(by.css(`${sel.rows}.is-hidden`)).count();
+      return all - hidden;
+    };
+
+    expect(await getVisibleRowsCount()).toEqual(5);
+    await element(by.css(`${sel.filter} .btn-filter`)).click();
+    const popupEl = await element(by.css('.popupmenu.is-open'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(popupEl), config.waitsFor);
+    await element(by.css(sel.filterGreaterThan)).click();
+    await element(by.css(`${sel.filter} input[type="text"]`)).clear();
+    await element(by.css(`${sel.filter} input[type="text"]`)).sendKeys('30');
+    await element(by.css(`${sel.filter} input[type="text"]`)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await getVisibleRowsCount()).toEqual(3);
+    await element(by.css(`${sel.filter} input[type="text"]`)).clear();
+    await element(by.css(`${sel.filter} input[type="text"]`)).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await getVisibleRowsCount()).toEqual(5);
+  });
+});
+
 describe('Datagrid form button tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-form-buttons?layout=nofrills');
