@@ -48,7 +48,7 @@ const TEST_BREADCRUMBS = [
 let breadcrumbEl;
 let breadcrumbAPI;
 
-describe('Breadcrumb API', () => {
+fdescribe('Breadcrumb API', () => {
   beforeEach(() => {});
 
   afterEach(() => {
@@ -217,11 +217,14 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    breadcrumbAPI.add({
+    const newBreadcrumbSettings = {
       id: 'fifth-item',
       content: 'Fifth Item',
       href: '#'
-    });
+    };
+
+    // Run with `true` second argument to render after adding (otherwise there is a missing `a` tag)
+    breadcrumbAPI.add(newBreadcrumbSettings, true);
     const fifth = breadcrumbAPI.breadcrumbs[4];
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(5);
@@ -337,16 +340,18 @@ describe('Breadcrumb API', () => {
     const overflowBtnEl = breadcrumbAPI.overflowBtn;
 
     // Constrain the breadcrumb area to a fixed width
-    breadcrumbEl.style.width = '300px';
-
-    // Trigger the popupmenu's `beforeOpen` method, which populates the overflow menu
-    overflowBtnEl.click();
+    breadcrumbEl.style.width = '200px';
 
     setTimeout(() => {
-      expect(breadcrumbEl.classList.contains('truncated')).toBeTruthy();
-      expect(breadcrumbAPI.overflowed.length).toBeGreaterThan(0);
-      expect(overflowMenuEl.childNodes.length).toBeGreaterThan(0);
-      done();
-    }, 10);
+      // Trigger the popupmenu's `beforeOpen` method, which populates the overflow menu
+      overflowBtnEl.click();
+
+      setTimeout(() => {
+        expect(breadcrumbEl.classList.contains('truncated')).toBeTruthy();
+        expect(breadcrumbAPI.overflowed.length).toBeGreaterThan(0);
+        expect(overflowMenuEl.childNodes.length).toBeGreaterThan(0);
+        done();
+      }, 300);
+    }, 300);
   });
 });

@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { Environment as env } from '../../utils/environment';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 
 // jQuery components
 import '../hyperlinks/hyperlinks.jquery';
@@ -109,6 +110,7 @@ BreadcrumbItem.prototype = {
 
   /**
    * Set the anchor's tabIndex based on its current overflow state, if applicable
+   * @private
    * @returns {void}
    */
   checkFocus() {
@@ -149,7 +151,7 @@ BreadcrumbItem.prototype = {
    */
   set disabled(state) {
     const realState = state === true;
-    const a = this.element.querySelector('a');
+    const a = this.a;
 
     this.settings.disabled = realState;
     this.element.classList[realState ? 'add' : 'remove']('is-disabled');
@@ -281,7 +283,7 @@ BreadcrumbItem.prototype = {
     // If the element was auto-generated and not build from pre-existing markup,
     // destroy everything associated.
     if (!this.fromElement) {
-      const a = this.element.querySelector('a');
+      const a = this.a;
       if (a) {
         const $a = $(a);
         $a.off();
@@ -616,6 +618,8 @@ Breadcrumb.prototype = {
    * @returns {void}
    */
   handleEvents() {
+    const self = this;
+
     // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
     $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
       const item = this.getBreadcrumbItemAPI(e.target);
@@ -625,15 +629,27 @@ Breadcrumb.prototype = {
       item.api.callback(e, args);
     });
 
-    // Setup a resize observer for detection when truncation is enabled
+    // Setup a resize observer for detection when truncation is enabled.
+    // To prevent `ResizeObserver loop limit exceeded thrown` errors, the callback for the
+    // ResizeObserver is debounced by running in a RenderLoop tick.
     if (this.canDetectResize) {
       this.previousSize = this.list.getBoundingClientRect();
       this.ro = new ResizeObserver(() => { // eslint-disable-line
-        const newSize = this.list.getBoundingClientRect();
-        if (newSize.width !== this.previousSize.width) {
-          this.previousSize = newSize;
-          this.refresh();
+        if (this.detectCheck) {
+          this.detectCheck.destroy(true);
         }
+        this.detectCheck = new RenderLoopItem({
+          duration: 1,
+          timeoutCallback() {
+            const newSize = self.list.getBoundingClientRect();
+            if (newSize.width !== self.previousSize.width) {
+              self.previousSize = newSize;
+              self.refresh();
+              delete self.detectCheck;
+            }
+          }
+        });
+        renderLoop.register(this.detectCheck);
       });
       this.ro.observe(this.list);
     }
