@@ -73,6 +73,10 @@ Spinbox.prototype = {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
 
+    if (this.element.is(':disabled')) {
+      this.element.closest('.field').addClass('is-disabled');
+    }
+
     this
       .setInitialValue()
       .addMarkup()

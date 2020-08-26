@@ -698,14 +698,15 @@ Popdown.prototype = {
 
     // First and last turn off and withdraw
     if (this.focusableElem) {
-      this.focusableElem.first.off('keydown.popdown');
-      this.focusableElem.last.off('keydown.popdown');
       delete this.focusableElem;
     }
-    if (this.focusableElems) {
+    if (this.focusableElem.first) {
+      this.focusableElem.first.off('keydown.popdown');
       this.focusableElems.first.off('keydown.popdown');
+    }
+    if (this.focusableElem.last) {
+      this.focusableElem.last.off('keydown.popdown');
       this.focusableElems.last.off('keydown.popdown');
-      delete this.focusableElems;
     }
 
     if (this.originalParent && this.originalParent.length) {
