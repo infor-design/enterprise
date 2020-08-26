@@ -453,8 +453,6 @@ body.no-scroll {
 }
 
 .page-container {
-  @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
-
   bottom: 0;
   font-size: 0;
   height: 100%;
@@ -494,8 +492,6 @@ body.no-scroll {
 
   + .page-container,
   + .application-menu + .page-container {
-    @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
-
     height: calc(100% - 60px);
     margin-top: 60px;
   }
