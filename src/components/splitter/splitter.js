@@ -248,7 +248,7 @@ Splitter.prototype = {
       // Prevent splitter content area to remain open if splitter is dragged rapidly.
       // Make sure the width is reset when splitter is flush left.
       if (splitRect.left === 0) {
-        thisSide[0].style.width = `0px`;
+        thisSide[0].style.width = '0px';
         args[direction] = 10;
       }
 
@@ -378,7 +378,7 @@ Splitter.prototype = {
 
     if (!this.isSplitterRightSide && this.settings.side === 'left' ||
         this.isSplitterRightSide && this.settings.side === 'right') {
-      thisSide[0].style.width = `0px`;
+      thisSide[0].style.width = '0px';
     }
 
     // Adjust Left and Right Side
