@@ -267,7 +267,7 @@ Pie.prototype = {
     // Handle zero sum or empty pies
     if (isEmpty || sum === 0 || isNaN(sum)) {
       const palette = theme.themeColors().palette;
-      this.chartData.push({ data: {}, color: palette.graphite['30'].value, name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
+      this.chartData.push({ data: {}, color: palette.slate['30'].value, name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
 
     self.updateData(self.chartData);
