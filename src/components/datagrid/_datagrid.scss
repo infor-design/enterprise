@@ -3233,7 +3233,7 @@ $datagrid-small-row-height: 25px;
   }
 
   .datagrid-expand-btn {
-    left: -14px;
+    left: -8px;
     margin-top: 0;
 
     .icon.plus-minus::before,
@@ -3585,7 +3585,7 @@ td .btn-actions {
   }
 
   .plus-minus {
-    left: -10px;
+    left: -6px;
     position: relative;
     top: -6px;
   }
@@ -3876,14 +3876,13 @@ td .btn-actions {
 
 // RTL Styles
 html[dir='rtl'] {
-  .datagrid {
-    // Inverse left Border
-    th:last-child {
-      border-left: 0;
-    }
+  .datagrid-container .datagrid-wrapper td:first-child {
+    border-left: 1px solid $datagrid-cell-border-color;
+  }
 
+  .datagrid {
     th:first-child {
-      border-right: 1px solid $datagrid-header-border-color;
+      border-left: 1px solid $datagrid-header-border-color;
     }
 
     .datagrid-rowgroup-header {
@@ -4341,7 +4340,7 @@ html[dir='rtl'] {
     }
 
     .datagrid-wrapper:not(.left):not(.right) td:first-child {
-      border-right: 1px solid $datagrid-cell-border-color;
+      border-left: 1px solid $datagrid-cell-border-color;
     }
   }
 
