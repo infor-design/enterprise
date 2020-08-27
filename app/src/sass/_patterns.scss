@@ -65,3 +65,18 @@
     }
   }
 }
+
+// ===================================================================================================
+// These rules allow for a header/page container to animate their height.
+// This can be useful and good aesthetically for demo pages where header components are swapped often.
+// Apply `animate-containers` on the `body` tag.
+// ===================================================================================================
+.animate-containers {
+  header {
+    @include transition(height 200ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+  }
+
+  .page-container {
+    @include transition(height 200ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+  }
+}

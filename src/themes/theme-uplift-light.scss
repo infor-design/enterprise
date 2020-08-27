@@ -51,6 +51,11 @@ $panel-border-color: $theme-color-palette-graphite-30;
 // Accordion
 $accordion-disabled-text-color: $input-disabled-color;
 
+// BreadCrumb
+$breadcrumb-container-height: $theme-size-font-lg;
+$breadcrumb-separator-margin-top: 4px;
+$breadcrumb-empty-container-height: calc(#{$breadcrumb-container-height} + 2px);
+
 // Calendar
 $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $theme-color-palette-graphite-20;

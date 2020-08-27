@@ -1,8 +1,11 @@
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
+import { Environment as env } from '../../utils/environment';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 
 // jQuery components
 import '../hyperlinks/hyperlinks.jquery';
+import '../popupmenu/popupmenu.jquery';
 
 // Breadcrumb Item default settings
 const BREADCRUMB_ITEM_DEFAULTS = {
@@ -56,9 +59,10 @@ BreadcrumbItem.prototype = {
     const li = document.createElement('li');
     const a = document.createElement('a');
     li.appendChild(a);
-
     this.element = li;
-    this.refresh();
+
+    // Base Class
+    this.element.classList.add('breadcrumb-item');
 
     return li;
   },
@@ -105,6 +109,31 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * Set the anchor's tabIndex based on its current overflow state, if applicable
+   * @private
+   * @returns {void}
+   */
+  checkFocus() {
+    const a = this.a;
+    let isOverflowed = this.overflowed;
+
+    // IE11/Edge don't implement truncated view, so never hide them due to overflow
+    if (env.browser.isIE11 || env.browser.isEdge) {
+      isOverflowed = false;
+    }
+
+    a.tabIndex = (isOverflowed || this.disabled) ? -1 : 0;
+    a.setAttribute('tabindex', a.tabIndex);
+  },
+
+  /**
+   * @returns {HTMLAnchorElement} reference to this breadcrumb item's anchor tag
+   */
+  get a() {
+    return this.element.querySelector('a');
+  },
+
+  /**
    * Sets whether or not this breadcrumb is currently active.
    * @param {boolean} state whether or not this breadcrumb item is disabled
    * @returns {void}
@@ -129,7 +158,7 @@ BreadcrumbItem.prototype = {
    */
   set disabled(state) {
     const realState = state === true;
-    const a = this.element.querySelector('a');
+    const a = this.a;
 
     this.settings.disabled = realState;
     this.element.classList[realState ? 'add' : 'remove']('is-disabled');
@@ -138,12 +167,19 @@ BreadcrumbItem.prototype = {
     if (realState) {
       a.setAttribute('disabled', realState);
       a.setAttribute('aria-disabled', realState);
-      a.tabIndex = -1;
     } else {
       a.removeAttribute('disabled');
       a.removeAttribute('aria-disabled');
-      a.tabIndex = 0;
     }
+  },
+
+  /**
+   * @returns {boolean} `true` if this Breadcrumb item is currently disabled
+   */
+  get disabled() {
+    const aDisabled = this.a.getAttribute('disabled');
+    const liDisabled = this.element.getAttribute('is-disabled');
+    return aDisabled || liDisabled;
   },
 
   /**
@@ -160,6 +196,24 @@ BreadcrumbItem.prototype = {
    */
   enable() {
     this.disabled = false;
+  },
+
+  /**
+   * @returns {boolean} whether or not the Breadcrumb Item is pushed into overflow by the boundaries
+   * of its container element.
+   */
+  get overflowed() {
+    const li = this.element;
+    const a = li.querySelector('a');
+
+    // Get original size first
+    const aRect = a.getBoundingClientRect();
+    const containerRect = this.element.parentNode.getBoundingClientRect();
+
+    if (env.rtl) {
+      return containerRect.right < aRect.right;
+    }
+    return containerRect.left > aRect.left;
   },
 
   /**
@@ -181,6 +235,19 @@ BreadcrumbItem.prototype = {
       e.preventDefault();
     }
     return result;
+  },
+
+  /**
+   * @returns {Number} the current index of this breadcrumb within the parent list
+   */
+  get index() {
+    let el = this.element;
+    let i = 0;
+    while (el.previousSibling !== null) {
+      el = el.previousSibling;
+      i++;
+    }
+    return i;
   },
 
   /**
@@ -236,7 +303,7 @@ BreadcrumbItem.prototype = {
     // If the element was auto-generated and not build from pre-existing markup,
     // destroy everything associated.
     if (!this.fromElement) {
-      const a = this.element.querySelector('a');
+      const a = this.a;
       if (a) {
         const $a = $(a);
         $a.off();
@@ -261,9 +328,9 @@ const BREADCRUMB_STYLES = ['default', 'alternate'];
 
 // Breadcrumb default settings
 const BREADCRUMB_DEFAULTS = {
+  breadcrumbs: [],
   style: BREADCRUMB_STYLES[0],
-  truncate: false,
-  breadcrumbs: []
+  truncate: true,
 };
 
 /**
@@ -272,9 +339,9 @@ const BREADCRUMB_DEFAULTS = {
  * @class Breadcrumb
  * @param {HTMLElement} element the base breadcrumb element
  * @param {string} [settings] The component settings.
- * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
- * @param {boolean} [settings.truncate=false] if true, creates a "truncated" breadcrumb style that specifically
  * @param {array} [settings.breadcrumbs=[]] predefines breadcrumb items as plain objects.  All properties in these objects correspond to the settings available in the `BreadcrumbItem` type.
+ * @param {string} [settings.style='default'] defines the style of breadcrumb this instance will render.  Can be "default" or "alternate".  Note that placing this component within a Header component has additional styles.
+ * @param {boolean} [settings.truncate=true] if true, creates a "truncated" breadcrumb style that keeps all breadcrumbs on a single line.  If false, causes breadcrumbs to wrap to subsequent lines.
  * @returns {this} component instance
  */
 function Breadcrumb(element, settings) {
@@ -341,44 +408,96 @@ Breadcrumb.prototype = {
       this.list = document.createElement('ol');
       this.element.appendChild(this.list);
     } else {
+      this.teardownEvents();
       this.teardownBreadcrumbs();
     }
 
-    // Build/invoke hyperlinks against each item
+    // Build all the list items
     const html = document.createDocumentFragment();
     this.breadcrumbs.forEach((breadcrumb) => {
       if (!breadcrumb.fromElement || !breadcrumb.element) {
         const li = breadcrumb.render();
         html.appendChild(li);
-      } else {
-        breadcrumb.refresh();
       }
     });
 
-    // If markup needs to change, rebind events
-    if (html.children?.length) {
-      this.list.appendChild(html);
+    // Used by the popupmenu below
+    // (linter doesn't like this being in the "if" block)
+    function breadcrumbMoreMenuBeforeOpen(response) {
+      let menuHTML = '';
+      this.overflowed.forEach((breadcrumb, i) => {
+        let liDisabled = '';
+        let aDisabled = '';
+        if (breadcrumb.settings.disabled) {
+          liDisabled = ' is-disabled';
+          aDisabled = ' disabled';
+        }
+
+        const menuItemHTML = `<li class="${liDisabled}">
+          <a href="#" data-breadcrumb-index="${i}"${aDisabled}>${breadcrumb.settings.content || ''}</a>
+        </li>`;
+        menuHTML += menuItemHTML;
+      });
+      response(menuHTML);
     }
 
-    // Add/remove the Alternate class, if applicable
-    this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
+    // Render/Refresh an overflow button
+    if (this.canDetectResize) {
+      const hasoverflowBtn = this.overflowBtn;
+      if (!hasoverflowBtn) {
+        const overflowContainer = document.createElement('div');
+        const overflowBtn = document.createElement('button');
+        const overflowMenu = document.createElement('ul');
+        const overflowSpan = document.createElement('span');
 
-    // Setup truncation, if applicable
-    this.element.classList[this.settings.truncate ? 'add' : 'remove']('truncated');
+        overflowContainer.classList.add('breadcrumb-overflow-container');
+        overflowBtn.classList.add('btn-actions');
+        overflowBtn.classList.add('overflow-btn');
+        overflowSpan.innerText = 'More Breadcrumbs';
+        overflowSpan.classList.add('audible');
+
+        overflowBtn.insertAdjacentHTML('afterbegin', $.createIcon({ icon: 'more' }));
+        overflowBtn.appendChild(overflowSpan);
+        overflowContainer.appendChild(overflowBtn);
+        overflowContainer.appendChild(overflowMenu);
+        this.overflowContainerElem = overflowContainer;
+        this.overflowBtn = overflowBtn;
+        this.overflowMenu = overflowMenu;
+      }
+      this.element.insertBefore(this.overflowContainerElem, this.list);
+
+      // Invoke popupmenu against the "More" button
+      $(this.overflowBtn).popupmenu({
+        menu: $(this.overflowMenu),
+        beforeOpen: breadcrumbMoreMenuBeforeOpen.bind(this)
+      });
+    }
+
+    // If markup needs to change, rebind events
+    if (html.childNodes?.length) {
+      this.list.appendChild(html);
+    }
 
     // Add ARIA to the list container
     this.list.setAttribute('aria-label', 'Breadcrumb');
 
-    this.teardownEvents();
+    // Decorate
+    this.element.classList.add('breadcrumb');
+    this.list.classList.add('breadcrumb-list');
+
+    // Refresh the state of everything in the Breadcrumb list
+    this.refresh();
+
     this.handleEvents();
   },
 
   /**
    * @param {object} settings representing an individual breadcrumb item's properties
    * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @param {boolean} [doAddToDataset = false] if true, adds the new settings object to the `settings.breadcrumbs` array
    * @returns {void}
    */
-  add(settings, doRender = false) {
+  add(settings, doRender = false, doAddToDataset = false) {
     if (!settings) {
       throw new Error('Settings for a new breadcrumb item must be provided.');
     }
@@ -391,6 +510,10 @@ Breadcrumb.prototype = {
 
     const newBreadcrumb = new BreadcrumbItem(settings);
     this.breadcrumbs.push(newBreadcrumb);
+
+    if (doAddToDataset) {
+      this.settings.breadcrumbs.push(settings);
+    }
 
     if (doRender) {
       this.render();
@@ -405,9 +528,10 @@ Breadcrumb.prototype = {
   /**
    * @param {BreadcrumbItem|HTMLElement|number} item an input representing a Breadcrumb API, an anchor tag linked to one, or an index number of a breadcrumb in the list.
    * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @param {boolean} [doRemoveFromDataset = false] if true, removes the corresponding settings object from the `settings.breadcrumbs` array
    * @returns {void}
    */
-  remove(item, doRender = false) {
+  remove(item, doRender = false, doRemoveFromDataset = false) {
     const target = this.getBreadcrumbItemAPI(item);
 
     target.api.destroy(true);
@@ -415,8 +539,11 @@ Breadcrumb.prototype = {
     // Remove the API from the internal array
     this.breadcrumbs.splice(target.i, 1);
 
+    if (doRemoveFromDataset) {
+      this.settings.breadcrumbs.splice(target.i, 1);
+    }
+
     if (doRender) {
-      this.teardownBreadcrumbs();
       this.render();
     }
   },
@@ -424,16 +551,23 @@ Breadcrumb.prototype = {
   /**
    * Remove all breadcrumbs in the list
    * @param {boolean} [doRender = false] if true, causes the breadcrumb list to rerender
+   * @param {boolean} [doResetDataset = false] if true, clears the `settings.breadcrumb` array.
    * @returns {void}
    */
-  removeAll(doRender = false) {
+  removeAll(doRender = false, doResetDataset = false) {
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       breadcrumbAPI.destroy(true);
     });
     this.breadcrumbs = [];
 
+    if (doResetDataset) {
+      this.settings.breadcrumbs = [];
+    }
+
     if (doRender) {
       this.render();
+    } else {
+      this.refresh();
     }
   },
 
@@ -445,7 +579,7 @@ Breadcrumb.prototype = {
   makeCurrent(item) {
     const target = this.getBreadcrumbItemAPI(item);
     this.breadcrumbs.forEach((thisAPI) => {
-      const a = thisAPI.element.querySelector('a');
+      const a = thisAPI.a;
       thisAPI.current = a.isEqualNode(target.a);
     });
   },
@@ -459,7 +593,7 @@ Breadcrumb.prototype = {
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       if (!api && breadcrumbAPI.current) {
         api = breadcrumbAPI;
-        a = api.element.querySelector('a');
+        a = api.a;
       }
     });
     return a;
@@ -498,11 +632,29 @@ Breadcrumb.prototype = {
   },
 
   /**
+   * @returns {array<BreadcrumbItem>} containing all currently-overflowed Breadcrumb items
+   */
+  get overflowed() {
+    return this.breadcrumbs.filter(item => item.overflowed);
+  },
+
+  /**
+   * @returns {boolean} whether or not the breadcrumb list is capable of detecting a resize
+   * NOTE: This allows IE11 (and other browsers that don't support ResizeObserver) to gracefully
+   * degrade into a non-truncated mode.
+   */
+  get canDetectResize() {
+    return this.settings.truncate && env.features.resizeObserver;
+  },
+
+  /**
    * Sets up Breadcrumb list-level events
    * @private
    * @returns {void}
    */
   handleEvents() {
+    const self = this;
+
     // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
     $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
       const item = this.getBreadcrumbItemAPI(e.target);
@@ -511,6 +663,43 @@ Breadcrumb.prototype = {
       }
       item.api.callback(e, args);
     });
+
+    // Setup a resize observer for detection when truncation is enabled.
+    // To prevent `ResizeObserver loop limit exceeded thrown` errors, the callback for the
+    // ResizeObserver is debounced by running in a RenderLoop tick.
+    if (this.canDetectResize) {
+      this.previousSize = this.list.getBoundingClientRect();
+      this.ro = new ResizeObserver(() => { // eslint-disable-line
+        if (this.detectCheck) {
+          this.detectCheck.destroy(true);
+        }
+        this.detectCheck = new RenderLoopItem({
+          duration: 1,
+          timeoutCallback() {
+            const newSize = self.list.getBoundingClientRect();
+            if (newSize.width !== self.previousSize.width) {
+              self.previousSize = newSize;
+              self.refresh();
+              delete self.detectCheck;
+            }
+          }
+        });
+        renderLoop.register(this.detectCheck);
+      });
+      this.ro.observe(this.list);
+    }
+
+    // Picking an item from the overflow menu should cause the original breadcrumb item's operation to occur.
+    // This will either trigger the item's callback, or simply follow its `href` attribute.
+    if (this.overflowBtn) {
+      $(this.overflowBtn).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
+        // First argument is the clicked item from the `popupmenu.selected` event
+        const liItem = args[0];
+        const index = liItem[0].getAttribute('data-breadcrumb-index');
+        const breadcrumbAPI = this.overflowed[Number(index)];
+        $(breadcrumbAPI.a).trigger('click');
+      });
+    }
 
     this.hasEvents = true;
   },
@@ -529,13 +718,13 @@ Breadcrumb.prototype = {
     // If a breadcrumb item is passed, use that instead of searching the array.
     if (item instanceof BreadcrumbItem) {
       api = item;
-      a = item.element.querySelector('a');
+      a = item.a;
       index = this.breadcrumbs.indexOf(item);
     // Search the breadcrumb array for a matching anchor.
     } else if (item instanceof HTMLAnchorElement) {
       a = item;
       this.breadcrumbs.forEach((breadcrumbAPI, i) => {
-        const thisA = breadcrumbAPI.element.querySelector('a');
+        const thisA = breadcrumbAPI.a;
         if (thisA.isEqualNode(a)) {
           api = breadcrumbAPI;
           index = i;
@@ -547,7 +736,7 @@ Breadcrumb.prototype = {
       compareByIndex = true;
       index = item;
       api = this.breadcrumbs[index];
-      a = api.element.querySelector('a');
+      a = api.a;
     }
 
     if (!api) {
@@ -564,6 +753,43 @@ Breadcrumb.prototype = {
   },
 
   /**
+   * Refreshes the state of the Breadcrumb list while re-rendering as little as possible.
+   * @param {boolean} [doHandleEvents = false] if true, causes all events to unbind/rebind
+   * @returns {void}
+   */
+  refresh(doHandleEvents = false) {
+    if (doHandleEvents) {
+      this.teardownEvents();
+    }
+
+    // Refresh the state of all breadcrumb items
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.refresh();
+    });
+
+    // Add/remove the Alternate class, if applicable
+    this.element.classList[this.settings.style === 'alternate' ? 'add' : 'remove']('alternate');
+
+    // Setup truncation, if applicable
+    // Truncation only occurs when the list of breadcrumbs is larger than the container
+    if (this.canDetectResize) {
+      this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
+    } else {
+      this.element.classList.remove('truncated');
+      this.element.classList.add('no-truncate');
+    }
+
+    // Reset the tabindex separately (needs to be done after content renders for all breadcrumbs)
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.checkFocus();
+    });
+
+    if (doHandleEvents) {
+      this.handleEvents();
+    }
+  },
+
+  /**
    * Removes bound events and generated markup from this component, and tears down all
    * breadcrumb items.
    * @private
@@ -573,6 +799,16 @@ Breadcrumb.prototype = {
     this.teardownEvents();
     this.teardownBreadcrumbs();
     this.breadcrumbs = [];
+
+    if (this.overflowContainerElem) {
+      const popupmenuAPI = $(this.overflowBtn).data('popupmenu');
+      if (popupmenuAPI) {
+        popupmenuAPI.destroy();
+      }
+      if (this.overflowContainerElem.parentNode) {
+        this.element.removeChild(this.overflowContainerElem);
+      }
+    }
 
     return this;
   },
@@ -587,6 +823,18 @@ Breadcrumb.prototype = {
       return;
     }
 
+    if (this.ro) {
+      this.ro.disconnect();
+      delete this.ro;
+    }
+
+    if (this.overflowBtn) {
+      $(this.overflowBtn).off([
+        `beforeopen.${COMPONENT_NAME}`,
+        `selected.${COMPONENT_NAME}`
+      ].join(' '));
+    }
+
     $(this.list).off();
     $(this.element).off();
     delete this.hasEvents;
@@ -599,7 +847,9 @@ Breadcrumb.prototype = {
    * @returns {void}
    */
   teardownBreadcrumbs() {
-    this.breadcrumbs.forEach(breadcrumb => breadcrumb.destroy());
+    this.breadcrumbs.forEach((breadcrumbAPI) => {
+      breadcrumbAPI.destroy();
+    });
   },
 
   /**
