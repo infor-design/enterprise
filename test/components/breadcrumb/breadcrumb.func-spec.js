@@ -78,10 +78,10 @@ describe('Breadcrumb API', () => {
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
       breadcrumbs: TEST_BREADCRUMBS
     });
-    const a1 = breadcrumbAPI.breadcrumbs[0].element.querySelector('a');
+    const a1 = breadcrumbAPI.breadcrumbs[0].a;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
     const a2 = li2.querySelector('a');
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
@@ -96,10 +96,10 @@ describe('Breadcrumb API', () => {
     document.body.insertAdjacentHTML('afterbegin', fullBreadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl);
-    const a1 = breadcrumbAPI.breadcrumbs[0].element.querySelector('a');
+    const a1 = breadcrumbAPI.breadcrumbs[0].a;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
     const a2 = li2.querySelector('a');
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
@@ -188,7 +188,7 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     expect(target3.api).toBeDefined();
@@ -202,7 +202,7 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     breadcrumbAPI.destroy();
@@ -314,7 +314,7 @@ describe('Breadcrumb API', () => {
     expect(liCssClasses.contains('current')).toBeTruthy();
   });
 
-  it('can programmatically get the current breadcrumb\'s anchor', () => {
+  it('can get the current breadcrumb\'s anchor', () => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
@@ -322,7 +322,7 @@ describe('Breadcrumb API', () => {
     });
 
     const currentA = breadcrumbAPI.current;
-    const a4 = breadcrumbAPI.breadcrumbs[3].element.querySelector('a');
+    const a4 = breadcrumbAPI.breadcrumbs[3].a;
 
     expect(currentA).toBeDefined();
     expect(currentA).toEqual(a4);

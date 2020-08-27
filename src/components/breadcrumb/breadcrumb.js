@@ -231,6 +231,19 @@ BreadcrumbItem.prototype = {
   },
 
   /**
+   * @returns {Number} the current index of this breadcrumb within the parent list
+   */
+  get index() {
+    let el = this.element;
+    let i = 0;
+    while (el.previousSibling !== null) {
+      el = el.previousSibling;
+      i++;
+    }
+    return i;
+  },
+
+  /**
    * Scrapes an existing HTML <li> element for breadcrumb-related settings, and saves them.
    * @returns {void}
    */
@@ -474,9 +487,10 @@ Breadcrumb.prototype = {
   /**
    * @param {object} settings representing an individual breadcrumb item's properties
    * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @param {boolean} [doAddToDataset = false] if true, adds the new settings object to the `settings.breadcrumbs` array
    * @returns {void}
    */
-  add(settings, doRender = false) {
+  add(settings, doRender = false, doAddToDataset = false) {
     if (!settings) {
       throw new Error('Settings for a new breadcrumb item must be provided.');
     }
@@ -489,6 +503,10 @@ Breadcrumb.prototype = {
 
     const newBreadcrumb = new BreadcrumbItem(settings);
     this.breadcrumbs.push(newBreadcrumb);
+
+    if (doAddToDataset) {
+      this.settings.breadcrumbs.push(settings);
+    }
 
     if (doRender) {
       this.render();
@@ -503,15 +521,20 @@ Breadcrumb.prototype = {
   /**
    * @param {BreadcrumbItem|HTMLElement|number} item an input representing a Breadcrumb API, an anchor tag linked to one, or an index number of a breadcrumb in the list.
    * @param {boolean} [doRender = false] if true, causes a re-render of the breadcrumb list
+   * @param {boolean} [doRemoveFromDataset = false] if true, removes the corresponding settings object from the `settings.breadcrumbs` array
    * @returns {void}
    */
-  remove(item, doRender = false) {
+  remove(item, doRender = false, doRemoveFromDataset = false) {
     const target = this.getBreadcrumbItemAPI(item);
 
     target.api.destroy(true);
 
     // Remove the API from the internal array
     this.breadcrumbs.splice(target.i, 1);
+
+    if (doRemoveFromDataset) {
+      this.settings.breadcrumbs.splice(target.i, 1);
+    }
 
     if (doRender) {
       this.render();
@@ -521,13 +544,18 @@ Breadcrumb.prototype = {
   /**
    * Remove all breadcrumbs in the list
    * @param {boolean} [doRender = false] if true, causes the breadcrumb list to rerender
+   * @param {boolean} [doResetDataset = false] if true, clears the `settings.breadcrumb` array.
    * @returns {void}
    */
-  removeAll(doRender = false) {
+  removeAll(doRender = false, doResetDataset = false) {
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       breadcrumbAPI.destroy(true);
     });
     this.breadcrumbs = [];
+
+    if (doResetDataset) {
+      this.settings.breadcrumbs = [];
+    }
 
     if (doRender) {
       this.render();
@@ -544,7 +572,7 @@ Breadcrumb.prototype = {
   makeCurrent(item) {
     const target = this.getBreadcrumbItemAPI(item);
     this.breadcrumbs.forEach((thisAPI) => {
-      const a = thisAPI.element.querySelector('a');
+      const a = thisAPI.a;
       thisAPI.current = a.isEqualNode(target.a);
     });
   },
@@ -558,7 +586,7 @@ Breadcrumb.prototype = {
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       if (!api && breadcrumbAPI.current) {
         api = breadcrumbAPI;
-        a = api.element.querySelector('a');
+        a = api.a;
       }
     });
     return a;
@@ -683,13 +711,13 @@ Breadcrumb.prototype = {
     // If a breadcrumb item is passed, use that instead of searching the array.
     if (item instanceof BreadcrumbItem) {
       api = item;
-      a = item.element.querySelector('a');
+      a = item.a;
       index = this.breadcrumbs.indexOf(item);
     // Search the breadcrumb array for a matching anchor.
     } else if (item instanceof HTMLAnchorElement) {
       a = item;
       this.breadcrumbs.forEach((breadcrumbAPI, i) => {
-        const thisA = breadcrumbAPI.element.querySelector('a');
+        const thisA = breadcrumbAPI.a;
         if (thisA.isEqualNode(a)) {
           api = breadcrumbAPI;
           index = i;
@@ -701,7 +729,7 @@ Breadcrumb.prototype = {
       compareByIndex = true;
       index = item;
       api = this.breadcrumbs[index];
-      a = api.element.querySelector('a');
+      a = api.a;
     }
 
     if (!api) {
