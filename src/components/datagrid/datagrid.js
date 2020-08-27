@@ -6376,7 +6376,9 @@ Datagrid.prototype = {
         self.createResizeHandle();
         self.resizeHandle[0].style.left = `${leftPos}px`;
         self.resizeHandle[0].style.cursor = '';
-      }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
+      })
+      .off('contextmenu.datagrid')
+      .on('contextmenu.datagrid', 'th', (e) => {
         if (self.settings.headerMenuId) {
           // Add Header Context Menu Support
           e.preventDefault();

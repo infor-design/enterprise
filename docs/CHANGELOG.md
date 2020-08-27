@@ -1,10 +1,17 @@
 # What's New with Enterprise
 
+## v4.31.2
+
+### v4.31.2 Fixes
+
+- `[Datagrid]` Added the ability to resize frozen columns, if you do not want this you must set columns to `resizable: false`. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Datagrid]` Fixed hideColumn method to check if the column is hidden. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Popdown]` Added a safety check to the destroy. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+
 ## v4.31.1
 
 ### v4.31.1 Fixes
 
-- `[Datagrid]` Added the ability to resize frozen columns, if you do not want this you must set columns to `resizable: false`. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
 - `[Datagrid]` Fixed a bug with icon alignment in editors in small or xtra small layout. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
 - `[Datagrid]` Fixed selection checkbox alignment. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
 
