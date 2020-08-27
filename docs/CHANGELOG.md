@@ -4,8 +4,9 @@
 
 ### v4.32.0 Features
 
+- `[Breadcrumb]` Add truncated style and made it the default for all Breadcrumb lists. ([#4091](https://github.com/infor-design/enterprise/issues/4091))
 - `[Datagrid]` Add a new `RowNumber` formatter that will show a row number column that remains the same no matter how the grid is sorted. ([#1904](https://github.com/infor-design/enterprise/issues/1904))
-- `[Datepicker]` Added the ability to use the range selection in date picker when using the UmAlQura Calendar (RTL). `TJM` ([#4227](https://github.com/infor-design/enterprise/issues/4227))
+- `[Datepicker]` Added the ability to use the range selection in date picker when using the UmAlQura Calendar (RTL). ([#4227](https://github.com/infor-design/enterprise/issues/4227))
 - `[Homepage]` Added ability to support a 5 column option. ([#4101](https://github.com/infor-design/enterprise/issues/4101))
 
 ### v4.32.0 Fixes
@@ -23,6 +24,7 @@
 - `[Homepage]` Fixed an issue where the columns were not showing properly after resize by using the maximize button. ([#894](https://github.com/infor-design/enterprise-ng/issues/894))
 - `[Homepage]` Fixed an issue where the columns were not showing properly after resize browser window. ([#895](https://github.com/infor-design/enterprise-ng/issues/895))
 - `[Input]` Fixed a bug where the text input error state border color would be wrong in the vibrant, dark and high contrast. ([#4248](https://github.com/infor-design/enterprise/issues/4248))
+- `[Locale]` Fixed issues with some timezone and datetime formats. ([#4297](https://github.com/infor-design/enterprise/issues/4297))
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
 - `[Popover]` Fixed a a regression where passing a popover content as a hash link to an ID no longer worked. ([#4281](https://github.com/infor-design/enterprise/issues/4281))
 - `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))

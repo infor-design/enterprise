@@ -776,26 +776,26 @@ const Locale = {  // eslint-disable-line
    */
   getTimeZone(date, timeZoneName) {
     const currentLocale = Locale.currentLocale.name || 'en-US';
-    let name = '';
 
     if (env.browser.name === 'ie' && env.browser.version === '11') {
       return (date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('');
     }
 
-    if (timeZoneName === 'long') {
-      name = date.toLocaleTimeString(
-        currentLocale,
-        { timeZoneName: 'long' }
-      );
-    } else {
-      name = date.toLocaleTimeString(
-        currentLocale,
-        { timeZoneName: 'short' }
-      );
+    const short = date.toLocaleDateString(currentLocale);
+    const full = date.toLocaleDateString(currentLocale, { timeZoneName: timeZoneName === 'long' ? 'long' : 'short' });
+
+    // Trying to remove date from the string in a locale-agnostic way
+    const shortIndex = full.indexOf(short);
+    if (shortIndex >= 0) {
+      const trimmed = full.substring(0, shortIndex) + full.substring(shortIndex + short.length);
+
+      // by this time `trimmed` should be the timezone's name with some punctuation -
+      // trim it from both sides
+      return trimmed.replace(/^[\s,.\-:;]+|[\s,.\-:;]+$/g, '');
     }
 
-    const timezoneParts = name.replace(/[0-9:AMP]/g, '').split(' ');
-    return timezoneParts.join(' ').trimLeft();
+    // in some magic case when short representation of date is not present in the long one, just return the long one as a fallback, since it should contain the timezone's name
+    return full;
   },
 
   /**
