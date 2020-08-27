@@ -5259,7 +5259,7 @@ Datagrid.prototype = {
   hideColumn(id) {
     let idx = this.columnIdxById(id);
 
-    if (idx === -1) {
+    if (idx === -1 || this.settings.columns[idx]?.hidden) {
       return;
     }
 
