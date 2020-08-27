@@ -66,12 +66,12 @@
 
   .splitter-btn {
     height: 30px;
-    left: -4px;
+    left: 2px;
     margin-top: -2px;
-    min-width: 30px;
+    min-width: 16px;
     position: absolute;
     transform: rotate(180deg);
-    width: 30px;
+    width: 16px;
     z-index: 101;
 
     .icon {
@@ -81,7 +81,6 @@
     }
 
     &.rotate {
-      left: -5px;
       transform: rotate(0deg);
     }
   }
@@ -122,7 +121,6 @@
       transform: none;
 
       &.rotate {
-        left: -6px;
         margin-top: -5px;
         transform: rotate(180deg);
       }
