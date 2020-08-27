@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var data = [];
+    var columns = [];
+
+    // Define Some Sample Data
+    data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8, 18, 13), action: 'Action', status: 'Error' });
+    data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3, 14, 32), action: 'On Hold', status: 'Error' });
+    data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3, 16, 21), action: 'Action', status: 'Error' });
+    data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3, 9, 26), action: 'Action', status: 'Confirmed' });
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5, 8, 10), action: 'On Hold', status: 'Confirmed' });
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, orderDate: new Date(2014, 6, 9, 10, 10), action: 'On Hold', status: 'Error' });
+    data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9, 23, 57), action: 'On Hold', status: 'Confirmed' });
+    data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed' });
+    data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed' });
+
+    var statuses = [
+      { id: '', value: '', label: '&nbsp;' },
+      { id: 'Confirmed', value: 'Confirmed', label: 'Confirmed' },
+      { id: 'Error', value: 'Error', label: 'Error' }
+    ];
+
+    var activities = [
+      { id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint' },
+      { id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair' }
+    ];
+
+    var lookupOptions = {
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          response();
+        });
+      },
+      options: {
+        selectable: 'single',
+        toolbar: { title: 'Products', results: true, dateFilter: false, keywordFilter: false, actions: true, views: true, rowHeight: true }
+      }
+    };
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text' });
+    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', editor: Editors.Lookup  });
+    columns.push({ id: 'activity', name: 'Left Align DD', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
+    columns.push({ id: 'activity', name: 'Centered DD', field: 'activity', formatter: Formatters.Dropdown, align: 'center', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
+    columns.push({ id: 'activity', name: 'Right Align DD', field: 'activity', formatter: Formatters.Dropdown, align: 'right', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
+    columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer' });
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      filterable: true,
+      selectable: 'mixed',
+      editable: true,
+      rowHeight: 'extra-small',
+      editable: true,
+      enableTooltips: true,
+      actionableMode: true,
+      textOverflow: 'ellipsis',
+      toolbar: { title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false, keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false }
+    }).on('filtered', function (e, args) {
+      console.log('filter ran', args);
+    });
+
+  });
+</script>

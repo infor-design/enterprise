@@ -35,12 +35,18 @@
 - `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Tree]` Fixed an issue where the return focus state was not working properly after closing the context menu. ([#4252](https://github.com/infor-design/enterprise/issues/4252))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
+## v4.31.2
+
+### v4.31.2 Fixes
+
+- `[Datagrid]` Added the ability to resize frozen columns, if you do not want this you must set columns to `resizable: false`. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Datagrid]` Fixed hideColumn method to check if the column is hidden. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
+- `[Popdown]` Added a safety check to the destroy. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
 
 ## v4.31.1
 
 ### v4.31.1 Fixes
 
-- `[Datagrid]` Added an option to frozen columns to allow the left side to be scrollable for trees. ([#3852](https://github.com/infor-design/enterprise/issues/3852))
 - `[Datagrid]` Fixed a bug with icon alignment in editors in small or xtra small layout. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
 - `[Datagrid]` Fixed selection checkbox alignment. ([#4266](https://github.com/infor-design/enterprise/issues/4266))
 
