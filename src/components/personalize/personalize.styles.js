@@ -244,6 +244,55 @@ html[class*="theme-uplift-"] .is-personalizable.tab-container.header-tabs > .tab
   color: ${colors.contrast};
 }
 
+.is-personalizable .breadcrumb .hyperlink,
+.breadcrumb.is-personalizable .hyperlink {
+  color: ${colors.theme.text};
+}
+.is-personalizable .breadcrumb .hyperlink:hover,
+.breadcrumb.is-personalizable .hyperlink:hover {
+  color: ${colors.theme.text};
+}
+.is-personalizable .breadcrumb .hyperlink:focus:not(.hide-focus),
+.breadcrumb.is-personalizable .hyperlink:focus:not(.hide-focus) {
+  box-shadow: none;
+}
+.is-personalizable .breadcrumb .hyperlink[disabled],
+.breadcrumb.is-personalizable .hyperlink[disabled],
+.is-personalizable .breadcrumb .hyperlink[disabled]:hover,
+.breadcrumb.is-personalizable .hyperlink[disabled]:hover {
+  color: ${colors.theme.disabledText};
+}
+
+.is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate),
+.scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) {
+  background-color: ${colors.base};
+}
+.is-personalizable .scrollable-flex-header .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before,
+.scrollable-flex-header.is-personalizable .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before {
+  background-image: linear-gradient(to right, ${colors.base}, ${colorUtils.hexToRgba(colors.base, 0)});
+}
+html[dir='rtl'] .is-personalizable .scrollable-flex-header .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before,
+html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+.is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) .hyperlink {
+  color: ${colors.contrast};
+}
+.is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink:hover,
+.scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) .hyperlink:hover  {
+  color: ${colors.contrast};
+}
+
+.is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate) .btn-actions.is-open .icon,
+.scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) .btn-actions.is-open .icon {
+  color: ${colors.contrast};
+}
+.is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate) .btn-actions:focus:not(.hide-focus),
+.scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) .btn-actions:focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 2px ${colorUtils.hexToRgba(colors.contrast, 0.3)} !important;
+}
+
 .module-tabs.is-personalizable .tab-more {
   border-left-color: ${colors.darkest} !important;
 }

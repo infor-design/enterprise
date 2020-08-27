@@ -2238,7 +2238,7 @@ Datagrid.prototype = {
         const isFilterEmpty = () => {
           let isEmpty = true;
           for (let i = 0, len = conditions.length; i < len; i++) {
-            if (conditions[i].value.toString().trim() !== '') {
+            if (conditions[i].filterType === 'checkbox' || conditions[i].value.toString().trim() !== '') {
               isEmpty = false;
             }
           }

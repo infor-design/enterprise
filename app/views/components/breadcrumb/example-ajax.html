@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="six columns">
+    <p>The Breadcrumbs below are loaded in directly as a dataset from a JSON response.</p>
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
+    <nav id="test-breadcrumb" class="breadcrumb">
+      <ol aria-label="breadcrumb"></ol>
+    </nav>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    const $el = $('#test-breadcrumb');
+    $.getJSON('{{basepath}}api/breadcrumbs-standard', function(breadcrumbData) {
+      $el.breadcrumb({
+        breadcrumbs: breadcrumbData
+      });
+    });
+  });
+</script>

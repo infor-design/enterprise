@@ -262,7 +262,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timestamp' })).toEqual('14:15:12');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'hour' })).toEqual('14:15');
     expect(Locale.formatDate('29/3/2018 14:15', { date: 'datetime' })).toEqual('29/3/2018 14:15');
-    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezone' })).toEqual('10/11/2018 14:15 GT-');
+    expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezone' })).toEqual('10/11/2018 14:15 GMT-4');
     expect(['2014-12-31', '10/11/2018 14:15 hora estándar oriental', '10/11/2018 14:15 hora de verano oriental']).toContain(Locale.formatDate(new Date(2018, 10, 10, 14, 15, 12), { date: 'timezoneLong' }));
     expect(Locale.formatDate(new Date(2018, 10, 10), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 00:00');
     expect(Locale.formatDate(new Date(2018, 10, 10, 14, 15), 'd MMM yyyy HH:mm')).toEqual('10 nov. 2018 14:15');
@@ -1436,6 +1436,42 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('26-3-2018 14:00:00');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Asia/Shanghai')).toEqual('26-3-2018 12:00:00');
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('26-3-2018 00:00:00');
+  });
+
+  it('Should be able to format timezones and timezones', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('7/22/2020 8:11 PM');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('7/22/2020 9:11 PM EDT');
+
+    Locale.set('he-IL');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22.7.2020 20:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('22.7.2020 21:11 GMT-4‎');
+
+    Locale.set('hi-IN');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22-07-2020 8:11 अपर');
+
+    Locale.set('hr-HR');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22. 07. 2020. 20:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('22. 07. 2020. 21:11 GMT -4');
+
+    Locale.set('it-IT');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22/07/2020 20:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('22/07/2020 21:11 GMT-4');
+
+    Locale.set('zh-Hant');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('2020/7/22 下午9:11 EDT');
+
+    Locale.set('zh-TW');
+
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('2020/7/22 下午9:11 EDT');
   });
 
   it('Should be able to display dates into another timezone including short timezone name', () => {

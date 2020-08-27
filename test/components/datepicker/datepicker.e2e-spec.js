@@ -1018,30 +1018,15 @@ describe('Datepicker Month Year Changer Year First Tests', () => { //eslint-disa
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('2021/07/01');
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress when closed', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-      await element(by.css('#date-field-normal + .icon')).click();
-      const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
+  it('Should show the year span in the Datepicker button first to match the JP locale', async () => {
+    await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
+    await element(by.css('#date-field-normal + .icon')).click();
+    const containerEl = await element(by.className('no-frills'));
+    const monthYearPaneFirstSpanEl = await element.all(by.css('.btn-monthyear-pane > *')).first();
+    await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-closed-yearfirst')).toEqual(0);
-    });
-  }
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress when open', async () => {
-      await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-      await element(by.css('#date-field-normal + .icon')).click();
-      await browser.driver.sleep(config.sleep);
-      await element(by.css('#btn-monthyear-pane')).click();
-
-      const containerEl = await element(by.className('no-frills'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkElement(containerEl, 'datepicker-with-month-year-picker-yearfirst')).toEqual(0);
-    });
-  }
+    expect(monthYearPaneFirstSpanEl.getText()).toEqual('2019');
+  });
 });
 
 describe('Datepicker Range Tests', () => {

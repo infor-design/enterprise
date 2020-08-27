@@ -1,0 +1,43 @@
+<div class="full-height full-width">
+  <div id="datagrid" >
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 300});
+      columns.push({ id: 'id', name: 'Id', field: 'id'});
+      columns.push({ id: 'depth', name: 'Depth', field: 'depth', sortable: false});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, sortable: false});
+      columns.push({ id: 'escalated', name: 'Escalated', field: 'escalated', sortable: false});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', sortable: false});
+      columns.push({ id: 'time', name: 'Order Time', field: 'time', sortable: false});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/tree-tasks';
+
+      $.getJSON(url, function(data) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          frozenColumns: {
+            left: ['taskName', 'id', 'depth'],
+            leftScrollable: true
+          },
+          dataset: data,
+          treeGrid: true,
+          toolbar: {title: 'Tree with Frozen Columns', results: true, personalize: true, actions: true, rowHeight: true}
+          }).on('selected', function (e, args) {
+            console.log(args);
+          });
+
+      });
+
+  });
+</script>
