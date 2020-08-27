@@ -1450,7 +1450,8 @@ $datagrid-small-row-height: 25px;
             padding: 5px 27px 0 9px;
 
             + .icon {
-              top: 8px;
+              right: 2px;
+              top: 6px;
             }
           }
 
@@ -1632,6 +1633,10 @@ $datagrid-small-row-height: 25px;
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
       padding: 2px 5px 0;
+
+      .dropdown-trigger {
+        margin-top: -2px;
+      }
     }
 
     tbody tr td {
@@ -1658,7 +1663,7 @@ $datagrid-small-row-height: 25px;
       &.datagrid-trigger-cell {
         .dropdown-trigger + .icon {
           left: -4px !important;
-          top: 4px !important;
+          top: 5px !important;
         }
 
         .icon.icon-calendar {
@@ -1695,7 +1700,7 @@ $datagrid-small-row-height: 25px;
         .dropdown {
           font-size: $input-size-compact-font-size;
           height: $datagrid-extra-small-row-height + 2px;
-          padding: 2px 22px 0 6px;
+          padding: 7px 22px 0 6px;
         }
 
         .datepicker + .icon {
@@ -2634,6 +2639,10 @@ $datagrid-small-row-height: 25px;
       .datagrid-cell-wrapper {
         text-align: center;
       }
+
+      .dropdown-trigger {
+        text-align: center;
+      }
     }
 
     &.l-image-text {
@@ -3224,7 +3233,7 @@ $datagrid-small-row-height: 25px;
   }
 
   .datagrid-expand-btn {
-    left: -14px;
+    left: -8px;
     margin-top: 0;
 
     .icon.plus-minus::before,
@@ -3576,7 +3585,7 @@ td .btn-actions {
   }
 
   .plus-minus {
-    left: -10px;
+    left: -6px;
     position: relative;
     top: -6px;
   }
@@ -3867,14 +3876,13 @@ td .btn-actions {
 
 // RTL Styles
 html[dir='rtl'] {
-  .datagrid {
-    // Inverse left Border
-    th:last-child {
-      border-left: 0;
-    }
+  .datagrid-container .datagrid-wrapper td:first-child {
+    border-left: 1px solid $datagrid-cell-border-color;
+  }
 
+  .datagrid {
     th:first-child {
-      border-right: 1px solid $datagrid-header-border-color;
+      border-left: 1px solid $datagrid-header-border-color;
     }
 
     .datagrid-rowgroup-header {
@@ -4332,7 +4340,7 @@ html[dir='rtl'] {
     }
 
     .datagrid-wrapper:not(.left):not(.right) td:first-child {
-      border-right: 1px solid $datagrid-cell-border-color;
+      border-left: 1px solid $datagrid-cell-border-color;
     }
   }
 

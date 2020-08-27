@@ -15,6 +15,7 @@ const Environment = {
   browser: {},
 
   features: {
+    resizeObserver: typeof ResizeObserver !== 'undefined',
     touch: (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0))
   },
 

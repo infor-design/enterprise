@@ -192,7 +192,7 @@
         breadcrumbIdCount++;
       }
 
-      breadcrumbAPI.add(settings, true);
+      breadcrumbAPI.add(settings, true, true);
     }
 
     function clearCard() {
@@ -204,7 +204,7 @@
       if (!lastClickedAPI) {
         return;
       }
-      breadcrumbAPI.remove(lastClickedAPI);
+      breadcrumbAPI.remove(lastClickedAPI, true, true);
       clearCard();
     }
 
@@ -234,7 +234,7 @@
     });
 
     $removeAllBtn.on('click.test', function (e) {
-      breadcrumbAPI.removeAll();
+      breadcrumbAPI.removeAll(true, true);
       clearCard();
     });
 

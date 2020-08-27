@@ -620,9 +620,7 @@ ColorPicker.prototype = {
   */
   disable() {
     this.element.prop('disabled', true);
-    setTimeout(() => {
-      this.element.parent().addClass('is-disabled');
-    });
+
     if (!this.settings.placeIn) {
       this.element.parent().addClass('is-disabled');
     }

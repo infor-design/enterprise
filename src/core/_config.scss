@@ -580,10 +580,13 @@ $contextual-panel-border-color: $ids-color-palette-graphite-30;
 $contextual-panel-searchfield-bg-color: $body-color-primary-background;
 $contextual-panel-searchfield-border-color: $ids-color-palette-graphite-30;
 
-//BreadCrumb
+// BreadCrumb
 $breadcrumb-color: $ids-color-palette-graphite-60;
 $breadcrumb-hover-color: $ids-color-palette-graphite-60;
 $breadcrumb-disabled-color: $disabled-color;
+$breadcrumb-container-height: 28px;
+$breadcrumb-separator-margin-top: 7px;
+$breadcrumb-empty-container-height: calc(#{$breadcrumb-container-height} + 5px);
 
 // Rating (Stars)
 $rating-bg-color: $ids-color-palette-amber-60;

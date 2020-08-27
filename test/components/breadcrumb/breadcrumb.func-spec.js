@@ -78,10 +78,10 @@ describe('Breadcrumb API', () => {
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
       breadcrumbs: TEST_BREADCRUMBS
     });
-    const a1 = breadcrumbAPI.breadcrumbs[0].element.querySelector('a');
+    const a1 = breadcrumbAPI.breadcrumbs[0].a;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
     const a2 = li2.querySelector('a');
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
@@ -96,10 +96,10 @@ describe('Breadcrumb API', () => {
     document.body.insertAdjacentHTML('afterbegin', fullBreadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl);
-    const a1 = breadcrumbAPI.breadcrumbs[0].element.querySelector('a');
+    const a1 = breadcrumbAPI.breadcrumbs[0].a;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
     const a2 = li2.querySelector('a');
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
@@ -118,6 +118,16 @@ describe('Breadcrumb API', () => {
     });
 
     expect(breadcrumbAPI.element.classList.contains('alternate')).toBeTruthy();
+  });
+
+  it('can disable truncation', () => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      truncate: false
+    });
+
+    expect(breadcrumbAPI.element.classList.contains('no-truncate')).toBeTruthy();
   });
 
   it('can disable and re-enable the entire breadcrumb list', () => {
@@ -178,7 +188,7 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     expect(target3.api).toBeDefined();
@@ -192,7 +202,7 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a3 = breadcrumbAPI.breadcrumbs[2].element.querySelector('a');
+    const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
     breadcrumbAPI.destroy();
@@ -207,11 +217,14 @@ describe('Breadcrumb API', () => {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    breadcrumbAPI.add({
+    const newBreadcrumbSettings = {
       id: 'fifth-item',
       content: 'Fifth Item',
       href: '#'
-    });
+    };
+
+    // Run with `true` second argument to render after adding (otherwise there is a missing `a` tag)
+    breadcrumbAPI.add(newBreadcrumbSettings, true);
     const fifth = breadcrumbAPI.breadcrumbs[4];
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(5);
@@ -301,7 +314,7 @@ describe('Breadcrumb API', () => {
     expect(liCssClasses.contains('current')).toBeTruthy();
   });
 
-  it('can programmatically get the current breadcrumb\'s anchor', () => {
+  it('can get the current breadcrumb\'s anchor', () => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
@@ -309,9 +322,36 @@ describe('Breadcrumb API', () => {
     });
 
     const currentA = breadcrumbAPI.current;
-    const a4 = breadcrumbAPI.breadcrumbs[3].element.querySelector('a');
+    const a4 = breadcrumbAPI.breadcrumbs[3].a;
 
     expect(currentA).toBeDefined();
     expect(currentA).toEqual(a4);
+  });
+
+  it('should render a popupmenu with overflowed breadcrumb items', (done) => {
+    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
+    breadcrumbEl = document.querySelector(`#${id}`);
+    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
+      breadcrumbs: TEST_BREADCRUMBS
+    });
+
+    // Reference internal elements setup for truncation
+    const overflowMenuEl = breadcrumbAPI.overflowMenu;
+    const overflowBtnEl = breadcrumbAPI.overflowBtn;
+
+    // Constrain the breadcrumb area to a fixed width
+    breadcrumbEl.style.width = '200px';
+
+    setTimeout(() => {
+      // Trigger the popupmenu's `beforeOpen` method, which populates the overflow menu
+      overflowBtnEl.click();
+
+      setTimeout(() => {
+        expect(breadcrumbEl.classList.contains('truncated')).toBeTruthy();
+        expect(breadcrumbAPI.overflowed.length).toBeGreaterThan(0);
+        expect(overflowMenuEl.childNodes.length).toBeGreaterThan(0);
+        done();
+      }, 300);
+    }, 300);
   });
 });

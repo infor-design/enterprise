@@ -2936,10 +2936,6 @@ Editor.prototype = {
     this.destroyPreviewMode();
     this.element.addClass('is-disabled').attr('contenteditable', 'false');
     this.container.addClass('is-disabled');
-
-    setTimeout(() => {
-      this.element.attr('contenteditable', 'false');
-    }, 1);
   },
 
   /**

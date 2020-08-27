@@ -1,0 +1,54 @@
+// Breadcrumbs (Uplift)
+//================================================== //
+.breadcrumb {
+  .hyperlink {
+    font-size: 14px;
+    line-height: 1.6em;
+  }
+
+  .btn-actions {
+    line-height: 1.6em;
+  }
+
+  &.truncated {
+    .breadcrumb-list li,
+    .breadcrumb-overflow-container {
+      &::after {
+        font-size: 1.2rem;
+        margin-top: $breadcrumb-separator-margin-top;
+      }
+    }
+  }
+}
+
+.scrollable-flex-header {
+  .breadcrumb {
+    .hyperlink {
+      line-height: 1.5em;
+    }
+
+    &.truncated {
+      .breadcrumb-overflow-container::after {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .scrollable-flex-header {
+    .breadcrumb.truncated {
+      .breadcrumb-list li {
+        &::after {
+          margin-top: 4px;
+        }
+      }
+
+      .breadcrumb-overflow-container {
+        &::after {
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+}

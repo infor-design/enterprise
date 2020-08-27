@@ -6,6 +6,7 @@ import { personalization } from '../personalize/personalize.bootstrap';
 import { theme } from '../theme/theme';
 
 // jQuery Components
+import '../breadcrumb/breadcrumb.jquery';
 import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../tabs/tabs.jquery';
@@ -247,28 +248,80 @@ Header.prototype = {
   },
 
   /**
+   * @private
+   * @returns {array} containing breadcrumb-friendly representation of the `levelsDeep` array
+   */
+  getCurrentBreadcrumbData() {
+    const self = this;
+
+    // Runs in the context of the BreadcrumbItem API
+    function callback() {
+      const i = this.index;
+      const breadcrumbList = self.breadcrumbAPI.list;
+
+      // Clicking on the current Breadcrumb Item does nothing
+      if (this.current) {
+        return;
+      }
+
+      // Clicking on the top-level breadcrumb resets the Header display
+      if (i === 0) {
+        self.reset();
+        return;
+      }
+
+      let delta;
+      let children = breadcrumbList.childNodes.length - 1;
+      if (i < children) {
+        delta = children - i;
+        while (delta > 0) {
+          self.drillup();
+          self.breadcrumbAPI.remove(children, false, true);
+          delta -= 1;
+          children -= 1;
+        }
+      }
+
+      self.breadcrumbAPI.render();
+    }
+
+    return this.levelsDeep.map((title, i) => {
+      const id = `header-breadcrumb-${title.replace(' ', '-').toLowerCase()}`;
+      const current = (i + 1) === self.levelsDeep.length;
+      return {
+        callback,
+        content: title,
+        current,
+        id
+      };
+    });
+  },
+
+  /**
    * Used for adding a Breadcrumb Element to the Header
    * @private
    * @returns {void}
    */
   buildBreadcrumb() {
-    const self = this;
     let breadcrumbClass = 'has-breadcrumb';
+    let style = 'default';
 
     if (this.settings.useAlternate) {
       breadcrumbClass = 'has-alternate-breadcrumb';
+      style = 'alternate';
     }
     this.element.addClass(breadcrumbClass);
 
     this.breadcrumb = this.element.find('.breadcrumb');
     if (!this.breadcrumb.length) {
       this.breadcrumb = $('<nav class="breadcrumb hidden" role="navigation"></nav>').appendTo(this.element);
-      this.breadcrumb.on('click', 'a', (e) => {
-        self.handleBreadcrumbClick(e);
+      this.breadcrumb.breadcrumb({
+        breadcrumbs: this.getCurrentBreadcrumbData(),
+        style
       });
+      this.breadcrumbAPI = this.breadcrumb.data('breadcrumb');
     }
 
-    this.breadcrumb[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
     this.adjustBreadcrumb();
   },
 
@@ -278,17 +331,11 @@ Header.prototype = {
    * @returns {void}
    */
   adjustBreadcrumb() {
-    const last = this.levelsDeep[this.levelsDeep.length - 1];
-    this.breadcrumb.empty();
-
-    const bcMarkup = $('<ol aria-label="breadcrumb"></ol>').appendTo(this.breadcrumb);
-    $.each(this.levelsDeep, (i, txt) => {
-      let current = '';
-      if (last === txt) {
-        current = ' current';
-      }
-
-      bcMarkup.append($(`<li><a href="#" class="hyperlink${current}">${txt}</a></li>`));
+    if (!this.breadcrumbAPI) {
+      return;
+    }
+    this.breadcrumbAPI.updated({
+      breadcrumbs: this.getCurrentBreadcrumbData()
     });
   },
 
@@ -466,36 +513,6 @@ Header.prototype = {
         e.returnValue = false;
       }
     });
-  },
-
-  /**
-   * Handles click events on Breadcrumb elements
-   * @private
-   * @param {jQuery.Event} e `click` event
-   * @returns {void}
-   */
-  handleBreadcrumbClick(e) {
-    const selected = $(e.target).parent();
-    const breadcrumbs = this.breadcrumb.find('li');
-    const selectedIndex = breadcrumbs.index(selected);
-    let delta;
-
-    if (selected.hasClass('current')) {
-      return;
-    }
-
-    if (selectedIndex === 0) {
-      this.reset();
-      return;
-    }
-
-    if (selectedIndex < breadcrumbs.length - 1) {
-      delta = (breadcrumbs.length - 1) - selectedIndex;
-      while (delta > 0) {
-        this.drillup();
-        delta -= 1;
-      }
-    }
   },
 
   /**
@@ -755,8 +772,10 @@ Header.prototype = {
       }
 
       self.element.off(`${transitionEnd}.breadcrumb-header`);
-      self.breadcrumb.off().remove();
-      self.breadcrumb = $();
+      self.breadcrumbAPI.destroy();
+      self.breadcrumb.remove();
+      delete self.breadcrumbAPI;
+      delete self.breadcrumb;
     }
 
     self.element.removeClass('has-breadcrumb').removeClass('has-alternate-breadcrumb');

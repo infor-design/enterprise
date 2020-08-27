@@ -19,6 +19,20 @@
         padding-top: 6px;
       }
     }
+
+    &.list-item {
+      &::before {
+        padding: 4px 8px 8px 21px;
+      }
+    }
+  }
+
+  // Level 2 Accordion Pane
+  .accordion-pane {
+    // Level 3 Accordion Header
+    .accordion-header {
+      @include left-align-cascade-styles-header(40px, 34px, 61px, 41px);
+    }
   }
 }
 

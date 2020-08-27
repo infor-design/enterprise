@@ -3174,10 +3174,6 @@ Dropdown.prototype = {
 
     this.pseudoElem.addClass('is-disabled');
 
-    setTimeout(() => {
-      this.pseudoElem.addClass('is-disabled');
-    });
-
     if (this.pseudoElem.is($(document.activeElement))) {
       this.pseudoElem.blur();
     }
