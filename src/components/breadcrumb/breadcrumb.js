@@ -115,7 +115,14 @@ BreadcrumbItem.prototype = {
    */
   checkFocus() {
     const a = this.a;
-    a.tabIndex = (this.overflowed || this.disabled) ? -1 : 0;
+    let isOverflowed = this.overflowed;
+
+    // IE11/Edge don't implement truncated view, so never hide them due to overflow
+    if (env.browser.isIE11 || env.browser.isEdge) {
+      isOverflowed = false;
+    }
+
+    a.tabIndex = (isOverflowed || this.disabled) ? -1 : 0;
     a.setAttribute('tabindex', a.tabIndex);
   },
 

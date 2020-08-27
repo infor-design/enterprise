@@ -38,7 +38,7 @@
 
   // Runs in the context of the Breadcrumb Item
   function callback() {
-    const content = this.settings.content;
+    var content = this.settings.content;
     $('body').toast({
       title: '"' + content + '" Clicked',
       message: 'The Breadcrumb "' + content + '" was clicked, and its callback was fired.'
@@ -46,7 +46,7 @@
     return true;
   };
 
-  breadcrumb_defs.forEach((setting) => {
+  breadcrumb_defs.forEach(function(setting) {
     setting.callback = callback;
   });
 
