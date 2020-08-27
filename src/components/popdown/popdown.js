@@ -697,16 +697,16 @@ Popdown.prototype = {
     }
 
     // First and last turn off and withdraw
-    if (this.focusableElem) {
-      delete this.focusableElem;
-    }
-    if (this.focusableElem.first) {
+    if (this.focusableElem.first && this.focusableElem.first instanceof jQuery) {
       this.focusableElem.first.off('keydown.popdown');
       this.focusableElems.first.off('keydown.popdown');
     }
-    if (this.focusableElem.last) {
+    if (this.focusableElem.last && this.focusableElem.last instanceof jQuery) {
       this.focusableElem.last.off('keydown.popdown');
       this.focusableElems.last.off('keydown.popdown');
+    }
+    if (this.focusableElem) {
+      delete this.focusableElem;
     }
 
     if (this.originalParent && this.originalParent.length) {
