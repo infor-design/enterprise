@@ -77,8 +77,8 @@
   .btn-monthyear-pane {
     border-radius: 2px;
     color: $datepicker-month-year-color;
-    font-size: $theme-size-font-lg;
-    font-weight: $theme-number-font-weight-base;
+    font-size: $ids-size-font-lg;
+    font-weight: $ids-number-font-weight-base;
     margin-left: -5px;
     padding: 4px 0 5px;
 
@@ -90,7 +90,7 @@
     &.active {
       span,
       .icon {
-        color: $theme-color-brand-primary-base;
+        color: $ids-color-brand-primary-base;
       }
 
       .icon {
@@ -160,7 +160,7 @@
           border-radius: 14px;
           box-shadow: none;
           color: $datepicker-day-color;
-          font-size: $theme-size-font-base;
+          font-size: $ids-size-font-base;
           padding: 1px 8px;
           text-decoration: none;
           user-select: none;
@@ -189,11 +189,11 @@
 
         &.is-selected a {
           background-color: $datepicker-selected-bg-color;
-          color: $theme-color-palette-white;
-          font-weight: $theme-number-font-weight-bold;
+          color: $ids-color-palette-white;
+          font-weight: $ids-number-font-weight-bold;
 
           .icon {
-            color: $theme-color-palette-white;
+            color: $ids-color-palette-white;
           }
         }
 
@@ -424,7 +424,7 @@
         box-shadow: none;
 
         .day-text::after {
-          border: 1px solid $theme-color-palette-white;
+          border: 1px solid $ids-color-palette-white;
           border-radius: 50%;
           box-shadow: 0 0 3px 3px $focus-box-shadow-color;
           content: '';
@@ -476,7 +476,7 @@
     &.is-today:focus {
       .day-text {
         color: $datepicker-today-color;
-        font-weight: $theme-number-font-weight-bold;
+        font-weight: $ids-number-font-weight-bold;
       }
 
       &.is-selected,
@@ -522,7 +522,7 @@
       .day-text {
         background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
-        font-weight: $theme-number-font-weight-bold;
+        font-weight: $ids-number-font-weight-bold;
       }
     }
 

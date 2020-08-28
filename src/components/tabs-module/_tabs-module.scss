@@ -25,7 +25,7 @@
     background-color: $module-tabs-bg-color;
     border: 0;
     color: $module-tabs-inactive-text-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     min-width: 0;
 
     > * {
@@ -93,7 +93,7 @@
     @include transition(background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
     color: $module-tabs-inactive-text-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     min-width: 135px;
     overflow: hidden;
     text-align: center;
@@ -116,8 +116,8 @@
 
     a {
       float: left;
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-sm;
+      font-weight: $ids-number-font-weight-bold;
       margin: 0 auto;
       overflow: hidden;
       padding: 10px;
@@ -138,7 +138,7 @@
       }
 
       > span:not(.icon) {
-        font-weight: $theme-number-font-weight-bold;
+        font-weight: $ids-number-font-weight-bold;
         margin-left: 5px;
       }
     }
@@ -200,16 +200,16 @@
   }
 
   .add-tab-button {
-    font-size: $theme-size-font-xl;
-    font-weight: $theme-number-font-weight-base;
+    font-size: $ids-size-font-xl;
+    font-weight: $ids-number-font-weight-base;
     height: 34px;
     padding-bottom: 5px;
     padding-top: 1px;
     width: 41px;
 
     span {
-      font-size: $theme-size-font-xl;
-      font-weight: $theme-number-font-weight-base;
+      font-size: $ids-size-font-xl;
+      font-weight: $ids-number-font-weight-base;
     }
 
   }
@@ -219,7 +219,7 @@
     z-index: 10;
 
     &.is-visible {
-      border-color: $theme-color-palette-white;
+      border-color: $ids-color-palette-white;
     }
   }
 
@@ -235,8 +235,8 @@
   .add-tab-button {
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
-    font-size: $theme-size-font-sm;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-sm;
+    font-weight: $ids-number-font-weight-bold;
     padding: 8px 10px;
     text-align: center;
 
@@ -245,8 +245,8 @@
     }
 
     .more-text {
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-sm;
+      font-weight: $ids-number-font-weight-bold;
     }
 
     &.is-selected {

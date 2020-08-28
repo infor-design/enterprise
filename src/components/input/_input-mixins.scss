@@ -12,7 +12,7 @@
   border-radius: 2px;
   color: $input-color;
   display: inline-block;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   height: $input-size-regular-height;
   max-width: 100%;
   padding: $input-size-regular-padding;
@@ -107,7 +107,7 @@
 
   color: $error-color;
   display: inline-block;
-  font-size: $theme-size-font-lg;
+  font-size: $ids-size-font-lg;
   left: 3px;
   line-height: 0;
   position: relative;

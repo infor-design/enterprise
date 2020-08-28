@@ -37,11 +37,11 @@
 
   &.is-active {
 
-    //Next and Previous Buttons
+    // Next and Previous Buttons
     .btn-next,
     .btn-previous {
-      background-color: $theme-color-palette-graphite-100;
-      border: 1px solid $theme-color-brand-secondary-alt;
+      background-color: $ids-color-palette-slate-100;
+      border: 1px solid $ids-color-brand-secondary-alt;
       border-radius: 50%;
       display: none;
       height: 32px;
@@ -60,10 +60,10 @@
       }
 
       &:hover {
-        border: 1px solid $theme-color-palette-white;
+        border: 1px solid $ids-color-palette-white;
 
         .icon {
-          color: $theme-color-palette-white;
+          color: $ids-color-palette-white;
         }
       }
     }
@@ -157,10 +157,10 @@
         display: none;
 
         &.is-active {
-          background-color: $theme-color-palette-graphite-100;
-          border: 1px solid $theme-color-brand-secondary-alt;
+          background-color: $ids-color-palette-slate-100;
+          border: 1px solid $ids-color-brand-secondary-alt;
           border-radius: 2px;
-          color: $theme-color-brand-secondary-alt;
+          color: $ids-color-brand-secondary-alt;
           cursor: default;
           display: inline-block;
           height: auto;
@@ -168,13 +168,13 @@
           width: auto;
 
           &:hover {
-            background-color: $theme-color-palette-graphite-100;
-            border-color: $theme-color-brand-secondary-alt;
+            background-color: $ids-color-palette-slate-100;
+            border-color: $ids-color-brand-secondary-alt;
           }
 
           &:focus {
-            background-color: $theme-color-palette-graphite-100;
-            border-color: $theme-color-brand-secondary-alt;
+            background-color: $ids-color-palette-slate-100;
+            border-color: $ids-color-brand-secondary-alt;
           }
         }
       }

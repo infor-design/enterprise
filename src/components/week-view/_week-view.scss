@@ -28,7 +28,7 @@ $week-view-cell-height: 25px;
     th {
       background-clip: padding-box;
       border-top: 0;
-      font-size: $theme-size-font-md;
+      font-size: $ids-size-font-md;
       height: 2.4rem;
       line-height: 2.4rem;
       text-align: left;
@@ -36,9 +36,9 @@ $week-view-cell-height: 25px;
 
       // Style todays date
       .week-view-header-wrapper.is-today {
-        box-shadow: 0 4px 0 0 $theme-color-brand-primary-base;
-        color: $theme-color-brand-primary-base;
-        font-weight: $theme-number-font-weight-bold;
+        box-shadow: 0 4px 0 0 $ids-color-brand-primary-base;
+        color: $ids-color-brand-primary-base;
+        font-weight: $ids-number-font-weight-bold;
       }
     }
 
@@ -131,13 +131,13 @@ $week-view-cell-height: 25px;
 
     // Legend Row with times
     th:nth-child(1) {
-      font-size: $theme-size-font-xs;
+      font-size: $ids-size-font-xs;
       width: 60px;
     }
 
     // First column padding
     tr td:nth-child(1) {
-      font-size: $theme-size-font-xs;
+      font-size: $ids-size-font-xs;
 
       .week-view-cell-wrapper {
         padding: 0 5px;
@@ -176,7 +176,7 @@ $week-view-cell-height: 25px;
 
   // Moving time marker
   .week-view-time-marker {
-    border: 1px solid $theme-color-brand-primary-base;
+    border: 1px solid $ids-color-brand-primary-base;
     display: block;
     height: 1px;
     margin-top: -2px;

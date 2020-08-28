@@ -14,9 +14,9 @@
     background: transparent;
     border: 1px solid;
     border-radius: 50%;
-    color: $theme-color-font-base;
+    color: $ids-color-font-base;
     display: inline-block;
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
     height: 80px;
     line-height: 80px;
     margin-bottom: 10px;
@@ -51,7 +51,7 @@
 
     color: $font-color;
     display: block;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     line-height: 20px;
     text-align: center;
     width: auto;
@@ -87,7 +87,7 @@
 .form-layout-compact {
   .object-count {
     .xl-text {
-      font-size: $theme-size-font-px-40;
+      font-size: $ids-size-font-px-40;
     }
   }
 }

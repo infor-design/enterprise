@@ -121,7 +121,7 @@
 
         p {
           color: $listbuilder-text-color-selected;
-          font-weight: $theme-number-font-weight-bold;
+          font-weight: $ids-number-font-weight-bold;
         }
 
         &:hover:not(.is-disabled),
@@ -154,7 +154,7 @@
         .edit-input {
           border: 0;
           color: $listbuilder-text-color-selected;
-          font-weight: $theme-number-font-weight-bold;
+          font-weight: $ids-number-font-weight-bold;
         }
       }
 

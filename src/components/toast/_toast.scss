@@ -42,7 +42,7 @@
   border-radius: 2px;
   box-shadow: $toast-shadow;
   color: $toast-text-color;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   overflow: hidden;
   padding: 0 10px;
   position: relative;
@@ -51,7 +51,7 @@
   .toast-title {
     color: $toast-header-color;
     display: block;
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
     margin-right: 25px;
     margin-top: 19px;
     z-index: -1;
@@ -124,7 +124,7 @@
 }
 
 .toast-progress {
-  background-color: $theme-color-brand-primary-base;
+  background-color: $ids-color-brand-primary-base;
   bottom: 0;
   height: 3px;
   left: 0;

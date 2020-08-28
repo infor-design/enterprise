@@ -15,119 +15,400 @@
 @import '../core/config';
 
 // Uplift Light Overrides
-$header-bg-color: $theme-color-brand-primary-base;
-$subhead-bg-color: $theme-color-brand-primary-alt;
-$disabled-color: $theme-color-palette-slate-30;
+$header-bg-color: $ids-color-brand-primary-base;
+$subhead-bg-color: $ids-color-brand-primary-alt;
+$disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
+$dropdown-search-bg-color: $ids-color-palette-slate-10;
 
-$body-color-primary-background: $theme-color-palette-white;
-$drop-shadow-depth: rgba($theme-color-boxshadow-base, 0.2);
+$body-color-primary-background: $ids-color-palette-white;
+$drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.2);
 
-$application-menu-border-color: $theme-color-palette-slate-90;
-$accordion-inverse-bg-color: $theme-color-palette-slate-90;
-$accordion-inverse-pane-bg-color: $theme-color-palette-slate-90;
-$accordion-inverse-border-color:  $theme-color-palette-slate-90;
-$accordion-inverse-text-color: $theme-color-palette-white;
-$accordion-static-panel-bg-color: $theme-color-palette-slate-90;
+$application-menu-border-color: $ids-color-palette-slate-90;
 
+// Accordion
+$accordion-inverse-bg-color: $ids-color-palette-slate-90;
+$accordion-inverse-pane-bg-color: $ids-color-palette-slate-90;
+$accordion-inverse-border-color:  $ids-color-palette-slate-90;
+$accordion-inverse-text-color: $ids-color-palette-white;
+$accordion-static-panel-bg-color: $ids-color-palette-slate-90;
+
+// Accordion
+$accordion-bg-color: $ids-color-palette-slate-10;
+$accordion-border-color: $ids-color-palette-slate-20;
+$accordion-toplevel-border-color: $ids-color-palette-slate-30;
+$accordion-pane-bg-color: $ids-color-palette-slate-20;
+$accordion-icon-color: $ids-color-palette-slate-60;
+$accordion-text-color: $ids-color-palette-slate-60;
+$accordion-hover-border-color: $ids-color-palette-slate-100;
+$accordion-panel-border-color: $ids-color-palette-slate-20;
+$accordion-alternate-border-color: $ids-color-palette-slate-20;
+$accordion-alternate-pane-bg-color: $ids-color-palette-slate-20;
+$accordion-disabled-border-color: $ids-color-palette-slate-30;
+$accordion-filtered-text-color: $ids-color-palette-slate-60;
+
+// About
+$about-text-border-color: $ids-color-palette-slate-30;
+$about-text-hover-border-color: $ids-color-palette-slate-70;
+
+// BreadCrumb
+$breadcrumb-color: $ids-color-palette-slate-60;
+$breadcrumb-hover-color: $ids-color-palette-slate-60;
+
+// Builder Pattern
+$builder-header-bg-color: $ids-color-palette-slate-60;
+
+// Cardlist
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-border-color: $ids-color-palette-slate-30;
 
-$masthead-bg-color: $theme-color-palette-black;
-$masthead-border-color: $theme-color-palette-black;
-$masthead-text-color: $theme-color-palette-slate-30;
+$masthead-bg-color: $ids-color-palette-black;
+$masthead-border-color: $ids-color-palette-black;
+$masthead-text-color: $ids-color-palette-slate-30;
 
-$datagrid-header-bg-color:  $theme-color-palette-graphite-80;
-$datagrid-list-header-color: $theme-color-font-base;
-$datagrid-list-header-bg-color: $theme-color-palette-graphite-10;
-$datagrid-list-group-header-bg-color: $theme-color-palette-graphite-20;
-$datagrid-list-group-header-border-color: $theme-color-palette-graphite-10;
-$datagrid-list-header-active-color: $theme-color-palette-graphite-20;
-$datagrid-list-sort-icon-color: $theme-color-palette-slate-40;
-$datagrid-sort-icon-color: $theme-color-palette-slate-50;
-$listview-border-color: $theme-color-palette-slate-20;
-$panel-border-color: $theme-color-palette-graphite-30;
+// Contextual Action Panel
+$contextual-panel-bg: $ids-color-palette-slate-20;
+$contextual-panel-color: $ids-color-palette-slate-60;
+$contextual-panel-border-color: $ids-color-palette-slate-30;
+$contextual-panel-searchfield-border-color: $ids-color-palette-slate-30;
+
+// Modal
+$modal-border-color: $ids-color-palette-slate-30;
+$modal-btn-color: $ids-color-palette-slate-60;
+$modal-btn-border-color: $ids-color-palette-slate-30;
+$modal-btn-disabled-color: $ids-color-palette-slate-60;
+$modal-color: $ids-color-palette-slate-60;
+$modal-secondary-color: $ids-color-palette-slate-60;
+
+// DataGrid
+$datagrid-header-bg-color:  $ids-color-palette-slate-80;
+$datagrid-list-header-color: $ids-color-font-base;
+$datagrid-list-header-bg-color: $ids-color-palette-slate-10;
+$datagrid-list-group-header-bg-color: $ids-color-palette-slate-20;
+$datagrid-list-group-header-border-color: $ids-color-palette-slate-10;
+$datagrid-list-header-active-color: $ids-color-palette-slate-20;
+$datagrid-list-sort-icon-color: $ids-color-palette-slate-40;
+$datagrid-sort-icon-color: $ids-color-palette-slate-50;
+
+$datagrid-border-color: $ids-color-palette-slate-20;
+$datagrid-nested-header-border-color: $ids-color-palette-slate-30;
+$datagrid-header-border-color: $ids-color-palette-slate-30;
+$datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
+
+$datagrid-cell-readonly-bg-color: $ids-color-palette-slate-10;
+$datagrid-cell-border-color: $ids-color-palette-slate-30;
+$datagrid-group-row-border-color: $ids-color-palette-slate-30;
+$datagrid-row-hover-color: $ids-color-palette-slate-20;
+$datagrid-row-icon-color: $ids-color-palette-slate-60;
+
+$datagrid-alternate-bg-color: $ids-color-palette-slate-10;
+$datagrid-alternate-row-hover-color: $ids-color-palette-slate-20;
+$datagrid-list-header-border-color: $ids-color-palette-slate-30;
+$datagrid-list-header-hover-color: $ids-color-palette-slate-20;
+$datagrid-list-alt-sorted-icon-color: $ids-color-palette-slate-40;
+$datagrid-list-sort-icon-hover-color: $ids-color-palette-slate-50;
+
+$datagrid-rowgroup-header: $ids-color-palette-slate-10;
+$datagrid-rowgroup-color: $ids-color-palette-slate-60;
+
+// Panels
+$panel-border-color: $ids-color-palette-slate-30;
+$panel-light-border-color: $ids-color-palette-slate-20;
+$panel-header-bg-color: $ids-color-palette-slate-20;
+
+// Font colors
+$font-color: $ids-color-palette-slate-60;
+$signin-title-color: $ids-color-palette-slate-70;
+
+// Fileupload
+$fileupload-secondary-color: $ids-color-palette-slate-60;
+$fileupload-border-color: $ids-color-palette-slate-50;
+$fileupload-droparea-color: $ids-color-palette-slate-50;
+$fileupload-droparea-bg-color: rgba($ids-color-palette-slate-20, 0.5);
+$fileupload-droparea-hover-bg-color: $ids-color-palette-slate-20;
+$fileupload-droparea-hover-border-color: $ids-color-palette-slate-60;
+$fileupload-droparea-hover-icon-color: $ids-color-palette-slate-50;
+$fileupload-droparea-dd-hover-color: $ids-color-palette-slate-50;
+$fileupload-cancel-bg-color: $ids-color-palette-slate-60;
+$fileupload-cancel-hover-bg-color: $ids-color-palette-slate-100;
+$fileupload-disabled-border-color: $ids-color-palette-slate-30;
+$fileupload-disabled-bg-color: $ids-color-palette-slate-10;
+$fileupload-disabled-color: $ids-color-palette-slate-30;
+
+// Field Set
+$fieldset-border-top-color: $ids-color-palette-slate-30;
+
+// Expandable Area
+$expandable-area-border-color: $ids-color-palette-slate-30;
 
 // Accordion
 $accordion-disabled-text-color: $input-disabled-color;
 
 // BreadCrumb
-$breadcrumb-container-height: $theme-size-font-lg;
+$breadcrumb-container-height: $ids-size-font-lg;
 $breadcrumb-separator-margin-top: 4px;
 $breadcrumb-empty-container-height: calc(#{$breadcrumb-container-height} + 2px);
 
 // Calendar
 $calendar-bg-color: $panel-bg-color;
-$calendar-line-color: $theme-color-palette-graphite-20;
-$calendar-line-color-light: $theme-color-palette-graphite-10;
-$calendar-event-color: $theme-color-font-base;
-$calendar-selected-border-color: $theme-color-brand-primary-base;
-$calendar-selected-bg-color: $theme-color-palette-graphite-10;
+$calendar-line-color: $ids-color-palette-slate-20;
+$calendar-line-color-light: $ids-color-palette-slate-10;
+$calendar-event-color: $ids-color-font-base;
+$calendar-selected-border-color: $ids-color-brand-primary-base;
+$calendar-selected-bg-color: $ids-color-palette-slate-10;
 $calendar-hover-bg-color: rgba(240, 240, 240, 0.5);
-$calendar-disabled-bg-color: $theme-color-palette-graphite-20;
-$calendar-disabled-color: $theme-color-brand-secondary-contrast;
+$calendar-disabled-bg-color: $ids-color-palette-slate-20;
+$calendar-disabled-color: $ids-color-brand-secondary-contrast;
+
+// Circle Pager
+$circlepager-disable-border-color: $ids-color-palette-slate-30;
+$circlepager-disable-hover-border-color: $ids-color-palette-slate-30;
+$circlepager-disable-focus-border-color: $ids-color-palette-slate-30;
 
 // Time Picker
 $timepicker-disabled-icon-color: $input-disabled-color;
-$timepicker-readonly-icon-color: $theme-color-palette-slate-40;
+$timepicker-disabled-border-color: $ids-color-palette-slate-30;
+$timepicker-disabled-color: $ids-color-palette-slate-30;
+$timepicker-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Badges
+$badge-neutral-color: $ids-color-palette-slate-100;
+$badge-neutral-icon-color: $ids-color-palette-slate-100;
+$badge-neutral-hover-icon-color: $ids-color-palette-slate-60;
+$badge-neutral-bg-color: $ids-color-palette-slate-20;
+$badge-neutral-hover-bg-color: $ids-color-palette-slate-30;
+$badge-secondary-color: $ids-color-palette-slate-100;
+$badge-secondary-icon-color: $ids-color-palette-slate-100;
+$badge-secondary-hover-icon-color: $ids-color-palette-slate-80;
+$badge-secondary-hover-bg-color: $ids-color-palette-slate-20;
+$badge-secondary-border-color: $ids-color-palette-slate-30;
+$badge-secondary-hover-border-color: $ids-color-palette-slate-50;
+$badge-secondary-disabled-border-color: $ids-color-palette-slate-40;
+$badge-alert-color: $ids-color-palette-slate-100;
+$badge-alert-icon-color: $ids-color-palette-slate-100;
+$badge-disabled-bg-color: $ids-color-palette-slate-20;
+
+// Composite Form Tabs
+$composite-tabs-text-color: $ids-color-palette-slate-60;
+$composite-tabs-bg-color: $ids-color-palette-slate-20;
+$composite-tabs-border-color: $ids-color-palette-slate-50;
+
+// Secondary with Border
+$secondary-border-btn-color:  $ids-color-palette-slate-60;
+$secondary-border-btn-hover-border-color: $ids-color-palette-slate-100;
+
+// Popup Menu
+$popupmenu-icon-color: $ids-color-palette-slate-60;
+$popupmenu-border-color: $ids-color-palette-slate-30;
+$popupmenu-hover-color: $ids-color-palette-slate-20;
 
 // Color Picker
-$colorpicker-readonly-icon-color: $theme-color-palette-slate-40;
+$colorpicker-swatch-border-color: $ids-color-palette-slate-20;
+$colorpicker-checkmark-one-color: $ids-color-palette-slate-50;
+$colorpicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Color Palette Background
 $color-border-color: rgba(0, 0, 0, 0.2);
 
+// Charts
+$chart-line-color: $ids-color-palette-slate-20;
+$chart-font-color: $ids-color-palette-slate-60;
+$chart-legend-border-color: $ids-color-palette-slate-20;
+$chart-progressbar-bg-color: $ids-color-palette-slate-30;
+$chart-progressbar-dark-fill: $ids-color-palette-slate-60;
+$chart-targeted-achievement-bg-color: $ids-color-palette-slate-30;
+
 // Date Picker
-$datepicker-readonly-icon-color: $theme-color-palette-slate-40;
+$datepicker-alternate-month-color: $ids-color-palette-slate-30;
+$datepicker-day-color: $ids-color-palette-slate-60;
+$datepicker-hover-bg-color: $ids-color-palette-slate-20;
+$datepicker-disabled-bg-color: $ids-color-palette-slate-10;
+$datepicker-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Autocomplete / Triggers
+$autocomplete-light-text: $ids-color-palette-slate-50;
+$trigger-icon-fill-color: $ids-color-palette-slate-60;
+$trigger-icon-fill-light-color: $ids-color-palette-slate-50;
 
 // Dropdown
-$dropdown-readonly-icon-color: $theme-color-palette-slate-40;
+$dropdown-readonly-icon-color: $ids-color-palette-slate-40;
+$dropdown-menu-separator-color: $ids-color-palette-slate-40;
+$dropdown-menu-separator-border-color: $ids-color-palette-slate-30;
+$dropdown-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Hierarchy
+$hierarchy-line-color: $ids-color-palette-slate-30;
 
 // Editor
 $editor-bg-color: transparent;
 $editor-border-color: $input-color-initial-border;
 $editor-hover-border-color: $input-color-hover-border;
 $editor-focus-border-color: $input-color-focus-border;
-$editor-line-number-color: $theme-color-brand-secondary-alt;
+$editor-line-number-color: $ids-color-brand-secondary-alt;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $theme-color-palette-graphite-50;
-$editor-toolbar-bottom-border-color: $theme-color-palette-graphite-30;
-$editor-btn-color: $theme-color-palette-graphite-10;
-$editor-btn-hover-color: $theme-color-palette-white;
-$editor-btn-active-color: $theme-color-palette-azure-40;
-$editor-btn-disabled-color: $theme-color-palette-graphite-40;
+$editor-toolbar-bg-color: $ids-color-palette-slate-50;
+$editor-toolbar-bottom-border-color: $ids-color-palette-slate-30;
+$editor-btn-color: $ids-color-palette-slate-10;
+$editor-btn-hover-color: $ids-color-palette-white;
+$editor-btn-active-color: $ids-color-palette-azure-40;
+$editor-btn-disabled-color: $ids-color-palette-slate-40;
 $editor-readonly-color: $input-readonly-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $theme-color-palette-azure-40, $focus-box-shadow;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-azure-40, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
-$editor-blockquote-color: $theme-color-palette-graphite-40;
+$editor-blockquote-color: $ids-color-palette-slate-40;
+
+// Error Page
+$error-page-bg-color: $ids-color-palette-slate-30;
+$error-page-title-color: $ids-color-palette-slate-60;
+$error-page-info-color: $ids-color-palette-slate-40;
+$error-page-border-color: $ids-color-palette-slate-30;
+
+// Pager
+$pager-disabled-color: $ids-color-palette-slate-20;
+
+// Popovers
+$popover-border-color: $ids-color-palette-slate-30;
+$popover-arrow-border-color: $ids-color-palette-slate-30;
+$popover-separator-color: $ids-color-palette-slate-30;
+$popover-alternate-color: $ids-color-palette-slate-100;
+$popover-alternate-subheader-color: $ids-color-palette-slate-60;
+$popover-alternate-bg-color: $ids-color-palette-slate-10;
+$popover-alternate-arrow-color: $ids-color-palette-slate-10;
+$popover-alternate-table-header: $ids-color-palette-slate-10;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $theme-color-palette-graphite-80;
+$formatter-toolbar-separator-color: $ids-color-palette-slate-80;
+
+// Toolbar
+$toolbar-standalone-bg-color: $ids-color-palette-slate-20;
+$toolbar-standalone-border-color: $ids-color-palette-slate-30;
+$toolbar-separator-color: $ids-color-palette-slate-30;
+
+// List View
+$listview-bg-color-alternate: $ids-color-palette-slate-10;
+$listview-border-color: $ids-color-palette-slate-30;
+$listview-secondary-color: $ids-color-palette-slate-60;
+$listview-tertiary-color: $ids-color-palette-slate-50;
+$listview-selected-text-color: $ids-color-palette-slate-60;
+$listview-header-color: $ids-color-palette-slate-50;
+$listview-full-width-bg-color: $ids-color-palette-slate-10;
+$listview-full-width-border-color: $ids-color-palette-slate-30;
+$listview-border-color: $ids-color-palette-slate-20;
+
+// Lookup
+$lookup-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Image Border Color
+$image-border-color: $ids-color-palette-slate-20;
+$image-background-color: $ids-color-palette-slate-20;
 
 // Tabs
-$tab-text-color: $theme-color-palette-graphite-70;
+$tab-text-color: $ids-color-palette-slate-70;
+$tab-border-color: $ids-color-palette-slate-30;
+$tab-alt-border-color: $ids-color-palette-slate-30;
+
+// Header Tabs
+$header-tabcontainer-border-color: $ids-color-palette-slate-30;
+$header-tab-selected-color: $ids-color-palette-slate-10;
+$header-tab-alt-normal-color: $ids-color-palette-slate-60;
+
+// Header Breadcrumb
+$header-breadcrumb-border-color: $ids-color-palette-slate-30;
+
+// Splitter
+$splitter-grip-bg-color: $ids-color-palette-slate-60;
+$splitter-active-bg-color: $ids-color-palette-slate-20;
+$splitter-active-grip-bg-color: $ids-color-palette-slate-100;
+
+// Step Chart
+$step-chart-bg-color: $ids-color-palette-slate-20;
+
+// Toast
+$toast-border-color: $ids-color-palette-slate-30;
+$toast-header-color: $ids-color-palette-slate-100;
+
+// Vertical Tabs
+$vertical-tab-bg-hover-color: $ids-color-palette-slate-20;
+$vertical-tab-sidebar-border-color: $ids-color-palette-slate-20;
+
+// Multi-tabs
+$mutlitabs-section-alt-border-color: $ids-color-palette-slate-20;
+
+// Spinbox
+$spinbox-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Skip Link
+$skip-link-border-color: $ids-color-palette-slate-30;
 
 // Tree
-$tree-disabled-color : $theme-color-palette-graphite-30;
+$tree-disabled-color : $ids-color-palette-slate-30;
+$tree-selected-bg-color: $ids-color-palette-slate-20;
+$tree-icon-color: $ids-color-palette-slate-60;
+$tree-link-color: $ids-color-palette-slate-60;
+
+// Swaplist
+$swaplist-bg-color: $ids-color-palette-slate-10;
+$swaplist-border-color: $ids-color-palette-slate-60;
+$swaplist-border-color-card: $ids-color-palette-slate-30;
+$swaplist-icon-color: $ids-color-palette-slate-60;
+$swaplist-icon-color-disabled: $ids-color-palette-slate-30;
+$swaplist-icon-svg-color-disabled: $ids-color-palette-slate-30;
+
+// Searchfield Colors
+$searchfield-bg-color: $ids-color-palette-slate-20;
+$searchfield-border-color: $ids-color-palette-slate-30;
+$searchfield-placeholder-text-color: $ids-color-palette-slate-40;
+$searchfield-lighter-bg-color: $ids-color-palette-slate-10;
+$searchfield-alt-border-color: $ids-color-palette-slate-10;
+$searchfield-context-bg: $ids-color-palette-slate-10;
+$searchfield-context-border-color: $ids-color-palette-slate-30;
+$searchfield-context-box-shadow-color: $ids-color-palette-slate-30;
+
+$searchfield-card-bg-color: $ids-color-palette-slate-10;
+$searchfield-card-border-color: $ids-color-palette-slate-20;
+
+$searchfield-readonly-icon-color: $ids-color-palette-slate-40;
+
+// Slider
+$slider-labels-color: $ids-color-palette-slate-60;
+$slider-disabled-color: $ids-color-palette-slate-20;
+$slider-disabled-active-bg-color: $ids-color-palette-slate-30;
+$slider-disabled-handle-color: $ids-color-palette-slate-30;
+$slider-disabled-range-color: $ids-color-palette-slate-30;
+$slider-readonly-color: $ids-color-palette-slate-50;
+$slider-readonly-active-bg-color: $ids-color-palette-slate-60;
+$slider-readonly-labels-color: $ids-color-palette-slate-60;
+$slider-readonly-handle-color: $ids-color-palette-slate-50;
+
+// Switch
+$switch-unchecked-bar-color: $ids-color-palette-slate-40;
+$switch-unchecked-border-color: $ids-color-palette-slate-30;
+$switch-disabled-border-color: $ids-color-palette-slate-30;
+$switch-disabled-bg-color: $ids-color-palette-slate-20;
+$switch-disabled-bar-color: $ids-color-palette-slate-30;
+
+// Wizard
+$wizard-color: $ids-color-palette-slate-60;
 
 // Uplift-only Variables
 $uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $theme-color-palette-slate-20;
-$uplift-acc-header-selected-text-color: $theme-color-palette-white;
+$uplift-acc-header-text-color: $ids-color-palette-slate-20;
+$uplift-acc-header-selected-text-color: $ids-color-palette-white;
 
-$uplift-acc-subheader-text-color: $theme-color-palette-slate-20;
+$uplift-acc-subheader-text-color: $ids-color-palette-slate-20;
 
-$uplift-acc-expanded-bg-color: $theme-color-palette-black;
+$uplift-acc-expanded-bg-color: $ids-color-palette-black;
 
-$uplift-appmenu-searchfield-placeholder-color: $theme-color-palette-slate-60;
+$uplift-appmenu-searchfield-placeholder-color: $ids-color-palette-slate-60;
 
-$uplift-appmenu-main-bg-color: $theme-color-palette-slate-100;
-$uplift-appmenu-header-bg-color: $theme-color-palette-slate-100;
-$uplift-appmenu-footer-bg-color: $theme-color-palette-slate-100;
+$uplift-appmenu-main-bg-color: $ids-color-palette-slate-100;
+$uplift-appmenu-header-bg-color: $ids-color-palette-slate-100;
+$uplift-appmenu-footer-bg-color: $ids-color-palette-slate-100;
 
-$uplift-appmenu-hover-bg-color: $theme-color-palette-slate-90;
-$uplift-appmenu-selected-bg-color: $theme-color-palette-slate-80;
-$uplift-appmenu-selected-border-color: $theme-color-brand-primary-alt;
+$uplift-appmenu-hover-bg-color: $ids-color-palette-slate-90;
+$uplift-appmenu-selected-bg-color: $ids-color-palette-slate-80;
+$uplift-appmenu-selected-border-color: $ids-color-brand-primary-alt;
 
 // Core Uplift Controls
 @import '../core/controls-uplift';
@@ -135,7 +416,7 @@ $uplift-appmenu-selected-border-color: $theme-color-brand-primary-alt;
 html.is-chrome:not(.is-mac) {
   ::-webkit-scrollbar-track {
     background-color: $body-color-primary-background;
-    border: 1px solid $theme-color-palette-slate-10;
+    border: 1px solid $ids-color-palette-slate-10;
   }
 
   ::-webkit-scrollbar-corner {
@@ -149,11 +430,11 @@ html.is-chrome:not(.is-mac) {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $theme-color-palette-slate-20;
+    background: $ids-color-palette-slate-20;
     border-radius: 10px;
 
     &:hover {
-      background: $theme-color-palette-slate-30;
+      background: $ids-color-palette-slate-30;
     }
   }
 }

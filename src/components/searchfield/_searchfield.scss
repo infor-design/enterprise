@@ -3,14 +3,14 @@
 
 @mixin searchfield-text-style() {
   color: $font-color;
-  font-size: $theme-size-font-base;
-  font-weight: $theme-number-font-weight-bold;
+  font-size: $ids-size-font-base;
+  font-weight: $ids-number-font-weight-bold;
 }
 
 @mixin searchfield-text-style-hover() {
-  color: $theme-color-brand-primary-base;
-  font-size: $theme-size-font-base;
-  font-weight: $theme-number-font-weight-bold;
+  color: $ids-color-brand-primary-base;
+  font-size: $ids-size-font-base;
+  font-weight: $ids-number-font-weight-bold;
 }
 
 @mixin context-searchfield-box-shadow() {
@@ -28,7 +28,7 @@
   box-shadow 300ms $cubic-ease);
 
   > .icon {
-    background-color: rgba($theme-color-palette-white, 0); // IE 10
+    background-color: rgba($ids-color-palette-white, 0); // IE 10
     color: $trigger-icon-fill-color;
     height: 14px;
     position: absolute;
@@ -182,11 +182,11 @@
 
     &.has-focus {
       .btn {
-        border-color: $theme-color-brand-primary-base;
+        border-color: $ids-color-brand-primary-base;
       }
 
       .searchfield {
-        border-color: $theme-color-brand-primary-base;
+        border-color: $ids-color-brand-primary-base;
       }
     }
 
@@ -267,7 +267,7 @@
     border-right: 0;
     border-top-right-radius: 0;
     color: $font-color;
-    font-weight: $theme-number-font-weight-base;
+    font-weight: $ids-number-font-weight-base;
     margin: 0;
     min-width: 0;
     padding: 0 0 0 10px;
@@ -359,7 +359,7 @@
 
   background-color: $searchfield-context-bg;
   border: 0;
-  border-top: 1px solid $theme-color-brand-primary-alt;
+  border-top: 1px solid $ids-color-brand-primary-alt;
 
   &.alternate {
     background-color: $searchfield-context-alt-bg;

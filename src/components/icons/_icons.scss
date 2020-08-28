@@ -12,7 +12,7 @@
 
 //Glyphs on the Header
 .header .icon {
-  color: $theme-color-palette-white;
+  color: $ids-color-palette-white;
 }
 
 // Specific Icon Types
@@ -33,7 +33,7 @@ svg.icon-dirty,
 }
 
 .icon-info-field {
-  color: $theme-color-brand-primary-base;
+  color: $ids-color-brand-primary-base;
 }
 
 .field {
@@ -128,7 +128,7 @@ svg.icon-dirty,
 .icon-dirtyerror,
 .icon-error,
 .icon-error-alert {
-  color: $theme-color-status-danger !important;
+  color: $ids-color-status-danger !important;
 }
 
 .icon-success,
@@ -143,15 +143,15 @@ svg.icon-dirty,
 
 .icon-alert,
 .icon-alert-alert {
-  color: $theme-color-status-warning !important;
+  color: $ids-color-status-warning !important;
 }
 
 .icon-pending {
-  color: $theme-color-status-warning !important;
+  color: $ids-color-status-warning !important;
 }
 
 .icon-pending-alert {
-  color: $theme-color-status-warning !important;
+  color: $ids-color-status-warning !important;
 }
 
 .icon-info,
@@ -246,7 +246,7 @@ svg.icon-logo {
   width: 100px;
 
   svg {
-    color: $theme-color-palette-white;
+    color: $ids-color-palette-white;
     display: inline-block;
     height: 45px;
     margin-left: 26px;
@@ -283,11 +283,11 @@ svg.icon-dirty {
 }
 
 .icon-in-progress {
-  color: $theme-color-palette-amethyst-70;
+  color: $ids-color-palette-amethyst-70;
 }
 
 .icon-new {
-  color: $theme-color-palette-amber-70;
+  color: $ids-color-palette-amber-70;
 }
 
 // Psuedo-element Icons
@@ -532,8 +532,8 @@ svg.icon-dirty {
   }
 
   &.checkmark-selected {
-    background-color: $theme-color-brand-primary-base;
-    border-color: $theme-color-brand-primary-base;
+    background-color: $ids-color-brand-primary-base;
+    border-color: $ids-color-brand-primary-base;
 
     &::after {
       border-color: $inverse-color $inverse-color $inverse-color transparent;

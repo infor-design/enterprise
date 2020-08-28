@@ -66,7 +66,7 @@
     }
 
     > .scrollable-flex-content {
-      border-left: 1px solid $theme-color-palette-graphite-30;
+      border-left: 1px solid $ids-color-palette-slate-30;
       border-top: 0;
       width: calc(100% - 250px);
     }
@@ -104,7 +104,7 @@
       > .scrollable-flex-content {
         border-left: 0 !important;
         border-right: 0 !important;
-        border-top: 1px solid $theme-color-palette-graphite-30;
+        border-top: 1px solid $ids-color-palette-slate-30;
       }
     }
   }
@@ -152,7 +152,7 @@ html[dir='rtl'] {
     &.on-side {
       > .scrollable-flex-content {
         border-left: 0;
-        border-right: 1px solid $theme-color-palette-graphite-30;
+        border-right: 1px solid $ids-color-palette-slate-30;
       }
     }
   }

@@ -3,7 +3,7 @@
 
 // Alternate Text message
 .chart-message {
-  background-color: $theme-color-palette-ruby-10;
+  background-color: $ids-color-palette-ruby-10;
   color: $font-color-highcontrast;
   padding: 20px;
   text-align: center;
@@ -45,7 +45,7 @@
 
     color: $chart-font-color;
     fill: $chart-font-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
 
     &::selection {
       color: $inverse-color;
@@ -63,7 +63,7 @@
   }
 
   .chart-donut-text {
-    font-size: $theme-size-font-lg;
+    font-size: $ids-size-font-lg;
   }
 
   .label-line {
@@ -264,7 +264,7 @@
     @include ellipsis;
 
     color: $chart-font-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     width: auto;
   }
 
@@ -339,10 +339,10 @@
   .remaining {
     background: repeating-linear-gradient(
       150deg,
-      $theme-color-palette-azure-40,
-      $theme-color-palette-azure-40 1px,
-      $theme-color-palette-azure-20 1px,
-      $theme-color-palette-azure-20 10px
+      $ids-color-palette-azure-40,
+      $ids-color-palette-azure-40 1px,
+      $ids-color-palette-azure-20 1px,
+      $ids-color-palette-azure-20 10px
     );
   }
 
@@ -354,8 +354,8 @@
 
     span {
       color: $font-color !important;
-      font-size: $theme-size-font-base;
-      font-weight: $theme-number-font-weight-base;
+      font-size: $ids-size-font-base;
+      font-weight: $ids-number-font-weight-base;
       right: auto;
       top: 20px;
     }
@@ -376,14 +376,14 @@
 }
 
 .colored.label {
-  color: $theme-color-palette-turquoise-60;
+  color: $ids-color-palette-turquoise-60;
 
   &.amethyst07 {
     background-color: transparent;
-    color: $theme-color-palette-amethyst-70;
+    color: $ids-color-palette-amethyst-70;
 
     .value {
-      color: $theme-color-palette-amethyst-70;
+      color: $ids-color-palette-amethyst-70;
     }
   }
 
@@ -393,7 +393,7 @@
   }
 
   .value {
-    color: $theme-color-palette-turquoise-60;
+    color: $ids-color-palette-turquoise-60;
 
     &.error-color,
     &.error {
@@ -401,11 +401,11 @@
     }
 
     &.alert {
-      color: $theme-color-status-warning;
+      color: $ids-color-status-warning;
     }
 
     &.alert-yellow {
-      color: $theme-color-status-caution;
+      color: $ids-color-status-caution;
     }
 
     &.alert-neutral {
@@ -417,7 +417,7 @@
     }
 
     &.good {
-      color: $theme-color-status-success;
+      color: $ids-color-status-success;
     }
 
     &.primary {

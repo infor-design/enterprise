@@ -20,7 +20,7 @@
   }
 
   .bold {
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   &:focus {
@@ -32,8 +32,8 @@
     @include ellipsis();
 
     color: $listview-color;
-    font-size: $theme-size-font-base;
-    font-weight: $theme-number-font-weight-base;
+    font-size: $ids-size-font-base;
+    font-weight: $ids-number-font-weight-base;
     overflow-wrap: break-word;
 
     &.hyperlink {
@@ -48,7 +48,7 @@
 
   .listview-heading-lg {
     display: block;
-    font-size: $theme-size-font-lg;
+    font-size: $ids-size-font-lg;
     margin: 8px 0 5px;
     vertical-align: top;
 
@@ -67,7 +67,7 @@
   .listview-subheading,
   .listview-data-label {
     color: $listview-secondary-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     overflow-wrap: break-word;
   }
 
@@ -89,7 +89,7 @@
 
   .listview-micro {
     color: $listview-tertiary-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
 
     &::after {
       clear: both;
@@ -133,7 +133,7 @@
     }
 
     &:focus {
-      border-color: $theme-color-brand-primary-lighter !important;
+      border-color: $ids-color-brand-primary-lighter !important;
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
@@ -147,35 +147,35 @@
     }
 
     &.border-color.ruby {
-      border-left-color: $theme-color-palette-ruby-60 !important;
+      border-left-color: $ids-color-palette-ruby-60 !important;
     }
 
     &.border-color.amber {
-      border-left-color: $theme-color-palette-amber-60 !important;
+      border-left-color: $ids-color-palette-amber-60 !important;
     }
 
     &.border-color.emerald {
-      border-left-color: $theme-color-palette-emerald-60 !important;
+      border-left-color: $ids-color-palette-emerald-60 !important;
     }
 
     &.border-color.azure {
-      border-left-color: $theme-color-palette-azure-60 !important;
+      border-left-color: $ids-color-palette-azure-60 !important;
     }
 
     &.border-color.turquoise {
-      border-left-color: $theme-color-palette-turquoise-60 !important;
+      border-left-color: $ids-color-palette-turquoise-60 !important;
     }
 
     &.border-color.amethyst {
-      border-left-color: $theme-color-palette-amethyst-60 !important;
+      border-left-color: $ids-color-palette-amethyst-60 !important;
     }
 
     &.border-color.slate {
-      border-left-color: $theme-color-palette-slate-60 !important;
+      border-left-color: $ids-color-palette-slate-60 !important;
     }
 
     &.border-color.graphite {
-      border-left-color: $theme-color-palette-graphite-60 !important;
+      border-left-color: $ids-color-palette-graphite-60 !important;
     }
 
     &.error {
@@ -203,17 +203,17 @@
     }
 
     &.alert {
-      border-left-color: $theme-color-status-warning !important;
+      border-left-color: $ids-color-status-warning !important;
 
       .days,
       .hours,
       .day-sign,
       .hour-sign {
-        color: $theme-color-status-warning;
+        color: $ids-color-status-warning;
       }
 
       .icon-alert {
-        color: $theme-color-status-warning !important;
+        color: $ids-color-status-warning !important;
       }
     }
 
@@ -240,8 +240,8 @@
       @include ellipsis();
 
       color: $listview-color;
-      font-size: $theme-size-font-base;
-      font-weight: $theme-number-font-weight-base;
+      font-size: $ids-size-font-base;
+      font-weight: $ids-number-font-weight-base;
       text-decoration: none;
 
       &.hyperlink {
@@ -259,7 +259,7 @@
   i {
     color: $listview-color;
     font-style: normal;
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   .days,
@@ -339,7 +339,7 @@
 
   p {
     color: $listview-color;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     line-height: 23px;
   }
 
@@ -487,7 +487,7 @@
   .highlight {
     background-color: transparent;
     color: inherit;
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   // Empty message area
@@ -506,7 +506,7 @@
   tr,
   td {
     color: $listview-color;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     padding: 13px 15px;
   }
 
@@ -530,8 +530,8 @@
     th {
       color: $listview-header-color;
       display: table-cell;
-      font-size: $theme-size-font-sm;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-sm;
+      font-weight: $ids-number-font-weight-bold;
       padding: 15px;
 
       span {
@@ -555,7 +555,7 @@
   padding: 20px;
 
   .listview-heading {
-    font-size: $theme-size-font-lg;
+    font-size: $ids-size-font-lg;
   }
 
   .btn-expand {
@@ -571,8 +571,8 @@
 
   .listview-subheading {
     color: $font-color-lowcontrast;
-    font-size: $theme-size-font-base;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-base;
+    font-weight: $ids-number-font-weight-bold;
     padding-top: 3px;
   }
 
@@ -599,7 +599,7 @@
     @include font-size(16);
 
     color: $font-color-highcontrast;
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
     margin-top: 10px;
   }
 }
@@ -631,7 +631,7 @@
 
     &.has-focus {
       input {
-        border: 1px solid $theme-color-brand-primary-base;
+        border: 1px solid $ids-color-brand-primary-base;
       }
     }
   }

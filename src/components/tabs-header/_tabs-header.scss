@@ -32,7 +32,7 @@
 
     .tab {
       color: $header-tab-normal-color;
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
       overflow: hidden;
 
       &::before {
@@ -81,14 +81,14 @@
 
       &.dismissible {
         .icon {
-          color: $theme-color-palette-white;
+          color: $ids-color-palette-white;
           opacity: 0.6;
         }
 
         &:hover,
         &.is-selected {
           .icon:not(.is-error):not(.icon-error) {
-            color: $theme-color-palette-white;
+            color: $ids-color-palette-white;
             opacity: 1;
           }
         }

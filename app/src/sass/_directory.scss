@@ -8,19 +8,19 @@
 
 .badge.azure07,
 .badge.ruby07 {
-  color: $theme-color-palette-white;
+  color: $ids-color-palette-white;
 }
 
 .directory-listing {
   .icon {
-    color: $theme-color-brand-primary-alt;
+    color: $ids-color-brand-primary-alt;
 
     &.example {
-      color: $theme-color-palette-ruby-50;
+      color: $ids-color-palette-ruby-50;
     }
 
     &.test {
-      color: $theme-color-palette-azure-50;
+      color: $ids-color-palette-azure-50;
     }
   }
 }

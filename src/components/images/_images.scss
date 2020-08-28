@@ -11,7 +11,7 @@ $images-size: (
 
 // Image Placeholder
 @mixin image-placeholder($this-width, $this-height, $this-icon-height) {
-  background: $theme-color-palette-white;
+  background: $ids-color-palette-white;
   border: 1px solid $image-border-color;
   height: $this-height;
   max-height: $this-height;
@@ -88,12 +88,12 @@ $images-size: (
 
 // Initials for when photo is absent
 .image-initials {
-  background: $theme-color-palette-amethyst-50;
+  background: $ids-color-palette-amethyst-50;
   border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
-  color: $theme-color-palette-white;
+  color: $ids-color-palette-white;
   display: inline-block;
-  font-size: $theme-size-font-lg;
+  font-size: $ids-size-font-lg;
   height: 4.8rem;
   line-height: 4.8rem;
   text-align: center;
@@ -108,6 +108,6 @@ $images-size: (
 // Print Support
 @media print {
   .image-initials {
-    background-color: $theme-color-palette-graphite-30;
+    background-color: $ids-color-palette-slate-30;
   }
 }

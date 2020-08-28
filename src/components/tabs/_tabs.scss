@@ -64,7 +64,7 @@
   }
 
   > .busy-indicator-container {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 
 }
@@ -220,7 +220,7 @@
   }
 
   > .busy-indicator-container {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 
 }
@@ -302,7 +302,7 @@
   .tab-more,
   .add-tab-button {
     background-color: transparent;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     padding: 16px;
     position: relative;
     vertical-align: top;
@@ -464,8 +464,8 @@
         @include antialiased();
 
         color: inherit;
-        font-size: $theme-size-font-base;
-        font-weight: $theme-number-font-weight-base;
+        font-size: $ids-size-font-base;
+        font-weight: $ids-number-font-weight-base;
         text-decoration: none;
 
         > * {
@@ -730,7 +730,7 @@ html[dir='rtl'] {
   }
 
   .tab.is-selected a {
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   + .tab-panel-container {

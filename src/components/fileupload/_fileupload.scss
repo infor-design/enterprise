@@ -196,7 +196,7 @@
         color: $fileupload-primary-color;
 
         span {
-          font-size: $theme-size-font-base;
+          font-size: $ids-size-font-base;
           margin-left: -2.5px;
           margin-right: -2.5px;
           padding: 5px;
@@ -272,7 +272,7 @@
       .description,
       .size {
         color: $fileupload-secondary-color;
-        font-size: $theme-size-font-base;
+        font-size: $ids-size-font-base;
         height: 34px;
         line-height: 34px;
         overflow: hidden;
@@ -402,14 +402,14 @@
       // Area for each file error
       div.msg {
         clear: both;
-        font-size: $theme-size-font-base;
+        font-size: $ids-size-font-base;
         padding: 0 10px;
       }
 
       // Area for general error
       span.msg {
         display: inline-block;
-        font-size: $theme-size-font-base;
+        font-size: $ids-size-font-base;
         padding: 10px 10px 10px 0;
         width: calc(100% - 36px);
       }

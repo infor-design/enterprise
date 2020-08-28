@@ -140,7 +140,7 @@ hbsRegistrar(handlebars, {
 const opStart = swlog.logTaskStart(`deploying ${packageJson.version}`);
 
 if (argv.testMode) {
-  console.log(chalk.bgGreen.bold(`\n!! TEST MODE !!`));
+  console.log(chalk.bgGreen.bold('\n!! TEST MODE !!'));
 }
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
@@ -150,7 +150,7 @@ if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
 // Failsafe to prevent accidentally uploading dev/beta/rc documentation to
 // production as those semver's will have a dash in them (-dev, -beta, -rc)
 if (packageJson.version.includes('-') && deployTo === 'prod') {
-  console.error(chalk.red('Error!'), `You can NOT deploy documentation for a non-final version to "prod".`);
+  console.error(chalk.red('Error!'), 'You can NOT deploy documentation for a non-final version to "prod".');
   process.exit(0);
 }
 
@@ -259,7 +259,6 @@ function compileSupportingDocs() {
       componentStats.total += files.length;
 
       files.forEach((filePath, i) => {
-
         // For testing to only get one or two components
         if (argv.testMode && i > 2) {
           componentStats.numSkipped++;
@@ -294,10 +293,10 @@ function copyTokenFiles() {
   return new Promise((resolve, reject) => {
     const cpStart = swlog.logTaskStart('Copy token files');
     const dist = `${paths.idsWebsite.dist}/ids-identity`;
-    const files = glob.sync(`./node_modules/ids-identity/dist/tokens/web/theme-*.json`);
+    const files = glob.sync('./node_modules/ids-identity/dist/tokens/**/tokens/web/theme-*.json');
 
     const promises = files.map(file => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         const fileName = path.parse(file).name;
         const obj = JSON.parse(fs.readFileSync(file, 'utf8'));
         createDirs([dist]);
@@ -305,7 +304,7 @@ function copyTokenFiles() {
           swlog.logTaskAction('Copied', `${fileName}.json`);
           resolve();
         });
-      })
+      });
     });
 
     Promise.all(promises)
@@ -342,7 +341,7 @@ async function cleanAll() {
   }
 
   try {
-    await del(filesToDel)
+    await del(filesToDel);
     await createDirs([
       paths.idsWebsite.root,
       paths.idsWebsite.dist,
@@ -428,7 +427,7 @@ function documentJsToHtml(componentName) {
       return documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
     })
     .then(res => {
-      const results = res.map(async file => {
+      res.map(async file => {
         componentStats.numDocumented++;
         swlog.logTaskAction('API processed', `${componentName}.js`);
         allDocsObjMap[componentName].api = file.contents.toString().trim();
@@ -517,16 +516,6 @@ function statsConclusion() {
   }
   str += '\n';
   console.log(str);
-}
-
-/**
- * Calculate the difference in seconds
- * @param {number} t - a time in milliseconds elapsed since January 1, 1970 00:00:00 UTC.
- * @returns {string} - the time elapsed in seconds
- */
-function timeElapsed(t) {
-  const elapsed = ((Date.now() - t) / 1000).toFixed(1);
-  return `${elapsed}s`;
 }
 
 /**
@@ -642,7 +631,7 @@ function zipAndDeploy() {
     swlog.logTaskEnd(zipStart);
 
     if (argv.dryRun) {
-      console.log(chalk.bgRed.bold(`\n!! NO PUBLISH - DRY RUN !!\n`));
+      console.log(chalk.bgRed.bold('\n!! NO PUBLISH - DRY RUN !!\n'));
       statsConclusion();
     } else {
       postZippedBundle();

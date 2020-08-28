@@ -3,19 +3,19 @@
 //
 // Also see: /sass/controls/_timeline.scss
 
-$indicator-darkest: $theme-color-palette-azure-80;
-$indicator-darker: $theme-color-brand-primary-alt;
-$indicator-lighter: $theme-color-brand-primary-base;
-$indicator-lightest: $theme-color-palette-azure-50;
-$indicator-warning: $theme-color-status-danger;
-$indicator-blank: $theme-color-palette-graphite-30;
+$indicator-darkest: $ids-color-palette-azure-80;
+$indicator-darker: $ids-color-brand-primary-alt;
+$indicator-lighter: $ids-color-brand-primary-base;
+$indicator-lightest: $ids-color-palette-azure-50;
+$indicator-warning: $ids-color-status-danger;
+$indicator-blank: $ids-color-palette-slate-30;
 
 $indicator-size: 1.3em;
 $indicator-current-size: ($indicator-size * 1.6);
 
 // Container
 .process-indicator {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   margin-bottom: 20px;
 
   // Main blocks:  .display, .header, .details
@@ -62,7 +62,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     @include antialiased();
 
     color: $font-color;
-    font-size: $theme-size-font-xs;
+    font-size: $ids-size-font-xs;
 
     > * {
       vertical-align: middle;
@@ -147,7 +147,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     &::before,
     &::after {
-      background-color: $theme-color-palette-white;
+      background-color: $ids-color-palette-white;
       border-radius: 0.2em;
       content: '';
       display: inline-block;
@@ -182,11 +182,11 @@ $indicator-current-size: ($indicator-size * 1.6);
     border: 0;
 
     &::before {
-      color: $theme-color-palette-white;
+      color: $ids-color-palette-white;
       content: '!';
       display: inline-block;
       font-size: 1.4em;
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
       height: 100%;
       position: relative;
       text-align: center;
@@ -206,7 +206,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     // Clock circle
     &::before {
-      border: 0.15em solid $theme-color-palette-white;
+      border: 0.15em solid $ids-color-palette-white;
       content: '';
       height: 50%;
       left: 0.35em;
@@ -217,8 +217,8 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     // Clock hands
     &::after {
-      border-bottom: 0.15em solid $theme-color-palette-white;
-      border-left: 0.15em solid $theme-color-palette-white;
+      border-bottom: 0.15em solid $ids-color-palette-white;
+      border-left: 0.15em solid $ids-color-palette-white;
       content: '';
       height: 20%;
       left: 0.97em;
@@ -273,8 +273,8 @@ $indicator-current-size: ($indicator-size * 1.6);
   .heading {
     @include antialiased();
 
-    font-size: $theme-size-font-sm;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-sm;
+    font-weight: $ids-number-font-weight-bold;
     line-height: 1.5;
   }
 
@@ -282,7 +282,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     @include antialiased();
 
     color: $font-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     line-height: 1.5;
     margin-bottom: 10px;
   }

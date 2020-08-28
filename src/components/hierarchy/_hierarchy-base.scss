@@ -10,7 +10,7 @@
 
   legend {
     display: inline-block;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     margin: 20px 40px;
 
     li {
@@ -122,7 +122,7 @@
   .leaf {
     background-color: $panel-bg-color;
     border: 1px solid $panel-border-color;
-    border-left: 5px solid $theme-color-palette-graphite-60;
+    border-left: 5px solid $ids-color-palette-slate-60;
     border-radius: 2px;
     cursor: pointer;
     display: flex;
@@ -131,58 +131,58 @@
     width: $hierarchy-node-width;
 
     &.azure08 {
-      border-left-color: $theme-color-palette-azure-80;
+      border-left-color: $ids-color-palette-azure-80;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-azure-80;
+        border: 2px solid $ids-color-palette-azure-80;
       }
     }
 
     &.turquoise02 {
-      border-left-color: $theme-color-palette-turquoise-20;
+      border-left-color: $ids-color-palette-turquoise-20;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-turquoise-20;
+        border: 2px solid $ids-color-palette-turquoise-20;
       }
     }
 
     &.amethyst06 {
-      border-left-color: $theme-color-palette-amethyst-60;
+      border-left-color: $ids-color-palette-amethyst-60;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-amethyst-60;
+        border: 2px solid $ids-color-palette-amethyst-60;
       }
     }
 
     &.slate06 {
-      border-left-color: $theme-color-palette-slate-60;
+      border-left-color: $ids-color-palette-slate-60;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-slate-60;
+        border: 2px solid $ids-color-palette-slate-60;
       }
     }
 
     &.amber06 {
-      border-left-color: $theme-color-palette-amber-60;
+      border-left-color: $ids-color-palette-amber-60;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-amber-60;
+        border: 2px solid $ids-color-palette-amber-60;
       }
     }
 
     &.emerald07 {
-      border-left-color: $theme-color-palette-emerald-70;
+      border-left-color: $ids-color-palette-emerald-70;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-emerald-70;
+        border: 2px solid $ids-color-palette-emerald-70;
       }
     }
 
     &.ruby06 {
-      border-left-color: $theme-color-palette-ruby-60;
+      border-left-color: $ids-color-palette-ruby-60;
 
       .image-placeholder {
-        border: 2px solid $theme-color-palette-ruby-60;
+        border: 2px solid $ids-color-palette-ruby-60;
       }
     }
 
@@ -214,7 +214,7 @@
     }
 
     .image-placeholder {
-      border: 2px solid $theme-color-brand-secondary-alt;
+      border: 2px solid $ids-color-brand-secondary-alt;
     }
 
     .detail {
@@ -239,7 +239,7 @@
       @include ellipsis();
 
       color: $listview-color;
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       line-height: 20px;
       margin-top: 0;
     }
@@ -248,7 +248,7 @@
       @include ellipsis();
 
       color: $listview-color;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       line-height: 18px;
       margin-top: 0;
     }
@@ -440,12 +440,12 @@
   }
 
   .popupmenu.has-detail-fields + .arrow::after {
-    border-bottom-color: $theme-color-palette-white;
+    border-bottom-color: $ids-color-palette-white;
   }
 
   .detail-fields {
-    background: $theme-color-palette-white;
-    border-bottom: thin solid $theme-color-palette-slate-30;
+    background: $ids-color-palette-white;
+    border-bottom: thin solid $ids-color-palette-slate-30;
     padding: 10px;
 
     .dt-fields-row {
@@ -463,9 +463,9 @@
     }
 
     .dt-fields-cell {
-      color: $theme-color-palette-slate-80;
+      color: $ids-color-palette-slate-80;
       display: table-cell;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       line-height: 1.4rem;
     }
   }
