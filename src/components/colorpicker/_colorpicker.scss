@@ -28,23 +28,23 @@
 }
 
 .colorpicker-input-xs {
-  @extend .input-xs;
+  width: 18px !important;
 }
 
 .colorpicker-input-sm {
-  @extend .input-sm;
+  width: 93px !important;
 }
 
 .colorpicker-input-mm {
-  @extend .input-mm;
+  width: 168px !important;
 }
 
 .colorpicker-input-md {
-  @extend .input-md;
+  width: 243px !important;
 }
 
 .colorpicker-input-lg {
-  @extend .input-lg;
+  width: 343px !important;
 }
 
 .colorpicker-container {
@@ -89,14 +89,14 @@
   }
 
   &.color-only {
-    width: 70px;
+    width: 75px;
 
     input {
       width: 0;
     }
 
     .trigger {
-      margin-left: -5px;
+      margin-left: 0;
     }
   }
 
@@ -142,7 +142,7 @@
     height: 34px;
     margin-left: -5px;
     vertical-align: top;
-    width: 31px;
+    width: 30px;
   }
 
   .icon:not(.icon-error) {
@@ -198,7 +198,7 @@
     max-height: 34px;
     padding: 7px 0 10px 10px;
     text-overflow: ellipsis;
-    width: 90px; //Small Size
+    width: 93px; //Small Size
 
     &::-ms-clear {
       display: none;
