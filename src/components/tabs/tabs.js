@@ -2278,7 +2278,7 @@ Tabs.prototype = {
 
       switch (contentType) {
         case 'string':
-          hasId = sourceString.match(/#/g);
+          hasId = sourceString.match(/^#/g);
           // Text Content or a Selector.
           if (hasId !== null) {
             const obj = $(sourceString);
