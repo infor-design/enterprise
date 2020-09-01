@@ -2,7 +2,7 @@
 //==================================================//
 
 .bullet-chart {
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
 
   .range {
     cursor: pointer;
@@ -10,7 +10,7 @@
   }
 
   .marker {
-    stroke: $theme-color-brand-primary-base;
+    stroke: $ids-color-brand-primary-base;
     stroke-width: 2px;
   }
 
@@ -20,12 +20,12 @@
   }
 
   .title {
-    font-size: $theme-size-font-sm;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-sm;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   .subtitle {
-    font-weight: $theme-number-font-weight-base;
+    font-weight: $ids-number-font-weight-base;
     text-transform: none;
   }
 
@@ -33,12 +33,12 @@
 }
 
 .bullet {
-  .range.s0 { color: $theme-color-palette-slate-10; }
-  .range.s1 { color: $theme-color-palette-slate-20; }
-  .range.s2 { color: $theme-color-palette-slate-30; }
-  .measure.s0 { color: $theme-color-palette-azure-20; }
-  .measure.s1 { color: $theme-color-palette-azure-40; }
-  .measure.s2 { color: $theme-color-palette-azure-60; }
-  .measure.s3 { color: $theme-color-palette-azure-80; }
-  .measure.s4 { color: $theme-color-palette-azure-100; }
+  .range.s0 { color: $ids-color-palette-slate-10; }
+  .range.s1 { color: $ids-color-palette-slate-20; }
+  .range.s2 { color: $ids-color-palette-slate-30; }
+  .measure.s0 { color: $ids-color-palette-azure-20; }
+  .measure.s1 { color: $ids-color-palette-azure-40; }
+  .measure.s2 { color: $ids-color-palette-azure-60; }
+  .measure.s3 { color: $ids-color-palette-azure-80; }
+  .measure.s4 { color: $ids-color-palette-azure-100; }
 }

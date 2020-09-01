@@ -12,7 +12,7 @@
   &::before {
     @include css3(transform, rotate(-45deg));
 
-    border-top: 2px solid $theme-color-status-danger;
+    border-top: 2px solid $ids-color-status-danger;
     content: '';
     left: $offset;
     position: absolute;
@@ -180,11 +180,11 @@
     }
 
     &:hover:not(:disabled) .icon {
-      color: $theme-color-brand-primary-base;
+      color: $ids-color-brand-primary-base;
     }
 
     &:active .icon {
-      color: $theme-color-brand-primary-base;
+      color: $ids-color-brand-primary-base;
     }
 
     &.is-empty,
@@ -241,13 +241,13 @@
 
       &:focus {
         box-shadow: $focus-box-shadow;
-        outline: 1px solid $theme-color-brand-primary-base;
+        outline: 1px solid $ids-color-brand-primary-base;
       }
 
       &.is-selected {
         &::after {
           @include css3(transform, scaleX(-1) rotate(135deg));
-          // border-color: $theme-color-palette-white $theme-color-palette-white $theme-color-palette-white transparent;
+          // border-color: $ids-color-palette-white $ids-color-palette-white $ids-color-palette-white transparent;
           border-style: solid;
           border-width: 2px 2px 0 0;
           content: '';
@@ -277,7 +277,7 @@
   }
 
   .swatch {
-    background-color: $theme-color-brand-secondary-alt;
+    background-color: $ids-color-brand-secondary-alt;
     display: block;
     height: 20px;
     width: 20px;

@@ -78,7 +78,7 @@
   h2,
   h3,
   h4 {
-    color: $theme-color-palette-white;
+    color: $ids-color-palette-white;
     display: inline-block;
     margin-bottom: 0;
     max-width: 100%;
@@ -186,7 +186,7 @@
 
 .edit-profile {
   .bold {
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
   .builder-sidebar-content {
@@ -224,7 +224,7 @@
     }
 
     .totals {
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
       margin-top: 10px;
     }
   }

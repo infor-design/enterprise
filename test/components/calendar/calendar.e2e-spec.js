@@ -95,7 +95,7 @@ describe('Calendar ajax loading tests', () => {
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await element.all(by.css('.calendar-event-more')).count()).toEqual(0);
-    expect(await element.all(by.css('.calendar-event.graphite')).count()).toEqual(1);
+    expect(await element.all(by.css('.calendar-event.slate')).count()).toEqual(1);
     expect(await element.all(by.css('.calendar-event.emerald')).count()).toEqual(1);
   });
 });

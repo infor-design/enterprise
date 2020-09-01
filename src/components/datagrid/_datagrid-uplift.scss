@@ -50,7 +50,7 @@
 
 // Adjust header text
 .datagrid-header-text {
-  font-size: $theme-size-font-xs !important;
+  font-size: $ids-size-font-xs !important;
 }
 
 .datagrid-checkbox-wrapper {
@@ -308,6 +308,17 @@
     height: 24px;
   }
 
+  tbody tr td.is-editing .dropdown {
+    padding: 6px 22px 0 5px;
+  }
+
+  tbody tr td.is-editing .dropdown + .icon {
+    height: 16px;
+    right: 4px;
+    top: 6px;
+    width: 16px;
+  }
+
   .datagrid-cell-wrapper {
     min-height: 29px;
   }
@@ -360,7 +371,7 @@
 }
 
 .datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
-  left: 4px !important;
+  left: 5px !important;
   top: 7px;
 }
 

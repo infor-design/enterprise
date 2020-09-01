@@ -83,9 +83,9 @@ function createNewCustomObj(obj) {
  */
 const createJSONfile = filePath => new Promise((resolve) => {
   const themeObj = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  const themeColorPaletteObj = createNewCustomObj(themeObj.theme.color.palette);
-  const themeColorStatusObj = createNewCustomObj(themeObj.theme.color.status);
-  const themeColorBrandObj = createNewCustomObj(themeObj.theme.color.brand);
+  const themeColorPaletteObj = createNewCustomObj(themeObj.ids.color.palette);
+  const themeColorStatusObj = createNewCustomObj(themeObj.ids.color.status);
+  const themeColorBrandObj = createNewCustomObj(themeObj.ids.color.brand);
 
   // Get properties for individual components
   const themeBodyObj = createNewCustomObj(themeObj.body.color);

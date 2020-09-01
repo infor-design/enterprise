@@ -143,7 +143,7 @@
       color: $masthead-text-color;
 
       .ripple-effect {
-        background-color: $theme-color-palette-white;
+        background-color: $ids-color-palette-white;
       }
 
       &:active {
@@ -233,7 +233,7 @@
 .masthead-appname {
   color: $masthead-text-color;
   display: inline-block;
-  font-size: $theme-size-font-px-12;
+  font-size: $ids-size-font-px-12;
   font-weight: 600;
   line-height: 38px;
   margin: 0;

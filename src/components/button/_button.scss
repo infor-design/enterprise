@@ -23,8 +23,8 @@ button {
   @include antialiased();
 
   color: inherit;
-  font-size: $theme-size-font-base;
-  font-weight: $theme-number-font-weight-bold;
+  font-size: $ids-size-font-base;
+  font-weight: $ids-number-font-weight-bold;
   height: 34px;
   line-height: normal;
   min-width: 100px;
@@ -193,7 +193,7 @@ button {
   }
 
   .ripple-effect {
-    background-color: $theme-color-palette-white;
+    background-color: $ids-color-palette-white;
     opacity: 0.7;
     pointer-events: none;
   }
@@ -322,7 +322,7 @@ a.btn-close {
   }
 
   .ripple-effect {
-    background: $theme-color-palette-graphite-20;
+    background: $ids-color-palette-slate-20;
   }
 
   // Menu Button Form
@@ -429,10 +429,10 @@ a.btn-close {
 .btn-menu,
 .btn-actions {
   &.is-open {
-    color: $theme-color-brand-primary-base;
+    color: $ids-color-brand-primary-base;
 
     .icon {
-      color: $theme-color-brand-primary-base;
+      color: $ids-color-brand-primary-base;
     }
   }
 }
@@ -531,11 +531,11 @@ a.btn-close {
 
   &.has-content {
     .icon {
-      color: $theme-color-brand-primary-base;
+      color: $ids-color-brand-primary-base;
     }
 
     &:hover .icon {
-      color: $theme-color-palette-azure-80;
+      color: $ids-color-palette-azure-80;
     }
   }
 }
@@ -553,7 +553,7 @@ a.btn-close {
   }
 
   .ripple-circle {
-    color: rgba($theme-color-palette-white, 0);
+    color: rgba($ids-color-palette-white, 0);
   }
 }
 
@@ -726,7 +726,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $theme-color-brand-primary-base, $focus-box-shadow;
+    box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $ids-color-brand-primary-base, $focus-box-shadow;
   }
 
   &:disabled {

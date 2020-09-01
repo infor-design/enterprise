@@ -8,7 +8,7 @@ fieldset,
     @include antialiased();
 
     color: $fieldset-title-color;
-    font-weight: $theme-number-font-weight-base;
+    font-weight: $ids-number-font-weight-base;
     padding-bottom: 20px;
   }
 
@@ -45,7 +45,7 @@ fieldset,
   @include font-size(16);
 
   color: $fieldset-title-color;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   margin-bottom: 0;
   padding-bottom: 20px;
   padding-top: 30px;

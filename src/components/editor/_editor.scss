@@ -165,7 +165,7 @@
   display: block;
   font-size: $input-size-regular-font-size;
   -webkit-font-smoothing: antialiased;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -247,27 +247,27 @@
   }
 
   h1 {
-    font-size: $theme-size-font-px-40;
+    font-size: $ids-size-font-px-40;
   }
 
   h2 {
-    font-size: $theme-size-font-px-32;
+    font-size: $ids-size-font-px-32;
   }
 
   h3 {
-    font-size: $theme-size-font-px-28;
+    font-size: $ids-size-font-px-28;
   }
 
   h4 {
-    font-size: $theme-size-font-px-24;
+    font-size: $ids-size-font-px-24;
   }
 
   h5 {
-    font-size: $theme-size-font-px-20;
+    font-size: $ids-size-font-px-20;
   }
 
   h6 {
-    font-size: $theme-size-font-px-16;
+    font-size: $ids-size-font-px-16;
   }
 
   ul,
@@ -684,7 +684,7 @@
     border: 0;
     color: $editor-color;
     font-size: $input-size-regular-font-size;
-    font-weight: $theme-number-font-weight-base;
+    font-weight: $ids-number-font-weight-base;
     height: 100%;
     line-height: 2.4rem;
     outline: none;
@@ -716,7 +716,7 @@
     padding: 15px 10px 10px;
 
     > li {
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       line-height: 2.41rem;
       text-align: center;
     }

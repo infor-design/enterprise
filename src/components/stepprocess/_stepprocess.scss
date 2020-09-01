@@ -20,14 +20,14 @@
     .heading {
       color: $font-color-extrahighcontrast;
       display: table-cell;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       height: 60px;
       padding-left: 20px;
       vertical-align: middle;
 
       small {
         display: block;
-        font-size: $theme-size-font-base;
+        font-size: $ids-size-font-base;
         margin: 2px 0 0;
         padding: 0;
         text-transform: capitalize;
@@ -118,7 +118,7 @@
 
         span {
           display: inline-block;
-          font-size: $theme-size-font-base;
+          font-size: $ids-size-font-base;
           max-width: 80%;
         }
 

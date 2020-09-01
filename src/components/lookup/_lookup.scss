@@ -206,7 +206,7 @@
   .title {
     @include antialiased();
 
-    font-size: $theme-size-font-lg;
+    font-size: $ids-size-font-lg;
   }
 
   tr.is-clickable {

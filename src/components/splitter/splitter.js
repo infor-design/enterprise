@@ -240,9 +240,20 @@ Splitter.prototype = {
       }
     }).on('dragend.splitter', (e, args) => {
       thisSide.parent().find('.splitter-overlay').remove();
+      const splitRect = splitter[0].getBoundingClientRect();
+      const splitOffset = window.innerWidth - splitRect.left;
+      const isRightSide = this.isSplitterRightSide && this.settings.side === 'right' ||
+        !this.isSplitterRightSide && this.settings.side === 'left';
+
+      // Prevent splitter content area to remain open if splitter is dragged rapidly.
+      // Make sure the width is reset when splitter is flush left.
+      if (splitRect.left === 0) {
+        thisSide[0].style.width = '0px';
+        args[direction] = 10;
+      }
 
       if (s.collapseButton) {
-        if (args[direction] <= 10) {
+        if (args[direction] <= 10 || isRightSide && splitOffset <= 21) {
           $('#splitter-collapse-btn').removeClass('rotate');
         } else {
           $('#splitter-collapse-btn').addClass('rotate');
@@ -354,13 +365,22 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeRight(splitter, w) {
+    const parent = splitter.parent();
+    const thisSide = parent.is('.content') ? parent.parent() : parent;
     let width = w;
     let left = w - 1;
+
     if (this.isRTL && !this.isSplitterHorizontal) {
       const containerWidth = this.getContainerWidth();
       width = containerWidth >= w ? ((containerWidth - w) - 20) : w;
       left = w;
     }
+
+    if (!this.isSplitterRightSide && this.settings.side === 'left' ||
+        this.isSplitterRightSide && this.settings.side === 'right') {
+      thisSide[0].style.width = '0px';
+    }
+
     // Adjust Left and Right Side
     this.leftSide[0].style.width = `${width}px`;
     splitter[0].style.left = `${left}px`;

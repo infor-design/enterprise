@@ -2325,8 +2325,8 @@ Tree.prototype = {
 
     // Handle focus state after closing contextmenu
     function returnFocus(popupmenuApi, args) {
-      if (typeof $(':focus')[0] === 'undefined' && args) {
-        args.triggerElement?.focus();
+      if (typeof $(':focus')[0] === 'undefined' && args?.triggerElement) {
+        args.triggerElement.focus();
       }
     }
 

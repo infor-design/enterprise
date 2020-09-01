@@ -5,7 +5,7 @@
 .masthead .toolbar-section.title h1 {
   @include font-size(14);
 
-  color: $theme-color-palette-slate-10;
+  color: $ids-color-palette-slate-10;
   margin: 0 14px;
 }
 
@@ -35,7 +35,7 @@
   }
 
   .icon {
-    color: $theme-color-palette-slate-40;
+    color: $ids-color-palette-slate-40;
   }
 }
 

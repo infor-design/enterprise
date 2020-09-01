@@ -180,7 +180,7 @@
           }
 
           .audible {
-            color: $theme-color-palette-white;
+            color: $ids-color-palette-white;
           }
         }
 
@@ -465,7 +465,7 @@
 }
 
 .accordion-content {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
 }
 
 .accordion-header {
@@ -494,7 +494,7 @@
 
   a {
     color: inherit;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     text-decoration: none;
     text-overflow: ellipsis;
   }
@@ -589,7 +589,7 @@
     pointer-events: none;
 
     span.audible {
-      color: $theme-color-palette-white !important;
+      color: $ids-color-palette-white !important;
     }
 
     a {
@@ -678,7 +678,7 @@
     overflow-x: visible;
 
     p {
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       -webkit-text-size-adjust: 100%;
     }
 
@@ -735,7 +735,7 @@
         color: $accordion-icon-color;
         content: '\25cf';
         display: inline-block;
-        font-size: $theme-size-font-sm;
+        font-size: $ids-size-font-sm;
         padding: 4px 10px 8px 21px;
         vertical-align: middle;
       }
@@ -1434,8 +1434,8 @@ html.android {
 // Windows-style popup for truncated text elements
 .tooltip {
   &.tooltip-accordion-style {
-    background-color: $theme-color-palette-white;
-    color: $theme-color-palette-black;
+    background-color: $ids-color-palette-white;
+    color: $ids-color-palette-black;
 
     .arrow {
       display: none;
@@ -1445,7 +1445,7 @@ html.android {
       padding: 5px;
 
       p {
-        color: $theme-color-palette-black;
+        color: $ids-color-palette-black;
       }
     }
   }

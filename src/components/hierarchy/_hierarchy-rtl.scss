@@ -16,41 +16,41 @@ html[dir='rtl'] {
     // A node in the tree
     .leaf {
       border-left: 1px solid $panel-border-color;
-      border-right: 5px solid $theme-color-palette-graphite-60;
+      border-right: 5px solid $ids-color-palette-slate-60;
 
       &.azure08 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-azure-80;
+        border-right-color: $ids-color-palette-azure-80;
       }
 
       &.turquoise02 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-turquoise-20;
+        border-right-color: $ids-color-palette-turquoise-20;
       }
 
       &.amethyst06 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-amethyst-60;
+        border-right-color: $ids-color-palette-amethyst-60;
       }
 
       &.slate06 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-slate-60;
+        border-right-color: $ids-color-palette-slate-60;
       }
 
       &.amber06 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-amber-60;
+        border-right-color: $ids-color-palette-amber-60;
       }
 
       &.emerald07 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-emerald-70;
+        border-right-color: $ids-color-palette-emerald-70;
       }
 
       &.ruby06 {
         border-left-color: $panel-border-color;
-        border-right-color: $theme-color-palette-ruby-60;
+        border-right-color: $ids-color-palette-ruby-60;
       }
 
       //Styling for objects in the leafs

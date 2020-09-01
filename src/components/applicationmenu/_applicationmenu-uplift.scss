@@ -9,8 +9,8 @@
   .searchfield-wrapper {
     background-color: $uplift-acc-expanded-bg-color;
     border-radius: $uplift-acc-border-radius;
-    margin: 0 $theme-number-spacing-base;
-    width: calc(100% - calc(#{$theme-number-spacing-base} * 2));
+    margin: 0 $ids-number-spacing-base;
+    width: calc(100% - calc(#{$ids-number-spacing-base} * 2));
 
     .searchfield {
       height: 40px;
@@ -79,10 +79,10 @@
     }
 
     .name-xl {
-      font-size: $theme-size-font-md;
-      font-weight: $theme-number-font-weight-bold;
+      font-size: $ids-size-font-md;
+      font-weight: $ids-number-font-weight-bold;
       padding-left: 29px;
-      padding-top: calc(#{$theme-number-spacing-base} * 2);
+      padding-top: calc(#{$ids-number-spacing-base} * 2);
     }
 
     button.application-menu-switcher-trigger {
@@ -138,7 +138,7 @@
   // so all internal accordion styles have to override this rule.
   .accordion.panel.inverse {
     background-color: transparent;
-    padding: calc(#{$theme-number-spacing-base} * 1);
+    padding: calc(#{$ids-number-spacing-base} * 1);
     width: auto;
 
     .accordion-header {
@@ -214,7 +214,7 @@
         }
 
         > a > span {
-          font-weight: $theme-number-font-weight-bold;
+          font-weight: $ids-number-font-weight-bold;
         }
       }
 
@@ -375,7 +375,7 @@
           color: $uplift-acc-header-selected-text-color;
 
           > a > span {
-            font-weight: $theme-number-font-weight-bold;
+            font-weight: $ids-number-font-weight-bold;
           }
 
           .icon.plus-minus {

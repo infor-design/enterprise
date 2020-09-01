@@ -44,7 +44,7 @@
 }
 
 .is-personalizable .personalize-text {
-  color: $theme-color-palette-white !important;
+  color: $ids-color-palette-white !important;
 }
 
 .is-personalizable .personalize-actionable,
@@ -59,18 +59,18 @@
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
-  border-color: $theme-color-palette-white;
+  border-color: $ids-color-palette-white;
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
 
 .is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
-  border-color: $theme-color-palette-white;
+  border-color: $ids-color-palette-white;
   box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
   opacity: 1;
 }
 
 .is-personalizable .personalize-vertical-border {
-  border-color: $theme-color-palette-white;
+  border-color: $ids-color-palette-white;
 }
 
 .is-personalizable .personalize-horizontal-bottom-border {
@@ -87,13 +87,13 @@
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: $theme-color-palette-white !important;
+  color: $ids-color-palette-white !important;
 }
 
 .is-personalizable .info-message,
 .is-personalizable .info-message .icon,
 .is-personalizable .info-message p {
-  color: $theme-color-palette-white !important;
+  color: $ids-color-palette-white !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,

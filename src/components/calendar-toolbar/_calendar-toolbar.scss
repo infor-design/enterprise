@@ -37,8 +37,8 @@
   }
 
   .today {
-    font-size: $theme-size-font-sm;
-    font-weight: $theme-number-font-weight-bold;
+    font-size: $ids-size-font-sm;
+    font-weight: $ids-number-font-weight-bold;
     margin-left: 14px;
     text-decoration: none;
     top: 1px;
@@ -57,7 +57,7 @@
     > .month,
     > .year {
       color: $datepicker-month-year-color;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       position: relative;
       top: -1px;
     }
@@ -65,7 +65,7 @@
     .btn-monthyear-pane {
       border-radius: 2px;
       color: $datepicker-month-year-color;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       font-weight: 400;
       padding: 4px 5px;
     }

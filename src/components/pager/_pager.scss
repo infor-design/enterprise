@@ -2,7 +2,7 @@
 //================================================== //
 
 .pager-toolbar {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   height: 38px;
   margin: 5px 10px;
   max-height: 38px;
@@ -43,7 +43,7 @@
       }
 
       .audible {
-        color: $theme-color-font-base;
+        color: $ids-color-font-base;
       }
     }
 
@@ -64,7 +64,7 @@
 
     &.pager-no {
       > .btn-icon {
-        font-weight: $theme-number-font-weight-base;
+        font-weight: $ids-number-font-weight-base;
         margin-top: -1px;
         min-width: 19px;
         width: auto;
@@ -84,7 +84,7 @@
     &.selected {
       > .btn-icon {
         color: $pager-selected-color;
-        font-weight: $theme-number-font-weight-bold;
+        font-weight: $ids-number-font-weight-bold;
       }
 
       &:hover {
@@ -143,13 +143,13 @@
 }
 
 .paginated li {
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
 }
 
 // Pager for Tables
 .pager-count {
   display: inline-block;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   line-height: normal;
 
   > label {
@@ -159,7 +159,7 @@
   }
 
   input {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     height: 30px;
     margin: 0 5px;
     padding: 3px 0 !important;
@@ -189,8 +189,8 @@ li + .pager-count {
     height: 28px;
 
     span {
-      font-size: $theme-size-font-base;
-      font-weight: $theme-number-font-weight-base;
+      font-size: $ids-size-font-base;
+      font-weight: $ids-number-font-weight-base;
       text-transform: none;
     }
 

@@ -109,7 +109,7 @@ span.checkbox > label {
   color: $label-color;
   cursor: pointer;
   display: inline-block;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   margin-bottom: 0;
   padding-left: 25px;
   position: relative;
@@ -254,7 +254,7 @@ span.checkbox > input:checked + label::after,
   @include antialiased();
 
   display: block;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   margin-bottom: 12px;
 
   ~ .field {

@@ -12,7 +12,7 @@
     @include antialiased();
 
     color: $breadcrumb-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     height: 28px;
     line-height: 1.8em;
     margin-right: 0;
@@ -58,8 +58,8 @@
       .current,
       &.current {
         color: $breadcrumb-color;
-        font-size: $theme-size-font-sm;
-        font-weight: $theme-number-font-weight-bold;
+        font-size: $ids-size-font-sm;
+        font-weight: $ids-number-font-weight-bold;
 
         .hyperlink {
           // color: inherit;
@@ -95,7 +95,7 @@
 
       color: $breadcrumb-color;
       content: '\002F';
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
       padding-left: 4px;
       padding-right: 8px;
     }
@@ -185,7 +185,7 @@
     @include antialiased();
 
     color: $breadcrumb-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     line-height: 2em;
     padding-top: 1px;
     text-decoration: none;
@@ -214,7 +214,7 @@
     }
 
     &.current {
-      font-weight: $theme-number-font-weight-bold;
+      font-weight: $ids-number-font-weight-bold;
     }
 
     &[disabled] {
@@ -232,7 +232,7 @@
 
   a,
   span {
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 }
 

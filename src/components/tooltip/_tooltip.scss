@@ -8,7 +8,7 @@
   border-radius: 2px;
   box-shadow: $tooltip-box-shadow;
   color: $tooltip-color;
-  font-size: $theme-size-font-sm;
+  font-size: $ids-size-font-sm;
   left: -9999px;
   max-width: 300px;
   min-width: 40px;
@@ -52,7 +52,7 @@
 
   .hyperlink {
     color: $tooltip-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
 
     &:hover {
       color: $tooltip-color;
@@ -95,13 +95,13 @@
 
   p {
     color: $tooltip-color;
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
     word-break: normal;
     word-wrap: break-word;
   }
 
   span {
-    font-size: $theme-size-font-sm;
+    font-size: $ids-size-font-sm;
   }
 
   .icon {
@@ -121,7 +121,7 @@
   }
 
   .action-tooltip {
-    font-weight: $theme-number-font-weight-bold;
+    font-weight: $ids-number-font-weight-bold;
   }
 
 }
@@ -241,19 +241,19 @@
     .tooltip-title {
       background-color: $popover-alternate-title-bg-color;
       color: $popover-alternate-color;
-      font-size: $theme-size-font-lg;
+      font-size: $ids-size-font-lg;
       padding: 15px 5px 7px 15px;
     }
 
     th {
       color: $popover-alternate-subheader-color;
-      font-size: $theme-size-font-sm;
+      font-size: $ids-size-font-sm;
     }
 
     td,
     p {
       color: $popover-alternate-color;
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       text-align: left;
     }
   }
@@ -280,7 +280,7 @@
   border-bottom: 1px solid $popover-separator-color;
   color: $font-color-highcontrast;
   display: flex;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   justify-content: space-between;
   line-height: 18px;
   margin: 0;
@@ -292,9 +292,9 @@
   }
 
   &.filled {
-    background-color: $theme-color-palette-azure-70;
-    color: $theme-color-palette-white;
-    font-size: $theme-size-font-lg;
+    background-color: $ids-color-palette-azure-70;
+    color: $ids-color-palette-white;
+    font-size: $ids-size-font-lg;
     -webkit-font-smoothing: antialiased;
     margin: -1px -2px 0 -1px;
     padding: 15px 5px 7px 15px;
@@ -305,40 +305,40 @@
     }
 
     .icon-close {
-      color: $theme-color-palette-white;
+      color: $ids-color-palette-white;
     }
   }
 
   &.ruby {
-    background-color: $theme-color-palette-ruby-60;
+    background-color: $ids-color-palette-ruby-60;
   }
 
   &.amber {
-    background-color: $theme-color-palette-amber-60;
+    background-color: $ids-color-palette-amber-60;
   }
 
   &.emerald {
-    background-color: $theme-color-palette-emerald-60;
+    background-color: $ids-color-palette-emerald-60;
   }
 
   &.azure {
-    background-color: $theme-color-palette-azure-60;
+    background-color: $ids-color-palette-azure-60;
   }
 
   &.turquoise {
-    background-color: $theme-color-palette-turquoise-60;
+    background-color: $ids-color-palette-turquoise-60;
   }
 
   &.amethyst {
-    background-color: $theme-color-palette-amethyst-60;
+    background-color: $ids-color-palette-amethyst-60;
   }
 
   &.slate {
-    background-color: $theme-color-palette-slate-60;
+    background-color: $ids-color-palette-slate-60;
   }
 
   &.graphite {
-    background-color: $theme-color-palette-graphite-60;
+    background-color: $ids-color-palette-graphite-60;
   }
 }
 

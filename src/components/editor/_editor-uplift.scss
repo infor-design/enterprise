@@ -15,7 +15,7 @@
     min-height: 24px;
 
     &:first-child {
-      margin-left: $theme-number-spacing-base;
+      margin-left: $ids-number-spacing-base;
     }
 
     &.btn-editor .icon:not(.icon-dropdown) {
@@ -26,7 +26,7 @@
 
     &.btn-editor[data-element='h3'],
     &.btn-editor[data-element='h4'] {
-      margin-right: $theme-number-spacing-base;
+      margin-right: $ids-number-spacing-base;
       min-width: 32px;
 
       .icon {

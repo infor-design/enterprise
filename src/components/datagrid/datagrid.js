@@ -48,7 +48,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showHoverState=true] If false there will be no hover effect.
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
  * @param {array}    [settings.columns=[]] An array of columns (see column options)
- * @param {array}    [settings.frozenColumns={ left: [], right: [], leftScrollable: false }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side. Also you can set the left side to be scrollable.
+ * @param {array}    [settings.frozenColumns={ left: [], right: [] }] An object with two arrays of column id's. One for freezing columns to the left side, and one for freezing columns to the right side.
  * @param {boolean}  [settings.frozenColumns.expandRowAcrossAllCells=true] Expand the expandable across all frozen columns.
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
@@ -1951,6 +1951,18 @@ Datagrid.prototype = {
     const self = this;
     let filterChanged = false;
 
+    // Remove all nested key/value `_isFilteredOut` from given dataset
+    const removeFilteredOut = (dataset) => {
+      for (let i = 0, len = dataset.length; i < len; i++) {
+        if (typeof dataset[i]._isFilteredOut !== 'undefined') {
+          delete dataset[i]._isFilteredOut;
+        }
+        if (dataset[i].children) {
+          removeFilteredOut(dataset[i].children);
+        }
+      }
+    };
+
     if (conditions) {
       this.setFilterConditions(conditions);
     } else {
@@ -1963,6 +1975,10 @@ Datagrid.prototype = {
     if (this.pagerAPI && JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
       this.filterExpr = conditions;
       filterChanged = true;
+
+      if (this.settings.treeGrid) {
+        removeFilteredOut(this.settings.dataset);
+      }
     }
 
     const checkRow = function (rowData) {
@@ -2243,18 +2259,6 @@ Datagrid.prototype = {
             }
           }
           return isEmpty;
-        };
-
-        // Remove all nested key/value `_isFilteredOut` from given dataset
-        const removeFilteredOut = (dataset) => {
-          for (let i = 0, len = dataset.length; i < len; i++) {
-            if (typeof dataset[i]._isFilteredOut !== 'undefined') {
-              delete dataset[i]._isFilteredOut;
-            }
-            if (dataset[i].children) {
-              removeFilteredOut(dataset[i].children);
-            }
-          }
         };
 
         if (isFilterEmpty()) {
@@ -3313,6 +3317,12 @@ Datagrid.prototype = {
       }
       if (rowHtml.center) {
         tableHtml += rowHtml.center;
+
+        if (s.treeGrid && this.filterExpr?.length) {
+          if ($(`<table>${rowHtml.center}</table>`).find('tr:first').is('.is-hidden')) {
+            this.filteredCount++;
+          }
+        }
       }
       if (self.hasRightPane && rowHtml.right) {
         tableHtmlRight += rowHtml.right;
@@ -4630,12 +4640,7 @@ Datagrid.prototype = {
         this.stretchColumnDiff = diff;
       }
 
-      if (this.hasLeftPane && this.settings.frozenColumns.leftScrollable) {
-        this.tableLeft.parent().css('width', this.totalWidths.left);
-        this.tableLeft.css('width', 'auto');
-      }
-
-      if (this.hasLeftPane && !this.settings.frozenColumns.leftScrollable) {
+      if (this.hasLeftPane) {
         this.tableLeft.css('width', this.totalWidths.left);
       }
 
@@ -5266,7 +5271,7 @@ Datagrid.prototype = {
   hideColumn(id) {
     let idx = this.columnIdxById(id);
 
-    if (idx === -1) {
+    if (idx === -1 || this.settings.columns[idx]?.hidden) {
       return;
     }
 
@@ -5496,7 +5501,7 @@ Datagrid.prototype = {
     const columnSettings = this.columnById(id)[0];
     let idx = -1;
 
-    if (!percent) {
+    if (!percent || !id) {
       return;
     }
 
@@ -5632,13 +5637,18 @@ Datagrid.prototype = {
 
         // Setup enforcement for column or default min and max widths
         const minWidth = column.minWidth || 12;
-        const maxWidth = column.maxWidth || 1000;
+        const maxWidth = column.maxWidth || 2000;
 
         const node = self.currentHeader;
         const idx = node.index();
+        const isLeftPane = self.getContainer(node.attr('data-column-id')) === 'left';
+
         this.dragging = true;
         const left = ui.left + 5;
-        const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
+        let currentCol = this.bodyColGroup.find('col').eq(idx)[0];
+        if (isLeftPane) {
+          currentCol = this.bodyColGroupLeft.find('col').eq(idx)[0];
+        }
         const currentColWidth = parseInt(self.currentHeader.width(), 10);
         let cssWidth = parseInt(currentCol.style.width || currentColWidth, 10);
 
@@ -5649,7 +5659,7 @@ Datagrid.prototype = {
         const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
         const offsetLeft = parseFloat(self.currentHeader.offset().left);
         let leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
-        if (self.hasLeftPane && self.settings.frozenColumns.left.length && idx === 0) {
+        if (self.hasLeftPane && !isLeftPane && idx === 0) {
           leftOffset = (offsetLeft - offsetParentLeft - 2);
         }
         const diff = currentColWidth - (left - leftOffset);
@@ -5665,8 +5675,15 @@ Datagrid.prototype = {
         if (widthToSet === cssWidth) {
           return;
         }
-
         currentCol.style.width = (`${widthToSet}px`);
+
+        const inRange = (idx === this.settings.frozenColumns.left.length - 1) ||
+          (idx <= (this.settings.frozenColumns.left.length - 1) && diff > 0);
+
+        if (inRange && this.getContainer(columnId) === 'left') {
+          this.totalWidths.left += diff < 0 ? Math.abs(diff) : (-diff);
+          this.tableLeft.css('width', this.totalWidths.left);
+        }
 
         if (keyboard.pressedKeys.get('Shift')) {
           usingShiftKey = true;
@@ -6327,7 +6344,7 @@ Datagrid.prototype = {
     });
 
     // Move the drag handle to the end or start of the column
-    this.headerRow
+    this.headerRow.add(this.headerRowLeft)
       .off('mousemove.datagrid')
       .on('mousemove.datagrid', 'th', (e) => {
         if (self.dragging) {
@@ -6371,7 +6388,9 @@ Datagrid.prototype = {
         self.createResizeHandle();
         self.resizeHandle[0].style.left = `${leftPos}px`;
         self.resizeHandle[0].style.cursor = '';
-      }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', (e) => {
+      })
+      .off('contextmenu.datagrid')
+      .on('contextmenu.datagrid', 'th', (e) => {
         if (self.settings.headerMenuId) {
           // Add Header Context Menu Support
           e.preventDefault();

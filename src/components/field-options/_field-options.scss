@@ -28,7 +28,7 @@
   &:focus,
   &:active {
     color: transparent;
-    text-shadow: 0 0 0 $theme-color-palette-black;
+    text-shadow: 0 0 0 $ids-color-palette-black;
   }
 
   &:focus:not(.hide-focus) {
@@ -567,7 +567,7 @@
   .field-options {
     ~ .btn-actions {
       color: transparent;
-      text-shadow: 0 0 0 $theme-color-palette-black;
+      text-shadow: 0 0 0 $ids-color-palette-black;
     }
   }
 

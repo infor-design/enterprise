@@ -8,19 +8,19 @@
 
 .image-user-status {
   .icon use[href='#icon-user-status-available'] {
-    color: $theme-color-status-success;
+    color: $ids-color-status-success;
   }
 
   .icon use[href='#icon-user-status-away'] {
-    color: $theme-color-status-caution;
+    color: $ids-color-status-caution;
   }
 
   .icon use[href='#icon-user-status-busy'],
   .icon use[href='#icon-user-status-do-not-disturb'] {
-    color: $theme-color-status-danger;
+    color: $ids-color-status-danger;
   }
 
   .icon use[href='#icon-user-status-unknown'] {
-    color: $theme-color-palette-slate-30;
+    color: $ids-color-palette-slate-30;
   }
 }

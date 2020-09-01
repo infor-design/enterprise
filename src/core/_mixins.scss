@@ -264,7 +264,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 @mixin placeholder {
   color: $input-placeholder-color;
   font-size: $input-size-regular-font-size;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   opacity: 1;
 }
 

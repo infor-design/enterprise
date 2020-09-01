@@ -3,7 +3,7 @@
 //================================================== //
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho';
+@import '../../node_modules/ids-identity/dist/theme-soho/tokens/web/theme-soho';
 
 // Enterprise color palette
 @import '../../src/components/colors/colorpalette';
@@ -46,7 +46,7 @@ html {
   font-size: 62.5%;
 
   body {
-    background-color: $theme-color-palette-white;
+    background-color: $ids-color-palette-white;
     color: $color-font-lighter;
     font-family: $font-family;
     font-size: 100%;
@@ -65,7 +65,7 @@ html {
   // Change Letter Color and Size
   .fieldset-title {
     color: $color-font-lighter;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
   }
 
   // Align the Letter columns
@@ -94,29 +94,29 @@ html {
 h1 {
   @include font-size(50);
 
-  color: $theme-color-palette-black;
+  color: $ids-color-palette-black;
   line-height: 60px;
 }
 
 h2 {
   @include font-size(26);
 
-  color: $theme-color-palette-black;
+  color: $ids-color-palette-black;
   font-weight: 400;
   line-height: 42px;
 }
 
 h3 {
-  color: $theme-color-palette-black;
-  font-size: $theme-size-font-base;
+  color: $ids-color-palette-black;
+  font-size: $ids-size-font-base;
   letter-spacing: 1.17px;
   line-height: 16px;
   text-transform: uppercase;
 }
 
 h4 {
-  color: $theme-color-palette-black;
-  font-size: $theme-size-font-base;
+  color: $ids-color-palette-black;
+  font-size: $ids-size-font-base;
 }
 
 p,
@@ -139,7 +139,7 @@ a {
   @include font-size(16);
 
   color: $color-main-blue;
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   text-decoration: none;
 
   svg {
@@ -172,7 +172,7 @@ pre {
 p strong {
   @include font-size(16);
 
-  font-weight: $theme-number-font-weight-base;
+  font-weight: $ids-number-font-weight-base;
   padding-left: 0;
 
   &::after {
@@ -218,7 +218,7 @@ p strong {
     @include font-size(16);
 
     border-bottom: 2px solid transparent;
-    color: $theme-color-palette-black;
+    color: $ids-color-palette-black;
     display: inline-block;
     margin: 29px 18px 29px 18.5px;
     padding: 15px 5px 1px;
@@ -381,7 +381,7 @@ code {
   border: 1px solid #e1e8e8;
   border-radius: 0.25rem 0.25rem 0 0;
   font-family: $font-family-monospace;
-  font-size: $theme-size-font-base;
+  font-size: $ids-size-font-base;
   line-height: 24px;
   padding: 0 4px;
 
@@ -403,7 +403,7 @@ code {
     th {
       @include font-size(16);
 
-      font-weight: $theme-number-font-weight-base;
+      font-weight: $ids-number-font-weight-base;
       padding: 16px 30px 16px 0;
     }
 

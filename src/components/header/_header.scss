@@ -36,8 +36,8 @@ $subheader-height: 60px;
 
     color: $header-text-color;
     display: inline;
-    font-size: $theme-size-font-lg;
-    font-weight: $theme-number-font-weight-base;
+    font-size: $ids-size-font-lg;
+    font-weight: $ids-number-font-weight-base;
     margin-bottom: 0;
     text-overflow: ellipsis;
     vertical-align: middle;
@@ -71,7 +71,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $theme-color-brand-primary-alt, 0 0 0 3px $theme-color-palette-white, $header-focus-box-shadow;
+      box-shadow: 0 0 0 2px $ids-color-brand-primary-alt, 0 0 0 3px $ids-color-palette-white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;
@@ -81,7 +81,7 @@ $subheader-height: 60px;
 
   .page-title {
     color: $header-text-color;
-    font-size: $theme-size-font-lg;
+    font-size: $ids-size-font-lg;
     margin-top: 3px;
 
     .alert .icon {
@@ -94,7 +94,7 @@ $subheader-height: 60px;
 
   .section-title {
     color: $header-text-color;
-    font-size: $theme-size-font-base;
+    font-size: $ids-size-font-base;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -176,7 +176,7 @@ $subheader-height: 60px;
     }
 
     .panel-subhead {
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
       line-height: 1;
     }
 
@@ -400,13 +400,13 @@ $subheader-height: 60px;
     }
 
     .hyperlink {
-      color: $theme-color-palette-white;
+      color: $ids-color-palette-white;
       float: right;
-      font-size: $theme-size-font-base;
+      font-size: $ids-size-font-base;
 
       &:focus:not(.hide-focus)::after,
       &:active::after {
-        border-color: $theme-color-palette-white;
+        border-color: $ids-color-palette-white;
       }
 
     }
@@ -599,10 +599,10 @@ html[dir='rtl'] {
 
   header.header .title,
   header.header h1 {
-    color: $theme-color-palette-graphite-70 !important;
+    color: $ids-color-palette-slate-70 !important;
   }
 
   svg {
-    color: $theme-color-palette-graphite-70 !important;
+    color: $ids-color-palette-slate-70 !important;
   }
 }
