@@ -3841,6 +3841,12 @@ td .btn-actions {
     .trigger .icon {
       left: 4px !important;
       margin-top: -2px;
+
+      &.search {
+        height: 13px;
+        left: 4px !important;
+        top: 0;
+      }
     }
   }
 

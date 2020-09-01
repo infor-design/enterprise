@@ -1,0 +1,473 @@
+<div class="tab-container alternate" data-options='{ "containerElement": "#tab-panel-container" }'>
+  <ul class="tab-list">
+    <li class="tab"><a id="tabs-1" href="#header-tabs-1" data-translate="text">Datagrid</a></li>
+    <li class="tab"><a id="tabs-2" href="#header-tabs-2" data-translate="text">Calendar</a></li>
+    <li class="tab"><a id="tabs-3" href="#header-tabs-3" data-translate="text">Forms</a></li>
+  </ul>
+</div>
+
+<div id="tab-panel-container" class="page-container no-scroll">
+<div id="header-tabs-1" class="tab-panel">
+  <div class="row">
+    <div class="twelve columns">
+      <div class="row">
+        <div class="twelve columns">
+          <div class="full-height full-width">
+            <div class="toolbar" role="toolbar">
+              <div class="title" >
+                <span data-translate="text">Strings</span>
+                <span class="datagrid-result-count">(N Results)</span>
+              </div>
+              <div class="buttonset">
+                <button type="button" class="btn" id="about">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-info"></use>
+                  </svg>
+                  <span data-translate="text">Info</span>
+                </button>
+                <button type="button" class="btn" id="export">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-export-spreadsheet"></use>
+                  </svg>
+                  <span data-translate="text">Export</span>
+                </button>
+              </div>
+
+              <div class="more">
+                <button class="btn-actions" type="button" title="Actions">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-more"></use>
+                  </svg>
+                  <span class="audible">More Actions</span>
+                </button>
+                <ul class="popupmenu">
+                  <li class="is-disabled"><a href="#" data-translate="text">AdvancedFilter</a></li>
+                  <li class="is-disabled"><a href="#" data-translate="text">Add</a></li>
+                  <li class="separator"></li>
+                  <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+                  <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+                  <li class="separator"></li>
+                  <li><a data-option="export-to-excel" href="#" data-translate="text">ExportToExcel</a></li>
+                  <li class="separator single-selectable-section"></li>
+                  <li class="heading">Row Height</li>
+                  <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+                  <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+                  <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+                  <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+                </ul>
+
+              </div>
+            </div>
+            <div id="datagrid" class="datagrid">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="header-tabs-2" class="tab-panel">
+  <div class="full-width full-height">
+      <div class="calendar" data-init="false">
+        <div class="calendar-events">
+          <div class="accordion" data-options="{'allowOnePane': false}">
+            <div class="accordion-header is-expanded">
+              <a href="#"><span data-translate="text">Legend</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="calendar-event-types accordion-content">
+              </div>
+            </div>
+            <div class="accordion-header is-expanded">
+              <a href="#"><span data-translate="text">UpComing</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="calendar-upcoming-events accordion-content">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-monthview">
+        </div>
+        <div class="calendar-weekview">
+        </div>
+        <div class="calendar-event-details-mobile listview" data-init="false">
+        </div>
+      </div>
+
+      <ul id="calendar-actions-menu" class="popupmenu">
+        <li><a href="#" data-action="delete-event"><span data-translate="text">DeleteEvent</span></a></li>
+        <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
+      </ul>
+  </div>
+</div>
+
+<div id="header-tabs-3" class="tab-panel scrollable">
+  <div class="row form-responsive top-padding">
+    <div class="row">
+      <div class="six columns">
+        <div class="field">
+          <label for="disabled-field" data-translate="text">ExampleLabel</label>
+          <input type="text" id="disabled-field" name="disabled-field" data-translate="value" value="ExampleData" />
+        </div>
+
+        <div class="field">
+          <label for="states" class="label" data-translate="text">ExampleLabel</label>
+          <select id="states" name="states" class="dropdown">
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="desc-disabled" data-translate="text">ExampleLabel</label>
+          <textarea id="desc-disabled" class="textarea" maxlength="90" name="desc-disabled" data-translate="text">ExampleData</textarea>
+        </div>
+
+        <div class="field">
+          <label for="background-color" data-translate="text">ExampleLabel</label>
+          <input class="colorpicker" id="background-color" type="text" />
+        </div>
+
+      </div>
+
+      <div class="six columns">
+
+        <div class="field">
+          <label for="date-field-disabled" class="label" data-translate="text">ExampleLabel</label>
+          <input id="date-field-disabled" class="datepicker" name="date-field-disabled" type="text" />
+        </div>
+
+        <div class="field">
+          <label for="autocomplete-default" data-translate="text">ExampleLabel</label>
+          <input type="text" autocomplete="off" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}"
+             data-translate="placeholder" placeholder="ExamplePlaceholder" id="autocomplete-default" />
+        </div>
+
+        <div class="field">
+          <label for="searchfield" data-translate="text">ExampleLabel</label>
+          <input id="searchfield" class="searchfield" data-translate="value" value="ExampleData" />
+        </div>
+
+        <div class="field">
+          <label for="timepicker-main" class="label" data-translate="text">ExampleLabel</label>
+          <input id="timepicker-main" class="timepicker" type="text" data-translate="placeholder" placeholder="ExamplePlaceholder"/>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <div class="field">
+          <span class="label" data-translate="text">ExampleLabel</span>
+          <div class="editor" id="editor-disabled" role="textbox" aria-multiline="true" aria-label="Comments">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('body').one('initialized', function () {
+  var columns = [], data = [];
+
+  // Define Columns for the Grid.
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+  columns.push({ id: 'id', name: Locale.translate('Id'), field: 'id', filterType: 'text', width: 100});
+  columns.push({ id: 'value', name: Locale.translate('String'), field: 'value', filterType: 'text', width: 400, textOverflow: 'ellipsis'});
+
+  // Init and get the api for the grid
+  grid = $('#datagrid').datagrid({
+    columns: columns,
+    dataset: Object.values(Locale.currentLanguage.messages),
+    selectable: 'multiple',
+    paging: true,
+    pagesize: 10,
+    editable: true,
+    filterable: true,
+    enableTooltips: true,
+    toolbar: {results: true }
+  });
+
+  $('#export').on('click', function () {
+    grid.data('datagrid').exportToCsv();
+  });
+
+  $('#about').on('click', function () {
+    $('body').about();
+  });
+});
+</script>
+
+
+<script>
+$('body').one('initialized', function () {
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
+  var events = [];
+
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+      $('.calendar').calendar({
+        month: 8,
+        year: 2020,
+        day: 3,
+        eventTypes: eventTypes,
+        events: events,
+        upcomingEventDays: 0,
+        template: 'tmpl-readonly',
+        mobileTemplate: 'tmpl-mbl-readonly',
+        modalTemplate: 'tmpl-modal',
+        menuId: 'calendar-actions-menu'
+      });
+    });
+  });
+});
+
+// Wire up the actions
+$('#actions').on('selected', function(e, args) {
+  var action = args[0].getAttribute('data-action');
+  var api = $('.calendar').data('calendar');
+  var selectedDate = api.getDayEvents();
+  var events = api.settings.events;
+  var defaultHours = 8;
+  var startDate = new Date(selectedDate.date);
+  var endDate = new Date(selectedDate.date);
+  var isAllDay = true;
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(startDate.getHours() + defaultHours);
+  // To default all day use
+  if (isAllDay) {
+    endDate.setHours(23, 59, 59, 999);
+  }
+
+  if (action === 'add-api') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'team',
+      isAllDay: isAllDay
+    };
+    api.addEvent(newEvent);
+  }
+
+  if (action === 'add-modal') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      title: 'Request Time Off',
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'dto',
+      isAllDay: isAllDay
+    };
+
+    var done = function(elem, event) {
+      // Collect the data and popuplate the event object
+      var inputs = elem.querySelectorAll('input, textarea, select');
+      for (var i = 0; i < inputs.length; i++) {
+        newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+      }
+
+      api.addEvent(newEvent);
+      return;
+    };
+
+    api.showEventModal(newEvent, done);
+  }
+
+  if (action === 'clear') {
+    api.clearEvents(selectedDate.date);
+  }
+});
+
+</script>
+
+<script id="tmpl-mbl-readonly" type="text/html">
+  {{={{{ }}}=}}
+  <ul>
+    {{#event}}
+      <li class="border-color {{color}}" data-id="{{id}}">
+        <div class="container">
+          <div class="column-left">
+            {{#subject}}
+            <p class="listview-heading">{{subject}}</p>
+            {{/subject}}
+
+            {{#duration}}
+            <p class="listview-subheading">{{startsLong}} - {{endsLong}}</p>
+            {{/duration}}
+
+            {{#durationHours}}
+            <p class="listview-subheading">{{startsHoursLong}} - {{endsHoursLong}}</p>
+            {{/durationHours}}
+
+            {{#status}}
+            <p class="listview-subheading">{{typeLabel}} | {{status}}</p>
+            {{/status}}
+          </div>
+          <div class="column-right">
+            {{#duration}}
+            <p class="listview-micro">{{duration}} {{durationUnits}}</p>
+            {{/duration}}
+            {{#durationHours}}
+            <p class="listview-micro">{{durationHours}} {{durationUnits}}</p>
+            {{/durationHours}}
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-caret-right"></use>
+            </svg>
+          </div>
+        </div>
+      </li>
+    {{/event}}
+  </ul>
+</script>
+
+<script id="tmpl-readonly" type="text/html">
+{{={{{ }}}=}}
+  {{#event}}
+  <div class="accordion-header is-expanded {{color}}">
+    <a href="#">{{subject}}</a>
+  </div>
+  <div class="accordion-pane is-expanded">
+    <div class="accordion-content">
+      {{#status}}
+      <div class="field">
+        <span class="label" data-translate="text">Status</span>
+        <span class="data">
+          {{status}}
+          {{#icon}}
+          <svg class="icon {{icon}}" focusable="false" aria-hidden="true" role="presentation" data-status="{{status}}"><use href="#{{icon}}"></use></svg>
+          {{/icon}}
+        </span>
+      </div>
+      {{/status}}
+      <div class="field">
+        <span class="label" data-translate="text">Date</span>
+        {{#duration}}
+        <span class="data">
+          {{startsLong}}
+              -
+          {{endsLong}}
+        </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{startsHoursLong}}
+              -
+          {{endsHoursLong}}
+        </span>
+        {{/durationHours}}
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">EventType</span>
+        <span class="data">
+          {{typeLabel}}
+        </span>
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">Duration</span>
+        {{#duration}}
+        <span class="data">
+          {{duration}} {{durationUnits}}
+        </span>
+        {{/duration}}
+        {{#durationHours}}
+        <span class="data">
+          {{durationHours}} {{durationUnits}}
+        </span>
+        {{/durationHours}}
+      </div>
+      <div class="field">
+        <span class="label" data-translate="text">Comments</span>
+        <span class="data{{#noComments}} is-placeholder{{/noComments}}" >
+          {{comments}}
+        </span>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+</script>
+
+<script id="tmpl-modal" type="text/html">
+  {{#event}}
+  <div class="container">
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="subject" class="label" data-translate="text"><span data-translate="text">Subject</span></label>
+          <input id="subject" type="text" value="{{subject}}">
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="type" class="label"><span data-translate="text">Type</span></label>
+          <select id="type" class="dropdown" name="type">
+            {{#eventTypes}}
+            <option value="{{id}}">{{label}}</option>
+            {{/eventTypes}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field field-checkbox">
+          <input type="checkbox" class="checkbox" name="isAllDay" id="isAllDay" {{#isAllDay}}checked="true"{{/isAllDay}}>
+          <label for="isAllDay" class="checkbox-label"><span data-translate="text">AllDay</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="startsLocale" class="label"><span data-translate="text">From</span></label>
+          <input id="startsLocale" class="datepicker" name="starts" type="text" value="{{startsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="startsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="startsHourLocale" class="timepicker" name="startshour" type="text" {{#isAllDay}}disabled="true"{{/isAllDay}} value="{{startsHourLocale}}" data-validate="required time"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="six columns">
+        <div class="field">
+          <label for="endsLocale" class="label"><span data-translate="text">To</span></label>
+          <input id="endsLocale" class="datepicker" name="ends" type="text" value="{{endsLocale}}" data-validate="required date"/>
+        </div>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="endsHourLocale" class="label">&nbsp;<span class="audible">Time</span></label>
+          <input id="endsHourLocale" class="timepicker" name="endsHourLocale" type="text" value="{{endsHourLocale}}" {{#isAllDay}}disabled="true"{{/isAllDay}} data-validate="required time"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-responsive row">
+      <div class="twelve columns">
+        <div class="field">
+          <label for="comments" class="label"><span data-translate="text">Comments</span></label>
+          <textarea id="comments" type="text" value="{{comments}}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/event}}
+  <div class="modal-buttonset">
+    <button id="cancel" data-cancel="submit" type="button" class="btn-modal-secondary"><span data-translate="text">Cancel</span></button>
+    <button id="submit" data-action="submit" type="button" class="btn-modal-primary hide-focus"><span data-translate="text">Submit</span></button>
+  </div>
+</script>
