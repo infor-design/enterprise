@@ -85,6 +85,9 @@ Button.prototype = {
    * @returns {boolean} whether or not this component is currently disabled
    */
   get disabled() {
+    if (this.element.parent().is('.spinbox-wrapper')) {
+      return this.element.parent().find('input')[0].disabled;
+    }
     return this.element[0].disabled;
   },
 
