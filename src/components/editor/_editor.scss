@@ -272,12 +272,11 @@
 
   ul,
   ol {
-    @include rem(line-height, 2.2rem);
-    @include rem(margin-left, 2rem);
-
     color: $input-color;
     font-size: $input-size-regular-font-size;
+    line-height: 2.2rem;
     list-style: disc;
+    margin-left: 2rem;
 
     li {
       line-height: inherit;
@@ -778,6 +777,12 @@ html[dir='rtl'] {
         left: 40px;
       }
     }
+  }
+
+  .editor ul,
+  .editor ol {
+    margin-left: 0;
+    margin-right: 2rem;
   }
 
   .toolbar,
