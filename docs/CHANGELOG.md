@@ -1,6 +1,8 @@
 # What's New with Enterprise
 
-## v4.32.0
+## v4.33.0 Fixes
+
+- `[Tabs Header]` Fixed a bug where the add icon were too small and the page form layout has a big space on top of it. ([#4289](https://github.com/infor-design/enterprise/issues/4289))
 
 ### v4.32.0 Important Notes
 
