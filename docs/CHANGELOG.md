@@ -19,6 +19,7 @@
 - `[Accordion]` Fixed a bug in the vibrant theme where nested header text was not showing because the width was pushing it to the next line. ([#4145](https://github.com/infor-design/enterprise/issues/4145))
 - `[Application Menu]` Fixed too much spacing level when there's an icon in accordion header in uplift theme. ([#4202](http://localhost:4000/components/applicationmenu/test-six-levels-icons.html?theme=uplift&variant=light&colors=0066D4))
 - `[Contextual Action Panel]` Made the close button work in cases where subcomponents are open inside the CAP. ([#4112](https://github.com/infor-design/enterprise/issues/4112))
+- `[Colorpicker]` The sizes were inconsistent with other components in width so we adjusted them. ([#4310](https://github.com/infor-design/enterprise/issues/4310))
 - `[Datagrid]` Fixed an issue where the selectedRows array contents continued to multiply each time running `selectAllRows`. ([#4195](https://github.com/infor-design/enterprise/issues/4195))
 - `[Datagrid]` Fixed an issue where the dynamic tooltip was not working properly. ([#4260](https://github.com/infor-design/enterprise/issues/4260))
 - `[Datagrid]` Fixed an issue where the check box filter was not working. ([#4271](https://github.com/infor-design/enterprise/issues/4271))
@@ -39,6 +40,7 @@
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
 - `[Tabs]` Fixed a small error by removing a - 1 involved with testing. ([#4093](https://github.com/infor-design/enterprise/issues/4093))
 - `[Tabs]` Fixed a bug where using `#` in a Tab title was not possible. ([#4179](https://github.com/infor-design/enterprise/issues/4179))
+- `[Toolbar Flex]` Fixed a bug where in some cases a un-needed scrollbar would appear. [[#4325](https://github.com/infor-design/enterprise/issues/4325)]
 - `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Tree]` Fixed an issue where the return focus state was not working properly after closing the context menu. ([#4252](https://github.com/infor-design/enterprise/issues/4252))
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
