@@ -35,6 +35,33 @@ function matchedItems(elem, selector) {
 // Array of plugin names, selectors (optional), and callback functions (optional),
 // for no-configuration initializations.
 const PLUGIN_MAPPINGS = [
+
+  // Inline text translations by Locale, via the `data-translate` attribute.
+  // (Not all inline text items are powered by JS components)
+  ['texttranslations', '[data-translate="text"]', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      const obj = $(item);
+      obj.attr('data-translate-key', obj.text());
+      obj.text(Locale.translate(obj.text(), true));
+    });
+  }],
+
+  ['texttranslations', '[data-translate="value"]', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      const obj = $(item);
+      obj.attr('data-translate-key', obj.attr('value'));
+      obj.attr('value', Locale.translate(obj.attr('value'), true));
+    });
+  }],
+
+  ['texttranslations', '[data-translate="placeholder"]', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      const obj = $(item);
+      obj.attr('data-translate-key', obj.attr('placeholder'));
+      obj.attr('placeholder', Locale.translate(obj.attr('placeholder'), true));
+    });
+  }],
+
   // Application Menu
   ['applicationmenu', '#application-menu', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
@@ -345,16 +372,6 @@ const PLUGIN_MAPPINGS = [
   ['listdetail', '.list-detail', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
       invoke($(item), 'listdetail');
-    });
-  }],
-
-  // Inline text translations by Locale, via the `data-translate` attribute.
-  // (Not all inline text items are powered by JS components)
-  ['texttranslations', '[data-translate="text"]', function (rootElem, pluginName, selector) {
-    matchedItems(rootElem, selector).each((i, item) => {
-      const obj = $(item);
-      obj.attr('data-translate-key', obj.text());
-      obj.text(Locale.translate(obj.text(), true));
     });
   }],
 

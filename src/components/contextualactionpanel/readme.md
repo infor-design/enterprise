@@ -12,6 +12,8 @@ demo:
     slug: example-markup
   - name: CAP example triggering on adjacent content
     slug: example-trigger
+  - name: Workspaces Pattern (See Below)
+    slug: example-workspaces
   - name: Destroy Test
     slug: test-destroy
   - name: Disable a button on a CAP Toolbar
@@ -71,6 +73,10 @@ const flexToolbarAPI = capAPI.toolbarAPI;
 // Disable the close button using its `FlexToolbarItem` API
 flexToolbarAPI.items[0].disabled = true;
 ```
+
+## Workspaces Concept
+
+Workspaces are another term for a Contextual Action Panel that contains complex more complex workflows. The most common use case for Workspace can be seen in a Infor Homepage where a Workspace can be triggered from a Widget. Workspaces can be used to show and collect many data points where users can perform multiple actions without the need to launch the full application. Some of the workflow examples are editing and submitting data, and viewing additional information on a particular data point. The option to launch the full application should be provided within the Workspace which would take users to the specific workflow in the application. The example above shows a simple workspace concept. This concept works best on XL-M breakpoints or Desktop and Tablet devices. The toolbar used in Workspace demonstrates a left-aligned terminal action (usually Cancel), a center-aligned Title with optional action (Launch Application), and a right-aligned confirmation action (usually Submit).
 
 ## Keyboard Shortcuts
 

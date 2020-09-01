@@ -133,8 +133,8 @@
   }
 
   .is-editing .lookup-wrapper .trigger {
-    margin-left: -28px !important;
-    margin-top: -7px !important;
+    margin-left: 4px !important;
+    margin-top: -13px !important;
   }
 
   .datagrid-trigger-cell .icon.icon-calendar {
@@ -143,7 +143,9 @@
 
   tbody tr td.is-editing {
     input {
-      height: 26px;
+      height: 22px !important;
+      margin-left: -17px;
+      margin-top: -4px;
     }
 
     .datepicker {
@@ -159,7 +161,7 @@
   }
 
   .datagrid-trigger-cell .icon.icon-search-list {
-    top: 6px;
+    top: 4px;
   }
 }
 
