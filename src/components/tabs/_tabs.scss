@@ -1,5 +1,6 @@
 // Tabs (Vertical and Horizontal)
 //==================================================/
+
 @mixin tab-outline {
   border: 1px solid transparent;
   border-radius: 2px;
@@ -223,6 +224,17 @@
     font-size: $ids-size-font-base;
   }
 
+}
+
+// Page containers without scroll
+.page-container {
+  .tab-panel-container {
+    &.no-scroll {
+      .tab-panel {
+        padding-top: 0;
+      }
+    }
+  }
 }
 
 // More Button

@@ -75,6 +75,10 @@
       margin-top: 0;
       position: relative;
     }
+
+    &.tab-panel-container {
+      position: absolute;
+    }
   }
 }
 
@@ -95,6 +99,13 @@
 
 .tab-panel-container {
   height: inherit;
+
+  &.no-scroll {
+    .tab-panel {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 
   .tab-panel {
     @media (max-width: $breakpoint-phone-to-tablet - 1) {

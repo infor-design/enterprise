@@ -26,6 +26,12 @@
       }
     }
   }
+
+  .add-tab-button {
+    span[aria-hidden] {
+      @include font-size(24);
+    }
+  }
 }
 
 .popupmenu.tab-list-spillover,
