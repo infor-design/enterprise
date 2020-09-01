@@ -1136,8 +1136,10 @@ describe('Datepicker Range Tests', () => {
     await element.all(by.cssContainingText('.monthview-table td', '6')).get(1).click();
 
     const testDate1 = new Date();
+    testDate1.setMonth(7);
     testDate1.setDate(3);
     const testDate2 = new Date(testDate1);
+    testDate2.setMonth(7);
     testDate2.setDate(6);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/3/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
@@ -1155,8 +1157,10 @@ describe('Datepicker Range Tests', () => {
     await element.all(by.cssContainingText('.monthview-table td', '4')).get(0).click();
 
     const testDate1 = new Date();
+    testDate1.setMonth(7);
     testDate1.setDate(4);
     const testDate2 = new Date(testDate1);
+    testDate2.setMonth(7);
     testDate2.setDate(7);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/4/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
@@ -1174,8 +1178,10 @@ describe('Datepicker Range Tests', () => {
     await element.all(by.cssContainingText('.monthview-table td', '11')).get(0).click();
 
     const testDate1 = new Date();
+    testDate1.setMonth(8);
     testDate1.setDate(11);
     const testDate2 = new Date(testDate1);
+    testDate2.setMonth(8);
     testDate2.setDate(12);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/11/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
@@ -1192,8 +1198,10 @@ describe('Datepicker Range Tests', () => {
     await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
 
     const testDate1 = new Date();
+    testDate1.setMonth(7);
     testDate1.setDate(16);
     const testDate2 = new Date(testDate1);
+    testDate2.setMonth(7);
     testDate2.setDate(21);
 
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/16/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
