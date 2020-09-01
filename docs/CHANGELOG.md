@@ -2,8 +2,6 @@
 
 ## v4.33.0 Fixes
 
-- `[Tabs Header]` Fixed a bug where the add icon were too small and the page form layout has a big space on top of it. ([#4289](https://github.com/infor-design/enterprise/issues/4289))
-
 ### v4.32.0 Important Notes
 
 - `[Colors]` In Uplift (Vibrant) theme there is no longer any colors in graphite. All are slate. This involved bringing in a new version 3.0 of the design system with some breaking changes you should not if using the tokens directly. See the [design system change log](https://github.com/infor-design/design-system/blob/master/docs/CHANGELOG.md) for details. ([#4206](https://github.com/infor-design/enterprise/issues/4206))
@@ -41,6 +39,7 @@
 - `[Tabs]` Added detection for width/height/style changes on a Tabs component, which now triggers a resize event. ([ng#860](https://github.com/infor-design/enterprise-ng/issues/860))
 - `[Tabs]` Fixed a small error by removing a - 1 involved with testing. ([#4093](https://github.com/infor-design/enterprise/issues/4093))
 - `[Tabs]` Fixed a bug where using `#` in a Tab title was not possible. ([#4179](https://github.com/infor-design/enterprise/issues/4179))
+- `[Tabs Header]` Fixed a bug where the add icon were too small and the page form layout has a big space on top of it. ([#4289](https://github.com/infor-design/enterprise/issues/4289))
 - `[Toolbar Flex]` Fixed a bug where in some cases a un-needed scrollbar would appear. [[#4325](https://github.com/infor-design/enterprise/issues/4325)]
 - `[Toolbar Searchfield]` Fixed a bug where the searchfield doesn't perfectly align together with flex toolbar. [[#4226](https://github.com/infor-design/enterprise/issues/4226)]
 - `[Tree]` Fixed an issue where the return focus state was not working properly after closing the context menu. ([#4252](https://github.com/infor-design/enterprise/issues/4252))
