@@ -1,0 +1,19 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="test-input">Number In Range</label>
+      <input id="test-input" type="text" class="new-mask"
+        data-options='{
+          "process": "rangeNumber",
+          "patternOptions": {
+            "delimeter": "-",
+            "allowLeadingZeros": true,
+            "allowThousandsSeparator": false,
+            "allowDecimal": false,
+            "allowNegative": false,
+            "integerLimit": 20
+          }
+        }' />
+    </div>
+  </div>
+</div>

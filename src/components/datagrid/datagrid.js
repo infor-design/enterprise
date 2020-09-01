@@ -1584,12 +1584,26 @@ Datagrid.prototype = {
             const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
-            // Set datepicker with range/single date
-            if (col && col.filterType === 'date') {
+            // Set datepicker and numbers filter with range/single
+            if (col && /date|integer|decimal/.test(col.filterType)) {
               const input = rowElem.find('input');
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
-              self.filterSetDatepicker(input, operator, col.editorOptions);
+              if (col.filterType === 'date') {
+                self.filterSetDatepicker(input, operator, col.editorOptions);
+              } else {
+                const rangeDelimeter = col.maskOptions?.rangeNumberDelimeter || '-';
+                const isRange = operator === 'in-range';
+                const maskApi = input.data('mask');
+                const settings = isRange ?
+                  { process: 'rangeNumber', patternOptions: { delimeter: rangeDelimeter } } :
+                  { process: 'number', patternOptions: { delimeter: '' } };
+
+                if (maskApi && maskApi.settings.process !== settings.process) {
+                  col.maskOptions = utils.extend(true, {}, col.maskOptions, settings);
+                  maskApi.updated(settings);
+                }
+              }
             }
             self.applyFilter(null, 'selected');
           })
@@ -1864,7 +1878,7 @@ Datagrid.prototype = {
       btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
     }
 
-    if (col.filterType === 'date') {
+    if (/\b(date|integer|decimal|percent)\b/g.test(col.filterType)) {
       btnMarkup += render('in-range', 'InRange');
     }
 
@@ -1998,6 +2012,7 @@ Datagrid.prototype = {
         let rangeData = null;
         let rangeSeparator = null;
         let rangeValues = null;
+        let isRangeNumber = false;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -2032,7 +2047,15 @@ Datagrid.prototype = {
           !(conditions[i].value instanceof Array)) &&
             !(/^(date|time|text)$/.test(columnDef.filterType))) {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
-          conditionValue = Locale.parseNumber(conditionValue);
+
+          if (columnDef && columnDef.maskOptions?.process === 'rangeNumber') {
+            const splitter = columnDef.maskOptions.patternOptions?.delimeter;
+            conditionValue = conditionValue.split(splitter).map(x => Locale.parseNumber(x)).sort((a, b) => a - b);
+            isRangeNumber = true;
+          } else {
+            conditionValue = Locale.parseNumber(conditionValue);
+            isRangeNumber = false;
+          }
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
@@ -2181,6 +2204,10 @@ Datagrid.prototype = {
                 d2 = d2.getTime();
                 isMatch = rowValue >= d1 && rowValue <= d2 && rowValue !== null;
               }
+            }
+            if (isRangeNumber) {
+              const isNotEmpty = rowValue !== '' && rowValue !== null;
+              isMatch = (rowValue >= conditionValue[0] && rowValue <= conditionValue[1] && isNotEmpty);
             }
             break;
           case 'less-than':

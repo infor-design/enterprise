@@ -111,6 +111,11 @@ MaskInput.prototype = {
           this.element.classList.add('is-number-mask');
           break;
         }
+        case 'rangeNumber': {
+          this.settings.pattern = masks.rangeNumberMask;
+          this.element.classList.add('is-range-number-mask');
+          break;
+        }
         case 'date': {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
           const datepicker = $(this.element).data('datepicker');
@@ -653,6 +658,10 @@ MaskInput.prototype = {
     if (this.settings.process === 'number') {
       this.element.classList.remove('is-number-mask');
     }
+    if (this.settings.process === 'rangeNumber') {
+      this.element.classList.remove('is-range-number-mask');
+    }
+
     this.element.removeEventListener('focus', this.focusEventHandler);
     delete this.focusEventHandler;
 

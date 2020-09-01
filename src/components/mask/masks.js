@@ -303,6 +303,63 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   return numberMask(rawValue);
 };
 
+/**
+ * Soho Range Number Mask Function
+ * @param {string} rawValue the un-formatted value that will eventually be masked.
+ * @param {object} options masking options
+ * @returns {array} representing a mask that will match a formatted Number.
+ */
+masks.rangeNumberMask = function (rawValue, options) {
+  const minusSign = Locale.currentLocale.data.numbers.minusSign;
+  const minusSignLen = (rawValue.match(new RegExp(minusSign, 'g')) || []).length;
+  const minusRegex = new RegExp(`[${minusSign}]`, 'g');
+  const delimeterRegex = new RegExp(`[${options.delimeter}]`, 'g');
+  const isNegative = x => (new RegExp(`^${minusSign}`)).test(x);
+  const parts = rawValue.split(options.delimeter);
+  let returnValue = parts;
+  const insertDelimeter = (v) => {
+    const index = v.indexOf(options.delimeter);
+    const r = masks.numberMask(v, options);
+    if (index > -1) {
+      r.splice(index, 0, delimeterRegex);
+    }
+    return r;
+  };
+
+  if (options.allowNegative) {
+    if (rawValue.length === 1 && minusSignLen) {
+      returnValue = [minusRegex];
+    } else if (isNegative(rawValue) && minusSignLen === 1) {
+      returnValue = masks.numberMask(parts[1], options);
+      returnValue.splice(0, 0, minusRegex);
+    } else if (isNegative(rawValue) && minusSignLen > 1) {
+      if (rawValue.substr(-1) === options.delimeter) {
+        returnValue = masks.numberMask(rawValue.substr(1).slice(0, -1), options);
+        returnValue.splice(0, 0, minusRegex);
+        returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
+      } else {
+        returnValue = insertDelimeter(rawValue.substr(1));
+        returnValue.splice(0, 0, minusRegex);
+      }
+    } else if (rawValue.substr(-1) === options.delimeter) {
+      returnValue = masks.numberMask(rawValue.slice(0, -1), options);
+      returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
+    } else {
+      returnValue = insertDelimeter(rawValue);
+    }
+  } else {
+    const useValue = isNegative(rawValue) ? rawValue.substr(1) : rawValue;
+    if (useValue.substr(-1) === options.delimeter) {
+      returnValue = masks.numberMask(useValue.slice(0, -1), options);
+      returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
+    } else {
+      returnValue = insertDelimeter(useValue);
+    }
+  }
+
+  return returnValue;
+};
+
 // Default Date Mask Options
 const DEFAULT_DATETIME_MASK_OPTIONS = {
   format: 'M/d/yyyy',
