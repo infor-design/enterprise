@@ -1097,8 +1097,11 @@ MonthView.prototype = {
 
     const selectPicklistItem = (target, cssClass) => {
       const selectedElem = this.monthYearPane[0].querySelector(`.picklist.${cssClass} .is-selected`);
+
       DOM.removeClass(selectedElem, 'is-selected');
-      selectedElem.querySelector('a').setAttribute('tabindex', '-1');
+      if (selectedElem) {
+        selectedElem.querySelector('a').setAttribute('tabindex', '-1');
+      }
 
       DOM.addClass(target.parentNode, 'is-selected');
       target.setAttribute('tabindex', '0');
