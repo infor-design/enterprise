@@ -115,6 +115,10 @@ input::-webkit-inner-spin-button {
   &.is-focused {
     box-shadow: $focus-box-shadow;
 
+    &.is-disabled {
+      box-shadow: none;
+    }
+
     > .spinbox-control {
       border-color: $input-color-focus-border;
 
