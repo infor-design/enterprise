@@ -817,8 +817,8 @@ Accordion.prototype = {
       // If we have the correct settings defined, close other accordion
       // headers that are not parents of this one.
       const collapseDfds = [];
-      if (self.settings.allowOnePane && !dontCollapseHeaders) {
-        self.headers?.not(headerParents).each(function () {
+      if (self.settings.allowOnePane && !dontCollapseHeaders && self.headers) {
+        self.headers.not(headerParents).each(function () {
           const h = $(this);
           if (self.isExpanded(h)) {
             collapseDfds.push(self.collapse(h));
@@ -828,13 +828,14 @@ Accordion.prototype = {
 
       // Expand all headers that are parents of this one, if applicable
       const expandDfds = [];
-      headerParents?.not(header).each(function () {
-        const h = $(this);
-        if (!self.isExpanded(h)) {
-          expandDfds.push(self.expand(h));
-        }
-      });
-
+      if (headerParents) {
+        headerParents.not(header).each(function () {
+          const h = $(this);
+          if (!self.isExpanded(h)) {
+            expandDfds.push(self.expand(h));
+          }
+        });
+      }
       header.add(pane).addClass('is-expanded');
       header.children('a').attr('aria-expanded', 'true');
 
