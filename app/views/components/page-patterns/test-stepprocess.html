@@ -1,0 +1,395 @@
+<header class="header is-personalizable top-header">
+  <div class="toolbar">
+    <div class="title">
+      <h1>
+        <span class="panel-title">Designer Application</span>
+        <span class="panel-subhead">Last saved at <i id="savedTime">8:02am</i></span>
+      </h1>
+    </div>
+    <div class="buttonset">
+      <button class="btn js-btn-save-changes" type="button">
+        <span>Save</span>
+      </button>
+    </div>
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div class="step-process-container two-column fixed page-container no-scroll" role="main">
+
+  <div class="sidebar">
+    <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
+      <div class="title title-wide">Steps to complete</div>
+    </div>
+
+    <ul id="step-list" class="tree js-step-list-scroll" data-init="false">
+
+      <li class="js-step is-selected">
+        <a class="js-step-link" href="#content1">
+          <svg class="step-alert icon-confirm icon" alert="true" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-confirm"></use>
+          </svg>
+          <span class='tree-text'>Step 1</span>
+        </a>
+      </li>
+
+      <li class="js-step folder">
+        <a class="js-step-link" href="#">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-circle"></use>
+          </svg>
+          <span class='tree-text'>Longer name for Step 2 (Folder) that should wrap to multiple lines</span>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+        <ul class="folder js-step-folder">
+          <li class="js-step">
+            <a class="js-step-link" href="#content2-1">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Step 2-1</span>
+            </a>
+          </li>
+          <li class="js-step">
+            <a class="js-step-link" href="#content2-2">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Step 2-2</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="js-step folder">
+        <a class="js-step-link" href="#content3">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Step 3 (Ajax)</span>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+        <ul class="folder js-step-folder"></ul>
+      </li>
+
+      <li class="js-step">
+        <a class="js-step-link" href="#content4">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Step 4</span>
+        </a>
+      </li>
+      <!-- ...More steps populated by function below -->
+    </ul>
+  </div>
+
+  <div class="main no-scroll" role="main">
+
+    <div class="toolbar-custom toolbar-collapsible">
+      <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-bullet-steps"></use>
+        </svg>
+        <span class="audible">Bullet</span>
+      </button>
+      <div class="heading">
+        Preferences
+        <small>Page X of XX</small>
+      </div>
+      <div class="actions phone-hidden">
+        <button class="btn-tertiary js-step-link-prev" type="button">
+          <span>Previous</span>
+        </button>
+        <button class="btn-tertiary js-step-link-next" type="button">
+          <span>Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="scrollable step-container js-step-container-scroll">
+
+      <div id="content1" class="js-step-panel">
+        <h2>Step 1</h2>
+        <form>
+          <div class="field">
+            <label for="employment-type" class="label">Employment Type</label>
+            <input id="employment-type" name="employment-type" type="text">
+          </div>
+
+          <div class="field">
+            <label for="work-type" class="label">Work Type</label>
+            <input id="work-type" name="work-type" type="text">
+          </div>
+
+          <div class="field">
+            <fieldset class="radio-group">
+              <legend>Select an Option</legend>
+              <input type="radio" class="radio" name="options" id="option1" value="option1" />
+              <label for="option1" class="radio-label">Option one</label>
+              <br/>
+              <input type="radio" class="radio" name="options" id="option2" value="option1" checked="true" />
+              <label for="option2"  class="radio-label">Option two</label>
+              <br/>
+              <input type="radio" class="radio" name="options" id="option3" value="option3" />
+              <label for="option3" class="radio-label">Option three</label>
+              <br/>
+              <input type="radio" class="radio" name="options" id="option4" value="delivery" disabled="true" />
+              <label for="option4" class="radio-label">Option four</label>
+            </fieldset>
+          </div>
+
+          <div class="field">
+            <label for="point-of-origin" class="label">Point of Origin</label>
+            <input id="point-of-origin" name="point-of-origin" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-one" class="label">Extra Field</label>
+            <input id="extra-field-one" name="extra-field-one" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-two" class="label">Extra Field</label>
+            <input id="extra-field-two" name="extra-field-two" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-three" class="label">Extra Field</label>
+            <input id="extra-field-three" name="extra-field-three" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-four" class="label">Extra Field</label>
+            <input id="extra-field-four" name="extra-field-four" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-five" class="label">Extra Field</label>
+            <input id="extra-field-five" name="extra-field-five" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-six" class="label">Extra Field</label>
+            <input id="extra-field-six" name="extra-field-six" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-seven" class="label">Extra Field</label>
+            <input id="extra-field-seven" name="extra-field-seven" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-eight" class="label">Extra Field</label>
+            <input id="extra-field-eight" name="extra-field-eight" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-nine" class="label">Extra Field</label>
+            <input id="extra-field-nine" name="extra-field-nine" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-ten" class="label">Almost Last Field</label>
+            <input id="extra-field-ten" name="extra-field-ten" type="text">
+          </div>
+
+          <div class="field">
+            <label for="extra-field-eleven" class="label">Last Field</label>
+            <input id="extra-field-eleven" name="extra-field-eleven" type="text">
+          </div>
+
+        </form>
+      </div>
+
+      <div id="content2-1" class="js-step-panel">
+        <h2>Step 2-1</h2>
+        <form>
+          <div class="field">
+            <label for="slider-competency1">How competent do you think you are?</label>
+            <input id="slider-competency1" name="slider-competency1" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
+              {"value": 0, "description": "0%"},
+              {"value": 1, "description": "25%"},
+              {"value": 2, "description": "50%"},
+              {"value": 3, "description": "75%"},
+              {"value": 4, "description": "100%"}
+            ]' />
+          </div>
+          <div class="field">
+            <label for="slider-competency2">Do you think you are smarter than what percentage of the general population?</label>
+            <input id="slider-competency2" name="slider-competency2" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
+              {"value": 0, "description": "0%"},
+              {"value": 1, "description": "25%"},
+              {"value": 2, "description": "50%"},
+              {"value": 3, "description": "75%"},
+              {"value": 4, "description": "100%"}
+            ]' />
+          </div>
+        </form>
+      </div>
+
+      <div id="content2-2" class="js-step-panel">
+        <h2>Step 2-2</h2>
+        <p>This is step 2-2</p>
+      </div>
+
+      <div id="content3" class="js-step-panel">
+        <h2>Step 3</h2>
+        <p>This is step 3</p>
+      </div>
+
+      <div id="content4" class="js-step-panel">
+        <h2>Step 4</h2>
+        <p>This is step 4</p>
+      </div>
+
+    </div>
+
+    <div class="phone-action-bar phone-visible">
+      <button class="btn js-btn-save-changes" type="button">Save &amp; Close</button>
+      <button class="btn-primary js-step-link-next" type="button">Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $(function () {
+
+    var sampleData, ajaxSampleData;
+
+    // Add extra sample nodes/data
+    for (var i = 5; i < 20; i++) {
+      stepFunctions.createHTML('#step-list', {
+        id: 'content' + i,
+        title: 'step ' + i
+      });
+    }
+
+    // Init Step Process
+    $('.step-process-container').stepprocess({
+      'linearProgression': false,
+      'beforeSelectStep': stepFunctions.beforeSelectStep
+    });
+
+    // Attach scroll action features
+    $('.js-step-container-scroll').scrollaction({
+      scrollActionTarget: '.main'
+    });
+
+    $('.js-step-tree-scroll').scrollaction({
+      scrollActionTarget: '.sidebar'
+    });
+
+    // Example button save event
+    $('.js-btn-save-changes').click(function (e) {
+      e.preventDefault();
+      $('body').message({
+        title: 'Step Saved',
+        isError: false,
+        returnFocus: $(this),
+        message: 'This has been saved.',
+        buttons: [{
+          text: 'Ok',
+          click: function () {
+            $(this).data('modal').close();
+          },
+          isDefault: true
+        }]
+      });
+    });
+  });
+
+  // Step Functions
+  var stepFunctions = {
+
+    ajaxGetSubstepsForStep: function (stepId, callback) {
+      var deferred = $.Deferred();
+
+      setTimeout(function () {
+        var subSteps = [
+          { id: 'content3-1', title: 'step 3-1'},
+          { id: 'content3-2', title: 'step 3-2' }
+        ];
+        var folder = $('.js-step-link[href="' + stepId + '"]').next('.js-step-folder');
+        for (var i = 0; i < subSteps.length; i++) {
+          stepFunctions.createHTML(folder, subSteps[i]);
+        }
+        deferred.resolve(subSteps)
+      }, 100);
+      return deferred.promise();
+    },
+
+    ajaxCanAccessStep: function () {
+      var deferred = $.Deferred();
+      setTimeout(function () {
+        var canAccess = true;
+        deferred.resolve(canAccess)
+      }, 100);
+      return deferred.promise();
+    },
+
+    beforeSelectStep: function (args) {
+      var deferred = $.Deferred();
+      var $stepLink = $(Soho.xss.escapeHTML(args.stepLink));
+      var $folder = $stepLink.next('.js-step-folder');
+      var stepId = $stepLink.attr('href');
+
+      if ($folder.length && $folder.children().length === 0) {
+
+        // Is a folder, get nodes (unless backend denies due to security)
+        stepFunctions.ajaxGetSubstepsForStep(stepId).done(function (subSteps) {
+          var canAccessStep = subSteps.length > 0;
+          var stepLinkToSelect;
+          var $stepProcessElem = $('.step-process-container');
+
+          if (canAccessStep) {
+            // Example to automatically select first one after ajax loads steps
+            stepLinkToSelect = $('.js-step-link[href="#' + subSteps[0].id + '"]');
+          } else {
+            // Since folder tried to open, toggle it closed when permission denied.
+            $stepProcessElem.data('stepprocess').toggleNode($stepLink);
+          }
+
+          if (stepLinkToSelect) {
+            deferred.resolve(canAccessStep, stepLinkToSelect);
+          } else {
+            deferred.resolve(canAccessStep);
+          }
+        });
+
+      } else {
+        // Not a folder, just check security
+        stepFunctions.ajaxCanAccessStep($stepLink).done(function(canAccessStep) {
+          deferred.resolve(canAccessStep);
+        });
+      }
+
+      // Return promise
+      return deferred.promise();
+    },
+
+    createHTML: function(stepFolder, step) {
+      console.log(step);
+      var $stepContainer = $(stepFolder);
+      var $contentContainer = $('.step-container');
+      $stepContainer.append('<li class="js-step">' +
+        '<a class="js-step-link" href="#' + step.id + '">' +
+          '<svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">' +
+            '<use href="#icon-empty-circle"></use>' +
+          '</svg>' +
+          '<span class="tree-text">' + step.title + '</span>' +
+        '</a>' +
+      '</li>');
+      $contentContainer.append('<div id="' + step.id + '" class="js-step-panel">' +
+        '<h2>' + step.title + '</h2>' +
+        '<p>This is ' + step.title + '</p>' +
+      '</div>');
+    }
+
+  };
+</script>
