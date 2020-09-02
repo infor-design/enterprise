@@ -4,7 +4,7 @@
 
 ### v4.33.0 Fixes
 
-- Placeholder Item
+- `[Tree]` Fixed a bug that adding icons in with the tree text would encode it when using addNode. ([#4305](https://github.com/infor-design/enterprise/issues/4305))
 
 ## v4.32.0
 
