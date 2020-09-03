@@ -4,7 +4,7 @@
 
 ### v4.33.0 Fixes
 
-- Placeholder Item
+- `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 
 ## v4.32.0
 
