@@ -4,7 +4,7 @@
 
 ### v4.33.0 Fixes
 
-- Placeholder Item
+- `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 
 ## v4.32.0
 
