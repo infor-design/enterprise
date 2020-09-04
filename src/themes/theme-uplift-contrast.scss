@@ -179,7 +179,7 @@ $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
-//States
+// States
 $error-color: $ids-color-status-danger;
 $error-icon-fill: $ids-color-status-danger;
 $alert-color: $ids-color-palette-amber-100;
@@ -327,7 +327,7 @@ $error-page-bg-color: $ids-color-palette-slate-20;
 $error-page-content-bg-color: $ids-color-palette-slate-10;
 $error-page-title-color: $ids-color-palette-black;
 $error-page-info-color: $label-color;
-$error-border-color: $ids-color-palette-slate-60;
+$error-border-color: $ids-color-status-danger;
 $error-box-shadow: 0 2px 5px $drop-shadow-depth;
 
 //Skip Link
