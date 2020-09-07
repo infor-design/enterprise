@@ -4,7 +4,7 @@
 
 ### v4.33.0 Fixes
 
-- Placeholder Item
+- `[Tabs]` Fixed multiple bugs where error icon in tabs and the animation bar were not properly aligned in RTL uplift theme. ([#4326](https://github.com/infor-design/enterprise/issues/4326))
 
 ## v4.32.0
 
