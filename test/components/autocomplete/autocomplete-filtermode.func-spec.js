@@ -87,7 +87,7 @@ describe('Autocomplete API', () => {
     expect(resultItems[0].innerText.trim()).toBe('california');
   });
 
-  fit('properly escapes and allows special characters within a search term', () => {
+  it('properly escapes and allows special characters within a search term', () => {
     autocompleteAPI = new Autocomplete(autocompleteInputEl, {
       source: specialCharacterData
     });
