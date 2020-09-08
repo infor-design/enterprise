@@ -19,7 +19,7 @@
     "href": '/somelink/'
   }, {
     "id": "node2",
-    "text": "Node Two",
+    "text": "Node Two <svg class=\"icon icon-info\" focusable=\"false\" aria-hidden=\"true\" role=\"presentation\"><use href=\"#icon-info-alert\"></use></svg>",
     "open": true,
     "selected": false,
     "children": [{
@@ -41,9 +41,12 @@
   }];
 
 
-  $('#json-tree').tree({
+  var api = $('#json-tree').tree({
     dataset: sampleData,
     folderIconOpen: 'plusminus-folder-open',
     folderIconClosed: 'plusminus-folder-closed'
-  });
+  }).data('tree');
+
+  api.addNode({text: 'New Item <svg class="icon icon-info" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-info-alert"></use></svg>', parent: 'new1', disabled: true});
+
 </script>
