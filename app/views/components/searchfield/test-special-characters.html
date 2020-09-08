@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Special Characters</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="searchfield-objects">Search Results</label>
+      <input data-init="false" id="searchfield-objects" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+
+    var results = [
+      {value: '1', label: 'Item ( ) [ ? + *'},
+      {value: '2', label: 'Item Two'},
+      {value: '3', label: 'Item $ & * ? #'},
+      {value: '4', label: 'Item @ ^ &'},
+      {value: '5', label: 'Item Five'},
+      {value: '4', label: 'Item ] [ | ~'}
+    ];
+
+    // Objects Example
+    var objectsField = $('#searchfield-objects').searchfield({
+      filterMode: 'contains',
+      delay: 500,
+      source: function(term, response) {
+        console.log(this);
+        response(objectsField.val(), results);
+      }
+    });
+
+  });
+</script>
