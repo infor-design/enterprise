@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
@@ -268,6 +269,11 @@ Tree.prototype = {
     const span = document.createElement('span');
     DOM.addClass(span, 'tree-text');
     span.textContent = text;
+
+    if (span.innerHTML.indexOf('&lt;svg') > 0) {
+      span.innerHTML = xssUtils.unescapeHTML(span.innerHTML);
+    }
+
     a[0].appendChild(span);
 
     // Inject children count
