@@ -5,6 +5,7 @@
 ### v4.33.0 Fixes
 
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
+- `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
 
 ## v4.32.0
 

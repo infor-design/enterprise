@@ -91,7 +91,7 @@
       columns.push({ id: 'deployment', name: 'Deployment', field: 'deployment'});
       columns.push({ id: 'scheduled', name: 'Scheduled Time', field: 'scheduled', formatter: Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Color,
-        ranges: [{'value': 'Success', 'classes': 'alert-green'}, {'value': 'Queued', classes: ''}]});
+        ranges: [{'value': 'Success', 'classes': 'emerald08-color'}, {'value': 'Queued', classes: ''}]});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200, formatter: Formatters.Button, text: 'Cancel', click: function () {
           alert('test');
         }, focusable: true, contentVisible: function (row, cell, data) {
