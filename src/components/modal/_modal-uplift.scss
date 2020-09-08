@@ -93,3 +93,29 @@ html[dir='rtl'] {
     }
   }
 }
+
+//combine firefox and rtl rules
+html[dir='rtl'] {
+  &.is-firefox {
+    .modal {
+      .tab-container {
+        &.horizontal,
+        &.header-tabs {
+          > .tab-list-container {
+            .tab {
+              &:not(.last-child) {
+                &.is-error {
+                  .icon-error,
+                  .icon-info,
+                  .icon-alert {
+                    margin-top: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
