@@ -5,6 +5,7 @@
 ### v4.33.0 Fixes
 
 - `[Tabs]` Fixed multiple bugs where error icon in tabs and the animation bar were not properly aligned in RTL uplift theme. ([#4326](https://github.com/infor-design/enterprise/issues/4326))
+- `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
 
 ## v4.32.0
 
