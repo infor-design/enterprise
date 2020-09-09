@@ -81,6 +81,7 @@ const PAGER_DEFAULTS = {
   showPageSizeSelector: true,
   smallPageSizeSelector: false,
   pageSizeSelectorText: 'RecordsPerPage',
+  pageSizeSelectorTextNoToken: 'RecordsPerPageNoToken',
   onPageSizeChange: null,
   showFirstButton: true,
   enableFirstButton: true,
@@ -1022,7 +1023,7 @@ Pager.prototype = {
       // Change to the condensed layout, if applicable
       if (this.showSmallPageSizeSelector) {
         isAudible = ' class="audible"';
-        translatedText = Locale.translate(this.settings.pageSizeSelectorText).replace('{0}', '');
+        translatedText = Locale.translate(this.settings.pageSizeSelectorTextNoToken);
         recordHtml = `<span class="record-count">${this.settings.pagesize}</span>
         <span${isAudible}>${translatedText}</span>`;
       }

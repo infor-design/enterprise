@@ -49,6 +49,11 @@
       border-bottom: 1px solid transparent;
       color: $tree-link-color;
       margin: 0 0 0 4px;
+
+      .icon {
+        left: 1px;
+        top: 7px;
+      }
     }
 
     // Icons
