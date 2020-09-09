@@ -314,6 +314,7 @@ Soho.Locale.addCulture('fr-FR', {
     Print: { id: 'Print', value: 'Imprimer', comment: 'Print tooltip' },
     Range: { id: 'Range', value: 'Plage', comment: 'Range for tooltip' },
     RecordsPerPage: { id: 'RecordsPerPage', value: '{0} enregistrements par page', comment: 'Dropdown allows the user to select how many visible records {} shows select value.' },
+    RecordsPerPageNoToken: { id: 'RecordsPerPageNoToken', value: 'Enregistrements par page', comment: 'Shows as a title list of values for page number (without the slot/token value)' },
     Redo: { id: 'Redo', value: 'Rétablir', comment: 'Redo tooltip' },
     ReorderRows: { id: 'ReorderRows', value: 'Retrier les lignes', comment: 'Drag and Reorder Grid Rows' },
     Refresh: { id: 'Refresh', value: 'Actualiser', comment: 'Refresh tooltip' },
