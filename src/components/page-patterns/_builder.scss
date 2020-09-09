@@ -277,6 +277,7 @@
 
 // Inside the builder pane, the cart will show up as a popupmenu when on Tablet view-size and lower, so hide the cart
 // @media screen and (max-width: 1585px) {
+
 @include respond-to(tabletdown) {
   .builder-actions {
     display: block;
