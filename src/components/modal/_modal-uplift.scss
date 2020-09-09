@@ -38,7 +38,9 @@
               .icon-info,
               .icon-alert {
                 height: 15px;
-                margin-top: -3px;
+                margin-left: 0;
+                margin-right: 11px;
+                margin-top: 0;
                 right: -8px;
                 width: 15px;
               }
@@ -63,10 +65,57 @@
 }
 
 html[dir='rtl'] {
+  .modal {
+    .tab-container {
+      &.horizontal,
+      &.header-tabs {
+        > .tab-list-container {
+          .tab {
+            &:not(.last-child) {
+              &.is-error {
+                .icon-error,
+                .icon-info,
+                .icon-alert {
+                  margin-top: -2px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .modal-content {
     > .btn-close {
       left: 11px;
       right: auto;
+    }
+  }
+}
+
+//combine firefox and rtl rules
+html[dir='rtl'] {
+  &.is-firefox {
+    .modal {
+      .tab-container {
+        &.horizontal,
+        &.header-tabs {
+          > .tab-list-container {
+            .tab {
+              &:not(.last-child) {
+                &.is-error {
+                  .icon-error,
+                  .icon-info,
+                  .icon-alert {
+                    margin-top: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

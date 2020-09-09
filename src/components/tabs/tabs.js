@@ -566,7 +566,8 @@ Tabs.prototype = {
     if (modal.length) {
       modal.on('afteropen.tabs', () => {
         if (self.hasAnimatedBar()) {
-          self.focusBar();
+          const selected = $('.tab.is-selected');
+          self.focusBar(selected);
         }
       });
     }
