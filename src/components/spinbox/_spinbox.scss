@@ -201,6 +201,7 @@ input::-webkit-inner-spin-button {
 
 // When on smaller form factors make 400px fields go down to medium size.
 // Matches similar rules on the standard input fields.
+
 @include respond-to(phone) {
   .spinbox-lg,
   .field-short .spinbox-lg,

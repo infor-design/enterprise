@@ -27,6 +27,7 @@
       columns.push({ id: 'price1', name: 'Price 1', field: 'price1', formatter: Formatters.Text, editor: Editors.Input, filterType: 'decimal', maskOptions: {patternOptions: {allowThousandsSeparator: false}}});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', formatter: Formatters.Integer, editor: Editors.Input, filterType: 'integer', mask: '####'});
       columns.push({ id: 'price',  name: 'Price 2', field: 'price', align: 'right', formatter: Formatters.Decimal, editor: Editors.Input, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+      columns.push({ id: 'price',  name: 'Price (negative)', field: 'price', align: 'right', formatter: Formatters.Decimal, editor: Editors.Input, filterType: 'integer', editor: Editors.Input, maskOptions: {allowNegative: true}});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({
