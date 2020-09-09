@@ -641,7 +641,7 @@ MonthView.prototype = {
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
     let yearList = '<ul class="picklist is-year">';
-    yearList += '<li class="picklist-item up"><a href="#" tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>';
+    yearList += `<li class="picklist-item up"><a href="#" tabindex="0"><span class="audible">${Locale.translate('PreviousYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
 
     for (let i = this.settings.yearsBack; i >= 1; i--) {
       years.push(parseInt(year, 10) - i);
@@ -655,7 +655,7 @@ MonthView.prototype = {
     years.map(function (yearMap) {
       yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
     });
-    yearList += '<li class="picklist-item down"><a tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>';
+    yearList += `<li class="picklist-item down"><a tabindex="0"><span class="audible">${Locale.translate('NextYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
     yearList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-year').empty().append(yearList);
