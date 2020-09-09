@@ -305,28 +305,6 @@
   }
 }
 
-// Fix tab error icons inside of modal
-.modal {
-  .tab-container {
-    &.horizontal {
-      .tab-list-container {
-        .tab:not(.last-child) {
-          &.is-error {
-            .icon-error,
-            .icon-info,
-            .icon-alert {
-              margin-left: 0;
-              margin-right: 11px;
-              margin-top: -4px;
-              position: absolute;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .overlay {
   @include css3(transition, all 0.2s);
 
