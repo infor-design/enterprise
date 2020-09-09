@@ -1,11 +1,5 @@
 # What's New with Enterprise
 
-## v4.33.0
-
-### v4.33.0 Fixes
-
-- Placeholder Item
-
 ## v4.32.0
 
 ### v4.32.0 Important Notes
