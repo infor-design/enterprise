@@ -77,7 +77,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 }
 
 // Use "transition: transform ... ..." with all vendor prefixes
-// TODO: Find a way to mix this with the regular transition mixin
 @mixin transform-transition-list($transition-rule, $additional-transitions-list...) {
   @each $prefix in $prefixes {
     #{$prefix}transition: #{$prefix}transform $transition-rule, $additional-transitions-list;
