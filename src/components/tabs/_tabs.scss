@@ -702,10 +702,16 @@ html[dir='rtl'] {
       &:not(.last-child) {
         margin-left: 10px;
         margin-right: inherit;
+
+        &.is-error {
+          a[role='tab'] {
+            padding: 12px 5px 12px 20px;
+          }
+        }
       }
 
       .icon-error {
-        left: -10px;
+        left: 0;
         right: auto;
       }
     }
@@ -728,6 +734,35 @@ html[dir='rtl'] {
 
   .tab-focus-indicator {
     right: auto;
+  }
+}
+
+//Firefox and with RTL fixes
+html.is-firefox {
+  .tab-container {
+    > .tab-list-container {
+      .tab {
+        .icon-error,
+        .icon-info,
+        .icon-alert {
+          top: 12px;
+        }
+      }
+    }
+  }
+
+  &[dir='rtl'] {
+    .tab-container {
+      > .tab-list-container {
+        .tab {
+          .icon-error,
+          .icon-info,
+          .icon-alert {
+            top: 14px;
+          }
+        }
+      }
+    }
   }
 }
 
