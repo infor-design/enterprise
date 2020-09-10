@@ -77,6 +77,25 @@ describe('Editor example-index tests', () => {
 
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
   });
+
+  it('Should not insert images if the modals are cancelled', async () => {
+    const imageBtn = await element(by.css('.editor-toolbar .btn[data-action="image"]'));
+
+    // Open the Image Modal
+    await imageBtn.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.editor-modal-image.is-visible'))), config.waitsFor);
+
+    // Press the escape key and wait for the modal to close
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.editor-modal-image'))), config.waitsFor);
+
+    // Scan the editor content for image tags and make sure none exist
+    expect(await element(by.css('.editor img')).isPresent()).toBeFalsy();
+  });
 });
 
 describe('Editor visual regression tests', () => {
