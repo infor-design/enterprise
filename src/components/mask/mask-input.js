@@ -305,7 +305,7 @@ MaskInput.prototype = {
     // this will throw an error.
     rawValue = this._getSafeRawValue(rawValue);
 
-    const opts = {
+    let opts = {
       guide: this.settings.guide,
       keepCharacterPositions: this.settings.keepCharacterPositions,
       patternOptions: this.settings.patternOptions,
@@ -323,6 +323,11 @@ MaskInput.prototype = {
     if (typeof this.settings.pipe === 'function') {
       opts.pipe = this.settings.pipe;
     }
+
+    // Adjust range number value and options for rangeNumberMask.
+    const adjustedRangeNumber = masks.adjustRangeNumber(rawValue, opts, this);
+    rawValue = adjustedRangeNumber.rawValue;
+    opts = adjustedRangeNumber.opts;
 
     // Perform the mask processing.
     const processed = api.process(rawValue, opts);

@@ -310,54 +310,83 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
  * @returns {array} representing a mask that will match a formatted Number.
  */
 masks.rangeNumberMask = function (rawValue, options) {
+  options = options || {};
+  options.delimeter = options.delimeter || '-';
   const minusSign = Locale.currentLocale.data.numbers.minusSign;
-  const minusSignLen = (rawValue.match(new RegExp(minusSign, 'g')) || []).length;
-  const minusRegex = new RegExp(`[${minusSign}]`, 'g');
-  const delimeterRegex = new RegExp(`[${options.delimeter}]`, 'g');
-  const isNegative = x => (new RegExp(`^${minusSign}`)).test(x);
-  const parts = rawValue.split(options.delimeter);
-  let returnValue = parts;
-  const insertDelimeter = (v) => {
-    const index = v.indexOf(options.delimeter);
-    const r = masks.numberMask(v, options);
-    if (index > -1) {
-      r.splice(index, 0, delimeterRegex);
+  const regex = s => new RegExp(`${s}`, 'g');
+  const isValid = x => /^\u0028.+\u0029$/g.test(x);
+  const getLen = (partValue, x) => (partValue.match(x) || []).length;
+  const parts = rawValue.split(`\u0029${options.delimeter}\u0028`);
+
+  const getPatterns = (partValue) => {
+    const thisChar = partValue.substr(-1);
+    const partLen = { start: getLen(partValue, /[\u0028]/g), end: getLen(partValue, /[\u0029]/g) };
+    let r = [];
+    if (partLen.start === 1) {
+      const isMinus = options.allowNegative && partValue.substr(1, 1) === minusSign;
+      r = masks.numberMask(isMinus ? partValue.substr(1) : partValue, options);
+      r.splice(0, 0, /[\u0028]/g);
+      if (thisChar === '\u0029') {
+        r.push(/[\u0029]/g);
+      } else if (thisChar === options.delimeter) {
+        r.push(/[\u0029]/g);
+        r.push(regex(`[${options.delimeter}]`));
+      }
     }
     return r;
   };
 
-  if (options.allowNegative) {
-    if (rawValue.length === 1 && minusSignLen) {
-      returnValue = [minusRegex];
-    } else if (isNegative(rawValue) && minusSignLen === 1) {
-      returnValue = masks.numberMask(parts[1], options);
-      returnValue.splice(0, 0, minusRegex);
-    } else if (isNegative(rawValue) && minusSignLen > 1) {
-      if (rawValue.substr(-1) === options.delimeter) {
-        returnValue = masks.numberMask(rawValue.substr(1).slice(0, -1), options);
-        returnValue.splice(0, 0, minusRegex);
-        returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
-      } else {
-        returnValue = insertDelimeter(rawValue.substr(1));
-        returnValue.splice(0, 0, minusRegex);
-      }
-    } else if (rawValue.substr(-1) === options.delimeter) {
-      returnValue = masks.numberMask(rawValue.slice(0, -1), options);
-      returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
-    } else {
-      returnValue = insertDelimeter(rawValue);
-    }
-  } else {
-    const useValue = isNegative(rawValue) ? rawValue.substr(1) : rawValue;
-    if (useValue.substr(-1) === options.delimeter) {
-      returnValue = masks.numberMask(useValue.slice(0, -1), options);
-      returnValue.push(new RegExp(`[${options.delimeter}]`, 'g'));
-    } else {
-      returnValue = insertDelimeter(useValue);
-    }
+  if (typeof options.integerLimit === 'number') {
+    options.integerLimit *= 2;
+    options.integerLimit += options.delimeter.length + 4;
   }
 
-  return returnValue;
+  let r1 = [];
+  let r2 = [];
+
+  if (rawValue.substr(0, 1) === '\u0028' && parts.length) {
+    if (getLen(rawValue, /[\u0028]/g) === 2 &&
+      getLen(rawValue, /[\u0029]/g) === 2 &&
+      getLen(rawValue, regex(`\\u0029${options.delimeter}\\u0028`)) === 1 &&
+        parts[1].indexOf('\u0029') !== (parts[1].length - 1)) {
+      const str1 = parts[1].substr(0, (parts[1].indexOf('\u0029') + 1));
+      r1 = getPatterns(`${parts[0]}\u0029`);
+      r2 = [regex(`[${options.delimeter}]`), ...getPatterns(`\u0028${str1}`)];
+    } else {
+      r1 = getPatterns(parts.length === 2 ? `${parts[0]}\u0029` : parts[0]);
+      if (r1.length && parts.length === 2 && isValid(`${parts[0]}\u0029`)) {
+        r2 = [regex(`[${options.delimeter}]`), ...getPatterns(`\u0028${parts[1]}`)];
+      }
+    }
+  }
+  return [...r1, ...r2];
+};
+
+/**
+ * Adjust range number value and options
+ * @param {string} rawValue the un-formatted value that will eventually be masked.
+ * @param {object} opts masking options
+ * @param {string} inputApi mask input ele api
+ * @returns {object} adjusted range number and options.
+ */
+masks.adjustRangeNumber = function (rawValue, opts, inputApi) {
+  if (inputApi.settings.process === 'rangeNumber') {
+    const delimeter = inputApi && inputApi.settings?.patternOptions?.delimeter ?
+      inputApi.settings.patternOptions.delimeter : '-';
+    const isLastcharDelimeter = opts && opts.previousMaskResult?.substr(-1) === delimeter;
+    if (opts && opts.selection?.start === 1 && opts.selection?.end === 1 && rawValue !== '\u0028') {
+      rawValue = `\u0028${rawValue}`;
+      opts.selection.start++;
+      opts.selection.end++;
+    } else if (opts && opts.selection?.start !== 1 && opts.selection?.end !== 1 &&
+      rawValue.substr(-1) === '\u0029' && (rawValue.match(/\u0028/g) || []).length === 1 &&
+      !isLastcharDelimeter) {
+      rawValue = `${rawValue}${delimeter}\u0028`;
+      opts.selection.start += 2;
+      opts.selection.end += 2;
+    }
+  }
+  return { rawValue, opts };
 };
 
 // Default Date Mask Options

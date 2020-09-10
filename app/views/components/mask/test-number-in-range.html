@@ -1,19 +1,22 @@
 <div class="row top-padding">
   <div class="six columns">
     <div class="field">
-      <label for="test-input">Number In Range</label>
+      <label for="test-input">Number In Range ({numbers})-({numbers})</label>
       <input id="test-input" type="text" class="new-mask"
         data-options='{
           "process": "rangeNumber",
           "patternOptions": {
             "delimeter": "-",
-            "allowLeadingZeros": true,
+            "allowLeadingZeros": false,
             "allowThousandsSeparator": false,
             "allowDecimal": false,
-            "allowNegative": false,
-            "integerLimit": 20
+            "allowNegative": true
           }
         }' />
+    </div>
+    <div class="field">
+      <label for="test-input2">Number In Range as pattern (###)-(###)</label>
+      <input type="text" name="test-input2" id="test-input2" data-mask="(###)-(###)" />
     </div>
   </div>
 </div>

@@ -2049,7 +2049,14 @@ Datagrid.prototype = {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
 
           if (columnDef && columnDef.maskOptions?.process === 'rangeNumber') {
-            const splitter = columnDef.maskOptions.patternOptions?.delimeter;
+            let splitter = columnDef.maskOptions.patternOptions?.delimeter;
+            splitter = `\u0029${splitter}\u0028`;
+            if (conditionValue.substr(0, 1) === '\u0028') {
+              conditionValue = conditionValue.substr(1);
+            }
+            if (conditionValue.substr(-1) === '\u0029') {
+              conditionValue = conditionValue.substr(0, conditionValue.length - 1);
+            }
             conditionValue = conditionValue.split(splitter).map(x => Locale.parseNumber(x)).sort((a, b) => a - b);
             isRangeNumber = true;
           } else {
