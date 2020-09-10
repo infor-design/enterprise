@@ -8,6 +8,7 @@
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 - `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
 - `[Tabs]` Fixed multiple bugs where error icon in tabs and the animation bar were not properly aligned in RTL uplift theme. ([#4326](https://github.com/infor-design/enterprise/issues/4326))
+- `[Tree]` Fixed an issue where toggle node without making select/unselect was not working properly. ([#3927](https://github.com/infor-design/enterprise/issues/3927))
 - `[Tree]` Fixed a bug that adding icons in with the tree text would encode it when using addNode. ([#4305](https://github.com/infor-design/enterprise/issues/4305))
 
 ## v4.32.0
