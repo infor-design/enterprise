@@ -77,6 +77,34 @@ describe('Editor example-index tests', () => {
 
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
   });
+
+  it('should update fontpicker\'s displayed text type when the selected text\'s block is modified', async () => {
+    const elem = await element(by.css('.editor'));
+
+    // Clear contents and put some fresh text in
+    await elem.clear();
+    await elem.sendKeys('test test');
+    await elem.click();
+
+    // Simulate text selection of just the first word "test"
+    await browser.actions()
+      .keyDown(protractor.Key.SHIFT)
+      .sendKeys(protractor.Key.ARROW_RIGHT)
+      .sendKeys(protractor.Key.ARROW_RIGHT)
+      .sendKeys(protractor.Key.ARROW_RIGHT)
+      .sendKeys(protractor.Key.ARROW_RIGHT)
+      .keyUp(protractor.Key.SHIFT)
+      .perform();
+    await browser.driver.sleep(config.sleepShort);
+
+    // Open the fontpicker and select "Header 1"
+    await element(by.css('.fontpicker')).click();
+    await element(by.css('a[data-val="header1"]')).click();
+
+    // Check that the <h3> was applied, and the text inside the fontpicker is up to date.
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
+    expect(await element(by.css('.fontpicker')).getText()).toEqual('Header 1');
+  });
 });
 
 describe('Editor visual regression tests', () => {
