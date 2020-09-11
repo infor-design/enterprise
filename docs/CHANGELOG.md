@@ -4,14 +4,17 @@
 
 ### v4.33.0 Fixes
 
+- `[Autocomplete]` Fix a bug when connected to NG where pressing the enter key would not select Autocomplete items/. ([ng#901](https://github.com/infor-design/enterprise-ng/issues/901))
 - `[Datagrid]` Added support to `In Range` filter operator for numeric columns. ([#3988](https://github.com/infor-design/enterprise/issues/3988))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
+- `[Editor]` Fixed a bug where the Fontpicker's displayed style wasn't updating to match the current text selection in some cases. ([#4309](https://github.com/infor-design/enterprise/issues/4309))
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 - `[Modal Manager]` Modals now pass `isCancelled` properly when the Modal Manager API detects a request to close by using the Escape key. ([#4298](https://github.com/infor-design/enterprise/issues/4298))
 - `[Searchfield]` Allow for search terms to include special characters. ([#4291](https://github.com/infor-design/enterprise/issues/4291))
 - `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
 - `[Tabs]` Fixed multiple bugs where error icon in tabs and the animation bar were not properly aligned in RTL uplift theme. ([#4326](https://github.com/infor-design/enterprise/issues/4326))
 - `[Tabs]` Fixed a bug where removing a nested tab would cause an error due to being invisible. ([#4356](https://github.com/infor-design/enterprise/issues/4356))
+- `[Toolbar Flex]` Fixed detection of overflow in some toolbars where items were not properly displaying all overflowed items in the "More Actions" menu. ([#4296](https://github.com/infor-design/enterprise/issues/4296))
 - `[Tree]` Fixed a bug that adding icons in with the tree text would encode it when using addNode. ([#4305](https://github.com/infor-design/enterprise/issues/4305))
 
 ## v4.32.0
