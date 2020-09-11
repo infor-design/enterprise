@@ -463,6 +463,7 @@ Autocomplete.prototype = {
     // Remove events
     this.list.off([
       `click.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`,
       `touchend.${COMPONENT_NAME}`,
       `focusout.${COMPONENT_NAME}`
     ].join(' '));
@@ -906,6 +907,12 @@ Autocomplete.prototype = {
     if (this.element.offset().left > this.list.offset().left) {
       this.list.width(this.list.width() + 1);
     }
+
+    // Allow keyboard handling when focus is inside the Autocomplete list.
+    // See https://github.com/infor-design/enterprise-ng/issues/901
+    this.list.on(`keydown.${COMPONENT_NAME}`, (e) => {
+      this.handleAutocompleteKeydown(e);
+    });
 
     return this;
   },
