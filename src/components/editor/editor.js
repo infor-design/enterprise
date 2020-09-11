@@ -2560,7 +2560,7 @@ Editor.prototype = {
    * Formats the currently-selected block of content in the editor with a predefined HTML element
    * and style, if applicable.
    * @param {string} el, the desired block-level element with which to wrap the current block.
-   * @returns {void|boolean} same return value as [`document.execCommand()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)
+   * @returns {void}
    */
   execFormatBlock(el) {
     if (this.selection === undefined) {
@@ -2627,8 +2627,8 @@ Editor.prototype = {
       document.execCommand('removeFormat', false, el);
     }
 
+    document.execCommand('formatBlock', false, el);
     this.checkActiveButtons();
-    return document.execCommand('formatBlock', false, el);
   },
 
   // Get What is Selected

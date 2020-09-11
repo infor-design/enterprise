@@ -12,6 +12,15 @@ const caseSensitiveData = [
   'CaLiFoRnIa'
 ];
 
+const specialCharacterData = [
+  'Item ( ) [ ? + *',
+  'Item Two',
+  'Item $ & * ? #',
+  'Item @ ^ &',
+  'Item Five',
+  'Item ] [ | ~'
+];
+
 let autocompleteInputEl;
 let autocompleteAPI;
 
@@ -76,5 +85,46 @@ describe('Autocomplete API', () => {
     expect(resultItems).toBeDefined();
     expect(resultItems.length).toEqual(1);
     expect(resultItems[0].innerText.trim()).toBe('california');
+  });
+
+  it('properly escapes and allows special characters within a search term', () => {
+    autocompleteAPI = new Autocomplete(autocompleteInputEl, {
+      source: specialCharacterData
+    });
+
+    // Search for "Item" (all data should show)
+    autocompleteAPI.openList('Item', specialCharacterData);
+    let autocompleteListEl = document.querySelector('#autocomplete-list');
+    let resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems).toBeDefined();
+    expect(resultItems.length).toEqual(6);
+
+    // Search for "?" (two results)
+    autocompleteAPI.openList('?', specialCharacterData);
+    autocompleteListEl = document.querySelector('#autocomplete-list');
+    resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems.length).toEqual(2);
+    expect(resultItems[0].innerText.trim()).toBe('Item ( ) [ ? + *');
+    expect(resultItems[1].innerText.trim()).toBe('Item $ & * ? #');
+
+    // Search for "&" (two results)
+    autocompleteAPI.openList('&', specialCharacterData);
+    autocompleteListEl = document.querySelector('#autocomplete-list');
+    resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems.length).toEqual(2);
+    expect(resultItems[0].innerText.trim()).toBe('Item $ & * ? #');
+    expect(resultItems[1].innerText.trim()).toBe('Item @ ^ &');
+
+    // Search for opening square bracket "[" (2 results)
+    autocompleteAPI.openList('[', specialCharacterData);
+    autocompleteListEl = document.querySelector('#autocomplete-list');
+    resultItems = autocompleteListEl.querySelectorAll('li');
+
+    expect(resultItems.length).toEqual(2);
+    expect(resultItems[0].innerText.trim()).toBe('Item ( ) [ ? + *');
+    expect(resultItems[1].innerText.trim()).toBe('Item ] [ | ~');
   });
 });

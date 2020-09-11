@@ -120,7 +120,9 @@ stringUtils.textWidth = function textWidth(text, padding, font) {
 };
 
 /**
- * Escape  user input to be treated as literal string with regular expressions
+ * Escape user input that will be treated as a literal string.  This prevents incorrect
+ * RegExp matching when converting user input.
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
  * @private
  * @param {string} s string to process.
  * @returns {string} string after escaping.
