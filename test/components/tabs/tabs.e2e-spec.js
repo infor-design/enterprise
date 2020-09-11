@@ -554,3 +554,34 @@ describe('Tabs focus after enable/disable programmatically', () => {
     expect(await browser.driver.switchTo().activeElement().getAttribute('id')).toEqual('enable');
   });
 });
+
+describe('Tabs nested tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-nested-horizontal-tabs');
+    const tabsContainerEl = await element(by.id('main-tabs-container'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  // See Github #4356
+  it('can remove nested child tabs', async () => {
+    // Ensure nested tab container is loaded
+    const nestedTabsContainerEl = await element(by.id('nested-tabs-container'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(nestedTabsContainerEl), config.waitsFor);
+
+    // Check that Tab #4 exists
+    expect(await element(by.id('tab4')).isPresent()).toBeTruthy();
+
+    // Call the `destroy()` method
+    const removeScript = "$('#nested-tabs-container').data('tabs').remove('tab4')";
+    browser.executeScript(removeScript);
+
+    // Check that Tab #4 no longer exists
+    expect(await element(by.id('tab4')).isPresent()).toBeFalsy();
+  });
+});
