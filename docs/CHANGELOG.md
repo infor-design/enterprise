@@ -6,6 +6,7 @@
 
 - `[Datagrid]` Added support to `In Range` filter operator for numeric columns. ([#3988](https://github.com/infor-design/enterprise/issues/3988))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
+- `[Editor]` Fixed a bug where the Fontpicker's displayed style wasn't updating to match the current text selection in some cases. ([#4309](https://github.com/infor-design/enterprise/issues/4309))
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 - `[Searchfield]` Allow for search terms to include special characters. ([#4291](https://github.com/infor-design/enterprise/issues/4291))
 - `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
