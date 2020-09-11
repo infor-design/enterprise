@@ -341,7 +341,7 @@ ModalManager.prototype = {
       switch (keyCode) {
         // Escape Key
         case 27:
-          this.close(modalTargetElem);
+          this.close(modalTargetElem, true);
           break;
         case 9:
           this.setModalFocus(e.shiftKey ? 'last' : 'first', e);
