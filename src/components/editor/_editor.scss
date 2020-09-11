@@ -802,4 +802,14 @@ html[dir='rtl'] {
       }
     }
   }
+
+  // Flex Toolbar-specific styles
+  .flex-toolbar.formatter-toolbar {
+    .toolbar-section.more {
+      .btn-actions {
+        margin-left: 8px;
+        margin-right: auto;
+      }
+    }
+  }
 }
