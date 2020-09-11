@@ -111,6 +111,11 @@ MaskInput.prototype = {
           this.element.classList.add('is-number-mask');
           break;
         }
+        case 'rangeNumber': {
+          this.settings.pattern = masks.rangeNumberMask;
+          this.element.classList.add('is-range-number-mask');
+          break;
+        }
         case 'date': {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
           const datepicker = $(this.element).data('datepicker');
@@ -300,7 +305,7 @@ MaskInput.prototype = {
     // this will throw an error.
     rawValue = this._getSafeRawValue(rawValue);
 
-    const opts = {
+    let opts = {
       guide: this.settings.guide,
       keepCharacterPositions: this.settings.keepCharacterPositions,
       patternOptions: this.settings.patternOptions,
@@ -318,6 +323,11 @@ MaskInput.prototype = {
     if (typeof this.settings.pipe === 'function') {
       opts.pipe = this.settings.pipe;
     }
+
+    // Adjust range number value and options for rangeNumberMask.
+    const adjustedRangeNumber = masks.adjustRangeNumber(rawValue, opts, this);
+    rawValue = adjustedRangeNumber.rawValue;
+    opts = adjustedRangeNumber.opts;
 
     // Perform the mask processing.
     const processed = api.process(rawValue, opts);
@@ -653,6 +663,10 @@ MaskInput.prototype = {
     if (this.settings.process === 'number') {
       this.element.classList.remove('is-number-mask');
     }
+    if (this.settings.process === 'rangeNumber') {
+      this.element.classList.remove('is-range-number-mask');
+    }
+
     this.element.removeEventListener('focus', this.focusEventHandler);
     delete this.focusEventHandler;
 
