@@ -62,4 +62,16 @@
   }
 }
 
+// RTL Styles
+html[dir='rtl'] {
+  .tab-container.horizontal,
+  .tab-container.header-tabs {
+    .tab {
+      .icon-error {
+        right: auto !important;
+      }
+    }
+  }
+}
+
 @import '../tabs-module/tabs-module-uplift';
