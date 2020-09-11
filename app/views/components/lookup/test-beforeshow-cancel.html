@@ -1,0 +1,21 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="product-lookup" class="label">Products</label>
+      <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('#product-lookup').lookup({
+    field: 'productId',
+    beforeShow: function (api, response) {
+      $('body').toast({ title: 'Lookup Test', message: 'Canceled to open lookup window by settings method "beforeShow()"' });
+      response(false);
+    }
+  });
+</script>
