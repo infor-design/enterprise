@@ -284,6 +284,7 @@ Lookup.prototype = {
         }
 
         if (typeof grid === 'boolean' && grid === false) {
+          self.isOpen = false;
           return false;
         }
 

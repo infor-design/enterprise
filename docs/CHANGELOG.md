@@ -8,6 +8,7 @@
 - `[Datagrid]` Added support to `In Range` filter operator for numeric columns. ([#3988](https://github.com/infor-design/enterprise/issues/3988))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 - `[Editor]` Fixed a bug where the Fontpicker's displayed style wasn't updating to match the current text selection in some cases. ([#4309](https://github.com/infor-design/enterprise/issues/4309))
+- `[Lookup]` Fixed an issue where the event `beforeShow` was only triggered the first time. ([#899](https://github.com/infor-design/enterprise-ng/issues/899))
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 - `[Modal Manager]` Modals now pass `isCancelled` properly when the Modal Manager API detects a request to close by using the Escape key. ([#4298](https://github.com/infor-design/enterprise/issues/4298))
 - `[Searchfield]` Allow for search terms to include special characters. ([#4291](https://github.com/infor-design/enterprise/issues/4291))
