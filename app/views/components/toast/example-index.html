@@ -5,9 +5,13 @@
 </div>
 
 <script>
-
   $('#show-toast-message').on('click', function() {
-    $('body').toast({title: 'Application Offline', message: 'This is a Toast message.'});
+    $('body').toast({
+        title: 'Application Offline',
+        message: 'This is a Toast message.',
+        attributes: { name: 'id', value: function(args) {
+          return 'toast-id-' + args.toastIndex;
+        }}
+    });
   });
-
 </script>
