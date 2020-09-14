@@ -438,7 +438,6 @@ Tree.prototype = {
 
   /**
    * Deselects a tree node
-   * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
@@ -486,7 +485,6 @@ Tree.prototype = {
 
   /**
    * Selects a tree node
-   * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
@@ -698,7 +696,6 @@ Tree.prototype = {
 
   /**
    * Changes a node's open/close status to its opposite form.
-   * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {object} e jquery event
    * @returns {void}
@@ -721,6 +718,11 @@ Tree.prototype = {
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
+            self.selectNodeFinish(node, focus, e);
+          }
+        } else if (s.expandTarget === 'icon') {
+          const parent = node[0].parentNode;
+          if (e && DOM.hasClass(e.target, 'icon') && DOM.hasClass(parent, 'folder')) {
             self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
@@ -767,6 +769,11 @@ Tree.prototype = {
               }
             });
           } else if (result) { // Boolean is returned instead of a promise
+            self.selectNodeFinish(node, focus, e);
+          }
+        } else if (s.expandTarget === 'icon') {
+          const parent = node[0].parentNode;
+          if (e && DOM.hasClass(e.target, 'icon') && DOM.hasClass(parent, 'folder')) {
             self.selectNodeFinish(node, focus, e);
           }
         } else { // No Callback specified
