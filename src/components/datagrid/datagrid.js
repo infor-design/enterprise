@@ -2415,6 +2415,20 @@ Datagrid.prototype = {
           }
         }
       };
+      const setParents = function (nodeData) {
+        let found = false;
+        for (let i = 0, l = nodeData.length; i < l; i++) {
+          const node = nodeData[i];
+          if (node._isFilteredOut && !found && node.children?.length) {
+            node._isFilteredOut = !setParents(node.children);
+          }
+          if (typeof node._isFilteredOut === 'boolean' && !node._isFilteredOut) {
+            found = true;
+          }
+        }
+        return found;
+      };
+      setParents(s.dataset);
       checkNodes(s.dataset, 0);
     }
   },
