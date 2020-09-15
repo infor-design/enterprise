@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').one('initialized', function () {
+
+    // Define Columns
+    var columns = [];
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
+    columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center' });
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 120 });
+    columns.push({ id: '', name: '', field: '' });
+
+    var baseUrl = '{{basepath}}api/compressors';
+    $.getJSON(baseUrl + '?pageNum=1&pageSize=100', function(res) {
+      // Initialize the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'mixed',
+        paging: true,
+        pagesize: 7,
+        source: function(req, response) {
+          // Set url to get data
+          var url = baseUrl + '?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          }
+
+          // Get the data based on info in req, and return results into response.
+          $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
+            req.total = res.total;
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total;
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
+            response(res.data, req);
+          });
+        },
+        toolbar: { title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true }
+      })
+      .on('selected', function (e, args) {
+        console.log('Row Selected');
+      })
+      .on('rowactivated', function (e, args) {
+        console.log('Row Activated');
+        if (args && args.item && typeof args.item.id !== 'undefined') {
+          $('body').toast({
+            title: '',
+            message: 'Row Activated (Row Id: '+ args.item.id +')'
+          });
+        }
+      });
+    });
+
+  });
+</script>
