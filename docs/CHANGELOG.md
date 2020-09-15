@@ -2,6 +2,10 @@
 
 ## v4.33.0
 
+### v4.33.0 Features
+
+- `[Toast]` Added a setting to enable setting ids or other attributes on the toast element. ([#4275](https://github.com/infor-design/enterprise/issues/4275))
+
 ### v4.33.0 Fixes
 
 - `[Autocomplete]` Fix a bug when connected to NG where pressing the enter key would not select Autocomplete items/. ([ng#901](https://github.com/infor-design/enterprise-ng/issues/901))

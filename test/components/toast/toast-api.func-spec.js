@@ -112,4 +112,59 @@ describe('Toast API', () => {
     expect(container.getAttribute('class')).toContain('is-draggable');
     expect(container.getAttribute('style')).toContain(left);
   });
+
+  it('Should support setting attributes', () => {
+    let settings = {
+      title: 'Toast Title 2',
+      message: 'Toast Message 2',
+      timeout: 6000,
+      attributes: { name: 'id', value: 'my-unique-id' }
+    };
+
+    toastObj.updated(settings);
+    let container = document.body.querySelector('#my-unique-id');
+
+    expect(container.getAttribute('id')).toEqual('my-unique-id');
+
+    settings = {
+      title: 'Toast Title 2',
+      message: 'Toast Message 2',
+      timeout: 6000,
+      attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+    };
+
+    toastObj.updated(settings);
+    container = document.body.querySelector('[data-automation-id="my-unique-id"]');
+
+    expect(container.getAttribute('data-automation-id')).toEqual('my-unique-id');
+  });
+
+  it('Should support setting attributes as a function', () => {
+    const settings = {
+      title: 'Toast Title 2',
+      message: 'Toast Message 2',
+      timeout: 6000,
+      attributes: { name: 'id', value: args => `toast-id-${args.toastIndex}` }
+    };
+
+    toastObj.updated(settings);
+    const container = document.body.querySelector('#toast-id-2');
+
+    expect(container.getAttribute('id')).toEqual('toast-id-2');
+  });
+
+  it('Should support setting attributes as an array', () => {
+    const settings = {
+      title: 'Toast Title 2',
+      message: 'Toast Message 2',
+      timeout: 6000,
+      attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+    };
+
+    toastObj.updated(settings);
+    const container = document.body.querySelector('#my-unique-id');
+
+    expect(container.getAttribute('id')).toEqual('my-unique-id');
+    expect(container.getAttribute('data-automation-id')).toEqual('my-unique-id');
+  });
 });

@@ -40,6 +40,7 @@ const TOAST_DEFAULTS = {
  * @param {boolean} [settings.draggable = false] if true, allows user to drag/drop the toast container.
  * @param {boolean} [settings.savePosition] Save positon to local storage.
  * @param {string} [settings.uniqueId] A uniqueId to save positon to local storage, so same saved positon can be use for whole app.
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -111,20 +112,22 @@ Toast.prototype = {
     self.createDraggable(toast, container);
 
     // Get the number of toasts
-    let toastsIndex = container.children().length;
-    this.toastsIndex = toastsIndex;
+    let toastIndex = container.children().length;
+    this.toastIndex = toastIndex;
 
     // Get the number of unique toast container
     const toastUniqueContainer = this.element.find('.toast-container');
     for (let i = 0, len = toastUniqueContainer.children(); i < len.length; i++) {
-      toastsIndex = len.length;
+      toastIndex = len.length;
     }
+
+    this.addAttributes(toast);
 
     // Build the RenderLoop integration
     const timer = new RenderLoopItem({
       duration: math.convertDelayToFPS(s.timeout),
       timeoutCallback() {
-        self.remove(toast, toastsIndex);
+        self.remove(toast, toastIndex);
       },
       updateCallback(data) {
         percentage = ((data.duration - data.elapsedTime) / maxHideTime) * 100;
@@ -143,10 +146,10 @@ Toast.prototype = {
     // Clears the toast from the container, removing it from renderLoop and tearing down events
     function clearToast(targetToast) {
       timer.destroy(true);
-      self.remove(targetToast, toastsIndex);
+      self.remove(targetToast, toastIndex);
     }
 
-    $(document).on(`keydown.toast-${toastsIndex} keyup.toast-${toastsIndex}`, (e) => {
+    $(document).on(`keydown.toast-${toastIndex} keyup.toast-${toastIndex}`, (e) => {
       e = e || window.event;
       const key = e.which || e.keyCode;
 
@@ -169,6 +172,26 @@ Toast.prototype = {
     closeBtn.on('click.toast', () => {
       clearToast(toast);
     });
+  },
+
+  /**
+   * Generate additional attributes.
+   * @private
+   * @param {object} elem The root dom node
+   */
+  addAttributes(elem) {
+    const setting = this.settings.attributes;
+    if (!setting) {
+      return;
+    }
+
+    if (Array.isArray(setting)) {
+      setting.forEach((item) => {
+        elem.attr(item.name, item.value);
+      });
+    }
+    const value = typeof setting.value === 'function' ? setting.value(this) : setting.value;
+    elem.attr(setting.name, value);
   },
 
   /**
@@ -488,7 +511,7 @@ Toast.prototype = {
       'touchend.toast'
     ].join(' '));
     container.remove();
-    delete this.toastsIndex;
+    delete this.toastIndex;
     delete this.uniqueId;
     $.removeData(this.element[0], COMPONENT_NAME);
   }
