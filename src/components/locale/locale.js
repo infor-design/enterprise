@@ -231,7 +231,7 @@ const Locale = {  // eslint-disable-line
       correctLanguage = 'he';
     }
     // Another special case
-    if (lang === 'nb' || lang === 'nn') {
+    if (lang === 'nb' || lang === 'nn' || lang === 'nb-NO' || lang === 'nn-NO') {
       correctLanguage = 'no';
     }
     return correctLanguage;
