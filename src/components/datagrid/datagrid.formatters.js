@@ -234,6 +234,8 @@ const formatters = {
   },
 
   Hyperlink(row, cell, value, col, item, api) {
+    const disableAttr = col && typeof col.disableButton === 'function' &&
+      col.disableButton(row, cell, value, col, item) ? ' disabled' : '';
     let colHref = col.href || '#';
 
     // Support for dynamic links based on content
@@ -253,11 +255,11 @@ const formatters = {
     }
 
     return col.icon ?
-      (`<a href="${colHref}" class="btn-icon row-btn ${(col.cssClass || '')}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>
+      (`<a href="${colHref}"${disableAttr} class="btn-icon row-btn ${(col.cssClass || '')}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>
           ${$.createIcon({ icon: col.icon, file: col.iconFile })}
           <span class="audible">${textValue}</span>
         </a>`) :
-      (`<a href="${colHref}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} role="presentation" class="hyperlink ${(col.cssClass || '')}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
+      (`<a href="${colHref}"${disableAttr} ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} role="presentation" class="hyperlink ${(col.cssClass || '')}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
   },
 
   Template(row, cell, value, col, item) {
@@ -560,12 +562,14 @@ const formatters = {
 
   Button(row, cell, value, col, item, api) {
     let text;
+    const disableAttr = col && typeof col.disableButton === 'function' &&
+      col.disableButton(row, cell, value, col, item) ? ' disabled' : '';
     if (col.text) {
       text = col.text;
     } else {
       text = (value === null || value === undefined || value === '') ? '' : value.toString();
     }
-    let markup = `<button type="button" class="${(col.icon ? 'btn-icon' : 'btn-secondary')} row-btn ${(col.cssClass ? col.cssClass : '')}"${(!api.settings.rowNavigation ? '' : ' tabindex="-1"')} >`;
+    let markup = `<button type="button"${disableAttr} class="${(col.icon ? 'btn-icon' : 'btn-secondary')} row-btn ${(col.cssClass ? col.cssClass : '')}"${(!api.settings.rowNavigation ? '' : ' tabindex="-1"')} >`;
 
     if (col.icon) {
       markup += $.createIcon({ icon: col.icon, file: col.iconFile });

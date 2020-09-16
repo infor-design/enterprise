@@ -86,9 +86,9 @@ Button.prototype = {
    */
   get disabled() {
     if (this.element.parent().is('.spinbox-wrapper')) {
-      return this.element.parent().find('input')[0].disabled;
+      return this.isDisabled(this.element.parent().find('input'));
     }
-    return this.element[0].disabled;
+    return this.isDisabled(this.element);
   },
 
   /**
@@ -582,6 +582,20 @@ Button.prototype = {
    */
   toggle() {
     this.pressed = !this.pressed;
+  },
+
+  /**
+   * Check if given element is disabled or not.
+   * https://stackoverflow.com/a/41736179
+   * $('elem')[0].disabled will only work on 'form elements' and will
+   * return undefined for all others elements, so use $('elem').is('[disabled]') instead.
+   * @private
+   * @param {jQuery[]|HTMLElement} el element to check
+   * @returns {boolean} True if disabled.
+   */
+  isDisabled(el) {
+    el = el instanceof jQuery ? el : $(el);
+    return el.is('[disabled]') && !el.is('[disabled="false"]');
   },
 
   /**

@@ -3231,6 +3231,10 @@ describe('Datagrid icon buttons tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-icon-buttons')).toEqual(0);
     });
   }
+
+  it('Should have disabled buttons', async () => {
+    expect(await element.all(by.css('.row-btn[disabled]')).count()).toEqual(4);
+  });
 });
 
 describe('Datagrid loaddata selected rows tests', () => {

@@ -40,6 +40,8 @@
       columns.push({ id: 'actionLink', name: 'As Link', sortable: false, align: 'center', width: 80, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
       columns.push({ id: 'action', name: 'Active', sortable: false, align: 'center', width: 80, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);},
         contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
+      columns.push({ id: 'disableButtons', name: 'Disable Buttons', sortable: false, align: 'center', width: 120, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log('Clicked! Buttons', args[0].cell, args[0].row, args[0].item.id);}, disableButton: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
+      columns.push({ id: 'disableButtonsLink', name: 'Disable Buttons (as link)', sortable: false, align: 'center', width: 170, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) { console.log('Clicked! Buttons (as link)', args[0].cell, args[0].row, args[0].item.id);}, disableButton: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
 
       // Init and get the api for the grid
