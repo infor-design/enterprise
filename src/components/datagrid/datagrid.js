@@ -7798,7 +7798,7 @@ Datagrid.prototype = {
     let args = [{ row: idx, item: dataset[idx] }];
 
     const doRowactivated = () => {
-      const rowNodes = this.rowNodes(idx).toArray();
+      const rowNodes = s.paging && s.source && s.selectable === 'mixed' ? this.rowNodesByDataIndex(idx).toArray() : this.rowNodes(idx).toArray();
       rowNodes.forEach((rowElem) => {
         rowElem.classList.add('is-rowactivated');
       });
