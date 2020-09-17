@@ -452,7 +452,7 @@ Pager.prototype = {
 
     self.pagerBar.on('keydown.pager', $(self.focusableElements), (event) => {
       if ($('.popupmenu.is-open').length > 0) {
-        return;
+        return true;
       }
 
       event = event || window.event;
