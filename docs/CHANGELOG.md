@@ -19,6 +19,7 @@
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
 - `[Locale]` Fixed an max stack error when setting `nb-NO` as a language. ([#874](https://github.com/infor-design/enterprise-ng/issues/874))
 - `[Modal Manager]` Modals now pass `isCancelled` properly when the Modal Manager API detects a request to close by using the Escape key. ([#4298](https://github.com/infor-design/enterprise/issues/4298))
+- `[Pager]` Fixed an error when using arrow keys to select in the pagesize selector. ([#4383](https://github.com/infor-design/enterprise/issues/4383))
 - `[Searchfield]` Allow for search terms to include special characters. ([#4291](https://github.com/infor-design/enterprise/issues/4291))
 - `[Stepprocess]` Fixed a bug where padding and scrolling was missing. Note that this pattern will eventually be removed and we do not suggest any one use it for new development. ([#4249](https://github.com/infor-design/enterprise/issues/4249))
 - `[Tabs]` Fixed multiple bugs where error icon in tabs and the animation bar were not properly aligned in RTL uplift theme. ([#4326](https://github.com/infor-design/enterprise/issues/4326))

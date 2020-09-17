@@ -451,6 +451,10 @@ Pager.prototype = {
     });
 
     self.pagerBar.on('keydown.pager', $(self.focusableElements), (event) => {
+      if ($('.popupmenu.is-open').length > 0) {
+        return;
+      }
+
       event = event || window.event;
       const key = event.which || event.keyCode || event.charCode || false;
       let isLeft = key === 37 || key === 40;
