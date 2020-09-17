@@ -34,6 +34,25 @@ function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
 }
 
 /**
+ * *
+ * Check if given column is disabled.
+ * @private
+ * @param  {number} row The row index
+ * @param  {number} cell The cell index
+ * @param  {object} value The value in the dataset
+ * @param  {object} col The column definition
+ * @param  {object} item The row data
+ * @returns {boolean} Returns checked value.
+ */
+function isColumnDisabled(row, cell, value, col, item) {
+  const isTrue = v => (typeof v !== 'undefined' && v !== null && ((typeof v === 'boolean' && v === true) || (typeof v === 'string' && v.toLowerCase() === 'true')));
+  const disabled = col ? col.disabled : null;
+
+  return typeof disabled === 'function' ?
+    disabled(row, cell, value, col, item) : isTrue(disabled);
+}
+
+/**
 * A object containing all the supported UI formatters.
 * @private
 */
@@ -234,8 +253,7 @@ const formatters = {
   },
 
   Hyperlink(row, cell, value, col, item, api) {
-    const disableAttr = col && typeof col.disableButton === 'function' &&
-      col.disableButton(row, cell, value, col, item) ? ' disabled' : '';
+    const disableAttr = isColumnDisabled(row, cell, value, col, item) ? ' disabled' : '';
     let colHref = col.href || '#';
 
     // Support for dynamic links based on content
@@ -562,8 +580,7 @@ const formatters = {
 
   Button(row, cell, value, col, item, api) {
     let text;
-    const disableAttr = col && typeof col.disableButton === 'function' &&
-      col.disableButton(row, cell, value, col, item) ? ' disabled' : '';
+    const disableAttr = isColumnDisabled(row, cell, value, col, item) ? ' disabled' : '';
     if (col.text) {
       text = col.text;
     } else {

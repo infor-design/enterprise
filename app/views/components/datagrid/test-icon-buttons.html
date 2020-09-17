@@ -33,15 +33,16 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'id', hidden: true, name: ' Id', field: 'id', formatter: Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'quantity2', name: 'Quantity2', hidden: true, field: 'quantity2'});
       columns.push({ id: 'actionLink', name: 'As Link', sortable: false, align: 'center', width: 80, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
       columns.push({ id: 'action', name: 'Active', sortable: false, align: 'center', width: 80, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);},
         contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
-      columns.push({ id: 'disableButtons', name: 'Disable Buttons', sortable: false, align: 'center', width: 120, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log('Clicked! Buttons', args[0].cell, args[0].row, args[0].item.id);}, disableButton: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
-      columns.push({ id: 'disableButtonsLink', name: 'Disable Buttons (as link)', sortable: false, align: 'center', width: 170, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) { console.log('Clicked! Buttons (as link)', args[0].cell, args[0].row, args[0].item.id);}, disableButton: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
+      columns.push({ id: 'disableButtons', name: 'Disable Buttons', sortable: false, align: 'center', width: 120, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log('Clicked! Buttons', args[0].cell, args[0].row, args[0].item.id);}, disabled: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
+      columns.push({ id: 'disableButtonsLink', name: 'Disable Buttons (as link)', sortable: false, align: 'center', width: 170, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) { console.log('Clicked! Buttons (as link)', args[0].cell, args[0].row, args[0].item.id);}, disabled: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
+      columns.push({ id: 'id', name: ' Id', field: 'id', formatter: Formatters.Readonly });
+      columns.push({ id: 'productDescDisabled', name: 'Product Desc (disabled)', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('Clicked! Hyperlink Id:', args[0].item.id);}, disabled: function (row, cell, data, col, item) { return (item.status !== 'OK');} });
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
 
       // Init and get the api for the grid
