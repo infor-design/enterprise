@@ -6612,8 +6612,8 @@ Datagrid.prototype = {
     }
 
     // Allow menu to be added manually
-    if (this.element.parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
-      toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
+    if (this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1) {
+      toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       this.refreshSelectedRowHeight();
     } else {
       toolbar = $('<div class="toolbar" role="toolbar"></div>');
@@ -6728,8 +6728,8 @@ Datagrid.prototype = {
       }
     }
 
-    toolbar.find('.btn-actions').popupmenu().on('selected', (e, args) => {
-      const action = args.attr('data-option');
+    toolbar.find('.btn-actions').popupmenu().on('selected', (e, args, args2) => {
+      const action = args.attr ? args.attr('data-option') : args2.attr('data-option');
       if (!action) {
         return;
       }
@@ -6748,8 +6748,7 @@ Datagrid.prototype = {
       }
 
       if (action === 'export-to-excel') {
-        // self.exportToExcel();
-        self.exportToCsv();
+        self.exportToExcel();
       }
 
       // Filter actions
@@ -6764,7 +6763,7 @@ Datagrid.prototype = {
       }
     });
 
-    if (this.settings.initializeToolbar && !toolbar.data('toolbar')) {
+    if (this.settings.initializeToolbar && !toolbar.data('toolbar') && !toolbar.hasClass('flex-toolbar')) {
       const opts = $.fn.parseOptions(toolbar);
 
       if (this.settings.toolbar.fullWidth) {
@@ -6772,6 +6771,11 @@ Datagrid.prototype = {
       }
 
       toolbar.toolbar(opts);
+    }
+
+    if (this.settings.initializeToolbar && toolbar.hasClass('flex-toolbar') && !toolbar.data('toolbarFlex')) {
+      const opts = $.fn.parseOptions(toolbar);
+      toolbar.toolbarFlex(opts);
     }
 
     if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {

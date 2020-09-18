@@ -13,6 +13,7 @@
 - `[Datagrid]` Fixed an issue where short field icon padding was misaligned in RTL mode. ([#1812](https://github.com/infor-design/enterprise/issues/1812))
 - `[Datagrid]` Added support to `In Range` filter operator for numeric columns. ([#3988](https://github.com/infor-design/enterprise/issues/3988))
 - `[Datagrid]` Fixed an issue where filter was not working if user types slow in the filter input for treegrid. ([#4270](https://github.com/infor-design/enterprise/issues/4270))
+- `[Datagrid]` Fixed an issue where using flex toolbar as a custom toolbar did not work. ([#4385](https://github.com/infor-design/enterprise/issues/4385))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 - `[Editor]` Fixed a bug where the Fontpicker's displayed style wasn't updating to match the current text selection in some cases. ([#4309](https://github.com/infor-design/enterprise/issues/4309))
 - `[Lookup]` Fixed an issue where the event `beforeShow` was only triggered the first time. ([#899](https://github.com/infor-design/enterprise-ng/issues/899))
