@@ -6258,8 +6258,12 @@ Datagrid.prototype = {
           }
         }
 
-        if (!td.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
+        }
+        if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
         }
       }
 
@@ -11404,8 +11408,9 @@ Datagrid.prototype = {
       } else {
         title = elem.getAttribute('title');
         if (title) {
+          const disableButton = elem.querySelector('.row-btn[disabled]');
           // Title attribute on current element
-          tooltip.content = title;
+          tooltip.content = disableButton ? '' : title;
           elem.removeAttribute('title');
         } else if (isTh && !isHeaderFilter) {
           const targetEl = elem.querySelector('.datagrid-header-text');
