@@ -2300,6 +2300,11 @@ $datagrid-small-row-height: 25px;
       &.micro-text {
         font-size: $ids-size-font-sm;
       }
+
+      &[disabled] {
+        color: $hyperlink-disabled-color;
+        pointer-events: none;
+      }
     }
 
     //Keyword Search Results
