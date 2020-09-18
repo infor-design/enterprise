@@ -59,6 +59,12 @@
   }
 }
 
+@mixin trigger-icon-background($color: $datagrid-cell-bg-color) {
+  background-color: $color;
+  -webkit-box-shadow: -3px 0 1px 0 $color, 10px 0 0 0 $color;
+  box-shadow: -3px 0 1px 0 $color, 10px 0 0 0 $color;
+}
+
 $datagrid-header-height: 39px;  // 1px border on parent
 $datagrid-filterable-header-height: 61px;
 
@@ -1815,6 +1821,10 @@ $datagrid-small-row-height: 25px;
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
     &.is-selected:not(.hide-selected-color) td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
+
+      .icon {
+        @include trigger-icon-background($datagrid-row-selected-color);
+      }
     }
 
     &.is-rowactivated td:not(.is-editing),
@@ -3481,6 +3491,8 @@ td .btn-actions {
   }
 
   .icon {
+    @include trigger-icon-background($datagrid-cell-bg-color);
+
     color: $trigger-icon-fill-color;
     left: 3px;
     top: 4px;
@@ -3531,6 +3543,14 @@ td .btn-actions {
     .icon-info,
     .icon-alert {
       @include css3(transition, margin-left 300ms ease);
+    }
+
+    &:hover .icon {
+      @include trigger-icon-background($datagrid-row-hover-color);
+    }
+
+    &.is-editing:hover .icon {
+      @include trigger-icon-background($datagrid-cell-bg-color);
     }
 
     &:hover,
