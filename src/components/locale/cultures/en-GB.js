@@ -21,9 +21,11 @@ Soho.Locale.addCulture('en-GB', {
       year: 'MMMM yyyy',
       dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
+      timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'dd/MM/yyyy HH:mm',
-      timezone: 'dd/MM/yyyy HH:mm zz',
+      datetimeMillis: 'dd/MM/yyyy HH:mm',
+      timezone: 'dd/MM/yyyy HH:mm:ss.SSS zz',
       timezoneLong: 'dd/MM/yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
