@@ -21,8 +21,10 @@ Soho.Locale.addCulture('ms-MY', {
       year: 'MMMM yyyy',
       dayOfWeek: 'd EEE',
       timestamp: 'h:mm:ss a',
+      timestampMillis: 'h:mm:ss.SSS a',
       hour: 'h:mm a',
       datetime: 'd/MM/yyyy h:mm',
+      datetimeMillis: 'd/MM/yyyy h:mm:ss.SSS a',
       timezone: 'd/MM/yyyy h:mm zz',
       timezoneLong: 'd/MM/yyyy h:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats

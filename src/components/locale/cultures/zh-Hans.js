@@ -20,9 +20,11 @@ Soho.Locale.addCulture('zh-Hans', {
       month: 'M月d日',
       year: 'yyyy年 M月',
       dayOfWeek: 'd日EEE',
-      ttimestamp: 'HH:mm:ss',
+      timestamp: 'HH:mm:ss',
+      timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'yyyy/M/d ah:mm',
+      datetimeMillis: 'yyyy/M/d HH:mm:ss.SSS',
       timezone: 'yyyy/M/d ah:mm zz',
       timezoneLong: 'yyyy/M/d ah:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats

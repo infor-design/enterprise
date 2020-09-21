@@ -4,6 +4,7 @@
 
 ### v4.33.0 Features
 
+- `[Locale]` Added a new dateTimeMillis and timeStampMillis format if milliseconds are needed. ([#4384](https://github.com/infor-design/enterprise/issues/4384))
 - `[Toast]` Added a setting to enable setting ids or other attributes on the toast element. ([#4275](https://github.com/infor-design/enterprise/issues/4275))
 
 ### v4.33.0 Fixes
