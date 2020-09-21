@@ -3634,7 +3634,6 @@ Tabs.prototype = {
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
       const parentRect = parentElement[0].getBoundingClientRect();
       let parentPadding;
-      let tabLeftMargin;
       let tablistScrollWidth;
       let tablistScrollLeft;
 
