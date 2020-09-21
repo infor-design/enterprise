@@ -610,6 +610,13 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date('2015-01-06T06:00:00.001Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-06T01:00:00.001');
   });
 
+  it('Should format datetimeMillis and timestampMillis', () => {
+    Locale.set('en-US');
+
+    expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40, 30, 999), { date: 'datetimeMillis' })).toEqual('11/8/2000 1:40:30:999 PM');
+    expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40, 30, 777), { date: 'timestampMillis' })).toEqual('1:40:30:777 PM');
+  });
+
   // monthYear and yearMonth
   it('Should format a year and month locale', () => {
     Locale.set('en-US');

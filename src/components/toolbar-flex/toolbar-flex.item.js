@@ -240,7 +240,7 @@ ToolbarFlexItem.prototype = {
       eventArgs.push(this.selectedAnchor);
     }
 
-    $(this.element).trigger('selected', eventArgs);
+    $(this.element).trigger('selected', eventArgs, eventArgs[1]);
   },
 
   /**

@@ -1226,27 +1226,6 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await utils.setPage('/components/datepicker/example-range?locale=ar-SA');
   });
 
-  it('Should be able to change and set a range', async () => {
-    const datepickerEl = await element(by.id('range-novalue'));
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-
-    await datepickerEl.sendKeys('1441121014411212');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
-    const button1El = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
-    await button1El.click();
-
-    const button2El = await element.all(by.css('.monthview-table td:not(.alternate)')).last();
-    await button2El.click();
-
-    const testDate1 = new Date();
-    const testDate2 = new Date();
-    const testDate3 = new Date(testDate2.getFullYear(), testDate2.getMonth() + 1, 0);
-    await testDate2.setDate(testDate3.getDate());
-
-    expect(await element(by.id('range-novalue')).getAttribute('value')).toEqual('1442/01/01 - 1442/01/29');
-  });
-
   it('Should be able to change open an initially set range (by field value)', async () => {
     const datepickerEl = await element(by.id('range-valuebyelem'));
 

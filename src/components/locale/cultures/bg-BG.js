@@ -22,8 +22,10 @@ Soho.Locale.addCulture('bg-BG', {
       year: 'MMMM yyyy г.',
       dayOfWeek: 'EEE d',
       timestamp: 'H:mm:ss',
+      timestampMillis: 'H:mm:ss.SSS',
       hour: 'H:mm',
       datetime: 'd.MM.yyyy H:mm',
+      datetimeMillis: 'd.MM.yyyy H:mm:ss.SSS',
       timezone: 'd.MM.yyyy H:mm zz',
       timezoneLong: 'd.MM.yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats

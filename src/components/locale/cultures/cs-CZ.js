@@ -21,8 +21,10 @@ Soho.Locale.addCulture('cs-CZ', {
       year: 'MMMM yyyy',
       dayOfWeek: 'EEE d',
       timestamp: 'H:mm:ss',
+      timestampMillis: 'H:mm:ss.sss',
       hour: 'H:mm',
       datetime: 'dd.MM.yyyy H:mm',
+      datetimeMillis: 'dd.MM.yyyy H:mm:ss.sss',
       timezone: 'dd.MM.yyyy H:mm zz',
       timezoneLong: 'dd.MM.yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
