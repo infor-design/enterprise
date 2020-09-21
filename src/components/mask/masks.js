@@ -295,7 +295,9 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       mask = mask.concat(SUFFIX.split(masks.EMPTY_STRING));
     }
 
-    return mask;
+    return {
+      mask
+    };
   }
 
   numberMask.instanceOf = 'createNumberMask';
@@ -359,7 +361,9 @@ masks.rangeNumberMask = function (rawValue, options) {
       }
     }
   }
-  return [...r1, ...r2];
+  return {
+    mask: [...r1, ...r2]
+  };
 };
 
 /**
@@ -503,7 +507,11 @@ masks.dateMask = function dateMask(rawValue, options) {
     }
   });
 
-  return mask;
+  return {
+    mask,
+    literals: splitterStr.split(''),
+    literalRegex: splitterRegex
+  };
 };
 
 /**
@@ -522,7 +530,11 @@ masks.rangeDateMask = function (rawValue, options) {
     secondDate = masks.dateMask(parts[1], options);
   }
 
-  return firstDate.concat(delimiterArr.concat(secondDate));
+  return {
+    mask: firstDate.mask.concat(delimiterArr.concat(secondDate.mask)),
+    literals: delimiterArr,
+    literalRegex: secondDate.literalRegex
+  };
 };
 
 /**

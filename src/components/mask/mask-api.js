@@ -73,7 +73,7 @@ MaskAPI.prototype = {
       throw new Error('No string provided');
     }
 
-    let providedMask;
+    let maskObj = {};
     let processResult = {
       originalValue: rawValue,
       caretPos: opts.selection.start,
@@ -92,31 +92,39 @@ MaskAPI.prototype = {
         previousMaskResult: opts.previousMaskResult
       });
 
-      // Get a processed mask pattern from the function
-      providedMask = this.pattern(rawValue, maskOpts);
+      // Get a processed mask pattern from the function.
+      // See #4079 for an explanation of the change from just an array to an object with meta-data.
+      maskObj = this.pattern(rawValue, maskOpts);
+      if (Array.isArray(maskObj)) {
+        maskObj = {
+          mask: maskObj
+        };
+      }
 
       // mask functions can setup caret traps to have some control over how the caret
       // moves. We need to process the mask for any caret traps. `processCaretTraps`
       // will remove the caret traps from the mask and return the indexes of the caret traps.
-      const caretTrapInfo = this._processCaretTraps(providedMask);
+      const caretTrapInfo = this._processCaretTraps(maskObj.mask);
 
       // The processed mask is what we're interested in
-      providedMask = caretTrapInfo.maskWithoutCaretTraps;
+      maskObj.mask = caretTrapInfo.maskWithoutCaretTraps;
 
       // And we need to store these indexes because they're needed by `adjustCaretPosition`
       opts.caretTrapIndexes = caretTrapInfo.indexes;
     } else {
       // Use a provided array
-      providedMask = this.pattern;
+      maskObj = {
+        mask: this.pattern
+      };
     }
 
     // As a convenience, setting the mask to false will cause it to return without processing.
-    if (providedMask === false) {
+    if (maskObj.mask === false) {
       return processResult;
     }
 
     try {
-      processResult = this._conformToMask(rawValue, providedMask, opts);
+      processResult = this._conformToMask(rawValue, maskObj, opts);
     } catch (e) {
       // console.error('Couldn\'t complete masking process: "'+ e.message +'"');
       return processResult;
@@ -170,16 +178,16 @@ MaskAPI.prototype = {
    * Processes a raw string value against a masking algorithm and removes unfavorable chracters.
    * @private
    * @param {string} rawValue incoming full text string to process.
-   * @param {array} mask the mask to be used for modifying the raw value.
+   * @param {object} maskObj containing the mask to be used for modifying the raw value, along with some meta-data calculated about the mask.
    * @param {object} [settings] incoming settings for mask parsing.
    * @returns {object} containing the conformation result and some meta-data
    */
-  _conformToMask(rawValue, mask, settings) {
+  _conformToMask(rawValue, maskObj, settings) {
     // Set default settings
     settings = utils.mergeSettings(undefined, settings, masks.DEFAULT_CONFORM_OPTIONS);
 
     // Setup the placeholder version of the mask
-    settings.placeholder = this._convertMaskToPlaceholder(mask, settings.placeholderChar);
+    settings.placeholder = this._convertMaskToPlaceholder(maskObj.mask, settings.placeholderChar);
 
     // Setup booleans and numbers for various settings (speed)
     let charactersRejected = false;
@@ -284,7 +292,7 @@ MaskAPI.prototype = {
 
             // Else if, the character we got from the user input is not a placeholder, let's see
             // if the current position in the mask can accept it.
-            } else if (mask[l].test(rawValueChar.char)) {
+            } else if (maskObj.mask[l].test(rawValueChar.char)) {
               // we map the character differently based on whether we are keeping character
               // positions or not. If any of the conditions below are met, we simply map the
               // raw value character to the placeholder position.
@@ -363,7 +371,8 @@ MaskAPI.prototype = {
         break;
 
       // Else, the charInPlaceholder is not a placeholderChar. That is, we cannot fill it
-      // with user input. So we just map it to the final output
+      // with user input. So as long as there is no prior instance of it in the previous place,
+      // we just map it to the final output.
       } else {
         resultStr += charInPlaceholder;
       }
