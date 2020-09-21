@@ -2415,6 +2415,20 @@ Datagrid.prototype = {
           }
         }
       };
+      const setParents = function (nodeData) {
+        let found = false;
+        for (let i = 0, l = nodeData.length; i < l; i++) {
+          const node = nodeData[i];
+          if (node._isFilteredOut && !found && node.children?.length) {
+            node._isFilteredOut = !setParents(node.children);
+          }
+          if (typeof node._isFilteredOut === 'boolean' && !node._isFilteredOut) {
+            found = true;
+          }
+        }
+        return found;
+      };
+      setParents(s.dataset);
       checkNodes(s.dataset, 0);
     }
   },
@@ -6244,8 +6258,12 @@ Datagrid.prototype = {
           }
         }
 
-        if (!td.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
+        }
+        if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
         }
       }
 
@@ -7784,7 +7802,7 @@ Datagrid.prototype = {
     let args = [{ row: idx, item: dataset[idx] }];
 
     const doRowactivated = () => {
-      const rowNodes = this.rowNodes(idx).toArray();
+      const rowNodes = s.paging && s.source && s.selectable === 'mixed' ? this.rowNodesByDataIndex(idx).toArray() : this.rowNodes(idx).toArray();
       rowNodes.forEach((rowElem) => {
         rowElem.classList.add('is-rowactivated');
       });
@@ -11386,8 +11404,9 @@ Datagrid.prototype = {
       } else {
         title = elem.getAttribute('title');
         if (title) {
+          const disableButton = elem.querySelector('.row-btn[disabled]');
           // Title attribute on current element
-          tooltip.content = title;
+          tooltip.content = disableButton ? '' : title;
           elem.removeAttribute('title');
         } else if (isTh && !isHeaderFilter) {
           const targetEl = elem.querySelector('.datagrid-header-text');
