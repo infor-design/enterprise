@@ -290,18 +290,24 @@ MaskAPI.prototype = {
 
               // And we go to find the next placeholder character that needs filling
               continue placeholderLoop;
-              /*
+
+            // Else if, the character we got from the user input is a known literal member of the
+            // mask (not necessarily user-input, and forms part of the formatting), add that and speed the mask
+            // up to the next section.
             } else if (
               maskObj.literalRegex &&
               maskObj.literalRegex.test(rawValueChar.char) &&
               rawValue.slice(l, l + 1) === rawValueChar.char
             ) {
-              if (settings.guide === true) {
-                resultStr += placeholderChar;
-                caretPos++;
+              resultStr += rawValueChar.char;
+              const rawValueAfterLiteral = rawValue.slice(l + 1, rawValue.length - 1).indexOf(rawValueChar.char);
+              let literalIndex = rawValueAfterLiteral.indexOf(rawValueChar.char);
+              while (literalIndex > 0) {
+                l++;
+                literalIndex--;
               }
+
               continue placeholderLoop;
-              */
             // Else if, the character we got from the user input is not a placeholder, let's see
             // if the current position in the mask can accept it.
             } else if (maskObj.mask[l].test(rawValueChar.char)) {
