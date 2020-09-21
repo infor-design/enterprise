@@ -21,8 +21,10 @@ Soho.Locale.addCulture('zh-Hant', {
       year: 'yyyy年 M月',
       dayOfWeek: 'd日 EEE',
       timestamp: 'ah:mm:ss',
+      timestampMillis: 'ah:mm:ss.SSS',
       hour: 'ah:mm',
       datetime: 'yyyy/M/d ah:mm',
+      datetimeMillis: 'yyyy/M/d ah:mm.SSS',
       timezone: 'yyyy/M/d ah:mm zz',
       timezoneLong: 'yyyy/M/d ah:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
