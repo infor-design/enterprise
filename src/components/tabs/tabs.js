@@ -3659,10 +3659,8 @@ Tabs.prototype = {
           // TODO: Improve this calculation because there's something off
           const tmpLeft = targetRectObj.left;
           if (isNotHeaderTabs) {
-            tabLeftMargin = parseInt(window.getComputedStyle(target[0]).marginLeft, 10);
-            targetRectObj.left = tablistScrollWidth - tabLeftMargin -
-              targetRectObj.right + tablistScrollLeft;
-            targetRectObj.right = tablistScrollWidth - tabLeftMargin - tmpLeft + tablistScrollLeft;
+            tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
+            tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
           } else {
             targetRectObj.left = tablistScrollWidth -
               (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
