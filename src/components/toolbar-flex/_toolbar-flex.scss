@@ -86,6 +86,7 @@
     }
 
     &:not(.favor) {
+      padding-left: 6px;
       text-overflow: ellipsis;
     }
   }
