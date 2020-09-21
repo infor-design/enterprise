@@ -108,6 +108,7 @@ MaskAPI.prototype = {
 
       // The processed mask is what we're interested in
       maskObj.mask = caretTrapInfo.maskWithoutCaretTraps;
+      maskObj.caretTrapIndexes = caretTrapInfo.indexes;
 
       // And we need to store these indexes because they're needed by `adjustCaretPosition`
       opts.caretTrapIndexes = caretTrapInfo.indexes;
@@ -197,7 +198,7 @@ MaskAPI.prototype = {
     const maskLength = this.pattern.length;
     const placeholderLength = settings.placeholder.length || 0;
     const placeholderChar = settings.placeholderChar;
-    const caretPos = settings.selection.start;
+    let caretPos = settings.selection.start;
     let resultStr = masks.EMPTY_STRING;
 
     const editDistance = rawValueLength - prevMaskResultLength;
@@ -289,7 +290,18 @@ MaskAPI.prototype = {
 
               // And we go to find the next placeholder character that needs filling
               continue placeholderLoop;
-
+              /*
+            } else if (
+              maskObj.literalRegex &&
+              maskObj.literalRegex.test(rawValueChar.char) &&
+              rawValue.slice(l, l + 1) === rawValueChar.char
+            ) {
+              if (settings.guide === true) {
+                resultStr += placeholderChar;
+                caretPos++;
+              }
+              continue placeholderLoop;
+              */
             // Else if, the character we got from the user input is not a placeholder, let's see
             // if the current position in the mask can accept it.
             } else if (maskObj.mask[l].test(rawValueChar.char)) {

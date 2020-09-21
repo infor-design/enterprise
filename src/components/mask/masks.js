@@ -503,7 +503,10 @@ masks.dateMask = function dateMask(rawValue, options) {
       const end = format.indexOf(nextPart);
       const literals = format.substring(start, end).split(masks.EMPTY_STRING);
 
-      mask = mask.concat(literals);
+      // Insert caret traps (create logical sections)
+      const literalsWithCarets = [masks.CARET_TRAP].concat(literals.concat(masks.CARET_TRAP));
+
+      mask = mask.concat(literalsWithCarets);
     }
   });
 
