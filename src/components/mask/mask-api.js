@@ -280,6 +280,7 @@ MaskAPI.prototype = {
           while (rawValueArr.length > 0) {
             // Let's retrieve the first user character in the queue of characters we have left
             const rawValueChar = rawValueArr.shift();
+            const nextChar = rawValue.slice(l, l + 1);
 
             // If the character we got from the user input is a placeholder character (which happens
             // regularly because user input could be something like (540) 90_-____, which includes
@@ -297,19 +298,19 @@ MaskAPI.prototype = {
             } else if (
               maskObj.literalRegex &&
               maskObj.literalRegex.test(rawValueChar.char) &&
-              rawValue.slice(l, l + 1) === rawValueChar.char
+              nextChar === rawValueChar.char
             ) {
               // Analyze the number of this particular literal in the value,
               // and only add it if we haven't passed the maximum
               const thisLiteralRegex = new RegExp(`(${rawValueChar.char})`, 'g');
               const numberLiteralsPlaceholder = settings.placeholder.match(thisLiteralRegex).length;
               const numberLiteralsRawValue = rawValue.match(thisLiteralRegex).length;
-              if (numberLiteralsRawValue < numberLiteralsPlaceholder) {
+              if (numberLiteralsRawValue <= numberLiteralsPlaceholder) {
                 resultStr += rawValueChar.char;
               }
 
-              const rawValueAfterLiteral = rawValue.slice(l + 1, rawValue.length - 1);
-              let literalIndex = rawValueAfterLiteral.indexOf(rawValueChar.char);
+              // Fast forward the loop to the after the next instance of this literal.
+              let literalIndex = settings.placeholder.slice(l).indexOf(rawValueChar.char);
               while (literalIndex > 0) {
                 l++;
                 literalIndex--;
