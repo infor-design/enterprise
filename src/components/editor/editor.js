@@ -1276,10 +1276,11 @@ Editor.prototype = {
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
-    this.settings.anchor.class = $(`[name="em-class-${this.id}"]`).val();
-    this.settings.anchor.target = $(`[name="em-target-${this.id}"]`).val();
+    this.settings.anchor.class = document.querySelector(`[name="em-class-${this.id}"]`).value;
+    this.settings.anchor.target = document.querySelector(`[name="em-target-${this.id}"]`).value;
+
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
-      $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
+      document.querySelector(`[name="em-isclickable-${this.id}"]`).checked : this.settings.anchor.isClickable;
 
     const alink = $(`<a data-url="${cleanValue}" href="${cleanValue}">${cleanValue}</a>`);
 

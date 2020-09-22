@@ -903,7 +903,7 @@ TimePicker.prototype = {
     const sep = this.getTimeSeparator();
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
-    period = (!this.is24HourFormat() && period === '') ? $(`#${this.periodId}-shdo`).val() : period;
+    period = (!this.is24HourFormat() && period === '') ? document.querySelector(`#${this.periodId}-shdo`).value : period;
     timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
 
     /**
