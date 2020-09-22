@@ -15,6 +15,7 @@
 - `[Datagrid]` Fixed an issue where short field icon padding was misaligned in RTL mode. ([#1812](https://github.com/infor-design/enterprise/issues/1812))
 - `[Datagrid]` Added support to `In Range` filter operator for numeric columns. ([#3988](https://github.com/infor-design/enterprise/issues/3988))
 - `[Datagrid]` Fixed an issue where filter was not working if user types slow in the filter input for treegrid. ([#4270](https://github.com/infor-design/enterprise/issues/4270))
+- `[Datagrid]` Fixed an issue where the icons right text was truncated for extra-small row height. ([#4355](https://github.com/infor-design/enterprise/issues/4355))
 - `[Datagrid]` Fixed an issue where the column icons and content was overlapping. ([#4264](https://github.com/infor-design/enterprise/issues/4264))
 - `[Datagrid]` Fixed an issue where using flex toolbar as a custom toolbar did not work. ([#4385](https://github.com/infor-design/enterprise/issues/4385))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))

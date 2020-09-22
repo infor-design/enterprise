@@ -1944,6 +1944,10 @@ $datagrid-small-row-height: 25px;
       width: inherit;
     }
 
+    .l-right-text .datagrid-alert-text {
+      margin-right: auto;
+    }
+
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
