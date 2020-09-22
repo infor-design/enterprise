@@ -198,7 +198,7 @@ MaskAPI.prototype = {
     const maskLength = this.pattern.length;
     const placeholderLength = settings.placeholder.length || 0;
     const placeholderChar = settings.placeholderChar;
-    let caretPos = settings.selection.start;
+    const caretPos = settings.selection.start;
     let resultStr = masks.EMPTY_STRING;
 
     const editDistance = rawValueLength - prevMaskResultLength;
