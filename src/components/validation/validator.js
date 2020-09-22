@@ -1082,7 +1082,7 @@ Validator.prototype = {
    * @param {jQuery[]} form The form to reset.
    */
   resetForm(form) {
-    const formFields = form.find('input, select, textarea');
+    const formFields = form.find('input, select, textarea, div.dropdown, div.editor');
 
     // Clear Errors
     formFields.removeClass('error');
@@ -1120,6 +1120,8 @@ Validator.prototype = {
     Object.keys(validationTypes).forEach((validationType) => {
       formFields.removeData(`${validationType}message`);
     });
+
+    formFields.removeData('isValid');
   },
 
   /**
