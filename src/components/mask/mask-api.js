@@ -299,8 +299,16 @@ MaskAPI.prototype = {
               maskObj.literalRegex.test(rawValueChar.char) &&
               rawValue.slice(l, l + 1) === rawValueChar.char
             ) {
-              resultStr += rawValueChar.char;
-              const rawValueAfterLiteral = rawValue.slice(l + 1, rawValue.length - 1).indexOf(rawValueChar.char);
+              // Analyze the number of this particular literal in the value,
+              // and only add it if we haven't passed the maximum
+              const thisLiteralRegex = new RegExp(`(${rawValueChar.char})`, 'g');
+              const numberLiteralsPlaceholder = settings.placeholder.match(thisLiteralRegex).length;
+              const numberLiteralsRawValue = rawValue.match(thisLiteralRegex).length;
+              if (numberLiteralsRawValue < numberLiteralsPlaceholder) {
+                resultStr += rawValueChar.char;
+              }
+
+              const rawValueAfterLiteral = rawValue.slice(l + 1, rawValue.length - 1);
               let literalIndex = rawValueAfterLiteral.indexOf(rawValueChar.char);
               while (literalIndex > 0) {
                 l++;

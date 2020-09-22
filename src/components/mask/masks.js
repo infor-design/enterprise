@@ -421,6 +421,19 @@ const DATE_MAX_VALUES = {
   a: undefined
 };
 
+// Converts a string containing character literals acting as separators for date sections
+// Into a regular expression that can be used to detect those characters (used later in the masking process)
+function getSplitterRegex(splitterStr) {
+  const arr = splitterStr.split('');
+  const fixedArr = arr.map((c) => {
+    if (c === ' ') { // convert space characters into white space matcher
+      c = '\\s';
+    }
+    return c;
+  });
+  return new RegExp(`[(${fixedArr.join('|')})]+`);
+}
+
 /**
  * Soho Date Mask Function
  * @param {string} rawValue the un-formatted value that will eventually be masked.
@@ -434,7 +447,7 @@ masks.dateMask = function dateMask(rawValue, options) {
   const digitRegex = masks.DIGITS_REGEX;
   const format = options.format;
   const splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, ''));
-  const splitterRegex = new RegExp(`[${splitterStr.replace(' ', '/s')}]+`);
+  const splitterRegex = getSplitterRegex(splitterStr);
   const formatArray = format.match(/(d{1,2}|M{1,4}|y{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|a{1}|z{1, 4}|E{1, 4})/g);
   const rawValueArray = rawValue.split(splitterRegex);
   const maxValue = DATE_MAX_VALUES;
