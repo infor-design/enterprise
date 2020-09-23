@@ -1841,7 +1841,9 @@ PopupMenu.prototype = {
         }
 
         if ($(thisE.target).hasClass('swatch')) {
-          self.close();
+          setTimeout(() => {
+            self.close();
+          }, 150);
         }
       });
 
