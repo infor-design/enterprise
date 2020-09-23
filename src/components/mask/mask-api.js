@@ -198,7 +198,7 @@ MaskAPI.prototype = {
     const maskLength = this.pattern.length;
     const placeholderLength = settings.placeholder.length || 0;
     const placeholderChar = settings.placeholderChar;
-    const caretPos = settings.selection.start;
+    let caretPos = settings.selection.start;
     let resultStr = masks.EMPTY_STRING;
 
     const editDistance = rawValueLength - prevMaskResultLength;
@@ -298,8 +298,13 @@ MaskAPI.prototype = {
             } else if (
               maskObj.literalRegex &&
               maskObj.literalRegex.test(rawValueChar.char) &&
-              nextChar === rawValueChar.char
+              nextChar && (nextChar === rawValueChar.char || nextChar === placeholderChar)
             ) {
+              if (isAddition && rawValue[l - 1] === rawValueChar.char) {
+                caretPos++;
+                continue placeholderLoop;
+              }
+
               // Analyze the number of this particular literal in the value,
               // and only add it if we haven't passed the maximum
               const thisLiteralRegex = new RegExp(`(${rawValueChar.char})`, 'g');
@@ -398,7 +403,7 @@ MaskAPI.prototype = {
         break;
 
       // Else, the charInPlaceholder is not a placeholderChar. That is, we cannot fill it
-      // with user input. So as long as there is no prior instance of it in the previous place,
+      // with user input. So as long as it doesn't exist at the rawValue's current index,
       // we just map it to the final output.
       } else {
         resultStr += charInPlaceholder;
@@ -431,6 +436,8 @@ MaskAPI.prototype = {
         resultStr = masks.EMPTY_STRING;
       }
     }
+
+    debugger;
 
     return {
       caretPos,
