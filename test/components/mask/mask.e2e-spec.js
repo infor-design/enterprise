@@ -102,7 +102,7 @@ describe('Number Masks', () => {
 });
 
 describe('Date Masks', () => {
-  fit('allows removal and re-entry of all characters in a section with keyboard input', async () => {
+  it('allows removal and re-entry of all characters in a section with keyboard input', async () => {
     await utils.setPage('/components/mask/test-date-with-validation');
     const inputEl = await element(by.id('date'));
     await browser.driver
@@ -111,8 +111,6 @@ describe('Date Masks', () => {
     // Input date without leading zeros in day/month
     await inputEl.clear();
     await inputEl.sendKeys('1/1/2020');
-
-    debugger;
 
     expect(await inputEl.getAttribute('value')).toEqual('1/1/2020');
 
@@ -131,15 +129,11 @@ describe('Date Masks', () => {
       .sendKeys(protractor.Key.BACK_SPACE)
       .perform();
 
-    debugger;
-
     expect(await inputEl.getAttribute('value')).toEqual('1//2020');
 
     // Insert a new set of numbers between the slashes.
     // The leading zero should be respected.
     await inputEl.sendKeys('02');
-
-    debugger;
 
     expect(await inputEl.getAttribute('value')).toEqual('1/02/2020');
 
