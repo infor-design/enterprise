@@ -1840,7 +1840,7 @@ PopupMenu.prototype = {
           self.close(true, self.settings.trigger === 'rightClick');
         }
 
-        if ($(thisE.target).hasClass('colorpicker')) {
+        if ($(thisE.target).hasClass('swatch')) {
           self.close();
         }
       });
