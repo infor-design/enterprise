@@ -5836,7 +5836,7 @@ Datagrid.prototype = {
     }
 
     if (totals === undefined && this.settings.source) {
-      count = self.settings.dataset.length;;
+      count = self.settings.dataset.length;
     }
 
     let countText;
