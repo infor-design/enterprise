@@ -1913,7 +1913,7 @@ Editor.prototype = {
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
 
     // Remove empty tags
-    s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
+    s = s.replace(/<[^(br|/>)]+>[\s]*<\/[^>]+>/gi, '');
 
     if (s.indexOf('·') > -1) {
       // Replace span and paragraph tags from bulleted list pasting
