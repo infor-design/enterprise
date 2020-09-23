@@ -437,8 +437,6 @@ MaskAPI.prototype = {
       }
     }
 
-    debugger;
-
     return {
       caretPos,
       caretTrapIndexes: settings.caretTrapIndexes,

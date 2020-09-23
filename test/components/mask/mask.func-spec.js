@@ -534,21 +534,4 @@ describe('Date Mask API', () => {
 
     expect(result.conformedValue).toEqual('12122012');
   });
-
-  it('should allow a completely empty date section', () => {
-    const api = new MaskAPI(DEFAULT_SETTINGS);
-
-    const textValue = '1//2020';
-    const opts = {
-      selection: {
-        start: 2
-      },
-      patternOptions: {
-        format: 'M/d/yyyy'
-      }
-    };
-    const result = api.process(textValue, opts);
-
-    expect(result.conformedValue).toEqual('1//2020');
-  });
 });
