@@ -298,9 +298,9 @@ MaskAPI.prototype = {
             } else if (
               maskObj.literalRegex &&
               maskObj.literalRegex.test(rawValueChar.char) &&
-              nextChar && (maskObj.literalRegex.test(nextChar) || nextChar === placeholderChar)
+              nextChar && ((nextChar === rawValueChar.char) || (nextChar === placeholderChar))
             ) {
-              if (isAddition && rawValue[l - 1] === rawValueChar.char) {
+              if (isAddition && maskObj.literals.indexOf(rawValue[l - 1]) > -1) {
                 caretPos++;
                 continue placeholderLoop;
               }
@@ -436,6 +436,8 @@ MaskAPI.prototype = {
         resultStr = masks.EMPTY_STRING;
       }
     }
+
+    debugger;
 
     return {
       caretPos,
