@@ -298,7 +298,7 @@ MaskAPI.prototype = {
             } else if (
               maskObj.literalRegex &&
               maskObj.literalRegex.test(rawValueChar.char) &&
-              nextChar && (nextChar === rawValueChar.char || nextChar === placeholderChar)
+              nextChar && (maskObj.literalRegex.test(nextChar) || nextChar === placeholderChar)
             ) {
               if (isAddition && rawValue[l - 1] === rawValueChar.char) {
                 caretPos++;
