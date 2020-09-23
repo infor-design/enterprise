@@ -5836,16 +5836,16 @@ Datagrid.prototype = {
     }
 
     if (totals === undefined && this.settings.source) {
-      count = this.lastCount || 0;
+      count = self.settings.dataset.length;;
     }
 
     let countText;
     if (self.settings.showFilterTotal && self.filteredCount > 0) {
-      countText = `(${Locale.translate(count === 1 ? 'ResultOf' : 'ResultsOf')})`;
+      countText = `(${Locale.translate(count < 1 ? 'ResultOf' : 'ResultsOf')})`;
       countText = countText.replace('{0}', formatInteger(count - self.filteredCount));
       countText = countText.replace('{1}', formatInteger(count));
     } else {
-      countText = `({0} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      countText = `({0} ${Locale.translate(count < 1 ? 'Result' : 'Results')})`;
       countText = countText.replace('{0}', formatInteger(count));
     }
 
