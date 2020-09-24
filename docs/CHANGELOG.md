@@ -33,6 +33,7 @@
 - `[Tabs]` Fixed a bug where removing a nested tab would cause an error due to being invisible. ([#4356](https://github.com/infor-design/enterprise/issues/4356))
 - `[Tabs]` Fixed a bug where the focus/activated state does not display correctly in RTL. ([#4332](https://github.com/infor-design/enterprise/issues/4332))
 - `[Toolbar Flex]` Fixed detection of overflow in some toolbars where items were not properly displaying all overflowed items in the "More Actions" menu. ([#4296](https://github.com/infor-design/enterprise/issues/4296))
+- `[Toolbar Flex]` Fixed an issue where in some examples/cases the first item did not get an initial tabindex. ([#4418](https://github.com/infor-design/enterprise/issues/4418))
 - `[Tree]` Fixed an issue where calling togglenode without first doing a select/unselect was not working properly. ([#3927](https://github.com/infor-design/enterprise/issues/3927))
 - `[Tree]` Fixed a bug that adding icons in with the tree text would encode it when using addNode. ([#4305](https://github.com/infor-design/enterprise/issues/4305))
 - `[Validation]` Fixed an issue where after the execution `resetForm()` was not resting dropdown and editor the fields. ([#4259](https://github.com/infor-design/enterprise/issues/4259))
