@@ -93,7 +93,9 @@ ToolbarFlex.prototype = {
       if (!this.focusedItem) {
         this.focusedItem = this.items[0];
       }
-      this.focusedItem.focused = true;
+      if (this.focusedItem) {
+        this.focusedItem.focused = true;
+      }
     }
 
     this.render();
