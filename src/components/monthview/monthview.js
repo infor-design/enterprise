@@ -242,11 +242,15 @@ MonthView.prototype = {
         </tr>
       </tbody>`).appendTo(this.table);
 
-    this.monthYearPane = $(!this.settings.showMonthYearPicker ? '' : `<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
-      <div class="expandable-pane">
-        <div class="content"><div class="picklist-section is-month"></div><div class="picklist-section is-year"></div></div>
-      </div>
-    </div>`);
+    this.monthYearPane = $('');
+
+    if (this.settings.showMonthYearPicker && this.settings.isPopup) {
+      this.monthYearPane = $(`<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
+        <div class="expandable-pane">
+          <div class="content"><div class="picklist-section is-month"></div><div class="picklist-section is-year"></div></div>
+        </div>
+      </div>`);
+    }
 
     if (this.settings.hideDays) {
       this.table = '';
