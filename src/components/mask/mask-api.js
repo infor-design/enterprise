@@ -73,7 +73,7 @@ MaskAPI.prototype = {
       throw new Error('No string provided');
     }
 
-    let providedMask;
+    let maskObj = {};
     let processResult = {
       originalValue: rawValue,
       caretPos: opts.selection.start,
@@ -92,31 +92,40 @@ MaskAPI.prototype = {
         previousMaskResult: opts.previousMaskResult
       });
 
-      // Get a processed mask pattern from the function
-      providedMask = this.pattern(rawValue, maskOpts);
+      // Get a processed mask pattern from the function.
+      // See #4079 for an explanation of the change from just an array to an object with meta-data.
+      maskObj = this.pattern(rawValue, maskOpts);
+      if (Array.isArray(maskObj)) {
+        maskObj = {
+          mask: maskObj
+        };
+      }
 
       // mask functions can setup caret traps to have some control over how the caret
       // moves. We need to process the mask for any caret traps. `processCaretTraps`
       // will remove the caret traps from the mask and return the indexes of the caret traps.
-      const caretTrapInfo = this._processCaretTraps(providedMask);
+      const caretTrapInfo = this._processCaretTraps(maskObj.mask);
 
       // The processed mask is what we're interested in
-      providedMask = caretTrapInfo.maskWithoutCaretTraps;
+      maskObj.mask = caretTrapInfo.maskWithoutCaretTraps;
+      maskObj.caretTrapIndexes = caretTrapInfo.indexes;
 
       // And we need to store these indexes because they're needed by `adjustCaretPosition`
       opts.caretTrapIndexes = caretTrapInfo.indexes;
     } else {
       // Use a provided array
-      providedMask = this.pattern;
+      maskObj = {
+        mask: this.pattern
+      };
     }
 
     // As a convenience, setting the mask to false will cause it to return without processing.
-    if (providedMask === false) {
+    if (maskObj.mask === false) {
       return processResult;
     }
 
     try {
-      processResult = this._conformToMask(rawValue, providedMask, opts);
+      processResult = this._conformToMask(rawValue, maskObj, opts);
     } catch (e) {
       // console.error('Couldn\'t complete masking process: "'+ e.message +'"');
       return processResult;
@@ -170,16 +179,16 @@ MaskAPI.prototype = {
    * Processes a raw string value against a masking algorithm and removes unfavorable chracters.
    * @private
    * @param {string} rawValue incoming full text string to process.
-   * @param {array} mask the mask to be used for modifying the raw value.
+   * @param {object} maskObj containing the mask to be used for modifying the raw value, along with some meta-data calculated about the mask.
    * @param {object} [settings] incoming settings for mask parsing.
    * @returns {object} containing the conformation result and some meta-data
    */
-  _conformToMask(rawValue, mask, settings) {
+  _conformToMask(rawValue, maskObj, settings) {
     // Set default settings
     settings = utils.mergeSettings(undefined, settings, masks.DEFAULT_CONFORM_OPTIONS);
 
     // Setup the placeholder version of the mask
-    settings.placeholder = this._convertMaskToPlaceholder(mask, settings.placeholderChar);
+    settings.placeholder = this._convertMaskToPlaceholder(maskObj.mask, settings.placeholderChar);
 
     // Setup booleans and numbers for various settings (speed)
     let charactersRejected = false;
@@ -189,7 +198,7 @@ MaskAPI.prototype = {
     const maskLength = this.pattern.length;
     const placeholderLength = settings.placeholder.length || 0;
     const placeholderChar = settings.placeholderChar;
-    const caretPos = settings.selection.start;
+    let caretPos = settings.selection.start;
     let resultStr = masks.EMPTY_STRING;
 
     const editDistance = rawValueLength - prevMaskResultLength;
@@ -271,6 +280,7 @@ MaskAPI.prototype = {
           while (rawValueArr.length > 0) {
             // Let's retrieve the first user character in the queue of characters we have left
             const rawValueChar = rawValueArr.shift();
+            const nextChar = rawValue.slice(l, l + 1);
 
             // If the character we got from the user input is a placeholder character (which happens
             // regularly because user input could be something like (540) 90_-____, which includes
@@ -282,9 +292,39 @@ MaskAPI.prototype = {
               // And we go to find the next placeholder character that needs filling
               continue placeholderLoop;
 
+            // Else if, the character we got from the user input is a known literal member of the
+            // mask (not necessarily user-input, and forms part of the formatting), add that and speed the mask
+            // up to the next section.
+            } else if (
+              maskObj.literalRegex &&
+              maskObj.literalRegex.test(rawValueChar.char) &&
+              nextChar && ((nextChar === rawValueChar.char) || (nextChar === placeholderChar))
+            ) {
+              if (isAddition && maskObj.literals.indexOf(rawValue[l - 1]) > -1) {
+                caretPos++;
+                continue placeholderLoop;
+              }
+
+              // Analyze the number of this particular literal in the value,
+              // and only add it if we haven't passed the maximum
+              const thisLiteralRegex = new RegExp(`(${rawValueChar.char})`, 'g');
+              const numberLiteralsPlaceholder = settings.placeholder.match(thisLiteralRegex).length;
+              const numberLiteralsRawValue = rawValue.match(thisLiteralRegex).length;
+              if (numberLiteralsRawValue <= numberLiteralsPlaceholder) {
+                resultStr += rawValueChar.char;
+              }
+
+              // Fast forward the loop to the after the next instance of this literal.
+              let literalIndex = settings.placeholder.slice(l).indexOf(rawValueChar.char);
+              while (literalIndex > 0) {
+                l++;
+                literalIndex--;
+              }
+
+              continue placeholderLoop;
             // Else if, the character we got from the user input is not a placeholder, let's see
             // if the current position in the mask can accept it.
-            } else if (mask[l].test(rawValueChar.char)) {
+            } else if (maskObj.mask[l].test(rawValueChar.char)) {
               // we map the character differently based on whether we are keeping character
               // positions or not. If any of the conditions below are met, we simply map the
               // raw value character to the placeholder position.
@@ -363,7 +403,8 @@ MaskAPI.prototype = {
         break;
 
       // Else, the charInPlaceholder is not a placeholderChar. That is, we cannot fill it
-      // with user input. So we just map it to the final output
+      // with user input. So as long as it doesn't exist at the rawValue's current index,
+      // we just map it to the final output.
       } else {
         resultStr += charInPlaceholder;
       }

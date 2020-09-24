@@ -37,6 +37,8 @@ sections:
     slug: breadcrumb
   - name: Busy Indicator
     slug: busyindicator
+  - name: Calendar
+    slug: calendar
   - name: Cards
     slug: cards
   - name: Checkboxes
@@ -217,8 +219,6 @@ sections:
     slug: bubble
   - name: Bullet
     slug: bullet
-  - name: Calendar
-    slug: calendar
   - name: Column Chart
     slug: column
   - name: Column Chart (Grouped)

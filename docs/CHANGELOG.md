@@ -24,6 +24,7 @@
 - `[Locale]` Fixed an max stack error when setting `nb-NO` as a language. ([#874](https://github.com/infor-design/enterprise-ng/issues/874))
 - `[Lookup]` Fixed an issue where the event `beforeShow` was only triggered the first time. ([#899](https://github.com/infor-design/enterprise-ng/issues/899))
 - `[Lookup]` Fixed a bug where the lookup count doesn't update correctly. ([#4312](https://github.com/infor-design/enterprise/issues/4312))
+- `[Mask]` Enabled editable sections of Date masks.  Editing within a section will no longer incorrectly alter values that may already exist in a date field's other editable sections. ([#4079](https://github.com/infor-design/enterprise/issues/4079))
 - `[Modal Manager]` Modals now pass `isCancelled` properly when the Modal Manager API detects a request to close by using the Escape key. ([#4298](https://github.com/infor-design/enterprise/issues/4298))
 - `[Pager]` Fixed an error when using arrow keys to select in the pagesize selector. ([#4383](https://github.com/infor-design/enterprise/issues/4383))
 - `[Searchfield]` Allow for search terms to include special characters. ([#4291](https://github.com/infor-design/enterprise/issues/4291))
