@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.31.3
+
+### v4.31.3 Fixes
+
+- `[Editor]` Fixed a bug where b tags in an empty p tag would be stripped. ([#4411](https://github.com/infor-design/enterprise/issues/4411))
+
 ## v4.31.2
 
 ### v4.31.2 Fixes
