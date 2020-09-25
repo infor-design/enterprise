@@ -1840,8 +1840,10 @@ PopupMenu.prototype = {
           self.close(true, self.settings.trigger === 'rightClick');
         }
 
-        if ($(thisE.target).hasClass('colorpicker')) {
-          self.close();
+        if ($(thisE.target).hasClass('swatch')) {
+          setTimeout(() => {
+            self.close();
+          }, 150);
         }
       });
 

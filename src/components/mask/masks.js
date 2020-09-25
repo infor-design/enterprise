@@ -295,7 +295,9 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       mask = mask.concat(SUFFIX.split(masks.EMPTY_STRING));
     }
 
-    return mask;
+    return {
+      mask
+    };
   }
 
   numberMask.instanceOf = 'createNumberMask';
@@ -359,7 +361,9 @@ masks.rangeNumberMask = function (rawValue, options) {
       }
     }
   }
-  return [...r1, ...r2];
+  return {
+    mask: [...r1, ...r2]
+  };
 };
 
 /**
@@ -417,6 +421,19 @@ const DATE_MAX_VALUES = {
   a: undefined
 };
 
+// Converts a string containing character literals acting as separators for date sections
+// Into a regular expression that can be used to detect those characters (used later in the masking process)
+function getSplitterRegex(splitterStr) {
+  const arr = splitterStr.split('');
+  const fixedArr = arr.map((c) => {
+    if (c === ' ') { // convert space characters into white space matcher
+      c = '\\s';
+    }
+    return c;
+  });
+  return new RegExp(`[(${fixedArr.join('|')})]+`);
+}
+
 /**
  * Soho Date Mask Function
  * @param {string} rawValue the un-formatted value that will eventually be masked.
@@ -430,7 +447,7 @@ masks.dateMask = function dateMask(rawValue, options) {
   const digitRegex = masks.DIGITS_REGEX;
   const format = options.format;
   const splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, ''));
-  const splitterRegex = new RegExp(`[${splitterStr}]+`);
+  const splitterRegex = getSplitterRegex(splitterStr);
   const formatArray = format.match(/(d{1,2}|M{1,4}|y{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|a{1}|z{1, 4}|E{1, 4})/g);
   const rawValueArray = rawValue.split(splitterRegex);
   const maxValue = DATE_MAX_VALUES;
@@ -499,11 +516,18 @@ masks.dateMask = function dateMask(rawValue, options) {
       const end = format.indexOf(nextPart);
       const literals = format.substring(start, end).split(masks.EMPTY_STRING);
 
-      mask = mask.concat(literals);
+      // Insert caret traps (create logical sections)
+      const literalsWithCarets = [masks.CARET_TRAP].concat(literals.concat(masks.CARET_TRAP));
+
+      mask = mask.concat(literalsWithCarets);
     }
   });
 
-  return mask;
+  return {
+    mask,
+    literals: splitterStr.split(''),
+    literalRegex: splitterRegex
+  };
 };
 
 /**
@@ -522,7 +546,11 @@ masks.rangeDateMask = function (rawValue, options) {
     secondDate = masks.dateMask(parts[1], options);
   }
 
-  return firstDate.concat(delimiterArr.concat(secondDate));
+  return {
+    mask: firstDate.mask.concat(delimiterArr.concat(secondDate.mask)),
+    literals: delimiterArr,
+    literalRegex: secondDate.literalRegex
+  };
 };
 
 /**
