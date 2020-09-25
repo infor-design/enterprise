@@ -7,6 +7,8 @@
   min-height: 235px;
   min-width: 297px;
   text-align: center;
+  transform: scaleY(1);
+  transition: all 0.01s ease-out; // force a repaint
   vertical-align: middle;
   width: 100%;
 
@@ -580,7 +582,6 @@
         border: 1px solid  $calendar-line-color;
         border-radius: 0;
         height: 100px;
-        //min-width: 90px;
         width: 14.3%;
 
         &:first-child {

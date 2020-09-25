@@ -10,6 +10,7 @@
 ### v4.33.0 Fixes
 
 - `[Autocomplete]` Fix a bug when connected to NG where pressing the enter key would not select Autocomplete items/. ([ng#901](https://github.com/infor-design/enterprise-ng/issues/901))
+- `[Calendar]` Removed some extra keyboard stops when tabing. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 - `[Colorpicker]` Fixed an issue where the colorpicker closes when pressing or clicking outside the swatch. ([#3559](https://github.com/infor-design/enterprise/issues/3559))
 - `[Datagrid]` Fixed an issue where activated row on 2nd or any subsequent page was not highlighting for mixed selection mode. ([ng#900](https://github.com/infor-design/enterprise-ng/issues/900))
 - `[Datagrid]` Added support to disable column buttons. ([1590](https://github.com/infor-design/enterprise/issues/1590))

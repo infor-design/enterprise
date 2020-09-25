@@ -751,5 +751,12 @@
     "icon": "icon-error-alert",
     "color": "#F6CACA",
     "borderColor": "#e84f4f"
+  },
+  {
+    "id": "76",
+    "subject": "Meeting",
+    "starts": "2020-09-23T08:00:00.000",
+    "ends": "2020-09-23T09:00:00.000",
+    "type": "dto"
   }
 ]
