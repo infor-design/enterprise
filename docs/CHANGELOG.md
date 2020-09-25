@@ -41,6 +41,8 @@
 - `[Tree]` Fixed a bug that adding icons in with the tree text would encode it when using addNode. ([#4305](https://github.com/infor-design/enterprise/issues/4305))
 - `[Validation]` Fixed an issue where after the execution `resetForm()` was not resting dropdown and editor the fields. ([#4259](https://github.com/infor-design/enterprise/issues/4259))
 
+(48 Issues Solved This Release, Backlog Enterprise 184, Backlog Ng 48, 1084 Functional Tests, 1530 e2e Tests)
+
 ## v4.32.0
 
 ### v4.32.0 Important Notes
