@@ -189,6 +189,7 @@ Toast.prototype = {
       setting.forEach((item) => {
         elem.attr(item.name, item.value);
       });
+      return;
     }
     const value = typeof setting.value === 'function' ? setting.value(this) : setting.value;
     elem.attr(setting.name, value);

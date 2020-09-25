@@ -3555,6 +3555,12 @@ td .btn-actions {
       @include trigger-icon-background($datagrid-row-hover-color);
     }
 
+    &.error:hover .icon,
+    &.error.icon,
+    &.datagrid-trigger-cell.error .icon {
+      @include trigger-icon-background(transparent);
+    }
+
     &.is-editing:hover .icon {
       @include trigger-icon-background($datagrid-cell-bg-color);
     }
