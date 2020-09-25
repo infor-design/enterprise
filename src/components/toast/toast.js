@@ -187,10 +187,12 @@ Toast.prototype = {
 
     if (Array.isArray(setting)) {
       setting.forEach((item) => {
-        elem.attr(item.name, item.value);
+        const value = typeof item.value === 'function' ? item.value(this) : item.value;
+        elem.attr(item.name, value);
       });
       return;
     }
+
     const value = typeof setting.value === 'function' ? setting.value(this) : setting.value;
     elem.attr(setting.name, value);
   },
