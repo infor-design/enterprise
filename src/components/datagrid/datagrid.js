@@ -6226,11 +6226,15 @@ Datagrid.prototype = {
         self.toggleRowSelection(target.closest('tr'));
       }
 
-      const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
-
       // Handle Cell Click Event
       const cell = td.attr('aria-colindex') - 1;
       const col = self.columnSettings(cell);
+
+      if (col && !target.is('.datagrid-checkbox') && col.editor === Editors.Checkbox) {
+        return;
+      }
+
+      const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
