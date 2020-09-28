@@ -65,8 +65,6 @@ sections:
     slug: expandablearea
   - name: Error Page
     slug: error-page
-  - name: Favorites
-    slug: favorites
   - name: Field Filter
     slug: field-filter
   - name: Fieldset
