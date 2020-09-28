@@ -25,6 +25,7 @@
 - `[Datagrid]` Fixed an issue where the column icons and content was overlapping. ([#4264](https://github.com/infor-design/enterprise/issues/4264))
 - `[Datagrid]` Fixed an issue where using flex toolbar as a custom toolbar did not work. ([#4385](https://github.com/infor-design/enterprise/issues/4385))
 - `[Datepicker]` Added missing off screen text for the picker buttons in the datepicker month/year view. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
+- `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Editor]` Fixed a bug where the Fontpicker's displayed style wasn't updating to match the current text selection in some cases. ([#4309](https://github.com/infor-design/enterprise/issues/4309))
 - `[Editor]` Fixed a bug where b tags in an empty p tag would be stripped. ([#4411](https://github.com/infor-design/enterprise/issues/4411))
 - `[Locale]` Added a new translation token for Records Per Page with no number. ([#4334](https://github.com/infor-design/enterprise/issues/4334))
