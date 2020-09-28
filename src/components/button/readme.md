@@ -54,6 +54,17 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 
 ```
 
+You can also use the button component to make a toggle button. Here is an example of a favorite style icon you can toggle on and off. Adding the class `icon-favorite` will change the icon color to a gold color instead of the usually azure toggle buttons when on.
+
+```html
+<button type="button" id="favorite" class="btn-icon icon-toggle" title="Favorite">
+   <svg class="icon-test icon" focusable="false" aria-hidden="true" role="presentation">
+    <use href="#icon-star-filled"></use>
+   </svg>
+   <span>Favorite</span>
+</button>
+```
+
 ## Implementation Tips
 
 - Make sure to add an automation-id or permanently unique id for testing that remains the same across versions.
