@@ -402,11 +402,20 @@ Pager.prototype = {
     this.pagerBar.on('click.pager', '.btn-icon', function (e) {
       const btn = e.currentTarget;
       const li = btn.parentNode;
+      const dropdown = document.querySelector('.datagrid-cell-wrapper .dropdown');
+      const dropdownList = document.querySelector('.datagrid-dropdown-list');
 
       e.preventDefault();
 
       if ($(this).attr('disabled')) {
         return false;
+      }
+
+      // If a dropdown is open, remove it on pager click
+      if (dropdownList) {
+        const triggerCell = dropdown.parentNode.parentNode;
+        dropdownList.remove();
+        triggerCell.classList.remove('is-editing');
       }
 
       // If this is a filtered dataset, use the `filteredTotal` instead
