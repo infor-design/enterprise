@@ -5,7 +5,7 @@
 ### v4.34.0 Fixes
 
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
-- `[List Detail]` Fixed css height for list detail in responsive view
+- `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 
 ## v4.33.0
 
