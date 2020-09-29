@@ -3499,7 +3499,7 @@ Tabs.prototype = {
       (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
 
     if (Locale.isRTL()) {
-      style.right = `${tablistScrollWidth + paddingRight -  (left + tablistScrollLeft) - tabListDifferWidth}px`;
+      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft) - tabListDifferWidth}px`;
     } else {
       style.left = `${left + tablistScrollLeft}px`;
     }
