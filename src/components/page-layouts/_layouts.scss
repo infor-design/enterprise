@@ -353,6 +353,7 @@ body.no-scroll {
       > .main,
       > .sidebar {
         display: block;
+        height: 100%;
         width: 100%; // Override Inline Css
       }
     }
