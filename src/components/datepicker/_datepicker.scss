@@ -117,6 +117,12 @@
 
   .tooltip-content {
     padding: 0;
+
+    @media only screen
+      and (max-width: $breakpoint-phone-to-tablet - 1)
+      and (-webkit-min-device-pixel-ratio: 2) {
+      padding: 7px 10px 5px;
+    }
   }
 
   .popup-footer {
