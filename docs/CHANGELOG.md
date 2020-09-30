@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.31.4
+
+### v4.31.4 Fixes
+
+- `[Datagrid]` Fixed an issue where the icons right text was truncated for extra-small row height. ([#4355](https://github.com/infor-design/enterprise/issues/4355))
+
 ## v4.31.3
 
 ### v4.31.3 Fixes
