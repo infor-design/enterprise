@@ -3484,6 +3484,7 @@ Tabs.prototype = {
     const scrollingTablist = this.tablistContainer;
     const tablistScrollLeft = scrollingTablist[0].scrollLeft;
     const tablistScrollWidth = scrollingTablist[0].scrollWidth;
+    const tabListDifferWidth = tablistScrollWidth - this.tablistContainer[0].offsetWidth;
 
     const targetStyle = window.getComputedStyle(target[0], null);
     let paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
@@ -3498,7 +3499,7 @@ Tabs.prototype = {
       (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
 
     if (Locale.isRTL()) {
-      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft)}px`;
+      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft) - tabListDifferWidth}px`;
     } else {
       style.left = `${left + tablistScrollLeft}px`;
     }
