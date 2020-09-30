@@ -1818,6 +1818,10 @@ $datagrid-small-row-height: 25px;
         background-color: $badge-neutral-hover-bg-color;
         transition: none;
       }
+
+      .icon {
+        @include trigger-icon-background($datagrid-row-hover-color);
+      }
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
