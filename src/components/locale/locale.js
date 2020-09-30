@@ -514,12 +514,12 @@ const Locale = {  // eslint-disable-line
 
       // Set the d3 locale for charts (unless disabled)
       d3.formatDefaultLocale({
-        decimal: data.numbers.decimal,
-        thousands: data.numbers.group,
-        grouping: data.numbers.groupSizes,
-        currency: data.currencySign,
-        percent: data.numbers.percentSign,
-        minus: data.numbers.minusSign
+        decimal: data?.numbers?.decimal || '.',
+        thousands: data?.numbers?.group || ',',
+        grouping: data?.numbers?.groupSizes || [3],
+        currency: data?.currencySign || '$',
+        percent: data?.numbers?.percentSign || '%',
+        minus: data?.numbers?.minusSign || '-'
       });
     }
   },

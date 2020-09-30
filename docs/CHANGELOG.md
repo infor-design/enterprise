@@ -2,7 +2,7 @@
 
 ## v4.34.0
 
-### v4.33.0 Features
+### v4.34.0 Features
 
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 
