@@ -93,8 +93,6 @@ sections:
     slug: listbuilder
   - name: Masthead
     slug: masthead
-  - name: Menubutton
-    slug: menubutton
   - name: Message
     slug: message
   - name: Modal

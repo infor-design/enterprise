@@ -6,6 +6,10 @@ demo:
   - name: Form Buttons
     slug: example-index
   pages:
+  - name: Simple Menu Button
+    slug: example-menubutton
+  - name: Menu Button with Submenus
+    slug: example-menubutton-submenu
   - name: 100% Width Button
     slug: example-100-percent
   - name: Anchor tags that look like buttons
@@ -24,12 +28,13 @@ demo:
 
 A button object should always use a `<button>` element. Also make sure to add `type="button"` or some browsers will treat this as a submit button and refresh the page.
 
-There are four types of buttons, all controlled by class.
+There are five types of buttons, all controlled by classes and markup.
 
 - `btn-primary` - Primary action form button
 - `btn-secondary` - Secondary action form button
 - `btn-tertiary` or `btn` - Normal tertiary button
 - `btn-icon` - Icon only button
+- `btn-menu` - A button with a context menu attached
 
 All buttons are assumed to include an icon and a text label. An icon can be added by including the SVG icon element and use a span to hold the button text.
 
@@ -51,7 +56,6 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
     <use href="#icon-calendar"></use>
   </svg>
 </button>
-
 ```
 
 You can also use the button component to make a toggle button. Here is an example of a favorite style icon you can toggle on and off. Adding the class `icon-favorite` will change the icon color to a gold color instead of the usually azure toggle buttons when on.
@@ -63,6 +67,24 @@ You can also use the button component to make a toggle button. Here is an exampl
    </svg>
    <span>Favorite</span>
 </button>
+```
+
+If you need a menu button, note that it is comprised of the [popupmenu](./popupmenu) and the button component.
+
+Once the proper markup is in place calling `$(elem).button()` will correctly initialize a menu button. If the arrow icon is missing in the markup it will be added. For example:
+
+```html
+<button class="btn-menu">
+  <span>Menu Button</span>
+  <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+    <use href="#icon-dropdown"></use>
+  </svg>
+</button>
+<ul class="popupmenu">
+  <li><a href="#" id="menu-option-1">Menu Option #1</a></li>
+  <li><a href="#" id="menu-option-2">Menu Option #2</a></li>
+  <li><a href="#" id="menu-option-3">Menu Option #3</a></li>
+</ul>
 ```
 
 ## Implementation Tips
@@ -83,6 +105,7 @@ You can also use the button component to make a toggle button. Here is an exampl
 ## Keyboard Shortcuts
 
 - <kbd>Spacebar</kbd> or <kbd>Enter</kbd> keys execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an "Apply" or "Recalculate" button.
+- <kbd>Enter</kbd> If the button is a menu button the enter key will toggle the menu. Use the arrow keys and enter to select in the menu. See [popupmenu]( ./popupmenu) for details on using the keyboard in the the open menu.
 
 ## Responsive Guidelines
 
