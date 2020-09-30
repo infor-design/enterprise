@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Menu button example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/menubutton/example-index?layout=nofrills');
+    await utils.setPage('/components/button/example-menubutton?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -40,7 +40,7 @@ describe('Menu button example-index tests', () => {
 
 describe('Menu button disabled tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/menubutton/test-disabled');
+    await utils.setPage('/components/button/test-menubutton-disabled');
   });
 
   it('Should be disabled', async () => {
