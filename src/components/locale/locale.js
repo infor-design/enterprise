@@ -9,6 +9,7 @@ import { ummalquraData } from './info/umalqura-data';
 // culture files. This allows manually setting the directory for the culture files.
 let existingCulturePath = '';
 let minifyCultures = false;
+
 if (typeof window.SohoConfig === 'object') {
   if (typeof window.SohoConfig.culturesPath === 'string') {
     existingCulturePath = window.SohoConfig.culturesPath;
@@ -510,6 +511,16 @@ const Locale = {  // eslint-disable-line
           nativeName: data.nativeName
         };
       }
+
+      // Set the d3 locale for charts (unless disabled)
+      d3.formatDefaultLocale({
+        decimal: data.numbers.decimal,
+        thousands: data.numbers.group,
+        grouping: data.numbers.groupSizes,
+        currency: data.currencySign,
+        percent: data.numbers.percentSign,
+        minus: data.numbers.minusSign
+      });
     }
   },
 

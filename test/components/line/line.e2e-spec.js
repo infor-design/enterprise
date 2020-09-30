@@ -28,6 +28,28 @@ describe('Line Chart tests', () => {
   }
 });
 
+describe('Line Localization tests', () => {
+  it('Should Localize Numbers - en-US', async () => {
+    await utils.setPage('/components/line/example-localize.html');
+    await utils.checkForErrors();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.y .tick text')).get(0).getText()).toEqual('0');
+    expect(await element.all(by.css('.y .tick text')).get(1).getText()).toEqual('5,000');
+    expect(await element.all(by.css('.y .tick text')).get(2).getText()).toEqual('10,000');
+  });
+
+  it('Should Localize Numbers - de-DE', async () => {
+    await utils.setPage('/components/line/example-localize.html?locale=de-DE');
+    await utils.checkForErrors();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.y .tick text')).get(0).getText()).toEqual('0');
+    expect(await element.all(by.css('.y .tick text')).get(1).getText()).toEqual('5.000');
+    expect(await element.all(by.css('.y .tick text')).get(2).getText()).toEqual('10.000');
+  });
+});
+
 describe('Line Chart Zero Millions tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/line/example-zero-millions?layout=nofrills');

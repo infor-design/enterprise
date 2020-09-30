@@ -110,7 +110,7 @@ CompletionChart.prototype = {
       if (formatterString === '.0%') {
         return localePercent(toPercent(value, ds));
       }
-      return d3.format(formatterString || '')(value);
+      return d3.format(formatterString || 'm')(value);
     };
 
     const fixPercent = function (value, ds) {

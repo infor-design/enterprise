@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.tooltip.show='label (value)'] Controls what is visible in
   the tooltip, this can be value, label or percent or custom function.
  * @param {string} [settings.tooltip.formatter='.0f'] The d3.formatter string.
- * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
+ * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
