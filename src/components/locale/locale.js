@@ -517,8 +517,8 @@ const Locale = {  // eslint-disable-line
         decimal: data?.numbers?.decimal || '.',
         thousands: data?.numbers?.group || ',',
         grouping: data?.numbers?.groupSizes || [3],
-        currency: data?.currencySign || '$',
         percent: data?.numbers?.percentSign || '%',
+        currency: !data?.currencySign ? ['$', ''] : data.currencyFormat.split('¤')[0] === '' ? [data.currencySign, ''] : ['', data.currencySign],
         minus: data?.numbers?.minusSign || '-'
       });
     }
