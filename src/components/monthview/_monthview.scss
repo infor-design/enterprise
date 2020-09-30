@@ -389,20 +389,6 @@
           position: absolute;
           width: 43px;
           z-index: -1;
-
-          @media only screen
-            and (max-width: $breakpoint-phone-to-tablet - 1)
-            and (-webkit-min-device-pixel-ratio: 2)
-            and (orientation: landscape) {
-            height: 32px;
-          }
-
-          @media only screen
-            and (max-width: $breakpoint-phone-to-tablet - 1)
-            and (-webkit-min-device-pixel-ratio: 2)
-            and (orientation: portrait) {
-            height: 32px;
-          }
         }
       }
 
@@ -439,16 +425,16 @@
             and (max-width: $breakpoint-phone-to-tablet - 1)
             and (-webkit-min-device-pixel-ratio: 2)
             and (orientation: landscape) {
-            height: 31px;
-            width: 31px;
+            height: 34px;
+            width: 34px;
           }
 
           @media only screen
             and (max-width: $breakpoint-phone-to-tablet - 1)
             and (-webkit-min-device-pixel-ratio: 2)
             and (orientation: portrait) {
-            height: 31px;
-            width: 31px;
+            height: 34px;
+            width: 34px;
           }
         }
       }

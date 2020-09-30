@@ -4,9 +4,12 @@
 
 ### v4.34.0 Fixes
 
+- `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Datagrid]` Fixed an issue where the double click event was not firing for checkbox columns. ([#4381](https://github.com/infor-design/enterprise/issues/4381))
+- `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
 - `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
+- `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 
 ## v4.33.0
 
