@@ -91,9 +91,9 @@ describe('Message overlay opacity tests', () => {
 describe('Message visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on lists example?layout=nofrills', async () => {
-      await utils.setPage('/components/message/test-lists.html?layout=nofrills');
+      await utils.setPage('/components/message/test-lists.html');
       await browser.driver.sleep(config.sleep);
-      const container = await element(by.css('.container'));
+      const container = await element(by.id('maincontent'));
       await element(by.id('show-message')).click();
       await browser.driver.sleep(config.sleep);
 
@@ -101,9 +101,9 @@ describe('Message visual regression tests', () => {
     });
 
     it('Should not visual regress on error example', async () => {
-      await utils.setPage('/components/message/example-index.html?layout=nofrills');
+      await utils.setPage('/components/message/example-index.html');
       await browser.driver.sleep(config.sleep);
-      const container = await element(by.css('.container'));
+      const container = await element(by.id('maincontent'));
       await element(by.id('show-application-error')).click();
       await browser.driver.sleep(config.sleep);
 
