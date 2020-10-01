@@ -2414,7 +2414,10 @@ PopupMenu.prototype = {
 
     delete this.openedWithTouch;
 
-    if (noFocus || !this.settings.returnFocus || env.features.touch) {
+    // Editor colorpicker
+    const cpEditorNotVisible = this.element.is('.colorpicker-editor-button') && !utils.isInViewport(this.element[0]);
+
+    if (noFocus || !this.settings.returnFocus || env.features.touch || cpEditorNotVisible) {
       return;
     }
 

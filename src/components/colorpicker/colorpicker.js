@@ -396,7 +396,13 @@ ColorPicker.prototype = {
         if (!this.isEditor) {
           this.setColor(item.data('value'), item.data('label'));
         }
-        this.element.focus();
+
+        // Editor colorpicker
+        const cpEditorNotVisible = this.element.is('.colorpicker-editor-button') && !utils.isInViewport(this.element[0]);
+
+        if (!cpEditorNotVisible) {
+          this.element.focus();
+        }
 
         /**
         *  Fires after the color picker is changed
