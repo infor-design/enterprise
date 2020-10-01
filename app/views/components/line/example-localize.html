@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Line Chart &mdash; Localized</h2>
+    <p>Change the URL to see localized data (for example add ?locale=de-DE)</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var  dataset = [{
+    "name": "Figures",
+    "data": [
+      {"name": "Q1", "value": 10011.8 },
+      {"name": "Q2", "value": 10011 },
+      {"name": "Q3", "value": 1051.1 },
+      {"name": "Q4", "value": 2050.50 }
+    ]
+  }];
+
+  $('#line-example').chart({
+    type: 'line',
+    animate: false,
+    dataset: dataset,
+    yAxis: {
+      ticks: {
+        number: 3,
+      }
+    }
+  });
+
+});
+</script>

@@ -19,14 +19,13 @@ const COMPONENT_NAME = 'line';
  * @class Line
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
- *
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {function|string} [settings.tooltip] A custom tooltip or tooltip renderer function
  * for the whole chart.
  * @param {string} [settings.isArea] Render as an area chart.
  * @param {string} [settings.isBubble=false] Render as a bubble chart.
  * @param {string} [settings.isScatterPlot=false] Render as a Scatter Plot Chart.
-* @param {string} [settings.showLegend=true] If false the label will not be shown.
+ * @param {string} [settings.showLegend=true] If false the label will not be shown.
  * @param {object} [settings.xAxis] A series of options for the xAxis
  * @param {number} [settings.xAxis.rotate] Rotate the elements on the x axis.
  * Recommend -65 deg but this can be tweaked depending on look.
@@ -50,7 +49,7 @@ const COMPONENT_NAME = 'line';
  * the size on hover and stroke or even add a custom class.
  * Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
  * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
- * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
+ * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
@@ -58,6 +57,7 @@ const COMPONENT_NAME = 'line';
  *  button: {text: 'xxx', click: <function>}
  *  }`
  *  Set this to null for no message or will default to 'No Data Found with an icon.'
+ * @param {object} [settings.localeInfo] If passed in you can override the default formatting https://github.com/d3/d3-format/blob/master/README.md#formatDefaultLocale
  */
 const LINE_DEFAULTS = {
   dataset: [],
@@ -91,6 +91,11 @@ Line.prototype = {
   init() {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.initialSelectCall = false;
+
+    if (this.settings.localeInfo) {
+      d3.formatDefaultLocale(this.settings.localeInfo);
+    }
+
     this
       .build()
       .handleEvents();
@@ -121,8 +126,7 @@ Line.prototype = {
     const self = this;
     const s = this.settings;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
-    const isFormatter = !!s.formatterString;
-    const format = value => (isFormatter ? d3.format(s.formatterString)(value) : value);
+    const format = value => d3.format(s.formatterString || ',')(value);
 
     // Add css class
     let cssClass = 'line-chart';

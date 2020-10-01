@@ -33,7 +33,7 @@ const COMPONENT_NAME = 'bar';
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
- * @pram {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
+ * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * You may want to change this based on label data.
  * @param {object} [settings.emptyMessage={
  *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
@@ -45,6 +45,7 @@ const COMPONENT_NAME = 'bar';
  *  icon: 'icon-empty-no-data',
  *  button: {text: 'xxx', click: <function>}  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
+ * @param {object} [settings.localeInfo] If passed in you can override the default formatting https://github.com/d3/d3-format/blob/master/README.md#formatDefaultLocale
  */
 const BAR_DEFAULTS = {
   dataset: [],
@@ -89,6 +90,11 @@ Bar.prototype = {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
     this.initialSelectCall = false;
+
+    if (this.settings.localeInfo) {
+      d3.formatDefaultLocale(this.settings.localeInfo);
+    }
+
     this
       .build()
       .handleEvents();
@@ -120,7 +126,7 @@ Bar.prototype = {
     const parent = this.element.parent();
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!s.formatterString;
-    const format = value => (isFormatter ? d3.format(s.formatterString)(value) : value);
+    const format = value => d3.format(self.settings.formatterString || ',')(value);
 
     let maxTextWidth;
     let largestText;
