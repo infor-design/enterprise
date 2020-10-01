@@ -88,7 +88,7 @@ describe('Message overlay opacity tests', () => {
   });
 });
 
-fdescribe('Message visual regression tests', () => {
+describe('Message visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on lists example?layout=nofrills', async () => {
       await utils.setPage('/components/message/test-lists.html?layout=nofrills');
