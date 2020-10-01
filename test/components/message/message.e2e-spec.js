@@ -87,3 +87,27 @@ describe('Message overlay opacity tests', () => {
     expect(await overlayEl.getCssValue('opacity')).toBe('0.1');
   });
 });
+
+fdescribe('Message visual regression tests', () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on lists example?layout=nofrills', async () => {
+      await utils.setPage('/components/message/test-lists.html?layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+      const container = await element(by.css('.container'));
+      await element(by.id('show-message')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(container, 'message-open-list')).toEqual(0);
+    });
+
+    it('Should not visual regress on error example', async () => {
+      await utils.setPage('/components/message/example-index.html?layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+      const container = await element(by.css('.container'));
+      await element(by.id('show-application-error')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(container, 'message-open')).toEqual(0);
+    });
+  }
+});
