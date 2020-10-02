@@ -825,13 +825,24 @@ SearchField.prototype = {
       });
     }
 
+    function getHighlighted(items) {
+      return items.filter('.is-selected');
+    }
+
     // Override the 'click' listener created by Autocomplete (which overrides the
     // default Popupmenu method) to act differntly when the More Results link is activated.
-    self.element.on(`listopen.${this.id}`, () => {
+    self.element.on(`listopen.${this.id}`, (e) => {
       const list = $('#autocomplete-list');
+      const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+      const items = list.find(excludes);
+      const highlighted = getHighlighted(items);
 
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
+
+      if (highlighted.length === 0) {
+        this.autocomplete.settings.autoSelectFirstItem = true;
+      }
 
       // Trigger the `allResultsCallback` if one is defined
       self.element.on(`selected.${this.id}`, (thisE, a, ret) => {
