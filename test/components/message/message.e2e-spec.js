@@ -32,7 +32,7 @@ describe('Message tests', () => {
       expect(modalButtonPrimaryClasses).toContain('btn-modal-primary');
       expect(modalButtonPrimaryClasses).toContain('hide-focus');
 
-      const modalButtonEl = await element(by.css('.btn-modal'));
+      const modalButtonEl = await element.all(by.css('.btn-modal')).first();
 
       await modalButtonEl.sendKeys(protractor.Key.TAB);
       const modalButtonClasses = await modalButtonEl.getAttribute('class');
@@ -41,6 +41,24 @@ describe('Message tests', () => {
       expect(modalButtonClasses).toContain('hide-focus');
     });
   }
+
+  it('Should be able to set id/automation/id on buttons', async () => {
+    const btnEl = await element(by.id('show-application-alert'));
+    await btnEl.click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('message-acknowledge-cancel-1')).getAttribute('id')).toEqual('message-acknowledge-cancel-1');
+    expect(await element(by.css('[data-automation-id="message-alert-cancel-1"]')).getAttribute('data-automation-id')).toEqual('message-alert-cancel-1');
+  });
+
+  it('Should be able to set id/automation/id on root/items', async () => {
+    const btnEl = await element(by.id('show-application-alert'));
+    await btnEl.click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('message-acknowledge-title')).getAttribute('id')).toEqual('message-acknowledge-title');
+    expect(await element(by.id('message-acknowledge-message')).getAttribute('id')).toEqual('message-acknowledge-message');
+  });
 });
 
 describe('Message xss tests', () => {

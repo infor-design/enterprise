@@ -24,7 +24,8 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
  * @param {string} [settings.audibleLabel='']  String to include in message title that is strictly audible.
  * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
   status: '',
@@ -36,7 +37,8 @@ const MESSAGE_DEFAULTS = {
   allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
   audibleLabel: '',
   overlayOpacity: 0.7,
-  hideUnderneath: false
+  hideUnderneath: false,
+  attributes: null
 };
 
 function Message(element, settings) {
@@ -84,7 +86,8 @@ Message.prototype = {
       close: this.settings.close,
       isAlert: true,
       overlayOpacity: this.settings.overlayOpacity,
-      hideUnderneath: this.settings.hideUnderneath
+      hideUnderneath: this.settings.hideUnderneath,
+      attributes: this.settings.attributes
     });
 
     // Adjust Width if Set as a Setting

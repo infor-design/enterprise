@@ -101,7 +101,8 @@
       firstPageTooltip: 'Custom First Tooltip',
       previousPageTooltip: 'Custom Previous Tooltip',
       nextPageTooltip: 'Custom Next Tooltip',
-      lastPageTooltip: 'Custom Last Tooltip'
+      lastPageTooltip: 'Custom Last Tooltip',
+      attributes: [{ name: 'id', value: 'standalone-pager' }, { name: 'data-automation-id', value: 'standalone-pager-auto-id' } ],
     }).on('firstpage', function (e, args) {
       $('body').toast({title: 'firstpage jQuery Event Fired', message: ''});
     }).on('previouspage', function (e, args) {

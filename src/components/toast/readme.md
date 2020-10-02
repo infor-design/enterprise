@@ -35,7 +35,29 @@ The toast component is made accessible by making an aria live region which means
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+The toast can have custom id's/automation id's that can be used for scripting. To add them use the option `attributes` to set an id on the generated toast message. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+
+Setting the id/automation id with a function, the toastIndex will be a running total of open toasts:
+
+```js
+  attributes: { name: 'id', value: args => `toast-id-${args.toastIndex}` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+The close button will get an id with `-btn-close` appended after the id given.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

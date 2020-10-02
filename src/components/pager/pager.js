@@ -68,6 +68,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {boolean} [settings.nextPageTooltip = 'Next Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.lastPageTooltip = 'Last Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.pageSizeMenuSettings = {}] customizable popupmenu settings for the Page Size Selector.
+* @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
@@ -102,7 +103,8 @@ const PAGER_DEFAULTS = {
   lastPageTooltip: 'LastPage',
   pageSizeMenuSettings: {
     attachToBody: false
-  }
+  },
+  attributes: null
 };
 
 function Pager(element, settings) {
@@ -317,6 +319,7 @@ Pager.prototype = {
     }
 
     this.element.attr({ role: 'region', 'aria-label': Locale.translate('Pagination') });
+
     return this;
   },
 
@@ -1107,6 +1110,8 @@ Pager.prototype = {
    * @returns {undefined}
    */
   renderBar(pagingInfo) {
+    const self = this;
+
     if (!pagingInfo) {
       pagingInfo = this.state;
     } else {
@@ -1189,6 +1194,21 @@ Pager.prototype = {
     }
 
     this.initTabIndexes();
+
+    // Add id's to everything
+    utils.addAttributes(this.pagerBar, this, this.settings.attributes);
+    utils.addAttributes(this.pagerBar.find('.pager-first button'), this, this.settings.attributes, 'btn-first');
+    utils.addAttributes(this.pagerBar.find('.pager-prev button'), this, this.settings.attributes, 'btn-prev');
+    utils.addAttributes(this.pagerBar.find('.pager-next button'), this, this.settings.attributes, 'btn-next');
+    utils.addAttributes(this.pagerBar.find('.pager-last button'), this, this.settings.attributes, 'btn-last');
+    utils.addAttributes(this.pagerBar.find('.pager-pagesize button'), this, this.settings.attributes, 'btn-pagesize');
+    utils.addAttributes(this.pagerBar.find('input'), this, this.settings.attributes, 'pagesize-input');
+
+    this.pagerBar.find('.pager-pagesize .popupmenu li').each(function () {
+      const link = $(this).find('a');
+      const value = link.text();
+      utils.addAttributes(link, self, self.settings.attributes, `pagesize-opt-${value}`);
+    });
   },
 
   /**

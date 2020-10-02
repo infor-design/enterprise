@@ -121,7 +121,8 @@ Toast.prototype = {
       toastIndex = len.length;
     }
 
-    this.addAttributes(toast);
+    utils.addAttributes(toast, this, this.settings.attributes);
+    utils.addAttributes(toast.find('button'), this, this.settings.attributes, 'btn-close');
 
     // Build the RenderLoop integration
     const timer = new RenderLoopItem({
@@ -172,29 +173,6 @@ Toast.prototype = {
     closeBtn.on('click.toast', () => {
       clearToast(toast);
     });
-  },
-
-  /**
-   * Generate additional attributes.
-   * @private
-   * @param {object} elem The root dom node
-   */
-  addAttributes(elem) {
-    const setting = this.settings.attributes;
-    if (!setting) {
-      return;
-    }
-
-    if (Array.isArray(setting)) {
-      setting.forEach((item) => {
-        const value = typeof item.value === 'function' ? item.value(this) : item.value;
-        elem.attr(item.name, value);
-      });
-      return;
-    }
-
-    const value = typeof setting.value === 'function' ? setting.value(this) : setting.value;
-    elem.attr(setting.name, value);
   },
 
   /**
