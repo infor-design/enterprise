@@ -2415,7 +2415,18 @@ PopupMenu.prototype = {
     delete this.openedWithTouch;
 
     // Editor colorpicker
-    const cpEditorNotVisible = this.element.is('.colorpicker-editor-button') && !utils.isInViewport(this.element[0]);
+    let cpEditorNotVisible = false;
+    if (this.element.is('.colorpicker-editor-button')) {
+      const toolbarItem = this.element.data('toolbaritem') || this.element.data('toolbarflexitem');
+      const toolbarAPI = toolbarItem ? toolbarItem.toolbarAPI : null;
+      if (toolbarAPI) {
+        toolbarAPI.overflowedItems.forEach((thisItem) => {
+          if (thisItem.type === 'colorpicker') {
+            cpEditorNotVisible = true;
+          }
+        });
+      }
+    }
 
     if (noFocus || !this.settings.returnFocus || env.features.touch || cpEditorNotVisible) {
       return;
