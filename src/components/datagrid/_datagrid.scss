@@ -138,6 +138,15 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  &.has-empty-message.is-empty {
+    &.has-horizontal-scroll {
+      .datagrid-wrapper.left,
+      .datagrid-wrapper.right {
+        overflow-x: auto;
+      }
+    }
+  }
+
   &.has-horizontal-scroll {
     .datagrid-wrapper.left,
     .datagrid-wrapper.right {
