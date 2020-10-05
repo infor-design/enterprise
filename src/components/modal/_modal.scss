@@ -442,13 +442,27 @@ body.modal-engaged {
     top: 14px;
   }
 
+  // Message specific styles
   .message {
+    @include antialiased();
+
     color: $modal-color;
     font-size: $ids-size-font-base;
     line-height: 20px;
+    margin-bottom: 0;
     max-width: 369px;
-    padding: 15px 0 25px;
+    padding: 0;
     text-align: left;
+
+    .modal-body-wrapper {
+      padding: 5px 20px;
+    }
+
+    ol,
+    ul {
+      list-style: initial;
+      margin: -4px 20px 0;
+    }
   }
 
   .alert-text {
@@ -549,13 +563,6 @@ body.modal-engaged {
       background-color: transparent;
       color: $modal-btn-primary-hover-color;
     }
-  }
-}
-
-// Message specific styles
-.message {
-  .modal-body-wrapper {
-    padding: 5px 20px;
   }
 }
 
