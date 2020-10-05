@@ -9928,9 +9928,18 @@ Datagrid.prototype = {
       }
     }
 
+    // Adjust leading/trailing spaces as `&nbsp;`
+    const adj = (thisVal, regx) => {
+      const r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
+      return r[0].replace(/\s/g, '&nbsp;');
+    };
+
     // update cell value
     const escapedVal = xssUtils.escapeHTML(coercedVal);
-    const val = (isEditor ? coercedVal : escapedVal);
+    let val = (isEditor ? coercedVal : escapedVal);
+    if (typeof val === 'string') {
+      val = `${adj(val, /^\s*/)}${val.trim()}${adj(val, /\s*$/)}`;
+    }
     formatted = this.formatValue(formatter, row, cell, val, col, rowData);
 
     if (col.contentVisible) {
@@ -9982,7 +9991,20 @@ Datagrid.prototype = {
     oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
     coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
 
-    if (coercedVal !== oldVal && !fromApiCall) {
+    let isCellChange;
+    if (typeof oldVal === 'string' && typeof coercedVal === 'string') {
+      // Some reasion compare spaces not in match, use `&nbsp;` leading/trailing spaces
+      const values = {
+        oldVal: `${adj(oldVal, /^\s*/)}${oldVal.trim()}${adj(oldVal, /\s*$/)}`,
+        coercedVal: `${adj(coercedVal, /^\s*/)}${coercedVal.trim()}${adj(coercedVal, /\s*$/)}`
+      };
+      isCellChange = (values.coercedVal !== values.oldVal && !fromApiCall);
+    } else {
+      isCellChange = (coercedVal !== oldVal && !fromApiCall);
+    }
+
+    if (isCellChange) {
+    // if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
         row: this.settings.source !== null ? dataRowIndex : row,
         relativeRow: row,
