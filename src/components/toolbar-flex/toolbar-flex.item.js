@@ -227,7 +227,7 @@ ToolbarFlexItem.prototype = {
   triggerSelectedEvent() {
     // Searchfields and Colorpickers aren't "selectable" in the same way actionable
     // items are, so they shouldn't fire the "selected" event.
-    const disallowedTypes = ['colorpicker', 'searchfield', 'toolbarsearchfield'];
+    const disallowedTypes = ['searchfield', 'toolbarsearchfield'];
     if (disallowedTypes.indexOf(this.type) > -1) {
       return;
     }
@@ -762,7 +762,7 @@ ToolbarFlexItem.prototype = {
       itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
     }
 
-    if (this.type === 'button' || this.type === 'menubutton') {
+    if (/\b(button|menubutton|colorpicker)\b/g.test(this.type)) {
       itemData.text = this.element.textContent.trim();
     }
 
@@ -835,7 +835,7 @@ ToolbarFlexItem.prototype = {
       itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
     }
 
-    if (this.type === 'button' || this.type === 'menubutton') {
+    if (/\b(button|menubutton|colorpicker)\b/g.test(this.type)) {
       itemData.text = this.element.textContent.trim();
     }
 

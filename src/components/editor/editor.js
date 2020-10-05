@@ -494,6 +494,29 @@ Editor.prototype = {
     // Invoke Tooltips
     this.toolbar.find('button[title]').tooltip();
 
+    // Adjust color picker alignment, for opened by toolbar overflowed items
+    cpElements.on('beforeopen.editor', (e, menu) => {
+      const toolbarApi = this.toolbar.data('toolbar') || this.toolbar.data('toolbar-flex');
+      if (toolbarApi) {
+        toolbarApi.overflowedItems.forEach((item) => {
+          if (item.type === 'colorpicker' && menu) {
+            menu.parent('.popupmenu-wrapper')
+              .off('afterplace.editor') // if reached more then once
+              .one('afterplace.editor', (evt, args) => {
+                if (typeof args.width === 'undefined') {
+                  const containerW = args.container?.outerWidth() || -1;
+                  const elementW = args.element?.outerWidth() || -1;
+                  const left = (containerW - elementW) / 2;
+                  if (left > -1) {
+                    args.element.css('left', `${left}px`);
+                  }
+                }
+              });
+          }
+        });
+      }
+    });
+
     return this;
   },
 
@@ -993,7 +1016,7 @@ Editor.prototype = {
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
       clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
-      visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
+      visual: this.getIcon('ViewVisual', 'visual', 'visual-icon')
     };
 
     let customButtonLabels;
