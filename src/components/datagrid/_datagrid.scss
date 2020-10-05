@@ -142,7 +142,7 @@ $datagrid-small-row-height: 25px;
     .datagrid-wrapper.left,
     .datagrid-wrapper.right {
       // Make bottom visible to prevent space different at the bottom.
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 
