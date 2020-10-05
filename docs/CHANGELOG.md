@@ -11,7 +11,7 @@
 - `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Datagrid]` Fixed an issue where the double click event was not firing for checkbox columns. ([#4381](https://github.com/infor-design/enterprise/issues/4381))
 - `[Datagrid]` Fixed an issue where the dropdown in a datagrid would stay open when clicking to the next page of results. ([#4396](https://github.com/infor-design/enterprise/issues/4396))
-- `[Datagrid]` Fixed a bug where a a scroll bar shows even when there's no data in the grid. ([#4228](https://github.com/infor-design/enterprise/issues/4228))
+- `[Datagrid]` Fixed a bug where a scroll bar shows even when there's no data in datagrid. ([#4228](https://github.com/infor-design/enterprise/issues/4228))
 - `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
