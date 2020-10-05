@@ -2414,7 +2414,21 @@ PopupMenu.prototype = {
 
     delete this.openedWithTouch;
 
-    if (noFocus || !this.settings.returnFocus || env.features.touch) {
+    // Editor colorpicker
+    let cpEditorNotVisible = false;
+    if (this.element.is('.colorpicker-editor-button')) {
+      const toolbarItem = this.element.data('toolbaritem') || this.element.data('toolbarflexitem');
+      const toolbarAPI = toolbarItem ? toolbarItem.toolbarAPI : null;
+      if (toolbarAPI) {
+        toolbarAPI.overflowedItems.forEach((thisItem) => {
+          if (thisItem.type === 'colorpicker') {
+            cpEditorNotVisible = true;
+          }
+        });
+      }
+    }
+
+    if (noFocus || !this.settings.returnFocus || env.features.touch || cpEditorNotVisible) {
       return;
     }
 

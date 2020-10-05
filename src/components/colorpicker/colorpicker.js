@@ -396,7 +396,24 @@ ColorPicker.prototype = {
         if (!this.isEditor) {
           this.setColor(item.data('value'), item.data('label'));
         }
-        this.element.focus();
+
+        // Editor colorpicker
+        let cpEditorNotVisible = false;
+        if (this.element.is('.colorpicker-editor-button')) {
+          const toolbarItem = this.element.data('toolbaritem') || this.element.data('toolbarflexitem');
+          const toolbarAPI = toolbarItem ? toolbarItem.toolbarAPI : null;
+          if (toolbarAPI) {
+            toolbarAPI.overflowedItems.forEach((thisItem) => {
+              if (thisItem.type === 'colorpicker') {
+                cpEditorNotVisible = true;
+              }
+            });
+          }
+        }
+
+        if (!cpEditorNotVisible) {
+          this.element.focus();
+        }
 
         /**
         *  Fires after the color picker is changed
