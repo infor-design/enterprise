@@ -508,7 +508,12 @@ Autocomplete.prototype = {
     }
 
     function getHighlighted(items) {
-      return items.filter('.is-selected');
+      let highlightedItems = items.filter('.is-selected');
+      if (highlightedItems.length === 0) {
+        highlightedItems = items.filter('.is-focused');
+      }
+
+      return highlightedItems;
     }
 
     function unhighlight(item) {
@@ -911,7 +916,9 @@ Autocomplete.prototype = {
     // Allow keyboard handling when focus is inside the Autocomplete list.
     // See https://github.com/infor-design/enterprise-ng/issues/901
     this.list.on(`keydown.${COMPONENT_NAME}`, (e) => {
-      this.handleAutocompleteKeydown(e);
+      if (e.key === 'Enter') {
+        this.handleAutocompleteKeydown(e);
+      }
     });
 
     return this;
