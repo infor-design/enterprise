@@ -15,6 +15,7 @@
 - `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
+- `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
 - `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
 - `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
 - `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
