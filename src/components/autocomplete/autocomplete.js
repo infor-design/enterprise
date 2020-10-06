@@ -912,8 +912,6 @@ Autocomplete.prototype = {
       this.list.width(this.list.width() + 1);
     }
 
-
-
     // Allow keyboard handling when focus is inside the Autocomplete list.
     // See https://github.com/infor-design/enterprise-ng/issues/901
     this.list.on(`keydown.${COMPONENT_NAME}`, (e) => {
