@@ -512,6 +512,7 @@ Autocomplete.prototype = {
       if (highlightedItems.length === 0) {
         highlightedItems = items.filter('.is-focused');
       }
+
       return highlightedItems;
     }
 
