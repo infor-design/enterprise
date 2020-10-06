@@ -512,6 +512,7 @@ Autocomplete.prototype = {
       if (highlightedItems.length === 0) {
         highlightedItems = items.filter('.is-focused');
       }
+
       return highlightedItems;
     }
 
@@ -911,8 +912,6 @@ Autocomplete.prototype = {
     if (this.element.offset().left > this.list.offset().left) {
       this.list.width(this.list.width() + 1);
     }
-
-
 
     // Allow keyboard handling when focus is inside the Autocomplete list.
     // See https://github.com/infor-design/enterprise-ng/issues/901
