@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="paging" class="label">Paging</label>
+      <input id="paging" data-init="false" class="lookup" name="paging" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var columns = [];
+
+  //Define Columns for the Grid.
+  columns.push({
+    id: 'productName',
+    name: 'Product Name',
+    sortable: false,
+    field: 'productName',
+    formatter: Formatters.Hyperlink,
+    filterType: 'text'
+  });
+  columns.push({
+    id: 'active',
+    name: 'Active',
+    field: 'active',
+    sortable: false,
+    filterType: 'checkbox',
+    align: 'center',
+    formatter: Formatters.Checkbox
+  });
+
+  //Get some data via ajax
+  var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+  $.getJSON(url, function (data) {
+    //Init the Lookup with that data and paging options
+    $('#paging').lookup({
+      field: 'productId',
+      options: {
+        columns: columns,
+        dataset: data.data,
+        selectable: 'multiple',
+        paging: true,
+        filterable: true,
+        pagesize: 5,
+        toolbar: {
+          results: true,
+          keywordFilter: false,
+          filterRow: true,
+          actions: true,
+          views: true,
+          rowHeight: false,
+          collapsibleFilter: false,
+          fullWidth: true
+        }
+      }
+    });
+
+  });
+
+</script>
