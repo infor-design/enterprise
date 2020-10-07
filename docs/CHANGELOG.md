@@ -30,6 +30,7 @@
 ### v4.33.0 Fixes
 
 - `[Autocomplete]` Fix a bug when connected to NG where pressing the enter key would not select Autocomplete items/. ([ng#901](https://github.com/infor-design/enterprise-ng/issues/901))
+- `[Autocomplete]` Fixed an issue where the Searchfield items were not selectable after 'All results for "xx"' was selected. ([#4446](https://github.com/infor-design/enterprise/issues/4446))
 - `[Calendar]` Removed some extra keyboard stops when tabing. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 - `[Calendar]` Fixed a bug where the incorrect color was shown when events are added with the dialog. ([#4439](https://github.com/infor-design/enterprise/issues/4439))
 - `[Colorpicker]` Fixed an issue where the colorpicker closes when pressing or clicking outside the swatch. ([#3559](https://github.com/infor-design/enterprise/issues/3559))

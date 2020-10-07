@@ -1469,7 +1469,6 @@ Calendar.prototype = {
       for (let i = 0; i < inputs.length; i++) {
         event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
       }
-      event.color = ''; // Color set by tiying it to eventTypes later
 
       if (isAdd) {
         this.addEvent(event);
