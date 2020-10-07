@@ -14,6 +14,7 @@
 - `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Datagrid]` Fixed an issue where the double click event was not firing for checkbox columns. ([#4381](https://github.com/infor-design/enterprise/issues/4381))
 - `[Datagrid]` Fixed an issue where the dropdown in a datagrid would stay open when clicking to the next page of results. ([#4396](https://github.com/infor-design/enterprise/issues/4396))
+- `[Datagrid]` Fixed a bug where a scroll bar shows even when there's no data in datagrid. ([#4228](https://github.com/infor-design/enterprise/issues/4228))
 - `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
@@ -31,6 +32,7 @@
 ### v4.33.0 Fixes
 
 - `[Autocomplete]` Fix a bug when connected to NG where pressing the enter key would not select Autocomplete items/. ([ng#901](https://github.com/infor-design/enterprise-ng/issues/901))
+- `[Autocomplete]` Fixed an issue where the Searchfield items were not selectable after 'All results for "xx"' was selected. ([#4446](https://github.com/infor-design/enterprise/issues/4446))
 - `[Calendar]` Removed some extra keyboard stops when tabing. ([#4318](https://github.com/infor-design/enterprise/issues/4318))
 - `[Calendar]` Fixed a bug where the incorrect color was shown when events are added with the dialog. ([#4439](https://github.com/infor-design/enterprise/issues/4439))
 - `[Colorpicker]` Fixed an issue where the colorpicker closes when pressing or clicking outside the swatch. ([#3559](https://github.com/infor-design/enterprise/issues/3559))

@@ -221,14 +221,16 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return color;
   }
 
-  if (event.color) {
+  if (event.color?.substr(0, 1) === '#') {
     return event.color;
   }
 
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (eventInfo.length === 1) {
     color = eventInfo[0].color || 'azure';
+    return color;
   }
+
   return color;
 };
 
