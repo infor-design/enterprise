@@ -58,7 +58,35 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+The pager can have custom id's/automation id's that can be used for scripting. To add them use the option `attributes` to set an id on the generated pager. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+
+```js
+  attributes: { name: 'id', value: args => `pager-id` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+For the pager if you set the attributes on the root message, you will get an ID added to the root of the message dialog. Also the following elements will get the same id with the following appended:
+
+- First page button gets `btn-first`
+- Previous page button gets `btn-prev`
+- Next page button gets `btn-next`
+- Last page button gets `btn-last`
+- Pagesize selector button gets `btn-pagesize`
+- Each option in the page size select menu gets `pagesize-opt-<n>` for example `pagesize-opt-50`
+- The input selector button gets `pagesize-inpu`
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

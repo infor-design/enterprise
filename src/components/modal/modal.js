@@ -50,6 +50,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
 * @param {htmlObject|jqueryObject|srting} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
 * @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
+* @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -329,6 +330,7 @@ Modal.prototype = {
 
     if (this.settings.id) {
       this.element.attr('id', this.settings.id);
+      utils.addAttributes(this.element, this, this.settings.attributes);
     }
 
     if ($(this.settings.content).is('.modal')) {
@@ -577,6 +579,8 @@ Modal.prototype = {
         if (settingsJSON.validate) {
           btn.element[0].classList.add('no-validation');
         }
+
+        utils.addAttributes(btn.element, this, settingsJSON.attributes);
       }
 
       // In standard Modal mode, size the buttons to fit after rendering.
@@ -673,6 +677,8 @@ Modal.prototype = {
       if (props.validate !== undefined && !props.validate) {
         btn.addClass('no-validation');
       }
+
+      utils.addAttributes(btn, self, props.attributes);
 
       const attrs = {};
       const attrTypes = ['id', 'name', 'text'];
@@ -879,10 +885,19 @@ Modal.prototype = {
 
     // Ensure aria-labelled by points to the id
     if (this.settings.isAlert) {
-      this.element.attr('aria-labelledby', 'message-title');
-      this.element.attr('aria-describedby', 'message-text');
+      const title = this.element.find('#message-title');
+      utils.addAttributes(title, this, this.settings.attributes, 'title');
+
+      const messageText = this.element.find('#message-text');
+      utils.addAttributes(messageText, this, this.settings.attributes, 'message');
+
+      this.element.attr('aria-labelledby', title.attr('id'));
+      this.element.attr('aria-describedby', messageText.attr('id'));
     } else {
       const h1 = this.element.find('h1:first');
+      utils.addAttributes(h1, this, this.settings.attributes, 'title');
+      utils.addAttributes(this.element.find('.btn-close'), this, this.settings.attributes, 'btn-close');
+
       let id = h1.attr('id');
 
       if (!id) {
@@ -894,6 +909,7 @@ Modal.prototype = {
       const descById = `${this.element.attr('id') ? this.element.attr('id') : 'message'}-text`;
 
       this.element.attr('aria-labelledby', id);
+      utils.addAttributes(this.element, this, this.settings.attributes);
 
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {

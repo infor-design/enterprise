@@ -39,6 +39,7 @@
         title: '<span>Application Alert</span>',
         status: 'alert',
         returnFocus: $(this),
+        attributes: [{ name: 'id', value: 'message-acknowledge' }, { name: 'data-automation-id', value: 'message-acknowledge-auto' } ],
         message: 'This application has experienced a security alert. Please acknowledge the alert to proceed or cancel to abort.',
         buttons: [{
             text: 'Acknowledge',
@@ -46,13 +47,15 @@
               console.log('Acknowledge');
               $(this).data('modal').close();
             },
-            isDefault: true
+            isDefault: true,
+            attributes: { name: 'id', value: 'message-acknowledge-cancel-1' }
           }, {
             text: 'Cancel',
             click: function() {
               console.log('Cancel');
               $(this).data('modal').close();
-            }
+            },
+            attributes: { name: 'data-automation-id', value: 'message-alert-cancel-1' }
         }]
       });
     });

@@ -1,0 +1,102 @@
+# Automation Id's
+
+This list is a list of elements that have clickable items that need to be handled or tested and confirmed with the new automation attributes settings. The checkbox may be checked if the component is implemented to handle all clickable items with custom id's or custom ids + suffix and the doc testability section is filled out. See toast/message/pager for initial code.
+
+- [ ] About (implemented in modal - needs testing)
+- [ ] Accordion
+- [x] Alerts (not needed id can be directly applied)
+- [ ] Applicationmenu
+- [ ] Area
+- [ ] Autocomplete
+- [x] Badges (not needed id can be directly applied)
+- [ ] Bar
+- [ ] Bar Grouped
+- [ ] Bar Stacked
+- [ ] Blockgrid
+- [ ] Breadcrumb
+- [ ] Bubble
+- [ ] Bullet
+- [ ] Busyindicator
+- [ ] Button
+- [ ] Calendar
+- [ ] Calendar Toolbar
+- [x] Checkboxes (not needed id can be directly applied)
+- [ ] Circlepager
+- [ ] Colorpicker
+- [ ] Column
+- [ ] Column Grouped
+- [ ] Column Stacked
+- [ ] Completion Chart
+- [ ] Contextmenu
+- [ ] Contextualactionpanel (implemented in modal - needs testing)
+- [ ] Datagrid
+- [ ] Datepicker
+- [ ] Donut
+- [ ] Dropdown
+- [ ] Editor
+- [ ] Emptymessage
+- [ ] Error Page
+- [ ] Expandablearea
+- [ ] Field Filter
+- [ ] Field Options
+- [ ] Fieldset
+- [ ] Fileupload
+- [ ] Fileupload Advanced
+- [ ] Header
+- [ ] Hierarchy
+- [ ] Homepage
+- [x] Hyperlinks (not needed id can be directly applied)
+- [x] Icons (not needed id can be directly applied)
+- [x] Images (not needed id can be directly applied)
+- [ ] Input
+- [ ] Line
+- [ ] Listbuilder
+- [ ] Listview
+- [ ] Lookup
+- [ ] Masthead
+- [x] Message
+- [x] Modal
+- [ ] Monthview
+- [ ] Multiselect
+- [ ] Notification
+- [x] Pager
+- [ ] Pie
+- [ ] Popdown
+- [ ] Popover
+- [ ] Popupmenu
+- [ ] Positive Negative
+- [ ] Processindicator
+- [x] Progress (not needed id can be directly applied)
+- [ ] Radar
+- [x] Radios (not needed id can be directly applied)
+- [ ] Rating
+- [ ] Scatterplot
+- [ ] Searchfield
+- [ ] Signin
+- [x] Skiplink (not needed id can be directly applied)
+- [ ] Slider
+- [ ] Sparkline
+- [ ] Spinbox
+- [ ] Splitter
+- [ ] Stepchart
+- [ ] Swaplist
+- [ ] Switch
+- [ ] Tabs
+- [ ] Tabs Header
+- [ ] Tabs Module
+- [ ] Tabs Multi
+- [ ] Tabs Vertical
+- [x] Tag (not needed id can be directly applied)
+- [ ] Targeted Achievement
+- [ ] Textarea
+- [ ] Timeline
+- [ ] Timepicker
+- [x] Toast
+- [x] Toolbar (deprecated for toolbar flex)
+- [ ] Toolbar Flex
+- [ ] Toolbarsearchfield
+- [ ] Tooltip
+- [ ] Tree
+- [ ] Treemap
+- [ ] Week View
+- [ ] Wizard

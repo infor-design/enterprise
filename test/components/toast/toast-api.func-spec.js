@@ -137,6 +137,10 @@ describe('Toast API', () => {
     container = document.body.querySelector('[data-automation-id="my-unique-id"]');
 
     expect(container.getAttribute('data-automation-id')).toEqual('my-unique-id');
+
+    const closeButton = document.body.querySelector('[data-automation-id="my-unique-id-btn-close"]');
+
+    expect(closeButton.getAttribute('data-automation-id')).toEqual('my-unique-id-btn-close');
   });
 
   it('Should support setting attributes as a function', () => {
@@ -151,6 +155,10 @@ describe('Toast API', () => {
     const container = document.body.querySelector('#toast-id-2');
 
     expect(container.getAttribute('id')).toEqual('toast-id-2');
+
+    const closeButton = document.body.querySelector('#toast-id-2-btn-close');
+
+    expect(closeButton.getAttribute('id')).toEqual('toast-id-2-btn-close');
   });
 
   it('Should support setting attributes as an array', () => {
@@ -166,5 +174,10 @@ describe('Toast API', () => {
 
     expect(container.getAttribute('id')).toEqual('my-unique-id');
     expect(container.getAttribute('data-automation-id')).toEqual('my-unique-id');
+
+    const closeButton = document.body.querySelector('#my-unique-id-btn-close');
+
+    expect(closeButton.getAttribute('id')).toEqual('my-unique-id-btn-close');
+    expect(closeButton.getAttribute('data-automation-id')).toEqual('my-unique-id-btn-close');
   });
 });
