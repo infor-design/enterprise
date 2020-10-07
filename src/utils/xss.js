@@ -156,8 +156,11 @@ xssUtils.unescapeHTML = function (value) {
   }
 
   if (typeof value === 'string') {
+    const match = regx => ((value.match(regx) || [''])[0]);
     const doc = new DOMParser().parseFromString(value, 'text/html');
-    return doc.documentElement.textContent;
+
+    // Keep leading/trailing spaces
+    return `${match(/^\s*/)}${doc.documentElement.textContent.trim()}${match(/\s*$/)}`;
   }
   return value;
 };
