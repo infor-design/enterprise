@@ -1,6 +1,6 @@
 ---
 title: File Upload
-description: Displays an editable field. A user can prompt a system menu to select one or more file to upload. Best for allowing users to select files from a local server to be hosted on an application.
+description: A form element that allows users to choose a file they want to upload. A user can prompt a system menu to select one or more file to upload. Best for allowing users to select files from a local system to be uploaded to a server or application.
 demo:
   embedded:
   - name: Default File Upload Example
