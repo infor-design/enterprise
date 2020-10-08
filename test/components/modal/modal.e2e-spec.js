@@ -123,9 +123,11 @@ describe('Modal open example-modal tests on click', () => {
 });
 
 describe('Modal example-close-btn tests', () => {
-  it('Should close the modal via the x close icon', async () => {
+  beforeEach(async () => {
     await utils.setPage('/components/modal/example-close-btn');
+  });
 
+  it('Should close the modal via the x close icon', async () => {
     const modalBtn = await element(by.id('add-context'));
     await modalBtn.click();
     await browser.driver
@@ -140,6 +142,17 @@ describe('Modal example-close-btn tests', () => {
       .wait(protractor.ExpectedConditions.invisibilityOf(element(by.css('.modal-engaged'))), config.waitsFor);
 
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
+  });
+
+  it('Should be able to set id/automations', async () => {
+    const btnEl = await element(by.id('add-context'));
+    await btnEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.modal-engaged'))), config.waitsFor);
+
+    expect(await element(by.id('add-context-modal-title')).getAttribute('id')).toEqual('add-context-modal-title');
+    expect(await element(by.id('add-context-modal-text')).getAttribute('id')).toEqual('add-context-modal-text');
+    expect(await element(by.id('add-context-modal')).getAttribute('id')).toEqual('add-context-modal');
   });
 });
 

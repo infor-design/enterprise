@@ -4,21 +4,27 @@
 
 ### v4.34.0 Features
 
+- `[Message]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
+- `[Modal]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
+- `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 
 ### v4.34.0 Fixes
 
 - `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
+- `[Datagrid]` Fixed an issue where the leading spaces were removed on editing cells. ([#4380](https://github.com/infor-design/enterprise/issues/4380))
 - `[Datagrid]` Fixed an issue where the double click event was not firing for checkbox columns. ([#4381](https://github.com/infor-design/enterprise/issues/4381))
 - `[Datagrid]` Fixed an issue where the dropdown in a datagrid would stay open when clicking to the next page of results. ([#4396](https://github.com/infor-design/enterprise/issues/4396))
 - `[Datagrid]` Fixed a bug where a scroll bar shows even when there's no data in datagrid. ([#4228](https://github.com/infor-design/enterprise/issues/4228))
 - `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
+- `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
 - `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
 - `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
 - `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))
+- `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
 
 ## v4.33.0
 

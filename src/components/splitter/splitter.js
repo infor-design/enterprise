@@ -82,6 +82,7 @@ Splitter.prototype = {
     this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
     s.uniqueId = utils.uniqueId(this.element, 'splitter');
     dragHandle.appendTo(splitter);
+    dragHandle.prepend(`<span class="audible">${Locale.translate('SplitterDragHandle')}</span>`);
 
     const handleCollapseButton = () => {
       let savedOffset = 0;
@@ -90,7 +91,7 @@ Splitter.prototype = {
         self.splitTo(splitVal, parentHeight);
         $(el)[isRotate ? 'addClass' : 'removeClass']('rotate');
       };
-      this.splitterCollapseButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>');
+      this.splitterCollapseButton = $(`<button type="button" class="splitter-btn" id="splitter-collapse-btn"><span class="audible">${Locale.translate('SplitterCollapseButton')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-double-chevron"></use></svg></button>`);
       this.splitterCollapseButton.appendTo(splitter);
       if (splitter[0].offsetLeft > 10) {
         this.splitterCollapseButton.addClass('rotate');

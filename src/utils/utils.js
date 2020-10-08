@@ -1285,4 +1285,29 @@ utils.toggleCompactMode = function toggleCompactMode(elem) {
   }
 };
 
+/**
+ * Generate additional attributes.
+ * @private
+ * @param {object} elem The DOM node to add to
+ * @param {object} api The object base api
+ * @param {object|Array} setting The attribute setting
+ * @param {string} suffix Append an extra string at the end
+ */
+utils.addAttributes = function addAttributes(elem, api, setting, suffix) {
+  if (!setting) {
+    return;
+  }
+
+  if (Array.isArray(setting)) {
+    setting.forEach((item) => {
+      const value = typeof item.value === 'function' ? item.value(api) : item.value;
+      elem.attr(item.name, value + (suffix ? `-${suffix}` : ''));
+    });
+    return;
+  }
+
+  const value = typeof setting.value === 'function' ? setting.value(api) : setting.value;
+  elem.attr(setting.name, value + (suffix ? `-${suffix}` : ''));
+};
+
 export { utils, math };
