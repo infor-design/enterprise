@@ -378,6 +378,8 @@ Soho.Locale.addCulture('es-ES', {
     SliderMaximumHandle: { id: 'SliderMaximumHandle', value: 'Manipulador del intervalo máximo para', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control' },
     SliderMinimumHandle: { id: 'SliderMinimumHandle', value: 'Manipulador del intervalo mínimo para', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control' },
     SkipToMain: { id: 'SkipToMain', value: 'Saltar a contenido principal', comment: 'Skip link in header, jumps when clicked on to main area' },
+    SplitterCollapseButton: { id: 'SplitterCollapseButton', value: 'Botón de colapso del divisor', comment: 'Action to move the position of splitter either to left or right' },
+    SplitterDragHandle: { id: 'SplitterDragHandle', value: 'Mango de arrastre divisor', comment: 'Drags the splitter handle' },
     Status: { id: 'Status', value: 'Estado', comment: 'Status of someting thats submitted fx in progress, approved' },
     StartsWith: { id: 'StartsWith', value: 'Empieza por', comment: 'for condition filtering' },
     StepsCompleted: { id: 'StepsCompleted', value: '{0} de {1} pasos completados', comment: 'steps of a wizard/chart' },
