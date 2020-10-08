@@ -383,10 +383,10 @@ excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
       cols.forEach(col => rowContent.push(col.textContent.replace(/\r?\n|\r/g, '').replace(/"/g, '""').trim()));
       csv.push(rowContent.join(`"${separator.char}"`));
     });
-    if (separator.firstLine) {
+    if (separator.firstLine && separator.char !== ',') {
       csv.unshift([`sep=${separator.char}`]);
     }
-    return `"${csv.join('"\n"')}"`;
+    return `\uFEFF"${csv.join('"\n"')}"`;
   };
 
   const table = excel.cleanExtra(customDs, self);
