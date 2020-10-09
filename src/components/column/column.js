@@ -744,7 +744,10 @@ Column.prototype = {
         // Replace key/value and set type as string
         const replaceMatchAndSetType = () => {
           if (typeof content === 'string') {
-            content = replaceMatch(content, (match, key) => format(d[key]));
+            content = replaceMatch(content, (match, key) => {
+              const r = format(d[key]);
+              return isNaN(r) ? d[key] : r;
+            });
           } else if (typeof content === 'number') {
             content = content.toString();
           }
