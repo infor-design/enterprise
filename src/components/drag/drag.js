@@ -2,6 +2,7 @@
 
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 
 // TODO: Resize: http://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
 // Similar: https://github.com/desandro/draggabilly
@@ -295,7 +296,7 @@ Drag.prototype = {
     self.offset = null;
 
     // Touch and Drag Support
-    self.element.attr('draggable', false);
+    self.element.attr('draggable', !env.features.touch);
 
     if ('onpointerdown' in window || 'onmspointerdown' in window) {
       // TODO: Setup Pointer Events for 11 - pointerdown MSPointerDown, pointermove,
