@@ -22,7 +22,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
 - [ ] Circlepager
-- [ ] Colorpicker
+- [x] Colorpicker
 - [ ] Column
 - [ ] Column Grouped
 - [ ] Column Stacked
