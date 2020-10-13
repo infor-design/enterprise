@@ -397,6 +397,7 @@ Soho.Locale.addCulture('da-DK', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Luk denne fejl', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Tema', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Tid', comment: 'The time part of a date.' },
+    TimePeriod: { id: 'TimePeriod', value: 'Tidsperiode', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'Timer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'Til', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'I dag', comment: 'refering to today on a calendar' },

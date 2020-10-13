@@ -396,6 +396,7 @@ Soho.Locale.addCulture('el-GR', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Κλείσιμο αυτού του σφάλματος', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Θέμα', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Ώρα', comment: 'The time part of a date.' },
+    TimePeriod: { id: 'TimePeriod', value: 'Χρονική περίοδος', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'Χρονόμετρο', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'Έως', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Σήμερα', comment: 'refering to today on a calendar' },

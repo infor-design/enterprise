@@ -202,8 +202,7 @@ TimePicker.prototype = {
    */
   addAria() {
     this.element.attr({
-      'aria-expanded': 'false',
-      role: 'combobox'
+      role: 'textbox'
     });
 
     // TODO: Confirm this with Accessibility Team
@@ -957,7 +956,6 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
-    this.element.attr({ 'aria-expanded': 'true' });
     this.popup.find('div.dropdown').first().focus();
   },
 
@@ -1008,7 +1006,6 @@ TimePicker.prototype = {
       }
       this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
     }
-    this.element.attr({ 'aria-expanded': 'false' });
     this.trigger.off('hide.timepicker show.timepicker');
     this.trigger.data('tooltip').destroy();
     this.trigger.data('tooltip', undefined);
