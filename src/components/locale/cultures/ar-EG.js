@@ -635,7 +635,6 @@ Soho.Locale.addCulture('ar-EG', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'إغلاق هذا الخطأ', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'النسق', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'الوقت', comment: 'The time part of a date.' },
-    TimePeriod: { id: 'TimePeriod', value: 'فترة زمنية', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'المؤقت', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'إلى', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'اليوم', comment: 'refering to today on a calendar' },

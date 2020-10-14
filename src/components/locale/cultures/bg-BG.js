@@ -397,7 +397,6 @@ Soho.Locale.addCulture('bg-BG', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Затваряне на тази грешка', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Тема', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Час', comment: 'The time part of a date.' },
-    TimePeriod: { id: 'TimePeriod', value: 'Временной период', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'Таймер', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'До', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Днес', comment: 'refering to today on a calendar' },

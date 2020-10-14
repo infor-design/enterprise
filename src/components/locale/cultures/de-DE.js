@@ -397,7 +397,6 @@ Soho.Locale.addCulture('de-DE', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Fehler schließen', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Design', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Uhrzeit', comment: 'The time part of a date.' },
-    TimePeriod: { id: 'TimePeriod', value: 'Zeitraum', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'Timer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'Bis', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Heute', comment: 'refering to today on a calendar' },

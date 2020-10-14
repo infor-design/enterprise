@@ -396,7 +396,6 @@ Soho.Locale.addCulture('cs-CZ', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Zavřít tuto chybu', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Motiv', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Čas', comment: 'The time part of a date.' },
-    TimePeriod: { id: 'TimePeriod', value: 'Časový úsek', comment: 'Time period of a date' },
     Timer: { id: 'Timer', value: 'Časovač', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'Komu', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Dnes', comment: 'refering to today on a calendar' },
