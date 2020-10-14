@@ -567,17 +567,25 @@ TimePicker.prototype = {
     // Set default values based on what's retrieved from the Timepicker's input field.
     this.hourSelect.val(this.initValues.hours);
     this.hourSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.hours);
+    this.hourSelect.data('dropdown').pseudoElem.find('span')
+      .prepend(`<span class="audible">${Locale.translate('Hours', { locale: this.locale.name, language: this.language })}</span>`);
     this.minuteSelect.val(this.initValues.minutes);
     this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
+    this.minuteSelect.data('dropdown').pseudoElem.find('span')
+      .prepend(`<span class="audible">${Locale.translate('Minutes', { locale: this.locale.name, language: this.language })}</span>`);
 
     if (this.secondSelect) {
       this.secondSelect.val(this.initValues.seconds);
       this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
+      this.secondSelect.data('dropdown').pseudoElem.find('span')
+        .prepend(`<span class="audible">${Locale.translate('Seconds', { locale: this.locale.name, language: this.language })}</span>`);
     }
 
     if (self.hasDayPeriods()) {
       this.periodSelect.val(this.initValues.period);
       this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
+      this.periodSelect.data('dropdown').pseudoElem.find('span')
+        .prepend(`<span class="audible">${Locale.translate('TimePeriod', { locale: this.locale.name, language: this.language })}</span>`);
     }
 
     ui.find('div.dropdown').first().focus();
