@@ -29,15 +29,8 @@ describe('TimePicker ARIA', () => {
   });
 
   it('Should set ARIA labels', () => {
-    expect(document.querySelector('.timepicker[aria-expanded="false"]')).toBeTruthy();
-    expect(document.querySelector('.timepicker[role="combobox"]')).toBeTruthy();
+    expect(document.querySelector('.timepicker[role="textbox"]')).toBeTruthy();
     expect(document.querySelector('.icon[aria-hidden="true"]')).toBeTruthy();
     expect(document.querySelector('.icon[role="presentation"]')).toBeTruthy();
-  });
-
-  it('Should update ARIA labels with popup open', () => {
-    timepickerObj.openTimePopup();
-
-    expect(document.querySelector('.timepicker[aria-expanded="true"]')).toBeTruthy();
   });
 });
