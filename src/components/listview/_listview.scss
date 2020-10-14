@@ -252,7 +252,19 @@
 
   &.disable-hover {
     li:hover {
-      background-color: $listview-hover-bg-color;
+      background: none;
+    }
+
+    li {
+      &:first-child:focus {
+        border-top: 1px solid transparent !important;
+      }
+
+      &:focus {
+        border: 1px solid transparent;
+        border-color: transparent transparent $listview-border-color transparent !important;
+        box-shadow: none;
+      }
     }
   }
 
