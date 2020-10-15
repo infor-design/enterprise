@@ -9,10 +9,6 @@ addons:
 # use version in `.nvmrc`
 language: node_js
 dist: xenial
-virt: lxd
-group: edge
-arch:
-    - arm64-graviton2
 node_js:
 cache:
   directories:
