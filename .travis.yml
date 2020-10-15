@@ -8,7 +8,12 @@ addons:
 # Leave node_js version blank to
 # use version in `.nvmrc`
 language: node_js
-dist: xenial
+dist: focal
+virt: vm
+group: edge
+arch:
+    - arm64-graviton2
+    - amd64
 node_js:
 cache:
   directories:
