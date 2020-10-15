@@ -36,6 +36,16 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
 
+  it('Should be able to set id/automations', async () => {
+    await element(by.css('#background-color + .trigger .icon')).click();
+
+    expect(await element(by.id('background-color')).getAttribute('id')).toEqual('background-color');
+    expect(await element(by.id('background-color-trigger')).getAttribute('id')).toEqual('background-color-trigger');
+    expect(await element(by.id('background-color-slate01')).getAttribute('id')).toEqual('background-color-slate01');
+    expect(await element(by.id('background-color-azure10')).getAttribute('id')).toEqual('background-color-azure10');
+    expect(await element(by.id('background-color-clear')).getAttribute('id')).toEqual('background-color-clear');
+  });
+
   it('Should open popup on keyboard down', async () => {
     const colorInputEl = await element(by.css('#background-color'));
     await colorInputEl.click();
