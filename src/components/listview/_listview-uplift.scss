@@ -1,16 +1,6 @@
 // Uplift Listview
 //================================================== //
 
-.listview {
-  &.disable-hover {
-    li {
-      &:first-child:focus {
-        border-top: 1px solid $listview-border-color !important;
-      }
-    }
-  }
-}
-
 .listview .alert-text {
   font-size: 12px;
   line-height: 25px;
