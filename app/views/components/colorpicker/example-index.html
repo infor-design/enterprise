@@ -2,7 +2,7 @@
   <div class="twelve columns">
     <div class="field">
       <label for="background-color">Color Picker</label>
-      <input class="colorpicker" id="background-color" type="text" />
+      <input class="colorpicker" id="background-color" type="text" data-init="false"/>
     </div>
 
     <div class="field">
@@ -14,7 +14,13 @@
 
 <script>
   $(function() {
+    // Init the color picker with id's for automation
+    var elem = $('#background-color');
+    elem.colorpicker( {
+      attributes: { name: 'id', value: 'background-color' }
+    });
+
     // Set the value and trigger change to have it update in the field.
-    $('#background-color').val('#B94E4E').trigger('change');
+    elem.val('#B94E4E').trigger('change');
   });
 </script>

@@ -35,7 +35,7 @@ The toast component is made accessible by making an aria live region which means
 
 ## Testability
 
-The toast can have custom id's/automation id's that can be used for scripting. To add them use the option `attributes` to set an id on the generated toast message. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+You can add custom id's/automation id's to the toast that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
 
 Setting the id/automation id with a function, the toastIndex will be a running total of open toasts:
 

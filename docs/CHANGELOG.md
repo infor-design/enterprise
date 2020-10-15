@@ -21,6 +21,7 @@
 - `[Datagrid]` Fixed an issue where calling setFocus on the datagrid would stop open menus from working. ([#4429](https://github.com/infor-design/enterprise/issues/4429))
 - `[Datagrid]` To allow for some script tools to work we now set draggable to true. ([#4490](https://github.com/infor-design/enterprise/issues/4490))
 - `[Datagrid]` Fixed links when changing personalization as they would inherit the wrong color. ([#4481](https://github.com/infor-design/enterprise/issues/4481))
+- `[Editor]` Fixed an issue where the focus was getting lost after pressing toolbar buttons. ([#4335](https://github.com/infor-design/enterprise/issues/4335))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
 - `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
