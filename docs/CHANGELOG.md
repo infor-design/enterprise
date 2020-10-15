@@ -28,7 +28,7 @@
 - `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))
 - `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
-- `[Timepicker]` Fixed a bug where role="combobox" is not the correct aria role for timepicker element, and fixed missing audible labels. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
+- `[Timepicker]` Fixed an accessibility bug where role="combobox" was used incorrectly on the timepicker element. Also fixed some missing audible labels. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
 
 ## v4.33.0
 
