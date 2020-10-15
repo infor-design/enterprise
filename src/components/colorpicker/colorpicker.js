@@ -24,6 +24,7 @@ const COMPONENT_NAME = 'colorpicker';
  * @param {boolean} [settings.clearable=true] If true will add clearable option.
  * @param {string} [settings.clearableText] The text to show in tooltip.
  * @param {object} [settings.popupmenuSettings] optional Popupmenu settings that will supersede the defaults.
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
@@ -236,6 +237,9 @@ ColorPicker.prototype = {
 
     this.element.attr('autocomplete', 'off');
     this.addAria();
+
+    // Add automation Id's
+    utils.addAttributes(this.element.parent().find('.trigger'), this, this.settings.attributes, 'trigger');
   },
 
   /**
@@ -295,6 +299,7 @@ ColorPicker.prototype = {
       this.element.css({ width: ((w - 4) - this.swatch.width()) });
     }
   },
+
   /**
   * Get the currently set hex value.
   * @returns {string} A string containing the hex
@@ -598,6 +603,8 @@ ColorPicker.prototype = {
         .attr('title', `${colorText} #${colorValue}`)
         .tooltip();
 
+      utils.addAttributes(a, this, this.settings.attributes, colorText);
+
       if (!isMenu) {
         menu.append(li);
       }
@@ -612,6 +619,8 @@ ColorPicker.prototype = {
         a.data('label', s.clearableText)
           .data('value', resetColorValue)
           .tooltip();
+
+        utils.addAttributes(a, this, this.settings.attributes, 'clear');
         menu.append(li);
       }
 
