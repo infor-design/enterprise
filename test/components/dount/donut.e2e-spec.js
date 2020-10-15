@@ -5,13 +5,20 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Donut Chart tests', () => {
+fdescribe('Donut Chart tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/donut/example-index?layout=nofrills');
   });
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
+  });
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('comp-a')).getAttribute('id')).toEqual('comp-a');
+    expect(await element(by.id('comp-a')).getAttribute('data-automation-id')).toEqual('comp-a-automation-id');
+    expect(await element(by.id('comp-a-legend')).getAttribute('id')).toEqual('comp-a-legend');
+    expect(await element(by.id('comp-a-legend')).getAttribute('data-automation-id')).toEqual('comp-a-automation-id-legend');
   });
 
   if (utils.isChrome() && utils.isCI()) {

@@ -55,6 +55,15 @@ describe('About index tests', () => {
 
     expect(await element(by.id('about-modal')).isDisplayed()).toBeTruthy();
   });
+
+  it('Should be able to set id/automation id', async () => {
+    const button = await element(by.id('about-trigger'));
+    await button.click();
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await element(by.id('about-modal')).getAttribute('id')).toEqual('about-modal');
+    expect(await element(by.id('about-modal-btn-close')).getAttribute('id')).toEqual('about-modal-btn-close');
+  });
 });
 
 describe('About translation tests', () => {
