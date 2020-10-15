@@ -2314,7 +2314,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .hyperlink {
-      color: $hyperlink-color;
+      color: $hyperlink-color !important;
       display: inline-block;
       font-size: $ids-size-font-base;
 
