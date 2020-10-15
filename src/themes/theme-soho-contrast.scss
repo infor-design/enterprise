@@ -815,3 +815,12 @@ $calendar-disabled-color: $ids-color-palette-graphite-100;
     }
   }
 }
+
+//Override background color when hover on high contrast
+.listview {
+  &.disable-hover {
+    li:hover {
+      background-color: $ids-color-palette-white;
+    }
+  }
+}
