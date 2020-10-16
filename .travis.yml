@@ -8,7 +8,9 @@ addons:
 # Leave node_js version blank to
 # use version in `.nvmrc`
 language: node_js
+os: linux
 dist: xenial
+virt: lxd
 node_js:
 cache:
   directories:
