@@ -20,13 +20,25 @@ $('body').on('initialized', function () {
   var donutData = [{
     data: [{
         name: 'Component A',
-        value: 16
+        value: 16,
+        attributes: [
+          { name: 'id', value: 'comp-a' },
+          { name: 'data-automation-id', value: 'comp-a-automation-id' }
+        ]
     }, {
         name: 'Component B',
-        value: 12
+        value: 12,
+        attributes: [
+          { name: 'id', value: 'comp-b' },
+          { name: 'data-automation-id', value: 'comp-ba-automation-id' }
+        ]
     }, {
         name: 'Component C',
-        value: 14
+        value: 14,
+        attributes: [
+          { name: 'id', value: 'comp-c' },
+          { name: 'data-automation-id', value: 'comp-c-automation-id' }
+        ]
     }],
     centerLabel: 'Donut Chart'
   }];

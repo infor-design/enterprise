@@ -2,13 +2,13 @@
 <div class="row">
   <div class="six columns">
 
-    <button type="button" id="workspace-cap" class="btn-secondary contextual-action-panel-trigger" data-options="{ modalSettings: { fullsize: 'responsive' } }">
+    <button type="button" id="show-cap" class="btn-secondary contextual-action-panel-trigger" data-init="false">
       Show Contextual Action Panel
     </button>
-    <div class="contextual-action-panel" style="display:none;">
+    <div class="contextual-action-panel">
       <div class="flex-toolbar">
         <div class="toolbar-section">
-          <button id="cancel" class="btn">
+          <button id="btn-cancel" data-automation-id="btn-cancel-automation" class="btn">
             <span>Cancel</span>
           </button>
         </div>
@@ -16,7 +16,7 @@
         <div class="toolbar-section title center-text">
           <h2>
             <span>Promote Pearl Reynolds Promote Pearl Reynolds</span>
-            <button id="launch" class="btn-icon">
+            <button id="btn-launch" data-automation-id="btn-launch-automation" class="btn-icon">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-launch"></use>
               </svg>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="toolbar-section">
-          <button id="submit" class="btn">
+          <button id="btn-submit" data-automation-id="btn-submit-automation" class="btn">
             <span>Submit</span>
           </button>
         </div>
@@ -118,9 +118,20 @@
 
 </div>
 
-<script>
-  // Close modal on click
-  $('#submit, #cancel').on('click', function() {
-    $('#contextual-action-modal-1').data('modal').close();
+<script id="test-script">
+  $('body').on('initialized', function() {
+    $('#btn-submit, #btn-cancel').on('click', function() {
+      $('#show-cap').data('contextualactionpanel').close();
+    });
+
+    $('#show-cap').contextualactionpanel({
+        modalSettings: {
+          fullsize: 'responsive',
+          attributes: [
+            { name: 'id', value: 'cap' },
+            { name: 'data-automation-id', value: 'cap-automation-id' }
+          ]
+        }
+    });
   });
 </script>

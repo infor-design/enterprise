@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {boolean} [settings.modalSettings.showCloseBtn = false] if true, displays a "close (X)" button in the button row that cancels the CAP's Modal action.
 * @param {string} [settings.modalSettings.trigger = 'click'] Can be 'click' or 'immediate'.
 * @param {boolean} [settings.modalSettings.useFlexToolbar = false] If true the new flex toolbar will be used (For CAP)
+* @param {string} [settings.modalSettings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null,
