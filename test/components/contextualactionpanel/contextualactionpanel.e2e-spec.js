@@ -116,10 +116,22 @@ describe('Contextual Action Panel example-workspace tests', () => {
   });
 
   it('Should open popup on click', async () => {
-    await element(by.id('workspace-cap')).click();
-    await browser.driver.sleep(config.sleepLonger);
+    await element(by.id('show-cap')).click();
+    await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+    expect(await element(by.id('cap')).isDisplayed()).toBe(true);
+  });
+
+  it('Should be able to set id/automation id', async () => {
+    await element(by.id('show-cap')).click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('cap')).getAttribute('id')).toEqual('cap');
+    expect(await element(by.id('cap')).getAttribute('data-automation-id')).toEqual('cap-automation-id');
+    expect(await element(by.id('btn-cancel')).getAttribute('id')).toEqual('btn-cancel');
+    expect(await element(by.id('btn-cancel')).getAttribute('data-automation-id')).toEqual('btn-cancel-automation');
+    expect(await element(by.id('btn-submit')).getAttribute('id')).toEqual('btn-submit');
+    expect(await element(by.id('btn-submit')).getAttribute('data-automation-id')).toEqual('btn-submit-automation');
   });
 });
 

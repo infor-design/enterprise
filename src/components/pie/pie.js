@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, prefer-arrow-callback */
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-underscore-dangle */
 // Other Shared Imports
 import * as debug from '../../utils/debug';
 import { Environment as env } from '../../utils/environment';
@@ -286,7 +286,7 @@ Pie.prototype = {
         if (d.name === 'Empty-Pie') {
           name = '';
         }
-        return { name, display: 'twocolumn', placement: s.legendPlacement, color: d.color };
+        return { name, display: 'twocolumn', placement: s.legendPlacement, color: d.color, data: d };
       });
 
       s.svg = self.svg;
@@ -424,6 +424,14 @@ Pie.prototype = {
         return charts.chartColor(i, 'pie', d.data);
       })
       .attr('class', 'slice')
+      .call((d) => {
+        d._groups.forEach((slices) => {
+          slices.forEach((pieSlice) => {
+            const dat = pieSlice.__data__;
+            utils.addAttributes($(pieSlice), dat, dat.data.attributes);
+          });
+        });
+      })
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
         // charts.triggerContextMenu(self.element, d3.select(this).select('path').nodes()[0], d);
