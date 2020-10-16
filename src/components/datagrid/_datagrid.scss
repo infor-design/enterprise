@@ -2314,7 +2314,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .hyperlink {
-      color: $hyperlink-color;
+      color: $hyperlink-color !important;
       display: inline-block;
       font-size: $ids-size-font-base;
 
@@ -2835,6 +2835,10 @@ $datagrid-small-row-height: 25px;
       .datagrid-filter-wrapper .btn-filter.btn-filter-checkbox {
         left: calc(50% - 5px) !important;
         text-align: center;
+
+        @media (max-width: $breakpoint-slim) {
+          left: calc(50% - 13px) !important;
+        }
       }
     }
 

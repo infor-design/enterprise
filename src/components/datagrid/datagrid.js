@@ -6736,7 +6736,14 @@ Datagrid.prototype = {
       }
     }
 
-    toolbar.find('.btn-actions').popupmenu().on('selected', (e, args, args2) => {
+    const actions = toolbar.find('.btn-actions');
+    const isFlex = toolbar.is('.flex-toolbar');
+
+    if (!isFlex) {
+      actions.popupmenu();
+    }
+
+    const selectHandler = (e, args, args2) => {
       const action = args.attr ? args.attr('data-option') : args2.attr('data-option');
       if (!action) {
         return;
@@ -6769,7 +6776,8 @@ Datagrid.prototype = {
       if (action === 'clear-filter') {
         self.clearFilter();
       }
-    });
+    };
+    (isFlex ? toolbar : actions).on('selected', selectHandler);
 
     if (this.settings.initializeToolbar && !toolbar.data('toolbar') && !toolbar.hasClass('flex-toolbar')) {
       const opts = $.fn.parseOptions(toolbar);

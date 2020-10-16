@@ -1067,6 +1067,7 @@ Editor.prototype = {
 
       if (action) {
         self.execAction(action, e);
+        btn.focus();
       }
 
       if (env.browser.name === 'ie' || env.browser.isEdge()) {
@@ -1100,7 +1101,7 @@ Editor.prototype = {
   bindModals() {
     const self = this;
     const modalSettings = {
-      noRefocus: true
+      noRefocus: false
     };
 
     this.modals = {
@@ -2210,7 +2211,7 @@ Editor.prototype = {
          * @property {string} content Additional argument
          */
         this.element.triggerHandler('afterpreviewmode', content);
-        this.element.focus();
+        this.toolbar?.find('[data-action="source"]').focus();
       }, 0);
     };
 
@@ -2246,6 +2247,7 @@ Editor.prototype = {
        * @property {string} content Additional argument
        */
       this.element.triggerHandler('aftersourcemode', content);
+      this.toolbar?.find('[data-action="visual"]').focus();
     };
 
     // Check the false value
@@ -2570,10 +2572,6 @@ Editor.prototype = {
           }
         }, 0);
       }
-
-      setTimeout(() => {
-        this.getCurrentElement().focus();
-      }, 0);
     });
 
     // Toggle colorpicker

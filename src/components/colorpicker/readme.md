@@ -61,7 +61,32 @@ The color picker consists of an input with `class="colorpicker"`. It can be init
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the color picker that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes.
+For example:
+
+```js
+  attributes: { name: 'id', value: args => `background-color` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+For the colorpicker if you set the attributes on the input element with the `id` other components as before. But you can also pass additional attributes in the setting that will get appended to other elements. The id on the element wont change but the one you pass in to the attributes will get the following appended to other elements. So we suggest to set the id in attributes to the same id you set in the input markup. The following items get appended to:
+
+- Trigger button gets `trigger`
+- Each color in the picker will get `colorNN` for example `azure80`
+- The clear button in the picker in the picker will get `clear` appended
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Responsive Guidelines
 

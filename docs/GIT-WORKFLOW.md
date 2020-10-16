@@ -77,6 +77,3 @@ Note: For details info and great tutorials on Git scenarios see <https://www.atl
 - It's critial to follow [item 6 of Semantic Versioning](http://semver.org/#spec-item-6) in order for patch releases to be semantic and _only_ contain backwards compatible bug fixes
 - Branch from `4.2.X` into `4.2.7-rc`
 - Follow above guidelines for preparing for QA to release
-
-Additional Info:
-<https://github.com/hookandloop/code-styleguides/blob/master/workflow/git-workflow.md>

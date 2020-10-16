@@ -90,7 +90,7 @@ $('.modal').on('beforeclose', function () {
 
 ## Testability
 
-The modal can have custom id's/automation id's that can be used for scripting. To add them use the option `attributes` to set an id on the modal. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+You can add custom id's/automation id's to the modal that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
 
 ```js
   attributes: { name: 'id', value: args => `toast-id-${args.id}` }

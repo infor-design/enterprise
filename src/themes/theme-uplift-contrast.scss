@@ -858,3 +858,12 @@ html.is-chrome:not(.is-mac) {
     }
   }
 }
+
+//Override background color when hover on high contrast
+.listview {
+  &.disable-hover {
+    li:hover {
+      background-color: $ids-color-palette-white;
+    }
+  }
+}

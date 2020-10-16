@@ -1307,7 +1307,7 @@ utils.addAttributes = function addAttributes(elem, api, setting, suffix) {
   }
 
   const value = typeof setting.value === 'function' ? setting.value(api) : setting.value;
-  elem.attr(setting.name, value + (suffix ? `-${suffix}` : ''));
+  elem.attr(setting.name, value + (suffix ? `-${suffix.toLowerCase()}` : ''));
 };
 
 export { utils, math };
