@@ -73,6 +73,17 @@ describe('About translation tests', () => {
     expect(await element(by.css('.additional-content + p')).getText()).toEqual(ukText);
   });
 
+  it('Should show version correctly in arabic', async () => {
+    await utils.setPage('/components/about/example-index?locale=ar-SA');
+    const buttonEl = await element(by.id('about-trigger'));
+    await buttonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    // Its not inverted here but this is correct
+    expect(await element(by.css('.version')).getText()).toEqual('IDS إصدار : 4.34.0-dev');
+  });
+
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });

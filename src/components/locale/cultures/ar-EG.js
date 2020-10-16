@@ -681,7 +681,7 @@ Soho.Locale.addCulture('ar-EG', {
     User: { id: 'User', value: 'مستخدم', comment: 'User tooltip' },
     UserProfile: { id: 'UserProfile', value: 'ملف تعريف المستخدم', comment: 'User Profile tooltip' },
     Variant: { id: 'Variant', value: 'المتغير', comment: 'Refers to an application variant (a slight UI change/variation)' },
-    Version: { id: 'Version', value: 'إصدار IDS', comment: 'Version of IDS' },
+    Version: { id: 'Version', value: 'IDS إصدار', comment: 'Version of IDS' },
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'محاذاة عمودية إلى الوسط', comment: 'Vertical Align tooltip' },
     Vibrant: { id: 'Vibrant', value: 'متألق', comment: 'The title of one of the application themes.' },
     ViewSource: { id: 'ViewSource', value: 'عرض المصدر', comment: 'Toggle between the source view and visual view' },
