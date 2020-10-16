@@ -1,103 +1,33 @@
-# Security Notes
+# IDS Security Policy
 
-Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/docs/adopting-csp.html) checking for general xss issues.
+Outlined in this document are the practices and policies that IDS applies to help ensure that we release stable/secure software, and react appropriately to security issues when they arise.
 
-## Content Security Policy (CSP)
+## Reporting Security Issues
 
-### In order to pass CSP scans in your application you will need to
+If you need to report a security issue. Please use the [issue template](https://github.com/infor-design/enterprise/issues/new/choose), be careful not reveal any secure information and send that if needed on a private channel. We triage most issues by the next business day.
 
-- Make your app return the csp headers. To do this i used express-csp as we are using express. We use the following policy.
+## Onboarding Developers
 
-    ```bash
-    Content-Security-Policy:
-    default-src 'self';
-    img-src 'self' https://externalsite1.com http://externalsite1.com;
-    object-src 'none';
-    script-src 'strict-dynamic' 'nonce-04111658';
-    style-src * data: http://* 'unsafe-inline'
-    ```
+All new technical hires are introduced to our security policy as part of the onboarding process as outlined by the ISO (Infor Security Office)
 
-    Notes: Everything should be secure with the following exceptions.
+## Internal Audits
 
-    `img-src` - We need to add some paths for random image generator sites we use in the examples on blockgrid, hierarchy, and image components. You may need to include your own trusted sites.
+Developers watch for security issues proactively. We have a dedicated security team (ISO) who perform ongoing penetration testing, code auditing, and other forms of security oversight. We use automated vulnerability scanning and code scanning tools in the github ecosystem. We also encourage and test the components so they will work with Content Security Policy (CSP).
 
-    `style-src` We need to allow the soho script to set inline styles. We set this to `http://*` for the various sites we use. If we don't do this many components cannot function until we can refactor them to use CSSDOM instead of style tags (search style= in all *.js files). Some of the components needing work are mentioned on [Issue 628](https://github.com/infor-design/enterprise/issues/628)
-- Replace all `style="display: none;"` with class `hidden` and use CSSDOM or classes for all styles you use
-- Can testing with [CSP mitigator](https://chrome.google.com/webstore/detail/csp-mitigator/gijlobangojajlbodabkpjpheeeokhfa?hl=en)
-    Then note that we can test pages like <http://localhost:4000/components/personalize/example-index> using:
+## Storage of Data
 
-    ```html
-    script-src 'self';
-    style-src 'self';
-    frame-ancestors 'self';
-    object-src 'none'
-    ```
+No issues or comments in the repo should contain any private or secure information.
 
-## Common Errors and remediation
+## Development Process
 
-### Context Escaping
+We have a well-defined, security-focused, development process:
 
-[Escaping Info](http://jehiah.cz/a/guide-to-escape-sequences)
+No code goes into production unless it is reviewed by at least two other developers. The onus is on the reviewer to ask hard questions if they see any red flags for security. During the code-review process, if you see logic that's complicated and lacks a test, politely ask the developer for a test.
 
-### Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+Any new code pushed to production is first thoroughly unit tested , e2e tested and QA tested in a staging environment. Mechanisms are in place for rolling back any changes that are pushed to production or patching fixes backwards to the previous version if needed.
 
-Something like `elem.html(markup);` will trigger this warning. To address we should use whitelisting for example:
+Tests should not contain user-data, make sure to anonymize email addresses, usernames, etc.
 
-```javascript
-DOM.html(elem, markup, '<span><div>');'
-```
+## AntiVirus Software
 
-If this cannot be limited to a few types then sanitizing can be used.
-
-```javascript
-DOM.html(elem, markup, '*');'
-```
-
-Even better if all tags can be stripped.
-
-```javascript
-xssUtils.stripTags(string);
-```
-
-Or a pure alphanumeric value.
-
-```javascript
-xssUtils.ensureAlphaNumeric(string);
-```
-
-### URL Redirection to Untrusted Site ('Open Redirect')
-
-Something like `window.location = href` will generate this error. To address we should use code to ensure the URL is relative.
-
-```javascript
-Soho.xss.isUrlLocal(url)
-```
-
-### Improper Output Neutralization for Logs
-
-Something like `console.log` will generate this error. For client side code this is a false positive. But can generate a lot of scan error. To address we should use toast instead to show example output.
-
-```javascript
-$('body').toast({
-  'title': '<some> Event Triggered',
-  'message': 'The value was changed to : ' + value + ' .. ect'
-});
-```
-
-### XML Injection (aka Blind XPath Injection)
-
-Something like `this.listUl.find(`li[data-val="${value.replace(/"/g, '/quot/')}"]`);` will generate this error. If the value is not external this is a false positive if using newer than jQuery 1.9. But to be safe we can use:
-
-```javascript
-xssUtils.stripTags(string);
-```
-
-```javascript
-xssUtils.sanitizeHTML(string);
-```
-
-Or a pure alphanumeric value.
-
-```javascript
-xssUtils.ensureAlphaNumeric(string);
-```
+By policy all our machines and servers must run AntiVirus software.

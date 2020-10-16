@@ -18,7 +18,8 @@ const COMPONENT_NAME = 'about';
  * @param {string} [settings.productName] Additional product name information to display.
  * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
   content: undefined,
@@ -90,7 +91,7 @@ About.prototype = {
 
     const header = $('<div class="modal-header"></div>').appendTo(this.modal.find('.modal-content'));
     $('<div class="close-container"></div>')
-      .append($('<button name="close" type="button" class="btn-icon hide-focus"></button>')
+      .append($('<button name="close" type="button" class="btn-icon btn-close hide-focus"></button>')
         .append($.createIconElement({ icon: 'close', classes: 'icon-close' }))
         .append(`<span>${Locale.translate('Close')}'</span>`))
       .appendTo(header);
@@ -141,7 +142,7 @@ About.prototype = {
     $('.modal-body', this.modal)[0].tabIndex = 0;
 
     this.modal.appendTo('body');
-    this.modal.modal({ trigger: this.isBody ? 'immediate' : 'click' });
+    this.modal.modal({ trigger: this.isBody ? 'immediate' : 'click', attributes: this.settings.attributes });
     return this;
   },
 

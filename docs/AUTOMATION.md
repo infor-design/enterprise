@@ -2,7 +2,7 @@
 
 This list is a list of elements that have clickable items that need to be handled or tested and confirmed with the new automation attributes settings. The checkbox may be checked if the component is implemented to handle all clickable items with custom id's or custom ids + suffix and the doc testability section is filled out. See toast/message/pager for initial code.
 
-- [ ] About (implemented in modal - needs testing)
+- [x] About
 - [ ] Accordion
 - [x] Alerts (not needed id can be directly applied)
 - [ ] Applicationmenu
@@ -28,10 +28,10 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Column Stacked
 - [ ] Completion Chart
 - [ ] Contextmenu
-- [ ] Contextualactionpanel (implemented in modal - needs testing)
+- [x] Contextualactionpanel
 - [ ] Datagrid
 - [ ] Datepicker
-- [ ] Donut
+- [x] Donut
 - [ ] Dropdown
 - [ ] Editor
 - [ ] Emptymessage
@@ -60,7 +60,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Multiselect
 - [ ] Notification
 - [x] Pager
-- [ ] Pie
+- [x] Pie
 - [ ] Popdown
 - [ ] Popover
 - [ ] Popupmenu
