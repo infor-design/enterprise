@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.33.1
+
+### v4.33.1 Fixes
+
+- `[Breadcrumb]` Fixed an issue were css only breadcrumbs were missing styles. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
+
 ## v4.33.0
 
 ### v4.33.0 Features

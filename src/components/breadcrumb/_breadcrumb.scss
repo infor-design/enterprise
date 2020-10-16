@@ -26,7 +26,8 @@
     white-space: nowrap;
   }
 
-  .breadcrumb-list {
+  .breadcrumb-list,
+  ol {
     min-height: $breadcrumb-container-height;
     position: relative;
     vertical-align: middle;
@@ -80,7 +81,8 @@
 
   // Added to the JS Component automatically when `truncate: false` is set.
   &.no-truncate {
-    .breadcrumb-list li:first-child {
+    .breadcrumb-list li:first-child,
+    ol li:first-child {
       .hyperlink {
         margin-left: -4px;
       }
@@ -89,6 +91,7 @@
 
   // Creates the "/" separator
   .breadcrumb-list li,
+  ol li,
   .breadcrumb-overflow-container {
     &::after {
       @include antialiased();
@@ -115,6 +118,7 @@
     position: relative;
 
     .breadcrumb-list li,
+    ol li,
     .breadcrumb-overflow-container {
       display: inline-block;
 
@@ -134,7 +138,8 @@
       }
     }
 
-    .breadcrumb-list {
+    .breadcrumb-list,
+    ol {
       display: flex;
       justify-content: flex-end;
       overflow: hidden;
@@ -276,7 +281,8 @@
       }
     }
 
-    .breadcrumb-list {
+    .breadcrumb-list,
+    ol {
       padding-bottom: 15px;
       padding-top: 15px;
 
@@ -328,7 +334,8 @@
         }
       }
 
-      .breadcrumb-list {
+      .breadcrumb-list,
+      ol {
         padding: 15px 0;
 
         // Change the faded edge to match the header background color
@@ -358,7 +365,8 @@
       display: flex;
 
       // Change the faded edge to match the header background color
-      .breadcrumb-list {
+      .breadcrumb-list,
+      ol {
         &::before {
           background-image: linear-gradient(
             to right,
@@ -370,7 +378,8 @@
 
       // Change the faded edge to match the alternate header background color
       &.alternate {
-        .breadcrumb-list {
+        .breadcrumb-list,
+        ol {
           &::before {
             background-image: linear-gradient(
               to right,
@@ -405,7 +414,8 @@ html[dir='rtl'] {
     }
   }
 
-  .breadcrumb-list {
+  .breadcrumb-list,
+  ol {
     &::before {
       left: auto;
       right: 0;
@@ -415,7 +425,8 @@ html[dir='rtl'] {
   .breadcrumb {
     // Added to the JS Component automatically when `truncate: false` is set.
     &.no-truncate {
-      .breadcrumb-list li:first-child {
+      .breadcrumb-list li:first-child,
+      ol li:first-child {
         .hyperlink {
           margin-right: -4px;
         }
@@ -423,7 +434,8 @@ html[dir='rtl'] {
     }
 
     &.truncated {
-      .breadcrumb-list {
+      .breadcrumb-list,
+      ol {
         &::before {
           background-image: linear-gradient(
             to right,
@@ -455,7 +467,8 @@ html[dir='rtl'] {
 
   .scrollable-flex-header {
     .breadcrumb.truncated {
-      .breadcrumb-list li {
+      .breadcrumb-list li,
+      ol li {
         &::after {
           margin-top: 5px;
         }
@@ -467,7 +480,8 @@ html[dir='rtl'] {
         }
       }
 
-      .breadcrumb-list {
+      .breadcrumb-list,
+      ol {
         &::before {
           background-image: linear-gradient(
             to right,
@@ -478,7 +492,8 @@ html[dir='rtl'] {
       }
 
       &.alternate {
-        .breadcrumb-list {
+        .breadcrumb-list,
+        ol {
           &::before {
             background-image: linear-gradient(
               to right,
