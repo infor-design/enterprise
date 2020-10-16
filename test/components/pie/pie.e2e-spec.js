@@ -14,6 +14,13 @@ describe('Pie Chart tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('item-a')).getAttribute('id')).toEqual('item-a');
+    expect(await element(by.id('item-a')).getAttribute('data-automation-id')).toEqual('item-a-automation-id');
+    expect(await element(by.id('item-a-legend')).getAttribute('id')).toEqual('item-a-legend');
+    expect(await element(by.id('item-a-legend')).getAttribute('data-automation-id')).toEqual('item-a-automation-id-legend');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));

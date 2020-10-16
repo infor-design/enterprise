@@ -394,6 +394,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
     seriesLine = $(seriesLine);
     seriesLine.append(color, textBlock);
+    utils.addAttributes(seriesLine, series[i], series[i]?.data?.attributes, 'legend');
 
     if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
       legend.find('.container').append(seriesLine);

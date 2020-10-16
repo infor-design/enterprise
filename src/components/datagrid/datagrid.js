@@ -5485,7 +5485,7 @@ Datagrid.prototype = {
             selectOnFocus: false,
             listFilterSettings: {
               filterMode: 'contains',
-              searchableTextCallback: item => item.name
+              searchableTextCallback: item => item.name || item.id
             }
           })
           .off('selected.datagrid')
