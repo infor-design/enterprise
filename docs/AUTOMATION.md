@@ -18,8 +18,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Bullet
 - [ ] Busyindicator
 - [ ] Button
-- [ ] Calendar
-- [ ] Calendar Toolbar
+- [x] Calendar
+- [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
 - [ ] Circlepager
 - [x] Colorpicker
@@ -56,7 +56,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Masthead
 - [x] Message
 - [x] Modal
-- [ ] Monthview
+- [x] Monthview
 - [ ] Multiselect
 - [ ] Notification
 - [x] Pager
@@ -98,5 +98,5 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Tooltip
 - [ ] Tree
 - [ ] Treemap
-- [ ] Week View
+- [x] Week View
 - [ ] Wizard

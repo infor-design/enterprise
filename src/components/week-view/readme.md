@@ -98,9 +98,31 @@ The Weekview is a very complex control we do the following:
 - We use icons and color and text for the status's of the calendar events
 - Support keyboard
 
-## Keyboard Shortcuts
+## Testability
 
-TBD
+You can add custom id's/automation id's to the weekview for elements that can be clicked using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+The attribute can be a string value or function. The function will give you the calendar API as a parameter to assist in making things more dynamic (you can use some properties if needed).
+
+```js
+$('.weekview').weekview({
+  ...
+  attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+});
+```
+
+Providing the data this will add an ID to the top calendar div. In addition the following related items will be set.
+
+- Weekview Container - gets the id appended directly
+- Next Day Button - gets `week-view-btn-next` appended
+- Previous Day Button - gets `week-view-btn-prev` appended
+- Datepicker Input - gets `week-view-datepicker` appended
+- Datepicker Trigger - gets `week-view-datepicker-trigger` appended
+- Today Button - gets `week-view-today` appended
+
+Note that there is an extra week-view added as this can be on the same page as month-view which will have month-view appended.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Upgrading from 3.X
 

@@ -114,7 +114,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
  * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
   this.element = $(element);
@@ -214,13 +215,13 @@ Calendar.prototype = {
       return this;
     }
 
-    let eventTypeMarkup = '';
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
-      eventTypeMarkup += `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
+      const eventTypeMarkup = `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
         <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
+      this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+      utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`);
     }
-    this.eventTypeContainer.innerHTML = eventTypeMarkup;
     return this;
   },
 
@@ -258,10 +259,14 @@ Calendar.prototype = {
       onChangeView: this.onChangeToMonth,
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
-      legend: this.settings.dayLegend
+      legend: this.settings.dayLegend,
+      attributes: this.settings.attributes
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();
+
+    utils.addAttributes($('.calendar'), this, this.settings.attributes);
+    utils.addAttributes($('.calendar-monthview'), this, this.settings.attributes, 'monthview');
     return this;
   },
 
@@ -315,6 +320,7 @@ Calendar.prototype = {
       onChangeView: this.onChangeToWeekDay,
       eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.settings.iconTooltip,
+      attributes: this.settings.attributes
     });
     this.weekViewHeader = document.querySelector('.calendar .calendar-weekview .monthview-header');
 
@@ -323,6 +329,7 @@ Calendar.prototype = {
       this.monthView.selectDay(args.startDate, false, true);
     };
     this.weekView.renderAllEvents();
+    utils.addAttributes($('.calendar-weekview'), this, this.settings.attributes, 'weekview');
     return this;
   },
 
@@ -419,6 +426,8 @@ Calendar.prototype = {
       <span class="calendar-upcoming-duration">${event.isDays ? event.duration : event.durationHours} ${event.durationUnits || ''}</span>`;
     upcomingEvent.innerHTML = upcomingEventsMarkup;
     this.upcomingEventsContainer.appendChild(upcomingEvent);
+
+    utils.addAttributes($(upcomingEvent), this, this.settings.attributes, `upcoming-event-${event.id}`);
   },
 
   /**
@@ -824,6 +833,7 @@ Calendar.prototype = {
     }
 
     container.querySelector('.day-container').appendChild(node);
+    utils.addAttributes($(node), this, this.settings.attributes, `event-${event.id}`);
 
     if (this.settings.iconTooltip !== 'overflow') {
       const icon = node.querySelector('.calendar-event-icon');

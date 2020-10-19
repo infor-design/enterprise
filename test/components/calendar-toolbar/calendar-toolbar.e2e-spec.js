@@ -13,6 +13,22 @@ describe('Calendar Toolbar index tests', () => {
   it('Should render without error', async () => {
     await utils.checkForErrors();
   });
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('calendar-toolbar-id-month-view-btn-prev')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-btn-prev');
+    expect(await element(by.id('calendar-toolbar-id-month-view-btn-prev')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-btn-prev');
+    expect(await element(by.id('calendar-toolbar-id-month-view-btn-next')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-btn-next');
+    expect(await element(by.id('calendar-toolbar-id-month-view-btn-next')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-btn-next');
+
+    expect(await element(by.id('calendar-toolbar-id-month-view-datepicker')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-datepicker');
+    expect(await element(by.id('calendar-toolbar-id-month-view-datepicker')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-datepicker');
+
+    expect(await element(by.id('calendar-toolbar-id-month-view-datepicker-trigger')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-datepicker-trigger');
+    expect(await element(by.id('calendar-toolbar-id-month-view-datepicker-trigger')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-datepicker-trigger');
+
+    expect(await element(by.id('calendar-toolbar-id-month-view-today')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-today');
+    expect(await element(by.id('calendar-toolbar-id-month-view-today')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-today');
+  });
 });
 
 describe('Calendar Toolbar Datepicker tests', () => {

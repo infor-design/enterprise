@@ -17,7 +17,11 @@ $('body').one('initialized', function () {
       $('.week-view').weekview({
         eventTypes: eventTypes,
         events: events,
-        showViewChanger: false
+        showViewChanger: false,
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+        ]
       });
     });
   });

@@ -1,4 +1,15 @@
 <div class="full-height full-width">
-  <div class="calendar-toolbar">
+  <div class="calendar-toolbar" data-init="false">
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('.calendar-toolbar').calendartoolbar({
+      attributes: [
+        { name: 'id', value: 'calendar-toolbar-id' },
+        { name: 'data-automation-id', value: 'calendar-toolbar-automation-id' }
+      ]
+    });
+  });
+</script>
