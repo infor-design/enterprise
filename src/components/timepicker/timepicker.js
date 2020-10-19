@@ -80,6 +80,7 @@ TimePicker.prototype = {
       this.language = lang || this.settings.language || this.locale.language || null;
       this.settings.language = this.language;
       this.setCurrentCalendar();
+      this.addTimepickerWrapper();
       this.build().handleEvents();
     });
     return this;
@@ -101,6 +102,19 @@ TimePicker.prototype = {
     }
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.build();
+    return this;
+  },
+
+  /**
+   * Adds timepicker wrapper element for accessibility purpose
+   * @private
+   * @returns {void}
+   */
+  addTimepickerWrapper() {
+    console.log(this.element.previousSibling);
+    const timepickerWrapper = this.element.parent().find('.timepicker, svg.icon').wrapAll(`<div id="${this.twid}"></div>`);
+    this.timepickerWrapper = timepickerWrapper.parent();
+
     return this;
   },
 
@@ -141,6 +155,7 @@ TimePicker.prototype = {
     }
 
     this.id = `${utils.uniqueId(this.element, 'timepicker')}-id`;
+    this.twid = `timepicker-wrapper-${this.id.toString()}`;
     this.hoursId = `timepicker-hours-${this.id.toString()}`;
     this.minutesId = `timepicker-minutes-${this.id.toString()}`;
     this.secondsId = `timepicker-seconds-${this.id.toString()}`;
@@ -160,7 +175,6 @@ TimePicker.prototype = {
     this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
     this.dayPeriods = this.currentCalendar.dayPeriods;
-
     return this;
   },
 
@@ -201,9 +215,12 @@ TimePicker.prototype = {
    * @returns {void}
    */
   addAria() {
-    this.element.attr({
-      role: 'textbox'
-    });
+    if (this.timepickerWrapper) {
+      this.timepickerWrapper.attr({
+        'aria-expanded': 'false',
+        role: 'combobox'
+      });
+    }
 
     // TODO: Confirm this with Accessibility Team
     this.label = $(`label[for="${this.element.attr('id')}"]`);
@@ -964,6 +981,7 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
+    this.timepickerWrapper.attr({ 'aria-expanded': 'true' });
     this.popup.find('div.dropdown').first().focus();
   },
 
@@ -977,6 +995,7 @@ TimePicker.prototype = {
   closeTimePopup() {
     if (this.trigger.data('tooltip')) {
       this.trigger.data('tooltip').hide();
+      this.timepickerWrapper.attr({ 'aria-expanded': 'false' });
     }
   },
 
