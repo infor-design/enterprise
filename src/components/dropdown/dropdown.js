@@ -786,11 +786,6 @@ Dropdown.prototype = {
         <ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
     }
 
-    console.log(listExists);
-    console.log($(listContents));
-    console.log(this);
-    utils.addAttributes($(listContents), this, this.settings.attributes);
-
     // Get a current list of <option> elements
     // If none are available, simply return out
     let opts = this.element.find('option');
