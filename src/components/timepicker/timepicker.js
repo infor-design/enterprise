@@ -111,7 +111,6 @@ TimePicker.prototype = {
    * @returns {void}
    */
   addTimepickerWrapper() {
-    console.log(this.element.previousSibling);
     const timepickerWrapper = this.element.parent().find('.timepicker, svg.icon').wrapAll(`<div id="${this.twid}"></div>`);
     this.timepickerWrapper = timepickerWrapper.parent();
 
