@@ -25,6 +25,7 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.audibleLabel='']  String to include in message title that is strictly audible.
  * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
 */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
@@ -38,7 +39,8 @@ const MESSAGE_DEFAULTS = {
   audibleLabel: '',
   overlayOpacity: 0.7,
   hideUnderneath: false,
-  attributes: null
+  attributes: null,
+  noRefocus: false
 };
 
 function Message(element, settings) {
@@ -87,7 +89,8 @@ Message.prototype = {
       isAlert: true,
       overlayOpacity: this.settings.overlayOpacity,
       hideUnderneath: this.settings.hideUnderneath,
-      attributes: this.settings.attributes
+      attributes: this.settings.attributes,
+      noRefocus: this.settings.noRefocus
     });
 
     // Adjust Width if Set as a Setting
