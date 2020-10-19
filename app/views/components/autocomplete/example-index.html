@@ -2,7 +2,16 @@
   <div class="twelve columns">
     <div class="field">
       <label for="autocomplete-default">States</label>
-      <input type="text" autocomplete="off" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="autocomplete-default"/>
+      <input type="text" autocomplete="off" id="autocomplete" class="autocomplete" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="autocomplete-default"/>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#autocomplete').autocomplete({
+    attributes: [{
+      name: 'data-automation-id',
+      value: 'autocomplete-automation-id'
+    }]
+  });
+</script>
