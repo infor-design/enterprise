@@ -101,7 +101,8 @@
     });
 
     $('#export-to-csv').on('click', function () {
-      grid.data('datagrid').exportToCsv('myExport');
+      // grid.data('datagrid').exportToCsv('myExport');
+      grid.data('datagrid').exportToCsv('myExport', false, { flexChar: false, flexUtf8: false }, grid);
     });
     $('#export-to-excel').on('click', function () {
       grid.data('datagrid').exportToExcel('myExport');

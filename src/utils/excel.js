@@ -117,23 +117,39 @@ excel.cleanExtra = function (customDs, self) {
  * @private
  * @param {string} content The content for the file in the download.
  * @param {string} fileName The desired export filename in the download.
+ * @param {boolean} isUtf16 If true, will encode as Utf-16le.
  * @returns {void}
  */
-excel.save = function (content, fileName) {
+excel.save = function (content, fileName, isUtf16) {
   const ext = (fileName.match(/\.([^.]*?)(?=\?|#|$)/) || [])[1];
   const isTypeExcel = typeof ext === 'string' && /\b(xlsx|xls)\b/g.test(ext);
+  let blob = new Blob([content], {
+    type: 'application/csv;charset=utf-8;'
+  });
+
+  // ref: https://stackoverflow.com/a/43099608
+  if (isUtf16 && !isTypeExcel) {
+    const byteArray = [255, 254];
+    for (let i = 0; i < content.length; ++i) {
+      const charCode = content.charCodeAt(i);
+      byteArray.push(charCode & 0xff); // eslint-disable-line
+      byteArray.push(charCode / 256 >>> 0); // eslint-disable-line
+    }
+    blob = new Blob([new Uint8Array(byteArray)], {
+      type: 'text/plain;charset=UTF-16LE;'
+    });
+  }
 
   if (env.browser.name === 'ie' || env.browser.name === 'edge') {
     if (window.navigator.msSaveBlob) {
-      const blob = new Blob([content], {
-        type: 'application/csv;charset=utf-8;'
-      });
       navigator.msSaveBlob(blob, fileName);
     }
   } else if (window.URL.createObjectURL) { // createObjectURL api allows downloading larger files
-    const blob = new Blob([content], {
-      type: `application/${isTypeExcel ? 'vnd.ms-excel' : 'csv'};charset=utf-8;`
-    });
+    if (isTypeExcel) {
+      blob = new Blob([content], {
+        type: 'application/vnd.ms-excel;charset=utf-8;'
+      });
+    }
     const objectUrl = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = objectUrl;
@@ -348,6 +364,8 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
  * Can use as custom string `sep=;` or `;` will add to first line and use `;` as seperator
  * @param {boolean} [sep.firstLine=true] if false will not added to first line `sep=<separator.char>`
  * @param {string} [sep.char=','] custom separator char
+ * @param {boolean} [sep.flexChar=true] if false `char` will not be auto change to `\t` tab in case utf-16 encode for csv file
+ * @param {boolean} [sep.flexUtf8=true] if false `utf-8` will not be auto change to `utf-16le` in case utf-16 encode for csv file
  * @param {string} self The grid api to use (if customDs is not used)
  * @returns {void}
  */
@@ -356,11 +374,13 @@ excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
   const isFalse = v => /^(false|0+|null)$/gi.test(v);
 
   // Set Separator
-  const separator = { firstLine: true, char: ',' };
+  const separator = { firstLine: true, char: ',', flexChar: true, flexUtf8: true };
   if (sep !== 'sep=,' && !isFalse(sep)) {
     const setChar = char => (char !== '"' ? char : separator.char);
     if (isObject(sep)) {
       separator.firstLine = !isFalse(sep.firstLine);
+      separator.flexChar = !isFalse(sep.flexChar);
+      separator.flexUtf8 = !isFalse(sep.flexUtf8);
       if (typeof sep.char === 'string' && sep.char.length === 1 && !isFalse(sep.char)) {
         separator.char = setChar(sep.char);
       }
@@ -374,25 +394,32 @@ excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
     }
   }
 
-  const formatCsv = function (table) {
+  const formatCsv = function (table, isUtf16) {
+    // utf16: use tab `\t` to separate columns in order be displayed properly on excel
+    const separatorChar = isUtf16 && separator.flexChar ? '\t' : separator.char;
     const csv = [];
     const rows = [].slice.call(table[0].querySelectorAll('tr'));
     rows.forEach((row) => {
       const rowContent = [];
       const cols = [].slice.call(row.querySelectorAll('td, th'));
       cols.forEach(col => rowContent.push(col.textContent.replace(/\r?\n|\r/g, '').replace(/"/g, '""').trim()));
-      csv.push(rowContent.join(`"${separator.char}"`));
+      csv.push(rowContent.join(`"${separatorChar}"`));
     });
-    if (separator.firstLine && separator.char !== ',') {
+    if (separator.firstLine &&
+        ((separator.flexUtf8 && !isUtf16) ||
+         (!separator.flexUtf8 && separator.char !== ','))) {
       csv.unshift([`sep=${separator.char}`]);
     }
-    return `\uFEFF"${csv.join('"\n"')}"`;
+    return `${!separator.flexUtf8 ? '\uFEFF' : ''}"${csv.join('"\n"')}"`;
   };
 
   const table = excel.cleanExtra(customDs, self);
+  // ref: https://stackoverflow.com/a/2551031
+  const isUtf16 = !(/^[\u0000-\u007f]*$/.test(table[0].textContent)) && separator.flexUtf8; // eslint-disable-line
+  const data = formatCsv(table, isUtf16);
 
   fileName = `${fileName || self.element[0].id || 'Export'}.csv`;
-  excel.save(formatCsv(table), fileName);
+  excel.save(data, fileName, isUtf16);
 };
 
 export { excel };
