@@ -238,6 +238,15 @@ describe('Dropdown example-index tests', () => {
       // The Dropdown Pseudo element should no longer have focus
       expect(await element(by.css('div.dropdown')).getAttribute('class')).not.toContain('is-open');
     });
+
+    it('Should be able to set id/automation id', async () => {
+      expect(await element(by.id('custom-id-dropdown')).getAttribute('id')).toEqual('custom-id-dropdown');
+      expect(await element(by.id('custom-id-dropdown')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown');
+      expect(await element(by.id('custom-id-dropdown-label')).getAttribute('id')).toEqual('custom-id-dropdown-label');
+      expect(await element(by.id('custom-id-dropdown-label')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-label');
+      expect(await element(by.id('custom-id-dropdown-select')).getAttribute('id')).toEqual('custom-id-dropdown-select');
+      expect(await element(by.id('custom-id-dropdown-select')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-select');
+    });
   }
 
   it('Should be able to reopen when closed by a menu button', async () => {

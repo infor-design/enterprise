@@ -86,6 +86,11 @@ describe('Autocomplete example-index tests', () => {
       await utils.checkForErrors();
     });
   }
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('custom-id-autocomplete')).getAttribute('id')).toEqual('custom-id-autocomplete');
+    expect(await element(by.id('custom-id-autocomplete')).getAttribute('data-automation-id')).toEqual('custom-automation-id-autocomplete');
+  });
 });
 
 describe('Autocomplete ajax tests', () => {

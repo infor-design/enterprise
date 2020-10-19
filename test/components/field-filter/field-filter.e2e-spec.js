@@ -54,6 +54,19 @@ describe('FieldFilter example-index tests', () => {
     expect(await element(by.css('#example-textfield')).element(by.xpath('..')).element(by.className('is-open')).isDisplayed()).toBe(true);
     expect(await element(by.css('#example-textfield')).element(by.xpath('..')).element(by.css('#dropdown-search')).isPresent()).toBe(false);
   });
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('custom-id-field-filter')).getAttribute('id')).toEqual('custom-id-field-filter');
+    expect(await element(by.id('custom-id-field-filter')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter');
+    expect(await element(by.id('custom-id-field-filter-label')).getAttribute('id')).toEqual('custom-id-field-filter-label');
+    expect(await element(by.id('custom-id-field-filter-label')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-label');
+    expect(await element(by.id('custom-id-field-filter-input')).getAttribute('id')).toEqual('custom-id-field-filter-input');
+    expect(await element(by.id('custom-id-field-filter-input')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-input');
+    expect(await element(by.id('custom-id-field-filter-trigger')).getAttribute('id')).toEqual('custom-id-field-filter-trigger');
+    expect(await element(by.id('custom-id-field-filter-trigger')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-trigger');
+    expect(await element(by.id('custom-id-field-filter-listbox')).getAttribute('id')).toEqual('custom-id-field-filter-listbox');
+    expect(await element(by.id('custom-id-field-filter-listbox')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-listbox');
+  });
 });
 
 describe('FieldFilter filter type tests', () => {
