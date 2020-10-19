@@ -786,6 +786,11 @@ Dropdown.prototype = {
         <ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
     }
 
+    console.log(listExists);
+    console.log($(listContents));
+    console.log(this);
+    utils.addAttributes($(listContents), this, this.settings.attributes);
+
     // Get a current list of <option> elements
     // If none are available, simply return out
     let opts = this.element.find('option');
@@ -1860,6 +1865,13 @@ Dropdown.prototype = {
     this.pseudoElem
       .attr('aria-expanded', 'true')
       .addClass('is-open');
+
+    // Add test automation ids
+    utils.addAttributes(this.list, this, this.settings.attributes);
+    utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
+    utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
+    utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
+    utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {

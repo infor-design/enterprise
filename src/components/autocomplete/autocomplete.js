@@ -222,8 +222,8 @@ Autocomplete.prototype = {
       role: 'combobox',
       autocomplete: 'off'
     });
-    console.log(this.element);
-    utils.addAttributes(this.element, this, this.settings.attributes, 'autocomplete');
+    // Add test automation ids
+    utils.addAttributes(this.element, this, this.settings.attributes);
   },
 
   isLoading() {

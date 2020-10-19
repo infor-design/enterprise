@@ -171,7 +171,15 @@
     };
 
     // Init Field Filter and bind `filtered` event
-    $('.field-filter').fieldfilter({ dataset: fieldfilterData });
+    $('.field-filter').fieldfilter({
+      dataset: fieldfilterData,
+      attributes: [
+        {
+          name: 'data-automation-id',
+          value: 'field-filter-automation-id'
+        }
+      ]
+     });
 
     var setEvents = function() {
       $('.field-filter').on('filtered', function (e, args) {
