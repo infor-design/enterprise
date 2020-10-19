@@ -6,10 +6,10 @@ const svg = require('../../../src/components/icons/svg.html');
 
 let timepickerEl;
 let timepickerObj;
+let timepickerWrapperEl;
 
 describe('TimePicker ARIA', () => {
   beforeEach(() => {
-    timepickerEl = null;
     timepickerObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
@@ -29,8 +29,15 @@ describe('TimePicker ARIA', () => {
   });
 
   it('Should set ARIA labels', () => {
-    expect(document.querySelector('.timepicker[role="textbox"]')).toBeTruthy();
+    expect(document.querySelector('#timepicker-wrapper-timepicker-1-id[aria-expanded="false"]')).toBeTruthy();
+    expect(document.querySelector('#timepicker-wrapper-timepicker-1-id[role="combobox"]')).toBeTruthy();
     expect(document.querySelector('.icon[aria-hidden="true"]')).toBeTruthy();
     expect(document.querySelector('.icon[role="presentation"]')).toBeTruthy();
+  });
+
+  it('Should update ARIA labels with popup open', () => {
+    timepickerObj.openTimePopup();
+    timepickerWrapperEl = document.querySelector('.timepicker').parentElement.ariaExpanded;
+    expect(document.body.querySelector(`[aria-expanded="${timepickerWrapperEl}"]`)).toBeTruthy();
   });
 });
