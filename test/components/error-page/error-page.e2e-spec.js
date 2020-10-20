@@ -25,7 +25,7 @@ describe('Error page example-index tests', () => {
     });
   }
 
-  fit('Should be able to set id/automations', async () => {
+  it('Should be able to set id/automations', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('error-page-content-id-1')).getAttribute('id')).toEqual('error-page-content-id-1');
