@@ -28,84 +28,132 @@ var dataset = [{
       x: 5,
       y: 3,
       z: 3
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-jan' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-jan' }
+   ]
   }, {
     name: 'February',
     value: {
       x: 37,
       y: 5,
       z: 9
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-feb' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-feb' }
+   ]
   }, {
     name: 'March',
     value: {
       x: 10,
       y: 5.3,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-mar' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-mar' }
+   ]
   }, {
     name: 'April',
     value: {
       x: 80,
       y: 6,
       z: 10
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-apr' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-apr' }
+   ]
   }, {
     name: 'May',
     value: {
       x: 21,
       y: 4.8,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-may' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-may' }
+   ]
   }, {
     name: 'June',
     value: {
       x: 72,
       y: 5.2,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-jun' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-jun' }
+   ]
   }, {
     name: 'July',
     value: {
       x: 26,
       y: 8,
       z: 6
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-jul' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-jul' }
+   ]
   }, {
     name: 'August',
     value: {
       x: 71,
       y: 3.9,
       z: 8
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-aug' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-aug' }
+   ]
   }, {
     name: 'September',
     value: {
       x: 85,
       y: 8,
       z: 2
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-sep' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-sep' }
+   ]
   }, {
     name: 'October',
     value: {
       x: 52,
       y: 3,
       z: 2
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-oct' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-oct' }
+   ]
   }, {
     name: 'November',
     value: {
       x: 44,
       y: 5.9,
       z: 3
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-nov' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-nov' }
+   ]
   }, {
     name: 'December',
     value: {
       x: 110,
       y: 7,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-dec' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-dec' }
+   ]
   }],
   name: 'Series 01',
   labels: {
@@ -118,7 +166,11 @@ var dataset = [{
   },
   valueFormatterString: {
     z: '0.0%'
-  }
+  },
+  attributes: [
+   { name: 'id', value: 'bubble-series1' },
+   { name: 'data-automation-id', value: 'automation-id-bubble-series1' }
+ ]
 },
 {
   data: [{
@@ -127,86 +179,138 @@ var dataset = [{
       x: 9,
       y: 3.2,
       z: 3
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-jan' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-jan' }
+   ]
   }, {
     name: 'February',
     value: {
       x: 12,
       y: 6.3,
       z: 10
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-feb' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-feb' }
+   ]
   }, {
     name: 'March',
     value: {
       x: 65,
       y: 4,
       z: 10
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-mar' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-mar' }
+   ]
   }, {
     name: 'April',
     value: {
       x: 27,
       y: 7,
       z: 2
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-apr' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-apr' }
+   ]
   }, {
     name: 'May',
     value: {
       x: 29,
       y: 8.5,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-may' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-may' }
+   ]
   }, {
     name: 'June',
     value: {
       x: 81,
       y: 3.9,
       z: 8
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-jun' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-jun' }
+   ]
   }, {
     name: 'July',
     value: {
       x: 33,
       y: 4.1,
       z: 7
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-jul' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-jul' }
+   ]
   }, {
     name: 'August',
     value: {
       x: 75,
       y: 4,
       z: 3
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-aug' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-aug' }
+   ]
   }, {
     name: 'September',
     value: {
       x: 39,
       y: 7,
       z: 4
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-sep' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-sep' }
+   ]
   }, {
     name: 'October',
     value: {
       x: 80,
       y: 2,
       z: 3
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-oct' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-oct' }
+   ]
   }, {
     name: 'November',
     value: {
       x: 48,
       y: 6.2,
       z: 2
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-nov' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-nov' }
+   ]
   }, {
     name: 'December',
     value: {
       x: 99,
       y: 4,
       z: 2
-    }
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s2-dec' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s2-dec' }
+   ]
   }],
-  name: 'Series 02'
+  name: 'Series 02',
+  attributes: [
+   { name: 'id', value: 'bubble-series2' },
+   { name: 'data-automation-id', value: 'automation-id-bubble-series2' }
+ ]
 }];
 
 $('#line-example').chart({type: 'bubble', dataset: dataset});
@@ -267,7 +371,35 @@ let options = {
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the bubble chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+{
+  data: [{
+    name: 'January',
+    value: {
+      x: 5,
+      y: 3,
+      z: 3
+    },
+    attributes: [
+     { name: 'id', value: 'bubble-s1-jan' },
+     { name: 'data-automation-id', value: 'automation-id-bubble-s1-jan' }
+   ]
+  }],
+  name: 'Series 01',
+  attributes: [
+   { name: 'id', value: 'bubble-series1' },
+   { name: 'data-automation-id', value: 'automation-id-bubble-series1' }
+ ]
+}
+```
+
+Providing the data this will add an ID added to the line with `-line` appended and dot with `-dot` appended. In addition the related legend item will get the same id with `-legend` appended after it.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 
