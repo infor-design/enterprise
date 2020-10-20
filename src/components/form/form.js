@@ -72,6 +72,51 @@ $.fn.readonly = function () {
   return this;
 };
 
+/*
+ * Make password fields have a reveal text to obsucure or not obsucure the text value.
+ */
+$.fn.revealText = function (settings) {
+  if (!this) {
+    return this;
+  }
+  const input = this;
+  // Set the initial state
+  input.addClass(settings?.initialState === 'show' ? 'input-show-text' : 'input-hide-text');
+  input.addClass('input-hidepass');
+
+  // Add a text span and click events
+  const textSpan = $(`<span class="input-hideshow-text">${Soho.Locale.translate(settings?.initialState === 'show' ? 'Hide' : 'Show')}</span>`); // eslint-disable-line
+  input.after(textSpan);
+
+  // Handle Events
+  const toggleText = () => {
+    const textHidden = input.hasClass('input-hide-text');
+    if (textHidden) {
+      input.removeClass('input-hide-text').addClass('input-show-text');
+      input.attr('type', 'text');
+      textSpan.text(Soho.Locale.translate('Hide')); // eslint-disable-line
+      return;
+    }
+
+    input.removeClass('input-show-text').addClass('input-hide-text');
+    input.attr('type', 'password');
+    textSpan.text(Soho.Locale.translate('Show')); // eslint-disable-line
+  };
+
+  textSpan.on('click', () => {
+    toggleText();
+  });
+
+  input.on('keypress', (e) => {
+    // Toggle on Ctrl + R
+    if (e.keyCode === 18 && e.ctrlKey) {
+      toggleText();
+    }
+  });
+
+  return this;
+};
+
 // Fix: Labels without the "for" attribute
 $(() => {
   let str;

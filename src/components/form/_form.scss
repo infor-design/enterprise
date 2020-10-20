@@ -133,6 +133,15 @@
   }
 }
 
+// Hide and show password functionality
+.input-hideshow-text {
+  color: $ids-color-palette-slate-50;
+  cursor: pointer;
+  position: absolute;
+  text-transform: uppercase;
+  transform: translate(calc(-100% + -8px), 11px);
+}
+
 html[dir='rtl'] {
   .form-responsive {
     .colorpicker-container {
