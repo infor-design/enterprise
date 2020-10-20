@@ -1867,6 +1867,7 @@ Dropdown.prototype = {
     utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
     utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
     utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
+    utils.addAttributes(this.list.find('.dropdown-option a'), this, this.settings.attributes, 'option');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {
