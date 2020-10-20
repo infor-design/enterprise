@@ -166,7 +166,7 @@ PopupMenu.prototype = {
     const options = this.element.find('li a');
     [...options].forEach((opt, i) => {
       utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
-    })
+    });
   },
 
   /**
