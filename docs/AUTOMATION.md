@@ -81,11 +81,11 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Stepchart
 - [ ] Swaplist
 - [ ] Switch
-- [ ] Tabs
-- [ ] Tabs Header
-- [ ] Tabs Module
-- [ ] Tabs Multi
-- [ ] Tabs Vertical
+- [x] Tabs
+- [x] Tabs Header
+- [x] Tabs Module
+- [x] Tabs Multi
+- [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
 - [x] Textarea
