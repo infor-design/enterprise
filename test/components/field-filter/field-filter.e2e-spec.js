@@ -56,6 +56,8 @@ describe('FieldFilter example-index tests', () => {
   });
 
   it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
     expect(await element(by.id('custom-id-field-filter')).getAttribute('id')).toEqual('custom-id-field-filter');
     expect(await element(by.id('custom-id-field-filter')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter');
     expect(await element(by.id('custom-id-field-filter-label')).getAttribute('id')).toEqual('custom-id-field-filter-label');

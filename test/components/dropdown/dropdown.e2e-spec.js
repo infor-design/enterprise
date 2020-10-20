@@ -240,12 +240,14 @@ describe('Dropdown example-index tests', () => {
     });
 
     it('Should be able to set id/automation id', async () => {
+      await browser.driver.sleep(config.sleep);
+
       expect(await element(by.id('custom-id-dropdown')).getAttribute('id')).toEqual('custom-id-dropdown');
-      expect(await element(by.id('custom-automation-id-dropdown')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown');
+      expect(await element(by.id('custom-id-dropdown')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown');
       expect(await element(by.id('custom-id-dropdown-label')).getAttribute('id')).toEqual('custom-id-dropdown-label');
-      expect(await element(by.id('custom-automation-id-dropdown-label')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-label');
+      expect(await element(by.id('custom-id-dropdown-label')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-label');
       expect(await element(by.id('custom-id-dropdown-select')).getAttribute('id')).toEqual('custom-id-dropdown-select');
-      expect(await element(by.id('custom-automation-id-dropdown-select')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-select');
+      expect(await element(by.id('custom-id-dropdown-select')).getAttribute('data-automation-id')).toEqual('custom-automation-id-dropdown-select');
     });
   }
 

@@ -88,6 +88,8 @@ describe('Autocomplete example-index tests', () => {
   }
 
   it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
     expect(await element(by.id('custom-id-autocomplete')).getAttribute('id')).toEqual('custom-id-autocomplete');
     expect(await element(by.id('custom-automation-id-autocomplete')).getAttribute('data-automation-id')).toEqual('custom-automation-id-autocomplete');
   });
