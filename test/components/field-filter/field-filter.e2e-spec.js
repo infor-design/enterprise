@@ -58,16 +58,8 @@ describe('FieldFilter example-index tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-id-field-filter')).getAttribute('id')).toEqual('custom-id-field-filter');
-    expect(await element(by.id('custom-id-field-filter')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter');
-    expect(await element(by.id('custom-id-field-filter-label')).getAttribute('id')).toEqual('custom-id-field-filter-label');
-    expect(await element(by.id('custom-id-field-filter-label')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-label');
-    expect(await element(by.id('custom-id-field-filter-input')).getAttribute('id')).toEqual('custom-id-field-filter-input');
-    expect(await element(by.id('custom-id-field-filter-input')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-input');
-    expect(await element(by.id('custom-id-field-filter-trigger')).getAttribute('id')).toEqual('custom-id-field-filter-trigger');
-    expect(await element(by.id('custom-id-field-filter-trigger')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-trigger');
-    expect(await element(by.id('custom-id-field-filter-listbox')).getAttribute('id')).toEqual('custom-id-field-filter-listbox');
-    expect(await element(by.id('custom-id-field-filter-listbox')).getAttribute('data-automation-id')).toEqual('custom-automation-id-field-filter-listbox');
+    expect(await element(by.id('custom-field-filter-id-1')).getAttribute('id')).toEqual('custom-field-filter-id-1');
+    expect(await element(by.id('custom-field-filter-id-1')).getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id');
   });
 });
 
