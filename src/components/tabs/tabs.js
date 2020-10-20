@@ -2249,6 +2249,7 @@ Tabs.prototype = {
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
    * @param {object} options incoming options for the new tab.
    * @param {string} [options.name] the text title of the new tab.
+   * @param {Array} [options.attributes] additional attributes needed for the new tab.
    * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
    * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
    * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.
@@ -2318,6 +2319,13 @@ Tabs.prototype = {
 
     if (options.dropdown) {
       // TODO: Need to implement the passing of Dropdown Tab menus into this method.
+    }
+
+    // Add additional attributes, if applicable.
+    // NOTE: Do not add IDs this way.
+    if (Array.isArray(options.attributes)) {
+      utils.addAttributes(anchorMarkup, this, options.attributes, 'a');
+      utils.addAttributes(tabContentMarkup, this, options.attributes, 'panel');
     }
 
     function insertIntoTabset(self, targetIndex) {

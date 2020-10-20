@@ -260,6 +260,23 @@ describe('Tabs API', () => {
     expect(createTab[0].innerText).toEqual('New Weirdness');
   });
 
+  it('Can add automation ids to Tabs', () => {
+    const settingsObj = {
+      name: 'My New Tab',
+      content: '<p>New Tab Content</p>',
+      attributes: [
+        { name: 'data-automation-id', value: 'my-new-tab' }
+      ]
+    };
+
+    tabsObj.add('my-new-tab', settingsObj);
+    const newTab = tabsObj.anchors[5];
+    const newPanel = tabsObj.panels[5];
+
+    expect(newTab.getAttribute('data-automation-id')).toEqual('my-new-tab-a');
+    expect(newPanel.getAttribute('data-automation-id')).toEqual('my-new-tab-panel');
+  });
+
   it('Should hide tab', () => {
     const tab = tabsObj.hide(null, 'tabs-normal-contracts');
 

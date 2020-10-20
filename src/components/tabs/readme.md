@@ -154,7 +154,53 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom attributes/automation id's that can be used for scripting to the Tabs component.  It's possible to add `data-automation-id` attributes (or other attributes) directly to Tab anchors and panels:
+
+```html
+<div id="my-tabs" class="tab-container">
+  <ul class="tab-list">
+    <li class="tab">
+      <a href="#my-first-tab" id="tabs-first-a" data-automation-id="tabs-first-a">My First Tab</a>
+    </li>
+  </ul>
+</div>
+<div class="tab-panel-container">
+  <div class="tab-panel" id="my-first-tab" data-automation-id="tabs-first-panel">
+    <!-- my first tab's content -->
+  </div>
+</div>
+```
+
+Additionally, when using the `add()` API method, it's possible to pass an `attributes` object as part of the settings array that will append any additional attributes needed:
+
+```js
+const api = $('#my-tabs').data('tabs');
+api.add('my-second-tab', {
+  name: 'My Second Tab',
+  content: '<p>New Tab Content</p>',
+  attributes: [
+    { name: 'data-automation-id', 'value': 'my-second-tab' }
+  ]
+});
+```
+
+This will create a new tab that looks like the following...
+
+```html
+<li class="tab">
+  <a href="#my-second-tab" data-automation-id="my-second-tab-a">My First Tab</a>
+</li>
+```
+
+As well as a panel that looks like:
+
+```html
+<div class="tab-panel" id="my-second-tab" data-automation-id="my-second-tab-panel">
+  <p>New Tab Content</p>
+</div>
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
