@@ -128,7 +128,7 @@ About.prototype = {
         <span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>
         <span class="version">${Locale.translate('Version')} : ${$('html').attr('data-sohoxi-version')}</span><br>`;
 
-      $('<p></p>').html(text).appendTo(body);
+      $(`<p${Locale.isRTL() ? ' dir="rtl"' : ''}></p>`).html(text).appendTo(body);
     }
 
     this.buttons = this.modal.find('button');

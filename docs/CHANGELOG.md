@@ -13,9 +13,11 @@
 - `[Modal]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
+- `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 
 ### v4.34.0 Fixes
 
+- `[Breadcrumb]` Fixed an issue were css only breadcrumbs were missing styles. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 - `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Datagrid]` Fixed an issue where the special characters (é, à, ü, û, ...) export to csv was not generated them correctly. ([#4347](https://github.com/infor-design/enterprise/issues/4347))
 - `[Datagrid]` Fixed an issue where the leading spaces were removed on editing cells. ([#4380](https://github.com/infor-design/enterprise/issues/4380))
