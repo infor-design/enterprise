@@ -51,6 +51,22 @@ describe('Contextmenu index tests', () => {
     expect(await element.all(by.css('#action-popupmenu li')).first().getAttribute('role')).toEqual('none');
     expect(await element.all(by.css('#action-popupmenu li a')).first().getAttribute('role')).toEqual('menuitem');
   });
+
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('popupmenu-id')).getAttribute('id')).toEqual('popupmenu-id');
+    expect(await element(by.id('popupmenu-id')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id');
+
+    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('id')).toEqual('popupmenu-id-option-0');
+    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-0');
+
+    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('id')).toEqual('popupmenu-id-option-1');
+    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-1');
+
+    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('id')).toEqual('popupmenu-id-option-2');
+    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-2');
+  });
 });
 
 describe('Popupmenu example-selectable tests', () => {
