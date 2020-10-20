@@ -3,9 +3,9 @@
 This list is a list of elements that have clickable items that need to be handled or tested and confirmed with the new automation attributes settings. The checkbox may be checked if the component is implemented to handle all clickable items with custom id's or custom ids + suffix and the doc testability section is filled out. See toast/message/pager for initial code.
 
 - [x] About
-- [ ] Accordion
+- [x] Accordion (not needed id can be directly applied)
 - [x] Alerts (not needed id can be directly applied)
-- [ ] Applicationmenu
+- [x] Applicationmenu (not needed id can be directly applied)
 - [ ] Area
 - [ ] Autocomplete
 - [x] Badges (not needed id can be directly applied)
@@ -13,7 +13,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Bar Grouped
 - [ ] Bar Stacked
 - [ ] Blockgrid
-- [ ] Breadcrumb
+- [x] Breadcrumb
 - [ ] Bubble
 - [ ] Bullet
 - [ ] Busyindicator
