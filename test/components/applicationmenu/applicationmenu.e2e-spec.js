@@ -41,7 +41,7 @@ describe('Application Menu filter tests', () => {
   });
 
   it('should filter', async () => {
-    const button = await element(by.css('#application-menu-searchfield'));
+    const button = await element(by.css('#appmenu-searchfield'));
     await button.sendKeys('Role');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.has-filtered-children')).last()), config.waitsFor);
@@ -245,7 +245,7 @@ describe('Application Menu personalize roles switcher tests', () => {
     await browser.driver.sleep(config.sleepLonger);
 
     // Click the first button in the Application Menu toolbar
-    await element(by.css('#toolbar-btn-download')).click();
+    await element(by.css('#appmenu-header-toolbar-btn-download')).click();
     await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('application-menu')).getAttribute('class')).not.toContain('is-open');

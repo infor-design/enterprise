@@ -90,3 +90,18 @@ describe('Breadcrumb navigation tests', () => {
     });
   }
 });
+
+describe('Breadcrumb automation tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/breadcrumb/example-from-settings?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should create automation IDs from settings', async () => {
+    expect(await element(by.id('test-breadcrumb-home')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-home');
+    expect(await element(by.css('.breadcrumb-item.current a')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-fourth');
+  });
+});

@@ -125,7 +125,15 @@ The menu should respond responsively as follows:
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+When setting up the application menu for automated testing, ensure that the inner accordion component's links and expander buttons are labelled with id's and automation id's per the [Accordion component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/accordion#testability).  The same rules apply for Role Switcher accordions.
+
+For Application Menus that contain a Searchfield, defer to the [Searchfield component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/searchfield#testability) for the required elements inside the Searchfield wrapper.
+
+For Application Menus that contain user information, personalized role switching, etc., ensure the following:
+- All Buttons follow the [Button component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/button#testability).
+- All Toolbars are implemented using the Flex Toolbar component, and follow the [Flex Toolbar component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/toolbar-flex#testability).
+
+In general, please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

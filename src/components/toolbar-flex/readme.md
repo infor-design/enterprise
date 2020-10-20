@@ -274,3 +274,7 @@ If you create custom CSS classes to add to your `.toolbar-section` containers, e
 ## Responsive Guidelines
 
 When there are too many buttons, inputs, or other items present on the toolbar to fit on one line, items that would normally wrap to a second line are hidden. The hidden items will move to an overflow [action button.](./menubutton).
+
+## Testability
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

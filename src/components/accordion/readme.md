@@ -32,14 +32,14 @@ Inside this `accordion-content` element can be any HTML markup, including other 
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
       <use href="#icon-user"></use>
     </svg>
-    <a href="#"><span>Personal</span></a>
+    <a id="personal" data-automation-id="accordion-a-personal" href="#"><span>Personal</span></a>
   </div>
   <div class="accordion-pane">
     <div class="accordion-header">
-      <a href="#"><span>Item 1</span></a>
+      <a id="item-1" data-automation-id="accordion-a-personal-item-1" href="#"><span>Item 1</span></a>
     </div>
     <div class="accordion-header">
-      <a href="#"><span>Item 2</span></a>
+      <a id="item-1" data-automation-id="accordion-a-personal-item-2" href="#"><span>Item 2</span></a>
     </div>
   </div>
 
@@ -139,7 +139,34 @@ The IDS Enterprise Components' Accordion Plugin will manage the accessibility of
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to various parts of the accordion. If you wish to take advantage of the automation id's, please note that the component does not automatically add these id's, and it's necessary to fully write out the component markup, including expander buttons. For example:
+
+```html
+<div class="accordion">
+  <div class="accordion-header">
+    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <use href="#icon-user"></use>
+    </svg>
+    <a id="personal" data-automation-id="accordion-a-personal" href="#"><span>Personal</span></a>
+    <button id="personal-expander" data-automation-id="accordion-btn-personal" class="btn">
+      <svg class="chevron icon">
+        <use href="#icon-caret-down"></use>
+      </svg>
+      <span class="audible">Expand</span>
+    </button>
+  </div>
+  <div class="accordion-pane">
+    <div class="accordion-header">
+      <a id="item-1" data-automation-id="accordion-a-personal-item-1" href="#"><span>Item 1</span></a>
+    </div>
+    <div class="accordion-header">
+      <a id="item-1" data-automation-id="accordion-a-personal-item-2" href="#"><span>Item 2</span></a>
+    </div>
+  </div>
+</div>
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 
