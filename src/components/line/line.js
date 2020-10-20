@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, prefer-arrow-callback */
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-underscore-dangle */
 
 // Other Shared Imports
 import { Environment as env } from '../../utils/environment';
@@ -457,7 +457,14 @@ Line.prototype = {
           .attr('fill', () => charts.chartColor(lineIdx, 'line', d))
           .style('opacity', '.2')
           .attr('class', 'area')
-          .attr('d', area);
+          .attr('d', area)
+          .call((d2) => {
+            d2._groups.forEach((lines) => {
+              lines.forEach((thisLine) => {
+                utils.addAttributes($(thisLine), d, d.attributes, 'area');
+              });
+            });
+          });
       }
 
       const path = lineGroups.append('path')
@@ -467,6 +474,13 @@ Line.prototype = {
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('class', 'line')
+        .call((d2) => {
+          d2._groups.forEach((lines) => {
+            lines.forEach((thisLine) => {
+              utils.addAttributes($(thisLine), d, d.attributes, 'line');
+            });
+          });
+        })
         .on(`click.${self.namespace}`, function () {
           charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall);
         })
@@ -521,7 +535,7 @@ Line.prototype = {
               } else {
                 const obj2 = mouseEnterData[key];
                 for (const key2 in obj2) {  //eslint-disable-line
-                  if (obj2.hasOwnProperty(key2)) {  //eslint-disable-line
+                  if (obj2.hasOwnProperty(key2) && labels[key]) {  //eslint-disable-line
                     content += `${'' +
                         '<div class="swatch-row">' +
                           '<span class="text-capitalize">'}${labels[key][key2]}</span>` +
@@ -576,6 +590,14 @@ Line.prototype = {
             .enter()
             .append('circle')
             .attr('class', dots.class)
+            .call((d2) => {
+              d2._groups.forEach((thisDots) => {
+                thisDots.forEach((dot) => {
+                  const dat = dot.__data__;
+                  utils.addAttributes($(dot), dat, dat.attributes, 'dot');
+                });
+              });
+            })
             .attr('cx', function (dd, p) {
               if (!!s.xAxis && !!s.xAxis.parser) {
                 return xScale(s.xAxis.parser(dd, p));
@@ -612,6 +634,14 @@ Line.prototype = {
             .enter()
             .append('path')
             .attr('class', 'symbol')
+            .call((d2) => {
+              d2._groups.forEach((thisSymbols) => {
+                thisSymbols.forEach((symbol) => {
+                  const dat = symbol.__data__;
+                  utils.addAttributes($(symbol), dat, dat.attributes, 'symbol');
+                });
+              });
+            })
             .attr('transform', function (ds) {
               return `translate(${xScale(ds.value.x)},${yScale(ds.value.y)})`;
             })
