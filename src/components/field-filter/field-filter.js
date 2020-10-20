@@ -138,6 +138,11 @@ FieldFilter.prototype = {
       if (this.ddApi && this.ddApi.icon) {
         this.ddApi.icon.addClass('ffdropdown-icon');
       }
+
+      // Add test automation ids
+      utils.addAttributes(this.field, this, this.settings.attributes);
+      utils.addAttributes(this.field.find('label:not(.audible)'), this, this.settings.attributes, 'label');
+      utils.addAttributes(this.field.find('select'), this, this.settings.attributes, 'select');
     }
   },
 
