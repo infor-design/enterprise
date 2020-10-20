@@ -23,66 +23,150 @@ we pass a dataset with x and y axis values to make three lines.
 var dataset = [{
   data: [{
       name: 'Jan',
-      value: 12
+      value: 12,
+      attributes: [
+       { name: 'id', value: 'area-a-jan' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-jan' }
+     ]
   }, {
       name: 'Feb',
-      value: 11
+      value: 11,
+      attributes: [
+       { name: 'id', value: 'area-a-feb' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-feb' }
+     ]
   }, {
       name: 'Mar',
-      value: 14
+      value: 14,
+      attributes: [
+       { name: 'id', value: 'area-a-mar' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-mar' }
+     ]
   }, {
       name: 'Apr',
-      value: 10
+      value: 10,
+      attributes: [
+       { name: 'id', value: 'area-a-apr' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-apr' }
+     ]
   }, {
       name: 'May',
-      value: 14
+      value: 14,
+      attributes: [
+       { name: 'id', value: 'area-a-may' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-may' }
+     ]
   }, {
       name: 'Jun',
-      value: 8
+      value: 8,
+      attributes: [
+       { name: 'id', value: 'area-a-jun' },
+       { name: 'data-automation-id', value: 'automation-id-area-a-jun' }
+     ]
   }],
-  name: 'Component A'
+  name: 'Component A',
+  attributes: [
+   { name: 'id', value: 'area-comp-a' },
+   { name: 'data-automation-id', value: 'automation-id-area-comp-a' }
+ ]
 }, {
   data: [{
       name: 'Jan',
-      value: 22
+      value: 22,
+      attributes: [
+       { name: 'id', value: 'area-b-jan' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-jan' }
+     ]
   }, {
       name: 'Feb',
-      value: 21
+      value: 21,
+      attributes: [
+       { name: 'id', value: 'area-b-feb' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-feb' }
+     ]
   }, {
       name: 'Mar',
-      value: 24
+      value: 24,
+      attributes: [
+       { name: 'id', value: 'area-b-mar' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-mar' }
+     ]
   }, {
       name: 'Apr',
-      value: 20
+      value: 20,
+      attributes: [
+       { name: 'id', value: 'area-b-apr' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-apr' }
+     ]
   }, {
       name: 'May',
-      value: 24
+      value: 24,
+      attributes: [
+       { name: 'id', value: 'area-b-may' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-may' }
+     ]
   }, {
       name: 'Jun',
-      value: 28
+      value: 28,
+      attributes: [
+       { name: 'id', value: 'area-b-jun' },
+       { name: 'data-automation-id', value: 'automation-id-area-b-jun' }
+     ]
   }],
-  name: 'Component B'
+  name: 'Component B',
+  attributes: [
+   { name: 'id', value: 'area-comp-b' },
+   { name: 'data-automation-id', value: 'automation-id-area-comp-b' }
+ ]
 }, {
   data: [{
       name: 'Jan',
-      value: 32
+      value: 32,
+      attributes: [
+       { name: 'id', value: 'area-c-jan' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-jan' }
+     ]
   }, {
       name: 'Feb',
-      value: 31
+      value: 31,
+      attributes: [
+       { name: 'id', value: 'area-c-feb' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-feb' }
+     ]
   }, {
       name: 'Mar',
-      value: 34
+      value: 34,
+      attributes: [
+       { name: 'id', value: 'area-c-mar' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-mar' }
+     ]
   }, {
       name: 'Apr',
-      value: 30
+      value: 30,
+      attributes: [
+       { name: 'id', value: 'area-c-apr' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-apr' }
+     ]
   }, {
       name: 'May',
-      value: 34
+      value: 34,
+      attributes: [
+       { name: 'id', value: 'area-c-may' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-may' }
+     ]
   }, {
       name: 'Jun',
-      value: 38
+      value: 38,
+      attributes: [
+       { name: 'id', value: 'area-c-jun' },
+       { name: 'data-automation-id', value: 'automation-id-area-c-jun' }
+     ]
   }],
-  name: 'Component C'
+  name: 'Component C',
+  attributes: [
+   { name: 'id', value: 'area-comp-c' },
+   { name: 'data-automation-id', value: 'automation-id-area-comp-c' }
+ ]
 }];
 
 $('#area-example').chart({type: 'area', dataset: dataset});
@@ -130,7 +214,31 @@ name: 'Component C'
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the area chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+{
+  data: [{
+    name: 'Jan',
+    value: 12,
+    attributes: [
+      { name: 'id', value: 'area-a-jan' },
+      { name: 'data-automation-id', value: 'automation-id-area-a-jan' }
+    ]
+  }],
+  name: 'Component A',
+  attributes: [
+   { name: 'id', value: 'area-comp-a' },
+   { name: 'data-automation-id', value: 'automation-id-area-comp-a' }
+ ]
+}
+```
+
+Providing the data this will add an ID added to the area with `-area` appended, line with `-line` appended and dot with `-dot` appended. In addition the related legend item will get the same id with `-legend` appended after it.
+
+ Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

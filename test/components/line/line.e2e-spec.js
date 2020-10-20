@@ -26,6 +26,63 @@ describe('Line Chart tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'line')).toEqual(0);
     });
   }
+
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('line-a-jan-dot')).getAttribute('id')).toEqual('line-a-jan-dot');
+    expect(await element(by.id('line-a-jan-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-jan-dot');
+    expect(await element(by.id('line-a-feb-dot')).getAttribute('id')).toEqual('line-a-feb-dot');
+    expect(await element(by.id('line-a-feb-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-feb-dot');
+    expect(await element(by.id('line-a-mar-dot')).getAttribute('id')).toEqual('line-a-mar-dot');
+    expect(await element(by.id('line-a-mar-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-mar-dot');
+    expect(await element(by.id('line-a-apr-dot')).getAttribute('id')).toEqual('line-a-apr-dot');
+    expect(await element(by.id('line-a-apr-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-apr-dot');
+    expect(await element(by.id('line-a-may-dot')).getAttribute('id')).toEqual('line-a-may-dot');
+    expect(await element(by.id('line-a-may-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-may-dot');
+    expect(await element(by.id('line-a-jun-dot')).getAttribute('id')).toEqual('line-a-jun-dot');
+    expect(await element(by.id('line-a-jun-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-a-jun-dot');
+
+    expect(await element(by.id('line-b-jan-dot')).getAttribute('id')).toEqual('line-b-jan-dot');
+    expect(await element(by.id('line-b-jan-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-jan-dot');
+    expect(await element(by.id('line-b-feb-dot')).getAttribute('id')).toEqual('line-b-feb-dot');
+    expect(await element(by.id('line-b-feb-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-feb-dot');
+    expect(await element(by.id('line-b-mar-dot')).getAttribute('id')).toEqual('line-b-mar-dot');
+    expect(await element(by.id('line-b-mar-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-mar-dot');
+    expect(await element(by.id('line-b-apr-dot')).getAttribute('id')).toEqual('line-b-apr-dot');
+    expect(await element(by.id('line-b-apr-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-apr-dot');
+    expect(await element(by.id('line-b-may-dot')).getAttribute('id')).toEqual('line-b-may-dot');
+    expect(await element(by.id('line-b-may-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-may-dot');
+    expect(await element(by.id('line-b-jun-dot')).getAttribute('id')).toEqual('line-b-jun-dot');
+    expect(await element(by.id('line-b-jun-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-b-jun-dot');
+
+    expect(await element(by.id('line-c-jan-dot')).getAttribute('id')).toEqual('line-c-jan-dot');
+    expect(await element(by.id('line-c-jan-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-jan-dot');
+    expect(await element(by.id('line-c-feb-dot')).getAttribute('id')).toEqual('line-c-feb-dot');
+    expect(await element(by.id('line-c-feb-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-feb-dot');
+    expect(await element(by.id('line-c-mar-dot')).getAttribute('id')).toEqual('line-c-mar-dot');
+    expect(await element(by.id('line-c-mar-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-mar-dot');
+    expect(await element(by.id('line-c-apr-dot')).getAttribute('id')).toEqual('line-c-apr-dot');
+    expect(await element(by.id('line-c-apr-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-apr-dot');
+    expect(await element(by.id('line-c-may-dot')).getAttribute('id')).toEqual('line-c-may-dot');
+    expect(await element(by.id('line-c-may-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-may-dot');
+    expect(await element(by.id('line-c-jun-dot')).getAttribute('id')).toEqual('line-c-jun-dot');
+    expect(await element(by.id('line-c-jun-dot')).getAttribute('data-automation-id')).toEqual('automation-id-line-c-jun-dot');
+
+    expect(await element(by.id('line-comp-a-line')).getAttribute('id')).toEqual('line-comp-a-line');
+    expect(await element(by.id('line-comp-a-line')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-a-line');
+    expect(await element(by.id('line-comp-b-line')).getAttribute('id')).toEqual('line-comp-b-line');
+    expect(await element(by.id('line-comp-b-line')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-b-line');
+    expect(await element(by.id('line-comp-c-line')).getAttribute('id')).toEqual('line-comp-c-line');
+    expect(await element(by.id('line-comp-c-line')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-c-line');
+
+    expect(await element(by.id('line-comp-a-legend')).getAttribute('id')).toEqual('line-comp-a-legend');
+    expect(await element(by.id('line-comp-a-legend')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-a-legend');
+    expect(await element(by.id('line-comp-b-legend')).getAttribute('id')).toEqual('line-comp-b-legend');
+    expect(await element(by.id('line-comp-b-legend')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-b-legend');
+    expect(await element(by.id('line-comp-c-legend')).getAttribute('id')).toEqual('line-comp-c-legend');
+    expect(await element(by.id('line-comp-c-legend')).getAttribute('data-automation-id')).toEqual('automation-id-line-comp-c-legend');
+  });
 });
 
 describe('Line Localization tests', () => {
