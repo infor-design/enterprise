@@ -130,6 +130,7 @@ When setting up the application menu for automated testing, ensure that the inne
 For Application Menus that contain a Searchfield, defer to the [Searchfield component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/searchfield#testability) for the required elements inside the Searchfield wrapper.
 
 For Application Menus that contain user information, personalized role switching, etc., ensure the following:
+
 - All Buttons follow the [Button component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/button#testability).
 - All Toolbars are implemented using the Flex Toolbar component, and follow the [Flex Toolbar component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/toolbar-flex#testability).
 
