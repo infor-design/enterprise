@@ -17,6 +17,8 @@
 - `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 - `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
+- `[Radios/Progress/Treemap]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Treemap]` Added ability to show a tooltip. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
 ### v4.34.0 Fixes
 
@@ -42,6 +44,7 @@
 - `[Listview]` Fixed a bug where readonly and non-selectable listview should not have hover state. ([#4452](https://github.com/infor-design/enterprise/issues/4452))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))
 - `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
+- `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
 ## v4.33.0
 

@@ -12,9 +12,8 @@ demo:
 Insert a block element such as a `<div>` in the DOM with class `progess-bar`. Set the `data-value` attribute to set the current progress. Always include a visible `<label>` and set `aria-labelledby` to point to that label.
 
 ```html
-<label id="pr-label1">Percent complete</label>
 <div class="progress">
-    <div class="progress-bar" data-value="50" id="progress-bar1" aria-labelledby="pr-label1"></div>
+  <div class="progress-bar" data-options="{'value': '50'}" id="progress-bar1" data-automation-id="progress-bar1-automation" aria-labelledby="pr-label1"></div>
 </div>
 ```
 
@@ -35,11 +34,13 @@ When the markup is established, you can call the `updated` method or trigger the
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the progress component in the markup inline. For this reason there is no `attributes` setting like some other components.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details on automation id's.
 
 ## Keyboard Shortcuts
 
-- No Keyboard
+- No Keyboard is used on the progress component
 
 ## Responsive Guidelines
 

@@ -15,7 +15,13 @@
 <script>
 $('body').on('initialized', function () {
   $.getJSON('{{basepath}}api/storage-usage', function(data) {
-    $('#treemap-chart-example').treemap({dataset: data});
+    $('#treemap-chart-example').treemap({
+      dataset: data,
+      attributes: [
+        { name: 'id', value: 'custom-id' },
+        { name: 'data-automation-id', value: 'custom-automation-id' }
+      ]
+    });
   });
 });
 </script>
