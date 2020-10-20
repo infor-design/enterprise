@@ -2125,7 +2125,7 @@ describe('Locale API', () => {
     expect(Locale.translate('ViewSource')).toEqual('Προβολή πηγής');
     Locale.set('lt-LT');
 
-    expect(Locale.translate('CssClass')).toEqual('Css Klasė');
+    expect(Locale.translate('CssClass')).toEqual('CSS klase');
 
     Locale.set('zh-CN');
 

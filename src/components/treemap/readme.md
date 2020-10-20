@@ -91,7 +91,6 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 
 This chart has no keyboard functionality
 
-
 ## Testability
 
 You can add custom id's/automation id's to the treemap picker that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
