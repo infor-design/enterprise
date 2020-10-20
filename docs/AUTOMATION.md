@@ -9,9 +9,9 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Area
 - [ ] Autocomplete
 - [x] Badges (not needed id can be directly applied)
-- [ ] Bar
-- [ ] Bar Grouped
-- [ ] Bar Stacked
+- [x] Bar
+- [x] Bar Grouped
+- [x] Bar Stacked
 - [ ] Blockgrid
 - [ ] Breadcrumb
 - [x] Bubble

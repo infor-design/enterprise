@@ -18,27 +18,59 @@ $('body').on('initialized', function () {
   var dataset = [{
       data: [{
           name: '2008',
-          value: 123
+          value: 123,
+          attributes: [
+           { name: 'id', value: 'barstacked-s1-2008' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s1-2008' }
+         ]
       }, {
           name: '2009',
-          value: 234
+          value: 234,
+          attributes: [
+           { name: 'id', value: 'barstacked-s1-2009' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s1-2009' }
+         ]
       }, {
           name: '2010',
           value: 345,
+          attributes: [
+           { name: 'id', value: 'barstacked-s1-2010' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s1-2010' }
+         ]
       }],
-      name: 'Series 1'
+      name: 'Series 1',
+      attributes: [
+       { name: 'id', value: 'barstacked-series1' },
+       { name: 'data-automation-id', value: 'automation-id-barstacked-series1' }
+     ]
   }, {
       data: [{
           name: '2008',
-          value: 235
+          value: 235,
+          attributes: [
+           { name: 'id', value: 'barstacked-s2-2008' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s2-2008' }
+         ]
       }, {
           name: '2009',
-          value: 267
+          value: 267,
+          attributes: [
+           { name: 'id', value: 'barstacked-s2-2009' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s2-2009' }
+         ]
       }, {
           name: '2010',
-          value: 573
+          value: 573,
+          attributes: [
+           { name: 'id', value: 'barstacked-s2-2010' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-s2-2010' }
+         ]
       }],
-      name: 'Series 2'
+      name: 'Series 2',
+      attributes: [
+       { name: 'id', value: 'barstacked-series2' },
+       { name: 'data-automation-id', value: 'automation-id-barstacked-series2' }
+     ]
   }];
 
   $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset});
