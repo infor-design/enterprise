@@ -257,8 +257,17 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('id')).toEqual('custom-dropdown-id-1-listbox');
       expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-listbox');
 
-      expect(await element(by.id('custom-dropdown-id-1-option')).getAttribute('id')).toEqual('custom-dropdown-id-1-option');
-      expect(await element(by.id('custom-dropdown-id-1-option')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option');
+      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-0');
+      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-0');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-1');
+      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-1');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-2');
+      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-2');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-3');
+      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-3');
     });
   }
 

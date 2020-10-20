@@ -253,6 +253,15 @@ Autocomplete.prototype = {
       this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').appendTo('body');
     }
 
+    // Add test automation ids
+    utils.addAttributes(this.list, this, this.settings.attributes, 'list');
+    setTimeout(() => {
+      const options = this.list.find('li a');
+      [...options].forEach((opt, i) => {
+        utils.addAttributes($(opt), this, this.settings.attributes, `list-option${i}`);
+      });
+    });
+
     this.list[0].style.height = 'auto';
     this.list[0].style.width = `${this.element.outerWidth()}px`;
     this.list.addClass('autocomplete');
