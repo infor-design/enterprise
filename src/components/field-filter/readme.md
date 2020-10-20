@@ -35,8 +35,4 @@ Setting the id/automation id with a string value:
 
 If setting the id/automation id with a function, the id will be a running total of open filter fields.
 
-For the filter fields, `attributes` can be set either on the root settings or in each button element. For the button elements you can also use the `id` as before or the new attributes setting to set an id or automation id on the button.
-
-If you set the attributes on the root message, you will get an ID added to the root of the message dialog. Also the message area will get an id with `-message` appended after the id given. And the h1 area will get an id with `-title` appended after the id given. And finally the close button (if used) with get `btn-close` appended.
-
 Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
