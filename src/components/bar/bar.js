@@ -820,11 +820,14 @@ Bar.prototype = {
       });
     } else {
       dataset.forEach((d) => {
+        const keys = Object.keys(d).map(key => key);
         const values = Object.keys(d).map(key => d[key]);
-        values.forEach((key) => {
+        values.forEach((key, i) => {
           if (key && key.constructor === Array) {
-            key.forEach((k, i) => {
-              elems[i].textContent = getText(k, i);
+            key.forEach((k, i2) => {
+              if (keys[i] !== 'attributes') {
+                elems[i2].textContent = getText(k, i2);
+              }
             });
           }
         });
