@@ -43,6 +43,21 @@ function getIconSetPaths() {
 
   iconSets = iconSets.concat(emptyIconSets);
 
+  // Legacy Icon Files - DEPRECATE soon
+  iconSets.push({
+    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/standard/svg/*.svg`,
+    dest: `${PATHS.iconComponent}/svg.html`,
+    class: 'svg-icons',
+    isDeprecated: true
+  });
+
+  iconSets.push({
+    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/empty/svg/*.svg`,
+    dest: `${ROOT_DIR}/src/components/emptymessage/svg-empty.html`,
+    class: 'svg-icons-empty',
+    isDeprecated: true
+  });
+
   return iconSets;
 }
 
@@ -137,7 +152,14 @@ function createHtmlFiles(iconSets) {
       .then((data) => {
         if (IS_VERBOSE) {
           const thePath = iconSet.dest.replace(`${process.cwd()}/src/components`, '');
-          const desc = `${data.length} SVG icons compiled into "${thePath}"`;
+          let desc = `${data.length} SVG icons compiled into "${thePath}"`;
+          if (thePath.includes('/svg.html')) {
+            desc += ' [!! DEPRECATED !!]';
+          }
+          if (thePath.includes('/svg-empty.html')) {
+            desc += ' [!! DEPRECATED !!]';
+          }
+
           logger('success', desc);
         }
       })
