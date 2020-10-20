@@ -15,11 +15,13 @@ const COMPONENT_NAME = 'circlepager';
  * @param {Integer} [settings.slidesToShow=1] The number of slides to show in one view / pane
  * @param {Integer} [settings.startingSlide] First showing slide/group, an 0-based integer
  * @param {boolean} [settings.loop=false] Setting loop: true will loop back after next/previous reached to end
+ * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const CIRCLEPAGER_DEFAULTS = {
   slidesToShow: 1,
   startingSlide: null,
-  loop: false
+  loop: false,
+  attributes: null
 };
 
 function CirclePager(element, settings) {
@@ -65,6 +67,8 @@ CirclePager.prototype = {
     this.activeIndex = s.startingSlide !== null &&
       s.startingSlide > -1 && s.startingSlide < this.slides.length ?
       s.startingSlide : 0;
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
   },
 
   /**

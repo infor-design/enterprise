@@ -34,3 +34,49 @@
     </div>
   </div>
 </div>
+
+<script>
+$('body').on('initialized', function () {
+  $('#description-max').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-1' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-1' }
+    ]
+  });
+
+  $('#description-disabled').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-2' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-2' }
+    ]
+  });
+
+  $('#description').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-3' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-3' }
+    ]
+  });
+
+  $('#description-readonly').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-4' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-4' }
+    ]
+  });
+
+  $('#description-dirty').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-5' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-5' }
+    ]
+  });
+
+  $('#description-error').textarea({
+    attributes: [
+      { name: 'id', value: 'textarea-id-6' },
+      { name: 'data-automation-id', value: 'automation-id-textarea-6' }
+    ]
+  });
+});
+</script>

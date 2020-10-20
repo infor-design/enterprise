@@ -17,6 +17,7 @@ const COMPONENT_NAME = 'emptymessage';
 * @param {boolean} [settings.button = null] The button settings to use (click, isPrimary, cssClass ect)
 * @param {string} [settings.height = null]  The container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
 * @param {string} [settings.color = 'slate']  Defaults to 'slate' but can also be azure. Later may be expanded to all personalization colors.
+* @param {string} [settings.attributes = null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const EMPTYMESSAGE_DEFAULTS = {
   title: null,
@@ -24,7 +25,8 @@ const EMPTYMESSAGE_DEFAULTS = {
   icon: null,
   button: null,
   height: null, // null|'small'
-  color: 'slate' // or azure for now until personalization works
+  color: 'slate', // or azure for now until personalization works
+  attributes: null
 };
 
 function EmptyMessage(element, settings) {
@@ -89,6 +91,8 @@ EmptyMessage.prototype = {
         this.element.on('click', 'button', opts.button.click);
       }
     }
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
 
     return this;
   },
