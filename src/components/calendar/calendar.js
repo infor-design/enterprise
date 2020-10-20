@@ -193,13 +193,12 @@ Calendar.prototype = {
       const event = s.eventTypes[i];
       const color = event.color;
 
-      const legend = '' +
-        `<div class="calendar-event-legend-item">
-          <span class="calendar-event-legend-swatch ${color}"></span>
-          <span class="calendar-event-legend-text">${event.label}</span>
-        </div>`;
+      const legend = $('<div class="calendar-event-legend-item"></div>');
+      legend.append(`<span class="calendar-event-legend-swatch ${color}"></span>
+          <span class="calendar-event-legend-text">${event.label}</span>`);
 
       this.eventLegend.append(legend);
+      utils.addAttributes(legend, this, this.settings.attributes, `legend-mobile-${event.id}`);
     }
     this.monthviewTable.after(this.eventLegend);
   },
