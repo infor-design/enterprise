@@ -6,10 +6,10 @@
 // Libs
 const fs = require('fs');
 const glob = require('glob');
-const logger = require('../logger');
 const path = require('path');
 const del = require('del');
 const slash = require('slash');
+const logger = require('../logger');
 
 const IdsMetadata = require('../helpers/ids-metadata');
 
@@ -42,21 +42,6 @@ function getIconSetPaths() {
   }));
 
   iconSets = iconSets.concat(emptyIconSets);
-
-  // Legacy Icon Files - DEPRECATE soon
-  iconSets.push({
-    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/standard/svg/*.svg`,
-    dest: `${PATHS.iconComponent}/svg.html`,
-    class: 'svg-icons',
-    isDeprecated: true
-  });
-
-  iconSets.push({
-    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/empty/svg/*.svg`,
-    dest: `${ROOT_DIR}/src/components/emptymessage/svg-empty.html`,
-    class: 'svg-icons-empty',
-    isDeprecated: true
-  });
 
   return iconSets;
 }
@@ -152,14 +137,7 @@ function createHtmlFiles(iconSets) {
       .then((data) => {
         if (IS_VERBOSE) {
           const thePath = iconSet.dest.replace(`${process.cwd()}/src/components`, '');
-          let desc = `${data.length} SVG icons compiled into "${thePath}"`;
-          if (thePath.includes('/svg.html')) {
-            desc += ' [!! DEPRECATED !!]';
-          }
-          if (thePath.includes('/svg-empty.html')) {
-            desc += ' [!! DEPRECATED !!]';
-          }
-
+          const desc = `${data.length} SVG icons compiled into "${thePath}"`;
           logger('success', desc);
         }
       })

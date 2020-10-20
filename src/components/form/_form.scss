@@ -151,4 +151,8 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .input-hideshow-text {
+    transform: translate(calc(100% + 8px), 7px);
+  }
 }
