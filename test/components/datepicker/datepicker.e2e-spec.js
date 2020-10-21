@@ -1053,7 +1053,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
     const button1El = await element.all(by.css('.monthview-table td:not(.alternate)')).first();
     await button1El.click();
 
@@ -1074,7 +1074,8 @@ describe('Datepicker Range Tests', () => {
     expect(datepickerEl.getAttribute('value')).toEqual('2/7/2018 - 2/22/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(16);
     expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('7');
@@ -1087,7 +1088,7 @@ describe('Datepicker Range Tests', () => {
     expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(24);
     expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('5');
@@ -1101,7 +1102,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver.sleep(config.sleepShort);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     await element.all(by.cssContainingText('.monthview-table td', '5')).first().click();
     await element.all(by.cssContainingText('.monthview-table td', '10')).first().click();
@@ -1110,7 +1111,7 @@ describe('Datepicker Range Tests', () => {
 
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(4);
     expect(await element.all(by.css('.is-disabled')).first().getText()).toEqual('7');
@@ -1123,7 +1124,8 @@ describe('Datepicker Range Tests', () => {
     expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td', '5')).first().click();
     await element.all(by.cssContainingText('.monthview-table td', '10')).first().click();
@@ -1132,7 +1134,7 @@ describe('Datepicker Range Tests', () => {
 
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(6);
     expect(await element.all(by.css('.is-disabled')).count()).toEqual(2);
@@ -1143,7 +1145,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys('81220208142020');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '3')).get(2).click();
@@ -1164,7 +1166,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys('81220208142020');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '7')).get(1).click();
@@ -1185,7 +1187,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys('822020832020');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     await element.all(by.cssContainingText('.monthview-table td', '9')).get(1).click();
     await element.all(by.cssContainingText('.monthview-table td', '12')).get(0).click();
@@ -1207,6 +1209,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
@@ -1226,7 +1229,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys('81020201220AM81820201240AM');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
 
     await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
@@ -1247,6 +1250,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(6);
     expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('6');
@@ -1260,6 +1264,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.css('.range-selection')).count()).toEqual(13);
     expect(await element.all(by.css('.range-selection')).first().getText()).toEqual('19');
@@ -1297,6 +1302,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await browser.driver.sleep(config.sleepShort);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td', '24')).first().click();
     await element.all(by.cssContainingText('.monthview-table td', '18')).first().click();
@@ -1318,6 +1324,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td', '22')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '20')).get(0).click();
@@ -1332,6 +1339,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td', '22')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '24')).get(0).click();
@@ -1362,6 +1370,7 @@ describe('Datepicker Range Tests UmAlQura', () => {
     await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element.all(by.cssContainingText('.monthview-table td .day-text', '11')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td .day-text', '10')).get(0).click();

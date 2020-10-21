@@ -54,7 +54,39 @@ The Date Picker is a complex control to code for accessibility.
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the datepicker for elements that can be clicked using the `attributes` data attribute. This setting take either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+The value can be a string value or function. The function will give you the datepicker API as a parameter to assist in making things more dynamic (you can use some properties if needed). Note that you should set the input id and data-automation id directly on the input, the rest is generated from the setting.
+
+```html
+<div class="field">
+  <label for="date-field-normal" class="label">Date Field</label>
+  <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
+</div>
+
+<script>
+$('#date-field-normal').datepicker({
+  attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+});
+</script>
+```
+
+Providing the data in this example will append to the following items:
+
+expect(await element(by.id('custom-id-btn-picklist-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-up');
+    expect(await element(by.id('custom-id-btn-picklist-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-down');
+    expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
+    expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).toEqual('custom-id-btn-picklist-2018');
+
+- Month Year Picker Button - gets `btn-monthyear` appended
+- Cancel Button - gets `btn-cancel` appended
+- Select Button - gets `btn-select` appended
+- Down a set of years Button - gets `btn-picklist-down` appended
+- Up a set of years Button - gets `btn-picklist-up` appended
+- Each month in the month/year picker  - gets `btn-picklist-n` appended where n is the zero based month number (0-11)
+- Each year in the month/year picker  - gets `btn-picklist-n` appended where n is the four digit year
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 
