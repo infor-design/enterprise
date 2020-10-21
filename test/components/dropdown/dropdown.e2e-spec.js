@@ -238,6 +238,37 @@ describe('Dropdown example-index tests', () => {
       // The Dropdown Pseudo element should no longer have focus
       expect(await element(by.css('div.dropdown')).getAttribute('class')).not.toContain('is-open');
     });
+
+    it('Should be able to set id/automation id', async () => {
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.id('custom-dropdown-id-1')).getAttribute('id')).toEqual('custom-dropdown-id-1');
+      expect(await element(by.id('custom-dropdown-id-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id');
+
+      expect(await element(by.id('custom-dropdown-id-1-label')).getAttribute('id')).toEqual('custom-dropdown-id-1-label');
+      expect(await element(by.id('custom-dropdown-id-1-label')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-label');
+
+      expect(await element(by.id('custom-dropdown-id-1-input')).getAttribute('id')).toEqual('custom-dropdown-id-1-input');
+      expect(await element(by.id('custom-dropdown-id-1-input')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-input');
+
+      expect(await element(by.id('custom-dropdown-id-1-trigger')).getAttribute('id')).toEqual('custom-dropdown-id-1-trigger');
+      expect(await element(by.id('custom-dropdown-id-1-trigger')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-trigger');
+
+      expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('id')).toEqual('custom-dropdown-id-1-listbox');
+      expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-listbox');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-0');
+      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-0');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-1');
+      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-1');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-2');
+      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-2');
+
+      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-3');
+      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-3');
+    });
   }
 
   it('Should be able to reopen when closed by a menu button', async () => {
