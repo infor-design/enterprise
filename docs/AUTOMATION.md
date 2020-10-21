@@ -6,7 +6,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Accordion
 - [x] Alerts (not needed id can be directly applied)
 - [ ] Applicationmenu
-- [ ] Area
+- [x] Area
 - [ ] Autocomplete
 - [x] Badges (not needed id can be directly applied)
 - [ ] Bar
@@ -14,14 +14,14 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Bar Stacked
 - [ ] Blockgrid
 - [ ] Breadcrumb
-- [ ] Bubble
+- [x] Bubble
 - [ ] Bullet
 - [ ] Busyindicator
 - [ ] Button
-- [ ] Calendar
-- [ ] Calendar Toolbar
+- [x] Calendar
+- [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
-- [ ] Circlepager
+- [x] Circlepager
 - [x] Colorpicker
 - [ ] Column
 - [ ] Column Grouped
@@ -34,8 +34,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Donut
 - [ ] Dropdown
 - [ ] Editor
-- [ ] Emptymessage
-- [ ] Error Page
+- [x] Emptymessage
+- [x] Error Page
 - [ ] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
@@ -49,14 +49,14 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Icons (not needed id can be directly applied)
 - [x] Images (not needed id can be directly applied)
 - [ ] Input
-- [ ] Line
+- [x] Line
 - [ ] Listbuilder
 - [ ] Listview
 - [ ] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
-- [ ] Monthview
+- [x] Monthview
 - [ ] Multiselect
 - [ ] Notification
 - [x] Pager
@@ -70,7 +70,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Radar
 - [x] Radios (not needed id can be directly applied)
 - [ ] Rating
-- [ ] Scatterplot
+- [x] Scatterplot
 - [ ] Searchfield
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
@@ -88,7 +88,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
-- [ ] Textarea
+- [x] Textarea
 - [ ] Timeline
 - [ ] Timepicker
 - [x] Toast
@@ -98,5 +98,5 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Tooltip
 - [ ] Tree
 - [ ] Treemap
-- [ ] Week View
+- [x] Week View
 - [ ] Wizard

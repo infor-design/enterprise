@@ -19,72 +19,156 @@ $('body').on('initialized', function () {
     data: [{
         name: 'Jan',
         value: 3211,
-        depth: 4
+        depth: 4,
+        attributes: [
+         { name: 'id', value: 'line-a-jan' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-jan' }
+       ]
     }, {
         name: 'Feb',
-        value: 3111
+        value: 3111,
+        attributes: [
+         { name: 'id', value: 'line-a-feb' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-feb' }
+       ]
     }, {
         name: 'Mar',
-        value: 3411
+        value: 3411,
+        attributes: [
+         { name: 'id', value: 'line-a-mar' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-mar' }
+       ]
     }, {
         name: 'Apr',
-        value: 3011
+        value: 3011,
+        attributes: [
+         { name: 'id', value: 'line-a-apr' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-apr' }
+       ]
     }, {
         name: 'May',
-        value: 3411
+        value: 3411,
+        attributes: [
+         { name: 'id', value: 'line-a-may' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-may' }
+       ]
     }, {
         name: 'Jun',
-        value: 3111
+        value: 3111,
+        attributes: [
+         { name: 'id', value: 'line-a-jun' },
+         { name: 'data-automation-id', value: 'automation-id-line-a-jun' }
+       ]
     }],
     name: 'Component A',
     legendShortName: 'Comp A',
-    legendAbbrName: 'A'
+    legendAbbrName: 'A',
+    attributes: [
+     { name: 'id', value: 'line-comp-a' },
+     { name: 'data-automation-id', value: 'automation-id-line-comp-a' }
+   ]
   }, {
     data: [{
         name: 'Jan',
-        value: 2211
+        value: 2211,
+        attributes: [
+         { name: 'id', value: 'line-b-jan' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-jan' }
+       ]
     }, {
         name: 'Feb',
-        value: 2111
+        value: 2111,
+        attributes: [
+         { name: 'id', value: 'line-b-feb' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-feb' }
+       ]
     }, {
         name: 'Mar',
-        value: 2411
+        value: 2411,
+        attributes: [
+         { name: 'id', value: 'line-b-mar' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-mar' }
+       ]
     }, {
         name: 'Apr',
-        value: 2011
+        value: 2011,
+        attributes: [
+         { name: 'id', value: 'line-b-apr' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-apr' }
+       ]
     }, {
         name: 'May',
-        value: 2411
+        value: 2411,
+        attributes: [
+         { name: 'id', value: 'line-b-may' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-may' }
+       ]
     }, {
         name: 'Jun',
-        value: 2811
+        value: 2811,
+        attributes: [
+         { name: 'id', value: 'line-b-jun' },
+         { name: 'data-automation-id', value: 'automation-id-line-b-jun' }
+       ]
     }],
     name: 'Component B',
     legendShortName: 'Comp B',
-    legendAbbrName: 'A'
+    legendAbbrName: 'B',
+    attributes: [
+     { name: 'id', value: 'line-comp-b' },
+     { name: 'data-automation-id', value: 'automation-id-line-comp-b' }
+   ]
   }, {
     data: [{
         name: 'Jan',
-        value: 1211
+        value: 1211,
+        attributes: [
+         { name: 'id', value: 'line-c-jan' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-jan' }
+       ]
     }, {
         name: 'Feb',
-        value: 1111
+        value: 1111,
+        attributes: [
+         { name: 'id', value: 'line-c-feb' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-feb' }
+       ]
     }, {
         name: 'Mar',
-        value: 1411
+        value: 1411,
+        attributes: [
+         { name: 'id', value: 'line-c-mar' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-mar' }
+       ]
     }, {
         name: 'Apr',
-        value: 1011
+        value: 1011,
+        attributes: [
+         { name: 'id', value: 'line-c-apr' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-apr' }
+       ]
     }, {
         name: 'May',
-        value: 1411
+        value: 1411,
+        attributes: [
+         { name: 'id', value: 'line-c-may' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-may' }
+       ]
     }, {
         name: 'Jun',
-        value: 1811
+        value: 1811,
+        attributes: [
+         { name: 'id', value: 'line-c-jun' },
+         { name: 'data-automation-id', value: 'automation-id-line-c-jun' }
+       ]
     }],
     name: 'Component C',
     legendShortName: 'Comp C',
-    legendAbbrName: 'C'
+    legendAbbrName: 'C',
+    attributes: [
+     { name: 'id', value: 'line-comp-c' },
+     { name: 'data-automation-id', value: 'automation-id-line-comp-c' }
+   ]
   }];
 
   $('#line-example').chart({type: 'line', dataset: dataset, yAxis: {ticks: {number: 10, format: 's'} } });

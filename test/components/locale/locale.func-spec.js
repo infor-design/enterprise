@@ -2034,19 +2034,13 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('fr-FR');
     expect(Locale.currentLanguage.name).toEqual('fr');
 
-    expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
-    expect(Locale.translate('ReorderRows')).toEqual('Retrier les lignes');
-    expect(Locale.translate('SelectDay')).toEqual('Sélectionnez un jour');
-    expect(Locale.translate('UserProfile')).toEqual('Profile utilisateur');
+    expect(Locale.translate('From')).toEqual('Début');
 
     Locale.set('fr-CA');
 
     expect(Locale.currentLocale.name).toEqual('fr-CA');
     expect(Locale.currentLanguage.name).toEqual('fr');
-    expect(Locale.translate('AddComments')).toEqual('Ajouter des commentaires');
-    expect(Locale.translate('ReorderRows')).toEqual('Réorganiser les lignes');
-    expect(Locale.translate('SelectDay')).toEqual('Sélectionner un jour');
-    expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
+    expect(Locale.translate('From')).toEqual('De');
   });
 
   it('Should be able to set language to full code', () => {
@@ -2129,7 +2123,6 @@ describe('Locale API', () => {
 
     expect(Locale.translate('Blockquote')).toEqual('Αποκλεισμός προσφοράς');
     expect(Locale.translate('ViewSource')).toEqual('Προβολή πηγής');
-    expect(Locale.translate('CssClass')).toEqual('Τάξη Css');
     Locale.set('lt-LT');
 
     expect(Locale.translate('CssClass')).toEqual('Css Klasė');

@@ -160,6 +160,13 @@ PopupMenu.prototype = {
     // Set a reference collection for containing "pre-defined" menu items that should never
     // be replaced during an AJAX call.
     this.predefinedItems = $().add(this.settings.predefined);
+
+    // Add test automation ids
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    const options = this.element.find('li a');
+    [...options].forEach((opt, i) => {
+      utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
+    });
   },
 
   /**

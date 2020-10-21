@@ -31,28 +31,44 @@
   $('body').on('initialized', function () {
     $('#no-data-message').emptymessage({
       title: 'No Data Available',
-      icon: 'icon-empty-search-data'
+      icon: 'icon-empty-search-data',
+      attributes: [
+        { name: 'id', value: 'empty-message-id-1' },
+        { name: 'data-automation-id', value: 'automation-id-emptymessage-1' }
+      ]
     });
 
     $('#no-data-message2').emptymessage({
       title: 'No New Alerts ',
       icon: 'icon-empty-search-data',
       info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
-      color: 'azure'
+      color: 'azure',
+      attributes: [
+        { name: 'id', value: 'empty-message-id-2' },
+        { name: 'data-automation-id', value: 'automation-id-emptymessage-2' }
+      ]
     });
 
     $('#no-data-message3').emptymessage({
       title: 'No New Alerts ',
       icon: 'icon-empty-no-tasks',
       info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
-      color: 'azure'
+      color: 'azure',
+      attributes: [
+        { name: 'id', value: 'empty-message-id-3' },
+        { name: 'data-automation-id', value: 'automation-id-emptymessage-3' }
+      ]
     });
 
 
     $('#no-data-message4').emptymessage({
       title: 'No New Alerts ',
       icon: 'icon-empty-no-tasks',
-      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. '
+      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
+      attributes: [
+        { name: 'id', value: 'empty-message-id-4' },
+        { name: 'data-automation-id', value: 'automation-id-emptymessage-4' }
+      ]
     });
 
   });
