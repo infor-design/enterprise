@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="twelve columns">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Tree Map Example</h2>
+        </div>
+        <div class="widget-content">
+          <div id="treemap-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var treemapData = {
+    name: 'Storage Utilization (78 GB)',
+    children: [
+    {
+      name: 'by type',
+      children: [
+      {
+        name: 'type1',
+        children: [
+          {name: 'JSON', value: 262171903987}
+        ]
+      },
+      {
+        name: 'type2',
+        children: [
+          {name: 'PDF', value: 2621524675}
+        ],
+        tooltip: 'PDF %percent%'
+      },
+      {
+        name: 'type3',
+        children: [
+          {name: 'BOD', value: 621020385}
+        ],
+        tooltip: 'BOD %percent%'
+      },
+      {
+        name: 'type4',
+        children: [
+          {name: 'TXT', value: 29822693}
+        ],
+        tooltip: 'TXT %percent%'
+      }]
+    }]
+  };
+
+  $('#treemap-chart-example').treemap({ dataset: treemapData });
+});
+</script>

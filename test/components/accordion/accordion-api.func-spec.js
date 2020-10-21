@@ -48,7 +48,7 @@ describe('Accordion API', () => {
   it('can be destroyed', () => {
     accordionObj.destroy();
 
-    expect(document.body.querySelector('.btn.hide-focus')).toBeFalsy();
+    expect($(accordionEl).data('accordion')).toBeFalsy();
   });
 
   it('can collapse all its headers', () => {

@@ -22,6 +22,8 @@ demo:
     slug: example-contextmenu
   - name: Input with Accessible Required Labels
     slug: example-required-fields
+  - name: Reveal Sensitive Information
+    slug: example-password
 ---
 
 The Text Input Field supports both unstructured and structured entries. Certain types of values (such as phone numbers, credit card numbers, part codes, even decimal values, etc.) may have more complex formatting rules than simple text and decimal entries. You can use smart (forgiving) and structured formats within a text input field to support more of these types of values.
@@ -86,6 +88,23 @@ A standard Text Input is a basic input element with `type="text"`. Password type
   <label for="department-code-trackdirty">Department Code</label>
   <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
 </div>
+```
+
+## Reveal Sensitive Information Feature
+
+We have a small utility to handle the use case of hiding and showing sensitive information in input fields. The `revealText` plugin will add a hide/show "button" to the input field and when clicked the input will toggle from obscured text to normal text. Also you can press CTRL+R to toggle with the keyboard.
+
+```html
+<div class="field">
+  <label for="password-reveal">Password (Reveal)</label>
+  <input type="password" id="password-reveal" name="password-reveal" placeholder="Enter Password" value="IHave2Kittens!"/>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#password-reveal').revealText();
+  });
+</script>
 ```
 
 ## Accessibility

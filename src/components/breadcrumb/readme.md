@@ -22,17 +22,19 @@ This component is entirely HTML and CSS, to update contents you will need to imp
 
 ```html
 <nav class="breadcrumb">
-  <ol aria-label="breadcrumb">
-    <li>
-      <a href="#" id="home" class="hyperlink hide-focus">Home</a>
+  <ol class="breadcrumb-list" aria-label="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="#" id="home" data-automation-id="breadrcrumb-home" class="hyperlink">Home</a>
     </li>
-    <li>
-      <a href="#" id="second-item" class="hyperlink hide-focus">Second Item</a>
+    <li class="breadcrumb-item">
+      <a href="#" id="second-item" data-automation-id="breadrcrumb-second" class="hyperlink">Second Item</a>
     </li>
-    <li>
-      <a href="#" id="third-item" class="hyperlink hide-focus">Third Item</a>
+    <li class="breadcrumb-item">
+      <a href="#" id="third-item" data-automation-id="breadrcrumb-third" class="hyperlink">Third Item</a>
     </li>
-    <li class="current">Fourth Item <span class="audible">Current</span></li>
+    <li class="breadcrumb-item current">
+      <a href="#" id="fourth-item" data-automation-id="breadrcrumb-fourth" class="hyperlink">Fourth Item <span class="audible">Current</span></a>
+    </li>
   </ol>
 </nav>
 ```
@@ -53,7 +55,35 @@ Examples:
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to breadcrumbs that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+When defining breadcrumbs in HTML only, simply add the attributes you'd like to the markup.  The Breadcrumb API will respect these:
+
+```html
+<li class="breadcrumb-item">
+  <a href="#" id="home" data-automation-id="breadrcrumb-home" class="hyperlink">Home</a>
+</li>
+```
+
+When defining the breadcrumb API with Javascript, you can pass an `attributes` array that will be applied to a breadcrumb on an individual basis:
+
+```js
+$('#my-breadcrumb').breadcrumb({
+  breadcrumbs: [
+    {
+      content: 'Home',
+      id: 'breadcrumb-home',
+      href: '#',
+      attributes: [
+        { name: 'data-automation-id', value: 'breadcrumb-home' }
+      ]
+    },
+    ...
+  ]
+});
+```
+
+Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

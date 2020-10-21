@@ -1,4 +1,4 @@
-<nav id="application-menu" class="application-menu is-open is-personalizable" data-options=''{'filterable': 'true'}">
+<nav id="application-menu" class="application-menu is-open is-personalizable" data-options="{'filterable': 'true'}">
 
   <!--This wrapper simulates an issue in NG  its only not needed on the ng component-->
   <div class="application-menu-wrapper">
@@ -8,31 +8,31 @@
       <div class="application-menu-toolbar center-text">
         <div class="flex-toolbar">
           <div class="toolbar-section buttonset">
-            <button class="btn-icon" title="Download My Profile">
+            <button id="appmenu-header-toolbar-btn-download" data-automation-id="appmenu-header-toolbar-btn-download" class="btn-icon" title="Download My Profile">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-download"></use>
               </svg>
               <span class="audible">Download</span>
             </button>
-            <button class="btn-icon" title="Print My Profile">
+            <button id="appmenu-header-toolbar-btn-print" data-automation-id="appmenu-header-toolbar-btn-print" class="btn-icon" title="Print My Profile">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-print"></use>
               </svg>
               <span class="audible">Print</span>
             </button>
-            <button class="btn-icon" title="Show Purchasing Info">
+            <button id="appmenu-header-toolbar-btn-purchasing" data-automation-id="appmenu-header-toolbar-btn-purchasing" class="btn-icon" title="Show Purchasing Info">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-purchasing"></use>
               </svg>
               <span class="audible">Purchasing</span>
             </button>
-            <button class="btn-icon" title="Show Notification Info">
+            <button id="appmenu-header-toolbar-btn-notification" data-automation-id="appmenu-header-toolbar-btn-notification" class="btn-icon" title="Show Notification Info">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-notification"></use>
               </svg>
               <span class="audible">Notification</span>
             </button>
-            <button class="btn-icon" title="Show Inventory Info">
+            <button id="appmenu-header-toolbar-btn-inventory" data-automation-id="appmenu-header-toolbar-btn-inventory" class="btn-icon" title="Show Inventory Info">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use href="#icon-inventory"></use>
               </svg>
@@ -46,25 +46,25 @@
     <div class="application-menu-content">
       <div class="accordion panel inverse" data-options="{'allowOnePane': false}" >
         <div class="accordion-header">
-          <a href="#"><span>My Home</span></a>
+          <a id="appmenu-a-my-home" data-automation-id="appmenu-a-my-home" href="#"><span>My Home</span></a>
         </div>
         <div class="accordion-header is-selected">
-          <a href="#"><span>Raves</span></a>
+          <a id="appmenu-a-raves" data-automation-id="appmenu-a-raves" href="#"><span>Raves</span></a>
         </div>
         <div class="accordion-header">
-          <a href="#"><span>Request Time Off</span></a>
+          <a id="appmenu-a-timeoff" data-automation-id="appmenu-a-timeoff" href="#"><span>Request Time Off</span></a>
         </div>
         <div class="accordion-header">
-          <a href="#"><span>My Growth</span></a>
+          <a id="appmenu-a-my-growth" data-automation-id="appmenu-a-my-growth" href="#"><span>My Growth</span></a>
         </div>
         <div class="accordion-header">
-          <a href="#"><span>My Rewards</span></a>
+          <a id="appmenu-a-my-rewards" data-automation-id="appmenu-a-my-rewards" href="#"><span>My Rewards</span></a>
         </div>
         <div class="accordion-header">
-          <a href="#"><span>Find a Coworker</span></a>
+          <a id="appmenu-a-find-coworkers" data-automation-id="appmenu-a-find-coworkers" href="#"><span>Find a Coworker</span></a>
         </div>
         <div class="accordion-header">
-          <a href="#"><span>Example of a menu item that truncates since its too long</span></a>
+          <a id="appmenu-a-too-long" data-automation-id="appmenu-a-too-long" href="#"><span>Example of a menu item that truncates since its too long</span></a>
         </div>
       </div>
     </div>
@@ -73,30 +73,30 @@
       <div class="application-menu-toolbar">
         <div class="flex-toolbar">
           <div class="toolbar-section buttonset">
-          <button class="btn" type="button" title="Show Settings">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-settings"></use>
-            </svg>
-            <span>Settings</span>
-          </button>
-          <button class="btn-icon" type="button" title="Proxy as user">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-employee-directory"></use>
-            </svg>
-            <span class="audible">Proxy as user</span>
-          </button>
-          <button class="btn-icon" type="button" title="About this App">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-info-linear"></use>
-            </svg>
-            <span class="audible">About this App</span>
-          </button>
-          <button class="btn-icon" type="button" title="Log Out">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-logout"></use>
-            </svg>
-            <span class="audible">About this App</span>
-          </button>
+            <button id="appmenu-footer-toolbar-btn-settings" data-automation-id="appmenu-footer-toolbar-btn-settings" class="btn" type="button" title="Show Settings">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-settings"></use>
+              </svg>
+              <span>Settings</span>
+            </button>
+            <button id="appmenu-footer-toolbar-btn-proxy" data-automation-id="appmenu-footer-toolbar-btn-proxy" class="btn-icon" type="button" title="Proxy as user">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-employee-directory"></use>
+              </svg>
+              <span class="audible">Proxy as user</span>
+            </button>
+            <button id="appmenu-footer-toolbar-btn-about" data-automation-id="appmenu-footer-toolbar-btn-about" class="btn-icon" type="button" title="About this App">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-info-linear"></use>
+              </svg>
+              <span class="audible">About this App</span>
+            </button>
+            <button id="appmenu-footer-toolbar-btn-logout" data-automation-id="appmenu-footer-toolbar-btn-logout" class="btn-icon" type="button" title="Log Out">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-logout"></use>
+              </svg>
+              <span class="audible">Log Out</span>
+            </button>
           </div>
         </div>
       </div>
