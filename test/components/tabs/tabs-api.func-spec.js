@@ -279,23 +279,25 @@ describe('Tabs API', () => {
 
   it('Should hide tab', () => {
     const tab = tabsObj.hide(null, 'tabs-normal-contracts');
+    const hiddenTab = document.querySelectorAll('.tab')[0];
 
     expect(tab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].innerText).toEqual('Contracts');
-    expect(document.querySelectorAll('.tab')[0].classList).toContain('hidden');
+    expect(hiddenTab.innerText.trim()).toEqual('Contracts');
+    expect(hiddenTab.classList).toContain('hidden');
   });
 
   it('Should show tab', () => {
     const hideTab = tabsObj.hide(null, 'tabs-normal-contracts');
+    const hiddenTab = document.querySelectorAll('.tab')[0];
 
     expect(hideTab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].innerText).toEqual('Contracts');
-    expect(document.querySelectorAll('.tab')[0].classList).toContain('hidden');
+    expect(hiddenTab.innerText.trim()).toEqual('Contracts');
+    expect(hiddenTab.classList).toContain('hidden');
 
     const showTab = tabsObj.show(null, 'tabs-normal-contracts');
 
     expect(showTab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].classList).not.toContain('hidden');
+    expect(hiddenTab.classList).not.toContain('hidden');
   });
 
   it('Should disable tab', () => {
