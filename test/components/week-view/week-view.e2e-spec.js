@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('WeekView index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/week-view/example-index?layout=nofrills');
-    const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
+    const dateField = await element(by.css('.week-view #custom-id-week-view-datepicker'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
   });
@@ -16,6 +16,22 @@ describe('WeekView index tests', () => {
   it('Should render without error', async () => {
     expect(await element.all(by.css('.week-view-table th')).count()).toEqual(8);
     await utils.checkForErrors();
+  });
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('custom-id-week-view-btn-prev')).getAttribute('id')).toEqual('custom-id-week-view-btn-prev');
+    expect(await element(by.id('custom-id-week-view-btn-prev')).getAttribute('data-automation-id')).toEqual('custom-automation-id-week-view-btn-prev');
+    expect(await element(by.id('custom-id-week-view-btn-next')).getAttribute('id')).toEqual('custom-id-week-view-btn-next');
+    expect(await element(by.id('custom-id-week-view-btn-next')).getAttribute('data-automation-id')).toEqual('custom-automation-id-week-view-btn-next');
+
+    expect(await element(by.id('custom-id-week-view-datepicker')).getAttribute('id')).toEqual('custom-id-week-view-datepicker');
+    expect(await element(by.id('custom-id-week-view-datepicker')).getAttribute('data-automation-id')).toEqual('custom-automation-id-week-view-datepicker');
+
+    expect(await element(by.id('custom-id-week-view-datepicker-trigger')).getAttribute('id')).toEqual('custom-id-week-view-datepicker-trigger');
+    expect(await element(by.id('custom-id-week-view-datepicker-trigger')).getAttribute('data-automation-id')).toEqual('custom-automation-id-week-view-datepicker-trigger');
+
+    expect(await element(by.id('custom-id-week-view-today')).getAttribute('id')).toEqual('custom-id-week-view-today');
+    expect(await element(by.id('custom-id-week-view-today')).getAttribute('data-automation-id')).toEqual('custom-automation-id-week-view-today');
   });
 });
 

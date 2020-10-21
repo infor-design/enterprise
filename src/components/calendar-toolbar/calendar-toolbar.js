@@ -28,6 +28,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
  * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
+ * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -117,8 +118,8 @@ CalendarToolbar.prototype = {
           ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
         </div>
         <div class="toolbar-section buttonset l-align-right">
-          ${!this.settings.showViewChanger ? '' : `<label for="calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name, language: this.language })}</label>
-            <select id="calendar-view-changer" name="calendar-view-changer" class="dropdown">
+          ${!this.settings.showViewChanger ? '' : `<label for="${this.settings.viewChangerValue}-calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name, language: this.language })}</label>
+            <select id="${this.settings.viewChangerValue}-calendar-view-changer" name="${this.settings.viewChangerValue}-calendar-view-changer" class="dropdown">
               <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name, language: this.language })}</option>
               <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name, language: this.language })}</option>
               <option value="day" ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name, language: this.language })}</option>
@@ -146,7 +147,7 @@ CalendarToolbar.prototype = {
     });
 
     if (this.settings.showViewChanger) {
-      this.viewChanger = this.element.find('#calendar-view-changer').dropdown();
+      this.viewChanger = this.element.find(`#${this.settings.viewChangerValue}-calendar-view-changer`).dropdown();
     }
     this.todayLink = this.element.find('.hyperlink.today');
     this.monthPickerApi = this.monthPicker.data('datepicker');
@@ -155,6 +156,22 @@ CalendarToolbar.prototype = {
     this.element.find('button, a').hideFocus();
     this.setInternalDate(this.isIslamic ? [this.settings.year, this.settings.month, 1] :
       new Date(this.settings.year, this.settings.month, 1));
+
+    utils.addAttributes(this.element.find('.next'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-next`);
+    utils.addAttributes(this.element.find('.prev'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-prev`);
+    utils.addAttributes(this.element.find('.today'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-today`);
+    utils.addAttributes(this.element.find('#monthview-datepicker-field + .icon'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker-trigger`);
+    utils.addAttributes(this.element.find('#monthview-datepicker-field'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker`);
+
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="month"]'), this, this.settings.attributes, 'month-view-changer-month');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="week"]'), this, this.settings.attributes, 'month-view-changer-week');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="day"]'), this, this.settings.attributes, 'month-view-changer-day');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer'), this, this.settings.attributes, 'month-view-changer');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="month"]'), this, this.settings.attributes, 'week-view-changer-month');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="week"]'), this, this.settings.attributes, 'week-view-changer-week');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="day"]'), this, this.settings.attributes, 'week-view-changer-day');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer'), this, this.settings.attributes, 'week-view-changer');
+
     return this;
   },
 
@@ -287,8 +304,8 @@ CalendarToolbar.prototype = {
       this.element.trigger('change-next', { selectedDate: this.currentDate, isToday: false });
     });
 
-    if (this.settings.onChangeView) {
-      this.element.find('#calendar-view-changer').off('change.calendar-toolbar-v').on('change.calendar-toolbar-v', (e) => {
+    if (this.settings.onChangeView && this.viewChanger) {
+      this.viewChanger.off('change.calendar-toolbar-v').on('change.calendar-toolbar-v', (e) => {
         this.settings.onChangeView({
           viewName: e.currentTarget.value,
           elem: e.currentTarget,

@@ -144,7 +144,7 @@ describe('Modal example-close-btn tests', () => {
     expect(await element(by.css('body')).getAttribute('class')).not.toContain('modal-engaged');
   });
 
-  it('Should be able to set id/automations', async () => {
+  it('Should be able to set id/automation id', async () => {
     const btnEl = await element(by.id('add-context'));
     await btnEl.click();
     await browser.driver
