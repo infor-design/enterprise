@@ -8,7 +8,7 @@
           <use href="#icon-dropdown"></use>
         </svg>
       </button>
-      <ul class="popupmenu">
+      <ul class="popupmenu" data-init="false">
         <li><a href="#" id="test1">Menu Option #1</a></li>
         <li><a href="#" id="test2">Menu Option #2</a></li>
         <li><a href="#" id="test3">Menu Option #3</a></li>
@@ -17,3 +17,18 @@
 
   </div>
 </div>
+
+<script>
+  $('.popupmenu').popupmenu({
+    attributes: [
+      {
+        name: 'id',
+        value: 'popupmenu-id'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'popupmenu-automation-id'
+      }
+    ]
+  });
+</script>

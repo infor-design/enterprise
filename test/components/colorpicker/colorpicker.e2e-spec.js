@@ -36,7 +36,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should be able to set id/automations', async () => {
+  it('Should be able to set id/automation id', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
 
     expect(await element(by.id('background-color')).getAttribute('id')).toEqual('background-color');

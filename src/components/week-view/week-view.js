@@ -54,9 +54,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {function} [settings.onChangeWeek] Call back for when the week is changed.
  * @param {function} [settings.onRenderMonth] Fires when a week is rendered, allowing you to pass back events or event types to show.
-* @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
+ * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 function WeekView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
   this.element = $(element);
@@ -128,6 +129,7 @@ WeekView.prototype = {
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
+    utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
 
@@ -305,6 +307,8 @@ WeekView.prototype = {
       }
     }
     allDayContainer.appendChild(node);
+
+    utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
     this.attachTooltip(node, event);
   },
 
@@ -398,6 +402,7 @@ WeekView.prototype = {
           }
         }
         containerWrapper.appendChild(node);
+        utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
         this.attachTooltip(node, event);
       }
     }
@@ -664,7 +669,8 @@ WeekView.prototype = {
       isMenuButton: true,
       showViewChanger: this.settings.showViewChanger,
       onChangeView: this.settings.onChangeView,
-      viewChangerValue: !this.isDayView ? 'week' : 'day'
+      viewChangerValue: !this.isDayView ? 'week' : 'day',
+      attributes: this.settings.attributes
     });
     this.monthField = this.header.find('#monthview-datepicker-field');
   },

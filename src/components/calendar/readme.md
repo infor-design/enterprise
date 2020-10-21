@@ -136,6 +136,41 @@ The Calendar is a very complex control we do the following:
 - <kbd>Page Up</kbd> moves to the same date in the previous month
 - <kbd>Page Down</kbd> moves to the same date in the next month
 
+## Testability
+
+You can add custom id's/automation id's to the calendar for elements that can be clicked using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+The attribute can be a string value or function. The function will give you the calendar API as a parameter to assist in making things more dynamic (you can use some properties if needed).
+
+```js
+$('.calendar').calendar({
+  ...
+  attributes: [{ name: 'id', value: 'calendar-id' }, { name: 'data-automation-id', value: 'calendar-automation-id' } ],
+});
+```
+
+Providing the data this will add an ID to the top calendar div. In addition the following related items will be set.
+
+- Monthview Container - gets `monthview` appended
+- Weekview Checkboxes - get `weekview` appended
+- Legend Checkboxes - each gets `legend-${eventTypeId}` appended
+- UpComing events - each gets `upcoming-event-${eventId}` appended
+- Next Day Button - gets `btn-next` appended
+- Previous Day Button - gets `btn-prev` appended
+- Datepicker Input - gets `datepicker` appended
+- Datepicker Trigger - gets `datepicker-trigger` appended
+- Today Button - gets `today` appended
+- Month Page View Changer Dropdown - gets `month-view-changer-month` appended
+- Month Page View Changer Dropdown week value - gets `month-view-changer-month-week` appended
+- Month Page View Changer Dropdown day value - gets `month-view-changer-month-day` appended
+- Month Page View Changer Dropdown month value - gets `month-view-changer-month-month` appended
+- Week/Day Page View Changer Dropdown - gets `week-view-changer-month` appended
+- Week/Day Page View Changer Dropdown week value - gets `week-view-changer-month-week` appended
+- Week/Day Page View Changer Dropdown day value - gets `week-view-changer-month-day` appended
+- Week/Day Page View Changer Dropdown month value - gets `week-view-changer-month-month` appended
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
+
 ## Upgrading from 3.X
 
 - This is a new component for 4.x

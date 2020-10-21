@@ -24,6 +24,22 @@ describe('Circle pager example-index tests', () => {
       expect(await browser.imageComparison.checkScreen('circlepager')).toEqual(0);
     });
   }
+
+  it('Should be able to set id/automations', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('circlepager-id-1')).getAttribute('id')).toEqual('circlepager-id-1');
+    expect(await element(by.id('circlepager-id-1')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1');
+
+    expect(await element(by.id('circlepager-id-1-control-1')).getAttribute('id')).toEqual('circlepager-id-1-control-1');
+    expect(await element(by.id('circlepager-id-1-control-1')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-1');
+
+    expect(await element(by.id('circlepager-id-1-control-2')).getAttribute('id')).toEqual('circlepager-id-1-control-2');
+    expect(await element(by.id('circlepager-id-1-control-2')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-2');
+
+    expect(await element(by.id('circlepager-id-1-control-3')).getAttribute('id')).toEqual('circlepager-id-1-control-3');
+    expect(await element(by.id('circlepager-id-1-control-3')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-3');
+  });
 });
 
 describe('Circle pager example-circlepager tests', () => {

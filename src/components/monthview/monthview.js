@@ -116,7 +116,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
   this.element = $(element);
@@ -287,10 +288,12 @@ MonthView.prototype = {
       isAlternate: this.settings.headerStyle !== 'full',
       isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
       showViewChanger: this.settings.showViewChanger,
-      onChangeView: this.settings.onChangeView
+      onChangeView: this.settings.onChangeView,
+      attributes: this.settings.attributes
     });
 
     this.handleEvents();
+    utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
 

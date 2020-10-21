@@ -86,6 +86,31 @@ describe('Autocomplete example-index tests', () => {
       await utils.checkForErrors();
     });
   }
+
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('autocomplete')).getAttribute('id')).toEqual('autocomplete');
+    expect(await element(by.id('autocomplete')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id');
+
+    expect(await element(by.id('autocomplete-list')).getAttribute('id')).toEqual('autocomplete-list');
+    expect(await element(by.id('autocomplete-list')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list');
+
+    expect(await element(by.id('autocomplete-list-option0')).getAttribute('id')).toEqual('autocomplete-list-option0');
+    expect(await element(by.id('autocomplete-list-option0')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list-option0');
+
+    expect(await element(by.id('autocomplete-list-option1')).getAttribute('id')).toEqual('autocomplete-list-option1');
+    expect(await element(by.id('autocomplete-list-option1')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list-option1');
+
+    expect(await element(by.id('autocomplete-list-option2')).getAttribute('id')).toEqual('autocomplete-list-option2');
+    expect(await element(by.id('autocomplete-list-option2')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list-option2');
+
+    expect(await element(by.id('autocomplete-list-option3')).getAttribute('id')).toEqual('autocomplete-list-option3');
+    expect(await element(by.id('autocomplete-list-option3')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list-option3');
+
+    expect(await element(by.id('autocomplete-list-option4')).getAttribute('id')).toEqual('autocomplete-list-option4');
+    expect(await element(by.id('autocomplete-list-option4')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list-option4');
+  });
 });
 
 describe('Autocomplete ajax tests', () => {
