@@ -157,3 +157,33 @@ describe('Input Short Field tests', () => {
     });
   }
 });
+
+describe('Input Password Field tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/input/example-password');
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be able to toggle text visibility with the keyboard', async () => {
+    const inputEl = await element(by.id('password-reveal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+
+    expect(inputEl.getAttribute('type')).toEqual('password');
+
+    await element(by.css('.input-hideshow-text')).click();
+
+    expect(await inputEl.getAttribute('type')).toEqual('text');
+
+    await inputEl.sendKeys(protractor.Key.chord(
+      protractor.Key.CONTROL,
+      'r'
+    ));
+
+    expect(inputEl.getAttribute('type')).toEqual('password');
+  });
+});
