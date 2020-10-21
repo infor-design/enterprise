@@ -23,9 +23,9 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Checkboxes (not needed id can be directly applied)
 - [x] Circlepager
 - [x] Colorpicker
-- [ ] Column
-- [ ] Column Grouped
-- [ ] Column Stacked
+- [x] Column
+- [x] Column Grouped
+- [x] Column Stacked
 - [ ] Completion Chart
 - [ ] Contextmenu
 - [x] Contextualactionpanel
@@ -64,7 +64,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Popdown
 - [ ] Popover
 - [ ] Popupmenu
-- [ ] Positive Negative
+- [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress (not needed id can be directly applied)
 - [ ] Radar

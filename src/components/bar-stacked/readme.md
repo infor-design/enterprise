@@ -117,7 +117,7 @@ Setting the id/automation id with a string value or function. The function will 
 }
 ```
 
-Providing the data this will add an ID added to each bar. In addition the related legend item will get the same id with `-legend` appended after it.
+Providing the data this will add an ID added to each bar with `-bar` appended. In addition the related legend item will get the same id with `-legend` appended after it.
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 

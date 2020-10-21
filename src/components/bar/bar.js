@@ -731,7 +731,11 @@ Bar.prototype = {
       let legendSeries = s.isStacked ? series : legendMap;
       legendSeries = legendSeries.map((d) => {
         if (d.attributes && !d.data?.attributes) {
-          d.data = $.extend({}, (d.data || {}), { attributes: d.attributes });
+          if (d.data) {
+            d.data.attributes = d.attributes;
+          } else {
+            d.data = { attributes: d.attributes };
+          }
         }
         return d;
       });
