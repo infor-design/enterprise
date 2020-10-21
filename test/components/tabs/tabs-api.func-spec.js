@@ -25,7 +25,11 @@ describe('Tabs API', () => {
     svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
 
-    tabsObj = new Tabs(tabsEl);
+    tabsObj = new Tabs(tabsEl, {
+      attributes: [
+        { name: 'data-automation-id', value: 'tabs-test' }
+      ]
+    });
   });
 
   afterEach(() => {
@@ -263,18 +267,15 @@ describe('Tabs API', () => {
   it('Can add automation ids to Tabs', () => {
     const settingsObj = {
       name: 'My New Tab',
-      content: '<p>New Tab Content</p>',
-      attributes: [
-        { name: 'data-automation-id', value: 'my-new-tab' }
-      ]
+      content: '<p>New Tab Content</p>'
     };
 
     tabsObj.add('my-new-tab', settingsObj);
     const newTab = tabsObj.anchors[5];
     const newPanel = tabsObj.panels[5];
 
-    expect(newTab.getAttribute('data-automation-id')).toEqual('my-new-tab-a');
-    expect(newPanel.getAttribute('data-automation-id')).toEqual('my-new-tab-panel');
+    expect(newTab.getAttribute('data-automation-id')).toEqual('tabs-test-my-new-tab-a');
+    expect(newPanel.getAttribute('data-automation-id')).toEqual('tabs-test-my-new-tab-panel');
   });
 
   it('Should hide tab', () => {

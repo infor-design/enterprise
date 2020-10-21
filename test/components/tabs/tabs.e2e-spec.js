@@ -585,3 +585,35 @@ describe('Tabs nested tests', () => {
     expect(await element(by.id('tab4')).isPresent()).toBeFalsy();
   });
 });
+
+describe('Tabs attributes tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/test-attributes?layout=nofrills');
+    const tabsContainerEl = await element(by.id('tabs-normal'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should init tabs with automation ids', async () => {
+    expect(await element(by.id('tabs-a-contracts')).getAttribute('data-automation-id')).toEqual('tabs-test-contracts-a');
+  });
+
+  it('Should init more button with automation ids', async () => {
+    expect(await element(by.css('#tabs-normal .tab-more')).getAttribute('data-automation-id')).toEqual('tabs-test-btn-more');
+  });
+
+  it('Should init add button with automation ids', async () => {
+    expect(await element(by.css('#tabs-normal .add-tab-button')).getAttribute('data-automation-id')).toEqual('tabs-test-btn-add');
+  });
+
+  it('Should add correct attributes when clicking the add button', async () => {
+    await element(by.css('#tabs-normal .add-tab-button')).click();
+    const newTab = await element(by.css('[href="#new-tab-0"]'));
+
+    expect(await newTab.getAttribute('data-automation-id')).toEqual('tabs-test-new-tab-0-a');
+  });
+});
