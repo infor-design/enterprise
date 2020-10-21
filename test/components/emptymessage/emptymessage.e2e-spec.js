@@ -30,3 +30,23 @@ describe('Empty message example-index tests', () => {
     expect(await element(by.id('empty-message-id-4')).getAttribute('data-automation-id')).toEqual('automation-id-emptymessage-4');
   });
 });
+
+describe('Empty message test-button-click tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/emptymessage/test-button-click');
+  });
+
+  it('Should be able to set id/automations in root component', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('test-emptymessage-id')).getAttribute('id')).toEqual('test-emptymessage-id');
+    expect(await element(by.id('test-emptymessage-id')).getAttribute('data-automation-id')).toEqual('test-automation-emptymessage');
+  });
+
+  it('Should be able to set id/automations in button', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('test-emptymessage-id-button')).getAttribute('id')).toEqual('test-emptymessage-id-button');
+    expect(await element(by.id('test-emptymessage-id-button')).getAttribute('data-automation-id')).toEqual('test-automation-emptymessage-button');
+  });
+});

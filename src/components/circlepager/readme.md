@@ -76,7 +76,7 @@ Setting the id/automation id with a string value:
   attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
 ```
 
-These attributes will be attached to the circlepager component root.
+These attributes will be attached to the circlepager component root and in control buttons. The control buttons will add `-control` text and the index to get it's unique value. e.g. `automation-id-circlepager-1-control-1`.
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 

@@ -92,7 +92,8 @@ EmptyMessage.prototype = {
       }
     }
 
-    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.element, this, opts.attributes);
+    utils.addAttributes(this.element.find('.empty-actions button'), this, opts.attributes, 'btn');
 
     return this;
   },

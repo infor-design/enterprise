@@ -43,6 +43,7 @@ CirclePager.prototype = {
       this.handleEvents();
       this.initActiveSlide();
       this.showCollapsedView();
+      this.addAttributes();
     }
   },
 
@@ -351,6 +352,18 @@ CirclePager.prototype = {
       this.slidesJQ[i].style.width = `${((100 / this.slidesToShow) / this.slides.length)}%`;
     }
     this.show();
+  },
+
+  /** 
+   * Add attributes for control buttons
+   * @private
+   * @returns {void}
+   */
+  addAttributes() {
+    for (let i = 0, l = this.controlButtons.length; i < l; i++) {
+      const ctrlBtns = $(this.controlButtons[i]);
+      utils.addAttributes(ctrlBtns, this, this.settings.attributes, `control-${i + 1}`);
+    }
   },
 
   /**
