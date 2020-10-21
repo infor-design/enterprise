@@ -171,7 +171,9 @@ You can add custom attributes/automation id's that can be used for scripting to 
 </div>
 ```
 
-Additionally, when using the `add()` API method, it's possible to pass an `attributes` object as part of the settings array that will append any additional attributes needed:
+The Tabs API also supports an `attributes` setting, similar to other IDS components, which allows for passing attributes to all pre-existing tabs, the more tabs button, the add-tabs (+) button, and the App Menu trigger button on Module Tabs instances.
+
+Additionally, when using the `add()` API method, the `attributes` setting will be respected when adding tabs.  Also, it's possible to pass another `attributes` object as part of the settings array that will append new attributes specifically to the new tab:
 
 ```js
 const api = $('#my-tabs').data('tabs');
