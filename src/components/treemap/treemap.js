@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
@@ -23,7 +24,7 @@ const TREEMAP_DEFAULTS = {
 };
 
 /**
- * A radar chart is a diagram representing hierarchical data in the form of nested rectangles,
+ * A treemap chart is a diagram representing hierarchical data in the form of nested rectangles,
  * the area of each corresponding to its numerical value.
  * @class Treemap
  * @param {string} element The plugin element for the constuctor
@@ -41,7 +42,8 @@ const TREEMAP_DEFAULTS = {
  *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
  *  button: {text: 'xxx', click: <function>}
  *  }`
-*   Set this to null for no message or will default to 'No Data Found with an icon.'
+ * Set this to null for no message or will default to 'No Data Found with an icon.'
+ * @param {string} [settings.attributes] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Treemap(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TREEMAP_DEFAULTS);
@@ -148,6 +150,8 @@ Treemap.prototype = {
       return;
     }
 
+    utils.addAttributes(this.element, data, this.settings.attributes);
+
     // Show the title area
     if (this.settings.showTitle && data.name) {
       d3.select(this.element[0])
@@ -177,6 +181,8 @@ Treemap.prototype = {
     const tree = treemap(root);
 
     this.total = d3.sum(tree.leaves(), d => d.value);
+    let tooltipInterval;
+    charts.appendTooltip();
 
     // Add the tree map nodes
     this.root.datum(root).selectAll('.chart-treemap-node')
@@ -194,6 +200,46 @@ Treemap.prototype = {
         }
         return color(d.parent.data.name);
       })
+      .call((d) => {
+        // Add id's to each slice
+        d._groups.forEach((sections) => {
+          sections.forEach((section) => {
+            const dat = section.__data__;
+            utils.addAttributes($(section), dat, this.settings.attributes, dat.data.name?.toLowerCase());
+          });
+        });
+      })
+      .on('mouseenter.treemap', function (d) {
+        const rect = this.getBoundingClientRect();
+        const percentText = this.querySelector('.chart-treemap-percent').innerText;
+        let content = d.parent.data.tooltip;
+
+        // Only show if small
+        if (!content && rect.width > 60 && rect.height > 50) {
+          return;
+        }
+
+        if (!content) {
+          content = `<p><b>${d.data.name} </b> ${percentText}</p>`;
+        } else {
+          content = content.replace('%percent%', percentText);
+          content = content.replace('{{percent}}', percentText);
+        }
+
+        const size = charts.tooltipSize(content);
+        const posX = rect.left - (size.width / 2) + 12;
+        const posY = rect.top - size.height - 6;
+
+        charts.showTooltip(posX, posY, content, 'top');
+      })
+      .on('mouseleave.treemap', () => {
+        clearInterval(tooltipInterval);
+        charts.hideTooltip();
+      });
+
+    this.root.selectAll('.chart-treemap-node')
+      .append('span')
+      .attr('class', 'chart-treemap-text')
       .text(d => d.data.name);
 
     if (this.settings.showLabel) {
