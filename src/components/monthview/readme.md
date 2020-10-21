@@ -41,6 +41,32 @@ The monthview is a very complex component to code for accessibility. We take the
 - <kbd>Page Up</kbd> moves to the same date in the previous month
 - <kbd>Page Down</kbd> moves to the same date in the next month
 
+## Testability
+
+You can add custom id's/automation id's to the monthview for elements that can be clicked using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+The attribute can be a string value or function. The function will give you the calendar API as a parameter to assist in making things more dynamic (you can use some properties if needed).
+
+```js
+$('.monthview').monthview({
+  ...
+  attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+});
+```
+
+Providing the data this will add an ID to the top calendar div. In addition the following related items will be set.
+
+- Monthview Container - gets the id appended directly
+- Next Day Button - gets `month-view-btn-next` appended
+- Previous Day Button - gets `month-view-btn-prev` appended
+- Datepicker Input - gets `month-view-datepicker` appended
+- Datepicker Trigger - gets `month-view-datepicker-trigger` appended
+- Today Button - gets `month-view-today` appended
+
+Note that there is an extra month-view added as this can be on the same page as week-view which will have week-view appended.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
+
 ## Upgrading from 3.X
 
 - This is a new component for 4.x

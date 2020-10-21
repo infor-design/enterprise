@@ -13,7 +13,8 @@ const TEXTAREA_DEFAULTS = {
   maxLength: null,
   printable: true,
   charRemainingText: null,
-  charMaxText: null
+  charMaxText: null,
+  attributes: null
 };
 
 /**
@@ -32,6 +33,7 @@ const TEXTAREA_DEFAULTS = {
 * text defaulting to a localized 'Characters Left'.
 * @param {null|String} [settings.charMaxText = 'Character count maximum of']  Text that will be used in place of the "Max" text.
 * Defaults to a localized Version of 'Character count maximum of'.
+* @param {string} [settings.attributes = null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);
@@ -73,6 +75,8 @@ Textarea.prototype = {
     if (this.element.hasClass('autogrow')) {
       this.settings.autoGrow = true;
     }
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
 
     this.setupAutoGrow();
     this.handleEvents();

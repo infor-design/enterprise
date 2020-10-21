@@ -4,16 +4,23 @@
 
 ### v4.34.0 Features
 
+- `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Datagrid]` Fixed an issue with a custom toolbar, where buttons would click twice. ([#4471](https://github.com/infor-design/enterprise/issues/4471))
 - `[About]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Area/Bubble/Line/Scatterplot]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[bar/bar-grouped/bar-stacked]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Autocomplete]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[ContextualActionPanel]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Calendar/Monthview/WeekView/CalendarToolbar]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Donut/Pie]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Emptymessage]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Dropdown]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[FieldFilter]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Message]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Modal]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
+- `[Textarea]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 
 ### v4.34.0 Fixes
@@ -35,6 +42,7 @@
 - `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
 - `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
 - `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
+- `[Message]` Added the `noRefocus` setting that will feed through to the modal. ([#4507](https://github.com/infor-design/enterprise/issues/4507))
 - `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 - `[Listview]` Fixed a bug where readonly and non-selectable listview should not have hover state. ([#4452](https://github.com/infor-design/enterprise/issues/4452))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))

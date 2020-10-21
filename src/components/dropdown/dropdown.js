@@ -1861,6 +1861,17 @@ Dropdown.prototype = {
       .attr('aria-expanded', 'true')
       .addClass('is-open');
 
+    // Add test automation ids
+    utils.addAttributes(this.list, this, this.settings.attributes);
+    utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
+    utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
+    utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
+    utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
+    const options = this.list.find('.dropdown-option a');
+    [...options].forEach((opt, i) => {
+      utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
+    });
+
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {
       this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');

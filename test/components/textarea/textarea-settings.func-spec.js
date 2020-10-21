@@ -34,7 +34,8 @@ describe('Textarea API', () => {
       maxLength: null,
       printable: true,
       charRemainingText: null,
-      charMaxText: null
+      charMaxText: null,
+      attributes: null
     };
 
     expect(textareaObj.settings).toEqual(settings);
@@ -48,7 +49,8 @@ describe('Textarea API', () => {
       maxLength: null,
       printable: true,
       charRemainingText: null,
-      charMaxText: null
+      charMaxText: null,
+      attributes: null
     };
 
     textareaObj.updated(settings);
