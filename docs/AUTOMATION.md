@@ -21,7 +21,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
-- [ ] Circlepager
+- [x] Circlepager
 - [x] Colorpicker
 - [ ] Column
 - [ ] Column Grouped
@@ -34,8 +34,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Donut
 - [ ] Dropdown
 - [ ] Editor
-- [ ] Emptymessage
-- [ ] Error Page
+- [x] Emptymessage
+- [x] Error Page
 - [ ] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
@@ -88,7 +88,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
-- [ ] Textarea
+- [x] Textarea
 - [ ] Timeline
 - [ ] Timepicker
 - [x] Toast

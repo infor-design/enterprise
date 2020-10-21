@@ -156,5 +156,12 @@ $('body').on('initialized', function() {
     e.preventDefault();
     api.next();
   });
+
+  example1.circlepager({
+    attributes: [
+      { name: 'id', value: 'circlepager-id-1' },
+      { name: 'data-automation-id',  value: 'automation-id-circlepager-1' }
+    ]
+  });
 });
 </script>
