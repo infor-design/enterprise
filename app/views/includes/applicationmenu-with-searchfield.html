@@ -2,7 +2,7 @@
 
   <div class="searchfield-wrapper">
     <label class="audible" for="application-menu-searchfield">Search</label>
-    <input id="application-menu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
+    <input id="appmenu-searchfield" data-automation-id="appmenu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
   </div>
 
   <div class="accordion panel inverse" data-options="{'allowOnePane': true}" >
@@ -10,7 +10,13 @@
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-user"></use>
       </svg>
-      <a href="#"><span>My Account</span></a>
+      <a id="appmenu-l1-a-my-account" data-automation-id="appmenu-l1-a-my-account" href="#"><span>My Account</span></a>
+      <button id="appmenu-l1-btn-my-account" data-automation-id="appmenu-l1-btn-my-account" class="btn">
+        <svg class="chevron icon">
+          <use href="#icon-caret-down"></use>
+        </svg>
+        <span class="audible">Expand</span>
+      </button>
     </div>
     <div class="accordion-pane">
       <div class="accordion-content panel logout">
@@ -19,20 +25,20 @@
         </svg>
         <span class="content">
           <span class="name">Ming.le User</span>
-          <span><a href="#" class="hyperlink">Sign Out</a></span>
+          <span><a id="appmenu-link-sign-out" data-automation-id="appmenu-link-sign-out" href="#" class="hyperlink">Sign Out</a></span>
         </span>
       </div>
       <div class="accordion-header">
-        <a href="#"><span>Notifications</span></a>
+        <a id="appmenu-l2-a-notification" data-automation-id="appmenu-l2-a-notification" href="#"><span>Notifications</span></a>
       </div>
       <div class="accordion-header">
-        <a href="#"><span>Administrator</span></a>
+        <a id="appmenu-l2-a-admin" data-automation-id="appmenu-l2-a-admin" href="#"><span>Administrator</span></a>
       </div>
       <div class="accordion-header">
-        <a href="#"><span>User Settings</span></a>
+        <a id="appmenu-l2-a-settings" data-automation-id="appmenu-l2-a-settings" href="#"><span>User Settings</span></a>
       </div>
       <div class="accordion-header">
-        <a href="#"><span>Help</span></a>
+        <a id="appmenu-l2-a-help" data-automation-id="appmenu-l2-a-help" href="#"><span>Help</span></a>
       </div>
     </div>
 
@@ -40,70 +46,82 @@
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-bookmark-filled"></use>
       </svg>
-      <a href="#"><span>Bookmarks</span></a>
+      <a id="appmenu-l1-a-bookmarks" data-automation-id="appmenu-l1-a-bookmarks" href="#"><span>Bookmarks</span></a>
     </div>
 
     <div class="accordion-header">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-clock"></use>
       </svg>
-      <a href="#"><span>History</span></a>
+      <a id="appmenu-l1-a-history" data-automation-id="appmenu-l1-a-history" href="#"><span>History</span></a>
     </div>
 
     <div class="accordion-header">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-home"></use>
       </svg>
-      <a href="#"><span>Homepages</span></a>
+      <a id="appmenu-l1-a-homepages" data-automation-id="appmenu-l1-a-homepages" href="#"><span>Homepages</span></a>
     </div>
 
     <div class="accordion-header">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-roles"></use>
       </svg>
-      <a href="#"><span>My Roles</span></a>
+      <a id="appmenu-l1-a-my-roles" data-automation-id="appmenu-l1-a-my-roles" href="#"><span>My Roles</span></a>
+      <button id="appmenu-l1-btn-my-roles" data-automation-id="appmenu-l1-btn-my-roles" class="btn">
+        <svg class="chevron icon">
+          <use href="#icon-caret-down"></use>
+        </svg>
+        <span class="audible">Expand</span>
+      </button>
     </div>
     <div class="accordion-pane">
       <div class="accordion-header">
-        <a href="#"><span>Role #1</span></a>
+        <a id="appmenu-l2-a-role-1" data-automation-id="appmenu-l2-a-role-1" href="#"><span>Role #1</span></a>
+        <button id="appmenu-l2-btn-my-account" data-automation-id="appmenu-l1-btn-my-account" class="btn">
+          <svg class="chevron icon">
+            <use href="#icon-caret-down"></use>
+          </svg>
+          <span class="audible">Expand</span>
+        </button>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #1 Task #1</span></a>
+          <a id="appmenu-l3-a-role-1-task-1" data-automation-id="appmenu-l3-a-role-1-task-1" href="#"><span>Role #1 Task #1</span></a>
         </div>
 
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #1 Task #2</span></a>
+          <a id="appmenu-l3-a-role-1-task-2" data-automation-id="appmenu-l3-a-role-1-task-2" href="#"><span>Role #1 Task #2</span></a>
         </div>
 
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #1 Task #3</span></a>
+          <a id="appmenu-l3-a-role-1-task-3" data-automation-id="appmenu-l3-a-role-1-task-3" href="#"><span>Role #1 Task #3</span></a>
         </div>
       </div>
 
       <div class="accordion-header">
-        <a href="#"><span>Role #2</span></a>
+        <a id="appmenu-l2-a-role-2" data-automation-id="appmenu-l2-a-role-2" href="#"><span>Role #2</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #2 Task #1</span></a>
+          <a id="appmenu-l3-a-role-2-task-1" data-automation-id="appmenu-l3-a-role-2-task-1" href="#"><span>Role #2 Task #1</span></a>
         </div>
 
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #2 Task #2</span></a>
+          <a id="appmenu-l3-a-role-2-task-2" data-automation-id="appmenu-l3-a-role-2-task-2" href="#"><span>Role #2 Task #2</span></a>
         </div>
 
         <div class="accordion-header list-item">
-          <a href="#"><span>Role #2 Task #3</span></a>
+          <a id="appmenu-l3-a-role-2-task-3" data-automation-id="appmenu-l3-a-role-2-task-3" href="#"><span>Role #2 Task #3</span></a>
         </div>
       </div>
 
       <div class="accordion-header">
-        <a href="#"><span>Role #3</span></a>
+        <a id="appmenu-l2-a-role-3" data-automation-id="appmenu-l2-a-role-3" href="#"><span>Role #3</span></a>
       </div>
 
       <div class="accordion-header">
-        <a href="#"><span>Role #4</span></a>
+        <a id="appmenu-l2-a-role-4" data-automation-id="appmenu-l2-a-role-4" href="#"><span>Role #4</span></a>
       </div>
     </div>
 
