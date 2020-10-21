@@ -9,6 +9,7 @@ import '../popupmenu/popupmenu.jquery';
 
 // Breadcrumb Item default settings
 const BREADCRUMB_ITEM_DEFAULTS = {
+  attributes: null,
   callback: undefined,
   content: '',
   current: false,
@@ -79,6 +80,7 @@ BreadcrumbItem.prototype = {
       li.innerHTML = '';
       li.appendChild(a);
     }
+    const $a = $(a);
 
     // Disabled
     this.disabled = this.settings.disabled;
@@ -103,7 +105,12 @@ BreadcrumbItem.prototype = {
     a.innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
 
     // invoke/update IDS Hyperlink
-    $(a).hyperlink();
+    $a.hyperlink();
+
+    // Add user-defined attributes to each breadcrumb, if applicable
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes($a, this, this.settings.attributes);
+    }
 
     return li;
   },

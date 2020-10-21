@@ -1,10 +1,15 @@
-
 <div class="row">
   <div class="six columns">
 
-    <div class="accordion" data-demo-set-links="true" data-options="{'allowOnePane': false}">
-      <div class="accordion-header" id="header-one">
-        <a href="#"><span>Warehouse Location</span></a>
+    <div class="accordion" data-demo-set-links="true" data-options='{ "allowOnePane": false }'>
+      <div id="header-one" class="accordion-header">
+        <a href="#" id="warehouse-location" data-automation-id="accordion-a-header-one"><span>Warehouse Location</span></a>
+        <button id="personal-expander" data-automation-id="accordion-btn-warehouse-location" class="btn">
+          <svg class="chevron icon">
+            <use href="#icon-caret-down"></use>
+          </svg>
+          <span class="audible">Expand</span>
+        </button>
       </div>
       <div class="accordion-pane">
         <div class="accordion-content">
@@ -14,8 +19,14 @@
         </div>
       </div>
 
-      <div class="accordion-header" id="header-two">
-        <a href="#"><span>Sort By</span></a>
+      <div id="header-two" class="accordion-header">
+        <a href="#" id="sort-by" data-automation-id="accordion-a-sort-by"><span>Sort By</span></a>
+        <button id="sort-by-expander" data-automation-id="accordion-btn-sort-by" class="btn">
+          <svg class="chevron icon">
+            <use href="#icon-caret-down"></use>
+          </svg>
+          <span class="audible">Expand</span>
+        </button>
       </div>
       <div class="accordion-pane">
         <div class="accordion-content">
@@ -39,8 +50,14 @@
         </div>
       </div>
 
-      <div class="accordion-header" id="header-three">
-        <a href="#"><span>Brand Name</span></a>
+      <div id="header-three" class="accordion-header">
+        <a id="brand-name" data-automation-id="accordion-a-brand-name" href="#"><span>Brand Name</span></a>
+        <button id="brand-name-expander" data-automation-id="accordion-btn-brand-name" class="btn">
+          <svg class="chevron icon">
+            <use href="#icon-caret-down"></use>
+          </svg>
+          <span class="audible">Expand</span>
+        </button>
       </div>
       <div class="accordion-pane">
         <div class="accordion-content">
@@ -50,8 +67,14 @@
         </div>
       </div>
 
-      <div class="accordion-header" id="header-four">
-        <a href="#"><span>Material</span></a>
+      <div id="header-four" class="accordion-header">
+        <a id="material" data-automation-id="accordion-a-material" href="#"><span>Material</span></a>
+        <button id="material-expander" data-automation-id="accordion-btn-material" class="btn">
+          <svg class="chevron icon">
+            <use href="#icon-caret-down"></use>
+          </svg>
+          <span class="audible">Expand</span>
+        </button>
       </div>
       <div class="accordion-pane">
         <div class="accordion-content">

@@ -6,10 +6,10 @@
 // Libs
 const fs = require('fs');
 const glob = require('glob');
-const logger = require('../logger');
 const path = require('path');
 const del = require('del');
 const slash = require('slash');
+const logger = require('../logger');
 
 const IdsMetadata = require('../helpers/ids-metadata');
 
