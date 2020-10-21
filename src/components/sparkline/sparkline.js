@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, prefer-arrow-callback */
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-underscore-dangle */
 
 // Other Shared Imports
 import * as debug from '../../utils/debug';
@@ -142,6 +142,14 @@ Sparkline.prototype = {
         .attr('width', maxWidth)
         .attr('height', bot)
         .style('opacity', '0.06')
+        .call((d) => {
+          d._groups.forEach((medianranges) => {
+            medianranges.forEach((medianrange) => {
+              const dat = chartData[0];
+              utils.addAttributes($(medianrange), dat, dat.attributes, 'medianrange');
+            });
+          });
+        })
         .on(`mouseenter.${self.namespace}`, function () {
           const rect = this.getBoundingClientRect();
           let content = '<p class="sparkline-tooltip">' + // eslint-disable-line
@@ -197,7 +205,14 @@ Sparkline.prototype = {
       g.append('path')
         .attr('d', line(set.data))
         .attr('stroke', self.settings.isMinMax ? '#999999' : this.sparklineColors(i))
-        .attr('class', 'team connected-line');
+        .attr('class', 'team connected-line')
+        .call((d) => {
+          d._groups.forEach((lines) => {
+            lines.forEach((connectedLine) => {
+              utils.addAttributes($(connectedLine), set, set.attributes, 'connected-line');
+            });
+          });
+        });
     }
 
     // Add Dots (Dots/Peak/MinMAx)
@@ -230,6 +245,14 @@ Sparkline.prototype = {
       .style('cursor', 'pointer')
       .attr('cx', (d, m) => x(m))
       .attr('cy', d => y(d))
+      .call((d) => {
+        d._groups.forEach((points) => {
+          points.forEach((point, idx) => {
+            const dat = chartData[0];
+            utils.addAttributes($(point), dat, dat.attributes, `point-${idx}`);
+          });
+        });
+      })
       .on(`mouseenter.${self.namespace}`, function (d) {
         const rect = this.getBoundingClientRect();
         let content = `<p>${chartData[0].name ? `${chartData[0].name}<br> ${

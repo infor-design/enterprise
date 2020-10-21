@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-underscore-dangle */
 // Shared Imports
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
@@ -353,6 +354,14 @@ Radar.prototype = {
     blobWrapper
       .append('path')
       .attr('class', 'chart-radar-area')
+      .call((d) => {
+        d._groups.forEach((areas) => {
+          areas.forEach((area, i) => {
+            const dat = data[i];
+            utils.addAttributes($(area), dat, dat.attributes, 'area');
+          });
+        });
+      })
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', s.opacityArea)
@@ -407,6 +416,14 @@ Radar.prototype = {
     // Create the outlines
     blobWrapper.append('path')
       .attr('class', 'chart-radar-stroke')
+      .call((d) => {
+        d._groups.forEach((strokes) => {
+          strokes.forEach((stroke, i) => {
+            const dat = data[i];
+            utils.addAttributes($(stroke), dat, dat.attributes, 'stroke');
+          });
+        });
+      })
       .attr('d', d => radarLine(d))
       .style('stroke-width', `${s.strokeWidth}px`)
       .style('stroke', (d, i) => colors(i))
@@ -417,6 +434,14 @@ Radar.prototype = {
     blobWrapper.selectAll('.chart-radar-circle')
       .data(d => d)
       .enter().append('circle')
+      .call((d) => {
+        d._groups.forEach((circles) => {
+          circles.forEach((circle) => {
+            const dat = circle.__data__;
+            utils.addAttributes($(circle), dat, dat.attributes, 'circle');
+          });
+        });
+      })
       .attr('class', 'chart-radar-circle')
       .attr('r', s.dotRadius)
       .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
@@ -436,6 +461,14 @@ Radar.prototype = {
     blobCircleWrapper.selectAll('.radar-invisible-circle')
       .data(d => d)
       .enter().append('circle')
+      .call((d) => {
+        d._groups.forEach((circles) => {
+          circles.forEach((circle) => {
+            const dat = circle.__data__;
+            utils.addAttributes($(circle), dat, dat.attributes, 'invisible-circle');
+          });
+        });
+      })
       .attr('class', 'radar-invisible-circle')
       .attr('r', s.dotRadius * 1.5)
       .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
@@ -492,12 +525,18 @@ Radar.prototype = {
         this.element.addClass(`has-${s.legendPlacement}-legend`);
       }
 
-      const series = s.dataset.map((d, i) => ({
-        name: d.name,
-        display: 'twocolumn',
-        placement: s.legendPlacement,
-        color: colors(i)
-      }));
+      const series = s.dataset.map((d, i) => {
+        const args = {
+          name: d.name,
+          display: 'twocolumn',
+          placement: s.legendPlacement,
+          color: colors(i)
+        };
+        if (d.attributes) {
+          args.data = { attributes: d.attributes };
+        }
+        return args;
+      });
 
       s.svg = self.svg;
       charts.addLegend(series, 'pie', s, this.element);
