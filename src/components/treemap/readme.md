@@ -10,6 +10,8 @@ demo:
     slug: example-nested
   - name: Treemap With Additional Stats Fields
     slug: example-stats
+  - name: Treemap With Custom tooltips
+    slug: example-tooltips
 ---
 
 ## Code Example
@@ -83,15 +85,31 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 - You can control the size of the treemap by setting the size of the parent element the treemap lives in. This may include possibly using an inset margin in some cases.
 - This component does not support drilldown at this time.
 - Using the data you can either show a single set or nested set of data (compare the two examples)
+- You can set tooltips on the treemap by passing in a text or html string in a `tooltip` field in the data. By default a tooltip will show if the data rectangle is small.
 
 ## Keyboard Shortcuts
 
-None
+This chart has no keyboard functionality
 
 ## Testability
 
-- Needs further testing, but you can add a permanent data-automation-id or id to the chart container for scripting purposes.
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the treemap picker that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+For the treemap you can set attributes on the root element, you will get an ID/attributed added to each slice, which will get the `name` value in the data appended.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Responsive Information
 

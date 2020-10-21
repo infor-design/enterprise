@@ -7,16 +7,13 @@
     font-size: $ids-size-font-sm;
     font-weight: lighter;
     overflow: hidden;
-    padding-top: 8px;
     position: absolute;
-    text-indent: 8px;
   }
 
   .chart-treemap-percent {
     @include font-size(16);
 
     display: block;
-    padding-top: 2px;
   }
 
   .chart-treemap-title {
@@ -28,6 +25,25 @@
     line-height: 34px;
     margin: 20px 20px 0;
     text-align: center;
+  }
+
+  .chart-treemap-text {
+    left: 8px;
+    position: relative;
+    top: 8px;
+  }
+
+  .chart-treemap-percent {
+    left: 8px;
+    position: relative;
+    top: 10px;
+  }
+
+  .chart-treemap-percent {
+    @include font-size(16);
+
+    display: block;
+    padding-top: 2px;
   }
 }
 
