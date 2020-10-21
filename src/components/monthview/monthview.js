@@ -633,6 +633,8 @@ MonthView.prototype = {
    * @returns {void}
    */
   appendMonthYearPicker(month, year) {
+    const self = this;
+
     if (!this.settings.showMonthYearPicker) {
       return;
     }
@@ -669,6 +671,18 @@ MonthView.prototype = {
     if (this.yearFirst) {
       this.monthYearPane.addClass('is-yearfirst');
     }
+
+    utils.addAttributes(this.monthYearPane.find('.picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-up');
+    utils.addAttributes(this.monthYearPane.find('.picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-down');
+
+    this.monthYearPane.find('.is-year .picklist-item').not('.up, .down').each(function () {
+      const elem = $(this).find('a');
+      utils.addAttributes(elem, self, self.settings.attributes, `btn-picklist-${elem.text().toLowerCase()}`);
+    });
+
+    this.monthYearPane.find('.is-month .picklist-item').not('.up, .down').each(function (i) {
+      utils.addAttributes($(this).find('a'), self, self.settings.attributes, `btn-picklist-${i}`);
+    });
   },
 
   /**
@@ -1057,25 +1071,38 @@ MonthView.prototype = {
       const yearContainer = this.monthYearPane[0].querySelector('.picklist.is-year');
       const yearList = yearContainer.children;
       const year = yearList[(upDown === 'up' ? 1 : yearList.length - 2)].querySelector('a').getAttribute('data-year');
-      const nextYear = parseInt(year, 10) + (upDown === 'up' ? -1 : 1);
       DOM.remove(yearList[(upDown === 'up' ? yearList.length - 2 : 1)]);
 
-      const a = document.createElement('a');
-      a.setAttribute('href', '#');
-      a.setAttribute('tabindex', '-1');
-      a.setAttribute('data-year', nextYear);
-      a.innerHTML = nextYear;
+      $(yearContainer).find('.picklist-item').not('.up, .down').remove();
 
-      const li = document.createElement('li');
-      DOM.addClass(li, 'picklist-item');
-      li.appendChild(a);
-      yearContainer.insertBefore(li, yearList[(upDown === 'up' ? 1 : yearList.length - 1)]);
+      if (upDown === 'up') {
+        for (let i = 10; i > 0; i--) {
+          const nextYear = parseInt(year, 10) - i;
 
-      // Set selected
-      if (!this.monthYearPane[0].querySelector('.picklist.is-year li.is-selected')) {
-        DOM.addClass(li, 'is-selected');
-        a.setAttribute('tabindex', '0');
+          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}">${nextYear}</a>`);
+          const li = $('<li class="picklist-item"></li>');
+          li.append(a);
+
+          $(yearContainer).find('.picklist-item.down').before(li);
+          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        }
       }
+
+      if (upDown === 'down') {
+        for (let i = 1; i < 11; i++) {
+          const nextYear = parseInt(year, 10) + i;
+          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}">${nextYear}</a>`);
+          const li = $('<li class="picklist-item"></li>');
+          li.append(a);
+
+          $(yearContainer).find('.picklist-item.down').before(li);
+          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        }
+      }
+
+      $(yearContainer).find('.picklist-item').eq(5)
+        .addClass('is-selected')
+        .attr('tabindex', '0');
     };
 
     // Handle Long Press
