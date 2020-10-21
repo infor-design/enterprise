@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Calendar index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/calendar/example-index?layout=nofrills');
-    const dateField = await element(by.css('.calendar-monthview #monthview-datepicker-field'));
+    const dateField = await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
   });
@@ -22,16 +22,16 @@ describe('Calendar index tests', () => {
     const nextButton = await element(by.css('.calendar-monthview button.next'));
     const testDate = new Date();
 
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await utils.checkForErrors();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await nextButton.getText()).toEqual('Next Month');
   });
 
@@ -39,7 +39,7 @@ describe('Calendar index tests', () => {
     const prevButton = await element(by.css('.calendar-monthview .btn-icon.prev'));
     const testDate = new Date();
 
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     await prevButton.click();
     await utils.checkForErrors();
 
@@ -49,9 +49,34 @@ describe('Calendar index tests', () => {
     await testDate.setMinutes(0);
     await testDate.setSeconds(0);
 
-    expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.css('.calendar-monthview #calendar-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     expect(await prevButton.getText()).toEqual('Previous Month');
+  });
+
+  it('Should be able to set id/automation id', async () => {
+    expect(await element(by.id('calendar-id-legend-dto')).getAttribute('id')).toEqual('calendar-id-legend-dto');
+    expect(await element(by.id('calendar-id-legend-dto')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-dto');
+    expect(await element(by.id('calendar-id-legend-admin')).getAttribute('id')).toEqual('calendar-id-legend-admin');
+    expect(await element(by.id('calendar-id-legend-admin')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-admin');
+    expect(await element(by.id('calendar-id-legend-team')).getAttribute('id')).toEqual('calendar-id-legend-team');
+    expect(await element(by.id('calendar-id-legend-team')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-team');
+    expect(await element(by.id('calendar-id-legend-sick')).getAttribute('id')).toEqual('calendar-id-legend-sick');
+    expect(await element(by.id('calendar-id-legend-sick')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-sick');
+
+    expect(await element(by.id('calendar-id-month-view-btn-prev')).getAttribute('id')).toEqual('calendar-id-month-view-btn-prev');
+    expect(await element(by.id('calendar-id-month-view-btn-prev')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-month-view-btn-prev');
+    expect(await element(by.id('calendar-id-month-view-btn-next')).getAttribute('id')).toEqual('calendar-id-month-view-btn-next');
+    expect(await element(by.id('calendar-id-month-view-btn-next')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-month-view-btn-next');
+
+    expect(await element(by.id('calendar-id-month-view-datepicker')).getAttribute('id')).toEqual('calendar-id-month-view-datepicker');
+    expect(await element(by.id('calendar-id-month-view-datepicker')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-month-view-datepicker');
+
+    expect(await element(by.id('calendar-id-month-view-datepicker-trigger')).getAttribute('id')).toEqual('calendar-id-month-view-datepicker-trigger');
+    expect(await element(by.id('calendar-id-month-view-datepicker-trigger')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-month-view-datepicker-trigger');
+
+    expect(await element(by.id('calendar-id-month-view-today')).getAttribute('id')).toEqual('calendar-id-month-view-today');
+    expect(await element(by.id('calendar-id-month-view-today')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-month-view-today');
   });
 });
 
@@ -319,7 +344,7 @@ describe('Calendar WeekView settings tests', () => {
 
   it('Should switch to week', async () => {
     expect(await element(by.css('.week-view ')).isDisplayed()).toBe(false);
-    const dropdownEl = await element.all(by.css('#calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
+    const dropdownEl = await element.all(by.css('#month-calendar-view-changer + .dropdown-wrapper div.dropdown')).first();
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const searchEl = await element(by.css('.dropdown-search'));
