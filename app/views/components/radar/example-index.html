@@ -17,40 +17,199 @@ $('body').on('initialized', function () {
 
   var radarData = [{
     data: [
-  		{name: 'Battery Life', value: 0.22},
-  		{name: 'Brand', value: 0.28},
-  		{name: 'Cost', value: 0.29},
-  		{name: 'Design', value: 0.17},
-  		{name: 'Connectivity', value: 0.22},
-  		{name: 'Screen', value: 0.02},
-  		{name: 'Price', value: 0.21}
+  		{
+        name: 'Battery Life',
+        value: 0.22,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-battery-life' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-battery-life' }
+        ]
+      },
+  		{
+        name: 'Brand',
+        value: 0.28,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-brand' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-brand' }
+        ]
+      },
+  		{
+        name: 'Cost',
+        value: 0.29,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-cost' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-cost' }
+        ]
+      },
+  		{
+        name: 'Design',
+        value: 0.17,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-design' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-design' }
+        ]
+      },
+  		{
+        name: 'Connectivity',
+        value: 0.22,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-connectivity' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-connectivity' }
+        ]
+      },
+  		{
+        name: 'Screen',
+        value: 0.02,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-screen' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-screen' }
+        ]
+      },
+  		{
+        name: 'Price',
+        value: 0.21,
+        attributes: [
+          { name: 'id', value: 'radar-iphone-price' },
+          { name: 'data-automation-id', value: 'automation-id-radar-iphone-price' }
+        ]
+      }
     ],
     name: 'iPhone X',
-    id: '1'
+    id: '1',
+    attributes: [
+      { name: 'id', value: 'radar-iphone' },
+      { name: 'data-automation-id', value: 'automation-id-radar-iphone' }
+    ]
   }, {
     data: [
-      {name: 'Battery Life', value: 0.27},
-      {name: 'Brand', value: 0.16},
-      {name: 'Cost', value: 0.35},
-      {name: 'Design', value: 0.13},
-      {name: 'Connectivity', value: 0.20},
-      {name: 'Screen', value: 0.13},
-      {name: 'Price', value: 0.35}
+      {
+        name: 'Battery Life',
+        value: 0.27,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-battery-life' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-battery-life' }
+        ]
+      },
+      {
+        name: 'Brand',
+        value: 0.16,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-brand' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-brand' }
+        ]
+      },
+      {
+        name: 'Cost',
+        value: 0.35,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-cost' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-cost' }
+        ]
+      },
+      {
+        name: 'Design',
+        value: 0.13,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-design' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-design' }
+        ]
+      },
+      {
+        name: 'Connectivity',
+        value: 0.20,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-connectivity' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-connectivity' }
+        ]
+      },
+      {
+        name: 'Screen',
+        value: 0.13,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-screen' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-screen' }
+        ]
+      },
+      {
+        name: 'Price',
+        value: 0.35,
+        attributes: [
+          { name: 'id', value: 'radar-samsung-price' },
+          { name: 'data-automation-id', value: 'automation-id-radar-samsung-price' }
+        ]
+      }
     ],
     name: 'Samsung',
-    id: '2'
+    id: '2',
+    attributes: [
+      { name: 'id', value: 'radar-samsung' },
+      { name: 'data-automation-id', value: 'automation-id-radar-samsung' }
+    ]
   }, {
     data: [
-      {name: 'BatteryLife ', value: 0.26},
-      {name: 'Brand', value: 0.10},
-      {name: 'Contract', value: 0.30},
-      {name: 'Design', value: 0.14},
-      {name: 'Connectivity', value: 0.22},
-      {name: 'Screen', value: 0.04},
-      {name: 'Price', value: 0.41}
+      {
+        name: 'Battery Life',
+        value: 0.26,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-battery-life' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-battery-life' }
+        ]
+      },
+      {
+        name: 'Brand',
+        value: 0.10,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-brand' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-brand' }
+        ]
+      },
+      {
+        name: 'Cost',
+        value: 0.30,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-cost' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-cost' }
+        ]
+      },
+      {
+        name: 'Design',
+        value: 0.14,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-design' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-design' }
+        ]
+      },
+      {
+        name: 'Connectivity',
+        value: 0.22,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-connectivity' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-connectivity' }
+        ]
+      },
+      {
+        name: 'Screen',
+        value: 0.04,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-screen' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-screen' }
+        ]
+      },
+      {
+        name: 'Price',
+        value: 0.41,
+        attributes: [
+          { name: 'id', value: 'radar-nokia-price' },
+          { name: 'data-automation-id', value: 'automation-id-radar-nokia-price' }
+        ]
+      }
     ],
     name: 'Nokia Smartphone',
-    id: '3'
+    id: '3',
+    attributes: [
+      { name: 'id', value: 'radar-nokia' },
+      { name: 'data-automation-id', value: 'automation-id-radar-nokia' }
+    ]
   }];
 
   $('#radar-chart-example').chart({type: 'radar', dataset: radarData})
