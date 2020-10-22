@@ -20,13 +20,25 @@ $('body').on('initialized', function () {
           name: 'Category A',
           value: 373,
           url: 'test',
-          tooltip: 'Tooltip by Data <br> Component A <br> Information'
+          tooltip: 'Tooltip by Data <br> Component A <br> Information',
+          attributes: [
+           { name: 'id', value: 'bar-a' },
+           { name: 'data-automation-id', value: 'automation-id-bar-a' }
+         ]
       }, {
           name: 'Category B',
-          value: 372
+          value: 372,
+          attributes: [
+           { name: 'id', value: 'bar-b' },
+           { name: 'data-automation-id', value: 'automation-id-bar-b' }
+         ]
       }, {
           name: 'Category C',
-          value: 236.35
+          value: 236.35,
+          attributes: [
+           { name: 'id', value: 'bar-c' },
+           { name: 'data-automation-id', value: 'automation-id-bar-c' }
+         ]
       }],
       name: ''  //Can be optionally passed in makes less sense with one: Group 1
     }];

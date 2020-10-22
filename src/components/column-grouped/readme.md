@@ -56,7 +56,27 @@ You can override the tooltip by passing in a specific tooltip text value.
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the column grouped chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+{
+  data: [{
+    name: 'Jan',
+    value: 12,
+    attributes: [
+      { name: 'id', value: 'columngrouped-c1-jan' },
+      { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-jan' }
+    ]
+  }],
+  name: 'Component A'
+}
+```
+
+Providing the data this will add an ID added to each bar with `-bar` appended. In addition the related legend item will get the first group attributes id with `-legend` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 
