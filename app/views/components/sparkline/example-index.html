@@ -34,32 +34,61 @@ $('body').on('initialized', function () {
 
     var sparkData1 = [{
         data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
-        name: 'Inventory'
+        name: 'Inventory',
+        attributes: [
+          { name: 'id', value: 'sparkline1' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline1' }
+        ]
     }];
 
     var sparkData2 = [{
         data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
-        name: 'Inventory'
+        name: 'Inventory',
+        attributes: [
+          { name: 'id', value: 'sparkline2-inventory' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline2-inventory' }
+        ]
     }, {
         data: [40, 30, 40, 16, 50, 17, 15, 39, 15, 18],
-        name: 'Demand'
+        name: 'Demand',
+        attributes: [
+          { name: 'id', value: 'sparkline2-demand' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline2-demand' }
+        ]
     }];
 
     var sparkData3 = [{
         data: [25, 20, 61, 28, 10, 30, 50, 35, 13, 27],
-        name: 'Inventory'
+        name: 'Inventory',
+        attributes: [
+          { name: 'id', value: 'sparkline3' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline3' }
+        ]
     }];
 
     var sparkData4 = [{
         data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
-        name: 'Inventory'
+        name: 'Inventory',
+        attributes: [
+          { name: 'id', value: 'sparkline4' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline4' }
+        ]
+    }];
+
+    var sparkData5 = [{
+        data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
+        name: 'Inventory',
+        attributes: [
+          { name: 'id', value: 'sparkline5' },
+          { name: 'data-automation-id', value: 'automation-id-sparkline5' }
+        ]
     }];
 
   $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: sparkData1});
   $('#sparkline-chart-example-2').chart({type: 'sparkline-peak', dataset: sparkData2});
   $('#sparkline-chart-example-3').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData3});
   $('#sparkline-chart-example-4').chart({type: 'sparkline-minmax', dataset: sparkData4});
-  $('#sparkline-chart-example-5').chart({type: 'sparkline', dataset: sparkData1});
+  $('#sparkline-chart-example-5').chart({type: 'sparkline', dataset: sparkData5});
 
 });
 </script>
