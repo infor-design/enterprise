@@ -240,7 +240,8 @@ fdescribe('Dropdown example-index tests', () => {
     });
 
     it('Should be able to set id/automation id', async () => {
-      await browser.driver.sleep(config.sleep);
+      await clickOnDropdown();
+      await browser.driver.sleep(config.sleepShort);
 
       expect(await element(by.id('custom-dropdown-id-1')).getAttribute('id')).toEqual('custom-dropdown-id-1');
       expect(await element(by.id('custom-dropdown-id-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id');
@@ -589,7 +590,7 @@ fdescribe('Dropdown xss tests', () => {
   });
 
   it('Should not inject scripts', async () => {
-    const dropdownEl = await element(by.css('#custom-dropdown-id-1 + .dropdown-wrapper div.dropdown'));
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     const searchEl = await element(by.css('.dropdown-search'));
@@ -606,7 +607,7 @@ fdescribe('Dropdown xss tests', () => {
   });
 
   it('Should not inject scripts on reset list', async () => {
-    const dropdownEl = await element(by.css('#custom-dropdown-id-1 + .dropdown-wrapper div.dropdown'));
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys('x');
 
     const searchEl = await element(by.css('.dropdown-search'));
@@ -628,7 +629,7 @@ fdescribe('Dropdown xss tests', () => {
   });
 
   it('Should not get confused filtering with encoding', async () => { //eslint-disable-line
-    const dropdownEl = await element(by.css('#custom-dropdown-id-1 + .dropdown-wrapper div.dropdown'));
+    const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys('l');
 
     const searchEl = await element(by.css('.dropdown-search'));
