@@ -154,7 +154,55 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom attributes/automation id's that can be used for scripting to the Tabs component.  It's possible to add `data-automation-id` attributes (or other attributes) directly to Tab anchors and panels:
+
+```html
+<div id="my-tabs" class="tab-container">
+  <ul class="tab-list">
+    <li class="tab">
+      <a href="#my-first-tab" id="tabs-first-a" data-automation-id="tabs-first-a">My First Tab</a>
+    </li>
+  </ul>
+</div>
+<div class="tab-panel-container">
+  <div class="tab-panel" id="my-first-tab" data-automation-id="tabs-first-panel">
+    <!-- my first tab's content -->
+  </div>
+</div>
+```
+
+The Tabs API also supports an `attributes` setting, similar to other IDS components, which allows for passing attributes to all pre-existing tabs, the more tabs button, the add-tabs (+) button, and the App Menu trigger button on Module Tabs instances.
+
+Additionally, when using the `add()` API method, the `attributes` setting will be respected when adding tabs.  Also, it's possible to pass another `attributes` object as part of the settings array that will append new attributes specifically to the new tab:
+
+```js
+const api = $('#my-tabs').data('tabs');
+api.add('my-second-tab', {
+  name: 'My Second Tab',
+  content: '<p>New Tab Content</p>',
+  attributes: [
+    { name: 'data-automation-id', 'value': 'my-second-tab' }
+  ]
+});
+```
+
+This will create a new tab that looks like the following...
+
+```html
+<li class="tab">
+  <a href="#my-second-tab" data-automation-id="my-second-tab-a">My First Tab</a>
+</li>
+```
+
+As well as a panel that looks like:
+
+```html
+<div class="tab-panel" id="my-second-tab" data-automation-id="my-second-tab-panel">
+  <p>New Tab Content</p>
+</div>
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

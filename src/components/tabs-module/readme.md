@@ -22,4 +22,6 @@ All tabs components use the same API.  For details on this component's API, plea
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+The same rules for custom attributes and automation id's for the [Tabs Component API]('./tabs') apply to the Module Tabs component.
+
+Please also refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
