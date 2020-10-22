@@ -114,7 +114,16 @@ We have a small utility to handle the use case of hiding and showing sensitive i
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+If automation id's or other attributes are needed for the Input component, simply add them directly to the markup:
+
+```html
+<div class="field">
+  <label for="first-name">First Name</label>
+  <input type="text" id="first-name" data-automation-id="input-first-name" name="first-name" placeholder="Normal text Field"/>
+</div>
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

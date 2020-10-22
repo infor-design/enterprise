@@ -4,59 +4,59 @@
 
     <div class="field">
       <label for="first-name">First Name</label>
-      <input type="text" id="first-name" name="first-name" placeholder="Normal text Field"/>
+      <input type="text" id="first-name" data-automation-id="input-first-name" name="first-name" placeholder="Normal text Field"/>
     </div>
 
     <div class="field">
       <label class="required" for="last-name">Last Name</label>
-      <input type="text" id="last-name" aria-required="true" name="last-name" data-validate="required"/>
+      <input type="text" id="last-name" data-automation-id="input-last-name" aria-required="true" name="last-name" data-validate="required"/>
     </div>
 
     <div class="field">
       <label class="required" for="email-address">Email Address</label>
-      <input type="text" id="email-address" aria-required="true" name="email-address" data-validate="required email" data-validation-events="{'required': 'blur change', 'email': 'blur change'}" placeholder="Company@address.com"/>
+      <input type="text" id="email-address" data-automation-id="input-email-address" aria-required="true" name="email-address" data-validate="required email" data-validation-events="{'required': 'blur change', 'email': 'blur change'}" placeholder="Company@address.com"/>
     </div>
 
     <div class="field">
       <label class="required" for="email-address-ok">Email Address - Checker</label>
-      <input type="text" id="email-address-ok" name="email-address-ok" data-validate="emailPositive required" data-validation-events="{'required': 'blur change', 'emailPositive': 'blur change'}"/>
+      <input type="text" id="email-address-ok" data-automation-id="input-email-address-ok" name="email-address-ok" data-validate="emailPositive required" data-validation-events="{'required': 'blur change', 'emailPositive': 'blur change'}"/>
     </div>
 
     <div class="field is-disabled">
       <label for="department">Disabled</label>
-      <input type="text" disabled value="Field not editable" id="department" name="department"/>
+      <input type="text" disabled value="Field not editable" id="department" data-automation-id="input-department" name="department"/>
     </div>
 
     <div class="field">
       <label for="department-code">Readonly</label>
-      <input type="text" readonly value="02006" id="department-code" name="department-code"/>
+      <input type="text" readonly value="02006" id="department-code" data-automation-id="input-department-code" name="department-code"/>
     </div>
 
     <div class="field">
       <label for="department-code-trackdirty">Dirty Tracking</label>
-      <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty"/>
+      <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" data-automation-id="department-code-trackdirty" name="department-code-trackdirty"/>
     </div>
   </div>
 
   <div class="one-half column">
     <div class="field">
       <label for="alpha-field">Alphanumeric</label>
-      <input id="alpha-field" name="alpha-field" type="text" data-mask data-options="{ pattern: '***'}" />
+      <input id="alpha-field" data-automation-id="input-alpha-field" name="alpha-field" type="text" data-mask data-options="{ pattern: '***'}" />
     </div>
 
     <div class="field">
       <label for="decimal-field">Currency Field</label>
-      <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###.00", "mode": "number", "showCurrency": true }' />
+      <input id="decimal-field" data-automation-id="input-decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###.00", "mode": "number", "showCurrency": true }' />
     </div>
 
     <div class="field">
       <label for="phone-number">Phone Number</label>
-      <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask data-options='{ "pattern" : "(###) ###-####", "mode": "group"}' />
+      <input id="phone-number" data-automation-id="input-phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask data-options='{ "pattern" : "(###) ###-####", "mode": "group"}' />
     </div>
 
     <div class="field">
       <label for="date-input">Date Input - Error Handling</label>
-      <input id="date-input" name="date-input" type="text" placeholder="M/d/yyyy" data-mask data-options="{ pattern: '##/##/####', mode: 'date' }" data-validate="date"/>
+      <input id="date-input" data-automation-id="input-date-input" name="date-input" type="text" placeholder="M/d/yyyy" data-mask data-options="{ pattern: '##/##/####', mode: 'date' }" data-validate="date"/>
     </div>
 
     <div class="field">
@@ -66,12 +66,12 @@
 
     <div class="field">
       <label for="time-input">Time Input (12 hour)</label>
-      <input id="time-input" name="time-input" type="text" placeholder="hh:mm AM/PM" data-mask data-options='{ "pattern" : "##:## am", "mode" : "time" }' data-validate="time" />
+      <input id="time-input" data-automation-id="input-time-input" name="time-input" type="text" placeholder="hh:mm AM/PM" data-mask data-options='{ "pattern" : "##:## am", "mode" : "time" }' data-validate="time" />
     </div>
 
     <div class="field">
       <label for="credit-card">Credit Card</label>
-      <input id="credit-card" name="credit-card" type="text" placeholder="0000-0000-0000-0000" data-mask data-options='{ "pattern" : "####-####-####-####", "mode": "group" }'/>
+      <input id="credit-card" data-automation-id="input-department-code" name="credit-card" type="text" placeholder="0000-0000-0000-0000" data-mask data-options='{ "pattern" : "####-####-####-####", "mode": "group" }'/>
     </div>
 
   </div>
