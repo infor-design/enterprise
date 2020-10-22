@@ -35,6 +35,42 @@ describe('Grouped Bar Chart example-index tests', () => {
     expect(await element(by.css('.series-group:nth-child(-n+3)')).getAttribute('class')).toContain('is-selected');
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('bargroup-a-jan-bar')).getAttribute('id')).toEqual('bargroup-a-jan-bar');
+    expect(await element(by.id('bargroup-a-jan-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-jan-bar');
+    expect(await element(by.id('bargroup-a-feb-bar')).getAttribute('id')).toEqual('bargroup-a-feb-bar');
+    expect(await element(by.id('bargroup-a-feb-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-feb-bar');
+    expect(await element(by.id('bargroup-a-mar-bar')).getAttribute('id')).toEqual('bargroup-a-mar-bar');
+    expect(await element(by.id('bargroup-a-mar-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-mar-bar');
+    expect(await element(by.id('bargroup-a-apr-bar')).getAttribute('id')).toEqual('bargroup-a-apr-bar');
+    expect(await element(by.id('bargroup-a-apr-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-apr-bar');
+
+    expect(await element(by.id('bargroup-b-jan-bar')).getAttribute('id')).toEqual('bargroup-b-jan-bar');
+    expect(await element(by.id('bargroup-b-jan-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-b-jan-bar');
+    expect(await element(by.id('bargroup-b-feb-bar')).getAttribute('id')).toEqual('bargroup-b-feb-bar');
+    expect(await element(by.id('bargroup-b-feb-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-b-feb-bar');
+    expect(await element(by.id('bargroup-b-mar-bar')).getAttribute('id')).toEqual('bargroup-b-mar-bar');
+    expect(await element(by.id('bargroup-b-mar-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-b-mar-bar');
+    expect(await element(by.id('bargroup-b-apr-bar')).getAttribute('id')).toEqual('bargroup-b-apr-bar');
+    expect(await element(by.id('bargroup-b-apr-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-b-apr-bar');
+
+    expect(await element(by.id('bargroup-c-jan-bar')).getAttribute('id')).toEqual('bargroup-c-jan-bar');
+    expect(await element(by.id('bargroup-c-jan-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-c-jan-bar');
+    expect(await element(by.id('bargroup-c-feb-bar')).getAttribute('id')).toEqual('bargroup-c-feb-bar');
+    expect(await element(by.id('bargroup-c-feb-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-c-feb-bar');
+    expect(await element(by.id('bargroup-c-mar-bar')).getAttribute('id')).toEqual('bargroup-c-mar-bar');
+    expect(await element(by.id('bargroup-c-mar-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-c-mar-bar');
+    expect(await element(by.id('bargroup-c-apr-bar')).getAttribute('id')).toEqual('bargroup-c-apr-bar');
+    expect(await element(by.id('bargroup-c-apr-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-c-apr-bar');
+
+    expect(await element(by.id('bargroup-a-jan-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-jan-legend');
+    expect(await element(by.id('bargroup-a-feb-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-feb-legend');
+    expect(await element(by.id('bargroup-a-mar-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-mar-legend');
+    expect(await element(by.id('bargroup-a-apr-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-apr-legend');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
