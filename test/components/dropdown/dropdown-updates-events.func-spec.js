@@ -167,7 +167,7 @@ describe('Dropdown updates, events', () => {
 
   it('should trigger change event on click', (done) => {
     DOM.remove(document.querySelector('#dropdown-list'));
-    const spyEvent = spyOnEvent('#states', 'change');
+    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 

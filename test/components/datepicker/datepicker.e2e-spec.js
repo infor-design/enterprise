@@ -1028,7 +1028,10 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('2019/07/09');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await element(by.id('btn-monthyear-pane')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+
+    await element(by.id('custom-id-btn-monthyear')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
