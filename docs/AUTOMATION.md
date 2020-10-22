@@ -16,7 +16,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Breadcrumb
 - [x] Bubble
 - [ ] Bullet
-- [ ] Busyindicator
+- [x] Busyindicator
 - [ ] Button
 - [x] Calendar
 - [x] Calendar Toolbar
@@ -36,7 +36,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Editor
 - [x] Emptymessage
 - [x] Error Page
-- [ ] Expandablearea
+- [x] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
 - [ ] Fieldset
@@ -58,7 +58,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Modal
 - [x] Monthview
 - [ ] Multiselect
-- [ ] Notification
+- [x] Notification
 - [x] Pager
 - [x] Pie
 - [ ] Popdown

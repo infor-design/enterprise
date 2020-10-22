@@ -15,11 +15,13 @@ const COMPONENT_NAME = 'expandablearea';
 * @param {string} [settings.trigger = null]  Id of some other button to use as a trigger
 * @param {string} [settings.bottomBorder = false] Change the border to bottom vs top (for some cases)
 * @param {number} [settings.animationSpeed = 300] Change the animation speed in ms
+* @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const EXPANDABLEAREA_DEFAULTS = {
   trigger: null,
   bottomBorder: false,
-  animationSpeed: 300
+  animationSpeed: 300,
+  attributes: null
 };
 
 function ExpandableArea(element, settings) {
@@ -150,6 +152,12 @@ ExpandableArea.prototype = {
     }
 
     this.resize();
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.header, this, this.settings.attributes, 'header');
+    utils.addAttributes(this.content, this, this.settings.attributes, 'content');
+    utils.addAttributes(this.expander, this, this.settings.attributes, 'expander');
+    utils.addAttributes(this.footer, this, this.settings.attributes, 'footer');
 
     return this;
   },
