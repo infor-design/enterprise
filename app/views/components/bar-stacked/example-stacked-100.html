@@ -19,21 +19,45 @@ $('body').on('initialized', function () {
     var dataset = [{
       data: [{
           name: '2014',
-          value: 100
+          value: 100,
+          attributes: [
+           { name: 'id', value: 'barstacked-c1-2014' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-c1-2014' }
+         ]
       }, {
           name: '2015',
-          value: 200
+          value: 200,
+          attributes: [
+           { name: 'id', value: 'barstacked-c1-2015' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-c1-2015' }
+         ]
       }],
-      name: 'Component 1'
+      name: 'Component 1',
+      attributes: [
+       { name: 'id', value: 'barstacked-comp1' },
+       { name: 'data-automation-id', value: 'automation-id-barstacked-comp1' }
+     ]
     }, {
       data: [{
           name: '2014',
-          value: 100
+          value: 100,
+          attributes: [
+           { name: 'id', value: 'barstacked-c2-2014' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-c2-2014' }
+         ]
       }, {
           name: '2015',
-          value: 400
+          value: 400,
+          attributes: [
+           { name: 'id', value: 'barstacked-c2-2015' },
+           { name: 'data-automation-id', value: 'automation-id-barstacked-c2-2015' }
+         ]
       }],
-      name: 'Component 2'
+      name: 'Component 2',
+      attributes: [
+       { name: 'id', value: 'barstacked-comp2' },
+       { name: 'data-automation-id', value: 'automation-id-barstacked-comp2' }
+     ]
     }];
 
   $('#bar-stacked-100-example').chart({type: 'bar-normalized', dataset: dataset});

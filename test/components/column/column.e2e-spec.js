@@ -93,6 +93,31 @@ describe('Column Chart example-index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('column-auto-bar')).getAttribute('id')).toEqual('column-auto-bar');
+    expect(await element(by.id('column-auto-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-auto-bar');
+
+    expect(await element(by.id('column-dist-bar')).getAttribute('id')).toEqual('column-dist-bar');
+    expect(await element(by.id('column-dist-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-dist-bar');
+
+    expect(await element(by.id('column-equip-bar')).getAttribute('id')).toEqual('column-equip-bar');
+    expect(await element(by.id('column-equip-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-equip-bar');
+
+    expect(await element(by.id('column-fash-bar')).getAttribute('id')).toEqual('column-fash-bar');
+    expect(await element(by.id('column-fash-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-fash-bar');
+
+    expect(await element(by.id('column-food-bar')).getAttribute('id')).toEqual('column-food-bar');
+    expect(await element(by.id('column-food-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-food-bar');
+
+    expect(await element(by.id('column-health-bar')).getAttribute('id')).toEqual('column-health-bar');
+    expect(await element(by.id('column-health-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-health-bar');
+
+    expect(await element(by.id('column-other-bar')).getAttribute('id')).toEqual('column-other-bar');
+    expect(await element(by.id('column-other-bar')).getAttribute('data-automation-id')).toEqual('automation-id-column-other-bar');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('widget'));
