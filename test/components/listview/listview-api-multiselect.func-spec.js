@@ -12,7 +12,10 @@ let svgEl;
 const settings = {
   dataset: data,
   selectable: 'multiple',
-  template: listviewTemplateScript
+  template: listviewTemplateScript,
+  attributes: [
+    { name: 'data-automation-id', value: 'test' }
+  ]
 };
 
 describe('Listview API', () => {
@@ -56,5 +59,11 @@ describe('Listview API', () => {
 
     expect(selectedEls[0]).toBeTruthy();
     expect(selectedEls[1]).toBeTruthy();
+  });
+
+  fit('can set attributes and automation ids', () => {
+    const firstItem = listviewEl.querySelectorAll('li')[0];
+
+    expect(firstItem.getAttribute('data-automation-id')).toEqual('test-listview-item-0');
   });
 });

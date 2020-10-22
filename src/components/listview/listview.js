@@ -194,6 +194,11 @@ ListView.prototype = {
 
     this.element.attr({ tabindex: '-1', 'x-ms-format-detection': 'none' });
 
+    // Add user-defined attributes
+    if (this.settings.attributes) {
+      utils.addAttributes(this.element, this, this.settings.attributes, 'listview');
+    }
+
     // Configure Paging
     if (this.element.is('.paginated') || this.settings.paging === true) {
       this.element.pager(this.pagerSettings);
