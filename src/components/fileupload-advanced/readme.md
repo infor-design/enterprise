@@ -39,6 +39,9 @@ Setting the id/automation id with a string value:
   attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
 ```
 
+The label will get an id with `-label` appended after the id given.
+The icon will get an id with `-icon` appended after the id given.
+
 If setting the id/automation id with a function, the id will be a running total of open fileupload-advanced.
 
 Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

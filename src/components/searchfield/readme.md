@@ -67,6 +67,8 @@ Setting the id/automation id with a string value:
   attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
 ```
 
+The close button will get an id with `-btn-close` appended after the id given.
+
 If setting the id/automation id with a function, the id will be a running total of open searchfield.
 
 Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

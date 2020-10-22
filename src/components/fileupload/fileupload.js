@@ -169,8 +169,8 @@ FileUpload.prototype = {
 
     // Add test automation ids
     utils.addAttributes(elem, this, this.settings.attributes);
-    utils.addAttributes(this.svg, this, this.settings.attributes, 'trigger');
-    utils.addAttributes(this.svgClose, this, this.settings.attributes, 'trigger-close');
+    utils.addAttributes(this.svg, this, this.settings.attributes, 'btn-trigger');
+    utils.addAttributes(this.svgClose, this, this.settings.attributes, 'btn-trigger-close');
   },
 
   /*
