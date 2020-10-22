@@ -61,7 +61,7 @@ describe('Listview API', () => {
     expect(selectedEls[1]).toBeTruthy();
   });
 
-  fit('can set attributes and automation ids', () => {
+  it('can set attributes and automation ids', () => {
     const firstItem = listviewEl.querySelectorAll('li')[0];
 
     expect(firstItem.getAttribute('data-automation-id')).toEqual('test-listview-item-0');
