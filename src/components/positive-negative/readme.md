@@ -113,7 +113,51 @@ $('#positive-negative-example').chart({
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the positive-negative chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+{
+  data: [{
+    name: 'Jan',
+    value: 4000,
+    target: 13000,
+    attributes: [
+      { name: 'id', value: 'positive-negative-jan' },
+      { name: 'data-automation-id', value: 'automation-id-positive-negative-jan' }
+    ]
+  }],
+  legends: {
+    target: 'Revenue',
+    positive: 'Profit',
+    negative: 'Loss'
+  },
+  colors: {
+    target: 'neutral',
+    positive: 'good',
+    negative: 'error'
+  },
+  attributes: {
+    target: [
+      { name: 'id', value: 'positive-negative-revenue' },
+      { name: 'data-automation-id', value: 'automation-id-positive-negative-revenue' }
+    ],
+    positive: [
+      { name: 'id', value: 'positive-negative-profit' },
+      { name: 'data-automation-id', value: 'automation-id-positive-negative-profit' }
+    ],
+    negative: [
+      { name: 'id', value: 'positive-negative-loss' },
+      { name: 'data-automation-id', value: 'automation-id-positive-negative-loss' }
+    ]
+  }
+}
+```
+
+Providing the data this will add an ID added to each bar with `-bar` appended, each target-bar with `-target-bar` appended. In addition the related legend item will get the same id with `-legend` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Upgrading from 3.X
 

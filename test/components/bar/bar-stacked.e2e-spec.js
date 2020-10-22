@@ -40,6 +40,27 @@ describe('Bar (Stacked) Chart example-index tests', () => {
     expect(await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).getAttribute('class')).toContain('is-selected');
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('barstacked-s1-2008-bar')).getAttribute('id')).toEqual('barstacked-s1-2008-bar');
+    expect(await element(by.id('barstacked-s1-2008-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2008-bar');
+    expect(await element(by.id('barstacked-s1-2009-bar')).getAttribute('id')).toEqual('barstacked-s1-2009-bar');
+    expect(await element(by.id('barstacked-s1-2009-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2009-bar');
+    expect(await element(by.id('barstacked-s1-2010-bar')).getAttribute('id')).toEqual('barstacked-s1-2010-bar');
+    expect(await element(by.id('barstacked-s1-2010-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2010-bar');
+
+    expect(await element(by.id('barstacked-s2-2008-bar')).getAttribute('id')).toEqual('barstacked-s2-2008-bar');
+    expect(await element(by.id('barstacked-s2-2008-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2008-bar');
+    expect(await element(by.id('barstacked-s2-2009-bar')).getAttribute('id')).toEqual('barstacked-s2-2009-bar');
+    expect(await element(by.id('barstacked-s2-2009-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2009-bar');
+    expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('id')).toEqual('barstacked-s2-2010-bar');
+    expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2010-bar');
+
+    expect(await element(by.id('barstacked-series1-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series1-legend');
+    expect(await element(by.id('barstacked-series2-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series2-legend');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
@@ -83,6 +104,23 @@ describe('Bar (Stacked) Chart 100% tests', () => {
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
+  });
+
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('barstacked-c1-2014-bar')).getAttribute('id')).toEqual('barstacked-c1-2014-bar');
+    expect(await element(by.id('barstacked-c1-2014-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-c1-2014-bar');
+    expect(await element(by.id('barstacked-c1-2015-bar')).getAttribute('id')).toEqual('barstacked-c1-2015-bar');
+    expect(await element(by.id('barstacked-c1-2015-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-c1-2015-bar');
+
+    expect(await element(by.id('barstacked-c2-2014-bar')).getAttribute('id')).toEqual('barstacked-c2-2014-bar');
+    expect(await element(by.id('barstacked-c2-2014-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-c2-2014-bar');
+    expect(await element(by.id('barstacked-c2-2015-bar')).getAttribute('id')).toEqual('barstacked-c2-2015-bar');
+    expect(await element(by.id('barstacked-c2-2015-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-c2-2015-bar');
+
+    expect(await element(by.id('barstacked-comp1-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-comp1-legend');
+    expect(await element(by.id('barstacked-comp2-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-comp2-legend');
   });
 
   if (utils.isChrome() && utils.isCI()) {
