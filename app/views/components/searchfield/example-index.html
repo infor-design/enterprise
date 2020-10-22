@@ -12,7 +12,13 @@
 <script id="test-script">
   $('#searchfield').searchfield({
     clearable: true,
-    source: '{{basepath}}api/states?term='
+    source: '{{basepath}}api/states?term=',
+    attributes: [
+      {
+        name: 'data-automation-id',
+        value: 'searchfield-automation-id'
+      }
+    ]
   }).on('selected', function (e, a) {
     console.log('Selected event was fired');
     if (a.hasClass('more-results')) {

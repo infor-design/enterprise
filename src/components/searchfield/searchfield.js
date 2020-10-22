@@ -2082,6 +2082,9 @@ SearchField.prototype = {
 
     // Ignoring the close button from tabbing
     this.xButton[0].setAttribute('tabindex', '-1');
+
+    // Add test automation ids
+    utils.addAttributes(this.xButton, this, this.settings.attributes, 'close');
   },
 
   /**
