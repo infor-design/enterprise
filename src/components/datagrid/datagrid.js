@@ -5845,7 +5845,12 @@ Datagrid.prototype = {
       countText = countText.replace('{0}', formatInteger(count - self.filteredCount));
       countText = countText.replace('{1}', formatInteger(count));
     } else {
-      countText = `({0} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
+      const translation = Locale.translate(count === 1 ? 'Result' : 'Results');
+      if (translation.indexOf('{0}') === -1) {
+        countText = `({0} ${translation})`;
+      } else {
+        countText = translation;
+      }
       countText = countText.replace('{0}', formatInteger(count));
     }
 

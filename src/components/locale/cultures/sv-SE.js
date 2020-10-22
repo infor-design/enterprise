@@ -31,7 +31,7 @@ Soho.Locale.addCulture('sv-SE', {
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
       wide: ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'],
-      abbreviated: ['sön', 'mån', 'tir', 'ons', 'tor', 'fre', 'lör'],
+      abbreviated: ['sön', 'mån', 'tis', 'ons', 'tor', 'fre', 'lör'],
       narrow: ['S', 'M', 'T', 'O', 'T', 'F', 'L']
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
