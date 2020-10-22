@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-unused-vars */
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-unused-vars, no-underscore-dangle */
 
 // Other Shared Imports
 import * as debug from '../../utils/debug';
@@ -144,6 +144,7 @@ Column.prototype = {
     let yMaxTarget;
     let series;
     let seriesStacked;
+    let pnAttributes;
     let pnColors;
     let pnPatterns;
     let pnLegends;
@@ -177,11 +178,15 @@ Column.prototype = {
       yMin = d3.min([yMin, yMinTarget]);
       yMax = d3.max([yMax, yMaxTarget]);
 
+      pnAttributes = { target: null, positive: null, negative: null };
       pnLegends = { target: 'Target', positive: 'Positive', negative: 'Negative' };
       pnColors = { target: 'neutral', positive: 'good', negative: 'error' };
       pnPatterns = {};
 
       if (dataset[0]) {
+        if (dataset[0].attributes) {
+          $.extend(true, pnAttributes, dataset[0].attributes);
+        }
         if (dataset[0].colors) {
           $.extend(true, pnColors, dataset[0].colors);
         }
@@ -195,12 +200,16 @@ Column.prototype = {
       // Converting object into array
       pnSeries = [];
       $.each(pnLegends, function (key, val) {
-        pnSeries.push({
+        const args = {
           name: val,
           color: pnColors[key],
           pattern: pnPatterns[key],
           option: key
-        });
+        };
+        if (pnAttributes[key]) {
+          args.data = { attributes: pnAttributes[key] };
+        }
+        pnSeries.push(args);
       });
     }
 
@@ -463,10 +472,19 @@ Column.prototype = {
 
       // Add the bars - done different depending on if grouped or singlular
       if (isSingle || isPositiveNegative) {
-        bars = self.svg.selectAll(`rect${isTargetBars ? '.target-bar' : '.bar'}`)
+        const barsType = isTargetBars ? 'target-bar' : 'bar';
+        bars = self.svg.selectAll(`rect.${barsType}`)
           .data(self.settings.isStacked ? datasetStacked : dataArray)
           .enter()
           .append('rect')
+          .call((d) => {
+            d._groups.forEach((thisBars) => {
+              thisBars.forEach((bar) => {
+                const dat = bar.__data__;
+                utils.addAttributes($(bar), dat, dat.attributes, barsType);
+              });
+            });
+          })
           .attr('class', function (d, i) {
             let classStr = `bar series-${i}`;
 
@@ -583,6 +601,14 @@ Column.prototype = {
           .data(function (d) { return self.settings.isStacked ? d : d.values; })
           .enter()
           .append('rect')
+          .call((d) => {
+            d._groups.forEach((thisBars) => {
+              thisBars.forEach((bar) => {
+                const dat = bar.__data__;
+                utils.addAttributes($(bar), dat, dat.attributes, 'bar');
+              });
+            });
+          })
           .attr('class', function (d, i) {
             return `series-${i} bar`;
           })
@@ -942,8 +968,18 @@ Column.prototype = {
       } else if (self.settings.isStacked && isSingle) {
         charts.addLegend(series, self.settings.type, self.settings, self.element);
       } else if (!isSingle) {
-        charts.addLegend(self.settings.isStacked ? seriesStacked :
-          series, self.settings.type, self.settings, self.element);
+        let legendSeries = self.settings.isStacked ? seriesStacked : series;
+        legendSeries = legendSeries.map((d) => {
+          if (d.attributes && !d.data?.attributes) {
+            if (d.data) {
+              d.data.attributes = d.attributes;
+            } else {
+              d.data = { attributes: d.attributes };
+            }
+          }
+          return d;
+        });
+        charts.addLegend(legendSeries, self.settings.type, self.settings, self.element);
       }
     }
 

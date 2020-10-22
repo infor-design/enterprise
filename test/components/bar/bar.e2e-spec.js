@@ -37,6 +37,19 @@ describe('Bar Chart example-index tests', () => {
     expect(await barTestEl.getCssValue('opacity')).toBe('0.6');
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('bar-a-bar')).getAttribute('id')).toEqual('bar-a-bar');
+    expect(await element(by.id('bar-a-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bar-a-bar');
+
+    expect(await element(by.id('bar-b-bar')).getAttribute('id')).toEqual('bar-b-bar');
+    expect(await element(by.id('bar-b-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bar-b-bar');
+
+    expect(await element(by.id('bar-c-bar')).getAttribute('id')).toEqual('bar-c-bar');
+    expect(await element(by.id('bar-c-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bar-c-bar');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));

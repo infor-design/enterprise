@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary, prefer-arrow-callback, no-underscore-dangle */
 // Other Shared Imports
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
@@ -190,7 +191,7 @@ Bar.prototype = {
     }
 
     // Get the Legend Series
-    const series = dataset.map(d => ({ name: d.name, color: d.color, pattern: d.pattern }));
+    const series = dataset.map(d => ({ name: d.name, color: d.color, pattern: d.pattern, attributes: d.attributes }));
 
     // Ellipsis
     this.ellipsis = { use: false, percentageWidth: 25, threshold: 12 };
@@ -417,6 +418,14 @@ Bar.prototype = {
       })
       .enter()
       .append('rect')
+      .call((d) => {
+        d._groups.forEach((bars) => {
+          bars.forEach((bar) => {
+            const dat = bar.__data__;
+            utils.addAttributes($(bar), dat, dat.attributes, 'bar');
+          });
+        });
+      })
       .attr('class', (d, i) => `bar series-${i}`)
       .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
         (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :  // eslint-disable-line
@@ -719,7 +728,18 @@ Bar.prototype = {
 
     // Add Legends
     if (s.showLegend) {
-      charts.addLegend((s.isStacked ? series : legendMap), s.type, s, this.element);
+      let legendSeries = s.isStacked ? series : legendMap;
+      legendSeries = legendSeries.map((d) => {
+        if (d.attributes && !d.data?.attributes) {
+          if (d.data) {
+            d.data.attributes = d.attributes;
+          } else {
+            d.data = { attributes: d.attributes };
+          }
+        }
+        return d;
+      });
+      charts.addLegend(legendSeries, s.type, s, this.element);
     }
     charts.appendTooltip();
 
@@ -804,11 +824,14 @@ Bar.prototype = {
       });
     } else {
       dataset.forEach((d) => {
+        const keys = Object.keys(d).map(key => key);
         const values = Object.keys(d).map(key => d[key]);
-        values.forEach((key) => {
+        values.forEach((key, i) => {
           if (key && key.constructor === Array) {
-            key.forEach((k, i) => {
-              elems[i].textContent = getText(k, i);
+            key.forEach((k, i2) => {
+              if (keys[i] !== 'attributes') {
+                elems[i2].textContent = getText(k, i2);
+              }
             });
           }
         });
