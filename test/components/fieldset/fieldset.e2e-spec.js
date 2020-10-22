@@ -18,6 +18,14 @@ describe('Fieldset Tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'fieldset-index')).toEqual(0);
     });
 
+    it('Should be able to set id/automation id', async () => {
+      await utils.setPage('/components/fieldset/example-index.html?layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.id('fieldset')).getAttribute('id')).toEqual('fieldset');
+      expect(await element(by.id('fieldset')).getAttribute('data-automation-id')).toEqual('fieldset-automation-id');
+    });
+
     it('Should not visual regress on short layouts', async () => {
       await utils.setPage('/components/fieldset/example-short.html?layout=nofrills');
       const containerEl = await element(by.className('container'));
