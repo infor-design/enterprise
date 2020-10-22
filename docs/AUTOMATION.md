@@ -48,10 +48,10 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)
 - [x] Images (not needed id can be directly applied)
-- [ ] Input
+- [x] Input (not needed id can be directly applied)
 - [x] Line
 - [ ] Listbuilder
-- [ ] Listview
+- [x] Listview
 - [ ] Lookup
 - [ ] Masthead
 - [x] Message
