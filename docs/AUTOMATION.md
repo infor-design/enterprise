@@ -67,7 +67,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
-- [ ] Radar
+- [x] Radar
 - [x] Radios
 - [ ] Rating
 - [x] Scatterplot
@@ -75,7 +75,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
 - [ ] Slider
-- [ ] Sparkline
+- [x] Sparkline
 - [ ] Spinbox
 - [ ] Splitter
 - [ ] Stepchart
