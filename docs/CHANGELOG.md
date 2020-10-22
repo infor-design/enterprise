@@ -9,6 +9,7 @@
 - `[Area/Bubble/Line/Scatterplot]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Bar/Bar Grouped/Bar Stacked]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Breadcrumb]` Added `attributes` setting to Breadcrumb Items for setting automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Bullet/Stepchart]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Calendar/Monthview/WeekView/CalendarToolbar]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Column/Column Grouped/Column Stacked/Positive Negative]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))

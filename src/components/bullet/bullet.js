@@ -1,4 +1,4 @@
-/* eslint-disable no-loop-func */
+/* eslint-disable no-loop-func, no-underscore-dangle */
 
 // Other Shared Imports
 import * as debug from '../../utils/debug';
@@ -130,6 +130,7 @@ Bullet.prototype = {
       difference: d => formatCallback('difference', d),
     };
 
+    const isSingle = chartData.data.length === 1;
     for (let i = 0; i < chartData.data.length; i++) {
       const duration = this.settings.animate ? 400 : 0;
       const barHeight = 20;
@@ -141,6 +142,7 @@ Bullet.prototype = {
       const rangesAsc = rowData.ranges.slice().sort(d3.ascending);
       let markersAsc = (rowData.markers ? rowData.markers.slice().sort(d3.ascending) : []);
       const measuresAsc = (rowData.measures ? rowData.measures.slice().sort(d3.ascending) : []);
+      const groupSuffix = isSingle ? '' : `-group${i}`;
 
       if (markers.length === 0) {
         markers = measures;
@@ -158,12 +160,20 @@ Bullet.prototype = {
       const text = title.append('text')
         .attr('class', 'title')
         .attr('dy', '-10px')
-        .text(() => rowData.title);
+        .text(() => rowData.title)
+        .call((d) => {
+          const node = d._groups[0][0];
+          utils.addAttributes($(node), chartData, chartData.attributes, `title${groupSuffix}`);
+        });
 
       text.append('tspan')
         .attr('class', 'subtitle')
         .attr('dx', '15px')
-        .text(() => rowData.subtitle);
+        .text(() => rowData.subtitle)
+        .call((d) => {
+          const node = d._groups[0][0];
+          utils.addAttributes($(node), chartData, chartData.attributes, `subtitle${groupSuffix}`);
+        });
 
       const maxAll = Math.max(ranges[0], markers[0], measures[0]);
       let minAll = Math.min(rangesAsc[0], markersAsc[0], measuresAsc[0]);
@@ -184,6 +194,13 @@ Bullet.prototype = {
         .data(ranges);
 
       range.enter().append('rect')
+        .call((d) => {
+          d._groups.forEach((thisRanges) => {
+            thisRanges.forEach((thisRange, idx) => {
+              utils.addAttributes($(thisRange), chartData, chartData.attributes, `range${idx}${groupSuffix}`);
+            });
+          });
+        })
         .attr('class', (d, a) => `range s${a}`)
         .attr('data-idx', i)
         .attr('width', 0)
@@ -261,6 +278,13 @@ Bullet.prototype = {
         .data(measures);
 
       measure.enter().append('rect')
+        .call((d) => {
+          d._groups.forEach((thisMeasures) => {
+            thisMeasures.forEach((thisMeasure, idx) => {
+              utils.addAttributes($(thisMeasure), chartData, chartData.attributes, `measure${idx}${groupSuffix}`);
+            });
+          });
+        })
         .attr('class', (d, k) => `measure s${k}`)
         .attr('width', 0)
         .attr('height', 3)
@@ -278,10 +302,19 @@ Bullet.prototype = {
         .attr('width', w1);
 
       // Update the marker lines.
+      const isSingleMarker = markers.length === 1;
       const marker = g.selectAll('line.marker')
         .data(markers);
 
       marker.enter().append('line')
+        .call((d) => {
+          d._groups.forEach((thisMarkers) => {
+            thisMarkers.forEach((thisMarker, idx) => {
+              const suffix = isSingleMarker ? `marker${groupSuffix}` : `marker${idx}${groupSuffix}`;
+              utils.addAttributes($(thisMarker), chartData, chartData.attributes, suffix);
+            });
+          });
+        })
         .attr('class', (noMarkers ? 'hidden' : 'marker'))
         .attr('x1', 0)
         .attr('x2', 0)
@@ -306,6 +339,10 @@ Bullet.prototype = {
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
         marker.enter().append('text')
+          .call((d) => {
+            const node = d._groups[0][0];
+            utils.addAttributes($(node), chartData, chartData.attributes, `difference${groupSuffix}`);
+          })
           .attr('class', 'inverse')
           .attr('text-anchor', 'middle')
           .attr('y', barHeight / 2 + 4)

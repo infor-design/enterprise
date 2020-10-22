@@ -42,7 +42,27 @@ $('#manual').stepchart({
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the step chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+{
+  steps: 7,
+  completed: 2,
+  inProgress: 3,
+  iconType: 'icon-error',
+  extraText: '{1} Days Overdue',
+  attributes: [
+    { name: 'id', value: 'stepchart-example' },
+    { name: 'data-automation-id', value: 'automation-id-stepchart-example' }
+  ]
+}
+```
+
+Providing the data this will add an ID added to each label with `-label`, label-icon with `-label-icon`, label-small with `-label-small`, and step with `-step{index}` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

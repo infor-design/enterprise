@@ -1,0 +1,69 @@
+
+<div class="row">
+    <div class="full column center" style="height: 610px">
+      <div id="bullet-example" class="chart-container">
+      </div>
+    </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var palette = Soho.theme.themeColors().palette;
+
+  // Example grouped
+  var dataset = [{
+    data: [
+      {
+        title: 'Schedule Adherence By Quantity',
+        subtitle: '',
+        url: '/some-path/some-url-1',
+        ranges: [2, 4, 6],
+        measures: [2, 2],
+        markers: [6]
+      }, {
+        title: 'Schedule Adherence By Date',
+        subtitle: '',
+        url: '/some-path/some-url-2',
+        ranges: [2, 4, 6],
+        measures: [2, 2],
+        markers: [6]
+      }, {
+        title: 'Receiving Accuracy',
+        subtitle: '',
+        url: '/some-path/some-url-3',
+        ranges: [2, 4, 6],
+        measures: [2, 2],
+        markers: [6]
+      }, {
+        title: 'Premium Freight Charges',
+        subtitle: '',
+        url: '/some-path/some-url-4',
+        ranges: [2, 4, 6],
+        measures: [2, 2],
+        markers: [6]
+      }, {
+        title: 'Overall Rating',
+        subtitle: '',
+        url: '/some-path/some-url-5',
+        ranges: [2, 4, 6],
+        measures: [2, 2],
+        markers: [6]
+      }
+    ],
+    barColors: [
+      palette.emerald['20'].value,
+      palette.emerald['40'].value,
+      palette.emerald['60'].value
+    ],
+    lineColors: ['#000000', '#000000', '#000000'],
+    markerColors: ['#000000'],
+    attributes: [
+      { name: 'id', value: 'bullet-group-example1' },
+      { name: 'data-automation-id', value: 'automation-id-bullet-group-example1' }
+    ]
+  }];
+
+  // Invoke Chart
+  $('#bullet-example').chart({ type: 'bullet', dataset: dataset });
+});
+</script>

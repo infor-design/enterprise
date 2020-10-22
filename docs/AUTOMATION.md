@@ -15,7 +15,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Blockgrid
 - [x] Breadcrumb
 - [x] Bubble
-- [ ] Bullet
+- [x] Bullet
 - [ ] Busyindicator
 - [ ] Button
 - [x] Calendar
@@ -78,7 +78,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Sparkline
 - [ ] Spinbox
 - [ ] Splitter
-- [ ] Stepchart
+- [x] Stepchart
 - [ ] Swaplist
 - [ ] Switch
 - [ ] Tabs
