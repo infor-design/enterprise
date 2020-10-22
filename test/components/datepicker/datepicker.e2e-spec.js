@@ -6,7 +6,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Datepicker example-index tests', () => {
+describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
   });
@@ -147,7 +147,7 @@ fdescribe('Datepicker example-index tests', () => {
   }
 });
 
-fdescribe('Datepicker example-index tests (fr-CA)', () => {
+describe('Datepicker example-index tests (fr-CA)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=fr-CA');
   });
@@ -250,7 +250,7 @@ fdescribe('Datepicker example-index tests (fr-CA)', () => {
   }
 });
 
-fdescribe('Datepicker keyboard tests', () => {
+describe('Datepicker keyboard tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index');
   });
@@ -455,7 +455,7 @@ fdescribe('Datepicker keyboard tests', () => {
   });
 });
 
-fdescribe('Datepicker Anniversary tests', () => {
+describe('Datepicker Anniversary tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-anniversary-format');
   });
@@ -539,7 +539,7 @@ fdescribe('Datepicker Anniversary tests', () => {
   });
 });
 
-fdescribe('Datepicker custom format tests', () => {
+describe('Datepicker custom format tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-custom-format');
   });
@@ -597,7 +597,7 @@ fdescribe('Datepicker custom format tests', () => {
   });
 });
 
-fdescribe('Datepicker disabled date tests', () => {
+describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-disabled-dates?layout=nofrills');
   });
@@ -718,7 +718,7 @@ fdescribe('Datepicker disabled date tests', () => {
   }
 });
 
-fdescribe('Datepicker Legend Tests', () => {
+describe('Datepicker Legend Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-legend?layout=nofrills');
   });
@@ -746,7 +746,7 @@ fdescribe('Datepicker Legend Tests', () => {
   }
 });
 
-fdescribe('Datepicker Change Event Tests', () => {
+describe('Datepicker Change Event Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-change-event?layout=nofrills');
   });
@@ -814,7 +814,7 @@ fdescribe('Datepicker Change Event Tests', () => {
   });
 });
 
-fdescribe('Datepicker Destroy Mask Tests', () => {
+describe('Datepicker Destroy Mask Tests', () => {
   beforeEach(async () => {
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
@@ -842,7 +842,7 @@ fdescribe('Datepicker Destroy Mask Tests', () => {
   });
 });
 
-fdescribe('Datepicker Disable Month Year Changer Tests', () => {
+describe('Datepicker Disable Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-month-year-picker');
     const Date = () => {  //eslint-disable-line
@@ -860,7 +860,7 @@ fdescribe('Datepicker Disable Month Year Changer Tests', () => {
   });
 });
 
-fdescribe('Datepicker No Today Tests', () => {
+describe('Datepicker No Today Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-no-today?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -877,7 +877,7 @@ fdescribe('Datepicker No Today Tests', () => {
   });
 });
 
-fdescribe('Datepicker Month Year Changer Tests', () => {
+describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -920,6 +920,7 @@ fdescribe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
 
     await element(by.id('custom-id-btn-monthyear')).click();
     await browser.driver.sleep(config.sleep);
@@ -989,7 +990,7 @@ fdescribe('Datepicker Month Year Changer Tests', () => {
   }
 });
 
-fdescribe('Datepicker Month Year Changer Year First Tests', () => {
+describe('Datepicker Month Year Changer Year First Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=ja-JP');
     const Date = () => {  //eslint-disable-line
@@ -1057,7 +1058,7 @@ fdescribe('Datepicker Month Year Changer Year First Tests', () => {
   });
 });
 
-fdescribe('Datepicker Range Tests', () => {
+describe('Datepicker Range Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-range');
   });
@@ -1253,7 +1254,7 @@ fdescribe('Datepicker Range Tests', () => {
   });
 });
 
-fdescribe('Datepicker Range Tests UmAlQura', () => {
+describe('Datepicker Range Tests UmAlQura', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-range?locale=ar-SA');
   });
@@ -1407,7 +1408,7 @@ fdescribe('Datepicker Range Tests UmAlQura', () => {
   });
 });
 
-fdescribe('Datepicker Timeformat Tests', () => {
+describe('Datepicker Timeformat Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-timeformat');
   });
@@ -1545,7 +1546,7 @@ fdescribe('Datepicker Timeformat Tests', () => {
   });
 });
 
-fdescribe('Datepicker Umalqura Tests', () => {
+describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
     await browser.driver
@@ -1580,7 +1581,7 @@ fdescribe('Datepicker Umalqura Tests', () => {
   });
 });
 
-fdescribe('Datepicker Month Year Picker Tests', () => {
+describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -1618,7 +1619,7 @@ fdescribe('Datepicker Month Year Picker Tests', () => {
   }
 });
 
-fdescribe('Datepicker Year Picker Tests', () => {
+describe('Datepicker Year Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -1652,7 +1653,7 @@ fdescribe('Datepicker Year Picker Tests', () => {
   }
 });
 
-fdescribe('Datepicker Month Only Picker Tests', () => {
+describe('Datepicker Month Only Picker Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
     const Date = () => {  //eslint-disable-line
@@ -1693,7 +1694,7 @@ fdescribe('Datepicker Month Only Picker Tests', () => {
   }
 });
 
-fdescribe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
+describe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-validation');
   });
@@ -1751,7 +1752,7 @@ fdescribe('Datepicker Custom Validation Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
+describe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-12hr-time');
   });
@@ -1817,7 +1818,7 @@ fdescribe('Datepicker 12hr Time Tests', () => { //eslint-disable-line
   });
 });
 
-fdescribe('Datepicker Umalqura EG Tests', () => {
+describe('Datepicker Umalqura EG Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-eg-umalqura?locale=ar-SA');
   });
@@ -1838,7 +1839,7 @@ fdescribe('Datepicker Umalqura EG Tests', () => {
   });
 });
 
-fdescribe('Datepicker Gregorian SA Tests', () => {
+describe('Datepicker Gregorian SA Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-ar-sa-gregorian');
   });
@@ -1882,7 +1883,7 @@ fdescribe('Datepicker Gregorian SA Tests', () => {
   });
 });
 
-fdescribe('Datepicker Disabled Years Validation Tests', () => {
+describe('Datepicker Disabled Years Validation Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-disabled-years-validated');
   });
@@ -1906,7 +1907,7 @@ fdescribe('Datepicker Disabled Years Validation Tests', () => {
   });
 });
 
-fdescribe('Datepicker Invalid Date Tests', () => {
+describe('Datepicker Invalid Date Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-invalid-dates');
   });
@@ -1932,7 +1933,7 @@ fdescribe('Datepicker Invalid Date Tests', () => {
   });
 });
 
-fdescribe('Datepicker Modal Test', () => {
+describe('Datepicker Modal Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-modal');
   });
@@ -1977,7 +1978,7 @@ fdescribe('Datepicker Modal Test', () => {
   });
 });
 
-fdescribe('Datepicker Modal (No Autofocus) Test', () => {
+describe('Datepicker Modal (No Autofocus) Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-modal-no-autofocus');
   });
@@ -2001,7 +2002,7 @@ fdescribe('Datepicker Modal (No Autofocus) Test', () => {
   });
 });
 
-fdescribe('Datepicker Month Format Tests', () => {
+describe('Datepicker Month Format Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-month-formats');
   });
@@ -2013,7 +2014,7 @@ fdescribe('Datepicker Month Format Tests', () => {
   });
 });
 
-fdescribe('Datepicker restrict month selection tests', () => {
+describe('Datepicker restrict month selection tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-restrict-month-selection');
   });
@@ -2058,7 +2059,7 @@ fdescribe('Datepicker restrict month selection tests', () => {
   });
 });
 
-fdescribe('Datepicker set first day of week tests', () => {
+describe('Datepicker set first day of week tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-first-day-of-week');
   });
@@ -2075,7 +2076,7 @@ fdescribe('Datepicker set first day of week tests', () => {
   });
 });
 
-fdescribe('Datepicker Set Value Tests', () => {
+describe('Datepicker Set Value Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-set-value');
   });
@@ -2089,7 +2090,7 @@ fdescribe('Datepicker Set Value Tests', () => {
   });
 });
 
-fdescribe('Datepicker Time in Cs-Cz Format Tests', () => {
+describe('Datepicker Time in Cs-Cz Format Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-with-time-cs-CZ');
   });
@@ -2101,7 +2102,7 @@ fdescribe('Datepicker Time in Cs-Cz Format Tests', () => {
   });
 });
 
-fdescribe('Datepicker Body Re Initialize Tests', () => {
+describe('Datepicker Body Re Initialize Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-validation-body-reinitialize');
   });
@@ -2129,7 +2130,7 @@ fdescribe('Datepicker Body Re Initialize Tests', () => {
   });
 });
 
-fdescribe('Datepicker specific locale/language tests', () => {
+describe('Datepicker specific locale/language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-two-locales-same-page');
   });
@@ -2180,7 +2181,7 @@ fdescribe('Datepicker specific locale/language tests', () => {
   });
 });
 
-fdescribe('Datepicker specific language tests', () => {
+describe('Datepicker specific language tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/test-specific-lang');
   });
@@ -2194,7 +2195,7 @@ fdescribe('Datepicker specific language tests', () => {
   });
 });
 
-fdescribe('Datepicker translation tests', () => {
+describe('Datepicker translation tests', () => {
   it('Should format lt-LT correctly', async () => {
     await utils.setPage('/components/datepicker/example-index?locale=lt-lT');
     await element(by.id('date-field-normal')).sendKeys('2020-06-30');
