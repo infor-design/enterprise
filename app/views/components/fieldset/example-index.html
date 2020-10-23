@@ -2,7 +2,7 @@
     <div class="six columns">
 
       <!-- Variation One -->
-      <fieldset>
+      <fieldset id="fieldset" data-automation-id="fieldset-automation-id">
         <legend>Company Information</legend>
         <div class="summary-form">
 
@@ -53,7 +53,7 @@
 
       <!-- Variation Two -->
       <div class="fieldset" role="region" aria-labelledby="fieldset-title">
-        <h2 class="fieldset-title" id="fieldset-title">Credit Information</h2>
+        <h2 class="fieldset-title">Credit Information</h2>
         <div id="container-1" class="chart-container"></div>
       </div>
 
@@ -97,7 +97,7 @@
 
       $('#container-1').chart({
         dataset: container,
-        type: 'completion-target'
+        type: 'completion-target',
       }).data('chart');
     });
 

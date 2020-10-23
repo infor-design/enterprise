@@ -33,7 +33,11 @@ The Multi-Tabs component creates a system that wraps individual [Tabs Components
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+The same rules for custom attributes and automation id's for the [Tabs Component API]('./tabs') apply to each individual Tabs Component within this component.  
+
+The Multi-Tabs `add()` API method's `options` setting is functionally similar to the one on the Tabs API, and can contain the `attributes` property needed for adding automation ids and other custom attributes.
+
+Please also refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

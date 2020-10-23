@@ -46,6 +46,7 @@ const COMPONENT_NAME = 'listview';
  * @param {object} [settings.pagerSettings=null] If defined as an object, passes settings into the internal Pager component
  * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
  * @param {object} [settings.initializeContents=false] If true the initializer will be run on all internal contents.
+ * @param {string} [settings.attributes] Add extra attributes like id's to the listview. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -70,7 +71,8 @@ const LISTVIEW_DEFAULTS = {
     showLastButton: false
   },
   searchTermMinSize: 1,
-  initializeContents: false
+  initializeContents: false,
+  attributes: null,
 };
 
 function ListView(element, settings) {
@@ -191,6 +193,11 @@ ListView.prototype = {
     }
 
     this.element.attr({ tabindex: '-1', 'x-ms-format-detection': 'none' });
+
+    // Add user-defined attributes
+    if (this.settings.attributes) {
+      utils.addAttributes(this.element, this, this.settings.attributes, 'listview');
+    }
 
     // Configure Paging
     if (this.element.is('.paginated') || this.settings.paging === true) {
@@ -362,6 +369,11 @@ ListView.prototype = {
       const item = $(this);
 
       item.attr('role', 'option');
+
+      // Add user-defined attributes
+      if (self.settings.attributes) {
+        utils.addAttributes(item, self, self.settings.attributes, `listview-item-${i}`);
+      }
 
       if (isMultiselect) {
         // Add Selection Checkboxes

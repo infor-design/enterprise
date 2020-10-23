@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <div class="field">
-      <button id="popover-trigger" class="btn-secondary" type="button">
+      <button id="popover-trigger" data-automation-id="popover-trigger-automation-id" class="btn-secondary" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-upload"></use>
         </svg>
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div id="popover-contents" class="popover-content-area hidden">
+<div id="popover-contents" class="popover-content-area hidden" data-automation-id="popover-contents-automation-id">
   <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
   <div class="demo-popover">
     <table role="grid" class="l-pull-left">
@@ -32,10 +32,10 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn-primary" type="button">Apply</button>
+    <button class="btn-primary" id="popover-btn-apply" data-automation-id="popover-btn-apply-automation-id" type="button">Apply</button>
   </div>
   <div class="modal-buttonset">
-    <button type="button" class="btn-modal-primary">View more</button>
+    <button type="button" class="btn-modal-primary" id="popover-btn-view-more" data-automation-id="popover-btn-view-more-automation-id" >View more</button>
   </div>
 </div>
 

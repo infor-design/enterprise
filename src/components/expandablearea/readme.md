@@ -64,6 +64,26 @@ Its possible to assign a custom button that can toggle a specific area using the
 
 ## Testability
 
+The expandablearea can have custom id's/automation id's that can be used for scripting. To add them, use the option `attributes` to set an id on the generated expandablearea. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+
+```js
+  attributes: { name: 'id', value: args => `message-id-${args.id}` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+Providing the data, this will add an ID added to each expandablearea header with `-header`, expandablearea content with `-content`, expandablearea expander with `-expander`, expandablearea footer with `-footer`, and to the root expandablearea element appended.
+
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts

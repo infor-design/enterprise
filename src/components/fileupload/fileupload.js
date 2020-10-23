@@ -166,6 +166,11 @@ FileUpload.prototype = {
     setTimeout(() => {
       self.fileInput.css({ position: 'fixed', left: '-10000px' });
     }, 0);
+
+    // Add test automation ids
+    utils.addAttributes(elem, this, this.settings.attributes);
+    utils.addAttributes(this.svg, this, this.settings.attributes, 'btn-trigger');
+    utils.addAttributes(this.svgClose, this, this.settings.attributes, 'btn-trigger-close');
   },
 
   /*

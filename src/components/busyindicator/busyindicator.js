@@ -18,6 +18,7 @@ const COMPONENT_NAME = 'busyindicator';
  * @param {string} [settings.transparentOverlay=false] If true, allows the "blockUI" setting to display
  * an overlay that prevents interaction, but appears transparent instead of gray.
  * @param {string} [settings.overlayOnly=false] If true, the busy indicator will only be the overlay.
+ * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const BUSYINDICATOR_DEFAULTS = {
   blockUI: true,
@@ -25,7 +26,8 @@ const BUSYINDICATOR_DEFAULTS = {
   displayDelay: 1000,
   timeToComplete: 0,
   transparentOverlay: false,
-  overlayOnly: false
+  overlayOnly: false,
+  attributes: null
 };
 
 function BusyIndicator(element, settings) {
@@ -221,6 +223,11 @@ BusyIndicator.prototype = {
         self.element.trigger('complete');
       }, self.completionTime);
     }
+
+    utils.addAttributes(this.container, this, this.settings.attributes);
+    utils.addAttributes(this.container.find('.busy-indicator.active'), this, this.settings.attributes, 'busyindicator');
+    utils.addAttributes(this.container.find('span'), this, this.settings.attributes, 'text');
+    utils.addAttributes(this.overlay, this, this.settings.attributes, 'overlay');
   },
 
   /**
