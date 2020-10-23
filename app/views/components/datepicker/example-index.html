@@ -4,7 +4,7 @@
 
     <div class="field">
       <label for="date-field-normal" class="label">Date Field</label>
-      <input id="date-field-normal" class="datepicker" name="date-field" type="text"/>
+      <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
     </div>
 
     <div class="field">
@@ -22,7 +22,15 @@
 </div>
 
 <script>
-  $('#date-field-normal').on('change', function () {
-    console.log('Change Event Fired')
+  $('body').on('initialized', function() {
+    $('#date-field-normal')
+      .datepicker({
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+      ]})
+      .on('change', function () {
+        console.log('Change Event Fired')
+      });
   });
 </script>

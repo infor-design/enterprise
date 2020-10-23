@@ -1862,9 +1862,9 @@ Dropdown.prototype = {
       .addClass('is-open');
 
     // Add test automation ids
-    utils.addAttributes(this.list, this, this.settings.attributes);
     utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
     utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
+    this.list.find('label').attr('for', this.list.find('input').attr('id'));
     utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
     utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
     const options = this.list.find('.dropdown-option a');

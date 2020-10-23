@@ -167,6 +167,9 @@ describe('DatePicker API', () => {
       hours -= hours > 12 ? 12 : 0;
       amPm = 'م';
     }
+    if (hours === 12) {
+      amPm = 'ص';
+    }
     if (minutes.toString().length === 1) {
       minutes = `0${minutes}`;
     }

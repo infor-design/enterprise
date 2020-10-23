@@ -22,43 +22,43 @@ describe('MonthView index tests', () => {
     expect(await nextButton.getText()).toEqual('Next Month');
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-id-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await nextButton.click();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() + 1);
 
-    expect(await element(by.id('monthview-id-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
   it('Should be able to change month to previous', async () => {
     const prevButton = await element(by.css('button.prev'));
     const testDate = new Date();
 
-    expect(await element(by.id('monthview-id-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
 
     await prevButton.click();
     await testDate.setDate(1);
     await testDate.setMonth(testDate.getMonth() - 1);
 
-    expect(await element(by.id('monthview-id-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
 
   it('Should be able to set id/automation id', async () => {
-    expect(await element(by.id('monthview-id-btn-prev')).getAttribute('id')).toEqual('monthview-id-btn-prev');
-    expect(await element(by.id('monthview-id-btn-prev')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-btn-prev');
-    expect(await element(by.id('monthview-id-btn-next')).getAttribute('id')).toEqual('monthview-id-btn-next');
-    expect(await element(by.id('monthview-id-btn-next')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-btn-next');
+    expect(await element(by.id('monthview-id-month-view-btn-prev')).getAttribute('id')).toEqual('monthview-id-month-view-btn-prev');
+    expect(await element(by.id('monthview-id-month-view-btn-prev')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-btn-prev');
+    expect(await element(by.id('monthview-id-month-view-btn-next')).getAttribute('id')).toEqual('monthview-id-month-view-btn-next');
+    expect(await element(by.id('monthview-id-month-view-btn-next')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-btn-next');
 
-    expect(await element(by.id('monthview-id-datepicker')).getAttribute('id')).toEqual('monthview-id-datepicker');
-    expect(await element(by.id('monthview-id-datepicker')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-datepicker');
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getAttribute('id')).toEqual('monthview-id-month-view-datepicker');
+    expect(await element(by.id('monthview-id-month-view-datepicker')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-datepicker');
 
-    expect(await element(by.id('monthview-id-datepicker-trigger')).getAttribute('id')).toEqual('monthview-id-datepicker-trigger');
-    expect(await element(by.id('monthview-id-datepicker-trigger')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-datepicker-trigger');
+    expect(await element(by.id('monthview-id-month-view-datepicker-trigger')).getAttribute('id')).toEqual('monthview-id-month-view-datepicker-trigger');
+    expect(await element(by.id('monthview-id-month-view-datepicker-trigger')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-datepicker-trigger');
 
-    expect(await element(by.id('monthview-id-today')).getAttribute('id')).toEqual('monthview-id-today');
-    expect(await element(by.id('monthview-id-today')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-today');
+    expect(await element(by.id('monthview-id-month-view-today')).getAttribute('id')).toEqual('monthview-id-month-view-today');
+    expect(await element(by.id('monthview-id-month-view-today')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-today');
   });
 });
 

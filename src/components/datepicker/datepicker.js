@@ -86,7 +86,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   useCurrentTime: false,
@@ -137,7 +138,8 @@ const DATEPICKER_DEFAULTS = {
   hideButtons: false,
   showToday: true,
   onOpenCalendar: null,
-  isMonthPicker: false
+  isMonthPicker: false,
+  attributes: null
 };
 
 function DatePicker(element, settings) {
@@ -977,6 +979,10 @@ DatePicker.prototype = {
     });
 
     setTimeout(() => {
+      utils.addAttributes(this.popup.find('.btn-monthyear-pane'), this, this.settings.attributes, 'btn-monthyear');
+      utils.addAttributes(this.popup.find('.is-cancel'), this, this.settings.attributes, 'btn-cancel');
+      utils.addAttributes(this.popup.find('.is-select'), this, this.settings.attributes, 'btn-select');
+
       self.calendarAPI.validatePrevNext();
       self.setFocusAfterOpen();
     }, 50);
