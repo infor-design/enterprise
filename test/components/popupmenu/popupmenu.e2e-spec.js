@@ -8,7 +8,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Contextmenu index tests', () => {
+fdescribe('Contextmenu index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextmenu/example-index');
   });
@@ -55,21 +55,16 @@ describe('Contextmenu index tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('popupmenu-id')).getAttribute('id')).toEqual('popupmenu-id');
-    expect(await element(by.id('popupmenu-id')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id');
+    expect(await element(by.id('input-menu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
+    expect(await element(by.id('action-popupmenu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
 
-    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('id')).toEqual('popupmenu-id-option-0');
-    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-0');
-
-    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('id')).toEqual('popupmenu-id-option-1');
-    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-1');
-
-    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('id')).toEqual('popupmenu-id-option-2');
-    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-2');
+    expect(await element(by.id('cut')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-0');
+    expect(await element(by.id('copy')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-1');
+    expect(await element(by.id('paste')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-2');
   });
 });
 
-describe('Popupmenu example-selectable tests', () => {
+fdescribe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable?layout=nofrills');
   });
@@ -174,7 +169,7 @@ describe('Popupmenu example-selectable tests', () => {
 });
 
 // NOTE: tests for infor-design/enterprise#2458
-describe('Popupmenu missing submenu tests', () => {
+fdescribe('Popupmenu missing submenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/test-malformed-popupmenu?layout=nofrills');
   });
@@ -198,7 +193,7 @@ describe('Popupmenu missing submenu tests', () => {
   });
 });
 
-describe('Popupmenu example-selectable-multiple tests', () => {
+fdescribe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
   });
@@ -258,7 +253,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   }
 });
 
-describe('Contextmenu created dynamically tests', () => {
+fdescribe('Contextmenu created dynamically tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu-dynamic');
   });
@@ -287,7 +282,7 @@ describe('Contextmenu created dynamically tests', () => {
   });
 });
 
-describe('Contextmenu immediate tests', () => {
+fdescribe('Contextmenu immediate tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-context-menu');
   });
@@ -321,7 +316,7 @@ describe('Contextmenu immediate tests', () => {
   });
 });
 
-describe('Contextmenu Placement Tests', () => {
+fdescribe('Contextmenu Placement Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextmenu/example-page-rightclick');
   });

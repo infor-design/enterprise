@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <div class="field">
-      <button id="popupmenu-trigger" class="btn-menu">
+      <button id="popupmenu-trigger" class="btn-menu" data-init="false">
         <span>Normal Menu</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
           <use href="#icon-dropdown"></use>
@@ -18,8 +18,8 @@
   </div>
 </div>
 
-<script>
-  $('.popupmenu').popupmenu({
+<script id="test-script">
+  $('#popupmenu-trigger').popupmenu({
     attributes: [
       {
         name: 'id',
