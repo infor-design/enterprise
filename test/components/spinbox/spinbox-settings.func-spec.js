@@ -36,7 +36,8 @@ describe('Spinbox settings', () => {
       min: 0,
       max: 10,
       step: null,
-      maskOptions: null
+      maskOptions: null,
+      attributes: null
     };
 
     settings.min = 0; // example initializes with data-options
@@ -51,7 +52,8 @@ describe('Spinbox settings', () => {
       min: 10,
       max: 20,
       step: null,
-      maskOptions: null
+      maskOptions: null,
+      attributes: null
     };
 
     spinboxApi.updated();
@@ -82,7 +84,8 @@ describe('Spinbox settings', () => {
       min: 0,
       max: 10,
       step: null,
-      maskOptions: null
+      maskOptions: null,
+      attributes: null
     };
 
     expect(spinboxApi.settings).toEqual(settings);
