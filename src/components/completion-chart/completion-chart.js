@@ -228,6 +228,10 @@ CompletionChart.prototype = {
           value: $('.info .value', this.element),
           text: $('.info .text', this.element)
         },
+        plainInfo: {
+          value: $('>.value', this.element),
+          text: $('>.text', this.element)
+        },
         completed: {
           bar: $('.completed.bar', this.element),
           value: $('.completed .value', this.element),
@@ -249,6 +253,31 @@ CompletionChart.prototype = {
         },
         percentText: $('.chart-percent-text', this.element)
       };
+    };
+
+    // Add automation attributes
+    const setAutomationAttributes = function () {
+      const attr = chartData.attributes;
+      if (attr) {
+        const addAttributes = (elem, suffix) => utils.addAttributes(elem, chartData, chartData.attributes, suffix);
+        addAttributes(c.name, 'name');
+        addAttributes(c.info.value, 'info-value');
+        addAttributes(c.info.text, 'info-text');
+        addAttributes(c.plainInfo.value, 'info-value');
+        addAttributes(c.plainInfo.text, 'info-text');
+        addAttributes(c.completed.bar, 'completed-bar');
+        addAttributes(c.completed.value, 'completed-value');
+        addAttributes(c.completed.text, 'completed-text');
+        addAttributes(c.remaining.bar, 'remaining-bar');
+        addAttributes(c.remaining.value, 'remaining-value');
+        addAttributes(c.remaining.text, 'remaining-text');
+        addAttributes(c.targetline.bar, 'targetline-bar');
+        addAttributes(c.targetline.value, 'targetline-value');
+        addAttributes(c.targetline.text, 'targetline-text');
+        addAttributes(c.total.bar, 'total-bar');
+        addAttributes(c.total.value, 'total-value');
+        addAttributes(c.percentText, 'percent-text');
+      }
     };
 
     const setJsonData = function (ds) {
@@ -400,6 +429,7 @@ CompletionChart.prototype = {
     DOM.append(this.element, html.label + html.body.prop('outerHTML'), '<a><use><svg><div><span><br>');
 
     cacheElements();
+    setAutomationAttributes();
     setJsonData();
     updateBars();
 

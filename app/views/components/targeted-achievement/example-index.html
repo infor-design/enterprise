@@ -16,7 +16,11 @@ $('body').on('initialized', function () {
       completed: {text: '50K of 250K', value: 50000, format: '.2s', color: 'primary'},
       remaining: {value: 20000, format: '.2s', text: ' To Target'},
       total: {value: 250000, format: '.2s'},
-    }]
+    }],
+    attributes: [
+      { name: 'id', value: 'targeted-achievement-example1' },
+      { name: 'data-automation-id', value: 'automation-id-targeted-achievement-example1' }
+    ]
   }];
 
   var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');

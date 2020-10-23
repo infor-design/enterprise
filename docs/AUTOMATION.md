@@ -25,7 +25,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Column
 - [x] Column Grouped
 - [x] Column Stacked
-- [ ] Completion Chart
+- [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
 - [ ] Datagrid
@@ -86,7 +86,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Tabs Multi
 - [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
-- [ ] Targeted Achievement
+- [x] Targeted Achievement
 - [x] Textarea
 - [ ] Timeline
 - [ ] Timepicker
