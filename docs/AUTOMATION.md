@@ -14,9 +14,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Bar Stacked
 - [ ] Blockgrid
 - [x] Breadcrumb
-- [x] Bubble
 - [x] Bullet
-- [ ] Busyindicator
+- [x] Busyindicator
 - [ ] Button
 - [x] Calendar
 - [x] Calendar Toolbar
@@ -36,7 +35,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Editor
 - [x] Emptymessage
 - [x] Error Page
-- [ ] Expandablearea
+- [x] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
 - [ ] Fieldset
@@ -48,17 +47,17 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)
 - [x] Images (not needed id can be directly applied)
-- [ ] Input
+- [x] Input (not needed id can be directly applied)
 - [x] Line
 - [ ] Listbuilder
-- [ ] Listview
+- [x] Listview
 - [ ] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
 - [x] Monthview
 - [ ] Multiselect
-- [ ] Notification
+- [x] Notification
 - [x] Pager
 - [x] Pie
 - [ ] Popdown
@@ -81,11 +80,11 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Stepchart
 - [ ] Swaplist
 - [ ] Switch
-- [ ] Tabs
-- [ ] Tabs Header
-- [ ] Tabs Module
-- [ ] Tabs Multi
-- [ ] Tabs Vertical
+- [x] Tabs
+- [x] Tabs Header
+- [x] Tabs Module
+- [x] Tabs Multi
+- [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
 - [x] Textarea

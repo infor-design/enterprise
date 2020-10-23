@@ -15,6 +15,7 @@ const redirect = (req, res, item, example, route) => {
 router.get('/:item/:example', (req, res, next) => {
   redirect(req, res, 'searchfield', 'example-header-compact', 'components/header/example-searchfield-full');
   redirect(req, res, 'searchfield', 'example-header-large', 'components/header/example-searchfield-large');
+  redirect(req, res, 'tabs-vertical', 'example-responsive', 'components/tabs-vertical/example-index');
   next();
 });
 
