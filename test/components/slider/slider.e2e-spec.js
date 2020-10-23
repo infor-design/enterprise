@@ -24,6 +24,31 @@ describe('Slider example-index tests', () => { //eslint-disable-line
       expect(await browser.imageComparison.checkScreen('slider')).toEqual(0);
     });
   }
+
+  it('Should be able to set ids/automation ids', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('slider-id-1')).getAttribute('id')).toEqual('slider-id-1');
+    expect(await element(by.id('slider-id-1')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1');
+
+    expect(await element(by.id('slider-id-1-wrapper')).getAttribute('id')).toEqual('slider-id-1-wrapper');
+    expect(await element(by.id('slider-id-1-wrapper')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-wrapper');
+
+    expect(await element(by.id('slider-id-1-hitarea')).getAttribute('id')).toEqual('slider-id-1-hitarea');
+    expect(await element(by.id('slider-id-1-hitarea')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-hitarea');
+
+    expect(await element(by.id('slider-id-1-range')).getAttribute('id')).toEqual('slider-id-1-range');
+    expect(await element(by.id('slider-id-1-range')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-range');
+
+    expect(await element(by.id('slider-id-1-handle')).getAttribute('id')).toEqual('slider-id-1-handle');
+    expect(await element(by.id('slider-id-1-handle')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-handle');
+
+    expect(await element(by.id('slider-id-1-tick-1')).getAttribute('id')).toEqual('slider-id-1-tick-1');
+    expect(await element(by.id('slider-id-1-tick-1')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-tick-1');
+
+    expect(await element(by.id('slider-id-1-tick-2')).getAttribute('id')).toEqual('slider-id-1-tick-2');
+    expect(await element(by.id('slider-id-1-tick-2')).getAttribute('data-automation-id')).toEqual('slider-automation-id-1-tick-2');
+  });
 });
 
 describe('Slider Vertical tests', () => { //eslint-disable-line
