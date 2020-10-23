@@ -26,6 +26,7 @@
 - `[Emptymessage]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[FieldFilter]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Input]` Add a `revealText` plugin that will add a button to password fields to hide and show sensitive information such as SIN or passwords. ([#4098](https://github.com/infor-design/enterprise/issues/4098))
+- `[Listview]` Added a new setting `allowDeselect` which will make it such that if you select an item you cant deselect, you can only select another item. ([#4376](https://github.com/infor-design/enterprise/issues/4376))
 - `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 - `[Listview]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
