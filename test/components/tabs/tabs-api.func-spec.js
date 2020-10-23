@@ -25,7 +25,11 @@ describe('Tabs API', () => {
     svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
 
-    tabsObj = new Tabs(tabsEl);
+    tabsObj = new Tabs(tabsEl, {
+      attributes: [
+        { name: 'data-automation-id', value: 'tabs-test' }
+      ]
+    });
   });
 
   afterEach(() => {
@@ -260,25 +264,41 @@ describe('Tabs API', () => {
     expect(createTab[0].innerText).toEqual('New Weirdness');
   });
 
+  it('Can add automation ids to Tabs', () => {
+    const settingsObj = {
+      name: 'My New Tab',
+      content: '<p>New Tab Content</p>'
+    };
+
+    tabsObj.add('my-new-tab', settingsObj);
+    const newTab = tabsObj.anchors[5];
+    const newPanel = tabsObj.panels[5];
+
+    expect(newTab.getAttribute('data-automation-id')).toEqual('tabs-test-my-new-tab-a');
+    expect(newPanel.getAttribute('data-automation-id')).toEqual('tabs-test-my-new-tab-panel');
+  });
+
   it('Should hide tab', () => {
     const tab = tabsObj.hide(null, 'tabs-normal-contracts');
+    const hiddenTab = document.querySelectorAll('.tab')[0];
 
     expect(tab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].innerText).toEqual('Contracts');
-    expect(document.querySelectorAll('.tab')[0].classList).toContain('hidden');
+    expect(hiddenTab.innerText.trim()).toEqual('Contracts');
+    expect(hiddenTab.classList).toContain('hidden');
   });
 
   it('Should show tab', () => {
     const hideTab = tabsObj.hide(null, 'tabs-normal-contracts');
+    const hiddenTab = document.querySelectorAll('.tab')[0];
 
     expect(hideTab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].innerText).toEqual('Contracts');
-    expect(document.querySelectorAll('.tab')[0].classList).toContain('hidden');
+    expect(hiddenTab.innerText.trim()).toEqual('Contracts');
+    expect(hiddenTab.classList).toContain('hidden');
 
     const showTab = tabsObj.show(null, 'tabs-normal-contracts');
 
     expect(showTab).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[0].classList).not.toContain('hidden');
+    expect(hiddenTab.classList).not.toContain('hidden');
   });
 
   it('Should disable tab', () => {

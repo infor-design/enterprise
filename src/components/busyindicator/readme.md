@@ -28,7 +28,7 @@ To use the busy indicator place it on a element with class `busy`. Keep in mind 
 You can provide the options inline in the `data-options`. This example below uses the initializer. If you're not using the initializer, call `$('#busy-form').busyindicator()` to initialize the plugin.
 
 ```html
-<form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
+<form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000, 'attributes' : [{ name: 'id', value: 'busyindicator-id-1' }, { name: 'data-automation-id', value: 'busyindicator-automation-id-1' }] }">
   <div class="field">
     <label for="busy-field-name">Name</label>
     <input type="text" id="busy-field-name" name="busy-field-name" value="" />
@@ -59,6 +59,26 @@ $('#busy-form button[type="submit"]').click(function(e) {
 ```
 
 ## Testability
+
+The busyindcator can have custom id's/automation id's that can be used for scripting. To add them, use the option `attributes` to set an id on the generated busyindcator. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+
+```js
+  attributes: { name: 'id', value: args => `message-id-${args.id}` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+Providing the data, this will add an ID added to each busyindicator overlay with `-overlay`, active busyindicator with `-busyindicator`, busyindicator text with `-text` and to the root busyindicator element appended.
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 

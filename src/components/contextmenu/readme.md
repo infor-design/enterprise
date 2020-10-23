@@ -61,4 +61,6 @@ For all additional information, see the [popup menu](./popupmenu) as this compon
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the contextmenu component in the input markup inline. For this reason there is no `attributes` setting like some other components.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

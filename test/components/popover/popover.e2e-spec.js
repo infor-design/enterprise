@@ -24,6 +24,22 @@ describe('Popover Index Tests', () => {
     expect(await element(by.css('.popover')).isDisplayed()).toBeTruthy();
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('popover-trigger')).getAttribute('id')).toEqual('popover-trigger');
+    expect(await element(by.id('popover-trigger')).getAttribute('data-automation-id')).toEqual('popover-trigger-automation-id');
+
+    expect(await element(by.id('popover-contents')).getAttribute('id')).toEqual('popover-contents');
+    expect(await element(by.id('popover-contents')).getAttribute('data-automation-id')).toEqual('popover-contents-automation-id');
+
+    expect(await element(by.id('popover-btn-apply')).getAttribute('id')).toEqual('popover-btn-apply');
+    expect(await element(by.id('popover-btn-apply')).getAttribute('data-automation-id')).toEqual('popover-btn-apply-automation-id');
+
+    expect(await element(by.id('popover-btn-view-more')).getAttribute('id')).toEqual('popover-btn-view-more');
+    expect(await element(by.id('popover-btn-view-more')).getAttribute('data-automation-id')).toEqual('popover-btn-view-more-automation-id');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.id('popover-trigger')).click();

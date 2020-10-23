@@ -9,25 +9,25 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Area
 - [ ] Autocomplete
 - [x] Badges (not needed id can be directly applied)
-- [ ] Bar
-- [ ] Bar Grouped
-- [ ] Bar Stacked
+- [x] Bar
+- [x] Bar Grouped
+- [x] Bar Stacked
 - [ ] Blockgrid
 - [x] Breadcrumb
 - [x] Bubble
 - [ ] Bullet
-- [ ] Busyindicator
+- [x] Busyindicator
 - [ ] Button
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
 - [x] Circlepager
 - [x] Colorpicker
-- [ ] Column
-- [ ] Column Grouped
-- [ ] Column Stacked
+- [x] Column
+- [x] Column Grouped
+- [x] Column Stacked
 - [ ] Completion Chart
-- [ ] Contextmenu
+- [x] Contextmenu
 - [x] Contextualactionpanel
 - [ ] Datagrid
 - [ ] Datepicker
@@ -36,10 +36,10 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Editor
 - [x] Emptymessage
 - [x] Error Page
-- [ ] Expandablearea
+- [x] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
-- [ ] Fieldset
+- [x] Fieldset
 - [x] Fileupload
 - [x] Fileupload Advanced
 - [ ] Header
@@ -48,26 +48,26 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)
 - [x] Images (not needed id can be directly applied)
-- [ ] Input
+- [x] Input (not needed id can be directly applied)
 - [x] Line
 - [ ] Listbuilder
-- [ ] Listview
+- [x] Listview
 - [ ] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
 - [x] Monthview
 - [ ] Multiselect
-- [ ] Notification
+- [x] Notification
 - [x] Pager
 - [x] Pie
 - [ ] Popdown
-- [ ] Popover
+- [x] Popover
 - [ ] Popupmenu
-- [ ] Positive Negative
+- [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
-- [ ] Radar
+- [x] Radar
 - [x] Radios
 - [ ] Rating
 - [x] Scatterplot
@@ -75,17 +75,17 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
 - [ ] Slider
-- [ ] Sparkline
+- [x] Sparkline
 - [ ] Spinbox
 - [ ] Splitter
 - [ ] Stepchart
 - [ ] Swaplist
 - [ ] Switch
-- [ ] Tabs
-- [ ] Tabs Header
-- [ ] Tabs Module
-- [ ] Tabs Multi
-- [ ] Tabs Vertical
+- [x] Tabs
+- [x] Tabs Header
+- [x] Tabs Module
+- [x] Tabs Multi
+- [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
 - [x] Textarea

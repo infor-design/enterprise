@@ -47,7 +47,40 @@ $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: s
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the sparkline chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+var singleLine = [{
+  data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
+  name: 'Inventory',
+  attributes: [
+    { name: 'id', value: 'sparkline1' },
+    { name: 'data-automation-id', value: 'automation-id-sparkline1' }
+  ]
+}];
+
+var twoLines = [{
+    data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
+    name: 'Inventory',
+    attributes: [
+      { name: 'id', value: 'sparkline2-inventory' },
+      { name: 'data-automation-id', value: 'automation-id-sparkline2-inventory' }
+    ]
+}, {
+    data: [40, 30, 40, 16, 50, 17, 15, 39, 15, 18],
+    name: 'Demand',
+    attributes: [
+      { name: 'id', value: 'sparkline2-demand' },
+      { name: 'data-automation-id', value: 'automation-id-sparkline2-demand' }
+    ]
+}];
+```
+
+Providing the data this will add an ID added to each point with `point-{dataIndex}`, medianrange with `-medianrange` and connected-line with `-connected-line` appended.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Future
 

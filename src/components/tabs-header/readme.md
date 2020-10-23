@@ -12,8 +12,10 @@ demo:
     slug: example-add-tab-button
 ---
 
-All tabs components use the same API.  For details on this component's API, please read the [tabs component API](./tabs).
+All tabs components use the same API.  For details on this component's API, please read the [Tabs Component API](./tabs).
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+The same rules for custom attributes and automation id's for the [Tabs Component API]('./tabs') apply to the Header Tabs component.
+
+Please also refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

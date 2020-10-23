@@ -60,6 +60,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.tabCounts=false] If true, Displays a modifiable count above each tab.
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
+ * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
  */
 const TABS_DEFAULTS = {
   addTabButton: false,
@@ -77,7 +78,8 @@ const TABS_DEFAULTS = {
   source: null,
   sourceArguments: {},
   tabCounts: false,
-  verticalResponsive: false
+  verticalResponsive: false,
+  attributes: null
 };
 
 function Tabs(element, settings) {
@@ -254,11 +256,23 @@ Tabs.prototype = {
     self.anchors = self.tablist.children('li:not(.separator)').children('a');
     self.anchors.each(function prepareAnchor() {
       const a = $(this);
+      const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
+
       a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '-1' })
         .parent().attr('role', 'presentation').addClass('tab');
 
+      let dismissibleIcon;
       if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-        $.createIconElement({ icon: 'close', classes: 'icon close' }).insertAfter(a);
+        dismissibleIcon = $.createIconElement({ icon: 'close', classes: 'icon close' });
+        dismissibleIcon.insertAfter(a);
+      }
+
+      // If attributes are defined, add them to various things
+      if (self.settings.attributes) {
+        utils.addAttributes(a, self, self.settings.attributes, `${attrPart}-a`);
+        if (dismissibleIcon) {
+          utils.addAttributes(dismissibleIcon, self, self.settings.attributes, `${attrPart}-close-btn`);
+        }
       }
 
       // Find and configure dropdown tabs
@@ -270,7 +284,8 @@ Tabs.prototype = {
         li.addClass('has-popupmenu').popupmenu({
           menu: dd,
           trigger: 'click',
-          attachToBody: true
+          attachToBody: true,
+          attributes: self.settings.attributes
         });
 
         a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
@@ -319,6 +334,11 @@ Tabs.prototype = {
 
         if (li.is(':not(.has-popupmenu)') && !panel.length) {
           return;
+        }
+
+        if (self.settings.attributes) {
+          const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
+          utils.addAttributes(panel, self, self.settings.attributes, `${attrPart}-panel`);
         }
 
         a.data('panel-link', panel);
@@ -501,6 +521,11 @@ Tabs.prototype = {
       this.moreButton = $();
     }
 
+    // Add extra attributes to the more button, if applicable
+    if (this.moreButton?.length && this.settings.attributes) {
+      utils.addAttributes(this.moreButton, this, this.settings.attributes, 'btn-more');
+    }
+
     // Add the application menu Module Tab, if applicable
     let appMenuTrigger = this.tablist.find('.application-menu-trigger');
     if (this.settings.appMenuTrigger === true) {
@@ -532,6 +557,11 @@ Tabs.prototype = {
       }
     }
 
+    // Add extra attributes to the App Menu Trigger button, if applicable
+    if (appMenuTrigger.length && this.settings.attributes) {
+      utils.addAttributes(appMenuTrigger, this, this.settings.attributes, 'appmenu-trigger-btn');
+    }
+
     // Add Tab Button
     if (this.settings.addTabButton) {
       if (!this.addTabButton || !this.addTabButton.length) {
@@ -548,6 +578,11 @@ Tabs.prototype = {
       this.addTabButton.off().removeData().remove();
       this.addTabButton = undefined;
       this.element.removeClass('has-add-button');
+    }
+
+    // Add extra attributes to the add button, if applicable
+    if (this.addTabButton?.length && this.settings.attributes) {
+      utils.addAttributes(this.addTabButton, this, this.settings.attributes, 'btn-add');
     }
 
     return this;
@@ -2249,6 +2284,7 @@ Tabs.prototype = {
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
    * @param {object} options incoming options for the new tab.
    * @param {string} [options.name] the text title of the new tab.
+   * @param {Array} [options.attributes] additional attributes needed for the new tab.
    * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
    * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
    * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.
@@ -2304,12 +2340,15 @@ Tabs.prototype = {
     const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
     const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
+    let iconMarkup;
 
     tabHeaderMarkup.html(anchorMarkup);
 
     if (options.isDismissible) {
+      iconMarkup = $.createIconElement({ icon: 'close', classes: 'close icon' });
+      utils.addAttributes(iconMarkup, this, options.attributes, 'close-btn');
       tabHeaderMarkup.addClass('dismissible');
-      tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close icon' }));
+      tabHeaderMarkup.append(iconMarkup);
     }
 
     if (this.settings.tabCounts) {
@@ -2318,6 +2357,17 @@ Tabs.prototype = {
 
     if (options.dropdown) {
       // TODO: Need to implement the passing of Dropdown Tab menus into this method.
+    }
+
+    // Add additional attributes, if applicable.
+    // NOTE: Do not add IDs this way.
+    let attrs = this.settings.attributes || [];
+    if (Array.isArray(options.attributes)) {
+      attrs = attrs.concat(options.attributes);
+    }
+    if (attrs.length) {
+      utils.addAttributes(anchorMarkup, this, attrs, `${tabId}-a`);
+      utils.addAttributes(tabContentMarkup, this, attrs, `${tabId}-panel`);
     }
 
     function insertIntoTabset(self, targetIndex) {
@@ -3192,13 +3242,16 @@ Tabs.prototype = {
       xOffset = 3;
     }
 
+    const attributes = self.settings.attributes;
+
     // Invoke the popup menu on the button.
     self.moreButton.popupmenu({
       autoFocus: false,
       attachToBody: true,
       menu: 'tab-container-popupmenu',
       trigger: 'immediate',
-      offset: { x: xOffset }
+      offset: { x: xOffset },
+      attributes
     });
     self.moreButton.addClass('popup-is-open');
     self.popupmenu = self.moreButton.data('popupmenu');

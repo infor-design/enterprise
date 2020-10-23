@@ -9,7 +9,8 @@ const NOTIFICATION_DEFAULTS = {
   type: 'alert',
   parent: '.header',
   link: '#',
-  linkText: 'Click here to view.'
+  linkText: 'Click here to view.',
+  attributes: null
 };
 
 /**
@@ -22,6 +23,7 @@ const NOTIFICATION_DEFAULTS = {
  * @param {string} [settings.parent] The jQuery selector to find where to insert the message into (prepended). By default this will appear under the .header on the page.
  * @param {string} [settings.link] The url to use for the hyperlink
  * @param {string} [settings.linkText] The text to show in the hyperlink. Leave empty for no link.
+ * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
@@ -82,6 +84,14 @@ Notification.prototype = {
 
     parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
     $(this.notificationEl).animateOpen();
+
+    utils.addAttributes($(this.notificationEl), this, this.settings.attributes);
+    utils.addAttributes($(this.notificationEl).find('.notification-icon'), this, this.settings.attributes, 'icon');
+    utils.addAttributes($(this.notificationEl).find('.notification-text'), this, this.settings.attributes, 'text');
+    utils.addAttributes($(this.notificationEl).find('.notification-text a'), this, this.settings.attributes, 'link');
+    utils.addAttributes($(this.notificationEl).find('button.notification-close'), this, this.settings.attributes, 'btn-close');
+    utils.addAttributes($(this.notificationEl).find('button.notification-close .icon'), this, this.settings.attributes, 'icon-close');
+
     return this;
   },
 
