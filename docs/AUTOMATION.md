@@ -40,8 +40,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Field Filter
 - [ ] Field Options
 - [x] Fieldset
-- [ ] Fileupload
-- [ ] Fileupload Advanced
+- [x] Fileupload
+- [x] Fileupload Advanced
 - [ ] Header
 - [ ] Hierarchy
 - [ ] Homepage
@@ -71,7 +71,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Radios
 - [ ] Rating
 - [x] Scatterplot
-- [ ] Searchfield
+- [x] Searchfield
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
 - [ ] Slider

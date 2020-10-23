@@ -83,6 +83,15 @@ describe('Searchfield example-index tests', () => {
     // Identify the added "No Results" link
     expect(await element(by.linkText('No Results'))).toBeDefined();
   });
+
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('searchfield')).getAttribute('id')).toEqual('searchfield');
+    expect(await element(by.id('searchfield')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id');
+
+    expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-close');
+  });
 });
 
 describe('Searchfield go-button tests', () => {

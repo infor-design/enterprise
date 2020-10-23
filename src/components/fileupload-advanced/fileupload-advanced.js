@@ -149,6 +149,11 @@ FileUploadAdvanced.prototype = {
 
     DOM.append(this.element, html, '<div><svg><use><label><span><input>');
     this.dropArea = $('.drop-area', this.element);
+
+    // Add test automation ids
+    utils.addAttributes(this.dropArea, this, this.settings.attributes);
+    utils.addAttributes(this.dropArea.find('svg'), this, this.settings.attributes, 'icon');
+    utils.addAttributes(this.dropArea.find('label'), this, this.settings.attributes, 'label');
   },
 
   /**
