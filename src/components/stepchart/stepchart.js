@@ -14,7 +14,8 @@ const DEFAULT_STEPCHART_OPTIONS = {
   extraText: '',
   completedColor: null,
   allCompletedColor: null,
-  inProgressColor: null
+  inProgressColor: null,
+  attributes: null
 };
 
 /**
@@ -33,8 +34,9 @@ const DEFAULT_STEPCHART_OPTIONS = {
  *  can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
  * @param {string} [settings.completedColor = null] The color to show completed steps. Defaults to primary color.
  * @param {string} [settings.allCompletedColor = null] The color to steps when all are completed. Defaults to primary color.
- * @param {string} i[settings.nProgressColor The color to show in-progress steps. Defaults to ruby02.
- */
+ * @param {string} [settings.inProgressColor = null] The color to show in-progress steps. Defaults to ruby02.
+ * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 function StepChart(element, settings) {
   return this.init(element, settings);
 }
@@ -90,6 +92,7 @@ StepChart.prototype = {
 
     for (let i = 0; i < this.settings.steps; i++) {
       const step = $('<div class="step-chart-step"></div>');
+      utils.addAttributes(step, this.settings, this.settings.attributes, `step${i}`);
 
       // Set up ticks
       if (i < this.settings.completed) {
@@ -146,6 +149,11 @@ StepChart.prototype = {
       container.find('.step-chart-step').css('background-color', this.settings.allCompletedColor);
       label.find('.icon').attr('style', `fill: ${this.settings.allCompletedColor}!important`);
     }
+
+    // Add automation attributes
+    utils.addAttributes(label, this.settings, this.settings.attributes, 'label');
+    utils.addAttributes(label.find('.icon'), this.settings, this.settings.attributes, 'icon');
+    utils.addAttributes(label.find('.step-chart-label-small'), this.settings, this.settings.attributes, 'label-small');
 
     return this;
   },

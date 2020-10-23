@@ -38,7 +38,68 @@ $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the bullet chart that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+// Example single
+var dataSingleBullet = [{
+  data: [
+    {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
+      tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
+  ],
+  barColors: [
+    palette.turquoise[Soho.theme.uplift ? '20': '10'].value,
+    palette.turquoise[Soho.theme.uplift ? '30': '30'].value,
+    palette.turquoise[Soho.theme.uplift ? '60': '50'].value,
+    palette.turquoise[Soho.theme.uplift ? '80': '70'].value,
+    palette.turquoise[Soho.theme.uplift ? '100': '90'].value
+  ],
+  lineColors: ['#000000', '#000000', '#000000'],
+  markerColors: ['#000000'],
+  attributes: [
+    { name: 'id', value: 'bullet-example1' },
+    { name: 'data-automation-id', value: 'automation-id-bullet-example1' }
+  ]
+}];
+
+// Example grouped
+var dataGroupedBullet = [{
+  data: [
+    {
+      title: 'Schedule Adherence By Quantity',
+      subtitle: '',
+      url: '/some-path/some-url-1',
+      ranges: [2, 4, 6],
+      measures: [2, 2],
+      markers: [6, 6]
+    }, {
+      title: 'Schedule Adherence By Date',
+      subtitle: '',
+      url: '/some-path/some-url-2',
+      ranges: [2, 4, 6],
+      measures: [2, 2],
+      markers: [6, 6]
+    }
+  ],
+  barColors: [
+    palette.emerald['20'].value,
+    palette.emerald['40'].value,
+    palette.emerald['60'].value
+  ],
+  lineColors: ['#000000', '#000000', '#000000'],
+  markerColors: ['#000000'],
+  attributes: [
+    { name: 'id', value: 'bullet-group-example1' },
+    { name: 'data-automation-id', value: 'automation-id-bullet-group-example1' }
+  ]
+}];
+```
+
+Providing the data this will add an ID added to each range with `-range{index}`, measure with `-measure{index}`, difference with `-difference`, title with `-title`, subtitle with `-subtitle`, marker with `-marker` and if more then one marker `-marker{index}` appended. In addition if data grouped the related items will get the same id with `-group{index}` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

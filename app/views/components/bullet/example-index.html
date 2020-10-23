@@ -26,7 +26,11 @@ $('body').on('initialized', function () {
           palette.turquoise[Soho.theme.uplift ? '100': '90'].value
         ],
         lineColors: ['#000000', '#000000', '#000000'],
-        markerColors: ['#000000']
+        markerColors: ['#000000'],
+        attributes: [
+          { name: 'id', value: 'bullet-example1' },
+          { name: 'data-automation-id', value: 'automation-id-bullet-example1' }
+        ]
       }];
 
     $('#bullet-example1').chart({type: 'bullet', dataset: dataset1})
