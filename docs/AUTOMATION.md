@@ -98,4 +98,4 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Tree
 - [x] Treemap
 - [x] Week View
-- [ ] Wizard
+- [x] Wizard
