@@ -32,6 +32,7 @@ const COMPONENT_NAME = 'listview';
  * @param {boolean} [settings.searchable=false] If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
  * @param {boolean} [settings.highlight=true] If false the highlighting of text when using searchable is disabled. You may want to disable this on larger lists.
  * @param {string|boolean} [settings.selectable='single'] selection mode, can be false, 'single', 'multiple' or 'mixed'
+ * @param {boolean} [settings.allowDeselect=true] If using single select you can set this if you want the rows to not be deSelected.
  * @param {boolean} [settings.selectOnFocus=true] If true the first item in the list will be selected as it is focused.
  * @param {boolean} [settings.showCheckboxes=true] If false will not show checkboxes used with multiple selection mode only
  * @param {boolean} [settings.hoverable=true] If true the list element will show a hover action to indicate its actionable.
@@ -64,6 +65,7 @@ const LISTVIEW_DEFAULTS = {
   source: null,
   forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false,
+  allowDeselect: true,
   showPageSizeSelector: false,
   listFilterSettings: null,
   pagerSettings: {
@@ -950,6 +952,10 @@ ListView.prototype = {
   * @param {jquery[]|number} li  Either the actually jQuery list element or a zero based index
   */
   deselect(li) {
+    if (!this.settings.allowDeselect) {
+      return;
+    }
+
     if (typeof li === 'number') {
       li = $(this.element.children()[0]).children().eq(li);
     }
@@ -985,6 +991,10 @@ ListView.prototype = {
     }
 
     isChecked = li.hasClass('is-selected');
+
+    if (isChecked && !this.settings.allowDeselect) {
+      return;
+    }
 
     // focus
     if (!li.is('[tabindex="0"]')) {

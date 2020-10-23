@@ -552,3 +552,32 @@ describe('Listview flex card empty tests', () => {
     });
   }
 });
+
+describe('Listview allow delselect tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/listview/example-singleselect-no-deselect');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul li'))), config.waitsFor);
+  });
+
+  it('Should disallow deselect on click', async () => {
+    const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
+    await listviewItemEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li.is-selected'))), config.waitsFor);
+
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
+
+    expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
+
+    await listviewItemEl.click();
+
+    expect(await element(by.css('li.is-selected')).isPresent()).toBeTruthy();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
+
+    expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
+  });
+});
