@@ -27,7 +27,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Column Grouped
 - [x] Column Stacked
 - [ ] Completion Chart
-- [ ] Contextmenu
+- [x] Contextmenu
 - [x] Contextualactionpanel
 - [ ] Datagrid
 - [ ] Datepicker
@@ -39,7 +39,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Expandablearea
 - [ ] Field Filter
 - [ ] Field Options
-- [ ] Fieldset
+- [x] Fieldset
 - [ ] Fileupload
 - [ ] Fileupload Advanced
 - [ ] Header
@@ -62,7 +62,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Pager
 - [x] Pie
 - [ ] Popdown
-- [ ] Popover
+- [x] Popover
 - [ ] Popupmenu
 - [x] Positive Negative
 - [ ] Processindicator
