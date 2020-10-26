@@ -230,7 +230,7 @@ describe('Locale API', () => {
   it('Should format hebrew dates', () => {
     Locale.set('he-IL');
 
-    expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('1.1.2020');
+    expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('01/01/2020');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('8 בנוב׳ 2019');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('8 בנובמבר 2019');
   });
@@ -1453,8 +1453,8 @@ describe('Locale API', () => {
 
     Locale.set('he-IL');
 
-    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22.7.2020 20:11');
-    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('22.7.2020 21:11 GMT-4‎');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('22/07/2020 20:11');
+    expect(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' })).toEqual('22/07/2020 21:11 GMT-4‎');
 
     Locale.set('hi-IN');
 
