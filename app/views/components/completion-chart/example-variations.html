@@ -24,7 +24,11 @@ $('body').on('initialized', function () {
       completed: {text: 'Spent', value: 50000, format: '$,.0f'},
       remaining: {text: 'Pending', value: 10000, format: '$,.0f'},
       total: {value: 95000, format: '$,.0f'},
-    }]
+    }],
+    attributes: [
+      { name: 'id', value: 'completion-chart-example1' },
+      { name: 'data-automation-id', value: 'automation-id-completion-chart-example1' }
+    ]
   }];
 
   var dataset2 = [{
@@ -75,7 +79,11 @@ $('body').on('initialized', function () {
       info: {text: '/100'},
       completed: {value: 84},
       targetline: {text: 'target', value: '87%'},
-    }]
+    }],
+    attributes: [
+      { name: 'id', value: 'completion-chart-example7' },
+      { name: 'data-automation-id', value: 'automation-id-completion-chart-example7' }
+    ]
   }];
 
   var api1 = $('#example-1').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
