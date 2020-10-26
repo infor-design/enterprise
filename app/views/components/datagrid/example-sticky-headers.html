@@ -1,12 +1,17 @@
 <style>
-  .datagrid-container {
+  .sticky-container .datagrid-container,
+  .sticky-container .datagrid-wrapper {
+    overflow: visible !important;
+  }
+  .sticky-container .datagrid-container th {
+    position: -webkit-sticky;
     position: sticky;
     top: 45px;
   }
 
-  .page-container .scrollable .toolbar {
+  .sticky-container .toolbar {
     position: sticky;
-    top: 10px;
+    top: 15px;
   }
 </style>
 
@@ -22,8 +27,20 @@
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
-    <div id="datagrid-one" class="datagrid">
+    <div class="sticky-container">
+      <div id="datagrid-one" class="datagrid">
+      </div>
     </div>
 
     <p>&nbsp;</p>
@@ -36,10 +53,32 @@
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
-    <div id="datagrid-two" class="datagrid">
+    <div class="sticky-container">
+      <div id="datagrid-two" class="datagrid">
+      </div>
     </div>
 
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -70,11 +109,18 @@
       columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
 
       // Init and get the api for the grid
-      $('#datagrid-one, #datagrid-two').datagrid({
+      $('#datagrid-one').datagrid({
         columns: columns,
         dataset: res,
         saveColumns: false,
-        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+        toolbar: {title: 'Datagrid One', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+
+      $('#datagrid-two').datagrid({
+        columns: columns,
+        dataset: res,
+        saveColumns: false,
+        toolbar: {title: 'Datagrid Two ', results: true, actions: true, rowHeight: true, personalize: true}
       });
     });
  });
