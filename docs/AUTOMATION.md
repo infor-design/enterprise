@@ -68,14 +68,14 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Progress
 - [x] Radar
 - [x] Radios
-- [ ] Rating
+- [x] Rating (not needed id can be directly applied)
 - [x] Scatterplot
 - [x] Searchfield
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
-- [ ] Slider
+- [x] Slider
 - [x] Sparkline
-- [ ] Spinbox
+- [x] Spinbox
 - [ ] Splitter
 - [x] Stepchart
 - [ ] Swaplist
