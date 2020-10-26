@@ -15,17 +15,17 @@
 
           <div class="field">
             <label for="username" class="required accessible">Email</label>
-            <input type="text" name="username" id="username" autocomplete="off" data-validate="required"/>
+            <input type="text" name="username" id="username" autocomplete="off" data-validate="required" data-automation-id="username-automation-id" />
           </div>
 
           <div class="field">
             <label for="password" class="required accessible">Password</label>
-            <input type="password" id="password" data-validate="required" name="password"/>
+            <input type="password" id="password" data-validate="required" name="password" data-automation-id="password-automation-id" />
           </div>
 
           <div class="field">
             <label for="states" class="label">Server</label>
-            <select id="states" name="states" class="dropdown">
+            <select id="states" name="states" class="dropdown" data-automation-id="states-automation-id">
               <option value="N">NL</option>
               <option value="U">US</option>
               <option value="E">EU</option>
@@ -33,7 +33,7 @@
             </select>
           </div>
 
-          <button id="submit" class="btn-primary" type="submit">Sign in</button>
+          <button id="submit" class="btn-primary" type="submit" data-automation-id="submit-automation-id">Sign in</button>
           <a id="forgot-password" class="hyperlink" href="./example-forgotpassword">Forgot Password?</a>
 
         </form>
