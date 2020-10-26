@@ -71,15 +71,15 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Rating
 - [x] Scatterplot
 - [x] Searchfield
-- [ ] Signin
+- [x] Signin (not needed id can be directly applied)
 - [x] Skiplink (not needed id can be directly applied)
 - [ ] Slider
 - [x] Sparkline
 - [ ] Spinbox
-- [ ] Splitter
+- [x] Splitter
 - [x] Stepchart
 - [ ] Swaplist
-- [ ] Switch
+- [x] Switch (not needed id can be directly applied)
 - [x] Tabs
 - [x] Tabs Header
 - [x] Tabs Module
@@ -88,8 +88,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Tag (not needed id can be directly applied)
 - [ ] Targeted Achievement
 - [x] Textarea
-- [ ] Timeline
-- [ ] Timepicker
+- [x] Timeline (not needed id can be directly applied)
+- [x] Timepicker
 - [x] Toast
 - [x] Toolbar (deprecated for toolbar flex)
 - [ ] Toolbar Flex

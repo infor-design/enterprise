@@ -3,7 +3,7 @@
 {{> includes/svg-inline-refs}}
 <div class="page-container scrollable">
   <div class="wrapper">
-    <section class="signin" role="main">
+    <section class="signin" role="main" id="signin-container-id">
 
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-logo"></use>
@@ -11,7 +11,7 @@
 
         <h1>Application Name</h1>
 
-        <form id="signin" data-validate-on="submit" autocomplete="off">
+        <form id="signin" data-validate-on="submit" autocomplete="off" data-automation-id="signin-automation-id">
 
           <div class="field">
             <label for="username" class="required accessible">Email</label>

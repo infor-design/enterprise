@@ -51,6 +51,16 @@ describe('Timepicker example-index tests', () => {
     expect(await timepickerEl.getAttribute('value')).toEqual('1:00 AM');
   });
 
+  it('Should be able to set id/automation id', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('timepicker-id-1')).getAttribute('id')).toEqual('timepicker-id-1');
+    expect(await element(by.id('timepicker-id-1')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1');
+
+    expect(await element(by.id('timepicker-id-1-trigger')).getAttribute('id')).toEqual('timepicker-id-1-trigger');
+    expect(await element(by.id('timepicker-id-1-trigger')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-trigger');
+  });
+
   // Test has strange behavior on CI, so isolating this to local
   if (!utils.isCI()) {
     it('Should pick time from picker and set to field', async () => {
