@@ -380,18 +380,24 @@ describe('Popupmenu (settings)', () => {
     popupmenuButtonEl = null;
     svgEl = null;
     popupmenuObj = null;
-    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
+    document.body.insertAdjacentHTML('afterbegin', popupmenuContextMenuHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
-    popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
     svgEl = document.body.querySelector('.svg-icons');
   });
 
   afterEach(() => {
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    if (popupmenuObj) {
+      popupmenuObj.destroy();
+    }
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
   });
 
   it('should place the menu underneath the `body` element with `attachToBody` set', () => {
+    popupmenuButtonEl = document.body.querySelector('#input-menu');
     popupmenuObj = new PopupMenu(popupmenuButtonEl, {
       attachToBody: true
     });
@@ -401,27 +407,48 @@ describe('Popupmenu (settings)', () => {
 
     // Menu markup should move back to immediately after the button when destroyed.
     popupmenuObj.destroy();
-    const popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu');
+    const popupmenuEl = document.body.querySelector('#input-menu + .popupmenu');
 
     expect(popupmenuEl).toBeDefined();
   });
 
   it('should remove the menu `<ul>` from the DOM when destroyed with `removeOnDestroy` set', () => {
+    popupmenuButtonEl = document.body.querySelector('#input-menu');
     popupmenuObj = new PopupMenu(popupmenuButtonEl, {
       removeOnDestroy: true
     });
-    let popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu-wrapper > .popupmenu');
+    let popupmenuEl = document.body.querySelector('#input-menu + .popupmenu-wrapper > .popupmenu');
 
     // When invoked, references should exist
     expect(popupmenuEl).toBeDefined();
     expect(popupmenuObj.menu).toBeDefined();
 
     popupmenuObj.destroy();
-    popupmenuEl = document.body.querySelector('#popupmenu-trigger + .popupmenu');
+    popupmenuEl = document.body.querySelector('#input-menu + .popupmenu');
 
     // When destroyed with the setting, references should be gone
     expect(popupmenuEl).toBe(null);
     expect(popupmenuObj.menu).not.toBeDefined();
+  });
+
+  it('can append custom attributes via setting', () => {
+    popupmenuButtonEl = document.body.querySelector('#input-menu');
+    popupmenuObj = new PopupMenu(popupmenuButtonEl, {
+      attributes: [{
+        name: 'data-automation-id',
+        value: 'action-popupmenu'
+      }]
+    });
+    const popupmenuEl = document.body.querySelector('.popupmenu-wrapper > .popupmenu');
+    const firstItemEl = popupmenuEl.querySelector('li:first-child a');
+    const lastSubItemEl = popupmenuEl.querySelector('li.submenu li:last-child a');
+
+    expect(popupmenuButtonEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
+    expect(popupmenuEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
+    expect(firstItemEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-option-0');
+
+    // Account for menu nesting
+    expect(lastSubItemEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-option-3-2');
   });
 });
 
@@ -439,9 +466,14 @@ describe('Popupmenu toData() API', () => {
     });
 
     afterEach(() => {
-      popupmenuObj.destroy();
-      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-      svgEl.parentNode.removeChild(svgEl);
+      if (popupmenuObj) {
+        popupmenuObj.destroy();
+      }
+      cleanup([
+        '.svg-icons',
+        '.row',
+        '.popupmenu-wrapper'
+      ]);
     });
 
     it('Should convert the main Popupmenu example into an object representation', () => {

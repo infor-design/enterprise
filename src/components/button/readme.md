@@ -100,7 +100,28 @@ Once the proper markup is in place calling `$(elem).button()` will correctly ini
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+In most cases, special attributes or automation ids should be added directly to the button markup:
+
+```html
+<button id="my-button" data-automation-id="my-button" class="btn-primary">
+  <span>My Button</span>
+</button>
+```
+
+It's also possible to use the Javascript IDS Button API to add attributes programmatically.  This is helpful when composing more complex components using the button as a trigger:
+
+```js
+$('#my-button').button({
+  attributes: [
+    {
+      name: 'data-automation-id',
+      value: 'my-button'
+    }
+  ]
+})
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

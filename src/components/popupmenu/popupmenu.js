@@ -690,14 +690,27 @@ PopupMenu.prototype = {
     contextElement[0].setAttribute('role', 'menu');
     contextElement[0].setAttribute('aria-labelledby', this.element.attr('id'));
 
+    // Calculates a nested index
+    function getTreeIndex(li) {
+      const $li = $(li);
+      const parentLis = $li.parents('li');
+      const indexes = [];
+
+      $li.add(parentLis).each((i, thisLi) => {
+        indexes.push($(thisLi).parent().children('li:not(.heading):not(.separator)').index(thisLi));
+      });
+
+      return indexes.join('-');
+    }
+
     lis.each((i, li) => {
       const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
       const $a = $(a);
       const $li = $(li);
-      let span = $(a).children('span')[0];
-      let submenu = $(li).children('ul')[0];
-      const icon = $(li).find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
-      const submenuWrapper = $(li).children('.wrapper')[0];
+      let span = $a.children('span')[0];
+      let submenu = $li.children('ul')[0];
+      const icon = $li.find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
+      const submenuWrapper = $li.children('.wrapper')[0];
 
       li.setAttribute('role', 'none');
 
@@ -707,7 +720,7 @@ PopupMenu.prototype = {
 
         // Add user-defined attributes to the anchor
         if (self.settings.attributes) {
-          utils.addAttributes($a, self, self.settings.attributes, `option-${i}`);
+          utils.addAttributes($a, self, self.settings.attributes, `option-${getTreeIndex(li)}`);
         }
 
         // disabled menu items, by prop and by className

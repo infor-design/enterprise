@@ -45,6 +45,7 @@ const TOOLBAR_ELEMENTS = [
 
 // Mappings from toolbar item type to component API
 const TOOLBAR_COMPONENT_APIS = {
+  button: 'button',
   actionbutton: 'popupmenu',
   colorpicker: 'colorpicker',
   menubutton: 'popupmenu',
@@ -62,7 +63,8 @@ const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   readOnly: false,
   hidden: false,
   componentSettings: undefined,
-  allowTabs: false
+  allowTabs: false,
+  attributes: null,
 };
 
 /**
@@ -409,6 +411,13 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * @returns {number} representing the index of this Toolbar Item within its current section.
+   */
+  get index() {
+    return this.toolbarAPI.items.indexOf(this);
+  },
+
+  /**
    * Sets up all event listeners for this element.
    * @returns {void}
    */
@@ -511,13 +520,52 @@ ToolbarFlexItem.prototype = {
       this.readonly = this.readonly;
     }
 
+    // In some cases we need to concatenate attributes together.
+    // The main Flex Toolbar API will pass on its attributes as an `attributes` setting on each Item.
+    // If an attribute is provided by the Toolbar API, but a component instance is already configured
+    // to have these attributes, we don't want to change the ones on the component instance.
+    // However, we want any unset attributes at the component level to pass on from the Toolbar.
+    if (Array.isArray(this.settings.attributes)) {
+      if (!this.settings.componentSettings) {
+        this.settings.componentSettings = {};
+      }
+
+      let attrs;
+      if (!this.settings.componentSettings.attributes) {
+        attrs = this.settings.attributes.map(obj => ({
+          name: obj.name,
+          value: `${obj.value}-${this.type}-${this.index}`
+        }));
+      } else {
+        // If an item attribute is not defined, but a toolbar attribute is,
+        // Make a custom one by concatenating properties of these two together.
+        attrs = [];
+        this.settings.attributes.forEach((topLevelAttr) => {
+          const itemAttr = this.settings.componentSettings.attributes.find(
+            toolbarAttrs => toolbarAttrs.name === topLevelAttr.name
+          );
+          if (itemAttr) {
+            // Simply push the existing one if it finds it
+            attrs.push(itemAttr);
+          } else {
+            attrs.push({
+              name: topLevelAttr.name,
+              value: `${topLevelAttr.value}-${this.type}-${this.index}`
+            });
+          }
+        });
+      }
+      this.settings.componentSettings.attributes = attrs;
+    }
+
     // Setup component APIs, if applicable.
     // NOTE: Soho Initializer doesn't invoke these automatically, by nature of the
     // base elements existing inside the Flex Toolbar.
     const $element = $(this.element);
     const componentType = TOOLBAR_COMPONENT_APIS[this.type];
+    let api;
     if (componentType) {
-      const api = $element.data(componentType);
+      api = $element.data(componentType);
       if (!api) {
         $element[componentType](this.settings.componentSettings);
       } else {

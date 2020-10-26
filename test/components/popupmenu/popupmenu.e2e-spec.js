@@ -8,7 +8,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Contextmenu index tests', () => {
+describe('Contextmenu index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextmenu/example-index');
   });
@@ -64,7 +64,7 @@ fdescribe('Contextmenu index tests', () => {
   });
 });
 
-fdescribe('Popupmenu example-selectable tests', () => {
+describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable?layout=nofrills');
   });
@@ -169,7 +169,7 @@ fdescribe('Popupmenu example-selectable tests', () => {
 });
 
 // NOTE: tests for infor-design/enterprise#2458
-fdescribe('Popupmenu missing submenu tests', () => {
+describe('Popupmenu missing submenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/test-malformed-popupmenu?layout=nofrills');
   });
@@ -193,7 +193,7 @@ fdescribe('Popupmenu missing submenu tests', () => {
   });
 });
 
-fdescribe('Popupmenu example-selectable-multiple tests', () => {
+describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
   });
@@ -253,7 +253,7 @@ fdescribe('Popupmenu example-selectable-multiple tests', () => {
   }
 });
 
-fdescribe('Contextmenu created dynamically tests', () => {
+describe('Contextmenu created dynamically tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu-dynamic');
   });
@@ -282,7 +282,7 @@ fdescribe('Contextmenu created dynamically tests', () => {
   });
 });
 
-fdescribe('Contextmenu immediate tests', () => {
+describe('Contextmenu immediate tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tree/example-context-menu');
   });
@@ -316,7 +316,7 @@ fdescribe('Contextmenu immediate tests', () => {
   });
 });
 
-fdescribe('Contextmenu Placement Tests', () => {
+describe('Contextmenu Placement Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/contextmenu/example-page-rightclick');
   });

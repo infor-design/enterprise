@@ -13,6 +13,7 @@
 - `[Bar/Bar Grouped/Bar Stacked]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Breadcrumb]` Added `attributes` setting to Breadcrumb Items for setting automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Bullet/Stepchart]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Button]` Added `attributes` setting to Button API for automation id's and id's ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Calendar/Monthview/WeekView/CalendarToolbar]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Column/Column Grouped/Column Stacked/Positive Negative]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
@@ -36,6 +37,8 @@
 - `[Message]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Modal]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
 - `[Pager/Wizard]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
+- `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
+- `[Popupmenu]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 - `[Notification]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Radar/Sparkline]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
@@ -44,6 +47,7 @@
 - `[Textarea]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Treemap]` Added ability to show a tooltip. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 - `[Tabs]` Added `attributes` setting to the `add()` method's options argument for setting automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Toolbar Flex]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Radios/Progress/Treemap]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 
 ### v4.34.0 Fixes
