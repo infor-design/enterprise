@@ -3237,6 +3237,30 @@ describe('Datagrid icon buttons tests', () => {
   });
 });
 
+describe('Datagrid keyword search server side tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-keyword-search-serverside?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should show highlights on server side keyword search', async () => {
+    await element(by.id('gridfilter')).click();
+    await element(by.id('gridfilter')).sendKeys('214');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.datagrid-result-count')).getText()).toEqual('(781 results)');
+    expect(await element.all(by.css('.datagrid-cell-wrapper i')).count()).toEqual(10);
+  });
+});
+
 describe('Datagrid loaddata selected rows tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-loaddata-selected-rows');

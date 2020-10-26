@@ -59,6 +59,7 @@
 - `[Datagrid]` To allow for some script tools to work we now set draggable to true. ([#4490](https://github.com/infor-design/enterprise/issues/4490))
 - `[Datagrid]` Fixed an error on the filter box on the personalization dialog where it would error if there is a column with no name field. ([#4495](https://github.com/infor-design/enterprise/issues/4495))
 - `[Datagrid]` Fixed links when changing personalization as they would inherit the wrong color. ([#4481](https://github.com/infor-design/enterprise/issues/4481))
+- `[Datagrid]` Fixed a bug where seaching with the search on the toolbar would not highlight results. ([#4488](https://github.com/infor-design/enterprise/issues/4488))
 - `[Datepicker]` Changed the month/year picker to skip 10 years instead of one. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
 - `[Editor]` Fixed an issue where the focus was getting lost after pressing toolbar buttons. ([#4335](https://github.com/infor-design/enterprise/issues/4335))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
