@@ -2763,6 +2763,7 @@ $datagrid-small-row-height: 25px;
 
 // Grid Headers
 .datagrid-header {
+  background-color: $datagrid-header-bg-color;
   overflow: hidden;
 
   &.left {
@@ -4893,7 +4894,7 @@ html[dir='rtl'] {
 }
 
 .sticky-container {
-  overflow: auto;
+  // overflow: auto;
   width: 100%;
 }
 
