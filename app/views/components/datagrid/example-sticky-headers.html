@@ -1,33 +1,5 @@
-<style>
-  .sticky-container .datagrid-container,
-  .sticky-container .datagrid-wrapper {
-    overflow: visible !important;
-  }
-  .sticky-container .datagrid-container th {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 45px;
-  }
-
-  .sticky-container .toolbar {
-    position: sticky;
-    top: 15px;
-  }
-</style>
-
 <div class="row">
   <div class="twelve columns">
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -52,17 +24,6 @@
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
 
     <div class="sticky-container">
       <div id="datagrid-two" class="datagrid">
@@ -72,6 +33,16 @@
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+    <div class="sticky-container">
+      <div id="datagrid-three" class="datagrid">
+      </div>
+    </div>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -96,31 +67,50 @@
   $('body').one('initialized', function () {
     var columns = [];
 
-    $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+    $.getJSON('{{basepath}}api/books', function(res) {
+      var filterOptions = [{id: 'Test', value: 'Test', label: 'Test'} ];
 
       // Define Columns for the Grid.
-      columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
-      columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
-      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'book', name: 'Book', field: 'book', formatter: Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
+      columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
+      columns.push({ id: 'ledger', name: 'Ledger', field: 'ledger', formatter: Formatters.Lookup, filterType: 'lookup', textOverflow: 'ellipsis' });
+      columns.push({ id: 'bookCurrency', name: 'Book Currency', field: 'bookCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'transactionCurrency', name: 'Transaction Currency', field: 'transactionCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'postHistory', name: 'Post History', field: 'postHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+      columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+      columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
 
-      // Init and get the api for the grid
+      // Simple grid with toolbar
       $('#datagrid-one').datagrid({
         columns: columns,
         dataset: res,
         saveColumns: false,
+        stickyHeader: true,
+        filterable: true,
         toolbar: {title: 'Datagrid One', results: true, actions: true, rowHeight: true, personalize: true}
       });
 
+      // Frozen Columns
       $('#datagrid-two').datagrid({
         columns: columns,
         dataset: res,
+        stickyHeader: true,
         saveColumns: false,
+        frozenColumns: {left: ['productId', 'productName']},
         toolbar: {title: 'Datagrid Two ', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+
+      // No toolbar
+      $('#datagrid-three').datagrid({
+        columns: columns,
+        dataset: res,
+        stickyHeader: true,
+        saveColumns: false
       });
     });
  });

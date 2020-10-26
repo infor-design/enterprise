@@ -80,6 +80,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.stretchColumn=null] If 'last' the last column will stretch to the end, otherwise specific columns can be targetted.
  * @param {boolean}  [settings.stretchColumnOnChange=true] If true, column will recalculate its width and stretch if required.
  * @param {boolean}  [settings.spacerColumn=false] If true an extra column will be added to the end that fills the space. This allows columns to not stretch to fill so they are a constant size. This setting cannot be used with percent columns.
+ * @param {boolean}  [settings.stickyHeader=false] If true the data grid headers will stick to the top of the container the grid is in when scrolling down.
  * @param {boolean}  [settings.columnSizing='both'] Determines the sizing method for the auto sizing columns. Options are: both | data | header (including filter)
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
@@ -183,6 +184,7 @@ const DATAGRID_DEFAULTS = {
   stretchColumn: null,
   stretchColumnOnChange: false,
   spacerColumn: false,
+  stickyHeader: false,
   columnSizing: 'all',
   twoLineHeader: false,
   clickToSelect: true,
@@ -425,6 +427,10 @@ Datagrid.prototype = {
     }
 
     this.element.removeClass('datagrid').addClass('datagrid-container').attr('x-ms-format-detection', 'none');
+
+    if (this.settings.stickyHeader) {
+      this.element.removeClass('datagrid').addClass('is-sticky');
+    }
 
     // initialize row height by a setting
     if (this.settings.rowHeight !== 'normal' && this.settings.rowHeight !== 'large') {
@@ -6743,6 +6749,10 @@ Datagrid.prototype = {
 
     const actions = toolbar.find('.btn-actions');
     const isFlex = toolbar.is('.flex-toolbar');
+
+    if (this.settings.stickyHeader) {
+      toolbar.addClass('is-sticky');
+    }
 
     if (!isFlex) {
       actions.popupmenu();
