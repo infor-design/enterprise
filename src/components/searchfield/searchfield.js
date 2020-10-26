@@ -312,6 +312,9 @@ SearchField.prototype = {
     // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
 
+    // Add test automation ids to toolbarsearch wrapper.
+    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper');
+
     // Initially disable animations on toolbar searchfields
     // An event listener on Toolbar's `rendered` event removes these at the correct time
     if (this.toolbarParent && !this.isContainedByFlexToolbar) {
