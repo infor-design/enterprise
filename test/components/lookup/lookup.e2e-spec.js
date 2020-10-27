@@ -92,7 +92,7 @@ describe('Lookup example tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
 
-  fit('should generate automation id\'s', async () => {
+  it('should generate automation id\'s', async () => {
     expect(await element(by.id('product-lookup')).getAttribute('data-automation-id')).toEqual('my-lookup-input');
     expect(await element(by.css('#product-lookup + .trigger')).getAttribute('data-automation-id')).toEqual('my-lookup-trigger');
 
