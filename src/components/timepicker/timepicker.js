@@ -583,14 +583,19 @@ TimePicker.prototype = {
     this.minuteSelect.val(this.initValues.minutes);
     this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
 
+    utils.addAttributes(this.hourSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'hours');
+    utils.addAttributes(this.minuteSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'minutes');
+
     if (this.secondSelect) {
       this.secondSelect.val(this.initValues.seconds);
       this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
+      utils.addAttributes(this.secondSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'seconds');
     }
 
     if (self.hasDayPeriods()) {
       this.periodSelect.val(this.initValues.period);
       this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
+      utils.addAttributes(this.periodSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'period');
     }
 
     ui.find('div.dropdown').first().focus();
@@ -599,6 +604,8 @@ TimePicker.prototype = {
       self.setTimeOnField();
       self.closeTimePopup();
     });
+
+    utils.addAttributes(ui.find('.set-time'), this, this.settings.attributes, 'btn');
 
     // Handle Tabbing on the dialog
     if (!this.settings.parentElement) {

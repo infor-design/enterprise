@@ -61,6 +61,22 @@ describe('Timepicker example-index tests', () => {
     expect(await element(by.id('timepicker-id-1-trigger')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-trigger');
   });
 
+  it('Should be able to set id/automation id on hours, minutes, seconds, and button', async () => {
+    await element(by.css('.timepicker + .icon')).click();
+
+    expect(await element(by.id('timepicker-id-1-hours')).getAttribute('id')).toEqual('timepicker-id-1-hours');
+    expect(await element(by.id('timepicker-id-1-hours')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-hours');
+
+    expect(await element(by.id('timepicker-id-1-minutes')).getAttribute('id')).toEqual('timepicker-id-1-minutes');
+    expect(await element(by.id('timepicker-id-1-minutes')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-minutes');
+
+    expect(await element(by.id('timepicker-id-1-seconds')).getAttribute('id')).toEqual('timepicker-id-1-seconds');
+    expect(await element(by.id('timepicker-id-1-seconds')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-seconds');
+
+    expect(await element(by.id('timepicker-id-1-btn')).getAttribute('id')).toEqual('timepicker-id-1-btn');
+    expect(await element(by.id('timepicker-id-1-btn')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-btn');
+  });
+
   // Test has strange behavior on CI, so isolating this to local
   if (!utils.isCI()) {
     it('Should pick time from picker and set to field', async () => {
