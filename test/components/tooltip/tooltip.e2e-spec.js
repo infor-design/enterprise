@@ -42,6 +42,19 @@ describe('Tooltips index page tests', () => {
     expect(await element(by.id('tooltip')).getText()).toEqual('');
   });
 
+  it('should be able to set id/automation id', async () => {
+    expect(await element(by.id('tooltip-btn')).getAttribute('data-automation-id')).toEqual('test-tooltip-trigger');
+
+    await browser.actions()
+      .mouseMove(await element(by.id('tooltip-btn')))
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.id('tooltip')).getAttribute('data-automation-id')).toEqual('test-tooltip');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await browser.actions().mouseMove(await element(by.id('tooltip-btn'))).perform();

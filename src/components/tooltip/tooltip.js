@@ -46,6 +46,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  * @param {string} [settings.delay] The delay before showing the tooltip
  * @param {string} [settings.attachToBody] The if true (default) the popup is added to the body. In some cases like popups with tab stops you may want to append the element next to the item.
+ * @param {Array} [settings.attributes] allows user-defined attributes on generated Tooltip markup.
  */
 const TOOLTIP_DEFAULTS = {
   content: null,
@@ -69,7 +70,8 @@ const TOOLTIP_DEFAULTS = {
   headerClass: null,
   delay: 500,
   onHidden: null,
-  attachToBody: true
+  attachToBody: true,
+  attributes: null,
 };
 
 function Tooltip(element, settings) {
@@ -184,6 +186,10 @@ Tooltip.prototype = {
 
     if (this.element.data('extraClass') && this.element.data('extraClass').length) {
       this.settings.extraClass = this.element.data('extraClass');
+    }
+
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.element, this, this.settings.attributes, 'trigger');
     }
 
     this.isRTL = Locale.isRTL();
@@ -512,6 +518,10 @@ Tooltip.prototype = {
     }
     tooltip.setAttribute('class', classes);
 
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.tooltip, this, this.settings.attributes);
+    }
+
     if (titleArea) {
       titleArea.style.display = 'none';
     }
@@ -542,6 +552,10 @@ Tooltip.prototype = {
     }
 
     this.tooltip[0].setAttribute('class', classes);
+
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.tooltip, this, this.settings.attributes);
+    }
 
     const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length && this.settings.trigger === 'hover';
 
