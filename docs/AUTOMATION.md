@@ -37,7 +37,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Error Page
 - [x] Expandablearea
 - [ ] Field Filter
-- [ ] Field Options
+- [x] Field Options
 - [x] Fieldset
 - [x] Fileupload
 - [x] Fileupload Advanced
@@ -56,11 +56,11 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Message
 - [x] Modal
 - [x] Monthview
-- [ ] Multiselect
+- [x] Multiselect
 - [x] Notification
 - [x] Pager
 - [x] Pie
-- [ ] Popdown
+- [x] Popdown
 - [x] Popover
 - [x] Popupmenu
 - [x] Positive Negative
@@ -91,9 +91,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Timeline
 - [ ] Timepicker
 - [x] Toast
-- [x] Toolbar (deprecated for toolbar flex)
+- [x] Toolbarsearchfield
 - [x] Toolbar Flex
-- [ ] Toolbarsearchfield
 - [ ] Tooltip
 - [ ] Tree
 - [x] Treemap

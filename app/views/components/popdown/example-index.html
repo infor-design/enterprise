@@ -7,17 +7,17 @@
       </svg>
       <span>My Cart</span>
     </button>
-    <div class="popdown hidden">
+    <div id="popdown" class="popdown hidden" data-automation-id="popdown-automation-id">
       <div class="widget">
         <div class="widget-header">
           <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
         </div>
         <div class="widget-content">
-          <div id="popover-listview-example" class="listview is-selectable" data-tmpl="popdown-content-tmpl" data-dataset="{{basepath}}api/construction-cart-items"></div>
+          <div id="popover-listview-example" class="listview is-selectable" data-tmpl="popdown-content-tmpl" data-dataset="{{basepath}}api/construction-cart-items" data-automation-id="popover-listview-example-automation-id"></div>
         </div>
         <div class="widget-footer modal-buttonset">
-          <button id="edit-cart" type="button" class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
-          <button id="checkout" type="button" class="btn-modal-primary" style="width: 50%;">Checkout</button>
+          <button id="edit-cart" data-automation-id="edit-cart-automation-id" type="button" class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+          <button id="checkout" data-automation-id="checkout-automation-id" type="button" class="btn-modal-primary" style="width: 50%;">Checkout</button>
         </div>
       </div>
     </div>
