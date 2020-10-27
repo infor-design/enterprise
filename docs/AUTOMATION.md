@@ -16,7 +16,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Breadcrumb
 - [x] Bullet
 - [x] Busyindicator
-- [ ] Button
+- [x] Button
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
@@ -25,7 +25,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Column
 - [x] Column Grouped
 - [x] Column Stacked
-- [ ] Completion Chart
+- [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
 - [ ] Datagrid
@@ -62,20 +62,20 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Pie
 - [x] Popdown
 - [x] Popover
-- [ ] Popupmenu
+- [x] Popupmenu
 - [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
 - [x] Radar
 - [x] Radios
-- [ ] Rating
+- [x] Rating (not needed id can be directly applied)
 - [x] Scatterplot
 - [x] Searchfield
 - [ ] Signin
 - [x] Skiplink (not needed id can be directly applied)
-- [ ] Slider
+- [x] Slider
 - [x] Sparkline
-- [ ] Spinbox
+- [x] Spinbox
 - [ ] Splitter
 - [x] Stepchart
 - [ ] Swaplist
@@ -86,14 +86,13 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Tabs Multi
 - [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
-- [ ] Targeted Achievement
+- [x] Targeted Achievement
 - [x] Textarea
 - [ ] Timeline
 - [ ] Timepicker
 - [x] Toast
-- [x] Toolbar (deprecated for toolbar flex)
-- [ ] Toolbar Flex
 - [x] Toolbarsearchfield
+- [x] Toolbar Flex
 - [ ] Tooltip
 - [ ] Tree
 - [x] Treemap

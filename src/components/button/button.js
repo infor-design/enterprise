@@ -53,7 +53,8 @@ const BUTTON_DEFAULTS = {
   hideMenuArrow: null,
   replaceText: false,
   ripple: true,
-  validate: false
+  validate: false,
+  attributes: null
 };
 
 function Button(element, settings) {
@@ -213,6 +214,8 @@ Button.prototype = {
    * @returns {void}
    */
   render() {
+    this.renderAttributes();
+
     const elemClasses = this.element[0].classList;
     // Style = "primary/secondary/tertiary" hierarchy/context
     if (buttonStyles.indexOf(this.settings.style) > 0) {
@@ -403,6 +406,16 @@ Button.prototype = {
     // Hide Focus API
     if (!this.element.data('hidefocus')) {
       this.element.hideFocus();
+    }
+  },
+
+  /**
+   * Handle attributes from settings, if applicable
+   * @returns {void}
+   */
+  renderAttributes() {
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.element, this, this.settings.attributes);
     }
   },
 

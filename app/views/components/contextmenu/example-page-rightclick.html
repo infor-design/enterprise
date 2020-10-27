@@ -54,6 +54,9 @@
 <script id="test-script">
   $('body').popupmenu({
     menu: 'action-popupmenu',
-    trigger: 'rightClick'
+    trigger: 'rightClick',
+    attributes: [
+      { name: 'data-automation-id', value: 'contextmenu' }
+    ]
   });
 </script>

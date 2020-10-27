@@ -582,7 +582,7 @@ Homepage.prototype = {
       self.columns = 5;
       bp = bpXXL;
     }
-    if (xl && /4|5/g.test(self.columns)) {
+    if ((xl || xxl) && /4|5/g.test(self.columns)) {
       self.columns = 4;
       bp = bpXL;
     }

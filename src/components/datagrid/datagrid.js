@@ -932,6 +932,12 @@ Datagrid.prototype = {
     this.cellNode(0, 0, true).attr('tabindex', '0');
     this.renderPager(pagerInfo, true);
     this.displayCounts();
+
+    // Highlight search results
+    if ((this.settings.paging && this.settings.source &&
+      pagerInfo?.filterExpr && pagerInfo.filterExpr[0]?.column === 'all')) {
+      this.highlightSearchRows(pagerInfo.filterExpr[0].value);
+    }
   },
 
   /**

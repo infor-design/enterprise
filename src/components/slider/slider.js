@@ -23,7 +23,8 @@ const SLIDER_DEFAULTS = {
   ticks: [],
   tooltipContent: undefined,
   tooltipPosition: 'top',
-  persistTooltip: false
+  persistTooltip: false,
+  attributes: null
 };
 
 /**
@@ -40,6 +41,7 @@ const SLIDER_DEFAULTS = {
  * @param {undefined|Array} [settings.tooltipContent] Special customizable tooltip content.
  * @param {string} [settings.tooltipPosition = 'top'] Option to control the position of tooltip. ['top' , 'bottom']
  * @param {boolean} [settings.persistTooltip = false] If true the tooltip will stay visible.
+ * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Slider(element, settings) {
   this.element = $(element);
@@ -360,6 +362,17 @@ Slider.prototype = {
       this.readonly();
     } else if (this.element.prop('disabled') === true) {
       this.disable();
+    }
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper');
+    utils.addAttributes(this.hitarea, this, this.settings.attributes, 'hitarea');
+    utils.addAttributes(this.range, this, this.settings.attributes, 'range');
+    utils.addAttributes(...this.handles, this, this.settings.attributes, 'handle');
+
+    for (let i = 0, l = this.ticks.length; i < l; i++) {
+      const ticks = $(this.ticks[i].element);
+      utils.addAttributes(ticks, this, this.settings.attributes, `tick-${i + 1}`);
     }
 
     return self;

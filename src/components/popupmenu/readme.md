@@ -147,7 +147,76 @@ Or it can be attached on the fly in the page.
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom attributes/automation id's that can be used for scripting to the Popupmenu.  It's possible to add `data-automation-id` attributes (or other attributes) directly to a Popupmenu's trigger, list and anchors:
+
+```html
+<button id="trigger" class="btn" data-automation-id="my-popupmenu-trigger">
+  <span>Open Menu</span>
+</button>
+<ul class="popupmenu" data-automation-id="my-popupmenu-menu">
+  <li><a id="item-one" data-automation-id="my-popupmenu-option-0" href="#">Item One</a></li>
+  <li><a id="item-two" data-automation-id="my-popupmenu-option-1" href="#">Item Two</a></li>
+  <li><a id="item-three" data-automation-id="my-popupmenu-option-2" href="#">Item Three</a></li>
+</ul>
+```
+
+It's also possible to pass an `attributes` setting via Javascript.  For example, programmatically creating the use case above could be done using this example:
+
+```js
+$('#trigger').popupmenu({
+  'attributes': [
+    {
+      name: 'data-automation-id',
+      value: 'my-popupmenu'
+    }
+  ]
+})
+```
+
+In this case, the strings `-trigger`, `-menu`, and `-option-(x)` are all appended to the Popupmenu automatically.  The menu options are appended with a unique number based on their numeric index within that list of items.
+
+The numeric indexes also take into account nesting of menu items.  For each level of nesting, another number representing an item's location is appended.  For example, a nested menu invoked with the above JS code might look like this after it's fully rendered:
+
+```html
+<button id="trigger" class="btn" data-automation-id="my-popupmenu-trigger">
+  <span>Open Menu</span>
+</button>
+
+<!-- ... -->
+
+<div class="popupmenu-wrapper">
+  <ul class="popupmenu" data-automation-id="my-popupmenu-menu">
+    <li class="popupmenu-item">
+      <a id="item-one" data-automation-id="my-popupmenu-option-0" href="#">Item One</a>
+    </li>
+    <li class="popupmenu-item">
+      <a id="item-two" data-automation-id="my-popupmenu-option-1" href="#">Item Two</a>
+    </li>
+    <li class="popupmenu-item submenu">
+      <a id="item-three" data-automation-id="my-popupmenu-option-2" href="#">Item Three</a>
+      <div class="wrapper">
+        <ul class="popupmenu">
+          <li class="popupmenu-item">
+            <a id="subitem-one" href="#" data-automation-id="my-popupmenu-option-2-0">Sub-item One</a>
+          </li>
+          <li class="popupmenu-item">
+            <a id="subitem-two" href="#" data-automation-id="my-popupmenu-option-2-1">Sub-item Two</a>
+          </li>
+          <li class="separator"></li>
+          <li class="popupmenu-item">
+            <a id="subitem-three" href="#" data-automation-id="my-popupmenu-option-2-2">Sub-item Three</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="popupmenu-item">
+      <a id="item-four" data-automation-id="my-popupmenu-option-3" href="#">Item Four</a>
+    </li>
+  </ul>
+</div>
+```
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

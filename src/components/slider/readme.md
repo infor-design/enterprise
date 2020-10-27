@@ -76,6 +76,15 @@ This is an example of a slider that can only have values in increments of 10, wi
 </div>
 ```
 
+Another example of a slider where you can set/add `attributes` like id and automation id.
+
+```html
+    <div class="field">
+      <label for="slider-regular">Regular</label>
+      <input id="slider-regular" name="slider-regular" value="10" class="slider" type="range" data-options="{'persistTooltip': false, tooltipContent: [''], attributes: [{ name: 'id', value: 'slider-id-1' }, { name: 'data-automation-id', value: 'slider-automation-id-1' }]}"/>
+    </div>
+```
+
 ## Implementation Tips
 
 Only providing the HTML label and input with a `type="range"` attribute and `slider` CSS class are necessary if using the IDS Enterprise Components Suite.
@@ -99,6 +108,26 @@ The Slider is fairly complex to make accessible. But generally this can be accom
     - `aria-describedby` - When used in conjunction with a [tooltip control](./tooltip), this attribute will be appended to the handle automatically, but in this case the `aria-label` attribute should be removed.
 
 ## Testability
+
+The slider can have custom id's/automation id's that can be used for scripting. To add them, use the option `attributes` to set an id on the generated slider. This can take either an object or an array if doing several id's, and you can configure the automation id name. For example:
+
+```js
+  attributes: { name: 'id', value: args => `message-id-${args.id}` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+Providing the data, this will add an ID added to each slider wrapper with `-wrapper`, slider hitarea with `-hitarea`, slider range with `-range`, slider handle with `-handle`, slider ticks and ticks complete with `-tick-{idx}`, and the hidden slider element appended.
 
 - Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
