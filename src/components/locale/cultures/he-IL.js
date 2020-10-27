@@ -13,7 +13,7 @@ Soho.Locale.addCulture('he-IL', {
     dateFormat: {
       separator: '/', // Infered
       timeSeparator: ':',
-      short: 'd.M.yyyy', // use four digit year
+      short: 'dd/MM/yyyy', // use four digit year
       medium: 'd בMMM yyyy',
       long: 'd בMMMM yyyy',
       full: 'EEEE, d בMMMM yyyy',
@@ -23,10 +23,10 @@ Soho.Locale.addCulture('he-IL', {
       timestampMillis: 'H:mm:ss.SSS',
       dayOfWeek: 'EEE d',
       hour: 'H:mm',
-      datetime: 'd.M.yyyy H:mm',
-      datetimeMillis: 'd.M.yyyy H:mm:ss.SSS',
-      timezone: 'd.M.yyyy H:mm zz',
-      timezoneLong: 'd.M.yyyy H:mm zzzz'
+      datetime: 'dd/MM/yyyy H:mm',
+      datetimeMillis: 'dd/MM/yyyy H:mm:ss.SSS',
+      timezone: 'dd/MM/yyyy H:mm zz',
+      timezoneLong: 'dd/MM/yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {

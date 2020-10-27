@@ -25,7 +25,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Column
 - [x] Column Grouped
 - [x] Column Stacked
-- [ ] Completion Chart
+- [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
 - [ ] Datagrid
@@ -68,14 +68,13 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Progress
 - [x] Radar
 - [x] Radios
-- [ ] Rating
+- [x] Rating (not needed id can be directly applied)
 - [x] Scatterplot
 - [x] Searchfield
 - [x] Signin (not needed id can be directly applied)
 - [x] Skiplink (not needed id can be directly applied)
-- [ ] Slider
-- [x] Sparkline
-- [ ] Spinbox
+- [x] Slider
+- [x] Spinbox
 - [x] Splitter
 - [x] Stepchart
 - [ ] Swaplist
@@ -86,7 +85,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Tabs Multi
 - [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
-- [ ] Targeted Achievement
+- [x] Targeted Achievement
 - [x] Textarea
 - [x] Timeline (not needed id can be directly applied)
 - [x] Timepicker

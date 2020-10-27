@@ -37,6 +37,22 @@ describe('Spinbox example-index tests', () => {
     });
   }
 
+  it('Should be able to set ids/automation ids', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('spinbox-id-1-wrapper')).getAttribute('id')).toEqual('spinbox-id-1-wrapper');
+    expect(await element(by.id('spinbox-id-1-wrapper')).getAttribute('data-automation-id')).toEqual('spinbox-automation-id-1-wrapper');
+
+    expect(await element(by.id('spinbox-id-1-spinbox')).getAttribute('id')).toEqual('spinbox-id-1-spinbox');
+    expect(await element(by.id('spinbox-id-1-spinbox')).getAttribute('data-automation-id')).toEqual('spinbox-automation-id-1-spinbox');
+
+    expect(await element(by.id('spinbox-id-1-btn-up')).getAttribute('id')).toEqual('spinbox-id-1-btn-up');
+    expect(await element(by.id('spinbox-id-1-btn-up')).getAttribute('data-automation-id')).toEqual('spinbox-automation-id-1-btn-up');
+
+    expect(await element(by.id('spinbox-id-1-btn-down')).getAttribute('id')).toEqual('spinbox-id-1-btn-down');
+    expect(await element(by.id('spinbox-id-1-btn-down')).getAttribute('data-automation-id')).toEqual('spinbox-automation-id-1-btn-down');
+  });
+
   it('Should be set with down arrow', async () => {
     await spinboxEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver

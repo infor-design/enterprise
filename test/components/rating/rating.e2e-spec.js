@@ -24,4 +24,26 @@ describe('Rating example-index tests', () => {
       expect(await browser.imageComparison.checkScreen('rating')).toEqual(0);
     });
   }
+
+  it('Should be able to set ids/automation ids', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('rating-id-1')).getAttribute('id')).toEqual('rating-id-1');
+    expect(await element(by.id('rating-id-1')).getAttribute('data-automation-id')).toEqual('rating-automation-id-1');
+
+    expect(await element(by.id('one-star-id1')).getAttribute('id')).toEqual('one-star-id1');
+    expect(await element(by.id('one-star-id1')).getAttribute('data-automation-id')).toEqual('one-star-automation-id1');
+
+    expect(await element(by.id('two-star-id1')).getAttribute('id')).toEqual('two-star-id1');
+    expect(await element(by.id('two-star-id1')).getAttribute('data-automation-id')).toEqual('two-star-automation-id1');
+
+    expect(await element(by.id('three-star-id1')).getAttribute('id')).toEqual('three-star-id1');
+    expect(await element(by.id('three-star-id1')).getAttribute('data-automation-id')).toEqual('three-star-automation-id1');
+
+    expect(await element(by.id('four-star-id1')).getAttribute('id')).toEqual('four-star-id1');
+    expect(await element(by.id('four-star-id1')).getAttribute('data-automation-id')).toEqual('four-star-automation-id1');
+
+    expect(await element(by.id('five-star-id1')).getAttribute('id')).toEqual('five-star-id1');
+    expect(await element(by.id('five-star-id1')).getAttribute('data-automation-id')).toEqual('five-star-automation-id1');
+  });
 });
