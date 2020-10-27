@@ -14,6 +14,32 @@ const COMPONENT_NAME = 'lookup';
 // Lookup components are "modal" (one on-screen at any given time)
 let LOOKUP_GRID_ID = 'lookup-datagrid';
 
+// When passing on attributes from the Lookup component to its subcomponents (modal/grid),
+// This helper appends suffixes representing those components to each attribute.
+function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
+  let attrs = [];
+
+  // If no child attributes exist, just pass the parents on with the prefix
+  if (!childAttrs.length) {
+    attrs = parentAttrs.map(obj => ({
+      name: obj.name,
+      value: `${obj.value}-${suffix}`
+    }));
+    return attrs;
+  }
+
+  // If child attributes exist, only append the ones from the parent
+  // that aren't defined in the child
+  parentAttrs.forEach((attr) => {
+    const childAttr = childAttrs.find(toolbarAttrs => toolbarAttrs.name === attr.name);
+    attrs.push(childAttr || {
+      name: attr.name,
+      value: `${attr.value}-${suffix}`
+    });
+  });
+  return attrs;
+}
+
 /**
  * Input element that opens a dialog with a list for selection.
  * @class Lookup
@@ -51,7 +77,8 @@ const LOOKUP_DEFAULTS = {
   clickArguments: {},
   delimiter: ',',
   minWidth: null,
-  clearable: false
+  clearable: false,
+  attributes: null,
 };
 
 function Lookup(element, settings) {
@@ -164,7 +191,10 @@ Lookup.prototype = {
     }
 
     if (this.settings.clearable) {
-      lookup.searchfield({ clearable: true });
+      lookup.searchfield({
+        clearable: true,
+        attributes: this.settings.attributes
+      });
     }
 
     if (!this.settings.editable) {
@@ -183,6 +213,12 @@ Lookup.prototype = {
     this.addAria();
 
     if (lookup.attr('autocomplete') === undefined) lookup.attr('autocomplete', 'off');
+
+    // Set attributes, if applicable
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(lookup, this, this.settings.attributes, 'input');
+      utils.addAttributes(this.icon, this, this.settings.attributes, 'trigger');
+    }
   },
 
   /**
@@ -446,7 +482,8 @@ Lookup.prototype = {
       title: labelText,
       content,
       buttons,
-      cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''}`
+      cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''}`,
+      attributes: addSuffixToAttributes(this.settings.attributes, [], 'modal')
     }).off('open.lookup').on('open.lookup', () => {
       self.createGrid();
     })
@@ -560,6 +597,14 @@ Lookup.prototype = {
       }
 
       self.settings.options.isList = true;
+
+      if (self.settings.attributes) {
+        self.settings.options.attributes = addSuffixToAttributes(
+          self.settings.attributes,
+          [],
+          'datagrid'
+        );
+      }
 
       // Create grid (unless already exists from passed in grid)
       if (!lookupGrid.data('datagrid')) {

@@ -85,7 +85,34 @@ grid = $('#product-lookup').lookup({
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the Lookup that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes.
+For example:
+
+```js
+  attributes: { name: 'id', value: args => `background-color` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [{ name: 'id', value: 'my-unique-id' }, { name: 'data-automation-id', value: 'my-unique-id' }]
+```
+
+When using the attributes setting, the following elements are appended:
+- the input field, with `-input`.
+- the trigger icon, with `-trigger`.
+- the modal component is passed the same `attributes` setting, but all attribute values are suffixed with `-modal`.
+- the datagrid component is passed the same `attributes` setting, but all attribute values are suffixed with `-datagrid`.
+
+Additionally, if any of the Lookup's content is manually defined -- such as the Datagrid, inner-Searchfield, or Toolbar, you should label those with automation id's manually.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 
