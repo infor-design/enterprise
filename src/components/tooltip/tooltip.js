@@ -627,6 +627,10 @@ Tooltip.prototype = {
       });
 
       title.appendChild(closeBtnX[0]);
+
+      if (Array.isArray(this.settings.attributes)) {
+        utils.addAttributes(closeBtnX, this, this.settings.attributes, 'close-btn');
+      }
     }
 
     if (this.settings.initializeContent) {
