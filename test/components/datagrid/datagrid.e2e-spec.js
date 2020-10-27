@@ -456,6 +456,14 @@ describe('Datagrid Expandable Row Tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should generate automation ids', async () => {
+    expect(await element(by.id('custom-id-btn-expand-row-0')).getAttribute('id')).toEqual('custom-id-btn-expand-row-0');
+    expect(await element(by.id('custom-id-btn-expand-row-0')).getAttribute('data-automation-id')).toEqual('custom-automation-id-btn-expand-row-0');
+
+    expect(await element(by.id('custom-id-btn-expand-row-6')).getAttribute('id')).toEqual('custom-id-btn-expand-row-6');
+    expect(await element(by.id('custom-id-btn-expand-row-6')).getAttribute('data-automation-id')).toEqual('custom-automation-id-btn-expand-row-6');
+  });
+
   it('Should expand/collapse on row click', async () => {
     const detailRow = await element(by.css('#datagrid tbody tr:nth-child(4)'));
     const button = await element(by.css('#datagrid tbody tr:nth-child(3) td:nth-child(1) button'));
@@ -488,6 +496,14 @@ describe('Datagrid filter tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should generate automation ids', async () => {
+    expect(await element(by.id('custom-id-btn-filter-productname')).getAttribute('id')).toEqual('custom-id-btn-filter-productname');
+    expect(await element(by.id('custom-id-btn-filter-productname')).getAttribute('data-automation-id')).toEqual('custom-automation-id-btn-filter-productname');
+
+    expect(await element(by.id('custom-id-filter-productname')).getAttribute('id')).toEqual('custom-id-filter-productname');
+    expect(await element(by.id('custom-id-filter-productname')).getAttribute('data-automation-id')).toEqual('custom-automation-id-filter-productname');
+  });
+
   it('Should single select row, filter and restore', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(9);
     await element(by.css('#datagrid .datagrid-wrapper:nth-child(2) tbody tr:nth-child(1) td:nth-child(1)')).click();
@@ -495,15 +511,15 @@ describe('Datagrid filter tests', () => {
     expect(await element(by.css('#datagrid .datagrid-wrapper:nth-child(2) tbody tr:nth-child(1)')).getAttribute('class')).toMatch('is-selected');
     expect(await element(by.css('#datagrid .datagrid-wrapper:nth-child(2) tbody tr:nth-child(2)')).getAttribute('class')).not.toMatch('is-selected');
 
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys('2241202');
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('custom-id-filter-productid')).clear();
+    await element(by.id('custom-id-filter-productid')).sendKeys('2241202');
+    await element(by.id('custom-id-filter-productid')).sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(1);
 
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).clear();
-    await element(by.id('example-filter-datagrid-1-header-filter-1')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('custom-id-filter-productid')).clear();
+    await element(by.id('custom-id-filter-productid')).sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(9);
@@ -512,12 +528,12 @@ describe('Datagrid filter tests', () => {
   });
 
   it('Should render editors in the filter row when frozen', async () => {
-    expect(await element(by.css('#example-filter-datagrid-1-header-filter-1 + .trigger')).isPresent()).toBeTruthy();
+    expect(await element(by.css('#custom-id-filter-productid + .trigger')).isPresent()).toBeTruthy();
   });
 
   it('Should render and filter type contents', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) .datagrid-row')).count()).toEqual(9);
-    const selectEl = await element(by.id('example-filter-datagrid-1-header-filter-4'));
+    const selectEl = await element(by.id('custom-id-filter-activity1'));
     const selectElParent = await selectEl.element(by.xpath('..'));
     let multiselectEl = await selectElParent.element(by.css('div.dropdown'));
     await browser.driver
@@ -552,7 +568,7 @@ describe('Datagrid filter RTL tests', () => {
   });
 
   it('Should not have errors', async () => {
-    await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+    await element(by.css('#custom-id-col-id .btn-filter')).click();
     await utils.checkForErrors();
   });
 
@@ -560,7 +576,7 @@ describe('Datagrid filter RTL tests', () => {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
-      await element(by.css('#example-filter-datagrid-1-header-0 .btn-filter')).click();
+      await element(by.css('#custom-id-col-id .btn-filter')).click();
       await browser.driver.sleep(config.sleepShort);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
@@ -1085,6 +1101,17 @@ describe('Datagrid index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should generate automation ids', async () => {
+    expect(await element(by.id('custom-id-col-productid')).getAttribute('id')).toEqual('custom-id-col-productid');
+    expect(await element(by.id('custom-id-col-productid')).getAttribute('data-automation-id')).toEqual('custom-automation-id-col-productid');
+
+    expect(await element(by.id('custom-id-title')).getAttribute('id')).toEqual('custom-id-title');
+    expect(await element(by.id('custom-id-title')).getAttribute('data-automation-id')).toEqual('custom-automation-id-title');
+
+    expect(await element(by.id('custom-id-actions')).getAttribute('id')).toEqual('custom-id-actions');
+    expect(await element(by.id('custom-id-actions')).getAttribute('data-automation-id')).toEqual('custom-automation-id-actions');
+  });
+
   it('Should show results', async () => {
     expect(await element(by.className('datagrid-result-count')).getText()).toBe('(7 results)');
   });
@@ -1141,18 +1168,26 @@ describe('Datagrid keyword search tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should generate automation ids', async () => {
+    expect(await element(by.id('custom-id-title')).getAttribute('id')).toEqual('custom-id-title');
+    expect(await element(by.id('custom-id-title')).getAttribute('data-automation-id')).toEqual('custom-automation-id-title');
+
+    expect(await element(by.id('custom-id-search')).getAttribute('id')).toEqual('custom-id-search');
+    expect(await element(by.id('custom-id-search')).getAttribute('data-automation-id')).toEqual('custom-automation-id-search');
+  });
+
   it('Should filter keyword results', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(12);
-    await element(by.id('gridfilter')).sendKeys('T');
-    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('custom-id-search')).sendKeys('T');
+    await element(by.id('custom-id-search')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(11);
   });
 
   it('Should highlight keyword results', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(12);
-    await element(by.id('gridfilter')).sendKeys('26');
-    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('custom-id-search')).sendKeys('26');
+    await element(by.id('custom-id-search')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(6);
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(6);

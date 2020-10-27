@@ -1,6 +1,7 @@
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { xssUtils } from '../../utils/xss';
+import { utils } from '../../utils/utils';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -277,7 +278,7 @@ const formatters = {
           ${$.createIcon({ icon: col.icon, file: col.iconFile })}
           <span class="audible">${textValue}</span>
         </a>`) :
-      (`<a href="${colHref}"${disableAttr} ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} role="presentation" class="hyperlink ${(col.cssClass || '')}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
+      (`<a href="${colHref}"${disableAttr} ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} class="hyperlink ${(col.cssClass || '')}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
   },
 
   Template(row, cell, value, col, item) {
@@ -386,8 +387,9 @@ const formatters = {
   },
 
   // Expand / Collapse Button
-  Expander(row, cell, value) {
-    const button = `<button type="button" aria-label="${Locale.translate('ExpandCollapse')}" class="btn-icon datagrid-expand-btn" tabindex="-1">
+  Expander(row, cell, value, col, item, api) {
+    const attrs = utils.stringAttributes(api, api.settings.attributes, `btn-expand-row-${row}`);
+    const button = `<button ${attrs} type="button" aria-label="${Locale.translate('ExpandCollapse')}" class="btn-icon datagrid-expand-btn" tabindex="-1">
       <span class="icon plus-minus"></span>
       </button>${(value ? `<span> ${value}</span>` : '')}`;
 
@@ -572,7 +574,7 @@ const formatters = {
       return html;
     }
     const classList = `swatch${value === '' ? ' is-empty' : ''}`;
-    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="${classList}" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}" aria-describedby="">`;
+    html = `<span class="colorpicker-container trigger dropdown-trigger"><span class="${classList}" style="background-color: ${value}"></span><input class="colorpicker" id="colorpicker-${cell}" name="colorpicker-${cell}" type="text" role="combobox" aria-autocomplete="list" value="${value}">`;
     html += `<span class="trigger">${$.createIcon({ icon: 'dropdown' })}</span></span>`;
 
     return html;
