@@ -28,7 +28,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
-- [ ] Datagrid
+- [x] Datagrid
 - [ ] Datepicker
 - [x] Donut
 - [ ] Dropdown

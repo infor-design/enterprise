@@ -45,6 +45,7 @@
         dataset: data,
         filterable: true,
         rowTemplate: rowTemplate,
+        attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
           results: true, keywordFilter: true, actions: true, exportToExcel: true, rowHeight: true, personalize: true}
       });

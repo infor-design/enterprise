@@ -41,6 +41,7 @@
         columns: columns,
         dataset: data,
         frozenColumns: {left: ['productId']},
+        attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
       }).on('filtered', function () {
         console.log('Filter Ran');
