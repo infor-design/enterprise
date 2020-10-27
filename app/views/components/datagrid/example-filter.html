@@ -73,7 +73,7 @@
         columnReorder: true,
         selectable: 'single',
         editable: true,
-        rowHeight: 'extra-small',
+        attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
         frozenColumns: {left: ['id', 'productId']},
         emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}

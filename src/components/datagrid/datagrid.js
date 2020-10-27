@@ -141,7 +141,8 @@ const COMPONENT_NAME = 'datagrid';
  * and if only parent has a match then make expand/collapse button to be collapsed, disabled
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
- */
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
   // If actionableMode is "true, tab and shift tab behave like left and right arrow key,
@@ -228,7 +229,8 @@ const DATAGRID_DEFAULTS = {
   onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
   searchExpandableRow: true,
-  allowChildExpandOnMatch: false
+  allowChildExpandOnMatch: false,
+  attributes: null
 };
 
 function Datagrid(element, settings) {
@@ -1261,8 +1263,13 @@ Datagrid.prototype = {
 
       // Apply css classes
       cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
+      let ids = utils.stringAttributes(this, this.settings.attributes, `col-${column.id?.toLowerCase()}`);
 
-      headerRows[container] += `<th scope="col" role="columnheader" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
+      if (!ids) {
+        ids = `id="${id}"`;
+      }
+
+      headerRows[container] += `<th scope="col" role="columnheader" ${ids} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1445,12 +1452,17 @@ Datagrid.prototype = {
       filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
 
+      let attrs = utils.stringAttributes(this, this.settings.attributes, `filter-${col.id?.toLowerCase()}`);
+      if (!attrs) {
+        attrs = `id="${filterId}"`;
+      }
+
       switch (col.filterType) {
         case 'checkbox':
           // just the button
           break;
         case 'date':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" id="${filterId}"/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs}/>`;
           break;
         case 'integer': {
           integerDefaults = {
@@ -1468,7 +1480,7 @@ Datagrid.prototype = {
           };
 
           col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
           break;
         }
         case 'percent':
@@ -1502,12 +1514,12 @@ Datagrid.prototype = {
             col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
           break;
         }
         case 'contents':
         case 'select':
-          filterMarkup += `<select id="${filterId}" ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
           if (filterOptions) {
             for (let i = 0, l = filterOptions.length; i < l; i++) {
               const option = filterOptions[i];
@@ -1521,7 +1533,7 @@ Datagrid.prototype = {
 
           break;
         case 'multiselect':
-          filterMarkup += `<select id="${filterId}" class="multiselect" multiple${col.filterDisabled ? ' disabled' : ''}>`;
+          filterMarkup += `<select ${attrs} class="multiselect" multiple${col.filterDisabled ? ' disabled' : ''}>`;
           if (filterOptions) {
             for (let i = 0, l = filterOptions.length; i < l; i++) {
               const option = filterOptions[i];
@@ -1535,13 +1547,13 @@ Datagrid.prototype = {
 
           break;
         case 'time':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" id="${filterId}"/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs}/>`;
           break;
         case 'lookup':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" id="${filterId}" >`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}"/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs}/>`;
           break;
       }
 
@@ -1801,8 +1813,10 @@ Datagrid.prototype = {
       return filterConditions.length && !inArray(icon) ?
         '' : self.filterItemHtml(icon, text, isChecked);
     };
+    const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
+
     const renderButton = function (defaultValue, extraClass) {
-      return `<button type="button" class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
@@ -4132,9 +4146,12 @@ Datagrid.prototype = {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
       }
 
+      const idProp = this.settings.attributes?.filter(a => a.name === 'id');
+      const ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
+
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-          ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
-            isSelected ? ' aria-selected="true"' : ''
+          ` ${ariaDescribedby
+          }${isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
@@ -5881,6 +5898,13 @@ Datagrid.prototype = {
       DOM.html(self.toolbar.find('.datagrid-group-count'), groupCountText, '<span>');
       self.toolbar[0].setAttribute('aria-label', self.toolbar.find('.title').text());
       self.toolbar.find('.datagrid-row-count').text(count);
+
+      // Append ID's
+      utils.addAttributes(self.toolbar.find('.title'), this, this.settings.attributes, 'title');
+      utils.addAttributes(self.toolbar.find('.btn-actions'), this, this.settings.attributes, 'actions');
+      const search = self.toolbar.find('#gridfilter');
+      utils.addAttributes(search, this, this.settings.attributes, 'search');
+      search.prev('label').attr('for', search.attr('id'));
     }
     DOM.html(self.element.closest('.modal').find('.datagrid-result-count'), countText, '<span>');
     this.lastCount = count;
@@ -8670,8 +8694,6 @@ Datagrid.prototype = {
 
         row.children().each(function () {
           const cellNode = $(this);
-          // Read Header
-          // string += $('#' + cell.attr('aria-describedby')).text() + ' ' + cell.text() + ' ';
           string += `${cellNode.text()} `;
         });
 
