@@ -318,10 +318,7 @@ You must manually add an id or automation id to the root datagrid div. The setti
 - Toolbar Actions Button - If using, the actions button in the above toolbar will get `actions` appended
 - Toolbar Search Input - If using, the search input in the above toolbar will get `search` appended
 
-To script cells we do not have id's so you must do something like:
-
-- To target a cell you can use a combination of the `aria-describedby` which is the column ID alon with the aria-rowindex on the parent row. Or the aria-colindex may be used with the aria-rowindex.
--
+To target a cell you can use a combination of the `aria-describedby` which is the column ID along with the aria-rowindex on the parent row. Or the aria-colindex may be used with the aria-rowindex.
 
 Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
