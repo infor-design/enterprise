@@ -458,10 +458,13 @@ Splitter.prototype = {
   updated(settings) {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, SPLITTER_DEFAULTS);
+
+      return this
+        .destroy()
+        .init();
     }
-    return this
-      .destroy()
-      .init();
+
+    return this;
   },
 
   /**
