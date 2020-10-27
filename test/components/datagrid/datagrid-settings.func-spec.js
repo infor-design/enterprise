@@ -110,6 +110,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       exportConvertNegative: false,
       columnGroups: null,
       treeGrid: false,
+      attributes: null,
       onPostRenderCell: null,
       onDestroyCell: null,
       onEditCell: null,

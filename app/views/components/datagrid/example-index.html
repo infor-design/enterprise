@@ -1,6 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <div id="datagrid" class="datagrid">
+    <div id="datagrid" data-automation-id="datagrid-automation-id" class="datagrid">
     </div>
   </div>
 </div>
@@ -27,6 +27,7 @@
           columns: columns,
           dataset: res,
           saveColumns: false,
+          attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
           toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
         });
       });

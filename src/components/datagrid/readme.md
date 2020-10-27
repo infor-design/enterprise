@@ -297,7 +297,30 @@ The grid column text and headers follows the following padding rules, using an m
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the datagrid for some internal elements that can be clicked using the `attributes` setting. This setting can be either an object or an array for setting multiple values such as an automation-id or other attributes.
+
+The value attribute can be a string value or function. The function will pass you the datagrid API as a parameter to assist in making things more dynamic. You can use some properties or data if needed in generating an id.
+
+```js
+$('.datagrid').datagrid({
+  ...
+  attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+});
+```
+
+You must manually add an id or automation id to the root datagrid div. The setting if added will generate id's for the following items:
+
+- Column Header - The column header will get `col-n` appended where n is the column id passed in the columns setting
+- Expandable Button - If using expandable rows the button will get `btn-expand-row-n` where n is the current row index
+- Filter Row Input - If using filterable rows the filter input element get `filter-n` where n is the column id passed in the columns setting
+- Filter Row Button - If using filterable rows the filter condition button will get `btn-filter-n` where n is the column id passed in the columns
+- Toolbar Results Title - If using, the title in the above toolbar will get `title` appended
+- Toolbar Actions Button - If using, the actions button in the above toolbar will get `actions` appended
+- Toolbar Search Input - If using, the search input in the above toolbar will get `search` appended
+
+To target a cell you can use a combination of the `aria-describedby` which is the column ID along with the aria-rowindex on the parent row. Or the aria-colindex may be used with the aria-rowindex.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

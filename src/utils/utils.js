@@ -1317,4 +1317,31 @@ utils.addAttributes = function addAttributes(elem, api, setting, suffix) {
   addAttr(setting.name, value);
 };
 
+/**
+ * Generate additional attributes as an html string
+ * @private
+ * @param {object} api The object base api
+ * @param {object|Array} setting The attribute setting
+ * @param {string} suffix Append an extra string at the end
+ * @returns {string} the attrbibutes as a string
+ */
+utils.stringAttributes = function addAttributes(api, setting, suffix) {
+  let attributes = '';
+  if (!setting) {
+    return attributes;
+  }
+
+  if (Array.isArray(setting)) {
+    setting.forEach((item) => {
+      const value = typeof item.value === 'function' ? item.value(api) : item.value;
+      attributes += ` ${item.name}="${value + (suffix ? `-${suffix}` : '')}"`;
+    });
+    return attributes;
+  }
+
+  const value = typeof setting.value === 'function' ? setting.value(api) : setting.value;
+  attributes += ` ${setting.name}="${value + (suffix ? `-${suffix.toLowerCase()}` : '')}"`;
+  return attributes;
+};
+
 export { utils, math };
