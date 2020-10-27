@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <div class="field">
-      <button id="popover-trigger" data-automation-id="popover-trigger-automation-id" class="btn-secondary" type="button">
+      <button id="popover-trigger" class="btn-secondary" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-upload"></use>
         </svg>
@@ -41,6 +41,10 @@
 
 <script>
   var POPOVER_OPTIONS = {
+    attributes: [{
+      name: 'data-automation-id',
+      value: 'my-popover'
+    }],
     closebutton: true,
     content: $('#popover-contents'),
     extraClass: 'alternate',
