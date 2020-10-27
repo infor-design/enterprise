@@ -29,6 +29,7 @@ const COMPONENT_NAME = 'listbuilder';
  *  "data-action" attribute, or a jQuery-wrapped element reference).
  * @param {string|jQuery[]} [settings.btnGoDown]  "GoDown" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {string} [settings.template]  representing HTML content that builds a list
  * @param {string} [settings.templateNewItem]  representing HTML content that builds a single list item
  * @param {string} [settings.templateItemContent]  representing HTML content that replaces the inner content
@@ -43,6 +44,7 @@ const LISTBUILDER_DEFAULTS = {
   btnDelete: 'delete',
   btnGoUp: 'goup',
   btnGoDown: 'godown',
+  attributes: null,
   template: '' +
     '<ul data-handle=".handle">' +
       '{{#dataset}}' +
@@ -104,13 +106,89 @@ ListBuilder.prototype = {
   loadListview() {
     const s = this.settings;
     const lv = $('.listview', this.element);
+    let attributes;
+    if (s.attributes) {
+      attributes = this.getLvAutomationAttributes('-listbuilder');
+    }
 
     if (!s.dataset.length && lv.length && $('li', lv).length) {
-      this.listApi = lv.listview({ selectable: 'single' }).data('listview');
+      this.listApi = lv.listview({ selectable: 'single', attributes }).data('listview');
     } else if (lv.length) {
-      this.listApi = lv.listview({ dataset: s.dataset, template: s.template, selectable: 'single' }).data('listview');
+      this.listApi = lv.listview({ dataset: s.dataset, template: s.template, selectable: 'single', attributes }).data('listview');
     }
     return this;
+  },
+
+  /**
+   * Get list view settings for automation attributes
+   * @private
+   * @param {string} suffix for listbuilder
+   * @returns {object|array} attributes with suffix
+   */
+  getLvAutomationAttributes(suffix) {
+    const s = this.settings;
+    let attributes;
+    if (s.attributes && typeof suffix === 'string' && suffix !== '') {
+      if (Array.isArray(s.attributes)) {
+        attributes = [];
+        s.attributes.forEach((item) => {
+          const value = typeof item.value === 'function' ? item.value(this) : item.value;
+          attributes.push({ name: item.name, value: (value + suffix) });
+        });
+      } else {
+        const value = typeof s.attributes.value === 'function' ? s.attributes.value(this) : s.attributes.value;
+        attributes = { name: s.attributes.name, value: (value + suffix) };
+      }
+    }
+    return attributes;
+  },
+
+  /**
+   * Update the automation attributes for given list item
+   * @private
+   * @param {jQuery} li The list item
+   * @returns {void}
+   */
+  updateLvAutomationAttributes(li) {
+    const s = this.settings;
+    if (s.attributes && li) {
+      let lastIdx = this.dataset.length - 1;
+      let found = true;
+      let max = 1000; // max-limit
+      let attributes;
+      while (found && max > 0) {
+        const suffix = `-listbuilder-listview-item-${lastIdx}`;
+        attributes = this.getLvAutomationAttributes(suffix);
+        found = this.findAutomationAttributesItem(attributes);
+        lastIdx++;
+        max--;
+      }
+      utils.addAttributes(li, this, attributes);
+    }
+  },
+
+  /**
+   * Initialize dataset
+   * @private
+   * @param {string|array} attributes The list of attributes key/value
+   * @returns {boolean} True, if found item
+   */
+  findAutomationAttributesItem(attributes) {
+    const s = this.settings;
+    let r = false;
+    if (s.attributes && attributes) {
+      if (Array.isArray(attributes)) {
+        for (let i = 0, l = attributes.length; i < l; i++) {
+          const attr = attributes[i];
+          const el = this.listApi.element.find(`[${attr.name}="${attr.value}"]`);
+          if (el.length) {
+            r = true;
+            break;
+          }
+        }
+      }
+    }
+    return r;
   },
 
   /**
@@ -176,6 +254,14 @@ ListBuilder.prototype = {
     s.btnGoDown = setAction(s.btnGoDown);
     s.btnEdit = setAction(s.btnEdit);
     s.btnDelete = setAction(s.btnDelete);
+
+    // Add automation attributes
+    const suffix = 'listbuilder-btn';
+    utils.addAttributes(s.btnAdd, this, s.attributes, `${suffix}-add`);
+    utils.addAttributes(s.btnGoUp, this, s.attributes, `${suffix}-goup`);
+    utils.addAttributes(s.btnGoDown, this, s.attributes, `${suffix}-godown`);
+    utils.addAttributes(s.btnEdit, this, s.attributes, `${suffix}-edit`);
+    utils.addAttributes(s.btnDelete, this, s.attributes, `${suffix}-delete`);
 
     // Init tooltips
     this.topButtons = s.btnAdd.add(s.btnGoUp).add(s.btnGoDown).add(s.btnEdit).add(s.btnDelete);
@@ -311,6 +397,7 @@ ListBuilder.prototype = {
       self.dataset.push(self.extractNodeData(li));
       self.arrayIndexMove(self.dataset, self.dataset.length - 1, index);
       self.updateAttributes();
+      self.updateLvAutomationAttributes(li);
       li.trigger('click');
       self.arrangeApi.updated();
       self.editItem(true);
