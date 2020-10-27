@@ -1103,7 +1103,7 @@ Dropdown.prototype = {
       return false;
     }
 
-    if (this.settings.noSearch && ![8, 9, 13, 27, 32, 35, 36, 37, 38, 40, 46].includes(e.which)) {
+    if (this.isOpen() && this.settings.noSearch && ![8, 9, 13, 27, 32, 35, 36, 37, 38, 40, 46].includes(e.which)) {
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -1628,7 +1628,7 @@ Dropdown.prototype = {
    * @param {object} e The event object
    */
   handleAutoComplete(e) {
-    if (this.isLoading() || this.settings.noSearch) {
+    if (this.isLoading()) {
       return;
     }
 
