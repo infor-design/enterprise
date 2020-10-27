@@ -117,6 +117,17 @@ describe('Button API', () => {
       done();
     }, 1000);
   });
+
+  it('can have custom attributes', () => {
+    buttonAPI.updated({
+      attributes: [{
+        name: 'data-automation-id',
+        value: 'my-button'
+      }]
+    });
+
+    expect(buttonEl.getAttribute('data-automation-id')).toEqual('my-button');
+  });
 });
 
 // Secondary Button HTML with visible text and an icon

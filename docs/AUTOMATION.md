@@ -16,7 +16,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Breadcrumb
 - [x] Bullet
 - [x] Busyindicator
-- [ ] Button
+- [x] Button
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
@@ -62,7 +62,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Pie
 - [ ] Popdown
 - [x] Popover
-- [ ] Popupmenu
+- [x] Popupmenu
 - [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
@@ -92,7 +92,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Timepicker
 - [x] Toast
 - [x] Toolbar (deprecated for toolbar flex)
-- [ ] Toolbar Flex
+- [x] Toolbar Flex
 - [ ] Toolbarsearchfield
 - [ ] Tooltip
 - [ ] Tree

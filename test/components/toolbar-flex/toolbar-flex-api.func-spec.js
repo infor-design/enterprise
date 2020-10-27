@@ -349,3 +349,63 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     });
   });
 });
+
+describe('Flex Toolbar (with extra attributes)', () => {
+  beforeEach(() => {
+    toolbarEl = null;
+    toolbarAPI = null;
+    rowEl = null;
+
+    document.body.insertAdjacentHTML('afterbegin', svg);
+    document.body.insertAdjacentHTML('afterbegin', toolbarFavorButtonsetHTML);
+
+    rowEl = document.body.querySelector('.row');
+    toolbarEl = document.body.querySelector('.flex-toolbar');
+    toolbarAPI = new ToolbarFlex(toolbarEl, {
+      attributes: [
+        {
+          name: 'data-automation-id',
+          value: 'my-toolbar'
+        }
+      ]
+    });
+  });
+
+  afterEach(() => {
+    toolbarAPI.destroy();
+    cleanup([
+      '.svg-icons',
+      '.row',
+      '.popupmenu-wrapper'
+    ]);
+  });
+
+  it('can have automation ids', () => {
+    const firstItem = toolbarAPI.items[0];
+
+    // Toolbar elements get the attribute
+    expect(toolbarEl.getAttribute('data-automation-id')).toEqual('my-toolbar');
+    expect(firstItem.element.getAttribute('data-automation-id')).toEqual('my-toolbar-button-0');
+
+    // MenuButton and its controlled elements get the attribute
+    const menuButtonItem = toolbarAPI.items[1];
+    const menuEl = menuButtonItem.componentAPI.menu[0];
+    const menuFirstItemEl = menuEl.querySelector('li:first-child a');
+
+    expect(menuButtonItem.element.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-trigger');
+    expect(menuEl.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-menu');
+    expect(menuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-option-0');
+
+    // "More Actions" button should render with a copy of the MenuButton's items,
+    // but they will have unique `data-automation-id` attributes specific for the overflowed MenuButton items
+    const actionButtonItem = toolbarAPI.items[5];
+    const actionMenuEl = actionButtonItem.componentAPI.menu[0];
+    const actionMenuFirstItemEl = actionMenuEl.querySelector('li:first-child a');
+    const actionMenuButtonFirstItemEl = actionMenuEl.querySelector('li.submenu li:first-child a');
+
+    expect(actionButtonItem.element.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-trigger');
+    expect(actionMenuEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-menu');
+    expect(actionMenuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-0');
+    expect(actionMenuButtonFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-1-0');
+  });
+});

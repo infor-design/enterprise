@@ -69,7 +69,8 @@ const POPUPMENU_DEFAULTS = {
   },
   predefined: $(),
   duplicateMenu: null,
-  stretchToWidestMenuItem: false
+  stretchToWidestMenuItem: false,
+  attributes: null,
 };
 
 function PopupMenu(element, settings) {
@@ -160,13 +161,6 @@ PopupMenu.prototype = {
     // Set a reference collection for containing "pre-defined" menu items that should never
     // be replaced during an AJAX call.
     this.predefinedItems = $().add(this.settings.predefined);
-
-    // Add test automation ids
-    utils.addAttributes(this.element, this, this.settings.attributes);
-    const options = this.element.find('li a');
-    [...options].forEach((opt, i) => {
-      utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
-    });
   },
 
   /**
@@ -275,6 +269,12 @@ PopupMenu.prototype = {
     // and simply acting like a button.
     if (this.menu.length === 0) {
       return;
+    }
+
+    // Add attributes to both the trigger element and the menu `<ul>`
+    if (this.settings.attributes) {
+      utils.addAttributes(this.element, this, this.settings.attributes, 'trigger');
+      utils.addAttributes(this.menu, this, this.settings.attributes, 'menu');
     }
 
     // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
@@ -690,12 +690,27 @@ PopupMenu.prototype = {
     contextElement[0].setAttribute('role', 'menu');
     contextElement[0].setAttribute('aria-labelledby', this.element.attr('id'));
 
+    // Calculates a nested index
+    function getTreeIndex(li) {
+      const $li = $(li);
+      const parentLis = $li.parents('li');
+      const indexes = [];
+
+      $li.add(parentLis).each((i, thisLi) => {
+        indexes.push($(thisLi).parent().children('li:not(.heading):not(.separator)').index(thisLi));
+      });
+
+      return indexes.join('-');
+    }
+
     lis.each((i, li) => {
       const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
-      let span = $(a).children('span')[0];
-      let submenu = $(li).children('ul')[0];
-      const icon = $(li).find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
-      const submenuWrapper = $(li).children('.wrapper')[0];
+      const $a = $(a);
+      const $li = $(li);
+      let span = $a.children('span')[0];
+      let submenu = $li.children('ul')[0];
+      const icon = $li.find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
+      const submenuWrapper = $li.children('.wrapper')[0];
 
       li.setAttribute('role', 'none');
 
@@ -703,10 +718,12 @@ PopupMenu.prototype = {
         a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
         a.setAttribute('tabindex', '-1');
 
-        // disabled menu items, by prop and by className
-        const $a = $(a);
-        const $li = $(li);
+        // Add user-defined attributes to the anchor
+        if (self.settings.attributes) {
+          utils.addAttributes($a, self, self.settings.attributes, `option-${getTreeIndex(li)}`);
+        }
 
+        // disabled menu items, by prop and by className
         if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
           $li.addClass('is-disabled');
           a.setAttribute('aria-disabled', 'true');
