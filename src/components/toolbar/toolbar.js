@@ -38,6 +38,8 @@ const COMPONENT_NAME = 'toolbar';
  * @param {boolean} [settings.noSearchfieldReinvoke=false] If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller
  *  to do it instead.
+ * @param {Array} [settings.attributes] If defined, passes user-defined attributes into the Toolbar
+ *  and some of its subcomponents
  */
 const TOOLBAR_DEFAULTS = {
   rightAligned: false,
@@ -46,6 +48,7 @@ const TOOLBAR_DEFAULTS = {
   favorButtonset: true,
   moreMenuSettings: undefined,
   noSearchfieldReinvoke: false,
+  attributes: null
 };
 
 function Toolbar(element, settings) {
@@ -103,6 +106,10 @@ Toolbar.prototype = {
     this.element.attr('role', 'toolbar');
     if (this.settings.resizeContainers && this.element.is(':not(:hidden)')) {
       this.element[0].classList.add('do-resize');
+    }
+
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.element, this, this.settings.attributes);
     }
 
     this.buildAriaLabel();
@@ -169,15 +176,21 @@ Toolbar.prototype = {
 
     // Invoke buttons
     const buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
-    buttons.each(function () {
-      const buttonControl = $(this).data('button');
+    buttons.each(function (i) {
+      const btn = $(this);
+
+      const buttonControl = btn.data('button');
       if (!buttonControl) {
-        $(this).button();
+        btn.button();
       }
 
       const tooltipControl = $(this).data('tooltip');
-      if (!tooltipControl && $(this).attr('title')) {
-        $(this).tooltip();
+      if (!tooltipControl && btn.attr('title')) {
+        btn.tooltip();
+      }
+
+      if (Array.isArray(self.settings.attributes)) {
+        utils.addAttributes(btn, self, self.settings.attributes, `button-${i}`);
       }
     });
 
@@ -194,6 +207,8 @@ Toolbar.prototype = {
           const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
           sf.searchfield(searchfieldOpts);
         }
+
+        utils.addAttributes(sf, self, self.settings.attributes, 'searchfield');
       });
     }
 
@@ -226,8 +241,8 @@ Toolbar.prototype = {
     }
 
     const menuItems = [];
-    this.items.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function () {
-      menuItems.push(self.buildMoreActionsMenuItem($(this)));
+    this.items.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function (i) {
+      menuItems.push(self.buildMoreActionsMenuItem($(this), i));
     });
 
     menuItems.reverse();
@@ -240,11 +255,25 @@ Toolbar.prototype = {
     this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
     this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
 
+    // If no more menu attributes are directly added through settings,
+    // use the toolbar's with an `actionbutton` suffix
+    let moreMenuAttrs = this.settings.moreMenuSettings?.attributes;
+    if (!moreMenuAttrs?.length) {
+      moreMenuAttrs = this.settings.attributes?.map(attr => ({
+        name: attr.name,
+        value: typeof attr.value === 'function' ? attr.value : `${attr.value}-actionbutton`
+      }));
+    }
+    if (!moreMenuAttrs?.length) {
+      moreMenuAttrs = null;
+    }
+
     // Setup an Event Listener that will refresh the contents of the More Actions
     // Menu's items each time the menu is opened.
     const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
       trigger: 'click',
-      menu: this.moreMenu
+      menu: this.moreMenu,
+      attributes: moreMenuAttrs
     }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
     if (popupMenuInstance) {
       this.more
@@ -315,10 +344,11 @@ Toolbar.prototype = {
    * allow events/properties to propagate when the More Actions item is acted upon.
    * @private
    * @param {jQuery[]} item the source item from the toolbar.
+   * @param {number} [index] an optional index value
    * @returns {jQuery[]} a jQuery-wrapped <li> representing a More Actions menu
    *  implementation of the toolbar item.
    */
-  buildMoreActionsMenuItem(item) {
+  buildMoreActionsMenuItem(item, index) {
     const isSplitButton = false;
     let popupLi;
 
