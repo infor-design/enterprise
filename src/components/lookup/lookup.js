@@ -18,14 +18,21 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
 // This helper appends suffixes representing those components to each attribute.
 function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
   let attrs = [];
+  if (!parentAttrs?.length && !childAttrs?.length) {
+    return attrs;
+  }
 
   // If no child attributes exist, just pass the parents on with the prefix
-  if (!childAttrs.length) {
+  if (!childAttrs?.length) {
     attrs = parentAttrs.map(obj => ({
       name: obj.name,
       value: `${obj.value}-${suffix}`
     }));
     return attrs;
+  }
+
+  if (!parentAttrs.length) {
+    return childAttrs;
   }
 
   // If child attributes exist, only append the ones from the parent

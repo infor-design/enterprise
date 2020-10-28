@@ -105,6 +105,7 @@ Setting the id/automation id with a string value:
 ```
 
 When using the attributes setting, the following elements are appended:
+
 - the input field, with `-input`.
 - the trigger icon, with `-trigger`.
 - the modal component is passed the same `attributes` setting, but all attribute values are suffixed with `-modal`.
