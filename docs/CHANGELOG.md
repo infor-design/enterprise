@@ -4,7 +4,6 @@
 
 ### v4.34.0 Features
 
-- `[Blockgrid/ListBuilder/Swaplist]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Busyindicator]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[About]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
