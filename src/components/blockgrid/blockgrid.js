@@ -17,7 +17,8 @@ const COMPONENT_NAME = 'blockgrid';
  * @param {object} [settings.pagerSettings={}] if paging is enabled, the settings inside this object will be passed to the pager for configuration.
  * @param {number} [settings.pagerSettings.pagesize=25] Number of rows per page
  * @param {array} [settings.pagerSettings.pagesizes=[]] Array of page sizes to show in the page size dropdown.
- */
+ * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+*/
 const BLOCKGRID_DEFAULTS = {
   dataset: [],
   selectable: false, // false, 'single' or 'multiple' or mixed
@@ -27,7 +28,8 @@ const BLOCKGRID_DEFAULTS = {
     pagesizes: [10, 25, 50, 75],
     showFirstButton: false,
     showLastButton: false
-  }
+  },
+  attributes: null
 };
 
 // Moves/Converts certain settings
@@ -286,9 +288,10 @@ Blockgrid.prototype = {
    * @returns {void}
    */
   render() {
-    let blockelements = '';
-    let displayedDataset = this.settings.dataset;
+    const s = this.settings;
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
+    let blockelements = '';
+    let displayedDataset = s.dataset;
 
     if (this.pagerAPI) {
       // If the paging information sets limits on the dataset, customize the
@@ -302,7 +305,7 @@ Blockgrid.prototype = {
 
         // If the dataset doesn't actually have IDs, set temporary ones for
         // tracking selected/deselected
-        if (displayedDataset.length !== this.settings.dataset.length) {
+        if (displayedDataset.length !== s.dataset.length) {
           for (let j = 0; j < displayedDataset.length; j++) {
             if (displayedDataset[j].id) {
               break;
@@ -320,7 +323,7 @@ Blockgrid.prototype = {
 
     for (let i = 0; i < displayedDataset.length; i++) {
       const data = displayedDataset[i];
-      const tabindex = this.settings.selectable === 'mixed' ? '0' : '-1';
+      const tabindex = s.selectable === 'mixed' ? '0' : '-1';
       let selected = '';
       let checked = '';
 
@@ -329,17 +332,31 @@ Blockgrid.prototype = {
         checked = ' checked';
       }
 
+      // Set image alt text
+      const imageAlt = data.imgAlt || data.imageAlt || `${data.maintxt || data.title} ${Locale.translate('Image')}`;
+
       blockelements += `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
         <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id || i}"${checked}>
         <label for="checkbox${i}" class="checkbox-label">
           <span class="audible">${selectText}</span>
         </label>
-        <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
+        <img alt="${imageAlt}" src="${data.img || data.image}" class="image-round">
         <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p>
       </div>`;
     }
 
     this.element.attr('role', 'list').append(blockelements);
+
+    // Add automation attributes
+    if (s.attributes) {
+      for (let i = 0; i < displayedDataset.length; i++) {
+        const checkbox = this.element.find(`#checkbox${i}`);
+        const label = this.element.find(`.checkbox-label[for="checkbox${i}"]`);
+
+        utils.addAttributes(checkbox, this, s.attributes, `blockgrid-checkbox${i}`);
+        utils.addAttributes(label, this, s.attributes, `blockgrid-checkbox-label${i}`);
+      }
+    }
 
     // If a Blockgrid element had focus before rendering, restore focus to the first new block
     if (this.previousFocusedElement) {
