@@ -57,6 +57,33 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
     expect(await blockEl.getAttribute('class')).toContain('is-selected');
   });
+
+  it('Should be able to set id/automation id example one', async () => {
+    expect(await element(by.id('checkbox0')).getAttribute('id')).toEqual('checkbox0');
+    expect(await element(by.id('checkbox0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox0');
+    expect(await element(by.id('example1-blockgrid-checkbox-label0')).getAttribute('id')).toEqual('example1-blockgrid-checkbox-label0');
+    expect(await element(by.id('example1-blockgrid-checkbox-label0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox-label0');
+
+    expect(await element(by.id('checkbox1')).getAttribute('id')).toEqual('checkbox1');
+    expect(await element(by.id('checkbox1')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox1');
+    expect(await element(by.id('example1-blockgrid-checkbox-label1')).getAttribute('id')).toEqual('example1-blockgrid-checkbox-label1');
+    expect(await element(by.id('example1-blockgrid-checkbox-label1')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox-label1');
+
+    expect(await element(by.id('checkbox2')).getAttribute('id')).toEqual('checkbox2');
+    expect(await element(by.id('checkbox2')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox2');
+    expect(await element(by.id('example1-blockgrid-checkbox-label2')).getAttribute('id')).toEqual('example1-blockgrid-checkbox-label2');
+    expect(await element(by.id('example1-blockgrid-checkbox-label2')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox-label2');
+
+    expect(await element(by.id('checkbox3')).getAttribute('id')).toEqual('checkbox3');
+    expect(await element(by.id('checkbox3')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox3');
+    expect(await element(by.id('example1-blockgrid-checkbox-label3')).getAttribute('id')).toEqual('example1-blockgrid-checkbox-label3');
+    expect(await element(by.id('example1-blockgrid-checkbox-label3')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox-label3');
+
+    expect(await element(by.id('checkbox4')).getAttribute('id')).toEqual('checkbox4');
+    expect(await element(by.id('checkbox4')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox4');
+    expect(await element(by.id('example1-blockgrid-checkbox-label4')).getAttribute('id')).toEqual('example1-blockgrid-checkbox-label4');
+    expect(await element(by.id('example1-blockgrid-checkbox-label4')).getAttribute('data-automation-id')).toEqual('automation-id-example1-blockgrid-checkbox-label4');
+  });
 });
 
 describe('Blockgrid example-mixed-selection responsive tests', () => {

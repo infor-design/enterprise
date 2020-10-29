@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [
+       {name: 'Overall', value:25},
+       {name: 'Quality', value:35},
+       {name: 'Price', value:45},
+       {name: 'Quantity', value:55},
+       {name: 'Delivery', value:65}],
+        name: '2019'
+      },
+			{ data: [
+        {name: 'Overall', value:20},
+        {name: 'Quality', value:30},
+        {name: 'Price', value:40},
+        {name: 'Quantity', value:50},
+        {name: 'Delivery', value:60}],
+        name: '2020'
+      }
+    ];
+
+  $('#column-grouped-example').chart({
+    type: 'column-grouped',
+    dataset: dataset,
+    tooltip: function (req, args) {
+			console.log("Args", args);
+			const data = args.data || {};
+			let content = "Name: " + data.name;
+			content += "<br>Value: " + data.value;
+			req(content);
+		}
+  });
+
+});
+</script>
