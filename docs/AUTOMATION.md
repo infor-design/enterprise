@@ -64,7 +64,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Popover
 - [x] Popupmenu
 - [x] Positive Negative
-- [ ] Processindicator
+- [x] Processindicator
 - [x] Progress
 - [x] Radar
 - [x] Radios
@@ -94,7 +94,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Toolbarsearchfield
 - [x] Toolbar Flex
 - [ ] Tooltip
-- [ ] Tree
+- [x] Tree
 - [x] Treemap
 - [x] Week View
 - [x] Wizard
