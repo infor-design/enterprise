@@ -1,13 +1,5 @@
 # What's New with Enterprise
 
-## v4.35.0
-
-### v4.35.0 Features
-
-## v4.35.0 Fixes
-
-- `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
-
 ## v4.34.0
 
 ### v4.34.0 Features
@@ -86,6 +78,7 @@
 - `[Listview]` Fixed a bug where readonly and non-selectable listview should not have hover state. ([#4452](https://github.com/infor-design/enterprise/issues/4452))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))
 - `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
+- `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
 ## v4.33.0
