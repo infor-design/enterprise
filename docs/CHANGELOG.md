@@ -52,7 +52,8 @@
 
 ### v4.34.0 Fixes
 
-- `[Breadcrumb]` Fixed an issue were css only breadcrumbs were missing styles. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
+- `[Autocomplete]` Fixed an issue where a slow and incomplete ajax request would cause the dropdown to briefly show wrong contents. ([#4387](https://github.com/infor-design/enterprise/issues/4387))
+- `[Breadcrumb]` Fixed an issue where css only breadcrumbs were missing styles. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 - `[Datepicker]` Fixed an issue where range highlight was not aligning for Mac/Safari. ([#4352](https://github.com/infor-design/enterprise/issues/4352))
 - `[Datagrid]` Fixed an issue with a custom toolbar, where buttons would click twice. ([#4471](https://github.com/infor-design/enterprise/issues/4471))
 - `[Datagrid]` Fixed an issue where the special characters (é, à, ü, û, ...) export to csv was not generated them correctly. ([#4347](https://github.com/infor-design/enterprise/issues/4347))
@@ -221,11 +222,11 @@
 - `[Blockgrid]` Fixed a bug where first/last pager buttons would show and be disabled by default (buttons are now hidden by default). ([ng#836](https://github.com/infor-design/enterprise-ng/issues/836))
 - `[Buttons]` Reverted an inner Css rule change that set 'btn' classes to contains vs starts with. ([#4120](https://github.com/infor-design/enterprise/issues/4120))
 - `[Datagrid]` Fixed an issue when hiding columns after loading a datagrid up with grouped headers and frozen columns. ([#4218](https://github.com/infor-design/enterprise/issues/4218))
-- `[Datagrid]` Fixed an issue where the rows were not render properly when use method `updateDataset()` for treegrid. ([#4213](https://github.com/infor-design/enterprise/issues/4213))
+- `[Datagrid]` Fixed an issue where the rows where not render properly when use method `updateDataset()` for treegrid. ([#4213](https://github.com/infor-design/enterprise/issues/4213))
 - `[Datagrid]` Fixed an issue where the tooltip for tree grid was not working properly. ([#827](https://github.com/infor-design/enterprise-ng/issues/827))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for server side paging. ([#3977](https://github.com/infor-design/enterprise/issues/3977))
 - `[Datagrid]` Fixed a bug that nested datagrid columns could not be clicked. ([#4197](https://github.com/infor-design/enterprise/issues/4197))
-- `[Datagrid]` Fixed an issue where the 'value' and 'oldValue' on cell change event were showing escaped. ([#4028](https://github.com/infor-design/enterprise/issues/4028))
+- `[Datagrid]` Fixed an issue where the 'value' and 'oldValue' on cell change event where showing escaped. ([#4028](https://github.com/infor-design/enterprise/issues/4028))
 - `[Datagrid]` Fixed an issue where the keyword search was not working for group headers. ([#4068](https://github.com/infor-design/enterprise/issues/4068))
 - `[Datagrid]` Fixed an issue where the column filter results were inconsistent for tree grid. ([#4031](https://github.com/infor-design/enterprise/issues/4031))
 - `[Datagrid]` Fixed an issue where the data was not exporting to excel when using the groupable setting. ([#4081](https://github.com/infor-design/enterprise/issues/4081))
@@ -297,7 +298,6 @@
 - `[Custom Builds]` The build script can now produce an ES Module version of the components that can be imported by your application. ([#3771](https://github.com/infor-design/enterprise/issues/3771))
 - `[Datagrid]` Added a setting disableRowDeselection that if enabled does not allow selected rows to be toggled to deselected. ([#3791](https://github.com/infor-design/enterprise/issues/3791))
 - `[Datagrid]` Added an additional row size extra-small. This row size may need a bit of further fleshing out. All of the previous row sizes have been renamed but using the old settings are supported but deprecated. The new sizes are Extra Small, Small, Medium, Large (Normal). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
-- `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Demoapp]` Added the ability to set runtime flags for persisting settings that were previously only possible to set via URL query parameters. ([n/a])
 - `[Icons]` Changed the tree node icon to be more meaningful in uplift theme. Added a print-preview icon. This replaces the update-preview icon which has confusing meaning but was not removed.
 - `[Searchfield]` Added the ability to clear the searchfield by calling a public clear() function. ([#3810](https://github.com/infor-design/enterprise/issues/3810))
@@ -598,7 +598,7 @@
 - `[Contextual Action Panel]` Fixed close icon button in getting cut off on mobile view ([#3586](https://github.com/infor-design/enterprise/issues/3586))
 - `[Datagrid]` Fixed an issue where lookup editor was removing all characters following and including the '|' pipe character. ([#3556](https://github.com/infor-design/enterprise/issues/3556))
 - `[Datagrid]` Fixed an issue where date range filter was unable to filter data. ([#3503](https://github.com/infor-design/enterprise/issues/3503))
-- `[Datagrid]` Fixed a bug were datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
+- `[Datagrid]` Fixed a bug where datagrid tree would have very big text in the tree nodes on IOS. ([#3347](https://github.com/infor-design/enterprise/issues/3347))
 - `[Datagrid]` Fixed a focus trap issue when using actionable mode, tab will now move up and down rows. ([#2399](https://github.com/infor-design/enterprise/issues/2399))
 - `[Datagrid]` Fixed a bug when setting the UI indicator with `setSortIndicator` then it would take two clicks to sort the inverse direction. ([#3391](https://github.com/infor-design/enterprise/issues/3391))
 - `[Datagrid]` Fixed an issue where date range filter was not working. ([#3337](https://github.com/infor-design/enterprise/issues/3337))
