@@ -263,7 +263,7 @@ Toolbar.prototype = {
     }
     if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
       moreMenuAttrs = this.settings.attributes.map((attr) => {
-        const value = (typeof attr.value === 'function') ? attr.value : `${attr.value}-actionbutton`;
+        const value = `${attr.value}-actionbutton`;
         return {
           name: attr.name,
           value
