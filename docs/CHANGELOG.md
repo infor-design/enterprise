@@ -66,6 +66,7 @@
 - `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
 - `[Message]` Added the `noRefocus` setting that will feed through to the modal. ([#4507](https://github.com/infor-design/enterprise/issues/4507))
 - `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
+- `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
 (56 Issues Solved This Release, Backlog Enterprise 188, Backlog Ng 42, 1089 Functional Tests, 1619 e2e Tests)
