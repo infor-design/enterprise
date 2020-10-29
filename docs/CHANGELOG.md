@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.35.0
+
+### v4.35.0 Features
+
+## v4.35.0 Fixes
+
+- `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
+
 ## v4.34.0
 
 ### v4.34.0 Features
