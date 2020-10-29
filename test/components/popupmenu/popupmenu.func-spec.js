@@ -431,7 +431,7 @@ describe('Popupmenu (settings)', () => {
     expect(popupmenuObj.menu).not.toBeDefined();
   });
 
-  it('can append custom attributes via setting', () => {
+  it('can append custom attributes via setting', (done) => {
     popupmenuButtonEl = document.body.querySelector('#input-menu');
     popupmenuObj = new PopupMenu(popupmenuButtonEl, {
       attributes: [{
@@ -439,16 +439,19 @@ describe('Popupmenu (settings)', () => {
         value: 'action-popupmenu'
       }]
     });
-    const popupmenuEl = document.body.querySelector('.popupmenu-wrapper > .popupmenu');
-    const firstItemEl = popupmenuEl.querySelector('li:first-child a');
-    const lastSubItemEl = popupmenuEl.querySelector('li.submenu li:last-child a');
+    setTimeout(() => {
+      const popupmenuEl = document.body.querySelector('.popupmenu-wrapper > .popupmenu');
+      const firstItemEl = popupmenuEl.querySelector('li:first-child a');
+      const lastSubItemEl = popupmenuEl.querySelector('li.submenu li:last-child a');
 
-    expect(popupmenuButtonEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
-    expect(popupmenuEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
-    expect(firstItemEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-option-0');
+      expect(popupmenuButtonEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
+      expect(popupmenuEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
+      expect(firstItemEl.getAttribute('data-automation-id')).toEqual('cut-automation-id');
 
-    // Account for menu nesting
-    expect(lastSubItemEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-option-3-2');
+      // Account for menu nesting
+      expect(lastSubItemEl.getAttribute('data-automation-id')).toEqual('settings-automation-id');
+      done();
+    }, 300);
   });
 });
 

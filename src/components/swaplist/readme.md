@@ -51,7 +51,46 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the swaplist that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+var dsAvailable = [];
+dsAvailable.push({id: 1, value: 'opt-1', text: 'Option A'});
+dsAvailable.push({id: 2, value: 'opt-2', text: 'Option B'});
+dsAvailable.push({id: 3, value: 'opt-3', text: 'Option C'});
+dsAvailable.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+dsAvailable.push({id: 6, value: 'opt-6', text: 'Option F'});
+dsAvailable.push({id: 8, value: 'opt-8', text: 'Option H'});
+dsAvailable.push({id: 9, value: 'opt-9', text: 'Option I'});
+
+var dsSelected = [];
+dsSelected.push({id: 4, value: 'opt-4', text: 'Option D'});
+dsSelected.push({id: 7, value: 'opt-7', text: 'Option G'});
+dsSelected.push({id: 11, value: 'opt-11', text: 'Option K'});
+
+var dsAdditional = [];
+dsAdditional.push({id: 10, value: 'opt-10', text: 'Option J'});
+dsAdditional.push({id: 12, value: 'opt-12', text: 'Option L'});
+dsAdditional.push({id: 13, value: 'opt-13', text: 'Option M'});
+dsAdditional.push({id: 14, value: 'opt-14', text: 'Option N'});
+
+$('#example1').swaplist({
+  available: dsAvailable,
+  selected: dsSelected,
+  additional: dsAdditional,
+  template: $('#swaplist-tmpl').html(),
+  attributes: [
+    { name: 'id', value: 'example1' },
+    { name: 'data-automation-id', value: 'automation-id-example1' }
+  ]
+});
+```
+
+Providing the data this will add an ID added to each list container with `-swaplist-{containerClass}`, item with `-swaplist-{containerClass}{index}` and buttons with `-swaplist-btn-{containerClass}` also if container is selected `-{left|right}` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

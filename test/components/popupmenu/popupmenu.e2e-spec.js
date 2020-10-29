@@ -58,9 +58,9 @@ describe('Contextmenu index tests', () => {
     expect(await element(by.id('input-menu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
     expect(await element(by.id('action-popupmenu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
 
-    expect(await element(by.id('cut')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-0');
-    expect(await element(by.id('copy')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-1');
-    expect(await element(by.id('paste')).getAttribute('data-automation-id')).toEqual('action-popupmenu-option-2');
+    expect(await element(by.id('cut')).getAttribute('data-automation-id')).toEqual('cut-automation-id');
+    expect(await element(by.id('copy')).getAttribute('data-automation-id')).toEqual('copy-automation-id');
+    expect(await element(by.id('paste')).getAttribute('data-automation-id')).toEqual('paste-automation-id');
   });
 });
 

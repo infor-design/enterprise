@@ -92,6 +92,16 @@ describe('Lookup example tests', () => {
     expect(await lookupEl.getAttribute('value')).toEqual('2142201');
   });
 
+  it('should generate automation id\'s', async () => {
+    expect(await element(by.id('product-lookup')).getAttribute('data-automation-id')).toEqual('my-lookup-input');
+    expect(await element(by.css('#product-lookup + .trigger')).getAttribute('data-automation-id')).toEqual('my-lookup-trigger');
+
+    await element.all(by.className('trigger')).first().click();
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
+
+    expect(await element(by.css('.modal.lookup-modal')).getAttribute('data-automation-id')).toEqual('my-lookup-modal');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const buttonEl = await element.all(by.className('trigger')).first();

@@ -1172,22 +1172,22 @@ describe('Datagrid keyword search tests', () => {
     expect(await element(by.id('custom-id-title')).getAttribute('id')).toEqual('custom-id-title');
     expect(await element(by.id('custom-id-title')).getAttribute('data-automation-id')).toEqual('custom-automation-id-title');
 
-    expect(await element(by.id('custom-id-search')).getAttribute('id')).toEqual('custom-id-search');
-    expect(await element(by.id('custom-id-search')).getAttribute('data-automation-id')).toEqual('custom-automation-id-search');
+    expect(await element(by.id('gridfilter')).getAttribute('id')).toEqual('gridfilter');
+    expect(await element(by.id('gridfilter')).getAttribute('data-automation-id')).toEqual('custom-automation-id-search');
   });
 
   it('Should filter keyword results', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(12);
-    await element(by.id('custom-id-search')).sendKeys('T');
-    await element(by.id('custom-id-search')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('gridfilter')).sendKeys('T');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(11);
   });
 
   it('Should highlight keyword results', async () => {
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(12);
-    await element(by.id('custom-id-search')).sendKeys('26');
-    await element(by.id('custom-id-search')).sendKeys(protractor.Key.ENTER);
+    await element(by.id('gridfilter')).sendKeys('26');
+    await element(by.id('gridfilter')).sendKeys(protractor.Key.ENTER);
 
     expect(await element.all(by.css('.datagrid-wrapper:nth-child(2) tbody tr')).count()).toEqual(6);
     expect(await element.all(by.css('.search-mode i')).count()).toEqual(6);
