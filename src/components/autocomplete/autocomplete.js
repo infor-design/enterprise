@@ -641,6 +641,9 @@ Autocomplete.prototype = {
     clearTimeout(this.loadingTimeout);
 
     function done(searchTerm, response, deferredStatus) {
+      if (self.lastTerm !== searchTerm) {
+        return dfd.reject(searchTerm);
+      }
       self.element.triggerHandler('complete'); // For Busy Indicator
 
       /**
@@ -759,6 +762,7 @@ Autocomplete.prototype = {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
         const sourceURL = self.settings.source.toString();
         const request = $.getJSON(sourceURL + buffer);
+        this.lastTerm = buffer;
 
         request.done((data) => {
           done(buffer, data, true);
