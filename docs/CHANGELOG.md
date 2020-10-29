@@ -4,6 +4,7 @@
 
 ### v4.34.0 Features
 
+- `[All Components]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Busyindicator]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[About]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
@@ -32,23 +33,8 @@
 - `[Listview]` Added a new setting `allowDeselect` which will make it such that if you select an item you cant deselect, you can only select another item. ([#4376](https://github.com/infor-design/enterprise/issues/4376))
 - `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
-- `[Listview]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Message]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
-- `[Modal]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
-- `[Pager/Wizard]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
-- `[Pager]` Added `attributes` setting to set automation id's and id's. ([#4277](https://github.com/infor-design/enterprise/issues/4277))
-- `[Popupmenu]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
-- `[Notification]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Radar/Sparkline]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Radios/Progress/Treemap]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Rating/Slider/Spinbox]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Textarea]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Treemap]` Added ability to show a tooltip. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
-- `[Tabs]` Added `attributes` setting to the `add()` method's options argument for setting automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Toolbar Flex]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Tooltip]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Radios/Progress/Treemap]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 
 ### v4.34.0 Fixes
 
@@ -65,20 +51,24 @@
 - `[Datagrid]` Fixed an error on the filter box on the personalization dialog where it would error if there is a column with no name field. ([#4495](https://github.com/infor-design/enterprise/issues/4495))
 - `[Datagrid]` Fixed links when changing personalization as they would inherit the wrong color. ([#4481](https://github.com/infor-design/enterprise/issues/4481))
 - `[Datagrid]` Fixed a bug where seaching with the search on the toolbar would not highlight results. ([#4488](https://github.com/infor-design/enterprise/issues/4488))
+- `[Datagrid]` Fixed an issue with a custom toolbar, where buttons would click twice. ([#4471](https://github.com/infor-design/enterprise/issues/4471))
 - `[Datepicker]` Changed the month/year picker to skip 10 years instead of one. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
+- `[Dropdown]` Improved the behavior of the `noSearch` dropdown when using the keyboard. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
 - `[Editor]` Fixed an issue where the focus was getting lost after pressing toolbar buttons. ([#4335](https://github.com/infor-design/enterprise/issues/4335))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
 - `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
 - `[Homepage]` Fixed an issue where the four column widgets were incorrectly positioned, left aligned on large screen. ([#4541](https://github.com/infor-design/enterprise/issues/4541))
-- `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
-- `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
-- `[Message]` Added the `noRefocus` setting that will feed through to the modal. ([#4507](https://github.com/infor-design/enterprise/issues/4507))
 - `[List Detail]` Fixed css height for list detail in responsive view ([#4426](https://github.com/infor-design/enterprise/issues/4426))
 - `[Listview]` Fixed a bug where readonly and non-selectable listview should not have hover state. ([#4452](https://github.com/infor-design/enterprise/issues/4452))
 - `[Lookup]` Fixed a bug where the filter header together with the checkbox column is not properly align. ([#3774](https://github.com/infor-design/enterprise/issues/3774))
+- `[MenuButton]` Removed the menubutton component sections as its not really a component, info on it can be found under buttons in the MenuButton examples. ([#4416](https://github.com/infor-design/enterprise/issues/4416))
+- `[Message]` Added support for lists in the message, also fixed a problem when doing so, with screen readers. ([#4400](https://github.com/infor-design/enterprise/issues/4400))
+- `[Message]` Added the `noRefocus` setting that will feed through to the modal. ([#4507](https://github.com/infor-design/enterprise/issues/4507))
 - `[Splitter]` Added missing audible labels in splitter collapse button and splitter handle. ([#4404](https://github.com/infor-design/enterprise/issues/4404))
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
+
+(56 Issues Solved This Release, Backlog Enterprise 188, Backlog Ng 42, 1089 Functional Tests, 1619 e2e Tests)
 
 ## v4.33.0
 
