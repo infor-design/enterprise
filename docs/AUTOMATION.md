@@ -51,7 +51,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Line
 - [x] Listbuilder
 - [x] Listview
-- [ ] Lookup
+- [x] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
