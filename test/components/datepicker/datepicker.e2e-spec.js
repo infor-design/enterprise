@@ -101,7 +101,7 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-id-btn-monthyear')).getAttribute('id')).toEqual('custom-id-btn-monthyear');
+    expect(await element(by.id('btn-monthyear-pane')).getAttribute('id')).toEqual('btn-monthyear-pane');
     expect(await element(by.id('custom-id-btn-cancel')).getAttribute('id')).toEqual('custom-id-btn-cancel');
     expect(await element(by.id('custom-id-btn-select')).getAttribute('id')).toEqual('custom-id-btn-select');
     expect(await element(by.id('custom-id-btn-picklist-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-up');
@@ -890,9 +890,9 @@ describe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys('10/1/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    await element(by.id('custom-id-btn-monthyear')).click();
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', 'April')).click();
@@ -919,10 +919,10 @@ describe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys('10/1/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
     await browser.driver.sleep(config.sleepShort);
 
-    await element(by.id('custom-id-btn-monthyear')).click();
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
@@ -949,9 +949,9 @@ describe('Datepicker Month Year Changer Tests', () => {
     await datepickerEl.sendKeys('10/1/2018');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    await element(by.id('custom-id-btn-monthyear')).click();
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
@@ -978,9 +978,9 @@ describe('Datepicker Month Year Changer Tests', () => {
       await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
       await element(by.css('#date-field-normal + .icon')).click();
       await browser.driver.sleep(config.sleep);
-      await element(by.css('#custom-id-btn-monthyear')).click();
+      await element(by.css('#btn-monthyear-pane')).click();
       await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -1003,9 +1003,9 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     await datepickerEl.sendKeys('2018/01/10');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    await element(by.id('custom-id-btn-monthyear')).click();
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '4月')).click();
@@ -1029,9 +1029,9 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     await datepickerEl.sendKeys('2019/07/09');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    await element(by.id('custom-id-btn-monthyear')).click();
+    await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
     await element(by.cssContainingText('.picklist-item', '2021')).click();
@@ -1054,7 +1054,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
     await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
     await element(by.css('#date-field-normal + .icon')).click();
     const containerEl = await element(by.className('no-frills'));
-    const monthYearPaneFirstSpanEl = await element.all(by.css('#custom-id-btn-monthyear .year')).first();
+    const monthYearPaneFirstSpanEl = await element.all(by.css('#btn-monthyear-pane .year')).first();
     await browser.driver.sleep(config.sleep);
 
     expect(await monthYearPaneFirstSpanEl.getText()).toEqual('2019年');
@@ -2204,9 +2204,9 @@ describe('Datepicker translation tests', () => {
     await element(by.id('date-field-normal')).sendKeys('2020-06-30');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('2020 m. birželis');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020 m. birželis');
   });
 
   it('Should format lv-LV correctly', async () => {
@@ -2215,9 +2215,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('30.06.2020');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('Jūnijs 2020');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('Jūnijs 2020');
   });
 
   it('Should format ro-RO correctly', async () => {
@@ -2226,9 +2226,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('30.06.2020');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('iunie 2020');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('iunie 2020');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('L MA MI J V S D');
   });
 
@@ -2238,9 +2238,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('30. 6. 2020');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.id('custom-id-btn-monthyear')).getText()).toBe('jún 2020');
+    expect(await element(by.id('btn-monthyear-pane')).getText()).toBe('jún 2020');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('P U S Š P S N');
   });
 
@@ -2250,9 +2250,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('30/6/2020');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('Ιούνιος 2020');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('Ιούνιος 2020');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('Δ Τ Τ Π Π Σ Κ');
   });
 
@@ -2262,9 +2262,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('2020/6/30');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('2020年 6月');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
   });
 
@@ -2274,9 +2274,9 @@ describe('Datepicker translation tests', () => {
     await datepickerEl.sendKeys('2020/6/30');
     await element(by.css('#date-field-normal + .icon')).click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('custom-id-btn-monthyear'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
-    expect(await element(by.css('#custom-id-btn-monthyear')).getText()).toBe('2020年 6月');
+    expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
   });
 });

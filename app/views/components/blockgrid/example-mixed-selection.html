@@ -42,7 +42,11 @@
 
     $('#blockgrid').blockgrid({
       dataset: data,
-      selectable: 'mixed'
+      selectable: 'mixed',
+      attributes: [
+        { name: 'id', value: 'example1' },
+        { name: 'data-automation-id', value: 'automation-id-example1' }
+      ]
     }).on('selected', function (e, args) {
       console.log(args);
     }).on('activated', function (e, args) {

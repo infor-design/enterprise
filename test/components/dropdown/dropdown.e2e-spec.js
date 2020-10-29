@@ -11,6 +11,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const clickOnDropdown = async () => {
   const dropdownEl = element(by.css('div.dropdown'));
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+  await browser.driver.sleep(config.sleep);
   await dropdownEl.click();
 };
 
@@ -52,6 +53,7 @@ describe('Dropdown example-index tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(searchEl), config.waitsFor);
 
+    await browser.driver.sleep(config.sleep);
     await browser.switchTo().activeElement().sendKeys('Oh');
     await browser.driver.sleep(config.sleep);
     await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
@@ -98,10 +100,12 @@ describe('Dropdown example-index tests', () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       await dropdownEl.click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = await element(by.id('custom-dropdown-id-1-input'));
+      await browser.driver.sleep(config.sleep);
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
       await dropdownSearchEl.click();
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -120,7 +124,7 @@ describe('Dropdown example-index tests', () => {
       await dropdownEl.click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = await element(by.id('custom-dropdown-id-1-input'));
+      const dropdownSearchEl = await element(by.id('dropdown-search'));
       await dropdownSearchEl.click();
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownSearchEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -153,12 +157,14 @@ describe('Dropdown example-index tests', () => {
     const dropdownEl = await element(by.css('div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-    const dropdownSearchEl = element(by.id('custom-dropdown-id-1-input'));
+    await browser.driver.sleep(config.sleep);
+    const dropdownSearchEl = element(by.id('dropdown-search'));
     await dropdownSearchEl.click();
-    await element(by.id('custom-dropdown-id-1-input')).clear().sendKeys('Colorado');
+    await element(by.id('dropdown-search')).clear().sendKeys('Colorado');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-focused .dropdown-highlight'))), config.waitsFor);
 
@@ -177,7 +183,7 @@ describe('Dropdown example-index tests', () => {
       // Wait for the list to open
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      const dropdownSearchEl = element(by.id('custom-dropdown-id-1-input'));
+      const dropdownSearchEl = element(by.id('dropdown-search'));
 
       await dropdownSearchEl.click();
       await dropdownSearchEl.sendKeys(' Jersey');
@@ -187,7 +193,7 @@ describe('Dropdown example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
 
       // SearchInput should display "New Jersey" and not just " Jersey"
-      expect(await element(by.id('custom-dropdown-id-1-input')).getAttribute('value')).toEqual('New Jersey');
+      expect(await element(by.id('dropdown-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
     it('Should close an open list and tab to the next element without re-opening', async () => {
@@ -221,7 +227,7 @@ describe('Dropdown example-index tests', () => {
       await browser.driver.sleep(100);
 
       // First key press causes the menu to close
-      await element(by.css('#custom-dropdown-id-1-input')).sendKeys(protractor.Key.ESCAPE);
+      await element(by.css('#dropdown-search')).sendKeys(protractor.Key.ESCAPE);
 
       // Wait for the menu to disappear
       // NOTE: Need to fix this once setTimeouts are removed (Github #794)
@@ -246,8 +252,8 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('custom-dropdown-id-1')).getAttribute('id')).toEqual('custom-dropdown-id-1');
       expect(await element(by.id('custom-dropdown-id-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id');
 
-      expect(await element(by.id('custom-dropdown-id-1-input')).getAttribute('id')).toEqual('custom-dropdown-id-1-input');
-      expect(await element(by.id('custom-dropdown-id-1-input')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-input');
+      expect(await element(by.id('dropdown-search')).getAttribute('id')).toEqual('dropdown-search');
+      expect(await element(by.id('dropdown-search')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-input');
 
       expect(await element(by.id('custom-dropdown-id-1-trigger')).getAttribute('id')).toEqual('custom-dropdown-id-1-trigger');
       expect(await element(by.id('custom-dropdown-id-1-trigger')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-trigger');
@@ -255,17 +261,17 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('id')).toEqual('custom-dropdown-id-1-listbox');
       expect(await element(by.id('custom-dropdown-id-1-listbox')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-listbox');
 
-      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-0');
-      expect(await element(by.id('custom-dropdown-id-1-option-0')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-0');
+      expect(await element(by.id('list-option-0')).getAttribute('id')).toEqual('list-option-0');
+      expect(await element(by.id('list-option-0')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-0');
 
-      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-1');
-      expect(await element(by.id('custom-dropdown-id-1-option-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-1');
+      expect(await element(by.id('list-option-1')).getAttribute('id')).toEqual('list-option-1');
+      expect(await element(by.id('list-option-1')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-1');
 
-      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-2');
-      expect(await element(by.id('custom-dropdown-id-1-option-2')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-2');
+      expect(await element(by.id('list-option-2')).getAttribute('id')).toEqual('list-option-2');
+      expect(await element(by.id('list-option-2')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-2');
 
-      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('id')).toEqual('custom-dropdown-id-1-option-3');
-      expect(await element(by.id('custom-dropdown-id-1-option-3')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-3');
+      expect(await element(by.id('list-option-3')).getAttribute('id')).toEqual('list-option-3');
+      expect(await element(by.id('list-option-3')).getAttribute('data-automation-id')).toEqual('custom-automation-dropdown-id-option-3');
     });
   }
 
@@ -273,16 +279,17 @@ describe('Dropdown example-index tests', () => {
     let dropdownEl = await element(by.css('div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-dropdown-id-1-input')).isDisplayed()).toBeTruthy();
+    expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
 
     await element(by.css('.btn-actions')).click();
 
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-dropdown-id-1-input')).isPresent()).toBeFalsy();
+    expect(await element(by.id('dropdown-search')).isPresent()).toBeFalsy();
     await browser.driver.sleep(config.sleep);
 
     dropdownEl = await element(by.css('div.dropdown'));
@@ -291,7 +298,7 @@ describe('Dropdown example-index tests', () => {
     await dropdownEl.click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-dropdown-id-1-input')).isDisplayed()).toBeTruthy();
+    expect(await element(by.id('dropdown-search')).isDisplayed()).toBeTruthy();
   });
 });
 
@@ -305,6 +312,7 @@ describe('Dropdown example-ajax tests', () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       await dropdownEl.click();
       await browser.driver.sleep(config.sleep);
       const dropdownSearchEl = await element(by.id('dropdown-search'));
@@ -489,9 +497,11 @@ describe('Dropdown typeahead-reloading tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
+      await browser.driver.sleep(config.sleep);
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
       const dropdownSearchEl = await element(by.id('dropdown-search'));
       await dropdownSearchEl.click();
 

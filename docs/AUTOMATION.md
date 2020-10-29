@@ -12,7 +12,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Bar
 - [x] Bar Grouped
 - [x] Bar Stacked
-- [ ] Blockgrid
+- [x] Blockgrid
 - [x] Breadcrumb
 - [x] Bullet
 - [x] Busyindicator
@@ -49,7 +49,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Images (not needed id can be directly applied)
 - [x] Input (not needed id can be directly applied)
 - [x] Line
-- [ ] Listbuilder
+- [x] Listbuilder
 - [x] Listview
 - [ ] Lookup
 - [ ] Masthead
@@ -78,7 +78,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Spinbox
 - [ ] Splitter
 - [x] Stepchart
-- [ ] Swaplist
+- [x] Swaplist
 - [ ] Switch
 - [x] Tabs
 - [x] Tabs Header

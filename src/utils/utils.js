@@ -1298,16 +1298,23 @@ utils.addAttributes = function addAttributes(elem, api, setting, suffix) {
     return;
   }
 
+  // Add the given attribute to element, if not alreay exist
+  const addAttr = (name, value) => {
+    if (elem[0] && !elem[0].hasAttribute(name)) {
+      elem.attr(name, value + (suffix ? `-${suffix.toLowerCase()}` : ''));
+    }
+  };
+
   if (Array.isArray(setting)) {
     setting.forEach((item) => {
       const value = typeof item.value === 'function' ? item.value(api) : item.value;
-      elem.attr(item.name, value + (suffix ? `-${suffix}` : ''));
+      addAttr(item.name, value);
     });
     return;
   }
 
   const value = typeof setting.value === 'function' ? setting.value(api) : setting.value;
-  elem.attr(setting.name, value + (suffix ? `-${suffix.toLowerCase()}` : ''));
+  addAttr(setting.name, value);
 };
 
 /**
