@@ -1,5 +1,7 @@
 import { Treemap } from '../../../src/components/treemap/treemap';
 
+require('../../../src/components/locale/cultures/en-US.js');
+
 const treemapHTML = require('../../../app/views/components/treemap/example-index.html');
 const svg = require('../../../src/components/icons/svg.html');
 const data = require('../../../app/data/storage-usage.json');
@@ -11,7 +13,11 @@ let svgEl;
 const treemapId = '#treemap-chart-example';
 
 describe('Treemap API', () => {
+  const Locale = window.Soho.Locale;
+
   beforeEach(() => {
+    Locale.set('en-US');
+
     treemapEl = null;
     treemapAPI = null;
     svgEl = null;

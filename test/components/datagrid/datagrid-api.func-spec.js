@@ -704,7 +704,7 @@ describe('Datagrid API', () => { //eslint-disable-line
 
     expect(result).toBeLessThan(4.5);
     expect(table[0].querySelectorAll('tbody tr').length).toEqual(2000);
-    expect(table[0].querySelector('tbody tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" role="presentation" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
+    expect(table[0].querySelector('tbody tr').outerHTML).toEqual('<tr><td><div><span> T100</span></div></td><td><div><a href="#" tabindex="-1" class="hyperlink ">Compressor</a></div></td><td><div>Assemble Paint</div></td><td><div>$#,##0.00</div></td><td><div>10 %</div></td><td><div>8/7/2018</div></td><td><div></div></td></tr>');
   });
 
   it('Should update paging settings', () => {

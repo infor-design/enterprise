@@ -3,12 +3,12 @@
 
     <div class="field">
       <label for="input-menu">Label</label>
-      <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu"/>
+      <input type="text" data-options="{ trigger:'rightClick', 'attributes': [ { 'name': 'data-automation-id', 'value': 'action-popupmenu' } ] }" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu"/>
     </div>
 
     <div class="field">
       <label for="input-menu2">Label2</label>
-      <input type="text"  data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2"/>
+      <input type="text"  data-options="{ trigger:'rightClick' }" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2"/>
     </div>
 
     <ul id="action-popupmenu" class="popupmenu">

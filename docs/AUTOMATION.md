@@ -12,11 +12,11 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Bar
 - [x] Bar Grouped
 - [x] Bar Stacked
-- [ ] Blockgrid
+- [x] Blockgrid
 - [x] Breadcrumb
 - [x] Bullet
 - [x] Busyindicator
-- [ ] Button
+- [x] Button
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
@@ -28,7 +28,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
-- [ ] Datagrid
+- [x] Datagrid
 - [ ] Datepicker
 - [x] Donut
 - [ ] Dropdown
@@ -37,7 +37,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Error Page
 - [x] Expandablearea
 - [ ] Field Filter
-- [ ] Field Options
+- [x] Field Options
 - [x] Fieldset
 - [x] Fileupload
 - [x] Fileupload Advanced
@@ -49,20 +49,20 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Images (not needed id can be directly applied)
 - [x] Input (not needed id can be directly applied)
 - [x] Line
-- [ ] Listbuilder
+- [x] Listbuilder
 - [x] Listview
-- [ ] Lookup
+- [x] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
 - [x] Monthview
-- [ ] Multiselect
+- [x] Multiselect
 - [x] Notification
 - [x] Pager
 - [x] Pie
-- [ ] Popdown
+- [x] Popdown
 - [x] Popover
-- [ ] Popupmenu
+- [x] Popupmenu
 - [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
@@ -77,7 +77,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Spinbox
 - [x] Splitter
 - [x] Stepchart
-- [ ] Swaplist
+- [x] Swaplist
 - [x] Switch (not needed id can be directly applied)
 - [x] Tabs
 - [x] Tabs Header
@@ -90,9 +90,8 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Timeline (not needed id can be directly applied)
 - [x] Timepicker
 - [x] Toast
-- [x] Toolbar (deprecated for toolbar flex)
-- [ ] Toolbar Flex
-- [ ] Toolbarsearchfield
+- [x] Toolbarsearchfield
+- [x] Toolbar Flex
 - [ ] Tooltip
 - [ ] Tree
 - [x] Treemap

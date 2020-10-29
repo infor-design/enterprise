@@ -1,75 +1,213 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div id="no-data-message">
+    <div id="error-loading">
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-    <div id="no-data-message2">
+    <div id="empty-generic">
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-    <div id="no-data-message3">
+    <div id="new-project">
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-    <div id="no-data-message4">
+    <div id="no-alerts">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-analytics">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-budget">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-data">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-events">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-notes">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-orders">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-tasks">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-users">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="search-data">
     </div>
   </div>
 </div>
 
 <script>
   $('body').on('initialized', function () {
-    $('#no-data-message').emptymessage({
-      title: 'No Data Available',
+
+    $('#error-loading').emptymessage({
+      title: 'Error Loading Data (icon-empty-error-loading)',
       icon: 'icon-empty-search-data',
       attributes: [
-        { name: 'id', value: 'empty-message-id-1' },
-        { name: 'data-automation-id', value: 'automation-id-emptymessage-1' }
+        { name: 'id', value: 'error-loading' },
+        { name: 'data-automation-id', value: 'automation-id-error-loading' }
       ]
     });
 
-    $('#no-data-message2').emptymessage({
-      title: 'No New Alerts ',
+    $('#empty-generic').emptymessage({
+      title: 'Generic Message (icon-empty-generic)',
       icon: 'icon-empty-search-data',
-      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
-      color: 'azure',
       attributes: [
-        { name: 'id', value: 'empty-message-id-2' },
-        { name: 'data-automation-id', value: 'automation-id-emptymessage-2' }
+        { name: 'id', value: 'empty-generic' },
+        { name: 'data-automation-id', value: 'automation-id-empty-generic' }
       ]
     });
 
-    $('#no-data-message3').emptymessage({
-      title: 'No New Alerts ',
+    $('#new-project').emptymessage({
+      title: 'Add a New Project (icon-empty-new-project)',
+      icon: 'icon-empty-new-project',
+      attributes: [
+        { name: 'id', value: 'new-project' },
+        { name: 'data-automation-id', value: 'automation-id-new-project' }
+      ]
+    });
+
+    $('#no-alerts').emptymessage({
+      title: 'Add a New Project (icon-empty-no-alerts)',
+      icon: 'icon-empty-no-alerts',
+      attributes: [
+        { name: 'id', value: 'no-alerts' },
+        { name: 'data-automation-id', value: 'automation-id-no-alerts' }
+      ]
+    });
+
+    $('#no-analytics').emptymessage({
+      title: 'No New Analytics (icon-empty-no-analytics)',
+      icon: 'icon-empty-no-analytics',
+      attributes: [
+        { name: 'id', value: 'no-analytics' },
+        { name: 'data-automation-id', value: 'automation-id-no-analytics' }
+      ]
+    });
+
+    $('#no-budget').emptymessage({
+      title: 'No Budget (icon-empty-no-budget)',
+      icon: 'icon-empty-no-budget',
+      attributes: [
+        { name: 'id', value: 'no-budget' },
+        { name: 'data-automation-id', value: 'automation-id-no-budget' }
+      ]
+    });
+
+    $('#no-data').emptymessage({
+      title: 'No Data Found (icon-empty-no-data)',
+      icon: 'icon-empty-no-data',
+      attributes: [
+        { name: 'id', value: 'no-data' },
+        { name: 'data-automation-id', value: 'automation-id-no-data' }
+      ]
+    });
+
+    $('#no-events').emptymessage({
+      title: 'No Events (icon-empty-no-events)',
+      icon: 'icon-empty-no-events',
+      attributes: [
+        { name: 'id', value: 'no-events' },
+        { name: 'data-automation-id', value: 'automation-id-no-events' }
+      ]
+    });
+
+    $('#no-notes').emptymessage({
+      title: 'No Notes Found (icon-empty-no-notes)',
+      icon: 'icon-empty-no-notes',
+      attributes: [
+        { name: 'id', value: 'no-notes' },
+        { name: 'data-automation-id', value: 'automation-id-no-notes' }
+      ]
+    });
+
+    $('#no-orders').emptymessage({
+      title: 'No Orders Found (icon-empty-no-orders)',
+      icon: 'icon-empty-no-orders',
+      attributes: [
+        { name: 'id', value: 'no-orders' },
+        { name: 'data-automation-id', value: 'automation-id-no-orders' }
+      ]
+    });
+
+    $('#no-tasks').emptymessage({
+      title: 'No Tasks Found (icon-empty-no-tasks)',
       icon: 'icon-empty-no-tasks',
-      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
-      color: 'azure',
       attributes: [
-        { name: 'id', value: 'empty-message-id-3' },
-        { name: 'data-automation-id', value: 'automation-id-emptymessage-3' }
+        { name: 'id', value: 'no-tasks' },
+        { name: 'data-automation-id', value: 'automation-id-no-tasks' }
       ]
     });
 
-
-    $('#no-data-message4').emptymessage({
-      title: 'No New Alerts ',
-      icon: 'icon-empty-no-tasks',
-      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
+    $('#no-users').emptymessage({
+      title: 'No Users Found (icon-empty-no-users)',
+      icon: 'icon-empty-no-users',
       attributes: [
-        { name: 'id', value: 'empty-message-id-4' },
-        { name: 'data-automation-id', value: 'automation-id-emptymessage-4' }
+        { name: 'id', value: 'no-users' },
+        { name: 'data-automation-id', value: 'automation-id-no-users' }
       ]
     });
 
+    $('#search-data').emptymessage({
+      title: 'Search for Data (icon-empty-search-data)',
+      icon: 'icon-empty-search-data',
+      attributes: [
+        { name: 'id', value: 'search-data' },
+        { name: 'data-automation-id', value: 'automation-id-search-data' }
+      ]
+    });
   });
 </script>

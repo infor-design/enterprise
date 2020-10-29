@@ -16,6 +16,7 @@ const COMPONENT_NAME = 'toolbar-flex';
  */
 const TOOLBAR_FLEX_DEFAULTS = {
   allowTabs: false,
+  attributes: null,
   beforeMoreMenuOpen: null,
   moreMenuSettings: {},
 };
@@ -69,7 +70,8 @@ ToolbarFlex.prototype = {
       $(item).toolbarflexitem({
         toolbarAPI: this,
         componentSettings: itemComponentSettings,
-        allowTabs: this.settings.allowTabs
+        allowTabs: this.settings.allowTabs,
+        attributes: this.settings.attributes,
       });
       return $(item).data('toolbarflexitem');
     });
@@ -107,6 +109,11 @@ ToolbarFlex.prototype = {
    */
   render() {
     this.element.setAttribute('role', 'toolbar');
+
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes($(this.element), this, this.settings.attributes);
+    }
+
     this.items.forEach((item) => {
       item.render();
     });

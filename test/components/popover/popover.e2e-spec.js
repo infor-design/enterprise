@@ -27,9 +27,15 @@ describe('Popover Index Tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
+    // Trigger and content wrapper are generated internally from the settings
     expect(await element(by.id('popover-trigger')).getAttribute('id')).toEqual('popover-trigger');
-    expect(await element(by.id('popover-trigger')).getAttribute('data-automation-id')).toEqual('popover-trigger-automation-id');
+    expect(await element(by.id('popover-trigger')).getAttribute('data-automation-id')).toEqual('my-popover-trigger');
 
+    await element(by.id('popover-trigger')).click();
+
+    expect(await element(by.css('.popover')).getAttribute('data-automation-id')).toEqual('my-popover');
+
+    // Content and buttons (Apply/View More) were user-defined and have automation ids applied directly
     expect(await element(by.id('popover-contents')).getAttribute('id')).toEqual('popover-contents');
     expect(await element(by.id('popover-contents')).getAttribute('data-automation-id')).toEqual('popover-contents-automation-id');
 

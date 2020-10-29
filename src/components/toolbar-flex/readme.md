@@ -277,4 +277,110 @@ When there are too many buttons, inputs, or other items present on the toolbar t
 
 ## Testability
 
+You can add custom id's/automation id's to the Flex Toolbar that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes.
+For example:
+
+```js
+  attributes: { name: 'id', value: args => `background-color` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [
+    { name: 'id', value: 'my-unique-id' },
+    { name: 'data-automation-id', value: 'my-unique-id' }
+  ]
+```
+
+These attributes can be added programmatically using the Flex Toolbar API:
+
+```js
+  $('#my-flex-toolbar').toolbarflex({
+    attributes: [
+      { name: 'data-automation-id', value: 'my-toolbar' }
+    ]
+  });
+```
+
+Setting attributes in this manner labels all the following elements:
+
+- the root level Toolbar element gets an attribute of `my-toolbar`
+- all Toolbar Items will get a string that looks like `my-toolbar-${type}-${index}-${extra}`, depending on their composition.
+
+For example, a standard button might appear as:
+
+```html
+<button class="btn" data-automation-id="my-toolbar-button-0">
+  <span>Text Button</span>
+</button>
+```
+
+A menu button might look like the following example. Internally, the extraneous "trigger" text is appended to this element because Flex Toolbar is aware that this is a [MenuButton]('./menubutton'), and defers to that component to apply attributes.  The Flex Toolbar concatenates the attribute value internally:
+
+```html
+<button class="btn-menu" data-automation-id="my-toolbar-menubutton-1-trigger">
+  <span>Menu Button</span>
+</button>
+<!-- ... -->
+<div class="popupmenu-wrapper">
+  <ul class="popupmenu" data-automation-id="my-toolbar-menubutton-1-menu">
+    <li class="popupmenu-item">
+      <a href="#" data-automation-id="my-toolbar-menubutton-1-option-0">Item One</a>
+    </li>
+    <li class="popupmenu-item">
+      <a href="#" data-automation-id="my-toolbar-menubutton-1-option-1">Item Two</a>
+    </li>
+    <li class="popupmenu-item submenu">
+      <a href="#" data-automation-id="my-toolbar-menubutton-1-option-2">Item Three</a>
+    </il>
+  </ul>
+</div>
+```
+
+A "More Actions" button -- being a type of Menu Button itself -- will contain similarly-named attributes with different values on it's "overflowed" version of a Flex Toolbar Menu Button:
+
+```html
+<button class="btn-actions" data-automation-id="my-toolbar-actionbutton-5-trigger">
+  <svg class="icon" role="presentation">
+    <use href="#icon-more"></use>
+  </svg>
+  <span class="audible">More Actions</span>
+</button>
+<!-- ... -->
+<div class="popupmenu-wrapper">
+  <ul class="popupmenu" data-automation-id="my-toolbar-actionbutton-5-menu">
+    <li class="popupmenu-item">
+      <a href="#" data-automation-id="my-toolbar-actionbutton-5-option-0">Text Button</a>
+    </li>
+    <li class="popupmenu-item submenu">
+      <a href="#" data-automation-id="my-toolbar-actionbutton-5-option-1">Menu Button</a>
+      <div class="wrapper">
+        <ul class="popupmenu">
+          <li class="popupmenu-item">
+            <a href="#" data-automation-id="my-toolbar-actionbutton-5-option-1-0">Item One</a>
+          </li>
+          <li class="popupmenu-item">
+            <a href="#" data-automation-id="my-toolbar-actionbutton-5-option-1-1">Item Two</a>
+          </li>
+          <li class="popupmenu-item">
+            <a href="#" data-automation-id="my-toolbar-actionbutton-5-option-1-2">Item Three</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+```
+
+For other component types, such as [Colorpicker]('./colorpicker'), [Searchfield]('./searchfield'), etc., attribute values are similarly passed down.  This provides a way for a developer to simply implement a single ID on the Toolbar API that will be respected for all components the Toolbar contains.
+
+If you only need to test a specific Flex Toolbar Item, and not the entire component (for example, one button out of five), please either set attributes directly on those elements, or use their respective component API's `attributes` setting, if applicable.
+
 Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

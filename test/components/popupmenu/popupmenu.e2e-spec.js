@@ -55,17 +55,12 @@ describe('Contextmenu index tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('popupmenu-id')).getAttribute('id')).toEqual('popupmenu-id');
-    expect(await element(by.id('popupmenu-id')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id');
+    expect(await element(by.id('input-menu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
+    expect(await element(by.id('action-popupmenu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
 
-    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('id')).toEqual('popupmenu-id-option-0');
-    expect(await element(by.id('popupmenu-id-option-0')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-0');
-
-    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('id')).toEqual('popupmenu-id-option-1');
-    expect(await element(by.id('popupmenu-id-option-1')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-1');
-
-    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('id')).toEqual('popupmenu-id-option-2');
-    expect(await element(by.id('popupmenu-id-option-2')).getAttribute('data-automation-id')).toEqual('popupmenu-automation-id-option-2');
+    expect(await element(by.id('cut')).getAttribute('data-automation-id')).toEqual('cut-automation-id');
+    expect(await element(by.id('copy')).getAttribute('data-automation-id')).toEqual('copy-automation-id');
+    expect(await element(by.id('paste')).getAttribute('data-automation-id')).toEqual('paste-automation-id');
   });
 });
 

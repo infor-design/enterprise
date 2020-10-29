@@ -107,7 +107,11 @@
 
     var api = $('#example-listbuilder').listbuilder({
       dataset: ds,
-      template: $('#listbuilder-tmpl').html()
+      template: $('#listbuilder-tmpl').html(),
+      attributes: [
+        { name: 'id', value: 'example1' },
+        { name: 'data-automation-id', value: 'automation-id-example1' }
+      ]
     }).data('listbuilder');
 
     // Add
