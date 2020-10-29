@@ -32,7 +32,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Datepicker
 - [x] Donut
 - [ ] Dropdown
-- [ ] Editor
+- [x] Editor
 - [x] Emptymessage
 - [x] Error Page
 - [x] Expandablearea
@@ -42,7 +42,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Fileupload
 - [x] Fileupload Advanced
 - [ ] Header
-- [ ] Hierarchy
+- [x] Hierarchy
 - [ ] Homepage
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)

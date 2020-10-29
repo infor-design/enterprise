@@ -53,7 +53,39 @@ Required template HTML markup:
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the hierarchy that can be used for scripting using the `attributes` data attribute. This data attribute can be either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+
+Setting the id/automation id with a string value or function. The function will give you the data as a parameter for making things more dynamic.
+
+```js
+var dataset = [{
+  "id": "1",
+  "Name": "Jonathan Cargill",
+  "Position": "Director",
+  "EmploymentType": "FT",
+  "Picture": "/images/21.jpg",
+  "attributes": [
+    { "name": "id", "value": "example1-1-jonathan-cargill" },
+    { "name": "data-automation-id", "value": "automation-id-example1-1-jonathan-cargill" }
+  ]
+  "children": [
+    {
+      "id": "1_3",
+      "Name": "Kaylee Edwards",
+      "Position": "Records Manager",
+      "EmploymentType": "FT",
+      "Picture": "/images/11.jpg",
+      "attributes": [
+        { "name": "id", "value": "example1-1_3-kaylee-edwards" },
+        { "name": "data-automation-id", "value": "automation-id-example1-1_3-kaylee-edwards" }
+      ]
+    }
+  }];
+```
+
+Providing the data this will add an ID added to each leaf with `-hierarchy-leaf`, toggle button with `-hierarchy-btn-toggle`, actions button with `-hierarchy-popupmenu-trigger` and action button options with `-hierarchy-popupmenu-option-{index}` appended after it.
+
+- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Upgrading from 3.X
 
