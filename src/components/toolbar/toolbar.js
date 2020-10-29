@@ -241,8 +241,8 @@ Toolbar.prototype = {
     }
 
     const menuItems = [];
-    this.items.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function (i) {
-      menuItems.push(self.buildMoreActionsMenuItem($(this), i));
+    this.items.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function () {
+      menuItems.push(self.buildMoreActionsMenuItem($(this)));
     });
 
     menuItems.reverse();
@@ -259,10 +259,13 @@ Toolbar.prototype = {
     // use the toolbar's with an `actionbutton` suffix
     let moreMenuAttrs = this.settings.moreMenuSettings?.attributes;
     if (!moreMenuAttrs?.length) {
-      moreMenuAttrs = this.settings.attributes?.map(attr => ({
-        name: attr.name,
-        value: typeof attr.value === 'function' ? attr.value : `${attr.value}-actionbutton`
-      }));
+      moreMenuAttrs = this.settings.attributes?.map((attr) => {
+        const value = (typeof attr.value === 'function') ? attr.value : `${attr.value}-actionbutton`;
+        return {
+          name: attr.name,
+          value
+        };
+      });
     }
     if (!moreMenuAttrs?.length) {
       moreMenuAttrs = null;
@@ -344,11 +347,10 @@ Toolbar.prototype = {
    * allow events/properties to propagate when the More Actions item is acted upon.
    * @private
    * @param {jQuery[]} item the source item from the toolbar.
-   * @param {number} [index] an optional index value
    * @returns {jQuery[]} a jQuery-wrapped <li> representing a More Actions menu
    *  implementation of the toolbar item.
    */
-  buildMoreActionsMenuItem(item, index) {
+  buildMoreActionsMenuItem(item) {
     const isSplitButton = false;
     let popupLi;
 
@@ -456,9 +458,27 @@ Toolbar.prototype = {
       }
     }
 
+    const index = this.items.not(this.more).not('.searchfield').index(item);
     if (item.is('.btn-menu')) {
+      // Automatically apply attributes to menu buttons if attributes are set on the toolbar,
+      // but the menubutton doesn't have them.
+      // If no more menu attributes are directly added through settings,
+      // use the toolbar's with an `actionbutton` suffix
+      let menuBtnAttrs = this.settings.attributes?.map((attr) => {
+        const value = (typeof attr.value === 'function') ? attr.value : `${attr.value}-menubutton-${index}`;
+        return {
+          name: attr.name,
+          value
+        };
+      });
+      if (!menuBtnAttrs?.length) {
+        menuBtnAttrs = null;
+      }
+
       if (!item.data('popupmenu')) {
-        item.popupmenu();
+        item.popupmenu({
+          attributes: menuBtnAttrs
+        });
       } else if (!a.children('.icon.arrow').length) {
         a.append($.createIcon({
           classes: 'icon arrow icon-dropdown',
