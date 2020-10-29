@@ -257,9 +257,12 @@ Toolbar.prototype = {
 
     // If no more menu attributes are directly added through settings,
     // use the toolbar's with an `actionbutton` suffix
-    let moreMenuAttrs = this.settings.moreMenuSettings?.attributes;
-    if (!moreMenuAttrs?.length) {
-      moreMenuAttrs = this.settings.attributes?.map((attr) => {
+    let moreMenuAttrs;
+    if (this.settings.moreMenuSettings && Array.isArray(this.settings.moreMenuSettings.attributes)) {
+      moreMenuAttrs = this.settings.moreMenuSettings.attributes;
+    }
+    if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
+      moreMenuAttrs = this.settings.attributes.map((attr) => {
         const value = (typeof attr.value === 'function') ? attr.value : `${attr.value}-actionbutton`;
         return {
           name: attr.name,
