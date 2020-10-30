@@ -474,7 +474,7 @@ Toolbar.prototype = {
           value: `${attr.value}-menubutton-${index}`
         }));
       }
-      if (!menuBtnAttrs.length) {
+      if (!menuBtnAttrs?.length) {
         menuBtnAttrs = null;
       }
 
