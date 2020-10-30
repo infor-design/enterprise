@@ -780,9 +780,9 @@ Dropdown.prototype = {
 
     if (!listExists) {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
-        <label for="dropdown-search" class="audible">${Locale.translate('TypeToFilter')}</label>
-        <input type="text" class="dropdown-search${reverseText}" id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span></span>
+        <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
+        <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>
         <ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
     }
 
@@ -1103,6 +1103,12 @@ Dropdown.prototype = {
       return false;
     }
 
+    if (this.isOpen() && this.settings.noSearch && ![8, 9, 13, 27, 32, 35, 36, 37, 38, 40, 46].includes(e.which)) {
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
       return; // eslint-disable-line
     }
@@ -1127,10 +1133,6 @@ Dropdown.prototype = {
    * @returns {void}
    */
   handleSearchEvents() {
-    if (this.settings.noSearch) {
-      this.searchInput.prop('readonly', true);
-    }
-
     // Used to determine how spacebar should function.
     // False means space will select/deselect.  True means
     // Space will add a space inside the search input.

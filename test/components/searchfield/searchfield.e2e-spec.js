@@ -91,6 +91,12 @@ describe('Searchfield example-index tests', () => {
     expect(await element(by.id('searchfield')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id');
 
     expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-close');
+
+    expect(await element(by.id('example-toolbar-searchfield')).getAttribute('id')).toEqual('example-toolbar-searchfield');
+    expect(await element(by.id('example-toolbar-searchfield')).getAttribute('data-automation-id')).toEqual('toolbar-searchfield-automation-id');
+
+    expect(await element(by.id('example-toolbar-searchfield-wrapper')).getAttribute('id')).toEqual('example-toolbar-searchfield-wrapper');
+    expect(await element(by.id('example-toolbar-searchfield-wrapper')).getAttribute('data-automation-id')).toEqual('example-toolbar-searchfield-wrapper-automation-id');
   });
 });
 

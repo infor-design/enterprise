@@ -12,11 +12,11 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Bar
 - [x] Bar Grouped
 - [x] Bar Stacked
-- [ ] Blockgrid
+- [x] Blockgrid
 - [x] Breadcrumb
 - [x] Bullet
 - [x] Busyindicator
-- [ ] Button
+- [x] Button
 - [x] Calendar
 - [x] Calendar Toolbar
 - [x] Checkboxes (not needed id can be directly applied)
@@ -25,75 +25,73 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Column
 - [x] Column Grouped
 - [x] Column Stacked
-- [ ] Completion Chart
+- [x] Completion Chart
 - [x] Contextmenu
 - [x] Contextualactionpanel
-- [ ] Datagrid
+- [x] Datagrid
 - [ ] Datepicker
 - [x] Donut
 - [ ] Dropdown
-- [ ] Editor
+- [x] Editor
 - [x] Emptymessage
 - [x] Error Page
 - [x] Expandablearea
 - [ ] Field Filter
-- [ ] Field Options
+- [x] Field Options
 - [x] Fieldset
 - [x] Fileupload
 - [x] Fileupload Advanced
 - [ ] Header
-- [ ] Hierarchy
+- [x] Hierarchy
 - [ ] Homepage
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)
 - [x] Images (not needed id can be directly applied)
 - [x] Input (not needed id can be directly applied)
 - [x] Line
-- [ ] Listbuilder
+- [x] Listbuilder
 - [x] Listview
-- [ ] Lookup
+- [x] Lookup
 - [ ] Masthead
 - [x] Message
 - [x] Modal
 - [x] Monthview
-- [ ] Multiselect
+- [x] Multiselect
 - [x] Notification
 - [x] Pager
 - [x] Pie
-- [ ] Popdown
+- [x] Popdown
 - [x] Popover
-- [ ] Popupmenu
+- [x] Popupmenu
 - [x] Positive Negative
 - [ ] Processindicator
 - [x] Progress
 - [x] Radar
 - [x] Radios
-- [ ] Rating
+- [x] Rating (not needed id can be directly applied)
 - [x] Scatterplot
 - [x] Searchfield
-- [ ] Signin
+- [x] Signin (not needed id can be directly applied)
 - [x] Skiplink (not needed id can be directly applied)
-- [ ] Slider
-- [x] Sparkline
-- [ ] Spinbox
-- [ ] Splitter
+- [x] Slider
+- [x] Spinbox
+- [x] Splitter
 - [x] Stepchart
-- [ ] Swaplist
-- [ ] Switch
+- [x] Swaplist
+- [x] Switch (not needed id can be directly applied)
 - [x] Tabs
 - [x] Tabs Header
 - [x] Tabs Module
 - [x] Tabs Multi
 - [x] Tabs Vertical
 - [x] Tag (not needed id can be directly applied)
-- [ ] Targeted Achievement
+- [x] Targeted Achievement
 - [x] Textarea
-- [ ] Timeline
-- [ ] Timepicker
+- [x] Timeline (not needed id can be directly applied)
+- [x] Timepicker
 - [x] Toast
-- [x] Toolbar (deprecated for toolbar flex)
-- [ ] Toolbar Flex
-- [ ] Toolbarsearchfield
+- [x] Toolbarsearchfield
+- [x] Toolbar Flex
 - [ ] Tooltip
 - [ ] Tree
 - [x] Treemap

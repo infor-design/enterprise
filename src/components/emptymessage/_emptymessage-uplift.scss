@@ -2,18 +2,18 @@
 //================================================== //
 
 .icon-empty-state {
-  fill: transparent;
+  fill: transparent !important;
   height: 80px;
   width: 80px;
 
   &.is-graphite {
     color: $icon-empty-bg-color;
-    fill: transparent;
+    fill: transparent !important;
   }
 
   &.is-slate {
     color: $icon-empty-bg-color;
-    fill: transparent;
+    fill: transparent !important;
   }
 }
 

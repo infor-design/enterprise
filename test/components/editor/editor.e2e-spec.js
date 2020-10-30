@@ -124,6 +124,33 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
     expect(await element(by.css('.fontpicker')).getText()).toEqual('Header 1');
   });
+
+  it('Should be able to set id/automation id example', async () => {
+    expect(await element(by.id('example1-editor-fontpicker-option-0')).getAttribute('id')).toEqual('example1-editor-fontpicker-option-0');
+    expect(await element(by.id('example1-editor-fontpicker-option-0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-fontpicker-option-0');
+
+    expect(await element(by.id('example1-editor-toolbar-button-1')).getAttribute('id')).toEqual('example1-editor-toolbar-button-1');
+    expect(await element(by.id('example1-editor-toolbar-button-1')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-toolbar-button-1');
+
+    await element(by.css('.btn-editor[data-action="foreColor"]')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popupmenu.colorpicker.is-open'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('example1-editor-toolbar-colorpicker-5-slate10')).getAttribute('id')).toEqual('example1-editor-toolbar-colorpicker-5-slate10');
+    expect(await element(by.id('example1-editor-toolbar-colorpicker-5-slate10')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-toolbar-colorpicker-5-slate10');
+
+    await element(by.css('.btn-editor[data-action="anchor"]')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.editor-modal-url.is-visible'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('em-url-editor-1-id')).getAttribute('id')).toEqual('em-url-editor-1-id');
+    expect(await element(by.id('em-url-editor-1-id')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-input0');
+
+    expect(await element(by.id('example1-editor-modal-button0')).getAttribute('id')).toEqual('example1-editor-modal-button0');
+    expect(await element(by.id('example1-editor-modal-button0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-button0');
+  });
 });
 
 describe('Editor visual regression tests', () => {

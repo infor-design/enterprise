@@ -6,7 +6,7 @@
         </div>
 
         <div class="toolbar-section buttonset">
-          <button class="btn btn-toggle" type="button" id="toggle-compact">
+          <button class="btn btn-toggle" type="button" id="toggle-compact" data-automation-id="toggle-compact-automation-id">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-change-row-line-height"></use>
             </svg>
@@ -23,7 +23,7 @@
         <label for="example-textfield">Text Field</label>
         <input type="text" class="field-options" aria-required="true" name="example-textfield" id="example-textfield"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-text-field" data-automation-id="field-options-text-field-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -43,7 +43,7 @@
           <option value="AZ">Arizona</option>
         </select>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-dropdown" data-automation-id="field-options-dropdown-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -63,7 +63,7 @@
           <option value="AZ">Arizona</option>
         </select>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-multiselect" data-automation-id="field-options-multiselect-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -79,7 +79,7 @@
         <label for="example-autocomplete">Autocomplete</label>
         <input type="text" autocomplete="off" class="autocomplete field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-autocomplete" data-automation-id="field-options-autocomplete-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -95,7 +95,7 @@
         <label for="example-fileupload">Fileupload</label>
         <input type="file" class="fileupload field-options" name="example-fileupload" id="example-fileupload"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-fileupload" data-automation-id="field-options-fileupload-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -111,7 +111,7 @@
         <label for="example-lookup" class="label">Lookup</label>
         <input data-init="false" class="lookup field-options" name="example-lookup" type="text" id="example-lookup"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-lookup" data-automation-id="field-options-lookup-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -127,7 +127,7 @@
         <label for="example-datepicker" class="label">Date Picker</label>
         <input class="datepicker field-options" name="example-datepicker" type="text" id="example-datepicker"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-datepicker" data-automation-id="field-options-datepicker-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -143,7 +143,7 @@
          <label for="example-timepicker" class="label">Time Picker</label>
          <input class="timepicker field-options" name="example-timepicker" type="text" id="example-timepicker"/>
 
-         <button class="btn-actions btn-menu" type="button">
+         <button class="btn-actions btn-menu" type="button" id="field-options-timepicker" data-automation-id="field-options-timepicker-automation-id">
             <span class="audible">Actions for Item Description</span>
             <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
                <use href="#icon-more"/>
@@ -159,7 +159,7 @@
         <label for="example-spinbox">Spinbox</label>
         <input name="example-spinbox" type="text" class="spinbox field-options"  id="example-spinbox"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-spinbox" data-automation-id="field-options-spinbox-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -175,7 +175,7 @@
         <label for="example-colorpicker">Color Picker</label>
         <input class="colorpicker field-options" type="text" name="example-colorpicker" id="example-colorpicker"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-colorpicker" data-automation-id="field-options-colorpicker-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -204,7 +204,7 @@
           <label for="option4" class="radio-label">Option four</label>
         </div>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-radio-group" data-automation-id="field-options-radio-group-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -222,7 +222,7 @@
         <input type="checkbox" class="checkbox field-options" id="checkbox-field-1"/>
         <label for="checkbox-field-1" class="checkbox-label">Field Checkbox 1</label>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-checkbox" data-automation-id="field-options-checkbox-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -237,7 +237,7 @@
         <input type="checkbox" class="checkbox field-options" id="checkbox-field-2"/>
         <label for="checkbox-field-2" class="checkbox-label">Field Checkbox 2</label>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-checkbox-2-" data-automation-id="field-options-checkbox-2-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -252,7 +252,7 @@
         <input type="checkbox" class="checkbox field-options" id="checkbox-field-3"/>
         <label for="checkbox-field-3" class="checkbox-label">Field Checkbox 3</label>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-checkbox-3" data-automation-id="field-options-checkbox-3-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -269,7 +269,7 @@
         <label for="example-disabled-textfield">Disabled</label>
         <input class="field-options" type="text" disabled="true" value="Field not editable" name="example-disabled-textfield" id="example-disabled-textfield"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-disabled" data-automation-id="field-options-disabled-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -285,7 +285,7 @@
         <label for="example-readonly-textfield">Readonly</label>
         <input class="field-options" type="text" readonly="true" value="02006" name="example-readonly-textfield" id="example-readonly-textfield"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-readonly" data-automation-id="field-options-readonly-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -301,7 +301,7 @@
         <label for="example-clearable">Clearable Input</label>
         <input type="text" class="field-options" data-clearable="true" name="example-clearable" id="example-clearable"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-clearable" data-automation-id="field-options-clearable-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -317,7 +317,7 @@
         <label for="example-searchfield-clearable">Clearable Searchfield</label>
         <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" type="text" class="searchfield field-options" name="example-searchfield-clearable" id="example-searchfield-clearable"/>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-clearable-searchfield" data-automation-id="field-options-clearable-searchfield-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>
@@ -333,7 +333,7 @@
         <label for="example-textarea">Textarea</label>
         <textarea class="textarea field-options" placeholder="Type your notes here..." name="example-textarea" id="example-textarea"></textarea>
 
-        <button class="btn-actions btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button" id="field-options-textarea" data-automation-id="field-options-textarea-automation-id">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use href="#icon-more"/>

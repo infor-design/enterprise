@@ -37,6 +37,8 @@ const SWAPLIST_DEFAULTS = {
     additional: true
   },
 
+  attributes: null,
+
   // Template HTML
   template: '' +
     '<ul data-swap-handle=".handle">' +
@@ -72,6 +74,7 @@ const SWAPLIST_DEFAULTS = {
 * @param {string} [settings.selectedBtnLeft = '.btn-moveto-left'] A class name linking the move left button element.
 * @param {string} [settings.selectedBtnRight = '.btn-moveto-right'] A class name linking the move right button element.
 * @param {string} [settings.additionalBtn = '.btn-moveto-selected'] A class name linking the additional button element.
+* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 * @param {string} [settings.template] An Html String with the mustache template for the view.
 * @param {object} [settings.draggable] An object containing boolean key/value to make container/s
 *  disable for dragging and moving items. Supported keys with draggable are "available",
@@ -161,6 +164,7 @@ SwapList.prototype = {
         if (options.dataset.length === 0) {
           options.forceToRenderOnEmptyDs = true;
         }
+        options.attributes = this.getLvAutomationAttributes(c.class);
         lv.listview(options);
       }
 
@@ -169,6 +173,31 @@ SwapList.prototype = {
         $('ul', lv).addClass('is-not-droppable');
       }
     }
+  },
+
+  /**
+   * Get list view settings for automation attributes
+   * @private
+   * @param {string} cssClass class name
+   * @returns {object|array} attributes with suffix
+   */
+  getLvAutomationAttributes(cssClass) {
+    const s = this.settings;
+    let attributes;
+    if (s.attributes && typeof cssClass === 'string' && cssClass.length > 1) {
+      const suffix = `-swaplist-${cssClass.substring(1)}`; // remove first dot
+      if (Array.isArray(s.attributes)) {
+        attributes = [];
+        s.attributes.forEach((item) => {
+          const value = typeof item.value === 'function' ? item.value(this) : item.value;
+          attributes.push({ name: item.name, value: (value + suffix) });
+        });
+      } else {
+        const value = typeof s.attributes.value === 'function' ? s.attributes.value(this) : s.attributes.value;
+        attributes = { name: s.attributes.name, value: (value + suffix) };
+      }
+    }
+    return attributes;
   },
 
   /**
@@ -223,6 +252,27 @@ SwapList.prototype = {
     s.itemContentClass = 'swaplist-item-content';
     s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span>
       <span class="${s.numOfSelectionsClass}-text">&nbsp;</span></p><div/>`);
+
+    // Add automation attributes to header buttons
+    if (s.attributes) {
+      const autoAttr = [{
+        btn: $(`${s.availableClass} ${s.availableBtn}`, this.element),
+        suffix: (s.availableClass || '').substring(1)// available
+      }, {
+        btn: $(`${s.selectedClass} ${s.selectedBtnLeft}`, this.element),
+        suffix: `${(s.selectedClass || '').substring(1)}-left`// selected-left
+      }, {
+        btn: $(`${s.selectedClass} ${s.selectedBtnRight}`, this.element),
+        suffix: `${(s.selectedClass || '').substring(1)}-right`// selected right
+      }, {
+        btn: $(`${s.additionalClass} ${s.additionalBtn}`, this.element),
+        suffix: (s.additionalClass || '').substring(1)// additional
+      }];
+      autoAttr.forEach((x) => {
+        x.suffix = `swaplist-btn-${x.suffix}`;
+      });
+      autoAttr.forEach(x => utils.addAttributes(x.btn, this, s.attributes, x.suffix));
+    }
 
     // Make top buttons disabled if not draggable
     if (!s.draggable.available) {

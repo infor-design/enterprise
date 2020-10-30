@@ -16,7 +16,8 @@ const SPINBOX_DEFAULTS = {
   min: -2147483647,
   max: 2147483647,
   step: null,
-  maskOptions: null
+  maskOptions: null,
+  attributes: null
 };
 
 /**
@@ -29,6 +30,7 @@ const SPINBOX_DEFAULTS = {
  * @param {Number} [settings.min = -2147483647] if defined, provides a minimum numeric limit
  * @param {Number} [settings.max = 2147483647]  if defined, provides a maximum numeric limit
  * @param {Number} [settings.maskOptions = null]  if defined this is passed to the internal mask component
+ * @param {string} [settings.attributes = null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {null|Number} [settings.step = null]  if defined, increases or decreases the spinbox value
  *  by a specific interval whenever the control buttons are used.
  *  the spinbox value after the spinbox has lost focus.
@@ -253,6 +255,11 @@ Spinbox.prototype = {
     if (this.element.attr('readonly')) {
       this.readonly();
     }
+
+    utils.addAttributes(this.element.parent(), this, this.settings.attributes, 'wrapper');
+    utils.addAttributes(this.element, this, this.settings.attributes, 'spinbox');
+    utils.addAttributes(this.buttons.down, this, this.settings.attributes, 'btn-down');
+    utils.addAttributes(this.buttons.up, this, this.settings.attributes, 'btn-up');
 
     return this;
   },

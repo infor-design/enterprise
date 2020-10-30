@@ -55,6 +55,12 @@
 
   $('#targetButton').popupmenu({
     beforeOpen: popupmenuTestBeforeOpen,
-    menu: 'popup-menu'
+    menu: 'popup-menu',
+    attributes: [
+      {
+        name: 'data-automation-id',
+        value: 'test'
+      }
+    ]
   });
 </script>

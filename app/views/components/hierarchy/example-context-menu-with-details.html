@@ -1,5 +1,20 @@
 <figure class="hierarchy" id="hierarchy"></figure>
 <script>
+  // Get suffix text for automation attributes
+  function getSuffix(d) {
+    var suffix = '-' + d.id;
+    suffix += '-' + d.Name || '';
+    return suffix.toString().toLowerCase().replace(/\s/g, '-');
+  }
+
+  // Set automation attributes
+  function setAutomationAttributes(d) {
+    d.attributes = [
+      { name: 'id', value: 'example1'+ getSuffix(d) },
+      { name: 'data-automation-id', value: 'automation-id-example1'+ getSuffix(d) }
+    ];
+  };
+
   $.getJSON('{{basepath}}api/orgstructure', function(data) {
     const legendData = [
       { 'value' : 'FT', 'label' : 'Full Time'     },
@@ -7,6 +22,10 @@
       { 'value' : 'C',  'label' : 'Contractor'    },
       { 'value' : 'O',  'label' : 'Open Position' }
     ];
+
+    // Add automation attributes, first and first-child node
+    setAutomationAttributes(data[0]);
+    setAutomationAttributes(data[0].children[0]);
 
     $('#hierarchy').hierarchy({
       templateId: 'hierarchyChartTemplate',

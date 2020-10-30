@@ -58,7 +58,9 @@ The multi-select list is fairly complex to make accessible. But generally this c
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the multiselect component via the dropdown component. For this reason there is no `attributes` setting like some other components.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

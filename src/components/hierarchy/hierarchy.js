@@ -99,8 +99,28 @@ Hierarchy.prototype = {
     if (s.layout) {
       this.setLayout(s.layout);
     }
+
+    // Automation attributes
+    this.setAutomationAttributes();
   },
 
+  /**
+   * Set automation attributes.
+   * @private
+   * @returns {void}
+   */
+  setAutomationAttributes() {
+    const leaves = [].slice.call(this.element[0].querySelectorAll('.leaf'));
+    leaves.forEach((leaf) => {
+      const leafJq = $(leaf);
+      const d = leafJq.data();
+      if (d && d.attributes) {
+        const btnToggle = leafJq.find('.btn-expand, .btn-collapse');
+        utils.addAttributes(leafJq, this, d.attributes, 'hierarchy-leaf');
+        utils.addAttributes(btnToggle, this, d.attributes, 'hierarchy-btn-toggle');
+      }
+    });
+  },
   /**
    * Setup the hierarchy layout.
    * @private
@@ -384,26 +404,32 @@ Hierarchy.prototype = {
       return a;
     });
 
+    let opAttr;
+    const opAttrStr = idx => utils.stringAttributes(this, opAttr, `option-${idx}`);
+    if (data.attributes) {
+      opAttr = this.getAutomationAttributes(data, '-hierarchy-popupmenu');
+    }
+
     // Ignoring next line. Eslint expects template literals vs string concat.
     // However template literals break JSON.stringify() in this case
     /* eslint-disable */
-    const actionMarkup = actions.map(a => {
+    const actionMarkup = actions.map((a, idx) => {
       if (a.hasOwnProperty('data')) {
         if (a.data.type === 'separator') {
           return `<li class="separator"></li>`
         }
       }
       return `
-        <li data-disabled='${a.disabled}' class='${a.menu ? 'submenu' : ''}'>
-          <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>
+        <li data-disabled="${a.disabled}" class="${a.menu ? 'submenu' : ''}">
+          <a href="${a.url}"${opAttrStr(idx)} data-action-reference="${JSON.stringify(a.data)}">
             ${a.value}
             ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
           </a>
           ${a.menu ? `<div class="wrapper" role="application" aria-hidden="true">
             <ul class="popupmenu">
-              ${a.menu.map(i => `
-              <li data-disabled='${a.disabled}'>
-                <a href='${a.url}' data-action-reference='` + JSON.stringify(a.data) + `'>${i.value}</a>
+              ${a.menu.map((x, idx2) => `
+              <li data-disabled="${a.disabled}">
+                <a href="${a.url}"${opAttrStr(`${idx}-${idx2}`)} data-action-reference="${JSON.stringify(a.data)}">${x.value}</a>
               </li>`).join('')}
             </ul>
           </div>` : ''}
@@ -722,6 +748,7 @@ Hierarchy.prototype = {
     const thisLegend = s.legend;
     const thisChildren = data.children;
     const rootNodeHTML = [];
+    const uniqueId = `${utils.uniqueId(this.element, 'hierarchy')}`;
     const structure = {
       legend: '<legend><ul></ul></legend>',
       chart: '<ul class="container"><li class="chart"></li></ul>',
@@ -749,15 +776,14 @@ Hierarchy.prototype = {
     this.setColor(data);
 
     if (this.isPagingLayout() && data.parentDataSet) {
-      const backMarkup = '' +
-        '<div class="back">' +
-        '<button type="button" class="btn-icon hide-focus btn-back">' +
-        '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-        '<use href="#icon-caret-left"></use>' +
-        '</svg>' +
-        '<span>Back</span>' +
-        '</button>' +
-        '</div>';
+      const backAutomationAttr = ` id="${uniqueId}-back-button" data-automation-id="automation-id-${uniqueId}-back-button"`;
+      const backMarkup = `<div class="back">
+        <button type="button" class="btn-icon hide-focus btn-back"${backAutomationAttr}>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-left"></use>
+          </svg>
+          <span>Back</span>
+        </button></div>`;
 
       // Append back button to chart to go back to view previous level
       const backButton = $(backMarkup).appendTo(chart);
@@ -932,6 +958,30 @@ Hierarchy.prototype = {
   },
 
   /**
+   * Get append suffix with automation attributes
+   * @private
+   * @param {array} data for attributes to use
+   * @param {string} suffix to use
+   * @returns {object|array} attributes with suffix
+   */
+  getAutomationAttributes(data, suffix) {
+    let attributes = data.attributes;
+    if (data.attributes && typeof suffix === 'string' && suffix !== '') {
+      if (Array.isArray(data.attributes)) {
+        attributes = [];
+        data.attributes.forEach((item) => {
+          const value = typeof item.value === 'function' ? item.value(this) : item.value;
+          attributes.push({ name: item.name, value: (value + suffix) });
+        });
+      } else {
+        const value = typeof data.attributes.value === 'function' ? data.attributes.value(this) : data.attributes.value;
+        attributes = { name: data.attributes.name, value: (value + suffix) };
+      }
+    }
+    return attributes;
+  },
+
+  /**
    * Builds leaf template
    * @private
    * @param {object} data leaf data
@@ -944,7 +994,8 @@ Hierarchy.prototype = {
     setTimeout(() => {
       const actionButton = $(`#btn-${xssUtils.stripTags(data.id)}`);
       if (actionButton.length !== 0) {
-        actionButton.hideFocus().popupmenu({ attachToBody: false });
+        const attributes = this.getAutomationAttributes(data, '-hierarchy-popupmenu');
+        actionButton.hideFocus().popupmenu({ attachToBody: false, attributes });
       }
     }, 1);
 

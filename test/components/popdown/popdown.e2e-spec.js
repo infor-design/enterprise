@@ -23,6 +23,22 @@ describe('Popdown Index Tests', () => {
 
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
   });
+
+  it('Should have id/automation ids', async () => {
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('popdown')).getAttribute('id')).toEqual('popdown');
+    expect(await element(by.id('popdown')).getAttribute('data-automation-id')).toEqual('popdown-automation-id');
+
+    expect(await element(by.id('popdownpopover-listview-example')).getAttribute('id')).toEqual('popover-listview-example');
+    expect(await element(by.id('popover-listview-example')).getAttribute('data-automation-id')).toEqual('popover-listview-example-automation-id');
+
+    expect(await element(by.id('edit-cart')).getAttribute('id')).toEqual('edit-cart');
+    expect(await element(by.id('edit-cart')).getAttribute('data-automation-id')).toEqual('edit-cart-automation-id');
+
+    expect(await element(by.id('checkout')).getAttribute('id')).toEqual('checkout');
+    expect(await element(by.id('checkout')).getAttribute('data-automation-id')).toEqual('checkout-automation-id');
+  });
 });
 
 describe('Popdown (with Dropdown) Tests', () => {
