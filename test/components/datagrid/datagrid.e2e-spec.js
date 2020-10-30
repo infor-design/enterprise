@@ -306,7 +306,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
   });
 });
 
-describe('Datagrid Disable Rows Tests', () => {
+fdescribe('Datagrid Disable Rows Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-disabled-rows?layout=nofrills');
 
