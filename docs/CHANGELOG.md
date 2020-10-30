@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.35.0
+
+### v4.35.0 Fixes
+
+- `[Placeholder]` Placeholder Placeholder - Remove me on first fix. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+
 ## v4.34.0
 
 ### v4.34.0 Features
