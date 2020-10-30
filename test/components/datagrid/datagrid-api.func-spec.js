@@ -173,11 +173,15 @@ describe('Datagrid API', () => { //eslint-disable-line
     text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
 
     expect(text).toEqual('200');
+    expect(datagridObj.settings.dataset[1].productId).toEqual('200');
+    expect(datagridObj.settings.dataset[1].productName).toEqual('Different Compressor');
 
     datagridObj.updateRow(1, { productId: 'test', productName: 'test' });
     text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
 
     expect(text).toEqual('test');
+    expect(datagridObj.settings.dataset[1].productId).toEqual('test');
+    expect(datagridObj.settings.dataset[1].productName).toEqual('test');
   });
 
   it('Should be able to show tooltip on either text cut off or not', (done) => {
