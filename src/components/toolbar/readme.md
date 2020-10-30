@@ -74,7 +74,46 @@ If you want to have no action button (button with three dots) visible in the too
 
 ## Testability
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
+You can add custom id's/automation id's to the Toolbar that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes.
+For example:
+
+```js
+  attributes: { name: 'id', value: args => `background-color` }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: { name: 'data-automation-id', value: 'my-unique-id' }
+```
+
+Setting the id/automation id with a string value:
+
+```js
+  attributes: [
+    { name: 'id', value: 'my-unique-id' },
+    { name: 'data-automation-id', value: 'my-unique-id' }
+  ]
+```
+
+These attributes can be added programmatically using the Toolbar API:
+
+```js
+  $('#my-toolbar').toolbar({
+    attributes: [
+      { name: 'data-automation-id', value: 'my-toolbar' }
+    ]
+  });
+```
+
+When passing attributes in this manner, the following elements within the Toolbar are appended with a `data-automation-id` attribute:
+
+- The main toolbar element with `my-toolbar`.
+- All toolbar buttons, with `my-toolbar-button-{0}` where `{0}` is the toolbar button's index.
+- One exception to the button rule is the More Actions button, which will be `my-toolbar-actionbutton`. The attributes setting is passed into the [Popupmenu API]('./popupmenu#testability') using this suffix.  All action button menu items are labeled at the Popupmenu API level.
+- If a [Searchfield]('./searchfield') is present, it will be labeled with `my-toolbar-searchfield`.
+
+Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

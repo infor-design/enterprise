@@ -38,6 +38,8 @@ const COMPONENT_NAME = 'toolbar';
  * @param {boolean} [settings.noSearchfieldReinvoke=false] If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller
  *  to do it instead.
+ * @param {Array} [settings.attributes] If defined, passes user-defined attributes into the Toolbar
+ *  and some of its subcomponents
  */
 const TOOLBAR_DEFAULTS = {
   rightAligned: false,
@@ -46,6 +48,7 @@ const TOOLBAR_DEFAULTS = {
   favorButtonset: true,
   moreMenuSettings: undefined,
   noSearchfieldReinvoke: false,
+  attributes: null
 };
 
 function Toolbar(element, settings) {
@@ -103,6 +106,10 @@ Toolbar.prototype = {
     this.element.attr('role', 'toolbar');
     if (this.settings.resizeContainers && this.element.is(':not(:hidden)')) {
       this.element[0].classList.add('do-resize');
+    }
+
+    if (Array.isArray(this.settings.attributes)) {
+      utils.addAttributes(this.element, this, this.settings.attributes);
     }
 
     this.buildAriaLabel();
@@ -169,15 +176,21 @@ Toolbar.prototype = {
 
     // Invoke buttons
     const buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
-    buttons.each(function () {
-      const buttonControl = $(this).data('button');
+    buttons.each(function (i) {
+      const btn = $(this);
+
+      const buttonControl = btn.data('button');
       if (!buttonControl) {
-        $(this).button();
+        btn.button();
       }
 
       const tooltipControl = $(this).data('tooltip');
-      if (!tooltipControl && $(this).attr('title')) {
-        $(this).tooltip();
+      if (!tooltipControl && btn.attr('title')) {
+        btn.tooltip();
+      }
+
+      if (!btn.is('.btn-menu') && Array.isArray(self.settings.attributes)) {
+        utils.addAttributes(btn, self, self.settings.attributes, `button-${i}`);
       }
     });
 
@@ -194,6 +207,8 @@ Toolbar.prototype = {
           const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
           sf.searchfield(searchfieldOpts);
         }
+
+        utils.addAttributes(sf, self, self.settings.attributes, 'searchfield');
       });
     }
 
@@ -240,11 +255,31 @@ Toolbar.prototype = {
     this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
     this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
 
+    // If no more menu attributes are directly added through settings,
+    // use the toolbar's with an `actionbutton` suffix
+    let moreMenuAttrs;
+    if (this.settings.moreMenuSettings && Array.isArray(this.settings.moreMenuSettings.attributes)) {
+      moreMenuAttrs = this.settings.moreMenuSettings.attributes;
+    }
+    if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
+      moreMenuAttrs = this.settings.attributes.map((attr) => {
+        const value = `${attr.value}-actionbutton`;
+        return {
+          name: attr.name,
+          value
+        };
+      });
+    }
+    if (!moreMenuAttrs?.length) {
+      moreMenuAttrs = null;
+    }
+
     // Setup an Event Listener that will refresh the contents of the More Actions
     // Menu's items each time the menu is opened.
     const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
       trigger: 'click',
-      menu: this.moreMenu
+      menu: this.moreMenu,
+      attributes: moreMenuAttrs
     }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
     if (popupMenuInstance) {
       this.more
@@ -426,9 +461,27 @@ Toolbar.prototype = {
       }
     }
 
+    const index = this.items.not(this.more).not('.searchfield').index(item);
     if (item.is('.btn-menu')) {
+      // Automatically apply attributes to menu buttons if attributes are set on the toolbar,
+      // but the menubutton doesn't have them.
+      // If no more menu attributes are directly added through settings,
+      // use the toolbar's with an `actionbutton` suffix
+      let menuBtnAttrs;
+      if (this.settings.attributes && this.settings.attributes.length) {
+        menuBtnAttrs = this.settings.attributes.map(attr => ({
+          name: attr.name,
+          value: `${attr.value}-menubutton-${index}`
+        }));
+      }
+      if (!menuBtnAttrs?.length) {
+        menuBtnAttrs = null;
+      }
+
       if (!item.data('popupmenu')) {
-        item.popupmenu();
+        item.popupmenu({
+          attributes: menuBtnAttrs
+        });
       } else if (!a.children('.icon.arrow').length) {
         a.append($.createIcon({
           classes: 'icon arrow icon-dropdown',

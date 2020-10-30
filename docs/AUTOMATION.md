@@ -92,6 +92,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Toast
 - [x] Toolbarsearchfield
 - [x] Toolbar Flex
+- [x] Toolbar
 - [ ] Tooltip
 - [x] Tree
 - [x] Treemap
