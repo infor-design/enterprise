@@ -189,7 +189,7 @@ Toolbar.prototype = {
         btn.tooltip();
       }
 
-      if (Array.isArray(self.settings.attributes)) {
+      if (!btn.is('.btn-menu') && Array.isArray(self.settings.attributes)) {
         utils.addAttributes(btn, self, self.settings.attributes, `button-${i}`);
       }
     });
@@ -467,14 +467,14 @@ Toolbar.prototype = {
       // but the menubutton doesn't have them.
       // If no more menu attributes are directly added through settings,
       // use the toolbar's with an `actionbutton` suffix
-      let menuBtnAttrs = this.settings.attributes?.map((attr) => {
-        const value = (typeof attr.value === 'function') ? attr.value : `${attr.value}-menubutton-${index}`;
-        return {
+      let menuBtnAttrs;
+      if (this.settings.attributes && this.settings.attributes.length) {
+        menuBtnAttrs = this.settings.attributes.map(attr => ({
           name: attr.name,
-          value
-        };
-      });
-      if (!menuBtnAttrs?.length) {
+          value: `${attr.value}-menubutton-${index}`
+        }));
+      }
+      if (!menuBtnAttrs.length) {
         menuBtnAttrs = null;
       }
 
