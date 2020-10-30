@@ -32,7 +32,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [ ] Datepicker
 - [x] Donut
 - [ ] Dropdown
-- [ ] Editor
+- [x] Editor
 - [x] Emptymessage
 - [x] Error Page
 - [x] Expandablearea
@@ -42,7 +42,7 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Fileupload
 - [x] Fileupload Advanced
 - [ ] Header
-- [ ] Hierarchy
+- [x] Hierarchy
 - [ ] Homepage
 - [x] Hyperlinks (not needed id can be directly applied)
 - [x] Icons (not needed id can be directly applied)
@@ -64,22 +64,21 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Popover
 - [x] Popupmenu
 - [x] Positive Negative
-- [ ] Processindicator
+- [x] Processindicator
 - [x] Progress
 - [x] Radar
 - [x] Radios
 - [x] Rating (not needed id can be directly applied)
 - [x] Scatterplot
 - [x] Searchfield
-- [ ] Signin
+- [x] Signin (not needed id can be directly applied)
 - [x] Skiplink (not needed id can be directly applied)
 - [x] Slider
-- [x] Sparkline
 - [x] Spinbox
-- [ ] Splitter
+- [x] Splitter
 - [x] Stepchart
 - [x] Swaplist
-- [ ] Switch
+- [x] Switch (not needed id can be directly applied)
 - [x] Tabs
 - [x] Tabs Header
 - [x] Tabs Module
@@ -88,14 +87,14 @@ This list is a list of elements that have clickable items that need to be handle
 - [x] Tag (not needed id can be directly applied)
 - [x] Targeted Achievement
 - [x] Textarea
-- [ ] Timeline
-- [ ] Timepicker
+- [x] Timeline (not needed id can be directly applied)
+- [x] Timepicker
 - [x] Toast
 - [x] Toolbarsearchfield
 - [x] Toolbar Flex
 - [x] Toolbar
 - [ ] Tooltip
-- [ ] Tree
+- [x] Tree
 - [x] Treemap
 - [x] Week View
 - [x] Wizard

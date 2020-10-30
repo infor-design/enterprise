@@ -68,6 +68,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       rowHeight: 'large',
       fixedRowHeight: null,
       selectable: false,
+      stickyHeader: false,
       onBeforeSelect: null,
       selectChildren: true,
       allowSelectAcrossPages: null,

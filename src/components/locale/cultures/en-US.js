@@ -316,7 +316,7 @@ Soho.Locale.addCulture('en-US', {
     Plan: { id: 'Plan', value: 'Plan', comment: 'As in type of vacation plan' },
     Platform: { id: 'Platform', value: 'Platform', comment: 'The users operating system i.e. mac, windows' },
     Period: { id: 'Period', value: 'Period', comment: 'the am/pm portion of a time' },
-    PressDown: { id: 'PressDown', value: 'Press Down arrow to select a date', comment: 'the audible label for Tooltip about how to operate the date picker' },
+    PressDown: { id: 'PressDown', value: 'Press Down arrow to select', comment: 'the audible label for Tooltip about how to operate a picker' },
     PressShiftF10: { id: 'PressShiftF10', value: 'Press Shift+F10 to open the context menu.', comment: 'the audible infor for screen readers on how to use a field with a popup menu' },
     Previous: { id: 'Previous', value: 'Previous', comment: 'Previous icon tooltip - moved to previous record' },
     PreviousMonth: { id: 'PreviousMonth', value: 'Previous Month', comment: 'the label for the button that moves calendar to next/prev' },

@@ -53,6 +53,7 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 * @param {boolean} [settings.useSourceFormatter = false] true will format the html content in source mode.
 * @param {boolean} [settings.formatterTabsize = 4] number of spaces can use for indentation.
 * @param {boolean} [settings.rows = null] Number of rows that will be shown in each part of the editor. Set like textarea rows attributes to adjust the height of the editor without css. Example: `{ editor: 10, source: 20 }`
+* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -115,7 +116,8 @@ const EDITOR_DEFAULTS = {
         y: 0
       }
     }
-  }
+  },
+  attributes: null
 };
 
 function Editor(element, settings) {
@@ -447,7 +449,15 @@ Editor.prototype = {
       }
     }
 
-    const toolbar = `<div class="${toolbarCssClasses}" data-init="false" id="editor-toolbar-${this.id}">
+    // Add automation attributes to each buttons
+    let btnAttributes = '';
+    if (this.settings.attributes) {
+      btnAttributes = this.getAutomationAttributes('-editor-toolbar');
+      btnAttributes = JSON.stringify(btnAttributes);
+      btnAttributes = ` data-options='{"attributes": ${btnAttributes}}'`;
+    }
+
+    const toolbar = `<div class="${toolbarCssClasses}" data-init="false" id="editor-toolbar-${this.id}"${btnAttributes}>
       <div class="${sectionCss}buttonset">
         ${buttonsHTML}
       </div>
@@ -464,6 +474,16 @@ Editor.prototype = {
     // Invoke Fontpicker, if applicable
     const fpElement = this.toolbar.find('[data-action="fontStyle"]').first();
     if (fpElement && fpElement.length) {
+      // Set suffix for fontpicker automation attributes
+      if (this.settings.attributes) {
+        const fpAttributes = this.getAutomationAttributes('-editor-fontpicker');
+        if (typeof this.settings.fontpickerSettings.popupmenuSettings === 'object') {
+          this.settings.fontpickerSettings.popupmenuSettings.attributes = fpAttributes;
+        } else if (!this.settings.fontpickerSettings.popupmenuSettings) {
+          this.settings.fontpickerSettings.popupmenuSettings = { attributes: fpAttributes };
+        }
+      }
+
       fpElement.fontpicker(this.settings.fontpickerSettings);
       this.fontPickerElem = fpElement;
     }
@@ -518,6 +538,30 @@ Editor.prototype = {
     });
 
     return this;
+  },
+
+  /**
+   * Get append suffix with automation attributes
+   * @private
+   * @param {string} suffix to use
+   * @returns {object|array} attributes with suffix
+   */
+  getAutomationAttributes(suffix) {
+    const s = this.settings;
+    let attributes = s.attributes;
+    if (s.attributes && typeof suffix === 'string' && suffix !== '') {
+      if (Array.isArray(s.attributes)) {
+        attributes = [];
+        s.attributes.forEach((item) => {
+          const value = typeof item.value === 'function' ? item.value(this) : item.value;
+          attributes.push({ name: item.name, value: (value + suffix) });
+        });
+      } else {
+        const value = typeof s.attributes.value === 'function' ? s.attributes.value(this) : s.attributes.value;
+        attributes = { name: s.attributes.name, value: (value + suffix) };
+      }
+    }
+    return attributes;
   },
 
   /**
@@ -1067,7 +1111,9 @@ Editor.prototype = {
 
       if (action) {
         self.execAction(action, e);
-        btn.focus();
+        if (btn && !self.isBtnOverflowedItem(btn)) {
+          btn.focus();
+        }
       }
 
       if (env.browser.name === 'ie' || env.browser.isEdge()) {
@@ -1141,6 +1187,17 @@ Editor.prototype = {
           }
         }, 10);
       })
+      .off('beforeclose')
+      .on('beforeclose', function () {
+        const action = $(this).is('.editor-modal-image') ? 'image' : 'anchor';
+        if (self.toolbar) {
+          const btn = self.toolbar.find(`[data-action="${action}"]`);
+          const modalApi = $(this).data('modal');
+          if (btn && modalApi) {
+            modalApi.settings.noRefocus = self.isBtnOverflowedItem(btn);
+          }
+        }
+      })
       .off('close')
       .on('close', function (e, isCancelled) {
         self.restoreSelection(self.savedSelection);
@@ -1192,8 +1249,18 @@ Editor.prototype = {
     if (isTargetCustom) {
       targetOptions += `<option value="${s.anchor.target}">${s.anchor.target}</option>`;
     }
+
+    let modalAttributes;
+    let ddAttributes = '';
+    // Set automation attributes settings for dropdown
+    if (s.attributes) {
+      modalAttributes = this.getAutomationAttributes('-editor-modal');
+      ddAttributes = JSON.stringify(modalAttributes);
+      ddAttributes = ` data-options='{"attributes": ${ddAttributes}}'`;
+    }
+
     // TODO: Rename to link when you get strings
-    return $(`<div class="modal editor-modal-url" id="modal-url-${this.id}"></div>`)
+    const output = $(`<div class="modal editor-modal-url" id="modal-url-${this.id}"></div>`)
       .html(`<div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title">${Locale.translate('InsertAnchor')}</h1>
@@ -1213,7 +1280,7 @@ Editor.prototype = {
           </div>
           <div class="field">
             <label for="em-target-${this.id}" class="label"> ${Locale.translate('Target')}</label>
-            <select id="em-target-${this.id}" name="em-target-${this.id}" class="dropdown">
+            <select id="em-target-${this.id}" name="em-target-${this.id}" class="dropdown"${ddAttributes}>
               ${targetOptions}
             </select>
           </div>
@@ -1222,7 +1289,17 @@ Editor.prototype = {
             <button type="button" class="btn-modal-primary"> ${Locale.translate('Insert')}</button>
           </div>
         </div>
-      </div>`).appendTo('body');
+      </div>`);
+
+    // Add automation attributes
+    if (s.attributes) {
+      const inputs = [].slice.call(output[0].querySelectorAll('[type="text"]'));
+      const buttons = [].slice.call(output[0].querySelectorAll('button'));
+      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`));
+      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`));
+    }
+
+    return output.appendTo('body');
   },
 
   /**
@@ -1237,7 +1314,8 @@ Editor.prototype = {
     if (imageModal.length > 0) {
       return imageModal;
     }
-    return $(`<div class="modal editor-modal-image" id="modal-image-${this.id}"></div>'`)
+
+    const output = $(`<div class="modal editor-modal-image" id="modal-image-${this.id}"></div>'`)
       .html(`<div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title">${Locale.translate('InsertImage')}</h1>
@@ -1254,7 +1332,17 @@ Editor.prototype = {
               ${Locale.translate('Insert')}</button>
           </div>
         </div>
-      </div>`).appendTo('body');
+      </div>`);
+
+    // Add automation attributes
+    if (this.settings.attributes) {
+      const modalAttributes = this.getAutomationAttributes('-editor-modal');
+      const inputs = [].slice.call(output[0].querySelectorAll('[type="text"]'));
+      const buttons = [].slice.call(output[0].querySelectorAll('button'));
+      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`));
+      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`));
+    }
+    return output.appendTo('body');
   },
 
   bindAnchorPreview() {
@@ -2211,7 +2299,10 @@ Editor.prototype = {
          * @property {string} content Additional argument
          */
         this.element.triggerHandler('afterpreviewmode', content);
-        this.toolbar?.find('[data-action="source"]').focus();
+        const btn = this.toolbar?.find('[data-action="source"]');
+        if (btn && !this.isBtnOverflowedItem(btn)) {
+          btn.focus();
+        }
       }, 0);
     };
 
@@ -2247,7 +2338,10 @@ Editor.prototype = {
        * @property {string} content Additional argument
        */
       this.element.triggerHandler('aftersourcemode', content);
-      this.toolbar?.find('[data-action="visual"]').focus();
+      const btn = this.toolbar?.find('[data-action="visual"]');
+      if (btn && !this.isBtnOverflowedItem(btn)) {
+        btn.focus();
+      }
     };
 
     // Check the false value
@@ -2284,6 +2378,25 @@ Editor.prototype = {
         }
       });
     }
+  },
+
+  /**
+   * Check button is overflowed item or not.
+   * @private
+   * @param  {jQuery} btn button to check
+   * @returns {boolean} true if button is overflowed item
+   */
+  isBtnOverflowedItem(btn) {
+    const toolbarApi = this.toolbar.data('toolbar') || this.toolbar.data('toolbar-flex');
+    let found = false;
+    if (toolbarApi) {
+      toolbarApi.overflowedItems.forEach((item) => {
+        if (btn.is(item.element)) {
+          found = true;
+        }
+      });
+    }
+    return found;
   },
 
   /**
@@ -3081,7 +3194,7 @@ Editor.prototype = {
 
   // Strip styles
   stripStyles(s, styleStripper) {
-    const stylesToKeep = ['color', 'background', 'font-weight', 'font-style', 'text-decoration', 'text-align'];
+    const stylesToKeep = ['color', 'font-size', 'background', 'font-weight', 'font-style', 'text-decoration', 'text-align'];
     return s.replace(styleStripper, (m) => {
       m = m.replace(/( style=|("|\'))/gi, '');
       const attributes = m.split(';');

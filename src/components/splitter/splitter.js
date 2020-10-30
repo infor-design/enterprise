@@ -15,7 +15,8 @@ const SPLITTER_DEFAULTS = {
   maxWidth: {
     left: 'auto',
     right: 'auto'
-  }
+  },
+  attributes: null
 };
 
 /**
@@ -30,6 +31,7 @@ const SPLITTER_DEFAULTS = {
 * @param {HTMLElement|jQuery[]} [settings.containment = null] When to stop the splitter, this can be document, or a parent element
 * @param {boolean} [settings.save = true] If true the split size will automatically be saved for next time
 * @param {object} [settings.maxWidth = {left: 'auto', right: 'auto'}] Ability to stop dragging at a max left or right size.
+* @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Splitter(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SPLITTER_DEFAULTS);
@@ -290,6 +292,10 @@ Splitter.prototype = {
     // Aria
     this.element.attr({ 'aria-dropeffect': 'move', tabindex: '0', 'aria-grabbed': 'false' });
 
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.element.find('.splitter-drag-handle'), this, this.settings.attributes, 'handle');
+    utils.addAttributes(this.element.find('.splitter-drag-handle svg.icon'), this, this.settings.attributes, 'icon');
+
     return this;
   },
 
@@ -452,10 +458,13 @@ Splitter.prototype = {
   updated(settings) {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, SPLITTER_DEFAULTS);
+
+      return this
+        .destroy()
+        .init();
     }
-    return this
-      .destroy()
-      .init();
+
+    return this;
   },
 
   /**

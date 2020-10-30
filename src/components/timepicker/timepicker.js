@@ -26,7 +26,8 @@ const TIMEPICKER_DEFAULTS = function () {
     mode: TIMEPICKER_MODES[0],
     roundToInterval: true,
     parentElement: null,
-    returnFocus: true
+    returnFocus: true,
+    attributes: null
   };
 };
 
@@ -47,6 +48,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
+ * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function TimePicker(element, settings) {
   this.element = $(element);
@@ -80,7 +82,7 @@ TimePicker.prototype = {
       this.language = lang || this.settings.language || this.locale.language || null;
       this.settings.language = this.language;
       this.setCurrentCalendar();
-      this.build().handleEvents();
+      this.build().handleEvents().addAttributes();
     });
     return this;
   },
@@ -211,6 +213,16 @@ TimePicker.prototype = {
     this.label.find('.audible').remove();
     this.label.append(`<span class="audible">${Locale.translate('UseArrow', { locale: this.locale.name, language: this.language })}</span>`);
     return this;
+  },
+
+  /**
+   * Adds an extra attributes
+   * @private
+   * @returns {void}
+   */
+  addAttributes() {
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.trigger, this, this.settings.attributes, 'trigger');
   },
 
   /**
@@ -571,14 +583,19 @@ TimePicker.prototype = {
     this.minuteSelect.val(this.initValues.minutes);
     this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
 
+    utils.addAttributes(this.hourSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'hours');
+    utils.addAttributes(this.minuteSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'minutes');
+
     if (this.secondSelect) {
       this.secondSelect.val(this.initValues.seconds);
       this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
+      utils.addAttributes(this.secondSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'seconds');
     }
 
     if (self.hasDayPeriods()) {
       this.periodSelect.val(this.initValues.period);
       this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
+      utils.addAttributes(this.periodSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'period');
     }
 
     ui.find('div.dropdown').first().focus();
@@ -587,6 +604,8 @@ TimePicker.prototype = {
       self.setTimeOnField();
       self.closeTimePopup();
     });
+
+    utils.addAttributes(ui.find('.set-time'), this, this.settings.attributes, 'btn');
 
     // Handle Tabbing on the dialog
     if (!this.settings.parentElement) {
