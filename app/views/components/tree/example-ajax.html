@@ -36,32 +36,68 @@
 
   sampleDataNoID = [{
     "text": "Node One",
-    "extra": "test 1"
+    "extra": "test 1",
+    "attributes": [{
+      "name": "id",
+      "value": "tree-ajax-exp1-node1"
+    }, {
+      "name": "data-automation-id",
+      "value": "automation-id-tree-ajax-exp1-node1"
+    }]
   }, {
     "text": "Node Two",
     "open": false,
     "children": [],
-    "extra": "test 2"
+    "extra": "test 2",
+    "attributes": [{
+      "name": "id",
+      "value": "tree-ajax-exp1-node2"
+    }, {
+      "name": "data-automation-id",
+      "value": "automation-id-tree-ajax-exp1-node2"
+    }]
   }, {
     "text": "Node Three",
     "open": false,
     "children": null,
-    "extra": "test 3"
+    "extra": "test 3",
+    "attributes": [{
+      "name": "id",
+      "value": "tree-ajax-exp1-node3"
+    }, {
+      "name": "data-automation-id",
+      "value": "automation-id-tree-ajax-exp1-node3"
+    }]
   }];
 
 
-
+  var currentAutomationId = -1;
   //Can refer to the data set here
   $('#json-tree').tree({dataset: sampleDataNoID, source: function (req, response) {
     setTimeout(function () {
+      currentAutomationId++;
 
       var nodes = [{
         "id": "node2.1",
-        "text": "Node 2.1"
+        "text": "Node 2.1",
+        "attributes": [{
+          "name": "id",
+          "value": "tree-ajax-exp1-node21-" + currentAutomationId
+        }, {
+          "name": "data-automation-id",
+          "value": "automation-id-tree-ajax-exp1-node21-" + currentAutomationId
+        }]
       },{
         "id": "node2.2",
         "text": "Node 2.2",
-        "children": []
+        "children": [],
+        "attributes": [{
+          "name": "id",
+          "value": "tree-ajax-exp1-node22-" + currentAutomationId
+        }, {
+          "name": "data-automation-id",
+          "value": "automation-id-tree-ajax-exp1-node22-" + currentAutomationId
+        }]
       }];
 
       response(nodes);
