@@ -7,15 +7,15 @@
         <li>
             <a id="home" href="#">Home</a>
         </li>
-        <li><a id="about-us" href="#">About Us</a></li>
+        <li><a id="about-us" href="#" data-automation-attributes="{'attributes': [{'name': 'data-automation-id', 'value': 'tree-multiselect-exp1-about-us'}]}">About Us</a></li>
         <li class="is-open">
-            <a id="public-folder" href="#">Public Folders</a>
+            <a id="public-folder" href="#" data-automation-attributes="{'attributes': [{'name': 'data-automation-id', 'value': 'tree-multiselect-exp1-public-folder'}]}">Public Folders</a>
             <ul class="is-open root">
               <li class="is-open">
                   <a href="#" id="leadership">Leadership</a>
                   <ul class="is-open">
                     <li class="is-selected">
-                      <a id="shipment" href="#">Shipment</a>
+                      <a id="shipment" href="#" data-automation-attributes="{'attributes': [{'name': 'data-automation-id', 'value': 'tree-multiselect-exp1-shipment'}]}">Shipment</a>
                     </li>
                     <li>
                       <a id="network" href="#" class="is-disabled">Network</a>
@@ -157,7 +157,7 @@
   var api = elem.data('tree');
 
   //Add view jquery object
-  api.addNode({text: 'New Item 5', parent: $('#leadership'), id: 'new5'});
+  api.addNode({text: 'New Item 5', parent: $('#leadership'), id: 'new5', attributes: [{name: 'data-automation-id', value: 'tree-multiselect-exp1-newitem5'}]});
 
   elem
     .on('selected', function (e, args) {

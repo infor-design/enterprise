@@ -1145,6 +1145,7 @@ Tree.prototype = {
       if (data.selected) {
         self.selectNode(a, data.focus);
       }
+      self.addAutomationAttributes(a, data);
       if (a.is('.hide-focus')) {
         a.hideFocus();
       }
@@ -1884,9 +1885,36 @@ Tree.prototype = {
         entry = $.extend({}, jsonData, entry);
       }
 
+      const autoAttr = utils.parseSettings(nodeJQ, 'data-automation-attributes');
+      if (autoAttr.attributes && jsonData) {
+        utils.extend(jsonData, autoAttr);
+        this.addAutomationAttributes(nodeJQ, jsonData);
+      }
       nodeJQ.data('jsonData', entry);
     }
     return entry;
+  },
+
+  /**
+  * Add automation attributes to given link items.
+  * @param {jQuery} a The main link href node.
+  * @param {object} nodeData The node data.
+  * @returns {void}
+  */
+  addAutomationAttributes(a, nodeData) {
+    a = this.isjQuery(a) ? a : $(a);
+    if (a.length && nodeData.attributes) {
+      const textEl = a.find('.tree-text');
+      const iconTree = a.find('.icon-tree');
+      const iconExpandTarget = a.find('.icon-expand-target');
+      const checkbox = a.find('.tree-checkbox');
+
+      utils.addAttributes(a, this, nodeData.attributes, 'tree-link');
+      utils.addAttributes(textEl, this, nodeData.attributes, 'tree-link-text');
+      utils.addAttributes(iconTree, this, nodeData.attributes, 'tree-icon');
+      utils.addAttributes(iconExpandTarget, this, nodeData.attributes, 'tree-icon-expand-target');
+      utils.addAttributes(checkbox, this, nodeData.attributes, 'tree-checkbox');
+    }
   },
 
   /**
@@ -2064,6 +2092,7 @@ Tree.prototype = {
     }
 
     a.data('jsonData', nodeData);
+    this.addAutomationAttributes(a, nodeData);
     this.createSortable();
     return li;
   },

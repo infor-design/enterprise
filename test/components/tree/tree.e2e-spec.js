@@ -110,6 +110,21 @@ describe('Tree Ajax data tests', () => {
 
     expect(await element.all(by.css('.tree li')).count()).toBe(5);
   });
+
+  it('Should be able to set id/automation id example', async () => {
+    expect(await element(by.id('tree-ajax-exp1-node1-tree-link')).getAttribute('id')).toEqual('tree-ajax-exp1-node1-tree-link');
+    expect(await element(by.id('tree-ajax-exp1-node1-tree-link')).getAttribute('data-automation-id')).toEqual('automation-id-tree-ajax-exp1-node1-tree-link');
+    expect(await element(by.id('tree-ajax-exp1-node1-tree-icon')).getAttribute('id')).toEqual('tree-ajax-exp1-node1-tree-icon');
+    expect(await element(by.id('tree-ajax-exp1-node1-tree-icon')).getAttribute('data-automation-id')).toEqual('automation-id-tree-ajax-exp1-node1-tree-icon');
+
+    await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
+    await browser.driver.sleep(2500);
+
+    expect(await element(by.id('node2.1')).getAttribute('id')).toEqual('node2.1');
+    expect(await element(by.id('node2.1')).getAttribute('data-automation-id')).toEqual('automation-id-tree-ajax-exp1-node21-0-tree-link');
+    expect(await element(by.id('tree-ajax-exp1-node21-0-tree-icon')).getAttribute('id')).toEqual('tree-ajax-exp1-node21-0-tree-icon');
+    expect(await element(by.id('tree-ajax-exp1-node21-0-tree-icon')).getAttribute('data-automation-id')).toEqual('automation-id-tree-ajax-exp1-node21-0-tree-icon');
+  });
 });
 
 describe('Tree context menu tests', () => {
@@ -223,6 +238,23 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-partial');
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).not.toContain('is-selected');
     expect(await element.all(by.css('.tree li.folder')).get(0).all(by.css('a[role="treeitem"].is-disabled')).count()).toBe(1);
+  });
+
+  it('Should be able to set id/automation id example', async () => {
+    expect(await element(by.id('about-us')).getAttribute('id')).toEqual('about-us');
+    expect(await element(by.id('about-us')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-about-us-tree-link');
+    expect(await element(by.css('#about-us .icon-tree')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-about-us-tree-icon');
+    expect(await element(by.css('#about-us .tree-checkbox')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-about-us-tree-checkbox');
+
+    expect(await element(by.id('public-folder')).getAttribute('id')).toEqual('public-folder');
+    expect(await element(by.id('public-folder')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-public-folder-tree-link');
+    expect(await element(by.css('#public-folder .icon-tree')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-public-folder-tree-icon');
+    expect(await element(by.css('#public-folder .tree-checkbox')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-public-folder-tree-checkbox');
+
+    expect(await element(by.id('shipment')).getAttribute('id')).toEqual('shipment');
+    expect(await element(by.id('shipment')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-shipment-tree-link');
+    expect(await element(by.css('#shipment .icon-tree')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-shipment-tree-icon');
+    expect(await element(by.css('#shipment .tree-checkbox')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-shipment-tree-checkbox');
   });
 });
 
