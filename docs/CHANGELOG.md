@@ -5,34 +5,10 @@
 ### v4.34.0 Features
 
 - `[All Components]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Busyindicator]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[About]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Autocomplete]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Area/Bubble/Line/Scatterplot]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Bar/Bar Grouped/Bar Stacked]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Breadcrumb]` Added `attributes` setting to Breadcrumb Items for setting automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Bullet/Stepchart]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Button]` Added `attributes` setting to Button API for automation id's and id's ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Calendar/Monthview/WeekView/CalendarToolbar]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Circlepager]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Column/Column Grouped/Column Stacked/Positive Negative]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[CompletionChart/TargetedAchievement]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[ContextualActionPanel]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Datagrid]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Dropdown]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Datepicker]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Donut/Pie]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Input]` Add a `revealText` plugin that will add a button to password fields to hide and show sensitive information such as SIN or passwords. ([#4098](https://github.com/infor-design/enterprise/issues/4098))
-- `[Input]` Added docs/examples of adding attributes for automation id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Emptymessage]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Expandablearea]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[Emptymessage]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
-- `[FieldFilter]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Datagrid]` Added a limited experimental sticky header feature. ([#3993](https://github.com/infor-design/enterprise/issues/3993))
 - `[Input]` Add a `revealText` plugin that will add a button to password fields to hide and show sensitive information such as SIN or passwords. ([#4098](https://github.com/infor-design/enterprise/issues/4098))
 - `[Listview]` Added a new setting `allowDeselect` which will make it such that if you select an item you cant deselect, you can only select another item. ([#4376](https://github.com/infor-design/enterprise/issues/4376))
 - `[Locale]` Added a new set of translations from the translation team. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
-- `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 - `[Locale/Charts]` The numbers inside charts are now formatted using the current locale's, number settings. This can be disabled/changed in some charts by passing in a localeInfo object to override the default settings. ([#4437](https://github.com/infor-design/enterprise/issues/4437))
 - `[Treemap]` Added ability to show a tooltip. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
@@ -70,7 +46,7 @@
 - `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
-(56 Issues Solved This Release, Backlog Enterprise 188, Backlog Ng 42, 1089 Functional Tests, 1619 e2e Tests)
+(56 Issues Solved This Release, Backlog Enterprise 185, Backlog Ng 42, 1089 Functional Tests, 1619 e2e Tests)
 
 ## v4.33.0
 

@@ -4878,6 +4878,33 @@ html[dir='rtl'] {
   top: -9px;
 }
 
+// Sticky Headers
+.is-sticky.datagrid-container,
+.is-sticky .datagrid-wrapper {
+  overflow: visible !important;
+}
+
+.is-sticky.datagrid-container th {
+  position: sticky;
+  top: 0;
+}
+
+.is-sticky.toolbar + .is-sticky.datagrid-container th {
+  top: 40px;
+}
+
+.sticky-container {
+  // overflow: auto;
+  width: 100%;
+}
+
+.is-sticky.toolbar {
+  background-color: $body-color-primary-background;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 // Ios Hacks
 .ios {
   .datagrid-header .datagrid-filter-wrapper .dropdown.is-disabled {
@@ -4916,28 +4943,6 @@ html[dir='rtl'] {
 
         &:last-child {
           border-right: 1px solid $ids-color-brand-primary-base;
-        }
-      }
-    }
-  }
-}
-
-// IE 11 Hacks
-.ie11 {
-  .datagrid-header {
-    .datagrid-filter-wrapper input {
-      padding: 0 5px;
-    }
-
-    th {
-      z-index: auto;
-
-      &.l-center-text .datagrid-filter-wrapper {
-        .btn-filter.btn-filter-checkbox {
-          &.btn-filter-checkbox {
-            left: auto !important;
-            margin-left: calc(50% - 5px);
-          }
         }
       }
     }
