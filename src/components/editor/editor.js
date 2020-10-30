@@ -3194,7 +3194,7 @@ Editor.prototype = {
 
   // Strip styles
   stripStyles(s, styleStripper) {
-    const stylesToKeep = ['color', 'background', 'font-weight', 'font-style', 'text-decoration', 'text-align'];
+    const stylesToKeep = ['color', 'font-size', 'background', 'font-weight', 'font-style', 'text-decoration', 'text-align'];
     return s.replace(styleStripper, (m) => {
       m = m.replace(/( style=|("|\'))/gi, '');
       const attributes = m.split(';');

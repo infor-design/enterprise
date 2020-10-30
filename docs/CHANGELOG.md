@@ -57,6 +57,7 @@
 - `[Dropdown]` Improved the behavior of the `noSearch` dropdown when using the keyboard. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
 - `[Editor]` Fixed an issue where the focus was getting lost after pressing toolbar buttons. ([#4335](https://github.com/infor-design/enterprise/issues/4335))
 - `[Editor]` Fixed an issue where the color picker was not opening the popup for overflow menu and had name as undefined in list. ([#4398](https://github.com/infor-design/enterprise/issues/4398))
+- `[Editor]` Fixed an issue where font-size tags are stripped from the css. ([#4557](https://github.com/infor-design/enterprise/issues/4557))
 - `[Favorites]` Removed the favorites component as its not really a component, info on it can be found under buttons in the toggle example. ([#4405](https://github.com/infor-design/enterprise/issues/4405))
 - `[Fieldset]` Fixed a bug where summary form data gets cut off on a smaller viewport. ([#3861](https://github.com/infor-design/enterprise/issues/3861))
 - `[Homepage]` Fixed an issue where the four column widgets were incorrectly positioned, left aligned on large screen. ([#4541](https://github.com/infor-design/enterprise/issues/4541))
