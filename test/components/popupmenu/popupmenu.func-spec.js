@@ -439,6 +439,7 @@ describe('Popupmenu (settings)', () => {
         value: 'action-popupmenu'
       }]
     });
+
     setTimeout(() => {
       const popupmenuEl = document.body.querySelector('.popupmenu-wrapper > .popupmenu');
       const firstItemEl = popupmenuEl.querySelector('li:first-child a');
@@ -451,7 +452,7 @@ describe('Popupmenu (settings)', () => {
       // Account for menu nesting
       expect(lastSubItemEl.getAttribute('data-automation-id')).toEqual('settings-automation-id');
       done();
-    }, 300);
+    }, 350);
   });
 });
 
