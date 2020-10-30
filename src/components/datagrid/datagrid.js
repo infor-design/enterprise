@@ -5923,7 +5923,7 @@ Datagrid.prototype = {
   * @param {object} emptyMessage The update empty message config object.
   */
   setEmptyMessage(emptyMessage) {
-    this.element[emptyMessage.height === 'small' ? 'addClass' : 'removeClass']('empty-message-height-small');
+    this.element[emptyMessage?.height === 'small' ? 'addClass' : 'removeClass']('empty-message-height-small');
     if (!this.emptyMessage) {
       this.emptyMessageContainer = $('<div class="empty-message-container"><div></div></div>');
       this.element.append(this.emptyMessageContainer).addClass('has-empty-message');
