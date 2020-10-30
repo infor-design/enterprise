@@ -78,12 +78,12 @@
       columns.push({ id: 'bookCurrency', name: 'Book Currency', field: 'bookCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
       columns.push({ id: 'transactionCurrency', name: 'Transaction Currency', field: 'transactionCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
       columns.push({ id: 'postHistory', name: 'Post History', field: 'postHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-      columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-      columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-      columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-      columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
-      columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
-      columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+      // columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      // columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      // columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+      // columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+      // columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+      // columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
 
       // Simple grid with toolbar
       $('#datagrid-one').datagrid({
@@ -91,8 +91,7 @@
         dataset: res,
         saveColumns: false,
         stickyHeader: true,
-        filterable: true,
-        toolbar: {title: 'Datagrid One', results: true, actions: true, rowHeight: true, personalize: true}
+        filterable: true
       });
 
       // Frozen Columns
@@ -101,8 +100,7 @@
         dataset: res,
         stickyHeader: true,
         saveColumns: false,
-        frozenColumns: {left: ['selectionCheckbox', 'book']},
-        toolbar: {title: 'Datagrid Two ', results: true, actions: true, rowHeight: true, personalize: true}
+        filterable: true
       });
 
       // No toolbar
@@ -110,7 +108,8 @@
         columns: columns,
         dataset: res,
         stickyHeader: true,
-        saveColumns: false
+        saveColumns: false,
+        filterable: true
       });
     });
  });
