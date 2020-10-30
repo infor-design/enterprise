@@ -29,6 +29,7 @@
 - `[Datagrid]` Fixed links when changing personalization as they would inherit the wrong color. ([#4481](https://github.com/infor-design/enterprise/issues/4481))
 - `[Datagrid]` Fixed a bug where seaching with the search on the toolbar would not highlight results. ([#4488](https://github.com/infor-design/enterprise/issues/4488))
 - `[Datagrid]` Fixed an issue with a custom toolbar, where buttons would click twice. ([#4471](https://github.com/infor-design/enterprise/issues/4471))
+- `[Datagrid]` Fixed a bug in updateRow where it did not sync up all data passed in with the dataset. ([#4476](https://github.com/infor-design/enterprise/issues/4476))
 - `[Datepicker]` Changed the month/year picker to skip 10 years instead of one. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
 - `[Dropdown]` Improved the behavior of the `noSearch` dropdown when using the keyboard. ([#4388](https://github.com/infor-design/enterprise/issues/4388))
 - `[Editor]` Fixed an issue where the focus was getting lost after pressing toolbar buttons. ([#4335](https://github.com/infor-design/enterprise/issues/4335))

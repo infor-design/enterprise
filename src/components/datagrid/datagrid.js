@@ -4984,6 +4984,11 @@ Datagrid.prototype = {
 
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
+
+    this.settings.dataset[idx] = {
+      ...this.settings.dataset[idx],
+      ...data
+    };
   },
 
   /**

@@ -320,11 +320,8 @@ describe('Datagrid Disable Rows Tests', () => {
   });
 
   it('Should Make Rows Disabled', async () => {
-    expect(await element(by.css('#datagrid tbody tr:nth-child(1)')).getAttribute('aria-disabled')).toBeFalsy();
     expect(await element(by.css('#datagrid tbody tr:nth-child(2)')).getAttribute('aria-disabled')).toEqual('true');
-    expect(await element(by.css('#datagrid tbody tr:nth-child(3)')).getAttribute('aria-disabled')).toEqual('true');
     expect(await element(by.css('#datagrid tbody tr:nth-child(4)')).getAttribute('aria-disabled')).toEqual('true');
-    expect(await element(by.css('#datagrid tbody tr:nth-child(5)')).getAttribute('aria-disabled')).toBeFalsy();
   });
 
   if (utils.isChrome() && utils.isCI()) {
