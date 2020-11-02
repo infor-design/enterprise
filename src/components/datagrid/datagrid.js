@@ -6140,7 +6140,10 @@ Datagrid.prototype = {
     this.element
       .off('click.datagrid-header')
       .on('click.datagrid-header', '.datagrid-header th.is-sortable, .datagrid-header th.btn-filter', function (e) {
-        if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
+        const parent = $(e.target).parent();
+        if (parent.is('.datagrid-filter-wrapper') ||
+            parent.is('.lookup-wrapper') ||
+            parent.is('.has-close-icon-button')) {
           return false;
         }
 

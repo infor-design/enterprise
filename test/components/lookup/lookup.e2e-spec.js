@@ -511,3 +511,17 @@ describe('Lookup minWidth tests', () => {
     });
   }
 });
+
+describe('Lookup Custom Icon', () => {
+  it('should support custom icons', async () => {
+    await utils.setPage('/components/lookup/example-icon?layout=nofrills');
+
+    expect(await element.all(by.css('[href="#icon-launch"]')).count()).toEqual(1);
+  });
+
+  it('should support custom icons in datagrid', async () => {
+    await utils.setPage('/components/datagrid/test-lookup-filter?layout=nofrills');
+
+    expect(await element.all(by.css('[href="#icon-launch"]')).count()).toEqual(1);
+  });
+});

@@ -57,6 +57,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * into the click method, and augmented with parameters specific to the implementation.
  * @param {string} [settings.field='id'] Field name to return from the dataset or can be a function which returns a string on logic
  * @param {string} [settings.title] Dialog title to show, or befault shows  field label + "Lookup"
+ * @param {string} [settings.icon] Swap out the lookup id for any other icon in the icon set by name
  * @param {array} [settings.buttons] Pass dialog buttons or Cancel / Apply
  * @param {object} [settings.options] Options to pass to the datagrid
  * @param {function} [settings.beforeShow] Call back that executes async before the lookup is opened.
@@ -73,6 +74,7 @@ const LOOKUP_DEFAULTS = {
   click: null,
   field: 'id',
   title: null,
+  icon: 'icon-search-list',
   buttons: [],
   options: null,
   beforeShow: null,
@@ -154,7 +156,7 @@ Lookup.prototype = {
     }
 
     // Add Button
-    this.icon = $('<span class="trigger"></span>').append($.createIcon('search-list'));
+    this.icon = $('<span class="trigger"></span>').append($.createIcon(this.settings.icon));
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
