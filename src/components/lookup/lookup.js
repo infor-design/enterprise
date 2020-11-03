@@ -157,6 +157,10 @@ Lookup.prototype = {
 
     // Add Button
     this.icon = $('<span class="trigger"></span>').append($.createIcon(this.settings.icon));
+    if (this.settings.icon !== 'icon-search-list') {
+      this.icon.addClass('has-custom-icon');
+    }
+
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
