@@ -36,7 +36,7 @@ describe('Fontpicker API', () => {
   it('should be completely rendered after the page is loaded', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
 
-    expect(fontpickerEl.querySelector('span').innerText).toBe('Normal Text');
+    expect(fontpickerEl.querySelector('span:not(.audible)').innerText).toBe('Normal Text');
   });
 
   it('can be disabled and re-enabled', () => {
