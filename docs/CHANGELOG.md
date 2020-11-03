@@ -4,7 +4,7 @@
 
 ### v4.35.0 Fixes
 
-- `[Placeholder]` Placeholder Placeholder - Remove me on first fix. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
 
 ## v4.34.0
 
