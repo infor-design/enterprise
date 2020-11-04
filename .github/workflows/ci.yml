@@ -50,4 +50,4 @@ jobs:
       run: npm run functional:ci
 
     - name: Run e2e tests
-      run:  npm run e2e:ci:debug
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:group0:ci;
