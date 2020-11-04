@@ -2,9 +2,13 @@
 
 ## v4.35.0
 
+### v4.35.0 Features
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+
 ### v4.35.0 Fixes
 
-- `[Placeholder]` Placeholder Placeholder - Remove me on first fix. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ## v4.34.0
 
