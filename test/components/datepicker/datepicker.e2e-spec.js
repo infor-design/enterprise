@@ -1201,27 +1201,6 @@ describe('Datepicker Range Tests', () => {
     expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/4/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
   });
 
-  it('Should be able to select max 2 days', async () => {
-    const datepickerEl = await element(by.id('range-maxdays'));
-    await datepickerEl.sendKeys('822020832020');
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-
-    await element.all(by.cssContainingText('.monthview-table td', '9')).get(1).click();
-    await element.all(by.cssContainingText('.monthview-table td', '12')).get(0).click();
-    await element.all(by.cssContainingText('.monthview-table td', '11')).get(0).click();
-
-    const testDate1 = new Date();
-    testDate1.setMonth(9);
-    testDate1.setDate(11);
-    const testDate2 = new Date(testDate1);
-    testDate2.setMonth(9);
-    testDate2.setDate(12);
-
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/11/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
-  });
-
   it('Should be able to select min 5 days', async () => {
     const datepickerEl = await element(by.id('range-mindays'));
     await datepickerEl.sendKeys('8920208152020');
