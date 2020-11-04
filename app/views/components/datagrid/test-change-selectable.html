@@ -1,6 +1,7 @@
 
 <div class="row">
   <div class="full-width">
+    <button class="btn-secondary" type="button" id="switch-mode">Switch Select Mode</button>
     <div id="datagrid">
     </div>
   </div>
@@ -23,7 +24,8 @@
       data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', checked: false});
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', checked: false});
 
-      //Define Columns for the Grid.
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', hidden: true, sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: '/home/detail/{{value}}'});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
@@ -33,14 +35,11 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'checked', name: 'Checked', field: 'checked', formatter: Formatters.Checkbox});
 
-      //Init and get the api for the grid
-      $('#datagrid').datagrid({
+      // Init and get the api for the grid
+      var dg = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         selectable: 'single',
-        cellNavigation: false,
-        disableRowDeselection: true,
-        clickToSelect: true,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       }).on('selected', function (e, args) {
         if (args[0]) {
@@ -50,8 +49,23 @@
         if (args[0]) {
           console.log('activated', args[0].idx, args[0].data.productId, args[0].elem);
         }
-      });
+      }).data('datagrid');
 
+      $('#switch-mode').on('click', function () {
+        var isSelectable =  dg.settings.selectable === 'single';
+
+        if (isSelectable) {
+          dg.settings.selectable = 'mixed';
+          dg.showColumn('selectionCheckbox');
+          dg.unSelectAllRows();
+          dg.deactivateAllRowNodes();
+        } else {
+          dg.settings.selectable = 'mixed';
+          dg.hideColumn('selectionCheckbox');
+          dg.unSelectAllRows();
+          dg.deactivateAllRowNodes();
+        }
+      });
  });
 
 </script>
