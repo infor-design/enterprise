@@ -2582,7 +2582,7 @@ PopupMenu.prototype = {
     this.teardown();
 
     // In some cases, the menu needs to be completely removed on `destroy`.
-    this.menu.triggerHandler('destroy');
+    this.menu?.triggerHandler('destroy');
     if (this.settings.removeOnDestroy && this.menu && this.menu.length) {
       this.menu.off().remove();
       delete this.menu;
