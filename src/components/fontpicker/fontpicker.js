@@ -194,6 +194,10 @@ FontPicker.prototype = {
     // Set initial state
     this.render();
 
+    // Add audible label
+    this.audible = $(`<span class="audible">${Locale.translate('FontPickerStyle')}</span>`);
+    this.element.prepend(this.audible[0]);
+
     return this;
   },
 
@@ -204,7 +208,7 @@ FontPicker.prototype = {
    */
   render() {
     const selected = this.selected;
-    const spanElem = this.element.querySelector('span');
+    const spanElem = this.element.querySelector('span:not(.audible)');
 
     $(spanElem).html(selected.displayName);
   },
