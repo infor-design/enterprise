@@ -8817,7 +8817,7 @@ Datagrid.prototype = {
       }
 
       // If multiSelect or mixedSelect is enabled, press Control+A to toggle select all rows
-      if ((self.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+      if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
         checkbox
           .addClass('is-checked')
           .removeClass('is-partial')
