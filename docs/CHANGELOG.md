@@ -2,9 +2,14 @@
 
 ## v4.35.0
 
+### v4.35.0 Features
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+
 ### v4.35.0 Fixes
 
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ## v4.34.0
 
