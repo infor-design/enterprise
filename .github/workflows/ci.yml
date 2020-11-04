@@ -51,3 +51,9 @@ jobs:
 
     - name: Run e2e tests
       run:  (npm run quickstart &) && sleep 5; npm run e2e:group0:ci;
+
+    - name: Explain why this job ran
+      uses: monacorp/action-name@main
+      with:
+       entrypoint: /bin/echo
+       args: The ${{ github.event_name }} event triggered this step. (We want to trigger jenkins on merge)
