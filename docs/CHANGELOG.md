@@ -4,7 +4,7 @@
 
 ### v4.35.0 Fixes
 
-- `[Placeholder]` Placeholder Placeholder - Remove me on first fix. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 
 ## v4.34.0
 
