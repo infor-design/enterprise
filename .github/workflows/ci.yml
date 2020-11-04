@@ -31,7 +31,12 @@ jobs:
       with:
         path: node_modules
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    
+
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: America/New_York
+
     - name: Install Dependencies
       run: npm i
 
