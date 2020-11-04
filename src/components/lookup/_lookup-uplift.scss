@@ -15,8 +15,14 @@
   .searchfield-wrapper {
     > .icon.close {
       right: 35px;
-      top: 12px;
+      top: 14px;
     }
+  }
+
+  .has-custom-icon .icon {
+    height: 16px;
+    right: -8px;
+    width: 16px;
   }
 }
 

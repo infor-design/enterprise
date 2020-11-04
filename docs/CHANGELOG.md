@@ -2,9 +2,14 @@
 
 ## v4.35.0
 
+### v4.35.0 Features
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+
 ### v4.35.0 Fixes
 
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ## v4.34.0
 
