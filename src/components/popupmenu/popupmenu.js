@@ -2481,7 +2481,7 @@ PopupMenu.prototype = {
   teardown() {
     const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
-    if (!this.menu) {
+    if (!this.menu || !this.menu.parent) {
       return;
     }
 
