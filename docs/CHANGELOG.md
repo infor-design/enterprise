@@ -4,7 +4,7 @@
 
 ### v4.35.0 Fixes
 
-- `[Placeholder]` Placeholder Placeholder - Remove me on first fix. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[Datagrid]` Fixed a bug where the plus-minus icon were misaligned together with focus state on all row heights. ([#4480](https://github.com/infor-design/enterprise/issues/4480))
 
 ## v4.34.0
 
