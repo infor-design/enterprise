@@ -52,15 +52,15 @@
       }).data('datagrid');
 
       $('#switch-mode').on('click', function () {
-        var isSelectable =  dg.settings.selectable === 'single';
+        var isSingle =  dg.settings.selectable === 'single';
 
-        if (isSelectable) {
+        if (isSingle) {
           dg.settings.selectable = 'mixed';
           dg.showColumn('selectionCheckbox');
           dg.unSelectAllRows();
           dg.deactivateAllRowNodes();
         } else {
-          dg.settings.selectable = 'mixed';
+          dg.settings.selectable = 'single';
           dg.hideColumn('selectionCheckbox');
           dg.unSelectAllRows();
           dg.deactivateAllRowNodes();
