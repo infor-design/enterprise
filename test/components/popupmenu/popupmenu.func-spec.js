@@ -430,6 +430,7 @@ describe('Popupmenu (settings)', () => {
     expect(popupmenuEl).toBe(null);
     expect(popupmenuObj.menu).not.toBeDefined();
   });
+});
 
 describe('Popupmenu toData() API', () => {
   describe('Main Examples', () => {
