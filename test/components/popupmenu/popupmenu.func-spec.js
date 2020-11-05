@@ -430,30 +430,6 @@ describe('Popupmenu (settings)', () => {
     expect(popupmenuEl).toBe(null);
     expect(popupmenuObj.menu).not.toBeDefined();
   });
-
-  it('can append custom attributes via setting', (done) => {
-    popupmenuButtonEl = document.body.querySelector('#input-menu');
-    popupmenuObj = new PopupMenu(popupmenuButtonEl, {
-      attributes: [{
-        name: 'data-automation-id',
-        value: 'action-popupmenu'
-      }]
-    });
-
-    setTimeout(() => {
-      const popupmenuEl = document.body.querySelector('.popupmenu-wrapper > .popupmenu');
-      const firstItemEl = popupmenuEl.querySelector('li:first-child a');
-      const lastSubItemEl = popupmenuEl.querySelector('li.submenu li:last-child a');
-
-      expect(popupmenuButtonEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
-      expect(popupmenuEl.getAttribute('data-automation-id')).toEqual('action-popupmenu-menu');
-      expect(firstItemEl.getAttribute('data-automation-id')).toEqual('cut-automation-id');
-
-      // Account for menu nesting
-      expect(lastSubItemEl.getAttribute('data-automation-id')).toEqual('settings-automation-id');
-      done();
-    }, 350);
-  });
 });
 
 describe('Popupmenu toData() API', () => {

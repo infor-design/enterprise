@@ -1252,6 +1252,15 @@ $datagrid-small-row-height: 25px;
 
   }
 
+  &.medium-rowheight,
+  &.normal-rowheight {
+    .datagrid-expand-btn {
+      .icon.plus-minus {
+        left: -6px;
+      }
+    }
+  }
+
   &.small-rowheight,
   &.extra-small-rowheight {
     tbody tr {
@@ -1265,7 +1274,7 @@ $datagrid-small-row-height: 25px;
           top: 0;
 
           .icon.plus-minus {
-            left: -7px !important;
+            left: -6px !important;
             top: -8px !important;
           }
 

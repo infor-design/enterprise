@@ -7,10 +7,6 @@ const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PR
 const theme = process.env.ENTERPRISE_THEME || 'soho'
 let browserstackBuildID = `${Date.now()} : ${theme} theme : ci:bs e2e`;
 
-if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ci:bs e2e : group ${group}`;
-}
-
 process.env.isBrowserStack = true;
 
 exports.config = {
