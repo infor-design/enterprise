@@ -191,6 +191,7 @@ Soho.Locale.addCulture('en-US', {
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
     FontPickerNormal: { id: 'FontPickerNormal', value: 'Normal Text', comment: 'Description of default text style on Fontpicker components' },
     FontPickerHeader: { id: 'FontPickerHeader', value: 'Header {0}', comment: 'Description of header text style on Fontpicker components' },
+    FontPickerStyle: { id: 'FontPickerStyle', value: 'Font Style', comment: 'Description of font style on Fontpicker components' },
     Forms: { id: 'Forms', value: 'Forms', comment: 'Describing a data form of fields and data labels' },
     From: { id: 'From', value: 'From', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full View', comment: 'Full View tooltip' },
