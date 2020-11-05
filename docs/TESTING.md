@@ -6,8 +6,8 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 
 - [Karma](https://karma-runner.github.io/2.0/index.html) test runner for all tests.
 - [Protractor](https://www.protractortest.org/) for controlling e2e tests.
-- [TravisCI](https://travis-ci.com/infor-design/enterprise) for continuous integration (CI).
-- [BrowserStack](https://www.browserstack.com/) for running e2e tests on our various supported environments.
+- [Github Actions](https://github.com/features/actions) for continuous integration (CI).
+- [Browser Stack](https://www.browserstack.com/) for testing specific browsers.
 
 ## Writing Tests
 
@@ -54,7 +54,7 @@ For development purposes, the functional tests can be run in the background cont
 npm run functional:local
 ```
 
-To do a single test run and exit immediately (which is also what TravisCI does during builds), use:
+To run the tests in a CI environment (Git Hub Actions), use:
 
 ```sh
 npm run functional:ci
@@ -71,7 +71,7 @@ npm quickstart
 npm run e2e:ci
 ```
 
-See [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml) for current implementation
+See `.github/workflows` folder for current implementation
 
 ## Running E2E Tests Locally
 
@@ -109,38 +109,6 @@ npm run e2e:ci:bs
 
 **NOTE:** After running the tests go into [BrowserStack Automate](https://automate.browserstack.com/) and delete the build for the stats to be accurate.
 
-### Run e2e tests on BrowserStack
-
-IDS Enterprise is configured for nightly builds of the `master` branch.  This build runs in the evening (EST) and it tests <http://master-enterprise.demo.design.infor.com> by default.  TravisCI runs these with:
-
-```sh
-npm run e2e:ci:bs
-```
-
-### Run a specific E2E component on BrowserStack
-
-```sh
-npm start
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:bs
-```
-
-### Run E2E locally on High Contrast or Dark Theme (defaults to light theme)
-
-```sh
-npm start
-env ENTERPRISE_THEME='high-contrast' npm run e2e:local:debug
-```
-
-```sh
-npm start
-env ENTERPRISE_THEME='dark' npm run e2e:local:debug
-```
-
-```sh
-npm start
-npm run e2e:local:debug
-```
-
 ## Debugging Functional Tests
 
 - Isolate the test or suite using [fdescribe](https://jasmine.github.io/api/edge/global.html#fdescribe) or [fit](https://jasmine.github.io/api/edge/global.html#fit)
@@ -166,7 +134,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-A visual regression test will be similar to the following code snippet. The tests run on Travis. Locally, in our development environment, we need to replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
+A visual regression test will be similar to the following code snippet. The tests run on Github Actions. Locally, in our development environment, we need to replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
@@ -193,15 +161,11 @@ if (utils.isChrome() && utils.isCI()) {
 }
 ```
 
-Follow [this guide](https://docs.travis-ci.com/user/common-build-problems/#troubleshooting-locally-in-a-docker-image) in order to debug Travis. We currently use the `node_js` [image](https://hub.docker.com/r/travisci/ci-nodejs/)
-
-Travis commands can be found in the [.travis.yml](https://github.com/infor-design/enterprise/blob/master/.travis.yml), this will need to be replicated inside of the container. This process is outlined below.
-
 ### Creating Baseline Screenshots
 
-In order to create Baseline screenshots, it's necessary to emulate the actual TravisCI environment in which the visual regression testing will take place.  Running the tests in an environment that's different than the one the images were generated against will create extreme differences in the rendered IDS components, possibly causing false test failures.
+In order to create Baseline screenshots, it's necessary to emulate the actual Github Actions environment in which the visual regression testing will take place.  Running the tests in an environment that's different than the one the images were generated against will create extreme differences in the rendered IDS components, possibly causing false test failures.
 
-Following the process below will safely create baseline images the CI can use during visual regression tests. The older way we needed to have a local VM, now its possible to connect to the actual travis build and do things.
+Following the process below will safely create baseline images the CI can use during visual regression tests. The older way we needed to have a local VM, now its possible to connect to the actual Github Action build and do things.
 
 #### Using the docker image
 

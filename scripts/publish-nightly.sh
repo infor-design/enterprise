@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# install again for all packages to be
-# available from within travis `deploy`
+# install again for all packages to be available
 npm install
 
 # Use package.json for everything
