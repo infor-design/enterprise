@@ -54,4 +54,4 @@ jobs:
 
     - name: Deploy Master
       if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-      runs: sh ./scripts/jenkins-deploy.sh -b master -w
+      run: sh ./scripts/jenkins-deploy.sh -b master -w
