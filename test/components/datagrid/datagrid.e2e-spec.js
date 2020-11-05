@@ -2155,7 +2155,7 @@ describe('Datagrid checkbox disabled editor tests', () => {
   }
 });
 
-fdescribe('Datagrid Lookup Editor', () => {
+describe('Datagrid Lookup Editor', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-editable-lookup');
 
@@ -3005,7 +3005,7 @@ describe('Datagrid filter single select tests', () => {
   });
 });
 
-fdescribe('Datagrid filter lookup custom click function tests', () => {
+describe('Datagrid filter lookup custom click function tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-lookup-click-function?layout=nofrills');
 
@@ -3404,7 +3404,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
   });
 });
 
-fdescribe('Datagrid on modal with no default size', () => {
+describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
     await element(by.id('open-modal')).click();
@@ -3683,7 +3683,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate single select tests', () => {
+describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
 
@@ -4340,7 +4340,7 @@ describe('Datagrid tree single select tests', () => {
   });
 });
 
-fdescribe('Datagrid tooltip tests', () => {
+describe('Datagrid tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-tooltips');
 
