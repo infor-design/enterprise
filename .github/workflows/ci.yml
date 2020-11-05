@@ -53,6 +53,5 @@ jobs:
       run:  (npm run quickstart &) && sleep 5; npm run e2e:group0:ci;
 
     - name: Deploy Master
-      env:
-      if: github.event.pull_request.merged == true
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       run: sh ./scripts/jenkins-deploy.sh -b master -w

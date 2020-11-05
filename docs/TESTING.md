@@ -134,7 +134,7 @@ npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js
 
 ## Working With Visual Regression Tests
 
-A visual regression test will be similar to the following code snippet. The tests run on Github Actions. Locally, in our development environment, we need to replicate the environment with Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
+A visual regression test will be similar to the following code snippet. The tests run on Github Actions. Locally, in our development environment, we need to replicate the environment with Git Lab Runner and Docker in order to capture and compare screenshots on a nearly identical machine.  Below, we provide a guide for the setup and generation of baseline images.
 
 ```javascript
 // Only test visual regressions on Chrome, and the CI
