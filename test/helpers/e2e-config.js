@@ -1,6 +1,6 @@
 module.exports = {
-  sleepShort: 100,
+  sleepShort: 150,
   sleep: 400,
-  sleepLonger: 800,
-  waitsFor: 2800
+  sleepLonger: 1000,
+  waitsFor: 3000
 };
