@@ -6045,8 +6045,6 @@ Datagrid.prototype = {
    */
   handleEvents() {
     const self = this;
-    const isMultiple = this.settings.selectable === 'multiple';
-    const isMixed = this.settings.selectable === 'mixed';
 
     // Set Focus on rows
     if (!self.settings.cellNavigation && self.settings.rowNavigation) {
@@ -6254,7 +6252,7 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
-      if (isMixed) {
+      if (self.settings.selectable === 'mixed') {
         canSelect = isSelectionCheckbox;
 
         // Then Activate
@@ -6268,7 +6266,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (canSelect && isMultiple && e.shiftKey) {
+      if (canSelect && self.settings.selectable === 'multiple' && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
@@ -7989,8 +7987,8 @@ Datagrid.prototype = {
   */
   toggleRowSelection(idx) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    const isSingle = this.settings.selectable === 'single';
     let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
+
     if (this.settings.groupable) {
       rowIndex = this.dataRowIndex(row);
     }
@@ -8003,7 +8001,7 @@ Datagrid.prototype = {
       return;
     }
 
-    if (isSingle && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
+    if (this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
       this.unselectRow(rowIndex);
       this.displayCounts();
       return this._selectedRows; // eslint-disable-line
@@ -8266,8 +8264,6 @@ Datagrid.prototype = {
   selectRows(row, nosync, selectAll) {
     let idx = -1;
     const s = this.settings;
-    const isSingle = s.selectable === 'single';
-    const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
     const isSiblings = s.selectable === 'siblings';
     const dataset = this.getActiveDataset();
 
@@ -8279,7 +8275,7 @@ Datagrid.prototype = {
       return this._selectedRows;
     }
 
-    if (isSingle) {
+    if (s.selectable === 'single') {
       // Unselect
       if (this._selectedRows.length) {
         this.unselectRow(this._selectedRows[0].idx, true, true);
@@ -8290,7 +8286,7 @@ Datagrid.prototype = {
       this.selectRow(idx, true, true);
     }
 
-    if (isMultiple || isSiblings) {
+    if (s.selectable === 'multiple' || s.selectable === 'mixed' || isSiblings) {
       if (Object.prototype.toString.call(row) === '[object Array]') {
         for (let i = 0; i < row.length; i++) {
           this.selectRow(row[i], true, true);
@@ -8420,8 +8416,6 @@ Datagrid.prototype = {
   */
   handleKeys() {
     const self = this;
-    const isMultiple = self.settings.selectable === 'multiple';
-    const isMixed = self.settings.selectable === 'mixed';
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
 
     // Handle header navigation
@@ -8439,11 +8433,11 @@ Datagrid.prototype = {
 
       // Enter or Space
       if (key === 13 || key === 32) {
-        triggerEl = (isMultiple && index === 0) ? $('.datagrid-checkbox', th) : th;
+        triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
         triggerEl.trigger('click.datagrid').focus();
         const selectionCheckbox = (triggerEl[0].dataset.columnId === 'selectionCheckbox' || triggerEl.prevObject[0].dataset.columnId === 'selectionCheckbox');
 
-        if ((isMultiple || isMixed) && selectionCheckbox) {
+        if ((self.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') && selectionCheckbox) {
           checkbox
             .addClass('is-checked')
             .removeClass('is-partial')
@@ -8761,7 +8755,7 @@ Datagrid.prototype = {
           return;
         }
 
-        if (isMultiple && e.shiftKey) {
+        if (self.settings.selectable === 'multiple' && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
@@ -8823,7 +8817,7 @@ Datagrid.prototype = {
       }
 
       // If multiSelect or mixedSelect is enabled, press Control+A to toggle select all rows
-      if ((isMultiple || isMixed) && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+      if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
         checkbox
           .addClass('is-checked')
           .removeClass('is-partial')
