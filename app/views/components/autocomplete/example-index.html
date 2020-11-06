@@ -2,14 +2,15 @@
   <div class="twelve columns">
     <div class="field">
       <label for="autocomplete-default">States</label>
-      <input type="text" autocomplete="off" id="autocomplete" class="autocomplete" data-init="false" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="autocomplete-default"/>
+      <input type="text" autocomplete="off" class="autocomplete" data-init="false" placeholder="Type to Search" id="autocomplete-default"/>
     </div>
   </div>
 </div>
 
 <script>
-  const elem = $('#autocomplete');
+  const elem = $('#autocomplete-default');
   elem.autocomplete({
+    source: '{{basepath}}api/states?term=',
     attributes: [
       {
         name: 'id',
