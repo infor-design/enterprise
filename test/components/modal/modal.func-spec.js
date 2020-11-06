@@ -100,19 +100,6 @@ describe('Modal API', () => {
     expect(modalAPI).toEqual(jasmine.any(Object));
   });
 
-  it('can be opened', (done) => {
-    modalAPI = new Modal($('body'), {
-      content: $(modalPanelEl)
-    });
-    modalAPI.open();
-
-    setTimeout(() => {
-      expect(document.body.classList.contains('modal-engaged')).toBeTruthy();
-      expect(modalAPI.element[0].getAttribute('aria-modal')).toBeTruthy();
-      done();
-    }, 100);
-  });
-
   it('can have a buttonset attached', () => {
     modalAPI = new Modal($('body'), {
       content: $(modalPanelEl),
