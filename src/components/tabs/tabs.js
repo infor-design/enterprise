@@ -391,7 +391,12 @@ Tabs.prototype = {
       .attr({ role: 'tabpanel' })
       .find('h3:first').attr('tabindex', '0');
 
-    self.panels.appendTo(self.container);
+    self.panels.each(function () {
+      const panel = $(this);
+      if (!panel.parent().is(self.container)) {
+        self.container.append(panel);
+      }
+    });
 
     const excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)';
     const tabs = this.tablist.children(`li${excludes}`);
