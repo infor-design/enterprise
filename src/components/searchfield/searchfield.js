@@ -313,8 +313,8 @@ SearchField.prototype = {
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
 
     // Add test automation ids
-    utils.addAttributes(this.element, this, this.settings.attributes);
-    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper');
+    utils.addAttributes(this.element, this, this.settings.attributes, '', true);
+    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper', true);
 
     // Initially disable animations on toolbar searchfields
     // An event listener on Toolbar's `rendered` event removes these at the correct time
@@ -2088,7 +2088,7 @@ SearchField.prototype = {
     this.xButton[0].setAttribute('tabindex', '-1');
 
     // Add test automation ids
-    utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close');
+    utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);
   },
 
   /**

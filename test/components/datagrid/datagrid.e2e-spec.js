@@ -3333,7 +3333,7 @@ describe('Datagrid loaddata clear selected rows tests', () => {
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should be able to select then update rows, and have no selected rows', async () => {
@@ -3343,6 +3343,7 @@ describe('Datagrid loaddata clear selected rows tests', () => {
     await element(by.id('show-selected')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.toast-message')).getText()).toEqual('Number selected rows: 7');
     await element(by.css('#toast-container .btn-close')).click();

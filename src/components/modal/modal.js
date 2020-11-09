@@ -330,7 +330,7 @@ Modal.prototype = {
 
     if (this.settings.id) {
       this.element.attr('id', this.settings.id);
-      utils.addAttributes(this.element, this, this.settings.attributes);
+      utils.addAttributes(this.element, this, this.settings.attributes, '', true);
     }
 
     if ($(this.settings.content).is('.modal')) {
@@ -580,7 +580,7 @@ Modal.prototype = {
           btn.element[0].classList.add('no-validation');
         }
 
-        utils.addAttributes(btn.element, this, settingsJSON.attributes);
+        utils.addAttributes(btn.element, this, settingsJSON.attributes, '', true);
       }
 
       // In standard Modal mode, size the buttons to fit after rendering.
@@ -678,7 +678,7 @@ Modal.prototype = {
         btn.addClass('no-validation');
       }
 
-      utils.addAttributes(btn, self, props.attributes);
+      utils.addAttributes(btn, self, props.attributes, '', true);
 
       const attrs = {};
       const attrTypes = ['id', 'name', 'text'];
@@ -886,17 +886,17 @@ Modal.prototype = {
     // Ensure aria-labelled by points to the id
     if (this.settings.isAlert) {
       const title = this.element.find('#message-title');
-      utils.addAttributes(title, this, this.settings.attributes, 'title');
+      utils.addAttributes(title, this, this.settings.attributes, 'title', true);
 
       const messageText = this.element.find('#message-text');
-      utils.addAttributes(messageText, this, this.settings.attributes, 'message');
+      utils.addAttributes(messageText, this, this.settings.attributes, 'message', true);
 
       this.element.attr('aria-labelledby', title.attr('id'));
       this.element.attr('aria-describedby', messageText.attr('id'));
     } else {
       const h1 = this.element.find('h1:first');
-      utils.addAttributes(h1, this, this.settings.attributes, 'title');
-      utils.addAttributes(this.element.find('.btn-close'), this, this.settings.attributes, 'btn-close');
+      utils.addAttributes(h1, this, this.settings.attributes, 'title', true);
+      utils.addAttributes(this.element.find('.btn-close'), this, this.settings.attributes, 'btn-close', true);
 
       let id = h1.attr('id');
 
@@ -909,7 +909,7 @@ Modal.prototype = {
       const descById = `${this.element.attr('id') ? this.element.attr('id') : 'message'}-text`;
 
       this.element.attr('aria-labelledby', id);
-      utils.addAttributes(this.element, this, this.settings.attributes);
+      utils.addAttributes(this.element, this, this.settings.attributes, '', true);
 
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {

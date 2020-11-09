@@ -256,10 +256,10 @@ Spinbox.prototype = {
       this.readonly();
     }
 
-    utils.addAttributes(this.element.parent(), this, this.settings.attributes, 'wrapper');
-    utils.addAttributes(this.element, this, this.settings.attributes, 'spinbox');
-    utils.addAttributes(this.buttons.down, this, this.settings.attributes, 'btn-down');
-    utils.addAttributes(this.buttons.up, this, this.settings.attributes, 'btn-up');
+    utils.addAttributes(this.element.parent(), this, this.settings.attributes, 'wrapper', true);
+    utils.addAttributes(this.element, this, this.settings.attributes, 'spinbox', true);
+    utils.addAttributes(this.buttons.down, this, this.settings.attributes, 'btn-down', true);
+    utils.addAttributes(this.buttons.up, this, this.settings.attributes, 'btn-up', true);
 
     return this;
   },

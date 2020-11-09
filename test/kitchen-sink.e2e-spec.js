@@ -13,12 +13,6 @@ describe('Kitchen-sink tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-
     if (utils.isChrome()) {
       it('Should pass CSP', async () => {
         let errorLog = null;

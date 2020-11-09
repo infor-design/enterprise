@@ -228,53 +228,6 @@ describe('Multiselect example-clear-all tests', () => {
   }
 });
 
-describe('Multiselect example-select-all-performance tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/multiselect/test-select-all-performance');
-  });
-
-  xit('Should select all performance test', async () => {
-    const timer = setTimer();
-    await clickOnMultiselect();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
-
-    const all = await element.all(by.css('.dropdown-option')).count();
-    const selectAll = element(by.css('li.dropdown-select-all-list-item'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(selectAll), config.waitsFor);
-
-    await selectAll.click();
-    const selected = await element.all(by.css('.dropdown-option.is-selected')).count();
-
-    expect(selected).toEqual(all);
-    expect(timer.elapsed).toBeLessThan(1300);
-  });
-
-  xit('Should clear all selected performance test', async () => {
-    const timer = setTimer();
-    await clickOnMultiselect();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
-
-    const all = await element.all(by.css('.dropdown-option')).count();
-    const selectAll = element(by.css('li.dropdown-select-all-list-item'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(selectAll), config.waitsFor);
-
-    await selectAll.click();
-    let selected = await element.all(by.css('.dropdown-option.is-selected')).count();
-
-    expect(selected).toEqual(all);
-
-    await selectAll.click();
-    selected = await element.all(by.css('.dropdown-option.is-selected')).count();
-
-    expect(selected).toEqual(0);
-    expect(timer.elapsed).toBeLessThan(2200);
-  });
-});
-
 describe('Multiselect typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/test-reload-typeahead');

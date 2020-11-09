@@ -30,7 +30,7 @@ describe('Popdown Index Tests', () => {
     expect(await element(by.id('popdown')).getAttribute('id')).toEqual('popdown');
     expect(await element(by.id('popdown')).getAttribute('data-automation-id')).toEqual('popdown-automation-id');
 
-    expect(await element(by.id('popdownpopover-listview-example')).getAttribute('id')).toEqual('popover-listview-example');
+    expect(await element(by.id('popover-listview-example')).getAttribute('id')).toEqual('popover-listview-example');
     expect(await element(by.id('popover-listview-example')).getAttribute('data-automation-id')).toEqual('popover-listview-example-automation-id');
 
     expect(await element(by.id('edit-cart')).getAttribute('id')).toEqual('edit-cart');
