@@ -391,6 +391,10 @@ Button.prototype = {
           this.element.attr('title', moreText).tooltip({
             content: moreText
           });
+
+          if (!this.settings.title) {
+            this.tooltipAPI.destroy();
+          }
         }
       }
     }
