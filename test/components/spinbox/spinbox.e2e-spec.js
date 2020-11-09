@@ -6,14 +6,13 @@ requireHelper('rejection');
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 let spinboxEl;
-const spinboxId = 'regular-spinbox';
 
 describe('Spinbox example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/spinbox/example-index');
-    spinboxEl = await element(by.id(spinboxId));
+    spinboxEl = await element(by.id('spinbox-id-1-spinbox'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.id(spinboxId))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('spinbox-id-1-spinbox'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {

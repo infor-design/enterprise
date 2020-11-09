@@ -90,8 +90,15 @@ describe('Autocomplete example-index tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('autocomplete')).getAttribute('id')).toEqual('autocomplete');
-    expect(await element(by.id('autocomplete')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id');
+    expect(await element(by.id('autocomplete-default')).getAttribute('id')).toEqual('autocomplete-default');
+    expect(await element(by.id('autocomplete-default')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id');
+
+    const autocompleteEl = await element(by.css('#autocomplete-default'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
+    await autocompleteEl.sendKeys('a');
+
+    const autocompleteListEl = await element(by.css('#autocomplete-list'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
 
     expect(await element(by.id('autocomplete-list')).getAttribute('id')).toEqual('autocomplete-list');
     expect(await element(by.id('autocomplete-list')).getAttribute('data-automation-id')).toEqual('autocomplete-automation-id-list');

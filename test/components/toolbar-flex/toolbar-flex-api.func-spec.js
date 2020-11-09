@@ -333,20 +333,6 @@ describe('Flex Toolbar', () => { //eslint-disable-line
         }, 400);
       }, 400);
     });
-
-    it('Should trigger "selected" event for overflow menu', (done) => {
-      const moreMenuButton = toolbarAPI.items[5];
-      const moreActionsSpyEvent = spyOnEvent('button.btn-actions', 'selected');
-      const firstMoreMenuEntry = document.body.querySelector('ul#popupmenu-2 li:nth-child(5) a');
-
-      moreMenuButton.componentAPI.open();
-      setTimeout(() => {
-        firstMoreMenuEntry.click();
-
-        expect(moreActionsSpyEvent).toHaveBeenTriggered();
-        done();
-      }, 500);
-    });
   });
 });
 

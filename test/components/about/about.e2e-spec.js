@@ -90,7 +90,7 @@ describe('About translation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
 
     // Its not inverted here but this is correct
-    expect(await element(by.css('.version')).getText()).toEqual('IDS إصدار : 4.34.0-dev');
+    expect(await element(by.css('.version')).getText()).toContain('إصدار :');
   });
 
   it('Should not have errors', async () => {

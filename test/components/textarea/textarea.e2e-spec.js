@@ -127,28 +127,6 @@ describe('Textarea example-index tests', () => {
 
     expect(await element(by.className('icon-error'))).toBeTruthy();
   });
-
-  it('Should be able to set id/automations', async () => {
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.id('textarea-id-1')).getAttribute('id')).toEqual('textarea-id-1');
-    expect(await element(by.id('textarea-id-1')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-1');
-
-    expect(await element(by.id('textarea-id-2')).getAttribute('id')).toEqual('textarea-id-2');
-    expect(await element(by.id('textarea-id-2')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-2');
-
-    expect(await element(by.id('textarea-id-3')).getAttribute('id')).toEqual('textarea-id-3');
-    expect(await element(by.id('textarea-id-3')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-3');
-
-    expect(await element(by.id('textarea-id-4')).getAttribute('id')).toEqual('textarea-id-4');
-    expect(await element(by.id('textarea-id-4')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-4');
-
-    expect(await element(by.id('textarea-id-5')).getAttribute('id')).toEqual('textarea-id-5');
-    expect(await element(by.id('textarea-id-5')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-5');
-
-    expect(await element(by.id('textarea-id-6')).getAttribute('id')).toEqual('textarea-id-6');
-    expect(await element(by.id('textarea-id-6')).getAttribute('data-automation-id')).toEqual('automation-id-textarea-6');
-  });
 });
 
 describe('Textarea size tests', () => {
