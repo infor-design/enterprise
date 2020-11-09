@@ -63,7 +63,7 @@
 - `[Tabs Module]` Fixed a bug where tab items were not centered correctly in uplift theme. ([#4538](https://github.com/infor-design/enterprise/issues/4538))
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
-(56 Issues Solved This Release, Backlog Enterprise 185, Backlog Ng 42, 1089 Functional Tests, 1619 e2e Tests)
+(56 Issues Solved This Release, Backlog Enterprise 185, Backlog Ng 42, 1082 Functional Tests, 1612 e2e Tests)
 
 ## v4.33.0
 
