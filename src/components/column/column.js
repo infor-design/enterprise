@@ -222,7 +222,7 @@ Column.prototype = {
     const x0 = d3.scaleBand()
       .range([0, width])
       .round(true)
-      .padding(0.1);
+      .padding(0);
 
     const x1 = d3.scaleBand();
 

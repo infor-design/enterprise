@@ -20,12 +20,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    
+
     - name: Cache multiple paths
       uses: actions/cache@v2
       with:
@@ -50,9 +50,8 @@ jobs:
       run: npm run functional:ci
 
     - name: Run e2e tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:group0:ci;
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
-    - name: Explain why this job ran
-      env:
-        EVENT_NAME: ${{ toJson(github) }}
-      run: echo "$EVENT_NAME"
+    - name: Deploy Master
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      run: sh ./scripts/jenkins-deploy.sh -b master -w

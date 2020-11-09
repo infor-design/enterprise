@@ -12,7 +12,7 @@ module.exports = {
     return capabilities.platform === 'MAC';
   },
   isBS: () => process.env.isBrowserStack,
-  isCI: () => process.env.TRAVIS,
+  isCI: () => process.env.CI,
   setPage: async (url) => {
     let addQuery = '?';
     let theme = `theme=${browser.params.theme}`;
