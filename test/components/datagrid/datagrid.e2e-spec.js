@@ -2189,21 +2189,6 @@ describe('Datagrid Lookup Editor', () => {
 
     expect(await element(by.css(staticCell)).getText()).toEqual('2542205');
   });
-
-  it('should be able to select from the dialog when clicking directly on the icon', async () => {
-    const checkboxTd = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2) .icon'));
-    await browser.actions().mouseMove(checkboxTd).perform();
-    await browser.actions().click(checkboxTd).perform();
-
-    await browser.driver.sleep(config.sleep);
-    await element(by.css('.lookup-modal tr:nth-child(5) td:nth-child(1)')).click();
-    await browser.driver.sleep(config.sleep);
-
-    const editCell = '.has-editor.is-editing input';
-    await element(by.css(editCell)).sendKeys(protractor.Key.ENTER);
-
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2)')).getText()).toEqual('2542205');
-  });
 });
 
 describe('Datagrid Lookup Mask Editor', () => {
