@@ -14,18 +14,6 @@ const clickOnMultiselect = async () => {
   await multiselectEl.click();
 };
 
-const setTimer = () => {
-  let starttime = 0;
-  browser.controlFlow().execute(() => {
-    starttime = Date.now();
-  });
-  return {
-    get elapsed() {
-      return browser.controlFlow().execute(() => Date.now() - starttime);
-    }
-  };
-};
-
 describe('Multiselect example-states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-states');

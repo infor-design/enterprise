@@ -1,7 +1,6 @@
 const { browserStackErrorReporter } = require('./helpers/browserstack-error-reporter.js');
 const utils = require('./helpers/e2e-utils.js');
 const config = require('./helpers/e2e-config.js');
-const axePageObjects = require('./helpers/axe-page-objects.js');
 
 require('./helpers/rejection.js');
 
