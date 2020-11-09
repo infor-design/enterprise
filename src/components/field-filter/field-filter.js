@@ -140,9 +140,9 @@ FieldFilter.prototype = {
       }
 
       // Add test automation ids
-      utils.addAttributes(this.field, this, this.settings.attributes);
-      utils.addAttributes(this.field.find('label:not(.audible)'), this, this.settings.attributes, 'label');
-      utils.addAttributes(this.field.find('select'), this, this.settings.attributes, 'select');
+      utils.addAttributes(this.field, this, this.settings.attributes, '', true);
+      utils.addAttributes(this.field.find('label:not(.audible)'), this, this.settings.attributes, 'label', true);
+      utils.addAttributes(this.field.find('select'), this, this.settings.attributes, 'select', true);
     }
   },
 

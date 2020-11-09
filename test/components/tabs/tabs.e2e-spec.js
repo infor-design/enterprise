@@ -2,7 +2,6 @@ const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -36,14 +35,6 @@ describe('Tabs click example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-init')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
     });
   }
 
@@ -125,14 +116,6 @@ describe('Tabs click example-counts tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-counts')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
     });
   }
 
@@ -332,14 +315,6 @@ describe('Tabs click example-add-tab button tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-add-tab')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-add-tab-button', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
     });
   }
 

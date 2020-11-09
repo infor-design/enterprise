@@ -90,13 +90,7 @@ describe('Searchfield example-index tests', () => {
     expect(await element(by.id('searchfield')).getAttribute('id')).toEqual('searchfield');
     expect(await element(by.id('searchfield')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id');
 
-    expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-close');
-
-    expect(await element(by.id('example-toolbar-searchfield')).getAttribute('id')).toEqual('example-toolbar-searchfield');
-    expect(await element(by.id('example-toolbar-searchfield')).getAttribute('data-automation-id')).toEqual('toolbar-searchfield-automation-id');
-
-    expect(await element(by.id('example-toolbar-searchfield-wrapper')).getAttribute('id')).toEqual('example-toolbar-searchfield-wrapper');
-    expect(await element(by.id('example-toolbar-searchfield-wrapper')).getAttribute('data-automation-id')).toEqual('example-toolbar-searchfield-wrapper-automation-id');
+    expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-btn-close');
   });
 });
 
@@ -140,45 +134,6 @@ describe('Searchfield full-text category tests', () => {
     await element(by.id('clothing-single')).click();
 
     expect(await element(by.css(categoryButtonSelector)).getText()).toEqual('Clothing');
-  });
-});
-
-describe('Searchfield full-text category with go button tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/searchfield/example-categories-and-go-button');
-    await browser.driver
-      .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id(singleCategoryId))), config.waitsFor);
-  });
-
-  // TODO: Not sure what the cause of the timeout here is...
-  // all these elements work everywhere else...
-  xit('Can pass a list of selected categories with the go button callback', async () => {
-    const categoryButtonSelector = '[aria-controls="popupmenu-1"]';
-    const searchfieldCategoryButtonEl = await element(by.css(categoryButtonSelector));
-    await searchfieldCategoryButtonEl.click();
-
-    const targetCategory = await element(by.id('baby-multi'));
-    await targetCategory.click();
-
-    await browser.driver
-      .wait(protractor.ExpectedConditions
-        .presenceOf(await element(by.css(categoryButtonSelector))), config.waitsFor);
-
-    expect(await element(by.css(categoryButtonSelector)).getText()).toEqual('5 Selected');
-
-    const searchfieldGoButtonEl = await element(by.css(`#${searchfieldGoButtonId}`));
-    await searchfieldGoButtonEl.click();
-
-    const toastMessageSelector = '.toast-message';
-    await browser.driver
-      .wait(protractor.ExpectedConditions
-        .presenceOf(await element(by.css(toastMessageSelector))), config.waitsFor);
-
-    // EPC: NOTE: for some reason Protractor is adding spaces before the commas when using `getText()`.
-    // I've added them into the result for now, til we can track down the cause.
-    expect(await element(by.css(toastMessageSelector)).getText())
-      .toEqual('Animals , Baby , Clothing , Images , Places');
   });
 });
 

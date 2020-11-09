@@ -292,9 +292,9 @@ Splitter.prototype = {
     // Aria
     this.element.attr({ 'aria-dropeffect': 'move', tabindex: '0', 'aria-grabbed': 'false' });
 
-    utils.addAttributes(this.element, this, this.settings.attributes);
-    utils.addAttributes(this.element.find('.splitter-drag-handle'), this, this.settings.attributes, 'handle');
-    utils.addAttributes(this.element.find('.splitter-drag-handle svg.icon'), this, this.settings.attributes, 'icon');
+    utils.addAttributes(this.element, this, this.settings.attributes, '', true);
+    utils.addAttributes(this.element.find('.splitter-drag-handle'), this, this.settings.attributes, 'handle', true);
+    utils.addAttributes(this.element.find('.splitter-drag-handle svg.icon'), this, this.settings.attributes, 'icon', true);
 
     return this;
   },

@@ -1,7 +1,6 @@
 const { browserStackErrorReporter } = require('./helpers/browserstack-error-reporter.js');
 const utils = require('./helpers/e2e-utils.js');
 const config = require('./helpers/e2e-config.js');
-const axePageObjects = require('./helpers/axe-page-objects.js');
 
 require('./helpers/rejection.js');
 
@@ -13,12 +12,6 @@ describe('Kitchen-sink tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-
     if (utils.isChrome()) {
       it('Should pass CSP', async () => {
         let errorLog = null;

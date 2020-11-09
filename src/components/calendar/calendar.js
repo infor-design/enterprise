@@ -198,7 +198,7 @@ Calendar.prototype = {
           <span class="calendar-event-legend-text">${event.label}</span>`);
 
       this.eventLegend.append(legend);
-      utils.addAttributes(legend, this, this.settings.attributes, `legend-mobile-${event.id}`);
+      utils.addAttributes(legend, this, this.settings.attributes, `legend-mobile-${event.id}`, true);
     }
     this.monthviewTable.after(this.eventLegend);
   },
@@ -219,7 +219,7 @@ Calendar.prototype = {
       const eventTypeMarkup = `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
         <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
       this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
-      utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`);
+      utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
     }
     return this;
   },

@@ -153,11 +153,11 @@ ExpandableArea.prototype = {
 
     this.resize();
 
-    utils.addAttributes(this.element, this, this.settings.attributes);
-    utils.addAttributes(this.header, this, this.settings.attributes, 'header');
-    utils.addAttributes(this.content, this, this.settings.attributes, 'content');
-    utils.addAttributes(this.expander, this, this.settings.attributes, 'expander');
-    utils.addAttributes(this.footer, this, this.settings.attributes, 'footer');
+    utils.addAttributes(this.element, this, this.settings.attributes, '', true);
+    utils.addAttributes(this.header, this, this.settings.attributes, 'header', true);
+    utils.addAttributes(this.content, this, this.settings.attributes, 'content', true);
+    utils.addAttributes(this.expander, this, this.settings.attributes, 'expander', true);
+    utils.addAttributes(this.footer, this, this.settings.attributes, 'footer', true);
 
     return this;
   },

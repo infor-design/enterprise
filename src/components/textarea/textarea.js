@@ -76,8 +76,6 @@ Textarea.prototype = {
       this.settings.autoGrow = true;
     }
 
-    utils.addAttributes(this.element, this, this.settings.attributes);
-
     this.setupAutoGrow();
     this.handleEvents();
     this.updateCounter();
