@@ -34,8 +34,8 @@ while getopts "b:lwq" opt; do
     esac
 done
 
-if [ -z $JENKINS_API_TOKEN ]; then echo "JENKINS_API_TOKEN must be defined"; exit 1; fi
-if [ -z $JENKINS_JOB_TOKEN ]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
+if [ -z "$JENKINS_API_TOKEN" ]; then echo "JENKINS_API_TOKENx must be defined"; exit 1; fi
+if [ -z "$JENKINS_JOB_TOKEN" ]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
 
 _check_credentials() {
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null \
@@ -87,12 +87,12 @@ _check_credentials
 
 build_number_url=$(echo $BUILD_FROM | sed -e 's/\.//g')
 
-echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
+echo "Building $BUILD_FROM as $([ "$BUILD_AS_LATEST" = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
 
 CURRENT_JOB_STATUS=`check_status`
 
 if [ "$CURRENT_JOB_STATUS" == "None" ]; then
-    if [ $QUEUE_BUILD = false ]; then
+    if [ "$QUEUE_BUILD" = false ]; then
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
         RESP=`stop_jenkins_build`
@@ -118,9 +118,9 @@ else
     echo "ERROR: Request to Jenkins returned $RESP"
 fi
 
-if [ $WATCH_FOR_BUILD_STATUS = true ]; then
+if [ "$WATCH_FOR_BUILD_STATUS" = true ]; then
     INITIAL_STATUS=`check_status`
-    if [ -n $INITIAL_STATUS ]; then
+    if [ -n "$INITIAL_STATUS" ]; then
         BUILD_STATUS=`check_status`
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."

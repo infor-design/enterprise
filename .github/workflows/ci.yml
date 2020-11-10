@@ -57,7 +57,7 @@ jobs:
         JENKINS_JOB_TOKEN: ${{ secrets.JENKINS_JOB_TOKEN }}
         JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
       if: github.event_name == 'push'
-      run: sh ./scripts/jenkins-deploy.sh -b master -w
+      run: sh ./scripts/jenkins-deploy.sh -b master
 
     - name: Dump GitHub context
       env:
