@@ -13,7 +13,7 @@ There are several ways to get involved, this document covers:
 
 ## Reporting An Issue
 
-<https://github.com/infor-design/enterprise/issues>
+<https://github.com/infor-design/enterprise/issues/new/choose>
 
 ### Bug Reports
 
@@ -30,11 +30,11 @@ Guidelines for bug reports:
 
     Examples of reduced test cases are:
 
-    - Take an existing example and modify it to resemble the issue, this is ideal as we can include this in our init tests to avoid future breakages
-    - Create an example using a tool like [jsfiddle](https://jsfiddle.net) (the enterprise scripts can be upload on this site)
+    - Take an existing example and modify it to resemble the issue, this is ideal as we can include this in our test suite to avoid future breakages
+    - Create an example using a tool like [stackblitz](https://stackblitz.com/) or [jsbin](https://jsbin.com/)
     - Any Other runnable code
 
-    Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
+    Also If you spend a little time in recreating and isolating the issue and you might learn and discover the solution.
 
     **:no_entry: Do not :no_entry:**
     - Send a video in place of a reduced test case
@@ -48,19 +48,18 @@ Guidelines for bug reports:
 
 Feature requests are welcome. Before you submit one be sure to have:
 
-1. Does your idea fits with the scope of the project? Might better fit being an app/plugin/extension?
-1. Would anyone else but your team would want this feature?
-1. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it before" isnt strong enough.
+1. Does your idea fits with the our general scope of the project? Might better fit being an app/plugin/extension?
+1. Would anyone else but you want this feature?
+1. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it like this for the last ten years" isn't strong enough.
 
 ## Submitting Pull Requests
 
 Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
-please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
+please first [raise an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
 
 If you'd like to submit a pull request you'll need to do the following:
 
 1. **[Forking the repo](https://help.github.com/articles/fork-a-repo/)**. Navigate to [Github Repository](https://github.com/infor-design/enterprise) and click the "Fork" button in the top right corner of your browser.
-
 1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/)** to your machine.
 1. **Make your changes** to your local fork for the proper branch.
     - Almost all development will be done on branches from `master`.
@@ -105,8 +104,6 @@ See [help.github.com](https://help.github.com/) for further information.
 
 ### Testing and Quality Assurance
 
-Never underestimate just how useful quality assurance is. If you're looking to get involved with the code base and don't know where to start, checking out and testing a pull request is one of the most useful things you could do.
-
-If you want to get involved with testing Enterprise, there is a set of [QA Documentation](#qa-documentation) on the wiki.
+Never underestimate just how useful quality assurance is. If you're looking to get involved with the code base and don't know where to start, start by checking out and testing a pull request.
 
 Essentially though, check out the latest master, take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!
