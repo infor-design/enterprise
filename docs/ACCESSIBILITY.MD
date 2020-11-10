@@ -37,12 +37,12 @@ This document describes the process for achieving a high degree of accessibility
 
 All screen readers read the accessibility DOM, so there may be minor differences in how things work, however, we use a combination of the following screen readers to test:
 
-- [Jaws 2019](https://support.freedomscientific.com/downloads/jaws/JAWSWhatsNew) or 2018 - On Firefox or Chrome
+- [Jaws 2020](https://support.freedomscientific.com/downloads/jaws/JAWSWhatsNew) or 2018 - On Firefox or Chrome
+- [Chrome Vox](https://chrome.google.com/webstore/detail/chromevox/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en) - A convenient screen reader for testing on mac
 - [NVDA](https://www.nvaccess.org/) - On Firefox or Chrome (For “free” option)
 - [Voice Over](https://help.apple.com/voiceover/mac/10.14/) - On Safari (For Mac Option)
 - [Voice Over](https://www.apple.com/accessibility/iphone/vision/) - On Safari (For IOS Option)
 - [Talkback](https://support.google.com/accessibility/android/answer/6283677?hl=en) - On Chrome (For Android Option)
-- [Chrome Vox](https://chrome.google.com/webstore/detail/chromevox/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en) - A convenient screen reader for testing on mac
 
 Screen readers need only be tested in one browser as recommended above.
 
@@ -50,7 +50,6 @@ Screen readers need only be tested in one browser as recommended above.
 
 - [Axe Chrome Dev Tools Plugin](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US) - A tool that adds a tab in Chrome Dev tools for testing for accessibility problems. This tool gives a visual version of the [Axe e2e tests](https://github.com/infor-design/enterprise/blob/master/test/components/dropdown/dropdown.e2e-spec.js#L64).
 - [HTML Code Sniffer](https://squizlabs.github.io/HTML_CodeSniffer/‎) - A tool that adds a bookmark to test a page for accessibility problems.
-- [Visbug](https://chrome.google.com/webstore/detail/visbug/cdockenadnadldjbbgcallicgledbeoc?hl=en‎) - A tool that lets you inspect aria attributes and test contrast along with other useful development and page inspection tools.
 
 ## Other Accessibility Tools
 
