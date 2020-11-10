@@ -43,14 +43,14 @@ jobs:
     - name: Build
       run: npm run build
 
-    # - name: Run Lint Checks
-    #  run: npm run lint:ci
+    - name: Run Lint Checks
+      run: npm run lint:ci
 
-    # - name: Run functional tests
-    #  run: npm run functional:ci
+    - name: Run functional tests
+      run: npm run functional:ci
 
-    # - name: Run e2e tests
-    #  run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+    - name: Run e2e tests
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
     - name: Deploy Master
       env:
