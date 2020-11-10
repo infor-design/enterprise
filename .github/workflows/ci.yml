@@ -53,5 +53,15 @@ jobs:
     #  run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
     - name: Deploy Master
-      if: github.event.pull_request.merged == 'true'
+      if: github.event.pull_request.merged == true
       run: sh ./scripts/jenkins-deploy.sh -b master -w
+    
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
