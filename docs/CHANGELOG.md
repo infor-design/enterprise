@@ -8,6 +8,7 @@
 
 ### v4.35.0 Fixes
 
+- `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))

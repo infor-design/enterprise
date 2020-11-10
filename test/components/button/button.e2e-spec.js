@@ -323,3 +323,41 @@ describe('Button secondary border tests', () => {
     });
   }
 });
+
+describe('Action button remove more tooltip tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/button/test-remove-more-tooltip?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not display tooltip when hovering the button', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('btn-1')))
+      .perform();
+
+    expect(await element(by.id('tooltip')).getText()).toEqual('');
+  });
+
+  it('Should display "More" text when hovering the button', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('btn-2')))
+      .perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.id('tooltip')).getText()).toEqual('More');
+  });
+
+  it('Should display "Tooltip will show" text when hovering the button', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('btn-3')))
+      .perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.id('tooltip')).getText()).toEqual('Tooltip will show');
+  });
+});
