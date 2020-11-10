@@ -3,8 +3,6 @@
 JENKINS_USER="Jenkins"
 JENKINS_DOMAIN="jenkins.design.infor.com:8080"
 JENKINS_JOB="soho-kubernetes-deploy"
-JENKINS_JOB_TOKEN="82WLCZo5Up8rzQ50aCFQZeB2ZktmSRTv"
-JENKINS_API_TOKEN="11f79b30db3082558025f3d71f867067d5"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_API_TOKEN@$JENKINS_DOMAIN"
 
 BUILD_FROM="master"
@@ -36,14 +34,14 @@ while getopts "b:lwq" opt; do
     esac
 done
 
-if [[ -z $JENKINS_API_TOKEN ]]; then echo "JENKINS_API_TOKEN must be defined"; exit 1; fi
-if [[ -z $JENKINS_JOB_TOKEN ]]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
+if [ -z $JENKINS_API_TOKEN ]; then echo "JENKINS_API_TOKEN must be defined"; exit 1; fi
+if [ -z $JENKINS_JOB_TOKEN ]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
 
 _check_credentials() {
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null \
                 "$JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json"
               )
-    if [[ "$response" == "200" ]]; then
+    if [ "$response" == "200" ]; then
         echo "Successfully authenticated..."
     else
         echo "ERROR: Authorization to Jenkins returned $response"
@@ -93,12 +91,12 @@ echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-ente
 
 CURRENT_JOB_STATUS=`check_status`
 
-if [[ "$CURRENT_JOB_STATUS" == "None" ]]; then
+if [ "$CURRENT_JOB_STATUS" == "None" ]; then
     if [ $QUEUE_BUILD = false ]; then
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
         RESP=`stop_jenkins_build`
-        if [[ "$RESP" == "302" ]]; then
+        if [ "$RESP" == "302" ]; then
             echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
         else
             exit 1
@@ -113,7 +111,7 @@ fi
 
 RESP=`queue_jenkins_build`
 
-if [[ "$RESP" == "201" ]]; then
+if [ "$RESP" == "201" ]; then
     echo "SUCCESS: Jenkins sucessfully queued job"
 else
     exit 1
@@ -126,16 +124,16 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
         BUILD_STATUS=`check_status`
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."
-        while [[ "$BUILD_STATUS" == "None" ]]; do
+        while [ "$BUILD_STATUS" == "None" ]; do
             sleep 10
             printf "."
             BUILD_STATUS=`check_status`
         done
-        if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
+        if [ "$BUILD_STATUS" == "SUCCESS" ]; then
             echo "" # new line
             echo "DEPLOY to http://$build_number_url-enterprise.demo.design.infor.com SUCCESSFUL."
             exit
-        elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
+        elif [ "$BUILD_STATUS" == "ABORTED" ]; then
             echo "" # new line
             echo "Build was $BUILD_STATUS. Exiting with 0 since this was likely intentional."
             exit 0
