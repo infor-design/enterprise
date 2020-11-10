@@ -387,12 +387,15 @@ Button.prototype = {
     if (this.element.hasClass('btn-actions')) {
       if ((!this.element.parents('.field').length && !this.element.parents('.toolbar').length)) {
         if (!this.tooltipAPI) {
-          const moreText = Locale.translate('More');
-          this.element.attr('title', moreText).tooltip({
-            content: moreText
-          });
+          if (!this.element.attr('title')) {
+            const moreText = Locale.translate('More');
+            this.element.attr('title', moreText).tooltip({
+              content: moreText
+            });
 
-          if (!this.settings.title) {
+            return;
+          }
+          if (!this.settings.title || this.element.attr('title') === '') {
             this.tooltipAPI.destroy();
           }
         }

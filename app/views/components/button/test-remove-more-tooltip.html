@@ -1,10 +1,10 @@
 <div class="row">
   <div class="one-half column">
-    <h2 class="section-title">Default: No Tooltip (No Title)</h2>
+    <h2 class="section-title">No Tooltip (If title is empty)</h2>
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Tasks</h2>
-        <button class="btn-actions" type="button" id="btn-1">
+        <button class="btn-actions" type="button" id="btn-1" title="">
           <span class="audible">Actions</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-more"></use>
@@ -25,11 +25,11 @@
     </div>
   </div>
   <div class="one-half column">
-    <h2 class="section-title">With Tooltip (Added Title)</h2>
+    <h2 class="section-title">With Tooltip (If no title attribute)</h2>
     <div class="card">
       <div class="card-header">
-        <h2 class="widget-title">Pie Chart Title</h2>
-        <button class="btn-actions" type="button" id="btn-2" title="Tooltip will show!">
+        <h2 class="widget-title">Pie Chart</h2>
+        <button class="btn-actions" type="button" id="btn-2">
           <span class="audible">Actions</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-more"></use>
@@ -43,6 +43,30 @@
       </div>
       <div class="card-content">
         <div id="pie-chart-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="one-half column">
+    <h2 class="section-title">With Tooltip (With title attribute value)</h2>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Donut Chart</h2>
+        <button class="btn-actions" type="button" id="btn-3" title="Tooltip will show">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="action-one">Action One</a></li>
+          <li><a href="#" id="action-two">Action Two</a></li>
+        </ul>
+
+      </div>
+      <div class="card-content">
+        <div id="pie-donut-example" class="chart-container">
+        </div>
       </div>
     </div>
   </div>
@@ -158,6 +182,54 @@
         tooltip: 'Item F <b>{{percent}}</b>'
       }]
     }];
+
+    var donutData = [{
+      data: [{
+        name: 'Component A',
+        value: 16,
+        attributes: [{
+            name: 'id',
+            value: 'comp-a'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-a-automation-id'
+          }
+        ]
+      }, {
+        name: 'Component B',
+        value: 12,
+        attributes: [{
+            name: 'id',
+            value: 'comp-b'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-ba-automation-id'
+          }
+        ]
+      }, {
+        name: 'Component C',
+        value: 14,
+        attributes: [{
+            name: 'id',
+            value: 'comp-c'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-c-automation-id'
+          }
+        ]
+      }],
+      centerLabel: 'Donut Chart'
+    }];
+
+    $('#pie-donut-example').chart({
+      type: 'donut',
+      dataset: donutData
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
 
     $('#pie-chart-example').chart({
         type: 'pie',
