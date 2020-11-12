@@ -110,19 +110,6 @@ Modal.prototype = {
 
   /**
    * @private
-   */
-  get aboutAPI() {
-    let api;
-    if (this.trigger && this.trigger.length) {
-      api = this.trigger.data('about');
-    } else if (this.mainContent && this.mainContent.length && this.mainContent.is('body')) {
-      api = this.mainContent.data('about');
-    }
-    return api;
-  },
-
-  /**
-   * @private
    * @returns {boolean} whether or not the Modal is a Contextual Action Panel (CAP)
    */
   get isCAP() {
