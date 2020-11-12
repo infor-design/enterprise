@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.34.1
+
+### v4.34.1 Fixes
+
+- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
+
 ## v4.34.0
 
 ### v4.34.0 Features

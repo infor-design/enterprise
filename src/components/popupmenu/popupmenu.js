@@ -2480,6 +2480,9 @@ PopupMenu.prototype = {
    */
   teardown() {
     const self = this;
+    if (!this.menu || !this.menu.parent) {
+      return this;
+    }
     const wrapper = this.menu.parent('.popupmenu-wrapper');
 
     function unwrapPopup(menu) {
