@@ -1262,10 +1262,6 @@ Dropdown.prototype = {
 
     term = '';
     this.position();
-
-    if (hasIcons && this.list.find('svg').length > 2) {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
   },
 
   /**
@@ -1321,10 +1317,6 @@ Dropdown.prototype = {
 
     lis.removeClass('hidden');
     this.position();
-
-    if (hasIcons && this.list.find('svg').length > 2) {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
 
     if (this.list.find('svg').length === 2) {
       this.list.find('svg').last().remove();
