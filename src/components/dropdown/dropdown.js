@@ -1870,9 +1870,13 @@ Dropdown.prototype = {
     utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
     utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
     const options = this.list.find('.dropdown-option a');
-    [...options].forEach((opt, i) => {
-      utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
-    });
+
+    if (self.settings.attributes) {
+      options.each(function (i) {
+        const opt = $(this);
+        utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`);
+      });
+    }
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {

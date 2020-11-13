@@ -255,12 +255,15 @@ Autocomplete.prototype = {
 
     // Add test automation ids
     utils.addAttributes(this.list, this, this.settings.attributes, 'list');
-    setTimeout(() => {
-      const options = this.list.find('li a');
-      [...options].forEach((opt, i) => {
-        utils.addAttributes($(opt), this, this.settings.attributes, `list-option${i}`);
+    if (self.settings.attributes) {
+      setTimeout(() => {
+        const options = this.list.find('li a');
+        options.each(function (i) {
+          const opt = $(this);
+          utils.addAttributes(opt, self, self.settings.attributes, `list-option${i}`);
+        });
       });
-    });
+    }
 
     this.list[0].style.height = 'auto';
     this.list[0].style.width = `${this.element.outerWidth()}px`;
