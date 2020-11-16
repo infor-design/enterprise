@@ -28,6 +28,7 @@
 ### v4.34.1 Fixes
 
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
+- `[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
 
 ## v4.34.0
 

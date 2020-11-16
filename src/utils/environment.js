@@ -257,7 +257,7 @@ const Environment = {
 
     switch (os) { //eslint-disable-line
       case 'Mac OS X':
-        osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nUAgent)[1].replace(/\_/g, '.'); //eslint-disable-line
+        osVersion = /Mac OS X ([1-9][0-9][\.\_\d]+)/.exec(nUAgent)[1].replace(/\_/g, '.'); //eslint-disable-line
         break;
 
       case 'Android':
