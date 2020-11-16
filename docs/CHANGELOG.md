@@ -8,6 +8,7 @@
 
 ### v4.35.0 Fixes
 
+- `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
@@ -17,6 +18,19 @@
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
+
+## v4.34.2
+
+### v4.34.2 Fixes
+
+- `[Dropdown/Autocomplete]` Fix a bug where these components would fail in IE 11. Note that IE 11 isn't "supported" but we fixed these issues to give teams more time to migrate. ([#4608](https://github.com/infor-design/enterprise/issues/4608))
+- `[General]` Fix a bug where the regex scripts will error on Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+
+## v4.34.1
+
+### v4.34.1 Fixes
+
+- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575)
 
 ## v4.34.0
 

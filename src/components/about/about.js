@@ -142,7 +142,15 @@ About.prototype = {
     $('.modal-body', this.modal)[0].tabIndex = 0;
 
     this.modal.appendTo('body');
-    this.modal.modal({ trigger: this.isBody ? 'immediate' : 'click', attributes: this.settings.attributes });
+    this.modal.modal({
+      trigger: this.isBody ? 'immediate' : 'click',
+      attributes: this.settings.attributes
+    });
+
+    // Link the About API to the Modal API
+    const modalAPI = this.modal.data('modal');
+    modalAPI.aboutAPI = this;
+
     return this;
   },
 
@@ -240,6 +248,7 @@ About.prototype = {
       const modalApi = this.modal.data('modal');
       if (modalApi) {
         modalApi.element.off('beforeopen.about');
+        modalApi.aboutAPI = null;
         modalApi.destroy();
       }
     }
