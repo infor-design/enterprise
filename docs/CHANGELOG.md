@@ -22,13 +22,13 @@
 ### v4.34.2 Fixes
 
 - `[Dropdown/Autocomplete]` Fix a bug where these components would fail in IE 11. Note that IE 11 isn't "supported" but we fixed these issues to give teams more time to migrate. ([#4608](https://github.com/infor-design/enterprise/issues/4608))
+- `[General]` Fix a bug where the regex scripts will error on Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
 
 ## v4.34.1
 
 ### v4.34.1 Fixes
 
-- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
-- `[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575)
 
 ## v4.34.0
 
