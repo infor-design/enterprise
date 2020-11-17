@@ -1666,7 +1666,7 @@ Dropdown.prototype = {
       }
 
       if (this.list.find('ul li.hidden').length === 0) {
-        this.list.find(' > svg.listoption-icon').changeIcon('icon-empty-circle');
+        this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
 
       filter();
