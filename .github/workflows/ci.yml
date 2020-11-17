@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+        key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
