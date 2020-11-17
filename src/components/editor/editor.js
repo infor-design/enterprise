@@ -273,7 +273,7 @@ Editor.prototype = {
       contentEditable: true,
       'aria-multiline': true,
       role: 'textbox',
-      'aria-labelledby': this.container.find('.label')[0].id
+      'aria-labelledby': this.container.find('.label').length ? this.container.find('.label')[0].id : 'no-id'
     });
 
     // Bind functionality for Pre elements. We dont use this yet but could if we
