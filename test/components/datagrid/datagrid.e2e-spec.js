@@ -4815,3 +4815,93 @@ describe('Datagrid treegrid Tooltip tests', () => {
     expect(await tooltip.getAttribute('class')).toContain('is-hidden');
   });
 });
+
+describe('Datagrid select all for active page only', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple-active-page?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should toggle select all', async () => {
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('tr.is-selected'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('tr.is-selected'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+  });
+
+  it('Should only select for active page', async () => {
+    let checkbox = await element(by.css('#datagrid tbody tr:nth-child(4) td:nth-child(1) .datagrid-checkbox'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(4)'))), config.waitsFor);
+
+    checkbox = await element(by.css('#datagrid tbody tr:nth-child(5) td:nth-child(1) .datagrid-checkbox'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(5)'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(2);
+
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(5)'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-prev .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-prev .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(2);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+  });
+});
