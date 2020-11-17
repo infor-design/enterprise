@@ -736,3 +736,30 @@ describe('Dropdown selectValue() tests', () => {
     });
   }
 });
+
+describe('Dropdown with icons tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-icons');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should not change the last option icon when filtering', async () => {
+    const dropdownEl = await element(by.css('select#example-icon + .dropdown-wrapper .dropdown'));
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
+
+    const searchEl = await element(by.css('.dropdown-search'));
+    await searchEl.clear().sendKeys(protractor.Key.BACK_SPACE);
+
+    expect(await element(by.css('#list-option-4 svg use[href="#icon-notes"]')).getAttribute('href')).toEqual('#icon-notes');
+  });
+});
