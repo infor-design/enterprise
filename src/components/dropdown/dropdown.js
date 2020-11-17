@@ -1665,6 +1665,10 @@ Dropdown.prototype = {
         return;
       }
 
+      if (this.list.find('ul li.hidden').length === 0) {
+        this.list.find(' > svg.listoption-icon').changeIcon('icon-empty-circle');
+      }
+
       filter();
     }, self.settings.delay);
   },
