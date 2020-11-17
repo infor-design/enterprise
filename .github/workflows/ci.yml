@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: ${{ runner.os }}-chrome-87
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
@@ -48,6 +48,12 @@ jobs:
 
     - name: Run functional tests
       run: npm run functional:ci
+
+    - name: Chrome Driver
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+        google-chrome --version
 
     - name: Run e2e tests
       run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
