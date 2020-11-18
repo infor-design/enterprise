@@ -62,6 +62,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {boolean}  [settings.selectOnEdit=true] if true, will select the cell text soon get to edit mode.
  * @param {Function}  [settings.isRowDisabled=null] Allows you to provide a function so you can set some rows to disabled base on data or row index.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -165,6 +166,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
+  selectOnEdit: true,
   isRowDisabled: null,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu

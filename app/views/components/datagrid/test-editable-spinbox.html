@@ -30,8 +30,8 @@
         //Define Columns for the Grid.
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', editor: Editors.Input});
-        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {min: -99, max: 99, step: 3}, width: 150});
-        columns.push({ id: 'spinBox2', name: 'Spinbox', field: 'price', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {min: 0, max: 50}, width: 150});
+        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {min: 0, max: 50}, width: 150});
+        columns.push({ id: 'spinBox2', name: 'Spinbox (step-3)', field: 'price', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {step: 3}, width: 150});
         columns.push({ id: 'buffer', name: '', field: ''});
 
         //Init and get the api for the grid

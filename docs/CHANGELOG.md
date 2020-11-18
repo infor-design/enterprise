@@ -14,6 +14,7 @@
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Datagrid]` Fixed an issue where the click event was not fire for hyperlinks keyword search results. ([#4550](https://github.com/infor-design/enterprise/issues/4550))
+- `[Datagrid]` Added api setting for selection on enter edit mode. ([#4485](https://github.com/infor-design/enterprise/issues/4485))
 - `[Datagrid]` Fixed a bug where the plus-minus icon were misaligned together with focus state on all row heights. ([#4480](https://github.com/infor-design/enterprise/issues/4480))
 - `[Dropdown]` Fixed a bug where the last option icon changes when searching/filtering in dropdown search field. ([#4474](https://github.com/infor-design/enterprise/issues/4474))
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
