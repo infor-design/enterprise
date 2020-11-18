@@ -1997,7 +1997,11 @@ MonthView.prototype = {
     this.teardown();
     if (this.element) {
       this.element.empty();
-      $.removeData(this.element[0], COMPONENT_NAME);
+    }
+    if (this.element && this.element[0]) {
+      try {
+        $.removeData(this.element[0], COMPONENT_NAME);
+      } catch (error) {} //eslint-disable-line
     }
     return this;
   }
