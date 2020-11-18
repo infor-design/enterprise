@@ -72,7 +72,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       onBeforeSelect: null,
       selectChildren: true,
       allowSelectAcrossPages: null,
-      selectAllOnlyActivePage: false,
+      selectAllCurrentPage: false,
       groupable: null,
       showNewRowIndicator: true,
       stretchColumn: null,

@@ -4816,9 +4816,9 @@ describe('Datagrid treegrid Tooltip tests', () => {
   });
 });
 
-describe('Datagrid select all for active page only', () => {
+describe('Datagrid select all for current page only', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple-active-page?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple-current-page?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver

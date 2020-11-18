@@ -86,7 +86,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
- * @param {boolean}  [settings.selectAllOnlyActivePage=false] Select all will effect only on active page and its for client side paging only.
+ * @param {boolean}  [settings.selectAllCurrentPage=false] Select all will effect only on current page and its for client side paging only.
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
  * @param {array}    [settings.columnIds=[]] An array of column IDs used to define aria descriptors for selection checkboxes.
  * @param {boolean}  [settings.paging=false] Enable paging mode
@@ -181,7 +181,7 @@ const DATAGRID_DEFAULTS = {
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   onBeforeSelect: null,
   allowSelectAcrossPages: null,
-  selectAllOnlyActivePage: false, // Select all will effect only on active page and its for client side paging only
+  selectAllCurrentPage: false, // Select all will effect only on current page and its for client side paging only
   groupable: null,
   showNewRowIndicator: true,
   stretchColumn: null,
@@ -907,15 +907,15 @@ Datagrid.prototype = {
     // Figure out whether or not to preserve previously selected rows
     if (!pagerInfo.preserveSelected && this.settings.source &&
       !this.settings.allowSelectAcrossPages) {
-      if (this.settings.selectAllOnlyActivePage) {
-        this.unSelectAllRowsActivePage();
+      if (this.settings.selectAllCurrentPage) {
+        this.unSelectAllRowsCurrentPage();
       } else {
         this.unSelectAllRows();
       }
     }
     if (!pagerInfo.preserveSelected && (pagerInfo.type === 'initial' || !pagerInfo.type)) {
-      if (this.settings.selectAllOnlyActivePage) {
-        this.unSelectAllRowsActivePage();
+      if (this.settings.selectAllCurrentPage) {
+        this.unSelectAllRowsCurrentPage();
       } else {
         this.unSelectAllRows();
       }
@@ -3202,7 +3202,7 @@ Datagrid.prototype = {
       self.settings.columns.push({ id: 'blank', value: '', field: '' });
     }
 
-    this.activePageRows = [];
+    this.currentPageRows = [];
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -3960,14 +3960,14 @@ Datagrid.prototype = {
       dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight}px" `;
     }
 
-    if (this.activePageRows) {
+    if (this.currentPageRows) {
       const args = {
         ariaRowindex,
         actualIndexLineage,
         dataIndex: actualIndex,
         isFilteredOut: rowData._isFilteredOut
       };
-      this.activePageRows.push(args);
+      this.currentPageRows.push(args);
     }
 
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
@@ -6554,15 +6554,15 @@ Datagrid.prototype = {
 
         if (!checkbox.hasClass('is-checked')) {
           checkbox.addClass('is-checked').attr('aria-checked', 'true');
-          if (self.settings.selectAllOnlyActivePage) {
-            self.selectAllRowsActivePage();
+          if (self.settings.selectAllCurrentPage) {
+            self.selectAllRowsCurrentPage();
           } else {
             self.selectAllRows();
           }
         } else {
           checkbox.removeClass('is-checked').attr('aria-checked', 'false');
-          if (self.settings.selectAllOnlyActivePage) {
-            self.unSelectAllRowsActivePage();
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage();
           } else {
             self.unSelectAllRows();
           }
@@ -7286,17 +7286,17 @@ Datagrid.prototype = {
   * @param  {boolean} nosync Do not sync the header
   * @returns {void}
   */
-  unSelectAllRowsActivePage(nosync) {
+  unSelectAllRowsCurrentPage(nosync) {
     const s = this.settings;
     this.dontSyncUi = true;
-    this.activePageRows?.forEach((row) => {
+    this.currentPageRows?.forEach((row) => {
       const idx = s.groupable ? row.dataIndex : this.pagingRowIndex(row.dataIndex);
       this.unselectRow(idx, true, true);
     });
     const dataset = this.getActiveDataset();
-    const arrIdx = this.activePageRows?.map(x => x.dataIndex) || [];
-    const activeRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
-    activeRows.map(row => (delete row._selected));
+    const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+    const currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+    currentRows.map(row => (delete row._selected));
     this.dontSyncUi = false;
 
     if (!nosync) {
@@ -7310,9 +7310,9 @@ Datagrid.prototype = {
   * @param  {boolean} nosync Do not sync the header
   * @returns {void}
   */
-  selectAllRowsActivePage(nosync) {
+  selectAllRowsCurrentPage(nosync) {
     this.dontSyncUi = true;
-    const arrIdx = this.activePageRows?.map(x => x.dataIndex) || [];
+    const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
 
     if (arrIdx.length) {
       this.selectRowsBetweenIndexes([arrIdx[0], arrIdx[arrIdx.length - 1]]);
@@ -7464,8 +7464,8 @@ Datagrid.prototype = {
             }
           });
         } else if (s.selectable === 'siblings') {
-          if (self.settings.selectAllOnlyActivePage) {
-            self.unSelectAllRowsActivePage(true);
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage(true);
           } else {
             self.unSelectAllRows(true, true);
           }
@@ -7617,10 +7617,10 @@ Datagrid.prototype = {
     const status = headerCheckbox.data('selected');
 
     // Only on active page selected all checkbox
-    if (s.selectAllOnlyActivePage && this.activePageRows && dataset.length !== rows.length) {
-      const arrIdx = this.activePageRows?.map(x => x.dataIndex) || [];
-      const activeRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
-      selectedRowsLength = activeRows.filter(x => x._selected).length;
+    if (s.selectAllCurrentPage && this.currentPageRows && dataset.length !== rows.length) {
+      const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+      const currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+      selectedRowsLength = currentRows.filter(x => x._selected).length;
     }
 
     if (s.source && s.allowSelectAcrossPages) {
@@ -7807,20 +7807,20 @@ Datagrid.prototype = {
    */
   syncSelectedUI() {
     const dataset = this.getActiveDataset();
-    let activeRows = dataset;
+    let currentRows = dataset;
 
     // Selected all only on active page
-    if (this.settings.selectAllOnlyActivePage) {
-      const arrIdx = this.activePageRows?.map(x => x.dataIndex) || [];
-      activeRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+    if (this.settings.selectAllCurrentPage) {
+      const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+      currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
     }
 
-    let rows = activeRows;
+    let rows = currentRows;
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = activeRows.length; i < l; i++) {
-        if (!activeRows[i]._isFilteredOut) {
+      for (let i = 0, l = currentRows.length; i < l; i++) {
+        if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
       }
@@ -8538,16 +8538,16 @@ Datagrid.prototype = {
             .attr('aria-checked', 'true');
 
           if (self.recordCount === self._selectedRows.length) {
-            if (self.settings.selectAllOnlyActivePage) {
-              self.unSelectAllRowsActivePage();
+            if (self.settings.selectAllCurrentPage) {
+              self.unSelectAllRowsCurrentPage();
             } else {
               self.unSelectAllRows();
             }
             return;
           }
 
-          if (self.settings.selectAllOnlyActivePage) {
-            self.selectAllRowsActivePage();
+          if (self.settings.selectAllCurrentPage) {
+            self.selectAllRowsCurrentPage();
           } else {
             self.selectAllRows();
           }
@@ -8926,16 +8926,16 @@ Datagrid.prototype = {
           .attr('aria-checked', 'true');
 
         if (self.recordCount === self._selectedRows.length) {
-          if (self.settings.selectAllOnlyActivePage) {
-            self.unSelectAllRowsActivePage();
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage();
           } else {
             self.unSelectAllRows();
           }
           return;
         }
 
-        if (self.settings.selectAllOnlyActivePage) {
-          self.selectAllRowsActivePage();
+        if (self.settings.selectAllCurrentPage) {
+          self.selectAllRowsCurrentPage();
         } else {
           self.selectAllRows();
         }
