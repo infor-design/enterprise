@@ -85,7 +85,7 @@ function addStandardInputFeatures(input, row, cell, value, container, column, e,
 }
 
 /**
-*  A object containing all the supported Editors
+*  A object containing all the supported Editors.
 * @private
 */
 const editors = {
