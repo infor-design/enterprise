@@ -2501,7 +2501,7 @@ Dropdown.prototype = {
       option = listOption;
       listOption = this.listUl.find(`li[data-val="${option.val()}"]`)
     } else {
-      option = this.element.find(`option[value="${listOption.attr('data-val')}"]`);
+      option = this.element.find('option').filter((i, item) => item.value === listOption.attr('data-val'));
     }
 
     // Unset previous highlight
