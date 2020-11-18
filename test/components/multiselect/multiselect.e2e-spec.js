@@ -415,7 +415,7 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
 
 describe('Multiselect select all behavior tests', () => {
   if (utils.isChrome() && utils.isCI()) {
-    fit('should not visually regress', async () => {
+    it('should not visually regress', async () => {
       await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');
 
       // Resize page to fit a "full" Multiselect
