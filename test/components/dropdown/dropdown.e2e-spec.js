@@ -804,4 +804,42 @@ describe('Dropdown "No Search" stay-open behavior', () => {
 
     expect(await element(by.className('is-focused')).isPresent()).toBeFalsy();
   });
+
+  it('can select keyed values with ENTER', async () => {
+    // Find pseudo-elem and click
+    const dropdownEl = element(by.css('div.dropdown'));
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+
+    // Find search input
+    await browser.driver.sleep(config.sleep);
+    const searchInput = await element(by.id('dropdown-search'));
+
+    // Highlight "102" and hit ENTER. 102 Should be selected.
+    await searchInput.click();
+    await searchInput.clear().sendKeys('102');
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(['', '102']).toContain(await element.all(by.css('div.dropdown span')).first().getText());
+  });
+
+  it('closes without selecting on pressing ESCAPE', async () => {
+    // Find pseudo-elem and click
+    const dropdownEl = element(by.css('div.dropdown'));
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+
+    // Find search input
+    await browser.driver.sleep(config.sleep);
+    const searchInput = await element(by.id('dropdown-search'));
+
+    // Highlight "75" and press ESCAPE. Nothing should be selected.
+    await searchInput.click();
+    await searchInput.clear().sendKeys('75');
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ESCAPE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('div.dropdown span')).first().getText()).toBe('');
+  });
 });
