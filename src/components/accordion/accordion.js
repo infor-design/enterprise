@@ -232,13 +232,6 @@ Accordion.prototype = {
         headersHaveIcons = true;
       }
       checkIfIcons();
-
-      // Add an Audible Description to the button
-      let description = expander.children('.audible');
-      if (!description.length) {
-        description = $('<span class="audible"></span>').appendTo(expander);
-      }
-      description.text(Locale.translate('Expand'));
     });
 
     if (headersHaveIcons) {
@@ -837,7 +830,6 @@ Accordion.prototype = {
         });
       }
       header.add(pane).addClass('is-expanded');
-      header.children('a').attr('aria-expanded', 'true');
 
       /**
       * Fires when expanding a pane is initiated.
@@ -971,7 +963,6 @@ Accordion.prototype = {
       pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
       header.add(pane).removeClass('is-expanded');
-      a.attr('aria-expanded', 'false');
       dfd.resolve();
     }
 
