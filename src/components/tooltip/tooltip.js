@@ -656,7 +656,6 @@ Tooltip.prototype = {
   show(newSettings, ajaxReturn) {
     const self = this;
 
-    console.log('show tooltip');
     // Don't open if this is an Actions Button with an open popupmenu
     if (this.popupmenuAPI && this.popupmenuAPI.isOpen) {
       return;

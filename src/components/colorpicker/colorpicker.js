@@ -601,7 +601,7 @@ ColorPicker.prototype = {
 
       a[0].setAttribute('data-label', colorText);
       a[0].setAttribute('data-value', colorValue);
-      a[0].setAttribute('data-title', `${colorText} #${colorValue}`);
+      a[0].setAttribute('title', `${colorText} #${colorValue}`);
       a.tooltip();
 
       utils.addAttributes(a, this, this.settings.attributes, colorText);
