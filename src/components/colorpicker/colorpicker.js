@@ -450,7 +450,7 @@ ColorPicker.prototype = {
     let colorLabel = label;
 
     // Make sure there is always a hash
-    if (hex.substr(0, 1) !== '#' && hex !== '') {
+    if (hex.toString().substr(0, 1) !== '#' && hex !== '') {
       colorHex = `#${colorHex}`;
     }
 
@@ -598,10 +598,11 @@ ColorPicker.prototype = {
         swatch[0].style.backgroundColor = `#${colorValue}`;
       }
       swatch.addClass(isBorder ? 'is-border' : '');
-      a.data('label', colorText)
-        .data('value', colorValue)
-        .attr('title', `${colorText} #${colorValue}`)
-        .tooltip();
+
+      a[0].setAttribute('data-label', colorText);
+      a[0].setAttribute('data-value', colorValue);
+      a[0].setAttribute('data-title', `${colorText} #${colorValue}`);
+      a.tooltip();
 
       utils.addAttributes(a, this, this.settings.attributes, colorText);
 
