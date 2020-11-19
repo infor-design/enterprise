@@ -18,6 +18,7 @@
 - `[Datagrid]` Fixed a bug where the plus-minus icon were misaligned together with focus state on all row heights. ([#4480](https://github.com/infor-design/enterprise/issues/4480))
 - `[Dropdown]` Fixed a bug where the last option icon changes when searching/filtering in dropdown search field. ([#4474](https://github.com/infor-design/enterprise/issues/4474))
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
+- `[FileUploadAdvanced]` Fixed an issue where abort method was not working properly to remove the file block when upload fails. ([#938](https://github.com/infor-design/enterprise-ng/issues/938))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
 
