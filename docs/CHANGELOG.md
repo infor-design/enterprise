@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.31.5
+
+### v4.31.5 Fixes
+
+- `[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+
 ## v4.31.4
 
 ### v4.31.4 Fixes
