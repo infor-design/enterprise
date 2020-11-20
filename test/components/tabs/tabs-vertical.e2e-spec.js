@@ -2,7 +2,6 @@ const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -30,14 +29,6 @@ describe('Tabs vertical click example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-vertical')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
     });
   }
 
@@ -107,15 +98,5 @@ describe('Tabs vertical click test-nested-regular-tabs tests', () => {
     const tabsEl = await element(by.id('page-one-tab-two'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
-  });
-
-  xit('Should open nested 2nd tab on first vertical tab (page 1), on click', async () => {
-    const tabElTrigger = await element(by.css('a[href="#page-one-tab-two"]'));
-    await tabElTrigger.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('#page-one-tab-two.tab-panel'))), config.waitsFor);
-
-    expect(await element(by.css('#page-one-tab-two.tab-panel')).getAttribute('class')).toContain('can-show');
-    expect(await element(by.css('#page-one-tab-two.tab-panel')).getAttribute('class')).toContain('is-visible');
   });
 });

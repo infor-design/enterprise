@@ -1,0 +1,76 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build Check
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Cache multiple paths
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: America/New_York
+
+    - name: Install Dependencies
+      run: npm i
+
+    - name: Build
+      run: npm run build
+
+    - name: Run Lint Checks
+      run: npm run lint:ci
+
+    - name: Run functional tests
+      run: npm run functional:ci
+
+    - name: Chrome Driver
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+        google-chrome --version
+
+    - name: Run e2e tests
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+
+    - name: Deploy Master
+      env:
+        JENKINS_JOB_TOKEN: ${{ secrets.JENKINS_JOB_TOKEN }}
+        JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+      if: github.event_name == 'push'
+      run: sh ./scripts/jenkins-deploy.sh -b master
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"

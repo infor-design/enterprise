@@ -109,14 +109,6 @@ describe('Modal open example-modal tests on click', () => {
     });
   }
 
-  if (!utils.isIE()) {
-    xit('Should be accessible on open with no WCAG 2AA violations on example-modal', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-  }
-
   it('Should open modal on click', async () => {
     expect(await element(by.css('.modal.is-visible')).isDisplayed()).toBeTruthy();
   });

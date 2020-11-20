@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 JENKINS_USER="Jenkins"
 JENKINS_DOMAIN="jenkins.design.infor.com:8080"
@@ -34,14 +34,14 @@ while getopts "b:lwq" opt; do
     esac
 done
 
-if [[ -z $JENKINS_API_TOKEN ]]; then echo "JENKINS_API_TOKEN must be defined"; exit 1; fi
-if [[ -z $JENKINS_JOB_TOKEN ]]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
+if [ -z "$JENKINS_API_TOKEN" ]; then echo "JENKINS_API_TOKENx must be defined"; exit 1; fi
+if [ -z "$JENKINS_JOB_TOKEN" ]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
 
 _check_credentials() {
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null \
                 "$JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json"
               )
-    if [[ "$response" == "200" ]]; then
+    if [ "$response" = "200" ]; then
         echo "Successfully authenticated..."
     else
         echo "ERROR: Authorization to Jenkins returned $response"
@@ -87,16 +87,16 @@ _check_credentials
 
 build_number_url=$(echo $BUILD_FROM | sed -e 's/\.//g')
 
-echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
+echo "Building $BUILD_FROM as $([ "$BUILD_AS_LATEST" = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
 
 CURRENT_JOB_STATUS=`check_status`
 
-if [[ "$CURRENT_JOB_STATUS" == "None" ]]; then
-    if [ $QUEUE_BUILD = false ]; then
+if [ "$CURRENT_JOB_STATUS" = "None" ]; then
+    if [ "$QUEUE_BUILD" = false ]; then
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
         RESP=`stop_jenkins_build`
-        if [[ "$RESP" == "302" ]]; then
+        if [ "$RESP" = "302" ]; then
             echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
         else
             exit 1
@@ -111,29 +111,29 @@ fi
 
 RESP=`queue_jenkins_build`
 
-if [[ "$RESP" == "201" ]]; then
+if [ "$RESP" = "201" ]; then
     echo "SUCCESS: Jenkins sucessfully queued job"
 else
     exit 1
     echo "ERROR: Request to Jenkins returned $RESP"
 fi
 
-if [ $WATCH_FOR_BUILD_STATUS = true ]; then
+if [ "$WATCH_FOR_BUILD_STATUS" = true ]; then
     INITIAL_STATUS=`check_status`
-    if [ -n $INITIAL_STATUS ]; then
+    if [ -n "$INITIAL_STATUS" ]; then
         BUILD_STATUS=`check_status`
         CURRENT_BUILD_NUMBER=`get_build_number`
         echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."
-        while [[ "$BUILD_STATUS" == "None" ]]; do
+        while [ "$BUILD_STATUS" = "None" ]; do
             sleep 10
             printf "."
             BUILD_STATUS=`check_status`
         done
-        if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
+        if [ "$BUILD_STATUS" = "SUCCESS" ]; then
             echo "" # new line
             echo "DEPLOY to http://$build_number_url-enterprise.demo.design.infor.com SUCCESSFUL."
             exit
-        elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
+        elif [ "$BUILD_STATUS" = "ABORTED" ]; then
             echo "" # new line
             echo "Build was $BUILD_STATUS. Exiting with 0 since this was likely intentional."
             exit 0
@@ -143,7 +143,7 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
             echo "" # new line
             while IFS='\n' read -r line; do
                 printf "\t%s\n" "$line"
-            done <<< "$(get_build_log)"
+            done
             echo "Build was ended with status: $BUILD_STATUS!"
             exit 1
         fi

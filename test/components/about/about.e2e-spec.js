@@ -90,7 +90,7 @@ describe('About translation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
 
     // Its not inverted here but this is correct
-    expect(await element(by.css('.version')).getText()).toEqual('IDS إصدار : 4.34.0-dev');
+    expect(await element(by.css('.version')).getText()).toContain('إصدار :');
   });
 
   it('Should not have errors', async () => {
@@ -111,6 +111,40 @@ describe('About Event tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('#toast-container .toast-title')).getText()).toEqual('Close Event Triggered');
+    await utils.checkForErrors();
+  });
+});
+
+describe('About Nested Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/about/test-nested');
+  });
+
+  it('Should be able to use both close buttons', async () => {
+    // Open About
+    await element(by.id('about-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    // Open Nested Modal
+    await element(by.id('modal-trigger')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('nested-modal'))), config.waitsFor);
+
+    expect(await element(by.id('nested-modal')).isDisplayed()).toBeTruthy();
+
+    // Close Nested Modal
+    await element(by.id('nested-modal-btn-close')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('nested-modal'))), config.waitsFor);
+
+    // Close About
+    await element(by.id('about-modal-btn-close')).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    expect(await element(by.id('about-modal')).isPresent()).toBeFalsy();
+
     await utils.checkForErrors();
   });
 });

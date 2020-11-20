@@ -28,23 +28,6 @@ describe('FieldFilter example-index tests', () => {
     expect(await element(by.css('#example-textfield')).element(by.xpath('..')).element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should be able to select next element', async () => {
-    const ddStr = 'div.dropdown';
-    const triggerEl = element(by.css('#example-textfield')).element(by.xpath('..')).element(by.css(ddStr));
-
-    await triggerEl.sendKeys(protractor.Key.ARROW_DOWN);
-
-    const ddList = await element(by.css('#dropdown-list'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(ddList), config.waitsFor);
-
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
-    await browser.switchTo().activeElement().sendKeys(protractor.Key.TAB);
-
-    expect(await element(by.id('example-textfield-ff')).getAttribute('value')).toEqual('does-not-equal');
-  });
-
   it('Should not contain search element', async () => {
     await clickOnFieldFilter('#example-textfield');
     const ddList = await element(by.css('#dropdown-list'));
@@ -58,14 +41,14 @@ describe('FieldFilter example-index tests', () => {
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('custom-field-filter-id-1')).getAttribute('id')).toEqual('custom-field-filter-id-1');
-    expect(await element(by.id('custom-field-filter-id-1')).getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id');
+    expect(await element.all(by.id('custom-field-filter-id-1')).first().getAttribute('id')).toEqual('custom-field-filter-id-1');
+    expect(await element.all(by.id('custom-field-filter-id-1')).first().getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id');
 
-    expect(await element(by.id('custom-field-filter-id-1-label')).getAttribute('id')).toEqual('custom-field-filter-id-1-label');
-    expect(await element(by.id('custom-field-filter-id-1-label')).getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id-label');
+    expect(await element.all(by.id('custom-field-filter-id-1-label')).first().getAttribute('id')).toEqual('custom-field-filter-id-1-label');
+    expect(await element.all(by.id('custom-field-filter-id-1-label')).first().getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id-label');
 
-    expect(await element(by.id('custom-field-filter-id-1-select')).getAttribute('id')).toEqual('custom-field-filter-id-1-select');
-    expect(await element(by.id('custom-field-filter-id-1-select')).getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id-select');
+    expect(await element.all(by.id('custom-field-filter-id-1-select')).first().getAttribute('id')).toEqual('custom-field-filter-id-1-select');
+    expect(await element.all(by.id('custom-field-filter-id-1-select')).first().getAttribute('data-automation-id')).toEqual('custom-automation-field-filter-id-select');
   });
 });
 

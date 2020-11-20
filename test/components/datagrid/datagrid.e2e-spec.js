@@ -2189,21 +2189,6 @@ describe('Datagrid Lookup Editor', () => {
 
     expect(await element(by.css(staticCell)).getText()).toEqual('2542205');
   });
-
-  it('should be able to select from the dialog when clicking directly on the icon', async () => {
-    const checkboxTd = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2) .icon'));
-    await browser.actions().mouseMove(checkboxTd).perform();
-    await browser.actions().click(checkboxTd).perform();
-
-    await browser.driver.sleep(config.sleep);
-    await element(by.css('.lookup-modal tr:nth-child(5) td:nth-child(1)')).click();
-    await browser.driver.sleep(config.sleep);
-
-    const editCell = '.has-editor.is-editing input';
-    await element(by.css(editCell)).sendKeys(protractor.Key.ENTER);
-
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(2)')).getText()).toEqual('2542205');
-  });
 });
 
 describe('Datagrid Lookup Mask Editor', () => {
@@ -3037,25 +3022,6 @@ describe('Datagrid filter lookup custom click function tests', () => {
     expect(await element(by.css('ul.popupmenu.is-open')).isDisplayed()).toBeTruthy();
     expect(await element(by.css('ul.popupmenu.is-open > li:nth-child(1)')).getText()).toBe('Equals');
   });
-
-  it('Should overflow to text ellipsis', async () => {
-    const lookup = await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 .trigger'));
-    await lookup.click();
-    await browser.driver.sleep(config.sleep);
-    await element.all(by.cssContainingText('#lookup-datagrid td', 'I Love Compressors')).first().click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.css('#test-filter-lookup-click-function-datagrid-1-header-2 input')).getAttribute('value')).toEqual('I Love Compressors');
-    await browser.driver.sleep(config.sleep);
-    await element(by.css('.datagrid-result-count')).click();
-
-    if (utils.isChrome() && utils.isCI()) {
-      const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-paging-lookup-ellipsis')).toEqual(0);
-    }
-  });
 });
 
 describe('Datagrid filter masks', () => {
@@ -3333,7 +3299,7 @@ describe('Datagrid loaddata clear selected rows tests', () => {
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should be able to select then update rows, and have no selected rows', async () => {
@@ -3343,6 +3309,7 @@ describe('Datagrid loaddata clear selected rows tests', () => {
     await element(by.id('show-selected')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('toast-container'))), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.toast-message')).getText()).toEqual('Number selected rows: 7');
     await element(by.css('#toast-container .btn-close')).click();
@@ -4849,11 +4816,102 @@ describe('Datagrid treegrid Tooltip tests', () => {
   });
 });
 
+describe('Datagrid select all for current page only', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple-current-page?layout=nofrills');
+
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should toggle select all', async () => {
+    const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('tr.is-selected'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    await browser.actions().mouseMove(checkboxTd).perform();
+    await browser.actions().click(checkboxTd).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('tr.is-selected'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+  });
+
+  it('Should only select for active page', async () => {
+    let checkbox = await element(by.css('#datagrid tbody tr:nth-child(4) td:nth-child(1) .datagrid-checkbox'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(4)'))), config.waitsFor);
+
+    checkbox = await element(by.css('#datagrid tbody tr:nth-child(5) td:nth-child(1) .datagrid-checkbox'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(5)'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(2);
+
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('#datagrid tbody tr.is-selected:nth-child(5)'))), config.waitsFor);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-prev .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(10);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-prev .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(2);
+    checkbox = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox-wrapper'));
+    await browser.actions().mouseMove(checkbox).perform();
+    await browser.actions().click(checkbox).perform();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+    await element(by.css('.pager-next .btn-icon')).click();
+    await browser.driver.sleep(350);
+
+    expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+  });
+});
+
 fdescribe('Datagrid Formatter Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-all-formatters?layout=nofrills');
-
     const datagridEl = await element(by.css('#readonly-datagrid tbody tr:nth-child(1)'));
+
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });

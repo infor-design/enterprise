@@ -1292,15 +1292,16 @@ utils.toggleCompactMode = function toggleCompactMode(elem) {
  * @param {object} api The object base api
  * @param {object|Array} setting The attribute setting
  * @param {string} suffix Append an extra string at the end
+ * @param {boolean} overrideExistingId Write over the current id value if there already
  */
-utils.addAttributes = function addAttributes(elem, api, setting, suffix) {
+utils.addAttributes = function addAttributes(elem, api, setting, suffix, overrideExistingId) {
   if (!setting) {
     return;
   }
 
   // Add the given attribute to element, if not alreay exist
   const addAttr = (name, value) => {
-    if (elem[0] && !elem[0].hasAttribute(name)) {
+    if (elem[0] && (overrideExistingId ? true : !elem[0].hasAttribute(name))) {
       elem.attr(name, value + (suffix ? `-${suffix.toLowerCase()}` : ''));
     }
   };

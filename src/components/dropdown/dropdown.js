@@ -1262,10 +1262,6 @@ Dropdown.prototype = {
 
     term = '';
     this.position();
-
-    if (hasIcons && this.list.find('svg').length > 2) {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
   },
 
   /**
@@ -1321,10 +1317,6 @@ Dropdown.prototype = {
 
     lis.removeClass('hidden');
     this.position();
-
-    if (hasIcons && this.list.find('svg').length > 2) {
-      this.list.find('svg').last().changeIcon('icon-empty-circle');
-    }
 
     if (this.list.find('svg').length === 2) {
       this.list.find('svg').last().remove();
@@ -1673,6 +1665,10 @@ Dropdown.prototype = {
         return;
       }
 
+      if (this.list.find('ul li.hidden').length === 0) {
+        this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
+      }
+
       filter();
     }, self.settings.delay);
   },
@@ -1870,9 +1866,13 @@ Dropdown.prototype = {
     utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
     utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
     const options = this.list.find('.dropdown-option a');
-    [...options].forEach((opt, i) => {
-      utils.addAttributes($(opt), this, this.settings.attributes, `option-${i}`);
-    });
+
+    if (self.settings.attributes) {
+      options.each(function (i) {
+        const opt = $(this);
+        utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`);
+      });
+    }
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {

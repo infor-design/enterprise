@@ -29,7 +29,7 @@ describe('TimePicker Events', () => {
   });
 
   it('Should trigger "change" event', () => {
-    const spyEvent = spyOnEvent('#timepicker-main', 'change');
+    const spyEvent = spyOnEvent('#timepicker-id-1', 'change');
     timepickerObj.openTimePopup();
     timepickerObj.setTimeOnField();
     timepickerObj.closeTimePopup();

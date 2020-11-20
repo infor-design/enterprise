@@ -17,7 +17,7 @@ describe('Expandable Area Index Tests', () => {
   });
 
   it('Should be able to toggle', async () => {
-    const pane = await element(by.id('expandable-area-0-content'));
+    const pane = await element(by.id('expandablearea-id-1-content'));
     const trigger = await element.all(by.className('expandable-expander')).first();
 
     expect(await pane.isDisplayed()).toBe(false);
@@ -37,7 +37,7 @@ describe('Expandable Area Index Tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'expandablearea-index')).toEqual(0);
     });
   }
-  
+
   it('Should be able to set ids/automations ids', async () => {
     await browser.driver.sleep(config.sleep);
 

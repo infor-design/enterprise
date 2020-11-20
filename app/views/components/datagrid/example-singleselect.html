@@ -44,7 +44,11 @@
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       }).on('selected', function (e, args) {
         if (args[0]) {
-          console.log(args[0].idx, args[0].data.productId, args[0].elem);
+          console.log('selected', args[0].idx, args[0].data.productId, args[0].elem);
+        }
+      }).on('activated', function (e, args) {
+        if (args[0]) {
+          console.log('activated', args[0].idx, args[0].data.productId, args[0].elem);
         }
       });
 

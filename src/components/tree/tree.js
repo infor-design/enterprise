@@ -1951,7 +1951,7 @@ Tree.prototype = {
     }
 
     if (nodeData.text) {
-      a.textContent = nodeData.text;
+      a.textContent = xssUtils.unescapeHTML(nodeData.text);
     }
 
     if (nodeData.disabled) {

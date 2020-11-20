@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="open-modal">Open Modal</button><br><br>
+
+    <!-- "Context" Example -->
+    <div id="modal-content" style="display: none;">
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a>
+    <ul class="popupmenu">
+      <li><a href="#">Action Four</a></li>
+      <li><a href="#">Action Five</a></li>
+    </ul>
+  </li>
+</ul>
+
+<script>
+  $('body').one('initialized', function () {
+    //Locale.set('en-US').done(function () {
+    var grid,
+    columns = [],
+    data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 'T100', productName: 'Compressor', phone: '191/2004', activity:  'Assemble Paint', quantity: 1, price: '800.9905673502324', percent: .10, status: 'OK', orderDate: '00000000', action: 'Action'});
+    data.push({ id: 2, productId: '200', productName: 'Different Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: '2', percent: .10, price: null, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+    data.push({ id: 3, productId: '300', productName: 'Compressor', phone: '(888) 888-8888', activity:  'Inspect and Repair', quantity: 1, price: '120.99', percent: .10, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+    data.push({ id: 4, productId: 'Z400', productName: 'Another Compressor', phone: '(888) 888-8888', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', percent: .10, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', percent: .10, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', percent: .10, status: 'OK', orderDate:new Date(2017, 5, 5), action: 'On Hold'});
+    data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold'});
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+//    columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+    columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+    columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions, menuId: 'grid-actions-menu'});
+//    columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
+    columns.push({ id: 'field1', name: 'Field1', field: 'field1', formatter: Formatters.Text });
+    columns.push({ id: 'field2', name: 'Field2', field: 'field2', formatter: Formatters.Text });
+    columns.push({ id: 'field3', name: 'Field3', field: 'field3', formatter: Formatters.Text });
+    columns.push({ id: 'field4', name: 'Field4', field: 'field4', formatter: Formatters.Text });
+    columns.push({ id: 'field5', name: 'Field5', field: 'field5', formatter: Formatters.Text });
+    columns.push({ id: 'field6', name: 'Field6', field: 'field6', formatter: Formatters.Text });
+    columns.push({ id: 'field7', name: 'Field7', field: 'field7', formatter: Formatters.Text });
+    columns.push({ id: 'field8', name: 'Field8', field: 'field8', formatter: Formatters.Text });
+    columns.push({ id: 'field9', name: 'Field9', field: 'field9', formatter: Formatters.Text });
+    columns.push({ id: 'field10', name: 'Field10', field: 'field10', formatter: Formatters.Text });
+    columns.push({ id: 'field11', name: 'Field11', field: 'field11', formatter: Formatters.Text });
+    columns.push({ id: 'field12', name: 'Field12', field: 'field12', formatter: Formatters.Text });
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      saveColumns: false,
+      paging: true,
+      pagesize: 5,
+      actionableMode: true,
+      cellNavigation: true,
+      editable: false,
+      enableTooltips: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      rowHeight: 'small',
+      selectable: 'multiple',
+      showDirty: false,
+      menuId: 'grid-actions-menu',
+      // toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+    }).on('contextmenu', function (e, args) {
+      console.log('contextmenu fired', args);
+    }).data('datagrid');
+
+    // Hide 10 of the columns to expose the issue
+    grid.hideColumn('field1');
+    grid.hideColumn('field2');
+    grid.hideColumn('field3');
+    grid.hideColumn('field4');
+    grid.hideColumn('field5');
+    grid.hideColumn('field6');
+    grid.hideColumn('field7');
+    grid.hideColumn('field8');
+    grid.hideColumn('field9');
+    grid.hideColumn('field10');
+
+    var modals = {
+      'open-modal': {
+        'title': 'Open Modal',
+        'content': $('#modal-content')
+      }
+    },
+
+    setModal = function (opt) {
+      opt = $.extend({
+        autoFocus: true,
+        showCloseBtn: true,
+        buttons: [{
+          text: 'Cancel',
+          id: 'modal-button-1',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+          id: 'modal-button-2',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }],
+        maxWidth: 1000
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+    $('#open-modal').on('click', function () {
+      setModal(modals[this.id]);
+    });
+  });
+</script>

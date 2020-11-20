@@ -364,11 +364,11 @@ Slider.prototype = {
       this.disable();
     }
 
-    utils.addAttributes(this.element, this, this.settings.attributes);
-    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper');
-    utils.addAttributes(this.hitarea, this, this.settings.attributes, 'hitarea');
-    utils.addAttributes(this.range, this, this.settings.attributes, 'range');
-    utils.addAttributes(...this.handles, this, this.settings.attributes, 'handle');
+    utils.addAttributes(this.element, this, this.settings.attributes, '', true);
+    utils.addAttributes(this.wrapper, this, this.settings.attributes, 'wrapper', true);
+    utils.addAttributes(this.hitarea, this, this.settings.attributes, 'hitarea', true);
+    utils.addAttributes(this.range, this, this.settings.attributes, 'range', true);
+    utils.addAttributes(...this.handles, this, this.settings.attributes, 'handle', true);
 
     for (let i = 0, l = this.ticks.length; i < l; i++) {
       const ticks = $(this.ticks[i].element);

@@ -17,17 +17,8 @@ describe('Empty message example-index tests', () => {
   it('Should be able to set id/automations', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('empty-message-id-1')).getAttribute('id')).toEqual('empty-message-id-1');
-    expect(await element(by.id('empty-message-id-1')).getAttribute('data-automation-id')).toEqual('automation-id-emptymessage-1');
-
-    expect(await element(by.id('empty-message-id-2')).getAttribute('id')).toEqual('empty-message-id-2');
-    expect(await element(by.id('empty-message-id-2')).getAttribute('data-automation-id')).toEqual('automation-id-emptymessage-2');
-
-    expect(await element(by.id('empty-message-id-3')).getAttribute('id')).toEqual('empty-message-id-3');
-    expect(await element(by.id('empty-message-id-3')).getAttribute('data-automation-id')).toEqual('automation-id-emptymessage-3');
-
-    expect(await element(by.id('empty-message-id-4')).getAttribute('id')).toEqual('empty-message-id-4');
-    expect(await element(by.id('empty-message-id-4')).getAttribute('data-automation-id')).toEqual('automation-id-emptymessage-4');
+    expect(await element(by.id('error-loading')).getAttribute('id')).toEqual('error-loading');
+    expect(await element(by.id('error-loading')).getAttribute('data-automation-id')).toEqual('automation-id-error-loading');
   });
 });
 
@@ -46,7 +37,7 @@ describe('Empty message test-button-click tests', () => {
   it('Should be able to set id/automations in button', async () => {
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('test-emptymessage-id-button')).getAttribute('id')).toEqual('test-emptymessage-id-button');
-    expect(await element(by.id('test-emptymessage-id-button')).getAttribute('data-automation-id')).toEqual('test-automation-emptymessage-button');
+    expect(await element(by.id('test-emptymessage-id-btn')).getAttribute('id')).toEqual('test-emptymessage-id-btn');
+    expect(await element(by.id('test-emptymessage-id-btn')).getAttribute('data-automation-id')).toEqual('test-automation-emptymessage-btn');
   });
 });

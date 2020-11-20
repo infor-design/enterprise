@@ -14,15 +14,6 @@ describe('Treemap example-index tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
-    expect(await element(by.id('custom-id')).getAttribute('id')).toEqual('custom-id');
-    expect(await element(by.id('custom-id')).getAttribute('data-automation-id')).toEqual('custom-automation-id');
-    expect(await element(by.id('custom-id-json')).getAttribute('id')).toEqual('custom-id-json');
-    expect(await element(by.id('custom-id-json')).getAttribute('data-automation-id')).toEqual('custom-automation-id-json');
-    expect(await element(by.id('custom-id-others')).getAttribute('id')).toEqual('custom-id-others');
-    expect(await element(by.id('custom-id-others')).getAttribute('data-automation-id')).toEqual('custom-automation-id-others');
-  });
-
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));

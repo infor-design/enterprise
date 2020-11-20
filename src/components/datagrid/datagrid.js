@@ -62,6 +62,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {boolean}  [settings.selectOnEdit=true] if true, will select the cell text soon get to edit mode.
  * @param {Function}  [settings.isRowDisabled=null] Allows you to provide a function so you can set some rows to disabled base on data or row index.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -86,6 +87,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
+ * @param {boolean}  [settings.selectAllCurrentPage=false] Select all will effect only on current page and its for client side paging only.
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
  * @param {array}    [settings.columnIds=[]] An array of column IDs used to define aria descriptors for selection checkboxes.
  * @param {boolean}  [settings.paging=false] Enable paging mode
@@ -165,6 +167,7 @@ const DATAGRID_DEFAULTS = {
   saveUserSettings: {},
   focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
+  selectOnEdit: true,
   isRowDisabled: null,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
@@ -180,6 +183,7 @@ const DATAGRID_DEFAULTS = {
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   onBeforeSelect: null,
   allowSelectAcrossPages: null,
+  selectAllCurrentPage: false, // Select all will effect only on current page and its for client side paging only
   groupable: null,
   showNewRowIndicator: true,
   stretchColumn: null,
@@ -905,10 +909,18 @@ Datagrid.prototype = {
     // Figure out whether or not to preserve previously selected rows
     if (!pagerInfo.preserveSelected && this.settings.source &&
       !this.settings.allowSelectAcrossPages) {
-      this.unSelectAllRows();
+      if (this.settings.selectAllCurrentPage) {
+        this.unSelectAllRowsCurrentPage();
+      } else {
+        this.unSelectAllRows();
+      }
     }
     if (!pagerInfo.preserveSelected && (pagerInfo.type === 'initial' || !pagerInfo.type)) {
-      this.unSelectAllRows();
+      if (this.settings.selectAllCurrentPage) {
+        this.unSelectAllRowsCurrentPage();
+      } else {
+        this.unSelectAllRows();
+      }
     }
 
     if (this.settings.disableClientFilter) {
@@ -3192,6 +3204,8 @@ Datagrid.prototype = {
       self.settings.columns.push({ id: 'blank', value: '', field: '' });
     }
 
+    this.currentPageRows = [];
+
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
       const container = self.getContainer(col.id);
@@ -3946,6 +3960,16 @@ Datagrid.prototype = {
 
     if (this.settings.fixedRowHeight && typeof this.settings.fixedRowHeight === 'number') {
       dynamicRowHeight = ` style="height: ${this.settings.fixedRowHeight}px" `;
+    }
+
+    if (this.currentPageRows) {
+      const args = {
+        ariaRowindex,
+        actualIndexLineage,
+        dataIndex: actualIndex,
+        isFilteredOut: rowData._isFilteredOut
+      };
+      this.currentPageRows.push(args);
     }
 
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
@@ -6050,8 +6074,6 @@ Datagrid.prototype = {
    */
   handleEvents() {
     const self = this;
-    const isMultiple = this.settings.selectable === 'multiple';
-    const isMixed = this.settings.selectable === 'mixed';
 
     // Set Focus on rows
     if (!self.settings.cellNavigation && self.settings.rowNavigation) {
@@ -6145,7 +6167,10 @@ Datagrid.prototype = {
     this.element
       .off('click.datagrid-header')
       .on('click.datagrid-header', '.datagrid-header th.is-sortable, .datagrid-header th.btn-filter', function (e) {
-        if ($(e.target).parent().is('.datagrid-filter-wrapper') || $(e.target).parent().is('.lookup-wrapper')) {
+        const parent = $(e.target).parent();
+        if (parent.is('.datagrid-filter-wrapper') ||
+            parent.is('.lookup-wrapper') ||
+            parent.is('.has-close-icon-button')) {
           return false;
         }
 
@@ -6256,7 +6281,7 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
-      if (isMixed) {
+      if (self.settings.selectable === 'mixed') {
         canSelect = isSelectionCheckbox;
 
         // Then Activate
@@ -6270,7 +6295,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (canSelect && isMultiple && e.shiftKey) {
+      if (canSelect && self.settings.selectable === 'multiple' && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
@@ -6287,7 +6312,7 @@ Datagrid.prototype = {
 
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
-      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
+      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
         let rowIdx = self.actualRowIndex(rowElem);
         dataRowIdx = self.dataRowIndex(rowElem);
@@ -6313,7 +6338,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
         }
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
@@ -6536,11 +6561,18 @@ Datagrid.prototype = {
 
         if (!checkbox.hasClass('is-checked')) {
           checkbox.addClass('is-checked').attr('aria-checked', 'true');
-
-          self.selectAllRows();
+          if (self.settings.selectAllCurrentPage) {
+            self.selectAllRowsCurrentPage();
+          } else {
+            self.selectAllRows();
+          }
         } else {
           checkbox.removeClass('is-checked').attr('aria-checked', 'false');
-          self.unSelectAllRows();
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage();
+          } else {
+            self.unSelectAllRows();
+          }
         }
       });
 
@@ -7256,6 +7288,50 @@ Datagrid.prototype = {
   },
 
   /**
+  * Deselect all rows on active page only, that are currently selected.
+  * @private
+  * @param  {boolean} nosync Do not sync the header
+  * @returns {void}
+  */
+  unSelectAllRowsCurrentPage(nosync) {
+    const s = this.settings;
+    this.dontSyncUi = true;
+    this.currentPageRows?.forEach((row) => {
+      const idx = s.groupable ? row.dataIndex : this.pagingRowIndex(row.dataIndex);
+      this.unselectRow(idx, true, true);
+    });
+    const dataset = this.getActiveDataset();
+    const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+    const currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+    currentRows.map(row => (delete row._selected));
+    this.dontSyncUi = false;
+
+    if (!nosync) {
+      this.syncSelectedUI();
+    }
+  },
+
+  /**
+  * Deselect all rows on active page only, that are currently selected.
+  * @private
+  * @param  {boolean} nosync Do not sync the header
+  * @returns {void}
+  */
+  selectAllRowsCurrentPage(nosync) {
+    this.dontSyncUi = true;
+    const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+
+    if (arrIdx.length) {
+      this.selectRowsBetweenIndexes([arrIdx[0], arrIdx[arrIdx.length - 1]]);
+    }
+    this.dontSyncUi = false;
+
+    if (!nosync) {
+      this.syncSelectedUI();
+    }
+  },
+
+  /**
   * Check if node index is exists in selected nodes
   * @private
   * @param {object} row The row to compare.
@@ -7395,7 +7471,11 @@ Datagrid.prototype = {
             }
           });
         } else if (s.selectable === 'siblings') {
-          this.unSelectAllRows(true, true);
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage(true);
+          } else {
+            self.unSelectAllRows(true, true);
+          }
 
           // Select node and node-siblings
           let nexts;
@@ -7535,14 +7615,23 @@ Datagrid.prototype = {
     if (this.headerNodes().length === 0) {
       return;
     }
+    const s = this.settings;
+    const dataset = this.getActiveDataset();
 
     const headerCheckbox = this.headerNodes().find('.datagrid-checkbox');
     const rowsLength = rows.length;
     let selectedRowsLength = this._selectedRows.length;
     const status = headerCheckbox.data('selected');
 
-    if (this.settings.source && this.settings.allowSelectAcrossPages) {
-      selectedRowsLength = this.settings.dataset.filter(i => i._selected).length;
+    // Only on active page selected all checkbox
+    if (s.selectAllCurrentPage && this.currentPageRows && dataset.length !== rows.length) {
+      const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+      const currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+      selectedRowsLength = currentRows.filter(x => x._selected).length;
+    }
+
+    if (s.source && s.allowSelectAcrossPages) {
+      selectedRowsLength = dataset.filter(i => i._selected).length;
     }
 
     // Do not run if checkbox in same state
@@ -7725,12 +7814,20 @@ Datagrid.prototype = {
    */
   syncSelectedUI() {
     const dataset = this.getActiveDataset();
-    let rows = dataset;
+    let currentRows = dataset;
+
+    // Selected all only on active page
+    if (this.settings.selectAllCurrentPage) {
+      const arrIdx = this.currentPageRows?.map(x => x.dataIndex) || [];
+      currentRows = dataset.filter((d, i) => arrIdx.indexOf(i) > -1);
+    }
+
+    let rows = currentRows;
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = dataset.length; i < l; i++) {
-        if (!dataset[i]._isFilteredOut) {
+      for (let i = 0, l = currentRows.length; i < l; i++) {
+        if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
       }
@@ -7991,8 +8088,8 @@ Datagrid.prototype = {
   */
   toggleRowSelection(idx) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
-    const isSingle = this.settings.selectable === 'single';
     let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
+
     if (this.settings.groupable) {
       rowIndex = this.dataRowIndex(row);
     }
@@ -8005,7 +8102,7 @@ Datagrid.prototype = {
       return;
     }
 
-    if (isSingle && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
+    if (this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
       this.unselectRow(rowIndex);
       this.displayCounts();
       return this._selectedRows; // eslint-disable-line
@@ -8268,8 +8365,6 @@ Datagrid.prototype = {
   selectRows(row, nosync, selectAll) {
     let idx = -1;
     const s = this.settings;
-    const isSingle = s.selectable === 'single';
-    const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
     const isSiblings = s.selectable === 'siblings';
     const dataset = this.getActiveDataset();
 
@@ -8281,7 +8376,7 @@ Datagrid.prototype = {
       return this._selectedRows;
     }
 
-    if (isSingle) {
+    if (s.selectable === 'single') {
       // Unselect
       if (this._selectedRows.length) {
         this.unselectRow(this._selectedRows[0].idx, true, true);
@@ -8292,7 +8387,7 @@ Datagrid.prototype = {
       this.selectRow(idx, true, true);
     }
 
-    if (isMultiple || isSiblings) {
+    if (s.selectable === 'multiple' || s.selectable === 'mixed' || isSiblings) {
       if (Object.prototype.toString.call(row) === '[object Array]') {
         for (let i = 0; i < row.length; i++) {
           this.selectRow(row[i], true, true);
@@ -8422,8 +8517,6 @@ Datagrid.prototype = {
   */
   handleKeys() {
     const self = this;
-    const isMultiple = self.settings.selectable === 'multiple';
-    const isMixed = self.settings.selectable === 'mixed';
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
 
     // Handle header navigation
@@ -8441,22 +8534,30 @@ Datagrid.prototype = {
 
       // Enter or Space
       if (key === 13 || key === 32) {
-        triggerEl = (isMultiple && index === 0) ? $('.datagrid-checkbox', th) : th;
+        triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
         triggerEl.trigger('click.datagrid').focus();
         const selectionCheckbox = (triggerEl[0].dataset.columnId === 'selectionCheckbox' || triggerEl.prevObject[0].dataset.columnId === 'selectionCheckbox');
 
-        if ((isMultiple || isMixed) && selectionCheckbox) {
+        if ((self.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') && selectionCheckbox) {
           checkbox
             .addClass('is-checked')
             .removeClass('is-partial')
             .attr('aria-checked', 'true');
 
           if (self.recordCount === self._selectedRows.length) {
-            self.unSelectAllRows();
+            if (self.settings.selectAllCurrentPage) {
+              self.unSelectAllRowsCurrentPage();
+            } else {
+              self.unSelectAllRows();
+            }
             return;
           }
 
-          self.selectAllRows();
+          if (self.settings.selectAllCurrentPage) {
+            self.selectAllRowsCurrentPage();
+          } else {
+            self.selectAllRows();
+          }
         }
 
         if (key === 32) { // Prevent scrolling with space
@@ -8763,7 +8864,7 @@ Datagrid.prototype = {
           return;
         }
 
-        if (isMultiple && e.shiftKey) {
+        if (self.settings.selectable === 'multiple' && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
@@ -8825,18 +8926,26 @@ Datagrid.prototype = {
       }
 
       // If multiSelect or mixedSelect is enabled, press Control+A to toggle select all rows
-      if ((isMultiple || isMixed) && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+      if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
         checkbox
           .addClass('is-checked')
           .removeClass('is-partial')
           .attr('aria-checked', 'true');
 
         if (self.recordCount === self._selectedRows.length) {
-          self.unSelectAllRows();
+          if (self.settings.selectAllCurrentPage) {
+            self.unSelectAllRowsCurrentPage();
+          } else {
+            self.unSelectAllRows();
+          }
           return;
         }
 
-        self.selectAllRows();
+        if (self.settings.selectAllCurrentPage) {
+          self.selectAllRowsCurrentPage();
+        } else {
+          self.selectAllRows();
+        }
         handled = true;
       }
 

@@ -255,12 +255,15 @@ Autocomplete.prototype = {
 
     // Add test automation ids
     utils.addAttributes(this.list, this, this.settings.attributes, 'list');
-    setTimeout(() => {
-      const options = this.list.find('li a');
-      [...options].forEach((opt, i) => {
-        utils.addAttributes($(opt), this, this.settings.attributes, `list-option${i}`);
+    if (self.settings.attributes) {
+      setTimeout(() => {
+        const options = this.list.find('li a');
+        options.each(function (i) {
+          const opt = $(this);
+          utils.addAttributes(opt, self, self.settings.attributes, `list-option${i}`);
+        });
       });
-    });
+    }
 
     this.list[0].style.height = 'auto';
     this.list[0].style.width = `${this.element.outerWidth()}px`;
@@ -688,6 +691,7 @@ Autocomplete.prototype = {
       * @param {array} event An array with the buffer in it
       */
       self.element.trigger('requeststart', [buffer]);
+      self.lastTerm = buffer;
 
       if (sourceType === 'function') {
         // Call the 'source' setting as a function with the done callback.
@@ -762,7 +766,6 @@ Autocomplete.prototype = {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
         const sourceURL = self.settings.source.toString();
         const request = $.getJSON(sourceURL + buffer);
-        this.lastTerm = buffer;
 
         request.done((data) => {
           done(buffer, data, true);

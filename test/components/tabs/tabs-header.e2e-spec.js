@@ -2,7 +2,6 @@ const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -32,14 +31,6 @@ describe('Tabs header click example-index tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(tabsEl, 'header-tabs-init')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
     });
   }
 
@@ -183,14 +174,6 @@ describe('Tabs header click example-add-tab button tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-add-tab-button', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-  }
-
   it('Should add two tabs, on click, then click', async () => {
     const addTabEl = await element(by.className('add-tab-button'));
     await addTabEl.click();
@@ -238,14 +221,6 @@ describe('Tabs header click test-contains-vertical-tabs tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
-
-  if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-  }
 
   it('Should open vertical tabs in a header tab', async () => {
     await element(by.css('a[href="#header-tabs-1"]')).click();

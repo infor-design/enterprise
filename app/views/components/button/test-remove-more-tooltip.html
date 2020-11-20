@@ -1,0 +1,246 @@
+<div class="row">
+  <div class="one-half column">
+    <h2 class="section-title">No Tooltip (If title is empty)</h2>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button" id="btn-1" title="">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview"
+          data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false', 'attributes': [ { 'name': 'data-automation-id', 'value': 'test' } ] }">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="one-half column">
+    <h2 class="section-title">With Tooltip (If no title attribute)</h2>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Pie Chart</h2>
+        <button class="btn-actions" type="button" id="btn-2">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="action-one">Action One</a></li>
+          <li><a href="#" id="action-two">Action Two</a></li>
+        </ul>
+
+      </div>
+      <div class="card-content">
+        <div id="pie-chart-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="one-half column">
+    <h2 class="section-title">With Tooltip (With title attribute value)</h2>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Donut Chart</h2>
+        <button class="btn-actions" type="button" id="btn-3" title="Tooltip will show">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="action-one">Action One</a></li>
+          <li><a href="#" id="action-two">Action Two</a></li>
+        </ul>
+
+      </div>
+      <div class="card-content">
+        <div id="pie-donut-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+    </li>
+    {{/dataset}}
+  </ul>
+
+</script>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var pieData = [{
+      data: [{
+        name: 'Item A',
+        value: 10.1,
+        id: 'item-a',
+        attributes: [{
+            name: 'id',
+            value: 'item-a'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-a-automation-id'
+          }
+        ],
+        tooltip: 'Item A <b>{{percent}}</b>'
+      }, {
+        name: 'Item B',
+        value: 12.2,
+        id: 'item-b',
+        attributes: [{
+            name: 'id',
+            value: 'item-b'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-b-automation-id'
+          }
+        ],
+        tooltip: 'Item B <b>{{percent}}</b>'
+      }, {
+        name: 'Item C',
+        value: 14.35,
+        id: 'item-c',
+        attributes: [{
+            name: 'id',
+            value: 'item-c'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-c-automation-id'
+          }
+        ],
+        tooltip: 'Item C <b>{{percent}}</b>'
+      }, {
+        name: 'Item D',
+        value: 15.6,
+        id: 'item-d',
+        attributes: [{
+            name: 'id',
+            value: 'item-d'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-d-automation-id'
+          }
+        ],
+        tooltip: 'Item D <b>{{percent}}</b>'
+      }, {
+        name: 'Item E',
+        value: 21.6,
+        id: 'item-e',
+        attributes: [{
+            name: 'id',
+            value: 'item-c'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-e-automation-id'
+          }
+        ],
+        tooltip: 'Item E <b>{{percent}}</b>'
+      }, {
+        name: 'Item F',
+        value: 41.6,
+        id: 'item-f',
+        id: 'item-f',
+        attributes: [{
+            name: 'id',
+            value: 'item-f'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'item-f-automation-id'
+          }
+        ],
+        tooltip: 'Item F <b>{{percent}}</b>'
+      }]
+    }];
+
+    var donutData = [{
+      data: [{
+        name: 'Component A',
+        value: 16,
+        attributes: [{
+            name: 'id',
+            value: 'comp-a'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-a-automation-id'
+          }
+        ]
+      }, {
+        name: 'Component B',
+        value: 12,
+        attributes: [{
+            name: 'id',
+            value: 'comp-b'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-ba-automation-id'
+          }
+        ]
+      }, {
+        name: 'Component C',
+        value: 14,
+        attributes: [{
+            name: 'id',
+            value: 'comp-c'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'comp-c-automation-id'
+          }
+        ]
+      }],
+      centerLabel: 'Donut Chart'
+    }];
+
+    $('#pie-donut-example').chart({
+      type: 'donut',
+      dataset: donutData
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
+
+    $('#pie-chart-example').chart({
+        type: 'pie',
+        dataset: pieData
+      })
+      .on('selected', function (e, args) {
+        if (args[0] && args[0].data) {
+          console.log(args[0].data, args[0].data.url);
+        }
+      });
+
+  });
+
+</script>

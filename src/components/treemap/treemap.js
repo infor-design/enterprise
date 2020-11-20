@@ -150,7 +150,7 @@ Treemap.prototype = {
       return;
     }
 
-    utils.addAttributes(this.element, data, this.settings.attributes);
+    utils.addAttributes(this.element, data, this.settings.attributes, '', true);
 
     // Show the title area
     if (this.settings.showTitle && data.name) {
@@ -205,7 +205,7 @@ Treemap.prototype = {
         d._groups.forEach((sections) => {
           sections.forEach((section) => {
             const dat = section.__data__;
-            utils.addAttributes($(section), dat, this.settings.attributes, dat.data.name?.toLowerCase());
+            utils.addAttributes($(section), dat, this.settings.attributes, dat.data.name?.toLowerCase(), true);
           });
         });
       })

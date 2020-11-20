@@ -2,9 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![npm version](https://badge.fury.io/js/ids-enterprise.svg)](https://badge.fury.io/js/ids-enterprise)
-[![Build Status](https://travis-ci.com/infor-design/enterprise.svg?branch=master)](https://travis-ci.com/infor-design/enterprise)
+![Build Check](https://github.com/infor-design/enterprise/workflows/Build%20Check/badge.svg)
 
-Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant, perceptive.
+Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant and perceptive.
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
 
@@ -16,7 +16,7 @@ For guidelines on when and where to use the components see the [design.infor.com
 - SVG-based iconography compatible with high DPI screens
 - Built-in, extendible localization system
 - Built-in mitigation of XSS exploits
-- 140 Components
+- 140+ Components
 
 ## Browser Support
 
@@ -25,7 +25,7 @@ We support the latest release and the release previous to the latest (R-1) for b
 <!-- markdownlint-disable MD013 MD033 -->
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari |
 | --------- | --------- | --------- | --------- | --------- |
-| IE Edge | R-1| R-1| R-1| R-1
+| R-1 | R-1 | R-1| R-1| R-1
 
 <!-- markdownlint-enable MD013 MD033 -->
 

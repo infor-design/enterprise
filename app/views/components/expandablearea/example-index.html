@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div class="expandable-area" id="expandable-area-1">
+    <div class="expandable-area" id="expandable-area-1" data-init="false">
       <div class="expandable-header">
         <span class="title">Procurement</span>
       </div>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="expandable-area is-expanded" id="expandable-area-2">
+    <div class="expandable-area is-expanded" id="expandable-area-2"  data-init="false">
       <div class="expandable-header">
         <span class="title">Design &amp; Definition</span>
       </div>
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class="expandable-area" id="expandable-area-3">
+    <div class="expandable-area" id="expandable-area-3"  data-init="false">
       <div class="expandable-header">
         <span class="title">
           Company Information
@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <div class="expandable-area" id="expandable-area-4">
+    <div class="expandable-area" id="expandable-area-4"  data-init="false">
       <div class="expandable-header">
         <span class="title">
           Customer Information
@@ -138,6 +138,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function() {
+
   $('#expandable-area-1').expandablearea({
     attributes: [{
         name: 'id',
@@ -185,5 +187,5 @@
       }
     ]
   });
-
+});
 </script>

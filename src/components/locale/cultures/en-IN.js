@@ -11,7 +11,7 @@ Soho.Locale.addCulture('en-IN', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '/', // Infered
+      separator: '-', // Infered
       timeSeparator: ':',
       short: 'dd-MM-yyyy', // Uses predominate format by request not CLDR
       medium: 'dd-MMM-yyyy',

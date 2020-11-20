@@ -19,7 +19,7 @@ npm install --save ids-enterprise@latest
 
 You can also use `ids-enterprise@dev` for a nightly (and potentially unstable) development build.
 
-After installation, the pre-built files are accessible in `./node_modules/ids-enterprise/dist`
+After installation, the pre-built files are accessible in `./node_modules/ids-enterprise/dist`. When you use npm the needed dependencies are included automatically.
 
 #### CDN
 
@@ -36,10 +36,6 @@ https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-light.css
 https://cdn.hookandloop.infor.com/sohoxi/4.19.0/css/theme-soho-light.min.css
 https://cdn.hookandloop.infor.com/sohoxi/4.19.0/svg/theme-soho-svg.html
 ```
-
-Versions available on CDN are: 4.3.2 to 4.3.5, 4.7.0 to 4.18.0
-
-**Note:** There may be a cost involved to using this with Infor's Amazon S3 account.  Please keep this in mind when using the library this way.
 
 ### Adding the library to a project
 

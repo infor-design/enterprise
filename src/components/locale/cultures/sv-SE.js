@@ -11,7 +11,7 @@ Soho.Locale.addCulture('sv-SE', {
     name: 'gregorian',
     // ca-gregorian/main/dates/calendars/gregorian/dateFormats/
     dateFormat: {
-      separator: '/', // Infered
+      separator: '-', // Infered
       timeSeparator: ':',
       short: 'yyyy-MM-dd', // use four digit year
       medium: 'd MMM yyyy',

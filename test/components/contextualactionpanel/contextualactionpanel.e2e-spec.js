@@ -144,17 +144,6 @@ describe('Contextual Action Panel "always" fullsize tests', () => {
     await utils.checkForErrors();
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    xit('always should not visual regress', async () => {
-      await browser.driver.manage().window().setSize(1200, 800);
-      await element(by.id('trigger-1')).click();
-      await browser.driver.sleep(config.sleep);
-      const panelEl = await element.all(by.css('#panel-1')).first();
-
-      expect(await browser.imageComparison.checkElement(panelEl, 'contextual-action-fullsize-always')).toEqual(0);
-    });
-  }
-
   it('should always show the CAP as a full screen sheet', async () => {
     await element(by.id('trigger-1')).click();
     await browser.driver.sleep(config.sleepLonger);
@@ -171,17 +160,6 @@ describe('Contextual Action Panel "responsive" fullsize tests', () => {
   it('should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  if (utils.isChrome() && utils.isCI()) {
-    xit('responsive should not visual regress', async () => {
-      await browser.driver.manage().window().setSize(766, 600);
-      await element(by.id('trigger-1')).click();
-      await browser.driver.sleep(config.sleep);
-      const panelEl = await element.all(by.css('#panel-1')).first();
-
-      expect(await browser.imageComparison.checkElement(panelEl, 'contextual-action-fullsize-responsive')).toEqual(0);
-    });
-  }
 
   it('should show the CAP as a full screen sheet when resizing the page to below the `phone-to-tablet` breakpoint size', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
