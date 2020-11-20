@@ -426,3 +426,25 @@
     }
   }
 }
+
+// Process Indivator Formatter
+.datagrid > tbody > tr .process-indicator {
+  top: 8px;
+
+  &.responsive .lines .indicator.current {
+    left: -1px;
+    top: 0;
+  }
+}
+
+.datagrid.extra-small-rowheight .process-indicator {
+  top: 0 !important;
+}
+
+.datagrid.small-rowheight .process-indicator {
+  top: 1px !important;
+}
+
+.datagrid.medium-rowheight .process-indicator {
+  top: 1px !important;
+}

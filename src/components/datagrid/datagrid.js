@@ -4670,6 +4670,11 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    if (!col.width && col.formatter?.toString()?.indexOf('ProcessIndicator')) {
+      colWidth = 155;
+      col.width = colWidth;
+    }
+
     if (col.id === 'expander') {
       colWidth = 55;
       col.width = colWidth;
