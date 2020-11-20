@@ -1103,14 +1103,6 @@ Dropdown.prototype = {
       return false;
     }
 
-    /*
-    if (this.isOpen() && this.settings.noSearch && ![8, 9, 13, 27, 32, 35, 36, 37, 38, 40, 46].includes(e.which)) {
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
-    }
-    */
-
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
       return; // eslint-disable-line
     }
