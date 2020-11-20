@@ -48,6 +48,7 @@
     left: -12px;
   }
 
+  .field-options ~ .close ~ .icon ~ .btn-actions,
   input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
     top: 0;
   }
@@ -111,7 +112,7 @@
   margin-left: -8px;
 
   + .btn-actions {
-    left: -10px !important;
+    left: -11px !important;
   }
 }
 
@@ -174,7 +175,7 @@
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
     .btn-actions:not(.is-checkbox) {
-      top: 5px !important;
+      top: 1px !important;
       width: 28px;
 
       .icon {
@@ -188,19 +189,17 @@
     }
 
     .spinbox-wrapper .btn-actions {
+      top: 5px !important;
       width: 28px !important;
     }
 
     .colorpicker-container ~ .btn-actions {
-      top: -5px !important;
+      top: -8px !important;
     }
 
+    [data-clearable='true'] + .icon.close ~ .btn-actions,
     input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
-      top: 4px !important;
-    }
-
-    [data-clearable='true'] + .icon.close ~ .btn-actions {
-      top: 5px !important;
+      top: 1px !important;
     }
 
     .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) > .icon:not(.close):not(.icon-error),
@@ -209,12 +208,43 @@
     }
 
     .textarea ~ .btn-actions:not(.is-checkbox) {
-      top: calc(50% - 0) !important;
+      top: calc(50% - 0px) !important;
     }
   }
 
   .form-layout-compact .compound-field .field.is-fieldoptions:first-child input[type='text'] ~ .btn-actions:not(.is-checkbox) {
     top: 4px !important;
+  }
+
+  &.is-mac {
+    .field-short.is-fieldoptions,
+    .form-layout-compact .field.is-fieldoptions {
+      .btn-actions:not(.is-checkbox) {
+        top: 5px !important;
+      }
+
+      .field-options.dropdown ~ .btn-actions,
+      .field-options.multiselect ~ .btn-actions {
+        top: 3px !important;
+      }
+
+      .field-options ~ .close ~ .icon ~ .btn-actions {
+        top: 5px !important;
+      }
+
+      .colorpicker-container ~ .btn-actions {
+        top: -4px !important;
+      }
+
+      [data-clearable='true'] + .icon.close ~ .btn-actions,
+      input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
+        top: 5px !important;
+      }
+
+      .textarea ~ .btn-actions:not(.is-checkbox) {
+        top: calc(50% - 0px) !important;
+      }
+    }
   }
 }
 
@@ -314,6 +344,30 @@
       ~ .btn-actions {
         left: -9px;
       }
+    }
+  }
+
+  .field.is-fieldoptions {
+    .colorpicker-container {
+      ~ .btn-actions {
+        top: 1px;
+      }
+    }
+
+    .field-options ~ .close,
+    input[type='text'][readonly]:not(.fileupload) {
+      ~ .btn-actions {
+        top: 0;
+      }
+    }
+  }
+
+  .field-short.is-fieldoptions,
+  .form-layout-compact .field.is-fieldoptions {
+    .field-options ~ .close ~ .btn-actions,
+    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions,
+    .colorpicker-container ~ .btn-actions {
+      top: 1px;
     }
   }
 }
