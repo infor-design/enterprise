@@ -2062,7 +2062,10 @@ $datagrid-small-row-height: 25px;
     }
 
     .process-indicator {
+      left: 5px;
       margin-bottom: 0;
+      position: relative;
+      top: 5px;
     }
 
     .icon-favorite {

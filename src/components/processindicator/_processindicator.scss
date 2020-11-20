@@ -114,11 +114,24 @@ $indicator-current-size: ($indicator-size * 1.6);
         height: 14px;
         margin-top: 4px;
         min-height: 14px;
-        min-width: 15px;
-        width: 15px;
+        min-width: 14px;
+        width: 14px;
 
         &.current {
           background-color: $ids-color-palette-white;
+          height: 18px;
+          min-height: 18px;
+          min-width: 18px;
+          position: relative;
+          top: 2px;
+          width: 18px;
+
+          .icon {
+            height: 18px;
+            position: relative;
+            top: -1px;
+            width: 18px;
+          }
         }
       }
 
