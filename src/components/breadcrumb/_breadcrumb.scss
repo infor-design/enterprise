@@ -255,8 +255,7 @@
       font-weight: $ids-number-font-weight-bold;
     }
 
-    &[disabled],
-    &.is-disabled {
+    &[disabled] {
       color: $breadcrumb-disabled-color;
     }
   }
@@ -277,17 +276,54 @@
       border-bottom: 1px solid $breadcrumb-hover-color;
     }
   }
+
+  .is-disabled {
+    span,
+    .hyperlink,
+    .breadcrumb-text {
+      color: $breadcrumb-disabled-color;
+
+      &:hover {
+        color: $breadcrumb-disabled-color;
+      }
+    }
+
+    .hyperlink {
+      &:hover {
+        border-bottom: 0;
+      }
+
+      &:focus:hover {
+        border-bottom: 0;
+        color: $breadcrumb-disabled-color;
+      }
+
+      &.active {
+        border-bottom: 0;
+      }
+    }
+  }
 }
 
 // Breadcrumb on a toolbar (see grid example)
-.toolbar .breadcrumb {
-  display: inline-block;
-  padding-top: 8px;
-  vertical-align: top;
+.toolbar,
+.flex-toolbar {
+  .breadcrumb-list,
+  ol {
+    min-height: 0;
+  }
+}
 
-  a,
-  span {
-    font-size: $ids-size-font-base;
+.toolbar {
+  .breadcrumb {
+    display: inline-block;
+    padding-top: 8px;
+    vertical-align: top;
+
+    a,
+    span {
+      font-size: $ids-size-font-base;
+    }
   }
 }
 
