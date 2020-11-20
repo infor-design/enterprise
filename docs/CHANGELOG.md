@@ -4,6 +4,7 @@
 
 ### v4.35.0 Features
 
+- `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))
 - `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ### v4.35.0 Fixes
@@ -15,8 +16,11 @@
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Datagrid]` Fixed an issue where the click event was not fire for hyperlinks keyword search results. ([#4550](https://github.com/infor-design/enterprise/issues/4550))
+- `[Datagrid]` Added api setting for selection on enter edit mode. ([#4485](https://github.com/infor-design/enterprise/issues/4485))
 - `[Datagrid]` Fixed a bug where the plus-minus icon were misaligned together with focus state on all row heights. ([#4480](https://github.com/infor-design/enterprise/issues/4480))
+- `[Dropdown]` Fixed a bug where the last option icon changes when searching/filtering in dropdown search field. ([#4474](https://github.com/infor-design/enterprise/issues/4474))
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
+- `[FileUploadAdvanced]` Fixed an issue where abort method was not working properly to remove the file block when upload fails. ([#938](https://github.com/infor-design/enterprise-ng/issues/938))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
 
@@ -82,6 +86,18 @@
 - `[Treemap]` Fixed a bug where small slices may show a "tip" below the chart. ([#2794](https://github.com/infor-design/enterprise/issues/2794))
 
 (56 Issues Solved This Release, Backlog Enterprise 185, Backlog Ng 42, 1082 Functional Tests, 1612 e2e Tests)
+
+## v4.33.2
+
+### v4.33.2 Fixes
+
+`[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+
+## v4.33.1
+
+### v4.33.1 Fixes
+
+- `[Breadcrumb]` Fixed an issue were css only breadcrumbs were missing styles. ([#4501](https://github.com/infor-design/enterprise/issues/4501))
 
 ## v4.33.0
 
