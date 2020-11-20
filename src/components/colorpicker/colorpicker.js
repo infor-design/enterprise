@@ -556,6 +556,9 @@ ColorPicker.prototype = {
     const checkThemes = s.themes[themeVariant].checkmark;
     let checkmarkClass = '';
 
+    // Remove previously opened colorpicker first
+    $('#colorpicker-menu').remove();
+
     for (let i = 0, l = s.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
