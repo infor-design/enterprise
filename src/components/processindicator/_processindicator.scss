@@ -18,6 +18,10 @@ $indicator-current-size: ($indicator-size * 1.6);
   font-size: $ids-size-font-base;
   margin-bottom: 20px;
 
+  &.has-labels {
+    margin-top: 8px;
+  }
+
   // Main blocks:  .display, .header, .details
   .display {
     margin-bottom: 20px;
@@ -29,7 +33,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
 
     .separator {
-      border: 1px solid transparent;
+      border: 1px solid $indicator-blank;
       display: inline-block;
       height: 0;
       width: $indicator-size;
@@ -75,11 +79,116 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
   }
 
+  &.responsive {
+    .display {
+      align-items: flex-end;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      word-spacing: initial;
+    }
+
+    .step {
+      display: grid;
+      height: 100%;
+      position: relative;
+
+      &:last-child .separator {
+        border: 0;
+      }
+    }
+
+    &.compact {
+      .label {
+        margin: 0 5px 4px 0;
+        white-space: normal;
+      }
+    }
+
+    .lines {
+      align-items: flex-end;
+      display: flex;
+      position: relative;
+
+      .indicator {
+        border-radius: 50%;
+        height: 14px;
+        margin-top: 4px;
+        min-height: 14px;
+        min-width: 15px;
+        width: 15px;
+
+        &.current {
+          background-color: $ids-color-palette-white;
+        }
+      }
+
+      .separator {
+        margin-left: -1px;
+        position: relative;
+        top: -6px;
+        width: 100%;
+      }
+    }
+
+    .details {
+      margin-top: -1px;
+      max-width: 100%;
+      overflow: hidden;
+      position: absolute;
+      top: calc(100% + 12px);
+      vertical-align: bottom;
+      width: 95%;
+
+      .heading {
+        display: block;
+        margin-bottom: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+      }
+
+      > span {
+        display: block;
+        white-space: normal;
+      }
+
+      > a {
+        display: block;
+        margin-top: -3px;
+        white-space: normal;
+      }
+
+      .icon {
+        height: 14px;
+        top: -1px;
+        width: 14px;
+      }
+    }
+  }
+
   // Makes the size of the process indicator smaller
   &.compact {
-    .display {
-      @include css3(transform, scale(0.7, 0.7));
-      @include css3(transform-origin, left center);
+    .label {
+      margin: -30px 0 33px -13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-spacing: normal;
+    }
+
+    .separator {
+      margin-left: -2px;
+    }
+
+    .indicator.icon {
+      border: 0;
+
+      .icon {
+        height: 15px;
+        left: -1px;
+        position: relative;
+        top: -1px;
+        width: 15px;
+      }
     }
 
     .heading,
@@ -88,7 +197,6 @@ $indicator-current-size: ($indicator-size * 1.6);
       display: inline-block;
     }
   }
-
 }
 
 // Indicator icons
@@ -235,8 +343,21 @@ $indicator-current-size: ($indicator-size * 1.6);
   // Really small indicator for long processes
   &.minor {
     border-radius: ($indicator-size / 4);
-    height: ($indicator-size / 2);
-    width: ($indicator-size / 2);
+    height: 0.6em;
+    width: 0.6em;
+  }
+
+  &.icon {
+    border: 0;
+
+    .icon {
+      height: 20px;
+      left: -1px;
+      position: relative;
+      top: -1px;
+      vertical-align: top;
+      width: 20px;
+    }
   }
 
 }
@@ -377,8 +498,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 }
 
-.ie,
-.ie11 {
+.ie {
   .process-indicator {
     &.compact {
       .indicator {
@@ -423,6 +543,21 @@ $indicator-current-size: ($indicator-size * 1.6);
           }
         }
       }
+    }
+  }
+}
+
+@include respond-to(smphabletdown) {
+  .process-indicator .step:not(.current) .details {
+    display: none !important;
+  }
+
+  .process-indicator .step.current {
+    position: initial;
+
+    .details {
+      margin-top: 75px;
+      top: auto;
     }
   }
 }

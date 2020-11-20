@@ -5447,7 +5447,7 @@ Datagrid.prototype = {
   * Export the grid contents to csv
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
-  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
+  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
   */
   exportToCsv(fileName, customDs, separator) {
     excel.exportToCsv(fileName, customDs, separator, this);

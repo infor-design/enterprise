@@ -4848,3 +4848,21 @@ describe('Datagrid treegrid Tooltip tests', () => {
     expect(await tooltip.getAttribute('class')).toContain('is-hidden');
   });
 });
+
+fdescribe('Datagrid Formatter Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-all-formatters?layout=nofrills');
+
+    const datagridEl = await element(by.css('#readonly-datagrid tbody tr:nth-child(1)'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render ProcessIndicator', async () => {
+    expect(await element.all(by.css('.process-indicator .step')).count()).toEqual(43);
+  });
+});

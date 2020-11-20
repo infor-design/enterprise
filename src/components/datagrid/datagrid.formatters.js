@@ -731,16 +731,28 @@ const formatters = {
               <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
               ${(col.showPercentText ? `<div class="chart-targeted-text l-center">${text}</div>
             </div>` : `<div class="audible">${perc}%</div>`)}`;
-  }
+  },
 
-  // TODO Possible future Formatters
-  // Multi Select
-  // Sparkline
-  // Progress Indicator (n of 100%)
-  // Process Indicator
-  // File Upload (Simple)
-  // Menu Button
-  // Radio
+  ProcessIndicator(row, cell, value) {
+    if (!value.steps) {
+      return '';
+    }
+
+    let processHtml = '<div class="process-indicator compact responsive"><div class="display">';
+
+    for (let i = 0; i < value.steps; i++) {
+      const isCurrent = i === value?.current;
+
+      processHtml += `<div class="step">
+        <div class="lines">
+          <span class="indicator ${isCurrent ? ' current processing' : ''} ${i < value?.current ? ' darker' : ''}"></span>
+          <span class="separator ${i < value?.current ? ' darker' : ''}"></span>
+        </div>
+      </div>`;
+    }
+    processHtml += '</div></div>';
+    return processHtml;
+  }
 };
 
 export { formatters as Formatters };

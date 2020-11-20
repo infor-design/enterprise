@@ -151,6 +151,24 @@
 
 (49 Issues Solved This Release, Backlog Enterprise 196, Backlog Ng 51, 1079 Functional Tests, 1525 e2e Tests)
 
+## v4.31.5
+
+### v4.31.5 Fixes
+
+- `[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+
+## v4.31.4
+
+### v4.31.4 Fixes
+
+- `[Datagrid]` Fixed an issue where the icons right text was truncated for extra-small row height. ([#4355](https://github.com/infor-design/enterprise/issues/4355))
+
+## v4.31.3
+
+### v4.31.3 Fixes
+
+- `[Editor]` Fixed a bug where b tags in an empty p tag would be stripped. ([#4411](https://github.com/infor-design/enterprise/issues/4411))
+
 ## v4.31.2
 
 ### v4.31.2 Fixes
@@ -689,7 +707,7 @@
 - `[Datagrid]` Fixed an issue where reset to default was not working properly. ([#3487](https://github.com/infor-design/enterprise/issues/3487))
 - `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
 - `[Editor]` Made the link and image link fields required on the dialogs. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
-- `[Editor]` Fixed an issue where it was possible to clear text and end up with text outside the default paragraph seperator. ([#2268](https://github.com/infor-design/enterprise/issues/2268))
+- `[Editor]` Fixed an issue where it was possible to clear text and end up with text outside the default paragraph separator. ([#2268](https://github.com/infor-design/enterprise/issues/2268))
 - `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 - `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
 - `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))
