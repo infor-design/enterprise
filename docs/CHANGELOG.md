@@ -2,6 +2,10 @@
 
 ## v4.35.0
 
+### v4.35.0 Important Notes
+
+- `[Breadcrumb]` We added support for the use of `span` in place of `a` tags inside Breadcrumb List Items at the component API level.  In order to facilitate this, some internal API methods had to be changed to recognize the list item instead of the anchor.  If you rely on the Breadcrumb API and reference breadcrumb item anchor tags, please note that before adopting this version, you should change your code to instead reference the list items, or only use the BreadcrumbItem API.
+
 ### v4.35.0 Features
 
 - `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))

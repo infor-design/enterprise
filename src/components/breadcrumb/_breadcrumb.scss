@@ -2,10 +2,17 @@
 //================================================== //
 
 .breadcrumb {
-  .hyperlink {
+  .hyperlink,
+  .breadcrumb-text,
+  li > span {
     display: inline-block;
     height: 24px;
     padding: 0 3px;
+  }
+
+  // Hyperlinks already have this by default
+  .breadcrumb-text {
+    margin-left: -4px;
   }
 
   .btn-actions {
@@ -56,15 +63,37 @@
       display: inline-block;
       list-style: none;
 
+      span {
+        color: $breadcrumb-color;
+      }
+
+      &.is-disabled {
+        span {
+          color: $breadcrumb-disabled-color;
+        }
+
+        .hyperlink {
+          color: $breadcrumb-disabled-color;
+        }
+      }
+
       .current,
       &.current {
         color: $breadcrumb-color;
         font-size: $ids-size-font-sm;
         font-weight: $ids-number-font-weight-bold;
 
-        .hyperlink {
-          // color: inherit;
+        span {
+          font-weight: inherit;
+        }
 
+        &.is-disabled {
+          span {
+            color: $breadcrumb-disabled-color;
+          }
+        }
+
+        .hyperlink {
           &[disabled] {
             color: $breadcrumb-disabled-color;
           }
@@ -72,7 +101,8 @@
       }
 
       &:first-child {
-        .hyperlink {
+        .hyperlink,
+        .breadcrumb-text {
           margin-left: 0;
         }
       }
@@ -83,7 +113,8 @@
   &.no-truncate {
     .breadcrumb-list li:first-child,
     ol li:first-child {
-      .hyperlink {
+      .hyperlink,
+      .breadcrumb-text {
         margin-left: -4px;
       }
     }
@@ -159,7 +190,8 @@
         padding-left: 6px;
         white-space: nowrap;
 
-        a {
+        a,
+        .breadcrumb-text {
           overflow: hidden;
           text-overflow: ellipsis;
           width: calc(100% - 7px); // accounts for the pseudo-element "/" delimeter + padding
@@ -170,14 +202,16 @@
         &:last-child {
           flex-shrink: 0;
 
-          a {
+          a,
+          .breadcrumb-text {
             text-overflow: clip;
             width: auto;
           }
         }
 
         &:last-child {
-          a {
+          a,
+          .breadcrumb-text {
             margin-right: 4px;
             overflow: hidden;
           }
@@ -186,7 +220,9 @@
     }
   }
 
-  .hyperlink {
+  span,
+  .hyperlink,
+  .breadcrumb-text {
     @include antialiased();
 
     color: $breadcrumb-color;
@@ -194,27 +230,24 @@
     line-height: 2em;
     padding-top: 1px;
     text-decoration: none;
+  }
 
+  .hyperlink,
+  .breadcrumb-text {
     &:visited {
       color: $breadcrumb-color;
     }
 
-    &:hover:not([disabled]) {
-      border-bottom: 1px solid $breadcrumb-hover-color;
+    &:hover:not([disabled]):not(.is-disabled) {
       color: $breadcrumb-hover-color;
     }
 
     &:focus {
       border-radius: 2px;
       color: $breadcrumb-hover-color;
-
-      &:hover {
-        border-bottom: 1px solid $breadcrumb-hover-color;
-      }
     }
 
     &:active {
-      border-bottom: 1px solid $breadcrumb-hover-color;
       color: $breadcrumb-hover-color;
     }
 
@@ -222,10 +255,27 @@
       font-weight: $ids-number-font-weight-bold;
     }
 
-    &[disabled] {
+    &[disabled],
+    &.is-disabled {
       color: $breadcrumb-disabled-color;
     }
+  }
 
+  // Only hyperlinks (and not text blocks) get underline state
+  .hyperlink {
+    &:hover:not([disabled]):not(.is-disabled) {
+      border-bottom: 1px solid $breadcrumb-hover-color;
+    }
+
+    &:focus {
+      &:hover {
+        border-bottom: 1px solid $breadcrumb-hover-color;
+      }
+    }
+
+    &:active {
+      border-bottom: 1px solid $breadcrumb-hover-color;
+    }
   }
 }
 
@@ -248,7 +298,8 @@
     display: block;
     padding: 1px 10px 0;
 
-    .hyperlink {
+    .hyperlink,
+    .breadcrumb-text {
       border: 0;
       color: $header-breadcrumb-color;
 
@@ -304,7 +355,8 @@
       background-color: $header-breadcrumb-alt-bg-color;
       border-bottom: 1px solid $header-breadcrumb-border-color;
 
-      .hyperlink {
+      .hyperlink,
+      .breadcrumb-text {
         color: $header-breadcrumb-alt-color;
 
         &:active:not([disabled]),
@@ -395,6 +447,14 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  .breadcrumb {
+    // Hyperlinks already have this by default
+    .breadcrumb-text {
+      margin-left: 0;
+      margin-right: -4px;
+    }
+  }
+
   .breadcrumb li,
   .breadcrumb-overflow-container {
     &::after {
@@ -408,7 +468,8 @@ html[dir='rtl'] {
     }
 
     &:first-child {
-      .hyperlink {
+      .hyperlink,
+      .breadrcrumb-text {
         margin-right: 0;
       }
     }
@@ -427,7 +488,8 @@ html[dir='rtl'] {
     &.no-truncate {
       .breadcrumb-list li:first-child,
       ol li:first-child {
-        .hyperlink {
+        .hyperlink,
+        .breadcrumb-text {
           margin-right: -4px;
         }
       }
@@ -453,7 +515,8 @@ html[dir='rtl'] {
             padding-left: 4px;
           }
 
-          a {
+          a,
+          .breadcrumb-text {
             margin-right: 0;
           }
 

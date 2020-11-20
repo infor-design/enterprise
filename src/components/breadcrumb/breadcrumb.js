@@ -57,13 +57,23 @@ BreadcrumbItem.prototype = {
    * @returns {void}
    */
   render() {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    li.appendChild(a);
-    this.element = li;
+    let li = this.element;
+    let a;
+    let span;
+    if (!li) {
+      li = document.createElement('li');
+      if (this.settings.href) {
+        a = document.createElement('a');
+        li.appendChild(a);
+      } else {
+        span = document.createElement('span');
+        li.appendChild(span);
+      }
+      this.element = li;
+    }
 
     // Base Class
-    this.element.classList.add('breadcrumb-item');
+    li.classList.add('breadcrumb-item');
 
     return li;
   },
@@ -74,13 +84,9 @@ BreadcrumbItem.prototype = {
    */
   refresh() {
     const li = this.element;
-    let a = li.querySelector('a');
-    if (!a) {
-      a = document.createElement('a');
-      li.innerHTML = '';
-      li.appendChild(a);
-    }
-    const $a = $(a);
+    const a = li.querySelector('a');
+    const span = li.querySelector('span:not(.audible)');
+    const $a = a ? $(a) : undefined;
 
     // Disabled
     this.disabled = this.settings.disabled;
@@ -89,27 +95,35 @@ BreadcrumbItem.prototype = {
     this.current = this.settings.current;
 
     // id
-    a.id = typeof this.settings.id === 'string' ? this.settings.id : '';
-
-    // href
-    if (typeof this.settings.href === 'string') {
-      const cleanHref = typeof this.settings.href === 'string' ? xssUtils.stripHTML(this.settings.href) : undefined;
-      a.href = cleanHref;
-      a.setAttribute('href', cleanHref);
-    } else {
-      a.href = undefined;
-      a.removeAttribute('href');
-    }
+    (a || li).id = typeof this.settings.id === 'string' ? this.settings.id : '';
 
     // content
-    a.innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
+    (a || span || li).innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
 
-    // invoke/update IDS Hyperlink
-    $a.hyperlink();
+    // href
+    if (a) {
+      if (typeof this.settings.href === 'string') {
+        const cleanHref = typeof this.settings.href === 'string' ? xssUtils.stripHTML(this.settings.href) : undefined;
+        a.href = cleanHref;
+        a.setAttribute('href', cleanHref);
+      } else {
+        a.href = undefined;
+        a.removeAttribute('href');
+      }
+
+      // invoke/update IDS Hyperlink
+      $a.hyperlink();
+    }
+
+    if (span) {
+      if (span.parentNode.isEqualNode(li)) {
+        span.classList.add('breadcrumb-text');
+      }
+    }
 
     // Add user-defined attributes to each breadcrumb, if applicable
     if (Array.isArray(this.settings.attributes)) {
-      utils.addAttributes($a, this, this.settings.attributes);
+      utils.addAttributes(($a || $(li)), this, this.settings.attributes);
     }
 
     return li;
@@ -122,6 +136,10 @@ BreadcrumbItem.prototype = {
    */
   checkFocus() {
     const a = this.a;
+    if (!a) {
+      return;
+    }
+
     let isOverflowed = this.overflowed;
 
     // IE11/Edge don't implement truncated view, so never hide them due to overflow
@@ -165,12 +183,15 @@ BreadcrumbItem.prototype = {
    */
   set disabled(state) {
     const realState = state === true;
-    const a = this.a;
-
     this.settings.disabled = realState;
     this.element.classList[realState ? 'add' : 'remove']('is-disabled');
-    a.disabled = realState;
 
+    const a = this.a;
+    if (!a) {
+      return;
+    }
+
+    a.disabled = realState;
     if (realState) {
       a.setAttribute('disabled', realState);
       a.setAttribute('aria-disabled', realState);
@@ -184,7 +205,7 @@ BreadcrumbItem.prototype = {
    * @returns {boolean} `true` if this Breadcrumb item is currently disabled
    */
   get disabled() {
-    const aDisabled = this.a.getAttribute('disabled');
+    const aDisabled = this.a?.getAttribute('disabled');
     const liDisabled = this.element.getAttribute('is-disabled');
     return aDisabled || liDisabled;
   },
@@ -212,15 +233,16 @@ BreadcrumbItem.prototype = {
   get overflowed() {
     const li = this.element;
     const a = li.querySelector('a');
+    const span = li.querySelector('span');
 
     // Get original size first
-    const aRect = a.getBoundingClientRect();
+    const elemRect = (a || span || li).getBoundingClientRect();
     const containerRect = this.element.parentNode.getBoundingClientRect();
 
     if (env.rtl) {
-      return containerRect.right < aRect.right;
+      return containerRect.right < elemRect.right;
     }
-    return containerRect.left > aRect.left;
+    return containerRect.left > elemRect.left;
   },
 
   /**
@@ -586,24 +608,24 @@ Breadcrumb.prototype = {
   makeCurrent(item) {
     const target = this.getBreadcrumbItemAPI(item);
     this.breadcrumbs.forEach((thisAPI) => {
-      const a = thisAPI.a;
-      thisAPI.current = a.isEqualNode(target.a);
+      const li = thisAPI.element;
+      thisAPI.current = li.isEqualNode(target.api.element);
     });
   },
 
   /**
-   * @returns {HTMLElement|undefined} representing the anchor of the current breadcrumb item
+   * @returns {HTMLElement|undefined} representing the currently-selected breadcrumb list item
    */
   get current() {
     let api;
-    let a;
+    let li;
     this.breadcrumbs.forEach((breadcrumbAPI) => {
       if (!api && breadcrumbAPI.current) {
         api = breadcrumbAPI;
-        a = api.a;
+        li = api.element;
       }
     });
-    return a;
+    return li;
   },
 
   /**
@@ -663,8 +685,8 @@ Breadcrumb.prototype = {
     const self = this;
 
     // Runs a callback associated with a breadcrumb item's anchor tag, if one's defined.
-    $(this.list).on(`click.${COMPONENT_NAME}`, 'a', (e, ...args) => {
-      const item = this.getBreadcrumbItemAPI(e.target);
+    $(this.list).on(`click.${COMPONENT_NAME}`, 'li', (e, ...args) => {
+      const item = this.getBreadcrumbItemAPI(e.currentTarget);
       if (!item || !item.api) {
         return;
       }
@@ -712,49 +734,55 @@ Breadcrumb.prototype = {
   },
 
   /**
-   * Accesses a Breadcrumb Item's API via its anchor tag.
-   * @param {BreadcrumbItem|HTMLElement|number} item the anchor tag to check for a Breadcrumb Item API.
+   * Accesses a Breadcrumb Item's API using various methods.
+   * @param {BreadcrumbItem|HTMLElement|number} item the anchor/list-item to check for a Breadcrumb Item API.
    * @returns {BreadcrumbItem|undefined} a Breadcrumb Item API, if applicable.
    */
   getBreadcrumbItemAPI(item) {
     let api;
-    let a;
+    let li;
     let index;
     let compareByIndex = false;
 
     // If a breadcrumb item is passed, use that instead of searching the array.
     if (item instanceof BreadcrumbItem) {
       api = item;
-      a = item.a;
+      li = item.element;
       index = this.breadcrumbs.indexOf(item);
     // Search the breadcrumb array for a matching anchor.
     } else if (item instanceof HTMLAnchorElement) {
-      a = item;
-      this.breadcrumbs.forEach((breadcrumbAPI, i) => {
-        const thisA = breadcrumbAPI.a;
-        if (thisA.isEqualNode(a)) {
-          api = breadcrumbAPI;
-          index = i;
-        }
-      });
+      li = item.parentNode;
+    } else if (item instanceof HTMLLIElement) {
+      li = item;
     // If the item is a number type, this will be used as in index number, and
     // the Breadcrumb array will be checked for an matching index instead.
     } else if (!isNaN(item) && item > -1) {
       compareByIndex = true;
       index = item;
       api = this.breadcrumbs[index];
-      a = api.a;
+      li = api.element;
+    }
+
+    // If the list item's been defined (but nothing else) grok the others
+    if (li && !api && !index) {
+      this.breadcrumbs.forEach((breadcrumbAPI, i) => {
+        const thisLi = breadcrumbAPI.element;
+        if (thisLi.isEqualNode(li)) {
+          api = breadcrumbAPI;
+          index = i;
+        }
+      });
     }
 
     if (!api) {
-      const matchType = compareByIndex ? 'at index ' : ' with matching HTML anchor';
-      const match = compareByIndex ? index : a;
+      const matchType = compareByIndex ? 'at index ' : ' with matching HTML List Item';
+      const match = compareByIndex ? index : li;
       throw new Error(`No matching Breadcrumb was found by ${matchType} "${match}"`);
     }
 
     return {
       api,
-      a,
+      li,
       i: index
     };
   },
