@@ -398,11 +398,11 @@ ColorPicker.prototype = {
         this.element.trigger('listclosed', 'select');
       })
       .on('selected.colorpicker', (e, item) => {
-        if (!this.isEditor) {
-          this.setColor(item.data('value'), item.data('label'));
-        }
-
         this.itemLabel = item.data('label');
+
+        if (!this.isEditor) {
+          this.setColor(item.data('value'), this.itemLabel);
+        }
 
         // Editor colorpicker
         let cpEditorNotVisible = false;
