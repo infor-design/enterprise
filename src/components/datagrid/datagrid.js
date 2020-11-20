@@ -4691,7 +4691,7 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'drilldown') {
-      colWidth = 78;
+      colWidth = 62;
       col.width = colWidth;
     }
 
