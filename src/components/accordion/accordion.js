@@ -830,6 +830,7 @@ Accordion.prototype = {
         });
       }
       header.add(pane).addClass('is-expanded');
+      header.children('a').attr('aria-expanded', 'true');
 
       /**
       * Fires when expanding a pane is initiated.
@@ -963,6 +964,7 @@ Accordion.prototype = {
       pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
       header.add(pane).removeClass('is-expanded');
+      a.attr('aria-expanded', 'false');
       dfd.resolve();
     }
 
