@@ -389,7 +389,9 @@ FileUploadAdvanced.prototype = {
         * @property {object} file - aborted
         */
         this.element.triggerHandler('fileaborted', [file]);
-        jqxhr.abort();
+        if (jqxhr && typeof jqxhr.abort === 'function') {
+          jqxhr.abort();
+        }
         btnCancel.off('click.fileuploadadvanced');
         container.remove();
       });

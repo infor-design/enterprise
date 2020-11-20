@@ -85,7 +85,7 @@ function addStandardInputFeatures(input, row, cell, value, container, column, e,
 }
 
 /**
-*  A object containing all the supported Editors
+*  A object containing all the supported Editors.
 * @private
 */
 const editors = {
@@ -120,7 +120,10 @@ const editors = {
     };
 
     this.focus = function () {
-      this.input.focus().select();
+      this.input.focus();
+      if (api.settings.selectOnEdit) {
+        this.input.select();
+      }
     };
 
     this.destroy = function () {
@@ -136,7 +139,7 @@ const editors = {
     this.init();
   },
 
-  Textarea(row, cell, value, container, column) {
+  Textarea(row, cell, value, container, column, e, api) {
     this.name = 'textarea';
     this.originalValue = value;
 
@@ -153,8 +156,8 @@ const editors = {
       }
       this.api = this.input.data('autogrow-start-height', autogrowStartHeight).textarea(column.editorOptions).data('textarea');
 
-      this.input.on('click.textareaeditor', (e) => {
-        e.stopPropagation();
+      this.input.on('click.textareaeditor', (evt) => {
+        evt.stopPropagation();
       });
 
       if (column.maxLength) {
@@ -175,7 +178,10 @@ const editors = {
     };
 
     this.focus = function () {
-      this.input.focus().select();
+      this.input.focus();
+      if (api.settings.selectOnEdit) {
+        this.input.select();
+      }
     };
 
     this.destroy = function () {
@@ -345,7 +351,10 @@ const editors = {
       this.input.trigger('openlist');
       const rowNodes = grid.rowNodes(row);
       rowNodes.removeClass('is-hover-row');
-      this.input.focus().select();
+      this.input.focus();
+      if (grid.settings.selectOnEdit) {
+        this.input.select();
+      }
 
       this.input.off('listclosed').on('listclosed', () => {
         grid.commitCellEdit(self.input);
@@ -490,6 +499,21 @@ const editors = {
         this.input[0].parentNode.querySelector('div.dropdown').focus();
       }
 
+      // Unselect dropdown search, and move cursor at end
+      if (!grid.settings.selectOnEdit) {
+        const ddSearch = $('#dropdown-search')[0];
+        if (ddSearch) {
+          if (typeof ddSearch.selectionStart === 'number') {
+            ddSearch.selectionEnd = ddSearch.value.length;
+            ddSearch.selectionStart = ddSearch.selectionEnd;
+          } else if (typeof ddSearch.createTextRange !== 'undefined') {
+            const range = ddSearch.createTextRange();
+            range.collapse(false);
+            range.select();
+          }
+        }
+      }
+
       this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
 
@@ -537,7 +561,10 @@ const editors = {
     this.focus = function () {
       const self = this;
 
-      this.input.select().focus();
+      this.input.focus();
+      if (grid.settings.selectOnEdit) {
+        this.input.select();
+      }
 
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
@@ -725,7 +752,10 @@ const editors = {
     this.focus = function () {
       const self = this;
 
-      this.input.select().focus();
+      this.input.focus();
+      if (grid.settings.selectOnEdit) {
+        this.input.select();
+      }
 
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
@@ -811,7 +841,10 @@ const editors = {
 
       // Using keyboard
       if (event.type === 'keydown') {
-        self.input.select().focus();
+        self.input.focus();
+        if (grid.settings.selectOnEdit) {
+          self.input.select();
+        }
         td.on('keydown.editorlookup', (e) => {
           if (e.keyCode === 40) {
             e.preventDefault();
@@ -825,7 +858,10 @@ const editors = {
         if ($(event.target).is('svg')) {
           api.openDialog(event);
         } else {
-          self.input.select().focus();
+          self.input.focus();
+          if (grid.settings.selectOnEdit) {
+            self.input.select();
+          }
           td.on('touchcancel.editorlookup touchend.editorlookup', '.trigger', () => {
             api.openDialog();
           });
@@ -882,7 +918,10 @@ const editors = {
 
     this.focus = function () {
       grid.quickEditMode = true;
-      this.input.select().focus();
+      this.input.focus();
+      if (grid.settings.selectOnEdit) {
+        this.input.select();
+      }
     };
 
     this.destroy = function () {
@@ -896,13 +935,14 @@ const editors = {
   },
 
   Spinbox(ow, cell, value, container, column, event, grid) {
+    const self = this;
     this.name = 'spinbox';
     this.originalValue = value;
     this.useValue = true; // use the data set value not cell value
 
     this.init = function () {
       if (column.inlineEditor) {
-        this.input = container.find('input');
+        self.input = container.find('input');
         return;
       }
 
@@ -912,25 +952,28 @@ const editors = {
         <span class="spinbox-control up">+</span></span>`;
 
       DOM.append(container, markup, '<label><span><input>');
-      this.input = container.find('input');
+      self.input = container.find('input');
 
       if (!column.editorOptions) {
         column.editorOptions = {};
       }
 
-      this.input.spinbox(column.editorOptions);
+      self.input.spinbox(column.editorOptions);
     };
 
     this.val = function (v) {
       if (v) {
-        this.input.val(v);
+        self.input.val(v);
       }
-      return parseInt(this.input.val(), 10);
+      return parseInt(self.input.val(), 10);
     };
 
     this.focus = function () {
       grid.quickEditMode = true;
-      this.input.select().focus();
+      self.input.focus();
+      if (grid.settings.selectOnEdit) {
+        self.input.select();
+      }
     };
 
     this.destroy = function () {
@@ -940,12 +983,12 @@ const editors = {
 
       setTimeout(() => {
         grid.quickEditMode = false;
-        const textVal = this.val();
-        if (this.input && this.input.data('spinbox')) {
-          this.input.data('spinbox').destroy();
+        const textVal = self.val();
+        if (self.input && self.input.data('spinbox')) {
+          self.input.data('spinbox').destroy();
         }
-        if (this.input) {
-          this.input.remove();
+        if (self.input) {
+          self.input.remove();
         }
         container.text(textVal);
       }, 0);
