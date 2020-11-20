@@ -402,6 +402,8 @@ ColorPicker.prototype = {
           this.setColor(item.data('value'), item.data('label'));
         }
 
+        this.itemLabel = item.data('label');
+
         // Editor colorpicker
         let cpEditorNotVisible = false;
         if (this.element.is('.colorpicker-editor-button')) {
@@ -592,7 +594,10 @@ ColorPicker.prototype = {
           });
           /* eslint-disable no-loop-func */
         }
-        a.addClass(`is-selected${checkmarkClass}`);
+
+        if (colorText === this.itemLabel) {
+          a.addClass(`is-selected${checkmarkClass}`);
+        }
       }
 
       colorValue = s.uppercase ? colorValue.toUpperCase() : colorValue.toLowerCase();
