@@ -429,6 +429,9 @@ function getSplitterRegex(splitterStr) {
     if (c === ' ') { // convert space characters into white space matcher
       c = '\\s';
     }
+    if (c === '-') { // escape dashes that might be part of date formats
+      c = '\\-';
+    }
     return c;
   });
   return new RegExp(`[(${fixedArr.join('|')})]+`);
