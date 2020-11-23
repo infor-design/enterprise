@@ -174,7 +174,7 @@ FieldOptions.prototype = {
           returns = 2;
         }
       } else if (isRadio) {
-        returns = ((height - this.trigger.height()) / 2) * -1;
+        returns = (((height - 10) - this.trigger.height()) / 2) * -1;
       }
       return returns;
     };
