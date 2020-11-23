@@ -4694,7 +4694,7 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
-    if (!col.width && col.formatter?.toString()?.indexOf('ProcessIndicator')) {
+    if (!col.width && col.formatter?.toString()?.indexOf('ProcessIndicator') > -1) {
       colWidth = 155;
       col.width = colWidth;
     }
