@@ -100,3 +100,21 @@ describe('Number Masks', () => {
     await (utils.checkForErrors());
   });
 });
+
+describe('Date Masks (custom formats)', () => {
+  it('correctly allows typing on sv-SE locale', async () => {
+    // Load the page
+    await utils.setPage('/components/datepicker/example-timeformat?locale=sv-SE');
+    const inputEl = await element(by.id('dp1'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+    await browser.driver.sleep(config.sleepShort);
+
+    await inputEl.clear();
+    await inputEl.sendKeys('202002022200');
+
+    expect(await inputEl.getAttribute('value')).toEqual('2020-02-02 22:00');
+
+    await (utils.checkForErrors());
+  });
+});
