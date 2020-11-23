@@ -56,6 +56,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       saveUserSettings: {},
       focusAfterSort: false,
       editable: false,
+      selectOnEdit: true,
       isRowDisabled: null,
       isList: false,
       menuId: null,
