@@ -22,6 +22,24 @@ $indicator-current-size: ($indicator-size * 1.6);
     margin-top: 8px;
   }
 
+  .responsive-label {
+    @include antialiased();
+
+    color: $label-color;
+    display: none;
+    font-size: $ids-size-font-sm;
+    font-weight: 700;
+    margin-bottom: 5px;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  .responsive-details {
+    display: none;
+  }
+
   // Main blocks:  .display, .header, .details
   .display {
     margin-bottom: 20px;
@@ -62,7 +80,8 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
   }
 
-  .details {
+  .details,
+  .responsive-details {
     @include antialiased();
 
     color: $font-color;
@@ -143,7 +162,8 @@ $indicator-current-size: ($indicator-size * 1.6);
       }
     }
 
-    .details {
+    .details,
+    .responsive-details {
       margin-top: -1px;
       max-width: 100%;
       overflow: hidden;
@@ -561,17 +581,26 @@ $indicator-current-size: ($indicator-size * 1.6);
 }
 
 @include respond-to(smphabletdown) {
-  .process-indicator .step:not(.current) .details {
+  .process-indicator .step .details {
     display: none !important;
   }
 
-  .process-indicator .step.current {
-    position: initial;
+  .process-indicator .step .label {
+    display: none !important;
+  }
 
-    .details {
-      margin-top: 75px;
-      top: auto;
-    }
+  .process-indicator .responsive-label {
+    display: block !important;
+  }
+
+  .process-indicator .responsive-details {
+    display: block !important;
+    position: relative !important;
+    top: -8px !important;
+  }
+
+  .process-indicator {
+    text-align: center;
   }
 }
 
