@@ -19,10 +19,7 @@ fdescribe('ProcessIndicator tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibility(containerEl), config.waitsFor);
-
-      expect(await browser.imageComparison.checkElement(containerEl, 'processindicator')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'processindicator-labels')).toEqual(0);
     });
   }
 });
@@ -40,9 +37,6 @@ fdescribe('ProcessIndicator Labels tests', () => {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
-
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibility(containerEl), config.waitsFor);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'processindicator-labels')).toEqual(0);
     });
