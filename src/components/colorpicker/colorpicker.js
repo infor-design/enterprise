@@ -595,7 +595,7 @@ ColorPicker.prototype = {
           /* eslint-disable no-loop-func */
         }
 
-        if (colorText === this.itemLabel) {
+        if (colorText === this.itemLabel || this.itemLabel === undefined) {
           a.addClass(`is-selected${checkmarkClass}`);
         }
       }
