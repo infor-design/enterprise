@@ -7,7 +7,7 @@
 - `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))
 - `[Datagrid]` Added a new ProcessIndicator formatter. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
 - `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
-- `[ProcessIndicator]` Added labels and contents areas and made it responsive. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
+- `[ProcessIndicator]` Added: labels, more icon support, and a content areas and made it responsive. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
 
 ### v4.35.0 Fixes
 
