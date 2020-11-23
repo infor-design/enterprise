@@ -276,6 +276,10 @@
     }
   }
 
+  .field-options ~ .close ~ .icon ~ .btn-actions {
+    top: -1px;
+  }
+
   // Clearable Inputs that are not Searchfields
   [data-clearable='true'] {
     ~ .btn-actions {
@@ -326,6 +330,7 @@
     }
   }
 
+  .field-options ~ .close ~ .icon ~ .btn-actions,
   input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
     top: 1px;
   }
@@ -581,7 +586,7 @@
 
     .colorpicker-container {
       ~ .btn-actions {
-        top: -13px;
+        top: -12px;
       }
     }
 
@@ -610,7 +615,7 @@
   .form-layout-compact .field.is-fieldoptions {
     .field-options {
       ~ .btn-actions:not(.is-checkbox) {
-        top: 2px;
+        top: 0;
       }
 
       &.dropdown ~ .btn-actions,
@@ -624,21 +629,23 @@
       }
     }
 
+    .spinbox-wrapper .btn-actions {
+      top: 5px !important;
+    }
+
+    .colorpicker-container ~ .btn-actions {
+      top: -8px;
+    }
+
+    .searchfield-wrapper .btn-actions,
+    [data-clearable='true'] + .icon.close ~ .btn-actions,
     input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
-      top: 2px !important;
+      top: 0 !important;
     }
 
     &.field-checkbox .btn-actions .icon:not(.icon-dropdown) {
       margin-left: 1px;
       margin-top: -2px;
-    }
-
-    [data-clearable='true'] + .icon.close ~ .btn-actions {
-      top: 2px !important;
-    }
-
-    .searchfield-wrapper .btn-actions {
-      top: 2px !important;
     }
   }
 
@@ -661,12 +668,6 @@
     &.multiselect {
       ~ .btn-actions {
         top: 1px;
-      }
-    }
-
-    &.searchfield {
-      ~ .btn-actions {
-        left: -6px;
       }
     }
   }
@@ -702,6 +703,17 @@
 
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
+    .field-options ~ .btn-actions:not(.is-checkbox) {
+      top: 2px;
+    }
+
+    .field-options ~ .close,
+    input[type='text'][readonly]:not(.fileupload) {
+      ~ .btn-actions {
+        top: 2px !important;
+      }
+    }
+
     .lookup-wrapper .btn-actions {
       left: -3px;
     }
@@ -735,7 +747,7 @@
   .field.is-fieldoptions {
     .colorpicker-container {
       ~ .btn-actions {
-        top: -1px;
+        top: 0;
       }
     }
 
@@ -757,6 +769,19 @@
     .data.field-options {
       ~ .btn-actions {
         left: -10px;
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .field.is-fieldoptions {
+      .colorpicker-container ~ .btn-actions,
+      input[type='text'] ~ .btn-actions:not(.is-checkbox) {
+        top: 1px;
+      }
+
+      .spinbox-wrapper .btn-actions {
+        top: 5px !important;
       }
     }
   }
@@ -857,6 +882,11 @@
         margin-left: -9px;
       }
     }
+  }
+
+  .field-short.is-fieldoptions .spinbox-wrapper .btn-actions,
+  .form-layout-compact .field.is-fieldoptions .spinbox-wrapper .btn-actions {
+    top: 5px;
   }
 }
 
