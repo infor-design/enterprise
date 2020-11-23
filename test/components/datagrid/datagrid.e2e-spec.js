@@ -4907,7 +4907,7 @@ describe('Datagrid select all for current page only', () => {
   });
 });
 
-fdescribe('Datagrid Formatter Tests', () => {
+describe('Datagrid Formatter Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-all-formatters?layout=nofrills');
     const datagridEl = await element(by.css('#readonly-datagrid tbody tr:nth-child(1)'));

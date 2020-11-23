@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('ProcessIndicator tests', () => {
+describe('ProcessIndicator tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/processindicator/example-index?layout=nofrills');
   });
@@ -19,12 +19,12 @@ fdescribe('ProcessIndicator tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'processindicator-labels')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'processindicator')).toEqual(0);
     });
   }
 });
 
-fdescribe('ProcessIndicator Labels tests', () => {
+describe('ProcessIndicator Labels tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/processindicator/example-labels?layout=nofrills');
   });
