@@ -763,3 +763,83 @@ describe('Dropdown with icons tests', () => {
     expect(await element(by.css('#list-option-4 svg use[href="#icon-notes"]')).getAttribute('href')).toEqual('#icon-notes');
   });
 });
+
+describe('Dropdown "No Search" stay-open behavior', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/example-no-search-stay-open?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Highlights items that match search terms when the list is opened', async () => {
+    // Find pseudo-elem and click
+    const dropdownEl = element(by.css('div.dropdown'));
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+
+    // Find search input
+    await browser.driver.sleep(config.sleep);
+    const searchInput = await element(by.id('dropdown-search'));
+
+    // Find numbers that exist
+    await searchInput.click();
+    await searchInput.clear().sendKeys('102');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.className('is-focused')).getText()).toEqual('102');
+
+    // Click to reset selection cursor, then find another
+    await searchInput.click();
+    await searchInput.clear().sendKeys('93');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.className('is-focused')).getText()).toEqual('93');
+
+    // Try to find one that doesn't exist.  All items will become unhighlighted.
+    await searchInput.click();
+    await searchInput.clear().sendKeys('104');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.className('is-focused')).isPresent()).toBeFalsy();
+  });
+
+  it('can select keyed values with ENTER', async () => {
+    // Find pseudo-elem and click
+    const dropdownEl = element(by.css('div.dropdown'));
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+
+    // Find search input
+    await browser.driver.sleep(config.sleep);
+    const searchInput = await element(by.id('dropdown-search'));
+
+    // Highlight "102" and hit ENTER. 102 Should be selected.
+    await searchInput.click();
+    await searchInput.clear().sendKeys('102');
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
+    await browser.driver.sleep(config.sleep);
+
+    expect(['', '102']).toContain(await element.all(by.css('div.dropdown span')).first().getText());
+  });
+
+  it('closes without selecting on pressing ESCAPE', async () => {
+    // Find pseudo-elem and click
+    const dropdownEl = element(by.css('div.dropdown'));
+    await browser.driver.sleep(config.sleep);
+    await dropdownEl.click();
+
+    // Find search input
+    await browser.driver.sleep(config.sleep);
+    const searchInput = await element(by.id('dropdown-search'));
+
+    // Highlight "75" and press ESCAPE. Nothing should be selected.
+    await searchInput.click();
+    await searchInput.clear().sendKeys('75');
+    await browser.switchTo().activeElement().sendKeys(protractor.Key.ESCAPE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('div.dropdown span')).first().getText()).toBe('');
+  });
+});

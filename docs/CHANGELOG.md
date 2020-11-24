@@ -2,19 +2,26 @@
 
 ## v4.35.0
 
+### v4.35.0 Important Notes
+
+- `[Breadcrumb]` We added support for the use of `span` in place of `a` tags inside Breadcrumb List Items at the component API level.  In order to facilitate this, some internal API methods had to be changed to recognize the list item instead of the anchor.  If you rely on the Breadcrumb API and reference breadcrumb item anchor tags, please note that before adopting this version, you should change your code to instead reference the list items, or only use the BreadcrumbItem API.
+
 ### v4.35.0 Features
 
 - `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))
 - `[Datagrid]` Added a new ProcessIndicator formatter. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
+- `[Dropdown]` Improved behavior of list item navigation/selection when a Dropdown is configured with "no search" mode activated. ([#4483](https://github.com/infor-design/enterprise/issues/4483))
 - `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 - `[ProcessIndicator]` Added: labels, more icon support, and a content areas and made it responsive. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
 
 ### v4.35.0 Fixes
 
+- `[Application Menu]` Fixed accessibility issues getting redundant info in expand/collapse button. ([#4462](https://github.com/infor-design/enterprise/issues/4462))
 - `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
+- `[Colorpicker]` Fixed an issue where values were not being selecting when multiple colopickers are present. ([#4146](https://github.com/infor-design/enterprise/issues/4146))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Datagrid]` Fixed an issue where the click event was not fire for hyperlinks keyword search results. ([#4550](https://github.com/infor-design/enterprise/issues/4550))
 - `[Datagrid]` Added api setting for selection on enter edit mode. ([#4485](https://github.com/infor-design/enterprise/issues/4485))

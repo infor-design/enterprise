@@ -103,11 +103,14 @@ describe('Multiselect example-index tests', () => {
 
     // Edited for #920
     it('Can deselect all items and display an empty pseudo-element', async () => {
+      // Open Multiselect
+      await browser.driver.sleep(config.sleep);
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await multiselectEl.click();
 
+      // Click the search
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
       const multiselectSearchEl = await element(by.id('dropdown-search'));
       await multiselectSearchEl.click();
 
@@ -126,10 +129,14 @@ describe('Multiselect example-index tests', () => {
 
     // Edited for #920
     it('Can select multiple items and display them in the pseudo-element', async () => {
+      // Open Multiselect
+      await browser.driver.sleep(config.sleep);
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
       await multiselectEl.click();
+
+      // Click on the search input
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
       await element(by.id('dropdown-search')).click();
 
       const multiselectSearchEl = await element(by.id('dropdown-search'));
@@ -170,10 +177,15 @@ describe('Multiselect example-index tests', () => {
   }
 
   it('Can show a filtered list of items that match a search term (Colorado)', async () => {
+    // Open Multiselect
+    await browser.driver.sleep(config.sleep);
     const multiselectEl = await element.all(by.css('div.dropdown')).first();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
     await multiselectEl.click();
+
+    // Click on the search input
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
+
     await element(by.id('dropdown-search')).click();
     await browser.driver.switchTo().activeElement().clear();
     await element(by.id('dropdown-search')).sendKeys('Colorado');

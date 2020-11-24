@@ -1,13 +1,25 @@
 // Breadcrumbs (Uplift)
 //================================================== //
 .breadcrumb {
-  .hyperlink {
+  .hyperlink,
+  .breadcrumb-text,
+  li > span {
     font-size: 14px;
     line-height: 1.6em;
   }
 
   .btn-actions {
     line-height: 1.6em;
+  }
+
+  .breadcrumb-list,
+  ol {
+    li {
+      .current,
+      &.current {
+        font-size: 14px;
+      }
+    }
   }
 
   &.truncated {
@@ -23,7 +35,9 @@
 
 .scrollable-flex-header {
   .breadcrumb {
-    .hyperlink {
+    .hyperlink,
+    .breadcrumb-text,
+    li > span {
       line-height: 1.5em;
     }
 
