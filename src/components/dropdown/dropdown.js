@@ -1103,12 +1103,6 @@ Dropdown.prototype = {
       return false;
     }
 
-    if (this.isOpen() && this.settings.noSearch && ![8, 9, 13, 27, 32, 35, 36, 37, 38, 40, 46].includes(e.which)) {
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
-    }
-
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
       return; // eslint-disable-line
     }
@@ -1155,10 +1149,6 @@ Dropdown.prototype = {
     this.searchInput
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
         const searchInput = $(this);
-        if (!this.ignoreKeys(searchInput, e)) {
-          return false;
-        }
-
         return this.handleKeyDown(searchInput, e);
       })
       .on(`input.${COMPONENT_NAME}`, (e) => {
@@ -1359,6 +1349,10 @@ Dropdown.prototype = {
     const excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)';
     let next;
 
+    if (!this.ignoreKeys(input, e)) {
+      return false;
+    }
+
     if (this.isLoading()) {
       return;
     }
@@ -1512,16 +1506,17 @@ Dropdown.prototype = {
       }
     }
 
-    if (!self.isOpen() && !self.isControl(key) &&
-      !this.settings.source && !this.settings.noSearch) {
-      // Make this into Auto Complete
-      self.isFiltering = true;
-      self.filterTerm = $.actualChar(e);
+    if (!self.isOpen()) {
+      if (!self.isControl(key) && !this.settings.source && !this.settings.noSearch) {
+        // Make this into Auto Complete
+        self.isFiltering = true;
+        self.filterTerm = $.actualChar(e);
 
-      if (self.searchInput && self.searchInput.length) {
-        self.searchInput.val($.actualChar(e));
+        if (self.searchInput && self.searchInput.length) {
+          self.searchInput.val($.actualChar(e));
+        }
+        self.toggle();
       }
-      self.toggle();
     }
 
     this.searchKeyMode = true;
@@ -1655,7 +1650,11 @@ Dropdown.prototype = {
 
     this.timer = setTimeout(() => {
       if (self.settings.noSearch) {
-        self.selectStartsWith(self.filterTerm);
+        if (self.isOpen()) {
+          self.highlightStartsWith(self.filterTerm);
+        } else {
+          self.selectStartsWith(self.filterTerm);
+        }
         return;
       }
 
@@ -2464,12 +2463,17 @@ Dropdown.prototype = {
   },
 
   /**
-   * Highlight the option that is being typed.
+   * Highlights a Dropdown list option if it's present inside the list.
    * @private
    * @param {object} listOption The option element
    * @param {boolean} noScroll If true will scroll to the option
+   * @returns {void}
    */
-  highlightOption(listOption, noScroll) { //eslint-disable-line
+  highlightOption(listOption, noScroll) {
+    if (!this.isOpen()) {
+      return;
+    }
+
     if (!listOption) {
       return;
     }
@@ -2482,30 +2486,41 @@ Dropdown.prototype = {
       return;
     }
 
-    // Get corresponding option from the list
-    const option = this.element.find(`option[value="${listOption.attr('data-val')}"]`);
-
-    if (option.hasClass('.is-disabled') || option.is(':disabled')) {
-      return; //eslint-disable-line
+    // Get the corresponding option from the list,
+    // or use an `<option>` element directly.
+    let option;
+    if (listOption.is('option')) {
+      option = listOption;
+      listOption = this.listUl.find(`li[data-val="${option.val()}"]`)
+    } else {
+      option = this.element.find('option').filter((i, item) => item.value === listOption.attr('data-val'));
     }
 
-    if (!this.isOpen()) {
+    // Unset previous highlight
+    this.setItemIconOverColor();
+    this.list.find('.is-focused').removeClass('is-focused').attr({ tabindex: '-1' });
+
+    // Don't continue if a match hasn't been found, or the match is disabled.
+    if (
+      !listOption.length ||
+      !option.length ||
+      option.hasClass('.is-disabled') ||
+      option.is(':disabled')
+    ) {
       return;
     }
 
-    this.setItemIconOverColor();
-    this.list.find('.is-focused').removeClass('is-focused').attr({ tabindex: '-1' });
-    if (!option.hasClass('clear')) {
-      this.setItemIconOverColor(listOption);
-      listOption.addClass('is-focused').attr({ tabindex: '0' });
-    }
-
     // Set activedescendent for new option
-    // this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
     this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
-    if (!noScroll || noScroll === false || noScroll === undefined) {
-      this.scrollToOption(listOption);
+    let isEmpty = (option.val() === '' || listOption.attr('data-val') === '' || option.hasClass('clear'));
+    if (!isEmpty) {
+      this.setItemIconOverColor(listOption);
+      listOption.addClass('is-focused').attr({ tabindex: '0' });
+
+      if (!noScroll || noScroll === false || noScroll === undefined) {
+        this.scrollToOption(listOption);
+      }
     }
   },
 
@@ -2845,16 +2860,16 @@ Dropdown.prototype = {
   },
 
   /**
-   * Select the next item that starts with a given character (text of the option).
-   * @param {string} char - The starting letter to match for. (Case insensitive)
+   * Finds the first HTMLOptionElement inside the select that matches a given search term
+   * @param {string} char a single character or filter term that will be matched.
+   * @returns {HTMLOptionElement|undefined} representing the first option that matches the filter term. Returns nothing if there's no match.
    */
-  selectStartsWith(char) {
+  firstOptionStartingWith(char) {
     if (typeof char !== 'string') {
       return;
     }
 
     const elem = this.element[0];
-    this.filterTerm = '';
 
     let newIdx = -1;
     let totalMatches = 0;
@@ -2892,9 +2907,35 @@ Dropdown.prototype = {
       }
     }
 
-    elem.selectedIndex = newIdx;
+    return elem.options[newIdx];
+  },
+
+  /**
+   * Select the next item that starts with a given string (text of the option).
+   * @param {string} char - The starting letter to match for. (Case insensitive)
+   * @returns {void}
+   */
+  selectStartsWith(char) {
+    this.filterTerm = '';
+    const newOption = this.firstOptionStartingWith(char);
+
+    this.select(newOption);
     this.updated();
     this.element.trigger('change');
+  },
+
+  /**
+   * Highlights the next item that starts with a given string (text of the option).
+   * @param {string} char - The starting letter to match for. (Case insensitive)
+   * @returns {void}
+   */
+  highlightStartsWith(char) {
+    if (!this.isOpen()) {
+      return;
+    }
+
+    const newOption = this.firstOptionStartingWith(char);
+    this.highlightOption($(newOption));
   },
 
   /**

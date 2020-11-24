@@ -5,6 +5,7 @@
 ### v4.35.0 Features
 
 - `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))
+- `[Dropdown]` Improved behavior of list item navigation/selection when a Dropdown is configured with "no search" mode activated. ([#4483](https://github.com/infor-design/enterprise/issues/4483))
 - `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ### v4.35.0 Fixes
