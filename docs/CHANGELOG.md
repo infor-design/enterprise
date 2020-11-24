@@ -10,6 +10,7 @@
 
 ### v4.35.0 Fixes
 
+- `[Application Menu]` Fixed accessibility issues getting redundant info in expand/collapse button. ([#4462](https://github.com/infor-design/enterprise/issues/4462))
 - `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))

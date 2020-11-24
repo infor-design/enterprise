@@ -232,13 +232,6 @@ Accordion.prototype = {
         headersHaveIcons = true;
       }
       checkIfIcons();
-
-      // Add an Audible Description to the button
-      let description = expander.children('.audible');
-      if (!description.length) {
-        description = $('<span class="audible"></span>').appendTo(expander);
-      }
-      description.text(Locale.translate('Expand'));
     });
 
     if (headersHaveIcons) {
