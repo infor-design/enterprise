@@ -7,17 +7,17 @@ const breadcrumbTmpl = `<nav id="${id}" class="breadcrumb"></nav>`;
 // Used to generate Breadcrumb data from existing HTML
 const fullBreadcrumbTmpl = `<nav id="${id}" class="breadcrumb">
   <ol>
-    <li class="breadcrumb-item">
-      <a id="home">Home</a>
+    <li id="home" class="breadcrumb-item">
+      <span>Home</span>
     </li>
-    <li class="breadcrumb-item is-disabled">
-      <a id="second-item" disabled>Second Item</a>
+    <li id="second-item" class="breadcrumb-item is-disabled">
+      <span>Second Item</span>
     </li>
-    <li class="breadcrumb-item">
-      <a id="third-item" href="https://infor.com/">Third Item</a>
+    <li id="third-item" class="breadcrumb-item">
+      <a href="https://infor.com/">Third Item</a>
     </li>
-    <li class="breadcrumb-item current">
-      <a id="fourth-item">Fourth Item</a>
+    <li id="fourth-item" class="breadcrumb-item current">
+      <span>Fourth Item</span>
     </li>
   </ol>
 </nav>`;
@@ -78,15 +78,13 @@ describe('Breadcrumb API', () => {
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
       breadcrumbs: TEST_BREADCRUMBS
     });
-    const a1 = breadcrumbAPI.breadcrumbs[0].a;
+    const li1 = breadcrumbAPI.breadcrumbs[0].element;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
-    const a2 = li2.querySelector('a');
     const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
-    expect(a1.id).toEqual(TEST_BREADCRUMBS[0].id);
-    expect(a2.disabled).toBeTruthy();
+    expect(li1.id).toEqual(TEST_BREADCRUMBS[0].id);
     expect(li2.classList.contains('is-disabled')).toBeTruthy();
     expect(a3.href).toEqual(TEST_BREADCRUMBS[2].href);
     expect(li4.classList.contains('current')).toBeTruthy();
@@ -96,15 +94,13 @@ describe('Breadcrumb API', () => {
     document.body.insertAdjacentHTML('afterbegin', fullBreadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl);
-    const a1 = breadcrumbAPI.breadcrumbs[0].a;
+    const li1 = breadcrumbAPI.breadcrumbs[0].element;
     const li2 = breadcrumbAPI.breadcrumbs[1].element;
-    const a2 = li2.querySelector('a');
     const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(TEST_BREADCRUMBS.length);
-    expect(a1.id).toEqual(TEST_BREADCRUMBS[0].id);
-    expect(a2.disabled).toBeTruthy();
+    expect(li1.id).toEqual(TEST_BREADCRUMBS[0].id);
     expect(li2.classList.contains('is-disabled')).toBeTruthy();
     expect(a3.href).toEqual(TEST_BREADCRUMBS[2].href);
     expect(li4.classList.contains('current')).toBeTruthy();
@@ -173,8 +169,8 @@ describe('Breadcrumb API', () => {
       breadcrumbs: newBreadcrumbs
     });
 
-    const targetA = breadcrumbEl.querySelector(`#${id} li:first-child > a`);
-    $(targetA).click();
+    const targetLi = breadcrumbEl.querySelector(`#${id} li:first-child`);
+    $(targetLi).click();
 
     // Callback should have executed, AND should've changed the text value
     expect(result).toBeTruthy();
@@ -232,18 +228,18 @@ describe('Breadcrumb API', () => {
     expect(fifth.disabled).toBeFalsy(); // Should take on the default
   });
 
-  it('can programmatically remove a breadcrumb via its anchor', () => {
+  it('can programmatically remove a breadcrumb via its list item', () => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a1 = breadcrumbEl.querySelector('li:first-child > a');
-    breadcrumbAPI.remove(a1, true);
+    const li1 = breadcrumbEl.querySelector('li:first-child');
+    breadcrumbAPI.remove(li1, true);
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
-    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
+    expect(breadcrumbEl.querySelector('li:first-child').innerText).toEqual('Second Item');
   });
 
   it('can programmatically remove a breadcrumb by providing an index', () => {
@@ -256,7 +252,7 @@ describe('Breadcrumb API', () => {
     breadcrumbAPI.remove(0, true);
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
-    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
+    expect(breadcrumbEl.querySelector('li:first-child').innerText).toEqual('Second Item');
   });
 
   it('can programmatically remove a breadcrumb via its BreadcrumbItem API', () => {
@@ -270,18 +266,18 @@ describe('Breadcrumb API', () => {
     breadcrumbAPI.remove(api1, true);
 
     expect(breadcrumbAPI.breadcrumbs.length).toEqual(3);
-    expect(breadcrumbEl.querySelector('li:first-child > a').innerText).toEqual('Second Item');
+    expect(breadcrumbEl.querySelector('li:first-child').innerText).toEqual('Second Item');
   });
 
-  it('can programmatically make a breadcrumb current via its anchor', () => {
+  it('can programmatically make a breadcrumb current via its list item', () => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
       breadcrumbs: TEST_BREADCRUMBS
     });
 
-    const a1 = breadcrumbEl.querySelector('li:first-child > a');
-    breadcrumbAPI.makeCurrent(a1);
+    const li1 = breadcrumbEl.querySelector('li:first-child');
+    breadcrumbAPI.makeCurrent(li1);
     const liCssClasses = breadcrumbEl.querySelector('li:first-child').classList;
 
     expect(liCssClasses.contains('current')).toBeTruthy();
@@ -314,7 +310,7 @@ describe('Breadcrumb API', () => {
     expect(liCssClasses.contains('current')).toBeTruthy();
   });
 
-  it('can get the current breadcrumb\'s anchor', () => {
+  it('can get the current breadcrumb\'s list item', () => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
@@ -322,10 +318,10 @@ describe('Breadcrumb API', () => {
     });
 
     const currentA = breadcrumbAPI.current;
-    const a4 = breadcrumbAPI.breadcrumbs[3].a;
+    const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
     expect(currentA).toBeDefined();
-    expect(currentA).toEqual(a4);
+    expect(currentA).toEqual(li4);
   });
 
   it('should render a popupmenu with overflowed breadcrumb items', (done) => {
