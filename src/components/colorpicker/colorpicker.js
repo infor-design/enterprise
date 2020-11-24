@@ -398,8 +398,10 @@ ColorPicker.prototype = {
         this.element.trigger('listclosed', 'select');
       })
       .on('selected.colorpicker', (e, item) => {
+        this.itemLabel = item.data('label');
+
         if (!this.isEditor) {
-          this.setColor(item.data('value'), item.data('label'));
+          this.setColor(item.data('value'), this.itemLabel);
         }
 
         // Editor colorpicker
@@ -450,7 +452,7 @@ ColorPicker.prototype = {
     let colorLabel = label;
 
     // Make sure there is always a hash
-    if (hex.substr(0, 1) !== '#' && hex !== '') {
+    if (hex.toString().substr(0, 1) !== '#' && hex !== '') {
       colorHex = `#${colorHex}`;
     }
 
@@ -556,6 +558,9 @@ ColorPicker.prototype = {
     const checkThemes = s.themes[themeVariant].checkmark;
     let checkmarkClass = '';
 
+    // Remove previously opened colorpicker first
+    $('#colorpicker-menu').remove();
+
     for (let i = 0, l = s.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
@@ -589,7 +594,10 @@ ColorPicker.prototype = {
           });
           /* eslint-disable no-loop-func */
         }
-        a.addClass(`is-selected${checkmarkClass}`);
+
+        if (colorText === this.itemLabel || this.itemLabel === undefined) {
+          a.addClass(`is-selected${checkmarkClass}`);
+        }
       }
 
       colorValue = s.uppercase ? colorValue.toUpperCase() : colorValue.toLowerCase();
@@ -598,10 +606,11 @@ ColorPicker.prototype = {
         swatch[0].style.backgroundColor = `#${colorValue}`;
       }
       swatch.addClass(isBorder ? 'is-border' : '');
-      a.data('label', colorText)
-        .data('value', colorValue)
-        .attr('title', `${colorText} #${colorValue}`)
-        .tooltip();
+
+      a[0].setAttribute('data-label', colorText);
+      a[0].setAttribute('data-value', colorValue);
+      a[0].setAttribute('title', `${colorText} #${colorValue}`);
+      a.tooltip();
 
       utils.addAttributes(a, this, this.settings.attributes, colorText);
 
