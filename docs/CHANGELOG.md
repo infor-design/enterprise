@@ -13,6 +13,7 @@
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
+- `[Colorpicker]` Fixed an issue where values were not being selecting when multiple colopickers are present. ([#4146](https://github.com/infor-design/enterprise/issues/4146))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Datagrid]` Fixed an issue where the click event was not fire for hyperlinks keyword search results. ([#4550](https://github.com/infor-design/enterprise/issues/4550))
 - `[Datagrid]` Added api setting for selection on enter edit mode. ([#4485](https://github.com/infor-design/enterprise/issues/4485))
