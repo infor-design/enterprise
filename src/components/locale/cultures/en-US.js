@@ -81,6 +81,7 @@ Soho.Locale.addCulture('en-US', {
     Apply: { id: 'Apply', value: 'Apply', comment: 'Text in a button to apply an action' },
     And: { id: 'And', value: 'and', comment: 'Text use in calendar' },
     AppMenuTriggerText: { id: 'AppMenuTriggerText', value: 'Menu', comment: 'Text in a special Module Tab used to trigger an Application Menu open or closed' },
+    AppMenuTriggerTextAlt: { id: 'AppMenuTriggerTextAlt', value: 'Application Menu Trigger', comment: 'Default text used inside of Application Menu trigger buttons' },
     Attach: { id: 'Attach', value: 'Attach', comment: 'Attach' },
     Available: { id: 'Available', value: 'Available', comment: 'Button tooltip used in a list of movable items' },
     Azure: { id: 'Azure', value: 'Azure', comment: 'Color in our color palette' },
