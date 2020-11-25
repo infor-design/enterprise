@@ -33,7 +33,7 @@ describe('Application Menu API', () => {
   });
 
   it('Should show on page', () => {
-    document.body.querySelector('.application-menu-trigger').click();
+    document.body.querySelector('#header-hamburger').click();
 
     expect(document.body.querySelector('#application-menu')).toBeVisible();
   });
