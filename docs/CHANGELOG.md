@@ -29,8 +29,10 @@
 - `[Field Options]` Fixed an issue where the action button was misaligned for safari. ([#4610](https://github.com/infor-design/enterprise/issues/4610))
 - `[FileUploadAdvanced]` Fixed an issue where abort method was not working properly to remove the file block when upload fails. ([#938](https://github.com/infor-design/enterprise-ng/issues/938))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed incorrect counts when using allowSelectAcrossPages. ([#4316](https://github.com/infor-design/enterprise/issues/4316))
 - `[Mask]` Fixed broken date/time masks in the `sv-SE` locale. ([#4613](https://github.com/infor-design/enterprise/issues/4613))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
+- `[Tooltip/Pager]` Fixed an issue where the tooltip would show at the top when clicking paging buttons. ([#218](https://github.com/infor-design/enterprise-ng/issues/218))
 
 ## v4.34.2
 
