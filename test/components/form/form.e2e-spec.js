@@ -61,9 +61,7 @@ describe('Form Tests', () => {
     it('Should not visual regress on compact/short fields in RTL', async () => {
       await utils.setPage('/components/form/example-compact-mode?layout=nofrills&locale=ar-SA');
       const containerEl = await element(by.className('container'));
-      await browser.driver.sleep(config.sleep);
-
-      await utils.checkForErrors();
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'form-compact-mode-rtl')).toEqual(0);
     });

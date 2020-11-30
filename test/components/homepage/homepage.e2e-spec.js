@@ -25,7 +25,7 @@ describe('Homepage example hero widget tests', () => {
       const containerEl = await element(by.css('body'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkScreen('homepage-hero-widget')).toEqual(0);
     });
