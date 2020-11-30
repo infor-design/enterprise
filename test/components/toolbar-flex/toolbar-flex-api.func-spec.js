@@ -318,21 +318,6 @@ describe('Flex Toolbar', () => { //eslint-disable-line
         done();
       }, 400);
     });
-
-    it('Should trigger "selected" event for a menu button', (done) => {
-      const menuButton = toolbarAPI.items[1];
-      const menuButtonSpyEvent = spyOnEvent('button#menu-button', 'selected');
-
-      menuButton.componentAPI.open();
-      setTimeout(() => {
-        document.body.querySelector('ul#popupmenu-1 li a').click();
-
-        setTimeout(() => {
-          expect(menuButtonSpyEvent).toHaveBeenTriggered();
-          done();
-        }, 400);
-      }, 400);
-    });
   });
 });
 

@@ -351,16 +351,6 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
-.toolbar.do-resize {
-  .toolbar-searchfield-wrapper {
-    .searchfield {
-      @include placeholderTextColor {
-        color: $searchfield-placeholder-text-color;
-      }
-    }
-  }
-}
-
 @include respond-to(phone) {
   .toolbar {
     .btn,
