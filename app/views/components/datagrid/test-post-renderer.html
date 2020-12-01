@@ -29,8 +29,9 @@
           columnReorder: true,
           paging: true,
           pagesize: 8,
+          frozenColumns: { left: ['productId'] },
           onPostRenderCell: function (container, args) {
-            console.log('Post Render Row', args.row);
+            console.log('Post Render Row', args.row, container);
             if (args.row !== 1) { //Simulate some logic around the buttons you might need
               container.innerHTML = '<button type="button" class="btn-icon"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use href="#icon-settings"/></svg><span class="audible">Date</span></button>';
             }
