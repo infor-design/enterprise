@@ -736,6 +736,11 @@ $datagrid-small-row-height: 25px;
             margin-top: 0;
           }
 
+          .has-close-icon-button .icon {
+            right: 19px;
+            top: 5px;
+          }
+
           .timepicker + .icon,
           .datepicker + .icon {
             right: 5px;
@@ -825,6 +830,11 @@ $datagrid-small-row-height: 25px;
         .lookup-wrapper .trigger {
           margin-left: -25px;
           margin-top: -1px;
+        }
+
+        .has-close-icon-button .icon {
+          right: 18px;
+          top: 4px;
         }
       }
 
@@ -3037,6 +3047,10 @@ $datagrid-small-row-height: 25px;
         padding: 3px 24px 2px 5px;
       }
 
+      &.lookup.is-not-editable {
+        color: $datagrid-filter-color;
+      }
+
       &.error {
         color: $datagrid-filter-color !important;
       }
@@ -3153,6 +3167,7 @@ $datagrid-small-row-height: 25px;
       width: calc(100% - 44px);
 
       input.lookup {
+        background-color: transparent;
         left: 10px;
         padding-right: 20px;
         width: calc(100% - 44px);
@@ -3168,6 +3183,22 @@ $datagrid-small-row-height: 25px;
         }
       }
 
+      .searchfield-wrapper.has-close-icon-button {
+        box-shadow: none;
+        display: inline;
+        width: inherit;
+
+        .icon {
+          color: $datagrid-filter-icon-color;
+          right: 11px;
+          top: 5px;
+
+          &:hover {
+            color: $datagrid-filter-hover-color;
+          }
+        }
+      }
+
       .trigger {
         height: 24px;
         margin-left: -18px;
@@ -3177,7 +3208,7 @@ $datagrid-small-row-height: 25px;
           color: $datagrid-filter-icon-color;
           height: 30px;
           right: -6px;
-          top: -2px;
+          top: -3px;
           width: 16px;
         }
       }

@@ -24,6 +24,13 @@
 - `[Dropdown/Autocomplete]` Fix a bug where these components would fail in IE 11. Note that IE 11 isn't "supported" but we fixed these issues to give teams more time to migrate. ([#4608](https://github.com/infor-design/enterprise/issues/4608))
 - `[General]` Fix a bug where the regex scripts will error on Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
 
+## v4.34.2
+
+### v4.34.2 Fixes
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+
 ## v4.34.1
 
 ### v4.34.1 Fixes
