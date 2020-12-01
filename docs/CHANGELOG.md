@@ -39,6 +39,15 @@
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
 - `[Tooltip/Pager]` Fixed an issue where the tooltip would show at the top when clicking paging buttons. ([#218](https://github.com/infor-design/enterprise-ng/issues/218))
 
+(40 Issues Solved This Release, Backlog Enterprise 173, Backlog Ng 42, 1083 Functional Tests, 1638 e2e Tests)
+
+## v4.34.3
+
+### v4.34.3 Fixes
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+
 ## v4.34.2
 
 ### v4.34.2 Fixes
