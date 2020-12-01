@@ -147,8 +147,9 @@ $indicator-current-size: ($indicator-size * 1.6);
 
           .icon {
             height: 18px;
+            left: -1px;
             position: relative;
-            top: -1px;
+            top: 0;
             width: 18px;
           }
         }
@@ -213,6 +214,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
 
     .indicator.icon {
+      background-color: transparent !important;
       border: 0;
 
       .icon {
