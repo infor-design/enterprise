@@ -4827,6 +4827,7 @@ describe('Datagrid select all for current page only', () => {
     await utils.setPage('/components/datagrid/test-paging-select-clientside-multiple-current-page?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
@@ -4909,5 +4910,23 @@ describe('Datagrid select all for current page only', () => {
     await browser.driver.sleep(350);
 
     expect(await element.all(by.css('tr.is-selected')).count()).toEqual(0);
+  });
+});
+
+describe('Datagrid Formatter Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datagrid/test-all-formatters?layout=nofrills');
+    const datagridEl = await element(by.css('#readonly-datagrid tbody tr:nth-child(1)'));
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should render ProcessIndicator', async () => {
+    expect(await element.all(by.css('.process-indicator .step')).count()).toEqual(43);
   });
 });

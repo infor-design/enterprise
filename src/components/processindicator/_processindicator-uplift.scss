@@ -21,6 +21,39 @@
   }
 }
 
+.process-indicator.compact .separator {
+  margin-left: 0;
+}
+
+.indicator.rejected::before,
+.indicator.rejected::after {
+  left: 0.121em;
+  top: 0.58em;
+}
+
+.indicator.icon .icon {
+  height: 22px;
+  left: 0;
+  top: 0;
+  width: 22px;
+}
+
+.process-indicator.responsive .lines .separator {
+  top: -7px !important;
+}
+
+.process-indicator.responsive .details .icon {
+  top: 3px;
+}
+
+@include respond-to(smphabletdown) {
+  .process-indicator .step.current {
+    .details {
+      margin-top: 90px;
+    }
+  }
+}
+
 .is-safari {
   .process-indicator {
     .indicator {
@@ -85,6 +118,11 @@
       }
     }
   }
+}
+
+.process-indicator.responsive .lines .indicator.current .icon {
+  left: -1px;
+  top: 0;
 }
 
 .ie,

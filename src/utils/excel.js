@@ -359,9 +359,9 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
  * Export the grid contents to csv
  * @param {string} fileName The desired export filename in the download.
  * @param {string} customDs An optional customized version of the data to use.
- * @param {string|object} sep (optional) If user's machine is configured for a locale with alternate default seperator.
- * The char double quote `"` is not allowed to be use as seperator char
- * Can use as custom string `sep=;` or `;` will add to first line and use `;` as seperator
+ * @param {string|object} sep (optional) If user's machine is configured for a locale with alternate default separator.
+ * The char double quote `"` is not allowed to be use as separator char
+ * Can use as custom string `sep=;` or `;` will add to first line and use `;` as separator
  * @param {boolean} [sep.firstLine=true] if false will not added to first line `sep=<separator.char>`
  * @param {string} [sep.char=','] custom separator char
  * @param {boolean} [sep.flexChar=true] if false `char` will not be auto change to `\t` tab in case utf-16 encode for csv file

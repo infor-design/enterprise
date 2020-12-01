@@ -34,16 +34,4 @@ describe('ColorPicker ARIA', () => {
     expect(parent.querySelector('.icon[aria-hidden="true"]')).toBeTruthy();
     expect(parent.querySelector('.icon[role="presentation"]')).toBeTruthy();
   });
-
-  it('Should update ARIA labels with popup open', (done) => {
-    colorpickerObj.toggleList();
-
-    setTimeout(() => {
-      const parent = colorpickerEl.parentNode;
-
-      expect(parent.querySelector('.colorpicker[aria-haspopup="true"]')).toBeTruthy();
-      expect(parent.querySelector('.colorpicker[aria-controls="colorpicker-menu"]')).toBeTruthy();
-      done();
-    }, 450);
-  });
 });

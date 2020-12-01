@@ -10,7 +10,7 @@ custom<div class="row top-padding">
     <p><strong>Default Separator</strong></p><br/>
     <ul>
       <li>1) Add `sep=,` to first line</li>
-      <li>2) Change document seperator to char `,`</li>
+      <li>2) Change document separator to char `,`</li>
     </ul>
     <br/>
     <pre><code>exportToCsv('Filename-1', data);</code></pre><br/>
@@ -23,7 +23,7 @@ custom<div class="row top-padding">
     <p><strong>Separator with Custom String</strong></p><br/>
     <ul>
       <li>1) Add `sep=;` to first line</li>
-      <li>2) Change document seperator to char `;`</li>
+      <li>2) Change document separator to char `;`</li>
     </ul>
     <br/>
     <pre><code>exportToCsv('Filename-2', data, 'sep=;');</code></pre><br/>
@@ -36,7 +36,7 @@ custom<div class="row top-padding">
     <p><strong>Separator with Custom String Char Only</strong></p><br/>
     <ul>
       <li>1) Add `sep=;` to first line</li>
-      <li>2) Change document seperator to char `;`</li>
+      <li>2) Change document separator to char `;`</li>
     </ul>
     <br/>
     <pre><code>exportToCsv('Filename-3', data, ';');</code></pre><br/>
@@ -49,7 +49,7 @@ custom<div class="row top-padding">
     <p><strong>Separator with Custom Object Type</strong></p><br/>
     <ul>
       <li>1) NOT add anything to first line</li>
-      <li>2) Change document seperator to char `;`</li>
+      <li>2) Change document separator to char `;`</li>
     </ul>
     <pre style="white-space: pre-line;"><code>
       var separator = { firstLine: false, char: ';' };
@@ -72,28 +72,28 @@ custom<div class="row top-padding">
 
     // Default separator *****************************************
     // 1) Add `sep=,` to first line
-    // 2) Change document seperator to char `,`
+    // 2) Change document separator to char `,`
     $('#export-default').on('click', function () {
       Soho.excel.exportToCsv('Filename-1', data);
     });
 
     // Separator with custom string, this will *******************
     // 1) Add `sep=;` to first line
-    // 2) Change document seperator to char `;`
+    // 2) Change document separator to char `;`
     $('#export-custom-string').on('click', function () {
       Soho.excel.exportToCsv('Filename-2', data, 'sep=;');
     });
 
     // Separator with custom string Char only, this will *********
     // 1) Add `sep=;` to first line
-    // 2) Change document seperator to char `;`
+    // 2) Change document separator to char `;`
     $('#export-custom-string-char-only').on('click', function () {
       Soho.excel.exportToCsv('Filename-3', data, ';');
     });
 
     // Separator with custom Object type, this will **************
     // 1) NOT add anything to first line
-    // 2) Change document seperator to char `;`
+    // 2) Change document separator to char `;`
     $('#export-custom-object').on('click', function () {
       var separator = { firstLine: false, char: ';' };
       Soho.excel.exportToCsv('Filename-4', data, separator);

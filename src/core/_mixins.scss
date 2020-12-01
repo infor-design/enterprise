@@ -207,6 +207,10 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     @media (min-width: $breakpoint-phone-to-tablet) { @content; }
   }
 
+  @else if $media == smphabletdown {
+    @media (min-width: 0) and (max-width: $breakpoint-phablet - 1) { @content; }
+  }
+
   @else if $media == desktop {
     @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
   }

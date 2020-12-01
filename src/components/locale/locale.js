@@ -1557,7 +1557,7 @@ const Locale = {  // eslint-disable-line
    * @private
    * @param  {string} numberString The number to expand
    * @param  {array} groupSizes The groupSizes option.
-   * @param  {string} sep The thousands seperator option.
+   * @param  {string} sep The thousands separator option.
    * @returns {string} The expanded number.
    */
   expandNumber(numberString, groupSizes, sep) {

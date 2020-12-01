@@ -218,7 +218,7 @@ Editor.prototype = {
         s.buttons.editor = s.buttons.editor.filter(el => el.substr(0, 6) !== 'header');
         s.fontpickerSettings = { styles };
       }
-      if (s.buttons.editor[0] === 'seperator') {
+      if (s.buttons.editor[0] === 'separator') {
         s.buttons.editor.splice(0, 1);
       }
       if (foundOldSettings) {

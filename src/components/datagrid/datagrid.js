@@ -4694,6 +4694,11 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    if (!col.width && col.formatter?.toString()?.indexOf('ProcessIndicator') > -1) {
+      colWidth = 155;
+      col.width = colWidth;
+    }
+
     if (col.id === 'expander') {
       colWidth = 55;
       col.width = colWidth;
@@ -4710,7 +4715,7 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'drilldown') {
-      colWidth = 78;
+      colWidth = 62;
       col.width = colWidth;
     }
 
@@ -5471,7 +5476,7 @@ Datagrid.prototype = {
   * Export the grid contents to csv
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
-  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
+  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
   */
   exportToCsv(fileName, customDs, separator) {
     excel.exportToCsv(fileName, customDs, separator, this);

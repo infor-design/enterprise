@@ -306,19 +306,6 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       }, 500);
     });
   });
-
-  describe('Item selected events', () => {
-    it('Should trigger "selected" event for a normal button', (done) => {
-      const button = toolbarAPI.items[0].element;
-      const buttonSpyEvent = spyOnEvent('div.buttonset button:first-child', 'selected');
-
-      button.click();
-      setTimeout(() => {
-        expect(buttonSpyEvent).toHaveBeenTriggered();
-        done();
-      }, 400);
-    });
-  });
 });
 
 describe('Flex Toolbar (with extra attributes)', () => {
