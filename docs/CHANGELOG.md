@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.36.0
+
+### v4.36.0 Fixes
+
+- `[NNN]` Placeholder element please remove me. ([#NNN](https://github.com/infor-design/enterprise/issues/NNN))
+
 ## v4.35.0
 
 ### v4.35.0 Important Notes
