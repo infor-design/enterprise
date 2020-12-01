@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('ProcessIndicator tests', () => {
+describe('ProcessIndicator tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/processindicator/example-index?layout=nofrills');
   });
@@ -24,7 +24,7 @@ fdescribe('ProcessIndicator tests', () => {
   }
 });
 
-fdescribe('ProcessIndicator Labels tests', () => {
+describe('ProcessIndicator Labels tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/processindicator/example-labels?layout=nofrills');
   });
