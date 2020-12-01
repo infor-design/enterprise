@@ -39,13 +39,9 @@ describe('Hierarchy index tests', () => {
 describe('Hierarchy context menu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/hierarchy/example-context-menu-with-details?layout=nofrills');
-
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('hierarchy'))), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should be able to set id/automation id example', async () => {

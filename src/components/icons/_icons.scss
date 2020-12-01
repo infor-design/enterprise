@@ -374,17 +374,22 @@ svg.icon-dirty {
     span.one {
       @include css3(transform, rotate(45deg));
 
-      top: 12.5px;
+      left: 5.5px;
+      top: 14.5px;
     }
 
     span.two {
       @include css3(transform, rotate(45deg));
+
+      left: 5.5px;
+      top: 14.5px;
     }
 
     span.three {
       @include css3(transform, rotate(-45deg));
 
-      top: 12.5px;
+      left: 5.5px;
+      top: 14.5px;
     }
   }
 }

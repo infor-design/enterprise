@@ -2,27 +2,13 @@
   <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
     {{#useFlexToolbar}}
     <div class="toolbar-section">
-      <button class="btn-icon application-menu-trigger" type="button">
-        <span class="audible">Application Menu</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
-      </button>
+      {{> includes/header-appmenu-trigger}}
     </div>
     {{/useFlexToolbar}}
 
     <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
       {{^useFlexToolbar}}
-      <button class="btn-icon application-menu-trigger" type="button">
-        <span class="audible">Application Menu</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
-      </button>
+      {{> includes/header-appmenu-trigger}}
       {{/useFlexToolbar}}
 
       <h1>Level One Detail Page</h1>

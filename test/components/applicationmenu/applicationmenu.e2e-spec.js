@@ -22,6 +22,18 @@ describe('Application Menu index tests', () => {
     await utils.checkForErrors();
   });
 
+  it('should put accurate aria attributes on the trigger button', async () => {
+    const button = await element(by.id('header-hamburger'));
+
+    expect(button.getAttribute('aria-controls')).toBe('application-menu');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+
+    await button.click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('should not visually regress on example-index', async () => {
       const button = await element(by.css('.application-menu-trigger'));
@@ -220,7 +232,7 @@ describe('Application Menu personalize roles switcher tests', () => {
     await browser.driver.sleep(config.sleep);
 
     // Reactivate App Menu
-    await element(by.css('#hamburger-button')).click();
+    await element(by.css('#header-hamburger')).click();
     await browser.driver.sleep(config.sleep);
 
     // Click more actions button, app menu should dismiss again.
@@ -241,7 +253,7 @@ describe('Application Menu personalize roles switcher tests', () => {
     await browser.driver.sleep(config.sleepLonger);
 
     // Reactivate App Menu
-    await element(by.css('#hamburger-button')).click();
+    await element(by.css('#header-hamburger')).click();
     await browser.driver.sleep(config.sleepLonger);
 
     // Click the first button in the Application Menu toolbar
@@ -271,6 +283,19 @@ describe('Application Menu role switcher tests', () => {
     await btnEl.click();
 
     expect(await element(by.css('.application-menu-switcher-panel')).isDisplayed()).toBeTruthy();
+  });
+
+  it('should assign proper aria roles to the trigger button', async () => {
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('trigger-btn'))), config.waitsFor);
+
+    expect(element(by.id('trigger-btn')).getAttribute('aria-controls')).toBe('expandable-area-0-content');
+    expect(element(by.id('trigger-btn')).getAttribute('aria-expanded')).toBe('false');
+
+    await element(by.id('trigger-btn')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.id('trigger-btn')).getAttribute('aria-expanded')).toBe('true');
   });
 
   it('can dismiss the role switcher by pressing Escape', async () => {

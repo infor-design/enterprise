@@ -17,6 +17,7 @@
 ### v4.35.0 Fixes
 
 - `[Application Menu]` Fixed accessibility issues getting redundant info in expand/collapse button. ([#4462](https://github.com/infor-design/enterprise/issues/4462))
+- `[Application Menu]` Fixed accessibility issues with missing instructional text and incorrect aria-role assignments on the App Menu triggers (hamburger buttons) and Role switcher buttons. ([#4489](https://github.com/infor-design/enterprise/issues/4489))
 - `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
@@ -33,8 +34,10 @@
 - `[FileUploadAdvanced]` Fixed an issue where abort method was not working properly to remove the file block when upload fails. ([#938](https://github.com/infor-design/enterprise-ng/issues/938))
 - `[Header]` Fixed a bug where the searchfield automatically expands when clicking the app menu button. ([#4617](https://github.com/infor-design/enterprise/issues/4617))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed incorrect counts when using allowSelectAcrossPages. ([#4316](https://github.com/infor-design/enterprise/issues/4316))
 - `[Mask]` Fixed broken date/time masks in the `sv-SE` locale. ([#4613](https://github.com/infor-design/enterprise/issues/4613))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
+- `[Tooltip/Pager]` Fixed an issue where the tooltip would show at the top when clicking paging buttons. ([#218](https://github.com/infor-design/enterprise-ng/issues/218))
 
 ## v4.34.2
 

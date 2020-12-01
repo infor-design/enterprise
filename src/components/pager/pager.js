@@ -776,6 +776,15 @@ Pager.prototype = {
       totalPages = this.state.filteredPages;
     }
 
+    if (this.pagerBar) {
+      this.pagerBar?.children('li').find('> .btn-icon, > .btn-icon[disabled] .disabled-tooltip').each((i, elem) => {
+        const el = $(elem);
+        if (el.data('tooltip')) {
+          el.data('tooltip').destroy();
+        }
+      });
+    }
+
     // Determine whether or not special navigation buttons should eventually be rendered
     // First Button
     if (this.settings.showFirstButton) {
