@@ -750,7 +750,8 @@ Lookup.prototype = {
 
       // There are rows selected off page. Update the count.
       if (adjust) {
-        this.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
+        const self = this;
+        self.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
       }
       return;
     }

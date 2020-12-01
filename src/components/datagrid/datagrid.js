@@ -5887,6 +5887,10 @@ Datagrid.prototype = {
         const selectedCount = selectedRowIdx.filter((a, b) => selectedRowIdx.indexOf(a) === b);
         self.contextualToolbar.find('.selection-count').text(`${selectedCount.length} ${Locale.translate('Selected')}`);
       });
+
+      if (self.settings.allowSelectAcrossPages) {
+        self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
+      }
     }
 
     if (totals && totals !== -1) {
@@ -5895,6 +5899,10 @@ Datagrid.prototype = {
 
     if (totals === undefined && this.settings.source) {
       count = self.settings.dataset.length;
+    }
+
+    if (totals === undefined && this.settings.source && this.pagerAPI?.state?.total) {
+      count = this.pagerAPI?.state?.total;
     }
 
     let countText;
