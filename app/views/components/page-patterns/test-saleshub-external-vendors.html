@@ -1,18 +1,11 @@
-  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+<a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline}}
 
   <div class="page-container no-scroll">
     <header class="header is-sticky has-alternate-tabs">
       <div class="toolbar">
         <div class="title">
-          <button class="btn-icon application-menu-trigger" type="button">
-            <span class="icon app-header go-back" focusable="false" aria-hidden="true">
-              <span class="one"></span>
-              <span class="two"></span>
-              <span class="three"></span>
-            </span>
-            <span class="audible">Back</span>
-          </button>
+          {{> includes/header-go-back-trigger}}
           <h1>Request #123897</h1>
         </div>
 
@@ -23,7 +16,7 @@
         {{> includes/header-actionbutton}}
       </div>
 
-      <div class="tab-container alternate">
+      <div class="tab-container alternate" data-options='{ "containerElement": "#maincontent" }'>
         <ul class="tab-list">
           <li class="tab"><a href="#header-tabs-1">Catalog Search</a></li>
           <li class="tab is-selected"><a href="#header-tabs-2">External Vendors</a></li>

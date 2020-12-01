@@ -82,7 +82,7 @@ describe('Popupmenu Menu Button API', () => {
   });
 
   it('Should have RTL set correctly', () => {
-    expect(popupmenuObj.isRTL()).toBe(false);
+    expect(popupmenuObj.isRTL()).toBeFalsy();
   });
 
   it('Should set padding correctly', () => {

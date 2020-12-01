@@ -57,6 +57,7 @@ ExpandableArea.prototype = {
       this.id = `expandable-area-${$('body').find('.expandable-area').index(this.element)}`;
     }
 
+    // Detect a button preceeding the expandable area that acts as its trigger element.
     if (this.element.prev('.expandable-area-trigger').length > 0) {
       this.expander = this.element.prev('.expandable-area-trigger');
       this.settings.trigger = this.expander.attr('id') || `expandable-area-trigger-${$('body').find('.expandable-area').index(this.element)}`;
@@ -77,15 +78,20 @@ ExpandableArea.prototype = {
   build() {
     const expanded = this.element.hasClass('is-expanded');
 
-    this.header.attr({
+    const target = this.expander || this.header;
+    target.attr({
       'aria-expanded': `${expanded}`,
       'aria-controls': `${this.id}-content`,
+    });
+
+    this.header.attr({
       id: `${this.id}-header`
     });
+
     this.content.attr({
       id: `${this.id}-content`,
       role: 'region',
-      'aria-labelledby': `${this.id}-content`
+      'aria-labelledby': `${this.id}-header`
     });
 
     // Add the link and footer if not there already.
@@ -124,6 +130,7 @@ ExpandableArea.prototype = {
 
     this.expander = getExpander(this, this.isCard);
     this.expander.attr('href', '#').hideFocus();
+    this.expander.attr('role', 'button');
 
     if (this.expander.length === 0) {
       this.expander = $(`#${this.settings.trigger}`);
@@ -208,7 +215,7 @@ ExpandableArea.prototype = {
     }
 
     this.element.addClass('is-expanded');
-    this.header.attr('aria-expanded', 'true');
+    (this.expander || this.header).attr('aria-expanded', 'true');
     this.expander.addClass('active');
 
     /**
@@ -285,7 +292,7 @@ ExpandableArea.prototype = {
     */
     this.content.one('animateclosedcomplete', () => {
       this.element.removeClass('is-expanded');
-      this.header.attr('aria-expanded', 'false');
+      (this.expander || this.header).attr('aria-expanded', 'false');
       this.element.triggerHandler('aftercollapse', [this.element]);
       this.content[0].style.display = 'none';
     }).animateClosed({ timing: this.settings.animationSpeed });
@@ -343,11 +350,14 @@ ExpandableArea.prototype = {
   * @returns {void}
   */
   destroy() {
+    const expandTarget = this.expander || this.header;
+    expandTarget
+      .removeAttr('aria-controls')
+      .removeAttr('aria-expanded');
+
     this.header.children('a').off();
     this.header.off();
     this.header
-      .removeAttr('aria-controls')
-      .removeAttr('aria-expanded')
       .removeAttr('id');
     this.content.removeAttr('id').removeClass('no-transition');
     $.removeData(this.element[0], COMPONENT_NAME);

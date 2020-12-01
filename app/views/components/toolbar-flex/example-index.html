@@ -150,14 +150,7 @@
     <!-- BEGIN Toolbar similar to Header Toolbar -->
     <div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-header' } ] }">
       <div class="toolbar-section">
-        <button class="btn-icon application-menu-trigger" type="button">
-          <span class="audible">Show navigation</span>
-          <span class="icon app-header">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
-        </button>
+        {{> includes/header-appmenu-trigger}}
       </div>
 
       <div class="toolbar-section title">
