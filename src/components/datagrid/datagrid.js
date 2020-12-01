@@ -3538,7 +3538,7 @@ Datagrid.prototype = {
               self.dataRowIndex(row);
             const lineage = row.attr('data-lineage');
             const rowData = self.rowData(rowIdx);
-            const colIdx = self.columnIdxById(col.id);
+            const colIdx = self.columnIdxById(col.id) - (self.settings.frozenColumns?.left?.length || 0);
             const args = {
               row: lineage || rowIdx,
               cell: colIdx,

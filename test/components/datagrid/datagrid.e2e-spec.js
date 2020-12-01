@@ -1953,6 +1953,12 @@ describe('Datagrid test post renderer tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Render dynamic buttons with onPostRenderCell', async () => {
+    const buttons = await element.all(by.css('.datagrid-cell-wrapper .btn-icon')).count();
+
+    expect(buttons).toEqual(7);
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
