@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.36.0
+
+### v4.36.0 Fixes
+
+- `[NNN]` Placeholder element please remove me. ([#NNN](https://github.com/infor-design/enterprise/issues/NNN))
+
 ## v4.35.0
 
 ### v4.35.0 Important Notes
@@ -9,12 +15,15 @@
 ### v4.35.0 Features
 
 - `[Datagrid]` Added support to select all rows on current page only for client side paging. ([#4265](https://github.com/infor-design/enterprise/issues/4265))
+- `[Datagrid]` Added a new ProcessIndicator formatter. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
 - `[Dropdown]` Improved behavior of list item navigation/selection when a Dropdown is configured with "no search" mode activated. ([#4483](https://github.com/infor-design/enterprise/issues/4483))
 - `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[ProcessIndicator]` Added: labels, more icon support, and a content areas and made it responsive. ([#3918](https://github.com/infor-design/enterprise/issues/3918))
 
 ### v4.35.0 Fixes
 
 - `[Application Menu]` Fixed accessibility issues getting redundant info in expand/collapse button. ([#4462](https://github.com/infor-design/enterprise/issues/4462))
+- `[Application Menu]` Fixed accessibility issues with missing instructional text and incorrect aria-role assignments on the App Menu triggers (hamburger buttons) and Role switcher buttons. ([#4489](https://github.com/infor-design/enterprise/issues/4489))
 - `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
 - `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
@@ -23,14 +32,27 @@
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Datagrid]` Fixed an issue where the click event was not fire for hyperlinks keyword search results. ([#4550](https://github.com/infor-design/enterprise/issues/4550))
 - `[Datagrid]` Added api setting for selection on enter edit mode. ([#4485](https://github.com/infor-design/enterprise/issues/4485))
-- `[Datagrid]` Fixed a bug where the plus-minus icon were misaligned together with focus state on all row heights. ([#4480](https://github.com/infor-design/enterprise/issues/4480))
+- `[Datagrid]` Fixed a bug where the onPostRenderCell function would get an empty container if using frozen columns. ([#947](https://github.com/infor-design/enterprise-ng/issues/947))
+- `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))
 - `[Dropdown]` Fixed a bug where the last option icon changes when searching/filtering in dropdown search field. ([#4474](https://github.com/infor-design/enterprise/issues/4474))
 - `[Editor/Fontpicker]` Fixed a bug where the label relationship were not valid in the editor role. Adding aria-labelledby will fix the association for both editor and the label. Also, added an audible label in fontpicker. ([#4454](https://github.com/infor-design/enterprise/issues/4454))
 - `[Field Options]` Fixed an issue where the action button was misaligned for safari. ([#4610](https://github.com/infor-design/enterprise/issues/4610))
 - `[FileUploadAdvanced]` Fixed an issue where abort method was not working properly to remove the file block when upload fails. ([#938](https://github.com/infor-design/enterprise-ng/issues/938))
+- `[Header]` Fixed a bug where the searchfield automatically expands when clicking the app menu button. ([#4617](https://github.com/infor-design/enterprise/issues/4617))
 - `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed incorrect counts when using allowSelectAcrossPages. ([#4316](https://github.com/infor-design/enterprise/issues/4316))
 - `[Mask]` Fixed broken date/time masks in the `sv-SE` locale. ([#4613](https://github.com/infor-design/enterprise/issues/4613))
 - `[Tree]` Fixed an issue where the character entity references were render differently for parent and child levels. ([#4512](https://github.com/infor-design/enterprise/issues/4512))
+- `[Tooltip/Pager]` Fixed an issue where the tooltip would show at the top when clicking paging buttons. ([#218](https://github.com/infor-design/enterprise-ng/issues/218))
+
+(40 Issues Solved This Release, Backlog Enterprise 173, Backlog Ng 42, 1083 Functional Tests, 1638 e2e Tests)
+
+## v4.34.3
+
+### v4.34.3 Fixes
+
+- `[Lookup]` Added the ability to change the lookup icon. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
+- `[Lookup]` Fixed some layout issues when using the editable and clearable options on the filter row. ([#4527](https://github.com/infor-design/enterprise/issues/4527))
 
 ## v4.34.2
 
@@ -201,6 +223,24 @@
 - `[Vertical Tabs]` Fixed an issue where the error icon was misaligning. ([#873](https://github.com/infor-design/enterprise-ng/issues/873))
 
 (49 Issues Solved This Release, Backlog Enterprise 196, Backlog Ng 51, 1079 Functional Tests, 1525 e2e Tests)
+
+## v4.31.5
+
+### v4.31.5 Fixes
+
+- `[General]` Fix a bug where the regex blows up on Mac Big Sur. ([#4612](https://github.com/infor-design/enterprise/issues/4612))
+
+## v4.31.4
+
+### v4.31.4 Fixes
+
+- `[Datagrid]` Fixed an issue where the icons right text was truncated for extra-small row height. ([#4355](https://github.com/infor-design/enterprise/issues/4355))
+
+## v4.31.3
+
+### v4.31.3 Fixes
+
+- `[Editor]` Fixed a bug where b tags in an empty p tag would be stripped. ([#4411](https://github.com/infor-design/enterprise/issues/4411))
 
 ## v4.31.2
 
@@ -740,7 +780,7 @@
 - `[Datagrid]` Fixed an issue where reset to default was not working properly. ([#3487](https://github.com/infor-design/enterprise/issues/3487))
 - `[Datepicker]` Fixed an issue where setting date format with comma character was not working. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
 - `[Editor]` Made the link and image link fields required on the dialogs. ([#3008](https://github.com/infor-design/enterprise/issues/3008))
-- `[Editor]` Fixed an issue where it was possible to clear text and end up with text outside the default paragraph seperator. ([#2268](https://github.com/infor-design/enterprise/issues/2268))
+- `[Editor]` Fixed an issue where it was possible to clear text and end up with text outside the default paragraph separator. ([#2268](https://github.com/infor-design/enterprise/issues/2268))
 - `[Fileupload]` Fixed an issue where tabbing out of a fileupload in was causing the modal dialog to disappear. ([#3458](https://github.com/infor-design/enterprise/issues/3458))
 - `[Form Compact Layout]` Added support for `form-compact-layout` the remaining components. ([#3008](https://github.com/infor-design/enterprise/issues/3329))
 - `[Dropdown]` Fixed a bug that was causing the `selectValue()` method not to update the visual display of the in-page Dropdown element. ([#3432](https://github.com/infor-design/enterprise/issues/3432))

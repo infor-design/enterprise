@@ -182,7 +182,9 @@ ApplicationMenu.prototype = {
 
       const expandableArea = this.switcherPanel.data('expandablearea');
       if (!expandableArea) {
-        this.switcherPanel.expandablearea();
+        this.switcherPanel.expandablearea({
+          trigger: switcherTrigger
+        });
       }
     }
     return this;
@@ -437,12 +439,11 @@ ApplicationMenu.prototype = {
 
     this.triggers.each(function () {
       const trig = $(this);
-      if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
-        const header = trig.parents('.header, .masthead');
-        if (header.parents('.page-container').length) {
-          return;
-        }
 
+      // Update aria
+      trig.attr({ 'aria-expanded': true });
+
+      if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
         trig.find('.icon.app-header').removeClass('go-back').addClass('close');
         trig.trigger('icon-change');
       }
@@ -537,6 +538,10 @@ ApplicationMenu.prototype = {
 
     this.triggers.each(function () {
       const trig = $(this);
+
+      // Update aria
+      trig.attr({ 'aria-expanded': false });
+
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
         trig.find('.icon.app-header').removeClass('close');
         trig.trigger('icon-change');
@@ -588,6 +593,25 @@ ApplicationMenu.prototype = {
 
     this.triggers = this.triggers[!remove ? 'add' : 'not'](changed);
     this.handleTriggerEvents();
+
+    // Setup trigger button markup
+    this.triggers.each((i, trig) => {
+      const $trig = $(trig);
+      $trig.attr('aria-controls', 'application-menu');
+      $trig.attr('aria-expanded', `${this.isOpen()}`);
+
+      // Add accessible text about the App menu trigger's function, if applicable
+      const hasText = trig.textContent?.length;
+      const audible = $trig.find('.audible');
+      if (!hasText) {
+        const text = Locale.translate('AppMenuTriggerTextAlt');
+        if (!audible.length) {
+          trig.insertAdjacentHTML('beforeend', `<span class="audible">${text}</span>`);
+        } else {
+          audible.text(text);
+        }
+      }
+    });
 
     if (norebuild && norebuild === true) {
       return;

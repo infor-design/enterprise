@@ -306,34 +306,6 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       }, 500);
     });
   });
-
-  describe('Item selected events', () => {
-    it('Should trigger "selected" event for a normal button', (done) => {
-      const button = toolbarAPI.items[0].element;
-      const buttonSpyEvent = spyOnEvent('div.buttonset button:first-child', 'selected');
-
-      button.click();
-      setTimeout(() => {
-        expect(buttonSpyEvent).toHaveBeenTriggered();
-        done();
-      }, 400);
-    });
-
-    it('Should trigger "selected" event for a menu button', (done) => {
-      const menuButton = toolbarAPI.items[1];
-      const menuButtonSpyEvent = spyOnEvent('button#menu-button', 'selected');
-
-      menuButton.componentAPI.open();
-      setTimeout(() => {
-        document.body.querySelector('ul#popupmenu-1 li a').click();
-
-        setTimeout(() => {
-          expect(menuButtonSpyEvent).toHaveBeenTriggered();
-          done();
-        }, 400);
-      }, 400);
-    });
-  });
 });
 
 describe('Flex Toolbar (with extra attributes)', () => {

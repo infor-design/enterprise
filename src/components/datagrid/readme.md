@@ -141,6 +141,7 @@ $('#datagrid').datagrid({
 |`isChecked` | Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.|
 |`postRender` | If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.|
 |`exportable` | If set to false then this column will not be included in a css or csv export operation, the default is true.|
+|`steps` | If use the ProcessIndicator formatter you should pass the following data in any column to render the process steps `{ steps: 5 , current: 2}`|
 
 ## Formatters
 
@@ -180,6 +181,7 @@ $('#datagrid').datagrid({
 |`Favorite` | Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.|
 |`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/test-targeted-achievement.html?font=source-sans" target="_blank">targeted achievement example</a>|
 |`RowNumber` | Formats the cell with a row number column that is shown 1 to n no matter the sort order. See the <a href="https://design.infor.com/code/ids-enterprise/latest/demo/datagrid/example-row-numbers?font=source-sans" target="_blank">row numbers example</a>|
+|`ProcessIndicator` | Formats the cell with a compact version of the Process indicator component. You should pass the following data in any column to render the process steps `{ steps: 5 , current: 2}`
 
 ## Creating Custom Formatters
 

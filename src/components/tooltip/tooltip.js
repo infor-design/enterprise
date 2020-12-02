@@ -1030,6 +1030,10 @@ Tooltip.prototype = {
    * @returns {this} component instance
    */
   teardown() {
+    if (this.timer && this.timer.destroy) {
+      this.timer.destroy(true);
+    }
+
     this.description.remove();
     this.descriptionId = undefined;
     this.activeElement = undefined;

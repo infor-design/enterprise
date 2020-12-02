@@ -1128,7 +1128,9 @@ Toolbar.prototype = {
     this.activeButton.addClass('is-selected').attr('tabindex', '0');
 
     if (!noFocus && this.activeButton[0]) {
-      this.activeButton[0].focus();
+      if (this.buttonsetItems.length > 1) {
+        this.activeButton[0].focus();
+      }
 
       /**
        * Fires when the Toolbar's currently `active` element has changed.

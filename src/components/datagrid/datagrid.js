@@ -3538,7 +3538,7 @@ Datagrid.prototype = {
               self.dataRowIndex(row);
             const lineage = row.attr('data-lineage');
             const rowData = self.rowData(rowIdx);
-            const colIdx = self.columnIdxById(col.id);
+            const colIdx = self.columnIdxById(col.id) - (self.settings.frozenColumns?.left?.length || 0);
             const args = {
               row: lineage || rowIdx,
               cell: colIdx,
@@ -4694,6 +4694,11 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    if (!col.width && col.formatter?.toString()?.indexOf('ProcessIndicator') > -1) {
+      colWidth = 155;
+      col.width = colWidth;
+    }
+
     if (col.id === 'expander') {
       colWidth = 55;
       col.width = colWidth;
@@ -4710,7 +4715,7 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'drilldown') {
-      colWidth = 78;
+      colWidth = 62;
       col.width = colWidth;
     }
 
@@ -5471,7 +5476,7 @@ Datagrid.prototype = {
   * Export the grid contents to csv
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
-  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default seperator.
+  * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
   */
   exportToCsv(fileName, customDs, separator) {
     excel.exportToCsv(fileName, customDs, separator, this);
@@ -5887,6 +5892,10 @@ Datagrid.prototype = {
         const selectedCount = selectedRowIdx.filter((a, b) => selectedRowIdx.indexOf(a) === b);
         self.contextualToolbar.find('.selection-count').text(`${selectedCount.length} ${Locale.translate('Selected')}`);
       });
+
+      if (self.settings.allowSelectAcrossPages) {
+        self.contextualToolbar.find('.selection-count').text(`${self._selectedRows.length} ${Locale.translate('Selected')}`);
+      }
     }
 
     if (totals && totals !== -1) {
@@ -5895,6 +5904,10 @@ Datagrid.prototype = {
 
     if (totals === undefined && this.settings.source) {
       count = self.settings.dataset.length;
+    }
+
+    if (totals === undefined && this.settings.source && this.pagerAPI?.state?.total) {
+      count = this.pagerAPI?.state?.total;
     }
 
     let countText;

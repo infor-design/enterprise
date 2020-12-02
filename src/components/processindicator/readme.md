@@ -5,6 +5,9 @@ demo:
   embedded:
   - name: Main Process Indicator Example
     slug: example-index
+  pages:
+  - name: Example showing labels and content areas
+    slug: example-labels
 ---
 
 ## Code Example
@@ -29,7 +32,6 @@ Here is an example of a compact process indicator. There are several classes in 
     Today
   </div>
 </div>
-
 ```
 
 ## Testability
