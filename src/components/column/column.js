@@ -627,7 +627,7 @@ Column.prototype = {
             return self.settings.isStacked ? xScale(i) :
               (x1.bandwidth() / 2 + ((width + 2) * i) - (dataArray[0].values.length === 1 ||
                 dataArray[0].values.length === 5 ||
-                dataArray[0].values.length === 4 ? x1(d.key) : 0
+                dataArray[0].values.length === 4 ? (width / 2) : 0
               ));
           })
           .attr('y', function () { return y(0) > height ? height : y(0); })
