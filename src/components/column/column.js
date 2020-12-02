@@ -222,7 +222,7 @@ Column.prototype = {
     const x0 = d3.scaleBand()
       .range([0, width])
       .round(true)
-      .padding(0);
+      .padding(this.settings.type === 'column-grouped' ? 0.1 : 0);
 
     const x1 = d3.scaleBand();
 
@@ -307,7 +307,7 @@ Column.prototype = {
     const xAxisValues = dataset[0].data.map(function (d) { return d.name; });
 
     const xAxis = d3.axisBottom(x0)
-      .tickSize(10)
+      .tickSize(0)
       .tickPadding(12);
 
     const yAxis = d3.axisLeft(y)
@@ -556,13 +556,7 @@ Column.prototype = {
             const r = self.settings.isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
               (d.value < 0 ? y(0) : y(d.value));
             return (
-              isTargetBars
-              ? y(d.target)
-              : d.value < 0
-              ? r
-              : r > (height - 3)
-              ? height - 2
-              : r
+              isTargetBars ? y(d.target) : d.value < 0 ? r : r > (height - 3) ? height - 2 : r
             );
           })
           .attr('height', function (d) {
@@ -587,7 +581,6 @@ Column.prototype = {
             return i;
           })
           .attr('transform', function (d) {
-            console.log(d);
             let x = x0(self.settings.isStacked ? xAxisValues[0] : d.name);
             const bandwidth = x0.bandwidth();
             if (!self.settings.isStacked && isGroupSmaller &&
@@ -595,8 +588,12 @@ Column.prototype = {
               x += (((bandwidth / 2) / dataArray.length) / 2);
             }
             if (self.isGrouped && !self.settings.isStacked) {
-              if (d.data.length <= 2 && isGroupSmaller) {
-                // pass through
+              if (d.data.length === 2) {
+                if (bandwidth < 120) {
+                  x -= (barMaxWidth / 2) - 4;
+                } else {
+                  x = x0(d.name);
+                }
               } else {
                 const barDiff = (barMaxWidth / (bandwidth > 150 ? 2 : 4));
                 x -= barDiff;
@@ -606,8 +603,7 @@ Column.prototype = {
               const len = dataArray[0]?.data?.length || 0;
               x = ((width - (bandwidth * len)) / len) / 2;
             }
-            console.log(x0(d.name));
-            return `translate(${x0(d.name)},0)`;
+            return `translate(${x},0)`;
           });
 
         bars = xValues.selectAll('rect')
@@ -625,13 +621,14 @@ Column.prototype = {
           .attr('class', function (d, i) {
             return `series-${i} bar`;
           })
-          .attr('width', Math.min.apply(null, [x1.bandwidth(), barMaxWidth]))
+          .attr('width', Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]))
           .attr('x', function (d, i) {
-            const width = Math.min.apply(null, [x1.bandwidth(), barMaxWidth]);  //eslint-disable-line
+            const width = Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]);  //eslint-disable-line
             return self.settings.isStacked ? xScale(i) :
               (x1.bandwidth() / 2 + ((width + 2) * i) - (dataArray[0].values.length === 1 ||
-                dataArray[0].values.length === 5 || dataArray[0].values.length === 4 ?
-                (width / 2) : 0));
+                dataArray[0].values.length === 5 ||
+                dataArray[0].values.length === 4 ? x1(d.key) : 0
+              ));
           })
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });

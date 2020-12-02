@@ -1,125 +1,95 @@
-
 <div class="row">
-  <div class="twelve columns">
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Grouped Column Chart &mdash; Format y-axis as integer</h2>
-        </div>
-        <div class="widget-content">
-          <div id="column-grouped-example" class="chart-container">
-          </div>
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Grouped Column Chart &mdash; Format y-axis as integer</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-grouped-example" class="chart-container">
         </div>
       </div>
+    </div>
   </div>
 </div>
 
 <script>
-$('body').on('initialized', function () {
+  $('body').on('initialized', function () {
 
-    var dataset = [
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":10
-         },
-         {
-            "name":"Future Orders",
-            "value":12
-         }
-      ],
-      "name":"Apples"
-   },
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":12
-         },
-         {
-            "name":"Future Orders",
-            "value":0
-         }
-      ],
-      "name":"Snozberry"
-   },
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":11
-         },
-         {
-            "name":"Future Orders",
-            "value":8
-         }
-      ],
-      "name":"Oranges"
-   },
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":8
-         },
-         {
-            "name":"Future Orders",
-            "value":7
-         }
-      ],
-      "name":"Bananas"
-   },
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":11
-         },
-         {
-            "name":"Future Orders",
-            "value":18
-         }
-      ],
-      "name":"Pears"
-   },
-   {
-      "data":[
-         {
-            "name":"Quantity",
-            "value":19
-         },
-         {
-            "name":"Future Orders",
-            "value":7
-         }
-      ],
-      "name":"Grapes"
-   },
-   {
-      "data": [
-         {
-            "name": "Quantity",
-            "value": 19
-         },
-         {
-            "name":"Future Orders",
-            "value": 10
-         }
-      ],
-      "name":"dfdfg"
-   }
-]
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 1.2
+      }, {
+        name: 'Feb',
+        value: 1.1
+      }, {
+        name: 'Mar',
+        value: 1.4
+      }, {
+        name: 'Apr',
+        value: 1.0
+      }, {
+        name: 'May',
+        value: 1.4
+      }, {
+        name: 'Jun',
+        value: .8
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 2.2
+      }, {
+        name: 'Feb',
+        value: 2.1
+      }, {
+        name: 'Mar',
+        value: 2.4
+      }, {
+        name: 'Apr',
+        value: 2.0
+      }, {
+        name: 'May',
+        value: 2.4
+      }, {
+        name: 'Jun',
+        value: 2.8
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 3.2
+      }, {
+        name: 'Feb',
+        value: 3.1
+      }, {
+        name: 'Mar',
+        value: 3.4
+      }, {
+        name: 'Apr',
+        value: 3
+      }, {
+        name: 'May',
+        value: 3.4
+      }, {
+        name: 'Jun',
+        value: 3.8
+      }],
+      name: 'Component C'
+    }];
 
-  $('#column-grouped-example').chart({
-    type: 'column-grouped',
-    dataset: dataset,
-    yAxis: {
-      ticks: {
-        number: 4, // Tip: round max data value
-        format: 'd'
+    $('#column-grouped-example').chart({
+      type: 'column-grouped',
+      dataset: dataset,
+      yAxis: {
+        ticks: {
+          number: 4, // Tip: round max data value
+          format: 'd'
+        }
       }
-    }
-  });
+    });
 
-});
+  });
 </script>

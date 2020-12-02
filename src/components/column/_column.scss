@@ -12,7 +12,7 @@
 
     .tick {
       line {
-        stroke: black;
+        stroke: $chart-line-color;
       }
 
       &.tick0 {
