@@ -4,7 +4,7 @@
 
 ### v4.36.0 Fixes
 
-- `[NNN]` Placeholder element please remove me. ([#NNN](https://github.com/infor-design/enterprise/issues/NNN))
+- `[Column Chart]` Fixed an alignment issue with the labes in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 
 ## v4.35.0
 
