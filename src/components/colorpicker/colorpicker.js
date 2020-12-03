@@ -398,7 +398,9 @@ ColorPicker.prototype = {
         this.element.trigger('listclosed', 'select');
       })
       .on('selected.colorpicker', (e, item) => {
-        this.itemLabel = item.data('label');
+        if (!this.element.is('.colorpicker-editor-button')) {
+          this.itemLabel = item.data('label');
+        }
 
         if (!this.isEditor) {
           this.setColor(item.data('value'), this.itemLabel);
