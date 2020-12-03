@@ -4,8 +4,8 @@
 
 ### v4.36.0 Fixes
 
-- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Column Chart]` Fixed an alignment issue with the labes in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
+- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 
 ## v4.35.0
 
