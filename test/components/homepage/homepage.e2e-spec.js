@@ -84,7 +84,7 @@ describe('Homepage example five column tests', () => {
     ];
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1920, 1080);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const widgets = await element.all(by.css('.homepage .widget'));
     const len = widgets.length;
 
@@ -115,7 +115,7 @@ describe('Homepage example five column tests', () => {
     ];
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1680, 1050);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const widgets = await element.all(by.css('.homepage .widget'));
     const len = widgets.length;
 
@@ -146,7 +146,7 @@ describe('Homepage example five column tests', () => {
     ];
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(1200, 1600);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const widgets = await element.all(by.css('.homepage .widget'));
     const len = widgets.length;
 
@@ -177,7 +177,7 @@ describe('Homepage example five column tests', () => {
     ];
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(768, 1024);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const widgets = await element.all(by.css('.homepage .widget'));
     const len = widgets.length;
 
@@ -208,7 +208,7 @@ describe('Homepage example five column tests', () => {
     ];
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(320, 480);
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
     const widgets = await element.all(by.css('.homepage .widget'));
     const len = widgets.length;
 
