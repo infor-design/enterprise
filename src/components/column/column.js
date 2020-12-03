@@ -222,7 +222,7 @@ Column.prototype = {
     const x0 = d3.scaleBand()
       .range([0, width])
       .round(true)
-      .padding(0);
+      .padding(this.settings.type === 'column-grouped' ? 0.1 : 0);
 
     const x1 = d3.scaleBand();
 
@@ -555,8 +555,9 @@ Column.prototype = {
           .attr('y', function (d) {
             const r = self.settings.isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
               (d.value < 0 ? y(0) : y(d.value));
-            return (isTargetBars ? y(d.target) :
-              (d.value < 0 ? r : (r > (height - 3) ? height - 2 : r)));
+            return (
+              isTargetBars ? y(d.target) : d.value < 0 ? r : r > (height - 3) ? height - 2 : r
+            );
           })
           .attr('height', function (d) {
             let r;
@@ -587,8 +588,16 @@ Column.prototype = {
               x += (((bandwidth / 2) / dataArray.length) / 2);
             }
             if (self.isGrouped && !self.settings.isStacked) {
-              const barDiff = (barMaxWidth / (bandwidth > 150 ? 2 : 4));
-              x -= barDiff;
+              if (d.data.length === 2) {
+                if (bandwidth < 120) {
+                  x -= (barMaxWidth / 2) - 4;
+                } else {
+                  x = x0(d.name);
+                }
+              } else {
+                const barDiff = (barMaxWidth / (bandwidth > 150 ? 2 : 4));
+                x -= barDiff;
+              }
             }
             if (self.settings.isStacked && width < 290 && bandwidth < 40) {
               const len = dataArray[0]?.data?.length || 0;
@@ -617,8 +626,9 @@ Column.prototype = {
             const width = Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]);  //eslint-disable-line
             return self.settings.isStacked ? xScale(i) :
               (x1.bandwidth() / 2 + ((width + 2) * i) - (dataArray[0].values.length === 1 ||
-                dataArray[0].values.length === 5 || dataArray[0].values.length === 4 ?
-                (width / 2) : 0));
+                dataArray[0].values.length === 5 ||
+                dataArray[0].values.length === 4 ? (width / 2) : 0
+              ));
           })
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });
