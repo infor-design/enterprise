@@ -4,7 +4,7 @@
 
 ### v4.36.0 Fixes
 
-- `[NNN]` Placeholder element please remove me. ([#NNN](https://github.com/infor-design/enterprise/issues/NNN))
+- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 
 ## v4.35.0
 

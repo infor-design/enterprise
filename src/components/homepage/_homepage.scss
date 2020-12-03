@@ -88,7 +88,7 @@
   }
 
   .ui-resizable-handle::before {
-    background: #078cd9;
+    background: $widget-editable-border-color;
     border-radius: 100%;
     content: '';
     display: block;
