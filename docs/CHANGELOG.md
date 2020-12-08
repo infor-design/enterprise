@@ -4,8 +4,9 @@
 
 ### v4.36.0 Fixes
 
-- `[Column Chart]` Fixed an alignment issue with the labes in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
+- `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
+- `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
 
 ## v4.35.0
 
