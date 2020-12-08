@@ -943,6 +943,10 @@ $datagrid-small-row-height: 25px;
   }
 }
 
+.full-height .datagrid-container {
+  height: calc(100% - 50px);
+}
+
 // Datagrid Scroll Wrapper
 .datagrid-wrapper {
   height: 100%;
@@ -4788,7 +4792,9 @@ html[dir='rtl'] {
 .datagrid-summary-row {
   td {
     background-color: $datagrid-cell-bg-color !important;
-    border-right-color: transparent;
+    border-top: 1px solid $datagrid-cell-border-color;
+    bottom: 0;
+    position: sticky;
 
     .datagrid-checkbox-wrapper {
       display: none;
@@ -4798,6 +4804,16 @@ html[dir='rtl'] {
   .datagrid-summary-totals {
     margin-left: -10px;
     padding-right: 10px;
+  }
+}
+
+.datagrid-container.has-summary-row {
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  tr:nth-last-child(2) td {
+    border-bottom: 0;
   }
 }
 
