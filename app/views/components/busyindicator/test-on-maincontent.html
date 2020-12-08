@@ -1,0 +1,70 @@
+<body class="no-scroll busy-loading-locale is-personalizable">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  {{> includes/applicationmenu}}
+  <div class="page-container no-scroll">
+    {{> includes/header}}
+    <section id="maincontent" class="page-container scrollable busy" role="main" data-options="{'displayDelay': 100}">
+      <div class="row">
+        <div class="twelve columns">
+          <button class="btn-secondary" type="button" id="busy-start">Start Busy Indicator</button>
+        </div>
+      </div>
+      <div class="homepage" data-columns="3">
+        <div class="content">
+
+          <div class="widget double-height">
+            <div class="widget-header">
+              <h2 tabindex="0" class="widget-title">Widget 1x2 (Dom Order 1)</h2>
+            </div>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 2)</h2>
+            </div>
+          </div>
+
+          <div class="widget double-width">
+            <div class="widget-header">
+              <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 3)</h2>
+            </div>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 4)</h2>
+            </div>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 5)</h2>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    $('body').on('initialized', function() {
+      var maincontentEl = $('#maincontent');
+
+      $('#busy-start').on('click', function () {
+        // Start
+        maincontentEl.trigger('start.busyindicator');
+
+        // Stop
+        setTimeout(function () {
+          maincontentEl.trigger('complete.busyindicator');
+        }, 5000);
+      });
+    });
+  </script>
+
+  {{> includes/footer}}
+
+</body>
+</html>
