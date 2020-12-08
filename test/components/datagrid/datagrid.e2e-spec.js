@@ -2044,7 +2044,7 @@ describe('Datagrid spacer row tests', () => {
   });
 });
 
-fdescribe('Datagrid summary row tests', () => {
+describe('Datagrid summary row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-summary-row?layout=nofrills');
 
