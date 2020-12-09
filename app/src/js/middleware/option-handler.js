@@ -53,6 +53,13 @@ module.exports = function () {
       res.opts.headerHamburger = true;
     }
 
+    // Loads the page without loading the D3 Library
+    // See infor-design/enterprise#4668
+    if (req.query.noD3 === 'true') {
+      res.opts.noD3 = true;
+      logger('info', 'Loading the page without the D3 graphics library');
+    }
+
     // Opens the requested page with the App Menu drawer expanded.
     if (req.query.appMenuOpen === 'true') {
       res.opts.appMenuOpen = true;
