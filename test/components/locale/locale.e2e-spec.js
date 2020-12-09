@@ -63,3 +63,11 @@ describe('Locale Set Value Tests', () => {
     expect(await element(by.id('output-date-field-time')).getAttribute('value')).toEqual('104530');
   });
 });
+
+describe('Locale tests', () => {
+  it('Loads without errors if D3 is not present', async () => {
+    await utils.setPage('/components/locale/test-translated-strings?layout=nofrills&noD3=true');
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('translation-string-container'))), config.waitsFor);
+    await utils.checkForErrors();
+  });
+});
