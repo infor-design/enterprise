@@ -23,15 +23,13 @@ describe('Application Menu index tests', () => {
   });
 
   it('should put accurate aria attributes on the trigger button', async () => {
-    const button = await element(by.id('header-hamburger'));
+    expect(await element(by.id('header-hamburger')).getAttribute('aria-controls')).toBe('application-menu');
+    expect(await element(by.id('header-hamburger')).getAttribute('aria-expanded')).toBe('false');
 
-    expect(button.getAttribute('aria-controls')).toBe('application-menu');
-    expect(button.getAttribute('aria-expanded')).toBe('false');
+    await element(by.id('header-hamburger')).click();
+    await browser.driver.sleep(config.sleep);
 
-    await button.click();
-    await browser.driver.sleep(config.sleepLonger);
-
-    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(await element(by.id('header-hamburger')).getAttribute('aria-expanded')).toBe('true');
   });
 
   if (utils.isChrome() && utils.isCI()) {

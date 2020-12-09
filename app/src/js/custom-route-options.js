@@ -107,6 +107,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.setOption('layout', 'layout-empty');
   }
 
+  // Busyindicator on maincontent container
+  if (url.match(/busyindicator\/test-on-maincontent/)) {
+    customOpts.setOption('layout', 'layout-empty');
+  }
+
   // Sign-in Dialog
   if (url.match(/tests\/signin/)) {
     customOpts.setOption('layout', 'tests/layout-noheader');

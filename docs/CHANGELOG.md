@@ -6,6 +6,7 @@
 
 - `[Column Chart]` Fixed an alignment issue with the labes in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
+- `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
 ## v4.35.0
 
@@ -26,8 +27,9 @@
 - `[Application Menu]` Fixed accessibility issues getting redundant info in expand/collapse button. ([#4462](https://github.com/infor-design/enterprise/issues/4462))
 - `[Application Menu]` Fixed accessibility issues with missing instructional text and incorrect aria-role assignments on the App Menu triggers (hamburger buttons) and Role switcher buttons. ([#4489](https://github.com/infor-design/enterprise/issues/4489))
 - `[About]` Made it possible to close About dialogs that previously had open, nested Modals present. ([NG#915](https://github.com/infor-design/enterprise-ng/issues/915))
-- `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Badges]` Fixed alignment issues in uplift theme. ([#4578](https://github.com/infor-design/enterprise/issues/4578))
+- `[Busy Indicator]` Fixed an issue where the whole page and parent div was shifts when active. ([#746](https://github.com/infor-design/enterprise-ng/issues/746))
+- `[Button]` Fixed the tooltip in action button to be not visible when there's no title attribute. ([#4473](https://github.com/infor-design/enterprise/issues/4473))
 - `[Column Chart]` Fixed a minor alignment issue in the xAxis labels ([#4460](https://github.com/infor-design/enterprise/issues/4460))
 - `[Colorpicker]` Fixed an issue where values were not being selecting when multiple colopickers are present. ([#4146](https://github.com/infor-design/enterprise/issues/4146))
 - `[Datagrid]` Fix a bug where changing selectable on the fly did not change the select behavior. ([#4575](https://github.com/infor-design/enterprise/issues/4575))

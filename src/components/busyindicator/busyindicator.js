@@ -136,7 +136,10 @@ BusyIndicator.prototype = {
       }
 
       this.originalPositionProp = this.element[0].style.position;
-      this.element[0].style.position = 'relative';
+      const elComputedPos = window.getComputedStyle(this.element[0], null).getPropertyValue('position');
+      if (elComputedPos !== 'absolute') {
+        this.element[0].style.position = 'relative';
+      }
       this.overlay = $(`<div class="overlay busy is-hidden${transparency}"></div>`).appendTo(this.element);
       this.container.addClass('blocked-ui');
     }
@@ -356,11 +359,40 @@ BusyIndicator.prototype = {
    */
   addScrollParent() {
     if (this.blockUI) {
-      this.scrollParent = $(this.getScrollParent(this.element[0]));
-      const h = this.scrollParent[0] ? this.scrollParent[0].offsetHeight : 0;
-      if (h && this.container && (h < this.element[0].offsetHeight)) {
-        const loc = ((h / 2) - 58);
-        const setTop = () => (this.container.css({ top: loc + this.scrollParent[0].scrollTop }));
+      const elem = this.element[0];
+      this.scrollParent = $(this.getScrollParent(elem));
+      const sElem = this.scrollParent[0];
+      const height = sElem ? sElem.offsetHeight : 0;
+      const elComputedPos = window.getComputedStyle(this.overlay[0], null).getPropertyValue('position');
+      const isOverlayAbsolute = elComputedPos === 'absolute';
+      if ((height && this.container && (height <= elem.offsetHeight))) {
+        const winHeight = window.innerHeight || document.documentElement.clientHeight;
+        const isHeight = el => ((el.scrollHeight > el.clientHeight) && el.clientHeight < (winHeight - 60));
+        const loc = ((height / 2) - 58);
+        const setTop = () => {
+          if (isOverlayAbsolute && this.element.is(sElem)) {
+            const scrollTop = elem.scrollTop;
+            this.overlay.css({ top: scrollTop });
+            this.container.css({ top: loc + scrollTop });
+          } else if (utils.isInViewport(sElem) && isHeight(sElem)) {
+            if (this.container[0].offsetHeight) {
+              this.container.css({ top: loc + sElem.scrollTop });
+            }
+          } else {
+            const loaderHeight = 85;
+            let visibleHeight = 0;
+            let extra = 0;
+            const b = elem.getBoundingClientRect();
+            if (b.top < 0) {
+              const diff = b.height + b.top;
+              visibleHeight = diff > winHeight ? winHeight : diff;
+              extra = b.top;
+            } else {
+              visibleHeight = winHeight - b.top;
+            }
+            this.container.css({ top: ((visibleHeight - loaderHeight) / 2) - extra });
+          }
+        };
         setTop();
 
         this.scrollParent
@@ -400,7 +432,7 @@ BusyIndicator.prototype = {
     const isScroll = el => regex.test(styleMerged(el));
     const scrollParent = (el) => {
       let found = false;
-      let parent = el.parentNode;
+      let parent = el;
       while (!found && parent && parent.tagName && parent.tagName.toLowerCase() !== 'body') {
         if (isScroll(parent)) {
           found = true;

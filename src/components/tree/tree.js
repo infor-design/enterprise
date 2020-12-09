@@ -2077,6 +2077,10 @@ Tree.prototype = {
         nodeData.node = li.find(`ul li a#${nodeData.id}`);
       }
     } else {
+      if (typeof nodeData.tempidsparent !== 'undefined') {
+        nodeData.parent = nodeData.tempidsparent;
+        delete nodeData.tempidsparent;
+      }
       li = $(li);
       this.addChildNodes(nodeData, li);
       nodeData.node = li.children('a').first();
@@ -2123,6 +2127,9 @@ Tree.prototype = {
       this.decorateNode(li.querySelector('a'));
     }
 
+    if (typeof nodeData.parent !== 'undefined') {
+      nodeData.tempidsparent = nodeData.parent;
+    }
     nodeData.parent = '';
     this.addNode(nodeData, $(ul), location);
   },

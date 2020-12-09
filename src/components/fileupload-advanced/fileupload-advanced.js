@@ -609,6 +609,10 @@ FileUploadAdvanced.prototype = {
     this.dropArea.off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
     $(document).off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
     $('.action', this.element).off('click.fileuploadadvanced');
+
+    const wrapper = $('.fileupload-wrapper', this.element);
+    wrapper.off().find('*').off();
+    wrapper.remove();
     return this;
   },
 
