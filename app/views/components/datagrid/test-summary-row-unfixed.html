@@ -1,24 +1,22 @@
-<div class="full-height full-width">
-  <div id="datagrid" class="datagrid">
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
   </div>
 </div>
 
 <script>
   $('body').one('initialized', function () {
-    var grid,
-      columns = [],
-      data = [];
 
-    var url = '{{basepath}}api/accounts-sm';
+      var grid,
+        columns = [],
+        data = [];
 
-    $.getJSON(url, function(res) {
-      data = res;
+      // Sample Custom Formatters
 
-      /* Sample Custom Formatters
-        Formatters.customSummaryRow = function (row, cell, value, col) {
-          return value + ' %';
-        };
-      */
+      /*Formatters.customSummaryRow = function (row, cell, value, col) {
+        return value + ' %';
+      };*/
 
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
@@ -29,14 +27,19 @@
       columns.push({ id: 'purchases', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2}, summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', align: 'right', name: 'Purchases', field: 'purchases'});
       columns.push({ id: 'percentage', summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after', name: 'Percentage', field: 'percentage'});
 
-      // Init and get the api for the grid
-      $('#datagrid').datagrid({
-        columns: columns,
-        columnReorder: true,
-        dataset: data,
-        summaryRow: true,
-        toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true }
+      // Get some data via ajax
+      var url = '{{basepath}}api/accounts-sm';
+
+      $.getJSON(url, function(res) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res.slice(0, 20),
+          summaryRow: true,
+          frozenColumns: { left: ['id', 'location'] },
+          toolbar: {title: 'Accounts', results: true, personalize: true, rowHeight: true}
+        });
       });
-    });
  });
+
 </script>

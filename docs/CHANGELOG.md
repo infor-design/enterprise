@@ -2,6 +2,10 @@
 
 ## v4.36.0
 
+### v4.36.0 Features
+
+- `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
+
 ### v4.36.0 Fixes
 
 - `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
