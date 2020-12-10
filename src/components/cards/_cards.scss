@@ -72,6 +72,10 @@
     }
   }
 
+  &.editable-hover-border {
+    border: 1px solid $widget-editable-border-color;
+  }
+
   .small-thin-text {
     @include font-size(11);
 
