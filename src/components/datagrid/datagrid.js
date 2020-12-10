@@ -3428,6 +3428,8 @@ Datagrid.prototype = {
 
     // Append a Summary Row
     if (this.settings.summaryRow) {
+      self.element.addClass('has-summary-row');
+
       const totals = self.calculateTotals();
       const summaryRowHtml = self.rowHtml(totals, this.recordCount, null, false, true);
       if (self.hasLeftPane && summaryRowHtml.left) {

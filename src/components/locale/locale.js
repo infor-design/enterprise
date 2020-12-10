@@ -512,15 +512,17 @@ const Locale = {  // eslint-disable-line
         };
       }
 
-      // Set the d3 locale for charts (unless disabled)
-      d3.formatDefaultLocale({
-        decimal: data?.numbers?.decimal || '.',
-        thousands: data?.numbers?.group || ',',
-        grouping: data?.numbers?.groupSizes || [3],
-        percent: data?.numbers?.percentSign || '%',
-        currency: !data?.currencySign ? ['$', ''] : data.currencyFormat.split('¤')[0] === '' ? [data.currencySign, ''] : ['', data.currencySign],
-        minus: data?.numbers?.minusSign || '-'
-      });
+      if (typeof d3 === 'object') {
+        // Set the d3 locale for charts (unless disabled)
+        d3.formatDefaultLocale({
+          decimal: data?.numbers?.decimal || '.',
+          thousands: data?.numbers?.group || ',',
+          grouping: data?.numbers?.groupSizes || [3],
+          percent: data?.numbers?.percentSign || '%',
+          currency: !data?.currencySign ? ['$', ''] : data.currencyFormat.split('¤')[0] === '' ? [data.currencySign, ''] : ['', data.currencySign],
+          minus: data?.numbers?.minusSign || '-'
+        });
+      }
     }
   },
 

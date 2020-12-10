@@ -2046,7 +2046,7 @@ describe('Datagrid spacer row tests', () => {
 
 describe('Datagrid summary row tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-summary-row');
+    await utils.setPage('/components/datagrid/example-summary-row?layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2058,9 +2058,18 @@ describe('Datagrid summary row tests', () => {
   });
 
   it('Should add up rows', async () => {
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(4)')).getText()).toEqual('72.48');
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5) td:nth-child(5)')).getText()).toEqual('100 %');
+    expect(await element(by.css('#datagrid tr.datagrid-summary-row td:nth-child(6)')).getText()).toEqual('1,861.00');
+    expect(await element(by.css('#datagrid tr.datagrid-summary-row td:nth-child(7)')).getText()).toEqual('20.53 %');
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-summary-row')).toEqual(0);
+    });
+  }
 });
 
 describe('Datagrid Client Side Filter and Sort Tests', () => {

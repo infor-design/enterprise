@@ -52,6 +52,13 @@ module.exports = function (app, defaults) {
       logger('info', 'Using Flex Toolbars inside of page headers');
     }
 
+    // Loads the page without loading the D3 Library
+    // See infor-design/enterprise#4668
+    if (commandLineArgs.noD3) {
+      res.opts.noD3 = true;
+      logger('info', 'Loading the page without the D3 graphics library');
+    }
+
     let useLiveReload = false;
     process.argv.forEach((val) => {
       if (val === '--livereload') {
