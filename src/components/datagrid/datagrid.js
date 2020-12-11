@@ -1773,10 +1773,13 @@ Datagrid.prototype = {
         }
 
         lookupEl
-          .lookup(col.editorOptions || {})
-          .on('change', () => {
+          .lookup(col.editorOptions || {});
+
+        if (this.settings.filterWhenTyping) {
+          lookupEl.on('change', () => {
             self.applyFilter(null, 'selected');
           });
+        }
       }
 
       const timepickerEl = elem.find('.timepicker');
