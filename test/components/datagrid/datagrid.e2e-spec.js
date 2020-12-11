@@ -555,7 +555,7 @@ describe('Datagrid filter tests', () => {
   }
 });
 
-fdescribe('Datagrid filter RTL tests', () => {
+describe('Datagrid filter RTL tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&layout=nofrills');
 
