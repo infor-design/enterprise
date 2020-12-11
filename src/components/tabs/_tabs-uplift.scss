@@ -32,6 +32,17 @@
       @include font-size(24);
     }
   }
+
+  .more-actions-button {
+    margin-top: 6px;
+
+    .btn-actions {
+      height: auto;
+      min-height: 32px;
+      min-width: 32px;
+      width: auto;
+    }
+  }
 }
 
 .popupmenu.tab-list-spillover,
