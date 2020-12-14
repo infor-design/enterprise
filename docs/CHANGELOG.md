@@ -5,6 +5,7 @@
 ### v4.35.1 Fixes
 
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+- `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
 
 ## v4.35.0
