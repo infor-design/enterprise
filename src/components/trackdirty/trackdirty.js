@@ -74,12 +74,12 @@ Trackdirty.prototype = {
    */
   trimEditorText(text) {
     return text.trim()
-      .replace(/>\s+</g, '')
+      .replace(/>\s+</g, '><')
       .replace(/\s+/g, ' ')
       .replace(' has-tooltip', '')
-      .replace(/<br( \/)?>/g, '<br>\n')
-      .replace(/<\/p> /g, '</p>\n\n')
-      .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+      .replace(/<br(\s+)?\/?>/g, '<br>\n')
+      .replace(/<\/p>(\s+)/g, '</p>\n\n')
+      .replace(/<\/blockquote>(\s+)?/g, '</blockquote>\n\n');
   },
 
   /**
@@ -156,14 +156,14 @@ Trackdirty.prototype = {
 
     if (input.is('.editor')) {
       const textArea = input.parent().find('textarea');
-      textArea.data('original', this.trimEditorText(this.valMethod(textArea)));
+      textArea.data('original', this.valMethod(textArea));
     }
 
     input.data('original', this.valMethod(input, true))
       .on('resetdirty.dirty', () => {
         if (input.is('.editor')) {
           const textArea = input.parent().find('textarea');
-          textArea.data('original', this.trimEditorText(this.valMethod(textArea)));
+          textArea.data('original', this.valMethod(textArea));
         }
 
         input.data('original', this.valMethod(input))
