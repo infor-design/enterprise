@@ -8,6 +8,7 @@ import { ListFilter } from '../listfilter/listfilter';
 import { TagList } from '../tag/tag.list';
 import { xssUtils } from '../../utils/xss';
 import { stringUtils } from '../../utils/string';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -644,7 +645,7 @@ Dropdown.prototype = {
    * @returns {void}
    */
   setTooltip() {
-    const opts = this.element.find('option:selected');
+    const opts = $(this.element[0].selectedOptions);
     const optText = this.getOptionText(opts);
     this.tooltipApi = this.pseudoElem.find('span')
       .tooltip({
@@ -978,9 +979,7 @@ Dropdown.prototype = {
       this.listUl.addClass('has-groups');
     }
 
-    if ($.fn.tooltip) {
-      this.listUl.find('[title]').addClass('has-tooltip').tooltip();
-    }
+    this.hasTooltips = this.listUl.find('[title]').length > 0;
 
     if (this.isOpen()) {
       this.position();
@@ -993,7 +992,7 @@ Dropdown.prototype = {
    * @private
    */
   setDisplayedValues() {
-    const opts = this.element.find('option:selected');
+    const opts = $(this.element[0].selectedOptions);
     let text = this.getOptionText(opts);
 
     // Clear Text
@@ -1964,6 +1963,60 @@ Dropdown.prototype = {
         self.highlightOption($(this), true);
       });
 
+    if (this.hasTooltips) {
+      let self = this;
+
+      function clearTimer() {
+        if (self.timer && self.timer.destroy) {
+          self.timer.destroy(true);
+        }
+      }
+
+      function showTooltip(target, title) {
+        $(target).tooltip({
+          trigger: 'immediate',
+          content: title
+        });
+        $(target).focus();
+      }
+
+      function hideTooltip(target) {
+        $('#tooltip').hide();
+        $('#tooltip').data('tooltip')?.destroy()
+      }
+
+      function showOnTimer(target) {
+        clearTimer();
+        self.timer = new RenderLoopItem({
+          duration: (500 / 10),
+          timeoutCallback() {
+            let title = target.getAttribute('title');
+            if (!title) {
+              title = target.getAttribute('data-title');
+              showTooltip(target, title);
+              return;
+            }
+            target.setAttribute('data-title', title);
+            target.removeAttribute('title');
+            showTooltip(target, title);
+          }
+        });
+        renderLoop.register(self.timer);
+      }
+
+      function hideImmediately(target) {
+        clearTimer();
+        hideTooltip(target);
+      }
+
+      self.list.on('mouseover.tooltip', 'li[title], li[data-title]', (e) => {
+        showOnTimer(e.currentTarget);
+      })
+      .on('mouseleave.tooltip, click.tooltip', 'li[title], li[data-title]', (e) => {
+        hideImmediately(e.currentTarget);
+      });
+    }
+
     // Some list-closing events are on a timer to prevent immediate list close
     // There would be several things to check with a setTimeout, so this is done with a CSS
     // class to keep things a bit cleaner
@@ -2315,14 +2368,6 @@ Dropdown.prototype = {
       `input.${COMPONENT_NAME}`,
       `keydown.${COMPONENT_NAME}`,
     ].join(' '));
-
-    // Destroy any tooltip items
-    this.listUl.find('.has-tooltip').each(function () {
-      const api = $(this).data('tooltip');
-      if (api) {
-        api.destroy();
-      }
-    });
 
     this.list
       .off([
@@ -3384,6 +3429,7 @@ Dropdown.prototype = {
       return false;
     }
 
+    let isTag = false;
     this.pseudoElem
       .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
       .on('click.dropdown touchstart.dropdown', (e) => {
@@ -3391,14 +3437,17 @@ Dropdown.prototype = {
         if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
           e.stopPropagation();
         }
-      }).on('mouseup.dropdown touchend.dropdown', (e) => {
-        if (e.button === 2) {
-          return;
-        }
-        if (isTagEl(e)) {
+        if (isTag) {
           return;
         }
         self.toggle();
+      }).on('mouseup.dropdown touchend.dropdown', (e) => {
+        if (e.button === 2) {
+          e.stopPropagation();
+          return;
+        }
+      }).on('mousedown.dropdown touchstart.dropdown', (e) => {
+        isTag = isTagEl(e);
       })
       .on('touchcancel.dropdown', (e) => {
         if (isTagEl(e)) {
