@@ -835,7 +835,7 @@ Tabs.prototype = {
         });
     }
 
-    if (this.moreActionsBtn.length) {
+    if (this.moreActionsBtn?.length) {
       this.moreActionsBtn
         .on('keydown.tabs', (e) => {
           self.handleMoreActionsButtonKeydown(e);
