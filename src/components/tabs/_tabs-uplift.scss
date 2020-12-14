@@ -12,6 +12,8 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
   > .tab-list-container {
+    margin-bottom: -20px;
+
     .tab {
       &.is-disabled {
         color: $ids-color-brand-secondary-lighter !important;
@@ -34,7 +36,7 @@
   }
 
   .more-actions-button {
-    margin-top: 6px;
+    margin-top: 3px;
 
     .btn-actions {
       height: auto;
