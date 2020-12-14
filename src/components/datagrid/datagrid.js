@@ -5019,10 +5019,7 @@ Datagrid.prototype = {
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
 
-    this.settings.dataset[idx] = {
-      ...this.settings.dataset[idx],
-      ...data
-    };
+    this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
   },
 
   /**

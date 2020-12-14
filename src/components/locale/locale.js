@@ -205,6 +205,10 @@ const Locale = {  // eslint-disable-line
    * @returns {string} The actual lang to use.
    */
   correctLanguage(lang) {
+    if (lang?.substr(0, 3) === 'en-') {
+      lang = lang.substr(0, 2);
+    }
+
     let correctLanguage = this.defaultLocales.filter(a => a.lang === lang);
 
     if (correctLanguage && correctLanguage[0]) {
