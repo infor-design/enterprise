@@ -982,6 +982,14 @@ $datagrid-small-row-height: 25px;
     flex-shrink: 0;
     overflow-x: auto;
   }
+
+  .datagrid-row.is-selected.is-hover-row {
+    .datagrid-trigger-cell {
+      .icon-calendar {
+        z-index: 2;
+      }
+    }
+  }
 }
 
 // Grid Styling
@@ -5018,6 +5026,22 @@ html[dir='rtl'] {
 .is-safari {
   a.btn-icon.row-btn {
     top: -4px;
+  }
+
+  .datagrid-summary-row td {
+    bottom: 35px;
+  }
+
+  .medium-rowheight .datagrid-summary-row td {
+    bottom: 30px;
+  }
+
+  .small-rowheight .datagrid-summary-row td {
+    bottom: 26px;
+  }
+
+  .extra-small-rowheight .datagrid-summary-row td {
+    bottom: 25px;
   }
 }
 
