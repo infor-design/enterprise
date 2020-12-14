@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.35.1
+
+### v4.35.1 Fixes
+
+- `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+
 ## v4.35.0
 
 ### v4.35.0 Important Notes
