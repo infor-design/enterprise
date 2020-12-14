@@ -1856,6 +1856,11 @@ $datagrid-small-row-height: 25px;
         .is-readonly {
           background-color: transparent !important;
         }
+
+        .icon {
+          background-color: $datagrid-cell-bg-color !important;
+          box-shadow: none !important;
+        }
       }
     }
 
@@ -5021,6 +5026,22 @@ html[dir='rtl'] {
 .is-safari {
   a.btn-icon.row-btn {
     top: -4px;
+  }
+
+  .datagrid-summary-row td {
+    bottom: 35px;
+  }
+
+  .medium-rowheight .datagrid-summary-row td {
+    bottom: 30px;
+  }
+
+  .small-rowheight .datagrid-summary-row td {
+    bottom: 26px;
+  }
+
+  .extra-small-rowheight .datagrid-summary-row td {
+    bottom: 25px;
   }
 }
 
