@@ -1,0 +1,121 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <button  type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-filter"></use>
+          </svg>
+          <span>Filter</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button  type="button" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+          <li class="separator"></li>
+          <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [];
+
+    var statuses = [{id: '', value: '', label:'&nbsp;'},
+                      {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+                      {id:'Error', value:'Error', label:'Error'}];
+    var lookupOptions = {
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          response();
+        });
+      },
+      options: {
+        saveUserSettings: {
+           columns: true,
+           rowHeight: true,
+           sortOrder: true,
+           pagesize: true,
+           activePage: true,
+           filter: true
+        },
+        selectable: 'single',
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+      }
+    };
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup' });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+    columns.push({ id: 'status', name: 'Status', align: 'left', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+
+    //Init and get the api for the grid
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+
+    //Get Page Based on info in Req, return results into response;
+    $.getJSON(url, function(res) {
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res.data,
+        columnReorder: true,
+        paging: true,
+        pagesize: 10,
+        pagesizes: [5, 10, 15],
+        filterWhenTyping: false,
+        filterable: true,
+        saveUserSettings: {
+           columns: true,
+           rowHeight: true,
+           sortOrder: true,
+           pagesize: true,
+           activePage: true,
+           filter: true
+        },
+        toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
+      });
+    });
+  });
+</script>
