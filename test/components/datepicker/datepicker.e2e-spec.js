@@ -1113,29 +1113,6 @@ describe('Datepicker Range Tests', () => {
     expect(await element.all(by.css('.range-selection')).last().getText()).toEqual('28');
   });
 
-  it('Should be able to select with disabled not included', async () => {
-    const datepickerEl = await element(by.id('range-disablenotincluded'));
-
-    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/28/2018');
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver.sleep(config.sleepShort);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-
-    await element.all(by.cssContainingText('.monthview-table td', '5')).first().click();
-    await element.all(by.cssContainingText('.monthview-table td', '10')).first().click();
-
-    expect(datepickerEl.getAttribute('value')).toEqual('2/5/2018 - 2/10/2018');
-
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-
-    expect(await element.all(by.css('.range-selection')).count()).toEqual(4);
-    expect(await element.all(by.css('.is-disabled')).first().getText()).toEqual('7');
-    expect(await element.all(by.css('.is-disabled')).get(1).getText()).toEqual('9');
-  });
-
   it('Should be able to select with disabled included', async () => {
     const datepickerEl = await element(by.id('range-disableincluded'));
 
