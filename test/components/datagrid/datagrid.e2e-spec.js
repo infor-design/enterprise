@@ -1281,6 +1281,12 @@ describe('Datagrid multiselect tests', () => {
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
   });
 
+  it('Should have aria selected mixed when partly selected', async () => {
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
+
+    expect(await element(by.css('.datagrid-checkbox.is-partial')).getAttribute('aria-checked')).toEqual('mixed');
+  });
+
   it('Should handle removing selected rows ', async () => {
     expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
 
