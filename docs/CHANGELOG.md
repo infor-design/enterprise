@@ -9,11 +9,11 @@
 ### v4.36.0 Fixes
 
 - `[Column Chart]` Fixed an alignment issue with the labes in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
-- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
-- `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
+- `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
 - `[Datagrid]` Fixed a bug where the error icon overlapped to the calendar icon when a row has been selected and hovered. ([#4670](https://github.com/infor-design/enterprise/issues/4670))
-- `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
+- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
+- `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
 ## v4.35.0
 

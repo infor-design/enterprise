@@ -32,6 +32,8 @@
             },
             isDefault: true
         }]
+      }).on('beforeopen', function() {
+        console.log('beforeopen fired');
       });
     });
 
