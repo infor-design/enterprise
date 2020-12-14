@@ -1775,7 +1775,7 @@ Datagrid.prototype = {
         lookupEl
           .lookup(col.editorOptions || {});
 
-        if (this.settings.filterWhenTyping) {
+        if (self.settings.filterWhenTyping) {
           lookupEl.on('change', () => {
             self.applyFilter(null, 'selected');
           });
