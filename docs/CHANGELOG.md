@@ -8,7 +8,6 @@
 
 ### v4.36.0 Fixes
 
-- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
@@ -16,7 +15,7 @@
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
-- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
+- `[Modal]` Fixed a bug where the autofocus was not working on anchor tag inside of the modal and moving the first button as a default focus if there's no `isDefault` property set up.
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
