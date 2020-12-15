@@ -257,11 +257,10 @@
   }
 }
 
-//This will force the fade edge to move in the tab list when the button is visible
-.has-more-button.tab-container.horizontal,
-.has-more-button.tab-container.header-tabs {
+.has-more-actions.has-more-button.has-add-button.tab-container.horizontal,
+.has-more-actions.has-more-button.has-add-button.tab-container.header-tabs {
   &::after {
-    right: 51px;
+    right: 132px;
   }
 }
 
@@ -305,14 +304,44 @@
     width: 40px;
   }
 
+  // More Tabs
+  &.has-more-button {
+    &::after {
+      right: 51px;
+    }
+  }
+
+  // Generic "More Actions" button
+  &.has-more-actions {
+    &::after {
+      right: 41px;
+    }
+  }
+
+  // "Add tab button"
   &.has-add-button {
     &::after {
       right: 95px;
     }
   }
 
+  // Both of the above
+  &.has-more-actions.has-more-button {
+    &::after {
+      right: 85px;
+    }
+  }
+
+  // All of the above
+  .has-more-actions.has-more-button.has-add-button {
+    &::after {
+      right: 132px;
+    }
+  }
+
   .tab-more,
-  .add-tab-button {
+  .add-tab-button,
+  .more-actions-button {
     background-color: transparent;
     font-size: $ids-size-font-base;
     padding: 16px;
@@ -342,6 +371,12 @@
     }
   }
 
+  .more-actions-button {
+    display: inline-block;
+    margin-top: 1px;
+    padding: 0;
+  }
+
   .more-text {
     display: none;
   }
@@ -357,6 +392,18 @@
   &.has-add-button {
     .tab-list-container {
       width: calc(100% - 102px);
+    }
+  }
+
+  &.has-more-actions {
+    .tab-list-container {
+      width: calc(100% - 92px);
+    }
+  }
+
+  &.has-add-button.has-more-actions {
+    .tab-list-container {
+      width: calc(100% - 132px);
     }
   }
 
@@ -678,7 +725,8 @@ html[dir='rtl'] {
     left: 0;
   }
 
-  .tab-container.horizontal {
+  .tab-container.horizontal,
+  .tab-container.header-tabs {
     &::before {
       left: auto;
       right: 0;
@@ -692,6 +740,19 @@ html[dir='rtl'] {
     &.has-add-button {
       &::after {
         left: 95px;
+      }
+    }
+
+    &.has-more-actions {
+      &::after {
+        left: 85px;
+      }
+    }
+
+    &.has-more-actions.has-more-button.has-add-button {
+      &::after {
+        left: 132px;
+        right: auto;
       }
     }
   }
