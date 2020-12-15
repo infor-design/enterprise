@@ -152,6 +152,33 @@ It's possible to create a tab that contains a dropdown menu. In the case of a dr
 </ul>
 ```
 
+### Tabs with a More Actions button
+
+In some cases you may want to place additional actions related to the tab panels close to the Tabs themselves.  For this use case, you can simply add a `has-more-actions` CSS class to the tab container, and a custom built actions button:
+
+```html
+<div id="tabs-with-menu" class="tab-container horizontal has-more-actions">
+  <div class="tab-list-container">
+    <ul class="tab-list">
+      <!-- ... -->
+    </ul>
+  </div>
+  <div class="more-actions-button">
+    <button class="btn-actions">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-more"></use>
+      </svg>
+      <span class="audible">More Actions</span>
+    </button>
+    <ul class="popupmenu">
+      <li><a href="#">Action Item #1</a></li>
+      <li><a href="#">Action Item #2</a></li>
+      <li><a href="#">Action Item #3</a></li>
+    </ul>
+  </div>
+</div>
+```
+
 ## Testability
 
 You can add custom attributes/automation id's that can be used for scripting to the Tabs component.  It's possible to add `data-automation-id` attributes (or other attributes) directly to Tab anchors and panels:
