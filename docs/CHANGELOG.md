@@ -17,6 +17,8 @@
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
+- `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
+- `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
 ## v4.35.0

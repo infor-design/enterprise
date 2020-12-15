@@ -590,6 +590,12 @@ Tabs.prototype = {
       utils.addAttributes(this.addTabButton, this, this.settings.attributes, 'btn-add');
     }
 
+    // Find a More Actions button, if applicable
+    const moreActionsButton = this.element.find('.more-actions-button .btn-actions');
+    if (moreActionsButton.length) {
+      this.moreActionsBtn = moreActionsButton;
+    }
+
     return this;
   },
 
@@ -828,6 +834,13 @@ Tabs.prototype = {
           self.handleAddButtonFocus(e);
         });
     }
+
+    if (this.moreActionsBtn?.length) {
+      this.moreActionsBtn
+        .on('keydown.tabs', (e) => {
+          self.handleMoreActionsButtonKeydown(e);
+        });
+    }
   },
 
   /**
@@ -978,6 +991,77 @@ Tabs.prototype = {
   },
 
   /**
+   * @returns {boolean} true if the "More Actions" button is present
+   */
+  hasMoreActions() {
+    const moreActionsBtn = this.element.find('.more-actions-button > .btn-actions');
+    return (moreActionsBtn && moreActionsBtn.length > 0);
+  },
+
+  /**
+   * Handler for keydown events on the optional "More Actions" button, if it's present.
+   * @private
+   * @param {jQuery.event} e Event
+   * @returns {boolean|undefined} ?
+   */
+  handleMoreActionsButtonKeydown(e) {
+    if (this.element.is('.is-disabled') || this.moreActionsBtn.is('.is-disabled')) {
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+
+    const self = this;
+    function openMenu(oldHref) {
+      e.preventDefault();
+      // setTimeout is used to bypass triggering of the keyboard when
+      // self.buildPopupMenu() is invoked.
+      setTimeout(() => {
+        self.buildPopupMenu(oldHref);
+        self.positionFocusState(self.moreButton, true);
+      }, 0);
+    }
+
+    const hasAddButton = this.addTabButton && this.addTabButton.length;
+    const allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)';
+    const tabs = this.tablist.children(`li${allExcludes}`);
+    let targetLi;
+
+    switch (e.which) {
+      case 37: // left
+      case 38: // up
+        if (hasAddButton) {
+          this.addTabButton.focus();
+        } else {
+          const last = this.findLastVisibleTab();
+          if (this.hasMoreButton()) {
+            openMenu(last.attr('href'));
+          } else {
+            targetLi = last;
+          }
+        }
+        break;
+      case 39: // right
+      case 40: // down
+        targetLi = tabs.first();
+        break;
+      default:
+        break;
+    }
+
+    if (targetLi) {
+      e.preventDefault();
+      targetLi.children('a').focus();
+
+      if (this.isScrollableTabs()) {
+        this.scrollTabList(targetLi);
+      }
+    }
+
+    return true;
+  },
+
+  /**
    * Handler for click events on the "More Tabs" popupmenu trigger
    * @private
    * @param {jQuery.event} e Event
@@ -1089,6 +1173,9 @@ Tabs.prototype = {
         i -= 1;
       }
 
+      if (self.hasMoreActions()) {
+        return self.moreActionsBtn;
+      }
       if (self.settings.addTabButton) {
         return self.addTabButton;
       }
@@ -1121,6 +1208,10 @@ Tabs.prototype = {
       if (self.settings.addTabButton) {
         return self.addTabButton;
       }
+      if (self.hasMoreActions()) {
+        return self.moreActionsBtn;
+      }
+
       return first;
     }
 
@@ -1196,24 +1287,26 @@ Tabs.prototype = {
 
     if (targetLi) {
       const isAddTabButton = targetLi.is('.add-tab-button');
-      const focusStateTarget = isAddTabButton ? targetLi : targetLi.children('a');
+      const isMoreActionsButton = targetLi.is('.btn-actions');
+      const focusStateTarget = isAddTabButton || isMoreActionsButton ? targetLi : targetLi.children('a');
 
       // Use the matching option in the popup menu if the target is hidden by overflow.
       if (this.isTabOverflowed(targetLi)) {
         return openMenu(targetLi.children('a').attr('href'));
       }
 
-      if (!isAddTabButton) {
-        focusStateTarget.focus();
-      } else {
+      if (isAddTabButton) {
         self.addTabButton.focus();
-      }
+      } else if (isMoreActionsButton) {
+        self.moreActionsBtn.focus();
+      } else {
+        focusStateTarget.focus();
 
-      if (this.isScrollableTabs()) {
-        this.scrollTabList(focusStateTarget);
+        if (this.isScrollableTabs()) {
+          this.scrollTabList(focusStateTarget);
+          self.positionFocusState(focusStateTarget, true);
+        }
       }
-
-      self.positionFocusState(focusStateTarget, true);
     }
 
     return true;
@@ -1458,14 +1551,19 @@ Tabs.prototype = {
       e.preventDefault();
       targetLi = self.tablist.find(filter).last();
 
-      if (self.isTabOverflowed(targetLi)) {
-        // Open the spillover
+      // setTimeout is used to bypass triggering of the keyboard when
+      // self.buildPopupMenu() is invoked.
+      setTimeout(() => {
         self.buildPopupMenu(targetLi.children('a').attr('href'));
         self.positionFocusState(self.moreButton, true);
-      }
+      }, 0);
     }
 
     function firstTab() {
+      if (self.hasMoreActions()) {
+        self.moreActionsBtn.focus();
+        return;
+      }
       targetLi = self.tablist.find(filter).first();
     }
 
@@ -1498,7 +1596,14 @@ Tabs.prototype = {
         break;
     }
 
-    targetLi.children('a').focus();
+    if (targetLi) {
+      targetLi.children('a').focus();
+
+      if (this.isScrollableTabs) {
+        e.preventDefault();
+        this.scrollTabList(targetLi);
+      }
+    }
     return true;
   },
 
@@ -3389,6 +3494,10 @@ Tabs.prototype = {
             self.addTabButton.focus();
             return;
           }
+          if (self.hasMoreActions()) {
+            self.moreActionsBtn.focus();
+            return;
+          }
           self.focusFirstVisibleTab();
         }
       }
@@ -3443,7 +3552,7 @@ Tabs.prototype = {
    * @returns {boolean} whether or not the tab is overflowed.
    */
   isTabOverflowed(li) {
-    if (this.isVerticalTabs() || this.isScrollableTabs()) {
+    if ((this.isVerticalTabs() || this.isScrollableTabs())) {
       return false;
     }
 

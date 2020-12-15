@@ -12,6 +12,8 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
   > .tab-list-container {
+    margin-bottom: -20px;
+
     .tab {
       &.is-disabled {
         color: $ids-color-brand-secondary-lighter !important;
@@ -30,6 +32,17 @@
   .add-tab-button {
     span[aria-hidden] {
       @include font-size(24);
+    }
+  }
+
+  .more-actions-button {
+    margin-top: 3px;
+
+    .btn-actions {
+      height: auto;
+      min-height: 32px;
+      min-width: 32px;
+      width: auto;
     }
   }
 }
