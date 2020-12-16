@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [];
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'rowReorder', name: '', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder});
+      columns.push({ id: 'favorite', name: '', field: 'favorite', formatter: Formatters.Favorite});
+      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+      columns.push({ id: 'location', name: 'Location', field: 'location'});
+      columns.push({ id: 'contact', name: 'Contact Name', field: 'contact'});
+      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', sortFunction: function (value) { return Locale.parseDate(value).getTime(); } });
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); }, width: 170 });
+
+      var url = '{{basepath}}api/companies';
+
+      $.getJSON(url, function(res) {
+        var grid = $('#datagrid').datagrid({
+          columns: columns,
+          editable: false,
+          rowReorder: true,
+          isList: true,
+          dataset: res,
+          toolbar: {title: 'Results in Companies for "Gravel"', actions: true, rowHeight: true, personalize: true}
+        }).on('rowreorder', function (e, args) {
+          var newData = grid.settings.dataset[args.endIndex];
+          newData.phone = 'test update';
+          grid.updateRow(args.endIndex, newData);
+        }).data('datagrid');
+      });
+    });
+</script>
