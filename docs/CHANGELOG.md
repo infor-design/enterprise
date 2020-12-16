@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.35.2
+
+### v4.35.2 Fixes
+
+- `[Datagrid]` Fixed an additional issue where updateRow will cause rows to no longer be reorderable. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+
 ## v4.35.1
 
 ### v4.35.1 Fixes
