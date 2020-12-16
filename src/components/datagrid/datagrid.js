@@ -5018,6 +5018,10 @@ Datagrid.prototype = {
     }
 
     this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
+
+    if (this.settings.rowReorder && this.tableBody.data('arrange')) {
+      this.tableBody.data('arrange').updated();
+    }
   },
 
   /**

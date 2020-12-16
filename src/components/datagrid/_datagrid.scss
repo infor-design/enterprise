@@ -1818,6 +1818,9 @@ $datagrid-small-row-height: 25px;
       cursor: move;
 
       .icon {
+        background-color: transparent !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
         color: $button-color-tertiary-initial-font;
         vertical-align: middle;
 
@@ -2125,6 +2128,12 @@ $datagrid-small-row-height: 25px;
     .icon-favorite {
       position: relative;
       top: 3px;
+
+      .icon {
+        background-color: transparent !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+      }
     }
 
     .datagrid-img {

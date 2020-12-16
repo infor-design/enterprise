@@ -315,7 +315,7 @@ const formatters = {
     }
 
     return (
-      `<div class="datagrid-reorder-icon">
+      `<div class="datagrid-reorder-icon draggable">
          ${$.createIcon({ icon: 'drag' })}
         <span class="audible">${text}</span>
       </div>`
