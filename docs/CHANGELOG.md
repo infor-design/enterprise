@@ -21,6 +21,20 @@
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
+## v4.35.2
+
+### v4.35.2 Fixes
+
+- `[Datagrid]` Fixed an additional issue where updateRow will cause rows to no longer be reorderable. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+
+## v4.35.1
+
+### v4.35.1 Fixes
+
+- `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+- `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
+- `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
+
 ## v4.35.0
 
 ### v4.35.0 Important Notes
