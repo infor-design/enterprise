@@ -7655,17 +7655,20 @@ Datagrid.prototype = {
     // Sync the header checkbox
     if (selectedRowsLength > 0) {
       headerCheckbox.data('selected', 'partial')
-        .addClass('is-checked is-partial');
+        .addClass('is-checked is-partial')
+        .attr('aria-checked', 'mixed');
     }
 
     if (selectedRowsLength === rowsLength) {
       headerCheckbox.data('selected', 'all')
-        .addClass('is-checked').removeClass('is-partial');
+        .addClass('is-checked').removeClass('is-partial')
+        .attr('aria-checked', 'true');
     }
 
     if (selectedRowsLength === 0) {
       headerCheckbox.data('selected', 'none')
-        .removeClass('is-checked is-partial');
+        .removeClass('is-checked is-partial')
+        .attr('aria-checked', 'false');
     }
   },
 
