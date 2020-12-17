@@ -58,7 +58,7 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 
 ## Testability
 
-You can add custom id's/automation id's to the color picker that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
+You can add custom id's/automation id's to the pager that can be used for scripting using the `attributes` setting. This setting takes either an object or an array for setting multiple values such as an automation-id or other attributes. For example:
 
 ```js
   attributes: { name: 'id', value: args => `pager-id` }

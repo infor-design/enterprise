@@ -12,12 +12,27 @@
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
 - `[Datagrid]` Fixed a bug where the error icon overlapped to the calendar icon when a row has been selected and hovered. ([#4670](https://github.com/infor-design/enterprise/issues/4670))
+- `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
 - `[Modal]` Fixed a bug where the autofocus was not working on anchor tag inside of the modal and moving the first button as a default focus if there's no `isDefault` property set up.
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
+
+## v4.35.2
+
+### v4.35.2 Fixes
+
+- `[Datagrid]` Fixed an additional issue where updateRow will cause rows to no longer be reorderable. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+
+## v4.35.1
+
+### v4.35.1 Fixes
+
+- `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
+- `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
+- `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
 
 ## v4.35.0
 
