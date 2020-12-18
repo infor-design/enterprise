@@ -26,7 +26,12 @@
         data.push({ id: 7, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity: 'Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
 
         //Define Columns for the Grid.
-        columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, width: 50, align: 'center', tooltip: 'Drill Down to Product'});
+        var callback = function(rowIdx, cell, value, col, rowData, grid) {
+          console.log(rowIdx, cell, value, col, rowData, grid);
+          return `Tooltip for ${cell}`
+        }
+
+        columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, width: 50, align: 'center', tooltip: callback });
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Formatters.Hyperlink, hyperlinkTooltip: 'Navigate to This Product' });
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
