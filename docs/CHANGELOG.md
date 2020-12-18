@@ -5,6 +5,7 @@
 ### v4.36.0 Features
 
 - `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
+- `[Lookup]` Added a clear callback function like the click callback that fires when clicking the clear X if enabled. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 
 ### v4.36.0 Fixes
 
