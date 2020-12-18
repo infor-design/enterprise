@@ -1,0 +1,69 @@
+<div id="maincontent" class="page-container scrollable" role="main">
+  <button type="button" class="btn-secondary" id="toggleEdit" style="margin: 0 0 15px 20px;">Toggle Edit Mode</button>
+
+  <div class="homepage" data-columns="3" data-use-small="true">
+    <div class="content">
+
+      <div class="small-widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 1) - A</h2>
+        </div>
+      </div>
+
+      <div class="small-widget double-width no-remove">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 2x1 (Dom Order 2) - B</h2>
+        </div>
+      </div>
+
+      <div class="small-widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Widget 1x1 (Dom Order 3) - C</h2>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $('body').on('initialized', function () {
+    const toggleEdit = $('#toggleEdit');
+    const homepageApi = $('.homepage').data('homepage');
+    homepageApi.setEdit(true);
+    toggleEdit.on('click', function () {
+      const editing = homepageApi.state.editing;
+      homepageApi.setEdit(!editing);
+    });
+    homepageApi.settings.onBeforeRemoveCard = function (card) {
+      var result = new Promise(function(resolve, reject){
+        $('body').message({
+          title: 'Remove this widget?',
+          buttons: [{
+            id: 'id-cancel',
+            text: 'Cancel',
+            click: function (e, modal) {
+              modal.close();
+              reject();
+            },
+            isDefault: true
+          }, {
+            text: 'Remove',
+            click: function (e, modal) {
+              modal.close();
+              resolve();
+            }
+          }]
+        })
+      });
+      return result;
+    }
+  });
+  $('.homepage')
+    .on('resizecard', function(event, card, data){ console.log("Homepage: resizecard event: ", [card, data])})
+    .on('reordercard', function(event, card, data){ console.log("Homepage: reordercard event: ", [card, data])})
+    .on('removecard', function(event, card, data){ console.log("Homepage: removecard event: ", [card, data])});
+  $('.widget')
+    .on('resizecard', function(event, card, data){ console.log("Widget: resizecard event: ", [card, data])})
+    .on('reordercard', function(event, card, data){ console.log("Widget: reordercard event: ", [card, data])})
+    .on('removecard', function(event, card, data){ console.log("Widget: removecard event: ", [card, data])});
+</script>

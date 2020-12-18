@@ -26,6 +26,7 @@
 }
 
 .card,
+.small-widget,
 .widget {
   background-color: $cardlist-bg-color;
   border: 1px solid $cardlist-border-color;
@@ -90,6 +91,11 @@
     @include auto-height;
     @include auto-width;
   }
+}
+
+.small-widget {
+  margin-bottom: 24px;
+  min-height: 260px;
 }
 
 .card-header,

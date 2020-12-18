@@ -12,6 +12,7 @@
   position: relative;
 
   .card,
+  .small-widget,
   .widget {
     height: 370px;
     left: 0;
@@ -29,7 +30,18 @@
     }
   }
 
+  .small-widget {
+    height: 260px;
+    width: 260px;
+
+    &:last-child::after {
+      height: 24px;
+      top: 260px;
+    }
+  }
+
   .card:hover .card-remove,
+  .small-widget:hover .card-remove,
   .widget:hover .card-remove {
     background: #ec1225;
   }
@@ -140,6 +152,17 @@
   }
 }
 
+.small-widget.double-height {
+  height: 544px;
+
+  .widget-content,
+  .card-content {
+    height: 492px;
+    min-height: 492px;
+    overflow: auto;
+  }
+}
+
 .card.auto-height,
 .widget.auto-height {
   @include auto-height;
@@ -149,7 +172,16 @@
   }
 }
 
+.small-widget.auto-height {
+  @include auto-height;
+
+  .chart-container {
+    padding-bottom: 24px;
+  }
+}
+
 .card.full-height,
+.small-widget.full-height,
 .widget.full-height {
   height: 100%;
 }
@@ -161,8 +193,18 @@
 .card.quad-width.to-single,
 .widget.quad-width.to-single,
 .card.quintuple-width.to-single,
-.widget.quintuple-width.to-single {
+.widget.quintuple-width.to-single,
+.card.sextuple-width.to-single,
+.widget.sextuple-width.to-single {
   width: 360px; // 320 (single)
+}
+
+.small-widget.double-width.to-single,
+.small-widget.triple-width.to-single,
+.small-widget.quad-width.to-single,
+.small-widget.quintuple-width.to-single,
+.small-widget.sextuple-width.to-single {
+  width: 260px; // 320 (single)
 }
 
 .card.double-width,
@@ -172,8 +214,18 @@
 .card.quad-width.to-double,
 .widget.quad-width.to-double,
 .card.quintuple-width.to-double,
-.widget.quintuple-width.to-double {
+.widget.quintuple-width.to-double,
+.card.sextuple-width.to-double,
+.widget.sextuple-width.to-double {
   width: 740px; // 660 (double: 380 + single)
+}
+
+.small-widget.double-width,
+.small-widget.triple-width.to-double,
+.small-widget.quad-width.to-double,
+.small-widget.quintuple-width.to-double,
+.small-widget.sextuple-width.to-double {
+  width: 544px; // (260 * 2) + 24
 }
 
 .card.triple-width,
@@ -181,24 +233,68 @@
 .card.quad-width.to-triple,
 .widget.quad-width.to-triple,
 .card.quintuple-width.to-triple,
-.widget.quintuple-width.to-triple {
+.widget.quintuple-width.to-triple,
+.card.sextuple-width.to-triple,
+.widget.sextuple-width.to-triple {
   width: 1120px; //1000 (triple: 380 + double)
+}
+
+.small-widget.triple-width,
+.small-widget.quad-width.to-triple,
+.small-widget.quintuple-width.to-triple,
+.small-widget.sextuple-width.to-triple {
+  width: 828px; // (260 * 3) + (24 * 2)
 }
 
 .card.quad-width,
 .widget.quad-width,
 .card.quintuple-width.to-quad,
-.widget.quintuple-width.to-quad {
+.widget.quintuple-width.to-quad,
+.card.sextuple-width.to-quad,
+.widget.sextuple-width.to-quad {
   width: 1500px; //1340 (quad: 380 + triple)
 }
 
+.small-widget.quad-width,
+.small-widget.quintuple-width.to-quad,
+.small-widget.sextuple-width.to-quad {
+  width: 1112px; // (260 * 4) + (24 * 3)
+}
+
 .card.quintuple-width,
-.widget.quintuple-width {
+.widget.quintuple-width,
+.card.sextuple-width.to-quintuple,
+.widget.sextuple-width.to-quintuple {
   width: 1880px; //1680 (quintuple: 380 + quad)
+}
+
+.small-widget.quintuple-width,
+.small-widget.sextuple-width.to-quintuple {
+  width: 1396px; // (260 * 5) + (24 * 4)
+}
+
+.card.sextuple-width,
+.widget.sextuple-width {
+  width: 2260px;
+}
+
+.small-widget.sextuple-width {
+  width: 1680px; // (260 * 6) + (24 * 5)
 }
 
 .card.half-height,
 .widget.half-width {
+  height: 270px;
+  min-height: 270px;
+
+  .card-content,
+  .widget-content {
+    height: 216px;
+    min-height: 216px;
+  }
+}
+
+.small-widget.half-width {
   height: 270px;
   min-height: 270px;
 
