@@ -1135,27 +1135,6 @@ describe('Datepicker Range Tests', () => {
     expect(await element.all(by.css('.is-disabled')).count()).toEqual(2);
   });
 
-  it('Should be able to select forward', async () => {
-    const datepickerEl = await element(by.id('range-selectforward'));
-    await datepickerEl.sendKeys('81220208142020');
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-
-    await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
-    await element.all(by.cssContainingText('.monthview-table td', '3')).get(2).click();
-    await element.all(by.cssContainingText('.monthview-table td', '6')).get(1).click();
-
-    const testDate1 = new Date();
-    testDate1.setMonth(7);
-    testDate1.setDate(3);
-    const testDate2 = new Date(testDate1);
-    testDate2.setMonth(7);
-    testDate2.setDate(6);
-
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/3/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
-  });
-
   it('Should be able to select backward', async () => {
     const datepickerEl = await element(by.id('range-selectbackward'));
     await datepickerEl.sendKeys('81220208142020');
