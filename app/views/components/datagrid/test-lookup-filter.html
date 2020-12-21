@@ -104,7 +104,11 @@
           filterable: true,
           dataset: data,
           toolbar: {keywordFilter: true, results: true}
-        });
+        }).on('filtered', function (e, args) {
+          console.log(e, args);
+        }).data('datagrid');
+
+        grid.applyFilter([{ columnId: 'productId', operator: 'contains', value: '2241202' }], 'filtered');
     });
   });
 
