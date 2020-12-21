@@ -1001,6 +1001,20 @@ Modal.prototype = {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
 
+      // Making default focus when there's no default button set
+      // for non contextual action panel.
+      if (!self.capAPI && self.buttonsetAPI) {
+        if (thisElem.buttonsetElem.find('.btn-modal-primary').length === 0) {
+          const firstBtn = $('.modal-buttonset button')[0];
+          focusElem = thisElem.buttonsetElem.find(firstBtn);
+        }
+      }
+
+      // If the selected element is anchor, it should focus the element.
+      if (focusElem.is('.modal-wrapper a')) {
+        focusElem = thisElem.element.find('.modal-content .message a').removeClass('hide-focus');
+      }
+
       // If the selected element is a tab, actually make sure it's the "selected" tab.
       let selected;
       let tabParent;

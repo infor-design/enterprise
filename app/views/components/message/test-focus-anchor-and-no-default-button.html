@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="anchor-tag-focus">Anchor Tag Focus</button><br /><br />
+    <button class="btn-secondary" type="button" id="no-default-button">No Default Button</button><br /><br />
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#anchor-tag-focus').on('click', function () {
+      $('body').message({
+        title: '<span>Modal body with anchor tag</span>',
+        returnFocus: $(this),
+        message: 'Success! You\'ve done the thing! Here\'s a <a href="#" class="hyperlink hide-focus longpress-target" title="Link">link</a>.',
+        buttons: [{
+          text: 'Success',
+          click: function () {
+            console.log('Success');
+            $(this).data('modal').close();
+          },
+          isDefault: true
+        }]
+      });
+    });
+  });
+
+  $('#no-default-button').on('click', function () {
+    $('body').message({
+      title: 'No Default Button',
+      message: 'You are about to delete<br/>this application permanently.<br/>Would you like to proceed?',
+      returnFocus: $(this),
+      buttons: [{
+        text: 'Yes',
+        click: function (e, modal) {
+          console.log('Yes');
+          modal.close();
+        }
+      }, {
+        text: 'No',
+        click: function (e, modal) {
+          console.log('No');
+          modal.close();
+        }
+      }]
+    });
+  });
+
+</script>
