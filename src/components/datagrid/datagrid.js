@@ -2538,6 +2538,11 @@ Datagrid.prototype = {
 
       input.val(conditions[i].value);
 
+      // Enable clear button
+      if (input.is('.lookup') && input.parent().find('svg.close').length === 1 && conditions[i].value) {
+        input.parent().find('svg.close').removeClass('is-empty');
+      }
+
       if (input.is('select')) {
         const firstVal = conditions[i].value instanceof Array ?
           conditions[i].value[0] : conditions[i].value;
