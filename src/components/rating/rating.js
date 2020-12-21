@@ -137,9 +137,8 @@ Rating.prototype = {
   */
   readonly() {
     const elem = $(this.element);
-    if (elem.hasClass('is-readonly')) {
-      elem.find('input').attr('disabled', '');
-    }
+    elem.addClass('is-readonly');
+    elem.find('input').attr('disabled', '');
   },
 
   /**
