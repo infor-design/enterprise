@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.35.3
+
+### v4.35.3 Fixes
+
+- `[Lookup]` Added a clear callback function like the click callback that fires when clicking the clear X if enabled. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Pager]` Fixed a bug that automation id's are not added when the attachToBody is used. ([#4692](https://github.com/infor-design/enterprise/issues/4692))
+- `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
+- `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
+
 ## v4.35.2
 
 ### v4.35.2 Fixes

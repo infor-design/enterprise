@@ -1218,6 +1218,16 @@ Pager.prototype = {
       const value = link.text();
       utils.addAttributes(link, self, self.settings.attributes, `pagesize-opt-${value}`);
     });
+
+    // Append if using attach to body
+    const menu = this.pagerBar.find('.btn-menu')?.data('popupmenu')?.menu;
+    if (menu) {
+      menu.find('li').each(function () {
+        const link = $(this).find('a');
+        const value = link.text();
+        utils.addAttributes(link, self, self.settings.attributes, `pagesize-opt-${value}`);
+      });
+    }
   },
 
   /**

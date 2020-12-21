@@ -55,6 +55,9 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {function} [settings.click] Provide a special function to run when the dialog opens to customize the interaction entirely.
  * @param {string} [settings.clickArguments={}] If a click method is defined, this flexible object can be passed
  * into the click method, and augmented with parameters specific to the implementation.
+ * @param {function} [settings.clear] Provide a special function to run when the clear x is pressed
+ * @param {string} [settings.clearArguments={}] If a clear method is defined, this flexible object can be passed
+ * into the clear method, and augmented with parameters specific to the implementation.
  * @param {string} [settings.field='id'] Field name to return from the dataset or can be a function which returns a string on logic
  * @param {string} [settings.title] Dialog title to show, or befault shows  field label + "Lookup"
  * @param {string} [settings.icon] Swap out the lookup id for any other icon in the icon set by name
@@ -207,6 +210,12 @@ Lookup.prototype = {
       lookup.searchfield({
         clearable: true,
         attributes: this.settings.attributes
+      });
+    }
+
+    if (this.settings.clearable && this.settings.clear) {
+      lookup.on('cleared', (e) => {
+        this.settings.clear(e, this, this.settings.clearArguments);
       });
     }
 
