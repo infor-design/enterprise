@@ -3,7 +3,7 @@
   <div class="twelve columns">
     <div class="field">
 
-      <div class="rating is-readonly">
+      <div class="rating is-readonly" id="rating">
         <fieldset>
           <legend class="audible">Rate Your Experience</legend>
           <input type="radio" class="is-filled" name="rating-name" id="one-star-id1"/>
@@ -47,6 +47,9 @@
           </label>
         </fieldset>
       </div>
+
+      <br />
+      <button class="btn-secondary" type="button" id="toggle-readonly">Make Enabled</button>
     </div>
 
   </div>
@@ -56,5 +59,15 @@
   $(document).ready(function(){
     var ratingCtrl = $('.rating').rating().data('rating');
     ratingCtrl.val(4.3);
+
+    $('#toggle-readonly').on('click', function () {
+      if ($('.rating').hasClass('is-readonly')) {
+        ratingCtrl.enable();
+        $(this).text('Make Readonly');
+      } else {
+        ratingCtrl.readonly();
+        $(this).text('Make Enabled');
+      }
+    });
   });
 </script>

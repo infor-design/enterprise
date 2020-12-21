@@ -23,12 +23,13 @@ const COMPONENT_NAME = 'homepage';
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
-  editing: false, // Private
-  easing: 'blockslide', // Private
-  gutterSize: 20, // Private
-  widgetWidth: 360, // Private
-  widgetHeight: 370, // Private
-  timeout: 100 // Private
+  editing: false,
+  easing: 'blockslide',
+  gutterSize: 20,
+  widgetWidth: 360,
+  widgetHeight: 370,
+  useSmall: false,
+  timeout: 100
 };
 
 function Homepage(element, settings) {
@@ -89,6 +90,7 @@ Homepage.prototype = {
    */
   init() {
     this.isTransitionsSupports = this.supportsTransitions();
+    this.setSmall();
     this.setColumns();
     this.initHeroWidget();
     this.handleEvents();
@@ -110,6 +112,31 @@ Homepage.prototype = {
       columns = columnsByAttr;
     }
     this.columns = columns;
+  },
+
+  /**
+   * Set widget/card default height and width.
+   * @private
+   * @returns {void}
+   */
+  setSmall() {
+    const s = this.settings;
+    const smAttr = this.element.attr('data-use-small');
+    if (s.useSmall || (smAttr && smAttr.toString().toLowerCase() === 'true')) {
+      const d = HOMEPAGE_DEFAULTS;
+      const small = { gutterSize: 24, widgetWidth: 260, widgetHeight: 260 };
+      s.useSmall = true;
+
+      if (s.gutterSize === d.gutterSize) {
+        s.gutterSize = small.gutterSize;
+      }
+      if (s.widgetWidth === d.widgetWidth) {
+        s.widgetWidth = small.widgetWidth;
+      }
+      if (s.widgetHeight === d.widgetHeight) {
+        s.widgetHeight = small.widgetHeight;
+      }
+    }
   },
 
   /**
@@ -157,7 +184,7 @@ Homepage.prototype = {
    */
   initEdit() {
     const homepage = this;
-    const cards = homepage.element.find('.card, .widget');
+    const cards = homepage.element.find('.card, .widget, .small-widget');
     if (homepage.editing === undefined) {
       homepage.editing = homepage.settings.editing;
     }
@@ -492,7 +519,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget');
+    const cards = this.element.find('.card, .widget, .small-widget');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {
@@ -500,7 +527,9 @@ Homepage.prototype = {
       const h = card.hasClass('double-height') ? 2 : 1;
       let w;
 
-      if (card.hasClass('quintuple-width')) {
+      if (card.hasClass('sextuple-width')) {
+        w = 6;
+      } else if (card.hasClass('quintuple-width')) {
         w = 5;
       } else if (card.hasClass('quad-width')) {
         w = 4;
@@ -553,51 +582,57 @@ Homepage.prototype = {
   resize(self, animate) {
     // Sizes of "breakpoints" is  320, 660, 1000, 1340, 1680 (for 320)
     // or 360, 740, 1120, 1500, 1880 or (for 360)
-    const bpXXL = (self.settings.widgetWidth * 5) + (self.settings.gutterSize * 4);
-    const bpXL = (self.settings.widgetWidth * 4) + (self.settings.gutterSize * 3);
+    const bpXl3 = (self.settings.widgetWidth * 6) + (self.settings.gutterSize * 5);
+    const bpXl2 = (self.settings.widgetWidth * 5) + (self.settings.gutterSize * 4);
+    const bpXl = (self.settings.widgetWidth * 4) + (self.settings.gutterSize * 3);
     const bpDesktop = (self.settings.widgetWidth * 3) + (self.settings.gutterSize * 2);
     const bpTablet = (self.settings.widgetWidth * 2) + self.settings.gutterSize;
     const bpPhone = self.settings.widgetWidth;
 
-    let bp = bpXXL; // 1680
+    let bp = bpXl3; // 2260 = ((360 * 6) + (20 * 5))
     // Math min against window.screen.width for single line mobile support
     const elemWidth = self.element.outerWidth();
 
-    // elemWidth -= 30; //extra break space
-
     // Find the Breakpoints
-    const xxl = (elemWidth >= bpXXL);
-    const xl = (elemWidth >= bpXL && elemWidth <= bpXXL);
-    const desktop = (elemWidth >= bpDesktop && elemWidth <= bpXL);
+    const xl3 = (elemWidth >= bpXl3);
+    const xl2 = (elemWidth >= bpXl2 && elemWidth <= bpXl3);
+    const xl = (elemWidth >= bpXl && elemWidth <= bpXl2);
+    const desktop = (elemWidth >= bpDesktop && elemWidth <= bpXl);
     const tablet = (elemWidth >= bpTablet && elemWidth <= bpDesktop);
     const phone = (elemWidth <= bpTablet);
 
-    // const maxAttr = this.element.attr('data-columns');
     const content = self.element.find('> .content');
     this.setColumns();
-    // this.settings.columns = parseInt((maxAttr || this.settings.columns), 10);
 
     // Assign columns as breakpoint sizes
-    if (xxl && self.columns === 5) {
-      self.columns = 5;
-      bp = bpXXL;
+    let columns;
+    if (xl3 || self.columns === 6) {
+      columns = 6;
+      bp = bpXl3;
     }
-    if ((xl || xxl) && /4|5/g.test(self.columns)) {
-      self.columns = 4;
-      bp = bpXL;
+    if (xl2 || self.columns === 5) {
+      columns = 5;
+      bp = bpXl2;
     }
-    if ((desktop) || ((xxl || xl) && self.columns === 3)) {
-      self.columns = 3;
+    if (xl || self.columns === 4) {
+      columns = 4;
+      bp = bpXl;
+    }
+    if (desktop || self.columns === 3) {
+      columns = 3;
       bp = bpDesktop;
     }
-    if (tablet) {
-      self.columns = 2;
+    if (tablet || self.columns === 2) {
+      columns = 2;
       bp = bpTablet;
     }
-    if (phone) {
-      self.columns = 1;
+    if (phone || self.columns === 1) {
+      columns = 1;
       bp = bpPhone;
     }
+
+    // Calculated columns
+    self.columns = columns || this.settings.columns;
 
     if (content.length) {
       content[0].style.marginLeft = `-${(bp / 2)}px`;
@@ -607,14 +642,14 @@ Homepage.prototype = {
     this.initRowsAndCols(); // setup colums
 
     // Loop thru each block, make fit where available and
-    // If block more wider than available size, make as  available size
+    // If block more wider than available size, make as available size
     // Assign new left and top css positions
     for (let i = 0, l = self.blocks.length; i < l; i++) {
       // let left, top, pos, available,
       const block = self.blocks[i];
 
       // Remove extra classes if assigned earlier
-      block.elem.removeClass('to-single to-double to-triple to-quad');
+      block.elem.removeClass('to-single to-double to-triple to-quad to-quintuple');
 
       // If block more wider than available size, make as available size
       if (block.w > self.columns) {
@@ -628,6 +663,8 @@ Homepage.prototype = {
           block.elem.addClass('to-triple');
         } else if (self.columns === 4) {
           block.elem.addClass('to-quad');
+        } else if (self.columns === 5) {
+          block.elem.addClass('to-quintuple');
         }
       }
 
@@ -731,8 +768,10 @@ Homepage.prototype = {
    * @returns {void}
    */
   refresh(animate) {
-    animate = typeof animate !== 'undefined' ? animate : this.settings.animate;
-    this.resize(this, animate);
+    setTimeout(() => {
+      animate = typeof animate !== 'undefined' ? animate : this.settings.animate;
+      this.resize(this, animate);
+    }, 0);
   },
 
   /**
