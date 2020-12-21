@@ -69,6 +69,13 @@
             icon: 'icon-launch',
             editable: false,
             clearable: true,
+            click: function (e, api, clickArguments) {
+              console.log('Filter was clicked', e, api, clickArguments);
+              api.element.val('21002').trigger('change');
+            },
+            clear: function (e, api, clickArguments) {
+              console.log('Clear was clicked', e, api, clickArguments);
+            },
             field: function (row, field, grid) {
               return row.productId;
             },
@@ -103,12 +110,9 @@
           columns: columns,
           filterable: true,
           dataset: data,
+          filterWhenTyping: false,
           toolbar: {keywordFilter: true, results: true}
-        }).on('filtered', function (e, args) {
-          console.log(e, args);
-        }).data('datagrid');
-
-        grid.applyFilter([{ columnId: 'productId', operator: 'contains', value: '2241202' }], 'filtered');
+        });
     });
   });
 
