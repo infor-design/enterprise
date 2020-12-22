@@ -75,8 +75,7 @@ describe('Application Menu filter tests', () => {
       // Filter the accordion
       const button = await element(by.css('#appmenu-searchfield'));
       await button.sendKeys('#3');
-      await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.has-filtered-children')).last()), config.waitsFor);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(menu, 'applicationmenu-filtered')).toEqual(0);
 
