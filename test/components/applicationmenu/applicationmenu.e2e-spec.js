@@ -63,6 +63,27 @@ describe('Application Menu filter tests', () => {
   it('should not have errors', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    fit('should not visually regress when filtered', async () => {
+      // Set window size
+      const windowSize = await browser.driver.manage().window().getSize();
+      await browser.driver.manage().window().setSize(1280, 718);
+      const menu = await element(by.id('application-menu'));
+      await browser.driver.sleep(config.sleepLonger);
+
+      // Filter the accordion
+      const button = await element(by.css('#appmenu-searchfield'));
+      await button.sendKeys('#3');
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.has-filtered-children')).last()), config.waitsFor);
+
+      expect(await browser.imageComparison.checkElement(menu, 'applicationmenu-filtered')).toEqual(0);
+
+      // Reset window size
+      await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+    });
+  }
 });
 
 describe('Application Menu MenuButton tests', () => {
