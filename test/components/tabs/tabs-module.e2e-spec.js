@@ -27,7 +27,7 @@ describe('Tabs Module Toolbar tests', () => {
   }
 });
 
-fdescribe('Tabs Module Appmenu Tests', () => {
+describe('Tabs Module Appmenu Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-module/example-app-menu-button-audible.html?layout=nofrills');
     const tabsEl = await element(by.id('module-tabs-example'));
