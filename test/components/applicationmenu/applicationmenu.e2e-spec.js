@@ -65,7 +65,7 @@ describe('Application Menu filter tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('should not visually regress when filtered', async () => {
+    it('should not visually regress when filtered', async () => {
       // Set window size
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);

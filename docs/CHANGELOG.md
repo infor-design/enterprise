@@ -10,6 +10,7 @@
 
 ### v4.36.0 Fixes
 
+- `[Application Menu]` Fixed an issue with filtering where nested items matching the filter were not always displayed. ([#4592](https://github.com/infor-design/enterprise/issues/4592))
 - `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
