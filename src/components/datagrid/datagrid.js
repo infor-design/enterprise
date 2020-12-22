@@ -1770,6 +1770,14 @@ Datagrid.prototype = {
               grid: self
             };
           }
+
+          if (col.editorOptions.clearArguments) {
+            col.editorOptions.clearArguments.grid = self;
+          } else {
+            col.editorOptions.clearArguments = {
+              grid: self
+            };
+          }
         }
 
         lookupEl
