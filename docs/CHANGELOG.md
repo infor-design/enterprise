@@ -34,8 +34,6 @@
 
 ### v4.35.4 Fixes
 
-## v4.35.4
-
 - `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 
 ## v4.35.3
