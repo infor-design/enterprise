@@ -8,7 +8,7 @@ let tabsPanelEl;
 let svgEl;
 let tabsObj;
 
-describe('Tabs Settings', () => {
+fdescribe('Tabs Settings', () => {
   beforeEach(() => {
     tabsEl = null;
     tabsPanelEl = null;
@@ -35,6 +35,7 @@ describe('Tabs Settings', () => {
       addTabButton: false,
       addTabButtonCallback: null,
       appMenuTrigger: false,
+      appMenuTriggerTextAudible: false,
       ajaxOptions: null,
       containerElement: null,
       changeTabOnHashChange: false,
@@ -58,6 +59,7 @@ describe('Tabs Settings', () => {
       addTabButton: true,
       addTabButtonCallback: null,
       appMenuTrigger: false,
+      appMenuTriggerTextAudible: false,
       ajaxOptions: null,
       containerElement: null,
       changeTabOnHashChange: true,
