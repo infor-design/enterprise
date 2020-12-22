@@ -30,6 +30,17 @@
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 
+## v4.35.3
+
+### v4.35.3 Fixes
+
+- `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
+- `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
+- `[Lookup]` Added a clear callback function like the click callback that fires when clicking the clear X if enabled. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Pager]` Fixed a bug that automation id's are not added when the attachToBody is used. ([#4692](https://github.com/infor-design/enterprise/issues/4692))
+- `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
+
 ## v4.35.2
 
 ### v4.35.2 Fixes
