@@ -18,6 +18,7 @@
 - `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
 - `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
+- `[Editor]` Fixed a bug where hyperlinks were not clickable in readonly state. ([#4702](https://github.com/infor-design/enterprise/issues/4702))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
 - `[Homepage]` Added support for small size (260x260) widgets and six columns. ([#4663](https://github.com/infor-design/enterprise/issues/4663))
 - `[Homepage]` Fixed an issue where the animation was not working on widget removed. ([#4686](https://github.com/infor-design/enterprise/issues/4686))
