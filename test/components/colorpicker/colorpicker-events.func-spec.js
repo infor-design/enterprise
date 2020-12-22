@@ -40,6 +40,6 @@ describe('ColorPicker Events', () => {
 
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 300);
+    }, 450);
   });
 });
