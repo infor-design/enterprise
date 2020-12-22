@@ -27,7 +27,7 @@ Rating.prototype = {
   init() {
     this.handleEvents();
     this.allInputs = this.element.find('input');
-    this.readonly();
+    this.enable();
   },
 
   /**
