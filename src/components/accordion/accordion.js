@@ -1270,7 +1270,7 @@ Accordion.prototype = {
    * @param {jQuery[]} targets element references representing accordion headers.
    */
   filter(targets) {
-    if (!targets || !targets.length) {
+    if (!targets) {
       return;
     }
 
