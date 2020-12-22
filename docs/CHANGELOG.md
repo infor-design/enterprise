@@ -17,6 +17,7 @@
 - `[Datagrid]` Fixed a bug where the error icon overlapped to the calendar icon when a row has been selected and hovered. ([#4670](https://github.com/infor-design/enterprise/issues/4670))
 - `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 - `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
 - `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
@@ -30,6 +31,12 @@
 - `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
+
+## v4.35.4
+
+### v4.35.4 Fixes
+
+- `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 
 ## v4.35.3
 
