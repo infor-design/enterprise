@@ -94,7 +94,6 @@
 
     color: $module-tabs-inactive-text-color;
     font-size: $ids-size-font-sm;
-    min-width: 135px;
     overflow: hidden;
     text-align: center;
 
@@ -104,6 +103,10 @@
 
     &:not(:first-child) {
       border-left: 1px solid $module-tabs-x-border-color;
+    }
+
+    &:not(.application-menu-trigger) {
+      min-width: 135px;
     }
 
     &::before {

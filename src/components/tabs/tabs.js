@@ -34,6 +34,8 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * trigger to be present on Non-Vertical Tabs implementatations.
  * @param {string} [settings.appMenuTriggerText] If defined, replaces the default "Menu" text used
  * in the app menu trigger.
+ * @param {boolean} [settings.appMenuTriggerTextAudible = false] if true, causes an app menu trigger's
+ * text content to be visually hidden (but still exists for accessiblity purposes)
  * @param {object} [settings.ajaxOptions] if defined, will be used by any internal
  * Tabs AJAX calls as the desired request settings.
  * @param {function} [settings.beforeActivate] If defined as a function, fires
@@ -67,6 +69,7 @@ const TABS_DEFAULTS = {
   addTabButtonCallback: null,
   appMenuTrigger: false,
   appMenuTriggerText: undefined,
+  appMenuTriggerTextAudible: false,
   ajaxOptions: null,
   beforeActivate: undefined,
   containerElement: null,
@@ -258,7 +261,7 @@ Tabs.prototype = {
       const a = $(this);
       const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
 
-      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '-1' })
+      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '0' })
         .parent().attr('role', 'presentation').addClass('tab');
 
       let dismissibleIcon;
@@ -537,6 +540,7 @@ Tabs.prototype = {
       // Backwards Compatibility for the original Application Menu codepath.
       if (this.isModuleTabs()) {
         if (!appMenuTrigger.length) {
+          const audibleClass = this.settings.appMenuTriggerTextAudible ? ' class="audible"' : '';
           appMenuTrigger = $(`
             <li class="tab application-menu-trigger">
               <a href="#">
@@ -545,7 +549,7 @@ Tabs.prototype = {
                   <span class="two"></span>
                   <span class="three"></span>
                 </span>
-                <span>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
+                <span${audibleClass}>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
               </a>
             </li>
           `);
@@ -562,9 +566,14 @@ Tabs.prototype = {
       }
     }
 
-    // Add extra attributes to the App Menu Trigger button, if applicable
-    if (appMenuTrigger.length && this.settings.attributes) {
-      utils.addAttributes(appMenuTrigger, this, this.settings.attributes, 'appmenu-trigger-btn');
+    if (appMenuTrigger.length) {
+      // Add extra attributes to the App Menu Trigger button, if applicable
+      if (this.settings.attributes) {
+        utils.addAttributes(appMenuTrigger, this, this.settings.attributes, 'appmenu-trigger-btn');
+      }
+
+      // Add it to the App Menu's list of triggers to adjust on open/close
+      $('#application-menu').data('applicationmenu').modifyTriggers([appMenuTrigger.children('a')]);
     }
 
     // Add Tab Button
@@ -2351,10 +2360,10 @@ Tabs.prototype = {
     this.anchors.attr({
       'aria-selected': 'false',
       'aria-expanded': 'false',
-      tabindex: '-1'
+      tabindex: '0'
     });
     this.moreButton.attr({
-      tabindex: '-1'
+      tabindex: '0'
     });
 
     // show current tab
@@ -2448,7 +2457,7 @@ Tabs.prototype = {
 
     // Build
     const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
-    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
+    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="0">${xssUtils.escapeHTML(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
     let iconMarkup;
 
