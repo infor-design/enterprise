@@ -5052,6 +5052,10 @@ html[dir='rtl'] {
   .extra-small-rowheight .datagrid-summary-row td {
     bottom: 25px;
   }
+
+  .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
+    top: -2px;
+  }
 }
 
 // All IE hacks
