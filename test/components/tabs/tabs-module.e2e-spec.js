@@ -26,3 +26,26 @@ describe('Tabs Module Toolbar tests', () => {
     });
   }
 });
+
+describe('Tabs Module Appmenu Tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs-module/example-app-menu-button-audible.html?layout=nofrills');
+    const tabsEl = await element(by.id('module-tabs-example'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress and still be accessible', async () => {
+      const appMenuTrigger = await element(by.css('.tab.application-menu-trigger'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(appMenuTrigger, 'tabs-module-appmenu-trigger-audible')).toEqual(0);
+      expect(appMenuTrigger.getText()).toBe('Menu');
+    });
+  }
+});
