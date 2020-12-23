@@ -339,8 +339,9 @@ html[dir='rtl'] {
 
       // Default Placement for Focus State
       &::before {
+        border-radius: 50%;
         left: auto;
-        right: $wizard-tick-size / 2;
+        right: -3.5px;
       }
 
       &.current,
