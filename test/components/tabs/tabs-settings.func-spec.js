@@ -8,7 +8,7 @@ let tabsPanelEl;
 let svgEl;
 let tabsObj;
 
-fdescribe('Tabs Settings', () => {
+describe('Tabs Settings', () => {
   beforeEach(() => {
     tabsEl = null;
     tabsPanelEl = null;
