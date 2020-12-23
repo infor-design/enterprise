@@ -1293,7 +1293,7 @@ ListView.prototype = {
       ].join(' '));
     }
     this.element.off('change.selectable-listview', '.listview-checkbox input');
-    this.element.off('contextmenu.listview dblclick.listview', 'li, tr');
+    this.element.off('contextmenu.listview longpress.listview dblclick.listview', 'li, tr');
     this.element.off('click.listview', 'li, tr, input[checkbox]');
     this.element.off('keydown.listview', 'li, tr, a');
     this.element.off('focus.listview', 'li, tbody tr');
@@ -1488,8 +1488,8 @@ ListView.prototype = {
         });
 
       this.element
-        .off('contextmenu.listview', 'li, tr')
-        .on('contextmenu.listview', 'li, tr', function (e) {
+        .off('contextmenu.listview longpress.listview', 'li, tr')
+        .on('contextmenu.listview longpress.listview', 'li, tr', function (e) {
           const item = $(this);
 
           e.preventDefault();
