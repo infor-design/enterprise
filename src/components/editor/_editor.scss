@@ -22,10 +22,6 @@
 
   &.is-readonly {
     .editor {
-      a {
-        pointer-events: none;
-      }
-
       > * {
         color: $input-readonly-color !important;
       }
@@ -107,7 +103,7 @@
 
     .editor,
     .editor-source {
-      border-color: transparent $editor-focus-border-color $editor-focus-border-color;
+      border-color: $editor-focus-border-color $editor-focus-border-color;
       box-shadow: $focus-box-shadow;
 
       &.error {
