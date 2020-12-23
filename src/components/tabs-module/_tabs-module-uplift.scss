@@ -20,7 +20,7 @@
 
     &.application-menu-trigger {
       a {
-        padding: 5px 6px 7px;
+        padding: 5px 12px 7px;
         width: 100%;
       }
     }
@@ -47,5 +47,9 @@
 
   .icon.app-header {
     top: -6px;
+
+    span:not(.audible) {
+      width: 18px;
+    }
   }
 }

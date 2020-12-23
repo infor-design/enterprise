@@ -627,7 +627,7 @@ ApplicationMenu.prototype = {
    * @returns {void}
    */
   filterResultsCallback(results, done) {
-    if (!results || !results.length) {
+    if (!results) {
       this.accordionAPI.unfilter();
       done();
       return;

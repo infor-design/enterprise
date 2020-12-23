@@ -216,6 +216,12 @@
         }
       }
 
+      &.has-filtered-children {
+        + .accordion-pane {
+          display: block;
+        }
+      }
+
       &:last-child {
         border-bottom-color: transparent;
       }

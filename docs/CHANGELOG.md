@@ -6,9 +6,11 @@
 
 - `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Lookup]` Added a clear callback function like the click callback that fires when clicking the clear X if enabled. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Tabs]` Added a setting for making the text on Module Tabs' optional Application Menu trigger only accessible to screen readers. ([#4590](https://github.com/infor-design/enterprise/issues/4590))
 
 ### v4.36.0 Fixes
 
+- `[Application Menu]` Fixed an issue with filtering where nested items matching the filter were not always displayed. ([#4592](https://github.com/infor-design/enterprise/issues/4592))
 - `[Column Chart]` Fixed an alignment issue with the labels in grouped column charts. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
