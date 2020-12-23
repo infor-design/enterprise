@@ -116,6 +116,9 @@ const PLUGIN_MAPPINGS = [
   // Modals
   ['modal'],
 
+  // Password Reveal
+  ['revealText', 'input.input-password-reveal'],
+
   // Sliders
   ['slider', 'input[type="range"], .slider'],
 
