@@ -761,6 +761,40 @@ Lookup.prototype = {
       if (adjust) {
         const self = this;
         self.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
+        this.grid.syncSelectedUI();
+      }
+    } else {
+      // For Single Record Select
+      const selectedIds = [];
+      selectedIds.push(selectedId);
+      let isFound = false;
+
+      for (let i = 0; i < selectedIds.length; i++) {
+        isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
+
+        if (this.grid && this.settings.options.source && !isFound) {
+          const data = {};
+          let foundInData = false;
+          for (let j = 0; j < this.grid._selectedRows.length; j++) {
+            if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              foundInData = true;
+            }
+          }
+
+          if (!foundInData) {
+            data[this.settings.field] = selectedIds[i];
+            this.grid._selectedRows.push({ data });
+          }
+          adjust = true;
+        }
+      }
+
+      // There are rows selected off page. Update the count.
+      if (adjust) {
+        const self = this;
+        self.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
+        this.grid.syncSelectedUI();
       }
       return;
     }
