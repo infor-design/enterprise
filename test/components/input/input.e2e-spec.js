@@ -175,7 +175,7 @@ describe('Input Password Field tests', () => {
 
     expect(inputEl.getAttribute('type')).toEqual('password');
 
-    await element(by.css('.input-hideshow-text')).click();
+    await element.all(by.css('.input-hideshow-text')).first().click();
 
     expect(await inputEl.getAttribute('type')).toEqual('text');
 
