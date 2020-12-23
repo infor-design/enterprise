@@ -25,6 +25,7 @@
 - `[Homepage]` Added support for small size (260x260) widgets and six columns. ([#4663](https://github.com/infor-design/enterprise/issues/4663))
 - `[Homepage]` Fixed an issue where the animation was not working on widget removed. ([#4686](https://github.com/infor-design/enterprise/issues/4686))
 - `[Homepage]` Fixed a bug where the border behaves differently and does not change back correctly when hovering in editable mode. ([#4640](https://github.com/infor-design/enterprise/issues/4640))
+- `[Listview]` Fixed an issue where the contextmenu was not open on longpress for iOS device. ([#4655](https://github.com/infor-design/enterprise/issues/4655))
 - `[Locale]` Don't attempt to set d3 locale if d3 is not being used ([#4668](https://github.com/infor-design/enterprise/issues/4486))
 - `[Modal]` Fixed a bug where the autofocus was not working on anchor tag inside of the modal and moving the first button as a default focus if there's no `isDefault` property set up.
 - `[Pager]` Fixed a bug that automation id's are not added when the attachToBody is used. ([#4692](https://github.com/infor-design/enterprise/issues/4692))
