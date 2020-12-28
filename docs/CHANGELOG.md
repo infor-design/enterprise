@@ -34,6 +34,7 @@
 - `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
+- `[Wizard]` Fixed a slight layout issue with the highlighted step in RTL mode. ([#4714](https://github.com/infor-design/enterprise/issues/4714))
 
 ## v4.35.4
 
