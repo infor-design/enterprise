@@ -113,11 +113,10 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
 
       &::before {
         border: 1px solid rgba($wizard-active-color, 1);
-        border-radius: ($wizard-current-state-size / 2) + $wizard-tick-border-width;
+        border-radius: 50%;
         height: $wizard-current-state-size;
         left: -3px;
         top: -3px;
-        // top: $wizard-tick-size - $wizard-current-state-size + ($wizard-tick-border-width/2);
         width: $wizard-current-state-size;
       }
 
@@ -341,7 +340,7 @@ html[dir='rtl'] {
       &::before {
         border-radius: 50%;
         left: auto;
-        right: -3px;
+        right: -2.9px;
       }
 
       &.current,
