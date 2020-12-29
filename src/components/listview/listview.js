@@ -3,6 +3,7 @@ import * as debug from '../../utils/debug';
 import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
@@ -371,6 +372,11 @@ ListView.prototype = {
       const item = $(this);
 
       item.attr('role', 'option');
+
+      // Add css class `is-touch` for touch devices
+      if (env.features.touch) {
+        item.addClass('is-touch');
+      }
 
       // Add user-defined attributes
       if (self.settings.attributes) {
