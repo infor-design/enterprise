@@ -488,3 +488,10 @@
 .datagrid.medium-rowheight .process-indicator {
   top: 1px !important;
 }
+
+// Adjust the lookup X
+.is-safari {
+  .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
+    top: 1px;
+  }
+}
