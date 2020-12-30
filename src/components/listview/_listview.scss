@@ -375,6 +375,10 @@
     }
   }
 
+  .is-touch {
+    @include unselectable;
+  }
+
   .is-disabled {
     @include unselectable;
 
