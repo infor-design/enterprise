@@ -142,6 +142,13 @@
   transform: translate(calc(-100% + -8px), 11px);
 }
 
+.input-hidepass {
+  &::-ms-reveal,
+  &::-ms-clear {
+    display: none !important;
+  }
+}
+
 html[dir='rtl'] {
   .form-responsive {
     .colorpicker-container {
