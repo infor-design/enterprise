@@ -36,6 +36,8 @@
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 - `[Wizard]` Fixed a slight layout issue with the highlighted step in RTL mode. ([#4714](https://github.com/infor-design/enterprise/issues/4714))
 
+(42 Issues Solved This Release, Backlog Enterprise 136, Backlog Ng 32, 1084 Functional Tests, 1642 e2e Tests)
+
 ## v4.35.4
 
 ### v4.35.4 Fixes
