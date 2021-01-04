@@ -44,24 +44,6 @@ describe('Locale Set Value Tests', () => {
     expect(await element(by.id('output-date-field-timestamp')).getAttribute('value')).toEqual('20200229104530');
     expect(await element(by.id('output-date-field-time')).getAttribute('value')).toEqual('104530');
   });
-
-  it('Should format dates in ar-SA', async () => {
-    await utils.setPage('/components/locale/test-set-value?layout=nofrills&locale=ar-SA');
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('output-date-field-time'))), config.waitsFor);
-
-    expect(await element(by.id('date-field-yyyyMMdd')).getAttribute('value')).toEqual('1441/07/05');
-    expect(await element(by.id('date-field-MMdd')).getAttribute('value')).toEqual('05 رجب');
-    expect(await element(by.id('date-field-yyyyMM')).getAttribute('value')).toEqual('جمادى الآخرة 1441');
-    expect(await element(by.id('date-field-yyyy')).getAttribute('value')).toEqual('1442');
-    expect(await element(by.id('date-field-timestamp')).getAttribute('value')).toEqual('1441/07/05 10:45:30 ص');
-
-    expect(await element(by.id('output-date-field-yyyyMMdd')).getAttribute('value')).toEqual('20200229');
-    expect(await element(by.id('output-date-field-MMdd')).getAttribute('value')).toEqual('0229');
-    expect(await element(by.id('output-date-field-yyyyMM')).getAttribute('value')).toEqual('202001');
-    expect(await element(by.id('output-date-field-yyyy')).getAttribute('value')).toEqual('2021');
-    expect(await element(by.id('output-date-field-timestamp')).getAttribute('value')).toEqual('20200229104530');
-    expect(await element(by.id('output-date-field-time')).getAttribute('value')).toEqual('104530');
-  });
 });
 
 describe('Locale tests', () => {

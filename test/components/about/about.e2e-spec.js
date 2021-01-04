@@ -23,18 +23,6 @@ describe('About index tests', () => {
     await utils.checkForErrors();
   });
 
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
-      const button = await element(by.id('about-trigger'));
-      await button.click();
-
-      const searchfieldSection = await element(by.id('maincontent'));
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkElement(searchfieldSection, 'about-open')).toEqual(0);
-    });
-  }
-
   it('should destroy and reinvoke properly', async () => {
     // Open the About dialog
     await element(by.id('about-trigger')).click();

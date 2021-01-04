@@ -1135,49 +1135,6 @@ describe('Datepicker Range Tests', () => {
     expect(await element.all(by.css('.is-disabled')).count()).toEqual(2);
   });
 
-  it('Should be able to select backward', async () => {
-    const datepickerEl = await element(by.id('range-selectbackward'));
-    await datepickerEl.sendKeys('81220208142020');
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
-
-    await element.all(by.cssContainingText('.monthview-table td', '5')).get(0).click();
-    await element.all(by.cssContainingText('.monthview-table td', '7')).get(1).click();
-    await element.all(by.cssContainingText('.monthview-table td', '4')).get(0).click();
-
-    const testDate1 = new Date();
-    testDate1.setMonth(7);
-    testDate1.setDate(4);
-    const testDate2 = new Date(testDate1);
-    testDate2.setMonth(7);
-    testDate2.setDate(7);
-
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/4/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
-  });
-
-  it('Should be able to select min 5 days', async () => {
-    const datepickerEl = await element(by.id('range-mindays'));
-    await datepickerEl.sendKeys('8920208152020');
-    await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
-    await browser.driver.sleep(config.sleepShort);
-
-    await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
-    await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
-
-    const testDate1 = new Date();
-    testDate1.setMonth(7);
-    testDate1.setDate(16);
-    const testDate2 = new Date(testDate1);
-    testDate2.setMonth(7);
-    testDate2.setDate(21);
-
-    expect(await datepickerEl.getAttribute('value')).toEqual(`${(testDate1.getMonth() + 1)}/16/${testDate1.getFullYear()} - ${(testDate2.getMonth() + 1)}/${testDate2.getDate()}/${testDate2.getFullYear()}`);
-  });
-
   it('Should be able to select with time', async () => {
     const datepickerEl = await element(by.id('range-withtime'));
     await datepickerEl.sendKeys('81020201220AM81820201240AM');
