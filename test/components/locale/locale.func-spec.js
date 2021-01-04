@@ -1290,7 +1290,7 @@ describe('Locale API', () => {
       calendarName: 'gregorian'
     };
 
-    const testDate2 = Soho.Locale.formatDate([1441, 6, 5, 0, 0, 0, 0], formatDateOptions);
+    const testDate2 = Soho.Locale.formatDate([1442, 6, 5, 0, 0, 0, 0], formatDateOptions);
 
     expect(testDate2).toEqual('0229');
 
