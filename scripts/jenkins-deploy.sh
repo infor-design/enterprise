@@ -7,6 +7,8 @@ JENKINS_URL="http://$JENKINS_USER:$JENKINS_API_TOKEN@$JENKINS_DOMAIN"
 
 BUILD_FROM="master"
 BUILD_AS_LATEST=false
+WATCH_FOR_BUILD_STATUS=false
+QUEUE_BUILD=false
 
 while getopts "b:lwq" opt; do
     case $opt in
@@ -17,6 +19,14 @@ while getopts "b:lwq" opt; do
         l)
             # latest? publishes to `latest-enterprise` demo server
             BUILD_AS_LATEST=true
+            ;;
+        q)
+            # Add to queue instead of cancelling existing build
+            QUEUE_BUILD=true
+            ;;
+        w)
+            # watch build status to break build
+            WATCH_FOR_BUILD_STATUS=true
             ;;
         *)
             exit 1
@@ -38,6 +48,12 @@ _check_credentials() {
         echo $(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json)
         exit 1
     fi
+}
+
+check_status () {
+    job_status=$(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json | \
+        python -c "import sys, json; print json.load(sys.stdin)['result']")
+    echo $job_status
 }
 
 get_build_number () {
@@ -72,7 +88,26 @@ _check_credentials
 build_number_url=$(echo $BUILD_FROM | sed -e 's/\.//g')
 
 echo "Building $BUILD_FROM as $([ "$BUILD_AS_LATEST" = true ] && echo 'latest-enterprise' || echo $build_number_url-enterprise)..."
-echo "- adding Jenkins build to queue..."
+
+CURRENT_JOB_STATUS=`check_status`
+
+if [ "$CURRENT_JOB_STATUS" = "None" ]; then
+    if [ "$QUEUE_BUILD" = false ]; then
+        CURRENT_BUILD_NUMBER=`get_build_number`
+        echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
+        RESP=`stop_jenkins_build`
+        if [ "$RESP" = "302" ]; then
+            echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
+        else
+            exit 1
+            echo "ERROR: Request to Jenkins returned $RESP"
+        fi
+    else
+        echo "- adding Jenkins build to queue..."
+    fi
+else
+    echo "- adding Jenkins build to queue..."
+fi
 
 RESP=`queue_jenkins_build`
 

@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.37.0
+
+### v4.37.0 Features
+
+- `[Placeholder]` Placeholder item remove me. ([#xxx](https://github.com/infor-design/enterprise/issues/xxx))
+
 ## v4.36.0
 
 ### v4.36.0 Features
