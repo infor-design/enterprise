@@ -64,7 +64,7 @@
     cursor: text;
 
     .hyperlink {
-      color: $hyperlink-color;
+      color: $hyperlink-color !important;
     }
   }
 
