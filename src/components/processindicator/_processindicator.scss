@@ -159,7 +159,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       .heading {
         display: block;
         font-size: $ids-size-font-sm;
-        font-weight: bold;
+        font-weight: 400;
         margin-bottom: 4px;
         overflow: hidden;
         text-overflow: ellipsis;
