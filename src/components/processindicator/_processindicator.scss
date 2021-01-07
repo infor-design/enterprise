@@ -410,7 +410,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 }
 
-.process-indicator-flex,
+.process-indicator,
 .timeline {
   .heading {
     @include antialiased();
