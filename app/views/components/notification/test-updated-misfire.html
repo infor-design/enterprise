@@ -1,0 +1,26 @@
+<div>
+  <div id="mock-header"></div>
+  <br />
+  <button id="close" class="btn-secondary">Close Notification</button>
+</div>
+
+<script>
+  $('#mock-header').notification({
+    type: 'error',
+    message: 'DTO rejected by your manager for Sept 30, 2018.',
+    parent: '#mock-header',
+    link: '#',
+    linkText: 'Click to view',
+    attributes: [
+      { name: 'id', value: 'notification-id-1'},
+      { name: 'data-automation-id', value: 'notification-automation-id-1' }
+    ]
+  });
+
+  $('#close').on('click', function() {
+    const data = $('#mock-header').data('notification');
+    if (data) {
+      data.close();
+    }
+  });
+</script>

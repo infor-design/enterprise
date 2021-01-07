@@ -103,10 +103,6 @@ Notification.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.off(`updated.${COMPONENT_NAME}`).on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
-    });
-
     $(this.notificationEl).off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.notification-close', () => {
       self.destroy();
     });
@@ -135,7 +131,6 @@ Notification.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
     this.element.off(`click.${COMPONENT_NAME}`, '.notification-close');
     return this;
   },
@@ -150,6 +145,13 @@ Notification.prototype = {
 
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
+  },
+
+  /**
+   * Close and remove added markup and detatch events.
+   */
+  close() {
+    this.destroy();
   }
 };
 
