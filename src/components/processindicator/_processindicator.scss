@@ -99,16 +99,8 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 
   &.responsive {
-    .display {
-      //align-items: flex-end;
-      //display: grid;
-      //grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-      //word-spacing: initial;
-    }
-
     .step {
       flex: 1;
-      //display: grid;
       height: 100%;
       position: relative;
 
