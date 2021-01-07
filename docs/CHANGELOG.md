@@ -6,6 +6,10 @@
 
 - `[Placeholder]` Placeholder item remove me. ([#xxx](https://github.com/infor-design/enterprise/issues/xxx))
 
+### v4.37.0 Fixes
+
+- `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
+
 ## v4.36.0
 
 ### v4.36.0 Features
