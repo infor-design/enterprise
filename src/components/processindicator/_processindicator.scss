@@ -583,6 +583,12 @@ $indicator-current-size: ($indicator-size * 1.6);
   .process-indicator {
     text-align: center;
   }
+
+  .process-indicator.responsive {
+    .step:last-child {
+      flex: 0;
+    }
+  }
 }
 
 html[dir='rtl'] {
