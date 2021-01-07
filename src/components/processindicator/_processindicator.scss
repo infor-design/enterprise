@@ -101,7 +101,6 @@ $indicator-current-size: ($indicator-size * 1.6);
   &.responsive {
     .step {
       flex: 1;
-      height: 100%;
       position: relative;
 
       &:last-child .separator {
@@ -119,8 +118,8 @@ $indicator-current-size: ($indicator-size * 1.6);
     .lines {
       align-items: center;
       display: flex;
-      position: relative;
       height: 22px;
+      position: relative;
 
       .indicator {
         border-radius: 50%;
@@ -148,10 +147,10 @@ $indicator-current-size: ($indicator-size * 1.6);
       }
 
       .separator {
+        height: 2px;
         margin-left: -1px;
         position: relative;
         width: 100%;
-        height: 2px;
       }
     }
 
@@ -159,12 +158,12 @@ $indicator-current-size: ($indicator-size * 1.6);
     .responsive-details {
       .heading {
         display: block;
+        font-size: $ids-size-font-sm;
+        font-weight: bold;
         margin-bottom: 4px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: normal;
-        font-weight: bold;
-        font-size: $ids-size-font-sm;
       }
 
       > span {
