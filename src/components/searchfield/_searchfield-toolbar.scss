@@ -307,10 +307,8 @@ $toolbarsearchfield-category-empty-width: 51px;
 
         &.has-categories {
           .searchfield {
-            border-bottom-color: rgba($searchfield-border-color, 1);
-
             &:focus {
-              border-color: rgba($input-color-focus-border, 1);
+              border-color: $ids-color-palette-white;
             }
           }
         }

@@ -4,7 +4,7 @@
 
 ### v4.37.0 Features
 
-- `[Placeholder]` Placeholder item remove me. ([#xxx](https://github.com/infor-design/enterprise/issues/xxx))
+- `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 
 ## v4.36.0
 
@@ -39,7 +39,6 @@
 - `[Pager]` Fixed a bug that automation id's are not added when the attachToBody is used. ([#4692](https://github.com/infor-design/enterprise/issues/4692))
 - `[Rating]` Fixed a bug with the readonly function, it did not toggle the readonly state correctly. ([#958](https://github.com/infor-design/enterprise-ng/issues/958))
 - `[Tabs]` Added support for a "More Actions" button to exist beside horizontal/header tabs. ([#4532](https://github.com/infor-design/enterprise/issues/4532))
-- `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Tree]` Fixed an issue where the parent value was get deleted after use `addNode()` method. ([#4486](https://github.com/infor-design/enterprise/issues/4486))
 - `[Wizard]` Fixed a slight layout issue with the highlighted step in RTL mode. ([#4714](https://github.com/infor-design/enterprise/issues/4714))
 
