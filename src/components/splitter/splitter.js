@@ -477,6 +477,7 @@ Splitter.prototype = {
       this.splitterCollapseButton.remove();
     }
     $.removeData(this.element[0], COMPONENT_NAME);
+    return this;
   },
 
   /**

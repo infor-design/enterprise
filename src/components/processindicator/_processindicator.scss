@@ -36,17 +36,17 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
   }
 
+  // Override compact rule
   .responsive-details {
-    display: none;
+    display: none !important;
   }
 
   // Main blocks:  .display, .header, .details
   .display {
+    display: flex;
     margin-bottom: 20px;
-    word-spacing: -($indicator-size * 0.22);
 
     > * {
-      vertical-align: middle;
       white-space: nowrap;
     }
 
@@ -99,16 +99,8 @@ $indicator-current-size: ($indicator-size * 1.6);
   }
 
   &.responsive {
-    .display {
-      align-items: flex-end;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-      word-spacing: initial;
-    }
-
     .step {
-      display: grid;
-      height: 100%;
+      flex: 1;
       position: relative;
 
       &:last-child .separator {
@@ -119,19 +111,19 @@ $indicator-current-size: ($indicator-size * 1.6);
     &.compact {
       .label {
         margin: 0 5px 4px 0;
-        white-space: normal;
+        white-space: nowrap;
       }
     }
 
     .lines {
-      align-items: flex-end;
+      align-items: center;
       display: flex;
+      height: 22px;
       position: relative;
 
       .indicator {
         border-radius: 50%;
         height: 14px;
-        margin-top: 4px;
         min-height: 14px;
         min-width: 14px;
         width: 14px;
@@ -142,7 +134,6 @@ $indicator-current-size: ($indicator-size * 1.6);
           min-height: 18px;
           min-width: 18px;
           position: relative;
-          top: 2px;
           width: 18px;
 
           .icon {
@@ -156,25 +147,19 @@ $indicator-current-size: ($indicator-size * 1.6);
       }
 
       .separator {
+        height: 2px;
         margin-left: -1px;
         position: relative;
-        top: -6px;
         width: 100%;
       }
     }
 
     .details,
     .responsive-details {
-      margin-top: -1px;
-      max-width: 100%;
-      overflow: hidden;
-      position: absolute;
-      top: calc(100% + 12px);
-      vertical-align: bottom;
-      width: 95%;
-
       .heading {
         display: block;
+        font-size: $ids-size-font-sm;
+        font-weight: 400;
         margin-bottom: 4px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -595,14 +580,14 @@ $indicator-current-size: ($indicator-size * 1.6);
     display: block !important;
   }
 
-  .process-indicator .responsive-details {
-    display: block !important;
-    position: relative !important;
-    top: -8px !important;
-  }
-
   .process-indicator {
     text-align: center;
+  }
+
+  .process-indicator.responsive {
+    .step:last-child {
+      flex: 0;
+    }
   }
 }
 

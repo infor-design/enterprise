@@ -6,6 +6,10 @@
 
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 
+### v4.37.0 Fixes
+
+- `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
+
 ## v4.36.0
 
 ### v4.36.0 Features
