@@ -18,6 +18,7 @@ if [[ "$RELEASE_TAG" == "latest" ]]; then
 
     echo "Publishing and Deploying $RELEASE_VERSION documentation"
     echo ""
+    node ./scripts/deploy-documentation.js --site staging
     node ./scripts/deploy-documentation.js --site prod
 
     echo "Publishing $RELEASE_VERSION files to AWS CDN"
