@@ -4,7 +4,7 @@
 
 ### v4.37.0 Features
 
-- `[Placeholder]` Placeholder item remove me. ([#xxx](https://github.com/infor-design/enterprise/issues/xxx))
+- `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
 
 ### v4.37.0 Fixes
 
