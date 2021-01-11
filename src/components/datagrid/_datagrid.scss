@@ -1893,6 +1893,11 @@ $datagrid-small-row-height: 25px;
         transition: none;
       }
 
+      .datagrid-expand-btn .icon {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
       .icon {
         @include trigger-icon-background($datagrid-row-hover-color);
       }
