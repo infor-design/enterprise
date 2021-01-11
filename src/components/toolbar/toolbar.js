@@ -341,6 +341,12 @@ Toolbar.prototype = {
       searchfieldWrapper.trigger('reanimate');
     }
 
+    // Make the searchfield toolbar tabbable
+    const sfElement = this.buttonset.find('.toolbar-searchfield-wrapper .searchfield');
+    if (sfElement.length) {
+      sfElement[0].setAttribute('tabindex', '0');
+    }
+
     return this;
   },
 
