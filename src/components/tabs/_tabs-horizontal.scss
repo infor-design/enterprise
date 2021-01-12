@@ -174,6 +174,17 @@ $horizontal-tabs-height: 40px;
   }
 }
 
+.tab-panel-container {
+  .info-message {
+    .icon-info.icon {
+      color: $info-color !important;
+    }
+    .message-text {
+      color: $info-color !important;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .tab-container.horizontal {

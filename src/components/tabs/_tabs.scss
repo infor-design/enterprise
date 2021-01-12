@@ -426,7 +426,8 @@
       &:not(.last-child) {
         margin-right: 10px;
 
-        &.is-error {
+        &.is-error,
+        &.is-info {
           a[role='tab'] {
             padding: 12px 20px 12px 5px;
           }

@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button type="button" class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
+    <!-- Width and height prevents strange resize behavior but adds double scoll on smaller screens. -->
+    <div class="modal" id="modal-1" style="width: 450px; height: 450px;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+
+          <div id="tabs-normal" class="tab-container">
+            <ul class="tab-list">
+              <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
+              <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
+            </ul>
+            <div id="tabs-normal-contracts" class="tab-panel">
+              <h3>Contracts</h3>
+              <div class="field">
+                <label class="required" for="last-name">Last Name</label>
+                <input type="text" id="last-name" aria-required="true" name="last-name" data-validate="required">
+              </div>
+              <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric
+                strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness
+                real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries:
+                functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships,
+                solutions, metrics architectures.<p>
+            </div>
+            <!-- Max height solves issue with content going outside its parent container -->
+            <div id="tabs-normal-attachments" class="tab-panel"
+              style="height: 200px; max-height: 250px; overflow-y: auto;">
+              <h3>Attachments</h3>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+              <p>Paragraph</p>
+            </div>
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width:50%">Cancel</button>
+            <button type="button" class="btn-modal-primary" style="width:50%">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    // Custom Rule
+    $.fn.validation.rules.customRule = {
+      check: function (value, field) {
+        var pass = false;
+        if (value !== 'Test') {
+          pass = true;
+        }
+        return pass;
+      },
+      message: 'Information message',
+      type: 'info',
+      id: 'customDynamicRule'
+    };
+
+    // Change the validation attribute on the field
+    $('#last-name').attr('data-validate', 'required customRule');
+  });
+
+  // Create dialog content and open modal
+  $('#btn-add-comment2').on('click', function () {
+
+    $('body').modal({
+      cssClass: 'testClass',
+      title: 'Add a Comment',
+      content: '<div id="tabs-normal2" class="tab-container">' +
+        '<ul class="tab-list">' +
+        '<li class="tab"><a href="#tabs-normal-contracts2">Contracts</a></li>' +
+        '<li class="tab"><a href="#tabs-normal-attachments2">Attachments</a></li>' +
+        '</ul>' +
+        '<div id="tabs-normal-contracts2" class="tab-panel">' +
+        '<h3>Contracts</h3>' +
+        '<p style="width: 450px;">Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.<p>' +
+        '</div>' +
+        '<div id="tabs-normal-attachments2" class="tab-panel">' +
+        '<h3>Attachments</h3>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '<p>Paragraph</p>' +
+        '</div>' +
+        '</div>',
+      buttons: [{
+        text: 'Cancel',
+        click: function (e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Submit',
+        click: function (e, modal) {
+          modal.close();
+        },
+        isDefault: true
+      }]
+    });
+
+    // To initialize tabs
+    $("#tabs-normal2").tabs();
+
+    //Need to trigger modal resize here but how?
+  });
+
+</script>
