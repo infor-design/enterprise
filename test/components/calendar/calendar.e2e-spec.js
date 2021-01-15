@@ -57,6 +57,8 @@ describe('Calendar index tests', () => {
   it('Should be able to set id/automation id', async () => {
     expect(await element(by.id('calendar-id-legend-dto')).getAttribute('id')).toEqual('calendar-id-legend-dto');
     expect(await element(by.id('calendar-id-legend-dto')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-dto');
+    expect(await element(by.css('#calendar-id-legend-dto + label')).getAttribute('for')).toEqual('calendar-id-legend-dto');
+
     expect(await element(by.id('calendar-id-legend-admin')).getAttribute('id')).toEqual('calendar-id-legend-admin');
     expect(await element(by.id('calendar-id-legend-admin')).getAttribute('data-automation-id')).toEqual('calendar-automation-id-legend-admin');
     expect(await element(by.id('calendar-id-legend-team')).getAttribute('id')).toEqual('calendar-id-legend-team');
