@@ -55,6 +55,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 * @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
+* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -81,7 +82,8 @@ const DROPDOWN_DEFAULTS = {
   tagListMaxHeight: 120,
   allTextString: null,
   selectedTextString: null,
-  selectAllFilterOnly: true
+  selectAllFilterOnly: true,
+  attributes: null
 };
 
 function Dropdown(element, settings) {
@@ -265,6 +267,10 @@ Dropdown.prototype = {
         role: 'button',
         'aria-haspopup': 'listbox'
       });
+
+    if (this.settings.attributes) {
+      utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'dropdown', true);
+    }
 
     // Pass disabled/readonly from the original element, if applicable
     // "disabled" is a stronger setting than "readonly" - should take precedent.
@@ -1857,18 +1863,21 @@ Dropdown.prototype = {
       .attr('aria-expanded', 'true')
       .addClass('is-open');
 
-    // Add test automation ids
-    utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
-    utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
-    this.list.find('label').attr('for', this.list.find('input').attr('id'));
-    utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
-    utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
-    const options = this.list.find('.dropdown-option a');
-
     if (self.settings.attributes) {
+      // Add test automation ids
+      utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'search', true);
+      this.list.find('label').attr('for', this.list.find('input').attr('id'));
+      utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'search-label');
+
+      utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger', true);
+      utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox', true);
+      utils.addAttributes(this.list, this, this.settings.attributes, 'list');
+
+      const options = this.list.find('.dropdown-option a');
+
       options.each(function (i) {
         const opt = $(this);
-        utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`);
+        utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`, true);
       });
     }
 
