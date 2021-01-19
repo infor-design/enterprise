@@ -1869,7 +1869,7 @@ Dropdown.prototype = {
       this.list.find('label').attr('for', this.list.find('input').attr('id'));
       utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'search-label');
 
-      utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger', true);
+      utils.addAttributes(this.list.find('.trigger svg'), this, this.settings.attributes, 'trigger', true);
       utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox', true);
       utils.addAttributes(this.list, this, this.settings.attributes, 'list');
 
