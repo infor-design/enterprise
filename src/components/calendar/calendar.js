@@ -219,7 +219,11 @@ Calendar.prototype = {
       const eventTypeMarkup = `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
         <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
       this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+
+      // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
+      const checkboxEl = $(this.eventTypeContainer).find(`#${eventType.id}`);
       utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
+      checkboxEl.next('label').attr('for', checkboxEl[0].id);
     }
     return this;
   },
