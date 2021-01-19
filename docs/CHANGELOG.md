@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.36.0
+## v4.36.1
 
-### v4.36.0 Fixes
+### v4.36.1 Fixes
 
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
