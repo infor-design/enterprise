@@ -2,6 +2,14 @@
 
 ## v4.36.0
 
+### v4.36.0 Fixes
+
+- `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
+- `[Editor]` Fixed a follow up issue with readonly links in the editor. ([#4702](https://github.com/infor-design/enterprise/issues/4702))
+
+## v4.36.0
+
 ### v4.36.0 Features
 
 - `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
