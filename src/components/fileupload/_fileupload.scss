@@ -69,8 +69,10 @@
   // Make this flow offscreen
   label.fileupload input[type='file'],
   input.fileupload[type='file'] {
-    left: -10000px;
-    position: fixed;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
 
     &:disabled + span:not(.audible),
     &:disabled + label.fileupload {
