@@ -168,7 +168,9 @@ FileUpload.prototype = {
     });
 
     this.textInput.on('dragleave.fileupload, dragend.fileupload, drop.fileupload', () => {
-      this.fileInput.css('z-index', '-1');
+      setTimeout(() => {
+        this.fileInput.css('z-index', '-1');
+      }, 1);
     });
 
     // Add test automation ids
