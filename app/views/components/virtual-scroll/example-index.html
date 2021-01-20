@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <h2>Virtual Scrolling List (1000 items)</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="virtual-scroll-container" id="virtual-scroll-1" data-init="false">
+      <div class="ids-virtual-scroll" tabindex="0">
+        <div class="ids-virtual-scroll-viewport">
+          <div class="listview disable-hover">
+            <ul class="contents" role="listbox">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var xmlhttp = new XMLHttpRequest();
+  var url = '/api/products-big';
+  var settings = {
+    height: 308,
+    itemHeight: $('html').attr('class').indexOf('uplift') > -1 ? 53 : 47
+  };
+
+  $.getJSON(url, function(data) {
+    settings.itemTemplate = function(item) {
+      return `<li>${item.productName}</li>`;
+    };
+    settings.data = data;
+
+    $('#virtual-scroll-1').virtualscroll(settings);
+  });
+
+  // Example two
+  var data = [];
+
+  for (var i =0; i < 8000; i++) {
+    var date = new Date();
+    date.setDate(date.getDate() + i);
+    data.push({ index: i, date: date });
+  }
+
+  const settings2 = {
+    height: 304,
+    itemHeight: 33,
+    data: data,
+    itemTemplate: function(item, elem) {
+      return `<li class="dropdown-option" role="option">${item.date}</li>`;
+    }
+  };
+
+  $('#virtual-scroll-2').virtualscroll(settings2);
+</script>

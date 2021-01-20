@@ -189,6 +189,8 @@ sections:
     slug: visibility
   - name: Validation
     slug: validation
+  - name: VirtualScroll
+    slug: virtual-scroll
 - name: Patterns
   pages:
     - name: About

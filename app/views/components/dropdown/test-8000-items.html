@@ -13,13 +13,13 @@
 <script>
   var ele = $('#big-dropdown');
   var markup = '';
-  for(var i =0; i < 8000; i++) {
+  for (var i =0; i < 8000; i++) {
     var date = new Date();
     date.setDate(date.getDate() + i);
 
     markup += `<option value="option${i}" title="${date}">${date}</option>`;
   }
-  ele.append(markup).dropdown();
+  ele.append(markup).dropdown({ width: 420, maxWidth: 420, virtualScroll: true });
 
   $('body').initialize();
 </script>

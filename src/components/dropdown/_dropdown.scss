@@ -661,6 +661,13 @@ div.multiselect {
   }
 }
 
+// Virtual Scrolling
+.ids-virtual-scroll-viewport {
+  ul {
+    overflow: hidden;
+  }
+}
+
 // Fix tooltip gets overlap by another element
 .modal {
   .dropdown-wrapper {

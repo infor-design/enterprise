@@ -1,0 +1,20 @@
+// Virtual Scroll Component
+// ======================================================== /
+
+.ids-virtual-scroll {
+  height: 250px;
+  overflow: auto;
+  width: 100%;
+
+  &:focus {
+    @include focus-state();
+  }
+}
+
+.virtual-scroll-container {
+
+}
+
+.ids-virtual-scroll-viewport {
+  position: relative;
+}

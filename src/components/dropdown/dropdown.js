@@ -9,6 +9,7 @@ import { TagList } from '../tag/tag.list';
 import { xssUtils } from '../../utils/xss';
 import { stringUtils } from '../../utils/string';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
+import { VirtualScroll } from '../virtual-scroll/virtual-scroll';
 
 // jQuery Components
 import '../icons/icons.jquery';
@@ -31,6 +32,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
 * @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
 * @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+* @param {boolean} [settings.virtualScroll = false] If true virtual scrolling will be used, this is good for larger lists but may not work with all other features.
 * @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
 * in the Search Input field in the open combo box
 * @param {boolean} [settings.showEmptyGroupHeaders = false]  If true, displays optgroup headers in the list
@@ -48,6 +50,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {boolean} [settings.delay = 300]  Typing buffer delay in ms
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
+* @param {number} [settings.width = null] Sets the width of the open list, by default its the size of the field
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 * @param {object} [settings.tagSettings] if defined, passes along 'clickHandler' and 'dismissHandler' functions to any Tags in the Taglist
@@ -55,11 +58,13 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 * @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
+* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
   filterMode: 'contains',
+  virtualScroll: false,
   maxSelected: undefined, // (multiselect) sets a limit on the number of items that can be selected
   moveSelected: 'none',
   moveSelectedToTop: undefined,
@@ -81,7 +86,8 @@ const DROPDOWN_DEFAULTS = {
   tagListMaxHeight: 120,
   allTextString: null,
   selectedTextString: null,
-  selectAllFilterOnly: true
+  selectAllFilterOnly: true,
+  attributes: null
 };
 
 function Dropdown(element, settings) {
@@ -265,6 +271,10 @@ Dropdown.prototype = {
         role: 'button',
         'aria-haspopup': 'listbox'
       });
+
+    if (this.settings.attributes) {
+      utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'main');
+    }
 
     // Pass disabled/readonly from the original element, if applicable
     // "disabled" is a stronger setting than "readonly" - should take precedent.
@@ -783,8 +793,19 @@ Dropdown.prototype = {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>
-        <ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>`;
+
+      if (this.settings.virtualScroll) {
+        listContents += `<div class="virtual-scroll-container">
+            <div class="ids-virtual-scroll" tabindex="0">
+              <div class="ids-virtual-scroll-viewport">
+                <ul role="listbox" class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
+              </div>
+            </div>
+          </div>`;
+      } else {
+        listContents += `<ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
+      }
     }
 
     // Get a current list of <option> elements
@@ -810,62 +831,6 @@ Dropdown.prototype = {
     // Re-inforce typeahead-reloaded options' `selected` properties
     if (this.settings.reload === 'typeahead') {
       selectedOpts.prop('selected', true);
-    }
-
-    function buildLiHeader(textContent) {
-      return `<li role="presentation" class="group-label" focusable="false">
-        ${textContent}
-      </li>`;
-    }
-
-    function buildLiOption(option, index) {
-      let liMarkup = '';
-      let text = option.innerHTML;
-      const attributes = DOM.getAttributes(option);
-      const value = attributes.getNamedItem('value');
-      const title = attributes.getNamedItem('title');
-      const hasTitle = title ? `" title="${title.value}"` : '';
-      const badge = attributes.getNamedItem('data-badge');
-      const badgeColor = attributes.getNamedItem('data-badge-color');
-      let badgeHtml = '';
-      const isSelected = option.selected ? ' is-selected' : '';
-      const isDisabled = option.disabled ? ' is-disabled' : '';
-      let liCssClasses = option.className ? ` ${option.className.value}` : '';
-      const aCssClasses = liCssClasses.indexOf('clear') > -1 ? ' class="clear-selection"' : '';
-      const tabIndex = ` tabIndex="${index && index === 0 ? 0 : -1}"`;
-      const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
-      const copiedDataAttrs = ` ${self.getDataAttributes(attributes, toExclude).str}`;
-      const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
-      let iconHtml = '';
-
-      if (self.listIcon.hasIcons && self.listIcon.items[index]) {
-        iconHtml = self.listIcon.items[index].html;
-      }
-
-      if (badge) {
-        badgeHtml = `<span class="badge ${badgeColor ? badgeColor.value : 'azure07'}">${badge.value}</span>`;
-      }
-
-      if (liCssClasses.indexOf('clear') > -1 && text === '') {
-        text = Locale.translate('ClearSelection');
-      }
-
-      // Highlight search term
-      if (term && term.length > 0) {
-        const exp = self.getSearchRegex(term);
-        text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
-      }
-
-      if (self.listIcon.hasIcons &&
-        self.listIcon.items[index] &&
-        self.listIcon.items[index].isSwatch) {
-        liCssClasses += ' is-swatch';
-      }
-
-      liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">
-        <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
-
-      return liMarkup;
     }
 
     // In multiselect scenarios, shows an option at the top of the list that will
@@ -904,61 +869,64 @@ Dropdown.prototype = {
 
       // Show a "selected" header if there are selected options
       if (selectedOpts.length > 0) {
-        ulContents += buildLiHeader(headerText.selected);
+        ulContents += self.buildLiHeader(headerText.selected);
       }
 
       selectedOpts.each(function (i) {
-        ulContents += buildLiOption(this, i);
+        ulContents += self.buildLiOption(this, i, term);
         upTopOpts++;
       });
 
       // Only show the "all" header beneath the selected options if there
       // are no other optgroups present
       if (!hasOptGroups && opts.length > 0) {
-        ulContents += buildLiHeader(headerText.all);
+        ulContents += self.buildLiHeader(headerText.all);
       }
     }
 
-    opts.each(function (i) {
-      const count = i + upTopOpts;
-      const option = $(this);
-      const parent = option.parent();
-      let optgroupIsNotDrawn;
-      let optgroupIndex;
+    if (this.settings.virtualScroll) {
+      ulContents = '';
+    } else {
+      opts.each(function (i) {
+        const count = i + upTopOpts;
+        const option = $(this);
+        const parent = option.parent();
+        let optgroupIsNotDrawn;
+        let optgroupIndex;
 
-      // Add Group Header if this is an <optgroup>
-      // Remove the group header from the queue.
-      if (parent.is('optgroup') && groups.length) {
-        optgroupIndex = parent.index();
-        optgroupIsNotDrawn = groups.index(parent) > -1;
+        // Add Group Header if this is an <optgroup>
+        // Remove the group header from the queue.
+        if (parent.is('optgroup') && groups.length) {
+          optgroupIndex = parent.index();
+          optgroupIsNotDrawn = groups.index(parent) > -1;
 
-        if (optgroupIsNotDrawn) {
-          groups = groups.not(parent);
-          ulContents += buildLiHeader(`${parent.attr('label')}`);
+          if (optgroupIsNotDrawn) {
+            groups = groups.not(parent);
+            ulContents += self.buildLiHeader(`${parent.attr('label')}`);
 
-          // Add all selected items for this group
-          if (moveSelected === 'group') {
-            groupsSelectedOpts[optgroupIndex].each(function (j) {
-              ulContents += buildLiOption(this, j);
-              upTopOpts++;
-            });
+            // Add all selected items for this group
+            if (moveSelected === 'group') {
+              groupsSelectedOpts[optgroupIndex].each(function (j) {
+                ulContents += self.buildLiOption(this, j, term);
+                upTopOpts++;
+              });
+            }
           }
         }
-      }
 
-      if (moveSelected !== 'none' && option.is(':selected')) {
-        return;
-      }
+        if (moveSelected !== 'none' && option.is(':selected')) {
+          return;
+        }
 
-      ulContents += buildLiOption(this, count);
-    });
+        ulContents += self.buildLiOption(this, count, term);
+      });
+    }
 
     // Render the new list contents to the page.
     // Build the entire thing and set references if this is the first opening.
     // Otherwise, simply replace the elements inside the <ul>.
     if (!listExists) {
-      listContents += `${ulContents}</ul>` +
-        '</div>';
+      listContents += this.settings.virtualScroll ? `${ulContents}</div>` : `${ulContents}</ul></div>`;
 
       // Append markup to the DOM
       this.list = $(listContents);
@@ -969,6 +937,9 @@ Dropdown.prototype = {
     } else {
       this.listUl.html(ulContents);
     }
+
+    this.virtualScrollElem = this.listUl.closest('.virtual-scroll-container');
+    this.opts = opts;
 
     if (this.listIcon.hasIcons) {
       this.list.addClass('has-icons');
@@ -985,6 +956,63 @@ Dropdown.prototype = {
       this.position();
       this.highlightOption(this.listUl.find('li:visible:not(.separator):not(.group-label):not(.is-disabled)').first());
     }
+  },
+
+  buildLiHeader(textContent) {
+    return `<li role="presentation" class="group-label" focusable="false">
+      ${textContent}
+    </li>`;
+  },
+
+  buildLiOption(option, index, term) {
+    const self = this;
+    let liMarkup = '';
+    let text = option.innerHTML;
+    const attributes = DOM.getAttributes(option);
+    const value = attributes.getNamedItem('value');
+    const title = attributes.getNamedItem('title');
+    const hasTitle = title ? `" title="${title.value}"` : '';
+    const badge = attributes.getNamedItem('data-badge');
+    const badgeColor = attributes.getNamedItem('data-badge-color');
+    let badgeHtml = '';
+    const isSelected = option.selected ? ' is-selected' : '';
+    const isDisabled = option.disabled ? ' is-disabled' : '';
+    let liCssClasses = option.className ? ` ${option.className.value}` : '';
+    const aCssClasses = liCssClasses.indexOf('clear') > -1 ? ' class="clear-selection"' : '';
+    const tabIndex = ` tabIndex="${index && index === 0 ? 0 : -1}"`;
+    const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
+    const copiedDataAttrs = ` ${self.getDataAttributes(attributes, toExclude).str}`;
+    const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
+    let iconHtml = '';
+
+    if (self.listIcon.hasIcons && self.listIcon.items[index]) {
+      iconHtml = self.listIcon.items[index].html;
+    }
+
+    if (badge) {
+      badgeHtml = `<span class="badge ${badgeColor ? badgeColor.value : 'azure07'}">${badge.value}</span>`;
+    }
+
+    if (liCssClasses.indexOf('clear') > -1 && text === '') {
+      text = Locale.translate('ClearSelection');
+    }
+
+    // Highlight search term
+    if (term && term.length > 0) {
+      const exp = self.getSearchRegex(term);
+      text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+    }
+
+    if (self.listIcon.hasIcons &&
+      self.listIcon.items[index] &&
+      self.listIcon.items[index].isSwatch) {
+      liCssClasses += ' is-swatch';
+    }
+
+    liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">
+      <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
+
+    return liMarkup;
   },
 
   /**
@@ -1858,14 +1886,14 @@ Dropdown.prototype = {
       .addClass('is-open');
 
     // Add test automation ids
-    utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
-    utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
-    this.list.find('label').attr('for', this.list.find('input').attr('id'));
-    utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
-    utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
-    const options = this.list.find('.dropdown-option a');
-
     if (self.settings.attributes) {
+      utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'label');
+      utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'input');
+      this.list.find('label').attr('for', this.list.find('input').attr('id'));
+      utils.addAttributes(this.list.find('.trigger'), this, this.settings.attributes, 'trigger');
+      utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox');
+      const options = this.list.find('.dropdown-option a');
+
       options.each(function (i) {
         const opt = $(this);
         utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`);
@@ -1899,9 +1927,25 @@ Dropdown.prototype = {
 
     this.position();
 
+    if (this.settings.virtualScroll) {
+      this.virtualScroller = new VirtualScroll(this.virtualScrollElem, {
+        height: 304,
+        itemHeight: 32,
+        itemTemplate: function(item, elem) {
+          return self.buildLiOption(elem, item);
+        },
+        data: this.opts
+      });
+    }
+
     // Limit the width
     if (this.settings.maxWidth) {
       this.list.css('max-width', `${this.settings.maxWidth}px`);
+    }
+
+    // Limit the width
+    if (this.settings.width) {
+      this.list.css('width', `${this.settings.width}px`);
     }
 
     // Set the contents of the search input.
@@ -2144,8 +2188,9 @@ Dropdown.prototype = {
     function dropdownAfterPlaceCallback(e, placementObj) {
       // Turn upside-down if flipped to the top of the pseudoElem
       self.list[placementObj.wasFlipped === true ? 'addClass' : 'removeClass']('is-ontop');
-      self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
-
+      if (!self.settings.virtualScroll) {
+        self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
+      }
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
 
@@ -3484,6 +3529,10 @@ Dropdown.prototype = {
 
     // Handle Label click
     this.label.on('click', () => {
+      if (self.isDisabled()) {
+        return;
+      }
+
       self.pseudoElem.focus();
     });
   }

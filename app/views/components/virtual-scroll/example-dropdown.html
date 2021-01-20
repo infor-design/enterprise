@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <h2>Virtual Scrolling Dropdown (1000 items)</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="dropdown-list" style="width: 450px">
+      <div class="virtual-scroll-container" id="virtual-scroll-2" data-init="false">
+        <div class="ids-virtual-scroll" tabindex="0">
+          <div class="ids-virtual-scroll-viewport">
+            <ul class="contents" role="listbox">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var data = [];
+
+  for (var i =0; i < 8000; i++) {
+    var date = new Date();
+    date.setDate(date.getDate() + i);
+    data.push({ index: i, date: date });
+  }
+
+  const settings2 = {
+    height: 304,
+    itemHeight: 32,
+    data: data,
+    itemTemplate: function(item, elem) {
+      return `<li class="dropdown-option" role="option">${item.date}</li>`;
+    }
+  };
+
+  $('#virtual-scroll-2').virtualscroll(settings2);
+</script>

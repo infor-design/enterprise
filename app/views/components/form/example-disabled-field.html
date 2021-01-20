@@ -183,6 +183,7 @@
     $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #multi-disabled-standard ~ .dropdown-wrapper > .dropdown, #background-color, #lookup-field-disabled, #date-field-disabled ,#checkbox-disabled , #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #disabled-slider, #requests-on, #searchfield')
       .disable();
     $('#enabled-btn').enable();
+    $('#states').disable();
 
     $('.colorpicker-container, .spinbox-wrapper, .slider-wrapper').addClass('is-disabled');
     $('#editor-disabled').attr('contenteditable', 'false');
@@ -192,6 +193,7 @@
     $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #multi-disabled-standard ~ .dropdown-wrapper > .dropdown, #background-color, #lookup-field-disabled, #date-field-disabled, #checkbox-disabled, #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #disabled-slider, #requests-on, #searchfield')
       .enable();
     $('#enabled-btn').disable();
+    $('#states').enable();
 
     $('.colorpicker-container, .spinbox-wrapper, .slider-wrapper').removeClass('is-disabled');
     $('#editor-disabled').attr('contenteditable', 'true');

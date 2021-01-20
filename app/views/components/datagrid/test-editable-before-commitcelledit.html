@@ -101,7 +101,7 @@
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 120 });
       columns.push({ id: 'price', name: 'Price', beforeCommitCellEdit: beforeCommitCellEditLogic, field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date5 });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date });
 
       // Init the grid
       $('#datagrid').datagrid({
