@@ -2,6 +2,10 @@
 
 ## v4.37.0
 
+### v4.37.0 Features
+
+- `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
+
 ### v4.37.0 Fixes
 
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
