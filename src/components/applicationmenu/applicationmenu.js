@@ -444,7 +444,7 @@ ApplicationMenu.prototype = {
       trig.attr({ 'aria-expanded': true });
 
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
-        trig.find('.icon.app-header').removeClass('go-back').addClass('close');
+        trig.find('.icon.app-header').removeClass('go-back');
         trig.trigger('icon-change');
       }
     });
@@ -543,7 +543,7 @@ ApplicationMenu.prototype = {
       trig.attr({ 'aria-expanded': false });
 
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
-        trig.find('.icon.app-header').removeClass('close');
+        trig.find('.icon.app-header');
         trig.trigger('icon-change');
       }
     });
