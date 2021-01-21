@@ -8,6 +8,7 @@
 
 ### v4.37.0 Fixes
 
+- `[App Menu]` Removed the close button animation on the hamburger button when app menus open. ([#4756](https://github.com/infor-design/enterprise/issues/4756))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
