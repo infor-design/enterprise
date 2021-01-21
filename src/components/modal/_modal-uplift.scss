@@ -34,9 +34,12 @@
         .tab {
           &:not(.last-child) {
             &.is-error,
-            &.is-info {
+            &.is-info,
+            &.is-success,
+            &.is-alert {
               .icon-error,
               .icon-info,
+              .icon-success,
               .icon-alert {
                 height: 15px;
                 margin-left: 0;

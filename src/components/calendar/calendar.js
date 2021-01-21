@@ -600,7 +600,7 @@ Calendar.prototype = {
     for (let i = 0; i < checkboxes.length; i++) {
       const input = checkboxes[i];
       if (!input.checked) {
-        types.push(input.getAttribute('id'));
+        types.push(input.getAttribute('name'));
       }
     }
     return types;
