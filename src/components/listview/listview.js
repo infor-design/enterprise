@@ -49,6 +49,7 @@ const COMPONENT_NAME = 'listview';
  * @param {object} [settings.searchTermMinSize=1] The search term will trigger filtering only when its length is greater than or equals to the value.
  * @param {object} [settings.initializeContents=false] If true the initializer will be run on all internal contents.
  * @param {string} [settings.attributes] Add extra attributes like id's to the listview. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.attributesOverride=true] if true, will override existing the attributes key/value.
  */
 const LISTVIEW_DEFAULTS = {
   dataset: [],
@@ -76,6 +77,7 @@ const LISTVIEW_DEFAULTS = {
   searchTermMinSize: 1,
   initializeContents: false,
   attributes: null,
+  attributesOverride: null
 };
 
 function ListView(element, settings) {
@@ -199,7 +201,7 @@ ListView.prototype = {
 
     // Add user-defined attributes
     if (this.settings.attributes) {
-      utils.addAttributes(this.element, this, this.settings.attributes, 'listview');
+      utils.addAttributes(this.element, this, this.settings.attributes, 'listview', this.settings.attributesOverride);
     }
 
     // Configure Paging
@@ -380,7 +382,7 @@ ListView.prototype = {
 
       // Add user-defined attributes
       if (self.settings.attributes) {
-        utils.addAttributes(item, self, self.settings.attributes, `listview-item-${i}`);
+        utils.addAttributes(item, self, self.settings.attributes, `listview-item-${i}`, self.settings.attributesOverride);
       }
 
       if (isMultiselect) {
