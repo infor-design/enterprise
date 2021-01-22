@@ -9,8 +9,9 @@
 ### v4.37.0 Fixes
 
 - `[App Menu]` Removed the close button animation on the hamburger button when app menus open. ([#4756](https://github.com/infor-design/enterprise/issues/4756))
-- `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
+- `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
