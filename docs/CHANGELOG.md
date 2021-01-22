@@ -12,6 +12,7 @@
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
+- `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
