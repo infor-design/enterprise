@@ -38,6 +38,7 @@ const SWAPLIST_DEFAULTS = {
   },
 
   attributes: null,
+  attributesOverride: true,
 
   // Template HTML
   template: '' +
@@ -75,6 +76,7 @@ const SWAPLIST_DEFAULTS = {
 * @param {string} [settings.selectedBtnRight = '.btn-moveto-right'] A class name linking the move right button element.
 * @param {string} [settings.additionalBtn = '.btn-moveto-selected'] A class name linking the additional button element.
 * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {boolean} [settings.attributesOverride=true] if true, will override existing the attributes key/value.
 * @param {string} [settings.template] An Html String with the mustache template for the view.
 * @param {object} [settings.draggable] An object containing boolean key/value to make container/s
 *  disable for dragging and moving items. Supported keys with draggable are "available",
@@ -164,6 +166,7 @@ SwapList.prototype = {
         if (options.dataset.length === 0) {
           options.forceToRenderOnEmptyDs = true;
         }
+        options.attributesOverride = s.attributesOverride;
         options.attributes = this.getLvAutomationAttributes(c.class);
         lv.listview(options);
       }
@@ -253,7 +256,7 @@ SwapList.prototype = {
     s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span>
       <span class="${s.numOfSelectionsClass}-text">&nbsp;</span></p><div/>`);
 
-    // Add automation attributes to header buttons
+    // Add automation attributes to header buttons and root element
     if (s.attributes) {
       const autoAttr = [{
         btn: $(`${s.availableClass} ${s.availableBtn}`, this.element),
@@ -271,7 +274,8 @@ SwapList.prototype = {
       autoAttr.forEach((x) => {
         x.suffix = `swaplist-btn-${x.suffix}`;
       });
-      autoAttr.forEach(x => utils.addAttributes(x.btn, this, s.attributes, x.suffix));
+      autoAttr.forEach(x => utils.addAttributes(x.btn, this, s.attributes, x.suffix, s.attributesOverride));
+      utils.addAttributes(this.element, this, s.attributes, 'swaplist', s.attributesOverride);
     }
 
     // Make top buttons disabled if not draggable
