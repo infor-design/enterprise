@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Format Big Negative Number</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="test-input">Numeric Input</label>
+      <input id="test-input" type="number" value="-922589489099.38" class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowLeadingZeros": true, "allowThousandsSeparator": false, "allowDecimal": true, "allowNegative": true, "integerLimit": 29, "decimalLimit": 2 } }' placeholder="-#######.00" step="0.01"/>
+    </div>
+    <div class="field">
+      <button id="format" class="btn-secondary">Format</button>
+    </div>
+    <div class="field">
+      <label for="test-format-value">Formatted Value</label>
+      <input id="test-format-value" type="number" readonly class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowLeadingZeros": true, "allowThousandsSeparator": false, "allowDecimal": true, "allowNegative": true, "integerLimit": 29, "decimalLimit": 2 } }' placeholder="-#######.00" step="0.01"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#format').on('click', function(e) {
+      var value = document.getElementById('test-input').value;
+
+      document.getElementById('test-format-value').value = Locale.formatNumber(value, {
+        style: "decimal",
+        round: true,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        group: "",
+        decimal: "."
+      });
+    });
+
+  });
+</script>

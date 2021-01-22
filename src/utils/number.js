@@ -61,8 +61,11 @@ numberUtils.toFixed = function toFixed(number, decimals = 2) {
     firstPart = (parseInt(firstPart, 10) + 1).toString();
   }
 
-  if (lastPart) {
+  if (lastPart && lastPart.substr(0, 1) !== '0') {
     parsedNum = firstPart + parsedNum;
+  }
+  if (lastPart && lastPart.substr(0, 1) === '0') {
+    parsedNum = `${firstPart}0${parsedNum}`;
   }
   return parsedNum;
 };
