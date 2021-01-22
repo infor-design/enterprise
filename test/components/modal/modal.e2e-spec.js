@@ -488,3 +488,20 @@ describe('Modal with external components tests', () => {
     expect(focusedElemText).toEqual('Close');
   });
 });
+
+describe('Modal focusable elements tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-focusable-elements?layout=nofrills');
+    const buttonEl = await element(by.id('add-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should focus the first available input field', async () => {
+    const focusedElemId = await browser.driver.switchTo().activeElement().getAttribute('id');
+
+    expect(focusedElemId).toEqual('problem');
+  });
+});
