@@ -20,6 +20,10 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   &.has-labels {
     margin-top: 8px;
+
+    .display {
+      align-items: unset;
+    }
   }
 
   .responsive-label {
@@ -43,6 +47,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   // Main blocks:  .display, .header, .details
   .display {
+    align-items: center;
     display: flex;
     margin-bottom: 20px;
 
@@ -123,9 +128,9 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       .indicator {
         border-radius: 50%;
-        height: 14px;
-        min-height: 14px;
-        min-width: 14px;
+        height: 15px;
+        min-height: 15px;
+        min-width: 15px;
         width: 14px;
 
         &.current {
@@ -138,17 +143,43 @@ $indicator-current-size: ($indicator-size * 1.6);
 
           .icon {
             height: 18px;
-            left: -1px;
-            position: relative;
-            top: 0;
+            top: -1px;
             width: 18px;
           }
+        }
+
+        &.icon {
+          border-color: transparent;
+        }
+
+        &.icon + .separator {
+          margin-left: 1px !important;
+        }
+
+        &.icon.current + .separator {
+          margin-left: 0 !important;
+        }
+
+        .icon {
+          height: 16px;
+          left: -3px;
+          position: relative;
+          top: -2px;
+          width: 16px;
+        }
+
+        .current .icon {
+          height: 18px;
+          left: -3px;
+          position: relative;
+          top: -2px;
+          width: 18px;
         }
       }
 
       .separator {
         height: 2px;
-        margin-left: -1px;
+        margin-left: 0;
         position: relative;
         width: 100%;
       }
@@ -173,12 +204,13 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       > a {
         display: block;
-        margin-top: -3px;
+        margin-top: -2px;
         white-space: normal;
       }
 
       .icon {
         height: 14px;
+        margin-right: 2px;
         top: -1px;
         width: 14px;
       }
@@ -195,7 +227,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
 
     .separator {
-      margin-left: -2px;
+      margin-left: 0 !important;
     }
 
     .indicator.icon {
@@ -203,11 +235,15 @@ $indicator-current-size: ($indicator-size * 1.6);
       border: 0;
 
       .icon {
-        height: 15px;
-        left: -1px;
+        height: 16px;
+        left: 0;
         position: relative;
-        top: -1px;
-        width: 15px;
+        top: 0;
+        width: 16px;
+
+        &.icon-skipped {
+          color: $indicator-darker !important;
+        }
       }
     }
 
@@ -271,6 +307,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   // Rejected
   &.rejected {
+    background-color: $indicator-warning;
     border: 0;
 
     &::before,
@@ -389,7 +426,7 @@ $indicator-current-size: ($indicator-size * 1.6);
         &::before,
         &::after {
           left: 0.12em;
-          width: ($indicator-size * 0.82);
+          width: 1.1em;
         }
 
         &.current {
