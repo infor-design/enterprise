@@ -888,10 +888,10 @@ ApplicationMenu.prototype = {
       this.handleDismissOnClick();
     });
 
-    $(document).on('open-applicationmenu', () => {
-      self.openMenu(undefined, true);
-    }).on('close-applicationmenu', () => {
-      self.closeMenu();
+    $(document).on('open-applicationmenu', (e, noFocus, userOpened) => {
+      self.openMenu(undefined, userOpened);
+    }).on('close-applicationmenu', (e, userClosed) => {
+      self.closeMenu(userClosed);
     }).on('dismiss-applicationmenu', () => {
       self.handleDismissOnClick();
     });
