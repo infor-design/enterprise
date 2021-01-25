@@ -131,9 +131,9 @@ ApplicationMenu.prototype = {
           this.searchfield = this.searchfield.children('.searchfield');
         }
       } else {
-        this.searchfield = $(`${'<div class="searchfield-wrapper">' +
-          '<label for="application-menu-searchfield">'}${Locale.translate('Search')}</label>` +
-          '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
+        this.searchfield = 
+          $('<input id="application-menu-searchfield" class="searchfield" placeholder="Search" />')
+            .prependTo(this.element);
       }
 
       this.element.addClass('has-searchfield');
