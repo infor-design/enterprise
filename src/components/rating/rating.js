@@ -37,11 +37,13 @@ Rating.prototype = {
    */
   handleEvents() {
     const inputs = $('input', this.element);
-
     for (let i = 0, l = inputs.length; i < l; i++) {
-      $(inputs[i]).on(`change.${COMPONENT_NAME}`, () => {
-        if (!this.element.hasClass('is-readonly')) {
-          this.val(i + 1);
+      const thisInput = $(inputs[i]);
+      const nextInput = $(inputs[i + 1]);
+      const isNotEmpty = el => (el.is('.is-filled') || el.is('.is-half'));
+      thisInput.on(`click.${COMPONENT_NAME}`, () => {
+        if (!this.element.is('.is-readonly')) {
+          this.val(isNotEmpty(thisInput) && !isNotEmpty(nextInput) ? i : i + 1);
         }
       });
     }
@@ -156,7 +158,7 @@ Rating.prototype = {
    * @returns {object} The api
    */
   unbind() {
-    this.element.find('input').off(`change.${COMPONENT_NAME}`);
+    this.element.find('input').off(`click.${COMPONENT_NAME}`);
     return this;
   },
 

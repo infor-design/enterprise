@@ -130,7 +130,7 @@ Spinbox.prototype = {
     }
 
     if (this.element.attr('step')) {
-      this.settings.max = this.element.attr('step');
+      this.settings.step = this.element.attr('step');
     } else if (this.settings.step) {
       this.element.attr('step', this.settings.step);
     }
