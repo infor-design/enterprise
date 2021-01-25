@@ -392,7 +392,7 @@
     <div class="process-indicator compact responsive has-labels">
       <div class="display">
         <div class="step">
-          <span class="label">Started</span>
+          <span class="label">Done</span>
           <div class="lines">
             <span class="indicator darker"></span>
             <span class="separator darker"></span>
@@ -400,25 +400,33 @@
         </div>
 
         <div class="step">
-          <span class="label">First Level</span>
+          <span class="label">Rejected (skipped)</span>
           <div class="lines">
-            <span class="indicator darker"></span>
+            <span class="indicator icon">
+              <svg class="icon icon-rejected-solid icon-skipped" focusable="false" aria-hidden="true" role="presentation">
+                 <use href="#icon-rejected-solid"></use>
+              </svg>
+            </span>
             <span class="separator darker"></span>
           </div>
         </div>
 
         <div class="step">
-          <span class="label">Second Level</span>
+          <span class="label">Rejected</span>
           <div class="lines">
-            <span class="indicator darker"></span>
+            <span class="indicator icon">
+              <svg class="icon icon-rejected-solid" aria-hidden="true" role="presentation">
+                 <use href="#icon-rejected-solid"></use>
+              </svg>
+            </span>
             <span class="separator darker"></span>
           </div>
         </div>
 
         <div class="step">
-          <span class="label">3rd Level</span>
+          <span class="label">Pending</span>
           <div class="lines">
-            <span class="indicator current processing icon">
+            <span class="indicator icon">
               <svg class="icon icon-pending" focusable="false" aria-hidden="true" role="presentation">
                  <use href="#icon-pending"></use>
               </svg>
@@ -428,7 +436,7 @@
         </div>
 
         <div class="step">
-          <span class="label">Final Level</span>
+          <span class="label">Future</span>
           <div class="lines">
             <span class="indicator"></span>
             <span class="separator"></span>
