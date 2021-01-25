@@ -121,3 +121,22 @@ describe('Spinbox Range Tests tests', () => {
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
   });
 });
+
+describe('Spinbox Stepped Interval tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/spinbox/example-stepped-intervals.html');
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('stepped-spinbox'))), config.waitsFor);
+  });
+
+  it('should be able to input a double digit number when a step is defined', async () => {
+    const spinBoxElement = element(by.id('stepped-spinbox'));
+
+    await spinBoxElement.clear();
+    await spinBoxElement.sendKeys('21');
+    await spinBoxElement.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleepShort);
+
+    expect(await spinBoxElement.getAttribute('value')).toEqual('21');
+  });
+});
