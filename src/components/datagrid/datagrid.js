@@ -9222,6 +9222,12 @@ Datagrid.prototype = {
     this.editor.row = idx;
     this.editor.cell = cell;
 
+    // Certain types we just use contents
+    if (col.formatter.toString().indexOf('function Badge') === 0 ||
+      col.formatter.toString().indexOf('function Alert') === 0) {
+      this.editor.useValue = true;
+    }
+
     if (this.settings.onEditCell) {
       this.settings.onEditCell(this.editor);
     }
