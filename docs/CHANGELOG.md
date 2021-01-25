@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.36.2
+
+### v4.36.2 Fixes
+
+- `[App Menu]` Removed the close button animation on the hamburger button when app menus open. ([#4756](https://github.com/infor-design/enterprise/issues/4756))
+- `[App Menu]` Fixed a regression bug  where the searchfield icon duplicated and were not properly aligned with the searchfield. ([#4737](https://github.com/infor-design/enterprise/issues/4737))
+- `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
+- `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
+- `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
+- `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
+
 ## v4.36.1
 
 ### v4.36.1 Fixes

@@ -53,8 +53,8 @@ FileUpload.prototype = {
     elemClass = elemClass ? ` ${elemClass}` : '';
 
     const instructions = Locale.translate('FileUpload');
-    const label = $(`<label for="${id}-filename">${elem.text()} <span class="audible">${instructions}</span></label>`);
-    const shadowField = $(`<input readonly id="${id}-filename" class="fileupload-background-transparent${elemClass}" type="text">`);
+    this.shadowLabel = $(`<label for="${id}-filename">${elem.text()} <span class="audible">${instructions}</span></label>`);
+    this.shadowField = $(`<input readonly id="${id}-filename" class="fileupload-background-transparent${elemClass}" type="text">`);
     const svg = `<span class="trigger">${$.createIcon('folder')}</span>`;
     const svgClose = `<span class="trigger-close" tabindex="-1">${$.createIcon('close')}</span>`;
 
@@ -66,22 +66,24 @@ FileUpload.prototype = {
         orgLabel = elem.parent().prev('label');
       }
 
-      label.html(`${orgLabel.text()} <span class="audible">${instructions}</span>`);
+      this.shadowLabel.html(`${orgLabel.text()} <span class="audible">${instructions}</span>`);
       orgLabel.addClass('audible').add(this.fileInput).attr('tabindex', '-1').attr('aria-hidden', 'true');
     }
 
-    elem.before(label, shadowField);
-    this.fileInput.after(svg, svgClose);
+    if (elem.parent().find('input[type="text"]').length === 0) {
+      elem.before(this.shadowLabel, this.shadowField);
+      this.fileInput.after(svg, svgClose);
+    }
 
     // if there is a value attribute, then this will be used as the current value since unable to set files[0].name
     // move it to the text input and remove it off the file input
     const fileInputValue = this.fileInput.attr('value');
     if (fileInputValue && fileInputValue.length > 0) {
-      shadowField.val(fileInputValue);
+      this.shadowField.val(fileInputValue);
       this.fileInput.attr('value', '');
     }
 
-    this.textInput = shadowField;
+    this.textInput = this.shadowField;
     this.svg = elem.parent().find('.trigger');
     this.svgClose = elem.parent().find('.trigger-close');
 
@@ -122,7 +124,7 @@ FileUpload.prototype = {
     }
 
     if (elem.hasClass('required')) {
-      label.addClass('required');
+      this.shadowLabel.addClass('required');
       elem.removeClass('required');
     }
 
@@ -149,7 +151,7 @@ FileUpload.prototype = {
       }
     });
 
-    // Fix - Not to buble events when clicked on trigger/close icons
+    // Fix - Not to bubble events when clicked on trigger/close icons
     this.fileInput.on('click.fileupload', (e) => {
       const handleEventData = this.fileInput.data(`handleEvent${[(e.type || '')]}`);
       if (handleEventData &&
@@ -160,12 +162,16 @@ FileUpload.prototype = {
       }
     });
 
-    // Fix: not sure why, but some browser(ie. safari) need to rerender,
-    // some rules were not applying from css file
-    self.fileInput.css({ position: 'static', left: 0 });
-    setTimeout(() => {
-      self.fileInput.css({ position: 'fixed', left: '-10000px' });
-    }, 0);
+    // Support Drag and Drop
+    this.textInput.on('dragenter.fileupload', () => {
+      this.fileInput.css('z-index', '1');
+    });
+
+    this.textInput.on('dragleave.fileupload, dragend.fileupload, drop.fileupload', () => {
+      setTimeout(() => {
+        this.fileInput.css('z-index', '-1');
+      }, 1);
+    });
 
     // Add test automation ids
     utils.addAttributes(elem, this, this.settings.attributes);
@@ -188,7 +194,8 @@ FileUpload.prototype = {
   unbind() {
     this.svg.add(this.svgClose).off('click.fileupload');
     this.fileInput.off('change.fileupload');
-    this.textInput.off('keydown.fileupload');
+    this.fileInput.prev('label');
+    this.textInput.off();
 
     this.element.closest('.field-fileupload')
       .removeClass('field-fileupload')
@@ -215,7 +222,8 @@ FileUpload.prototype = {
   * @returns {void}
   */
   destroy() {
-    this.unbind();
+    this.shadowField.remove();
+    this.shadowLabel.remove();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

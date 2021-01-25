@@ -131,9 +131,9 @@ ApplicationMenu.prototype = {
           this.searchfield = this.searchfield.children('.searchfield');
         }
       } else {
-        this.searchfield = $(`${'<div class="searchfield-wrapper">' +
-          '<label for="application-menu-searchfield">'}${Locale.translate('Search')}</label>` +
-          '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
+        this.searchfield =
+          $('<input id="application-menu-searchfield" class="searchfield" placeholder="Search" />')
+            .prependTo(this.element);
       }
 
       this.element.addClass('has-searchfield');
@@ -444,7 +444,7 @@ ApplicationMenu.prototype = {
       trig.attr({ 'aria-expanded': true });
 
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
-        trig.find('.icon.app-header').removeClass('go-back').addClass('close');
+        trig.find('.icon.app-header').removeClass('go-back');
         trig.trigger('icon-change');
       }
     });
@@ -544,7 +544,7 @@ ApplicationMenu.prototype = {
 
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
         trig.find('.icon.app-header').removeClass('close');
-        trig.trigger('icon-change');
+        trig.find('.icon.app-header');
       }
     });
 

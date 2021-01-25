@@ -627,19 +627,17 @@ DOM.convertToHTMLElement = function convertToHTMLElement(item) {
  */
 DOM.focusableElems = function focusableElems(el, additionalSelectors = [], ignoreSelectors = []) {
   const focusableElemSelector = [
-    'button',
-    '[href]',
-    'input',
-    'select',
-    'textarea',
+    'button:not([disabled]):not([tabindex="-1"])',
+    '[href]:not([disabled]):not([tabindex="-1"])',
+    'input:not([disabled]):not([tabindex="-1"])',
+    'textarea:not([disabled]):not([tabindex="-1"])',
     '[focusable]:not([focusable="false"])',
     '[tabindex]:not([tabindex="-1"])',
     '[contenteditable]',
     'iframe'
   ].concat(additionalSelectors).filter(item => ignoreSelectors.indexOf(item) === -1);
-  const elems = el.querySelectorAll(focusableElemSelector.join(', '));
-  const arrElems = utils.getArrayFromList(elems);
-  return arrElems.filter((elem) => {
+  const elems = [...el.querySelectorAll(focusableElemSelector.join(', '))];
+  return elems.filter((elem) => {
     if (elem.tagName.toLowerCase() === 'use') {
       return false;
     }

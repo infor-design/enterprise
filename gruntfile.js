@@ -2,7 +2,6 @@ module.exports = function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  const chokidar = require('./scripts/configs/watch.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const compress = require('./scripts/configs/compress.js');
@@ -56,7 +55,6 @@ module.exports = function (grunt) {
   grunt.initConfig(Object.assign(
     {},
     config,
-    chokidar,
     copy,
     cssmin,
     compress
@@ -115,11 +113,6 @@ module.exports = function (grunt) {
   // Zip dist folder for download from the git releases page.
   grunt.registerTask('zip-dist', [
     'compress'
-  ]);
-
-  // Watch Task
-  grunt.registerTask('watch', [
-    'chokidar'
   ]);
 };
 /* eslint-enable global-require, no-param-reassign,
