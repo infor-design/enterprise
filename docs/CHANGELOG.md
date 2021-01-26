@@ -16,6 +16,7 @@
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
 - `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
+- `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))
 - `[ProcessIndicator]` Fixed a layout issue on the index page and added a rejected icon. ([#4770](https://github.com/infor-design/enterprise/issues/4770))
 - `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
 - `[Swaplist]` Fixed an issue where the user attributes need to be override existing attributes. ([#4694](https://github.com/infor-design/enterprise/issues/4694))

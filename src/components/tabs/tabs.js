@@ -573,7 +573,7 @@ Tabs.prototype = {
       }
 
       // Add it to the App Menu's list of triggers to adjust on open/close
-      $('#application-menu').data('applicationmenu').modifyTriggers([appMenuTrigger.children('a')]);
+      $('#application-menu').data('applicationmenu')?.modifyTriggers([appMenuTrigger.children('a')]);
     }
 
     // Add Tab Button
@@ -1371,11 +1371,11 @@ Tabs.prototype = {
     this.hideFocusState();
 
     if (menu.hasClass('is-open')) {
-      menu.trigger('close-applicationmenu');
+      menu.trigger('close-applicationmenu', [true]);
       return false;
     }
 
-    menu.trigger('open-applicationmenu');
+    menu.trigger('open-applicationmenu', [null, true]);
     return false;
   },
 
