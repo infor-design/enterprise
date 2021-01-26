@@ -9223,8 +9223,9 @@ Datagrid.prototype = {
     this.editor.cell = cell;
 
     // Certain types we just use contents
-    if (col.formatter.toString().indexOf('function Badge') === 0 ||
-      col.formatter.toString().indexOf('function Alert') === 0) {
+    const formatterStr = col.formatter?.toString() || '';
+    if (formatterStr.indexOf('function Badge') === 0 ||
+      formatterStr.indexOf('function Alert') === 0) {
       this.editor.useValue = true;
     }
 
