@@ -170,7 +170,7 @@ function ValidationRules() {
         }
 
         const datepickerApi = field.data('datepicker');
-        let options = datepickerApi.settings;
+        let options = datepickerApi ? datepickerApi.settings : {};
         if (gridInfo && gridInfo.column && gridInfo.column.editorOptions) {
           options = gridInfo.column.editorOptions;
         } 
