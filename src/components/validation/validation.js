@@ -127,7 +127,7 @@ function ValidationRules() {
           } else if (typeof col.dateFormat === 'string') {
             dateFormat = gridInfo.column.dateFormat;
           }
-        }	
+        }
 
         const isStrict = !(
           dateFormat === 'MMMM' ||
@@ -170,8 +170,10 @@ function ValidationRules() {
         }
 
         const datepickerApi = field.data('datepicker');
-        const options = datepickerApi ? datepickerApi.settings : gridInfo ? gridInfo.column.editorOptions ? 
-          gridInfo.column.editorOptions : {} : {};
+        let options = {};
+        if (datepickerApi && datepickerApi.settings && gridInfo.column.editorOptions) {
+          options = gridInfo.column.editorOptions;
+        } 
         const hasOptions = Object.keys(options).length > 0;
         let d;
         let i;
