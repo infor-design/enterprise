@@ -105,7 +105,7 @@ function ValidationRules() {
 
     // date: Validate date, datetime (24hr or 12hr am/pm)
     date: {
-      check(value, field) {
+      check(value, field, gridInfo) {
         this.message = Locale.translate('InvalidDate');
 
         if (value instanceof Date) {
@@ -119,6 +119,15 @@ function ValidationRules() {
           dtApi = field.data('datepicker');
           dateFormat = dtApi.pattern;
         }
+		    if (gridInfo && gridInfo.column) {
+          const col = gridInfo.column;
+
+          if (typeof col.sourceFormat === 'string') {
+            dateFormat = gridInfo.column.sourceFormat;
+          } else if (typeof col.dateFormat === 'string') {
+            dateFormat = gridInfo.column.dateFormat;
+          }
+        }	
 
         const isStrict = !(
           dateFormat === 'MMMM' ||
@@ -145,7 +154,7 @@ function ValidationRules() {
 
     // Validate date, disable dates
     availableDate: {
-      check(value, field) {
+      check(value, field, gridInfo) {
         this.message = Locale.translate('UnavailableDate');
         let check = true;
 
@@ -161,7 +170,7 @@ function ValidationRules() {
         }
 
         const datepickerApi = field.data('datepicker');
-        const options = datepickerApi ? datepickerApi.settings : {};
+        const options = datepickerApi ? datepickerApi.settings : gridInfo ? gridInfo.column.editorOptions ? gridInfo.column.editorOptions : {} : {};
         const hasOptions = Object.keys(options).length > 0;
         let d;
         let i;
@@ -181,6 +190,15 @@ function ValidationRules() {
               pattern: datepickerApi.pattern,
               locale: datepickerApi.locale.name
             };
+          }
+		      if (gridInfo && gridInfo.column) {
+            const col = gridInfo.column;
+
+            if (col.sourceFormat) {
+              format = (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat);
+            } else if (col.dateFormat) {
+              format = (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat);
+      	    }
           }
           dateObj = Locale.parseDate(dateObj, format);
         }
@@ -213,7 +231,7 @@ function ValidationRules() {
             new Date(options.disable.maxDate).setHours(0, 0, 0, 0));
 
           // dayOfWeek
-          if (options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
+          if (options.disable.dayOfWeek && options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
             check = false;
           }
 
@@ -230,25 +248,29 @@ function ValidationRules() {
           if (/string|number/.test(typeof options.disable.years)) {
             options.disable.years = [options.disable.years];
           }
-          for (let i2 = 0, l2 = options.disable.years.length; i2 < l2; i2++) {
-            if (thisYear === Number(options.disable.years[i2])) {
-              check = false;
-              break;
+		      if (options.disable.years) {
+            for (let i2 = 0, l2 = options.disable.years.length; i2 < l2; i2++) {
+              if (thisYear === Number(options.disable.years[i2])) {
+                check = false;
+                break;
+              }
             }
           }
 
           // dates
-          if (options.disable.dates.length && typeof options.disable.dates === 'string') {
-            options.disable.dates = [options.disable.dates];
-          }
-          for (i = 0, l = options.disable.dates.length; i < l; i++) {
-            d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
-              new Date(options.disable.dates[i]);
+          if (options.disable.dates) {
+                if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+                  options.disable.dates = [options.disable.dates];
+                }
+                for (i = 0, l = options.disable.dates.length; i < l; i++) {
+                  d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
+                    new Date(options.disable.dates[i]);
 
-            if (d2 === d.setHours(0, 0, 0, 0)) {
-              check = false;
-              break;
-            }
+                  if (d2 === d.setHours(0, 0, 0, 0)) {
+                    check = false;
+                    break;
+                  }
+                }
           }
         }
         if (hasOptions) {
