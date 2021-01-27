@@ -25,6 +25,7 @@
 - `[Datagrid]` Fixed a bug where multiselect would loose selection across pages when using selectRowsAcrossPages. ([#954](https://github.com/infor-design/enterprise-ng/issues/954))
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 - `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Datagrid]` Fixed the inbuilt date validation to use the datagrid column settings for date fields. ([#4693](https://github.com/infor-design/enterprise/issues/4730))
 - `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
 - `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
