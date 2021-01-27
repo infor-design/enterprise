@@ -729,6 +729,19 @@ Column.prototype = {
             '</svg>';
         };
 
+        // Index to stroe tooltip cache data
+        let tooltipIdx = i;
+
+        // Set group info
+        let thisGroup = null;
+        if (self.isGrouped) {
+          thisGroup = { elem: d3.select(this.parentNode) };
+          thisGroup.data = thisGroup.elem.datum().values;
+          thisGroup.items = thisGroup.elem.selectAll('.bar');
+          thisGroup.idx = parseInt(thisGroup.elem.attr('data-group-id'), 10);
+          tooltipIdx = (thisGroup.idx * thisGroup.data.length) + i;
+        }
+
         const show = function (isTooltipBottom) { //eslint-disable-line
           size = charts.tooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width / 2) + (shape.attr('width') / 2);
@@ -793,11 +806,16 @@ Column.prototype = {
         const setCustomTooltip = (method) => {
           content = '';
           const args = { index: i, data: d };
+          if (self.isGrouped) {
+            args.groupElem = thisGroup.elem.node();
+            args.groupItems = thisGroup.items.nodes();
+            args.groupIndex = thisGroup.idx;
+            args.groupData = thisGroup.data;
+          }
           const req = (res) => {
             if (typeof res === 'string' || typeof res === 'number') {
               content = res;
               replaceMatchAndSetType();
-              tooltipDataCache[i] = content;
             }
           };
           let runInterval = true;
@@ -890,18 +908,18 @@ Column.prototype = {
           }
         }
 
-        if (tooltipData && typeof tooltipData === 'function' && typeof d.tooltip === 'undefined' && !tooltipDataCache[i]) {
+        if (tooltipData && typeof tooltipData === 'function' && typeof d.tooltip === 'undefined' && !tooltipDataCache[tooltipIdx]) {
           setCustomTooltip(tooltipData);
         } else {
-          content = tooltipDataCache[i] || tooltipData || content || '';
-          if (!tooltipDataCache[i] && d.tooltip !== false &&
+          content = tooltipDataCache[tooltipIdx] || tooltipData || content || '';
+          if (!tooltipDataCache[tooltipIdx] && d.tooltip !== false &&
             typeof d.tooltip !== 'undefined' && d.tooltip !== null) {
             if (typeof d.tooltip === 'function') {
               setCustomTooltip(d.tooltip);
             } else {
               content = d.tooltip.toString();
               replaceMatchAndSetType();
-              tooltipDataCache[i] = content;
+              tooltipDataCache[tooltipIdx] = content;
             }
           }
           if (typeof content === 'string' && content !== '') {
