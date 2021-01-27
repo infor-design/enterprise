@@ -259,18 +259,18 @@ function ValidationRules() {
 
           // dates
           if (options.disable.dates) {
-                if (options.disable.dates.length && typeof options.disable.dates === 'string') {
-                  options.disable.dates = [options.disable.dates];
-                }
-                for (i = 0, l = options.disable.dates.length; i < l; i++) {
-                  d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
-                    new Date(options.disable.dates[i]);
+            if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+              options.disable.dates = [options.disable.dates];
+            }
+            for (i = 0, l = options.disable.dates.length; i < l; i++) {
+              d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
+                new Date(options.disable.dates[i]);
 
-                  if (d2 === d.setHours(0, 0, 0, 0)) {
-                    check = false;
-                    break;
-                  }
-                }
+              if (d2 === d.setHours(0, 0, 0, 0)) {
+                check = false;
+                break;
+              }
+            }
           }
         }
         if (hasOptions) {
