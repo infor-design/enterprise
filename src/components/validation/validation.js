@@ -119,7 +119,7 @@ function ValidationRules() {
           dtApi = field.data('datepicker');
           dateFormat = dtApi.pattern;
         }
-		    if (gridInfo && gridInfo.column) {
+        if (gridInfo && gridInfo.column) {
           const col = gridInfo.column;
 
           if (typeof col.sourceFormat === 'string') {
@@ -170,7 +170,8 @@ function ValidationRules() {
         }
 
         const datepickerApi = field.data('datepicker');
-        const options = datepickerApi ? datepickerApi.settings : gridInfo ? gridInfo.column.editorOptions ? gridInfo.column.editorOptions : {} : {};
+        const options = datepickerApi ? datepickerApi.settings : gridInfo ? gridInfo.column.editorOptions ? 
+          gridInfo.column.editorOptions : {} : {};
         const hasOptions = Object.keys(options).length > 0;
         let d;
         let i;
@@ -191,14 +192,14 @@ function ValidationRules() {
               locale: datepickerApi.locale.name
             };
           }
-		      if (gridInfo && gridInfo.column) {
+          if (gridInfo && gridInfo.column) {
             const col = gridInfo.column;
 
             if (col.sourceFormat) {
               format = (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat);
             } else if (col.dateFormat) {
               format = (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat);
-      	    }
+            }
           }
           dateObj = Locale.parseDate(dateObj, format);
         }
@@ -248,7 +249,7 @@ function ValidationRules() {
           if (/string|number/.test(typeof options.disable.years)) {
             options.disable.years = [options.disable.years];
           }
-		      if (options.disable.years) {
+          if (options.disable.years) {
             for (let i2 = 0, l2 = options.disable.years.length; i2 < l2; i2++) {
               if (thisYear === Number(options.disable.years[i2])) {
                 check = false;
