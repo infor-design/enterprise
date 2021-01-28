@@ -109,9 +109,9 @@ function ValidationRules() {
         this.message = Locale.translate('InvalidDate');
 
         if (gridInfo && gridInfo.column) {
-          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true)
+          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true);
           if (gridValue instanceof Date) {
-              return gridValue && gridValue.getTime && !isNaN(gridValue.getTime());
+            return gridValue && gridValue.getTime && !isNaN(gridValue.getTime());
           }
         }
 
@@ -179,9 +179,9 @@ function ValidationRules() {
         const datepickerApi = field.data('datepicker');
         let options = datepickerApi ? datepickerApi.settings : {};
         if (gridInfo && gridInfo.column) {
-          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true)
+          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true);
           if (gridValue instanceof Date) {
-              value = gridValue;
+            value = gridValue;
           }
           if (gridInfo.column.editorOptions) {
               options = gridInfo.column.editorOptions;
