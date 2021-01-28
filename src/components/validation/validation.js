@@ -184,7 +184,7 @@ function ValidationRules() {
             value = gridValue;
           }
           if (gridInfo.column.editorOptions) {
-              options = gridInfo.column.editorOptions;
+            options = gridInfo.column.editorOptions;
           }
         }
 
