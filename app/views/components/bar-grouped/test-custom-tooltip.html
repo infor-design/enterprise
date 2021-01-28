@@ -71,7 +71,8 @@ $('body').on('initialized', function () {
 			const data = args.data || {};
 			let content = "Name: " + data.name;
 			content += "<br>Value: " + data.value;
-			req(content);
+      var target = args.elem; // use for tooltip position
+			req(content, target);
 		}
   });
 

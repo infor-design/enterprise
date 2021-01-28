@@ -720,6 +720,7 @@ Column.prototype = {
         const thisShape = this;
         const shape = $(this);
         let content = '';
+        let tooltipTargetEl = null;
         const ePageY = d3.event.pageY;
 
         const setPattern = function (pattern, hexColor) { //eslint-disable-line
@@ -744,23 +745,47 @@ Column.prototype = {
 
         const show = function (isTooltipBottom) { //eslint-disable-line
           size = charts.tooltipSize(content);
-          x = shape[0].getBoundingClientRect().left - (size.width / 2) + (shape.attr('width') / 2);
+          const tooltipOuterHeight = charts.tooltip.outerHeight();
+          let rect = null;
 
-          if (self.settings.isStacked) {
-            y = shape[0].getBoundingClientRect().top - size.height - 10;
-          } else {
-            y = ePageY - charts.tooltip.outerHeight() - 25;
-            if (dataset.length > 1) {
-              x = thisShape.parentNode.getBoundingClientRect().left - (size.width / 2) +
-                (thisShape.parentNode.getBoundingClientRect().width / 2);
+          if (DOM.isValidElement(tooltipTargetEl)) {
+            // If target come from callback, bar or group element
+            rect = tooltipTargetEl.getBoundingClientRect();
+            x = rect.left - (size.width / 2) + (rect.width / 2);
+            if (tooltipTargetEl !== thisGroup.elem.node()) {
+              // Bar element
+              y = rect.top - size.height - 10;
+            } else {
+              // Group element
+              y = ePageY - tooltipOuterHeight - 25;
               if (isTooltipBottom) {
-                y += charts.tooltip.outerHeight() + 50;
-                if (y > (thisShape.parentNode.getBoundingClientRect().bottom + 10)) {
-                  y = thisShape.parentNode.getBoundingClientRect().bottom + 10;
+                y += tooltipOuterHeight + 50;
+                if (y > (rect.bottom + 10)) {
+                  y = rect.bottom + 10;
                 }
               } else {
-                y = thisShape.parentNode.getBoundingClientRect().top -
-                charts.tooltip.outerHeight() + 25;
+                y = rect.top - tooltipOuterHeight + 25;
+              }
+            }
+          } else {
+            // Default use current shape or current group element
+            rect = shape[0].getBoundingClientRect();
+            x = rect.left - (size.width / 2) + (shape.attr('width') / 2);
+            if (self.settings.isStacked) {
+              y = rect.top - size.height - 10;
+            } else {
+              rect = thisShape.parentNode.getBoundingClientRect();
+              y = ePageY - tooltipOuterHeight - 25;
+              if (dataset.length > 1) {
+                x = rect.left - (size.width / 2) + (rect.width / 2);
+                if (isTooltipBottom) {
+                  y += tooltipOuterHeight + 50;
+                  if (y > (rect.bottom + 10)) {
+                    y = rect.bottom + 10;
+                  }
+                } else {
+                  y = rect.top - tooltipOuterHeight + 25;
+                }
               }
             }
           }
@@ -805,16 +830,17 @@ Column.prototype = {
         // Set custom tooltip callback method
         const setCustomTooltip = (method) => {
           content = '';
-          const args = { index: i, data: d };
+          const args = { elem: thisShape, index: i, data: d };
           if (self.isGrouped) {
             args.groupElem = thisGroup.elem.node();
             args.groupItems = thisGroup.items.nodes();
             args.groupIndex = thisGroup.idx;
             args.groupData = thisGroup.data;
           }
-          const req = (res) => {
+          const req = (res, target) => {
             if (typeof res === 'string' || typeof res === 'number') {
               content = res;
+              tooltipTargetEl = target;
               replaceMatchAndSetType();
             }
           };

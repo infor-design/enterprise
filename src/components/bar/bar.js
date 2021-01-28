@@ -2,6 +2,7 @@
 // Other Shared Imports
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
+import { DOM } from '../../utils/dom';
 import { utils, math } from '../../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
@@ -459,11 +460,12 @@ Bar.prototype = {
         let total = 0;
         const totals = [];
         let content = '';
-        const parentNode = d3.select(this.parentNode);
-        const data = parentNode.datum();
-        const mid = Math.round(data.length / 2);
+        let tooltipTargetEl = null;
         const maxBarsForTopTooltip = 6;
         const shape = d3.select(this);
+        const parentNode = this.parentNode;
+        const data = d3.select(parentNode).datum();
+        const mid = Math.round(data.length / 2);
         const setPattern = function (pattern, hexColor2) {
           return !pattern || !hexColor2 ? '' :
             `<svg width="12" height="12"><rect mask="url(#${pattern})" height="12" width="12" /></svg>`;
@@ -472,22 +474,31 @@ Bar.prototype = {
         // Set group info
         let thisGroup = null;
         if (s.isGrouped) {
-          thisGroup = { elem: parentNode };
+          thisGroup = { elem: d3.select(parentNode) };
           thisGroup.data = data;
-          thisGroup.items = parentNode.selectAll('.bar');
-          thisGroup.idx = parseInt(parentNode.attr('data-group-id'), 10);
+          thisGroup.items = thisGroup.elem.selectAll('.bar');
+          thisGroup.idx = parseInt(parentNode.getAttribute('data-group-id'), 10);
         }
 
         const show = function () {
-          const el = mid > 1 ? $(`.series-${mid}`, parentNode.node())[0] : shape.node();
+          const isTooltipBottom = (!s.isStacked && (data.length > maxBarsForTopTooltip));
+          let el;
+          const midNode = $(`.series-${mid}`, parentNode)[0];
+          if (DOM.isValidElement(tooltipTargetEl)) {
+            // If target come from callback, bar or group element
+            el = tooltipTargetEl === thisGroup.elem.node() ? midNode : tooltipTargetEl;
+          } else {
+            // Default use current shape or current group element
+            el = s.isGrouped ? midNode : shape.node();
+          }
           const rect = el.getBoundingClientRect();
           const winJq = $(window);
-          const xPosS = rect.left + winJq.scrollLeft();
+
           const yPosS = rect.top + winJq.scrollTop();
-          const isTooltipBottom = (!s.isStacked && (data.length > maxBarsForTopTooltip));
+          const xPosS = rect.left + winJq.scrollLeft();
 
           const size = charts.tooltipSize(content);
-          const x = xPosS + (parseFloat(shape.attr('width')) / 2) - (size.width / 2);
+          const x = xPosS + (rect.width / 2) - (size.width / 2);
           const y = isTooltipBottom ? yPosS : (yPosS - size.height - 13);
 
           if (content !== '') {
@@ -530,16 +541,17 @@ Bar.prototype = {
         // Set custom tooltip callback method
         const setCustomTooltip = (method) => {
           content = '';
-          const args = { index: i, data: d };
+          const args = { elem: this, index: i, data: d };
           if (s.isGrouped) {
             args.groupElem = thisGroup.elem.node();
             args.groupItems = thisGroup.items.nodes();
             args.groupIndex = thisGroup.idx;
             args.groupData = thisGroup.data;
           }
-          const req = (res) => {
+          const req = (res, target) => {
             if (typeof res === 'string' || typeof res === 'number') {
               content = res;
+              tooltipTargetEl = target;
               replaceMatchAndSetType();
             }
           };
