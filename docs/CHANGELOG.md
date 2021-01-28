@@ -4,7 +4,46 @@
 
 ### v4.37.0 Features
 
-- `[Placeholder]` Placeholder item remove me. ([#xxx](https://github.com/infor-design/enterprise/issues/xxx))
+- `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
+- `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
+
+### v4.37.0 Fixes
+
+- `[App Menu]` Fixed a regression bug  where the searchfield icon duplicated and were not properly aligned with the searchfield. ([#4737](https://github.com/infor-design/enterprise/issues/4737))
+- `[App Menu]` Removed the close button animation on the hamburger button when app menus open. ([#4756](https://github.com/infor-design/enterprise/issues/4756))
+- `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
+- `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
+- `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
+- `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
+- `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))
+- `[ProcessIndicator]` Fixed a layout issue on the index page and added a rejected icon. ([#4770](https://github.com/infor-design/enterprise/issues/4770))
+- `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
+- `[Swaplist]` Fixed an issue where the user attributes need to be override existing attributes. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
+- `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
+- `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
+- `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
+- `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
+
+## v4.36.2
+
+### v4.36.2 Fixes
+
+- `[App Menu]` Removed the close button animation on the hamburger button when app menus open. ([#4756](https://github.com/infor-design/enterprise/issues/4756))
+- `[App Menu]` Fixed a regression bug  where the searchfield icon duplicated and were not properly aligned with the searchfield. ([#4737](https://github.com/infor-design/enterprise/issues/4737))
+- `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
+- `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
+- `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
+- `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
+
+## v4.36.1
+
+### v4.36.1 Fixes
+
+- `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdow n. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
+- `[Editor]` Fixed a follow up issue with readonly links in the editor. ([#4702](https://github.com/infor-design/enterprise/issues/4702))
 
 ## v4.36.0
 
@@ -280,7 +319,7 @@
 - `[Input]` Fixed a bug where the text input error state border color would be wrong in the vibrant, dark and high contrast. ([#4248](https://github.com/infor-design/enterprise/issues/4248))
 - `[Locale]` Fixed issues with some timezone and datetime formats. ([#4297](https://github.com/infor-design/enterprise/issues/4297))
 - `[Popupmenu]` Fixed a minor issue with the shortcut text on small breakpoints. ([#3984](https://github.com/infor-design/enterprise/issues/3984))
-- `[Popover]` Fixed a a regression where passing a popover content as a hash link to an ID no longer worked. ([#4281](https://github.com/infor-design/enterprise/issues/4281))
+- `[Popover]` Fixed a regression where passing a popover content as a hash link to an ID no longer worked. ([#4281](https://github.com/infor-design/enterprise/issues/4281))
 - `[Personalize]` Fixed an issue regarding the layout and scroll ability of a page. ([#3330](https://github.com/infor-design/enterprise/issues/3330))
 - `[Searchfield]` Added a shadow to the focus state of searchfields with category buttons. ([#4181](https://github.com/infor-design/enterprise-ng/issues/4181))
 - `[Splitter]` Fixes an issue where the collapse button was not working when splitter is on the right. ([#1730](https://github.com/infor-design/enterprise-ng/issues/1730))

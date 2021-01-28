@@ -17,7 +17,7 @@
 
     <div class="field">
       <label for="nosearch-dropdown">No-Search Dropdown</label>
-      <select id="nosearch-dropdown" class="dropdown" data-options="{noSearch: true}">
+      <select id="nosearch-dropdown" class="dropdown" data-init="false">
         <option value="">&nbsp;</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -51,5 +51,19 @@
       'title': 'Change Event Fired',
       'message': 'Value changed to <span class="text-strong">' + $(this).val() + '</span> '
     });
+  });
+
+  $('#nosearch-dropdown').dropdown({
+    noSearch: true,
+    attributes: [
+      {
+        name: 'id',
+        value: 'custom-nosearch-id-1'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'custom-automation-nosearch-id'
+      }
+    ]
   });
 </script>

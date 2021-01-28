@@ -38,10 +38,6 @@
   width: 22px;
 }
 
-.process-indicator.responsive .lines .separator {
-  top: -7px !important;
-}
-
 .process-indicator.responsive .details .icon {
   top: 3px;
 }
@@ -118,11 +114,6 @@
       }
     }
   }
-}
-
-.process-indicator.responsive .lines .indicator.current .icon {
-  left: -1px;
-  top: 0;
 }
 
 .ie,

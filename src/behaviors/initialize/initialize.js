@@ -214,7 +214,7 @@ const PLUGIN_MAPPINGS = [
 
   ['header'],
 
-  ['fileupload', 'input.fileupload:not(.fileupload-background-transparent)'],
+  ['fileupload', 'input.fileupload:not(.fileupload-background-transparent):not([type="text"])'],
 
   ['fileuploadadvanced', '.fileupload-advanced'],
 

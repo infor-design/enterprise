@@ -1951,7 +1951,8 @@ Tree.prototype = {
     }
 
     if (nodeData.text) {
-      a.textContent = xssUtils.unescapeHTML(nodeData.text);
+      a.textContent = /&#?[^\s].{1,9};/g.test(nodeData.text) ?
+        xssUtils.unescapeHTML(nodeData.text) : nodeData.text;
     }
 
     if (nodeData.disabled) {

@@ -1147,6 +1147,15 @@ describe('Locale API', () => {
       minimumFractionDigits: 6,
       maximumFractionDigits: 6
     })).toEqual('123,456,789,012.123460');
+
+    expect(Locale.formatNumber('-922589489099.38', {
+      style: 'decimal',
+      round: true,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      group: '',
+      decimal: '.'
+    })).toEqual('-922589489099.38');
   });
 
   it('Should handle AM/PM', () => {

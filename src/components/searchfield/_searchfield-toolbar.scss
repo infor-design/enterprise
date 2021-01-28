@@ -303,14 +303,13 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       &.toolbar-searchfield-wrapper {
-        box-shadow: $focus-box-shadow-input;
-
         &.has-categories {
           .searchfield {
             border-bottom-color: rgba($searchfield-border-color, 1);
+            box-shadow: $focus-box-shadow-input;
 
             &:focus {
-              border-color: rgba($input-color-focus-border, 1);
+              border-color: $ids-color-palette-white;
             }
           }
         }

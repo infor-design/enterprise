@@ -1893,6 +1893,11 @@ $datagrid-small-row-height: 25px;
         transition: none;
       }
 
+      .datagrid-expand-btn .icon {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
       .icon {
         @include trigger-icon-background($datagrid-row-hover-color);
       }
@@ -2247,7 +2252,7 @@ $datagrid-small-row-height: 25px;
 
         &:focus {
           border-bottom: 1px solid $hyperlink-hover-color !important;
-          //
+
           &::after {
             border-color: transparent;
           }
@@ -3105,7 +3110,7 @@ $datagrid-small-row-height: 25px;
 
     input {
       background-color: transparent;
-      border-color: $datagrid-filter-border-color;
+      border-color: $datagrid-filter-border-color !important;
       color: $datagrid-filter-color;
       height: 24px;
       left: 9px;

@@ -426,7 +426,10 @@
       &:not(.last-child) {
         margin-right: 10px;
 
-        &.is-error {
+        &.is-error,
+        &.is-info,
+        &.is-success,
+        &.is-alert {
           a[role='tab'] {
             padding: 12px 20px 12px 5px;
           }
@@ -543,7 +546,8 @@
 
       .icon-error,
       .icon-info,
-      .icon-alert {
+      .icon-alert,
+      .icon-success {
         color: $error-icon-fill;
         height: 14px;
         position: absolute;

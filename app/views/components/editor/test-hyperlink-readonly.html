@@ -1,0 +1,40 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <input type="text" id="title" value="This is Hyperlink Readonly Sample"/>
+    </div>
+
+    <div class="field">
+      <span id="comments-label" class="label">Comments</span>
+      <div class="editor" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-options="{anchor: {isClickable: true, showIsClickable: true}}">
+          <a href="http://en.wikipedia.org/wiki/e-commerce" contenteditable="false" class="hyperlink" target="_blank">This is a hyperlink</a><br/>
+          <p>Hyperlinks should still work on Readonly state.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <button class="btn-primary" type="button" id="toggle-readonly">Toggle Readonly</button>
+      <button class="btn-secondary" type="button" id="toggle-enable">Enable Editor</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#toggle-enable').attr('disabled', 'disabled');
+    $('#toggle-readonly').on('click', function () {
+      $('.editor-container').addClass('is-readonly');
+      $('#editor1').attr('contenteditable', 'false');
+      $('#toggle-readonly').attr('disabled', 'disabled');
+      $('#toggle-enable').prop('disabled', false);
+    });
+    $('#toggle-enable').on('click', function () {
+      $('#toggle-enable').attr('disabled', 'disabled');
+      $('#toggle-readonly').prop('disabled', false);
+      $('.editor-container').removeClass('is-readonly');
+      $('#editor1').attr('contenteditable', 'true');
+    });
+  });
+</script>

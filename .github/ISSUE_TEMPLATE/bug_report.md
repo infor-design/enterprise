@@ -10,6 +10,8 @@ about: Create a report to help us improve
 A clear and concise description of what the bug is.
 
 **To Reproduce**
+<!-- Please spend a little time to make an accurate reduced test case for the issue. The more code you include the less likely is that the issue can be fixed quickly (or at all). This is a good article about reduced test cases if your unfamiliar https://css-tricks.com/reduced-test-cases/. -->
+
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'

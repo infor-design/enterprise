@@ -58,10 +58,15 @@
   }
 }
 
-.tab-container.horizontal > .tab-list-container .tab .icon-error {
-  right: 3px;
-  top: 16px;
-  width: 15px;
+.tab-container.horizontal > .tab-list-container .tab {
+  .icon-error,
+  .icon-info,
+  .icon-success,
+  .icon-alert {
+    right: 3px;
+    top: 16px;
+    width: 15px;
+  }
 }
 
 .tab-container.horizontal .add-tab-button {
