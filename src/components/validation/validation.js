@@ -108,6 +108,13 @@ function ValidationRules() {
       check(value, field, gridInfo) {
         this.message = Locale.translate('InvalidDate');
 
+        if (gridInfo && gridInfo.column) {
+          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true)
+          if (gridValue instanceof Date) {
+              return gridValue && gridValue.getTime && !isNaN(gridValue.getTime());
+          }
+        }
+
         if (value instanceof Date) {
           return value && value.getTime && !isNaN(value.getTime());
         }
@@ -171,10 +178,22 @@ function ValidationRules() {
 
         const datepickerApi = field.data('datepicker');
         let options = datepickerApi ? datepickerApi.settings : {};
-        if (gridInfo && gridInfo.column && gridInfo.column.editorOptions) {
-          options = gridInfo.column.editorOptions;
-        } 
-        const hasOptions = Object.keys(options).length > 0;
+        if (gridInfo && gridInfo.column) {
+          const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true)
+          if (gridValue instanceof Date) {
+              value = gridValue;
+          }
+          if (gridInfo.column.editorOptions) {
+              options = gridInfo.column.editorOptions;
+          }
+        }
+
+        // check that disbale option exists
+        if (!(options && options.disable)) {
+          return true;
+        }
+
+        const hasOptions = Object.keys(options.disable).length > 0;
         let d;
         let i;
         let l;
