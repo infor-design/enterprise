@@ -25,6 +25,7 @@
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
+- `[Track Dirty]` Fixed an error that was showing when using dirty indicator within a tab component. ([#936](https://github.com/infor-design/enterprise-ng/issues/936))
 - `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 
 ## v4.36.2
@@ -66,6 +67,7 @@
 - `[Datagrid]` Fixed a bug where multiselect would loose selection across pages when using selectRowsAcrossPages. ([#954](https://github.com/infor-design/enterprise-ng/issues/954))
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 - `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Datagrid]` Fixed the inbuilt date validation to use the datagrid column settings for date fields. ([#4693](https://github.com/infor-design/enterprise/issues/4730))
 - `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
 - `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
 - `[Editor]` Fixed an issue where the dirty indicator was not reset when the contents contain `<br>` tags. ([#4624](https://github.com/infor-design/enterprise/issues/4624))
