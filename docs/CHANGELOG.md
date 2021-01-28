@@ -23,7 +23,7 @@
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
-- `[Track Dirty]` Fixed a bug where error were showing when use with tabs. ([#936](https://github.com/infor-design/enterprise-ng/issues/936))
+- `[Track Dirty]` Fixed an error that was showing when using dirty indicator within a tab component. ([#936](https://github.com/infor-design/enterprise-ng/issues/936))
 - `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 
 ## v4.36.2
