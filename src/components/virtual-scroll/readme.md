@@ -61,7 +61,7 @@ Set up a virtual scroll container and apply properties like height, itemHeight a
 ## Settings and Attributes
 
 - `itemTemplate` {Function | string} Set the internal element template markup for a single element
-- `data` {Array<Object>} Attach a dataset that matches the list template and render.
+- `data` {Array} Attach a dataset that matches the list template and render.
 - `scrollTarget` {HTMLElement} Set internal element that will be the scrollable area.
 - `scrollTop` {number} Set the scroll top position and scroll down to that location.
 - `height` {number} The height in pixels we want the scroll area to be.
