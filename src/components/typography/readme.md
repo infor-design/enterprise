@@ -9,24 +9,19 @@ demo:
 
 ## Font family
 
-The default font family for the three themes is still for the moment `font-family: Helvetica, Arial`. Future designs will use a new font family  `'Source Sans Pro', Helvetica, Arial`. You can use this now on all three themes as an option.
+We have two different versions of IDS designs for the components Soho/Subtle/Classic and Uplift/Vibrant/New.
 
-To enable this font in the components first you need to add this link to the head of your pages.
+For: Soho/Subtle/Classic the default font family for the three themes is still for the moment `font-family: Helvetica, Arial` Arial/Helvetica are default system fonts for Mac/PC and do not need anything.
+
+For: Uplift/Vibrant/New we now use a custom font[Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) `font-family: 'source sans pro', Helvetica, Arial`. We include two font-weights 400, 600 served from google fonts because our design is limited in terms of weights (just normal and bold), for example we dont use italics anywhere in the designs as it is difficult to read. Source Sans Pro supports a lot of languages but not some of these so these are the [fall backs](https://github.com/infor-design/enterprise/blob/master/src/components/typography/_typography.scss#L8)
+
+To use the custom font enable this font in the components first you need to add this link to the head of your pages.
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
 ```
 
-After that you can either:
-
-1. Add the class `font-source-sans` to the HTML tag for example `<html class="font-source-sans>`
-2. Or pass it as an option to the `.personalize()` API.
-
-```javascript
-$('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
-```
-
-The sample app can also be run with this font by adding the `?font=source-sans` parameter to any page. For example [Main Page Example](./demo/components/personalize/example-index.html?font=source-sans)
+If your application needs to run without an internet connection its also possible to download the font locally and server it from your server see [google-webfonts](https://google-webfonts-helper.herokuapp.com/fonts/source-sans-pro?subsets=greek,latin,vietnamese) for details.
 
 ## Typography Related Classes
 

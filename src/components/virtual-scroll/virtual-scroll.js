@@ -11,7 +11,8 @@ const VIRTUALSCROLL_DEFAULTS = {
   data: [],
   scrollTop: 0,
   itemCount: 0,
-  itemTemplate: null
+  itemTemplate: null,
+  startIndex: 0
 };
 
 /**
@@ -37,7 +38,8 @@ VirtualScroll.prototype = {
 
     this.handleEvents();
     this.applyHeight();
-    this.renderItems();
+    this.renderItems(false);
+
     return this;
   },
 
@@ -57,6 +59,11 @@ VirtualScroll.prototype = {
     return this;
   },
 
+  /**
+   * Handle the scrolling event
+   * @private
+   * @param {Event} e The scroll event data
+   */
   handleScroll(e) {
     if (this.timeout) {
       cancelAnimationFrame(this.timeout);
@@ -65,16 +72,16 @@ VirtualScroll.prototype = {
     const target = e.target;
     this.timeout = requestAnimationFrame(() => {
       this.scrollTop = target.scrollTop;
-      this.renderItems();
     });
   },
 
   /**
-   * Render the visible section plus the cached data
-   * @private
+    * Render the visible section plus the cached data
+    * @private
+    * @param {boolean} allowZero Allow a zero length dataset (render empty)
    */
-  renderItems() {
-    if (!this.settings.data || this.settings.data.length === 0) {
+  renderItems(allowZero) {
+    if (!this.settings.data || (!allowZero && this.data.length === 0)) {
       return;
     }
     const startIndex = this.startIndex;
@@ -101,6 +108,7 @@ VirtualScroll.prototype = {
 
     this.itemContainer.style.transform = `translateY(${this.offsetY}px)`;
     this.itemContainer.innerHTML = html;
+    this.element.trigger('afterrendered', this, { elem: this, startIndex, endIndex });
   },
 
   /**
@@ -128,7 +136,7 @@ VirtualScroll.prototype = {
    */
   visibleItemCount() {
     // @ts-ignore
-    let count = Math.ceil(this.height / this.itemHeight) + 2 * this.bufferSize;
+    let count = Math.ceil(this.height / this.itemHeight) + (2 * this.bufferSize);
     count = Math.min(Number(this.itemCount) - this.startIndex, count);
     return count;
   },
@@ -174,7 +182,7 @@ VirtualScroll.prototype = {
     this.settings.height = value;
   },
 
-  get height() { return this.settings.height; },
+  get height() { return this.data.length === 0 ? 0 : this.settings.height; },
 
   /**
    * The height of each item in the scroller. TODO: support dynamic heights
@@ -201,10 +209,23 @@ VirtualScroll.prototype = {
    * @param {number|string} value The number of pixels from the top
    */
   set scrollTop(value) {
+    if (this.container.scrollTop !== value) {
+      this.container.scrollTop = value;
+      return;
+    }
     this.settings.scrollTop = value;
+    this.renderItems(false);
   },
 
   get scrollTop() { return this.settings.scrollTop || 0; },
+
+  /**
+   * Scroll to a indexed item bring it into center view.
+   * @param {number} value The index to scroll to
+   */
+  scrollTo(value) {
+    this.scrollTop = Number(value) * this.itemHeight;
+  },
 
   /**
    * The height of the inner viewport
@@ -260,7 +281,11 @@ VirtualScroll.prototype = {
     if (value) {
       this.settings.data = value;
       this.itemCount = value.length;
-      this.renderItems();
+      this.lastStart = null;
+      this.lastEnd = null;
+      this.scrollTop = 0;
+      this.applyHeight();
+      this.renderItems(true);
       return;
     }
 

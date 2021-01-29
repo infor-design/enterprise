@@ -331,7 +331,7 @@ Dropdown.prototype = {
       this.settings.maxSelected = parseInt(dataMaxselected, 10);
     }
 
-    // TODO: deprecate "moveSelectedToTop" in favor of "moveSelected"
+    // Maybe deprecate "moveSelectedToTop" in favor of "moveSelected"
     // _getMoveSelectedSetting()_ converts the old setting to the new text type.
     function getMoveSelectedSetting(incomingSetting, useText) {
       switch (incomingSetting) {
@@ -797,7 +797,7 @@ Dropdown.prototype = {
 
       if (this.settings.virtualScroll) {
         listContents += `<div class="virtual-scroll-container">
-            <div class="ids-virtual-scroll" tabindex="0">
+            <div class="ids-virtual-scroll">
               <div class="ids-virtual-scroll-viewport">
                 <ul role="listbox" class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
               </div>
@@ -812,7 +812,9 @@ Dropdown.prototype = {
     // If none are available, simply return out
     let opts = this.element.find('option');
     let groups = this.element.find('optgroup');
-    let selectedFilterMethod = ':selected';
+    let selectedFilterMethod = function (i, opt) {
+      return opt.selected;
+    };
     const groupsSelectedOpts = [];
 
     // For typeahead reloading, the <option> tags are not used for determining what's already
@@ -950,7 +952,8 @@ Dropdown.prototype = {
       this.listUl.addClass('has-groups');
     }
 
-    this.hasTooltips = this.listUl.find('[title]').length > 0;
+    this.hasTooltips = this.listUl.find('[title]').length > 0 ||
+      this.element.find('[title]').length > 0;
 
     if (this.isOpen()) {
       this.position();
@@ -971,7 +974,7 @@ Dropdown.prototype = {
     const attributes = DOM.getAttributes(option);
     const value = attributes.getNamedItem('value');
     const title = attributes.getNamedItem('title');
-    const hasTitle = title ? `" title="${title.value}"` : '';
+    const hasTitle = title ? ` title="${title.value}"` : '';
     const badge = attributes.getNamedItem('data-badge');
     const badgeColor = attributes.getNamedItem('data-badge-color');
     let badgeHtml = '';
@@ -981,12 +984,16 @@ Dropdown.prototype = {
     const aCssClasses = liCssClasses.indexOf('clear') > -1 ? ' class="clear-selection"' : '';
     const tabIndex = ` tabIndex="${index && index === 0 ? 0 : -1}"`;
     const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
-    const copiedDataAttrs = ` ${self.getDataAttributes(attributes, toExclude).str}`;
+    let copiedDataAttrs = ` ${self.getDataAttributes(attributes, toExclude).str}`;
     const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
     let iconHtml = '';
 
     if (self.listIcon.hasIcons && self.listIcon.items[index]) {
       iconHtml = self.listIcon.items[index].html;
+    }
+
+    if (copiedDataAttrs === ' ') {
+      copiedDataAttrs = '';
     }
 
     if (badge) {
@@ -1199,7 +1206,7 @@ Dropdown.prototype = {
 
     const self = this;
     let selected = false;
-    const list = $('.dropdown-option', this.listUl);
+    let list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
     let hasIcons = false;
     let results;
@@ -1212,73 +1219,87 @@ Dropdown.prototype = {
       term = '';
     }
 
-    if (!typeahead && term && term.length) {
-      results = this.listfilter.filter(list, term);
-    } else {
-      results = list;
+    const completeFilter = () => {
+      if (!typeahead && term && term.length) {
+        results = this.listfilter.filter(list, term);
+      } else {
+        results = list;
+      }
+
+      this.list.addClass('search-mode');
+      this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
+      this.searchInput.removeAttr('aria-activedescendant');
+
+      this.unhighlightOptions();
+
+      if (!results || !results.length && !term) {
+        this.resetList();
+        return;
+      }
+
+      results.removeClass('hidden');
+      list.not(results).add(headers).addClass('hidden');
+
+      this.filteredItems = list.filter(results);
+      this.filteredItems.each(function (i) {
+        const li = $(this);
+        const a = li.children('a');
+        li.attr('tabindex', i === 0 ? '0' : '-1');
+
+        if (!selected) {
+          self.highlightOption(li);
+          selected = true;
+        }
+
+        // Highlight Term
+        const exp = self.getSearchRegex(term);
+        let text = li.text();
+        text = xssUtils.escapeHTML(text);
+        text = text.replace(/&lt;/g, '&#16;');
+        text = text.replace(/&gt;/g, '&#17;');
+        text = text.replace(/&apos;/g, '&#18;');
+        text = text.replace(/&quot;/g, '&#19;');
+        text = text.replace(/&amp;/g, '&');
+        text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+        text = text.replace(/&#16;/g, '&lt;');
+        text = text.replace(/&#17;/g, '&gt;');
+        text = text.replace(/&#18;/g, '&apos;');
+        text = text.replace(/&#19;/g, '&quot;');
+
+        const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
+        const swatch = li.children('a').find('.swatch');
+        const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
+
+        if (icon) {
+          hasIcons = true;
+        }
+        if (a[0]) {
+          a[0].innerHTML = swatchHtml + icon + text;
+        }
+      });
+
+      headers.each(function () {
+        const children = $(this).nextUntil('.group-label, .selector').not('.hidden');
+        if (self.settings.showEmptyGroupHeaders || children.length) {
+          $(this).removeClass('hidden');
+        }
+      });
+
+      term = '';
+      this.position();
     }
 
-    this.list.addClass('search-mode');
-    this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
-    this.searchInput.removeAttr('aria-activedescendant');
-
-    this.unhighlightOptions();
-
-    if (!results || !results.length && !term) {
-      this.resetList();
+    if (this.settings.virtualScroll) {
+      $(this.virtualScroller.element).one('afterrendered', () => {
+        list = $('.dropdown-option', this.listUl);
+        completeFilter();
+      });
+      this.virtualScroller.data = this.listfilter.filter(this.opts, term);
+      list = $('.dropdown-option', this.listUl);
       return;
     }
 
-    results.removeClass('hidden');
-    list.not(results).add(headers).addClass('hidden');
-
-    this.filteredItems = list.filter(results);
-    this.filteredItems.each(function (i) {
-      const li = $(this);
-      const a = li.children('a');
-      li.attr('tabindex', i === 0 ? '0' : '-1');
-
-      if (!selected) {
-        self.highlightOption(li);
-        selected = true;
-      }
-
-      // Highlight Term
-      const exp = self.getSearchRegex(term);
-      let text = li.text();
-      text = xssUtils.escapeHTML(text);
-      text = text.replace(/&lt;/g, '&#16;');
-      text = text.replace(/&gt;/g, '&#17;');
-      text = text.replace(/&apos;/g, '&#18;');
-      text = text.replace(/&quot;/g, '&#19;');
-      text = text.replace(/&amp;/g, '&');
-      text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
-      text = text.replace(/&#16;/g, '&lt;');
-      text = text.replace(/&#17;/g, '&gt;');
-      text = text.replace(/&#18;/g, '&apos;');
-      text = text.replace(/&#19;/g, '&quot;');
-
-      const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
-      const swatch = li.children('a').find('.swatch');
-      const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
-
-      if (icon) {
-        hasIcons = true;
-      }
-      if (a[0]) {
-        a[0].innerHTML = swatchHtml + icon + text;
-      }
-    });
-
-    headers.each(function () {
-      const children = $(this).nextUntil('.group-label, .selector').not('.hidden');
-      if (self.settings.showEmptyGroupHeaders || children.length) {
-        $(this).removeClass('hidden');
-      }
-    });
-
-    term = '';
-    this.position();
+    completeFilter();
   },
 
   /**
@@ -1353,8 +1374,6 @@ Dropdown.prototype = {
       return;
     }
 
-    // TODO: Refactor this in v4.9.0 to call `selectOption` instead.  Can't currently
-    // do that because `selectOption` depends on the list being open.
     blank[0].selected = true;
     blank[0].setAttribute('selected', true);
     this.element.triggerHandler('updated');
@@ -1394,10 +1413,10 @@ Dropdown.prototype = {
     }
 
     if (self.isOpen()) {
-      options = this.listUl.find(excludes);
+      options = self.settings.virtualScroll ? this.opts : this.listUl.find(excludes);
       selectedIndex = -1;
       $(options).each(function (index) {
-        if ($(this).is('.is-focused')) {
+        if ($(this).is('.is-focused') || (self.settings.virtualScroll && $(this).is(':selected'))) {
           selectedIndex = index;
         }
       });
@@ -1488,6 +1507,12 @@ Dropdown.prototype = {
           next.addClass('is-focused');
         }
 
+        if (this.settings.virtualScroll) {
+          $(this.virtualScroller.element).one('afterrendered', () => {
+            this.highlightOption(next);
+          });
+        }
+
         e.stopPropagation();
         e.preventDefault();
         return false;  //eslint-disable-line
@@ -1500,6 +1525,7 @@ Dropdown.prototype = {
 
         if (selectedIndex < options.length - 1) {
           next = $(options[selectedIndex + 1]);
+
           this.highlightOption(next);
           self.setItemIconOverColor(next);
           // NOTE: Do not also remove the ".is-selected" class here!
@@ -1509,6 +1535,11 @@ Dropdown.prototype = {
           next.addClass('is-focused');
         }
 
+        if (this.settings.virtualScroll) {
+          $(this.virtualScroller.element).one('afterrendered', () => {
+            this.highlightOption(next);
+          });
+        }
         e.stopPropagation();
         e.preventDefault();
         return false;  //eslint-disable-line
@@ -1598,7 +1629,7 @@ Dropdown.prototype = {
         this.open();
       }
 
-      // TODO: refactor this out so that `handleKeyDown` is no longer necessary.
+      // Maybe refactor this out so that `handleKeyDown` is no longer necessary.
       // This is necessary here because in `noSearch` mode, there is no actionable searchInput.
       if (this.settings.noSearch && !e.ctrlKey) {
         this.handleKeyDown(target, e);
@@ -1652,7 +1683,7 @@ Dropdown.prototype = {
     }
 
     if (e.type === 'input') {
-      this.filterTerm = this.searchInput.val();
+      this.filterTerm = self.settings.noSearch ? this.searchInput.val().toLowerCase() : this.searchInput.val();
     } else {
       this.filterTerm += $.actualChar(e).toLowerCase();
 
@@ -1837,7 +1868,7 @@ Dropdown.prototype = {
    * @private
    */
   openList() {
-    const current = this.previousActiveDescendant ?
+    let current = this.previousActiveDescendant ?
       this.list.find(`.dropdown-option[data-val="${this.previousActiveDescendant.replace(/"/g, '/quot/')}"]`) :
       this.list.find('.is-selected');
     const self = this;
@@ -1931,14 +1962,36 @@ Dropdown.prototype = {
     this.position();
 
     if (this.settings.virtualScroll) {
+      let selectedIndex = -1;
+      let selectedElem = null;
+      let selectedOpt = this.opts.toArray().filter(function (opt, i) {
+        if (opt.selected) {
+          selectedIndex = i;
+          selectedElem = opt;
+          return opt;
+        }
+      });
+
       this.virtualScroller = new VirtualScroll(this.virtualScrollElem, {
-        height: 304,
+        height: 304, //64
         itemHeight: 32,
         itemTemplate: function(item, elem) {
-          return self.buildLiOption(elem, item);
+          const li = self.buildLiOption(elem, item);
+          if (elem.selected) {
+            selectedElem = elem;
+            current = $(selectedElem);
+          }
+          return li;
         },
         data: this.opts
       });
+
+      setTimeout(() => {
+        this.virtualScroller.scrollTo(selectedIndex);
+        setTimeout(() => {
+          this.highlightOption($(selectedElem), noScroll);
+        });
+      }, 1);
     }
 
     // Limit the width
@@ -1963,6 +2016,7 @@ Dropdown.prototype = {
 
     const noScroll = this.settings.multiple;
     this.highlightOption(current, noScroll);
+
     if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
       this.highlightOption(this.listUl.find('.dropdown-option').eq(0));
       setTimeout(() => {
@@ -2228,7 +2282,7 @@ Dropdown.prototype = {
         }
       }
 
-      if (adjustedUlHeight) {
+      if (adjustedUlHeight && !self.settings.virtualScroll) {
         self.listUl[0].style.height = adjustedUlHeight;
       }
 
@@ -2360,7 +2414,9 @@ Dropdown.prototype = {
    * @returns {object} The corrected object
    */
   correctValue(option) {
-    const val = option.attr('data-val').replace(/"/g, '/quot/');
+    let val = option.attr('data-val') || option.attr('value');
+    val = val.replace(/"/g, '/quot/');
+
     let cur = this.element.find(`option[value="${val}"]`);
     if (cur.length === 0 || cur.length > 1) {
       cur = this.element.find('option').filter(function () {
@@ -2481,10 +2537,11 @@ Dropdown.prototype = {
     if (current.length === 0) {
       return;
     }
+
     // scroll to the currently selected option
-    self.listUl.scrollTop(0);
-    self.listUl.scrollTop(current.offset().top - self.listUl.offset().top -
-      self.listUl.scrollTop() - 40);
+    current[0].scrollIntoView();
+    current.focus();
+    this.searchInput.focus();
   },
 
   /**
@@ -2647,6 +2704,10 @@ Dropdown.prototype = {
     const optionVal = optionEl.value;
     const selected = optionEl.selected;
     const li = this.listUl.find(`li[data-val="${optionVal}"]`);
+
+    if (!li) {
+      return;
+    }
 
     if (selected) {
       li[0].classList.add('is-selected');

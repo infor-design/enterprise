@@ -266,6 +266,12 @@ div.multiselect {
     background-color: inherit;
   }
 
+  // Virtual Scroll Support
+  .virtual-scroll-container {
+    background-color: $ids-color-palette-white;
+    min-height: 100%;
+  }
+
   &.text-align-reverse {
     text-align: right;
   }
