@@ -26,7 +26,9 @@ svg.icon-dirty,
 .icon-new,
 .icon-pending,
 .icon-empty-circle,
-.icon-half-empty-circle {
+.icon-half-empty-circle,
+.icon-rejected-outline,
+.icon-rejected-solid {
   position: relative;
   top: 10px;
   vertical-align: top;
@@ -127,7 +129,9 @@ svg.icon-dirty,
 
 .icon-dirtyerror,
 .icon-error,
-.icon-error-alert {
+.icon-error-alert,
+.icon-rejected-outline,
+.icon-rejected-solid {
   color: $ids-color-status-danger !important;
 }
 

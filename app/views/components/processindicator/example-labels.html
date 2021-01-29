@@ -22,7 +22,7 @@
         </div>
 
         <div class="step" id="step2" data-automation-id="step2-automation-id">
-          <span class="label">First Level Approval</span>
+          <span class="label">1st Level</span>
           <div class="lines">
             <span class="indicator darker"></span>
             <span class="separator darker"></span>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="step" id="step3" data-automation-id="step3-automation-id">
-          <span class="label">Second Level Approval</span>
+          <span class="label">2nd Level</span>
           <div class="lines">
             <span class="indicator darker"></span>
             <span class="separator darker"></span>
@@ -66,8 +66,8 @@
         <div class="step current" id="step4" data-automation-id="step4-automation-id">
           <span class="label">3rd Level - Multiple Approvers</span>
           <div class="lines">
-            <span class="indicator current processing"></span>
-            <span class="separator"></span>
+            <span class="indicator processing"></span>
+            <span class="separator darker"></span>
           </div>
           <div class="details">
             <span class="heading">Unreleased</span>
@@ -90,12 +90,25 @@
         <div class="step" id="step5" data-automation-id="step5-automation-id">
           <span class="label">4th level</span>
           <div class="lines">
-            <span class="indicator"></span>
+            <span class="indicator icon current">
+              <svg class="icon icon-rejected-solid" focusable="false" aria-hidden="true" role="presentation">
+                 <use href="#icon-rejected-solid"></use>
+              </svg>
+            </span>
             <span class="separator"></span>
           </div>
           <div class="details">
             <span class="heading">Status</span>
             <a class="hyperlink hide-focus" href="#">
+              <svg class="icon icon-rejected-outline" focusable="false" aria-hidden="true" role="presentation">
+                 <use href="#icon-rejected-outline"></use>
+              </svg>
+              <span>John Jones</span>
+            </a>
+            <a class="hyperlink hide-focus" href="#">
+              <svg class="icon icon-empty-circle" focusable="false" aria-hidden="true" role="presentation">
+                 <use href="#icon-empty-circle"></use>
+              </svg>
               <span>James Martin</span>
             </a>
             <span>Feb 12, 2021 | 14:12AM</span>

@@ -73,7 +73,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {array} [settings.year] Initial year to show.
  * @param {array} [settings.month] Initial month to show.
  * @param {number} [settings.day] The initial selected day to show.
- * @param {array} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
+ * @param {number} [settings.upcomingEventDays=14] How many days in advance should we show in the upcoming events pane.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
  * @param {function} [settings.onRenderMonth] Fires when a month is rendered, allowing you to pass back events or event types to show.
  * @param {function} [settings.onSelected] Fires when a month day is clicked. Allowing you to do something.
@@ -82,13 +82,13 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.mobileTemplate] The ID of the template on mobile responsive used for the events.
  * @param {string} [settings.modalTemplate] The ID of the template used for the modal dialog on events.
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
- * @param {string} [settings.menuSelected=null] Callback for the  right click context menu
+ * @param {function} [settings.menuSelected=null] Callback for the  right click context menu
  * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
  * @param {object} [settings.weekViewSettings = {}] an object containing settings for the internal weekview component.
- * @param {boolean} [settings.weekViewSettings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
+ * @param {number} [settings.weekViewSettings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {number} [settings.weekViewSettings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.weekViewSettings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.weekViewSettings.showAllDay=true] Detemines if the all day events row should be shown.
@@ -600,7 +600,7 @@ Calendar.prototype = {
     for (let i = 0; i < checkboxes.length; i++) {
       const input = checkboxes[i];
       if (!input.checked) {
-        types.push(input.getAttribute('id'));
+        types.push(input.getAttribute('name'));
       }
     }
     return types;

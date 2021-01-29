@@ -65,7 +65,7 @@ The following classes can be used for text alignment
 
 ## Title Case vs. Sentence Case
 
-Title case follows the standards used in book titles: always capitalize the first and last word, and capitalize all other words in the text string except for articles (a, an, the) and prepositions (except if they are the first or last word). Use title case for the following types of text:
+Title case follows the standards used in book titles. Always capitalize the first and last word, and capitalize all other words in the text string except for articles (a, an, the) and prepositions (except if they are the first or last word) and coordinating conjunctions (for, and, nor, but, or, yet, and so). Use title case for the following types of text:
 
 - Any type of header (page headers, section headers, list headers, field set headers)
 - Buttons
