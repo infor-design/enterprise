@@ -1172,9 +1172,7 @@ Dropdown.prototype = {
     const isIE11 = env.browser.name === 'ie' && env.browser.version === '11';
     let rectStr;
     if (!isIE11) {
-      /* eslint-disable */
       rectStr = String.fromCodePoint(8);
-      /* eslint-enable no-alert, no-console */
     }
     if (searchInputVal === '.' || searchInputVal === rectStr) {
       this.searchInput[0].value = '';
@@ -1208,7 +1206,6 @@ Dropdown.prototype = {
     let selected = false;
     let list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
-    let hasIcons = false;
     let results;
 
     if (!list.length || !this.list || this.list && !this.list.length) {
@@ -1243,7 +1240,6 @@ Dropdown.prototype = {
       this.filteredItems = list.filter(results);
       this.filteredItems.each(function (i) {
         const li = $(this);
-        const a = li.children('a');
         li.attr('tabindex', i === 0 ? '0' : '-1');
 
         if (!selected) {
@@ -1251,31 +1247,7 @@ Dropdown.prototype = {
           selected = true;
         }
 
-        // Highlight Term
-        const exp = self.getSearchRegex(term);
-        let text = li.text();
-        text = xssUtils.escapeHTML(text);
-        text = text.replace(/&lt;/g, '&#16;');
-        text = text.replace(/&gt;/g, '&#17;');
-        text = text.replace(/&apos;/g, '&#18;');
-        text = text.replace(/&quot;/g, '&#19;');
-        text = text.replace(/&amp;/g, '&');
-        text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
-        text = text.replace(/&#16;/g, '&lt;');
-        text = text.replace(/&#17;/g, '&gt;');
-        text = text.replace(/&#18;/g, '&apos;');
-        text = text.replace(/&#19;/g, '&quot;');
-
-        const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
-        const swatch = li.children('a').find('.swatch');
-        const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
-
-        if (icon) {
-          hasIcons = true;
-        }
-        if (a[0]) {
-          a[0].innerHTML = swatchHtml + icon + text;
-        }
+        self.highlightSearchTerm(li, term);
       });
 
       headers.each(function () {
@@ -1287,7 +1259,7 @@ Dropdown.prototype = {
 
       term = '';
       this.position();
-    }
+    };
 
     if (this.settings.virtualScroll) {
       $(this.virtualScroller.element).one('afterrendered', () => {
@@ -1321,7 +1293,7 @@ Dropdown.prototype = {
 
     this.list.removeClass('search-mode');
     const lis = this.listUl.find('li');
-    let hasIcons = false;
+
     lis.removeAttr('style').each(function () {
       const a = $(this).children('a');
       const li = $(this);
@@ -1330,10 +1302,6 @@ Dropdown.prototype = {
       const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
       const swatch = li.children('a').find('.swatch');
       const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
-
-      if (icon) {
-        hasIcons = true;
-      }
 
       if (a[0]) {
         a[0].innerHTML = swatchHtml + icon + text;
@@ -1400,7 +1368,7 @@ Dropdown.prototype = {
     }
 
     if (this.isLoading()) {
-      return;
+      return true;
     }
 
     if (self.settings.onKeyDown) {
@@ -1492,7 +1460,7 @@ Dropdown.prototype = {
       }
       case 38: { // up
         if (e.shiftKey) {
-          return;
+          return true;
         }
         this.searchKeyMode = false;
 
@@ -1519,7 +1487,7 @@ Dropdown.prototype = {
       }
       case 40: { // down
         if (e.shiftKey) {
-          return;
+          return true;
         }
         this.searchKeyMode = false;
 
@@ -1964,23 +1932,25 @@ Dropdown.prototype = {
     if (this.settings.virtualScroll) {
       let selectedIndex = -1;
       let selectedElem = null;
-      let selectedOpt = this.opts.toArray().filter(function (opt, i) {
+      this.opts.toArray().filter((opt, i) => {
         if (opt.selected) {
           selectedIndex = i;
           selectedElem = opt;
           return opt;
         }
+        return null;
       });
 
       this.virtualScroller = new VirtualScroll(this.virtualScrollElem, {
-        height: 304, //64
+        height: 304,
         itemHeight: 32,
-        itemTemplate: function(item, elem) {
-          const li = self.buildLiOption(elem, item);
+        itemTemplate: function(item, elem) { //eslint-disable-line
+          let li = self.buildLiOption(elem, item);
           if (elem.selected) {
             selectedElem = elem;
             current = $(selectedElem);
           }
+          li = self.highlightSearchTerm($(li), self.filterTerm);
           return li;
         },
         data: this.opts
@@ -1989,9 +1959,9 @@ Dropdown.prototype = {
       setTimeout(() => {
         this.virtualScroller.scrollTo(selectedIndex);
         setTimeout(() => {
-          this.highlightOption($(selectedElem), noScroll);
-        });
-      }, 1);
+          this.highlightOption($(selectedElem));
+        }, 100);
+      });
     }
 
     // Limit the width
@@ -2065,15 +2035,13 @@ Dropdown.prototype = {
       });
 
     if (this.hasTooltips) {
-      let self = this;
-
-      function clearTimer() {
+      function clearTimer() { //eslint-disable-line
         if (self.timer && self.timer.destroy) {
           self.timer.destroy(true);
         }
       }
 
-      function showTooltip(target, title) {
+      function showTooltip(target, title) {  //eslint-disable-line
         $(target).tooltip({
           trigger: 'immediate',
           content: title
@@ -2081,12 +2049,12 @@ Dropdown.prototype = {
         $(target).focus();
       }
 
-      function hideTooltip(target) {
+      function hideTooltip(target) { //eslint-disable-line
         $('#tooltip').hide();
-        $('#tooltip').data('tooltip')?.destroy()
+        $('#tooltip').data('tooltip')?.destroy();
       }
 
-      function showOnTimer(target) {
+      function showOnTimer(target) {  //eslint-disable-line
         clearTimer();
         self.timer = new RenderLoopItem({
           duration: (500 / 10),
@@ -2105,7 +2073,7 @@ Dropdown.prototype = {
         renderLoop.register(self.timer);
       }
 
-      function hideImmediately(target) {
+      function hideImmediately(target) {  //eslint-disable-line
         clearTimer();
         hideTooltip(target);
       }
@@ -2113,9 +2081,9 @@ Dropdown.prototype = {
       self.list.on('mouseover.tooltip', 'li[title], li[data-title]', (e) => {
         showOnTimer(e.currentTarget);
       })
-      .on('mouseleave.tooltip, click.tooltip', 'li[title], li[data-title]', (e) => {
-        hideImmediately(e.currentTarget);
-      });
+        .on('mouseleave.tooltip, mousewheel.tooltip, click.tooltip', 'li[title], li[data-title]', (e) => {
+          hideImmediately(e.currentTarget);
+        });
     }
 
     // Some list-closing events are on a timer to prevent immediate list close
@@ -2337,6 +2305,16 @@ Dropdown.prototype = {
       positionOpts.x = self.settings.placementOpts.x;
     }
 
+    // Limit the maxWidth
+    if (this.settings.maxWidth) {
+      this.list.css('max-width', `${this.settings.maxWidth}px`);
+    }
+
+    // Limit the width
+    if (this.settings.width) {
+      this.list.css('width', `${this.settings.width}px`);
+    }
+
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
     this.list.data('place').place(positionOpts);
   },
@@ -2530,7 +2508,6 @@ Dropdown.prototype = {
   * @returns {void}
   */
   scrollToOption(current) {
-    const self = this;
     if (!current) {
       return;
     }
@@ -2641,7 +2618,7 @@ Dropdown.prototype = {
     let option;
     if (listOption.is('option')) {
       option = listOption;
-      listOption = this.listUl.find(`li[data-val="${option.val()}"]`)
+      listOption = this.listUl.find(`li[data-val="${option.val()}"]`);
     } else {
       option = this.element.find('option').filter((i, item) => item.value === listOption.attr('data-val'));
     }
@@ -2663,7 +2640,7 @@ Dropdown.prototype = {
     // Set activedescendent for new option
     this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
-    let isEmpty = (option.val() === '' || listOption.attr('data-val') === '' || option.hasClass('clear'));
+    const isEmpty = (option.val() === '' || listOption.attr('data-val') === '' || option.hasClass('clear'));
     if (!isEmpty) {
       this.setItemIconOverColor(listOption);
       listOption.addClass('is-focused').attr({ tabindex: '0' });
@@ -2672,6 +2649,47 @@ Dropdown.prototype = {
         this.scrollToOption(listOption);
       }
     }
+  },
+
+  /**
+   * Highlight Term and replace it in the DOM element
+   * @param  {HTMLElement} li  The list item to replace
+   * @param  {string} term  The search term
+   * @returns {string} the markup of the li
+   */
+  highlightSearchTerm(li, term) {
+    if (!li) {
+      return '';
+    }
+
+    if (!term) {
+      return li[0].outerHTML;
+    }
+
+    const a = li.children('a');
+    const exp = this.getSearchRegex(term);
+    let text = li.text();
+    text = xssUtils.escapeHTML(text);
+    text = text.replace(/&lt;/g, '&#16;');
+    text = text.replace(/&gt;/g, '&#17;');
+    text = text.replace(/&apos;/g, '&#18;');
+    text = text.replace(/&quot;/g, '&#19;');
+    text = text.replace(/&amp;/g, '&');
+    text = text.replace(exp, '<span class="dropdown-highlight">$1</span>').trim();
+    text = text.replace(/&#16;/g, '&lt;');
+    text = text.replace(/&#17;/g, '&gt;');
+    text = text.replace(/&#18;/g, '&apos;');
+    text = text.replace(/&#19;/g, '&quot;');
+
+    const icon = li.children('a').find('svg').length !== 0 ? new XMLSerializer().serializeToString(li.children('a').find('svg')[0]) : '';
+    const swatch = li.children('a').find('.swatch');
+    const swatchHtml = swatch.length !== 0 ? swatch[0].outerHTML : '';
+
+    if (a[0]) {
+      a[0].innerHTML = swatchHtml + icon + text;
+    }
+
+    return li[0].outerHTML;
   },
 
   /**
@@ -2927,6 +2945,8 @@ Dropdown.prototype = {
         this.element.val(ieVal);
       }
     }
+
+    $('.tooltip:not(.is-hidden)').hide();
   },
 
   /**
@@ -3061,7 +3081,7 @@ Dropdown.prototype = {
       }
     }
 
-    return elem.options[newIdx];
+    return elem.options[newIdx]; //eslint-disable-line
   },
 
   /**
@@ -3553,7 +3573,6 @@ Dropdown.prototype = {
       }).on('mouseup.dropdown touchend.dropdown', (e) => {
         if (e.button === 2) {
           e.stopPropagation();
-          return;
         }
       }).on('mousedown.dropdown touchstart.dropdown', (e) => {
         isTag = isTagEl(e);

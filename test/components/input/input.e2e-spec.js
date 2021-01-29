@@ -178,12 +178,5 @@ describe('Input Password Field tests', () => {
     await element.all(by.css('.input-hideshow-text')).first().click();
 
     expect(await inputEl.getAttribute('type')).toEqual('text');
-
-    await inputEl.sendKeys(protractor.Key.chord(
-      protractor.Key.CONTROL,
-      'r'
-    ));
-
-    expect(await inputEl.getAttribute('type')).toEqual('password');
   });
 });

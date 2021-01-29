@@ -296,8 +296,8 @@ describe('Tabs click example-add-tab button tests', () => {
     await addBtn.click();
 
     // Analyze the list and ensure we have 4 tabs, with our new tab at the end
-    expect(element.all(by.className('tab')).get(3)).toBeDefined();
-    expect(element.all(by.className('tab')).get(3).getText()).toEqual('Riya');
+    expect(await element.all(by.className('tab')).get(3)).toBeDefined();
+    expect(await element.all(by.className('tab')).get(3).getText()).toEqual('Riya');
   });
 
   it('Should remove add on destroy', async () => {

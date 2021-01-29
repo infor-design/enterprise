@@ -15,7 +15,7 @@ const clickOnDropdown = async () => {
   await dropdownEl.click();
 };
 
-fdescribe('Dropdown example-index tests', () => {
+describe('Dropdown example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-index');
   });
@@ -300,7 +300,7 @@ fdescribe('Dropdown example-index tests', () => {
   });
 });
 
-fdescribe('Dropdown example-ajax tests', () => {
+describe('Dropdown example-ajax tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-ajax');
   });
@@ -324,7 +324,7 @@ fdescribe('Dropdown example-ajax tests', () => {
   }
 });
 
-fdescribe('Dropdown example-no-search-lsf tests', () => {
+describe('Dropdown example-no-search-lsf tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-lsf');
   });
@@ -370,7 +370,7 @@ fdescribe('Dropdown example-no-search-lsf tests', () => {
   });
 });
 
-fdescribe('Dropdown example-no-search-filtering tests', () => {
+describe('Dropdown example-no-search-filtering tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-filtering');
   });
@@ -437,7 +437,7 @@ fdescribe('Dropdown example-no-search-filtering tests', () => {
   }
 });
 
-fdescribe('Dropdown example-no-search tests', () => {
+describe('Dropdown example-no-search tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search');
   });
@@ -456,7 +456,7 @@ fdescribe('Dropdown example-no-search tests', () => {
   });
 });
 
-fdescribe('Dropdown typeahead-reloading tests', () => {
+describe('Dropdown typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/test-reload-typeahead');
   });
@@ -532,7 +532,7 @@ fdescribe('Dropdown typeahead-reloading tests', () => {
   }
 });
 
-fdescribe('Dropdown placeholder tests', () => {
+describe('Dropdown placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-placeholder');
 
@@ -551,7 +551,7 @@ fdescribe('Dropdown placeholder tests', () => {
   });
 });
 
-fdescribe('Dropdown placeholder with initially selected tests', () => {
+describe('Dropdown placeholder with initially selected tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/test-placeholder-initial-selected');
 
@@ -570,7 +570,7 @@ fdescribe('Dropdown placeholder with initially selected tests', () => {
   });
 });
 
-fdescribe('Dropdown readonly tests', () => {
+describe('Dropdown readonly tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-readonly');
   });
@@ -588,7 +588,7 @@ fdescribe('Dropdown readonly tests', () => {
   });
 });
 
-fdescribe('Dropdown xss tests', () => {
+describe('Dropdown xss tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/test-xss');
   });
@@ -661,7 +661,7 @@ fdescribe('Dropdown xss tests', () => {
   });
 });
 
-fdescribe('Dropdown badge tests', () => {
+describe('Dropdown badge tests', () => {
   it('Should not error on left to right', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
     await utils.checkForErrors();
@@ -709,7 +709,7 @@ fdescribe('Dropdown badge tests', () => {
   }
 });
 
-fdescribe('Dropdown selectValue() tests', () => {
+describe('Dropdown selectValue() tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-setvalue?layout=nofrills');
   });
@@ -735,7 +735,7 @@ fdescribe('Dropdown selectValue() tests', () => {
   }
 });
 
-fdescribe('Dropdown with icons tests', () => {
+describe('Dropdown with icons tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-icons');
   });
@@ -762,7 +762,7 @@ fdescribe('Dropdown with icons tests', () => {
   });
 });
 
-fdescribe('Dropdown "No Search" stay-open behavior', () => {
+describe('Dropdown "No Search" stay-open behavior', () => {
   beforeEach(async () => {
     await utils.setPage('/components/dropdown/example-no-search-stay-open?layout=nofrills');
   });

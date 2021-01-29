@@ -14,7 +14,7 @@ const clickOnMultiselect = async () => {
   await multiselectEl.click();
 };
 
-fdescribe('Multiselect example-states tests', () => {
+describe('Multiselect example-states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-states');
   });
@@ -78,7 +78,7 @@ fdescribe('Multiselect example-states tests', () => {
   }
 });
 
-fdescribe('Multiselect example-index tests', () => {
+describe('Multiselect example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-index');
   });
@@ -207,7 +207,7 @@ fdescribe('Multiselect example-index tests', () => {
   });
 });
 
-fdescribe('Multiselect example-clear-all tests', () => {
+describe('Multiselect example-clear-all tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-clear-all');
   });
@@ -228,7 +228,7 @@ fdescribe('Multiselect example-clear-all tests', () => {
   }
 });
 
-fdescribe('Multiselect typeahead-reloading tests', () => {
+describe('Multiselect typeahead-reloading tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/test-reload-typeahead');
   });
@@ -302,7 +302,7 @@ fdescribe('Multiselect typeahead-reloading tests', () => {
   }
 });
 
-fdescribe('Multiselect placeholder tests', () => {
+describe('Multiselect placeholder tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-placeholder');
 
@@ -321,7 +321,7 @@ fdescribe('Multiselect placeholder tests', () => {
   });
 });
 
-fdescribe('Multiselect header strings tests', () => {
+describe('Multiselect header strings tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/test-header-strings');
 
@@ -346,7 +346,7 @@ fdescribe('Multiselect header strings tests', () => {
   });
 });
 
-fdescribe('Multiselect with Tags tests', () => {
+describe('Multiselect with Tags tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Standard example should not visually regress', async () => {
       await utils.setPage('/components/multiselect/example-index');
@@ -372,7 +372,7 @@ fdescribe('Multiselect with Tags tests', () => {
   }
 });
 
-fdescribe('Multiselect `showSearchUnderSelected` tests', () => {
+describe('Multiselect `showSearchUnderSelected` tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-search-under-selected?layout=nofrills');
   });
@@ -413,7 +413,7 @@ fdescribe('Multiselect `showSearchUnderSelected` tests', () => {
   }
 });
 
-fdescribe('Multiselect select all behavior tests', () => {
+describe('Multiselect select all behavior tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('should not visually regress', async () => {
       await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');

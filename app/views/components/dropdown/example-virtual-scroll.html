@@ -20,7 +20,7 @@
     markup += `<option value="option${i}" title="${date}">${date}</option>`;
   }
 
-  ele.append(markup).dropdown({ width: 420, maxWidth: 420, virtualScroll: true }).on('change', function (e, args) {
+  ele.append(markup).dropdown({ width: 420, virtualScroll: true }).on('change', function (e, args) {
     $('body').toast({
       'title': 'Change Event Fired',
       'message': 'Value changed to <span class="text-strong">' + $(this)[0].selectedOptions[0].innerText + '</span> '
