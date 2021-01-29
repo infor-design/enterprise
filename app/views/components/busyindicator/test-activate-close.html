@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Activate and Close</h2>
+    <p>Fixed an error was showing when called `close()` method too soon after `activate()`. (Github issue <a href="https://github.com/infor-design/enterprise-ng/issues/980">#980</a>)</p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <form id="busy-form" class="busy" action="#" method="POST">
+      <div class="field">
+        <label for="busy-field-name">Name</label>
+        <input id="busy-field-name" name="busy-field-name" />
+      </div>
+      <div class="field">
+        <label for="busy-field-address">Address</label>
+        <input id="busy-field-address" name="busy-field-address" />
+      </div>
+      <div class="field">
+        <label for="busy-field-cats">Number of Cats</label>
+        <input id="busy-field-cats" name="busy-field-cats" />
+      </div>
+      <div class="field">
+        <button type="reset" id="reset" class="btn-secondary">Clear</button>
+        <button type="submit" id="submit" class="btn-primary">Submit to activate Busy Indicator</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+
+    var busyApi = $('#busy-form').data('busyindicator');
+    var delay = 1;
+
+    $('#submit').click(function(e) {
+      e.preventDefault();
+      if (busyApi) {
+        // Activate busyindicator
+        busyApi.activate();
+        showToast('Activated');
+
+        setTimeout(function() {
+          // Close busyindicator
+          busyApi.close();
+          showToast('Closed');
+        }, delay);
+      }
+    });
+
+    // Show toast
+    function showToast (option) {
+      $('body').toast({
+        title: 'Busyindicator',
+        message: option
+      });
+      console.log('Busyindicator: '+ option);
+    }
+
+  });
+</script>
