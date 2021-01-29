@@ -363,7 +363,10 @@ BusyIndicator.prototype = {
       this.scrollParent = $(this.getScrollParent(elem));
       const sElem = this.scrollParent[0];
       const height = sElem ? sElem.offsetHeight : 0;
-      const elComputedPos = window.getComputedStyle(this.overlay[0], null).getPropertyValue('position');
+      let elComputedPos;
+      if (this.overlay && this.overlay[0]) {
+        elComputedPos = window.getComputedStyle(this.overlay[0], null).getPropertyValue('position');
+      }
       const isOverlayAbsolute = elComputedPos === 'absolute';
       if ((height && this.container && (height <= elem.offsetHeight))) {
         const winHeight = window.innerHeight || document.documentElement.clientHeight;
