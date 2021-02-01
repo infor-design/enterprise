@@ -1331,15 +1331,15 @@ Datagrid.prototype = {
     // Set Up Header Panes
     if (self.headerRow === undefined) {
       if (self.hasLeftPane) {
-        self.headerRowLeft = $(`<thead class="datagrid-header left">${headerRows.left}</thead>`);
+        self.headerRowLeft = $(`<thead class="datagrid-header left" role="rowgroup">${headerRows.left}</thead>`);
         self.tableLeft.find('colgroup').after(self.headerRowLeft);
       }
 
-      self.headerRow = $(`<thead class="datagrid-header center">${headerRows.center}</thead>`);
+      self.headerRow = $(`<thead class="datagrid-header center"> role="rowgroup"${headerRows.center}</thead>`);
       self.table.find('colgroup').after(self.headerRow);
 
       if (self.hasRightPane) {
-        self.headerRowRight = $(`<thead class="datagrid-header right">${headerRows.right}</thead>`);
+        self.headerRowRight = $(`<thead class="datagrid-header right" role="rowgroup">${headerRows.right}</thead>`);
         self.tableRight.find('colgroup').after(self.headerRowRight);
       }
     } else {
@@ -3250,13 +3250,13 @@ Datagrid.prototype = {
 
     if (body.length === 0) {
       if (self.hasLeftPane) {
-        self.tableBodyLeft = $('<tbody></tbody>');
+        self.tableBodyLeft = $('<tbody role="rowgroup"></tbody>');
         self.tableLeft.append(self.tableBodyLeft);
       }
-      self.tableBody = $('<tbody></tbody>');
+      self.tableBody = $('<tbody role="rowgroup"></tbody>');
       self.table.append(self.tableBody);
       if (self.hasRightPane) {
-        self.tableBodyRight = $('<tbody></tbody>');
+        self.tableBodyRight = $('<tbody role="rowgroup"></tbody>');
         self.tableRight.append(self.tableBodyRight);
       }
     }
