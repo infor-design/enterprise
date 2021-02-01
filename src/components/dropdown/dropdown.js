@@ -1958,7 +1958,6 @@ Dropdown.prototype = {
 
       setTimeout(() => {
         $(this.virtualScroller.element).on('afterrendered', () => {
-          console.log($(selectedElem).text());
           this.highlightOption($(selectedElem));
         });
         this.virtualScroller.scrollTo(selectedIndex);
