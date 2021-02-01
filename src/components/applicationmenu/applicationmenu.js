@@ -131,7 +131,7 @@ ApplicationMenu.prototype = {
           this.searchfield = this.searchfield.children('.searchfield');
         }
       } else {
-        this.searchfield = 
+        this.searchfield =
           $('<input id="application-menu-searchfield" class="searchfield" placeholder="Search" />')
             .prependTo(this.element);
       }
@@ -586,6 +586,7 @@ ApplicationMenu.prototype = {
       return;
     }
     let changed = $();
+    const isHidden = !this.element.is(':visible');
 
     $.each(triggers, (i, obj) => {
       changed = changed.add($(obj));
@@ -618,6 +619,10 @@ ApplicationMenu.prototype = {
     }
 
     this.updated();
+
+    if (isHidden) {
+      this.element.css('display', 'none');
+    }
   },
 
   /**
@@ -889,7 +894,7 @@ ApplicationMenu.prototype = {
     });
 
     $(document).on('open-applicationmenu', (e, noFocus, userOpened) => {
-      self.openMenu(undefined, userOpened);
+      self.openMenu(noFocus, userOpened);
     }).on('close-applicationmenu', (e, userClosed) => {
       self.closeMenu(userClosed);
     }).on('dismiss-applicationmenu', () => {
