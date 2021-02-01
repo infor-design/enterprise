@@ -202,6 +202,10 @@ $toolbar-buttonset-height: 40px;
       &[disabled],
       &[disabled]:hover {
         color: $toolbar-standalone-disabled-color;
+
+        .icon {
+          color: $toolbar-standalone-disabled-color;
+        }
       }
     }
   }

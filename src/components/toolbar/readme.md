@@ -14,8 +14,6 @@ demo:
     slug: example-no-title-icon-buttons
   - name: No title + Text-Only Buttons
     slug: example-no-title-text-buttons
-  - name: Standalone Toolbar Style
-    slug: example-standalone-style
   - name: No "More Actions" Button
     slug: example-no-action-button
   - name: "`MaxVisibleButtons` Defined as '6' Instead of '3'"
