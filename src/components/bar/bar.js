@@ -2,6 +2,7 @@
 // Other Shared Imports
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
+import { DOM } from '../../utils/dom';
 import { utils, math } from '../../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
@@ -407,11 +408,11 @@ Bar.prototype = {
 
     groups.selectAll('rect')
       .data((d, i) => {
-        d.forEach((d3) => {
-          d3.index = i;
+        d.forEach((rectData) => {
+          rectData.index = i;
 
           if (!s.isStacked) {
-            d3.gindex = gindex++;
+            rectData.gindex = gindex++;
           }
         });
         return d;
@@ -459,17 +460,45 @@ Bar.prototype = {
         let total = 0;
         const totals = [];
         let content = '';
-        const data = d3.select(this.parentNode).datum();
+        let tooltipTargetEl = null;
+        const maxBarsForTopTooltip = 6;
+        const shape = d3.select(this);
+        const parentNode = this.parentNode;
+        const data = d3.select(parentNode).datum();
         const mid = Math.round(data.length / 2);
-        let shape = d3.select(this);
         const setPattern = function (pattern, hexColor2) {
           return !pattern || !hexColor2 ? '' :
             `<svg width="12" height="12"><rect mask="url(#${pattern})" height="12" width="12" /></svg>`;
         };
 
-        const show = function (xPosS, yPosS, isTooltipBottom) {
+        // Set group info
+        let thisGroup = null;
+        if (s.isGrouped) {
+          thisGroup = { elem: d3.select(parentNode) };
+          thisGroup.data = data;
+          thisGroup.items = thisGroup.elem.selectAll('.bar');
+          thisGroup.idx = parseInt(parentNode.getAttribute('data-group-id'), 10);
+        }
+
+        const show = function () {
+          const isTooltipBottom = (!s.isStacked && (data.length > maxBarsForTopTooltip));
+          let el;
+          const midNode = $(`.series-${mid}`, parentNode)[0];
+          if (DOM.isValidElement(tooltipTargetEl)) {
+            // If target come from callback, bar or group element
+            el = tooltipTargetEl === thisGroup.elem.node() ? midNode : tooltipTargetEl;
+          } else {
+            // Default use current shape or current group element
+            el = s.isGrouped ? midNode : shape.node();
+          }
+          const rect = el.getBoundingClientRect();
+          const winJq = $(window);
+
+          const yPosS = rect.top + winJq.scrollTop();
+          const xPosS = rect.left + winJq.scrollLeft();
+
           const size = charts.tooltipSize(content);
-          const x = xPosS + (parseFloat(shape.attr('width')) / 2) - (size.width / 2);
+          const x = xPosS + (rect.width / 2) - (size.width / 2);
           const y = isTooltipBottom ? yPosS : (yPosS - size.height - 13);
 
           if (content !== '') {
@@ -512,12 +541,18 @@ Bar.prototype = {
         // Set custom tooltip callback method
         const setCustomTooltip = (method) => {
           content = '';
-          const args = { index: i, data: d };
-          const req = (res) => {
+          const args = { elem: this, index: i, data: d };
+          if (s.isGrouped) {
+            args.groupElem = thisGroup.elem.node();
+            args.groupItems = thisGroup.items.nodes();
+            args.groupIndex = thisGroup.idx;
+            args.groupData = thisGroup.data;
+          }
+          const req = (res, target) => {
             if (typeof res === 'string' || typeof res === 'number') {
               content = res;
+              tooltipTargetEl = target;
               replaceMatchAndSetType();
-              tooltipDataCache[i] = content;
             }
           };
           let runInterval = true;
@@ -554,9 +589,6 @@ Bar.prototype = {
                 </div>`;
             }
           } else {
-            if (mid > 1) {
-              shape = d3.select(this.parentNode).select(`.series-${mid}`);
-            }
             for (j = 0, l = data.length; j < l; j++) {
               hexColor = charts.chartColor(j, 'bar', legendMap[j]);
               content += `<div class="swatch-row">
@@ -572,28 +604,8 @@ Bar.prototype = {
           content = `<span class="chart-tooltip-total"><b>${total}</b> ${Locale.translate('Total')}</span>${content}`;
         }
 
-        const yPosS = shape.nodes()[0].getBoundingClientRect().top + $(window).scrollTop();
-        const xPosS = shape.nodes()[0].getBoundingClientRect().left + $(window).scrollLeft();
-
-        const maxBarsForTopTooltip = 6;
-        const isTooltipBottom = (!s.isStacked && (data.length > maxBarsForTopTooltip));
-
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
-          content = '';
-          let runInterval = true;
-          tooltipInterval = setInterval(() => {
-            if (runInterval) {
-              runInterval = false;
-              tooltipData((data2) => {
-                content = data2;
-                tooltipDataCache[i] = data2;
-              });
-            }
-            if (content !== '') {
-              clearInterval(tooltipInterval);
-              show(xPosS, yPosS, isTooltipBottom);
-            }
-          }, 10);
+          setCustomTooltip(tooltipData);
         } else {
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (!tooltipDataCache[i] && d.tooltip !== false &&
@@ -607,7 +619,7 @@ Bar.prototype = {
             }
           }
           if (typeof content === 'string' && content !== '') {
-            show(xPosS, yPosS, isTooltipBottom);
+            show();
           }
 
           // set inline colors
