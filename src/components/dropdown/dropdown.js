@@ -487,7 +487,7 @@ Dropdown.prototype = {
     this.inputTimeout = setTimeout(() => {
       clearTimeout(self.inputTimeout);
       self.inputTimeout = null;
-    }, 100);
+    }, 200);
 
     return true;
   },
@@ -1957,10 +1957,11 @@ Dropdown.prototype = {
       });
 
       setTimeout(() => {
-        this.virtualScroller.scrollTo(selectedIndex);
-        setTimeout(() => {
+        $(this.virtualScroller.element).on('afterrendered', () => {
+          console.log($(selectedElem).text());
           this.highlightOption($(selectedElem));
-        }, 100);
+        });
+        this.virtualScroller.scrollTo(selectedIndex);
       });
     }
 
@@ -2393,6 +2394,9 @@ Dropdown.prototype = {
    */
   correctValue(option) {
     let val = option.attr('data-val') || option.attr('value');
+    if (!val) { // Blank option
+      return option;
+    }
     val = val.replace(/"/g, '/quot/');
 
     let cur = this.element.find(`option[value="${val}"]`);
@@ -2516,7 +2520,7 @@ Dropdown.prototype = {
     }
 
     // scroll to the currently selected option
-    current[0].scrollIntoView();
+    current[0].scrollIntoView({ block: 'center' });
     current.focus();
     this.searchInput.focus();
   },
