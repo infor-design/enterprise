@@ -48,9 +48,9 @@
 
   .icon {
     &.app-header {
-      left: -6px;
+      left: -4px;
       position: relative;
-      top: -7px;
+      top: -8px;
 
       span:not(.audible) {
         background-color: $module-tabs-inactive-text-color;
