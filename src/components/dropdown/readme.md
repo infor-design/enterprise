@@ -34,6 +34,8 @@ demo:
     slug: example-updating
   - name: Validation
     slug: example-validation
+  - name: Virtual Scrolling
+    slug: example-virtual-scroll
   - name: Widths
     slug: example-widths
   - name: Data Attributes
@@ -62,6 +64,22 @@ Create a `<select>` element with similar markup as below:
 ```
 
 The control is initialized through the page initializer with `$('body').initialize('en-US');` or manually with `$('.dropdown').dropdown();`.
+
+## Virtual Scrolling Feature
+
+In order to support cases with 5-15K dropdown items we added virtual scrolling to the dropdown. When this is used the list when open will only show the visible items plus a buffer so that the list can open and work faster for selection. At this time only some basic functionality is supported:
+
+- It works from the options in the select (ajax and some other features not tested)
+- Tooltips will work
+- Type ahead search will work
+
+One issue is that you should provide a width / maxWidth option when using this feature if all the items will vary greatly in size because all items are not rendered at once. If you don't when scrolling quickly the list may shuffle width and look a bit strange.
+
+```js
+$('dropdown-id')
+  .append(markup) // Append thousands of options
+  .dropdown({ width: 420, maxWidth: 450, virtualScroll: true });
+```
 
 ## Accessibility
 

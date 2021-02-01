@@ -173,17 +173,10 @@ describe('Input Password Field tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
 
-    expect(inputEl.getAttribute('type')).toEqual('password');
+    expect(await inputEl.getAttribute('type')).toEqual('password');
 
     await element.all(by.css('.input-hideshow-text')).first().click();
 
     expect(await inputEl.getAttribute('type')).toEqual('text');
-
-    await inputEl.sendKeys(protractor.Key.chord(
-      protractor.Key.CONTROL,
-      'r'
-    ));
-
-    expect(inputEl.getAttribute('type')).toEqual('password');
   });
 });

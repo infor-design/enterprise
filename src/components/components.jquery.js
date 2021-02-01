@@ -71,6 +71,7 @@ import './tree/tree.jquery';
 import './treemap/treemap.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
+import './virtual-scroll/virtual-scroll.jquery';
 import './week-view/week-view.jquery';
 import './wizard/wizard.jquery';
 

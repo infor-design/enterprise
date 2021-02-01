@@ -253,6 +253,9 @@ const PLUGIN_MAPPINGS = [
   // Track Dirty
   ['trackdirty', '[data-trackdirty="true"]'],
 
+  // Virtual Scroll
+  ['virtualscroll', '.virtual-scroll'],
+
   // Context Menus - Popupmenu Components with no trigger buttons
   ['popupmenu', '[data-popupmenu]:not(.btn-actions, .btn-filter, .btn-menu)', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {

@@ -252,7 +252,7 @@
 
   &.disable-hover {
     li:hover {
-      background: none;
+      background-color: $listview-bg-color;
     }
   }
 

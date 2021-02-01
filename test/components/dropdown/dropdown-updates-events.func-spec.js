@@ -48,7 +48,8 @@ describe('Dropdown updates, events', () => {
       selectedTextString: null,
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
-      attributes: null
+      attributes: null,
+      virtualScroll: false
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -78,7 +79,8 @@ describe('Dropdown updates, events', () => {
       selectedTextString: null,
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
-      attributes: null
+      attributes: null,
+      virtualScroll: false
     };
 
     dropdownObj.updated();
@@ -112,7 +114,8 @@ describe('Dropdown updates, events', () => {
       selectedTextString: null,
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
-      attributes: null
+      attributes: null,
+      virtualScroll: false
     };
     dropdownObj.updated(settings);
 
@@ -152,7 +155,8 @@ describe('Dropdown updates, events', () => {
       selectedTextString: null,
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
-      attributes: null
+      attributes: null,
+      virtualScroll: false
     };
 
     const spyEvent = spyOnEvent('.dropdown', 'has-updated');

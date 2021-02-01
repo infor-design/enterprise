@@ -6,6 +6,7 @@
 
 - `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
+- `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
 
 ### v4.37.0 Fixes
 
@@ -18,6 +19,7 @@
 - `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
 - `[Datagrid]` Added missing aria row group role to the datagrid. ([#4479](https://github.com/infor-design/enterprise/issues/4479))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
+- `[Dropdown]` Fixed a bug where you could click the label and focus a disabled dropdown. ([#4739](https://github.com/infor-design/enterprise/issues/4739))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
 - `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
 - `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))

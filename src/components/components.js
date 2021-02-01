@@ -59,6 +59,7 @@ export { Tooltip } from './tooltip/tooltip';
 export { Tree } from './tree/tree';
 export { Treemap } from './treemap/treemap';
 export { Validator } from './validation/validator';
+export { VirtualScroll } from './virtual-scroll/virtual-scroll';
 export { Wizard } from './wizard/wizard';
 
 // Complex ====/
