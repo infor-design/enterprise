@@ -261,7 +261,7 @@ Tabs.prototype = {
       const a = $(this);
       const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
 
-      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '0' })
+      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '-1' })
         .parent().attr('role', 'presentation').addClass('tab');
 
       let dismissibleIcon;
@@ -440,6 +440,11 @@ Tabs.prototype = {
       this.element.addClass('has-toolbar');
     }
 
+    if (this.isModuleTabs() && tabs.filter('.application-menu-trigger').length > 0) {
+      tabs.find('a[tabindex="0"]').attr('tabindex', '-1');
+      tabs.filter('.application-menu-trigger').find('a').attr('tabindex', '0');
+    }
+
     this.setOverflow();
 
     this.positionFocusState(selectedAnchor);
@@ -580,7 +585,7 @@ Tabs.prototype = {
     if (this.settings.addTabButton) {
       if (!this.addTabButton || !this.addTabButton.length) {
         this.addTabButton = $(`
-          <div class="add-tab-button" tabindex="0" role="button">
+          <div class="add-tab-button" tabindex="-1" role="button">
             <span aria-hidden="true" role="presentation">+</span>
             <span class="audible">${Locale.translate('AddNewTab')}</span>
           </div>
@@ -1270,9 +1275,11 @@ Tabs.prototype = {
         return true;
       case 13: // Enter
         activate();
+        this.positionFocusState();
         return false;
       case 32: // Spacebar
         activate();
+        this.positionFocusState();
         return false;
       case 38:
         targetLi = previousTab();
@@ -1368,14 +1375,14 @@ Tabs.prototype = {
 
     e.preventDefault();
 
-    this.hideFocusState();
+    // this.hideFocusState();
 
     if (menu.hasClass('is-open')) {
       menu.trigger('close-applicationmenu', [true]);
       return false;
     }
 
-    menu.trigger('open-applicationmenu', [null, true]);
+    menu.trigger('open-applicationmenu', [true, true]);
     return false;
   },
 
@@ -1643,6 +1650,11 @@ Tabs.prototype = {
     let selected = this.tablist.find('.is-selected');
     if (!selected.length || this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
       selected = this.moreButton;
+    }
+
+    const appMenuTrigger = this.element.find('.application-menu-trigger');
+    if (appMenuTrigger.length > 0 && appMenuTrigger.hasClass('is-focused')) {
+      selected = appMenuTrigger.find('a');
     }
 
     if (!selected.length) {
@@ -2360,10 +2372,10 @@ Tabs.prototype = {
     this.anchors.attr({
       'aria-selected': 'false',
       'aria-expanded': 'false',
-      tabindex: '0'
+      tabindex: '-1'
     });
     this.moreButton.attr({
-      tabindex: '0'
+      tabindex: '-1'
     });
 
     // show current tab
@@ -2457,7 +2469,7 @@ Tabs.prototype = {
 
     // Build
     const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
-    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="0">${xssUtils.escapeHTML(options.name)}</a>`);
+    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
     let iconMarkup;
 
@@ -3759,7 +3771,7 @@ Tabs.prototype = {
   positionFocusState(target, unhide) {
     const self = this;
 
-    // TODO: Recheck this and improve
+    // Recheck this and improve
     if (target !== undefined) {
       target = $(target);
     } else if (self.moreButton.hasClass('is-selected')) {
@@ -3767,14 +3779,6 @@ Tabs.prototype = {
     } else if (self.tablist.children('.is-selected').length > 0) {
       target = self.tablist.children('.is-selected').children('a');
     }
-
-    /*
-    NOTE: this used to replace the code directly above
-    target = target !== undefined ? $(target) :
-      self.moreButton.hasClass('is-selected') ? self.moreButton :
-      self.tablist.children('.is-selected').length > 0 ?
-      self.tablist.children('.is-selected').children('a') : undefined;
-    */
 
     if (!target || target === undefined || !target.length ||
       (target.is(this.moreButton) && this.isScrollableTabs())) {
@@ -3883,6 +3887,11 @@ Tabs.prototype = {
 
     const doHide = unhide === true ? 'add' : 'remove';
     focusStateElem.classList[doHide]('is-visible');
+
+    const focusedTab = this.element.find('.application-menu-trigger, .tab');
+    if (focusedTab.length > 0 && focusedTab.hasClass('is-focused')) {
+      focusStateElem.classList.add('is-visible');
+    }
   },
 
   /**

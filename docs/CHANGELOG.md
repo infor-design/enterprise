@@ -24,6 +24,7 @@
 - `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
 - `[Swaplist]` Fixed an issue where the user attributes need to be override existing attributes. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
+- `[Tabs]` Fixed a bug where the tab key would move through tabs rather than moving to the tab content. ([#4745](https://github.com/infor-design/enterprise/issues/4745))
 - `[Toolbar Searchfield]` Fixed a bug where the toolbar searchfield were unable to focused when tabbing through the page. ([#4683](https://github.com/infor-design/enterprise/issues/4683))
 - `[Toolbar Searchfield]` Fixed a bug where the search bar were showing extra outline when focused. ([#4682](https://github.com/infor-design/enterprise/issues/4682))
 - `[Track Dirty]` Fixed an error that was showing when using dirty indicator within a tab component. ([#936](https://github.com/infor-design/enterprise-ng/issues/936))
