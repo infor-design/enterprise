@@ -17,6 +17,7 @@
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
 - `[Column Chart]` Fixed an issue where the data was passing wrong for grouped type custom tooltip. ([#4548](https://github.com/infor-design/enterprise/issues/4548))
 - `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
+- `[Datagrid]` Added missing aria row group role to the datagrid. ([#4479](https://github.com/infor-design/enterprise/issues/4479))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Dropdown]` Fixed a bug where you could click the label and focus a disabled dropdown. ([#4739](https://github.com/infor-design/enterprise/issues/4739))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
