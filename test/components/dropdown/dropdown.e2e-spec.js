@@ -213,38 +213,6 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('div.dropdown'))).not.toContain('is-open');
     });
 
-    it('Should not allow the escape key to re-open a closed menu', async () => {
-      const dropdownEl = await element(by.css('div.dropdown'));
-
-      await browser.driver
-        .wait(EC.presenceOf(dropdownEl), config.waitsFor);
-      await element(by.css('div.dropdown')).click();
-
-      // Wait for the menu to be present
-      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
-      // await browser.driver
-      //  .wait(EC.presenceOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      await browser.driver.sleep(100);
-
-      // First key press causes the menu to close
-      await element(by.css('#custom-dropdown-id-1-search')).sendKeys(protractor.Key.ESCAPE);
-
-      // Wait for the menu to disappear
-      // NOTE: Need to fix this once setTimeouts are removed (Github #794)
-      // await browser.driver
-      //   .wait(EC.invisibilityOf(await element(by.css('ul[role="listbox"]'))), config.waitsFor);
-      await browser.driver.sleep(100);
-
-      // Second key press should do nothing
-      await element(by.css('div.dropdown')).sendKeys(protractor.Key.ESCAPE);
-
-      // Sleep for a short period of time, because we're not sure if the menu will be present or not
-      await browser.driver.sleep(100);
-
-      // The Dropdown Pseudo element should no longer have focus
-      expect(await element(by.css('div.dropdown')).getAttribute('class')).not.toContain('is-open');
-    });
-
     it('Should be able to set id/automation id', async () => {
       await clickOnDropdown();
       await browser.driver.sleep(config.sleepShort);
