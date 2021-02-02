@@ -20,6 +20,7 @@
 - `[Datagrid]` Added missing aria row group role to the datagrid. ([#4479](https://github.com/infor-design/enterprise/issues/4479))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Dropdown]` Fixed a bug where you could click the label and focus a disabled dropdown. ([#4739](https://github.com/infor-design/enterprise/issues/4739))
+- `[Homepage]` Fixed the wrong metadata was sending for resize, reorder and remove card events. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
 - `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
 - `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))
