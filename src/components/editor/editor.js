@@ -346,7 +346,12 @@ Editor.prototype = {
     currentElement.on('keydown.editor', (e) => {
       if (e.which === 9) {
         // Override tab only for pre nodes
-        const tag = this.getSelectionStart().tagName.toLowerCase();
+        const selectionStart = this.getSelectionStart();
+        if (!selectionStart || !selectionStart.tagName) {
+          return;
+        }
+
+        const tag = selectionStart.tagName.toLowerCase();
         if (tag === 'pre') {
           e.preventDefault();
           document.execCommand('insertHtml', null, '    ');
