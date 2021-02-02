@@ -1061,6 +1061,7 @@ Slider.prototype = {
       self.enableHandleDrag(handle);
     });
 
+    this.wrapper.find('[tabindex]').attr('tabindex', '0');
     return this;
   },
 
@@ -1082,6 +1083,7 @@ Slider.prototype = {
       });
     });
 
+    this.wrapper.find('[tabindex]').attr('tabindex', '-1');
     return this;
   },
 
