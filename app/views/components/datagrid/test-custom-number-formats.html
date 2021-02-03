@@ -20,6 +20,7 @@
       columns.push({ id: 'quantity', name: 'Integer', field: 'quantity', formatter: Formatters.Integer});
       columns.push({ id: 'quantity', name: 'Decimal', field: 'quantity', formatter: Formatters.Decimal});
       columns.push({ id: 'quantity', name: 'Decimal (NL)', field: 'quantityStr', formatter: Formatters.Decimal});
+      columns.push({ id: 'quantity', name: 'Change Group', field: 'quantityStr', formatter: Formatters.Decimal, numberFormat: { decimal: ',', group: '.'}, mask: '#.###,00' , editor: Editors.Input});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
