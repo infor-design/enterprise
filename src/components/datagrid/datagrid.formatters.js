@@ -707,7 +707,11 @@ const formatters = {
   },
 
   TargetedAchievement(row, cell, value, col) {
-    const perc = (100 * value);
+    const perc = Locale.formatNumber(
+      (100 * value),
+      col.numberFormat || { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+    );
+
     let text = `${perc}%`;
     const ranges = formatters.ClassRange(row, cell, perc, col);
     const target = col.target;

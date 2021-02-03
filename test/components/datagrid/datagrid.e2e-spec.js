@@ -3969,7 +3969,7 @@ describe('Datagrid select event tests', () => {
   });
 });
 
-describe('Datagrid Targeted Achievement', () => {
+fdescribe('Datagrid Targeted Achievement', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-targeted-achievement?layout=nofrills');
 
