@@ -1,6 +1,6 @@
 [
-	{"manufacturer":"1",	"manufacturerName":"Jamis Bicycles",			"inventoryValue":"2000000",		"customerSatisfaction":"1.25"},
-	{"manufacturer":"2",	"manufacturerName":"Trek Bicycle Corporation",	"inventoryValue":"16000000",	"customerSatisfaction":"0.30"},
+	{"manufacturer":"1",	"manufacturerName":"Jamis Bicycles",			"inventoryValue":"2000000",		"customerSatisfaction": 0.56},
+	{"manufacturer":"2",	"manufacturerName":"Trek Bicycle Corporation",	"inventoryValue":"16000000",	"customerSatisfaction": 0.30},
 	{"manufacturer":"3",	"manufacturerName":"Santa Cruz",				"inventoryValue":"100000",		"customerSatisfaction":"0.60"},
 	{"manufacturer":"4",	"manufacturerName":"Tomac",						"inventoryValue":"100000",		"customerSatisfaction":"0.45"},
 	{"manufacturer":"5",	"manufacturerName":"Gary Fisher",				"inventoryValue":"12000000",	"customerSatisfaction":"0.93"},

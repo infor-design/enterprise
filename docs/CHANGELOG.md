@@ -6,6 +6,7 @@
 
 - `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
+- `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the defaut to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
 - `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
 
 ### v4.37.0 Fixes
