@@ -630,7 +630,7 @@ DOM.focusableElems = function focusableElems(el, additionalSelectors = [], ignor
     'button:not([disabled]):not([tabindex="-1"])',
     '[href]:not([disabled]):not([tabindex="-1"])',
     'input:not([disabled]):not([tabindex="-1"])',
-    `select:not([disabled]):not([tabindex="-1"])`,
+    'select:not([disabled]):not([tabindex="-1"])',
     'div.dropdown:not([.is-disabled]):not([tabindex="-1"])',
     'div.multiselect:not([.is-disabled]):not([tabindex="-1"])',
     'textarea:not([disabled]):not([tabindex="-1"])',
