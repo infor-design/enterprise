@@ -213,26 +213,22 @@ Homepage.prototype = {
           const header = card.children('.widget-header');
           removeButton.insertBefore(header)
             .on('click.card-remove', () => {
+              const removeCard = () => {
+                card.remove();
+                homepage.refresh(false);
+                setTimeout(() => {
+                  homepage.element.triggerHandler('removecard', [card, homepage.state]);
+                }, 0);
+              };
               if (this.settings && typeof this.settings.onBeforeRemoveCard === 'function') {
                 const result = this.settings.onBeforeRemoveCard(card);
                 if (result && result.then && typeof result.then === 'function') { // A promise is returned
-                  result.then(() => {
-                    card.triggerHandler('removecard', [card, homepage.state]);
-                    card.remove();
-                    homepage.refresh(false);
-                    homepage.element.triggerHandler('removecard', [card, homepage.state]);
-                  });
+                  result.then(() => removeCard());
                 } else if (result) { // Boolean is returned instead of a promise
-                  card.triggerHandler('removecard', [card, homepage.state]);
-                  card.remove();
-                  homepage.refresh(false);
-                  homepage.element.triggerHandler('removecard', [card, homepage.state]);
+                  removeCard();
                 }
               } else {
-                card.triggerHandler('removecard', [card, homepage.state]);
-                card.remove();
-                homepage.refresh(false);
-                homepage.element.triggerHandler('removecard', [card, homepage.state]);
+                removeCard();
               }
             });
         }
@@ -279,8 +275,10 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, width: '' });
                   homepage.refresh(false);
-                  card.triggerHandler('resizecard', [card, homepage.state]);
-                  homepage.element.triggerHandler('resizecard', [card, homepage.state]);
+                  setTimeout(() => {
+                    card.triggerHandler('resizecard', [card, homepage.state]);
+                    homepage.element.triggerHandler('resizecard', [card, homepage.state]);
+                  }, 0);
                 });
             });
           const southHandle = $('<div>').addClass('ui-resizable-handle ui-resizable-s')
@@ -315,8 +313,10 @@ Homepage.prototype = {
                   $('.ui-resizable-handle').remove();
                   card.css({ opacity: 1, height: '' });
                   homepage.refresh(false);
-                  card.triggerHandler('resizecard', [card, homepage.state]);
-                  homepage.element.triggerHandler('resizecard', [card, homepage.state]);
+                  setTimeout(() => {
+                    card.triggerHandler('resizecard', [card, homepage.state]);
+                    homepage.element.triggerHandler('resizecard', [card, homepage.state]);
+                  }, 0);
                 });
             });
           if (card.has('.ui-resizable-handle').length === 0) {
@@ -373,8 +373,10 @@ Homepage.prototype = {
             card.removeClass('is-dragging');
             homepage.guide.remove();
             homepage.refresh(false);
-            card.triggerHandler('reordercard', [card, homepage.state]);
-            homepage.element.triggerHandler('reordercard', [card, homepage.state]);
+            setTimeout(() => {
+              card.triggerHandler('reordercard', [card, homepage.state]);
+              homepage.element.triggerHandler('reordercard', [card, homepage.state]);
+            }, 0);
           }
         });
     } else {
