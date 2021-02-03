@@ -76,11 +76,13 @@
 
 input.checkbox,
 span.checkbox > input {
+  height: 14px;
   left: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  width: 16px;// use fixed, to prevent page jump on click
+  width: 16px;
+  z-index: -1;
 
   &.error {
     + label {

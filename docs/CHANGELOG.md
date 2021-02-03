@@ -1,11 +1,18 @@
 # What's New with Enterprise
 
+## v4.38.0
+
+### v4.38.0 Fixes
+
+- `[Example]` Placeholder remove me. ([#9999](https://github.com/infor-design/enterprise/issues/999))
+
 ## v4.37.0
 
 ### v4.37.0 Features
 
 - `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
+- `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the defaut to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
 - `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
 
 ### v4.37.0 Fixes
@@ -15,16 +22,20 @@
 - `[Bar Chart]` Fixed an issue where the data was passing wrong for grouped type custom tooltip. ([#4548](https://github.com/infor-design/enterprise/issues/4548))
 - `[Busy Indicator]` Fixed an error was showing when called `close()` method too soon after `activate()`. ([#980](https://github.com/infor-design/enterprise-ng/issues/980))
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Checkboxes]` Fixed a bug where if checkboxes are in a specific relative layout the checkboxes may click the wrong one. ([#4808](https://github.com/infor-design/enterprise/issues/4808))
 - `[Column Chart]` Fixed an issue where the data was passing wrong for grouped type custom tooltip. ([#4548](https://github.com/infor-design/enterprise/issues/4548))
 - `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
 - `[Datagrid]` Added missing aria row group role to the datagrid. ([#4479](https://github.com/infor-design/enterprise/issues/4479))
+- `[Datagrid]` Fixed a bug where when setting a group and decimal out of the current locale then editing would not work. ([#4806](https://github.com/infor-design/enterprise/issues/4806))
 - `[Dropdown]` Fixed an issue where some elements did not correctly get an id in the dropdown. ([#4742](https://github.com/infor-design/enterprise/issues/4742))
 - `[Dropdown]` Fixed a bug where you could click the label and focus a disabled dropdown. ([#4739](https://github.com/infor-design/enterprise/issues/4739))
+- `[Homepage]` Fixed the wrong metadata was sending for resize, reorder and remove card events. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Fixed an issue where if the 11th digit is a zero the formatNumbers and truncateDecimals function will loose a digit. ([#4656](https://github.com/infor-design/enterprise/issues/4656))
 - `[Modal]` Improved detection of non-focusable elements when a Modal is configured to auto focus one of its inner components. ([#4740](https://github.com/infor-design/enterprise/issues/4740))
 - `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))
 - `[ProcessIndicator]` Fixed a layout issue on the index page and added a rejected icon. ([#4770](https://github.com/infor-design/enterprise/issues/4770))
 - `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
+- `[Splitter]` Fixed the splitter was dragging to wrong direction in RTL. ([#1813](https://github.com/infor-design/enterprise/issues/1813))
 - `[Swaplist]` Fixed an issue where the user attributes need to be override existing attributes. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Tabs]` Fixed a bug where the tab key would move through tabs rather than moving to the tab content. ([#4745](https://github.com/infor-design/enterprise/issues/4745))

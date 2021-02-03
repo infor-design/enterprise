@@ -180,20 +180,24 @@
   $('#regular-spinbox').spinbox();
 
   $('#disabled-btn').on('click', function () {
-    $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #multi-disabled-standard ~ .dropdown-wrapper > .dropdown, #background-color, #lookup-field-disabled, #date-field-disabled ,#checkbox-disabled , #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #disabled-slider, #requests-on, #searchfield')
+    $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #background-color, #lookup-field-disabled, #date-field-disabled ,#checkbox-disabled , #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #requests-on, #searchfield')
       .disable();
     $('#enabled-btn').enable();
     $('#states').disable();
+    $('#multi-disabled-standard').disable();
+    $('#disabled-slider').disable();
 
     $('.colorpicker-container, .spinbox-wrapper, .slider-wrapper').addClass('is-disabled');
     $('#editor-disabled').attr('contenteditable', 'false');
   });
 
   $('#enabled-btn').on('click', function () {
-    $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #multi-disabled-standard ~ .dropdown-wrapper > .dropdown, #background-color, #lookup-field-disabled, #date-field-disabled, #checkbox-disabled, #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #disabled-slider, #requests-on, #searchfield')
+    $('#disabled-field, #disabled-btn, #states ~ .dropdown-wrapper > .dropdown, #desc-disabled, #background-color, #lookup-field-disabled, #date-field-disabled, #checkbox-disabled, #autocomplete-default, #editor-disabled, #timepicker-main, #regular-spinbox, #option-disabled, #requests-on, #searchfield')
       .enable();
     $('#enabled-btn').disable();
     $('#states').enable();
+    $('#multi-disabled-standard').enable();
+    $('#disabled-slider').enable();
 
     $('.colorpicker-container, .spinbox-wrapper, .slider-wrapper').removeClass('is-disabled');
     $('#editor-disabled').attr('contenteditable', 'true');

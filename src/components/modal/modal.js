@@ -1249,12 +1249,8 @@ Modal.prototype = {
    * @returns {void}
    */
   setFocusableElems() {
-    const extraSelectors = [
-      'div.dropdown',
-      'div.multiselect'
-    ];
+    const extraSelectors = [];
     const ignoredSelectors = [
-      'select',
       'option'
     ];
 
