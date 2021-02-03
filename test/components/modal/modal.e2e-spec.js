@@ -499,9 +499,9 @@ describe('Modal focusable elements tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should focus the first available input field', async () => {
-    const focusedElemId = await browser.driver.switchTo().activeElement().getAttribute('id');
+  it('Should focus the first available field', async () => {
+    const focusedElem = await browser.driver.switchTo().activeElement();
 
-    expect(focusedElemId).toEqual('problem');
+    expect(focusedElem.getAttribute('class')).toContain('dropdown');
   });
 });
