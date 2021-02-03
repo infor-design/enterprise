@@ -15,6 +15,7 @@
 - `[Bar Chart]` Fixed an issue where the data was passing wrong for grouped type custom tooltip. ([#4548](https://github.com/infor-design/enterprise/issues/4548))
 - `[Busy Indicator]` Fixed an error was showing when called `close()` method too soon after `activate()`. ([#980](https://github.com/infor-design/enterprise-ng/issues/980))
 - `[Calendar]` Fixed a regression where clicking Legend checkboxes was no longer possible. ([#4746](https://github.com/infor-design/enterprise/issues/4746))
+- `[Checkboxes]` Fixed a bug where if checkboxes are in a specific relative layout the checkboxes may click the wrong one. ([#4808](https://github.com/infor-design/enterprise/issues/4808))
 - `[Column Chart]` Fixed an issue where the data was passing wrong for grouped type custom tooltip. ([#4548](https://github.com/infor-design/enterprise/issues/4548))
 - `[Datagrid]` Fixed an issue where the filter border on readonly lookups was not displayed in high contrast mode. ([#4724](https://github.com/infor-design/enterprise/issues/4724))
 - `[Datagrid]` Added missing aria row group role to the datagrid. ([#4479](https://github.com/infor-design/enterprise/issues/4479))
