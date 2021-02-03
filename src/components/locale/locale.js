@@ -1641,10 +1641,10 @@ const Locale = {  // eslint-disable-line
       numString = numString.toString();
     }
 
-    const group = numSettings ? numSettings.group : ',';
-    const decimal = numSettings ? numSettings.decimal : '.';
-    const percentSign = numSettings ? numSettings.percentSign : '%';
-    const currencySign = localeData.currencySign || '$';
+    const group = options && options.group ? options.group : numSettings ? numSettings.group : ',';
+    const decimal = options && options.decimal ? options.decimal : numSettings ? numSettings.decimal : '.';
+    const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
+    const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
     const exp = (group === ' ') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');

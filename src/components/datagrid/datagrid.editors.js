@@ -116,6 +116,10 @@ const editors = {
         thisValue = this.input.val().trim().replace(/(\s%?|%)$/g, '');
         return Locale.parseNumber(thisValue) / 100;
       }
+
+      if (column.numberFormat) {
+        return Locale.parseNumber(this.input.val(), column.numberFormat);
+      }
       return this.input.val();
     };
 
