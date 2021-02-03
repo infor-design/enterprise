@@ -25,6 +25,7 @@
 - `[Module Tabs]` Fixed a bug related to automatic linking of Application Menu trigger tabs in Angular environments ([#4736](https://github.com/infor-design/enterprise/issues/4736))
 - `[ProcessIndicator]` Fixed a layout issue on the index page and added a rejected icon. ([#4770](https://github.com/infor-design/enterprise/issues/4770))
 - `[Rating]` Fixed an issue where the rating was not clear on toggle. ([#4571](https://github.com/infor-design/enterprise/issues/4571))
+- `[Splitter]` Fixed the splitter was dragging to wrong direction in RTL. ([#1813](https://github.com/infor-design/enterprise/issues/1813))
 - `[Swaplist]` Fixed an issue where the user attributes need to be override existing attributes. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 - `[Tabs]` Fixed a bug where the info icon were not aligned correctly in the tab, and info message were not visible. ([#4711](https://github.com/infor-design/enterprise/issues/4711))
 - `[Tabs]` Fixed a bug where the tab key would move through tabs rather than moving to the tab content. ([#4745](https://github.com/infor-design/enterprise/issues/4745))
