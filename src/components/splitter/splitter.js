@@ -68,7 +68,7 @@ Splitter.prototype = {
     const parent = splitter.parent();
     const direction = s.axis === 'x' ? 'left' : 'top';
     const thisSide = parent.is('.content') ? parent.parent() : parent;
-    const dragHandle = $(`<div class="splitter-drag-handle">${$.createIcon('drag')}</div>`);
+    let dragHandle = splitter.find('.splitter-drag-handle');
     let defaultOffset = 299;
     let w = parent.width();
     let parentHeight;
@@ -83,8 +83,10 @@ Splitter.prototype = {
     this.isSplitterRightSide = splitter.is('.splitter-right') || (s.axis === 'x' && s.side === 'right');
     this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
     s.uniqueId = utils.uniqueId(this.element, 'splitter');
-    dragHandle.appendTo(splitter);
-    dragHandle.prepend(`<span class="audible">${Locale.translate('SplitterDragHandle')}</span>`);
+    if (!dragHandle.length) {
+      dragHandle = $(`<div class="splitter-drag-handle"><span class="audible">${Locale.translate('SplitterDragHandle')}</span>${$.createIcon('drag')}</div>`);
+      dragHandle.appendTo(splitter);
+    }
 
     const handleCollapseButton = () => {
       let savedOffset = 0;
@@ -447,6 +449,9 @@ Splitter.prototype = {
    */
   unbind() {
     this.element.off(`updated.${COMPONENT_NAME}`);
+    if (this.splitterCollapseButton) {
+      this.splitterCollapseButton.remove();
+    }
     return this;
   },
 
@@ -458,13 +463,10 @@ Splitter.prototype = {
   updated(settings) {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, SPLITTER_DEFAULTS);
-
-      return this
-        .destroy()
-        .init();
     }
-
-    return this;
+    return this
+      .unbind()
+      .init();
   },
 
   /**
@@ -473,9 +475,6 @@ Splitter.prototype = {
   */
   destroy() {
     this.unbind();
-    if (this.splitterCollapseButton) {
-      this.splitterCollapseButton.remove();
-    }
     $.removeData(this.element[0], COMPONENT_NAME);
     return this;
   },
