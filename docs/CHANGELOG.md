@@ -44,7 +44,7 @@
 - `[Track Dirty]` Fixed an error that was showing when using dirty indicator within a tab component. ([#936](https://github.com/infor-design/enterprise-ng/issues/936))
 - `[Tree]` Fixed an issue where the character entity was stripped for addNode() method. ([#4694](https://github.com/infor-design/enterprise/issues/4694))
 
-(42 Issues Solved This Release, Backlog Enterprise 137, Backlog Ng 35, 1082 Functional Tests, 1639 e2e Tests)
+(49 Issues Solved This Release, Backlog Enterprise 137, Backlog Ng 35, 1082 Functional Tests, 1639 e2e Tests)
 
 ## v4.36.2
 
