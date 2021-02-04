@@ -15,6 +15,10 @@
   color: $label-color;
   font-size: $label-size-regular-font-size;
   margin: $label-size-regular-margin;
+
+  .bar {
+    cursor: initial;
+  }
 }
 
 .field-short .completion-chart,
