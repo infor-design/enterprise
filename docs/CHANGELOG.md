@@ -1,11 +1,5 @@
 # What's New with Enterprise
 
-## v4.38.0
-
-### v4.38.0 Fixes
-
-- `[Example]` Placeholder remove me. ([#9999](https://github.com/infor-design/enterprise/issues/999))
-
 ## v4.37.0
 
 ### v4.37.0 Features
