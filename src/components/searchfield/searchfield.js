@@ -2094,12 +2094,11 @@ SearchField.prototype = {
     // Ignoring the close button from tabbing
     if (!this.settings.tabbable) {
       this.xButton[0].setAttribute('tabindex', '-1');
-      utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);
-    } else {
-      utils.addAttributes(this.xButton.parent('button'), this, this.settings.attributes, 'btn-close', true);
     }
 
     // Add test automation ids
+    utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);
+    utils.addAttributes(this.element.xButton, this, this.settings.attributes, 'btn-close', true);
   },
 
   /**
