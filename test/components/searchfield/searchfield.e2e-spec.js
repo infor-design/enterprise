@@ -11,7 +11,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const searchfieldId = 'searchfield';
 const searchfieldGoButtonId = 'searchfield-go-button--1';
 
-fdescribe('Searchfield example-index tests', () => {
+describe('Searchfield example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/searchfield/example-index');
     await browser.driver

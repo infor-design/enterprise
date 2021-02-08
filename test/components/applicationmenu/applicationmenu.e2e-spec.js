@@ -45,7 +45,7 @@ describe('Application Menu index tests', () => {
   }
 });
 
-fdescribe('Application Menu filter tests', () => {
+describe('Application Menu filter tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/example-filterable');
   });
