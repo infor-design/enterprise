@@ -631,6 +631,30 @@ div.multiselect {
       margin-left: 14px;
     }
   }
+
+  &.text-align-reverse {
+    li {
+      padding: 0 10px;
+    }
+
+    &.dropdown-list {
+      > .trigger {
+        width: auto;
+      }
+    }
+
+    input.dropdown-search {
+      &.text-align-reverse {
+        padding-right: 16px !important;
+      }
+    }
+
+    &.search-mode {
+      input.dropdown-search {
+        padding-right: 19px !important;
+      }
+    }
+  }
 }
 
 .dropdown-search {

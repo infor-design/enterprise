@@ -4,7 +4,7 @@
 
 ### v4.38.0 Fixes
 
-- `[Example]` Placeholder remove me. ([#9999](https://github.com/infor-design/enterprise/issues/999))
+- `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
 
 ## v4.37.0
 
