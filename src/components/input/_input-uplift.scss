@@ -53,3 +53,15 @@ span.required::after {
     }
   }
 }
+
+button.close {
+  top: 7px;
+  width: 14px;
+
+  .icon {
+    height: 14px;
+    right: initial;
+    top: -2px;
+    width: 14px;
+  }
+}
