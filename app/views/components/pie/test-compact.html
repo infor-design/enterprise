@@ -1,0 +1,71 @@
+<div style="width: 300px; height: 300px">
+  <div id="pie-chart-example" class="chart-container" style="width: 100%; height: 200px; overflow: visible">
+  </div>
+</div>
+
+<style>
+  .chart-legend.is-bottom {
+    border-top: 0;
+    text-align: center;
+  }
+
+  .chart-legend-item {
+    display: inline-block !important;
+    padding: 3px !important;
+    width: auto !important;
+  }
+
+  .chart-legend.is-bottom.adjusted-height .chart-legend-item-text {
+    top: -3px;
+  }
+</style>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [
+  {
+    "data": [
+      {
+        "name": "2018/01/03",
+        "value": 107376,
+        "percent": 0.9710606279843728,
+        "percentRound": 97
+      },
+      {
+        "name": "2018/01/29",
+        "value": 1352,
+        "percent": 0.012226884676602517,
+        "percentRound": 1
+      },
+      {
+        "name": "2019/07/02",
+        "value": 700,
+        "percent": 0.006330487628418463,
+        "percentRound": 1
+      },
+      {
+        "name": "2018/05/25",
+        "value": 648,
+        "percent": 0.00586022283316452,
+        "percentRound": 1
+      },
+      {
+        "name": "2019/12/23",
+        "value": 500,
+        "percent": 0.00452177687744176,
+        "percentRound": 0
+      }
+    ]
+  }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    showLines: false,
+    showLegend: true,
+    legendPlacement: 'bottom'
+  });
+
+});
+</script>
