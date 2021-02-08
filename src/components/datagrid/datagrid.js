@@ -6322,7 +6322,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (canSelect && self.settings.selectable === 'multiple' && e.shiftKey) {
+      if (canSelect && (self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
@@ -8894,7 +8894,7 @@ Datagrid.prototype = {
           return;
         }
 
-        if (self.settings.selectable === 'multiple' && e.shiftKey) {
+        if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);

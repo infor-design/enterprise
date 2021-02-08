@@ -4,7 +4,7 @@
 
 ### v4.38.0 Fixes
 
-- `[Example]` Placeholder remove me. ([#9999](https://github.com/infor-design/enterprise/issues/999))
+- `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 
 ## v4.37.0
 
