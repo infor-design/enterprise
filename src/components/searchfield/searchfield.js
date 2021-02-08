@@ -2111,6 +2111,9 @@ SearchField.prototype = {
     if (this.xButton) {
       this.xButton.click();
     }
+    if (this.element.xButton) {
+      this.element.xButton.click();
+    }
   },
 
   /**
