@@ -7,6 +7,11 @@
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
+- `[Locale/Multiselect]` Fixed a bug where translations could not be made correctly on All <label> and Selected <Label>, so we dropped having the label in the field. You can use the allTextString and selectedTextString if you want something special. ([#4505](https://github.com/infor-design/enterprise/issues/4505))
+- `[Locale]` Fixed a bug in Estonian translations. ([#4805](https://github.com/infor-design/enterprise/issues/4805))
+- `[Locale]` Fixed several bugs in Greek translations. ([#4791](https://github.com/infor-design/enterprise/issues/4791))
+- `[Locale]` Fixed a bug in Turkish translations. ([#4788](https://github.com/infor-design/enterprise/issues/4788))
+- `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 
 ## v4.37.0
