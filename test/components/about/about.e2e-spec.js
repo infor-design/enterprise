@@ -54,7 +54,7 @@ describe('About index tests', () => {
   });
 });
 
-describe('About translation tests', () => {
+fdescribe('About translation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/about/example-index?locale=uk-UA');
   });
