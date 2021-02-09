@@ -90,7 +90,7 @@ describe('Searchfield example-index tests', () => {
     expect(await element(by.id('searchfield')).getAttribute('id')).toEqual('searchfield');
     expect(await element(by.id('searchfield')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id');
 
-    expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-btn-close');
+    expect(await element(by.css('.searchfield-wrapper button.close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-btn-close');
   });
 });
 

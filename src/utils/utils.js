@@ -423,9 +423,10 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 
 /**
  * Clearable (Shows an X to clear)
- * @private
+ * @param  {object} options clearable
+ * @param  {boolean} options.tabbale If true the x will be tabbable
  */
-$.fn.clearable = function () {
+$.fn.clearable = function (options) {
   const self = this;
   this.element = $(this);
 
@@ -435,6 +436,11 @@ $.fn.clearable = function () {
   this.xButton = this.element.find('.icon.close').first();
   if (!this.xButton || !this.xButton.length) {
     this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+  }
+
+  if (options?.tabbable) {
+    this.xButton = $('<button type="button" class="btn-icon hide-focus close"></button>')
+      .append($.createIconElement({ classes: 'close', icon: 'close' }).icon());
   }
 
   // Clears the contents of the base element
@@ -467,7 +473,7 @@ $.fn.clearable = function () {
 
   // Add the button to field parent
   this.xButton.insertAfter(self.element);
-  this.xButton[0].tabIndex = 0;
+  this.xButton[0].tabIndex = options?.tabbable ? 0 : -1;
   this.xButton[0].setAttribute('focusable', true);
 
   // Handle Events
@@ -478,6 +484,10 @@ $.fn.clearable = function () {
     ].join(' '))
     .on('click.clearable', this.clear)
     .on('keydown.clearable', this.handleKeydown);
+
+  if (options?.tabbable) {
+    this.xButton.hideFocus();
+  }
 
   const elemEvents = [
     `blur.${COMPONENT_NAME}`,

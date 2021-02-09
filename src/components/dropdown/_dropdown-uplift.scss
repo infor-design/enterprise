@@ -99,20 +99,6 @@ div.multiselect {
       top: auto;
     }
   }
-
-  &.text-align-reverse {
-    input.dropdown-search {
-      &.text-align-reverse {
-        padding-right: 19px !important;
-      }
-    }
-
-    &.search-mode {
-      input.dropdown-search {
-        padding-right: 20px !important;
-      }
-    }
-  }
 }
 
 // Adjust Short Field Dropdowns
