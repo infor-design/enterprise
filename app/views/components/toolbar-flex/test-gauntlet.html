@@ -329,6 +329,7 @@
       };
       if (chkSearchfieldCollapsible.prop('checked') === true) {
         newSettings.collapsible = true;
+        newSettings.tabbable = false;
       }
       searchfieldAPI.componentAPI.updated(newSettings);
     }

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="one-half column">
+
+    <div class="field">
+      <label for="searchfield">Search</label>
+      <input id="searchfield" data-init="false" class="searchfield" placeholder="Type a search term"/>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('#searchfield').searchfield({
+    clearable: true,
+    tabbable: false,
+    source: '{{basepath}}api/states?term=',
+    attributes: [
+      {
+        name: 'id',
+        value: 'searchfield'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'searchfield-automation-id'
+      }
+    ]
+  }).on('selected', function (e, a) {
+    console.log('Selected event was fired');
+    if (a.hasClass('more-results')) {
+      console.log('More results was clicked');
+    }
+  });
+</script>

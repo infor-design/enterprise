@@ -5544,7 +5544,7 @@ Datagrid.prototype = {
         }
 
         self.isColumnsChanged = false;
-        modal.element.find('.searchfield').searchfield({ clearable: true });
+        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
         modal.element.find('.listview')
           .listview({
             source: this.settings.columns,
