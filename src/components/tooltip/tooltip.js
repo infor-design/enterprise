@@ -629,7 +629,7 @@ Tooltip.prototype = {
       title.appendChild(closeBtnX[0]);
 
       if (Array.isArray(this.settings.attributes)) {
-        utils.addAttributes(closeBtnX, this, this.settings.attributes, 'close-btn');
+        utils.addAttributes(closeBtnX, this, this.settings.attributes, 'btn-close', true);
       }
     }
 
@@ -736,6 +736,9 @@ Tooltip.prototype = {
     if (!self.settings.popover) {
       const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
       self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
+    } else {
+      utils.addAttributes(self.tooltip.find('.tooltip-title'), this, this.settings.attributes, 'title', true);
+      utils.addAttributes(self.tooltip.find('.btn-close'), this, this.settings.attributes, 'btn-close', true);
     }
 
     setTimeout(() => {
