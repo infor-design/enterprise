@@ -43,20 +43,6 @@ describe('Tooltip API', () => {
     expect(tooltipAPI).toEqual(jasmine.any(Object));
   });
 
-  it('can display by having its trigger element clicked', () => {
-    tooltipAPI = new Tooltip(tooltipBtnEl, {
-      trigger: 'click',
-      content: 'This IS the Tooltip!'
-    });
-    tooltipBtnEl.click();
-    const tooltipEl = tooltipAPI.tooltip[0];
-
-    expect(tooltipAPI.visible).toBeTruthy();
-    expect(tooltipEl).toBeDefined();
-    expect(tooltipEl.classList.contains('is-hidden')).toBeFalsy();
-    expect(tooltipEl.innerText.trim()).toEqual('This IS the Tooltip!');
-  });
-
   it('will not display if the trigger element is hidden', () => {
     tooltipBtnEl.classList.add('hidden');
     tooltipAPI = new Tooltip(tooltipBtnEl, {
