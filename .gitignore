@@ -48,7 +48,7 @@ xunit.xml
 ######################
 .DS_Store
 .vscode
-.code-workspace
+ep.code-workspace
 
 # Deprecated (or replaced by dynamic building #
 ##############
