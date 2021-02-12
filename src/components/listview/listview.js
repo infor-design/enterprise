@@ -13,7 +13,7 @@ import { Locale } from '../locale/locale';
 import '../../utils/animations';
 import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
-import '../searchfield/searchfield';
+import '../searchfield/searchfield.jquery';
 import '../emptymessage/emptymessage.jquery';
 
 const COMPONENT_NAME = 'listview';
