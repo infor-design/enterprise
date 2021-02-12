@@ -779,9 +779,9 @@ Dropdown.prototype = {
       labelText: self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()
     };
     headerText.all = (typeof s.allTextString === 'string' && s.allTextString !== '') ?
-      self.settings.allTextString : `${headerText.all} ${headerText.labelText}`;
+      self.settings.allTextString : `${headerText.all}`;
     headerText.selected = (typeof s.selectedTextString === 'string' && s.selectedTextString !== '') ?
-      self.settings.selectedTextString : `${headerText.selected} ${headerText.labelText}`;
+      self.settings.selectedTextString : `${headerText.selected}`;
 
     if (this.element[0].classList.contains('text-align-reverse')) {
       reverseText = ' text-align-reverse';

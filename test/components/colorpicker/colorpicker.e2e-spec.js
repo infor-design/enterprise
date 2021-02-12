@@ -287,7 +287,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
