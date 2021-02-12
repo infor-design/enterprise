@@ -13,7 +13,7 @@ import { Locale } from '../locale/locale';
 import '../../utils/animations';
 import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
-import '../searchfield/searchfield.jquery';
+import '../searchfield/searchfield';
 import '../emptymessage/emptymessage.jquery';
 
 const COMPONENT_NAME = 'listview';
@@ -23,7 +23,7 @@ const COMPONENT_NAME = 'listview';
  * @class ListView
  * @constructor
  *
- * @param {jquery[]|htmlelement} element the base element
+ * @param {jquery[]|HTMLelement} element the base element
  * @param {object} [settings] incoming settings
  * @param {array} [settings.dataset] Array of data to feed the template
  * @param {string} [settings.template] Html Template String
@@ -1287,7 +1287,7 @@ ListView.prototype = {
   },
 
   /**
-   * Detatch all bound events.
+   * Detach all bound events.
    * @private
    * @returns {object} component instance
    */
@@ -1318,7 +1318,7 @@ ListView.prototype = {
   },
 
   /**
-   * Detatch all events and tear down data object
+   * Detach all events and tear down data object
    * @returns {void}
    */
   destroy() {
@@ -1443,6 +1443,10 @@ ListView.prototype = {
           // ignore clicking favorites element or a hyperlink
           if (target.hasClass('icon-favorite') || target.hasClass('hyperlink')) {
             return;
+          }
+
+          if (!item.hasClass('is-selected') && isFocused) {
+            isFocused = false;
           }
 
           if (!isFocused && !item.hasClass('is-disabled') && (!isMixed || isCheckbox)) {
