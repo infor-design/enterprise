@@ -83,6 +83,10 @@ function SearchField(element, settings) {
   }
 
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
+
+  if (this.settings.collapsible) {
+    this.settings.tabbable = false;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

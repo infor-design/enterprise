@@ -7,6 +7,13 @@
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
+- `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
+- `[Popover]` Fixed a bug where the close button did not get an automation ID and added automation ID to the title. ([#4743](https://github.com/infor-design/enterprise/issues/4743))
+- `[Locale/Multiselect]` Fixed a bug where translations could not be made correctly on All label and Selected Label, so we dropped having the label in the field. You can use the allTextString and selectedTextString if you want something special. ([#4505](https://github.com/infor-design/enterprise/issues/4505))
+- `[Locale]` Fixed a bug in Estonian translations. ([#4805](https://github.com/infor-design/enterprise/issues/4805))
+- `[Locale]` Fixed several bugs in Greek translations. ([#4791](https://github.com/infor-design/enterprise/issues/4791))
+- `[Locale]` Fixed a bug in Turkish translations. ([#4788](https://github.com/infor-design/enterprise/issues/4788))
+- `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 
 ## v4.37.0
@@ -205,7 +212,7 @@
 
 ### v4.34.0 Features
 
-- `[All Components]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[All Components]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Datagrid]` Added a limited experimental sticky header feature. ([#3993](https://github.com/infor-design/enterprise/issues/3993))
 - `[Input]` Add a `revealText` plugin that will add a button to password fields to hide and show sensitive information such as SIN or passwords. ([#4098](https://github.com/infor-design/enterprise/issues/4098))
 - `[Listview]` Added a new setting `allowDeselect` which will make it such that if you select an item you cant deselect, you can only select another item. ([#4376](https://github.com/infor-design/enterprise/issues/4376))
