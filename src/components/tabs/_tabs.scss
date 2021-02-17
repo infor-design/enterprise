@@ -79,6 +79,7 @@
 // (padding/color rules are different for all tabs so they aren't in the generic class)
 .tab {
   @include css3(user-select, none);
+
   cursor: pointer;
   display: inline-block;
   position: relative;
