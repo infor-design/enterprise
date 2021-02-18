@@ -4,6 +4,7 @@
 
 ### v4.38.0 Fixes
 
+- `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
@@ -16,6 +17,7 @@
 - `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 - `[Tabs]` Fixed an iOS bug that was preventing dismissible tabs to be dismissed by tap. ([#4763](https://github.com/infor-design/enterprise/issues/4763))
+- `[TabsModule]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
 
 ## v4.37.0
 
