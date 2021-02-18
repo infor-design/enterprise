@@ -273,6 +273,7 @@ const Environment = {
     if (Environment.browser.isIPad()) {
       const osVersionStr = nUAgent.substr(nUAgent.indexOf('Version'), nUAgent.substr(nUAgent.indexOf('Version')).indexOf(' '));
       osVersion = osVersionStr.replace('Version/', '');
+      os = 'IOS';
     }
 
     this.devicespecs = {
