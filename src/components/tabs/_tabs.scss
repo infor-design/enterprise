@@ -93,7 +93,6 @@
     color: inherit;
     cursor: inherit;
     display: inline-block;
-    pointer-events: none;
     text-decoration: none;
 
     * {
@@ -103,10 +102,6 @@
     span {
       color: inherit;
     }
-  }
-
-  > .icon {
-    pointer-events: initial;
   }
 
   &.is-disabled {
@@ -713,6 +708,20 @@
           position: absolute;
         }
       }
+    }
+  }
+}
+
+// On Safari (specifically targeting iPad/iPhone) make the anchors pass through
+// to enable easier tapping of dismissible icons (See infor-design/enterprise#4763)
+.is-safari {
+  .tab {
+    > a {
+      pointer-events: none;
+    }
+
+    > .icon {
+      pointer-events: initial;
     }
   }
 }
