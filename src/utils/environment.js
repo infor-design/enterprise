@@ -57,8 +57,8 @@ const Environment = {
     let cssClasses = ''; // User-agent string
 
     if (ua.indexOf('Safari') !== -1 &&
-        ua.indexOf('Chrome') === -1 &&
-        ua.indexOf('Android') === -1) {
+      ua.indexOf('Chrome') === -1 &&
+      ua.indexOf('Android') === -1) {
       cssClasses += 'is-safari ';
       this.browser.name = 'safari';
     }
@@ -67,7 +67,7 @@ const Environment = {
       return false;
     };
 
-    if (navigator.platform.substr(0, 2) === 'iP') {
+    if (navigator.platform.substr(0, 2) === 'iP' || Environment.browser.isIPad()) {
       const lte9 = /constructor/i.test(window.HTMLElement);
       const idb = !!window.indexedDB;
 
@@ -128,7 +128,7 @@ const Environment = {
 
     // Class-based detection for iOS
     // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
-    if ((/iPhone|iPod|iPad/).test(ua)) {
+    if ((/iPhone|iPod|iPad/).test(ua) || Environment.browser.isIPad()) {
       cssClasses += 'ios ';
       this.os.name = 'ios';
 
@@ -270,11 +270,17 @@ const Environment = {
         break;
     }
 
+    if (Environment.browser.isIPad()) {
+      const osVersionStr = nUAgent.substr(nUAgent.indexOf('Version'), nUAgent.substr(nUAgent.indexOf('Version')).indexOf(' '));
+      osVersion = osVersionStr.replace('Version/', '');
+      os = 'IOS';
+    }
+
     this.devicespecs = {
       currentBrowser: browser,
       browserVersion: version.trim(),
       browserMajorVersion: majorVersion,
-      isMobile: mobile,
+      isMobile: mobile || Environment.browser.isIPad(),
       os,
       currentOSVersion: osVersion,
       browserVersionName
@@ -335,6 +341,11 @@ Environment.browser.isSafari = function () {
  */
 Environment.browser.isIE10 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '10';
+};
+
+Environment.browser.isIPad = function () {
+  return !!(navigator.userAgent.match(/(iPad)/) ||
+    (navigator.platform === 'MacIntel' && typeof navigator.standalone !== 'undefined'));
 };
 
 /**
