@@ -192,8 +192,8 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
     });
 
-    it('Should not visually regress on clasic rows setting', async () => {
-      await utils.setPage('/components/editor/test-rows?theme=clasic&mode=contrast&layout=nofrills');
+    it('Should not visually regress on classic rows setting', async () => {
+      await utils.setPage('/components/editor/test-rows?theme=classic&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
