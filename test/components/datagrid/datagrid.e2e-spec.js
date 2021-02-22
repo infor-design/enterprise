@@ -557,7 +557,7 @@ describe('Datagrid filter tests', () => {
 
 describe('Datagrid filter RTL tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&theme=classic');
+    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
@@ -4151,7 +4151,7 @@ describe('Datagrid Tree and Frozen Column tests', () => {
 
 describe('Datagrid tree with grouped header tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-tree-grouped-headers?theme=classic&slayout=nofrills');
+    await utils.setPage('/components/datagrid/test-tree-grouped-headers?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
