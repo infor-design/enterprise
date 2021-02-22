@@ -2,7 +2,7 @@ import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
 
 const blockgridHTML = require('../../../app/views/components/blockgrid/example-singleselect.html');
 const blockgridMixedSelectionHTML = require('../../../app/views/components/blockgrid/example-mixed-selection.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let blockgridEl;
 let svgEl;

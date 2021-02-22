@@ -2,7 +2,7 @@ import { triggerContextmenu } from '../../helpers/func-utils';
 import { Pie } from '../../../src/components/pie/pie';
 
 const pieHTML = require('../../../app/views/components/pie/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let pieEl;
 let svgEl;

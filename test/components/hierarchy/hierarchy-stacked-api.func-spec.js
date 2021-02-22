@@ -2,7 +2,7 @@ import { cleanup } from '../../helpers/func-utils';
 import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-stacked.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const data = require('../../../app/data/hc-john-randolph.json');
 
 const legendData = [

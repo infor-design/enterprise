@@ -1,7 +1,7 @@
 import { FieldFilter } from '../../../src/components/field-filter/field-filter';
 
 const fieldfilterHTML = require('../../../app/views/components/field-filter/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const fieldfilterData = [
   { value: 'equals', text: 'Equals', icon: 'filter-equals' },

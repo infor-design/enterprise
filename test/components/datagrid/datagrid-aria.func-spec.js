@@ -3,7 +3,7 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data');
 
 let data = [];

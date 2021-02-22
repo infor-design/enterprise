@@ -1,7 +1,7 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const TIMEPICKER_MODES = ['standard', 'range'];
 

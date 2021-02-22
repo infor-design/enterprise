@@ -2,7 +2,7 @@ import { Editor } from '../../../src/components/editor/editor';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/editor/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let editorEl;
 let editorObj;

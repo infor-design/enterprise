@@ -2,7 +2,7 @@ import { DatePicker } from '../../../src/components/datepicker/datepicker';
 import { Locale } from '../../../src/components/locale/locale';
 
 const datepickerHTML = require('../../../app/views/components/datepicker/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let datepickerEl;
 let svgEl;

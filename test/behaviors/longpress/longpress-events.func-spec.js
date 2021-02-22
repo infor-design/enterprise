@@ -1,7 +1,7 @@
 import { longPress } from '../../../src/behaviors/longpress/longpress';
 
 const longpressHTML = require('../../../app/views/behaviors/longpress/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let svgEl;
 

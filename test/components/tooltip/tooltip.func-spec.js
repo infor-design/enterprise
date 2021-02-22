@@ -1,7 +1,7 @@
 import { Tooltip } from '../../../src/components/tooltip/tooltip';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const triggerHTML = `<div id="test-wrapper" class="field">
   <button class="btn-secondary" id="tooltip-trigger">

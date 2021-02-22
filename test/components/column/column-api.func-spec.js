@@ -2,7 +2,7 @@ import { triggerContextmenu } from '../../helpers/func-utils';
 import { Column } from '../../../src/components/column/column';
 
 const areaHTML = require('../../../app/views/components/column/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let columnEl;
 let svgEl;

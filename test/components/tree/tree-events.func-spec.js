@@ -1,7 +1,7 @@
 import { Tree } from '../../../src/components/tree/tree';
 
 const treeHTML = require('../../../app/views/components/tree/test-select-event.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const sampleData = [{
   id: 'node1',

@@ -3,7 +3,7 @@ import { Button, BUTTON_DEFAULTS } from '../../../src/components/button/button';
 import { cleanup } from '../../helpers/func-utils';
 
 const buttonHTML = require('../../../app/views/components/button/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let buttonEl;
 let buttonAPI;

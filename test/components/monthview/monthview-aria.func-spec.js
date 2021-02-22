@@ -2,7 +2,7 @@ import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
 
 const monthviewHTML = require('../../../app/views/components/monthview/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let monthviewEl;
 let svgEl;
