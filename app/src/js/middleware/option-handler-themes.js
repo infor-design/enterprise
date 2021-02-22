@@ -39,7 +39,6 @@ module.exports = function (app) {
           ...req.query,
           ...{
             theme: 'new',
-            variant: req.query.theme,
             mode: req.query.mode
           }
         };
@@ -47,6 +46,7 @@ module.exports = function (app) {
         // Translate legacy "high-contrast" into "contrast"
         if (q.variant && q.variant.toString().indexOf('high-') !== -1) {
           q.mode = q.variant.toString().replace('high-', '');
+          delete q.variant;
         }
         if (q.mode && q.mode.toString().indexOf('high-') !== -1) {
           q.mode = q.mode.toString().replace('high-', '');
@@ -67,6 +67,7 @@ module.exports = function (app) {
     // Set the theme variant (light, dark...)
     if (req.query.variant && req.query.variant.length > 0) {
       res.opts.theme.mode = req.query.variant.toString().toLowerCase();
+      delete req.query.variant;
     }
     if (req.query.mode && req.query.mode.length > 0) {
       res.opts.theme.mode = req.query.mode.toString().toLowerCase();

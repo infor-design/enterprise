@@ -139,6 +139,9 @@
           if (hasTheme && param.indexOf('mode=') > -1) {
             return false;
           }
+          if (hasTheme && param.indexOf('variant=') > -1) {
+            return false;
+          }
           if (hasColor && param.indexOf('colors=') > -1) {
             return false;
           }
