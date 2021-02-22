@@ -22,7 +22,6 @@ module.exports = function (app) {
     const iconsEmptyPath = path.resolve(__dirname, '..', '..', '..', '..', 'src', 'components', 'emptymessage');
     res.opts.theme = {
       name: 'new',
-      variant: 'light',
       mode: 'light',
       icons: '',
     };
