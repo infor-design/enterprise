@@ -249,7 +249,7 @@ We kept the old instructions in needed to make the travis VM for now. See the Us
 
 1. Push the branch you're working on to GitHub (we'll need it later).
 1. In your terminal, run `docker run --name travis-vm -dit travisci/ubuntu-systemd:16.04` to download the Travis CI docker image to mimic the environment. And wait....
-1. Open the image and go in: `docker exec -it travis-vm bash -l`
+1. Open the image and go in: `docker exec -it travis-debug bash -l`
 1. Get the latest updates using `apt-get update`.
 1. Set the timezone for some tests
 
