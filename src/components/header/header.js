@@ -552,14 +552,14 @@ Header.prototype = {
         link = $(link.element);
       }
 
-      // Change Theme with Variant
+      // Change Theme with Mode
       const themeNameAttr = link.attr('data-theme-name');
-      const themeVariantAttr = link.attr('data-theme-variant');
-      if (themeNameAttr || themeVariantAttr) {
+      const themeModeAttr = link.attr('data-theme-mode');
+      if (themeNameAttr || themeModeAttr) {
         const name = menu.find('.is-checked a[data-theme-name]').attr('data-theme-name');
-        const variant = menu.find('.is-checked a[data-theme-variant]').attr('data-theme-variant');
-        if (name && variant) {
-          personalization.setTheme(`${name}-${variant}`);
+        const mode = menu.find('.is-checked a[data-theme-mode]').attr('data-theme-mode');
+        if (name && mode) {
+          personalization.setTheme(`${name}-${mode}`);
         }
         return;
       }
@@ -583,12 +583,12 @@ Header.prototype = {
 
     // Mark theme as checked
     const currentTheme = theme.currentTheme;
-    if (currentTheme.id !== 'theme-soho-light') {
+    if (currentTheme.id !== 'theme-new-light' || currentTheme.id !== 'theme-uplift-light') {
       const themeParts = currentTheme.id.split('-');
       $('body').find('.popupmenu [data-theme-name]').parent().removeClass('is-checked');
       $('body').find(`.popupmenu [data-theme-name="${themeParts[0]}-${themeParts[1]}"]`).parent().addClass('is-checked');
-      $('body').find('.popupmenu [data-theme-variant]').parent().removeClass('is-checked');
-      $('body').find(`.popupmenu [data-theme-variant="${themeParts[2]}"]`).parent().addClass('is-checked');
+      $('body').find('.popupmenu [data-theme-mode]').parent().removeClass('is-checked');
+      $('body').find(`.popupmenu [data-theme-mode="${themeParts[2]}"]`).parent().addClass('is-checked');
     }
 
     if (personalization.settings.colors) {

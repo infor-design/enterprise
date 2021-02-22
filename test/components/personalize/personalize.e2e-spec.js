@@ -59,7 +59,7 @@ describe('Personalization tests', () => {
 
 describe('Personalization classes tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-classes.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-classes.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -80,7 +80,7 @@ describe('Personalization classes tests', () => {
 
 describe('Personalization classes short tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/test-classes-short.html?layout=nofrills');
+    await utils.setPage('/components/personalize/test-classes-short.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -101,7 +101,7 @@ describe('Personalization classes short tests', () => {
 
 describe('Personalization example-tabs tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-tabs.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-tabs.html?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleepShort);
   });
 
@@ -123,7 +123,7 @@ describe('Personalization example-tabs tests', () => {
 
 describe('Personalization form tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-form.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-form.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -145,7 +145,7 @@ describe('Personalization form tests', () => {
 
 describe('Personalization form short tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/test-form-short.html?layout=nofrills');
+    await utils.setPage('/components/personalize/test-form-short.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -166,7 +166,7 @@ describe('Personalization form short tests', () => {
 
 describe('Personalization form2 tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-form2.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -187,7 +187,7 @@ describe('Personalization form2 tests', () => {
 
 describe('Personalization form 2 tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/example-form2.html?layout=nofrills');
+    await utils.setPage('/components/personalize/example-form2.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -208,7 +208,7 @@ describe('Personalization form 2 tests', () => {
 
 describe('Personalization form 2 short tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/personalize/test-form2-short.html?layout=nofrills');
+    await utils.setPage('/components/personalize/test-form2-short.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

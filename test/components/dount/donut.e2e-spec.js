@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Donut Chart tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-index?layout=nofrills');
+    await utils.setPage('/components/donut/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -37,7 +37,7 @@ describe('Donut Chart tests', () => {
 
 describe('Donut Chart alerts tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/donut/example-alerts?layout=nofrills');
+    await utils.setPage('/components/donut/example-alerts?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

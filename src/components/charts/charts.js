@@ -120,7 +120,7 @@ charts.removeTooltip = function removeTooltip() {
  */
 charts.colorRange = () => {
   const palette = theme.themeColors().palette;
-  if (theme.uplift) {
+  if (theme.new) {
     return [
       palette.azure['80'].value,
       palette.turquoise['40'].value,
@@ -170,7 +170,7 @@ charts.colorRange = () => {
 };
 
 charts.colorNameRange = () => {
-  if (theme.uplift) {
+  if (theme.new) {
     return ['azure08', 'turquoise04', 'amethyst06', 'graphite04', 'amber04', 'emerald07', 'ruby06',
       'azure03', 'amber07', 'graphite06', 'turquoise06', 'emerald09', 'amethyst03',
       'azure05', 'ruby03', 'amethyst08', 'emerald03', 'turquoise08', 'graphite02', 'amber09'];
@@ -988,10 +988,15 @@ charts.triggerContextMenu = function (container, elem, d) {
  * @returns {number} The calculated text width in pixels.
  */
 charts.calculateTextRenderWidth = function (textStr, fonts) {
-  const defaultFonts = { soho: '700 12px arial', uplift: '600 14px arial' };
+  const defaultFonts = {
+    soho: '700 12px arial',
+    uplift: '600 14px arial',
+    classic: '700 12px arial',
+    new: '600 14px arial'
+  };
   fonts = utils.mergeSettings(undefined, fonts, defaultFonts);
-  let themeId = (theme?.currentTheme?.id || '').match(/soho|uplift/);
-  themeId = themeId ? themeId[0] : 'soho';
+  let themeId = (theme?.currentTheme?.id || '').match(/soho|uplift|new|classic/);
+  themeId = themeId ? themeId[0] : 'new';
   this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
   const context = this.canvas.getContext('2d');
   context.font = fonts[themeId];

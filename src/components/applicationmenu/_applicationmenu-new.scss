@@ -4,11 +4,11 @@
 @import '../accordion/accordion-mixins';
 
 .application-menu {
-  background-color: $uplift-appmenu-main-bg-color;
+  background-color: $new-appmenu-main-bg-color;
 
   .searchfield-wrapper {
-    background-color: $uplift-acc-expanded-bg-color;
-    border-radius: $uplift-acc-border-radius;
+    background-color: $new-acc-expanded-bg-color;
+    border-radius: $new-acc-border-radius;
     margin: 0 $ids-number-spacing-base;
     width: calc(100% - calc(#{$ids-number-spacing-base} * 2));
 
@@ -16,22 +16,22 @@
       height: 40px;
 
       &::placeholder {
-        color: $uplift-appmenu-searchfield-placeholder-color;
+        color: $new-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
 
       &::-webkit-input-placeholder {
-        color: $uplift-appmenu-searchfield-placeholder-color;
+        color: $new-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
 
       &::-moz-placeholder {
-        color: $uplift-appmenu-searchfield-placeholder-color;
+        color: $new-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
 
       &:-ms-input-placeholder {
-        color: $uplift-appmenu-searchfield-placeholder-color;
+        color: $new-appmenu-searchfield-placeholder-color;
         opacity: 1;
       }
     }
@@ -51,11 +51,11 @@
 
     button {
       .icon {
-        color: $uplift-acc-header-text-color;
+        color: $new-acc-header-text-color;
       }
 
       &:hover {
-        background-color: $uplift-appmenu-hover-bg-color;
+        background-color: $new-appmenu-hover-bg-color;
       }
     }
   }
@@ -107,31 +107,31 @@
   }
 
   .application-menu-switcher-panel {
-    background-color: $uplift-appmenu-footer-bg-color;
+    background-color: $new-appmenu-footer-bg-color;
 
     .accordion.panel.inverse {
-      background-color: $uplift-appmenu-footer-bg-color;
+      background-color: $new-appmenu-footer-bg-color;
 
       .accordion-header {
-        border-radius: $uplift-acc-border-radius;
+        border-radius: $new-acc-border-radius;
 
         &.is-selected {
-          background-color: $uplift-appmenu-selected-bg-color;
+          background-color: $new-appmenu-selected-bg-color;
         }
       }
 
       .accordion-header:hover {
-        background-color: $uplift-appmenu-hover-bg-color;
+        background-color: $new-appmenu-hover-bg-color;
       }
     }
   }
 
   .application-menu-header {
-    background-color: $uplift-appmenu-header-bg-color;
+    background-color: $new-appmenu-header-bg-color;
   }
 
   .application-menu-footer {
-    background-color: $uplift-appmenu-footer-bg-color;
+    background-color: $new-appmenu-footer-bg-color;
   }
 
   // NOTE: panelled accordion is used inside of the app menu,
@@ -145,8 +145,8 @@
       @include transition(border-color 300ms $cubic-ease, padding 300ms $cubic-ease, margin 300ms $cubic-ease);
 
       border-bottom-color: transparent;
-      border-radius: $uplift-acc-border-radius;
-      color: $uplift-acc-header-text-color;
+      border-radius: $new-acc-border-radius;
+      color: $new-acc-header-text-color;
       height: auto;
 
       .btn,
@@ -155,7 +155,7 @@
         top: auto;
 
         &:focus:not(.hide-focus) {
-          border-color: $uplift-appmenu-selected-border-color;
+          border-color: $new-appmenu-selected-border-color;
           box-shadow: none;
         }
       }
@@ -167,29 +167,29 @@
         &.plus-minus {
           &::before,
           &::after {
-            background-color: $uplift-acc-header-text-color;
+            background-color: $new-acc-header-text-color;
           }
         }
       }
 
       &:hover {
-        background-color: $uplift-appmenu-hover-bg-color;
-        color: $uplift-acc-header-selected-text-color;
+        background-color: $new-appmenu-hover-bg-color;
+        color: $new-acc-header-selected-text-color;
       }
 
       &.is-focused:not(.hide-focus) {
-        border-color: $uplift-appmenu-selected-border-color;
+        border-color: $new-appmenu-selected-border-color;
         box-shadow: none;
       }
 
       &.is-selected {
-        background-color: $uplift-appmenu-selected-bg-color;
-        color: $uplift-acc-header-selected-text-color;
+        background-color: $new-appmenu-selected-bg-color;
+        color: $new-acc-header-selected-text-color;
 
         .icon.plus-minus {
           &::before,
           &::after {
-            background-color: $uplift-acc-header-selected-text-color;
+            background-color: $new-acc-header-selected-text-color;
           }
         }
       }
@@ -210,7 +210,7 @@
         }
 
         &.is-focused {
-          border-bottom-color: $uplift-appmenu-selected-border-color;
+          border-bottom-color: $new-appmenu-selected-border-color;
         }
 
         > a > span {
@@ -219,7 +219,7 @@
       }
 
       &.is-expanded {
-        background-color: $uplift-acc-expanded-bg-color;
+        background-color: $new-acc-expanded-bg-color;
         border-radius: 0;
         margin: 10px -10px 0;
         padding: 10px;
@@ -241,7 +241,7 @@
 
           &::before {
             border: 1px solid transparent;
-            border-radius: $uplift-acc-border-radius;
+            border-radius: $new-acc-border-radius;
             content: ' ';
             display: block;
             height: calc(100% - 22px);
@@ -253,39 +253,39 @@
         }
 
         &.is-focused {
-          background-color: $uplift-acc-expanded-bg-color;
+          background-color: $new-acc-expanded-bg-color;
           border-color: transparent;
 
           &::before {
-            border-color: $uplift-appmenu-selected-border-color;
+            border-color: $new-appmenu-selected-border-color;
           }
         }
 
         &.is-selected {
-          background-color: $uplift-acc-expanded-bg-color;
+          background-color: $new-acc-expanded-bg-color;
           border-bottom-color: transparent;
           border-top-color: transparent;
 
           &::before {
-            background-color: $uplift-appmenu-selected-bg-color;
-            border-color: $uplift-appmenu-selected-bg-color;
+            background-color: $new-appmenu-selected-bg-color;
+            border-color: $new-appmenu-selected-bg-color;
           }
         }
 
         &:hover {
-          background-color: $uplift-acc-expanded-bg-color;
+          background-color: $new-acc-expanded-bg-color;
 
           &::before {
-            background-color: $uplift-appmenu-hover-bg-color;
-            border-color: $uplift-appmenu-hover-bg-color;
+            background-color: $new-appmenu-hover-bg-color;
+            border-color: $new-appmenu-hover-bg-color;
           }
         }
 
         + .accordion-pane:not(.all-children-filtered) {
-          background-color: $uplift-acc-expanded-bg-color;
+          background-color: $new-acc-expanded-bg-color;
 
           .accordion-header {
-            border-radius: $uplift-acc-border-radius;
+            border-radius: $new-acc-border-radius;
 
             &:not(.is-selected):not(.is-focused) {
               border-color: transparent;
@@ -308,7 +308,7 @@
 
       &.filtered {
         + .accordion-pane {
-          background-color: $uplift-acc-expanded-bg-color;
+          background-color: $new-acc-expanded-bg-color;
         }
       }
     }
@@ -330,7 +330,7 @@
 
       .accordion-header {
         border-bottom-color: transparent;
-        color: $uplift-acc-subheader-text-color;
+        color: $new-acc-subheader-text-color;
 
         a {
           font-size: 14px;
@@ -356,23 +356,23 @@
         .icon.plus-minus {
           &::before,
           &::after {
-            background-color: $uplift-acc-subheader-text-color;
+            background-color: $new-acc-subheader-text-color;
           }
         }
 
         &:hover {
-          color: $uplift-acc-header-selected-text-color;
+          color: $new-acc-header-selected-text-color;
 
           .icon.plus-minus {
             &::before,
             &::after {
-              background-color: $uplift-acc-header-selected-text-color;
+              background-color: $new-acc-header-selected-text-color;
             }
           }
         }
 
         &.is-selected {
-          color: $uplift-acc-header-selected-text-color;
+          color: $new-acc-header-selected-text-color;
 
           > a > span {
             font-weight: $ids-number-font-weight-bold;
@@ -381,7 +381,7 @@
           .icon.plus-minus {
             &::before,
             &::after {
-              background-color: $uplift-acc-header-selected-text-color;
+              background-color: $new-acc-header-selected-text-color;
             }
           }
         }
@@ -450,7 +450,7 @@ html.is-firefox {
     }
   }
 
-  // Reset this from the Soho theme (not needed in Uplift)
+  // Reset this from the Classic theme (not needed in New theme)
   &.is-mac {
     .application-menu {
       .application-menu-switcher-trigger {
@@ -467,7 +467,7 @@ html.is-firefox {
 // RTL Styles
 html[dir='rtl'] {
   .application-menu {
-    background-color: $uplift-appmenu-main-bg-color;
+    background-color: $new-appmenu-main-bg-color;
 
     .application-menu-header {
       .application-menu-switcher-trigger {

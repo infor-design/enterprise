@@ -10,7 +10,8 @@ module.exports = function (app) {
   return function optionHandler(req, res, next) {
     /**
      * Set the theme, theme variant, icons, and colorScheme
-     * Example: http://localhost:4000/controls/modal?theme=soho&variant=dark
+     * Examples:
+     * http://localhost:4000/controls/modal?theme=classic&mode=dark
      * ====================================================================================
      * Note: We have a prop called "isSohoUseLegacyNaming" because we can't rename the
      * original soho css files and our templating system (hogan/mustache) doesn't do logic.
@@ -20,12 +21,13 @@ module.exports = function (app) {
     const iconsPath = path.resolve(__dirname, '..', '..', '..', '..', 'src', 'components', 'icons');
     const iconsEmptyPath = path.resolve(__dirname, '..', '..', '..', '..', 'src', 'components', 'emptymessage');
     res.opts.theme = {
-      name: 'soho',
+      name: 'new',
       variant: 'light',
+      mode: 'light',
       icons: '',
     };
 
-    // Set the theme name (soho, uplift...)
+    // Set the theme name (soho, uplift, new, classic...)
     if (req.query.theme && req.query.theme.length > 0) {
       // The legacy possible "theme" values
       const regex = /(light|dark|high-contrast)/gi;
@@ -36,14 +38,18 @@ module.exports = function (app) {
         const q = {
           ...req.query,
           ...{
-            theme: 'soho',
-            variant: req.query.theme
+            theme: 'new',
+            variant: req.query.theme,
+            mode: req.query.mode
           }
         };
 
         // Translate legacy "high-contrast" into "contrast"
-        if (q.variant.indexOf('high-') !== -1) {
-          q.variant = q.variant.replace('high-', '');
+        if (q.variant && q.variant.toString().indexOf('high-') !== -1) {
+          q.mode = q.variant.toString().replace('high-', '');
+        }
+        if (q.mode && q.mode.toString().indexOf('high-') !== -1) {
+          q.mode = q.mode.toString().replace('high-', '');
         }
 
         const theUrl = URL.format({ query: q });
@@ -53,14 +59,19 @@ module.exports = function (app) {
       }
 
       // Set the theme
-      res.opts.theme.name = req.query.theme.toLowerCase();
+      let themeName = req.query.theme.toLowerCase();
+      themeName = themeName.replace('soho', 'classic').replace('uplift', 'new');
+      res.opts.theme.name = themeName;
     }
 
     // Set the theme variant (light, dark...)
     if (req.query.variant && req.query.variant.length > 0) {
-      res.opts.theme.variant = req.query.variant.toLowerCase();
+      res.opts.theme.mode = req.query.variant.toString().toLowerCase();
     }
-    logger('info', `Setting theme to "theme-${res.opts.theme.name}-${res.opts.theme.variant}"`);
+    if (req.query.mode && req.query.mode.length > 0) {
+      res.opts.theme.mode = req.query.mode.toString().toLowerCase();
+    }
+    logger('info', `Setting theme to "theme-${res.opts.theme.name}-${res.opts.theme.mode || req.query.variant}"`);
     const svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString();
     const svgEmptyHtmlPartial = fs.readFileSync(`${iconsEmptyPath}/theme-${res.opts.theme.name}-svg-empty.html`).toString();
 

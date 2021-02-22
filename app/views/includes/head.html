@@ -54,10 +54,10 @@
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
   <link href="https://fonts.googleapis.com/css?{{fontString}}" rel="stylesheet"/>
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.variant}}.css" type="text/css"/>
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.mode}}.css" type="text/css"/>
   <script>
     var colors;
-    var longThemeName = 'theme-{{theme.name}}-{{theme.variant}}';
+    var longThemeName = 'theme-{{theme.name}}-{{theme.mode}}';
     var shortThemeName = '{{theme.name}}';
     var blockUI = '{{layout}}'.indexOf('embedded') > -1 ? false : true;
 
@@ -94,7 +94,7 @@
         hasTheme = typeof a.theme === 'string';
         themeStringParts = a.theme.split('-');
         queryParams.push('theme=' + themeStringParts[1]);
-        queryParams.push('variant=' + themeStringParts[2]);
+        queryParams.push('mode=' + themeStringParts[2]);
       }
 
       // Setup color if applicable
@@ -136,7 +136,7 @@
           if (hasTheme && param.indexOf('theme=') > -1) {
             return false;
           }
-          if (hasTheme && param.indexOf('variant=') > -1) {
+          if (hasTheme && param.indexOf('mode=') > -1) {
             return false;
           }
           if (hasColor && param.indexOf('colors=') > -1) {
@@ -149,7 +149,7 @@
 
       if (queryParams.length) {
         // Persist existing additional params.
-        // Also, overwrite existing color/theme/variant values if they've been added above.
+        // Also, overwrite existing color/theme/mode values if they've been added above.
         queryParams = queryParams.concat(existingThemeParamFilter(window.location.search));
 
         // Update URL in the browser window
@@ -173,6 +173,7 @@
 
         if (parts[1] !== shortThemeName) {
           shortThemeName = parts[1];
+          shortThemeName = shortThemeName.replace('soho', 'classic').replace('uplift', 'new');
 
           $.get('{{basepath}}api/icons?theme=' + shortThemeName, function(htmlStr) {
             htmlStr = htmlStr.replace('</div>', '');

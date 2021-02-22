@@ -10,7 +10,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Textarea example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/textarea/example-index');
+    await utils.setPage('/components/textarea/example-index?theme=classic');
   });
 
   it('Should not have errors', async () => {
@@ -227,7 +227,7 @@ describe('Textarea Modal Tests', () => {
 
 describe('Textarea Rows Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/textarea/test-rows?layout=nofrills');
+    await utils.setPage('/components/textarea/test-rows?theme=classic&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {

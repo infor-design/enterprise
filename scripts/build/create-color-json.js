@@ -58,12 +58,12 @@ function createNewCustomObj(obj) {
   Object.keys(obj).forEach(colorName => { //eslint-disable-line
     newObj[colorName] = {};
     if (obj[colorName].hasOwnProperty('name')) { //eslint-disable-line
-      // For colors w/o variants: black, white...
+      // For colors w/o modes: black, white...
       newObj[colorName].name = obj[colorName].name;
       newObj[colorName].value = obj[colorName].value;
       newObj[colorName].paletteName = obj[colorName].original.value;
     } else {
-      // Loop for color variants: 10, 20, 30...
+      // Loop for color modes: 10, 20, 30...
       Object.keys(obj[colorName]).forEach(colorNum => { //eslint-disable-line
         newObj[colorName][colorNum] = {
           name: obj[colorName][colorNum].name,
@@ -126,13 +126,14 @@ function createColorJsonFiles() {
   };
 
   IDS_THEMES.forEach((theme) => {
-    // A theme's base does not have a variant "modifier"
-    // i.e. "soho-light" is just "soho"
-    themeFiles.push(createPath(theme.name, theme.name));
-
-    theme.variants.forEach((variant) => {
-      themeFiles.push(createPath(theme.name, `${theme.name}-${variant.name}`));
-    });
+    if (theme.name.indexOf('new') > -1 || theme.name.indexOf('classic') > -1) {
+      // A theme's base does not have a modes "modifier"
+      // i.e. "classic-light" is just "classic"
+      themeFiles.push(createPath(theme.name, theme.name));
+      theme.modes.forEach((mode) => {
+        themeFiles.push(createPath(theme.name, `${theme.name}-${mode.name}`));
+      });
+    }
   });
 
   return Promise.all(themeFiles.map(createJSONfile))

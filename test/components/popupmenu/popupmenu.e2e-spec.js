@@ -66,7 +66,7 @@ describe('Contextmenu index tests', () => {
 
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable?layout=nofrills');
+    await utils.setPage('/components/popupmenu/example-selectable?ltheme=classic&ayout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -195,7 +195,7 @@ describe('Popupmenu missing submenu tests', () => {
 
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/popupmenu/example-selectable-multiple?layout=nofrills');
+    await utils.setPage('/components/popupmenu/example-selectable-multiple?theme=classic&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {

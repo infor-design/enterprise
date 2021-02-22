@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Hyperlink index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/hyperlinks/example-index?layout=nofrills');
+    await utils.setPage('/components/hyperlinks/example-index?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 

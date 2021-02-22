@@ -178,7 +178,7 @@ Radar.prototype = {
     if (s.legendPlacement === 'right') {
       dims.w *= 0.75;
     }
-    if (theme.uplift && dims.w >= 420) {
+    if ((theme.uplift || theme.new) && dims.w >= 420) {
       dims.extra -= 0.12;
     }
     // Manually adjust height to fit legend on mobile view
@@ -279,7 +279,7 @@ Radar.prototype = {
         .attr('x', 4)
         .attr('y', d => -d * radius / s.levels)
         .attr('dy', '0.4em')
-        .style('font-size', theme.uplift ? '12px' : '10px')
+        .style('font-size', (theme.uplift || theme.new) ? '12px' : '10px')
         .attr('fill', '#737373')
         .text((d) => {
           let text = '';
@@ -318,7 +318,7 @@ Radar.prototype = {
     // Append the labels at each axis
     axis.append('text')
       .attr('class', 'legend')
-      .style('font-size', theme.uplift ? '14px' : '12px')
+      .style('font-size', (theme.uplift || theme.new) ? '14px' : '12px')
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em')
       .attr('x', (d, i) => rScale(maxValue * s.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))

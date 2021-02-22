@@ -13,7 +13,7 @@ function checkLeftAndTop(elem, pos) {
 
 describe('Homepage example hero widget tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/homepage/example-hero-widget.html');
+    await utils.setPage('/components/homepage/example-hero-widget.html?theme=classic');
   });
 
   it('Should not have errors', async () => {
@@ -34,7 +34,7 @@ describe('Homepage example hero widget tests', () => {
 
 describe('Homepage example editable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/homepage/example-editable.html');
+    await utils.setPage('/components/homepage/example-editable.html?theme=classic');
   });
 
   it('Should not have errors', async () => {

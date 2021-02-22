@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Positive Negative Chart tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/positive-negative/example-index?layout=nofrills');
+    await utils.setPage('/components/positive-negative/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Listview example-singleselect tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/listview/example-singleselect');
+    await utils.setPage('/components/listview/example-singleselect?theme=classic');
     const listviewEl = await element(by.css('#period-end li'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -92,7 +92,7 @@ describe('Listview example-singleselect tests', () => {
 
 describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/listview/example-multiselect');
+    await utils.setPage('/components/listview/example-multiselect?theme=classic');
     const listviewEl = await element.all(by.css('#multiselect-listview li')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(listviewEl), config.waitsFor);
@@ -523,7 +523,7 @@ describe('Listview inside of List/Detail Pattern', () => {
 
 describe('Listview flex card empty tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/listview/test-empty-message-flex-container?layout=nofrills');
+    await utils.setPage('/components/listview/test-empty-message-flex-container?theme=classic&layout=nofrills');
     const emptyMessage = await element(by.css('.empty-message'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(emptyMessage), config.waitsFor);

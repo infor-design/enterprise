@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Masthead tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/masthead/example-index?theme=soho&layout=nofrills');
+    await utils.setPage('/components/masthead/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -29,31 +29,31 @@ describe('Masthead tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-soho')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-classic')).toEqual(0);
     });
 
-    it('Should not visual regress on uplift theme', async () => {
-      await utils.setPage('/components/masthead/example-index?theme=uplift&variant=dark&layout=nofrills');
+    it('Should not visual regress on new theme', async () => {
+      await utils.setPage('/components/masthead/example-index?theme=new&mode=dark&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-new')).toEqual(0);
     });
 
-    it('Should not visual regress on soho theme for images', async () => {
-      await utils.setPage('/components/masthead/example-photos?theme=soho&layout=nofrills');
+    it('Should not visual regress on classic theme for images', async () => {
+      await utils.setPage('/components/masthead/example-photos?theme=classic&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'masthead-soho-images')).toEqual(0);
     });
 
-    it('Should not visual regress on uplift theme for images', async () => {
-      await utils.setPage('/components/masthead/example-photos?theme=uplift&layout=nofrills');
+    it('Should not visual regress on new theme for images', async () => {
+      await utils.setPage('/components/masthead/example-photos?theme=new&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-uplift-images')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'masthead-new-images')).toEqual(0);
     });
   }
 });

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Bar (Stacked) Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-stacked/example-index?layout=nofrills');
+    await utils.setPage('/components/bar-stacked/example-index?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 
@@ -85,20 +85,20 @@ describe('Bar (Stacked) Chart example-colors', () => {
     const fGroupEl = await element.all(by.css('.series-group')).get(0);
     const barEl = await fGroupEl.element(by.css('.bar.series-0'));
 
-    expect(await barEl.getCssValue('fill')).toBe('rgb(142, 209, 198)');
+    expect(await barEl.getCssValue('fill')).toBe('rgb(168, 225, 225)');
   });
 
   it('Should detect that second bar is violet', async () => {
     const sGroupEl = await element.all(by.css('.series-group')).get(1);
     const barEl = await sGroupEl.element(by.css('.bar.series-0'));
 
-    expect(await barEl.getCssValue('fill')).toBe('rgb(146, 121, 166)');
+    expect(await barEl.getCssValue('fill')).toBe('rgb(121, 40, 225)');
   });
 });
 
 describe('Bar (Stacked) Chart 100% tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-stacked/example-stacked-100?layout=nofrills');
+    await utils.setPage('/components/bar-stacked/example-stacked-100?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Expandable Area Index Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/expandablearea/example-index?layout=nofrills');
+    await utils.setPage('/components/expandablearea/example-index?theme=classic&layout=nofrills');
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('expandable-expander'))), config.waitsFor);
   });
 
@@ -89,7 +89,7 @@ describe('Expandable Area Index Tests', () => {
 
 describe('Expandable Custom Toggle Button Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/expandablearea/test-toggle-button?layout=nofrills');
+    await utils.setPage('/components/expandablearea/test-toggle-button?theme=classic&layout=nofrills');
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.className('expandable-pane'))), config.waitsFor);
   });
 

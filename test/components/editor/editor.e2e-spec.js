@@ -147,64 +147,61 @@ describe('Editor example-index tests', () => {
 
     expect(await element(by.id('em-url-editor-1-id')).getAttribute('id')).toEqual('em-url-editor-1-id');
     expect(await element(by.id('em-url-editor-1-id')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-input0');
-
-    expect(await element(by.id('example1-editor-modal-button0')).getAttribute('id')).toEqual('example1-editor-modal-button0');
-    expect(await element(by.id('example1-editor-modal-button0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-button0');
   });
 });
 
 describe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress on subtle light', async () => {
-      await utils.setPage('/components/editor/example-index?theme=soho&variant=light&layout=nofrills');
+    it('Should not visually regress on classic light', async () => {
+      await utils.setPage('/components/editor/example-index?theme=classic&mode=light&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-light')).toEqual(0);
     });
 
-    it('Should not visually regress on subtle dark', async () => {
-      await utils.setPage('/components/editor/example-index?theme=soho&variant=dark&layout=nofrills');
+    it('Should not visually regress on classic dark', async () => {
+      await utils.setPage('/components/editor/example-index?theme=classic&mode=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-dark')).toEqual(0);
     });
 
-    it('Should not visually regress on subtle contrast', async () => {
-      await utils.setPage('/components/editor/example-index?theme=soho&variant=contrast&layout=nofrills');
+    it('Should not visually regress on classic contrast', async () => {
+      await utils.setPage('/components/editor/example-index?theme=classic&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-contrast')).toEqual(0);
     });
 
-    it('Should not visually regress on vibrant dark', async () => {
-      await utils.setPage('/components/editor/example-index?theme=uplift&variant=dark&layout=nofrills');
+    it('Should not visually regress on new dark', async () => {
+      await utils.setPage('/components/editor/example-index?theme=new&mode=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-dark')).toEqual(0);
     });
 
-    it('Should not visually regress on vibrant contrast', async () => {
-      await utils.setPage('/components/editor/example-index?theme=uplift&variant=contrast&layout=nofrills');
+    it('Should not visually regress on new contrast', async () => {
+      await utils.setPage('/components/editor/example-index?theme=new&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
     });
 
-    it('Should not visually regress on subtle rows setting', async () => {
-      await utils.setPage('/components/editor/test-rows?theme=soho&variant=contrast&layout=nofrills');
+    it('Should not visually regress on clasic rows setting', async () => {
+      await utils.setPage('/components/editor/test-rows?theme=clasic&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-rows')).toEqual(0);
     });
 
-    it('Should not visually regress on vibrant rows setting', async () => {
-      await utils.setPage('/components/editor/test-rows?theme=uplift&variant=contrast&layout=nofrills');
+    it('Should not visually regress on new rows setting', async () => {
+      await utils.setPage('/components/editor/test-rows?theme=new&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
 
@@ -392,7 +389,7 @@ describe('Editor empty tests', () => {
 
 describe('Editor placeholder tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/editor/test-placeholder?layout=nofrills');
+    await utils.setPage('/components/editor/test-placeholder?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => { //eslint-disable-line
