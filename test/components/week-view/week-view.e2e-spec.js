@@ -57,7 +57,7 @@ describe('WeekView ajax loading tests', () => {
 
 describe('WeekView specific week tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/week-view/test-specific-week?layout=nofrills');
+    await utils.setPage('/components/week-view/test-specific-week?theme=classic&layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
@@ -99,7 +99,7 @@ describe('WeekView specific week tests', () => {
 
 describe('WeekView events tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/week-view/test-events?layout=nofrills');
+    await utils.setPage('/components/week-view/test-events?theme=classic&layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
@@ -171,7 +171,7 @@ describe('WeekView updated tests', () => {
 
 describe('WeekView two weeks tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/week-view/example-two-weeks?layout=nofrills');
+    await utils.setPage('/components/week-view/example-two-weeks?theme=classic&layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
@@ -194,7 +194,7 @@ describe('WeekView two weeks tests', () => {
 
 describe('WeekView one day weeks tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/week-view/example-one-day?layout=nofrills');
+    await utils.setPage('/components/week-view/example-one-day?theme=classic&layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);
@@ -217,7 +217,7 @@ describe('WeekView one day weeks tests', () => {
 
 describe('WeekView two day tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/week-view/example-two-day?layout=nofrills');
+    await utils.setPage('/components/week-view/example-two-day?theme=classic&layout=nofrills');
     const dateField = await element(by.css('.week-view #monthview-datepicker-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(dateField), config.waitsFor);

@@ -2,7 +2,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 import { ContextualActionPanel } from '../../../src/components/contextualactionpanel/contextualactionpanel';
 
-const svgHTML = require('../../../src/components/icons/svg.html');
+const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
 const triggerHTML = require('../../../app/views/components/contextualactionpanel/example-trigger.html');
 
 // Standard Contextual Action Panel settings

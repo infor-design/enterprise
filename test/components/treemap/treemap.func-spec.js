@@ -3,7 +3,7 @@ import { Treemap } from '../../../src/components/treemap/treemap';
 require('../../../src/components/locale/cultures/en-US.js');
 
 const treemapHTML = require('../../../app/views/components/treemap/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const data = require('../../../app/data/storage-usage.json');
 const dataUpdate = require('../../../app/data/file-usage.json');
 

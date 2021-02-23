@@ -4,7 +4,7 @@ import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-tree.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data-tree');
 
 let data = [];

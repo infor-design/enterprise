@@ -158,23 +158,23 @@ Personalize.prototype = {
 
     let dark = false;
     let contrast = false;
-    let uplift = false;
+    let newTheme = false;
     if (themeColors.themeName.indexOf('contrast') > -1) {
       contrast = true;
     }
     if (themeColors.themeName.indexOf('dark') > -1) {
       dark = true;
     }
-    if (themeColors.themeName.indexOf('uplift') > -1) {
-      uplift = true;
+    if (themeColors.themeName.indexOf('uplift') > -1 || themeColors.themeName.indexOf('new') > -1) {
+      newTheme = true;
     }
     colors.theme.props = {
       contrast,
       dark,
-      uplift
+      newTheme
     };
 
-    // Force to be light text on custom colors { color: ['soho', 'uplift'] }
+    // Force to be light text on custom colors { color: ['classic', 'new'] }
     const forceToBeLightTextOn = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
@@ -242,7 +242,7 @@ Personalize.prototype = {
     colors.darkest = colors.horizontalBorder;
 
     // Some disabled colors on some preset color schemes come out terrible,
-    // unless they are adjusted here. { color: ['soho', 'uplift'] }
+    // unless they are adjusted here. { color: ['classic', 'new'] }
     // The alternate color is generally less luminous and less color-saturated (more gray).
     const alternateDisabledColors = {
       amber: ['#db7726', '#bb5500'], // amber 09
@@ -261,7 +261,7 @@ Personalize.prototype = {
     let lum = useAlternates ? 0.5 : 0.7;
     let sat = useAlternates ? 0.3 : 0.5;
 
-    if (!uplift) {
+    if (!newTheme) {
       // Soho adjustments go here
       if (dark) {
         baseColor = colors.darkest;
@@ -338,7 +338,7 @@ Personalize.prototype = {
       colors: this.settings.colors.header ||
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
       isDefault: false,
-      theme: this.currentTheme || 'theme-soho-light'
+      theme: this.currentTheme || 'theme-new-light'
     });
     return this;
   },
@@ -355,7 +355,7 @@ Personalize.prototype = {
     this.element.triggerHandler('colorschanged', {
       colors: theme.themeColors().brand.primary.alt.value,
       isDefault: true,
-      theme: this.currentTheme || 'theme-soho-light'
+      theme: this.currentTheme || 'theme-new-light'
     });
   },
 
@@ -393,6 +393,7 @@ Personalize.prototype = {
     if (!incomingTheme) {
       return;
     }
+    incomingTheme = incomingTheme.replace('soho', 'classic').replace('uplift', 'new');
 
     // Somehow colorpicker uses this, so keep it
     this.currentTheme = incomingTheme;
@@ -503,7 +504,7 @@ Personalize.prototype = {
     this.element.triggerHandler('themechanged', {
       colors: this.settings.colors.header ||
         this.settings.colors || theme.themeColors().brand.primary.alt.value,
-      theme: incomingTheme || 'theme-soho-light'
+      theme: incomingTheme || 'theme-new-light'
     });
     $('body').trigger('resize');
   },

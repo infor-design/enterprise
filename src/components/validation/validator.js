@@ -913,16 +913,17 @@ Validator.prototype = {
 
     let markup;
     let icon;
+    const messageId = `${(field.attr('id') || 'id')}-${rule.type}`;
 
     if (rule.type === 'error') {
       icon = `${validationType.type}-alert`;
     } else {
-      icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ? `${validationType.type}-alert` : `${validationType.type}`;
+      icon = theme.currentTheme.id && theme.new ? `${validationType.type}-alert` : `${validationType.type}`;
     }
 
     if (rule.type === 'icon') {
       markup = '' +
-        `<div class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: ['icon-custom'], icon: rule.icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -931,7 +932,7 @@ Validator.prototype = {
         </div>`;
     } else {
       markup = '' +
-        `<div class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -960,6 +961,9 @@ Validator.prototype = {
     if (validationType.type === 'error') {
       field.parent().find('.icon-success').remove();
     }
+    // Add aria
+    field.attr('aria-describedby', messageId);
+    field.attr('aria-invalid', 'true');
 
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message: rule.message });
@@ -1047,6 +1051,9 @@ Validator.prototype = {
     if (field.closest('.field-fileupload').length > 0) {
       field.closest('.field-fileupload').find(`input.${rule.type}`).removeClass(rule.type);
     }
+
+    // Remove Aria
+    field.removeAttr('aria-describedby').removeAttr('aria-invalid');
 
     // Remove tooltip style message and tooltip
     if (field.attr(`data-${rule.type}-type`) === 'tooltip') {

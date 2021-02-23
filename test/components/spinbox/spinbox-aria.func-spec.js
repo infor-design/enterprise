@@ -1,7 +1,7 @@
 import { Spinbox } from '../../../src/components/spinbox/spinbox';
 
 const spinboxHTML = require('../../../app/views/components/spinbox/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let spinboxEl;
 let svgEl;

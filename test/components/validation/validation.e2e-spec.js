@@ -27,6 +27,29 @@ describe('Validation example-index tests', () => {
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
     expect(await emailEl.getAttribute('class')).toContain('error');
   });
+
+  it('Should have correct aria', async () => {
+    const emailEl = await element(by.id('email-address-ok'));
+    await emailEl.clear();
+
+    expect(await emailEl.getAttribute('value')).toEqual('');
+
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('email-address-ok-error')).getText()).toBe('Required');
+    expect(await emailEl.getAttribute('aria-describedby')).toEqual('email-address-ok-error');
+    expect(await emailEl.getAttribute('aria-invalid')).toEqual('true');
+
+    // Reset it
+    await emailEl.sendKeys('test@test.test');
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.id('email-address-ok-error')).count()).toEqual(0);
+    expect(await emailEl.getAttribute('aria-describedby')).toBeFalsy();
+    expect(await emailEl.getAttribute('aria-invalid')).toBeFalsy();
+  });
 });
 
 describe('Validation short-field tests', () => {
@@ -634,13 +657,13 @@ describe('Validation just error class tests', () => {
 describe('Validation message types', () => {
   const exprAlerts = /(error|alert|success|info|icon)/;
   const color = {
-    default: { field: '#1a1a1a', icon: '#5c5c5c' },
-    error: { field: '#e84f4f', icon: '#5c5c5c' },
-    alert: { field: '#ff9426', icon: '#5c5c5c' },
-    success: { field: '#80ce4d', icon: '#5c5c5c' },
-    info: { field: '#368AC0', icon: '#5c5c5c' },
-    customIcon: { field: '#1a1a1a', icon: '#5c5c5c' },
-    isHelpMessage: { field: '#1a1a1a', icon: '#5c5c5c' }
+    default: { field: '#000000', icon: '#606066' },
+    error: { field: '#da1217', icon: '#606066' },
+    alert: { field: '#f98300', icon: '#606066' },
+    success: { field: '#2ac371', icon: '#606066' },
+    info: { field: '#0072ed', icon: '#606066' },
+    customIcon: { field: '#000000', icon: '#606066' },
+    isHelpMessage: { field: '#000000', icon: '#606066' }
   };
 
   beforeEach(async () => {

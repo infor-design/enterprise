@@ -2,7 +2,7 @@ import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
 import { cleanup } from '../../helpers/func-utils';
 
 let blockgridHTML = require('../../../app/views/components/blockgrid/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let blockgridEl;
 let blockgridObj;

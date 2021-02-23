@@ -16,7 +16,7 @@ const clickOnDropdown = async () => {
 
 describe('Dropdown example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/dropdown/example-index');
+    await utils.setPage('/components/dropdown/example-index?theme=classic');
   });
 
   it('Should not have errors', async () => {
@@ -425,7 +425,7 @@ describe('Dropdown example-no-search tests', () => {
 
 describe('Dropdown typeahead-reloading tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/dropdown/test-reload-typeahead');
+    await utils.setPage('/components/dropdown/test-reload-typeahead?theme=classic');
   });
 
   // Added to check highlighting of text characters
@@ -678,7 +678,7 @@ describe('Dropdown badge tests', () => {
 
 describe('Dropdown selectValue() tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/dropdown/example-setvalue?layout=nofrills');
+    await utils.setPage('/components/dropdown/example-setvalue?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

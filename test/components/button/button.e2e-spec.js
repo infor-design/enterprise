@@ -181,7 +181,7 @@ describe('Button example-index tests', () => {
 
 describe('Button example-with-icons tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/button/example-with-icons');
+    await utils.setPage('/components/button/example-with-icons?theme=classic');
   });
 
   if (!utils.isSafari()) {
@@ -246,7 +246,7 @@ describe('Button example-toggle-button tests', () => {
 
 describe('Button example-100-percent tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/button/example-100-percent');
+    await utils.setPage('/components/button/example-100-percent?theme=classic');
   });
 
   afterEach(async () => {
@@ -306,7 +306,7 @@ describe('Button example-100-percent tests', () => {
 
 describe('Button secondary border tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/button/test-secondary-border.html?layout=nofrills');
+    await utils.setPage('/components/button/test-secondary-border.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

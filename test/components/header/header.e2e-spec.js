@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Header Index Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/header/example-index?layout=nofrills');
+    await utils.setPage('/components/header/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

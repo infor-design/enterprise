@@ -21,7 +21,6 @@ const app = require('./app');
 const port = 4000;
 app.listen(port);
 
-// Show Awesome Image Of Soho
 /* eslint-disable no-console */
 console.log(chalk.gray('         .        .            ') + chalk.blue('|') + chalk.gray('       .        .        . '));
 console.log(chalk.gray('              *        .       ') + chalk.blue('|') + chalk.gray('   .        .              '));

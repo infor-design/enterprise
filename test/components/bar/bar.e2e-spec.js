@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Bar Chart example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-index?layout=nofrills');
+    await utils.setPage('/components/bar/example-index?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
@@ -102,7 +102,7 @@ describe('Bar Chart example-negative-value tests', () => {
 
 describe('Bar Chart example-colors', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/example-colors?layout=nofrills');
+    await utils.setPage('/components/bar/example-colors?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.bar.series-2'))), config.waitsFor);
   });
@@ -145,7 +145,7 @@ describe('Bar Chart example-colors', () => {
 
 describe('Bar Chart alignment tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/test-alignment?layout=nofrills');
+    await utils.setPage('/components/bar/test-alignment?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
@@ -170,7 +170,7 @@ describe('Bar Chart alignment tests', () => {
 
 describe('Bar Chart axis adjust tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/test-axis-adjust?layout=nofrills');
+    await utils.setPage('/components/bar/test-axis-adjust?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });
@@ -195,7 +195,7 @@ describe('Bar Chart axis adjust tests', () => {
 
 describe('Bar Chart axis formatter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar/test-axis-formatter?layout=nofrills');
+    await utils.setPage('/components/bar/test-axis-formatter?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
   });

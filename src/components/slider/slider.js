@@ -929,7 +929,7 @@ Slider.prototype = {
    * @returns {string} hex value representing a color
    */
   getColorClosestToValue() {
-    const currentVariant = theme.currentTheme.id.split('-')[2];
+    const currentMode = theme.currentTheme.id.split('-')[2];
     const preColors = {
       light: {
         default: '#000000',
@@ -960,7 +960,7 @@ Slider.prototype = {
       }
     };
 
-    const themeColors = preColors[currentVariant];
+    const themeColors = preColors[currentMode];
     const val = this.value()[0];
     let highestTickColor;
     let c;

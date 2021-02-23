@@ -2,7 +2,7 @@ import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/bubble/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let bubbleEl;
 let bubbleObj;

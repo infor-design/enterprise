@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Hierarchy index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/hierarchy/example-index?layout=nofrills');
+    await utils.setPage('/components/hierarchy/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

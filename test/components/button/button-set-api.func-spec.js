@@ -3,7 +3,7 @@ import extend from 'extend';
 import { ButtonSet } from '../../../src/components/button/button.set';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let buttonSetEl;
 let buttonSetAPI;

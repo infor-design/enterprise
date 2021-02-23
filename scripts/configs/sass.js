@@ -7,24 +7,24 @@ module.exports = {
     dist: {
       options: genericOpts,
       files: {
-        'dist/css/theme-soho-light.css': 'temp/theme-soho-light.scss',
-        'dist/css/theme-soho-dark.css': 'temp/theme-soho-dark.scss',
-        'dist/css/theme-soho-contrast.css': 'temp/theme-soho-contrast.scss',
-        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss',
-        'dist/css/theme-uplift-dark.css': 'temp/theme-uplift-dark.scss',
-        'dist/css/theme-uplift-contrast.css': 'temp/theme-uplift-contrast.scss',
+        'dist/css/theme-classic-light.css': 'temp/theme-classic-light.scss',
+        'dist/css/theme-classic-dark.css': 'temp/theme-classic-dark.scss',
+        'dist/css/theme-classic-contrast.css': 'temp/theme-classic-contrast.scss',
+        'dist/css/theme-new-light.css': 'temp/theme-new-light.scss',
+        'dist/css/theme-new-dark.css': 'temp/theme-new-dark.scss',
+        'dist/css/theme-new-contrast.css': 'temp/theme-new-contrast.scss',
       }
     },
 
     custom: {
       options: genericOpts,
       files: {
-        'dist/css/theme-soho-light.css': 'temp/theme-soho-light.scss',
-        'dist/css/theme-soho-dark.css': 'temp/theme-soho-dark.scss',
-        'dist/css/theme-soho-contrast.css': 'temp/theme-soho-contrast.scss',
-        'dist/css/theme-uplift-light.css': 'temp/theme-uplift-light.scss',
-        'dist/css/theme-uplift-dark.css': 'temp/theme-uplift-dark.scss',
-        'dist/css/theme-uplift-contrast.css': 'temp/theme-uplift-contrast.scss',
+        'dist/css/theme-classic-light.css': 'temp/theme-classic-light.scss',
+        'dist/css/theme-classic-dark.css': 'temp/theme-classic-dark.scss',
+        'dist/css/theme-classic-contrast.css': 'temp/theme-classic-contrast.scss',
+        'dist/css/theme-new-light.css': 'temp/theme-new-light.scss',
+        'dist/css/theme-new-dark.css': 'temp/theme-new-dark.scss',
+        'dist/css/theme-new-contrast.css': 'temp/theme-new-contrast.scss',
       }
     },
 

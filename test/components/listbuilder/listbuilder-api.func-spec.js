@@ -2,7 +2,7 @@ import { ListBuilder } from '../../../src/components/listbuilder/listbuilder';
 import { cleanup } from '../../helpers/func-utils';
 
 const listbuilderHTML = require('../../../app/views/components/listbuilder/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 require('../../../src/components/locale/cultures/en-US.js');
 

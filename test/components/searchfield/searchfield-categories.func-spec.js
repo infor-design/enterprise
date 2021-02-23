@@ -2,7 +2,7 @@ import { SearchField } from '../../../src/components/searchfield/searchfield';
 import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/example-categories-full.html');
-const svgHTML = require('../../../src/components/icons/svg.html');
+const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
 const categoryData = require('../../../app/data/searchfield-shopping-categories.json');
 
 let searchfieldSingleInputEl;

@@ -40,7 +40,6 @@ junit.xml
 npm-debug.log
 phantomjsdriver.log
 report.xml
-sohoxi-test-report.html
 views/docs/changelog-contents.html
 xunit.xml
 

@@ -2,6 +2,10 @@
 
 ## v4.38.0
 
+### v4.38.0 Important Changes
+
+- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its reccomend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
+
 ### v4.38.0 Fixes
 
 - `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
@@ -19,7 +23,10 @@
 - `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 - `[Tabs]` Fixed an iOS bug that was preventing dismissible tabs to be dismissed by tap. ([#4763](https://github.com/infor-design/enterprise/issues/4763))
-- `[TabsModule]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Vertical]` Fixed black hover state in new (uplift) theme contrast mode. ([#4867](https://github.com/infor-design/enterprise/issues/4867))
+- `[Validation]` Fixed an issue where validation messages did not have the correct aria for accessibility. ([#4830](https://github.com/infor-design/enterprise/issues/4830))
 
 ## v4.37.0
 

@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Tree example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tree/example-index?layout=nofrills');
+    await utils.setPage('/components/tree/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

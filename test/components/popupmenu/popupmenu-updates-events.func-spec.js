@@ -1,7 +1,7 @@
 import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
 
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let popupmenuButtonEl;
 let svgEl;
@@ -64,7 +64,7 @@ describe('Popupmenu Events', () => {
   it('Should not bubble "destroy" event', () => {
     const spyEvent = spyOnEvent('.field', 'destroy');
     popupmenuObj.destroy();
-    
+
     expect(spyEvent).not.toHaveBeenTriggered();
   });
 });

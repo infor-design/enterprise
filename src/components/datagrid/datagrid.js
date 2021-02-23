@@ -4511,16 +4511,18 @@ Datagrid.prototype = {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
     const context = this.canvas.getContext('2d');
+    const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
+
     if (!this.fontCached || !this.fontHeaderCached) {
-      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      this.fontCached = theme.currentTheme.id && isNewTheme ?
         '400 16px arial' : '400 14px arial';
-      this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      this.fontHeaderCached = theme.currentTheme.id && isNewTheme ?
         '600 14px arial' : '700 12px arial';
 
       if (this.settings.rowHeight === 'extra-small') {
-        this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        this.fontCached = theme.currentTheme.id && isNewTheme ?
           '400 14px arial' : '400 12px arial';
-        this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        this.fontHeaderCached = theme.currentTheme.id && isNewTheme ?
           '600 14px arial' : '700 12px arial';
       }
     }

@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Bullet example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/example-index?layout=nofrills');
+    await utils.setPage('/components/bullet/example-index?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bullet .range'))), config.waitsFor);
   });
@@ -62,7 +62,7 @@ describe('Bullet example-index tests', () => {
 
 describe('Bullet data group tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/example-data-group?layout=nofrills');
+    await utils.setPage('/components/bullet/example-data-group?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -193,7 +193,7 @@ describe('Bullet data group automation tests', () => {
 
 describe('Bullet negative positive tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/test-negative-positive-value?layout=nofrills');
+    await utils.setPage('/components/bullet/test-negative-positive-value?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -214,7 +214,7 @@ describe('Bullet negative positive tests', () => {
 
 describe('Bullet negative values tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bullet/test-negative-value?layout=nofrills');
+    await utils.setPage('/components/bullet/test-negative-value?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

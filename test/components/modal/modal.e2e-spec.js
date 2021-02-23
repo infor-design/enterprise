@@ -91,7 +91,7 @@ describe('Modal init example-modal tests', () => {
 
 describe('Modal open example-modal tests on click', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/modal/example-index');
+    await utils.setPage('/components/modal/example-index?theme=classic');
     const modalEl = await element(by.id('add-context'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);
@@ -341,7 +341,7 @@ describe('Modal xss tests', () => {
 
 describe('Modal button tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/modal/test-inline-buttons');
+    await utils.setPage('/components/modal/test-inline-buttons?theme=classic');
     const modalEl = await element(by.id('btn-show-modal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(modalEl), config.waitsFor);

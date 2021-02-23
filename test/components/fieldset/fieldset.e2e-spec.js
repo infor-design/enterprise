@@ -9,7 +9,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Fieldset Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on index', async () => {
-      await utils.setPage('/components/fieldset/example-index.html?layout=nofrills');
+      await utils.setPage('/components/fieldset/example-index.html?theme=classic&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 
@@ -19,7 +19,7 @@ describe('Fieldset Tests', () => {
     });
 
     it('Should be able to set id/automation id', async () => {
-      await utils.setPage('/components/fieldset/example-index.html?layout=nofrills');
+      await utils.setPage('/components/fieldset/example-index.html?theme=classic&layout=nofrills');
       await browser.driver.sleep(config.sleep);
 
       expect(await element(by.id('fieldset')).getAttribute('id')).toEqual('fieldset');

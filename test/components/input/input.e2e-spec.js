@@ -9,7 +9,7 @@ const inputId = 'first-name';
 
 describe('Input example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/input/example-index?layout=nofrills');
+    await utils.setPage('/components/input/example-index?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(inputId))), config.waitsFor);
@@ -120,7 +120,7 @@ describe('Input tooltip tests', () => {
 
 describe('Input Short Field Sizes tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/input/test-short-field-sizes?layout=nofrills');
+    await utils.setPage('/components/input/test-short-field-sizes?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 
@@ -140,7 +140,7 @@ describe('Input Short Field Sizes tests', () => {
 
 describe('Input Short Field tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/input/test-short-fields?layout=nofrills');
+    await utils.setPage('/components/input/test-short-fields?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 

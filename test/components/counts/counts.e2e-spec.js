@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Counts Actionable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/counts/example-index?layout=nofrills');
+    await utils.setPage('/components/counts/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -31,7 +31,7 @@ describe('Counts Actionable tests', () => {
 
 describe('Counts Non Actionable tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/counts/example-not-actionable?layout=nofrills');
+    await utils.setPage('/components/counts/example-not-actionable?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -54,7 +54,7 @@ describe('Counts Non Actionable tests', () => {
 
 describe('Counts Widgets tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/counts/example-widget-count?layout=nofrills');
+    await utils.setPage('/components/counts/example-widget-count?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -77,7 +77,7 @@ describe('Counts Widgets tests', () => {
 
 describe('Counts short tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/counts/example-short?layout=nofrills');
+    await utils.setPage('/components/counts/example-short?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

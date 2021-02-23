@@ -4,7 +4,7 @@ import { cleanup } from '../../helpers/func-utils';
 import { stringUtils } from '../../../src/utils/string';
 
 const weekViewHTML = require('../../../app/views/components/week-view/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const eventTypes = require('../../../app/data/event-types');
 const events = require('../../../app/data/events');
 

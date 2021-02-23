@@ -1,7 +1,7 @@
 import { ListView } from '../../../src/components/listview/listview';
 
 const listviewHTML = require('../../../app/views/components/listview/example-singleselect.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const data = require('../../../app/data/periods');
 
 let listviewEl;
