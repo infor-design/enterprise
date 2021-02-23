@@ -8728,6 +8728,11 @@ Datagrid.prototype = {
         }
       }
 
+      // Open Context Menu
+      if (key === 121 && e.shiftKey) { // Shift F10
+        target.trigger('contextmenu');
+      }
+
       // Tab, Left, Up, Right and Down arrow keys.
       if ([9, 37, 38, 39, 40].indexOf(key) !== -1) {
         if (target.closest('.code-block').length &&

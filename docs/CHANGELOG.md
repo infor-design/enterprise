@@ -7,6 +7,7 @@
 - `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
+- `[Datagrid]` Fixed a bug where shift+f10 did not open the context menu in the Datagrid. ([#4614](https://github.com/infor-design/enterprise/issues/4614))
 - `[Environment]` Fixed feature detection classes and routines on ipad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
 - `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
