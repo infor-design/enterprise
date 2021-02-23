@@ -7880,7 +7880,7 @@ Datagrid.prototype = {
 
     if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
       this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function () {
-        $(this).triggerHandler('recalculate-buttons');
+        $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
       }).animateOpen();
     }
   },
