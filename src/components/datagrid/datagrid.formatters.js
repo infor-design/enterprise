@@ -357,7 +357,7 @@ const formatters = {
     }
 
     ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
-    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}" aria-checked="${isChecked}"></span></div>`;
+    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
   },
 
   Actions(row, cell, value, col) {
