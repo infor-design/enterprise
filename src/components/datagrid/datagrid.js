@@ -4091,6 +4091,10 @@ Datagrid.prototype = {
         (col.readonly || col.editor === undefined)) ?
         'aria-readonly="true"' : '';
 
+      if (cssClass.indexOf('is-readonly') > -1) {
+        ariaReadonly = 'aria-readonly="true"';
+      }
+
       if (col.isReadonly && !col.readonly && col.id !== 'selectionCheckbox') {
         const fieldVal = self.fieldValue(rowData, self.settings.columns[j].field);
         const isReadonly = col.isReadonly(this.recordCount, j, fieldVal, col, rowData);
@@ -4196,9 +4200,23 @@ Datagrid.prototype = {
 
       const idProp = this.settings.attributes?.filter(a => a.name === 'id');
       const ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
+      let ariaChecked = '';
+
+      if (col.formatter?.toString().indexOf('function Checkbox') === 0) {
+        let isChecked;
+
+        // Use isChecked function if exists
+        if (col.isChecked) {
+          isChecked = col.isChecked(cellValue);
+        } else {
+          isChecked = (cellValue === undefined ? false : (cellValue === true || parseInt(cellValue, 10) === 1));
+        }
+        ariaChecked = ` aria-checked="${isChecked}"`;
+      }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
+          }${ariaChecked
           }${isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''

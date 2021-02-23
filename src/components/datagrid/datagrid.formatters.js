@@ -339,8 +339,7 @@ const formatters = {
 
     const animate = api.wasJustUpdated;
     api.wasJustUpdated = false;
-    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${col.name}" class="datagrid-checkbox
-     ${(isChecked ? `is-checked ${(!animate ? ' no-animation' : ' ')}` : '')}" aria-checked="${isChecked}"></span>${hiddenText}</div>`;
+    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" class="datagrid-checkbox${(isChecked ? ` is-checked ${(!animate ? ' no-animation' : ' ')}` : '')}"></span>${hiddenText}</div>`;
   },
 
   SelectionCheckbox(row, cell, value, col, item, api) {

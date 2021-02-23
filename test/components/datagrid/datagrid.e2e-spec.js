@@ -2167,6 +2167,17 @@ describe('Datagrid checkbox disabled editor tests', () => {
     await utils.checkForErrors();
   });
 
+  it('Should render correct aria', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getAttribute('aria-readonly')).toEqual('true');
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('false');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(6)')).getAttribute('aria-readonly')).toBeFalsy();
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(6) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(6) td:nth-child(6)')).getAttribute('aria-readonly')).toBeFalsy();
+  });
+
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
