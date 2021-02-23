@@ -17,7 +17,7 @@ const clickTabTest = async (index) => {
 
 describe('Tabs header click example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs-header/example-index');
+    await utils.setPage('/components/tabs-header/example-index?theme=classic');
     const tabsEl = await element(by.id('tab-panel-container'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

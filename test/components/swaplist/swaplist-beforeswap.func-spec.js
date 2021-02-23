@@ -2,7 +2,7 @@ import { SwapList } from '../../../src/components/swaplist/swaplist';
 import { cleanup } from '../../helpers/func-utils';
 
 const swaplistHTML = require('../../../app/views/components/swaplist/test-beforeswap-with-search.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const dataset = [];
 dataset.push({ id: 1, value: 'opt-1', text: 'Option AA' });

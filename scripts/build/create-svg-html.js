@@ -34,7 +34,7 @@ function getIconSetPaths() {
     class: 'svg-icons'
   }));
 
-  // Addition for soho "empty" icons
+  // Addition for classic "empty" icons
   const emptyIconSets = themes.map(theme => ({
     src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/empty/svg/*.svg`,
     dest: `${ROOT_DIR}/src/components/emptymessage/theme-${theme.name}-svg-empty.html`,
@@ -42,21 +42,6 @@ function getIconSetPaths() {
   }));
 
   iconSets = iconSets.concat(emptyIconSets);
-
-  // Legacy Icon Files - DEPRECATE soon
-  iconSets.push({
-    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/standard/svg/*.svg`,
-    dest: `${PATHS.iconComponent}/svg.html`,
-    class: 'svg-icons',
-    isDeprecated: true
-  });
-
-  iconSets.push({
-    src: `${PATHS.idsIdentity}/dist/theme-soho/icons/empty/svg/*.svg`,
-    dest: `${ROOT_DIR}/src/components/emptymessage/svg-empty.html`,
-    class: 'svg-icons-empty',
-    isDeprecated: true
-  });
 
   return iconSets;
 }

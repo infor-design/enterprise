@@ -17,7 +17,7 @@ const clickTabTest = async (index) => {
 
 describe('Tabs vertical click example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs-vertical/example-independent-scrolling');
+    await utils.setPage('/components/tabs-vertical/example-independent-scrolling?theme=classic');
     await browser.driver.sleep(config.sleep);
   });
 
@@ -54,7 +54,7 @@ describe('Tabs vertical click example-index tests', () => {
 
 describe('Tabs vertical click example-responsive tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs-vertical/example-responsive');
+    await utils.setPage('/components/tabs-vertical/example-responsive?theme=classic');
     const tabsEl = await element(by.id('tabs-vertical'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

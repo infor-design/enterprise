@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Line Chart tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/line/example-index?layout=nofrills');
+    await utils.setPage('/components/line/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -109,7 +109,7 @@ describe('Line Localization tests', () => {
 
 describe('Line Chart Zero Millions tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/line/example-zero-millions?layout=nofrills');
+    await utils.setPage('/components/line/example-zero-millions?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -132,7 +132,7 @@ describe('Line Chart Zero Millions tests', () => {
 
 describe('Line Chart Two Line tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/line/example-two-lines.html?layout=nofrills');
+    await utils.setPage('/components/line/example-two-lines.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -155,7 +155,7 @@ describe('Line Chart Two Line tests', () => {
 
 describe('Line Chart Axis Label tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/line/example-axis-labels.html?layout=nofrills');
+    await utils.setPage('/components/line/example-axis-labels.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -178,7 +178,7 @@ describe('Line Chart Axis Label tests', () => {
 
 describe('Line Chart Axis Rotate tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/line/example-rotate.html?layout=nofrills');
+    await utils.setPage('/components/line/example-rotate.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

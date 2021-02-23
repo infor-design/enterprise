@@ -3,7 +3,7 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
 const calendarHTML = require('../../../app/views/components/calendar/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const events = require('../../../app/data/events');
 const eventTypes = require('../../../app/data/event-types');
 

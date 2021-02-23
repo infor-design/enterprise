@@ -2,7 +2,7 @@ import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { cleanup } from '../../helpers/func-utils';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-no-search-lsf.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let dropdownEl;
 let dropdownObj;

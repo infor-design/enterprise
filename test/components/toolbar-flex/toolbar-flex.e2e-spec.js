@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Flex toobar ajax tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toolbar-flex/example-more-actions-ajax?layout=nofrills');
+    await utils.setPage('/components/toolbar-flex/example-more-actions-ajax?theme=classic&layout=nofrills');
 
     const flexToolbarEl = await element(by.id('flex-toolbar'));
     await browser.driver

@@ -53,7 +53,7 @@ Sparkline.prototype = {
     if (!this.settings.colors) {
       const palette = theme.themeColors().palette;
       this.settings.colors = [];
-      this.settings.colors[0] = palette.azure[theme.uplift ? '80' : '70'].value;
+      this.settings.colors[0] = palette.azure[(theme.uplift || theme.new) ? '80' : '70'].value;
       this.settings.colors[1] = palette.slate['40'].value;
       this.settings.colors[2] = palette.slate['30'].value;
       this.settings.colors[3] = palette.slate['20'].value;

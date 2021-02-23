@@ -2,7 +2,7 @@ import { ApplicationMenu } from '../../../src/components/applicationmenu/applica
 
 const applicationmenuHTML = require('../../../app/views/components/applicationmenu/example-index.html');
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 require('../../../src/components/locale/cultures/en-US.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
 

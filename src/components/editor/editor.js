@@ -617,13 +617,13 @@ Editor.prototype = {
    * @private
    */
   setRowsHeight() {
-    const isUplift = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1;
+    const isNew = theme.currentTheme.id && (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
     if (this.settings?.rows?.editor) {
-      this.element.height(this.settings?.rows?.editor * (isUplift ? 26 : 22.2));
+      this.element.height(this.settings?.rows?.editor * (isNew ? 26 : 22.2));
     }
 
     if (this.settings?.rows?.source) {
-      this.element.parent().find('.editor-source').height((this.settings?.rows?.source * (isUplift ? 26 : 26)) + 15);
+      this.element.parent().find('.editor-source').height((this.settings?.rows?.source * (isNew ? 26 : 26)) + 15);
     }
   },
 

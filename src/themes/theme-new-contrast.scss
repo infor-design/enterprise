@@ -1,4 +1,4 @@
-// IDS Enterprise - Uplift Theme
+// IDS Enterprise - New/Uplift Theme
 //================================================== //
 
 // Standard CSS reset stuff here
@@ -6,7 +6,7 @@
 @import '../core/mixins';
 
 // ids-identity token vars
-@import '../../node_modules/ids-identity/dist/theme-uplift/tokens/web/theme-uplift-contrast';
+@import '../../node_modules/ids-identity/dist/theme-new/tokens/web/theme-new-contrast';
 
 // Enterprise color variables
 @import '../components/colors/colorpalette';
@@ -782,27 +782,27 @@ $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
 $calendar-disabled-color: $ids-color-palette-slate-80;
 
-// Uplift-only Variables
-$uplift-acc-border-radius: 6px;
-$uplift-acc-header-text-color: $ids-color-palette-slate-10;
-$uplift-acc-header-selected-text-color: $ids-color-palette-white;
+// New Theme Only Variables
+$new-acc-border-radius: 6px;
+$new-acc-header-text-color: $ids-color-palette-slate-10;
+$new-acc-header-selected-text-color: $ids-color-palette-white;
 
-$uplift-acc-subheader-text-color: $ids-color-palette-slate-10;
+$new-acc-subheader-text-color: $ids-color-palette-slate-10;
 
-$uplift-acc-expanded-bg-color: $ids-color-palette-slate-100;
+$new-acc-expanded-bg-color: $ids-color-palette-slate-100;
 
-$uplift-appmenu-searchfield-placeholder-color: $ids-color-palette-slate-30;
+$new-appmenu-searchfield-placeholder-color: $ids-color-palette-slate-30;
 
-$uplift-appmenu-main-bg-color: $ids-color-palette-black;
-$uplift-appmenu-header-bg-color: $ids-color-palette-black;
-$uplift-appmenu-footer-bg-color: $ids-color-palette-black;
+$new-appmenu-main-bg-color: $ids-color-palette-black;
+$new-appmenu-header-bg-color: $ids-color-palette-black;
+$new-appmenu-footer-bg-color: $ids-color-palette-black;
 
-$uplift-appmenu-hover-bg-color: $ids-color-palette-slate-80;
-$uplift-appmenu-selected-bg-color: $ids-color-palette-slate-70;
-$uplift-appmenu-selected-border-color: $ids-color-palette-white;
+$new-appmenu-hover-bg-color: $ids-color-palette-slate-80;
+$new-appmenu-selected-bg-color: $ids-color-palette-slate-70;
+$new-appmenu-selected-border-color: $ids-color-palette-white;
 
-// Core Uplift Components
-@import '../core/controls-uplift';
+// Core New Theme Components
+@import '../core/controls-new';
 
 //Swaplist
 .swaplist {

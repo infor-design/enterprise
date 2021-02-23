@@ -2,7 +2,7 @@ import { Modal } from '../../../src/components/modal/modal';
 import { modalManager } from '../../../src/components/modal/modal.manager';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const triggerHTML = `<button class="btn-secondary" id="modal-trigger">
   <span>Activate Modal</span>

@@ -1,7 +1,7 @@
 import { ListView } from '../../../src/components/listview/listview';
 
 const listviewHTML = require('../../../app/views/components/listview/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const data = require('../../../app/data/inventory-tasks.json');
 
 let listviewEl;

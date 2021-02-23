@@ -2,7 +2,7 @@ import { ColorPicker } from '../../../src/components/colorpicker/colorpicker';
 import { cleanup } from '../../helpers/func-utils';
 
 const colorpickerHTML = require('../../../app/views/components/colorpicker/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let colorpickerEl;
 let colorpickerObj;

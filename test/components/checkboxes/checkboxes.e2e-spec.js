@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Checkbox example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-index?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -26,9 +26,9 @@ describe('Checkbox example-index tests', () => {
   }
 });
 
-describe('Checkbox Uplift tests', () => {
+describe('Checkbox New Theme tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-index?theme=uplift&layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-index?theme=new&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -38,14 +38,14 @@ describe('Checkbox Uplift tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkScreen('checkboxes-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('checkboxes-new')).toEqual(0);
     });
   }
 });
 
 describe('Checkbox group tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-checkbox-groups?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-checkbox-groups?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -66,7 +66,7 @@ describe('Checkbox group tests', () => {
 
 describe('Horizontal checkbox group tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/checkboxes/example-horizontal?layout=nofrills');
+    await utils.setPage('/components/checkboxes/example-horizontal?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

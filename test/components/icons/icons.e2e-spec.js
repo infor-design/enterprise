@@ -16,9 +16,9 @@ describe('Icon Soho (Subtle) tests', () => {
   });
 });
 
-describe('Icon Uplift (Vibrant)  tests', () => {
+describe('Icon New Theme tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/icons/example-index?theme=uplift&layout=nofrills');
+    await utils.setPage('/components/icons/example-index?theme=new&layout=nofrills');
     await browser.driver.sleep(config.sleep);
   });
 

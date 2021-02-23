@@ -918,7 +918,7 @@ Validator.prototype = {
     if (rule.type === 'error') {
       icon = `${validationType.type}-alert`;
     } else {
-      icon = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ? `${validationType.type}-alert` : `${validationType.type}`;
+      icon = theme.currentTheme.id && theme.new ? `${validationType.type}-alert` : `${validationType.type}`;
     }
 
     if (rule.type === 'icon') {

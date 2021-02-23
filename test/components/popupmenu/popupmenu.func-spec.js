@@ -4,7 +4,7 @@ import { cleanup } from '../../helpers/func-utils';
 const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
 const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const ePage = {
   pageX: 136,

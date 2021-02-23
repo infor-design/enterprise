@@ -2,7 +2,7 @@ import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 
 const datagridHTML = require('../../../app/views/components/datagrid/test-reorder-multiselect.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 require('../../../src/components/locale/cultures/en-US.js');
 

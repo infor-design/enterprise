@@ -88,7 +88,7 @@ describe('Blockgrid example-mixed-selection tests', () => {
 
 describe('Blockgrid example-mixed-selection responsive tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/blockgrid/example-mixed-selection?layout=nofrills');
+    await utils.setPage('/components/blockgrid/example-mixed-selection?theme=classic&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {

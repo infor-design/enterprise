@@ -27,7 +27,7 @@ describe('Toolbar Searchfield (no-reinvoke)', () => {
 
 describe('Searchfield with Toolbar alignment tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield');
+    await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?theme=classic');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldInput))), config.waitsFor);
@@ -44,10 +44,12 @@ describe('Searchfield with Toolbar alignment tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
+
       expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'toolbar-searchfield-init')).toBeLessThan(0.2);
 
       await searchfieldInputEl.click();
       await browser.driver.sleep(config.sleep);
+
       expect(await browser.imageComparison.checkElement(searchfieldToolbarContainer, 'toolbar-searchfield-alignment')).toBeLessThan(0.2);
     });
   }

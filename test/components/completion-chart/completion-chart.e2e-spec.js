@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Completion Chart variations tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/completion-chart/example-variations?layout=nofrills');
+    await utils.setPage('/components/completion-chart/example-variations?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -80,7 +80,7 @@ describe('Completion Chart variations tests', () => {
 
 describe('Completion Chart color tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/completion-chart/example-colors?layout=nofrills');
+    await utils.setPage('/components/completion-chart/example-colors?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -101,7 +101,7 @@ describe('Completion Chart color tests', () => {
 
 describe('Completion Chart Short Field tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/completion-chart/example-short.html?layout=nofrills');
+    await utils.setPage('/components/completion-chart/example-short.html?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

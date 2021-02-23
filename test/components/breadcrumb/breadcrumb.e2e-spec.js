@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Breadcrumb example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-index?layout=nofrills');
+    await utils.setPage('/components/breadcrumb/example-index?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.breadcrumb'))), config.waitsFor);
   });
@@ -30,7 +30,7 @@ describe('Breadcrumb example-index tests', () => {
 
 describe('Breadcrumb as text tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-current-as-link?layout=nofrills');
+    await utils.setPage('/components/breadcrumb/example-current-as-link?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -51,7 +51,7 @@ describe('Breadcrumb as text tests', () => {
 
 describe('Breadcrumb navigation alternate tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs-alternate?layout=nofrills');
+    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs-alternate?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -72,7 +72,7 @@ describe('Breadcrumb navigation alternate tests', () => {
 
 describe('Breadcrumb navigation tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs?layout=nofrills');
+    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

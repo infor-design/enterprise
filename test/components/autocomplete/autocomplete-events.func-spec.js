@@ -1,7 +1,7 @@
 import { Autocomplete } from '../../../src/components/autocomplete/autocomplete';
 
 const exampleHTML = require('../../../app/views/components/autocomplete/example-index.html');
-const svgHTML = require('../../../src/components/icons/svg.html');
+const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
 const data = require('../../../app/data/states-all.json');
 
 let autocompleteInputEl;

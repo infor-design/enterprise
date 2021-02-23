@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Slider example-index tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/slider/example-index?layout=nofrills');
+    await utils.setPage('/components/slider/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -53,7 +53,7 @@ describe('Slider example-index tests', () => { //eslint-disable-line
 
 describe('Slider Vertical tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/slider/example-vertical?layout=nofrills');
+    await utils.setPage('/components/slider/example-vertical?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -74,7 +74,7 @@ describe('Slider Vertical tests', () => { //eslint-disable-line
 
 describe('Slider short tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/slider/example-short?layout=nofrills');
+    await utils.setPage('/components/slider/example-short?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -95,7 +95,7 @@ describe('Slider short tests', () => { //eslint-disable-line
 
 describe('Slider tooltip position test', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/slider/example-tooltip-position');
+    await utils.setPage('/components/slider/example-tooltip-position?theme=classic');
   });
 
   it('Should show the tooltip on top', async () => {

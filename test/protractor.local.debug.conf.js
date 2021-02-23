@@ -5,7 +5,7 @@ const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PR
 
 exports.config = {
   params: {
-    theme:  process.env.ENTERPRISE_THEME || 'light'
+    theme:  'new'
   },
   allScriptsTimeout: 120000,
   logLevel: 'DEBUG',

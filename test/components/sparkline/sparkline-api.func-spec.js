@@ -2,7 +2,7 @@ import { triggerContextmenu } from '../../helpers/func-utils';
 import { Sparkline } from '../../../src/components/sparkline/sparkline';
 
 const sparklineHTML = require('../../../app/views/components/sparkline/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let sparklineEl;
 let svgEl;

@@ -1,7 +1,7 @@
 import { Tag } from '../../../src/components/tag/tag';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let tagEl;
 let tagAPI;

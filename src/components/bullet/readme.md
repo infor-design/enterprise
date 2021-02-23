@@ -50,11 +50,11 @@ var dataSingleBullet = [{
       tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
   ],
   barColors: [
-    palette.turquoise[Soho.theme.uplift ? '20': '10'].value,
-    palette.turquoise[Soho.theme.uplift ? '30': '30'].value,
-    palette.turquoise[Soho.theme.uplift ? '60': '50'].value,
-    palette.turquoise[Soho.theme.uplift ? '80': '70'].value,
-    palette.turquoise[Soho.theme.uplift ? '100': '90'].value
+    palette.turquoise[Soho.theme.new ? '20': '10'].value,
+    palette.turquoise[Soho.theme.new ? '30': '30'].value,
+    palette.turquoise[Soho.theme.new ? '60': '50'].value,
+    palette.turquoise[Soho.theme.new ? '80': '70'].value,
+    palette.turquoise[Soho.theme.new ? '100': '90'].value
   ],
   lineColors: ['#000000', '#000000', '#000000'],
   markerColors: ['#000000'],

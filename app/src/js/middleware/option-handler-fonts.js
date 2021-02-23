@@ -1,7 +1,7 @@
 const logger = require('../logger');
 
 // Matches required font weights as defined by the Design System:
-// https://github.com/infor-design/design-system/blob/master/design-tokens/theme-uplift/theme.json#L80-L84
+// https://github.com/infor-design/design-system/blob/master/design-tokens/theme-new/theme.json#L80-L84
 const STANDARD_WEIGHTS = [
   '300',
   '400',
@@ -49,7 +49,7 @@ const SARABUN_LOCALE = 'th-TH';
 const ASSISTANT_LOCALE = 'he-IL';
 
 // Font Switching Middleware.
-// For the IDS Uplift theme variants, certain Locales require specific fonts.
+// For the IDS New/Uplift theme modes, certain Locales require specific fonts.
 // See the discussion on https://github.com/infor-design/design-system/issues/385
 module.exports = function () {
   return function optionHandlerFonts(req, res, next) {
