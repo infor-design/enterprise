@@ -27,6 +27,29 @@ describe('Validation example-index tests', () => {
     expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
     expect(await emailEl.getAttribute('class')).toContain('error');
   });
+
+  it('Should have correct aria', async () => {
+    const emailEl = await element(by.id('email-address-ok'));
+    await emailEl.clear();
+
+    expect(await emailEl.getAttribute('value')).toEqual('');
+
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('email-address-ok-error')).getText()).toBe('Required');
+    expect(await emailEl.getAttribute('aria-describedby')).toEqual('email-address-ok-error');
+    expect(await emailEl.getAttribute('aria-invalid')).toEqual('true');
+
+    // Reset it
+    await emailEl.sendKeys('test@test.test');
+    await emailEl.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.id('email-address-ok-error')).count()).toEqual(0);
+    expect(await emailEl.getAttribute('aria-describedby')).toBeFalsy();
+    expect(await emailEl.getAttribute('aria-invalid')).toBeFalsy();
+  });
 });
 
 describe('Validation short-field tests', () => {
