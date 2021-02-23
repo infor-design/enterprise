@@ -1302,7 +1302,7 @@ describe('Datagrid multiselect tests', () => {
   it('Should have aria-checked and not aria-selected', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).getAttribute('aria-checked')).toEqual('true');
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-selected')).toEqual(null);
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('aria-selected')).toEqual('true');
   });
