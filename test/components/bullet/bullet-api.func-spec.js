@@ -2,7 +2,7 @@ import { triggerContextmenu } from '../../helpers/func-utils';
 import { Bullet } from '../../../src/components/bullet/bullet';
 
 const areaHTML = require('../../../app/views/components/bullet/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let bulletEl;
 let svgEl;

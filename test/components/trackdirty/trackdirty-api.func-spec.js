@@ -2,7 +2,7 @@ import { Trackdirty } from '../../../src/components/trackdirty/trackdirty';
 import { cleanup } from '../../helpers/func-utils';
 
 const dirtyHTML = require('../../../app/views/components/trackdirty/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let inputEl;
 let dirtyObj;

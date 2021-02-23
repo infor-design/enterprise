@@ -2,7 +2,7 @@ import { ListView } from '../../../src/components/listview/listview';
 import { cleanup } from '../../helpers/func-utils';
 
 const listviewHTML = require('../../../app/views/components/listview/test-legacy-dom-list.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let listviewEl;
 let listviewAPI;

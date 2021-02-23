@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Application Menu index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-index');
+    await utils.setPage('/components/applicationmenu/example-index?theme=classic');
   });
 
   it('should open when the hamburger button is clicked', async () => {
@@ -47,7 +47,7 @@ describe('Application Menu index tests', () => {
 
 describe('Application Menu filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-filterable');
+    await utils.setPage('/components/applicationmenu/example-filterable?theme=classic');
   });
 
   it('should filter', async () => {
@@ -164,7 +164,7 @@ describe('Application Menu accordion truncated text tooltip tests', () => {
 
 describe('Application Menu personalize tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-personalized');
+    await utils.setPage('/components/applicationmenu/example-personalized?theme=classic');
   });
 
   it('should not have errors', async () => {
@@ -217,7 +217,7 @@ describe('Application Menu personalize roles tests', () => {
 
 describe('Application Menu personalize roles switcher tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-personalized-role-switcher');
+    await utils.setPage('/components/applicationmenu/example-personalized-role-switcher?theme=classic');
   });
 
   it('should not have errors', async () => {

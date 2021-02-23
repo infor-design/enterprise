@@ -4,7 +4,7 @@ let personalization = {};
 
 describe('Personalize API', () => {
   beforeEach(() => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-soho-light' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
   });
 
   it('Should define personalization', () => {
@@ -12,7 +12,7 @@ describe('Personalize API', () => {
   });
 
   it('Should define currentTheme', () => {
-    expect(personalization.currentTheme).toEqual('theme-soho-light');
+    expect(personalization.currentTheme).toEqual('theme-new-light');
   });
 
   it('Should not run if config is ignored', () => {
@@ -22,7 +22,7 @@ describe('Personalize API', () => {
   });
 
   it('Should set theme on html tag', () => {
-    expect(document.documentElement.classList.contains('theme-soho-light')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-light')).toBeTruthy();
   });
 
   it('Should set theme on html tag for random theme name', () => {
@@ -50,37 +50,37 @@ describe('Personalize API', () => {
   });
 
   it('Should set theme on soho light theme', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-soho-light' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
 
-    expect(document.documentElement.classList.contains('theme-soho-light')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-light')).toBeTruthy();
   });
 
   it('Should set theme on soho dark theme', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-soho-dark' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-dark' });
 
-    expect(document.documentElement.classList.contains('theme-soho-dark')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-dark')).toBeTruthy();
   });
 
   it('Should set theme on soho contrast theme', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-soho-contrast' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-contrast' });
 
-    expect(document.documentElement.classList.contains('theme-soho-contrast')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-contrast')).toBeTruthy();
   });
 
-  it('Should set theme on uplift light theme', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-light' });
+  it('Should set theme on new light theme', () => {
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
 
-    expect(document.documentElement.classList.contains('theme-uplift-light')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-light')).toBeTruthy();
   });
 
-  it('Should set theme on uplift dark theme', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-dark' });
+  it('Should set theme on new dark theme', () => {
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-dark' });
 
-    expect(document.documentElement.classList.contains('theme-uplift-dark')).toBeTruthy();
+    expect(document.documentElement.classList.contains('theme-new-dark')).toBeTruthy();
   });
 
   it('Should fire colorschanged on setColors', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-light' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
     const spyEvent = spyOnEvent('html', 'colorschanged');
     personalization.setColors('personalization');
 
@@ -88,7 +88,7 @@ describe('Personalize API', () => {
   });
 
   it('Should fire colorschanged on setColorsToDefault', () => {
-    personalization = new Personalize(document.documentElement, { theme: 'theme-uplift-light' });
+    personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
     const spyEvent = spyOnEvent('html', 'colorschanged');
     personalization.setColorsToDefault();
 

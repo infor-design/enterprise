@@ -11,7 +11,7 @@ const ddSelector = function (dropdown) {
 
 describe('Timepicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/timepicker/example-index');
+    await utils.setPage('/components/timepicker/example-index?theme=classic');
   });
 
   it('Should not have errors', async () => {

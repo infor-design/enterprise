@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Lookup example tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/example-index?layout=nofrills');
+    await utils.setPage('/components/lookup/example-index?theme=classic&layout=nofrills');
   });
 
   it('should be enabled', async () => {
@@ -433,7 +433,7 @@ describe('Lookup modal tests', () => {
 
 describe('Lookup single select serverside tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/lookup/test-single-select-serverside');
+    await utils.setPage('/components/lookup/test-single-select-serverside?theme=classic');
   });
 
   it('should be able to reselect value', async () => {

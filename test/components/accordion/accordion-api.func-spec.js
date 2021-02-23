@@ -2,7 +2,7 @@ import { Accordion } from '../../../src/components/accordion/accordion';
 import { cleanup } from '../../helpers/func-utils';
 
 const accordionHTML = require('../../../app/views/components/accordion/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const emptyAccordionHTML = `<div id="test-accordion" class="accordion">
   <div id="top-header" class="accordion-header">Top Header</div>

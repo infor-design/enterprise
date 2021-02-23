@@ -6,7 +6,7 @@ specs.forEach((spec, i) => {
 });
 
 const files = [
-  'dist/css/light-theme.css',
+  'dist/css/theme-classic-contrast.css',
   'dist/js/jquery-3.5.1.js',
   'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
   'dist/js/d3.v5.js',

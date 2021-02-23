@@ -530,19 +530,30 @@ ColorPicker.prototype = {
   },
 
   /**
-   * Make basic theme variants backwards/forwards compatible
-   * @param {string} activeTheme The active theme to get the variant for
-   * @returns {string} The theme variants's border property value
-   * @example (i.e. match "theme-uplift-light" with "light" and return "themes.light.border")
+   * Make basic theme modes backwards/forwards compatible
+   * @param {string} activeTheme The active theme to get the mode for
+   * @returns {string} The theme modes's border property value
+   * @example (i.e. match "theme-new-light" with "light" and return "themes.light.border")
    */
-  getThemeVariant(activeTheme) {
+  getThemeMode(activeTheme) {
     const legacyThemes = Object.keys(COLORPICKER_DEFAULTS.themes);
     const res = legacyThemes.filter(legacyTheme => activeTheme.indexOf(legacyTheme) > -1);
-    let variant = 'light';
+    let mode = 'light';
     if (res.length > 0) {
-      variant = res[0];
+      mode = res[0];
     }
-    return variant;
+    return mode;
+  },
+
+  /**
+ * Make basic theme modes backwards/forwards compatible
+ * @deprecated Use getThemeMode
+ * @param {string} activeTheme The active theme to get the mode for
+ * @returns {string} The theme modes's border property value
+ * @example (i.e. match "theme-new-light" with "light" and return "themes.light.border")
+ */
+  getThemeVariant(activeTheme) {
+    return this.getThemeMode(activeTheme);
   },
 
   /**
@@ -555,9 +566,9 @@ ColorPicker.prototype = {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
-    const themeVariant = this.getThemeVariant(activeTheme);
-    const isBorderAll = (s.themes[themeVariant].border === 'all');
-    const checkThemes = s.themes[themeVariant].checkmark;
+    const themeMode = this.getThemeMode(activeTheme);
+    const isBorderAll = (s.themes[themeMode].border === 'all');
+    const checkThemes = s.themes[themeMode].checkmark;
     let checkmarkClass = '';
 
     // Remove previously opened colorpicker first

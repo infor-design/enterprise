@@ -796,7 +796,7 @@ DatePicker.prototype = {
           this.popupClosestScrollable.length === 1) {
           this.popup.find('.arrow').hide();
           this.popup.css({
-            'min-height': $('html').hasClass('theme-uplift-light') ? '' :
+            'min-height': $('html').hasClass('theme-new-light') ? '' :
               `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });

@@ -11,21 +11,21 @@ demo:
 
 ## Themes
 
-IDS Enterprise has currently 2 themes and 3 theme variations in each theme. The two themes are known as Subtle (formerly Soho) and Vibrant (formerly Uplift). Combined with the 3 variants in each theme there are six options:
+IDS Enterprise has currently 2 theme versions and 3 theme modes in each theme. The two themes are known as New (formerly Uplift/Vibrant) Classic (formerly Subtle / Soho). Combined with the 3 variants in each theme there are six options:
 
-1. Subtle (aka Soho) - Light
-1. Subtle (aka Soho) - Dark
-1. Subtle (aka Soho) - Contrast
-1. Vibrant (aka Uplift) - Light
-1. Vibrant (aka Uplift) - Dark
-1. Vibrant (aka Uplift) - Contrast
+1. New (formerly Uplift/Vibrant) - Light
+1. New (formerly Uplift/Vibrant) - Dark
+1. New (formerly Uplift/Vibrant) - Contrast
+1. Classic (formerly Subtle/Soho) - Light
+1. Classic (formerly Subtle/Soho) - Dark
+1. Classic (formerly Subtle/Soho) - Contrast
 
-The Vibrant Dark and Vibrant Contrast are still considered beta at this time as they may have minor issues. The Vibrant theme has more rich color and deeper depth in elements like cards and lists. It also has a different set of icons. The themes are found either in the npm package or the dist folder if downloading the release directly.
+The New theme set should be the default one to use. The New theme has more rich color and deeper depth in elements like cards and lists than the classic theme. It also has a different set of icons. The themes are found either in the npm package or the dist folder if downloading the release directly.
 
 To use each theme you need to:
 
-1. Import the correct style stylesheet which would be one of `theme-soho-contrast.css`, `theme-soho-dark.css`, `theme-soho-light.css`, `theme-uplift-contrast.css`, `theme-uplift-dark.css`, `theme-uplift-light.css` . The files `light-theme.css`, `high-contrast-theme.css` and `dark-theme.css` are there for backwards compatibility and will later be removed. We will later rename these to the new names Subtle and Vibrant.
-2. Add the correct SVG Block Element to the top of the page document (`theme-soho-svg.html` or `theme-uplift-svg.html`). The file `svg.html` is there for backwards compatibility and will later be removed.
+1. Import the correct style stylesheet which would be one of `theme-classic-contrast.css`, `theme-classic-dark.css`, `theme-classic-light.css`, `theme-new-contrast.css`, `theme-new-dark.css`, `theme-new-light.css` . The files `theme-uplift-*.css`, `theme-soho-*.css` are there for backwards compatibility and will later be removed.
+2. Add the correct SVG Block Element to the top of the page document (`theme-new-svg.html` or `theme-classic-svg.html`). The file `theme-uplift-*.html` and `theme-soho-*`  is there for backwards compatibility and will later be removed.
 
 It's also possible to get information about the themes from the theme api For info on that see the [theme api]( ./theme)
 

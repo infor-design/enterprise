@@ -13,7 +13,7 @@ module.exports = class IdsMetadata {
   constructor() {
     this.metadataObj = JSON.parse(fs.readFileSync(themeData, 'utf-8'));
 
-    this.createFullName = (theme, variant) => `${theme}-${variant}`;
+    this.createFullName = (theme, mode) => `${theme}-${mode}`;
   }
 
   /**
@@ -34,17 +34,16 @@ module.exports = class IdsMetadata {
   }
 
   /**
-   * Get all theme variants
-   * @returns {string[]} Full theme-variant names (i.e. ["soho-light"])
+   * Get all theme modes
+   * @returns {string[]} Full theme-mode names (i.e. ["classic-light"])
    */
-  getThemeVariants() {
+  getThemeModes() {
     const themes = this.getThemes();
     const arr = [];
 
     themes.forEach((theme) => {
       arr.push(this.createFullName(theme.name, theme.base.name));
-      theme.variants.forEach(variant =>
-        arr.push(this.createFullName(theme.name, variant.name)));
+      theme.modes.forEach(modes => arr.push(this.createFullName(theme.name, modes.name)));
     });
 
     return arr;

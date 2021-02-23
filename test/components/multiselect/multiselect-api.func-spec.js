@@ -2,7 +2,7 @@ import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 import { cleanup } from '../../helpers/func-utils';
 
 const multiSelectHTML = require('../../../app/views/components/multiselect/_samples-standard.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 const statesMultiselectData = require('../../../app/data/states-multiselect.json');
 
 let multiSelectEl;

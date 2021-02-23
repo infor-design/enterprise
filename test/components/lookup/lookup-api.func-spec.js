@@ -2,7 +2,7 @@ import { Lookup } from '../../../src/components/lookup/lookup';
 import { cleanup } from '../../helpers/func-utils';
 
 const lookupHTML = require('../../../app/views/components/lookup/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let lookupEl;
 let lookupObj;

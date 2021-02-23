@@ -6,9 +6,9 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Color tests', () => {
+describe('ColorPicker tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/colors/example-index?layout=nofrills');
+    await utils.setPage('/components/colors/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -32,9 +32,9 @@ describe('Color tests', () => {
   }
 });
 
-describe('Color uplift tests', () => {
+describe('Color New Theme tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/colors/example-index?theme=uplift&layout=nofrills');
+    await utils.setPage('/components/colors/example-index?theme=new&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -52,7 +52,7 @@ describe('Color uplift tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'colors-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'colors-new')).toEqual(0);
       await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
     });
   }

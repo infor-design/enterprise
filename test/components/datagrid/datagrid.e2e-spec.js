@@ -37,7 +37,7 @@ describe('Datagrid Alternate Row Tests', () => {
 
 describe('Datagrid Column Sizing Setting Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-columnsizing?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-columnsizing?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -60,7 +60,7 @@ describe('Datagrid Column Sizing Setting Tests', () => {
 
 describe('Datagrid Default Column Width Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-books?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-books?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -83,7 +83,7 @@ describe('Datagrid Default Column Width Tests', () => {
 
 describe('Datagrid Colspan Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-colspan?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-colspan?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -115,7 +115,7 @@ describe('Datagrid Colspan Tests', () => {
 
 describe('Datagrid Compact Row Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-compact-mode?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-compact-mode?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -148,7 +148,7 @@ describe('Datagrid Compact Row Tests', () => {
 
 describe('Datagrid Colspan Frozen Column Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -182,7 +182,7 @@ describe('Datagrid Colspan Frozen Column Tests', () => {
 
 describe('Datagrid Colspan Frozen Column and Single Select Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan-and-single-select?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-colspan-and-single-select?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -216,7 +216,7 @@ describe('Datagrid Colspan Frozen Column and Single Select Tests', () => {
 
 describe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-hide-show-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-grouped-headers-hide-show-columns?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -245,7 +245,7 @@ describe('Datagrid Colspan Frozen Column and Grouped Header Hide/Show Column Tes
 
 describe('Datagrid Comments Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-comments?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-comments?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -308,7 +308,7 @@ describe('Datagrid Custom Filter Option Tests', () => {
 
 describe('Datagrid Disable Rows Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-disabled-rows?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-disabled-rows?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -390,7 +390,7 @@ describe('Datagrid Editable Tests', () => {
 
 describe('Datagrid Empty Message Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-empty-message?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-empty-message?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .empty-message'));
     await browser.driver
@@ -482,7 +482,7 @@ describe('Datagrid Expandable Row Tests', () => {
 
 describe('Datagrid filter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-filter?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-filter?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
@@ -557,11 +557,12 @@ describe('Datagrid filter tests', () => {
 
 describe('Datagrid filter RTL tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&layout=nofrills');
+    await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
+    await browser.driver.sleep(config.sleep);
   });
 
   it('Should not have errors', async () => {
@@ -574,7 +575,7 @@ describe('Datagrid filter RTL tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
       await element(by.css('#custom-id-col-id .btn-filter')).click();
-      await browser.driver.sleep(config.sleepShort);
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-filter-rtl')).toEqual(0);
     });
@@ -583,7 +584,7 @@ describe('Datagrid filter RTL tests', () => {
 
 describe('Datagrid filter alternate row tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
@@ -614,7 +615,7 @@ describe('Datagrid filter alternate row tests', () => {
 
 describe('Datagrid filter medium row tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-filter-medium-rowheight?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-filter-medium-rowheight?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
@@ -637,7 +638,7 @@ describe('Datagrid filter medium row tests', () => {
 
 describe('Datagrid filter short row tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-filter-short-rowheight?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-filter-short-rowheight?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
     await browser.driver
@@ -802,7 +803,7 @@ describe('Datagrid frozen column grouped rows hide columns tests', () => {
 
 describe('Datagrid frozen column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-frozen-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-frozen-columns?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:first-child'));
     await browser.driver
@@ -862,7 +863,7 @@ describe('Datagrid frozen column tests', () => {
 
 describe('Datagrid grouping and editing tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-editable?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-grouping-editable?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:first-child'));
     await browser.driver
@@ -944,7 +945,7 @@ describe('Datagrid grouping and editing tests', () => {
 
 describe('Datagrid grouping headers and filter tests', () => { //eslint-disable-line
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-filter?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-grouping-filter?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
@@ -1057,7 +1058,7 @@ describe('Datagrid grouping with paging tests', () => {
 
 describe('Datagrid grouping totals tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-grouping-totals?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-grouping-totals?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid-rowgroup-header'));
     await browser.driver
@@ -1085,7 +1086,7 @@ describe('Datagrid grouping totals tests', () => {
 
 describe('Datagrid index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-index?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-index?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1194,7 +1195,7 @@ describe('Datagrid keyword search tests', () => {
 
 describe('Datagrid List Styles Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-list?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-list?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1217,7 +1218,7 @@ describe('Datagrid List Styles Tests', () => {
 
 describe('Datagrid mixed selection tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-mixed-selection?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-mixed-selection?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid-header .datagrid-wrapper:nth-child(1) tbody tr:nth-child(1) td:nth-child(2)'));
     await browser.driver
@@ -1257,7 +1258,7 @@ describe('Datagrid mixed selection tests', () => {
 
 describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-multiselect.html?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-multiselect.html?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1375,7 +1376,7 @@ describe('Datagrid multiselect tests', () => {
 
 describe('Datagrid Nested Datagrid tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-nested-grids?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-nested-grids?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1725,7 +1726,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
 
 describe('Datagrid Row Row Reorder', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-reorder?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-reorder?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1809,7 +1810,7 @@ describe('Datagrid Date default values', () => {
 
 describe('Datagrid Alert and Badges Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-alerts?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-alerts?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1839,7 +1840,7 @@ describe('Datagrid Alert and Badges Tests', () => {
 
 describe('Datagrid Alert and Badges Frozen Column Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-frozen-columns-with-alert?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-frozen-columns-with-alert?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1862,7 +1863,7 @@ describe('Datagrid Alert and Badges Frozen Column Tests', () => {
 
 describe('Datagrid Align Header Text Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-align-header-text?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-align-header-text?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1885,7 +1886,7 @@ describe('Datagrid Align Header Text Tests', () => {
 
 describe('Datagrid Align Header Text Toggle Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-align-header-text-toggle?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-align-header-text-toggle?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -1948,7 +1949,7 @@ describe('Datagrid page size selector tests', () => {
 
 describe('Datagrid test post renderer tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-post-renderer-tree?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-post-renderer-tree?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)'));
     await browser.driver
@@ -2052,7 +2053,7 @@ describe('Datagrid spacer row tests', () => {
 
 describe('Datagrid summary row tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/example-summary-row?layout=nofrills');
+    await utils.setPage('/components/datagrid/example-summary-row?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2132,7 +2133,7 @@ describe('Datagrid Client Side Filter and Sort Tests', () => {
 
 describe('Datagrid Duplicate Ids Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-duplicate-column-ids?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-duplicate-column-ids?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2155,7 +2156,7 @@ describe('Datagrid Duplicate Ids Tests', () => {
 
 describe('Datagrid checkbox disabled editor tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-editable-checkboxes?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-editable-checkboxes?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2239,7 +2240,7 @@ describe('Datagrid Lookup Mask Editor', () => {
 
 describe('Datagrid Time Editor Test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-editable-time?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-editable-time?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2398,7 +2399,7 @@ describe('Datagrid Editor Single Tests', () => {
 
 describe('Datagrid Header Alignment with Ellipsis', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-ellipsis-header-align?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-ellipsis-header-align?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
@@ -2421,7 +2422,7 @@ describe('Datagrid Header Alignment with Ellipsis', () => {
 
 describe('Datagrid Header Alignment with Ellipsis and Sorting', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-ellipsis-sort-indicator?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-ellipsis-sort-indicator?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
@@ -2505,7 +2506,7 @@ describe('Datagrid Expandable Row with multiselect', () => {
 
 describe('Datagrid Empty Card Scrolling', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-card?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-empty-card?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper'));
     await browser.driver
@@ -2528,7 +2529,7 @@ describe('Datagrid Empty Card Scrolling', () => {
 
 describe('Datagrid Empty Message Tests After Load', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-message-after-load?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper'));
     await browser.driver
@@ -2605,7 +2606,7 @@ describe('Datagrid Empty Message with two rows', () => {
 
 describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-empty-message-after-load-in-scrollable-flex?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid .datagrid-wrapper'));
     await browser.driver
@@ -2635,7 +2636,7 @@ describe('Datagrid Empty Message Tests After Load in Scrollable Flex', () => {
 
 describe('Datagrid Header Overlapping Sorting Indicator', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-overlapping-sort-indicator?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-overlapping-sort-indicator?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tr:nth-child(1)'));
     await browser.driver
@@ -2728,7 +2729,7 @@ describe('Datagrid Dirty and New Row Indicator', () => {
 
 describe('Datagrid Frozen Column Card (auto) tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-card-frozen-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-card-frozen-columns?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -2765,7 +2766,7 @@ describe('Datagrid Frozen Column Card (auto) tests', () => {
 
 describe('Datagrid Frozen Column Card (fixed) tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-card-frozen-columns-fixed-row-height?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -3231,7 +3232,7 @@ describe('Datagrid hide selection checkbox tests', () => {
 
 describe('Datagrid icon buttons tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-icon-buttons');
+    await utils.setPage('/components/datagrid/test-icon-buttons?theme=classic');
 
     const datagridEl = await element(by.css('#readonly-datagrid .datagrid-wrapper tbody tr:nth-child(1)'));
     await browser.driver
@@ -3347,7 +3348,7 @@ describe('Datagrid loaddata clear selected rows tests', () => {
 
 describe('Datagrid with long cell text', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-long-text?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-long-text?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -3394,7 +3395,7 @@ describe('Datagrid disableRowDeactivation setting tests', () => {
 
 describe('Datagrid on modal with no default size', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column');
+    await utils.setPage('/components/datagrid/test-modal-datagrid-single-column?theme=classic');
     await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
@@ -3418,7 +3419,7 @@ describe('Datagrid on modal with no default size', () => {
 
 describe('Datagrid on modal with no default size (two columns)', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns');
+    await utils.setPage('/components/datagrid/test-modal-datagrid-two-columns?theme=classic');
     await element(by.id('open-modal')).click();
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
@@ -3673,7 +3674,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
 
 describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(2)'));
     await browser.driver
@@ -3786,7 +3787,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
 
 describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-paging-with-summary-row?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-paging-with-summary-row?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
     await browser.driver
@@ -3971,7 +3972,7 @@ describe('Datagrid select event tests', () => {
 
 describe('Datagrid Targeted Achievement', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-targeted-achievement?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-targeted-achievement?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(1)'));
     await browser.driver
@@ -4028,7 +4029,7 @@ describe('Datagrid timezone tests', () => {
 
 describe('Datagrid editable tree tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-tree-editable?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-tree-editable?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
@@ -4081,7 +4082,7 @@ describe('Datagrid tree filter tests', () => {
 
 describe('Datagrid Tree and Frozen Column tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-tree-frozen-columns?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-tree-frozen-columns?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.center .datagrid tr:nth-child(10)'));
     await browser.driver
@@ -4150,7 +4151,7 @@ describe('Datagrid Tree and Frozen Column tests', () => {
 
 describe('Datagrid tree with grouped header tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-tree-grouped-headers?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-tree-grouped-headers?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('.datagrid tr:nth-child(10)'));
     await browser.driver
@@ -4584,7 +4585,7 @@ describe('Datagrid tree select multiple tests', () => {
 
 describe('Datagrid horizontal scrolling tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datagrid/test-horizontal-scroll.html?layout=nofrills');
+    await utils.setPage('/components/datagrid/test-horizontal-scroll.html?theme=classic&layout=nofrills');
 
     const datagridEl = await element(by.css('#datagrid-paging-both tr:nth-child(3)'));
     await browser.driver
@@ -4664,7 +4665,7 @@ describe('Datagrid columns width test', () => {
   });
 
   it('Should not change columns width after reset layout', async () => {
-    const width = [400, 420, 423];
+    const width = [400, 420, 423, 416];
     let elem = await element(by.css('#datagrid thead th:nth-child(5)'));
     await elem.getSize().then((size) => {
       expect(width).toContain(size.width);

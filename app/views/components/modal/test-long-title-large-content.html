@@ -94,12 +94,12 @@
       $(this).focus();
       setModal(modals[this.id]);
 
-      var sohoTheme = (Soho.theme.currentTheme.name.lastIndexOf('Soho') !== -1 || Soho.theme.currentTheme.name === 'Soho Light') && $('.modal-title')[0].innerHTML.length > 68;
+      var classicTheme = (Soho.theme.currentTheme.name.lastIndexOf('Classic') !== -1 || Soho.theme.currentTheme.name === 'Classic Light') && $('.modal-title')[0].innerHTML.length > 68;
 
-      var upliftTheme = (Soho.theme.currentTheme.name.lastIndexOf('Uplift') !== -1 || Soho.theme.currentTheme.name === 'Soho Uplift') && $('.modal-title')[0].innerHTML.length > 47;
+      var newTheme = (Soho.theme.currentTheme.name.lastIndexOf('New') !== -1 || Soho.theme.currentTheme.name === 'Classic Uplift') && $('.modal-title')[0].innerHTML.length > 47;
 
       setTimeout(function () {
-        if (sohoTheme || upliftTheme) {
+        if (classicTheme || newTheme) {
           $('.modal-title').tooltip(TOOLTIP_OPTIONS);
         }
       }, 100);

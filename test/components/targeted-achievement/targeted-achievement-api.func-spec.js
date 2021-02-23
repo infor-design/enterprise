@@ -2,7 +2,7 @@ import { CompletionChart } from '../../../src/components/completion-chart/comple
 import { cleanup } from '../../helpers/func-utils';
 
 const targetedHTML = require('../../../app/views/components/targeted-achievement/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let targetedEl;
 let targetedObj;

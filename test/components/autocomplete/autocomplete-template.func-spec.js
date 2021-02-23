@@ -1,6 +1,6 @@
 import { Autocomplete } from '../../../src/components/autocomplete/autocomplete';
 
-const svgHTML = require('../../../src/components/icons/svg.html');
+const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
 
 // For Non-standard Template
 const newTemplateHTML = require('../../../app/views/components/autocomplete/example-templates.html');

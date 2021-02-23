@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Rating example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/rating/example-index?layout=nofrills');
+    await utils.setPage('/components/rating/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

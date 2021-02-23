@@ -1,7 +1,7 @@
 import { Tabs } from '../../../src/components/tabs/tabs';
 
 const tabsHTML = require('../../../app/views/components/tabs/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let tabsEl;
 let tabsPanelEl;

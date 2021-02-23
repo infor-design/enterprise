@@ -1,9 +1,9 @@
-import { color as sohoLightColors } from './theme-soho-colors.json';
-import { color as sohoDarkColors } from './theme-soho-dark-colors.json';
-import { color as sohoContrastColors } from './theme-soho-contrast-colors.json';
-import { color as upliftLightColors } from './theme-uplift-colors.json';
-import { color as upliftDarkColors } from './theme-uplift-dark-colors.json';
-import { color as upliftContrastColors } from './theme-uplift-contrast-colors.json';
+import { color as classicLightColors } from './theme-classic-colors.json';
+import { color as classicDarkColors } from './theme-classic-dark-colors.json';
+import { color as classicContrastColors } from './theme-classic-contrast-colors.json';
+import { color as newLightColors } from './theme-new-colors.json';
+import { color as newDarkColors } from './theme-new-dark-colors.json';
+import { color as newContrastColors } from './theme-new-contrast-colors.json';
 import { Locale } from '../locale/locale';
 
 /**
@@ -18,19 +18,19 @@ const theme = {
    * @property {string} [currentTheme.id]
    * @property {string} [currentTheme.name]
    */
-  currentTheme: { id: 'theme-soho-light', name: Locale.translate('SohoLightTheme'), legacyId: 'light' },
+  currentTheme: { id: 'theme-new-light', name: Locale.translate('NewLightTheme') },
 
   /**
    * Get all of the colors for all themes
    * @returns {object[]} An array of color objects
    */
   allColors: [
-    { id: 'theme-soho-light', colors: sohoLightColors, legacyId: 'light' },
-    { id: 'theme-soho-dark', colors: sohoDarkColors, legacyId: 'dark' },
-    { id: 'theme-soho-contrast', colors: sohoContrastColors, legacyId: 'high-contrast' },
-    { id: 'theme-uplift-light', colors: upliftLightColors },
-    { id: 'theme-uplift-dark', colors: upliftDarkColors },
-    { id: 'theme-uplift-contrast', colors: upliftContrastColors }
+    { id: 'theme-classic-light', colors: classicLightColors },
+    { id: 'theme-classic-dark', colors: classicDarkColors },
+    { id: 'theme-classic-contrast', colors: classicContrastColors },
+    { id: 'theme-new-light', colors: newLightColors },
+    { id: 'theme-new-dark', colors: newDarkColors },
+    { id: 'theme-new-contrast', colors: newContrastColors }
   ],
 
   /**
@@ -39,12 +39,12 @@ const theme = {
    */
   themes: function themes() {
     return [
-      { id: 'theme-soho-light', name: Locale.translate('SohoLightTheme'), themeId: 'theme-soho', variantId: 'light', variantName: Locale.translate('Light'), legacyId: 'light' },
-      { id: 'theme-soho-dark', name: Locale.translate('SohoDarkTheme'), themeId: 'theme-soho', variantId: 'dark', variantName: Locale.translate('Dark'), legacyId: 'dark' },
-      { id: 'theme-soho-contrast', name: Locale.translate('SohoHighContrastTheme'), themeId: 'theme-soho', variantId: 'contrast', variantName: Locale.translate('Contrast'), legacyId: 'high-contrast' },
-      { id: 'theme-uplift-light', name: Locale.translate('UpliftLightTheme'), themeId: 'theme-uplift', variantId: 'light', variantName: Locale.translate('Light') },
-      { id: 'theme-uplift-dark', name: Locale.translate('UpliftDarkTheme'), themeId: 'theme-uplift', variantId: 'dark', variantName: Locale.translate('Dark') },
-      { id: 'theme-uplift-contrast', name: Locale.translate('UpliftHighContrastTheme'), themeId: 'theme-uplift', variantId: 'contrast', variantName: Locale.translate('Contrast') }
+      { id: 'theme-classic-light', name: Locale.translate('ClassicLightTheme'), themeId: 'theme-classic', modeId: 'light', modeName: Locale.translate('Light') },
+      { id: 'theme-classic-dark', name: Locale.translate('ClassicDarkTheme'), themeId: 'theme-classic', modeId: 'dark', modeName: Locale.translate('Dark') },
+      { id: 'theme-classic-contrast', name: Locale.translate('ClassicHighContrastTheme'), themeId: 'theme-classic', modeId: 'contrast', modeName: Locale.translate('Contrast') },
+      { id: 'theme-new-light', name: Locale.translate('NewLightTheme'), themeId: 'theme-new', modeId: 'light', modeName: Locale.translate('Light') },
+      { id: 'theme-new-dark', name: Locale.translate('NewDarkTheme'), themeId: 'theme-new', modeId: 'dark', modeName: Locale.translate('Dark') },
+      { id: 'theme-new-contrast', name: Locale.translate('NewHighContrastTheme'), themeId: 'theme-new', modeId: 'contrast', modeName: Locale.translate('Contrast') }
     ];
   },
 
@@ -90,7 +90,8 @@ const theme = {
    * @returns {[type]} [description]
    */
   setTheme: function setTheme(themeId) {
-    const result = this.themes().filter(themeObj => themeObj.id === themeId || (themeObj.legacyId && themeObj.legacyId === themeId)); //eslint-disable-line
+    themeId = themeId.replace('soho', 'classic').replace('uplift', 'new');
+    const result = this.themes().filter(themeObj => themeObj.id === themeId);
 
     if (result.length === 0) {
       return '';
@@ -100,10 +101,17 @@ const theme = {
   },
 
   /**
-   * @returns {boolean} whether or not the current theme is an Uplift variant
+   * @returns {boolean} whether or not the current theme is an Uplift mode
    */
   get uplift() {
-    return this.currentTheme.id.indexOf('-uplift-') > -1;
+    return this.currentTheme.id.indexOf('-uplift-') > -1 || this.currentTheme.id.indexOf('-new-') > -1;
+  },
+
+  /**
+   * @returns {boolean} whether or not the current theme is the new/uplift theme
+   */
+  get new() {
+    return this.currentTheme.id.indexOf('-uplift-') > -1 || this.currentTheme.id.indexOf('-new-') > -1;
   }
 
 };

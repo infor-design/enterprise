@@ -1,8 +1,8 @@
 import { EmptyMessage } from '../../../src/components/emptymessage/emptymessage';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/theme-soho-svg.html');
-const svgEmpty = require('../../../src/components/emptymessage/theme-soho-svg-empty.html');
+const svg = require('../../../src/components/icons/theme-classic-svg.html');
+const svgEmpty = require('../../../src/components/emptymessage/theme-classic-svg-empty.html');
 
 const emptymessageHTML = `<div class="row">
   <div class="four columns">

@@ -17,7 +17,7 @@ const clickTabTest = async (index) => {
 
 describe('Tabs click example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs/example-index');
+    await utils.setPage('/components/tabs/example-index?theme=classic');
     const tabsEl = await element(by.id('tabs-normal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -98,7 +98,7 @@ describe('Tabs click example-index tests', () => {
 
 describe('Tabs click example-counts tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs/example-counts');
+    await utils.setPage('/components/tabs/example-counts?theme=classic');
     const tabsEl = await element(by.id('tabs-counts'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -142,9 +142,9 @@ describe('Tabs click example-counts tests', () => {
   });
 });
 
-describe('Tabs click example-counts uplift tests', () => {
+describe('Tabs click example-counts new tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs/example-counts?theme=uplift');
+    await utils.setPage('/components/tabs/example-counts?theme=new');
     const tabsEl = await element(by.id('tabs-counts'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -155,13 +155,13 @@ describe('Tabs click example-counts uplift tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-counts in uplift', async () => {
+    it('Should not visual regress on example-counts in new', async () => {
       const tabsEl = await element(by.id('tabs-counts'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-counts-uplift')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(tabsEl, 'tabs-counts-new')).toEqual(0);
     });
   }
 });
@@ -270,7 +270,7 @@ describe('Tabs keyboard example-index tests', () => {
 
 describe('Tabs click example-add-tab button tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs/example-add-tab-button');
+    await utils.setPage('/components/tabs/example-add-tab-button?theme=classic');
     const tabsEl = await element(by.id('tab1'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -409,7 +409,7 @@ describe('Tabs click example-dropdown-tabs tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-dropdown-tabs', async () => {
+    it('Should not visual regress on example-dropdown-tabs?theme=classic', async () => {
       const tabsEl = await element(by.id('tabs-dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

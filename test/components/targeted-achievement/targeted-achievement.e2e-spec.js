@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Targeted Achievement example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/targeted-achievement/example-index?layout=nofrills');
+    await utils.setPage('/components/targeted-achievement/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -47,7 +47,7 @@ describe('Targeted Achievement example-index tests', () => {
 
 describe('Targeted Achievement icons and links tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/targeted-achievement/example-links-icons?layout=nofrills');
+    await utils.setPage('/components/targeted-achievement/example-links-icons?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

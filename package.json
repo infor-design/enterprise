@@ -133,7 +133,7 @@
     "handlebars-registrar": "^1.5.2",
     "html-loader": "^1.1.0",
     "ids-css": "^1.5.0",
-    "ids-identity": "3.0.6",
+    "ids-identity": "4.0.0",
     "jasmine-core": "^3.5.0",
     "jasmine-jquery": "^2.1.1",
     "jasmine-spec-reporter": "^5.0.2",

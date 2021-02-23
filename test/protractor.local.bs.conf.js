@@ -4,7 +4,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const browserstack = require('browserstack-local');
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
-const theme = process.env.ENTERPRISE_THEME || 'soho'
+const theme = process.env.ENTERPRISE_THEME || 'classic'
 let browserstackBuildID = `${Date.now()} : ci:bs e2e`;
 
 process.env.isBrowserStack = true;

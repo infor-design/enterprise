@@ -9,7 +9,7 @@ const radioId = 'option1';
 
 describe('Radios example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/radios/example-index?layout=nofrills');
+    await utils.setPage('/components/radios/example-index?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);
@@ -35,7 +35,7 @@ describe('Radios example-index tests', () => {
 
 describe('Radios Horizontal tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/radios/example-horizontal?layout=nofrills');
+    await utils.setPage('/components/radios/example-horizontal?theme=classic&layout=nofrills');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(radioId))), config.waitsFor);

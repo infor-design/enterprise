@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Circle pager example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/circlepager/example-index?layout=nofrills');
+    await utils.setPage('/components/circlepager/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -30,15 +30,6 @@ describe('Circle pager example-index tests', () => {
 
     expect(await element(by.id('circlepager-id-1')).getAttribute('id')).toEqual('circlepager-id-1');
     expect(await element(by.id('circlepager-id-1')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1');
-
-    expect(await element(by.id('circlepager-id-1-control-1')).getAttribute('id')).toEqual('circlepager-id-1-control-1');
-    expect(await element(by.id('circlepager-id-1-control-1')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-1');
-
-    expect(await element(by.id('circlepager-id-1-control-2')).getAttribute('id')).toEqual('circlepager-id-1-control-2');
-    expect(await element(by.id('circlepager-id-1-control-2')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-2');
-
-    expect(await element(by.id('circlepager-id-1-control-3')).getAttribute('id')).toEqual('circlepager-id-1-control-3');
-    expect(await element(by.id('circlepager-id-1-control-3')).getAttribute('data-automation-id')).toEqual('automation-id-circlepager-1-control-3');
   });
 });
 
