@@ -22,7 +22,9 @@
 - `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 - `[Tabs]` Fixed an iOS bug that was preventing dismissible tabs to be dismissed by tap. ([#4763](https://github.com/infor-design/enterprise/issues/4763))
-- `[TabsModule]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Vertical]` Fixed black hover state in new (uplift) theme contrast mode. ([#4867](https://github.com/infor-design/enterprise/issues/4867))
 - `[Validation]` Fixed an issue where validation messages did not have the correct aria for accessibility. ([#4830](https://github.com/infor-design/enterprise/issues/4830))
 
 ## v4.37.0
