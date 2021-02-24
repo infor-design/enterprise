@@ -24,7 +24,7 @@
 - `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
 - `[Tabs]` Fixed an iOS bug that was preventing dismissible tabs to be dismissed by tap. ([#4763](https://github.com/infor-design/enterprise/issues/4763))
 - `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
-- `[Tabs Module]` Fixed focus border of the home button in tabs module. ([#4850](https://github.com/infor-design/enterprise/issues/4850))
+- `[Tabs Module]` Fixed the focus border of the home button and make it tabbable in tabs module. ([#4850](https://github.com/infor-design/enterprise/issues/4850))
 - `[Tabs Vertical]` Fixed black hover state in new (uplift) theme contrast mode. ([#4867](https://github.com/infor-design/enterprise/issues/4867))
 - `[Validation]` Fixed an issue where validation messages did not have the correct aria for accessibility. ([#4830](https://github.com/infor-design/enterprise/issues/4830))
 
