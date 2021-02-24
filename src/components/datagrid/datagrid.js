@@ -8170,6 +8170,7 @@ Datagrid.prototype = {
       return;
     }
 
+    let rowData = s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
@@ -8223,8 +8224,6 @@ Datagrid.prototype = {
         }
       } else {
         const selIdx = elem.length ? self.dataRowIndex(elem) : index;
-        let rowData;
-
         if (selIdx !== undefined && selIdx > -1) {
           rowData = s.dataset[selIdx];
         }
@@ -8280,7 +8279,7 @@ Datagrid.prototype = {
     }
 
     if (!noTrigger) {
-      self.element.triggerHandler('selected', [self._selectedRows, 'deselect']);
+      self.element.triggerHandler('selected', [self._selectedRows, 'deselect', rowData]);
     }
   },
 
