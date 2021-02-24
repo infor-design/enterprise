@@ -1355,4 +1355,28 @@ utils.stringAttributes = function addAttributes(api, setting, suffix) {
   return attributes;
 };
 
+/**
+ * Using an array of attribute settings objects, determines if an attribute setting with a specified
+ * name exists in that group of settings.  This can be used to get the final value of an attribute before
+ * it's rendered into the DOM.
+ * @param {object} api the object base API
+ * @param {string} thisName the name of the setting to search for
+ * @param {object|Array} setting the attribute settings
+ * @returns {string|undefined} the value contained by the setting
+ */
+utils.getAttribute = function getAttribute(api, thisName, setting) {
+  let value;
+  if (typeof thisName !== 'string' || !thisName.length || !Array.isArray(setting)) {
+    return value;
+  }
+
+  setting.forEach((item) => {
+    if (!value && item.name === thisName) {
+      value = typeof item.value === 'function' ? item.value(api) : item.value;
+    }
+  });
+
+  return value;
+};
+
 export { utils, math };

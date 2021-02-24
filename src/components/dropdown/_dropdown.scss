@@ -131,6 +131,10 @@ div.multiselect {
     }
   }
 
+  span {
+    background-color: inherit;
+  }
+
   &:empty {
     min-height: 34px;
   }

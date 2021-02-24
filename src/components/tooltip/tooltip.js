@@ -213,8 +213,23 @@ Tooltip.prototype = {
       this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
     }
 
-    if (this.isPopover && this.settings.trigger === 'click') {
-      this.element.attr('aria-haspopup', true);
+    if (this.isPopover) {
+      const hasTimepicker = this.element.prev('input.timepicker').length;
+
+      if (!hasTimepicker && this.settings.trigger === 'click') {
+        this.element.attr('aria-haspopup', true);
+      }
+
+      if (hasTimepicker) {
+        const input = this.element.prev('input.timepicker');
+        input.attr('role', '');
+
+        this.element.attr('role', 'button');
+        this.element.attr('aria-haspopup', 'dialog');
+        this.element.attr('aria-controls', this.tooltip.attr('id'));
+        this.tooltip.attr('role', 'dialog');
+        this.tooltip.attr('aria-label', 'Timepicker Popup');
+      }
     }
   },
 
@@ -243,7 +258,7 @@ Tooltip.prototype = {
     this.tooltip = this.settings.tooltipElement ? $(this.settings.tooltipElement) : $('#tooltip');
     if (!this.tooltip.length) {
       const name = (this.settings.tooltipElement ? this.settings.tooltipElement.substring(1, this.settings.tooltipElement.length) : 'tooltip');
-      this.tooltip = $(`<div class="${this.isPopover ? 'popover' : 'tooltip'} bottom is-hidden" role="tooltip" id="${name}"><div class="arrow"></div><div class="tooltip-content"></div></div>`);
+      this.tooltip = $(`<div class="${this.isPopover ? 'popover' : 'tooltip'} bottom is-hidden" id="${name}"><div class="arrow"></div><div class="tooltip-content"></div></div>`);
     }
 
     this.tooltip.place({
@@ -257,6 +272,7 @@ Tooltip.prototype = {
     $.data(this.tooltip[0], 'tooltip', this);
 
     this.setTargetContainer();
+    this.addAria();
   },
 
   /**
@@ -733,12 +749,13 @@ Tooltip.prototype = {
     const mouseUpEventName = this.isTouch ? 'touchend' : 'mouseup';
 
     // Personalizable the tooltip
-    if (!self.settings.popover) {
-      const isPersonalizable = self.element.closest('.is-personalizable').length > 0;
-      self.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
+    if (!this.settings.popover) {
+      const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
+      this.tooltip[0].classList[isPersonalizable ? 'add' : 'remove']('is-personalizable');
     } else {
-      utils.addAttributes(self.tooltip.find('.tooltip-title'), this, this.settings.attributes, 'title', true);
-      utils.addAttributes(self.tooltip.find('.btn-close'), this, this.settings.attributes, 'btn-close', true);
+      utils.addAttributes(this.tooltip.find('.tooltip-title'), this, this.settings.attributes, 'title', true);
+      utils.addAttributes(this.tooltip.find('.btn-close'), this, this.settings.attributes, 'btn-close', true);
+      this.element.attr('aria-expanded', 'true');
     }
 
     setTimeout(() => {
@@ -835,7 +852,10 @@ Tooltip.prototype = {
    * @returns {void}
    */
   setTargetContainer() {
-    let targetContainer = $('body');
+    let targetContainer = $('[role="main"]');
+    if (!targetContainer.length) {
+      targetContainer = $('body');
+    }
     let attachAfterTriggerElem = false;
 
     // adjust the tooltip if the element is being scrolled inside a scrollable DIV
