@@ -272,6 +272,7 @@ Dropdown.prototype = {
         'aria-haspopup': 'true',
         'aria-expanded': 'false'
       });
+    this.renderPsuedoElemLabel();
 
     if (this.settings.attributes) {
       utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'dropdown', true);
@@ -470,6 +471,16 @@ Dropdown.prototype = {
     if (this.isOpen()) {
       this.position();
     }
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  renderPsuedoElemLabel() {
+    this.pseudoElem.attr({
+      'aria-label': `${this.label.text()}, ${this.value}`
+    });
   },
 
   /**
@@ -1078,7 +1089,7 @@ Dropdown.prototype = {
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
-
+    this.renderPsuedoElemLabel();
     this.updateItemIcon(opts);
     this.setBadge(opts);
   },
@@ -1895,14 +1906,6 @@ Dropdown.prototype = {
       this.list[0].classList.add('dropdown-short');
     }
 
-    const customId = utils.getAttribute(this, 'id', this.settings.attributes);
-    this.pseudoElem
-      .attr({
-        'aria-expanded': 'true',
-        'aria-controls': customId ? `${customId}-listbox` : 'dropdown-list'
-      })
-      .addClass('is-open');
-
     if (self.settings.attributes) {
       // Add test automation ids
       utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'search', true);
@@ -1919,7 +1922,15 @@ Dropdown.prototype = {
         const opt = $(this);
         utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`, true);
       });
+
+      const customId = utils.getAttribute(this, 'id', this.settings.attributes);
+      this.pseudoElem.attr('aria-controls', customId ? `${customId}-listbox` : 'dropdown-list');
+      this.pseudoElem.attr('aria-expanded');
     }
+
+    this.pseudoElem
+      .attr('aria-expanded', 'true')
+      .addClass('is-open');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {
