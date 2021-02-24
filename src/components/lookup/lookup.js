@@ -750,7 +750,7 @@ Lookup.prototype = {
             }
           }
 
-          if (!foundInData) {
+          if ((!foundInData) && (data !== undefined)) {
             data[this.settings.field] = selectedIds[i];
             this.grid._selectedRows.push({ data });
           }
@@ -783,7 +783,7 @@ Lookup.prototype = {
             }
           }
 
-          if (!foundInData) {
+          if ((!foundInData) && (data !== undefined)) {
             data[this.settings.field] = selectedIds[i];
             this.grid._selectedRows.push({ data });
           }
