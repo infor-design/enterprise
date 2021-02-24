@@ -340,7 +340,7 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
 
         .icon {
