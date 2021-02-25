@@ -148,7 +148,7 @@ ListDetail.prototype = {
       this.detailContainsBackElement = this.detailElement.contains(this.backElement);
     }
 
-    if (this.toggleElement){
+    if (this.toggleElement) {
       this.mainElement = this.element.querySelector('.main');
       this.sidebarElement = this.element.querySelector('.sidebar');
 
@@ -334,11 +334,11 @@ ListDetail.prototype = {
   toggleSidebar(hide) {
     if (hide) {
       this.sidebarElement.classList.add('hidden');
-      this.mainElement.style.width = "100%";
+      this.mainElement.style.width = '100%';
       this.toggleElementIcon.classList.remove('go-back');
     } else {
       this.sidebarElement.classList.remove('hidden');
-      this.mainElement.style.width = "";
+      this.mainElement.style.width = '';
       this.toggleElementIcon.classList.add('go-back');
     }
 
@@ -539,7 +539,7 @@ ListDetail.prototype = {
     delete this.backElement;
     delete this.backElementIcon;
     delete this.mainElement;
-    delete this.sidebarElement
+    delete this.sidebarElement;
     delete this.toggleElement;
     delete this.toggleElementIcon;
     delete this.edgeBleed;
