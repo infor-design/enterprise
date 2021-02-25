@@ -29,15 +29,20 @@ describe('TimePicker ARIA', () => {
   });
 
   it('Should set ARIA labels', () => {
-    expect(document.querySelector('.timepicker[aria-expanded="false"]')).toBeTruthy();
-    expect(document.querySelector('.timepicker[role="combobox"]')).toBeTruthy();
-    expect(document.querySelector('.icon[aria-hidden="true"]')).toBeTruthy();
-    expect(document.querySelector('.icon[role="presentation"]')).toBeTruthy();
+    expect(document.querySelector('.timepicker[aria-expanded="false"]'))
+      .withContext('Timepicker Input `aria-expanded="false"`').toBeTruthy();
+    expect(document.querySelector('.timepicker[role="combobox"]'))
+      .withContext('Timepicker Input `combobox` role').toBeTruthy();
+    expect(document.querySelector('.icon[aria-hidden="true"]'))
+      .withContext('Timepicker trigger icon `aria-hidden`').toBeTruthy();
+    expect(document.querySelector('.icon[role="button"]'))
+      .withContext('Timepicker trigger icon `button` role').toBeTruthy();
   });
 
   it('Should update ARIA labels with popup open', () => {
     timepickerObj.openTimePopup();
 
-    expect(document.querySelector('.timepicker[aria-expanded="true"]')).toBeTruthy();
+    expect(document.querySelector('.timepicker[aria-expanded="true"]'))
+      .withContext('Timepicker `aria-expanded="true"`').toBeTruthy();
   });
 });

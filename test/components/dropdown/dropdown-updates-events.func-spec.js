@@ -8,6 +8,8 @@ const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 let dropdownEl;
 let dropdownObj;
 
+const COMPONENT_ID = 'custom-dropdown-id-1';
+
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
     dropdownEl = null;
@@ -21,7 +23,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '#dropdown-list', '.row', 'select']);
+    cleanup(['.dropdown', '.svg-icons', `#${COMPONENT_ID}-dropdown-list`, '.row', 'select']);
   });
 
   it('Should set settings', () => {
@@ -174,8 +176,8 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on click', (done) => {
-    DOM.remove(document.querySelector('#dropdown-list'));
-    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
+    DOM.remove(document.querySelector('.dropdown-list'));
+    const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
@@ -190,7 +192,7 @@ describe('Dropdown updates, events', () => {
     options[1].innerText = 'Dup';
 
     // Try to select them and make sure you always get an event
-    const spyEvent = spyOnEvent('select.dropdown', 'change');
+    const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();

@@ -215,18 +215,18 @@ Tooltip.prototype = {
 
     if (this.isPopover) {
       const hasTimepicker = this.element.prev('input.timepicker').length;
-
       if (!hasTimepicker && this.settings.trigger === 'click') {
         this.element.attr('aria-haspopup', true);
       }
-
       if (hasTimepicker) {
+        const id = this.tooltip.attr('id');
         const input = this.element.prev('input.timepicker');
-        input.attr('role', '');
+        input.attr('role', 'combobox');
+        input.attr('aria-controls', id);
 
         this.element.attr('role', 'button');
         this.element.attr('aria-haspopup', 'dialog');
-        this.element.attr('aria-controls', this.tooltip.attr('id'));
+        this.element.attr('aria-controls', id);
         this.tooltip.attr('role', 'dialog');
         this.tooltip.attr('aria-label', 'Timepicker Popup');
       }

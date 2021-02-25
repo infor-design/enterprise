@@ -204,7 +204,14 @@ TimePicker.prototype = {
    */
   addAria() {
     this.element.attr({
-      role: 'combobox'
+      role: 'combobox',
+      'aria-expanded': 'false',
+    });
+
+    this.trigger.attr({
+      role: 'button',
+      'aria-hidden': 'true',
+      'aria-haspopup': 'dialog'
     });
 
     // TODO: Confirm this with Accessibility Team
@@ -477,6 +484,9 @@ TimePicker.prototype = {
     const minuteTimePart = $('<div class="time-part"></div>');
     minuteTimePart.append($(`<label for="${this.minutesId}">${Locale.translate('Minutes', { locale: this.locale.name, language: this.language })}</label>`));
     minuteTimePart.append(this.minuteSelect);
+    if (hasSeconds) {
+      minuteTimePart.append($(`<span class="label colons">${timeSeparator}</span>`));
+    }
     timeParts.append(minuteTimePart);
 
     // Seconds Picker
@@ -502,7 +512,6 @@ TimePicker.prototype = {
       }
 
       const secondsTimePart = $('<div class="time-part"></div>');
-      minuteTimePart.append($(`<span class="label colons">${timeSeparator}</span>`));
       secondsTimePart.append($(`<label for="${this.secondsId}">${Locale.translate('Seconds', { locale: this.locale.name, language: this.language })}</label>`));
       secondsTimePart.append(this.secondSelect);
       timeParts.append(secondsTimePart);
@@ -984,6 +993,10 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
+    if (this.trigger.data('tooltip')) {
+      this.element.attr('aria-expanded', 'true');
+    }
+
     this.popup.find('div.dropdown').first().focus();
   },
 
@@ -997,6 +1010,7 @@ TimePicker.prototype = {
   closeTimePopup() {
     if (this.trigger.data('tooltip')) {
       this.trigger.data('tooltip').hide();
+      this.element.attr('aria-expanded', 'false');
     }
   },
 

@@ -269,7 +269,7 @@ Dropdown.prototype = {
       .attr(attributesToCopy.obj)
       .attr({
         role: 'button',
-        'aria-haspopup': 'true',
+        'aria-haspopup': 'listbox',
         'aria-expanded': 'false'
       });
     this.renderPsuedoElemLabel();
