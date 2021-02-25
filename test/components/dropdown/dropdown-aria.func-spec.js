@@ -21,7 +21,7 @@ describe('Dropdown ARIA', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '#dropdown-list', '.row', 'select']);
+    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select']);
   });
 
   it('Should set ARIA labels', (done) => {
