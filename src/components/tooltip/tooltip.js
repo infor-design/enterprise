@@ -228,7 +228,7 @@ Tooltip.prototype = {
         this.element.attr('aria-haspopup', 'dialog');
         this.element.attr('aria-controls', id);
         this.tooltip.attr('role', 'dialog');
-        this.tooltip.attr('aria-label', 'Timepicker Popup');
+        this.tooltip.attr('aria-label', Locale.translate('TimepickerPopup'));
       }
     }
   },
