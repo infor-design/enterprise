@@ -743,8 +743,21 @@ Lookup.prototype = {
     if (selectedId.indexOf(this.settings.delimiter) > 1) {
       const selectedIds = selectedId.split(this.settings.delimiter);
       let isFound = false;
+      let isRemoved = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
+        if (this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              isRemoved = true;
+            }
+          }
+        }
+
+        if (isRemoved) {
+          continue;
+        }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {
@@ -758,7 +771,7 @@ Lookup.prototype = {
 
           if (this.grid.recentlyRemoved) {
             for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
-              if (this.grid.recentlyRemoved[j].toString() ===
+              if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
                 selectedIds[i].toString()) {
                 foundInData = true;
               }
@@ -784,8 +797,21 @@ Lookup.prototype = {
       const selectedIds = [];
       selectedIds.push(selectedId);
       let isFound = false;
+      let isRemoved = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
+        if (this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              isRemoved = true;
+            }
+          }
+        }
+
+        if (isRemoved) {
+          continue;
+        }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {
@@ -799,7 +825,7 @@ Lookup.prototype = {
 
           if (this.grid.recentlyRemoved) {
             for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
-              if (this.grid.recentlyRemoved[j].toString() ===
+              if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
                 selectedIds[i].toString()) {
                 foundInData = true;
               }
@@ -811,6 +837,15 @@ Lookup.prototype = {
             data[this.settings.field] = selectedIds[i];
           }
           adjust = true;
+        }
+
+        if (isFound && this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              adjust = false;
+            }
+          }
         }
       }
 
