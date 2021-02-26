@@ -184,6 +184,8 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on duplicate label', () => {
+    DOM.remove(document.querySelector('.dropdown-list'));
+
     // Make some dup labels
     const options = document.body.querySelectorAll('option');
     options[0].innerText = 'Dup';
