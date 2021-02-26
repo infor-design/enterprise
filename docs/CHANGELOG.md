@@ -40,6 +40,7 @@
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
 - `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the default to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
 - `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
+- `[Sidebar]` Added the ability to hide and show the side bar with the list detail view. ([#4394](https://github.com/infor-design/enterprise/issues/4394))
 
 ### v4.37.0 Fixes
 
