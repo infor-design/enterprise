@@ -24,6 +24,7 @@ const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
  * @param {HTMLElement} [settings.listElement] the base element for the Soho component that will be used as the "List" to be chosen from.
  * Must implement a Soho Accordion or Listview element.
  * @param {HTMLElement} [settings.listCloseElement]  defines a trigger button element that can be used to collapse a bleeding-edge list drawer.
+ * @param {HTMLElement} [settings.toggleElement] defines a trigger button that will be used to "toggle" the display of the listElement.
  * @param {HTMLElement} [settings.detailElement] the base element for the Soho component that will be used as "detail" or content area that can
  * change based on what is picked from the list.
  */
@@ -33,6 +34,7 @@ const LIST_DETAIL_DEFAULTS = {
   edgeBleedBreakpoint: LIST_DETAIL_EDGE_BLEED_BREAKPOINTS[0],
   listElement: undefined,
   listCloseElement: undefined,
+  toggleElement: undefined,
   detailElement: undefined
 };
 
@@ -107,12 +109,15 @@ ListDetail.prototype = {
     this.setInternalElementReference('detailElement');
     this.setInternalElementReference('backElement');
     this.setInternalElementReference('listCloseElement');
-
+    this.setInternalElementReference('toggleElement');
+    
     // Single sanity-check for showing the detail area.
     this.showDetail = false;
     if (this.element.classList.contains('show-detail')) {
       this.showDetail = true;
     }
+
+    this.showSidebar = true;
 
     // If a proper listElement has been provided, set a flag on its Component API
     // that notifies the API that it's controlling an adjacent detail area.
@@ -141,6 +146,20 @@ ListDetail.prototype = {
       }
       
       this.detailContainsBackElement = this.detailElement.contains(this.backElement);
+    }
+
+    if (this.toggleElement) {
+      this.mainElement = this.element.querySelector('.main');
+      this.sidebarElement = this.element.querySelector('.sidebar');
+
+      this.toggleElement.classList.add('list-detail-toggle-button');
+
+      // If it's an icon button, get a reference to the icon so we can change its state.
+      const hasIcon = this.toggleElement.querySelector('.icon');
+      if (hasIcon) {
+        this.toggleElementIcon = hasIcon;
+        this.toggleElementIcon.classList.add('go-back');
+      }
     }
 
     // Gets children list/detail components
@@ -222,6 +241,10 @@ ListDetail.prototype = {
 
     if (this.backElement) {
       this.backElement.addEventListener('click', this.handleBackClick.bind(this));
+    }
+
+    if (this.toggleElement) {
+      this.toggleElement.addEventListener('click', this.handleToggleClick.bind(this));
     }
 
     if (this.listCloseElement) {
@@ -308,6 +331,20 @@ ListDetail.prototype = {
     }
   },
 
+  toggleSidebar(hide) {
+    if (hide) {
+      this.sidebarElement.classList.add('hidden');
+      this.mainElement.style.width = '100%';
+      this.toggleElementIcon.classList.remove('go-back');
+    } else {
+      this.sidebarElement.classList.remove('hidden');
+      this.mainElement.style.width = '';
+      this.toggleElementIcon.classList.add('go-back');
+    }
+
+    this.showSidebar = !hide;
+  },
+
   /**
    * Handles `click` events passed to the `backElement`.
    * @private
@@ -357,6 +394,14 @@ ListDetail.prototype = {
    * Handler for the listCloseElement's `click` event.
    * @returns {void}
    */
+  handleToggleClick() {
+    this.toggleSidebar(this.showSidebar); 
+  },
+
+  /**
+   * Handler for the listCloseElement's `click` event.
+   * @returns {void}
+   */
   handleClose() {
     if (this.showDetail) {
       return;
@@ -388,6 +433,9 @@ ListDetail.prototype = {
       this.removeBackElementIconContext();
     } else {
       this.addBackElementIconContext();
+      if (this.toggleElement) {
+        this.toggleSidebar(false);
+      }
     }
 
     // Make sure the list is always re-enabled on desktop
@@ -490,11 +538,16 @@ ListDetail.prototype = {
     delete this.detailElement;
     delete this.backElement;
     delete this.backElementIcon;
+    delete this.mainElement;
+    delete this.sidebarElement;
+    delete this.toggleElement;
+    delete this.toggleElementIcon;
     delete this.edgeBleed;
     delete this.listContainsBackElement;
     delete this.detailContainsBackElement;
     delete this.childrenListDetailElements;
     delete this.showDetail;
+    delete this.showSidebar;
   },
 
   /**

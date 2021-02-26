@@ -8,6 +8,7 @@
 
 ### v4.38.0 Fixes
 
+- `[Application Menu]` Fixed visibility of expander icon on classic theme. ([#4874](https://github.com/infor-design/enterprise/issues/4874))
 - `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
@@ -19,6 +20,7 @@
 - `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
 - `[Lookup]` Fixed an issue with select all across pages in lookup. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Lookup]` Fixed an issue clearing selections with selectAcrossPages. ([#4539](https://github.com/infor-design/enterprise/issues/4539))
+- `[Message]` Fixed multiple events were firing. ([#953](https://github.com/infor-design/enterprise-ng/issues/953))
 - `[Popover]` Fixed a bug where the close button did not get an automation ID and added automation ID to the title. ([#4743](https://github.com/infor-design/enterprise/issues/4743))
 - `[Locale/Multiselect]` Fixed a bug where translations could not be made correctly on All label and Selected Label, so we dropped having the label in the field. You can use the allTextString and selectedTextString if you want something special. ([#4505](https://github.com/infor-design/enterprise/issues/4505))
 - `[Locale]` Fixed a bug in Estonian translations. ([#4805](https://github.com/infor-design/enterprise/issues/4805))
@@ -40,6 +42,7 @@
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
 - `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the default to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
 - `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
+- `[Sidebar]` Added the ability to hide and show the side bar with the list detail view. ([#4394](https://github.com/infor-design/enterprise/issues/4394))
 
 ### v4.37.0 Fixes
 
