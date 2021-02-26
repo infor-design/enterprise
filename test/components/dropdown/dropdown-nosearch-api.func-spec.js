@@ -20,7 +20,7 @@ describe('Dropdown API (No Search Mode)', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '#dropdown-list', '.row', 'select', '#dropdown-setup-script']);
+    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select', '#dropdown-setup-script']);
   });
 
   it('can programmatically select an item that starts with a specified character', () => {

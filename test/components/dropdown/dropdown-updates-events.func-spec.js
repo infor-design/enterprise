@@ -8,8 +8,6 @@ const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 let dropdownEl;
 let dropdownObj;
 
-const COMPONENT_ID = 'custom-dropdown-id-1';
-
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
     dropdownEl = null;
@@ -23,7 +21,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', `#${COMPONENT_ID}-dropdown-list`, '.row', 'select']);
+    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select']);
   });
 
   it('Should set settings', () => {

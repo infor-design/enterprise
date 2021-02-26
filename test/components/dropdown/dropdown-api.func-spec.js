@@ -93,7 +93,7 @@ describe('Dropdown API', () => {
     dropdownObj.open();
 
     // `targetEl` will be the list item for New Hampshire
-    const targetEl = document.querySelector('#dropdown-list > ul > li.dropdown-option:nth-child(0n+30');
+    const targetEl = document.querySelector('.dropdown-list > ul > li.dropdown-option:nth-child(0n+30');
     dropdownObj.selectOption($(targetEl));
 
     expect(dropdownObj.element.val()).toBe('NH');
