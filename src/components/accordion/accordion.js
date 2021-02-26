@@ -854,11 +854,11 @@ Accordion.prototype = {
         if (e) {
           e.stopPropagation();
         }
-        pane.triggerHandler('afterexpand', [a]);
-        self.element.trigger('afterexpand', [a]);
         $.when(...expandDfds, ...collapseDfds).done(() => {
           dfd.resolve();
         });
+        pane.triggerHandler('afterexpand', [a]);
+        self.element.trigger('afterexpand', [a]);
       }
 
       if (pane.hasClass('no-transition')) {
@@ -961,10 +961,11 @@ Accordion.prototype = {
       if (e) {
         e.stopPropagation();
       }
-      pane.triggerHandler('aftercollapse', [a]);
-      self.element.trigger('aftercollapse', [a]);
+
       header.add(pane).removeClass('is-expanded');
       a.attr('aria-expanded', 'false');
+      pane.triggerHandler('aftercollapse', [a]);
+      self.element.trigger('aftercollapse', [a]);
       dfd.resolve();
     }
 
