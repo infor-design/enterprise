@@ -1,8 +1,9 @@
 import { cleanup } from '../../helpers/func-utils';
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
+import { DOM } from '../../../src/utils/dom';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let dropdownEl;
 let dropdownObj;
@@ -173,7 +174,8 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on click', (done) => {
-    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
+    DOM.remove(document.querySelector('.dropdown-list'));
+    const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
@@ -188,7 +190,7 @@ describe('Dropdown updates, events', () => {
     options[1].innerText = 'Dup';
 
     // Try to select them and make sure you always get an event
-    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
+    const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();

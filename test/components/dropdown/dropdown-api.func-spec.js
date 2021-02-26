@@ -2,7 +2,7 @@ import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { cleanup } from '../../helpers/func-utils';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let dropdownEl;
 let dropdownObj;
@@ -93,7 +93,7 @@ describe('Dropdown API', () => {
     dropdownObj.open();
 
     // `targetEl` will be the list item for New Hampshire
-    const targetEl = document.querySelector('.dropdown-list > ul > li.dropdown-option:nth-child(0n+30');
+    const targetEl = document.querySelector('#dropdown-list > ul > li.dropdown-option:nth-child(0n+30');
     dropdownObj.selectOption($(targetEl));
 
     expect(dropdownObj.element.val()).toBe('NH');
