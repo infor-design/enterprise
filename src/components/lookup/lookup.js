@@ -672,7 +672,14 @@ Lookup.prototype = {
     }
 
     if (this.settings.options) {
-      lookupGrid.on('selected.lookup', (e, selectedRows) => {
+      lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
+        if (op === 'deselect') {
+          if (!self.grid.recentlyRemoved) {
+            self.grid.recentlyRemoved = [];
+          }
+          self.grid.recentlyRemoved.push(rowData);
+        }
+
         // Only proceed if a row is selected
         if (!selectedRows || selectedRows.length === 0) {
           return;
@@ -736,12 +743,24 @@ Lookup.prototype = {
     if (selectedId.indexOf(this.settings.delimiter) > 1) {
       const selectedIds = selectedId.split(this.settings.delimiter);
       let isFound = false;
+      let isRemoved = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
+        if (this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              isRemoved = true;
+            }
+          }
+        }
+
+        if (isRemoved) {
+          continue;
+        }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {
-          const data = {};
           let foundInData = false;
           for (let j = 0; j < this.grid._selectedRows.length; j++) {
             if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
@@ -750,9 +769,18 @@ Lookup.prototype = {
             }
           }
 
+          if (this.grid.recentlyRemoved) {
+            for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+              if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+                selectedIds[i].toString()) {
+                foundInData = true;
+              }
+            }
+          }
+
           if (!foundInData) {
+            const data = {};
             data[this.settings.field] = selectedIds[i];
-            this.grid._selectedRows.push({ data });
           }
           adjust = true;
         }
@@ -769,12 +797,24 @@ Lookup.prototype = {
       const selectedIds = [];
       selectedIds.push(selectedId);
       let isFound = false;
+      let isRemoved = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
+        if (this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              isRemoved = true;
+            }
+          }
+        }
+
+        if (isRemoved) {
+          continue;
+        }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {
-          const data = {};
           let foundInData = false;
           for (let j = 0; j < this.grid._selectedRows.length; j++) {
             if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
@@ -783,11 +823,29 @@ Lookup.prototype = {
             }
           }
 
+          if (this.grid.recentlyRemoved) {
+            for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+              if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+                selectedIds[i].toString()) {
+                foundInData = true;
+              }
+            }
+          }
+
           if (!foundInData) {
+            const data = {};
             data[this.settings.field] = selectedIds[i];
-            this.grid._selectedRows.push({ data });
           }
           adjust = true;
+        }
+
+        if (isFound && this.grid.recentlyRemoved) {
+          for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
+            if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
+              selectedIds[i].toString()) {
+              adjust = false;
+            }
+          }
         }
       }
 

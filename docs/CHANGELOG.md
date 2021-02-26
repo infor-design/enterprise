@@ -18,6 +18,8 @@
 - `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
 - `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
+- `[Lookup]` Fixed an issue with select all across pages in lookup. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+- `[Lookup]` Fixed an issue clearing selections with selectAcrossPages. ([#4539](https://github.com/infor-design/enterprise/issues/4539))
 - `[Message]` Fixed multiple events were firing. ([#953](https://github.com/infor-design/enterprise-ng/issues/953))
 - `[Popover]` Fixed a bug where the close button did not get an automation ID and added automation ID to the title. ([#4743](https://github.com/infor-design/enterprise/issues/4743))
 - `[Locale/Multiselect]` Fixed a bug where translations could not be made correctly on All label and Selected Label, so we dropped having the label in the field. You can use the allTextString and selectedTextString if you want something special. ([#4505](https://github.com/infor-design/enterprise/issues/4505))
