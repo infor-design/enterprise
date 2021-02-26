@@ -174,8 +174,7 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on click', (done) => {
-    DOM.remove(document.querySelector('.dropdown-list'));
-    const spyEvent = spyOnEvent('.dropdown', 'change');
+    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
@@ -184,15 +183,13 @@ describe('Dropdown updates, events', () => {
   });
 
   it('should trigger change event on duplicate label', () => {
-    DOM.remove(document.querySelector('.dropdown-list'));
-
     // Make some dup labels
     const options = document.body.querySelectorAll('option');
     options[0].innerText = 'Dup';
     options[1].innerText = 'Dup';
 
     // Try to select them and make sure you always get an event
-    const spyEvent = spyOnEvent('.dropdown', 'change');
+    const spyEvent = spyOnEvent('#custom-dropdown-id-1', 'change');
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
