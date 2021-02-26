@@ -1287,7 +1287,7 @@ Datagrid.prototype = {
         ids = `id="${id}"`;
       }
 
-      headerRows[container] += `<th scope="col" role="columnheader" ${ids} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
+      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1303,9 +1303,9 @@ Datagrid.prototype = {
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
-          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" tabindex="0"></span>';
+          headerRows[container] += '<span class="datagrid-checkbox" aria-label="Selection" role="checkbox" tabindex="0"></span>';
         } else {
-          headerRows[container] += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none" tabindex="0"></span>';
+          headerRows[container] += '<span class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none" tabindex="0"></span>';
         }
       }
 
@@ -4091,6 +4091,10 @@ Datagrid.prototype = {
         (col.readonly || col.editor === undefined)) ?
         'aria-readonly="true"' : '';
 
+      if (cssClass.indexOf('is-readonly') > -1) {
+        ariaReadonly = 'aria-readonly="true"';
+      }
+
       if (col.isReadonly && !col.readonly && col.id !== 'selectionCheckbox') {
         const fieldVal = self.fieldValue(rowData, self.settings.columns[j].field);
         const isReadonly = col.isReadonly(this.recordCount, j, fieldVal, col, rowData);
@@ -4196,9 +4200,27 @@ Datagrid.prototype = {
 
       const idProp = this.settings.attributes?.filter(a => a.name === 'id');
       const ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
+      let ariaChecked = '';
+
+      // Set aria-checkbox attribute
+      if (col.formatter?.toString().indexOf('function Checkbox') === 0) {
+        let isChecked;
+
+        // Use isChecked function if exists
+        if (col.isChecked) {
+          isChecked = col.isChecked(cellValue);
+        } else {
+          isChecked = (cellValue === undefined ? false : (cellValue === true || parseInt(cellValue, 10) === 1));
+        }
+        ariaChecked = ` aria-checked="${isChecked}"`;
+      }
+      if (col.formatter?.toString().indexOf('function SelectionCheckbox(') === 0) {
+        ariaChecked = ` aria-checked="${this.isRowSelected(rowData)}"`;
+      }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
+          }${ariaChecked
           }${isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
@@ -4511,16 +4533,18 @@ Datagrid.prototype = {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
     const context = this.canvas.getContext('2d');
+    const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
+
     if (!this.fontCached || !this.fontHeaderCached) {
-      this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      this.fontCached = theme.currentTheme.id && isNewTheme ?
         '400 16px arial' : '400 14px arial';
-      this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+      this.fontHeaderCached = theme.currentTheme.id && isNewTheme ?
         '600 14px arial' : '700 12px arial';
 
       if (this.settings.rowHeight === 'extra-small') {
-        this.fontCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        this.fontCached = theme.currentTheme.id && isNewTheme ?
           '400 14px arial' : '400 12px arial';
-        this.fontHeaderCached = theme.currentTheme.id && theme.currentTheme.id.indexOf('uplift') > -1 ?
+        this.fontHeaderCached = theme.currentTheme.id && isNewTheme ?
           '600 14px arial' : '700 12px arial';
       }
     }
@@ -5544,7 +5568,7 @@ Datagrid.prototype = {
         }
 
         self.isColumnsChanged = false;
-        modal.element.find('.searchfield').searchfield({ clearable: true });
+        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
         modal.element.find('.listview')
           .listview({
             source: this.settings.columns,
@@ -6322,7 +6346,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (canSelect && self.settings.selectable === 'multiple' && e.shiftKey) {
+      if (canSelect && (self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect) {
@@ -7390,9 +7414,9 @@ Datagrid.prototype = {
 
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
+    checkbox.attr('aria-checked', 'true');
     checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked').attr('aria-checked', 'true')
-      .attr('aria-label', 'Selected');
+      .addClass('is-checked');
 
     if (data) {
       data._selected = true;
@@ -7878,7 +7902,7 @@ Datagrid.prototype = {
 
     if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
       this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function () {
-        $(this).triggerHandler('recalculate-buttons');
+        $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
       }).animateOpen();
     }
   },
@@ -8201,9 +8225,10 @@ Datagrid.prototype = {
 
       if (self.columnIdxById('selectionCheckbox') !== -1) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+        checkbox.attr('aria-checked', 'false');
+
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked no-animate')
-          .attr('aria-checked', 'false')
           .removeAttr('aria-label');
       }
 
@@ -8296,11 +8321,13 @@ Datagrid.prototype = {
     // Not multiselect
     if (!isMultiselect) {
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-        .removeClass('is-checked is-partial').attr('aria-checked', 'false');
+        .removeClass('is-checked is-partial');
+      checkbox.attr('aria-checked', 'false');
 
       if (node.is('.is-selected')) {
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .addClass('is-checked').attr('aria-checked', 'true');
+        checkbox.attr('aria-checked', 'true');
       }
       return;
     }
@@ -8312,14 +8339,17 @@ Datagrid.prototype = {
         const status = self.getSelectedStatus(nodeToUse, isFirstSkipped);
 
         checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .removeClass('is-checked is-partial').attr('aria-checked', 'false');
+          .removeClass('is-checked is-partial');
+        checkboxToUse.attr('aria-checked', 'false');
 
         if (status === 'mixed') {
           checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
             .addClass('is-checked is-partial').attr('aria-checked', 'mixed');
+          checkboxToUse.attr('aria-checked', 'mixed');
         } else if (status) {
           checkboxToUse.find('.datagrid-cell-wrapper .datagrid-checkbox')
-            .addClass('is-checked').attr('aria-checked', 'true');
+            .addClass('is-checked');
+          checkboxToUse.attr('aria-checked', 'true');
         }
       });
     };
@@ -8571,8 +8601,8 @@ Datagrid.prototype = {
         if ((self.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') && selectionCheckbox) {
           checkbox
             .addClass('is-checked')
-            .removeClass('is-partial')
-            .attr('aria-checked', 'true');
+            .removeClass('is-partial');
+          checkbox.closest('th').attr('aria-checked', 'true');
 
           if (self.recordCount === self._selectedRows.length) {
             if (self.settings.selectAllCurrentPage) {
@@ -8726,6 +8756,11 @@ Datagrid.prototype = {
           e.preventDefault();
           return;
         }
+      }
+
+      // Open Context Menu
+      if (key === 121 && e.shiftKey) { // Shift F10
+        target.trigger('contextmenu');
       }
 
       // Tab, Left, Up, Right and Down arrow keys.
@@ -8894,7 +8929,7 @@ Datagrid.prototype = {
           return;
         }
 
-        if (self.settings.selectable === 'multiple' && e.shiftKey) {
+        if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
           self.toggleRowSelection(row);
@@ -8959,8 +8994,8 @@ Datagrid.prototype = {
       if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
         checkbox
           .addClass('is-checked')
-          .removeClass('is-partial')
-          .attr('aria-checked', 'true');
+          .removeClass('is-partial');
+        checkbox.closest('th').attr('aria-checked', 'true');
 
         if (self.recordCount === self._selectedRows.length) {
           if (self.settings.selectAllCurrentPage) {

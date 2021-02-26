@@ -9,7 +9,7 @@ let spinboxEl;
 
 describe('Spinbox example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/spinbox/example-index');
+    await utils.setPage('/components/spinbox/example-index?theme=classic');
     spinboxEl = await element(by.id('spinbox-id-1-spinbox'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.id('spinbox-id-1-spinbox'))), config.waitsFor);

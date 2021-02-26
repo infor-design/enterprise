@@ -209,7 +209,8 @@ Lookup.prototype = {
     if (this.settings.clearable) {
       lookup.searchfield({
         clearable: true,
-        attributes: this.settings.attributes
+        attributes: this.settings.attributes,
+        tabbable: false
       });
     }
 

@@ -2,7 +2,7 @@ import { Validator } from '../../../src/components/validation/validator';
 
 require('../../../src/components/locale/cultures/en-US.js');
 
-const svgHTML = require('../../../src/components/icons/svg.html');
+const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
 const exampleHTML = require('../../../app/views/components/validation/example-index.html');
 
 let emailEl;

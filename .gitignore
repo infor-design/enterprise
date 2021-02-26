@@ -40,7 +40,6 @@ junit.xml
 npm-debug.log
 phantomjsdriver.log
 report.xml
-sohoxi-test-report.html
 views/docs/changelog-contents.html
 xunit.xml
 
@@ -48,6 +47,7 @@ xunit.xml
 ######################
 .DS_Store
 .vscode
+ep.code-workspace
 
 # Deprecated (or replaced by dynamic building #
 ##############

@@ -4,14 +4,14 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const group = process.env.GROUP;
 const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS, group || 'all');
 
-const theme = process.env.ENTERPRISE_THEME || 'soho'
+const theme = process.env.ENTERPRISE_THEME || 'classic'
 let browserstackBuildID = `${Date.now()} : ${theme} theme : ci:bs e2e`;
 
 process.env.isBrowserStack = true;
 
 exports.config = {
   params: {
-    theme
+    theme: 'new'
   },
   allScriptsTimeout: 20000,
   logLevel: 'INFO',

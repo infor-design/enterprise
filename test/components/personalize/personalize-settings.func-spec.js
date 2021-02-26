@@ -1,7 +1,7 @@
 import { Personalize } from '../../../src/components/personalize/personalize';
 
 const personalizeHTML = require('../../../app/views/components/personalize/test-state.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let personalizeEl;
 let svgEl;

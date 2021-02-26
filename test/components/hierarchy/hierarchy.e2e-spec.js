@@ -7,15 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Hierarchy index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/hierarchy/example-index?layout=nofrills');
-  });
-
-  it('Should Render', async () => {
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('hierarchy'))), config.waitsFor);
-
-    expect(await element(by.id('hierarchy')).isDisplayed()).toBeTruthy();
-    expect(await element.all(by.css('.leaf')).count()).toEqual(27);
+    await utils.setPage('/components/hierarchy/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

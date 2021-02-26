@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -149,7 +149,7 @@ describe('Datepicker example-index tests', () => {
 
 describe('Datepicker example-index tests (fr-CA)', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index?layout=nofrills&locale=fr-CA');
+    await utils.setPage('/components/datepicker/example-index?theme=classic&layout=nofrills&locale=fr-CA');
   });
 
   it('Should not have errors', async () => {
@@ -599,7 +599,7 @@ describe('Datepicker custom format tests', () => {
 
 describe('Datepicker disabled date tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-disabled-dates?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-disabled-dates?theme=classic&layout=nofrills');
   });
   const sel = {};
   async function setSelector(elemSel) {
@@ -879,7 +879,7 @@ describe('Datepicker No Today Tests', () => {
 
 describe('Datepicker Month Year Changer Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-index?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-index?theme=classic&layout=nofrills');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
@@ -1478,7 +1478,7 @@ describe('Datepicker Umalqura Tests', () => {
 
 describe('Datepicker Month Year Picker Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-month-year-format?theme=classic&layout=nofrills');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
@@ -1516,7 +1516,7 @@ describe('Datepicker Month Year Picker Tests', () => {
 
 describe('Datepicker Year Picker Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-month-year-format?theme=classic&layout=nofrills');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };
@@ -1550,7 +1550,7 @@ describe('Datepicker Year Picker Tests', () => {
 
 describe('Datepicker Month Only Picker Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/example-month-year-format?layout=nofrills');
+    await utils.setPage('/components/datepicker/example-month-year-format?theme=classic&layout=nofrills');
     const Date = () => {  //eslint-disable-line
       return new Date(2018, 1, 10);
     };

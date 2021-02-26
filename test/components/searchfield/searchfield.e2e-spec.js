@@ -13,7 +13,7 @@ const searchfieldGoButtonId = 'searchfield-go-button--1';
 
 describe('Searchfield example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/searchfield/example-index');
+    await utils.setPage('/components/searchfield/example-index?theme=classic');
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
@@ -90,7 +90,7 @@ describe('Searchfield example-index tests', () => {
     expect(await element(by.id('searchfield')).getAttribute('id')).toEqual('searchfield');
     expect(await element(by.id('searchfield')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id');
 
-    expect(await element(by.css('.searchfield-wrapper .close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-btn-close');
+    expect(await element(by.css('.searchfield-wrapper button.close')).getAttribute('data-automation-id')).toEqual('searchfield-automation-id-btn-close');
   });
 });
 
@@ -165,7 +165,7 @@ describe('Searchfield clearable tests', () => {
 if (utils.isChrome() && utils.isCI()) {
   describe('Searchfield `collapseSize` tests', () => {
     beforeEach(async () => {
-      await utils.setPage('/components/searchfield/test-configure-close-size?layout=nofrills');
+      await utils.setPage('/components/searchfield/test-configure-close-size?theme=classic&layout=nofrills');
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.toolbar-section.search'))), config.waitsFor);
       await browser.driver.sleep(config.sleep);

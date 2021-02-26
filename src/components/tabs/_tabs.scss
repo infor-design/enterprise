@@ -484,6 +484,7 @@
             padding-right: 0;
             right: -1px;
             top: 1px;
+            z-index: 10;
           }
 
           &.icon-error {
@@ -707,6 +708,20 @@
           position: absolute;
         }
       }
+    }
+  }
+}
+
+// On Safari (specifically targeting iPad/iPhone) make the anchors pass through
+// to enable easier tapping of dismissible icons (See infor-design/enterprise#4763)
+.is-safari {
+  .tab {
+    > a {
+      pointer-events: none;
+    }
+
+    > .icon {
+      pointer-events: initial;
     }
   }
 }

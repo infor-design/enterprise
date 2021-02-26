@@ -36,7 +36,8 @@ const SEARCHFIELD_DEFAULTS = {
   template: undefined,
   clearable: false,
   collapsible: SEARCHFIELD_COLLAPSE_MODES[0],
-  collapseSize: undefined
+  collapseSize: undefined,
+  tabbable: true
 };
 
 // Used throughout:
@@ -65,6 +66,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * focused/blurred respectively
  * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
  * @param {number|function} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.  If defined as a function, gets a reference to this API as its primary argument, and returns a number.
+ * @param {boolean} [settings.tabbable=true] If true, the x button will get a tab stop. For accessibility its reccomended to keep this on.
  */
 function SearchField(element, settings) {
   this.element = $(element);
@@ -76,10 +78,15 @@ function SearchField(element, settings) {
     }
     if (settings.collapsible === undefined) {
       settings.collapsible = true;
+      settings.tabbable = false;
     }
   }
 
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
+
+  if (this.settings.collapsible) {
+    this.settings.tabbable = false;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -919,6 +926,10 @@ SearchField.prototype = {
   get isFocused() {
     const active = document.activeElement;
     const wrapperElem = this.wrapper[0];
+
+    if (this.settings.tabbable && wrapperElem.contains(active) && $(active).is('button.close')) {
+      return false;
+    }
 
     // If another element inside the Searchfield Wrapper is focused, the entire component
     // is considered "focused".
@@ -2080,15 +2091,18 @@ SearchField.prototype = {
    * @returns {void} adds 'x' button to clear the searchfield.
    */
   makeClearable() {
-    this.element.clearable();
+    this.element.clearable({ tabbable: this.settings.tabbable });
     this.wrapper.addClass('has-close-icon-button');
     this.xButton = this.wrapper.children('.icon.close');
 
     // Ignoring the close button from tabbing
-    this.xButton[0].setAttribute('tabindex', '-1');
+    if (!this.settings.tabbable) {
+      this.xButton[0].setAttribute('tabindex', '-1');
+    }
 
     // Add test automation ids
     utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);
+    utils.addAttributes(this.element.xButton, this, this.settings.attributes, 'btn-close', true);
   },
 
   /**
@@ -2099,6 +2113,9 @@ SearchField.prototype = {
   clear() {
     if (this.xButton) {
       this.xButton.click();
+    }
+    if (this.element.xButton) {
+      this.element.xButton.click();
     }
   },
 

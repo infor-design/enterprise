@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Colorpicker example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/colorpicker/example-index');
+    await utils.setPage('/components/colorpicker/example-index?theme=classic');
   });
 
   it('Should not have errors', async () => {
@@ -274,7 +274,7 @@ describe('Colorpicker states tests', () => {
   });
 
   it('Should check for api option Just Color', async () => {
-    expect(await element(by.id('color-only')).getCssValue('width')).toBe('10px');
+    expect(await element(by.id('color-only')).getCssValue('width')).toBe('12px');
   });
 });
 
@@ -287,7 +287,7 @@ describe('Colorpicker modal tests', () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('modal-page-container'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
 
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
@@ -409,7 +409,7 @@ describe('Colorpicker modal tests', () => {
 
 describe('Colorpicker sizes tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/colorpicker/example-sizes?layout=nofrills');
+    await utils.setPage('/components/colorpicker/example-sizes?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

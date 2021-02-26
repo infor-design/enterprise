@@ -183,7 +183,16 @@ const PLUGIN_MAPPINGS = [
   ['circlepager'],
 
   // Clear x
-  ['clearable', '[data-clearable="true"]'],
+  ['clearable', ['[data-clearable="true"]'].join(', '), function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      const tabbable = $(item).attr('data-tabbable');
+      if (tabbable === undefined) {
+        $(item).clearable({ tabbable: true });
+      } else {
+        $(item).clearable({ tabbable: (tabbable === 'true') });
+      }
+    });
+  }],
 
   // Text Area
   ['textarea', 'textarea'],

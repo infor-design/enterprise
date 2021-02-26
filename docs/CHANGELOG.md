@@ -2,9 +2,33 @@
 
 ## v4.38.0
 
+### v4.38.0 Important Changes
+
+- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its reccomend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
+
 ### v4.38.0 Fixes
 
-- `[Example]` Placeholder remove me. ([#9999](https://github.com/infor-design/enterprise/issues/999))
+- `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
+- `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
+- `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
+- `[Datagrid]` Added a fix for checkbox aria cells, the aria was in the wrong location. ([#4790](https://github.com/infor-design/enterprise/issues/4790))
+- `[Datagrid]` Fixed a bug where shift+f10 did not open the context menu in the Datagrid. ([#4614](https://github.com/infor-design/enterprise/issues/4614))
+- `[Datagrid]` Fixed an issue where tooltips on buttons in the contexual action toolbar in datagrid would never show up. ([#4876](https://github.com/infor-design/enterprise/issues/4876))
+- `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
+- `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
+- `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
+- `[Popover]` Fixed a bug where the close button did not get an automation ID and added automation ID to the title. ([#4743](https://github.com/infor-design/enterprise/issues/4743))
+- `[Locale/Multiselect]` Fixed a bug where translations could not be made correctly on All label and Selected Label, so we dropped having the label in the field. You can use the allTextString and selectedTextString if you want something special. ([#4505](https://github.com/infor-design/enterprise/issues/4505))
+- `[Locale]` Fixed a bug in Estonian translations. ([#4805](https://github.com/infor-design/enterprise/issues/4805))
+- `[Locale]` Fixed several bugs in Greek translations. ([#4791](https://github.com/infor-design/enterprise/issues/4791))
+- `[Locale]` Fixed a bug in Turkish translations. ([#4788](https://github.com/infor-design/enterprise/issues/4788))
+- `[Locale]` Fixed a bug in Thai translations. ([#4738](https://github.com/infor-design/enterprise/issues/4738))
+- `[Searchfield]` Fixed an accessibility issue where the X was not tabbable with the keyboard. To fix this added a tabbable setting which is on by default. If you want it off you can set it to false but you would pass accessibility testing. ([#4815](https://github.com/infor-design/enterprise/issues/4815))
+- `[Tabs]` Fixed an iOS bug that was preventing dismissible tabs to be dismissed by tap. ([#4763](https://github.com/infor-design/enterprise/issues/4763))
+- `[Tabs Module]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Tabs Module]` Fixed the focus border of the home button and make it tabbable in tabs module. ([#4850](https://github.com/infor-design/enterprise/issues/4850))
+- `[Tabs Vertical]` Fixed black hover state in new (uplift) theme contrast mode. ([#4867](https://github.com/infor-design/enterprise/issues/4867))
+- `[Validation]` Fixed an issue where validation messages did not have the correct aria for accessibility. ([#4830](https://github.com/infor-design/enterprise/issues/4830))
 
 ## v4.37.0
 
@@ -12,7 +36,7 @@
 
 - `[FileUpload]` Added the ability to drag files onto the file upload field like in 3.x versions. ([#4723](https://github.com/infor-design/enterprise/issues/4723))
 - `[Datagrid]` Added the ability to edit columns formatted with tags and badges with an Input editor. ([#4637](https://github.com/infor-design/enterprise/issues/4637))
-- `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the defaut to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
+- `[Datagrid]` Added the ability to pass a locale numberFormat to the TargetedAchievement formatter and also set the default to two decimals. ([#4802](https://github.com/infor-design/enterprise/issues/4802))
 - `[Dropdown]` Added basic virtual scrolling to dropdown for if you have thousands of items. Only basic dropdown functionality will work with this setting but it improved performance on larger dropdown lists. ([#4708](https://github.com/infor-design/enterprise/issues/4708))
 - `[Sidebar]` Added the ability to hide and show the side bar with the list detail view. ([#4394](https://github.com/infor-design/enterprise/issues/4394))
 
@@ -203,7 +227,7 @@
 
 ### v4.34.0 Features
 
-- `[All Components]` Added `attributes` setting to set automation ids's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
+- `[All Components]` Added `attributes` setting to set automation id's and id's. ([#4498](https://github.com/infor-design/enterprise/issues/4498))
 - `[Datagrid]` Added a limited experimental sticky header feature. ([#3993](https://github.com/infor-design/enterprise/issues/3993))
 - `[Input]` Add a `revealText` plugin that will add a button to password fields to hide and show sensitive information such as SIN or passwords. ([#4098](https://github.com/infor-design/enterprise/issues/4098))
 - `[Listview]` Added a new setting `allowDeselect` which will make it such that if you select an item you cant deselect, you can only select another item. ([#4376](https://github.com/infor-design/enterprise/issues/4376))

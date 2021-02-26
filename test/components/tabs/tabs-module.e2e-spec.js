@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Tabs Module Toolbar tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs-module/example-index?layout=nofrills');
+    await utils.setPage('/components/tabs-module/example-index?theme=classic&layout=nofrills');
     const tabsEl = await element(by.id('module-tabs-controls'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -29,7 +29,7 @@ describe('Tabs Module Toolbar tests', () => {
 
 describe('Tabs Module Appmenu Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs-module/example-app-menu-button-audible.html?layout=nofrills');
+    await utils.setPage('/components/tabs-module/example-app-menu-button-audible.html?theme=classic&layout=nofrills');
     const tabsEl = await element(by.id('module-tabs-example'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

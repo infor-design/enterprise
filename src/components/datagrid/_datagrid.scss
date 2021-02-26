@@ -2291,6 +2291,8 @@ $datagrid-small-row-height: 25px;
         position: relative;
 
         .icon-error {
+          background-color: transparent;
+          box-shadow: none;
           left: 100%;
           margin-left: -30px;
           position: absolute;
@@ -3751,7 +3753,7 @@ td .btn-actions {
   }
 
   .plus-minus {
-    left: -6px;
+    left: -10px;
     position: relative;
     top: -6px;
   }

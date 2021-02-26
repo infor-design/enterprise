@@ -1,7 +1,7 @@
 import { Textarea } from '../../../src/components/textarea/textarea';
 
 const textareaHTML = require('../../../app/views/components/textarea/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let textareaEl;
 let svgEl;

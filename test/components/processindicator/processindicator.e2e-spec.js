@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('ProcessIndicator tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/processindicator/example-index?layout=nofrills');
+    await utils.setPage('/components/processindicator/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -26,7 +26,7 @@ describe('ProcessIndicator tests', () => {
 
 describe('ProcessIndicator Labels tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/processindicator/example-labels?layout=nofrills');
+    await utils.setPage('/components/processindicator/example-labels?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

@@ -2,7 +2,7 @@ import { Personalize, COMPONENT_NAME } from './personalize';
 
 // Handle incoming settings from `SohoConfig`
 let instanceSettings = {
-  theme: 'theme-soho-light'
+  theme: 'theme-new-light'
 };
 
 if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.personalize === 'object') {

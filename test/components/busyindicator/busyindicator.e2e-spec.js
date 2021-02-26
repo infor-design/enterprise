@@ -27,17 +27,17 @@ describe('Busy Indicator example-index tests', () => {
     const btnEl = await element(by.id('submit'));
     await btnEl.click();
 
-    expect(element(by.id('busyindicator-id-1-overlay')).getAttribute('id')).toEqual('busyindicator-id-1-overlay');
-    expect(element(by.id('busyindicator-id-1-overlay')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-overlay');
+    expect(await element(by.id('busyindicator-id-1-overlay')).getAttribute('id')).toEqual('busyindicator-id-1-overlay');
+    expect(await element(by.id('busyindicator-id-1-overlay')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-overlay');
 
-    expect(element(by.id('busyindicator-id-1')).getAttribute('id')).toEqual('busyindicator-id-1');
-    expect(element(by.id('busyindicator-id-1')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1');
+    expect(await element(by.id('busyindicator-id-1')).getAttribute('id')).toEqual('busyindicator-id-1');
+    expect(await element(by.id('busyindicator-id-1')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1');
 
-    expect(element(by.id('busyindicator-id-1-busyindicator')).getAttribute('id')).toEqual('busyindicator-id-1-busyindicator');
-    expect(element(by.id('busyindicator-id-1-busyindicator')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-busyindicator');
+    expect(await element(by.id('busyindicator-id-1-busyindicator')).getAttribute('id')).toEqual('busyindicator-id-1-busyindicator');
+    expect(await element(by.id('busyindicator-id-1-busyindicator')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-busyindicator');
 
-    expect(element(by.id('busyindicator-id-1-text')).getAttribute('id')).toEqual('busyindicator-id-1-text');
-    expect(element(by.id('busyindicator-id-1-text')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-text');
+    expect(await element(by.id('busyindicator-id-1-text')).getAttribute('id')).toEqual('busyindicator-id-1-text');
+    expect(await element(by.id('busyindicator-id-1-text')).getAttribute('data-automation-id')).toEqual('busyindicator-automation-id-1-text');
   });
 });
 

@@ -8,7 +8,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Tooltips index page tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tooltip/example-index?layout=nofrills');
+    await utils.setPage('/components/tooltip/example-index?theme=classic&layout=nofrills');
   });
 
   it('should display when hovering the icon', async () => {
@@ -93,7 +93,7 @@ describe('Tooltips on icon tests', () => {
 
 describe('Tooltip (personalizable) tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/header/example-disabled-buttons?theme=soho&variant=dark&colors=206b62');
+    await utils.setPage('/components/header/example-disabled-buttons?theme=soho&mode=dark&colors=206b62');
   });
 
   it('should not have errors', async () => {

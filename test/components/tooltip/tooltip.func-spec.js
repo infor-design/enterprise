@@ -1,7 +1,7 @@
 import { Tooltip } from '../../../src/components/tooltip/tooltip';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 const triggerHTML = `<div id="test-wrapper" class="field">
   <button class="btn-secondary" id="tooltip-trigger">
@@ -41,20 +41,6 @@ describe('Tooltip API', () => {
     });
 
     expect(tooltipAPI).toEqual(jasmine.any(Object));
-  });
-
-  it('can display by having its trigger element clicked', () => {
-    tooltipAPI = new Tooltip(tooltipBtnEl, {
-      trigger: 'click',
-      content: 'This IS the Tooltip!'
-    });
-    tooltipBtnEl.click();
-    const tooltipEl = tooltipAPI.tooltip[0];
-
-    expect(tooltipAPI.visible).toBeTruthy();
-    expect(tooltipEl).toBeDefined();
-    expect(tooltipEl.classList.contains('is-hidden')).toBeFalsy();
-    expect(tooltipEl.innerText.trim()).toEqual('This IS the Tooltip!');
   });
 
   it('will not display if the trigger element is hidden', () => {

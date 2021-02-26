@@ -3,7 +3,7 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
-const svg = require('../../../src/components/icons/svg.html');
+const svg = require('../../../src/components/icons/theme-uplift-svg.html');
 
 let timepickerEl;
 let timepickerObj;

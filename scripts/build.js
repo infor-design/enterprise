@@ -107,7 +107,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(SRC_DIR, 'core', '_controls.scss'),
-      controlsUplift: path.join(SRC_DIR, 'core', '_controls-uplift.scss'),
+      controlsNew: path.join(SRC_DIR, 'core', '_controls-new.scss'),
       themes: {}
     }
   },
@@ -128,7 +128,7 @@ const filePaths = {
     },
     sass: {
       controls: path.join(TEMP_DIR, '_controls.scss'),
-      controlsUplift: path.join(TEMP_DIR, '_controls-uplift.scss'),
+      controlsNew: path.join(TEMP_DIR, '_controls-new.scss'),
       banner: path.join(TEMP_DIR, '_banner.scss'),
       themes: {}
     },
@@ -282,8 +282,8 @@ function capitalize(str) {
  * Dynamically create the CSS paths for the supported themes
  */
 function addDynamicCssThemePaths() {
-  const tryAddPath = (themeName, themeVariant) => {
-    const fileName = `theme-${themeName}-${themeVariant}`;
+  const tryAddPath = (themeName, themeMode) => {
+    const fileName = `theme-${themeName}-${themeMode}`;
     const srcPath = path.join(SRC_DIR, 'themes', `${fileName}.scss`);
     const targetPath = path.join(TEMP_DIR, `${fileName}.scss`);
 
@@ -296,8 +296,8 @@ function addDynamicCssThemePaths() {
   IDS_THEMES.forEach((theme) => {
     tryAddPath(theme.name, theme.base.name);
 
-    theme.variants.forEach((variant) => {
-      tryAddPath(theme.name, variant.name);
+    theme.modes.forEach((modes) => {
+      tryAddPath(theme.name, modes.name);
     });
   });
 }
@@ -581,7 +581,7 @@ function sortFilesIntoBuckets(files, srcFilePath) {
 
       const lastItemIndex = targetBucket.length - 1;
       const lastItem = targetBucket[lastItemIndex];
-      if (lastItem && lastItem.indexOf('-uplift') > -1) {
+      if (lastItem && (lastItem.indexOf('-uplift') > -1 || lastItem.indexOf('-new') > -1)) {
         targetBucket = targetBucket.splice(lastItemIndex, 0, file);
       } else {
         targetBucket.push(file);
@@ -610,10 +610,10 @@ function sortFilesIntoBuckets(files, srcFilePath) {
  * Writes the contents of a single file bucket to a string, for being appended to a file
  * @param {string} key the target file bucket
  * @param {string} type determines the type of file to include (see the types array inside)
- * @param {boolean} disallowUplift determines if we are including imports for the uplift-specific styles for IDS inside this index file
+ * @param {boolean} disallowNew determines if we are including imports for the new-specific styles for IDS inside this index file
  * @returns {string} formatted, multi-line, containing all relevant ES6-based import/export statements
  */
-function renderImportsToString(key, type, disallowUplift) {
+function renderImportsToString(key, type, disallowNew) {
   let fileContents = '';
   const bucket = buckets[key];
   if (!Array.isArray(bucket)) {
@@ -644,7 +644,7 @@ function renderImportsToString(key, type, disallowUplift) {
     }
 
     const lib = getLibFromFileName(fileName);
-    const libIsAllowed = !disallowUplift || (disallowUplift && lib.indexOf('-uplift') === -1);
+    const libIsAllowed = !disallowNew || (disallowNew && (lib.indexOf('-uplift') === -1 || lib.indexOf('-new') === -1));
 
     let statement = '';
     if (type === 'scss') {
@@ -749,8 +749,8 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
   let targetFile = '';
   const type = 'scss';
 
-  if (key === 'components' || key === 'components-uplift') {
-    const isUplift = key === 'components-uplift';
+  if (key === 'components' || key === 'components-new') {
+    const isNew = key === 'components-new';
     targetFile = `// Required ====/${NL}@import '../src/core/required';${NL}${NL}`;
 
     // 'component' source code files are comprised of three buckets that need to
@@ -758,7 +758,7 @@ function renderTargetSassFile(key, targetFilePath, isNormalBuild) {
     const componentBuckets = ['foundational', 'mid', 'complex', 'patterns', 'layouts'];
     componentBuckets.forEach((thisBucket) => {
       targetFile += `// ${capitalize(thisBucket)} ====/${NL}`;
-      targetFile += renderImportsToString(thisBucket, type, !isUplift);
+      targetFile += renderImportsToString(thisBucket, type, !isNew);
       targetFile += NL;
     });
     targetFile += `// These controls must come last${NL}@import '../src/components/colors/colors';${NL}`;
@@ -877,7 +877,7 @@ function renderTargetFiles(isNormalBuild) {
     });
     renderPromises.push(renderTargetSassFile('banner', filePaths.target.sass.banner, isNormalBuild));
     renderPromises.push(renderTargetSassFile('components', filePaths.target.sass.controls));
-    renderPromises.push(renderTargetSassFile('components-uplift', filePaths.target.sass.controlsUplift));
+    renderPromises.push(renderTargetSassFile('components-new', filePaths.target.sass.controlsNew));
   }
 
   // On normal builds, still generate the banner and inline it into each theme file.
@@ -1088,20 +1088,16 @@ cleanAll(true).then(() => {
 
     runBuildProcesses(requestedComponents, jsMatches, jQueryMatches, sassMatches)
       .then(() => {
-        // THIS NEEDS REMOVED VERY SOON
         // Copy renamed soho theme files to their deprecated names for backwards compatibility
         const cssPath = path.join(__dirname, '..', 'dist', 'css');
-        const cssFiles = glob.sync(`${cssPath}/**/theme-soho-*.css*`);
+        const cssFiles = glob.sync(`${cssPath}/**/theme-*.css*`);
 
         const proms = cssFiles.map(file => new Promise((resolve, reject) => {
-          const getVariantRx = /theme-soho-(\w*).(\S*)/; // get variant (1) and full ext (2)
-          const pieces = getVariantRx.exec(file);
-          const backwardCompatName = (pieces[1] === 'contrast' ? 'high-contrast' : pieces[1]);
-          const depName = `${backwardCompatName}-theme.${pieces[2]}`; // i.e. light-theme.css.map
+          const copyName = file.replace('classic', 'soho').replace('new', 'uplift');
 
-          return fs.copyFile(file, `${cssPath}/${depName}`, (err) => {
+          return fs.copyFile(file, copyName, (err) => {
             if (err) reject(err);
-            logger('alert', `Backwards compatibility ${file} copied to ${depName}`);
+            logger('alert', `Backwards compatibility ${file} copied to ${copyName}`);
             resolve();
           });
         }));

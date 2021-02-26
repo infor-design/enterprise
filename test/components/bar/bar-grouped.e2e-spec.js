@@ -83,7 +83,7 @@ describe('Grouped Bar Chart example-index tests', () => {
 
 describe('Grouped Bar formatter tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-grouped/example-formatter?layout=nofrills');
+    await utils.setPage('/components/bar-grouped/example-formatter?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -102,7 +102,7 @@ describe('Grouped Bar formatter tests', () => {
 
 describe('Grouped Bar many groups tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/bar-grouped/test-many-groups?layout=nofrills');
+    await utils.setPage('/components/bar-grouped/test-many-groups?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

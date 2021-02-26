@@ -26,7 +26,7 @@
   var url = '/api/products-big';
   var settings = {
     height: 308,
-    itemHeight: $('html').attr('class').indexOf('uplift') > -1 ? 53 : 47
+    itemHeight: $('html').attr('class').indexOf('uplift') > -1 || $('html').attr('class').indexOf('new') > -1 ? 53 : 47
   };
 
   $.getJSON(url, function(data) {

@@ -112,7 +112,7 @@ describe('Accordion Collapse Children tests', () => {
 
 describe('Accordion example-disabled tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-disabled?layout=nofrills');
+    await utils.setPage('/components/accordion/example-disabled?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -138,7 +138,7 @@ describe('Accordion example-disabled tests', () => {
 
 describe('Accordion example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-index?layout=nofrills');
+    await utils.setPage('/components/accordion/example-index?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {

@@ -80,7 +80,7 @@ describe('Multiselect example-states tests', () => {
 
 describe('Multiselect example-index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/multiselect/example-index');
+    await utils.setPage('/components/multiselect/example-index?theme=classic');
   });
 
   if (!utils.isSafari()) {
@@ -230,7 +230,7 @@ describe('Multiselect example-clear-all tests', () => {
 
 describe('Multiselect typeahead-reloading tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/multiselect/test-reload-typeahead');
+    await utils.setPage('/components/multiselect/test-reload-typeahead?theme=classic');
   });
 
   // Added to check highlighting of text characters
@@ -349,7 +349,7 @@ describe('Multiselect header strings tests', () => {
 describe('Multiselect with Tags tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Standard example should not visually regress', async () => {
-      await utils.setPage('/components/multiselect/example-index');
+      await utils.setPage('/components/multiselect/example-index?theme=classic');
 
       const multiselectStandardEl = await element(by.css('#multi-optgroup-tagged + .dropdown-wrapper div.dropdown'));
       await browser.driver
@@ -360,7 +360,7 @@ describe('Multiselect with Tags tests', () => {
     });
 
     it('Disabled example should not visually regress', async () => {
-      await utils.setPage('/components/multiselect/example-index');
+      await utils.setPage('/components/multiselect/example-index?theme=classic');
 
       const multiselectDisabledEl = await element(by.css('#multi-disabled-tagged + .dropdown-wrapper div.dropdown'));
       await browser.driver
@@ -374,7 +374,7 @@ describe('Multiselect with Tags tests', () => {
 
 describe('Multiselect `showSearchUnderSelected` tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/multiselect/example-search-under-selected?layout=nofrills');
+    await utils.setPage('/components/multiselect/example-search-under-selected?theme=classic&layout=nofrills');
   });
 
   it('should not have errors', async () => {
@@ -416,7 +416,7 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
 describe('Multiselect select all behavior tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('should not visually regress', async () => {
-      await utils.setPage('/components/multiselect/test-select-all-tags.html?layout=nofrills');
+      await utils.setPage('/components/multiselect/test-select-all-tags.html?theme=classic&layout=nofrills');
 
       // Resize page to fit a "full" Multiselect
       const windowSize = await browser.driver.manage().window().getSize();

@@ -15,7 +15,7 @@ const clickOnAutocomplete = async () => {
 describe('Autocomplete example-index tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-index?theme=${browser.params.theme}`);
+    await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-index?theme=classic`);
   });
 
   it('Should not have errors', async () => {

@@ -14,18 +14,7 @@ module.exports = {
   isBS: () => process.env.isBrowserStack,
   isCI: () => process.env.CI,
   setPage: async (url) => {
-    let addQuery = '?';
-    let theme = `theme=${browser.params.theme}`;
-    if (url.indexOf('?') > -1) {
-      addQuery = '';
-      theme = `&${theme}`;
-    }
-    if (url.indexOf('?theme') > -1) {
-      addQuery = '';
-      theme = '';
-    }
-
-    const pageurl = `${browser.baseUrl + url}${addQuery}${theme}`;
+    const pageurl = `${browser.baseUrl + url}`;
     await browser.waitForAngularEnabled(false);
     await browser.driver.get(pageurl);
   },
