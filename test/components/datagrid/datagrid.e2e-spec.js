@@ -1302,7 +1302,7 @@ describe('Datagrid multiselect tests', () => {
   it('Should have aria-checked and not aria-selected', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
 
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).getAttribute('aria-checked')).toEqual('true');
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1) .datagrid-checkbox')).getAttribute('aria-selected')).toEqual(null);
     expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2)')).getAttribute('aria-selected')).toEqual('true');
   });
@@ -2165,6 +2165,17 @@ describe('Datagrid checkbox disabled editor tests', () => {
 
   it('Should not have errors', async () => {
     await utils.checkForErrors();
+  });
+
+  it('Should render correct aria', async () => {
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(1) td:nth-child(6)')).getAttribute('aria-readonly')).toEqual('true');
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('false');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(2) td:nth-child(6)')).getAttribute('aria-readonly')).toBeFalsy();
+
+    expect(await element(by.css('#datagrid tbody tr:nth-child(6) td:nth-child(6)')).getAttribute('aria-checked')).toEqual('true');
+    expect(await element(by.css('#datagrid tbody tr:nth-child(6) td:nth-child(6)')).getAttribute('aria-readonly')).toBeFalsy();
   });
 
   if (utils.isChrome() && utils.isCI()) {
