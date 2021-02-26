@@ -1,6 +1,5 @@
 import { cleanup } from '../../helpers/func-utils';
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
-import { DOM } from '../../../src/utils/dom';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
 const svg = require('../../../src/components/icons/theme-uplift-svg.html');
