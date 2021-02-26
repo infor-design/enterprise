@@ -88,7 +88,7 @@ EmptyMessage.prototype = {
       $(buttonMarkup).appendTo(this.element);
 
       if (opts.button.click) {
-        this.element.on('click', 'button', opts.button.click);
+        this.element.off('click').on('click', 'button', opts.button.click);
       }
     }
 

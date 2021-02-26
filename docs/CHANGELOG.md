@@ -15,6 +15,7 @@
 - `[Datagrid]` Added a fix for checkbox aria cells, the aria was in the wrong location. ([#4790](https://github.com/infor-design/enterprise/issues/4790))
 - `[Datagrid]` Fixed a bug where shift+f10 did not open the context menu in the Datagrid. ([#4614](https://github.com/infor-design/enterprise/issues/4614))
 - `[Datagrid]` Fixed an issue where tooltips on buttons in the contexual action toolbar in datagrid would never show up. ([#4876](https://github.com/infor-design/enterprise/issues/4876))
+- `[EmptyMessage]` Fixed an issue where you may get double the click handlers. ([#4889](https://github.com/infor-design/enterprise/issues/4889))
 - `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
 - `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
