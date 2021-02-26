@@ -421,6 +421,7 @@ Soho.Locale.addCulture('en-US', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload' },
     Theme: { id: 'Theme', value: 'Theme', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Time', comment: 'The time part of a date.' },
+    TimepickerPopup: { id: 'TimepickerPopup', value: 'Timepicker Popup', comment: 'text read out by assistive technology that explains that the user is interacting with a Timepicker popup.' },
     Timer: { id: 'Timer', value: 'Timer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'To', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Today', comment: 'refering to today on a calendar' },

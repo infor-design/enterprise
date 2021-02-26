@@ -33,6 +33,8 @@
 - `[Tabs Module]` Fixed the focus border of the home button and make it tabbable in tabs module. ([#4850](https://github.com/infor-design/enterprise/issues/4850))
 - `[Tabs Vertical]` Fixed black hover state in new (uplift) theme contrast mode. ([#4867](https://github.com/infor-design/enterprise/issues/4867))
 - `[Validation]` Fixed an issue where validation messages did not have the correct aria for accessibility. ([#4830](https://github.com/infor-design/enterprise/issues/4830))
+- `[TabsModule]` Fixed positioning of the icon in tabs module. ([#4842](https://github.com/infor-design/enterprise/issues/4842))
+- `[Timepicker]` Improved accessibility on both the input field and its inner picker elements. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
 
 ## v4.37.0
 

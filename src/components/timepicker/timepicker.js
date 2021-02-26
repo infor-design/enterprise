@@ -204,8 +204,14 @@ TimePicker.prototype = {
    */
   addAria() {
     this.element.attr({
+      role: 'combobox',
       'aria-expanded': 'false',
-      role: 'combobox'
+    });
+
+    this.trigger.attr({
+      role: 'button',
+      'aria-hidden': 'true',
+      'aria-haspopup': 'dialog'
     });
 
     // TODO: Confirm this with Accessibility Team
@@ -448,9 +454,11 @@ TimePicker.prototype = {
       self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($(`<label for="${this.hoursId}" class="audible">${Locale.translate('Hours', { locale: this.locale.name, language: this.language })}</label>`));
-    timeParts.append(this.hourSelect);
-    timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
+    const hourTimePart = $('<div class="time-part"></div>');
+    hourTimePart.append($(`<label for="${this.hoursId}">${Locale.translate('Hours', { locale: this.locale.name, language: this.language })}</label>`));
+    hourTimePart.append(this.hourSelect);
+    hourTimePart.append($(`<span class="label colons">${timeSeparator}</span>`));
+    timeParts.append(hourTimePart);
 
     // Minutes Picker
     let minuteCounter = 0;
@@ -473,8 +481,13 @@ TimePicker.prototype = {
       this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($(`<label for="${this.minutesId}" class="audible">${Locale.translate('Minutes', { locale: this.locale.name, language: this.language })}</label>`));
-    timeParts.append(this.minuteSelect);
+    const minuteTimePart = $('<div class="time-part"></div>');
+    minuteTimePart.append($(`<label for="${this.minutesId}">${Locale.translate('Minutes', { locale: this.locale.name, language: this.language })}</label>`));
+    minuteTimePart.append(this.minuteSelect);
+    if (hasSeconds) {
+      minuteTimePart.append($(`<span class="label colons">${timeSeparator}</span>`));
+    }
+    timeParts.append(minuteTimePart);
 
     // Seconds Picker
     if (hasSeconds) {
@@ -498,9 +511,10 @@ TimePicker.prototype = {
         this.secondSelect.prepend($(`<option selected>${self.initValues.seconds}</option>`));
       }
 
-      timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
-      timeParts.append($(`<label for="${this.secondsId}" class="audible">${Locale.translate('Seconds', { locale: this.locale.name, language: this.language })}</label>`));
-      timeParts.append(this.secondSelect);
+      const secondsTimePart = $('<div class="time-part"></div>');
+      secondsTimePart.append($(`<label for="${this.secondsId}">${Locale.translate('Seconds', { locale: this.locale.name, language: this.language })}</label>`));
+      secondsTimePart.append(this.secondSelect);
+      timeParts.append(secondsTimePart);
     }
 
     if (!is24HourFormat && hasDayPeriods) {
@@ -518,8 +532,11 @@ TimePicker.prototype = {
 
         localeCount++;
       }
-      timeParts.append($(`<label for="${this.periodId}" class="audible">${Locale.translate('TimePeriod', { locale: this.locale.name, language: this.language })}</label>`));
-      timeParts.append(this.periodSelect);
+
+      const dayPeriodTimePart = $('<div class="time-part"></div>');
+      dayPeriodTimePart.append($(`<label for="${this.periodId}">${Locale.translate('Period', { locale: this.locale.name, language: this.language })}</label>`));
+      dayPeriodTimePart.append(this.periodSelect);
+      timeParts.append(dayPeriodTimePart);
     }
 
     if (this.settings.parentElement) {
@@ -976,7 +993,10 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
-    this.element.attr({ 'aria-expanded': 'true' });
+    if (this.trigger.data('tooltip')) {
+      this.element.attr('aria-expanded', 'true');
+    }
+
     this.popup.find('div.dropdown').first().focus();
   },
 
@@ -990,6 +1010,7 @@ TimePicker.prototype = {
   closeTimePopup() {
     if (this.trigger.data('tooltip')) {
       this.trigger.data('tooltip').hide();
+      this.element.attr('aria-expanded', 'false');
     }
   },
 
@@ -1027,7 +1048,7 @@ TimePicker.prototype = {
       }
       this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
     }
-    this.element.attr({ 'aria-expanded': 'false' });
+
     this.trigger.off('hide.timepicker show.timepicker');
     this.trigger.data('tooltip').destroy();
     this.trigger.data('tooltip', undefined);
@@ -1129,7 +1150,7 @@ TimePicker.prototype = {
    */
   teardown() {
     this.trigger.off('keydown.timepicker');
-    this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
+    this.element.off('focus.timepicker blur.timepicker keydown.timepicker click.timepicker');
     if (this.popup) {
       this.closeTimePopup();
     }
@@ -1174,6 +1195,13 @@ TimePicker.prototype = {
     this.trigger.off('click.timepicker').on('click.timepicker', () => {
       self.toggleTimePopup();
     });
+
+    // In Datepickers, labels aren't present
+    if (this.label) {
+      this.label.off('click.timepicker').on('click.timepicker', () => {
+        self.element[0].focus();
+      });
+    }
 
     this.handleKeys();
     this.handleBlur();

@@ -4,7 +4,8 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-    {{> includes/applicationmenu}}
+  {{> includes/applicationmenu}}
+  <div class="page-container no-scroll" id="maincontent" role="main">
     <header class="header is-personalizable">
       <div class="toolbar has-more-button do-resize">
         <div class="title">
@@ -32,9 +33,10 @@
         {{> includes/header-actionbutton}}
       </div>
     </header>
-    <div class="page-container no-scroll" id="maincontent" role="main">
+    <div class="page-container no-scroll" id="calendar-container">
       {{> content}}
     </div>
+  </div>
   {{> includes/footer}}
 </body>
 </html>

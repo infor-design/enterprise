@@ -269,8 +269,10 @@ Dropdown.prototype = {
       .attr(attributesToCopy.obj)
       .attr({
         role: 'button',
-        'aria-haspopup': 'listbox'
+        'aria-haspopup': 'listbox',
+        'aria-expanded': 'false'
       });
+    this.renderPsuedoElemLabel();
 
     if (this.settings.attributes) {
       utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'dropdown', true);
@@ -469,6 +471,16 @@ Dropdown.prototype = {
     if (this.isOpen()) {
       this.position();
     }
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  renderPsuedoElemLabel() {
+    this.pseudoElem.attr({
+      'aria-label': `${this.label.text()}, ${this.value}`
+    });
   },
 
   /**
@@ -783,6 +795,12 @@ Dropdown.prototype = {
     headerText.selected = (typeof s.selectedTextString === 'string' && s.selectedTextString !== '') ?
       self.settings.selectedTextString : `${headerText.selected}`;
 
+    // Find custom ID attributes
+    const baseIdAttr = utils.getAttribute(this, 'id', this.settings.attributes);
+    const listId = `${baseIdAttr ? `${baseIdAttr}-` : ''}dropdown-list`;
+    const listUlId = `${baseIdAttr ? `${baseIdAttr}-` : ''}listbox`;
+    const listAria = ' role="listbox"';
+
     if (this.element[0].classList.contains('text-align-reverse')) {
       reverseText = ' text-align-reverse';
     } else if (this.element[0].classList.contains('text-align-center')) {
@@ -790,7 +808,7 @@ Dropdown.prototype = {
     }
 
     if (!listExists) {
-      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
+      listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="${listId}" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>`;
@@ -799,13 +817,16 @@ Dropdown.prototype = {
         listContents += `<div class="virtual-scroll-container">
             <div class="ids-virtual-scroll">
               <div class="ids-virtual-scroll-viewport">
-                <ul role="listbox" class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
+                <ul id="${listUlId}"${listAria} class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
               </div>
             </div>
           </div>`;
       } else {
-        listContents += `<ul role="listbox" aria-label="${Locale.translate('Dropdown')}">`;
+        listContents += `<ul id="${listUlId}"${listAria} aria-label="${Locale.translate('Dropdown')}">`;
       }
+    } else {
+      this.list.attr('id', listId);
+      this.listUl.attr('id', `${listUlId}`);
     }
 
     // Get a current list of <option> elements
@@ -840,7 +861,7 @@ Dropdown.prototype = {
     if (isMultiselect && showSelectAll && opts.length) {
       const allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
 
-      ulContents += `<li role="presentation" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
+      ulContents += `<li role="none" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
         `<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">${
           Locale.translate('SelectAll')
         }</a>` +
@@ -962,7 +983,7 @@ Dropdown.prototype = {
   },
 
   buildLiHeader(textContent) {
-    return `<li role="presentation" class="group-label" focusable="false">
+    return `<li role="none" class="group-label" focusable="false">
       ${textContent}
     </li>`;
   },
@@ -1016,8 +1037,8 @@ Dropdown.prototype = {
       liCssClasses += ' is-swatch';
     }
 
-    liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" ${isSelected ? 'aria-selected="true"' : ''} data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="option">
-      <a id="list-option-${index}" href="#" ${aCssClasses} role="option">${iconHtml}${text}${badgeHtml}</a></li>`;
+    liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${hasTitle} role="none">
+      <a id="list-option-${index}" href="#" ${aCssClasses} role="option" ${isSelected ? 'aria-selected="true"' : ''}${tabIndex}>${iconHtml}${text}${badgeHtml}</a></li>`;
 
     return liMarkup;
   },
@@ -1068,7 +1089,7 @@ Dropdown.prototype = {
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
-
+    this.renderPsuedoElemLabel();
     this.updateItemIcon(opts);
     this.setBadge(opts);
   },
@@ -1240,7 +1261,7 @@ Dropdown.prototype = {
       this.filteredItems = list.filter(results);
       this.filteredItems.each(function (i) {
         const li = $(this);
-        li.attr('tabindex', i === 0 ? '0' : '-1');
+        li.children('a').attr('tabindex', i === 0 ? '0' : '-1');
 
         if (!selected) {
           self.highlightOption(li);
@@ -1870,8 +1891,13 @@ Dropdown.prototype = {
       }
     });
 
+    let targetContainer = $('[role="main"]');
+    if (!targetContainer.length) {
+      targetContainer = $('body');
+    }
+
     if (!this.isOpen()) {
-      this.list.appendTo('body');
+      this.list.appendTo(targetContainer);
     }
     this.list.show();
 
@@ -1880,10 +1906,6 @@ Dropdown.prototype = {
       this.list[0].classList.add('dropdown-short');
     }
 
-    this.pseudoElem
-      .attr('aria-expanded', 'true')
-      .addClass('is-open');
-
     if (self.settings.attributes) {
       // Add test automation ids
       utils.addAttributes(this.list.find('input'), this, this.settings.attributes, 'search', true);
@@ -1891,7 +1913,7 @@ Dropdown.prototype = {
       utils.addAttributes(this.list.find('label'), this, this.settings.attributes, 'search-label');
 
       utils.addAttributes(this.list.find('.trigger svg'), this, this.settings.attributes, 'trigger', true);
-      utils.addAttributes(this.list.find('ul'), this, this.settings.attributes, 'listbox', true);
+      utils.addAttributes(this.listUl, this, this.settings.attributes, 'listbox', true);
       utils.addAttributes(this.list, this, this.settings.attributes, 'list');
 
       const options = this.list.find('.dropdown-option a');
@@ -1900,7 +1922,15 @@ Dropdown.prototype = {
         const opt = $(this);
         utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`, true);
       });
+
+      const customId = utils.getAttribute(this, 'id', this.settings.attributes);
+      this.pseudoElem.attr('aria-controls', customId ? `${customId}-listbox` : 'dropdown-list');
+      this.pseudoElem.attr('aria-expanded');
     }
+
+    this.pseudoElem
+      .attr('aria-expanded', 'true')
+      .addClass('is-open');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
     if (this.settings.showSearchUnderSelected) {
@@ -2338,14 +2368,16 @@ Dropdown.prototype = {
       target = target.parent();
     }
 
+    const a = target[0].querySelector('a');
+
     // If this is the Select All option, select/deselect all.
     if (this.settings.multiple && target[0].classList.contains('dropdown-select-all-list-item')) {
       const doSelectAll = !(target[0].classList.contains('is-selected'));
       target[0].classList[doSelectAll ? 'add' : 'remove']('is-selected');
       if (doSelectAll) {
-        target[0].setAttribute('aria-selected', 'true');
+        a.setAttribute('aria-selected', 'true');
       } else {
-        target[0].removeAttribute('aria-selected');
+        a.setAttribute('aria-selected', 'false');
       }
       this.selectAll(doSelectAll);
       return true;  //eslint-disable-line
@@ -2375,7 +2407,7 @@ Dropdown.prototype = {
       const selectedOpts = opts.filter(':selected');
 
       if (opts.length > selectedOpts.length) {
-        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected').removeAttr('aria-selected');
+        this.list.find('.dropdown-select-all-list-item').removeClass('is-selected').attr('aria-selected', 'false');
       } else {
         this.list.find('.dropdown-select-all-list-item').addClass('is-selected').attr('aria-selected', 'true');
       }
@@ -2628,7 +2660,9 @@ Dropdown.prototype = {
 
     // Unset previous highlight
     this.setItemIconOverColor();
-    this.list.find('.is-focused').removeClass('is-focused').attr({ tabindex: '-1' });
+    this.list.find('.is-focused')
+      .removeClass('is-focused')
+      .children('a').attr({ tabindex: '-1' });
 
     // Don't continue if a match hasn't been found, or the match is disabled.
     if (
@@ -2646,7 +2680,8 @@ Dropdown.prototype = {
     const isEmpty = (option.val() === '' || listOption.attr('data-val') === '' || option.hasClass('clear'));
     if (!isEmpty) {
       this.setItemIconOverColor(listOption);
-      listOption.addClass('is-focused').attr({ tabindex: '0' });
+      listOption.addClass('is-focused')
+        .children('a').attr({ tabindex: '0' });
 
       if (!noScroll || noScroll === false || noScroll === undefined) {
         this.scrollToOption(listOption);
@@ -2706,7 +2741,8 @@ Dropdown.prototype = {
       listOptions = this.list.find('.is-selected');
     }
     this.setItemIconOverColor();
-    listOptions.removeClass('is-focused').attr({ tabindex: '-1' });
+    listOptions.removeClass('is-focused')
+      .children('a').attr({ tabindex: '-1' });
 
     this.searchInput.removeAttr('aria-activedescendant');
 
@@ -2725,6 +2761,7 @@ Dropdown.prototype = {
     const optionVal = optionEl.value;
     const selected = optionEl.selected;
     const li = this.listUl.find(`li[data-val="${optionVal}"]`);
+    const a = li.children('a');
 
     if (!li) {
       return;
@@ -2732,12 +2769,12 @@ Dropdown.prototype = {
 
     if (selected) {
       li[0].classList.add('is-selected');
-      li[0].setAttribute('aria-selected', true);
+      a[0].setAttribute('aria-selected', 'true');
       return;
     }
 
     li[0].classList.remove('is-selected');
-    li[0].removeAttribute('aria-selected');
+    a[0].setAttribute('aria-selected', 'false');
   },
 
   /**
@@ -2776,7 +2813,7 @@ Dropdown.prototype = {
       // Select all
       items.forEach((node) => {
         node.classList.add('is-selected');
-        node.setAttribute('aria-selected', true);
+        node.querySelector('a').setAttribute('aria-selected', 'true');
       });
       options.forEach((node) => {
         node.selected = true;
@@ -2786,7 +2823,7 @@ Dropdown.prototype = {
       // Clear all
       items.forEach((node) => {
         node.classList.remove('is-selected');
-        node.removeAttribute('aria-selected');
+        node.querySelector('a').setAttribute('aria-selected', 'false');
       });
       options.forEach((node) => {
         // Fix for ie-edge

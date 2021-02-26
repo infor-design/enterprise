@@ -81,13 +81,10 @@
   }
 
   .time-parts {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     padding: 15px;
-    text-align: center;
-    white-space: nowrap;
-
-    > label {
-      width: 72px;
-    }
 
     .colons {
       @include rem(font-size, 1.4rem);
@@ -98,6 +95,15 @@
       &:empty {
         min-width: 10px;
       }
+    }
+  }
+
+  .time-part {
+    text-align: center;
+    white-space: nowrap;
+
+    > label {
+      width: 72px;
     }
   }
 
