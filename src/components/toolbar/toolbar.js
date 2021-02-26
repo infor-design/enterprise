@@ -297,6 +297,12 @@ Toolbar.prototype = {
     function setActiveToolbarItem() {
       self.items.attr('tabindex', '-1');
 
+      // Make the home button tabbable
+      const homeButton = self.buttonset.children('button');
+      if (homeButton) {
+        homeButton.attr('tabindex', '0');
+      }
+
       let active = self.items.filter('.is-selected');
       if (active.length) {
         self.activeButton = active.first().attr('tabindex', '0');
