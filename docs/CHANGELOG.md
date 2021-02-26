@@ -8,6 +8,7 @@
 
 ### v4.38.0 Fixes
 
+- `[Application Menu]` Fixed visibility of expander icon on classic theme. ([#4874](https://github.com/infor-design/enterprise/issues/4874))
 - `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
