@@ -32,8 +32,10 @@
             },
             isDefault: true
         }]
-      }).on('beforeopen', function() {
+      }).off('beforeopen').on('beforeopen', function() {
         console.log('beforeopen fired');
+      }).off('beforeclose').on('beforeclose', function() {
+        console.log('beforeclose fired');
       });
     });
 

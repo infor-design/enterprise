@@ -852,7 +852,12 @@ Modal.prototype = {
     * @property {object} ui - The dialog object
     */
     elemCanOpen = this.element.triggerHandler('beforeopen', [this]);
-    $('body').triggerHandler('beforeopen', [this]);
+
+    // Only trigger on non message modals
+    if (!this.settings.isAlert) {
+      $('body').triggerHandler('beforeopen', [this]);
+    }
+
     this.isCancelled = false;
 
     if (elemCanOpen === false) {
