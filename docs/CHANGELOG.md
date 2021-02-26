@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.39.0
+
+### v4.39.0 Fixes
+
+- `[Placehold]` First one please remove me... ([#4874](https://github.com/infor-design/enterprise/issues/4874))
+
 ## v4.38.0
 
 ### v4.38.0 Important Changes
