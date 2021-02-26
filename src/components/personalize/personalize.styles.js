@@ -453,6 +453,11 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel .
   color: ${colors.contrast} !important;
 }
 
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::before,
+.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::after {
+  background-color: ${colors.contrast};
+}
+
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
   border: 1px solid ${colors.contrast} !important;
   box-shadow: none !important;
@@ -464,11 +469,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
   border: 1px solid ${colors.lighter};
-}
-
-.application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::before,
-.application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::after {
-  background-color: ${colors.contrast};
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable button:focus:not(.hide-focus),
