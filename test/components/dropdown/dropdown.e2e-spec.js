@@ -137,7 +137,7 @@ describe('Dropdown example-index tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const dropdownEl = element(by.css('div.dropdown'));
-      const dropdownElList = element(by.id('dropdown-list'));
+      const dropdownElList = element(by.id('custom-dropdown-id-1-dropdown-list'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
