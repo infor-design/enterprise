@@ -51,3 +51,4 @@ For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-
 - [Review source code changes](https://github.com/infor-design/enterprise/pulls)
 - [Releases, previous and upcoming](https://github.com/infor-design/enterprise/releases)
 - [Microsoft Teams Group](https://teams.microsoft.com/l/team/19%3a2b0c9ce520b0481a9ce115f0ca4a326f%40thread.skype/conversations?groupId=4f50ef7d-e88d-4ccb-98ca-65f26e57fe35&tenantId=457d5685-0467-4d05-b23b-8f817adda47c) (Infor Employees only)
+- [Roadmap and Sprint Board](https://github.com/orgs/infor-design/projects)
