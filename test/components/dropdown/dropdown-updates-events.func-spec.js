@@ -173,7 +173,7 @@ describe('Dropdown updates, events', () => {
     done();
   });
 
-  fit('should trigger change event on click', (done) => {
+  it('should trigger change event on click', (done) => {
     DOM.remove(document.querySelector('.dropdown-list'));
     const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.open();
@@ -184,7 +184,7 @@ describe('Dropdown updates, events', () => {
     console.log(document.body.innerHTML)
   });
 
-  fit('should trigger change event on duplicate label', () => {
+  it('should trigger change event on duplicate label', () => {
     // Make some dup labels
     const options = document.body.querySelectorAll('option');
     options[0].innerText = 'Dup';
