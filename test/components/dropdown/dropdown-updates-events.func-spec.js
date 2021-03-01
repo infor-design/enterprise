@@ -10,7 +10,7 @@ let dropdownObj;
 
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
-    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
+    cleanup(['.dropdown', '.field', '.dropdown-wrapper', '.twelve', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
     dropdownEl = null;
     dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
@@ -22,7 +22,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
+    cleanup(['.dropdown', '.field', '.dropdown-wrapper', '.twelve', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
   });
 
   it('Should set settings', () => {
