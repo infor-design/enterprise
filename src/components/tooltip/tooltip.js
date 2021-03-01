@@ -852,7 +852,14 @@ Tooltip.prototype = {
    * @returns {void}
    */
   setTargetContainer() {
-    let targetContainer = $('[role="main"]');
+    let targetContainer = $('body');
+
+    // Popovers need to be contained by an element with the correct ARIA role.
+    // See infor-design/enterprise#4403
+    if (this.isPopover) {
+      targetContainer = $('[role="main"]');
+    }
+
     if (!targetContainer.length) {
       targetContainer = $('body');
     }
