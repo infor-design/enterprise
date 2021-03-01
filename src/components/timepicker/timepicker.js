@@ -595,24 +595,32 @@ TimePicker.prototype = {
     ui.find('button').button();
 
     // Set default values based on what's retrieved from the Timepicker's input field.
+    const hourSelectAPI = this.hourSelect.data('dropdown');
     this.hourSelect.val(this.initValues.hours);
-    this.hourSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.hours);
-    this.minuteSelect.val(this.initValues.minutes);
-    this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
+    hourSelectAPI.pseudoElem.find('span').text(this.initValues.hours);
+    hourSelectAPI.renderPseudoElemLabel();
+    utils.addAttributes(hourSelectAPI.wrapper.find('.dropdown'), this, this.settings.attributes, 'hours');
 
-    utils.addAttributes(this.hourSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'hours');
-    utils.addAttributes(this.minuteSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'minutes');
+    const minuteSelectAPI = this.minuteSelect.data('dropdown');
+    this.minuteSelect.val(this.initValues.minutes);
+    minuteSelectAPI.pseudoElem.find('span').text(this.initValues.minutes);
+    minuteSelectAPI.renderPseudoElemLabel();
+    utils.addAttributes(minuteSelectAPI.wrapper.find('.dropdown'), this, this.settings.attributes, 'minutes');
 
     if (this.secondSelect) {
+      const secondSelectAPI = this.secondSelect.data('dropdown');
       this.secondSelect.val(this.initValues.seconds);
-      this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
-      utils.addAttributes(this.secondSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'seconds');
+      secondSelectAPI.pseudoElem.find('span').text(this.initValues.seconds);
+      secondSelectAPI.renderPseudoElemLabel();
+      utils.addAttributes(secondSelectAPI.wrapper.find('.dropdown'), this, this.settings.attributes, 'seconds');
     }
 
     if (self.hasDayPeriods()) {
+      const periodSelectAPI = this.periodSelect.data('dropdown');
       this.periodSelect.val(this.initValues.period);
-      this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
-      utils.addAttributes(this.periodSelect.data('dropdown').wrapper.find('.dropdown'), this, this.settings.attributes, 'period');
+      periodSelectAPI.pseudoElem.find('span').text(this.initValues.period);
+      periodSelectAPI.renderPseudoElemLabel();
+      utils.addAttributes(periodSelectAPI.wrapper.find('.dropdown'), this, this.settings.attributes, 'period');
     }
 
     ui.find('div.dropdown').first().focus();
