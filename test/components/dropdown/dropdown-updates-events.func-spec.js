@@ -181,7 +181,7 @@ describe('Dropdown updates, events', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
     done();
-    console.log(document.body.innerHTML)
+    console.log(document.body.innerHTML);
   });
 
   it('should trigger change event on duplicate label', () => {
@@ -208,6 +208,6 @@ describe('Dropdown updates, events', () => {
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
-    console.log(document.body.innerHTML)
+    console.log(document.body.innerHTML);
   });
 });
