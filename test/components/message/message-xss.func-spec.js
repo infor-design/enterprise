@@ -1,27 +1,23 @@
 import { Message } from '../../../src/components/message/message';
+import { cleanup } from '../../helpers/func-utils';
 
 let messageEl;
 let messageAPI;
 let messageTitleEl;
 let messageContentEl;
 
-describe('Message XSS Prevention', () => {
+fdescribe('Message XSS Prevention', () => {
   beforeEach(() => {
     messageEl = document.body;
   });
 
-  afterEach((done) => {
+  afterEach(() => {
     if (messageAPI) {
       messageAPI.destroy();
       messageAPI = null;
     }
 
-    setTimeout(() => {
-      messageEl = null;
-      messageTitleEl = null;
-      messageContentEl = null;
-      done();
-    }, 650);
+    cleanup();
   });
 
   it('Can strip HTML tags out of user-set content', () => {

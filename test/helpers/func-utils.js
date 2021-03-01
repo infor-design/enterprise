@@ -3,27 +3,17 @@
  * @param {HTMLElement|SVGElement|array|string} item a valid Element, Array or a CSS selector string
  * @returns {void}
  */
-function cleanup(item) {
-  if (!item) {
-    return;
-  }
-  if (item instanceof HTMLElement || item instanceof SVGElement) {
-    item.parentNode.removeChild(item);
-    return;
+function cleanup() {
+  let collection = document.body.querySelectorAll('*:not(script):not(link):not(html):not(body):not(head):not(meta)');
+
+  for (let i = 0; i < collection.length; i++) {
+    collection[i].remove();
   }
 
-  // Iterate through an array of selectors|elements
-  if (Array.isArray(item)) {
-    item.forEach(i => cleanup(i));
-    return;
-  }
+  collection = document.querySelectorAll('script[nonce]');
 
-  // Handle a single CSS selector
-  const els = Array.from(document.querySelectorAll(item)); // eslint-disable-line compat/compat
-  if (els && els.length) {
-    els.forEach((el) => {
-      el.parentNode.removeChild(el);
-    });
+  for (let i = 0; i < collection.length; i++) {
+    collection[i].remove();
   }
 }
 

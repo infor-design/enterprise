@@ -57,14 +57,8 @@ const settings = {
   }
 };
 
-describe('Lookup API', () => {
+fdescribe('Lookup API', () => {
   beforeEach(() => {
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.trigger',
-      '.modal'
-    ]);
     lookupEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -77,12 +71,7 @@ describe('Lookup API', () => {
     if (lookupObj) {
       lookupObj.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.trigger',
-      '.lookup'
-    ]);
+    cleanup();
   });
 
   it('Should be defined', () => {
