@@ -581,7 +581,6 @@ FileUploadAdvanced.prototype = {
     this.element
       .find('.fileupload-wrapper').removeClass('is-disabled')
       .find('.fileupload-adv-browse-lbl input[type="file"]').removeAttr('disabled');
-    this.handleEvents();
   },
 
   /**
@@ -593,7 +592,6 @@ FileUploadAdvanced.prototype = {
     this.element
       .find('.fileupload-wrapper').addClass('is-disabled')
       .find('.fileupload-adv-browse-lbl input[type="file"]').attr('disabled', 'disabled');
-    this.handleEvents();
   },
 
   /**
