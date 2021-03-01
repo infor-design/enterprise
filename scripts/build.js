@@ -1097,7 +1097,7 @@ cleanAll(true).then(() => {
 
           return fs.copyFile(file, copyName, (err) => {
             if (err) reject(err);
-            logger('alert', `Backwards compatibility ${file} copied to ${copyName}`);
+            // logger('alert', `Backwards compatibility ${file} copied to ${copyName}`);
             resolve();
           });
         }));

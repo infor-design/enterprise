@@ -21,7 +21,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select']);
+    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
   });
 
   it('Should set settings', () => {
@@ -173,7 +173,7 @@ describe('Dropdown updates, events', () => {
     done();
   });
 
-  it('should trigger change event on click', (done) => {
+  fit('should trigger change event on click', (done) => {
     DOM.remove(document.querySelector('.dropdown-list'));
     const spyEvent = spyOnEvent('.dropdown', 'change');
     dropdownObj.open();
@@ -181,9 +181,10 @@ describe('Dropdown updates, events', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
     done();
+    console.log(document.body.innerHTML)
   });
 
-  it('should trigger change event on duplicate label', () => {
+  fit('should trigger change event on duplicate label', () => {
     // Make some dup labels
     const options = document.body.querySelectorAll('option');
     options[0].innerText = 'Dup';
@@ -207,5 +208,6 @@ describe('Dropdown updates, events', () => {
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
+    console.log(document.body.innerHTML)
   });
 });
