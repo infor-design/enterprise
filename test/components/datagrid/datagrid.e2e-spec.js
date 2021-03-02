@@ -559,7 +559,7 @@ describe('Datagrid filter RTL tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-filter?locale=ar-SA&theme=classic&layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)'));
+    const datagridEl = await element.all(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(5)')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
     await browser.driver.sleep(config.sleep);
@@ -3878,10 +3878,11 @@ describe('Datagrid save user settings', () => {
   if (!utils.isCI() && !utils.isBS()) {
     it('Should save active page on reload', async () => {
       await element(by.css('li.pager-next .btn-icon')).click();
-      await browser.driver.sleep(config.sleepLonger);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
       await browser.refresh();
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('.pager-count input')).getAttribute('value')).toEqual('2');
     });
@@ -4648,7 +4649,7 @@ describe('Datagrid hide pager on one page tests', () => {
 
     const filterSel = await element(by.css(selector.filterSel));
     await filterSel.click();
-    const filterOpt = await element(by.css(selector.filterOpt));
+    const filterOpt = await element.all(by.css(selector.filterOpt)).first();
     await filterOpt.click();
     await browser.driver.sleep(config.sleep);
 
