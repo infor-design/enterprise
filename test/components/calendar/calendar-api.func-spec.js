@@ -2,8 +2,8 @@ import { Calendar } from '../../../src/components/calendar/calendar';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
-require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/en-US.js');
 require('../../../src/components/locale/cultures/da-DK.js');
 

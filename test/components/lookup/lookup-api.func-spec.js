@@ -57,7 +57,7 @@ const settings = {
   }
 };
 
-fdescribe('Lookup API', () => {
+describe('Lookup API', () => {
   beforeEach((done) => {
     lookupEl = null;
     lookupObj = null;

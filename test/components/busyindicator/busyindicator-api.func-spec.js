@@ -77,7 +77,7 @@ describe('Busy Indicator API', () => {
     }, 500);
 
     setTimeout(() => {
-      const customTextEl = $('.busy-indicator-container > span');
+      const customTextEl = busyindicatorObj.element.find('span');
 
       expect(customTextEl.text()).toEqual('Custom Text 1');
       busyindicatorObj.destroy();

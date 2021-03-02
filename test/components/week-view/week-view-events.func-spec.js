@@ -2,6 +2,9 @@ import { WeekView } from '../../../src/components/week-view/week-view';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+
 const weekViewHTML = require('../../../app/views/components/week-view/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const eventTypes = require('../../../app/data/event-types');

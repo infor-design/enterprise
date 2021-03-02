@@ -95,7 +95,7 @@ const simpleCAPSettings = {
 
 let capAPI;
 
-describe('Contexual Action Panel - Defined Through Settings', () => {
+describe('Contextual Action Panel - Defined Through Settings', () => {
   beforeEach(() => {
     capAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
@@ -143,20 +143,6 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
         done();
       }, 600);
     }, 600);
-  });
-
-  it('correctly converts legacy settings to `modalSettings` where applicable', () => {
-    capAPI = new ContextualActionPanel(document.body, legacyCAPSettings);
-    const modalAPI = capAPI.modalAPI;
-    const modalSettings = modalAPI.settings;
-
-    // Settings defined in `modalSettings` will also exist on the Modal API
-    expect(modalSettings.buttons).toBeDefined('modalAPI.settings.buttons');
-    expect(modalSettings.centerTitle).toBeDefined('modalAPI.settings.centerTitle');
-    expect(modalSettings.id).toBeDefined('modalAPI.settings.id');
-    expect(modalSettings.showCloseBtn).toBeDefined('modalAPI.settings.showCloseBtn');
-    expect(modalSettings.trigger).toBeDefined('modalAPI.settings.trigger');
-    expect(modalSettings.useFlexToolbar).toBeDefined('modalAPI.settings.useFlexToolbar');
   });
 
   it('can pass a `fullsize` setting to the underlying Modal component', () => {

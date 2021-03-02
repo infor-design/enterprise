@@ -4,7 +4,6 @@ import { cleanup } from '../../helpers/func-utils';
 
 require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
-require('../../../src/components/locale/cultures/da-DK.js');
 
 const datepickerHTML = require('../../../app/views/components/monthview/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');

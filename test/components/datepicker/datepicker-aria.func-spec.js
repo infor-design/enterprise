@@ -2,8 +2,8 @@ import { DatePicker } from '../../../src/components/datepicker/datepicker';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
-require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
 
 const datepickerHTML = require('../../../app/views/components/datepicker/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');

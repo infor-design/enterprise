@@ -29,10 +29,10 @@ describe('Message XSS Prevention', () => {
       message: dangerousMessageContent
     });
 
-    setTimeout(() => {
-      messageTitleEl = document.querySelector('.modal .modal-title');
-      messageContentEl = document.querySelector('.modal .modal-body'); // should only be one
+    messageTitleEl = messageEl.querySelector('.modal .modal-title');
+    messageContentEl = messageEl.querySelector('.modal .modal-body'); // should only be one
 
+    setTimeout(() => {
       expect(messageTitleEl.innerText).toEqual('Application Message alert("GOTCHA!");');
       expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
       messageTitleEl.innerText = '';
@@ -41,7 +41,7 @@ describe('Message XSS Prevention', () => {
     }, 500);
   });
 
-  it('Can disallow HTML tags based on component setting', () => {
+  it('Can disallow HTML tags based on component setting', (done) => {
     const messageTitleWithTags = '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>disallowed <br/>any <del>tags</del> <em>from</em> <i>appearing</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All</strong> <sub>are</sub> <sup>stripped</sup>.';
     const messageContentWithTags = '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>disallowed <br/>any <del>tags</del> <em>from</em> <i>appearing</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All</strong> <sub>are</sub> <sup>stripped</sup>.';
 
@@ -50,11 +50,10 @@ describe('Message XSS Prevention', () => {
       message: messageContentWithTags,
       allowedTags: ''
     });
+    messageTitleEl = messageEl.querySelector('.modal .modal-title');
+    messageContentEl = messageEl.querySelector('.modal .modal-body'); // should only be one
 
-    setTimeout((done) => {
-      messageTitleEl = document.querySelector('.modal .modal-title');
-      messageContentEl = document.querySelector('.modal .modal-body');
-
+    setTimeout(() => {
       expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
       expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
       done();

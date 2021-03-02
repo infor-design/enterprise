@@ -2,8 +2,8 @@ import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
-require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
 
 const monthviewHTML = require('../../../app/views/components/monthview/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');

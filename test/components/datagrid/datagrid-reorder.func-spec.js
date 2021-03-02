@@ -6,6 +6,7 @@ const datagridHTML = require('../../../app/views/components/datagrid/test-reorde
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/locale/cultures/da-DK.js');
 
 let datagridEl;
 let datagridObj;
