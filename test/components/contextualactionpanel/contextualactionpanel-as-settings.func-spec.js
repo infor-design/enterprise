@@ -32,33 +32,6 @@ const capSettings = {
   }
 };
 
-// These settings are legacy, and should be converted by the CAP API into the new
-// `modalSettings` object, which will be passed into the Modal API underneath.
-const legacyCAPSettings = {
-  centerTitle: true,
-  id: 'contextual-action-modal-xyz',
-  showCloseButton: true,
-  trigger: 'immediate',
-  useFlexToolbar: true,
-  buttons: [
-    {
-      type: 'input',
-      text: 'Keyword',
-      id: 'filter',
-      name: 'filter',
-      cssClass: 'searchfield',
-      searchfieldSettings: {
-        clearable: false,
-        collapsible: true
-      }
-    }, {
-      text: 'Close',
-      cssClass: 'btn',
-      icon: '#icon-close'
-    }
-  ]
-};
-
 // This settings object simplifies the content area and only defines the buttons
 const simpleCAPSettings = {
   title: 'Simple CAP',
