@@ -58,20 +58,22 @@ const settings = {
 };
 
 fdescribe('Lookup API', () => {
-  beforeEach(() => {
+  beforeEach((done) => {
     lookupEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', lookupHTML);
     lookupEl = document.body.querySelector('.lookup');
     lookupObj = new Lookup(lookupEl, settings);
+    done();
   });
 
-  afterEach(() => {
+  afterEach((done) => {
     if (lookupObj) {
       lookupObj.destroy();
     }
     cleanup();
+    done();
   });
 
   it('Should be defined', () => {
@@ -127,8 +129,10 @@ fdescribe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
-      document.body.querySelector('.lookup-modal tbody td:nth-child(1)').click();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
+      modalEl.querySelector('tbody td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('2142201');
       done();
@@ -160,11 +164,13 @@ fdescribe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
-      document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').click();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
+      expect(modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
+      expect(modalEl.querySelector('tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
+      expect(modalEl.querySelector('tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
+      modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('777777');
       done();
@@ -195,13 +201,15 @@ fdescribe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
       lookupObj.updateDataset(newData);
 
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
-      document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').click();
+      expect(modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
+      expect(modalEl.querySelector('tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
+      expect(modalEl.querySelector('tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
+      modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('777777');
       done();
