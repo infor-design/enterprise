@@ -8,7 +8,6 @@ const svg = require('../../../src/components/icons/theme-new-svg.html');
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 
 let data = [];
@@ -36,12 +35,10 @@ describe('Datagrid Row Reorder API', () => {
 
   beforeEach(() => {
     datagridEl = null;
-    svgEl = null;
     datagridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datagridHTML);
     datagridEl = document.body.querySelector('#datagrid');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.set('en-US');
     data = originalData.slice();

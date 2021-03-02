@@ -127,7 +127,7 @@ fdescribe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
+      expect(lookupObj.modal.element.classList.contains('is-visible')).toBeTruthy();
       document.body.querySelector('.lookup-modal tbody td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('2142201');

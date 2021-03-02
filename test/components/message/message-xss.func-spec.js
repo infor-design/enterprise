@@ -19,7 +19,7 @@ describe('Message XSS Prevention', () => {
     cleanup();
   });
 
-  it('Can strip HTML tags out of user-set content', () => {
+  it('Can strip HTML tags out of user-set content', (done) => {
     // NOTE: See SOHO-7819
     const dangerousMessageTitle = 'Application Message <script>alert("GOTCHA!");</script>';
     const dangerousMessageContent = 'This is a potentially dangerous Message. <script>alert("GOTCHA!");</script>';
@@ -37,6 +37,7 @@ describe('Message XSS Prevention', () => {
       expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
       messageTitleEl.innerText = '';
       messageContentEl.innerText = '';
+      done();
     }, 500);
   });
 
@@ -50,12 +51,13 @@ describe('Message XSS Prevention', () => {
       allowedTags: ''
     });
 
-    setTimeout(() => {
+    setTimeout((done) => {
       messageTitleEl = document.querySelector('.modal .modal-title');
       messageContentEl = document.querySelector('.modal .modal-body');
 
       expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
       expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+      done();
     }, 650);
   });
 });

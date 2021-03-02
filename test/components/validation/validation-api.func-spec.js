@@ -9,7 +9,6 @@ const exampleHTML = require('../../../app/views/components/validation/example-in
 let emailEl;
 let cardEl;
 let validatorAPI;
-let svgEl;
 const emailID = '#email-address-ok';
 
 describe('Validation API', () => {
@@ -18,13 +17,11 @@ describe('Validation API', () => {
   beforeEach(() => {
     emailEl = null;
     validatorAPI = null;
-    svgEl = null;
 
     Locale.set('en-US');
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', exampleHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     emailEl = document.body.querySelector(emailID);
     cardEl = document.body.querySelector('#credit-card');
 
