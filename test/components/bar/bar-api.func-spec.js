@@ -3,7 +3,10 @@ import { Bar } from '../../../src/components/bar/bar';
 import { Locale } from '../../../src/components/locale/locale';
 
 const barHTML = require('../../../app/views/components/bar/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
+
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
 
 let barEl;
 let barObj;
@@ -160,12 +163,7 @@ describe('Bar API', () => {
 
   afterEach(() => {
     barObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '#svg-tooltip',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

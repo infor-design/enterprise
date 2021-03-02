@@ -1,22 +1,23 @@
 import { DatePicker } from '../../../src/components/datepicker/datepicker';
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
+
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
 
 const datepickerHTML = require('../../../app/views/components/datepicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let datepickerEl;
-let svgEl;
 let datepickerAPI;
 
 describe('DatePicker Aria', () => {
   beforeEach(() => {
     datepickerEl = null;
-    svgEl = null;
     datepickerAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
     datepickerEl = document.body.querySelector('.datepicker');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
@@ -27,11 +28,7 @@ describe('DatePicker Aria', () => {
 
   afterEach(() => {
     datepickerAPI.destroy();
-    datepickerEl.parentNode.removeChild(datepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should set ARIA labels', () => {

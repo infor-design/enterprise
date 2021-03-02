@@ -2,7 +2,7 @@ import { Pager } from '../../../src/components/pager/pager';
 import { cleanup } from '../../helpers/func-utils';
 
 const pagerHTML = require('../../../app/views/components/pager/example-standalone.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let pagerEl;
 let pagerObj;
@@ -18,11 +18,7 @@ describe('Pager Event Test', () => {
 
   afterEach(() => {
     pagerObj.destroy();
-    cleanup([
-      '.pager-container',
-      '.svg-icons',
-      '.row',
-    ]);
+    cleanup();
   });
 
   it('Should trigger "firstpage" event when first page is clicked', (done) => {

@@ -1,7 +1,8 @@
 import { Autocomplete } from '../../../src/components/autocomplete/autocomplete';
+import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/autocomplete/example-index.html');
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/states-all.json');
 
 let autocompleteInputEl;
@@ -39,6 +40,7 @@ describe('Autocomplete API', () => {
     }
     autocompleteLabelEl.parentNode.removeChild(autocompleteLabelEl);
     autocompleteInputEl.parentNode.removeChild(autocompleteInputEl);
+    cleanup();
   });
 
   it('triggers a `listopen` event when the results list is opened', (done) => {

@@ -4,7 +4,10 @@
  * @returns {void}
  */
 function cleanup() {
-  let collection = document.body.querySelectorAll('*:not(script):not(link):not(html):not(body):not(head):not(meta)');
+  Soho.modalManager.destroyAll();
+  $('body').removeData();
+
+  let collection = document.body.querySelectorAll('*:not(html):not(body):not(head):not(meta):not(link)');
 
   for (let i = 0; i < collection.length; i++) {
     collection[i].remove();
@@ -15,6 +18,15 @@ function cleanup() {
   for (let i = 0; i < collection.length; i++) {
     collection[i].remove();
   }
+
+  // Remove Empty Space
+  document.body.innerHTML = document.body.innerHTML.replace(/(<(pre|script|style|textarea|{{)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)/g, '$1$3');
+  // Remove Comments
+  const regex = /( )*<!--((.*)|[^<]*|[^!]*|[^-]*|[^>]*)-->\n*/g;
+  document.body.innerHTML = document.body.innerHTML.replace(regex, '');
+  const regex2 = /( )*{{((.*)|[^<]*|[^!]*|[^-]*|[^>]*)}}\n*/g;
+  document.body.innerHTML = document.body.innerHTML.replace(regex2, '');
+  document.body.innerHTML = document.body.innerHTML.replace('&lt;%==%&gt;', '');
 }
 
 /**

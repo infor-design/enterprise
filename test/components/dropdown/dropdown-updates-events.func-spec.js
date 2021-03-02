@@ -3,7 +3,7 @@ import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { DOM } from '../../../src/utils/dom';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let dropdownEl;
 let dropdownObj;
@@ -21,7 +21,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
+    cleanup();
   });
 
   it('Should set settings', () => {

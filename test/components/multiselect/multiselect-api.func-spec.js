@@ -2,7 +2,7 @@ import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 import { cleanup } from '../../helpers/func-utils';
 
 const multiSelectHTML = require('../../../app/views/components/multiselect/_samples-standard.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const statesMultiselectData = require('../../../app/data/states-multiselect.json');
 
 let multiSelectEl;
@@ -21,7 +21,7 @@ describe('MultiSelect API', () => {
 
   afterEach(() => {
     multiSelectObj.destroy();
-    cleanup(['.multiselect', '.dropdown', '.svg-icons', '#dropdown-list', '.field', '.row', 'select']);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {
@@ -67,15 +67,7 @@ describe('Multiselect API (ajax)', () => {
 
   afterEach(() => {
     multiSelectObj.destroy();
-    cleanup([
-      '.multiselect',
-      '.dropdown',
-      '.svg-icons',
-      '#dropdown-list',
-      '.field',
-      '.row',
-      'select'
-    ]);
+    cleanup();
   });
 
   it('can set selected items from a datasource', (done) => {

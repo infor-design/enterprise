@@ -3,7 +3,7 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
 const weekViewHTML = require('../../../app/views/components/week-view/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const eventTypes = require('../../../app/data/event-types');
 
 let weekViewEl;
@@ -38,10 +38,7 @@ describe('WeekView Events', () => { //eslint-disable-line
 
   afterEach(() => {
     weekViewAPI.destroy();
-    cleanup([
-      '.full-height',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('triggers a `weekrendered` event when the week is changed', (done) => {

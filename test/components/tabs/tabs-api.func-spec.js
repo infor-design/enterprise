@@ -1,28 +1,21 @@
 import { Tabs } from '../../../src/components/tabs/tabs';
+import { cleanup } from '../../helpers/func-utils';
 
 const tabsHTML = require('../../../app/views/components/tabs/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let tabsEl;
-let tabsPanelEl;
-let svgEl;
-let rowEl;
 let tabsObj;
 
 describe('Tabs API', () => {
   beforeEach(() => {
     tabsEl = null;
-    tabsPanelEl = null;
-    svgEl = null;
     tabsObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', tabsHTML);
 
     tabsEl = document.body.querySelector('.tab-container');
-    rowEl = document.body.querySelector('.row');
-    tabsPanelEl = document.body.querySelector('.tab-panel-container');
-    svgEl = document.body.querySelector('.svg-icons');
     tabsEl.classList.add('no-init');
 
     tabsObj = new Tabs(tabsEl, {
@@ -34,10 +27,7 @@ describe('Tabs API', () => {
 
   afterEach(() => {
     tabsObj.destroy();
-    tabsPanelEl.parentNode.removeChild(tabsPanelEl);
-    tabsEl.parentNode.removeChild(tabsEl);
-    svgEl.parentNode.removeChild(svgEl);
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

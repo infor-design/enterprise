@@ -1,4 +1,5 @@
 import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
+import { cleanup } from '../../helpers/func-utils';
 
 const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
 
@@ -19,9 +20,7 @@ describe('Busy Indicator API', () => {
     if (busyindicatorObj) {
       busyindicatorObj.destroy();
     }
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

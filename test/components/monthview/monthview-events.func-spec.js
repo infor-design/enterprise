@@ -1,22 +1,24 @@
 import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
+
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/da-DK.js');
 
 const datepickerHTML = require('../../../app/views/components/monthview/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let monthviewEl;
-let svgEl;
 let monthviewAPI;
 
 describe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
-    svgEl = null;
     monthviewAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
     monthviewEl = document.body.querySelector('.monthview');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('ar-EG', Soho.Locale.cultures['ar-EG'], Soho.Locale.languages['ar']); //eslint-disable-line
@@ -37,11 +39,7 @@ describe('Monthview API', () => {
 
   afterEach(() => {
     monthviewAPI.destroy();
-    monthviewEl.parentNode.removeChild(monthviewEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('triggers a `monthrendered` event when the month is rendered', (done) => {

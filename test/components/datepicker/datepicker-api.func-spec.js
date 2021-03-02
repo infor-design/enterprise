@@ -1,26 +1,33 @@
 import { DatePicker } from '../../../src/components/datepicker/datepicker';
 import { TimePicker } from '../../../src/components/timepicker/timepicker'; //eslint-disable-line
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
+
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/locale/cultures/ja-JP.js');
+require('../../../src/components/locale/cultures/sv-SE.js');
+require('../../../src/components/locale/cultures/en-GB.js');
+require('../../../src/components/locale/cultures/da-DK.js');
 
 const datepickerHTML = require('../../../app/views/components/datepicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let datepickerEl;
 let datepickerTimeEl;
-let svgEl;
 let datepickerAPI;
 let datepickerTimeAPI;
 
 describe('DatePicker API', () => {
   beforeEach(() => {
     datepickerEl = null;
-    svgEl = null;
     datepickerAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
     datepickerEl = document.getElementById('date-field-normal');
     datepickerTimeEl = document.getElementById('start-time');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-EG', Soho.Locale.cultures['ar-EG'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
@@ -37,11 +44,7 @@ describe('DatePicker API', () => {
 
   afterEach(() => {
     datepickerAPI.destroy();
-    datepickerEl.parentNode.removeChild(datepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

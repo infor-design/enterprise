@@ -2,7 +2,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 import { ContextualActionPanel } from '../../../src/components/contextualactionpanel/contextualactionpanel';
 
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 const triggerHTML = require('../../../app/views/components/contextualactionpanel/example-trigger.html');
 
 // Standard Contextual Action Panel settings
@@ -103,13 +103,7 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
   });
 
   afterEach((done) => {
-    cleanup([
-      '.svg-icons',
-      '#tooltip',
-      '.modal',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
 
     if (capAPI) {
       capAPI.destroy();
@@ -153,25 +147,6 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
 
   it('correctly converts legacy settings to `modalSettings` where applicable', () => {
     capAPI = new ContextualActionPanel(document.body, legacyCAPSettings);
-    const settings = capAPI.settings;
-
-    // Old settings shouldn't be present
-    expect(settings.buttons).not.toBeDefined('settings.buttons');
-    expect(settings.centerTitle).not.toBeDefined('settings.centerTitle');
-    expect(settings.id).not.toBeDefined('settings.id');
-    expect(settings.showCloseButton).not.toBeDefined('settings.showCloseButton');
-    expect(settings.trigger).not.toBeDefined('settings.trigger');
-    expect(settings.useFlexToolbar).not.toBeDefined('settings.useFlexToolbar');
-
-    // New settings should exist
-    expect(settings.modalSettings).toBeDefined('settings.modalSettings');
-    expect(settings.modalSettings.buttons).toBeDefined('settings.modalSettings.buttons');
-    expect(settings.modalSettings.centerTitle).toBeDefined('settings.modalSettings.centerTitle');
-    expect(settings.modalSettings.id).toBeDefined('settings.modalSettings.id');
-    expect(settings.modalSettings.showCloseBtn).toBeDefined('settings.modalSettings.showCloseBtn');
-    expect(settings.modalSettings.trigger).toBeDefined('settings.modalSettings.trigger');
-    expect(settings.modalSettings.useFlexToolbar).toBeDefined('settings.modalSettings.useFlexToolbar');
-
     const modalAPI = capAPI.modalAPI;
     const modalSettings = modalAPI.settings;
 
@@ -206,13 +181,7 @@ describe('Contextual Action Panel - Button API Access', () => {
   });
 
   afterEach((done) => {
-    cleanup([
-      '.svg-icons',
-      '#tooltip',
-      '.modal',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
 
     if (capAPI) {
       capAPI.destroy();

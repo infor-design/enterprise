@@ -2,7 +2,7 @@ import { ListBuilder } from '../../../src/components/listbuilder/listbuilder';
 import { cleanup } from '../../helpers/func-utils';
 
 const listbuilderHTML = require('../../../app/views/components/listbuilder/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 require('../../../src/components/locale/cultures/en-US.js');
 
@@ -36,7 +36,7 @@ describe('ListBuilder API', () => {
 
   afterEach(() => {
     listbuilderObj.destroy();
-    cleanup(['#example-listbuilder-container', '.row', '.svg-icons', '#listbuilder-script', '#listbuilder-tmpl']);
+    cleanup();
   });
 
   it('Should be defined as an object', () => {

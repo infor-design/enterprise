@@ -6,7 +6,7 @@ let messageAPI;
 let messageTitleEl;
 let messageContentEl;
 
-fdescribe('Message XSS Prevention', () => {
+describe('Message XSS Prevention', () => {
   beforeEach(() => {
     messageEl = document.body;
   });
@@ -16,7 +16,6 @@ fdescribe('Message XSS Prevention', () => {
       messageAPI.destroy();
       messageAPI = null;
     }
-
     cleanup();
   });
 
@@ -36,7 +35,9 @@ fdescribe('Message XSS Prevention', () => {
 
       expect(messageTitleEl.innerText).toEqual('Application Message alert("GOTCHA!");');
       expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
-    }, 650);
+      messageTitleEl.innerText = '';
+      messageContentEl.innerText = '';
+    }, 500);
   });
 
   it('Can disallow HTML tags based on component setting', () => {

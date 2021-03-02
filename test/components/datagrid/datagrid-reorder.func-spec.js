@@ -1,8 +1,9 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/test-reorder-multiselect.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 require('../../../src/components/locale/cultures/en-US.js');
 
@@ -57,11 +58,7 @@ describe('Datagrid Row Reorder API', () => {
 
   afterEach(() => {
     datagridObj.destroy();
-    datagridEl.parentNode.removeChild(datagridEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should be able to reorder a row', (done) => {

@@ -2,7 +2,7 @@ import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
 import { cleanup } from '../../helpers/func-utils';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/orgstructure-original.json');
 
 const legendData = [
@@ -34,8 +34,7 @@ describe('Hierarchy API', () => {
   });
 
   afterEach(() => {
-    cleanup(['.svg-icons', '#hierarchyChartTemplate', '#hierarchy', '#hierarchy-init-script', '.hierarchy']);
-
+    cleanup();
     hierarchyAPI.destroy();
   });
 

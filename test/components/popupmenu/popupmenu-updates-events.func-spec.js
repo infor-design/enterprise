@@ -1,29 +1,26 @@
 import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
+import { cleanup } from '../../helpers/func-utils';
 
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let popupmenuButtonEl;
-let svgEl;
 let popupmenuObj;
 
 describe('Popupmenu Events', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
-    svgEl = null;
     popupmenuObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
 
   afterEach(() => {
     popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should trigger "beforeopen" event', () => {

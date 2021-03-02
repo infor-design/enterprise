@@ -13,6 +13,7 @@ const files = [
   'dist/js/sohoxi.js',
   'dist/js/cultures/en-US.js',
   'dist/js/cultures/da-DK.js',
+  'dist/js/cultures/ar-SA.js',
   'dist/js/cultures/ar-EG.js',
   'dist/js/cultures/es-ES.js',
   'dist/js/cultures/fr-FR.js',
