@@ -52,7 +52,7 @@ describe('Tabs vertical click example-index tests', () => {
   });
 });
 
-fdescribe('Tabs vertical click example-responsive tests', () => {
+describe('Tabs vertical click example-responsive tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-vertical/example-index?theme=classic');
     const tabsEl = await element(by.id('tabs-vertical'));
