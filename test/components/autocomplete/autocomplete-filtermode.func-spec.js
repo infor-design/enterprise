@@ -1,6 +1,7 @@
 import { Autocomplete } from '../../../src/components/autocomplete/autocomplete';
+import { cleanup } from '../../helpers/func-utils';
 
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 
 // For FilterMode "contains" tests
 const newTemplateHTML = require('../../../app/views/components/autocomplete/example-contains.html');
@@ -44,6 +45,7 @@ describe('Autocomplete API', () => {
 
     autocompleteInputEl = null;
     autocompleteAPI = null;
+    cleanup();
   });
 
   it('can provide search results with a "contains" filter', () => {

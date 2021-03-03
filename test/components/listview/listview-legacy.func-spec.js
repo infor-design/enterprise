@@ -2,7 +2,7 @@ import { ListView } from '../../../src/components/listview/listview';
 import { cleanup } from '../../helpers/func-utils';
 
 const listviewHTML = require('../../../app/views/components/listview/test-legacy-dom-list.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let listviewEl;
 let listviewAPI;
@@ -23,11 +23,7 @@ describe('Listview API (Legacy DOM List)', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    cleanup([
-      '.svg-icons',
-      '.listview',
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Can be invoked', () => {

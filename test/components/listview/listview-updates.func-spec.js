@@ -1,13 +1,13 @@
 import { ListView, LISTVIEW_DEFAULTS } from '../../../src/components/listview/listview';
+import { cleanup } from '../../helpers/func-utils';
 
 const listviewHTML = require('../../../app/views/components/listview/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let listviewEl;
 let listviewAPI;
 let listviewItemEls;
 let listviewTemplateScript;
-let svgEl;
 
 const newSettings = {
   dataset: [
@@ -21,12 +21,10 @@ describe('Listview API', () => {
   beforeEach(() => {
     listviewEl = null;
     listviewAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', listviewHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     listviewEl = document.body.querySelector('.listview');
     listviewEl.removeAttribute('data-options');
     listviewEl.classList.add('no-init');
@@ -40,8 +38,7 @@ describe('Listview API', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    listviewEl.parentNode.removeChild(listviewEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Properly sets default settings', () => {

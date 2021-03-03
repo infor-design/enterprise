@@ -3,7 +3,7 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/fontpicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let fontpickerEl;
 let fontpickerAPI;
@@ -24,7 +24,7 @@ describe('Fontpicker API', () => {
     if (fontpickerAPI) {
       fontpickerAPI.destroy();
     }
-    cleanup(['.fontpicker', '.svg-icons', '.modal', '.row', '.popupmenu-wrapper', '.popupmenu']);
+    cleanup();
   });
 
   it('can be invoked', () => {

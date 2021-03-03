@@ -1,6 +1,7 @@
 import { Autocomplete } from '../../../src/components/autocomplete/autocomplete';
+import { cleanup } from '../../helpers/func-utils';
 
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 
 // For basic API
 const exampleHTML = require('../../../app/views/components/autocomplete/example-index.html');
@@ -41,6 +42,7 @@ describe('Autocomplete API', () => {
     }
     autocompleteLabelEl.parentNode.removeChild(autocompleteLabelEl);
     autocompleteInputEl.parentNode.removeChild(autocompleteInputEl);
+    cleanup();
   });
 
   it('can be invoked', () => {

@@ -2,7 +2,7 @@ import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/bubble/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let bubbleEl;
 let bubbleObj;
@@ -210,11 +210,7 @@ describe('Bubble Chart API', () => {
 
   afterEach(() => {
     bubbleObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#bubble-script'
-    ]);
+    cleanup();
   });
 
   it('Should show on page', () => {

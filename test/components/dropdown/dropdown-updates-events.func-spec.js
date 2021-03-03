@@ -3,7 +3,7 @@ import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { DOM } from '../../../src/utils/dom';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let dropdownEl;
 let dropdownObj;
@@ -22,7 +22,7 @@ describe('Dropdown updates, events', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.field', '.dropdown-wrapper', '.twelve', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
+    cleanup();
   });
 
   it('Should set settings', () => {
@@ -182,7 +182,6 @@ describe('Dropdown updates, events', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
     done();
-    console.log(document.body.innerHTML);
   });
 
   it('should trigger change event on duplicate label', () => {
@@ -209,6 +208,5 @@ describe('Dropdown updates, events', () => {
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
-    console.log(document.body.innerHTML);
   });
 });

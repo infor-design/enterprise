@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Pie } from '../../../src/components/pie/pie';
 
 const pieHTML = require('../../../app/views/components/pie/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let pieEl;
-let svgEl;
 let pieObj;
 
 const dataset = [{
@@ -41,23 +40,17 @@ const dataset = [{
 describe('Pie Chart API', () => {
   beforeEach(() => {
     pieEl = null;
-    svgEl = null;
     pieObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', pieHTML);
     pieEl = document.body.querySelector('#pie-chart-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     pieObj = new Pie(pieEl, { type: 'pie', dataset });
   });
 
   afterEach(() => {
     pieObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    pieEl.parentNode.removeChild(pieEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should fire contextmenu event', () => {

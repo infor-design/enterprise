@@ -1,29 +1,25 @@
 import { Textarea } from '../../../src/components/textarea/textarea';
+import { cleanup } from '../../helpers/func-utils';
 
 const textareaHTML = require('../../../app/views/components/textarea/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let textareaEl;
-let svgEl;
 let textareaObj;
 
 describe('Textarea API', () => {
   beforeEach(() => {
     textareaEl = null;
-    svgEl = null;
     textareaObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', textareaHTML);
     textareaEl = document.body.querySelector('#description');
-    svgEl = document.body.querySelector('.svg-icons');
     textareaObj = new Textarea(textareaEl);
   });
 
   afterEach(() => {
     textareaObj.destroy();
-    const row = document.body.querySelector('.row');
-    row.parentNode.removeChild(row);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should set settings', () => {

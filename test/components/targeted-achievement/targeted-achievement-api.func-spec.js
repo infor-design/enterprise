@@ -2,7 +2,7 @@ import { CompletionChart } from '../../../src/components/completion-chart/comple
 import { cleanup } from '../../helpers/func-utils';
 
 const targetedHTML = require('../../../app/views/components/targeted-achievement/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let targetedEl;
 let targetedObj;
@@ -26,11 +26,7 @@ describe('Targeted Achievement API', () => {
 
   afterEach(() => {
     targetedObj.destroy();
-
-    cleanup([
-      '.svg-icons',
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

@@ -60,6 +60,7 @@ describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
+    Locale.addCulture('da-DK', Soho.Locale.cultures['da-DK'], Soho.Locale.languages['da']); //eslint-disable-line
     Locale.set('en-US');
   });
 

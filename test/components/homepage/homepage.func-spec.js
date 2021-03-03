@@ -24,7 +24,7 @@ describe('Homepage API', () => {
       homepageAPI = null;
     }
 
-    cleanup(['.homepage', '.page-container']);
+    cleanup();
     homepageEl = null;
   });
 

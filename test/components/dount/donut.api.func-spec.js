@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Pie } from '../../../src/components/pie/pie';
 
 const donutHTML = require('../../../app/views/components/donut/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let donutEl;
-let svgEl;
 let donutObj;
 
 const dataset = [{
@@ -25,23 +24,17 @@ const dataset = [{
 describe('Donut Chart API', () => {
   beforeEach(() => {
     donutEl = null;
-    svgEl = null;
     donutObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', donutHTML);
     donutEl = document.body.querySelector('#pie-donut-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     donutObj = new Pie(donutEl, { type: 'donut', dataset });
   });
 
   afterEach(() => {
     donutObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    donutEl.parentNode.removeChild(donutEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should fire contextmenu event', () => {

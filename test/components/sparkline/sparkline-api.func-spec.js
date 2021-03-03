@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Sparkline } from '../../../src/components/sparkline/sparkline';
 
 const sparklineHTML = require('../../../app/views/components/sparkline/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let sparklineEl;
-let svgEl;
 let sparklineObj;
 
 const sparkData1 = [{
@@ -34,23 +33,17 @@ const sparkData4 = [{
 describe('Sparkline Chart API', () => {
   beforeEach(() => {
     sparklineEl = null;
-    svgEl = null;
     sparklineObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', sparklineHTML);
     sparklineEl = document.body.querySelector('#sparkline-chart-example-1');
-    svgEl = document.body.querySelector('.svg-icons');
 
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline', dataset: sparkData1 });
   });
 
   afterEach(() => {
     sparklineObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    sparklineEl.parentNode.removeChild(sparklineEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should fire contextmenu event with sparkline', () => {

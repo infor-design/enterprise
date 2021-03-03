@@ -1,8 +1,9 @@
 import { ApplicationMenu } from '../../../src/components/applicationmenu/applicationmenu';
+import { cleanup } from '../../helpers/func-utils';
 
 const applicationmenuHTML = require('../../../app/views/components/applicationmenu/example-index.html');
 
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 require('../../../src/components/locale/cultures/en-US.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
 
@@ -30,6 +31,7 @@ describe('Application Menu API', () => {
 
     const headerEl = document.body.querySelector('.header');
     headerEl.parentNode.removeChild(headerEl);
+    cleanup();
   });
 
   it('Should show on page', () => {

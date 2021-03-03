@@ -1,31 +1,28 @@
 import { TimePicker } from '../../../src/components/timepicker/timepicker';
+import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 const TIMEPICKER_MODES = ['standard', 'range'];
 
 let timepickerEl;
-let svgEl;
 let timepickerObj;
 
 describe('TimePicker settings', () => {
   beforeEach(() => {
     timepickerEl = null;
-    svgEl = null;
     timepickerObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', timepickerHTML);
     timepickerEl = document.body.querySelector('.timepicker');
-    svgEl = document.body.querySelector('.svg-icons');
     timepickerEl.classList.add('no-init');
     timepickerObj = new TimePicker(timepickerEl);
   });
 
   afterEach(() => {
     timepickerObj.destroy();
-    timepickerEl.parentNode.removeChild(timepickerEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should set settings', () => {
