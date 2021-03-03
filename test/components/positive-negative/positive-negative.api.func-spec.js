@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Column } from '../../../src/components/column/column';
 
 const pnHTML = require('../../../app/views/components/positive-negative/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let pnEl;
-let svgEl;
 let pnObj;
 
 const dataset = [{
@@ -73,23 +72,17 @@ const dataset = [{
 describe('Positive Negative Chart API', () => {
   beforeEach(() => {
     pnEl = null;
-    svgEl = null;
     pnObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', pnHTML);
     pnEl = document.body.querySelector('#positive-negative-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     pnObj = new Column(pnEl, { type: 'positive-negative', dataset, formatterString: '.2s' });
   });
 
   afterEach(() => {
     pnObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    pnEl.parentNode.removeChild(pnEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should fire contextmenu event', () => {

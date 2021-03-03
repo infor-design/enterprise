@@ -4,7 +4,7 @@ import { cleanup } from '../../helpers/func-utils';
 const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
 const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
 const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 const ePage = {
   pageX: 136,
@@ -17,19 +17,16 @@ const eClient = {
 };
 
 let popupmenuButtonEl;
-let svgEl;
 let popupmenuObj;
 
 describe('Popupmenu Menu Button API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
-    svgEl = null;
     popupmenuObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
     popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-    svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
 
@@ -37,11 +34,7 @@ describe('Popupmenu Menu Button API', () => {
     if (popupmenuObj) {
       popupmenuObj.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {
@@ -93,19 +86,16 @@ describe('Popupmenu Menu Button API', () => {
 describe('Popupmenu Single Select API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
-    svgEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
 
   afterEach(() => {
     popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should select', () => {
@@ -123,14 +113,6 @@ describe('Popupmenu Single Select API', () => {
     popupmenuObj.highlight($(anchorItem));
 
     expect(anchorItem.parentNode.classList.toString()).toContain('is-focused');
-  });
-
-  it('Should return if item is in selectable section', () => {
-    // Expects jQuery anchor
-    const anchorItem = document.querySelector('.popupmenu li a');
-    const isSelectable = popupmenuObj.isInSelectableSection($(anchorItem));
-
-    expect(isSelectable).toBeFalsy();
   });
 
   it('Should return if item is in single selectable section', () => {
@@ -184,19 +166,16 @@ describe('Popupmenu Single Select API', () => {
 describe('Popupmenu renderItem() API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
-    svgEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
 
   afterEach(() => {
     popupmenuObj.destroy();
-    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should build HTML for a single Popupmenu item from a settings object', () => {
@@ -378,22 +357,16 @@ describe('Popupmenu renderItem() API', () => {
 describe('Popupmenu (settings)', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
-    svgEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuContextMenuHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
-    svgEl = document.body.querySelector('.svg-icons');
   });
 
   afterEach(() => {
     if (popupmenuObj) {
       popupmenuObj.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 
   it('should place the menu underneath the `body` element with `attachToBody` set', () => {
@@ -436,12 +409,10 @@ describe('Popupmenu toData() API', () => {
   describe('Main Examples', () => {
     beforeEach(() => {
       popupmenuButtonEl = null;
-      svgEl = null;
       popupmenuObj = null;
       document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
       document.body.insertAdjacentHTML('afterbegin', svg);
       popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-      svgEl = document.body.querySelector('.svg-icons');
       popupmenuObj = new PopupMenu(popupmenuButtonEl);
     });
 
@@ -449,11 +420,7 @@ describe('Popupmenu toData() API', () => {
       if (popupmenuObj) {
         popupmenuObj.destroy();
       }
-      cleanup([
-        '.svg-icons',
-        '.row',
-        '.popupmenu-wrapper'
-      ]);
+      cleanup();
     });
 
     it('Should convert the main Popupmenu example into an object representation', () => {
@@ -481,19 +448,16 @@ describe('Popupmenu toData() API', () => {
 
     beforeEach(() => {
       popupmenuButtonEl = null;
-      svgEl = null;
       popupmenuObj = null;
       document.body.insertAdjacentHTML('afterbegin', emptyMenuHTML);
       document.body.insertAdjacentHTML('afterbegin', svg);
       popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-      svgEl = document.body.querySelector('.svg-icons');
       popupmenuObj = new PopupMenu(popupmenuButtonEl);
     });
 
     afterEach(() => {
       popupmenuObj.destroy();
-      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-      svgEl.parentNode.removeChild(svgEl);
+      cleanup();
     });
 
     it('Should gracefully handle empty menus', () => {
@@ -508,19 +472,16 @@ describe('Popupmenu toData() API', () => {
   describe('Context Menu examples', () => {
     beforeEach(() => {
       popupmenuButtonEl = null;
-      svgEl = null;
       popupmenuObj = null;
       document.body.insertAdjacentHTML('afterbegin', popupmenuContextMenuHTML);
       document.body.insertAdjacentHTML('afterbegin', svg);
       popupmenuButtonEl = document.body.querySelector('#input-menu');
-      svgEl = document.body.querySelector('.svg-icons');
       popupmenuObj = new PopupMenu(popupmenuButtonEl);
     });
 
     afterEach(() => {
       popupmenuObj.destroy();
-      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-      svgEl.parentNode.removeChild(svgEl);
+      cleanup();
     });
 
     it('Should convert a more complicated Popupmenu example into an object representation', () => {

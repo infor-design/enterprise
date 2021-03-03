@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Column } from '../../../src/components/column/column';
 
 const areaHTML = require('../../../app/views/components/column/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let columnEl;
-let svgEl;
 let columnObj;
 const dataset = [{
   data: [{
@@ -241,12 +240,10 @@ const stackedSettings = {
 describe('Column Chart API', () => {
   beforeEach((done) => {
     columnEl = null;
-    svgEl = null;
     columnObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', areaHTML);
     columnEl = document.body.querySelector('#column-bar-example');
-    svgEl = document.body.querySelector('.svg-icons');
 
     columnObj = new Column(columnEl, { type: 'column', dataset: JSON.parse(JSON.stringify(dataset)), animate: false });
     setTimeout(done());
@@ -254,11 +251,7 @@ describe('Column Chart API', () => {
 
   afterEach(() => {
     columnObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    columnEl.parentNode.removeChild(columnEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should show on page', () => {

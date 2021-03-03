@@ -2,7 +2,7 @@ import { Lookup } from '../../../src/components/lookup/lookup';
 import { cleanup } from '../../helpers/func-utils';
 
 const lookupHTML = require('../../../app/views/components/lookup/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let lookupEl;
 let lookupObj;
@@ -58,31 +58,22 @@ const settings = {
 };
 
 describe('Lookup API', () => {
-  beforeEach(() => {
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.trigger',
-      '.modal'
-    ]);
+  beforeEach((done) => {
     lookupEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', lookupHTML);
     lookupEl = document.body.querySelector('.lookup');
     lookupObj = new Lookup(lookupEl, settings);
+    done();
   });
 
-  afterEach(() => {
+  afterEach((done) => {
     if (lookupObj) {
       lookupObj.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.trigger',
-      '.lookup'
-    ]);
+    cleanup();
+    done();
   });
 
   it('Should be defined', () => {
@@ -138,8 +129,10 @@ describe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
-      document.body.querySelector('.lookup-modal tbody td:nth-child(1)').click();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
+      modalEl.querySelector('tbody td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('2142201');
       done();
@@ -171,11 +164,13 @@ describe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
-      document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').click();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
+      expect(modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
+      expect(modalEl.querySelector('tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
+      expect(modalEl.querySelector('tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
+      modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('777777');
       done();
@@ -206,13 +201,15 @@ describe('Lookup API', () => {
     lookupObj.openDialog();
 
     setTimeout(() => {
-      expect(document.body.querySelector('.lookup-modal').classList.contains('is-visible')).toBeTruthy();
+      const modalEl = lookupObj.modal.element[0];
+
+      expect(modalEl.classList.contains('is-visible')).toBeTruthy();
       lookupObj.updateDataset(newData);
 
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
-      expect(document.body.querySelector('.lookup-modal tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
-      document.body.querySelector('.lookup-modal tbody tr:nth-child(1) td:nth-child(1)').click();
+      expect(modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').innerText.trim()).toEqual('777777');
+      expect(modalEl.querySelector('tbody tr:nth-child(2) td:nth-child(1)').innerText.trim()).toEqual('888888');
+      expect(modalEl.querySelector('tbody tr:nth-child(3) td:nth-child(1)').innerText.trim()).toEqual('999999');
+      modalEl.querySelector('tbody tr:nth-child(1) td:nth-child(1)').click();
 
       expect(lookupEl.value).toEqual('777777');
       done();

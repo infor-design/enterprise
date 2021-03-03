@@ -3,7 +3,7 @@ import extend from 'extend';
 import { ButtonSet } from '../../../src/components/button/button.set';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let buttonSetEl;
 let buttonSetAPI;
@@ -63,16 +63,7 @@ describe('ButtonSet API', () => {
     if (buttonSetAPI) {
       buttonSetAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.buttonset',
-      '.modal-buttonset',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('should exist', () => {

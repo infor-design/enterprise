@@ -3,7 +3,7 @@ import { Button, BUTTON_DEFAULTS } from '../../../src/components/button/button';
 import { cleanup } from '../../helpers/func-utils';
 
 const buttonHTML = require('../../../app/views/components/button/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let buttonEl;
 let buttonAPI;
@@ -23,14 +23,7 @@ describe('Button API', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('should exist', () => {
@@ -153,14 +146,7 @@ describe('Button API (Icons)', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('has a dynamic property representing its icon', () => {
@@ -198,14 +184,7 @@ describe('Button API (Toggle)', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('can become pressed/unpressed', () => {
@@ -250,14 +229,7 @@ describe('Button API (Favorite)', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('can become pressed/unpressed', () => {
@@ -294,14 +266,7 @@ describe('Button API `toData()` method', () => {
     if (buttonAPI) {
       buttonAPI.destroy();
     }
-    cleanup([
-      'button',
-      '.icon-dropdown',
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper',
-      '.popupmenu'
-    ]);
+    cleanup();
   });
 
   it('can get a data representation of itself', () => {

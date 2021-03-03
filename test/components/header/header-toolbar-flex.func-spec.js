@@ -29,14 +29,7 @@ describe('Header API (using Flex Toolbar)', () => {
 
   afterEach(() => {
     headerAPI.destroy();
-    innerPageContainerElem.parentNode.removeChild(innerPageContainerElem);
-    headerElem.parentNode.removeChild(headerElem);
-    outerPageContainerElem.parentNode.removeChild(outerPageContainerElem);
-
-    cleanup([
-      'header',
-      '.page-container'
-    ]);
+    cleanup();
   });
 
   it('Should support using a Flex Toolbar', () => {

@@ -2,7 +2,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 import { ContextualActionPanel } from '../../../src/components/contextualactionpanel/contextualactionpanel';
 
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 const triggerHTML = require('../../../app/views/components/contextualactionpanel/example-trigger.html');
 
 // Standard Contextual Action Panel settings
@@ -30,33 +30,6 @@ const capSettings = {
       }
     ]
   }
-};
-
-// These settings are legacy, and should be converted by the CAP API into the new
-// `modalSettings` object, which will be passed into the Modal API underneath.
-const legacyCAPSettings = {
-  centerTitle: true,
-  id: 'contextual-action-modal-xyz',
-  showCloseButton: true,
-  trigger: 'immediate',
-  useFlexToolbar: true,
-  buttons: [
-    {
-      type: 'input',
-      text: 'Keyword',
-      id: 'filter',
-      name: 'filter',
-      cssClass: 'searchfield',
-      searchfieldSettings: {
-        clearable: false,
-        collapsible: true
-      }
-    }, {
-      text: 'Close',
-      cssClass: 'btn',
-      icon: '#icon-close'
-    }
-  ]
 };
 
 // This settings object simplifies the content area and only defines the buttons
@@ -95,7 +68,7 @@ const simpleCAPSettings = {
 
 let capAPI;
 
-describe('Contexual Action Panel - Defined Through Settings', () => {
+describe('Contextual Action Panel - Defined Through Settings', () => {
   beforeEach(() => {
     capAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
@@ -103,13 +76,7 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
   });
 
   afterEach((done) => {
-    cleanup([
-      '.svg-icons',
-      '#tooltip',
-      '.modal',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
 
     if (capAPI) {
       capAPI.destroy();
@@ -151,39 +118,6 @@ describe('Contexual Action Panel - Defined Through Settings', () => {
     }, 600);
   });
 
-  it('correctly converts legacy settings to `modalSettings` where applicable', () => {
-    capAPI = new ContextualActionPanel(document.body, legacyCAPSettings);
-    const settings = capAPI.settings;
-
-    // Old settings shouldn't be present
-    expect(settings.buttons).not.toBeDefined('settings.buttons');
-    expect(settings.centerTitle).not.toBeDefined('settings.centerTitle');
-    expect(settings.id).not.toBeDefined('settings.id');
-    expect(settings.showCloseButton).not.toBeDefined('settings.showCloseButton');
-    expect(settings.trigger).not.toBeDefined('settings.trigger');
-    expect(settings.useFlexToolbar).not.toBeDefined('settings.useFlexToolbar');
-
-    // New settings should exist
-    expect(settings.modalSettings).toBeDefined('settings.modalSettings');
-    expect(settings.modalSettings.buttons).toBeDefined('settings.modalSettings.buttons');
-    expect(settings.modalSettings.centerTitle).toBeDefined('settings.modalSettings.centerTitle');
-    expect(settings.modalSettings.id).toBeDefined('settings.modalSettings.id');
-    expect(settings.modalSettings.showCloseBtn).toBeDefined('settings.modalSettings.showCloseBtn');
-    expect(settings.modalSettings.trigger).toBeDefined('settings.modalSettings.trigger');
-    expect(settings.modalSettings.useFlexToolbar).toBeDefined('settings.modalSettings.useFlexToolbar');
-
-    const modalAPI = capAPI.modalAPI;
-    const modalSettings = modalAPI.settings;
-
-    // Settings defined in `modalSettings` will also exist on the Modal API
-    expect(modalSettings.buttons).toBeDefined('modalAPI.settings.buttons');
-    expect(modalSettings.centerTitle).toBeDefined('modalAPI.settings.centerTitle');
-    expect(modalSettings.id).toBeDefined('modalAPI.settings.id');
-    expect(modalSettings.showCloseBtn).toBeDefined('modalAPI.settings.showCloseBtn');
-    expect(modalSettings.trigger).toBeDefined('modalAPI.settings.trigger');
-    expect(modalSettings.useFlexToolbar).toBeDefined('modalAPI.settings.useFlexToolbar');
-  });
-
   it('can pass a `fullsize` setting to the underlying Modal component', () => {
     capAPI = new ContextualActionPanel(document.body, {
       modalSettings: {
@@ -206,13 +140,7 @@ describe('Contextual Action Panel - Button API Access', () => {
   });
 
   afterEach((done) => {
-    cleanup([
-      '.svg-icons',
-      '#tooltip',
-      '.modal',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
 
     if (capAPI) {
       capAPI.destroy();

@@ -2,7 +2,7 @@ import { SearchField } from '../../../src/components/searchfield/searchfield';
 import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/example-index.html');
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/states-all.json');
 
 let searchfieldInputEl;
@@ -29,12 +29,7 @@ describe('Searchfield API', () => {
     if (searchfieldAPI) {
       searchfieldAPI.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.searchfield-wrapper',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 
   it('can be invoked', () => {

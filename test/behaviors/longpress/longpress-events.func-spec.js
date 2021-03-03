@@ -1,7 +1,8 @@
 import { longPress } from '../../../src/behaviors/longpress/longpress';
+import { cleanup } from '../../helpers/func-utils';
 
 const longpressHTML = require('../../../app/views/behaviors/longpress/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let svgEl;
 
@@ -15,6 +16,7 @@ describe('Longpress events', () => {
 
   afterEach(() => {
     svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('can be triggered on an element', () => {

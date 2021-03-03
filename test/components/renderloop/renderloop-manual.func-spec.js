@@ -6,6 +6,6 @@ describe('RenderLoop API (Manual Start)', () => {
     setTimeout(() => {
       expect(renderLoop.startTime).toBeUndefined();
       done();
-    }, 500);
+    }, 400);
   });
 });

@@ -15,7 +15,7 @@ describe('Dom Utils (SVGElement)', () => {
   });
 
   afterEach(() => {
-    cleanup(['.test-container', '.row']);
+    cleanup();
   });
 
   it('can add/remove a single class on an svg', () => {

@@ -2,7 +2,7 @@ import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
 import { cleanup } from '../../helpers/func-utils';
 
 const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let toolbarEl;
 let toolbarAPI;
@@ -24,11 +24,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
 
   afterEach(() => {
     toolbarAPI.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 
   it('Should be invoked', () => {
@@ -331,11 +327,7 @@ describe('Flex Toolbar (with extra attributes)', () => {
 
   afterEach(() => {
     toolbarAPI.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 
   it('can have automation ids', () => {

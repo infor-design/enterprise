@@ -1,13 +1,13 @@
 import { ListView } from '../../../src/components/listview/listview';
+import { cleanup } from '../../helpers/func-utils';
 
 const listviewHTML = require('../../../app/views/components/listview/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/inventory-tasks.json');
 
 let listviewEl;
 let listviewAPI;
 let listviewTemplateScript;
-let svgEl;
 
 const settings = {
   dataset: data,
@@ -22,12 +22,10 @@ describe('Listview API', () => {
   beforeEach(() => {
     listviewEl = null;
     listviewAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', listviewHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     listviewEl = document.body.querySelector('.listview');
     listviewTemplateScript = document.getElementById('task-tmpl').innerHTML;
     listviewEl.removeAttribute('data-options');
@@ -39,8 +37,7 @@ describe('Listview API', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    listviewEl.parentNode.removeChild(listviewEl);
+    cleanup();
   });
 
   it('Can select more than one item', () => {
