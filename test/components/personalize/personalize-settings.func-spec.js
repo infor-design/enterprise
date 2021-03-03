@@ -1,31 +1,28 @@
 import { Personalize } from '../../../src/components/personalize/personalize';
+import { cleanup } from '../../helpers/func-utils';
 
 const personalizeHTML = require('../../../app/views/components/personalize/test-state.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let personalizeEl;
-let svgEl;
 let personalizeObj;
 const personalizeId = '#personalize';
 
 describe('Personalize settings', () => {
   beforeEach(() => {
     personalizeEl = null;
-    svgEl = null;
     personalizeObj = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', personalizeHTML);
 
     personalizeEl = document.body.querySelector(personalizeId);
-    svgEl = document.body.querySelector('.svg-icons');
     personalizeObj = new Personalize(personalizeEl);
   });
 
   afterEach(() => {
     personalizeObj.destroy();
-    personalizeEl.parentNode.removeChild(personalizeEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should set colors', () => {

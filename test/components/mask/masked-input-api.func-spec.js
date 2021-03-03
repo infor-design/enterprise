@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
 require('../../../src/components/locale/cultures/en-US.js');
 require('../../../src/components/locale/cultures/fr-FR.js');
 

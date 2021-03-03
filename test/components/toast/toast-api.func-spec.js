@@ -1,4 +1,5 @@
 import { Toast } from '../../../src/components/toast/toast';
+import { cleanup } from '../../helpers/func-utils';
 
 let toastEl;
 let toastObj;
@@ -32,14 +33,8 @@ describe('Toast API', () => {
   });
 
   afterEach(() => {
-    toastEl = null;
-
     toastObj.destroy();
-
-    const toastContainer = document.querySelector('#toast-container');
-    if (toastContainer) {
-      toastContainer.parentNode.removeChild(toastContainer);
-    }
+    cleanup();
   });
 
   it('Should be defined', () => {

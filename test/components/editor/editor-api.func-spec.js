@@ -2,7 +2,7 @@ import { Editor } from '../../../src/components/editor/editor';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/editor/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let editorEl;
 let editorObj;
@@ -21,7 +21,7 @@ describe('Editor API', () => {
       editorObj.destroy();
     }
 
-    cleanup(['.editor', '.svg-icons', '.modal', '.row']);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {
@@ -97,18 +97,5 @@ describe('Editor API', () => {
     expect(editorEl.parentNode.classList.contains('is-preview')).toBeFalsy();
     expect(editorEl.getAttribute('contenteditable')).toBe('true');
     expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeVisible();
-  });
-
-  it('should convert legacy `firstHeader` and `secondHeader` settings to FontPicker style options', () => {
-    editorObj = new Editor(editorEl, {
-      firstHeader: 'h3',
-      secondHeader: 'h4'
-    });
-
-    expect(editorObj.settings.firstHeader).not.toBeDefined();
-    expect(editorObj.settings.secondHeader).not.toBeDefined();
-    expect(editorObj.settings.fontpickerSettings.styles).toBeDefined();
-    expect(Array.isArray(editorObj.settings.fontpickerSettings.styles)).toBeTruthy();
-    expect(editorObj.settings.fontpickerSettings.styles.length).toEqual(3);
   });
 });

@@ -1,22 +1,23 @@
 import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
+import { cleanup } from '../../helpers/func-utils';
+
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
 
 const monthviewHTML = require('../../../app/views/components/monthview/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let monthviewEl;
-let svgEl;
 let monthviewAPI;
 
 describe('MonthView Aria', () => {
   beforeEach(() => {
     monthviewEl = null;
-    svgEl = null;
     monthviewAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', monthviewHTML);
     monthviewEl = document.body.querySelector('.monthview');
-    svgEl = document.body.querySelector('.svg-icons');
 
     Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
     Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
@@ -31,11 +32,7 @@ describe('MonthView Aria', () => {
 
   afterEach(() => {
     monthviewAPI.destroy();
-    monthviewEl.parentNode.removeChild(monthviewEl);
-    svgEl.parentNode.removeChild(svgEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should update ARIA labels with calendar open', () => {

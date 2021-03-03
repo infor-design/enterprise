@@ -2,7 +2,7 @@ import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const scatterplotHTML = require('../../../app/views/components/scatterplot/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let scatterplotEl;
 let scatterplotObj;
@@ -185,11 +185,7 @@ describe('Scatter Plot API', () => {
 
   afterEach(() => {
     scatterplotObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#scatterplot-script'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

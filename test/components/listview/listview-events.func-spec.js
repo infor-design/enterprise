@@ -1,23 +1,21 @@
 import { ListView } from '../../../src/components/listview/listview';
+import { cleanup } from '../../helpers/func-utils';
 
 const listviewHTML = require('../../../app/views/components/listview/example-singleselect.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/periods');
 
 let listviewEl;
 let listviewAPI;
-let svgEl;
 
 describe('Listview Events', () => {
   beforeEach(() => {
     listviewEl = null;
     listviewAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', listviewHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     listviewEl = document.body.querySelector('.listview');
     listviewEl.removeAttribute('data-options');
     listviewEl.classList.add('no-init');
@@ -27,8 +25,7 @@ describe('Listview Events', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    listviewEl.parentNode.removeChild(listviewEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should be able to single select', (done) => {

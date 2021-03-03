@@ -16,10 +16,7 @@ describe('Keyboard Manager Tests', () => {
   });
 
   afterEach(() => {
-    cleanup([
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Can be trigger a keys event', (done) => {

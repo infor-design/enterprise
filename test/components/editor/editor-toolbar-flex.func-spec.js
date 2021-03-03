@@ -3,7 +3,7 @@ import { Editor } from '../../../src/components/editor/editor';
 import { cleanup } from '../../helpers/func-utils';
 
 const editorHTML = require('../../../app/views/components/editor/example-flex-toolbar.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let editorElem;
 let editorAPI;
@@ -25,7 +25,7 @@ describe('Editor API (using Flex Toolbar)', () => {
 
   afterEach(() => {
     editorAPI.destroy();
-    cleanup(['.editor', '.svg-icons', '.modal', '.row']);
+    cleanup();
   });
 
   it('Should support using a Flex Toolbar', () => {

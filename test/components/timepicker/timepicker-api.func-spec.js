@@ -2,8 +2,13 @@ import { TimePicker } from '../../../src/components/timepicker/timepicker';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/da-DK.js');
+require('../../../src/components/locale/cultures/en-US.js');
+
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let timepickerEl;
 let timepickerObj;
@@ -27,12 +32,7 @@ describe('TimePicker API', () => {
 
   afterEach(() => {
     timepickerObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '#timepicker-popup',
-      '.popover',
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

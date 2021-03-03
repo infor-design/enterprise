@@ -20,7 +20,7 @@ describe('Dom Utils (HTMLElement)', () => {
   });
 
   afterEach(() => {
-    cleanup(['.test-container', '.row']);
+    cleanup();
   });
 
   it('can add/remove a single class', () => {
