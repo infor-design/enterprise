@@ -1,11 +1,10 @@
-import { triggerContextmenu } from '../../helpers/func-utils';
+import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Bullet } from '../../../src/components/bullet/bullet';
 
 const areaHTML = require('../../../app/views/components/bullet/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let bulletEl;
-let svgEl;
 let bulletObj;
 const dataset1 = [{
   data: [{
@@ -65,12 +64,10 @@ function formatToUnits(num, digits) {
 describe('Bullet Chart API', () => {
   beforeEach((done) => {
     bulletEl = null;
-    svgEl = null;
     bulletObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', areaHTML);
     bulletEl = document.body.querySelector('#bullet-example1');
-    svgEl = document.body.querySelector('.svg-icons');
 
     bulletObj = new Bullet(bulletEl, { dataset: dataset1, animate: false });
     setTimeout(done(), 300);
@@ -78,11 +75,7 @@ describe('Bullet Chart API', () => {
 
   afterEach(() => {
     bulletObj.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    bulletEl.parentNode.removeChild(bulletEl);
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should show on page', () => {

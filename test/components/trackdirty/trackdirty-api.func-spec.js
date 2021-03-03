@@ -2,7 +2,7 @@ import { Trackdirty } from '../../../src/components/trackdirty/trackdirty';
 import { cleanup } from '../../helpers/func-utils';
 
 const dirtyHTML = require('../../../app/views/components/trackdirty/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let inputEl;
 let dirtyObj;
@@ -19,11 +19,7 @@ describe('Trackdirty API', () => {
 
   afterEach(() => {
     dirtyObj.destroy();
-
-    cleanup([
-      '.svg-icons',
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

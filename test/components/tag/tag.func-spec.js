@@ -1,7 +1,7 @@
 import { Tag } from '../../../src/components/tag/tag';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let tagEl;
 let tagAPI;
@@ -21,7 +21,7 @@ describe('Tag API (as span)', () => {
     if (tagAPI) {
       tagAPI.destroy();
     }
-    cleanup(['.tag', '.svg-icons', '.row']);
+    cleanup();
   });
 
   it('should initialize', () => {

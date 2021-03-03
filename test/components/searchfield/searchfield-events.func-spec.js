@@ -2,7 +2,7 @@ import { SearchField } from '../../../src/components/searchfield/searchfield';
 import { cleanup } from '../../helpers/func-utils';
 
 const exampleHTML = require('../../../app/views/components/searchfield/test-selected-event.html');
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 
 let searchfieldInputEl;
 let searchfieldAPI;
@@ -34,11 +34,6 @@ describe('Searchfield Events', () => {
     if (searchfieldAPI) {
       searchfieldAPI.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '.searchfield-wrapper',
-      '.popupmenu-wrapper'
-    ]);
+    cleanup();
   });
 });

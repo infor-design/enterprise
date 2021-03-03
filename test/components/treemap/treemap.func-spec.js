@@ -1,15 +1,15 @@
 import { Treemap } from '../../../src/components/treemap/treemap';
+import { cleanup } from '../../helpers/func-utils';
 
 require('../../../src/components/locale/cultures/en-US.js');
 
 const treemapHTML = require('../../../app/views/components/treemap/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/storage-usage.json');
 const dataUpdate = require('../../../app/data/file-usage.json');
 
 let treemapEl;
 let treemapAPI;
-let svgEl;
 const treemapId = '#treemap-chart-example';
 
 describe('Treemap API', () => {
@@ -20,12 +20,10 @@ describe('Treemap API', () => {
 
     treemapEl = null;
     treemapAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', treemapHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     treemapEl = document.body.querySelector(treemapId);
 
     treemapAPI = new Treemap(treemapEl, {
@@ -35,8 +33,7 @@ describe('Treemap API', () => {
 
   afterEach(() => {
     treemapAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    treemapEl.parentNode.removeChild(treemapEl);
+    cleanup();
   });
 
   it('Can be invoked', () => {

@@ -2,7 +2,7 @@ import { triggerContextmenu, cleanup } from '../../helpers/func-utils';
 import { Line } from '../../../src/components/line/line';
 
 const areaHTML = require('../../../app/views/components/area/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let areaEl;
 let areaObj;
@@ -101,11 +101,7 @@ describe('Area Chart API', () => {
 
   afterEach(() => {
     areaObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#area-script'
-    ]);
+    cleanup();
   });
 
   it('Should show on page', () => {

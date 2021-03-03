@@ -6,13 +6,14 @@ specs.forEach((spec, i) => {
 });
 
 const files = [
-  'dist/css/theme-classic-contrast.css',
+  'dist/css/theme-classic-light.css',
   'dist/js/jquery-3.5.1.js',
   'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
   'dist/js/d3.v5.js',
   'dist/js/sohoxi.js',
   'dist/js/cultures/en-US.js',
   'dist/js/cultures/da-DK.js',
+  'dist/js/cultures/ar-SA.js',
   'dist/js/cultures/ar-EG.js',
   'dist/js/cultures/es-ES.js',
   'dist/js/cultures/fr-FR.js',
@@ -34,7 +35,11 @@ module.exports = function (config) {
       '**/components/*/*.js': ['webpack', 'sourcemap'],
     },
     proxies: {
-      '/images/': 'app/www/images/'
+      '/images/': 'app/www/images/',
+      '/cultures/': 'dist/js/cultures/',
+      '/ar-EG.js': '',
+      '/en-US.js': '',
+      '/da-DK.js': '',
     },
     webpack: {
       optimization: {
@@ -70,15 +75,6 @@ module.exports = function (config) {
     mochaReporter: {
       ignoreSkipped: true,
     },
-    // reporters: ['mocha', 'coverage'],
-    // coverageReporter: {
-    //   dir: 'coverage',
-    //   reporters: [
-    //     { type: 'lcov', subdir: '.' },
-    //     { type: 'text-summary' },
-    //     { type: 'json' }
-    //   ]
-    // },
     port: 9876,
     colors: true,
     browsers: ['ChromeHeadlessNoSandbox'],

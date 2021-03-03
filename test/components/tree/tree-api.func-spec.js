@@ -1,29 +1,26 @@
 import { Tree } from '../../../src/components/tree/tree';
+import { cleanup } from '../../helpers/func-utils';
 
 const treeHTML = require('../../../app/views/components/tree/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let treeEl;
-let svgEl;
 let treeObj;
 
 describe('Tree API', () => {
   beforeEach(() => {
     treeEl = null;
-    svgEl = null;
     treeObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', treeHTML);
     treeEl = document.body.querySelector('.tree[role="tree"]');
-    svgEl = document.body.querySelector('.svg-icons');
     treeEl.classList.add('no-init');
     treeObj = new Tree(treeEl);
   });
 
   afterEach(() => {
     treeObj.destroy();
-    treeEl.parentNode.removeChild(treeEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

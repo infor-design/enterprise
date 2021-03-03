@@ -2,7 +2,7 @@ import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { cleanup } from '../../helpers/func-utils';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let dropdownEl;
 let dropdownObj;
@@ -20,7 +20,7 @@ describe('Dropdown API', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    cleanup(['.dropdown', '.svg-icons', '.dropdown-list', '.row', 'select']);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

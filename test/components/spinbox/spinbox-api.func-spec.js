@@ -1,23 +1,21 @@
 import { Spinbox } from '../../../src/components/spinbox/spinbox';
+import { cleanup } from '../../helpers/func-utils';
 
 const spinboxHTML = require('../../../app/views/components/spinbox/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let spinboxEl;
 let spinboxAPI;
-let svgEl;
 const spinboxId = '#regular-spinbox';
 
 describe('Spinbox API', () => {
   beforeEach(() => {
     spinboxEl = null;
     spinboxAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', spinboxHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     spinboxEl = document.body.querySelector(spinboxId);
 
     spinboxAPI = new Spinbox(spinboxEl, {});
@@ -25,8 +23,7 @@ describe('Spinbox API', () => {
 
   afterEach(() => {
     spinboxAPI.destroy();
-    svgEl.parentNode.removeChild(svgEl);
-    spinboxEl.parentNode.removeChild(spinboxEl);
+    cleanup();
   });
 
   it('Can be invoked', () => {

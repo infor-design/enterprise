@@ -2,6 +2,9 @@
 import { MaskAPI } from '../../../src/components/mask/mask-api';
 import { masks } from '../../../src/components/mask/masks';
 
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+
 describe('Mask API', () => {
   const DEFAULT_SETTINGS = {
     process: undefined,

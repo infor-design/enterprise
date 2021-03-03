@@ -1,11 +1,11 @@
 import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
+import { cleanup } from '../../helpers/func-utils';
 
 const blockgridHTML = require('../../../app/views/components/blockgrid/example-singleselect.html');
 const blockgridMixedSelectionHTML = require('../../../app/views/components/blockgrid/example-mixed-selection.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let blockgridEl;
-let svgEl;
 let blockgridObj;
 
 describe('Blockgrid Single Events', () => {
@@ -14,25 +14,21 @@ describe('Blockgrid Single Events', () => {
       dataset: [],
       selectable: 'single', // false, 'single' or 'multiple' or mixed
       paging: false,
-      pagesize: 25,
-      pagesizes: [10, 25, 50, 75]
+      pagerSettings: { pagesize: 25, pagesizes: [10, 25, 50, 75] }
     };
 
     blockgridEl = null;
-    svgEl = null;
     blockgridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', blockgridHTML);
     blockgridEl = document.body.querySelector('#blockgrid');
-    svgEl = document.body.querySelector('.svg-icons');
     blockgridEl.classList.add('no-init');
     blockgridObj = new Blockgrid(blockgridEl, settings);
   });
 
   afterEach(() => {
     blockgridObj.destroy();
-    blockgridEl.parentNode.removeChild(blockgridEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should trigger "selected" event', () => {
@@ -84,20 +80,17 @@ describe('Blockgrid Mixed Selection Events', () => {
     };
 
     blockgridEl = null;
-    svgEl = null;
     blockgridObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', blockgridMixedSelectionHTML);
     blockgridEl = document.body.querySelector('#blockgrid');
-    svgEl = document.body.querySelector('.svg-icons');
     blockgridEl.classList.add('no-init');
     blockgridObj = new Blockgrid(blockgridEl, settings);
   });
 
   afterEach(() => {
     blockgridObj.destroy();
-    blockgridEl.parentNode.removeChild(blockgridEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should trigger "activated" event', (done) => {

@@ -2,7 +2,7 @@ import { ColorPicker } from '../../../src/components/colorpicker/colorpicker';
 import { cleanup } from '../../helpers/func-utils';
 
 const colorpickerHTML = require('../../../app/views/components/colorpicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let colorpickerEl;
 let colorpickerObj;
@@ -20,10 +20,7 @@ describe('ColorPicker ARIA', () => {
 
   afterEach(() => {
     colorpickerObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-    ]);
+    cleanup();
   });
 
   it('Should set ARIA labels', () => {
