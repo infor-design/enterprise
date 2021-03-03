@@ -3,28 +3,30 @@
  * @param {HTMLElement|SVGElement|array|string} item a valid Element, Array or a CSS selector string
  * @returns {void}
  */
-function cleanup(item) {
-  if (!item) {
-    return;
-  }
-  if (item instanceof HTMLElement || item instanceof SVGElement) {
-    item.parentNode.removeChild(item);
-    return;
+function cleanup() {
+  Soho.modalManager.destroyAll();
+  $('body').removeData();
+
+  let collection = document.body.querySelectorAll('*:not(html):not(body):not(head):not(meta):not(link)');
+
+  for (let i = 0; i < collection.length; i++) {
+    collection[i].remove();
   }
 
-  // Iterate through an array of selectors|elements
-  if (Array.isArray(item)) {
-    item.forEach(i => cleanup(i));
-    return;
+  collection = document.querySelectorAll('script[nonce]');
+
+  for (let i = 0; i < collection.length; i++) {
+    collection[i].remove();
   }
 
-  // Handle a single CSS selector
-  const els = Array.from(document.querySelectorAll(item)); // eslint-disable-line compat/compat
-  if (els && els.length) {
-    els.forEach((el) => {
-      el.parentNode.removeChild(el);
-    });
-  }
+  // Remove Empty Space
+  document.body.innerHTML = document.body.innerHTML.replace(/(<(pre|script|style|textarea|{{)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)/g, '$1$3');
+  // Remove Comments
+  const regex = /( )*<!--((.*)|[^<]*|[^!]*|[^-]*|[^>]*)-->\n*/g;
+  document.body.innerHTML = document.body.innerHTML.replace(regex, '');
+  const regex2 = /( )*{{((.*)|[^<]*|[^!]*|[^-]*|[^>]*)}}\n*/g;
+  document.body.innerHTML = document.body.innerHTML.replace(regex2, '');
+  document.body.innerHTML = document.body.innerHTML.replace('&lt;%==%&gt;', '');
 }
 
 /**

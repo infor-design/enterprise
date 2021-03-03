@@ -1,4 +1,5 @@
 import { Toast } from '../../../src/components/toast/toast';
+import { cleanup } from '../../helpers/func-utils';
 
 let toastEl;
 let toastAPI;
@@ -16,8 +17,7 @@ describe('Toast XSS Prevention', () => {
     toastAPI.destroy();
     toastAPI = null;
 
-    toastMessageTitleEl.parentNode.removeChild(toastMessageTitleEl);
-    toastMessageContentEl.parentNode.removeChild(toastMessageContentEl);
+    cleanup();
 
     toastMessageTitleEl = null;
     toastMessageContentEl = null;

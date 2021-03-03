@@ -55,10 +55,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
 
   afterEach(() => {
     emptymessageObj.destroy();
-    cleanup([
-      '.row',
-      '.svg-icons'
-    ]);
+    cleanup();
   });
 
   it('Should render emptymessage', () => {

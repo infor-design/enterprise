@@ -1,4 +1,5 @@
 import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
+import { cleanup } from '../../helpers/func-utils';
 
 const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
 
@@ -19,9 +20,7 @@ describe('Busy Indicator API', () => {
     if (busyindicatorObj) {
       busyindicatorObj.destroy();
     }
-
-    const rowEl = document.body.querySelector('.row');
-    rowEl.parentNode.removeChild(rowEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {
@@ -78,7 +77,7 @@ describe('Busy Indicator API', () => {
     }, 500);
 
     setTimeout(() => {
-      const customTextEl = $('.busy-indicator-container > span');
+      const customTextEl = busyindicatorObj.element.find('span');
 
       expect(customTextEl.text()).toEqual('Custom Text 1');
       busyindicatorObj.destroy();

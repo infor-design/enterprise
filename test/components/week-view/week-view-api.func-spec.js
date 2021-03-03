@@ -3,8 +3,11 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 import { stringUtils } from '../../../src/utils/string';
 
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+
 const weekViewHTML = require('../../../app/views/components/week-view/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const eventTypes = require('../../../app/data/event-types');
 const events = require('../../../app/data/events');
 
@@ -43,10 +46,7 @@ describe('WeekView API', () => {
 
   afterEach(() => {
     weekViewAPI.destroy();
-    cleanup([
-      '.full-height',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Should be defined', () => {

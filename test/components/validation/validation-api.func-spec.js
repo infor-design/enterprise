@@ -1,14 +1,14 @@
 import { Validator } from '../../../src/components/validation/validator';
+import { cleanup } from '../../helpers/func-utils';
 
 require('../../../src/components/locale/cultures/en-US.js');
 
-const svgHTML = require('../../../src/components/icons/theme-uplift-svg.html');
+const svgHTML = require('../../../src/components/icons/theme-new-svg.html');
 const exampleHTML = require('../../../app/views/components/validation/example-index.html');
 
 let emailEl;
 let cardEl;
 let validatorAPI;
-let svgEl;
 const emailID = '#email-address-ok';
 
 describe('Validation API', () => {
@@ -17,13 +17,11 @@ describe('Validation API', () => {
   beforeEach(() => {
     emailEl = null;
     validatorAPI = null;
-    svgEl = null;
 
     Locale.set('en-US');
     document.body.insertAdjacentHTML('afterbegin', svgHTML);
     document.body.insertAdjacentHTML('afterbegin', exampleHTML);
 
-    svgEl = document.body.querySelector('.svg-icons');
     emailEl = document.body.querySelector(emailID);
     cardEl = document.body.querySelector('#credit-card');
 
@@ -32,14 +30,11 @@ describe('Validation API', () => {
   });
 
   afterEach(() => {
-    svgEl.parentNode.removeChild(svgEl);
-    const formEl = document.body.querySelector('form');
-    formEl.parentNode.removeChild(formEl);
-
     const toastApi = $('body').data('toast');
     if (toastApi) {
       toastApi.destroy();
     }
+    cleanup();
   });
 
   it('can be invoked', () => {
@@ -161,31 +156,6 @@ describe('Validation API', () => {
       expect(document.body.querySelector('.error-message')).toBeFalsy();
       done();
     });
-  });
-
-  it('be able to call addError / removeError', (done) => {
-    $('#email-address-ok').addError({
-      inline: false,
-      message: '<span>I have an Error.</span>',
-      showTooltip: true
-    })
-      .addError({
-        inline: false,
-        message: '<span>I have another Error.</span>',
-        showTooltip: true
-      });
-
-    setTimeout(() => {
-      const tooltip = document.body.querySelector('#validation-tooltip');
-
-      expect(tooltip).toBeVisible();
-      expect(tooltip.innerHTML).toContain('I have another Error');
-      expect(tooltip.innerHTML).toContain('I have an Error');
-      $('#email-address-ok').removeError();
-
-      expect(tooltip).toHaveClass('is-hidden');
-      done();
-    }, 100);
   });
 
   it('be able to call getMessage', () => {

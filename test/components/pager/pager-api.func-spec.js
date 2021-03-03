@@ -2,7 +2,7 @@ import { Pager } from '../../../src/components/pager/pager';
 import { cleanup } from '../../helpers/func-utils';
 
 const pagerHTML = require('../../../app/views/components/pager/example-standalone.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 // Custom tooltip settings
 const firstContent = 'In The Beginning...';
@@ -25,12 +25,7 @@ describe('Pager API (Standalone)', () => {
 
   afterEach(() => {
     pagerObj.destroy();
-    cleanup([
-      '.pager-container',
-      '.svg-icons',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

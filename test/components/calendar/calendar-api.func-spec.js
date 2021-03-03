@@ -2,8 +2,13 @@ import { Calendar } from '../../../src/components/calendar/calendar';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/locale/cultures/da-DK.js');
+
 const calendarHTML = require('../../../app/views/components/calendar/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const events = require('../../../app/data/events');
 const eventTypes = require('../../../app/data/event-types');
 
@@ -45,16 +50,7 @@ describe('Calendar API', () => {
 
   afterEach(() => {
     calendarObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '#tooltip',
-      '.calendar',
-      '.row',
-      '#tmpl-readonly',
-      '#test-script',
-      '#tmpl-modal',
-      '#calendar-actions-menu'
-    ]);
+    cleanup();
 
     jasmine.clock().uninstall();
   });

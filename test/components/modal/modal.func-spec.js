@@ -2,7 +2,7 @@ import { Modal } from '../../../src/components/modal/modal';
 import { modalManager } from '../../../src/components/modal/modal.manager';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 const triggerHTML = `<button class="btn-secondary" id="modal-trigger">
   <span>Activate Modal</span>
@@ -82,14 +82,7 @@ describe('Modal API', () => {
     if (modalAPI) {
       modalAPI.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#modal-trigger',
-      '#modal-panel',
-      '.modal-container',
-      '.modal'
-    ]);
+    cleanup();
   });
 
   it('should exist', () => {
@@ -187,15 +180,7 @@ describe('Modal Manager API', () => {
     if (modalAPI2) {
       modalAPI2.destroy();
     }
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#modal-trigger',
-      '#modal-panel',
-      '#modal-panel-2',
-      '.modal-container',
-      '.modal'
-    ]);
+    cleanup();
     setTimeout(() => {
       done();
     }, 500);

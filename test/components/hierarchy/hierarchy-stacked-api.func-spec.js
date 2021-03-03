@@ -2,7 +2,7 @@ import { cleanup } from '../../helpers/func-utils';
 import { Hierarchy } from '../../../src/components/hierarchy/hierarchy';
 
 const hierarchyHTML = require('../../../app/views/components/hierarchy/example-stacked.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const data = require('../../../app/data/hc-john-randolph.json');
 
 const legendData = [
@@ -14,19 +14,15 @@ const legendData = [
 
 let hierarchyEl;
 let hierarchyAPI;
-let svgEl;
 const hierarchyId = '#hierarchy';
 
 describe('Hierarchy Stacked API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;
-    svgEl = null;
 
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', hierarchyHTML);
-
-    svgEl = document.body.querySelector('.svg-icons');
     hierarchyEl = document.body.querySelector(hierarchyId);
 
     hierarchyAPI = new Hierarchy(hierarchyEl, {
@@ -41,10 +37,7 @@ describe('Hierarchy Stacked API', () => {
   });
 
   afterEach(() => {
-    svgEl.parentNode.removeChild(svgEl);
-    hierarchyEl.parentNode.removeChild(hierarchyEl);
-
-    cleanup(['.svg-icons', '#hierarchy', '#hierarchy-init-script', '.hierarchy']);
+    cleanup();
 
     if (hierarchyAPI) {
       hierarchyAPI.destroy();

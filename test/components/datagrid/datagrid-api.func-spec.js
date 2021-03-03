@@ -4,7 +4,7 @@ import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data');
 
 let data = [];
@@ -48,13 +48,7 @@ describe('Datagrid API', () => { //eslint-disable-line
 
   afterEach(() => {
     datagridObj.destroy();
-    cleanup([
-      '#datagrid-script',
-      '.svg-icons',
-      '.row',
-      '#tooltip',
-      '.grid-tooltip'
-    ]);
+    cleanup();
   });
 
   it('Should be defined as an object', () => {

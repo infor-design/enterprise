@@ -18,9 +18,7 @@ describe('Progress API', () => {
 
   afterEach(() => {
     progressObj.destroy();
-    cleanup([
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Should render progress', () => {

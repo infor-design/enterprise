@@ -1,7 +1,8 @@
 import { FieldFilter } from '../../../src/components/field-filter/field-filter';
+import { cleanup } from '../../helpers/func-utils';
 
 const fieldfilterHTML = require('../../../app/views/components/field-filter/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 const fieldfilterData = [
   { value: 'equals', text: 'Equals', icon: 'filter-equals' },
@@ -14,26 +15,22 @@ const fieldfilterData = [
 ];
 
 let fieldfilterEl;
-let svgEl;
 let fieldfilterObj;
 
 describe('FieldFilter API', () => {
   beforeEach(() => {
     fieldfilterEl = null;
-    svgEl = null;
     fieldfilterObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', fieldfilterHTML);
     fieldfilterEl = document.body.querySelector('.field-filter');
-    svgEl = document.body.querySelector('.svg-icons');
     fieldfilterEl.classList.add('no-init');
     fieldfilterObj = new FieldFilter(fieldfilterEl, { dataset: fieldfilterData });
   });
 
   afterEach(() => {
     fieldfilterObj.destroy();
-    fieldfilterEl.parentNode.removeChild(fieldfilterEl);
-    svgEl.parentNode.removeChild(svgEl);
+    cleanup();
   });
 
   it('Should be defined on jQuery object', () => {

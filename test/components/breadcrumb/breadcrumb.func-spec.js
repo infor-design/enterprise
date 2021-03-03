@@ -56,11 +56,7 @@ describe('Breadcrumb API', () => {
       breadcrumbAPI.destroy();
       breadcrumbAPI = null;
     }
-    cleanup([
-      '.breadcrumb',
-      '.svg-icons',
-      '.row'
-    ]);
+    cleanup();
     breadcrumbEl = null;
   });
 

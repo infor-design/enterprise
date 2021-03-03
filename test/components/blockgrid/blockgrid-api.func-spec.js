@@ -2,7 +2,7 @@ import { Blockgrid } from '../../../src/components/blockgrid/blockgrid';
 import { cleanup } from '../../helpers/func-utils';
 
 let blockgridHTML = require('../../../app/views/components/blockgrid/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let blockgridEl;
 let blockgridObj;
@@ -40,11 +40,7 @@ describe('Blockgrid API', () => {
 
   afterEach(() => {
     blockgridObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Should be defined', () => {

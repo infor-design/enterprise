@@ -2,7 +2,7 @@ import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Radar } from '../../../src/components/radar/radar';
 
 const radarHTML = require('../../../app/views/components/radar/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let radarEl;
 let radarObj;
@@ -60,13 +60,7 @@ describe('Radar API', () => {
 
   afterEach(() => {
     radarObj.destroy();
-
-    cleanup([
-      '.svg-icons',
-      '#svg-tooltip',
-      '.row',
-      '#test-script'
-    ]);
+    cleanup();
   });
 
   it('Should show on page', () => {

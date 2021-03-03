@@ -1,15 +1,15 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
+import { cleanup } from '../../helpers/func-utils';
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 const sampleData = require('../../../app/data/datagrid-sample-data');
 
 require('../../../src/components/locale/cultures/en-US.js');
 
 let datagridEl;
-let svgEl;
 let datagridObj;
 
 let data = [];
@@ -69,23 +69,17 @@ describe('Datagrid Paging API', () => {
   describe('Check Clientside Paging', () => {
     beforeEach(() => {
       datagridEl = null;
-      svgEl = null;
       datagridObj = null;
       document.body.insertAdjacentHTML('afterbegin', svg);
       document.body.insertAdjacentHTML('afterbegin', datagridHTML);
       datagridEl = document.body.querySelector('#datagrid');
-      svgEl = document.body.querySelector('.svg-icons');
 
       Locale.set('en-US');
     });
 
     afterEach(() => {
       datagridObj.destroy();
-      datagridEl.parentNode.removeChild(datagridEl);
-      svgEl.parentNode.removeChild(svgEl);
-
-      const rowEl = document.body.querySelector('.row');
-      rowEl.parentNode.removeChild(rowEl);
+      cleanup();
     });
 
     it('Should be able to track dirty cells with paging', (done) => {
@@ -156,23 +150,17 @@ describe('Datagrid Paging API', () => {
   describe('Check Indeterminate Paging using DataGrid source API', () => {
     beforeEach(() => {
       datagridEl = null;
-      svgEl = null;
       datagridObj = null;
       document.body.insertAdjacentHTML('afterbegin', svg);
       document.body.insertAdjacentHTML('afterbegin', datagridHTML);
       datagridEl = document.body.querySelector('#datagrid');
-      svgEl = document.body.querySelector('.svg-icons');
 
       Locale.set('en-US');
     });
 
     afterEach(() => {
       datagridObj.destroy();
-      datagridEl.parentNode.removeChild(datagridEl);
-      svgEl.parentNode.removeChild(svgEl);
-
-      const rowEl = document.body.querySelector('.row');
-      rowEl.parentNode.removeChild(rowEl);
+      cleanup();
     });
 
     it('test initial data load', (done) => {
@@ -515,25 +503,16 @@ describe('Datagrid Paging API', () => {
   describe('Check DataGrid.loadData with paging events', () => {
     beforeEach(() => {
       datagridEl = null;
-      svgEl = null;
       datagridObj = null;
       document.body.insertAdjacentHTML('afterbegin', svg);
       document.body.insertAdjacentHTML('afterbegin', datagridHTML);
       datagridEl = document.body.querySelector('#datagrid');
-      svgEl = document.body.querySelector('.svg-icons');
-
       Locale.set('en-US');
     });
 
     afterEach(() => {
       datagridObj.destroy();
-      datagridEl.parentNode.removeChild(datagridEl);
-      svgEl.parentNode.removeChild(svgEl);
-
-      const rowEl = document.body.querySelector('.row');
-      rowEl.parentNode.removeChild(rowEl);
+      cleanup();
     });
-
-    // todo: implement me
   });
 });

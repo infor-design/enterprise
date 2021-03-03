@@ -2,7 +2,7 @@ import { TimePicker } from '../../../src/components/timepicker/timepicker';
 import { cleanup } from '../../helpers/func-utils';
 
 const timepickerHTML = require('../../../app/views/components/timepicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-uplift-svg.html');
+const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let timepickerEl;
 let timepickerObj;
@@ -22,12 +22,7 @@ describe('TimePicker Methods', () => {
 
   afterEach(() => {
     timepickerObj.destroy();
-    cleanup([
-      '.svg-icons',
-      '#timepicker-popup',
-      '.popover',
-      '.row'
-    ]);
+    cleanup();
   });
 
   it('Should checks a time format value to see if it is a Military (24-hour) format', () => {

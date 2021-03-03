@@ -149,7 +149,7 @@ describe('Searchfield clearable tests', () => {
 
   it('Should clear the searchfield', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldClearId));
-    const closeBtn = await element(by.css('.close'));
+    const closeBtn = await element.all(by.css('.close')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
