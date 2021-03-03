@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <button class="btn-secondary" type="button" id="disabled-btn">Disable</button>
+      <button class="btn-secondary" type="button" id="enabled-btn">Enable</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="fileupload-advanced" data-init="false">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.fileupload-advanced').fileuploadadvanced({
+      attributes: [{
+          name: 'id',
+          value: 'fileupload-advanced'
+        },
+        {
+          name: 'data-automation-id',
+          value: 'fileupload-advanced-automation-id'
+        }
+      ]
+    });
+
+    $('#enabled-btn').disable();
+  });
+
+  $('#disabled-btn').on('click', function () {
+    $('.fileupload-advanced').disable();
+    $('#disabled-btn').disable();
+    $('#enabled-btn').enable();
+  });
+
+  $('#enabled-btn').on('click', function () {
+    $('.fileupload-advanced').enable();
+    $('#enabled-btn').disable();
+    $('#disabled-btn').enable();
+  });
+
+</script>
