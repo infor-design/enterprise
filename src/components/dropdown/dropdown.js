@@ -972,6 +972,10 @@ Dropdown.prototype = {
       this.listUl.html(ulContents);
     }
 
+    if (env.os.name === 'ios' || env.os.name === 'android') {
+      this.searchInput.attr('readonly', 'readonly');
+    }
+
     this.virtualScrollElem = this.listUl.closest('.virtual-scroll-container');
     this.opts = opts;
 
