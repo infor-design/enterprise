@@ -425,16 +425,20 @@ html.is-chrome:not(.is-mac) {
 
   ::-webkit-scrollbar {
     background-color: transparent;
-    height: 8px;
-    width: 8px;
+    height: 12px;
+    width: 12px;
   }
 
   ::-webkit-scrollbar-thumb {
     background: $ids-color-palette-slate-20;
+    background-clip: content-box;
+    border: 2px solid transparent;
     border-radius: 10px;
 
     &:hover {
       background: $ids-color-palette-slate-30;
+      background-clip: content-box;
+      border: 2px solid transparent;
     }
   }
 }
