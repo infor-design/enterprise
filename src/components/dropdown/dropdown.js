@@ -272,7 +272,7 @@ Dropdown.prototype = {
         'aria-haspopup': 'listbox',
         'aria-expanded': 'false'
       });
-    this.renderPsuedoElemLabel();
+    this.renderPseudoElemLabel();
 
     if (this.settings.attributes) {
       utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'dropdown', true);
@@ -477,9 +477,20 @@ Dropdown.prototype = {
    * @private
    * @returns {void}
    */
-  renderPsuedoElemLabel() {
+  renderPseudoElemLabel() {
+    // NOTE: this doesn't use the ID to get the label due to
+    // potentially not being placed in the page yet (in jQuery cache).
+    const label = this.element.prev();
+    let labelText = '';
+    this.selectedOptions.forEach((option) => {
+      if (labelText.length) {
+        labelText += ', ';
+      }
+      labelText += $(option).text().trim();
+    });
+
     this.pseudoElem.attr({
-      'aria-label': `${this.label.text()}, ${this.value}`
+      'aria-label': `${label.text()}, ${labelText}`
     });
   },
 
@@ -1089,7 +1100,7 @@ Dropdown.prototype = {
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
-    this.renderPsuedoElemLabel();
+    this.renderPseudoElemLabel();
     this.updateItemIcon(opts);
     this.setBadge(opts);
   },

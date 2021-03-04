@@ -578,40 +578,43 @@
 
           .column-left {
             float: left;
-            width: 85%;
+            width: 70%;
           }
 
           .column-right {
             float: right;
             margin-right: 15px;
             text-align: right;
-            width: 20%;
+            width: 30%;
           }
 
           .listview-micro {
+            display: inline-flex;
             float: none;
+            padding-right: 0;
             width: auto;
           }
 
           .icon {
             color: $button-color-tertiary-initial-font;
+            display: inline-flex;
             left: 10px;
-            top: 5px;
+            top: 4px;
           }
         }
       }
 
       .listview-heading {
-        display: inline-block;
+        display: inline-flex;
         width: 80%;
       }
 
       .listview-micro {
-        display: inline-block;
         float: right;
         margin-top: 2px;
+        position: relative;
         text-align: right;
-        width: 20%;
+        width: 30%;
       }
 
       .status-swatch {

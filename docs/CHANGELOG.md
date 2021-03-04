@@ -4,7 +4,7 @@
 
 ### v4.39.0 Fixes
 
-- `[Placehold]` First one please remove me... ([#4874](https://github.com/infor-design/enterprise/issues/4874))
+- `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 
 ## v4.38.0
 
@@ -17,11 +17,13 @@
 - `[Application Menu]` Fixed visibility of expander icon on classic theme. ([#4874](https://github.com/infor-design/enterprise/issues/4874))
 - `[Accordion]` Fixed an issue where the afterexpand and aftercollapse events fired before the states are set.  ([#4838](https://github.com/infor-design/enterprise/issues/4838))
 - `[Breadcrumb]` Fixed unnecessary scrollbar in safari on a flex toolbar. ([#4839](https://github.com/infor-design/enterprise/issues/4839))
+- `[Calendar]` Fixed calendar event details listview on mobile perspective. ([#4886](https://github.com/infor-design/enterprise/issues/4886))
 - `[Datagrid]` Added the ability to use shift click to select in mixed selection mode. ([#4748](https://github.com/infor-design/enterprise/issues/4748))
 - `[Datagrid]` Fixed alignment issue when editing. ([#4814](https://github.com/infor-design/enterprise/issues/4814))
 - `[Datagrid]` Added a fix for checkbox aria cells, the aria was in the wrong location. ([#4790](https://github.com/infor-design/enterprise/issues/4790))
 - `[Datagrid]` Fixed a bug where shift+f10 did not open the context menu in the Datagrid. ([#4614](https://github.com/infor-design/enterprise/issues/4614))
-- `[Datagrid]` Fixed an issue where tooltips on buttons in the contexual action toolbar in datagrid would never show up. ([#4876](https://github.com/infor-design/enterprise/issues/4876))
+- `[Datagrid]` Fixed an issue where tooltips on buttons in the contextual action toolbar in datagrid would never show up. ([#4876](https://github.com/infor-design/enterprise/issues/4876))
+- `[Datagrid]` Fixed an issue where when using a scroll-flex container to contain datagrid it did not show the Y scrollbar. ([#4914](https://github.com/infor-design/enterprise/issues/4914))
 - `[EmptyMessage]` Fixed an issue where you may get double the click handlers. ([#4889](https://github.com/infor-design/enterprise/issues/4889))
 - `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Fileupload Advanced]` Fixed a bug where the disable and enable methods were not working correctly. ([#4872](https://github.com/infor-design/enterprise/issues/4872))
