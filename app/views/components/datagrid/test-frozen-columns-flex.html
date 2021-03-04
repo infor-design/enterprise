@@ -1,0 +1,2153 @@
+<div class="full-width full-height">
+
+  <div class="scrollable-flex" role="main" style="height: 100%">
+
+    <!-- Simulate some optional header content -->
+    <section class="scrollable-flex-header">
+    </section>
+
+    <!-- Because of css flex box this area will be scrollable -->
+    <section class="scrollable-flex-content">
+      <div id="datagrid" class="datagrid">
+      </div>
+    </section>
+
+    <!-- Simulate some optional footer content -->
+    <section class="scrollable-flex-footer">
+    </section>
+
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [{
+          "resourceId": "Manufacturer(1)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "ProductList",
+            "ProductListDocument",
+            "ManufacturerSummaryDocument",
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            17,
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            32,
+            33,
+            25,
+            27,
+            28,
+            26,
+            23,
+            29,
+            24,
+            19,
+            16,
+            18
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(1)"
+          },
+          "id": 1,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "999999999999.990000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.98"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Jamis Bikes Rock2",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 1,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 1,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "valid": true,
+                  "label": "15",
+                  "value": "15"
+                }
+              ],
+              "value": "15"
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": true
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Jamis Bikes Rock2"
+        },
+        {
+          "resourceId": "Manufacturer(2)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            15
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(2)"
+          },
+          "id": 2,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 2",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 0,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 2,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 2"
+        },
+        {
+          "resourceId": "Manufacturer(3)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            15
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(3)"
+          },
+          "id": 3,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 3",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 0,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 3,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 3"
+        },
+        {
+          "resourceId": "Manufacturer(4)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            15
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(4)"
+          },
+          "id": 4,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 4",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 0,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 4,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 4"
+        },
+        {
+          "resourceId": "Manufacturer(5)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "ProductList",
+            "ProductListDocument",
+            "ManufacturerSummaryDocument",
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            17,
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            32,
+            33,
+            25,
+            27,
+            28,
+            26,
+            23,
+            29,
+            24,
+            19,
+            16,
+            18
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(5)"
+          },
+          "id": 5,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "900000000000.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 52",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 1,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 5,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": true
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 52"
+        },
+        {
+          "resourceId": "Manufacturer(6)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            15
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(6)"
+          },
+          "id": 6,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 6",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 0,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 6,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 6"
+        },
+        {
+          "resourceId": "Manufacturer(7)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            12,
+            14
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(7)"
+          },
+          "id": 7,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "99999999999.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 7",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 2,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 7,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 7"
+        },
+        {
+          "resourceId": "Manufacturer(8)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            15
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(8)"
+          },
+          "id": 8,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "A",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 8",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 0,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 8,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": false
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "Y",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 8"
+        },
+        {
+          "resourceId": "Manufacturer(9)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "ProductList",
+            "ProductListDocument",
+            "ManufacturerSummaryDocument",
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            32,
+            33,
+            25,
+            27,
+            28,
+            26,
+            23,
+            29,
+            24,
+            19,
+            16,
+            18
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(9)"
+          },
+          "id": 9,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "100000000.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 9",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 1,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 9,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": true
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 9"
+        },
+        {
+          "resourceId": "Manufacturer(11)",
+          "busClassName": "Manufacturer",
+          "navigations": [
+            "ProductList",
+            "ProductListDocument",
+            "ManufacturerSummaryDocument",
+            "AvailableProductsList"
+          ],
+          "actionMeta": {},
+          "name": "Manufacturer",
+          "actionIndexes": [
+            0,
+            31,
+            30,
+            22,
+            21,
+            20,
+            1,
+            11,
+            13,
+            32,
+            33,
+            25,
+            27,
+            28,
+            26,
+            23,
+            29,
+            24,
+            19,
+            16,
+            18
+          ],
+          "posToViewKey": {
+            "pk": "Manufacturer(11)"
+          },
+          "id": 10,
+          "fields": {
+            "InventoryValue": {
+              "size": 18,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.000000"
+            },
+            "CustomerSatisfaction": {
+              "size": 3,
+              "precision": 2,
+              "mutable": true,
+              "value": "0.00"
+            },
+            "NumericProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "N",
+              "required": true,
+              "stateValues": [
+                {
+                  "label": "Alpha",
+                  "value": "A",
+                  "selected": false
+                },
+                {
+                  "label": "Numeric",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            },
+            "ManufacturerName": {
+              "size": 30,
+              "mutable": true,
+              "value": "Manufacturer 11",
+              "required": true
+            },
+            "ManufacturerStatus": {
+              "size": 1,
+              "mutable": true,
+              "value": 1,
+              "stateValues": [
+                {
+                  "label": "Status Not Set",
+                  "value": "0",
+                  "selected": false
+                },
+                {
+                  "label": "Active",
+                  "value": "1",
+                  "selected": false
+                },
+                {
+                  "label": "Inactive",
+                  "value": "2",
+                  "selected": false
+                }
+              ]
+            },
+            "Image_prd_File": {
+              "linkValue": "",
+              "size": 0,
+              "docTitleFieldId": "File_DocumentTitle",
+              "mimeTypeFieldId": "File_MimeType",
+              "mutable": true,
+              "value": ""
+            },
+            "Manufacturer": {
+              "symbolicKey": true,
+              "size": 4,
+              "mutable": false,
+              "value": 11,
+              "required": true
+            },
+            "DefaultBackOrderCode": {
+              "size": 5,
+              "mutable": true,
+              "stateValues": [
+                {
+                  "label": " ",
+                  "value": ""
+                }
+              ],
+              "value": ""
+            },
+            "Image": {
+              "disableFieldHistory": true,
+              "size": 1,
+              "delimiter": "^",
+              "members": [
+                "Image_prd_File"
+              ],
+              "mutable": true,
+              "type": "group",
+              "value": ""
+            },
+            "InActiveState": {
+              "size": -1,
+              "mutable": false,
+              "value": true
+            },
+            "Manufacturer_DeleteFlag": {
+              "size": 36,
+              "mutable": false,
+              "value": ""
+            },
+            "AutoNumberProduct": {
+              "size": 1,
+              "mutable": true,
+              "value": "",
+              "stateValues": [
+                {
+                  "label": "Yes",
+                  "value": "Y",
+                  "selected": false
+                },
+                {
+                  "label": "No",
+                  "value": "N",
+                  "selected": false
+                }
+              ]
+            }
+          },
+          "representativeText": "Manufacturer 11"
+        }
+      ];
+
+        // Define Columns for the Grid.
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: 'http://www.google.com', target: '_blank'});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+        columns.push({ id: 'pumpLife', name: 'Pump Life', field: 'pumpLife'});
+        columns.push({ id: 'ratedTemp', name: 'Temp. Rating', field: 'ratedTemp'});
+        columns.push({ id: 'productSku', name: 'Sku', field: 'productSku'});
+        columns.push({ id: 'action', name: 'Action', field: 'action'});
+        columns.push({ id: 'rpm', name: 'Motor Rpm', field: 'rpm'});
+        columns.push({ id: 'maxPressure', name: 'Max Pressure', field: 'maxPressure'});
+        columns.push({ id: 'weight', name: 'Weight', field: 'weight'});
+        columns.push({ id: 'actionButton', name: 'Button', field: '', text: 'Buy Now', align: 'center', sortable: false, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}, width: 160, exportable: false});
+
+        // Init and get the api for the grid
+        $('#datagrid').datagrid({
+          "cellNavigation": true,
+          "columns": [
+            {
+              "id": "selectionCheckbox",
+              "sortable": false,
+              "resizable": false,
+              "align": "center"
+            },
+            {
+              "id": "ManufacturerCardView_0",
+              "field": "fields.undefined.value",
+              "sortable": false,
+              "displayField": {
+                "mainColumn": [
+                  {
+                    "filterable": true,
+                    "size": 30,
+                    "columnId": "ManufacturerName0",
+                    "label": {
+                      "resourceValue": "Manufacturer Name"
+                    },
+                    "type": "ALPHALOWER",
+                    "fieldId": "ManufacturerName"
+                  },
+                  {
+                    "filterable": true,
+                    "isSymbolicKey": true,
+                    "size": 4,
+                    "columnId": "Manufacturer1",
+                    "isKey": true,
+                    "label": {
+                      "resourceValue": "Manufacturer"
+                    },
+                    "type": "NUMERIC",
+                    "fieldId": "Manufacturer"
+                  }
+                ],
+                "rightColumn": [
+                  {
+                    "filterable": true,
+                    "size": 1,
+                    "columnId": "ManufacturerStatus0",
+                    "label": {
+                      "resourceValue": "Manufacturer Status"
+                    },
+                    "type": "NUMERIC",
+                    "isStaticStateField": true,
+                    "fieldId": "ManufacturerStatus",
+                    "states": [
+                      {
+                        "label": "Status Not Set",
+                        "value": "0"
+                      },
+                      {
+                        "label": "Active",
+                        "value": "1"
+                      },
+                      {
+                        "label": "Inactive",
+                        "value": "2"
+                      }
+                    ]
+                  },
+                  {
+                    "decSize": 2,
+                    "filterable": true,
+                    "displayAsProgressBar": true,
+                    "size": 3,
+                    "ranges": {
+                      "red": {
+                        "start": 0,
+                        "end": 1.5
+                      }
+                    },
+                    "columnId": "CustomerSatisfaction1",
+                    "label": {
+                      "resourceValue": "Customer Satisfaction"
+                    },
+                    "type": "PERCENT",
+                    "fieldId": "CustomerSatisfaction"
+                  },
+                  {
+                    "decSize": 2,
+                    "filterable": true,
+                    "displayAsProgressBar": true,
+                    "size": 3,
+                    "ranges": {
+                      "yellow": {
+                        "start": 0.00009999999747378752,
+                        "end": 1.5
+                      }
+                    },
+                    "columnId": "CustomerSatisfaction2",
+                    "label": {
+                      "resourceValue": "Customer Satisfaction"
+                    },
+                    "type": "PERCENT",
+                    "fieldId": "CustomerSatisfaction"
+                  },
+                  {
+                    "decSize": 2,
+                    "filterable": true,
+                    "displayAsProgressBar": true,
+                    "size": 3,
+                    "ranges": {
+                      "green": {
+                        "start": 0,
+                        "end": 1.5
+                      }
+                    },
+                    "columnId": "CustomerSatisfaction3",
+                    "label": {
+                      "resourceValue": "Customer Satisfaction"
+                    },
+                    "type": "PERCENT",
+                    "fieldId": "CustomerSatisfaction"
+                  },
+                  {
+                    "decSize": 2,
+                    "filterable": true,
+                    "displayAsProgressBar": true,
+                    "size": 3,
+                    "columnId": "CustomerSatisfaction4",
+                    "label": {
+                      "resourceValue": "Customer Satisfaction"
+                    },
+                    "type": "PERCENT",
+                    "fieldId": "CustomerSatisfaction"
+                  }
+                ],
+                "size": 50,
+                "configuration": false,
+                "columnId": "ManufacturerCardView",
+                "buttonRow": [
+                  {
+                    "hasMimeType": false,
+                    "resourceId": "Manufacturer(Manufacturer).Image_prd_File",
+                    "documentResourceId": "Manufacturer(Manufacturer).Image.File",
+                    "type": "FORMBUTTON",
+                    "title": {
+                      "resourceValue": "Download Image"
+                    },
+                    "fieldId": "Image_prd_File",
+                    "viewDocument": true,
+                    "resourceType": "document"
+                  }
+                ],
+                "id": "ManufacturerCardView",
+                "type": "CARDVIEW"
+              },
+              "isRequiredSearch": false,
+              "name": "",
+              "textOverflow": "ellipsis",
+              "isActionable": true,
+              "width": 520,
+              "align": "left",
+              "resizable": false
+            },
+            {
+              "id": "Manufacturer0_1",
+              "field": "fields.Manufacturer.value",
+              "sortable": false,
+              "fieldId": "Manufacturer",
+              "displayField": {
+                "filterable": true,
+                "isSymbolicKey": true,
+                "size": 4,
+                "columnId": "Manufacturer0",
+                "groupLabelId": "Manufacturer",
+                "isKey": true,
+                "groupLabel": {
+                  "resourceValue": "Manufacturer"
+                },
+                "label": {
+                  "resourceValue": "ID"
+                },
+                "type": "NUMERIC",
+                "fieldId": "Manufacturer"
+              },
+              "isRequiredSearch": false,
+              "name": "ID",
+              "textOverflow": "ellipsis",
+              "filterType": "integer",
+              "maskOptions": {
+                "process": "number",
+                "patternOptions": {
+                  "allowDecimal": false,
+                  "allowNegative": true,
+                  "integerLimit": 4,
+                  "decimalLimit": 0,
+                  "allowLeadingZeros": true,
+                  "allowThousandsSeparator": false,
+                  "symbols": {
+                    "decimal": ".",
+                    "negative": "-",
+                    "thousands": ","
+                  }
+                }
+              },
+              "align": "left"
+            },
+            {
+              "id": "ManufacturerName1_2",
+              "field": "fields.ManufacturerName.value",
+              "sortable": false,
+              "fieldId": "ManufacturerName",
+              "displayField": {
+                "filterable": true,
+                "size": 30,
+                "columnId": "ManufacturerName1",
+                "groupLabelId": "Manufacturer",
+                "groupLabel": {
+                  "resourceValue": "Manufacturer"
+                },
+                "label": {
+                  "resourceValue": "Name"
+                },
+                "type": "ALPHALOWER",
+                "fieldId": "ManufacturerName"
+              },
+              "isRequiredSearch": false,
+              "name": "Name",
+              "textOverflow": "ellipsis",
+              "filterType": "text",
+              "align": "left"
+            },
+            {
+              "id": "ManufacturerStatus2_3",
+              "field": "fields.ManufacturerStatus.value",
+              "sortable": false,
+              "fieldId": "ManufacturerStatus",
+              "displayField": {
+                "filterable": true,
+                "size": 1,
+                "columnId": "ManufacturerStatus2",
+                "groupLabelId": "Manufacturer",
+                "groupLabel": {
+                  "resourceValue": "Manufacturer"
+                },
+                "label": {
+                  "resourceValue": "Status"
+                },
+                "type": "NUMERIC",
+                "isStaticStateField": true,
+                "fieldId": "ManufacturerStatus",
+                "states": [
+                  {
+                    "label": "Status Not Set",
+                    "value": "0"
+                  },
+                  {
+                    "label": "Active",
+                    "value": "1"
+                  },
+                  {
+                    "label": "Inactive",
+                    "value": "2"
+                  }
+                ]
+              },
+              "isRequiredSearch": false,
+              "name": "Status",
+              "textOverflow": "ellipsis",
+              "filterType": "multiselect",
+              "filterRowEditorOptions": [
+                {
+                  "value": "0",
+                  "label": "Status Not Set"
+                },
+                {
+                  "value": "1",
+                  "label": "Active"
+                },
+                {
+                  "value": "2",
+                  "label": "Inactive"
+                }
+              ],
+              "editorOptions": {
+                "showSelectAll": true
+              },
+              "align": "center"
+            },
+            {
+              "id": "AutoNumberProduct3_4",
+              "field": "fields.AutoNumberProduct.value",
+              "sortable": false,
+              "fieldId": "AutoNumberProduct",
+              "displayField": {
+                "filterable": true,
+                "size": 1,
+                "columnId": "AutoNumberProduct3",
+                "label": {
+                  "resourceValue": "Auto Number Product"
+                },
+                "type": "ALPHAUPPER",
+                "isStaticStateField": true,
+                "allowUpdate": true,
+                "fieldId": "AutoNumberProduct",
+                "states": [
+                  {
+                    "label": " ",
+                    "value": ""
+                  },
+                  {
+                    "label": "Yes",
+                    "value": "Y"
+                  },
+                  {
+                    "label": "No",
+                    "value": "N"
+                  }
+                ]
+              },
+              "isRequiredSearch": false,
+              "name": "Auto Number Product",
+              "textOverflow": "ellipsis",
+              "filterType": "multiselect",
+              "filterRowEditorOptions": [
+                {
+                  "value": "Not Entered",
+                  "label": "ListStaticFieldFilterNotEntered"
+                },
+                {
+                  "value": "Y",
+                  "label": "Yes"
+                },
+                {
+                  "value": "N",
+                  "label": "No"
+                }
+              ],
+              "editorOptions": {
+                "showSelectAll": true
+              },
+              "options": [
+                {
+                  "value": "",
+                  "label": ""
+                },
+                {
+                  "value": "Y",
+                  "label": "Yes"
+                },
+                {
+                  "value": "N",
+                  "label": "No"
+                }
+              ],
+              "align": "center"
+            },
+            {
+              "id": "DefaultBackOrderCode4_5",
+              "field": "fields.DefaultBackOrderCode.value",
+              "sortable": false,
+              "fieldId": "DefaultBackOrderCode",
+              "displayField": {
+                "filterable": true,
+                "selectListUrl": "http://usspnclaudenba1.infor.com:2013/uitest/ManufacturerMaintWeb10x/list/BackOrderCode.BackOrderCodeList?output=spec&select=Manufacturer.DefaultBackOrderCode&csk.disablepagestate=true&csk.developer=true&type=select&csk.cli=true&csk.includelpl=true",
+                "columnId": "DefaultBackOrderCode4",
+                "isUserDefinedStateField": true,
+                "selectable": true,
+                "isKey": true,
+                "label": {
+                  "resourceValue": "Default Back Order Code"
+                },
+                "type": "ALPHALOWER",
+                "selectFieldId": "BackOrderCode",
+                "size": 5,
+                "selectListInfo": {
+                  "selectListResourceId": "BackOrderCode.BackOrderCodeList",
+                  "selectResourceType": "select",
+                  "selectResourceId": "Manufacturer.DefaultBackOrderCode"
+                },
+                "allowUpdate": true,
+                "fieldId": "DefaultBackOrderCode"
+              },
+              "isRequiredSearch": false,
+              "name": "Default Back Order Code",
+              "textOverflow": "ellipsis",
+              "filterType": "multiselect",
+              "filterRowEditorOptions": [
+                {
+                  "label": " ",
+                  "value": " "
+                }
+              ],
+              "editorOptions": {
+                "editable": false
+              },
+              "align": "center"
+            },
+            {
+              "id": "CustomerSatisfaction5_6",
+              "field": "fields.CustomerSatisfaction.value",
+              "sortable": false,
+              "fieldId": "CustomerSatisfaction",
+              "displayField": {
+                "decSize": 2,
+                "filterable": true,
+                "size": 3,
+                "columnId": "CustomerSatisfaction5",
+                "label": {
+                  "resourceValue": "Customer Satisfaction"
+                },
+                "type": "PERCENT",
+                "allowUpdate": true,
+                "fieldId": "CustomerSatisfaction"
+              },
+              "isRequiredSearch": false,
+              "name": "Customer Satisfaction",
+              "textOverflow": "ellipsis",
+              "filterType": "percent",
+              "maskOptions": {
+                "process": "number",
+                "patternOptions": {
+                  "allowDecimal": false,
+                  "allowNegative": true,
+                  "integerLimit": 3,
+                  "decimalLimit": 0,
+                  "allowLeadingZeros": true,
+                  "allowThousandsSeparator": false,
+                  "symbols": {
+                    "decimal": ".",
+                    "negative": "-",
+                    "thousands": ","
+                  }
+                }
+              },
+              "align": "right",
+              "headerAlign": "right"
+            },
+            {
+              "id": "InventoryValue6_7",
+              "field": "fields.InventoryValue.value",
+              "sortable": false,
+              "fieldId": "InventoryValue",
+              "displayField": {
+                "decSize": 6,
+                "filterable": true,
+                "size": 18,
+                "columnId": "InventoryValue6",
+                "label": {
+                  "resourceValue": "Inventory Value"
+                },
+                "type": "BCD",
+                "allowUpdate": true,
+                "fieldId": "InventoryValue"
+              },
+              "isRequiredSearch": false,
+              "name": "Inventory Value",
+              "textOverflow": "ellipsis",
+              "filterType": "decimal",
+              "maskOptions": {
+                "process": "number",
+                "patternOptions": {
+                  "allowDecimal": true,
+                  "allowNegative": true,
+                  "integerLimit": 12,
+                  "decimalLimit": 6,
+                  "allowLeadingZeros": true,
+                  "allowThousandsSeparator": false,
+                  "symbols": {
+                    "decimal": ".",
+                    "negative": "-",
+                    "thousands": ","
+                  }
+                }
+              },
+              "align": "right",
+              "headerAlign": "right"
+            }
+          ],
+          "disableClientSort": true,
+          "disableClientFilter": true,
+          "filterWhenTyping": false,
+          "redrawOnResize": false,
+          "menuId": "AllManufacturersCasual_ContextMenu",
+          "editable": true,
+          "enableTooltips": true,
+          "rowHeight": "extra-small",
+          "columnSizing": "both",
+          "saveUserSettings": {
+            "columns": false,
+            "rowHeight": false,
+            "sortOrder": false,
+            "pagesize": false,
+            "activePage": false,
+            "filter": false
+          },
+          "toolbar": null,
+          "actionableMode": true,
+          "showDirty": true,
+          "emptyMessage": null,
+          "columnGroups": [
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            },
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            },
+            {
+              "colspan": 3,
+              "id": "Manufacturer",
+              "name": "Manufacturer",
+              "align": "center"
+            },
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            },
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            },
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            },
+            {
+              "colspan": 1,
+              "id": "",
+              "name": ""
+            }
+          ],
+          "filterable": false,
+          "selectable": "mixed",
+          "disableRowDeactivation": true,
+          "frozenColumns": {
+            "left": [
+              "selectionCheckbox",
+              "ManufacturerCardView_0"
+            ]
+          },
+          "fixedRowHeight": "auto",
+          "dataset": data
+        });
+  });
+</script>
