@@ -4,7 +4,7 @@
 
 ### v4.39.0 Fixes
 
-- `[Placehold]` First one please remove me... ([#4874](https://github.com/infor-design/enterprise/issues/4874))
+- `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 
 ## v4.38.0
 
