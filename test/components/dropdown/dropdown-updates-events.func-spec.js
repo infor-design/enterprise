@@ -10,6 +10,7 @@ let dropdownObj;
 
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
+    cleanup(['.dropdown', '.field', '.dropdown-wrapper', '.twelve', '.svg-icons', '.dropdown-list', '.row', 'select', '.dropdown-list']);
     dropdownEl = null;
     dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
