@@ -23,7 +23,6 @@
 - `[Datagrid]` Fixed a bug where shift+f10 did not open the context menu in the Datagrid. ([#4614](https://github.com/infor-design/enterprise/issues/4614))
 - `[Datagrid]` Fixed an issue where tooltips on buttons in the contextual action toolbar in datagrid would never show up. ([#4876](https://github.com/infor-design/enterprise/issues/4876))
 - `[Datagrid]` Fixed an issue where when using a scroll-flex container to contain datagrid it did not show the Y scrollbar. ([#4914](https://github.com/infor-design/enterprise/issues/4914))
-#4912
 - `[EmptyMessage]` Fixed an issue where you may get double the click handlers. ([#4889](https://github.com/infor-design/enterprise/issues/4889))
 - `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Fileupload Advanced]` Fixed a bug where the disable and enable methods were not working correctly. ([#4872](https://github.com/infor-design/enterprise/issues/4872))
