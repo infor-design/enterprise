@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.37.1
+
+### v4.37.1 Fixes
+
+- `[General]` Increased windows custom css scrollbars from 8px to 12px. ([#4837](https://github.com/infor-design/enterprise/issues/4837))
+- `[Datagrid]` Fixed an issue where when using a scroll-flex container to contain datagrid it did not show the Y scrollbar. ([#4914](https://github.com/infor-design/enterprise/issues/4914))
+
 ## v4.37.0
 
 ### v4.37.0 Features
