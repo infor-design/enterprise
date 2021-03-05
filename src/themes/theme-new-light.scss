@@ -413,7 +413,7 @@ $new-appmenu-selected-border-color: $ids-color-brand-primary-alt;
 // Core New Theme Controls
 @import '../core/controls-new';
 
-html.is-chrome {
+html.is-chrome:not(.is-mac) {
   ::-webkit-scrollbar-track {
     background-color: $ids-color-body-lightest;
     border: 1px solid $ids-color-palette-slate-20;
