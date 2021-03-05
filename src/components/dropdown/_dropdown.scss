@@ -261,6 +261,7 @@ div.multiselect {
   min-height: 30px;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
+  pointer-events: all;
   position: absolute;
   white-space: nowrap;
   width: auto;
