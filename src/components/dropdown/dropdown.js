@@ -272,7 +272,7 @@ Dropdown.prototype = {
         'aria-haspopup': 'listbox',
         'aria-expanded': 'false'
       });
-    this.renderPsuedoElemLabel();
+    this.renderPseudoElemLabel();
 
     if (this.settings.attributes) {
       utils.addAttributes(this.pseudoElem, this, this.settings.attributes, 'dropdown', true);
@@ -477,9 +477,20 @@ Dropdown.prototype = {
    * @private
    * @returns {void}
    */
-  renderPsuedoElemLabel() {
+  renderPseudoElemLabel() {
+    // NOTE: this doesn't use the ID to get the label due to
+    // potentially not being placed in the page yet (in jQuery cache).
+    const label = this.element.prev();
+    let labelText = '';
+    this.selectedOptions.forEach((option) => {
+      if (labelText.length) {
+        labelText += ', ';
+      }
+      labelText += $(option).text().trim();
+    });
+
     this.pseudoElem.attr({
-      'aria-label': `${this.label.text()}, ${this.value}`
+      'aria-label': `${label.text()}, ${labelText}`
     });
   },
 
@@ -961,6 +972,10 @@ Dropdown.prototype = {
       this.listUl.html(ulContents);
     }
 
+    if (env.os.name === 'ios' || env.os.name === 'android') {
+      this.searchInput.attr('readonly', 'readonly');
+    }
+
     this.virtualScrollElem = this.listUl.closest('.virtual-scroll-container');
     this.opts = opts;
 
@@ -1089,7 +1104,7 @@ Dropdown.prototype = {
 
     // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
-    this.renderPsuedoElemLabel();
+    this.renderPseudoElemLabel();
     this.updateItemIcon(opts);
     this.setBadge(opts);
   },
@@ -2123,30 +2138,12 @@ Dropdown.prototype = {
       self.list.addClass('is-closable');
     }, 100);
 
-    // Is the jQuery Element a component of the current Dropdown list?
-    function isDropdownElement(target) {
-      return target.closest('.dropdown, .multiselect').length > 0 ||
-        target.closest('.dropdown-list').length > 0 ||
-        self.touchmove === true;
-    }
-
-    // Triggered when the user scrolls the page.
-    // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
-    function scrollDocument(e) {
-      const focus = $('*:focus'); // dont close on timepicker arrow down and up
-      if (self.touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
-        self.touchPrevented = false;
-        return;
-      }
-      self.closeList('cancel');
-    }
-
     // Triggered when the user clicks anywhere in the document
     // Will not close the list if the clicked target is anywhere inside the dropdown list.
 
     function clickDocument(e) {
       const target = $(e.target);
-      if (self.touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
+      if (self.touchPrevented || (self.isDropdownElement(target) && !target.is('.icon'))) {
         e.preventDefault();
 
         self.touchPrevented = false;
@@ -2206,7 +2203,10 @@ Dropdown.prototype = {
     }
     if (parentScrollableArea.length) {
       this.parentScrollableArea = parentScrollableArea;
-      this.parentScrollableArea.on('scroll.dropdown', scrollDocument);
+      this.parentScrollableArea.on('scroll.dropdown', (e) => {
+        this.scrollDocument(e);
+      });
+      this.parentScrollableArea.css('overscroll-behavior', 'none');
     }
 
     $('body').on('resize.dropdown', () => {
@@ -2226,6 +2226,33 @@ Dropdown.prototype = {
         self.closeList('cancel');
       });
     }
+  },
+
+  /**
+   * Is the jQuery Element a component of the current Dropdown list?
+   * @param {HTMLElement} target The element to check
+   * @private
+   * @returns {HTMLElement} whether or not the item was successfully selected.
+   */
+  isDropdownElement(target) {
+    return target.closest('.dropdown, .multiselect').length > 0 ||
+        target.closest('.dropdown-list').length > 0 ||
+        self.touchmove === true;
+  },
+
+  /**
+   * Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
+   * @param {Event} e Triggered when the user scrolls the page.
+   * @private
+   */
+  scrollDocument(e) {
+    const self = this;
+    const focus = $('*:focus'); // dont close on timepicker arrow down and up
+    if (self.touchPrevented || self.isDropdownElement($(e.target)) || focus.is('.timepicker')) {
+      self.touchPrevented = false;
+      return;
+    }
+    self.closeList('cancel');
   },
 
   /**
@@ -2268,7 +2295,7 @@ Dropdown.prototype = {
       if (isSmaller) {
         adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
         if (isToBottom) {
-          self.list[0].style.height = `${parseInt(listHeight, 10) - 10}px`;
+          self.list[0].style.height = `${parseInt(listHeight, 10) - 5}px`;
         }
       }
 
@@ -2551,7 +2578,18 @@ Dropdown.prototype = {
     }
 
     // scroll to the currently selected option
-    current[0].scrollIntoView({ block: 'center' });
+    if (!this.settings.virtualScroll) {
+      current[0].parentNode.scrollTop = current[0].offsetTop - current[0].parentNode.offsetTop;
+    } else {
+      current[0].closest('.ids-virtual-scroll').scrollTop = current[0].offsetTop - current[0].closest('.ids-virtual-scroll').offsetTop;
+      this.parentScrollableArea?.off('scroll.dropdown', (e) => {
+        this.scrollDocument(e);
+      });
+      current[0].scrollIntoView({ block: 'center' });
+      this.parentScrollableArea?.on('scroll.dropdown', (e) => {
+        this.scrollDocument(e);
+      });
+    }
     current.focus();
     this.searchInput.focus();
   },

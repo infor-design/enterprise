@@ -221,12 +221,14 @@ Tooltip.prototype = {
       if (hasTimepicker) {
         const id = this.tooltip.attr('id');
         const input = this.element.prev('input.timepicker');
+
         input.attr('role', 'combobox');
-        input.attr('aria-controls', id);
+        input.attr('aria-haspopup', 'dialog');
+        input.attr('aria-owns', id);
 
         this.element.attr('role', 'button');
-        this.element.attr('aria-haspopup', 'dialog');
         this.element.attr('aria-controls', id);
+
         this.tooltip.attr('role', 'dialog');
         this.tooltip.attr('aria-label', Locale.translate('TimepickerPopup'));
       }
@@ -852,7 +854,14 @@ Tooltip.prototype = {
    * @returns {void}
    */
   setTargetContainer() {
-    let targetContainer = $('[role="main"]');
+    let targetContainer = $('body');
+
+    // Popovers need to be contained by an element with the correct ARIA role.
+    // See infor-design/enterprise#4403
+    if (this.isPopover) {
+      targetContainer = $('[role="main"]');
+    }
+
     if (!targetContainer.length) {
       targetContainer = $('body');
     }
@@ -989,6 +998,19 @@ Tooltip.prototype = {
       $('body').off('resize.tooltip');
     }
 
+    this.element.removeAttr('aria-owns');
+
+    if (this.isPopover) {
+      const input = this.element.prev('input');
+      if (input.length) {
+        input
+          .attr('aria-expanded', 'false')
+          .removeAttr('aria-describedby')
+          .removeAttr('aria-haspopup')
+          .removeAttr('aria-owns');
+      }
+    }
+
     /**
      * Fires when hide the tooltip.
      *
@@ -1061,7 +1083,6 @@ Tooltip.prototype = {
     this.descriptionId = undefined;
     this.activeElement = undefined;
 
-    this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
     if (!this.tooltip.hasClass('is-hidden')) {
       this.hide();
     }
