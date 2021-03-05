@@ -7360,6 +7360,8 @@ Datagrid.prototype = {
     if (!nosync) {
       this.syncSelectedUI();
     }
+
+    this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
   },
 
   /**
