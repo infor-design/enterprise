@@ -28,6 +28,7 @@
 - `[EmptyMessage]` Fixed an issue where you may get double the click handlers. ([#4889](https://github.com/infor-design/enterprise/issues/4889))
 - `[Environment]` Fixed feature detection classes and routines on IPad 13 and up. ([#4855](https://github.com/infor-design/enterprise/issues/4855))
 - `[Fileupload Advanced]` Fixed a bug where the disable and enable methods were not working correctly. ([#4872](https://github.com/infor-design/enterprise/issues/4872))
+- `[General]` Increased windows custom css scrollbars from 8px to 12px. ([#4837](https://github.com/infor-design/enterprise/issues/4837))
 - `[Input]` Fixed a bug where the cursor overlapped the icon in right aligned lookup and input fields when selecting the field. ([#4718](https://github.com/infor-design/enterprise/issues/4718))
 - `[ListView]` Fixed an issue selecting after focusing the list with the keyboard. ([#4621](https://github.com/infor-design/enterprise/issues/4621))
 - `[Lookup]` Fixed an issue with select all across pages in lookup. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
