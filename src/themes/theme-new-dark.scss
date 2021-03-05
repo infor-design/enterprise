@@ -795,13 +795,13 @@ html.is-chrome:not(.is-mac) {
   ::-webkit-scrollbar-thumb {
     background: $ids-color-palette-slate-50;
     background-clip: content-box;
-    border: 2px solid transparent;
-    border-radius: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
 
     &:hover {
       background: $ids-color-palette-slate-40;
       background-clip: content-box;
-      border: 2px solid transparent;
+      border: 1px solid transparent;
     }
   }
 }
