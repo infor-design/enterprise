@@ -4,6 +4,7 @@ import { breakpoints } from '../../utils/breakpoints';
 import { DOM } from '../../utils/dom';
 import { findComponentsOnElements } from '../../utils/lifecycle/lifecycle';
 import { modalManager } from './modal.manager';
+import { Environment as env } from '../../utils/environment';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
@@ -190,7 +191,8 @@ Modal.prototype = {
    */
   get currentlyNeedsFullsize() {
     return (this.settings.fullsize === 'always' ||
-      (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint)));
+      (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint)) ||
+      (this.settings.fullsize === 'responsive' && this.isAndroid() && this.settings.breakpoint === 'phone-to-tablet'));
   },
 
   /**
@@ -734,6 +736,16 @@ Modal.prototype = {
     for (let cnt = 0; cnt < buttons.length; cnt++) {
       decorateButtons(buttons[cnt], cnt);
     }
+  },
+
+  /**
+   * Check if the device is Android.
+   * @private
+   * @returns {boolean}
+   */
+  isAndroid() {
+    const os = env && env.os && env.os.name ? env.os.name : '';
+    return os === 'android';
   },
 
   /**
