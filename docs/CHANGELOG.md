@@ -4,6 +4,7 @@
 
 ### v4.39.0 Fixes
 
+- `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 
 ## v4.38.0
@@ -50,6 +51,13 @@
 - `[Timepicker]` Improved accessibility on both the input field and its inner picker elements. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
 
 (37 Issues Solved This Release, Backlog Enterprise 136, Backlog Ng 32, 1082 Functional Tests, 1638 e2e Tests)
+
+## v4.37.1
+
+### v4.37.1 Fixes
+
+- `[General]` Increased windows custom css scrollbars from 8px to 12px. ([#4837](https://github.com/infor-design/enterprise/issues/4837))
+- `[Datagrid]` Fixed an issue where when using a scroll-flex container to contain datagrid it did not show the Y scrollbar. ([#4914](https://github.com/infor-design/enterprise/issues/4914))
 
 ## v4.37.0
 
