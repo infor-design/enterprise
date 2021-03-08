@@ -1294,8 +1294,11 @@ Dropdown.prototype = {
       });
 
       term = '';
-      if (this.isOpen()) {
-        this.position();
+      // Minimal shrink when on top on
+      if (self.list[0].classList.contains('is-ontop')) {
+        const listHeight = parseInt(self.list[0].offsetHeight, 10);
+        const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
+        self.list[0].style.top = `${self.wrapper[0].offsetParent.offsetTop + (listHeight - searchInputHeight) + 4}px`;
       }
     };
 
@@ -1352,7 +1355,6 @@ Dropdown.prototype = {
     } else {
       this.list[0].style.top = '';
     }
-
     delete this.filteredItems;
 
     if (this.settings.multiple) {
@@ -2302,7 +2304,7 @@ Dropdown.prototype = {
       if (isSmaller) {
         adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
         if (isToBottom) {
-          self.list[0].style.height = `${parseInt(listHeight, 10) - 5}px`;
+          self.list[0].style.maxHeight = `${parseInt(listHeight, 10) - 5}px`;
         }
       }
 
@@ -2315,7 +2317,7 @@ Dropdown.prototype = {
       }
 
       if (adjustedUlHeight && !self.settings.virtualScroll) {
-        self.listUl[0].style.height = adjustedUlHeight;
+        self.listUl[0].style.maxHeight = adjustedUlHeight;
       }
 
       if (adjustedUlHeight === undefined && self.list[0].classList.contains('is-ontop')) {
@@ -2379,9 +2381,7 @@ Dropdown.prototype = {
       this.list.css('width', `${this.settings.width}px`);
     }
 
-    console.log(positionOpts, this.list.css('top'));
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
-    console.log(positionOpts, this.list.css('top'));
 
     this.list.data('place').place(positionOpts);
   },
@@ -2605,46 +2605,21 @@ Dropdown.prototype = {
   /**
    * Isolate scrolling to a parent
    * @private
-   * @param {HTMLElement} scrollable the element not to propagate from
    */
-  scrollLock(scrollable) {
-    // eslint-disable-next-line consistent-return
-    scrollable.on('DOMMouseScroll mousewheel scroll', (e) => {
-      const el = $(this);
-      const scrollTop = this.scrollTop;
-      const scrollHeight = this.scrollHeight;
-      const height = el.innerHeight();
-      const delta = e.originalEvent.wheelDelta;
-      const up = delta > 0;
-
-      const prevent = function () {
-        e.stopPropagation();
-        e.preventDefault();
-        e.returnValue = false;
-        return false;
-      };
-
-      if (!up && -delta > scrollHeight - height - scrollTop) {
-      // Scrolling down, but this will take us past the bottom.
-        el.scrollTop(scrollHeight);
-        return prevent();
-      }
-      if (up && delta > scrollTop) {
-        // Scrolling up, but this will take us past the top.
-        el.scrollTop(0);
-        return prevent();
-      }
-    });
+  scrollLock() {
     this.parentScrollableArea?.off('scroll.dropdown');
   },
 
-  scrollRelease(scrollable) {
-    scrollable.off('DOMMouseScroll mousewheel scroll');
+  /**
+   * Restore the scroll behavior
+   * @private
+   */
+  scrollRelease() {
     setTimeout(() => {
       this.parentScrollableArea?.off('scroll.dropdown').on('scroll.dropdown', (e) => {
         this.scrollDocument(e);
       });
-    }, 600);
+    }, 400);
   },
 
   /**
