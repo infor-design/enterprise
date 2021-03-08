@@ -1294,7 +1294,9 @@ Dropdown.prototype = {
       });
 
       term = '';
-      this.position();
+      if (this.isOpen()) {
+        this.position();
+      }
     };
 
     if (this.settings.virtualScroll) {
@@ -1355,6 +1357,10 @@ Dropdown.prototype = {
 
     if (this.settings.multiple) {
       this.updateList();
+    }
+
+    if (this.settings.virtualScroll) {
+      this.virtualScroller.data = this.opts;
     }
 
     lis.removeClass('hidden');
@@ -2248,6 +2254,7 @@ Dropdown.prototype = {
   scrollDocument(e) {
     const self = this;
     const focus = $('*:focus'); // dont close on timepicker arrow down and up
+
     if (self.touchPrevented || self.isDropdownElement($(e.target)) || focus.is('.timepicker')) {
       self.touchPrevented = false;
       return;
@@ -2372,7 +2379,10 @@ Dropdown.prototype = {
       this.list.css('width', `${this.settings.width}px`);
     }
 
+    console.log(positionOpts, this.list.css('top'));
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
+    console.log(positionOpts, this.list.css('top'));
+
     this.list.data('place').place(positionOpts);
   },
 
@@ -2578,20 +2588,63 @@ Dropdown.prototype = {
     }
 
     // scroll to the currently selected option
+    this.scrollLock(this.listUl);
+
     if (!this.settings.virtualScroll) {
       current[0].parentNode.scrollTop = current[0].offsetTop - current[0].parentNode.offsetTop;
     } else {
       current[0].closest('.ids-virtual-scroll').scrollTop = current[0].offsetTop - current[0].closest('.ids-virtual-scroll').offsetTop;
-      this.parentScrollableArea?.off('scroll.dropdown', (e) => {
-        this.scrollDocument(e);
-      });
       current[0].scrollIntoView({ block: 'center' });
-      this.parentScrollableArea?.on('scroll.dropdown', (e) => {
-        this.scrollDocument(e);
-      });
     }
+
     current.focus();
     this.searchInput.focus();
+    this.scrollRelease(this.listUl);
+  },
+
+  /**
+   * Isolate scrolling to a parent
+   * @private
+   * @param {HTMLElement} scrollable the element not to propagate from
+   */
+  scrollLock(scrollable) {
+    // eslint-disable-next-line consistent-return
+    scrollable.on('DOMMouseScroll mousewheel scroll', (e) => {
+      const el = $(this);
+      const scrollTop = this.scrollTop;
+      const scrollHeight = this.scrollHeight;
+      const height = el.innerHeight();
+      const delta = e.originalEvent.wheelDelta;
+      const up = delta > 0;
+
+      const prevent = function () {
+        e.stopPropagation();
+        e.preventDefault();
+        e.returnValue = false;
+        return false;
+      };
+
+      if (!up && -delta > scrollHeight - height - scrollTop) {
+      // Scrolling down, but this will take us past the bottom.
+        el.scrollTop(scrollHeight);
+        return prevent();
+      }
+      if (up && delta > scrollTop) {
+        // Scrolling up, but this will take us past the top.
+        el.scrollTop(0);
+        return prevent();
+      }
+    });
+    this.parentScrollableArea?.off('scroll.dropdown');
+  },
+
+  scrollRelease(scrollable) {
+    scrollable.off('DOMMouseScroll mousewheel scroll');
+    setTimeout(() => {
+      this.parentScrollableArea?.off('scroll.dropdown').on('scroll.dropdown', (e) => {
+        this.scrollDocument(e);
+      });
+    }, 600);
   },
 
   /**
