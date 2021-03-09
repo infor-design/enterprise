@@ -888,14 +888,13 @@ Modal.prototype = {
     modalManager.currentlyActive = this;
 
     // Ensure aria-labelled by points to the id
-    utils.addAttributes(this.element, this, this.settings.attributes, 'modal', true);
-
     if (this.settings.isAlert) {
       const title = this.element.find('#message-title');
       utils.addAttributes(title, this, this.settings.attributes, 'title', true);
 
       const messageText = this.element.find('#message-text');
       utils.addAttributes(messageText, this, this.settings.attributes, 'message', true);
+      utils.addAttributes(this.element, this, this.settings.attributes, 'modal', true);
 
       this.element.attr('aria-labelledby', title.attr('id'));
       this.element.attr('aria-describedby', messageText.attr('id'));
@@ -926,7 +925,6 @@ Modal.prototype = {
         this.element.attr('aria-describedby', descById);
       }
     }
-
     this.mainContent = $('body').children('.scrollable-container');
     if (!this.mainContent.length) {
       this.mainContent = $('body');
