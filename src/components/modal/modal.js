@@ -888,6 +888,8 @@ Modal.prototype = {
     modalManager.currentlyActive = this;
 
     // Ensure aria-labelled by points to the id
+    utils.addAttributes(this.element, this, this.settings.attributes, 'modal', true);
+
     if (this.settings.isAlert) {
       const title = this.element.find('#message-title');
       utils.addAttributes(title, this, this.settings.attributes, 'title', true);
