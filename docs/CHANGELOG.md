@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.37.2
+
+### v4.37.2 Fixes
+
+- `[Datagrid]` Fixed an issue with missing scrollbars when in frozen column mode on wide screens. ([#4922](https://github.com/infor-design/enterprise/issues/4922))
+
 ## v4.37.1
 
 ### v4.37.1 Fixes

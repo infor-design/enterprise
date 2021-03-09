@@ -4541,7 +4541,7 @@ Datagrid.prototype = {
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
     const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
     const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);
-    this.element.removeClass('has-vertical-scroll has-visible-last-row');
+    this.element.removeClass('has-vertical-scroll has-visible-last-row has-horizontal-scroll');
 
     if (tableHeight < height - headerHeight) {
       this.element.addClass('has-visible-last-row');
@@ -6187,6 +6187,12 @@ Datagrid.prototype = {
           self.clearCache();
           self.renderRows();
         }
+      });
+    }
+
+    if (self.settings.frozenColumns.left.length) {
+      $('body').on('resize.frozencolumns', () => {
+        self.setScrollClass();
       });
     }
 
@@ -11980,7 +11986,7 @@ Datagrid.prototype = {
 
     this.element.off();
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
-    $('body').off('resize.vtable resize.datagrid');
+    $('body').off('resize.vtable resize.datagrid resize.frozencolumns');
     $(window).off('orientationchange.datagrid');
     $(window).off('resize.datagrid');
     return this;
