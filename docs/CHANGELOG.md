@@ -12,7 +12,7 @@
 
 ### v4.38.0 Important Changes
 
-- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its reccomend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
+- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its recommend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
 
 ### v4.38.0 Fixes
 
