@@ -2148,9 +2148,8 @@ Dropdown.prototype = {
         .on('mouseleave.tooltip, mousewheel.tooltip, click.tooltip', 'li[title], li[data-title]', (e) => {
           hideImmediately(e.currentTarget);
         });
-
-      this.scrollRelease(this.listUl);
     }
+    this.scrollRelease(this.listUl);
 
     // Some list-closing events are on a timer to prevent immediate list close
     // There would be several things to check with a setTimeout, so this is done with a CSS
