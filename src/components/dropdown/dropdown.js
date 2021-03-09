@@ -469,7 +469,7 @@ Dropdown.prototype = {
     this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
-      this.position();
+      self.shrinkTop(this);
     }
   },
 
@@ -1083,6 +1083,7 @@ Dropdown.prototype = {
         span = $(`#${this.element.attr('id')}`).next().find('span').first();
         DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
         this.setPlaceholder(text);
+        this.scrollRelease(this.listUl);
         return;
       }
 
@@ -1294,12 +1295,7 @@ Dropdown.prototype = {
       });
 
       term = '';
-      // Minimal shrink when on top on
-      if (self.list[0].classList.contains('is-ontop')) {
-        const listHeight = parseInt(self.list[0].offsetHeight, 10);
-        const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
-        self.list[0].style.top = `${self.wrapper[0].offsetParent.offsetTop + (listHeight - searchInputHeight) + 4}px`;
-      }
+      self.shrinkTop(self);
     };
 
     if (this.settings.virtualScroll) {
@@ -1313,6 +1309,20 @@ Dropdown.prototype = {
     }
 
     completeFilter();
+  },
+
+  /**
+   * Shrink if the element is flowing up
+   * @private
+   * @param {Object} self The api object
+   */
+  shrinkTop(self) {
+    // Minimal shrink when on top on
+    if (self.list && self.list[0].classList.contains('is-ontop')) {
+      const listHeight = parseInt(self.list[0].offsetHeight, 10);
+      const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
+      self.list[0].style.top = `${self.wrapper[0].offsetParent.offsetTop + (listHeight - searchInputHeight) + 4}px`;
+    }
   },
 
   /**
@@ -1888,6 +1898,7 @@ Dropdown.prototype = {
     let pos;
 
     this.touchPrevented = false;
+    this.scrollLock(this.listUl);
 
     // Close any other drop downs.
     $('select').each(function () {
@@ -2137,6 +2148,8 @@ Dropdown.prototype = {
         .on('mouseleave.tooltip, mousewheel.tooltip, click.tooltip', 'li[title], li[data-title]', (e) => {
           hideImmediately(e.currentTarget);
         });
+
+      this.scrollRelease(this.listUl);
     }
 
     // Some list-closing events are on a timer to prevent immediate list close
@@ -2619,7 +2632,7 @@ Dropdown.prototype = {
       this.parentScrollableArea?.off('scroll.dropdown').on('scroll.dropdown', (e) => {
         this.scrollDocument(e);
       });
-    }, 400);
+    }, env.os.name === 'ios' ? 800 : 400);
   },
 
   /**
@@ -2951,6 +2964,7 @@ Dropdown.prototype = {
       return;
     }
     let li;
+    this.scrollLock(this.listUl);
 
     // Discovers a `<option>` incoming item from its corresponding Dropdown List item's `data-val` attribute.
     if (option.is('li')) {
@@ -2966,6 +2980,7 @@ Dropdown.prototype = {
       }
 
       if (option.prop('disabled')) {
+        this.scrollRelease(this.listUl);
         return;
       }
     }
@@ -3053,6 +3068,7 @@ Dropdown.prototype = {
     }
 
     $('.tooltip:not(.is-hidden)').hide();
+    this.scrollRelease(this.listUl);
   },
 
   /**

@@ -67,6 +67,6 @@ describe('SwapList API', () => {
     setTimeout(() => {
       expect(spyEvent).toHaveBeenTriggered();
       done();
-    }, 1);
+    }, 100);
   });
 });
