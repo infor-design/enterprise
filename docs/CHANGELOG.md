@@ -11,7 +11,7 @@
 
 ### v4.38.0 Important Changes
 
-- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its reccomend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
+- `[Themes]` Renamed the concept of themes to versions and renamed uplift to new and soho to classic. The new/uplift theme is now the default and its recommend you use it as your default. The old scripts and names will still work ok but new copies with the new names are added for you. In addition Variants are now called Modes. But we got rid of the older script names from 2017 as they have been deprecated for a while now. In addition the ids-identity package thats included was bumped to 4.0 if using tokens directly from this the paths there have been changed to reflect the new names. ([#2606](https://github.com/infor-design/enterprise/issues/2606))
 
 ### v4.38.0 Fixes
 
@@ -52,6 +52,10 @@
 - `[Timepicker]` Improved accessibility on both the input field and its inner picker elements. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
 
 (37 Issues Solved This Release, Backlog Enterprise 136, Backlog Ng 32, 1082 Functional Tests, 1638 e2e Tests)
+
+### v4.37.2 Fixes
+
+- `[Datagrid]` Fixed an issue with missing scrollbars when in frozen column mode on wide screens. ([#4922](https://github.com/infor-design/enterprise/issues/4922))
 
 ## v4.37.1
 

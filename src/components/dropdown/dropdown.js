@@ -469,7 +469,7 @@ Dropdown.prototype = {
     this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
-      this.position();
+      self.shrinkTop(this);
     }
   },
 
@@ -1083,6 +1083,7 @@ Dropdown.prototype = {
         span = $(`#${this.element.attr('id')}`).next().find('span').first();
         DOM.html(span, `<span class="audible">${this.label.text()} </span>`, '<div><p><span><ul><li><a><abbr><b><i><kbd><small><strong><sub><svg><use><br>');
         this.setPlaceholder(text);
+        this.scrollRelease(this.listUl);
         return;
       }
 
@@ -1294,7 +1295,7 @@ Dropdown.prototype = {
       });
 
       term = '';
-      this.position();
+      self.shrinkTop(self);
     };
 
     if (this.settings.virtualScroll) {
@@ -1308,6 +1309,20 @@ Dropdown.prototype = {
     }
 
     completeFilter();
+  },
+
+  /**
+   * Shrink if the element is flowing up
+   * @private
+   * @param {Object} self The api object
+   */
+  shrinkTop(self) {
+    // Minimal shrink when on top on
+    if (self.list && self.list[0].classList.contains('is-ontop')) {
+      const listHeight = parseInt(self.list[0].offsetHeight, 10);
+      const searchInputHeight = parseInt(self.searchInput[0].offsetHeight, 10);
+      self.list[0].style.top = `${self.wrapper[0].offsetParent.offsetTop + (listHeight - searchInputHeight) + 4}px`;
+    }
   },
 
   /**
@@ -1350,11 +1365,14 @@ Dropdown.prototype = {
     } else {
       this.list[0].style.top = '';
     }
-
     delete this.filteredItems;
 
     if (this.settings.multiple) {
       this.updateList();
+    }
+
+    if (this.settings.virtualScroll) {
+      this.virtualScroller.data = this.opts;
     }
 
     lis.removeClass('hidden');
@@ -1880,6 +1898,7 @@ Dropdown.prototype = {
     let pos;
 
     this.touchPrevented = false;
+    this.scrollLock(this.listUl);
 
     // Close any other drop downs.
     $('select').each(function () {
@@ -2130,6 +2149,7 @@ Dropdown.prototype = {
           hideImmediately(e.currentTarget);
         });
     }
+    this.scrollRelease(this.listUl);
 
     // Some list-closing events are on a timer to prevent immediate list close
     // There would be several things to check with a setTimeout, so this is done with a CSS
@@ -2248,6 +2268,7 @@ Dropdown.prototype = {
   scrollDocument(e) {
     const self = this;
     const focus = $('*:focus'); // dont close on timepicker arrow down and up
+
     if (self.touchPrevented || self.isDropdownElement($(e.target)) || focus.is('.timepicker')) {
       self.touchPrevented = false;
       return;
@@ -2295,7 +2316,7 @@ Dropdown.prototype = {
       if (isSmaller) {
         adjustedUlHeight = `${listHeight - searchInputHeight - 5}px`;
         if (isToBottom) {
-          self.list[0].style.height = `${parseInt(listHeight, 10) - 5}px`;
+          self.list[0].style.maxHeight = `${parseInt(listHeight, 10) - 5}px`;
         }
       }
 
@@ -2308,7 +2329,7 @@ Dropdown.prototype = {
       }
 
       if (adjustedUlHeight && !self.settings.virtualScroll) {
-        self.listUl[0].style.height = adjustedUlHeight;
+        self.listUl[0].style.maxHeight = adjustedUlHeight;
       }
 
       if (adjustedUlHeight === undefined && self.list[0].classList.contains('is-ontop')) {
@@ -2373,6 +2394,7 @@ Dropdown.prototype = {
     }
 
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
+
     this.list.data('place').place(positionOpts);
   },
 
@@ -2578,20 +2600,38 @@ Dropdown.prototype = {
     }
 
     // scroll to the currently selected option
+    this.scrollLock(this.listUl);
+
     if (!this.settings.virtualScroll) {
       current[0].parentNode.scrollTop = current[0].offsetTop - current[0].parentNode.offsetTop;
     } else {
       current[0].closest('.ids-virtual-scroll').scrollTop = current[0].offsetTop - current[0].closest('.ids-virtual-scroll').offsetTop;
-      this.parentScrollableArea?.off('scroll.dropdown', (e) => {
-        this.scrollDocument(e);
-      });
       current[0].scrollIntoView({ block: 'center' });
-      this.parentScrollableArea?.on('scroll.dropdown', (e) => {
-        this.scrollDocument(e);
-      });
     }
+
     current.focus();
     this.searchInput.focus();
+    this.scrollRelease(this.listUl);
+  },
+
+  /**
+   * Isolate scrolling to a parent
+   * @private
+   */
+  scrollLock() {
+    this.parentScrollableArea?.off('scroll.dropdown');
+  },
+
+  /**
+   * Restore the scroll behavior
+   * @private
+   */
+  scrollRelease() {
+    setTimeout(() => {
+      this.parentScrollableArea?.off('scroll.dropdown').on('scroll.dropdown', (e) => {
+        this.scrollDocument(e);
+      });
+    }, env.os.name === 'ios' ? 800 : 400);
   },
 
   /**
@@ -2923,6 +2963,7 @@ Dropdown.prototype = {
       return;
     }
     let li;
+    this.scrollLock(this.listUl);
 
     // Discovers a `<option>` incoming item from its corresponding Dropdown List item's `data-val` attribute.
     if (option.is('li')) {
@@ -2938,6 +2979,7 @@ Dropdown.prototype = {
       }
 
       if (option.prop('disabled')) {
+        this.scrollRelease(this.listUl);
         return;
       }
     }
@@ -3025,6 +3067,7 @@ Dropdown.prototype = {
     }
 
     $('.tooltip:not(.is-hidden)').hide();
+    this.scrollRelease(this.listUl);
   },
 
   /**
