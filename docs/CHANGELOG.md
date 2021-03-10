@@ -54,6 +54,10 @@
 
 (37 Issues Solved This Release, Backlog Enterprise 136, Backlog Ng 32, 1082 Functional Tests, 1638 e2e Tests)
 
+### v4.37.2 Fixes
+
+- `[Datagrid]` Fixed an issue with missing scrollbars when in frozen column mode on wide screens. ([#4922](https://github.com/infor-design/enterprise/issues/4922))
+
 ## v4.37.1
 
 ### v4.37.1 Fixes
