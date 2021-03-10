@@ -6,6 +6,7 @@
 
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
+- `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 
 ## v4.38.0
 
