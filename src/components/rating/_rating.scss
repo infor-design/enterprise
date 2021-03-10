@@ -75,7 +75,6 @@
 .rating input:checked + label > svg.icon,
 .rating .is-half + label > svg.icon {
   @include opacity(1);
-  
 }
 
 // Compact Mode
