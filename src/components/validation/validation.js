@@ -1,5 +1,4 @@
 import { Locale } from '../locale/locale';
-console.log('validation.js')
 // The validation rules object.
 // This contains all base rules for validation that come bundled as part of Soho.
 // These rules can be extended.
@@ -119,7 +118,6 @@ function ValidationRules() {
         }
 
         if (value instanceof Date) {
-          console.log(this.message)
           return value && value.getTime && !isNaN(value.getTime());
         }
 
