@@ -30,7 +30,6 @@
 
   // Rating Icons - Svg
   svg.icon {
-    // color: $rating-bg-color;
     display: inline-block;
     height: 22px;
     position: relative;
@@ -75,8 +74,6 @@
 .rating input:checked + label > svg.icon,
 .rating .is-half + label > svg.icon {
   @include opacity(1);
-
-  color: $rating-bg-color;
 }
 
 // Compact Mode
