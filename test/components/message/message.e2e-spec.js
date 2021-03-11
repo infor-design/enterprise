@@ -49,6 +49,8 @@ describe('Message tests', () => {
 
     expect(await element(by.id('message-acknowledge-cancel-1')).getAttribute('id')).toEqual('message-acknowledge-cancel-1');
     expect(await element(by.css('[data-automation-id="message-alert-cancel-1"]')).getAttribute('data-automation-id')).toEqual('message-alert-cancel-1');
+    expect(await element(by.id('message-acknowledge-modal')).getAttribute('id')).toEqual('message-acknowledge-modal');
+    expect(await element(by.id('message-acknowledge-modal')).getAttribute('data-automation-id')).toEqual('message-acknowledge-auto-modal');
   });
 
   it('Should be able to set id/automation/id on root/items', async () => {
