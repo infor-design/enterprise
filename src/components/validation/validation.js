@@ -105,10 +105,9 @@ function ValidationRules() {
     // date: Validate date, datetime (24hr or 12hr am/pm)
     date: {
       check(value, field, gridInfo) {
+        const dateTimeClass = field[0].classList.contains('datetime');
 
-        let dateTimeClass = field[0].classList.contains('datetime')
-
-        dateTimeClass ? this.message = Locale.translate('InvalidDateTime') : this.message = Locale.translate('InvalidDate')
+        dateTimeClass ? this.message = Locale.translate('InvalidDateTime') : this.message = Locale.translate('InvalidDate');
 
         if (gridInfo && gridInfo.column) {
           const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true);
