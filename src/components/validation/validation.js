@@ -107,7 +107,7 @@ function ValidationRules() {
       check(value, field, gridInfo) {
         const dateTimeClass = field[0].classList.contains('datetime');
 
-        dateTimeClass ? this.message = Locale.translate('InvalidDateTime') : this.message = Locale.translate('InvalidDate');
+        this.message = Locale.translate(dateTimeClass ? 'InvalidDateTime' : 'InvalidDate');
 
         if (gridInfo && gridInfo.column) {
           const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true);
