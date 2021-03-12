@@ -436,6 +436,7 @@ html.is-chrome:not(.is-mac) {
     border-radius: 12px;
 
     &:hover {
+      background: $ids-color-palette-slate-30;
       background-clip: content-box;
       border: 2px solid transparent;
     }
