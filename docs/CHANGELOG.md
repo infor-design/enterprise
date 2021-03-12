@@ -8,6 +8,7 @@
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
+- `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
 
 ## v4.38.0
 
