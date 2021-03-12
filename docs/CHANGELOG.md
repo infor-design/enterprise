@@ -4,6 +4,7 @@
 
 ### v4.39.0 Fixes
 
+- `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
