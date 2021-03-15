@@ -1,5 +1,4 @@
 import { Locale } from '../locale/locale';
-
 // The validation rules object.
 // This contains all base rules for validation that come bundled as part of Soho.
 // These rules can be extended.
@@ -124,6 +123,9 @@ function ValidationRules() {
         let dtApi = null;
         if (field && field.data('datepicker')) {
           dtApi = field.data('datepicker');
+          if (dtApi.settings.showTime) {
+            this.message = Locale.translate('InvalidDateTime');
+          }
           dateFormat = dtApi.pattern;
         }
         if (gridInfo && gridInfo.column) {
