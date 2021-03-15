@@ -471,15 +471,16 @@ Tooltip.prototype = {
       // If it matches an element already on the page, grab that element's content
       // and store the reference only.
       // Adding a condition if it's really uses the ID attribute.
-      const idAttr = this.element[0].id;
-      if (content.indexOf('#') === 0 && (this.settings.popover ? true : idAttr === content.split('#').pop())) {
+      if (content.indexOf('#') === 0) {
         const contentCheck = $(`${content}`);
         if (contentCheck.length) {
           this.content = contentCheck;
           doRender();
           return true;
         }
-        return false;
+        this.content = content;
+        doRender();
+        return true;
       }
 
     // functions
