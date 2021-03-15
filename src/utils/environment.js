@@ -98,7 +98,7 @@ const Environment = {
     }
 
     // Class-based detection for IE
-    if (ua.match(/Edge\//)) {
+    if (ua.match(/Edg\//)) {
       cssClasses += 'ie ie-edge ';
       this.browser.name = 'edge';
       this.browser.version = navigator.appVersion.indexOf('Edge/18') > -1 ? '18' : '17';
