@@ -1455,12 +1455,12 @@ describe('Locale API', () => {
     Locale.set('zh-Hant');
 
     expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
-    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
+    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
 
     Locale.set('zh-TW');
 
     expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
-    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
+    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
   });
 
   it('Should be able to display dates into another timezone including short timezone name', () => {

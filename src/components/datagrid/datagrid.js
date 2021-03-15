@@ -6888,7 +6888,7 @@ Datagrid.prototype = {
     }
 
     const selectHandler = (e, args, args2) => {
-      const action = args.attr ? args.attr('data-option') : args2.attr('data-option');
+      const action = args?.attr ? args?.attr('data-option') : args2?.attr('data-option');
       if (!action) {
         return;
       }
