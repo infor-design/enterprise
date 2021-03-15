@@ -699,6 +699,8 @@ const Locale = {  // eslint-disable-line
       ret = ret.replace('zz', shortName);
     }
 
+    // Replace Left to Right Mark
+    ret = ret.replace(/&lrm;|\u200E/gi, ' ');
     return ret.trim();
   },
 
