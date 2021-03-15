@@ -318,6 +318,20 @@
         }
       }
     }
+
+    button.close {
+      right: 35px;
+      top: 4px;
+
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        right: 45px;
+      }
+
+      svg.close {
+        left: 0;
+        top: 0 !important;
+      }
+    }
   }
 
   //Call to action button

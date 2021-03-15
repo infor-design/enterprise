@@ -894,6 +894,7 @@ Modal.prototype = {
 
       const messageText = this.element.find('#message-text');
       utils.addAttributes(messageText, this, this.settings.attributes, 'message', true);
+      utils.addAttributes(this.element, this, this.settings.attributes, 'modal', true);
 
       this.element.attr('aria-labelledby', title.attr('id'));
       this.element.attr('aria-describedby', messageText.attr('id'));
@@ -924,7 +925,6 @@ Modal.prototype = {
         this.element.attr('aria-describedby', descById);
       }
     }
-
     this.mainContent = $('body').children('.scrollable-container');
     if (!this.mainContent.length) {
       this.mainContent = $('body');
