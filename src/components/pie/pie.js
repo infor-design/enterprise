@@ -240,6 +240,8 @@ Pie.prototype = {
         this.element.closest('.widget-content').css({ height: '' });
         this.element.css({ height: 'auto' });
       }
+    } else if (this.element[0].style.height === 'auto') { // unset height from auto if previously set so chart can fill space again
+      this.element.css({ height: '' });
     }
     // move the origin of the group's coordinate space to the center of the SVG element
     dims.center = { x: (dims.width / 2), y: dims.height / 2 };
