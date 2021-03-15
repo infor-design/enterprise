@@ -123,8 +123,7 @@ function ValidationRules() {
         let dtApi = null;
         if (field && field.data('datepicker')) {
           dtApi = field.data('datepicker');
-          console.log(dtApi.settings.showTime)
-          if(dtApi.settings.showTime){
+          if (dtApi.settings.showTime) {
             this.message = Locale.translate('InvalidDateTime');
           }
           dateFormat = dtApi.pattern;
