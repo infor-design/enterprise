@@ -1600,6 +1600,7 @@ Datagrid.prototype = {
     if (this.settings.twoLineHeader) {
       this.element.addClass('has-two-line-header');
     }
+    let activeMenu = null;
 
     // Attach Keyboard support
     this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
@@ -1649,6 +1650,11 @@ Datagrid.prototype = {
             if (data) {
               data.destroy();
             }
+            activeMenu = null;
+          })
+          .off('open.datagrid-filter')
+          .on('open.datagrid-filter', function () {
+            activeMenu = $(this).data('popupmenu');
           });
       }
       return false;
@@ -1667,6 +1673,11 @@ Datagrid.prototype = {
       }
       return true;
     });
+
+    this.element.off('focus.datagrid-filter-focus')
+      .on('focus.datagrid-filter-focus', '.datagrid-filter-wrapper input', () => {
+        activeMenu?.close();
+      });
 
     if (this.settings.filterWhenTyping) {
       this.element.off('keyup.datagrid-filter-input').on('keyup.datagrid-filter-input', '.datagrid-filter-wrapper input', (e) => {
