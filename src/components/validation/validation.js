@@ -105,9 +105,7 @@ function ValidationRules() {
     // date: Validate date, datetime (24hr or 12hr am/pm)
     date: {
       check(value, field, gridInfo) {
-        const dateTimeClass = field[0].classList.contains('datetime');
-
-        this.message = Locale.translate(dateTimeClass ? 'InvalidDateTime' : 'InvalidDate');
+        this.message = Locale.translate('InvalidDate');
 
         if (gridInfo && gridInfo.column) {
           const gridValue = gridInfo.column.formatter(gridInfo.row, gridInfo.cell, value, gridInfo.column, true);
@@ -125,6 +123,10 @@ function ValidationRules() {
         let dtApi = null;
         if (field && field.data('datepicker')) {
           dtApi = field.data('datepicker');
+          console.log(dtApi.settings.showTime)
+          if(dtApi.settings.showTime){
+            this.message = Locale.translate('InvalidDateTime');
+          }
           dateFormat = dtApi.pattern;
         }
         if (gridInfo && gridInfo.column) {
