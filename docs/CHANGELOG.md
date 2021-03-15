@@ -5,6 +5,7 @@
 ### v4.39.0 Fixes
 
 - `[Datagrid]` Fixed a bug where filter dropdown menus did not close when focusing a filter input. ([#4766](https://github.com/infor-design/enterprise/issues/4766))
+- `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
