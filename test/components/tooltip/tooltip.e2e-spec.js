@@ -115,3 +115,38 @@ describe('Tooltip (personalizable) tests', () => {
     });
   }
 });
+
+describe('Tooltips icons page tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tooltip/example-icon-in-tooltip?theme=classic&layout=nofrills');
+  });
+
+  it('should display tooltip with icon', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('tooltip-btn')))
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.css('#tooltip .tooltip-content')).getAttribute('innerHTML')).toContain('<use href="#icon-compose"></use>');
+  });
+});
+
+describe('Tooltips with pound sign', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tooltip/test-tooltip-starts-with-pound-sign?theme=classic&layout=nofrills');
+  });
+
+  it('should display tooltip with #content', async () => {
+    await browser.actions()
+      .mouseMove(await element(by.id('tooltip-btn')))
+      .perform();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('tooltip'))), config.waitsFor);
+
+    expect(await element(by.css('#tooltip .tooltip-content')).getAttribute('innerHTML')).toEqual('#Tooltips Provide Additional Information');
+  });
+});
+
