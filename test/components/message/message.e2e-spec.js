@@ -115,7 +115,7 @@ describe('Message visual regression tests', () => {
       await browser.driver.sleep(config.sleep);
       const container = await element(by.id('maincontent'));
       await element(by.id('show-message')).click();
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(container, 'message-open-list')).toEqual(0);
     });
@@ -125,7 +125,7 @@ describe('Message visual regression tests', () => {
       await browser.driver.sleep(config.sleep);
       const container = await element(by.id('maincontent'));
       await element(by.id('show-application-error')).click();
-      await browser.driver.sleep(config.sleep);
+      await browser.driver.sleep(config.sleepLonger);
 
       expect(await browser.imageComparison.checkElement(container, 'message-open')).toEqual(0);
     });
