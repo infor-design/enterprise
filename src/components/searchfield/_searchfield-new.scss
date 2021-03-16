@@ -50,9 +50,6 @@
       padding-top: 6px;
     }
 
-    .icon.close {
-      top: 12px;
-    }
   }
 
   &:not(.is-open) {
@@ -61,19 +58,6 @@
     }
   }
 
-  &.has-text .icon.close {
-    top: 11px;
-  }
-}
-
-.toolbar-searchfield-wrapper {
-  &.searchfield-wrapper {
-    &.non-collapsible {
-      svg.icon {
-        top: 11px;
-      }
-    }
-  }
 }
 
 // Firefox needs some help

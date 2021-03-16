@@ -123,10 +123,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     top: 11px;
   }
 
-  .icon.close {
-    top: 10px;
-  }
-
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
@@ -229,7 +225,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       color: $searchfield-text-color;
       height: 14px;
-      top: 10px;
+      //top: 10px;
     }
 
     &:not(.non-collapsible) {
