@@ -175,9 +175,9 @@ const Environment = {
     if ((verOffset = nUAgent.indexOf('OPR')) !== -1) { //eslint-disable-line
       browser = 'Opera';
       version = nUAgent.substring(verOffset + 4);
-    } else if ((verOffset = nUAgent.indexOf('Edge')) !== -1) { //eslint-disable-line
+    } else if ((verOffset = nUAgent.indexOf('Edg')) !== -1) { //eslint-disable-line
       browser = 'Microsoft Edge';
-      version = nUAgent.substring(verOffset + 5);
+      version = nUAgent.substring(verOffset + 4);
     } else if ((verOffset = nUAgent.indexOf('MSIE')) !== -1) { //eslint-disable-line
       browser = 'Microsoft Internet Explorer';
       version = nUAgent.substring(verOffset + 5);
