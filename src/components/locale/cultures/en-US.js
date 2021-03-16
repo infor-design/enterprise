@@ -235,6 +235,7 @@ Soho.Locale.addCulture('en-US', {
     Italic: { id: 'Italic', value: 'Italic', comment: 'Make Text Italic' },
     InvalidDate: { id: 'InvalidDate', value: 'Invalid Date', comment: 'validation message for wrong date format (short)' },
     InvalidTime: { id: 'InvalidTime', value: 'Invalid Time', comment: 'validation message for wrong time format' },
+    InvalidDateTime: { id: 'InvalidDateTime', value: 'Invalid Date or Time', comment: 'validation message for wrong date and time format' },
     Inventory: { id: 'Inventory', value: 'Inventory', comment: 'Icon button tooltop for Inventory Action' },
     InRange: { id: 'InRange', value: 'In Range', comment: 'In Range in icons for filtering' },
     IsEmpty: { id: 'IsEmpty', value: 'Is Empty', comment: 'Is Empty in icons for filtering' },
