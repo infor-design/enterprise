@@ -1,6 +1,7 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
+const axePageObjects = requireHelper('axe-page-objects');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -104,4 +105,21 @@ describe('Breadcrumb automation tests', () => {
     expect(await element(by.id('test-breadcrumb-home')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-home');
     expect(await element(by.css('.breadcrumb-item.current a')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-fourth');
   });
+});
+
+describe('Breadcrumb should be accessible with no WCAG 2AA violations', () => {
+  if (!utils.isIE()) {
+    const themes = ['new', 'classsic'];
+    const modes = ['light', 'dark', 'contrast'];
+    themes.forEach((theme) => {
+      modes.forEach(async (mode) => {
+        await utils.setPage(`/components/breadcrumb/example-add-remove-disabled?theme=${theme}&mode=${mode}`);
+        it('Should be accessible with no WCAG 2AA violations', async () => {
+          const res = await axePageObjects(browser.params.theme);
+
+          expect(res.violations.length).toEqual(0);
+        });
+      });
+    });
+  }
 });

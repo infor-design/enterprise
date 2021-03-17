@@ -69,7 +69,7 @@
 
       &.is-disabled {
         span {
-          opacity: 0.5;
+          color: $breadcrumb-disabled-color;
         }
 
         .hyperlink {
@@ -89,7 +89,7 @@
 
         &.is-disabled {
           span {
-            opacity: 0.5;
+            color: $breadcrumb-disabled-color;
           }
         }
 
