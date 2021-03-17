@@ -370,7 +370,7 @@ BusyIndicator.prototype = {
       const isOverlayAbsolute = elComputedPos === 'absolute';
       if ((height && this.container && (height <= elem.offsetHeight))) {
         const winHeight = window.innerHeight || document.documentElement.clientHeight;
-        const isHeight = el => ((el.scrollHeight > el.clientHeight) && el.clientHeight < (winHeight - 60));
+        const isHeight = el => ((el.scrollHeight >= el.clientHeight) && el.clientHeight < (winHeight - 60));
         const loc = ((height / 2) - 58);
         const setTop = () => {
           if (isOverlayAbsolute && this.element.is(sElem)) {
