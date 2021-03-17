@@ -11,7 +11,7 @@ import '../emptymessage/emptymessage.jquery';
 
 // Settings and Options
 const COMPONENT_NAME = 'pie';
-
+console.log('pie.js')
 /**
  * A pie chart (or a circle chart) is a circular statistical graphic which is divided
   into slices to illustrate numerical proportion. In a pie chart, the arc length of each slice is proportional to the quantity it represents.
@@ -79,6 +79,8 @@ const PIE_DEFAULTS = {
 };
 
 function Pie(element, settings) {
+  console.log(element)
+  console.log(settings.type)
   this.settings = utils.mergeSettings(element, settings, PIE_DEFAULTS);
   if (settings && settings.dataset) {
     this.settings.dataset = settings.dataset;
@@ -143,7 +145,10 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'slices');
     self.mainGroup.append('g').attr('class', 'labels');
     self.mainGroup.append('g').attr('class', 'lines');
-    this.element.addClass('chart-pie');
+    
+    if (this.settings.type === 'pie') {
+      this.element.addClass('chart-pie');
+    }
 
     if (s.showMobile) {
       s.legendPlacement = 'bottom';
