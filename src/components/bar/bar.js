@@ -406,6 +406,7 @@ Bar.prototype = {
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
     s.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && s.isStacked);
 
+    const clickType = charts.clickType();
     groups.selectAll('rect')
       .data((d, i) => {
         d.forEach((rectData) => {
@@ -650,7 +651,13 @@ Bar.prototype = {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
-      .on('click', function (d, i) {
+      .on(`contextmenu.${self.namespace}`, function (d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      })
+      .call(clickType);
+
+    clickType
+      .on(`click.${self.namespace}`, function (d, i) {
         const isSelected = this && d3.select(this).classed('is-selected');
         const thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
 
@@ -675,8 +682,26 @@ Bar.prototype = {
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
         }
       })
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`dblclick.${self.namespace}`, (d, i, targetElem) => {
+        let args;
+        if (s.isGrouped) {
+          const groupElem = targetElem[i]?.parentNode;
+          const groupIndex = parseInt(d3.select(groupElem)?.attr('data-group-id'), 10);
+          const groupItems = [];
+          d3.selectAll(targetElem).each(function (d2, i2) {
+            groupItems.push({ elem: this, data: d2, index: i2 });
+          });
+          args = [{ groupElem, groupIndex, groupItems }];
+        } else if (s.type === 'bar-stacked') {
+          args = [];
+          self.svg.selectAll('.series-group').each(function () {
+            const bar = d3.select(this).selectAll('.bar').nodes()[i];
+            args.push({ elem: bar, data: d3.select(bar).datum(), index: i });
+          });
+        } else {
+          args = [{ data: d, index: i, elem: targetElem[i] }];
+        }
+        self.element.triggerHandler('eventdblclick', [args]);
       });
 
     // Adjust the labels
@@ -934,7 +959,7 @@ Bar.prototype = {
         }
       } else {
         this.initialSelectCall = true;
-        selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        selector?.on('click')?.call(selector.node(), selector.datum(), barIndex);
       }
     }
     this.initialSelectCall = false;
@@ -1047,7 +1072,7 @@ Bar.prototype = {
 
     if (this.element) {
       this.element.find('.group .series-group .bar')
-        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+        .off(events(['mouseenter', 'mouseleave', 'click', 'dblclick', 'contextmenu']));
 
       this.element.off(events(['updated', 'resize']));
     }
