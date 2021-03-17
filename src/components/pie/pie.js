@@ -79,8 +79,6 @@ const PIE_DEFAULTS = {
 };
 
 function Pie(element, settings) {
-  console.log(element)
-  console.log(settings.type)
   this.settings = utils.mergeSettings(element, settings, PIE_DEFAULTS);
   if (settings && settings.dataset) {
     this.settings.dataset = settings.dataset;
