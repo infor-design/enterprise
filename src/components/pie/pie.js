@@ -85,7 +85,7 @@ function Pie(element, settings) {
   }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
-  charts.destory(element, settings);
+  charts.destroy(element, settings);
   this.init();
   debug.logTimeStart(COMPONENT_NAME);
 }

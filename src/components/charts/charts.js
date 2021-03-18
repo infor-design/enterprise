@@ -6,7 +6,7 @@ import { theme } from '../theme/theme';
 
 const charts = {};
 
-charts.destory = function destory(el, s) {
+charts.destroy = function destroy(el, s) {
   let e = el[0];
   e.className = 'chart-container';
   switch (s.type) {
