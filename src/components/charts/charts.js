@@ -18,6 +18,7 @@ charts.destroy = function destroy(el, s) {
       break;
     case 'line':
       e.classList.add('line-chart');
+      break;
     default:
       e.className = 'chart-container';
   }
