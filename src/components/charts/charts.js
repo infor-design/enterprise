@@ -900,7 +900,8 @@ charts.setSelected = function (o, isToggle, internals) {
         $(legends.selectAll('.chart-legend-item').nodes()[barIndex]).trigger('click.chart');
       }
     } else {
-      selector.on('click').call(selector.node(), selector.datum(), barIndex);
+      selector.dispatch('click');
+      // selector.on('click').call(selector.node(), selector.datum(), barIndex);
     }
   }
 };
@@ -1105,66 +1106,6 @@ charts.wrap = function (node, width, labelFactor) {
       }
     }
   });
-};
-
-/**
- * Set to bind the type of click (single or double).
- * http://bl.ocks.org/couchand/6394506
- * @private
- * @returns {void}
- */
-charts.clickType = function () {
-  const dispatcher = d3.dispatch('click', 'dblclick');
-  function clickCancel(selection) {
-    const dist = (a, b) => (Math.sqrt(Math.pow(a[0] - b[0], 2), Math.pow(a[1] - b[1], 2)));
-    const tolerance = 5;
-    let wait = null;
-    let down;
-    let args;
-    selection.on('mousedown', function (...moreArgs) {
-      const targetElem = this;
-      down = d3.mouse(document.body);
-      args = [...moreArgs, targetElem];
-    });
-    selection.on('mouseup', function () {
-      const self = this;
-      if (!(dist(down, d3.mouse(document.body)) > tolerance)) {
-        if (wait) {
-          window.clearTimeout(wait);
-          wait = null;
-          dispatcher.apply('dblclick', self, args);
-        } else {
-          wait = window.setTimeout(((function () {
-            return function () {
-              dispatcher.apply('click', self, args);
-              wait = null;
-            };
-          })()), 300);
-        }
-      }
-    });
-  }
-  // Method is assumed to be a standard D3 getter-setter:
-  // If passed with no arguments, gets the value.
-  // If passed with arguments, sets the value and returns the target.
-  function d3rebindAction(target, source, method) {
-    return function () {
-      const value = method.apply(source, arguments); // eslint-disable-line
-      return value === source ? target : value;
-    };
-  }
-  // Copies a variable number of methods from source to target.
-  const d3rebind = function (target, source) {
-    let method;
-    let i = 1;
-    const n = arguments.length;
-    while (++i < n) {
-      method = arguments[i]; // eslint-disable-line
-      target[method] = d3rebindAction(target, source, source[method]);
-    }
-    return target;
-  };
-  return d3rebind(clickCancel, dispatcher, 'on');
 };
 
 export { charts };
