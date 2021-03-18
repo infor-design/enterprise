@@ -16,6 +16,12 @@
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
 - `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
 
+## v4.38.1
+
+### v4.38.1 Fixes
+
+- `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
+
 ## v4.38.0
 
 ### v4.38.0 Important Changes
@@ -61,6 +67,12 @@
 - `[Timepicker]` Improved accessibility on both the input field and its inner picker elements. ([#4403](https://github.com/infor-design/enterprise/issues/4403))
 
 (37 Issues Solved This Release, Backlog Enterprise 136, Backlog Ng 32, 1082 Functional Tests, 1638 e2e Tests)
+
+## v4.37.3
+
+### v4.37.3 Fixes
+
+- `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
 
 ### v4.37.2 Fixes
 
