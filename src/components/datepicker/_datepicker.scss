@@ -94,7 +94,7 @@
 .monthview-popup.popover {
   max-width: inherit;
 
-  @media screen and (max-height: $breakpoint-big-phone + 20) {
+  @media screen and (max-height: $breakpoint-big-phone + 50) {
     overflow-y: auto;
   }
 
