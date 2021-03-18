@@ -7,7 +7,7 @@ import { theme } from '../theme/theme';
 const charts = {};
 
 charts.destroy = function destroy(el, s) {
-  let e = el[0];
+  const e = el[0];
   e.className = 'chart-container';
   switch (s.type) {
     case 'pie':
@@ -22,7 +22,7 @@ charts.destroy = function destroy(el, s) {
     default:
       e.className = 'chart-container';
   }
-}
+};
 
 // Reference to the tooltip
 charts.tooltip = {};
