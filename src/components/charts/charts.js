@@ -329,7 +329,6 @@ charts.showTooltip = function (x, y, content, arrow, customCss) {
  * @param  {object} container The dom container.
  * @returns {void}
  */
-
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
   if (series.length === 0) {
