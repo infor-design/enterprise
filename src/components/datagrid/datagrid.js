@@ -1611,10 +1611,9 @@ Datagrid.prototype = {
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
-          const menu = filterBtn.next('.popupmenu-wrapper');
-          utils.fixSVGIcons(menu);
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', (e, menu, api) => {
           self.hideTooltip();
+          activeMenu = api;
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
@@ -1651,10 +1650,6 @@ Datagrid.prototype = {
               data.destroy();
             }
             activeMenu = null;
-          })
-          .off('open.datagrid-filter')
-          .on('open.datagrid-filter', function () {
-            activeMenu = $(this).data('popupmenu');
           });
       }
       return false;
