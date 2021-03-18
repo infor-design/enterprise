@@ -127,8 +127,6 @@ Pie.prototype = {
     return this;
   },
 
-  
-
   /**
    * Build the Component.
    * @private
