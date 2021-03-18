@@ -7,9 +7,11 @@ import { theme } from '../theme/theme';
 const charts = {};
 
 charts.destroy = function destroy(el, s) {
-  const e = el[0];
+  const e = el[0] === undefined ? window.document.getElementsByClassName('chart-container')[0] : el[0];
   e.className = 'chart-container';
+
   switch (s.type) {
+    
     case 'pie':
       e.classList.add('chart-pie');
       break;
