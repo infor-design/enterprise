@@ -6,6 +6,23 @@ import { theme } from '../theme/theme';
 
 const charts = {};
 
+charts.destory = function destory(el, s) {
+  let e = el[0];
+  e.className = 'chart-container';
+  switch (s.type) {
+    case 'pie':
+      e.classList.add('chart-pie');
+      break;
+    case 'bar':
+      e.classList.add('bar-chart');
+      break;
+    case 'line':
+      e.classList.add('line-chart');
+    default:
+      e.className = 'chart-container';
+  }
+}
+
 // Reference to the tooltip
 charts.tooltip = {};
 charts.isIE = env.browser.name === 'ie';
@@ -312,6 +329,7 @@ charts.showTooltip = function (x, y, content, arrow, customCss) {
  * @param  {object} container The dom container.
  * @returns {void}
  */
+
 charts.addLegend = function (series, chartType, settings, container) {
   let i;
   if (series.length === 0) {

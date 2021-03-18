@@ -84,6 +84,7 @@ function Pie(element, settings) {
   }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
+  charts.destory(element, settings);
   this.init();
   debug.logTimeStart(COMPONENT_NAME);
 }
@@ -125,6 +126,8 @@ Pie.prototype = {
     return this;
   },
 
+  
+
   /**
    * Build the Component.
    * @private
@@ -142,10 +145,7 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'slices');
     self.mainGroup.append('g').attr('class', 'labels');
     self.mainGroup.append('g').attr('class', 'lines');
-    
-    if (this.settings.type === 'pie') {
-      this.element.addClass('chart-pie');
-    }
+    this.element.addClass('chart-pie');
 
     if (s.showMobile) {
       s.legendPlacement = 'bottom';
