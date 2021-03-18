@@ -11,7 +11,6 @@ charts.destroy = function destroy(el, s) {
   e.className = 'chart-container';
 
   switch (s.type) {
-    
     case 'pie':
       e.classList.add('chart-pie');
       break;
