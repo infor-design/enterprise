@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.38.1
+
+### v4.38.1 Fixes
+
+- `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
+
 ## v4.38.0
 
 ### v4.38.0 Important Changes
