@@ -676,6 +676,13 @@ Bar.prototype = {
         self.doDoubleClickAction(d, i, selector);
       });
 
+    // Make sure the default to get prevent not bubble up.
+    self.element
+      .off(`dblclick.${self.namespace}`)
+      .on(`dblclick.${self.namespace}`, '.bar', (e) => {
+        e.stopImmediatePropagation();
+      });
+
     // Adjust the labels
     self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? 15 : -15));
     self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
@@ -1057,7 +1064,7 @@ Bar.prototype = {
     } else {
       args = [{ data: d, index: i, elem: selector }];
     }
-    self.element.triggerHandler('eventdblclick', [args]);
+    self.element.triggerHandler('dblclick', [args]);
   },
 
   /*
