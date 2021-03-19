@@ -82,7 +82,7 @@ charts.destroy = function destroy(el) {
       }
     },
   ];
-  chartClasses.forEach( arrItem => e.classList.remove(...arrItem.chart.containerClass));
+  chartClasses.forEach(arrItem => e.classList.remove(...arrItem.chart.containerClass));
 };
 
 // Reference to the tooltip
