@@ -7,82 +7,8 @@ import { theme } from '../theme/theme';
 const charts = {};
 
 charts.destroy = function destroy(el) {
-  const e = el[0] === undefined ? window.document.getElementsByClassName('chart-container')[0] : el[0];
-  const chartClasses = [   
-    {
-      chart: {
-        type: 'area',
-        containerClass: ['line-chart']
-      }
-    },
-    {
-      chart: {
-        type: 'bar',
-        containerClass: ['bar-chart', 'bar-chart-stacked']
-      }
-    },
-    {
-      chart: {
-        type: 'bar-grouped',
-        containerClass: ['bar-chart', 'bar-chart-grouped']
-      }
-    },
-    {
-      chart: {
-        type: 'bar-stacked',
-        containerClass: ['bar-chart', 'bar-chart-stacked']
-      }
-    },
-    {
-      chart: {
-        type: 'bubble',
-        containerClass: ['line-chart', 'bubble']
-      }
-    },
-    {
-      chart: {
-        type: 'column',
-        containerClass: ['column-chart']
-      }
-    },
-    {
-      chart: {
-        type: 'column-grouped',
-        containerClass: ['column-chart']
-      }
-    },
-    {
-      chart: {
-        type: 'completion-target',
-        containerClass: ['completion-chart', 'chart-completion-target-padding']
-      }
-    },
-    {
-      chart: {
-        type: 'donut',
-        containerClass: ['chart-pie', 'has-right-legend']
-      }
-    },
-    {
-      chart: {
-        type: 'line',
-        containerClass: ['line-chart']
-      }
-    },
-    {
-      chart: {
-        type: 'column-positive-negative',
-        containerClass: ['column-chart']
-      }
-    },
-    {
-      chart: {
-        type: 'sparkline-dots-n-peak',
-        containerClass: []
-      }
-    },
-  ];
-  chartClasses.forEach(arrItem => e.classList.remove(...arrItem.chart.containerClass));
+  const chartClasses = ['line-chart', 'bar-chart', 'bar-chart-stacked', 'bar-chart-grouped', 'bubble', 'column-chart', 'completion-chart', 'chart-completion-target-padding', 'chart-pie', 'has-right-legend'];
+  el[0]?.classList.remove(...chartClasses);
 };
 
 // Reference to the tooltip
