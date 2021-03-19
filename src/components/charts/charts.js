@@ -9,26 +9,100 @@ const charts = {};
 charts.destroy = function destroy(el, s) {
   const e = el[0] === undefined ? window.document.getElementsByClassName('chart-container')[0] : el[0];
 
-  const chartClasses = [
+  const chartClasses = [   
     {
       chart: {
-        type: "pie",
-        containerClass: ['chart-pie', 'has-right-legend']
-      }
-    },
-    {
-      chart: {
-        type: "line",
+        type: 'area',
         containerClass: ['line-chart']
       }
     },
     {
       chart: {
-        type: "bar",
+        type: 'bar',
         containerClass: ['bar-chart', 'bar-chart-stacked']
       }
-    }
+    },
+    {
+      chart: {
+        type: 'bar-grouped',
+        containerClass: ['bar-chart', 'bar-chart-grouped']
+      }
+    },
+    {
+      chart: {
+        type: 'bar-stacked',
+        containerClass: ['bar-chart', 'bar-chart-stacked']
+      }
+    },
+    {
+      chart: {
+        type: 'bubble',
+        containerClass: ['line-chart', 'bubble']
+      }
+    },
+    {
+      chart: {
+        type: 'column',
+        containerClass: ['column-chart']
+      }
+    },
+    {
+      chart: {
+        type: 'column-grouped',
+        containerClass: ['column-chart']
+      }
+    },
+    {
+      chart: {
+        type: 'completion-target',
+        containerClass: ['completion-chart', 'chart-completion-target-padding']
+      }
+    },
+    {
+      chart: {
+        type: 'donut',
+        containerClass: ['chart-pie', 'has-right-legend']
+      }
+    },
+    {
+      chart: {
+        type: 'line',
+        containerClass: ['line-chart']
+      }
+    },
+    {
+      chart: {
+        type: 'column-positive-negative',
+        containerClass: ['column-chart']
+      }
+    },
+    {
+      chart: {
+        type: 'sparkline-dots-n-peak',
+        containerClass: []
+      }
+    },
+    
   ];
+
+  // {
+  //   chart: {
+  //     type: "pie",
+  //     containerClass: ['chart-pie', 'has-right-legend']
+  //   }
+  // },
+  // {
+  //   chart: {
+  //     type: "line",
+  //     containerClass: ['line-chart']
+  //   }
+  // },
+  // {
+  //   chart: {
+  //     type: "bar",
+  //     containerClass: ['bar-chart', 'bar-chart-stacked']
+  //   }
+  // }
 
   chartClasses.forEach( arrItem => e.classList.remove(...arrItem.chart.containerClass));
 };

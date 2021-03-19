@@ -6,7 +6,7 @@
           <h2 class="widget-title">Pie Chart Title</h2>
         </div>
         <div class="widget-content">
-          <div id="pie-chart-example" class="chart-container">
+          <div id="example-1" class="chart-container">
           </div>
         </div>
       </div>
@@ -77,12 +77,25 @@ $('body').on('initialized', function () {
       }]
     }];
 
-  $('#pie-chart-example').chart({type: 'pie', dataset: pieData})
-  .on('selected', function(e, args) {
-    if (args[0] && args[0].data) {
-      console.log(args[0].data, args[0].data.url);
-    }
-  });
+  // $('#pie-chart-example').chart({type: 'bar-stacked', dataset: pieData})
+  // .on('selected', function(e, args) {
+  //   if (args[0] && args[0].data) {
+  //     console.log(args[0].data, args[0].data.url);
+  //   }
+  // });
+
+
+  var dataset1 = [{
+  data: [{
+    name: {text: 'Label A'},
+    completed: {text: '50K of 250K', value: 50000, format: '.2s', color: 'primary'},
+    remaining: {value: 20000, format: '.2s', text: ' To Target'},
+    total: {value: 250000, format: '.2s'},
+  }]
+}];
+
+var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+
 
 });
 </script>
