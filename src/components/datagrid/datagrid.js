@@ -53,13 +53,13 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize, this is deprecated, use saveUserSettings
- * @param {object}   [settings.saveUserSettings]
- * @param {object}   [settings.saveUserSettings.columns=true]
- * @param {object}   [settings.saveUserSettings.rowHeight=true]
- * @param {object}   [settings.saveUserSettings.sortOrdertrue]
- * @param {object}   [settings.saveUserSettings.pageSize=true]
- * @param {object}   [settings.saveUserSettings.activePage=true]
- * @param {object}   [settings.saveUserSettings.filter=true]
+ * @param {object}   [settings.saveUserSettings] Save various settings (in local storage by default)
+ * @param {object}   [settings.saveUserSettings.columns=true] Save the column widths and order
+ * @param {object}   [settings.saveUserSettings.rowHeight=true] Save the row height setting
+ * @param {object}   [settings.saveUserSettings.sortOrder=true] Save the sort column
+ * @param {object}   [settings.saveUserSettings.pagesize=true] Save the page size dropdown value
+ * @param {object}   [settings.saveUserSettings.activePage=true] Save the active page on the pager
+ * @param {object}   [settings.saveUserSettings.filter=true] Save the filter conditions
  * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
  * @param {boolean}  [settings.selectOnEdit=true] if true, will select the cell text soon get to edit mode.
@@ -1611,10 +1611,9 @@ Datagrid.prototype = {
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
-        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', () => {
-          const menu = filterBtn.next('.popupmenu-wrapper');
-          utils.fixSVGIcons(menu);
+        filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', (e, menu, api) => {
           self.hideTooltip();
+          activeMenu = api;
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
@@ -1651,10 +1650,6 @@ Datagrid.prototype = {
               data.destroy();
             }
             activeMenu = null;
-          })
-          .off('open.datagrid-filter')
-          .on('open.datagrid-filter', function () {
-            activeMenu = $(this).data('popupmenu');
           });
       }
       return false;
