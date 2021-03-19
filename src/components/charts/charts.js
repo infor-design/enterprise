@@ -901,7 +901,6 @@ charts.setSelected = function (o, isToggle, internals) {
       }
     } else {
       selector.dispatch('click');
-      // selector.on('click').call(selector.node(), selector.datum(), barIndex);
     }
   }
 };
