@@ -8,21 +8,29 @@ const charts = {};
 
 charts.destroy = function destroy(el, s) {
   const e = el[0] === undefined ? window.document.getElementsByClassName('chart-container')[0] : el[0];
-  e.className = 'chart-container';
 
-  switch (s.type) {
-    case 'pie':
-      e.classList.add('chart-pie');
-      break;
-    case 'bar':
-      e.classList.add('bar-chart');
-      break;
-    case 'line':
-      e.classList.add('line-chart');
-      break;
-    default:
-      e.className = 'chart-container';
-  }
+  const chartClasses = [
+    {
+      chart: {
+        type: "pie",
+        containerClass: ['chart-pie', 'has-right-legend']
+      }
+    },
+    {
+      chart: {
+        type: "line",
+        containerClass: ['line-chart']
+      }
+    },
+    {
+      chart: {
+        type: "bar",
+        containerClass: ['bar-chart', 'bar-chart-stacked']
+      }
+    }
+  ];
+
+  chartClasses.forEach( arrItem => e.classList.remove(...arrItem.chart.containerClass));
 };
 
 // Reference to the tooltip
