@@ -81,7 +81,6 @@ charts.destroy = function destroy(el) {
         containerClass: []
       }
     },
-    
   ];
   chartClasses.forEach( arrItem => e.classList.remove(...arrItem.chart.containerClass));
 };
