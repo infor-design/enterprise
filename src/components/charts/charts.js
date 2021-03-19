@@ -84,26 +84,6 @@ charts.destroy = function destroy(el, s) {
     },
     
   ];
-
-  // {
-  //   chart: {
-  //     type: "pie",
-  //     containerClass: ['chart-pie', 'has-right-legend']
-  //   }
-  // },
-  // {
-  //   chart: {
-  //     type: "line",
-  //     containerClass: ['line-chart']
-  //   }
-  // },
-  // {
-  //   chart: {
-  //     type: "bar",
-  //     containerClass: ['bar-chart', 'bar-chart-stacked']
-  //   }
-  // }
-
   chartClasses.forEach( arrItem => e.classList.remove(...arrItem.chart.containerClass));
 };
 
