@@ -6,7 +6,7 @@ import { theme } from '../theme/theme';
 
 const charts = {};
 
-charts.destroy = function destroy(el, s) {
+charts.destroy = function destroy(el) {
   const e = el[0] === undefined ? window.document.getElementsByClassName('chart-container')[0] : el[0];
 
   const chartClasses = [   
