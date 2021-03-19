@@ -82,6 +82,27 @@ describe('Breadcrumb navigation tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
+      const containerEl = await element(by.css('div[class=row]'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkScreen('blockgrid-text')).toEqual(0);
+    });
+  }
+});
+
+describe('Disabled breadcrumb navigation tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/breadcrumb/example-disabled?theme=classic&layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -109,17 +130,10 @@ describe('Breadcrumb automation tests', () => {
 
 describe('Breadcrumb should be accessible with no WCAG 2AA violations', () => {
   if (!utils.isIE()) {
-    const themes = ['new', 'classsic'];
-    const modes = ['light', 'dark', 'contrast'];
-    themes.forEach((theme) => {
-      modes.forEach(async (mode) => {
-        await utils.setPage(`/components/breadcrumb/example-add-remove-disabled?theme=${theme}&mode=${mode}`);
-        it('Should be accessible with no WCAG 2AA violations', async () => {
-          const res = await axePageObjects(browser.params.theme);
-
-          expect(res.violations.length).toEqual(0);
-        });
-      });
+    await utils.setPage(`/components/breadcrumb/example-disabled?theme=classic&layout=nofrills`);
+    it('Should be accessible with no WCAG 2AA violations', async () => {
+      const res = await axePageObjects(browser.params.theme);
+      expect(res.violations.length).toEqual(0);
     });
   }
 });
