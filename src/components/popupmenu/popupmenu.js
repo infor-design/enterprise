@@ -1743,11 +1743,12 @@ PopupMenu.prototype = {
      * @event beforeopen
      * @memberof PopupMenu
      * @property {object} event - The jquery event object
-     * @property {object} this menu instance
+     * @property {object} this The menu instance
+     * @property {object} api The menu api
      */
     let canOpen = true;
     if (!this.element.hasClass('autocomplete')) {
-      canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
+      canOpen = this.element.triggerHandler('beforeopen', [this.menu, this]);
       if (canOpen === false) {
         return;
       }
@@ -2021,7 +2022,7 @@ PopupMenu.prototype = {
       submenu = submenu.children('.popupmenu');
     }
 
-    let canOpen = this.element.triggerHandler('beforeopen', [submenu]);
+    let canOpen = this.element.triggerHandler('beforeopen', [submenu, this]);
     if (canOpen === false) {
       return;
     }
