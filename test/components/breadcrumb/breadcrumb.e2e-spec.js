@@ -128,7 +128,7 @@ describe('Breadcrumb automation tests', () => {
   });
 });
 
-describe('Breadcrumb should be accessible with no WCAG 2AA violations', () => {
+describe('Breadcrumb should be accessible with no WCAG 2AA violations', async () => {
   if (!utils.isIE()) {
     await utils.setPage(`/components/breadcrumb/example-disabled?theme=classic&layout=nofrills`);
     it('Should be accessible with no WCAG 2AA violations', async () => {
