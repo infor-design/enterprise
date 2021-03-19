@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Donut Chart - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-donut-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var donutData = [{
+    data: [{
+      name: 'Component A',
+      value: 16,
+      attributes: [
+        { name: 'id', value: 'comp-a' },
+        { name: 'data-automation-id', value: 'comp-a-automation-id' }
+      ]
+    }, {
+      name: 'Component B',
+      value: 12,
+      attributes: [
+        { name: 'id', value: 'comp-b' },
+        { name: 'data-automation-id', value: 'comp-ba-automation-id' }
+      ]
+    }, {
+      name: 'Component C',
+      value: 14,
+      attributes: [
+        { name: 'id', value: 'comp-c' },
+        { name: 'data-automation-id', value: 'comp-c-automation-id' }
+      ]
+    }],
+    centerLabel: 'Donut Chart'
+  }];
+
+  $('#pie-donut-example').chart({ type: 'donut', dataset: donutData })
+    .on('selected', function (e, args) {
+      console.log('selected', args);
+    })
+    .on('dblclick', function (e, args) {
+      console.log('double clicked', args);
+    });
+
+});
+</script>
