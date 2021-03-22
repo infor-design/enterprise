@@ -36,6 +36,7 @@ describe('Bar (Stacked) Chart example-index tests', () => {
 
   it('Should highlight when selected', async () => {
     await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).getAttribute('class')).toContain('is-selected');
   });
