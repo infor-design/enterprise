@@ -402,6 +402,16 @@ $toolbarsearchfield-category-empty-width: 51px;
       display: none;
     }
   }
+
+  .btn-icon {
+    &:focus {
+      .close.icon {
+        display: block;
+        left: 4px;
+        top: 0.5px;
+      }
+    }
+  }
 }
 
 .azure07 .active input {
