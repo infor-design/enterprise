@@ -68,7 +68,7 @@ describe('Bar Chart example-selected tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/bar/test-selected');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.series-1'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.bar.is-selected'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
