@@ -900,7 +900,7 @@ charts.setSelected = function (o, isToggle, internals) {
         $(legends.selectAll('.chart-legend-item').nodes()[barIndex]).trigger('click.chart');
       }
     } else {
-      selector.on('click').call(selector.node(), selector.datum(), barIndex);
+      selector.dispatch('click');
     }
   }
 };
