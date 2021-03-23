@@ -11977,7 +11977,7 @@ Datagrid.prototype = {
   },
 
   /**
-  * Unwrap the grid back to a simple div, and destory all events and pointers.
+  * Unwrap the grid back to a simple div, and destroy all events and pointers.
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
