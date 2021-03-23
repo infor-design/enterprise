@@ -254,7 +254,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   }
 });
 
-fdescribe('Popupmenu shared instance tests', () => {
+describe('Popupmenu shared instance tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popupmenu/test-multiple?layout=nofrills');
   });
