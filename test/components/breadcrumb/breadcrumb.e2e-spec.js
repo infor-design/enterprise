@@ -87,7 +87,7 @@ describe('Breadcrumb navigation tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkScreen('blockgrid-text')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb')).toEqual(0);
     });
   }
 });
@@ -103,12 +103,12 @@ describe('Disabled breadcrumb navigation tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[class=row]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkScreen('blockgrid-text')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb-disabled')).toEqual(0);
     });
   }
 });
