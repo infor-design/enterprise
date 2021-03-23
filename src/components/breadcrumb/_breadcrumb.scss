@@ -238,7 +238,7 @@
       color: $breadcrumb-color;
     }
 
-    &:hover:not([disabled]):not(.is-disabled) {
+    &:hover {
       color: $breadcrumb-hover-color;
     }
 
