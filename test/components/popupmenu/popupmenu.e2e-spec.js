@@ -1,3 +1,4 @@
+const { element, browser } = require('protractor');
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
@@ -253,6 +254,34 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   }
 });
 
+fdescribe('Popupmenu shared instance tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/popupmenu/test-multiple?layout=nofrills');
+  });
+
+  it('does not unwrap and destroy Popupmenus if they are shared', async () => {
+    // Right click input 1 to open its Popupmenu
+    const input1 = await element(by.id('input-menu'));
+    await browser.actions().mouseMove(input1).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    // Right click input 2 to open its Popupmenu
+    const input2 = await element(by.id('input-menu2'));
+    await browser.actions().mouseMove(input2).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    // Click the button that destroys the 1st Popup Menu
+    await element(by.id('popup-destroy-1')).click();
+
+    // Right click input 2 to open its Popupmenu again
+    await browser.actions().mouseMove(input2).perform();
+    await browser.actions().click(protractor.Button.RIGHT).perform();
+
+    // The menu should be open and displayed with no issues
+    expect(await element(by.css('.popupmenu-wrapper')).isDisplayed()).toBeTruthy();
+  });
+});
+
 describe('Contextmenu created dynamically tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-contextmenu-dynamic');
@@ -352,3 +381,4 @@ describe('Contextmenu Placement Tests', () => {
     });
   }
 });
+

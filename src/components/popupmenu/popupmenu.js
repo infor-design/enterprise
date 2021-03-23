@@ -279,7 +279,8 @@ PopupMenu.prototype = {
 
     // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
     // to prevent containment issues. (Now a Preference)
-    if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
+    const menuParent = this.menu.parent().not('.popupmenu-wrapper, body');
+    if (this.settings.attachToBody && menuParent.length > 0) {
       this.originalParent = this.menu.prev();
       this.setMenuOrgContainment(this.menu);
       this.menu.detach().appendTo('body');
@@ -2326,7 +2327,7 @@ PopupMenu.prototype = {
     $('.scrollable').off('scroll.popupmenu');
 
     if (this.menu && this.menu.length) {
-      this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+      this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu dragstart.popupmenu');
     }
 
     $('iframe').each(function () {
@@ -2499,51 +2500,54 @@ PopupMenu.prototype = {
 
     this.predefinedItems = $();
 
-    const parentNode = this.menu.parent();
-    parentNode.find('.arrow').remove();
-    parentNode.off('contextmenu.popupmenu');
-    if (this.element.hasClass('btn-actions')) {
-      parentNode.removeClass('bottom');
+    // Only unwrap/move this menu if there are no other menus attempting to control it (shared instance)
+    const menuId = this.menu[0].id;
+    const otherTriggers = $(`[aria-controls="${menuId}"]`).not(this.element);
+    if (!otherTriggers.length) {
+      const parentNode = this.menu.parent();
+      parentNode.find('.arrow').remove();
+      parentNode.off('contextmenu.popupmenu');
+      if (this.element.hasClass('btn-actions')) {
+        parentNode.removeClass('bottom');
+      }
+
+      // Remove the wrapper, if applicable
+      if (!this.preExistingWrapper && this.menu.parent().is('.popupmenu-wrapper') && !otherTriggers.length) {
+        this.menu.unwrap();
+      }
+
+      // Place the menu back where it came from while cleaning up.
+      // Get an accurate target to place the menu back where it came from
+      const searchfield = this.element.parent().children('.searchfield');
+      if (searchfield.length) {
+        this.menu.insertAfter(searchfield.first());
+      } else if (this.menuOrgContainment) {
+        this.insertAtContainment(this.menu);
+      } else {
+        this.menu.insertAfter(this.element);
+      }
+
+      // Cleanup menu items
+      this.menu.find('.submenu').children('a').each((i, item) => {
+        const spantext = $(item).find('span').text();
+        const text = spantext || $(item).text();
+        $(item).find('span, svg').remove();
+        $(item).text(text);
+      });
+      this.menu.find('.submenu').removeClass('submenu');
+
+      // Unwrap submenus, if applicable
+      this.menu.find('.popupmenu').each(function () {
+        unwrapPopup($(this));
+      });
+
+      // Finish cleaning up after the wrapper
+      if (self.wrapperPlace) {
+        self.wrapperPlace.destroy();
+        delete self.wrapperPlace;
+      }
+      wrapper.off().remove();
     }
-
-    this.menu.off('dragstart.popupmenu');
-
-    // Remove the wrapper, if applicable
-    if (!this.preExistingWrapper && this.menu.parent().is('.popupmenu-wrapper')) {
-      this.menu.unwrap();
-    }
-
-    // Place the menu back where it came from while cleaning up.
-    // Get an accurate target to place the menu back where it came from
-    const searchfield = this.element.parent().children('.searchfield');
-    if (searchfield.length) {
-      this.menu.insertAfter(searchfield.first());
-    } else if (this.menuOrgContainment) {
-      this.insertAtContainment(this.menu);
-    } else {
-      this.menu.insertAfter(this.element);
-    }
-
-    // Cleanup menu items
-    this.menu.find('.submenu').children('a').each((i, item) => {
-      const spantext = $(item).find('span').text();
-      const text = spantext || $(item).text();
-      $(item).find('span, svg').remove();
-      $(item).text(text);
-    });
-    this.menu.find('.submenu').removeClass('submenu');
-
-    // Unwrap submenus, if applicable
-    this.menu.find('.popupmenu').each(function () {
-      unwrapPopup($(this));
-    });
-
-    // Finish cleaning up after the wrapper
-    if (self.wrapperPlace) {
-      self.wrapperPlace.destroy();
-      delete self.wrapperPlace;
-    }
-    wrapper.off().remove();
 
     if (this.menu && this.menu.length && this.menu.data('trigger')) {
       $.removeData(this.menu[0], 'trigger');
