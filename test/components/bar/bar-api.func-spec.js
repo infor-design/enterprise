@@ -174,15 +174,18 @@ describe('Bar API', () => {
     expect(document.body.querySelector('.chart-container')).toBeTruthy();
   });
 
-  it('Should select a bar', () => {
+  it('Should select a bar', (done) => {
     const options = {
       fieldName: 'name',
       fieldValue: 'Category C'
     };
     barObj.setSelected(options);
 
-    expect(barObj.getSelected()).toBeTruthy();
-    expect(barObj.getSelected()[0].data.name).toEqual('Category C');
+    setTimeout(() => {
+      expect(barObj.getSelected()).toBeTruthy();
+      expect(barObj.getSelected()[0].data.name).toEqual('Category C');
+      done();
+    }, 201);
   });
 
   it('Should toggle selected bar', () => {

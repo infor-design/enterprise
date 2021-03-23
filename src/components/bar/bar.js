@@ -134,7 +134,6 @@ Bar.prototype = {
     let maxTextWidth;
     let largestText;
     let yMap;
-    let isGrouped;
     let legendMap = [];
     let gindex;
     let totalBarsInGroup;
@@ -407,6 +406,9 @@ Bar.prototype = {
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
     s.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && s.isStacked);
 
+    const delay = 200;
+    let prevent = false;
+    let timer = 0;
     groups.selectAll('rect')
       .data((d, i) => {
         d.forEach((rectData) => {
@@ -651,33 +653,35 @@ Bar.prototype = {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
-      .on('click', function (d, i) {
-        const isSelected = this && d3.select(this).classed('is-selected');
-        const thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
-
-        charts.setSelectedElement({
-          task: (isSelected ? 'unselected' : 'selected'),
-          container: self.element,
-          selector: this,
-          isTrigger: self.initialSelectCall ? false : !isSelected,
-          triggerGroup: s.isGrouped,
-          d,
-          i,
-          type: s.type,
-          dataset: s.dataset,
-          isSingle: self.isSingular,
-          isGrouped: s.isGrouped,
-          isStacked: s.isStacked,
-          svg: self.svg,
-          clickedLegend: s.clickedLegend
-        });
-
-        if (isSelected && !self.initialSelectCall) {
-          self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
-        }
-      })
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      })
+      // Click and double click events
+      // Use very slight delay to fire off the normal click action
+      // It alow to cancel when the double click event happens
+      .on(`click.${self.namespace}`, function (d, i) {
+        const selector = this;
+        timer = setTimeout(function () {
+          if (!prevent) {
+            // Run click action
+            self.doClickAction(d, i, selector);
+          }
+          prevent = false;
+        }, delay);
+      })
+      .on(`dblclick.${self.namespace}`, function (d, i) {
+        const selector = this;
+        clearTimeout(timer);
+        prevent = true;
+        // Run double click action
+        self.doDoubleClickAction(d, i, selector);
+      });
+
+    // Make sure the default to get prevent not bubble up.
+    self.element
+      .off(`dblclick.${self.namespace}`)
+      .on(`dblclick.${self.namespace}`, '.bar', (e) => {
+        e.stopImmediatePropagation();
       });
 
     // Adjust the labels
@@ -935,7 +939,7 @@ Bar.prototype = {
         }
       } else {
         this.initialSelectCall = true;
-        selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        selector.dispatch('click');
       }
     }
     this.initialSelectCall = false;
@@ -996,6 +1000,74 @@ Bar.prototype = {
     this.setSelected(options, true);
   },
 
+  /**
+   * Action to happen on click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @returns {void}
+   */
+  doClickAction(d, i, selector) {
+    const self = this;
+    const s = this.settings;
+    const isSelected = selector && d3.select(selector).classed('is-selected');
+    const thisGroupId = parseInt(d3.select(selector.parentNode).attr('data-group-id'), 10);
+
+    charts.setSelectedElement({
+      task: (isSelected ? 'unselected' : 'selected'),
+      container: self.element,
+      selector,
+      isTrigger: self.initialSelectCall ? false : !isSelected,
+      triggerGroup: s.isGrouped,
+      d,
+      i,
+      type: s.type,
+      dataset: s.dataset,
+      isSingle: self.isSingular,
+      isGrouped: s.isGrouped,
+      isStacked: s.isStacked,
+      svg: self.svg,
+      clickedLegend: s.clickedLegend
+    });
+
+    if (isSelected && !self.initialSelectCall) {
+      self.element.triggerHandler('selected', [d3.select(selector).nodes(), {}, (s.isGrouped ? thisGroupId : i)]);
+    }
+  },
+
+  /**
+   * Action to happen on double click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @returns {void}
+   */
+  doDoubleClickAction(d, i, selector) {
+    const self = this;
+    const s = this.settings;
+    let args;
+    if (s.isGrouped) {
+      const groupElem = d3.select(selector.parentNode);
+      const groupIndex = parseInt(groupElem?.attr('data-group-id'), 10);
+      const groupItems = [];
+      groupElem.selectAll('.bar').each(function (d2, i2) {
+        groupItems.push({ elem: this, data: d2, index: i2 });
+      });
+      args = [{ groupElem: groupElem.node(), groupIndex, groupItems }];
+    } else if (s.type === 'bar-stacked') {
+      args = [];
+      self.svg.selectAll('.series-group').each(function () {
+        const bar = d3.select(this).selectAll('.bar').nodes()[i];
+        args.push({ elem: bar, data: d3.select(bar).datum(), index: i });
+      });
+    } else {
+      args = [{ data: d, index: i, elem: selector }];
+    }
+    self.element.triggerHandler('dblclick', [args]);
+  },
+
   /*
    * Handles resizing a chart.
    * @private
@@ -1048,7 +1120,7 @@ Bar.prototype = {
 
     if (this.element) {
       this.element.find('.group .series-group .bar')
-        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+        .off(events(['mouseenter', 'mouseleave', 'click', 'dblclick', 'contextmenu']));
 
       this.element.off(events(['updated', 'resize']));
     }
