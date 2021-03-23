@@ -6,6 +6,11 @@ import { theme } from '../theme/theme';
 
 const charts = {};
 
+charts.destroy = function destroy(el) {
+  const chartClasses = ['line-chart', 'bar-chart', 'bar-chart-stacked', 'bar-chart-grouped', 'bubble', 'column-chart', 'completion-chart', 'chart-completion-target-padding', 'chart-pie', 'has-right-legend'];
+  el[0]?.classList.remove(...chartClasses);
+};
+
 // Reference to the tooltip
 charts.tooltip = {};
 charts.isIE = env.browser.name === 'ie';
