@@ -17,6 +17,7 @@
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 - `[Pie Chart]` Added support for double click to Pie and Donut. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
+- `[Pie Chart]` Fixed bug were pie chart type does not remove old class name ([#3144](https://github.com/infor-design/enterprise/issues/3144))
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
