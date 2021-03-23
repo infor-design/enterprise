@@ -82,7 +82,7 @@ describe('Breadcrumb navigation tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[class=row]'));
+      const containerEl = await element(by.css('div[class=page-container]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
