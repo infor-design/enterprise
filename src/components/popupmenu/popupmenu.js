@@ -2482,7 +2482,7 @@ PopupMenu.prototype = {
    */
   teardown() {
     const self = this;
-    if (!this.menu || !this.menu.parent) {
+    if (!this.menu || !this.menu.length || !this.menu.parent()) {
       return this;
     }
     const wrapper = this.menu.parent('.popupmenu-wrapper');
@@ -2501,7 +2501,7 @@ PopupMenu.prototype = {
     this.predefinedItems = $();
 
     // Only unwrap/move this menu if there are no other menus attempting to control it (shared instance)
-    const menuId = this.menu[0].id;
+    const menuId = this.menu[0]?.id;
     const otherTriggers = $(`[aria-controls="${menuId}"]`).not(this.element);
     if (!otherTriggers.length) {
       const parentNode = this.menu.parent();
