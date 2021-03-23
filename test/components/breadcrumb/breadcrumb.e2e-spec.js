@@ -71,27 +71,6 @@ describe('Breadcrumb navigation alternate tests', () => {
   }
 });
 
-describe('Breadcrumb navigation tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs?theme=classic&layout=nofrills');
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[class=page-container]'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkScreen('breadcrumb')).toEqual(0);
-    });
-  }
-});
-
 describe('Disabled breadcrumb navigation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/breadcrumb/example-disabled?theme=classic&layout=nofrills');
