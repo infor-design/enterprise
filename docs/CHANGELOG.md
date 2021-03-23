@@ -13,6 +13,7 @@
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
+- `[Pie]` Fixed bug were pie chart type does not remove old class name ([#3144](https://github.com/infor-design/enterprise/issues/3144))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
 - `[Textarea]` Fixed a bug where the textarea options like autogrow, autoGrowMaxHeight doesn't work after the initialization inside of the accordion. ([#4977](https://github.com/infor-design/enterprise/issues/4977))
