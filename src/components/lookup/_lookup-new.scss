@@ -62,15 +62,16 @@ html[dir='rtl'] {
     .buttonset {
       .searchfield-wrapper {
         .btn-icon {
+          .close.icon {
+            top: -3px;
+          }
+
           &:focus {
             .close.icon {
               display: block;
               left: 4px;
               top: 0.5px;
             }
-          }
-          .close.icon {
-            top: -3px;
           }
         }
       }
