@@ -679,7 +679,7 @@ Bar.prototype = {
     // Make sure the default to get prevent not bubble up.
     self.element
       .off(`dblclick.${self.namespace}`)
-      .on(`dblclick.${self.namespace}`, '.bar', (e) => {
+      .on(`dblclick.${self.namespace}`, '*', (e) => {
         e.stopImmediatePropagation();
       });
 

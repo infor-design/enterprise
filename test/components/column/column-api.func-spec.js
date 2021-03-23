@@ -265,9 +265,12 @@ describe('Column Chart API', () => {
     expect(document.body.querySelector('.x.axis .tick:nth-of-type(7) text').innerHTML).toEqual('Other');
   });
 
-  it('Should render selected dot', () => {
-    expect(document.body.querySelector('.x.axis .tick:nth-of-type(1)').style.fontWeight).toEqual('bolder');
-    expect(document.body.querySelector('.bar.series-0').classList.contains('is-selected')).toBeTruthy();
+  it('Should render selected dot', (done) => {
+    setTimeout(() => {
+      expect(document.body.querySelector('.x.axis .tick:nth-of-type(1)').style.fontWeight).toEqual('bolder');
+      expect(document.body.querySelector('.bar.series-0').classList.contains('is-selected')).toBeTruthy();
+      done();
+    }, 201);
   });
 
   it('Should be able to format axis', () => {
@@ -284,7 +287,7 @@ describe('Column Chart API', () => {
     expect(document.body.querySelectorAll('.y.axis .tick text')[7].innerHTML).toEqual('70');
   });
 
-  it('Should be able to get the get and set the selected line', () => {
+  it('Should be able to get the get and set the selected line', (done) => {
     // Use group "name" to select
     let options = {
       fieldName: 'name',
@@ -292,19 +295,23 @@ describe('Column Chart API', () => {
     };
     columnObj.setSelected(options);
 
-    expect(columnObj.getSelected()[0].data.value).toEqual(14);
-    expect(columnObj.getSelected()[0].data.name).toEqual('Equipment');
+    setTimeout(() => {
+      expect(columnObj.getSelected()[0].data.value).toEqual(14);
+      expect(columnObj.getSelected()[0].data.name).toEqual('Equipment');
+      columnObj.toggleSelected(options);
 
-    columnObj.toggleSelected(options);
+      setTimeout(() => {
+        options = { index: 2 }; // Use groupIndex to select
+        columnObj.setSelected(options);
 
-    // Use groupIndex to select
-    options = { index: 2 };
-    columnObj.setSelected(options);
-
-    expect(columnObj.getSelected()[0].data.value).toEqual(14);
-    expect(columnObj.getSelected()[0].data.name).toEqual('Equipment');
-
-    columnObj.toggleSelected(options);
+        setTimeout(() => {
+          expect(columnObj.getSelected()[0].data.value).toEqual(14);
+          expect(columnObj.getSelected()[0].data.name).toEqual('Equipment');
+          columnObj.toggleSelected(options);
+          done();
+        }, 201);
+      }, 201);
+    }, 201);
   });
 
   it('Should fire contextmenu event with column', () => {

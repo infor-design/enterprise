@@ -97,7 +97,7 @@ describe('Radar API', () => {
     expect(document.body.querySelectorAll('.chart-legend-item-text')[0].innerText).toEqual('Thing X');
   });
 
-  it('Should be able to get the get and set the selected line', () => {
+  it('Should be able to get the get and set the selected line', (done) => {
     // Use group "name" to select
     let options = {
       fieldName: 'id',
@@ -105,21 +105,27 @@ describe('Radar API', () => {
     };
     radarObj.setSelected(options);
 
-    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
-    expect(radarObj.getSelected().index).toEqual(0);
+    setTimeout(() => {
+      expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
+      expect(radarObj.getSelected().index).toEqual(0);
+      radarObj.toggleSelected(options);
 
-    radarObj.toggleSelected(options);
+      setTimeout(() => {
+        options = { index: 2 };
+        radarObj.setSelected(options);
 
-    // Use groupIndex to select
-    options = { index: 2 };
-    radarObj.setSelected(options);
+        setTimeout(() => {
+          expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
+          expect(radarObj.getSelected().index).toEqual(2);
+          radarObj.toggleSelected(options);
 
-    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(1);
-    expect(radarObj.getSelected().index).toEqual(2);
-
-    radarObj.toggleSelected(options);
-
-    expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(0);
+          setTimeout(() => {
+            expect(document.querySelectorAll('.chart-radar-area.is-selected').length).toEqual(0);
+            done();
+          }, 201);
+        }, 201);
+      }, 201);
+    }, 201);
   });
 
   it('Should fire contextmenu event', () => {
