@@ -4,6 +4,7 @@
 
 ### v4.39.0 Fixes
 
+- `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
 - `[Bar Chart]` Added support for double click to Bar, Bar Grouped, Bar Stacked. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Bullet Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
