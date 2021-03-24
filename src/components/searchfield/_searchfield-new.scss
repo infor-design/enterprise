@@ -10,15 +10,16 @@
 .searchfield-wrapper {
   > .icon {
     &.close {
+      padding: 1px 3px;
       top: 50%;
       transform: translateY(-50%);
-      padding: 1px 3px
     }
 
     &:not(.close) {
       top: 12px;
     }
   }
+
   .go-button {
     height: 100%;
   }
@@ -52,7 +53,8 @@
     }
   }
 
-  > .icon, > .icon:not(.close) {
+  > .icon,
+  > .icon:not(.close) {
     top: 10px;
   }
 
@@ -63,12 +65,12 @@
   }
 
   .btn-icon.close {
+    bottom: 0;
     display: flex;
-    top: 0px;
-    bottom: 0px;
     height: 100%;
-    min-height: 100%;
     max-height: 100%;
+    min-height: 100%;
+    top: 0;
 
     & > svg.close.icon {
       top: 50%;
