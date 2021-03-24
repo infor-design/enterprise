@@ -350,6 +350,16 @@ Radar.prototype = {
       .enter().append('g')
       .attr('class', 'chart-radar-wrapper');
 
+    const delay = 200;
+    let prevent = false;
+    let timer = 0;
+    // Make sure the default to get prevent not bubble up.
+    self.element
+      .off(`dblclick.${self.namespace}`)
+      .on(`dblclick.${self.namespace}`, '*', (e) => {
+        e.stopImmediatePropagation();
+      });
+
     // Append the backgrounds
     blobWrapper
       .append('path')
@@ -365,52 +375,28 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', s.opacityArea)
-      .on(`click.${self.namespace}`, function (d, i) {
-        // Handle Click to select
-        clearTimeout(tooltipInterval);
-
-        const selectElem = d3.select(this);
-        const isSelected = selectElem.classed('is-selected');
-        svg.selectAll('.is-selected').classed('is-selected', false);
-        svg.selectAll('.is-not-selected').classed('is-not-selected', false);
-        charts.clearSelected(s.dataset);
-
-        if (!isSelected) {
-          svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
-          selectElem.classed('is-selected', true).classed('is-not-selected', false);
-          selectElem.style('fill-opacity', s.opacityArea);
-          s.dataset[i].selected = true;
-        }
-
-        const triggerData = {
-          elem: selectElem.nodes(),
-          data: d,
-          index: i
-        };
-
-        /**
-        * Fires when the chart is complete done rendering, for customization.
-        * @event selected
-        * @memberof Radar
-        * @property {object} data - The data element attached
-        * @property {HTMLElement} elem - The dom element
-        * @property {number} index - The index for this blob.
-        */
-
-        /**
-        * Fires when the chart is complete done rendering, for customization.
-        * @event deselected
-        * @memberof Radar
-        * @property {object} data - The data element attached
-        * @property {HTMLElement} elem - The dom element
-        * @property {number} index - The index for this blob.
-        */
-        self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
-
-        charts.selected = !isSelected ? triggerData : [];
-      })
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      })
+      // Click and double click events
+      // Use very slight delay to fire off the normal click action
+      // It alow to cancel when the double click event happens
+      .on(`click.${self.namespace}`, function (d, i) {
+        const selector = this;
+        timer = setTimeout(function () {
+          if (!prevent) {
+            // Run click action
+            self.doClickAction(d, i, selector, tooltipInterval, svg);
+          }
+          prevent = false;
+        }, delay);
+      })
+      .on(`dblclick.${self.namespace}`, function (d, i) {
+        const selector = this;
+        clearTimeout(timer);
+        prevent = true;
+        // Run double click action
+        self.doDoubleClickAction(d, i, selector);
       });
 
     // Create the outlines
@@ -659,6 +645,68 @@ Radar.prototype = {
     }
 
     this.updated();
+  },
+
+  /**
+   * Action to happen on click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @param {object} tooltipInterval - The tooltip-interval element
+   * @param {object} svg - The svg element
+   * @returns {void}
+   */
+  doClickAction(d, i, selector, tooltipInterval, svg) {
+    clearTimeout(tooltipInterval);
+    const s = this.settings;
+    const selectElem = d3.select(selector);
+    const isSelected = selectElem.classed('is-selected');
+    svg.selectAll('.is-selected').classed('is-selected', false);
+    svg.selectAll('.is-not-selected').classed('is-not-selected', false);
+    charts.clearSelected(s.dataset);
+
+    if (!isSelected) {
+      svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
+      selectElem.classed('is-selected', true).classed('is-not-selected', false);
+      selectElem.style('fill-opacity', s.opacityArea);
+      s.dataset[i].selected = true;
+    }
+
+    const triggerData = { elem: selectElem.nodes(), data: d, index: i };
+
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event selected
+    * @memberof Radar
+    * @property {object} data - The data element attached
+    * @property {HTMLElement} elem - The dom element
+    * @property {number} index - The index for this blob.
+    */
+
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event deselected
+    * @memberof Radar
+    * @property {object} data - The data element attached
+    * @property {HTMLElement} elem - The dom element
+    * @property {number} index - The index for this blob.
+    */
+    this.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
+    charts.selected = !isSelected ? triggerData : [];
+  },
+
+  /**
+   * Action to happen on double click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @returns {void}
+   */
+  doDoubleClickAction(d, i, selector) {
+    const triggerData = { elem: [selector], data: d, index: i };
+    this.element.triggerHandler(('dblclick'), triggerData);
   },
 
   /**

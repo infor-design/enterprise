@@ -354,7 +354,7 @@ CirclePager.prototype = {
     this.show();
   },
 
-  /** 
+  /**
    * Add attributes for control buttons
    * @private
    * @returns {void}

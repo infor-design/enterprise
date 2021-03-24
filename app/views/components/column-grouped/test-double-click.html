@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Column - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [{
+      name: 'Jan',
+      value: 12
+    }, {
+      name: 'Feb',
+      value: 11
+    }, {
+      name: 'Mar',
+      value: 14
+    }, {
+      name: 'Apr',
+      value: 10
+    }, {
+      name: 'May',
+      value: 14
+    }, {
+      name: 'Jun',
+      value: 8
+    }],
+    name: 'Component A'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 22
+    }, {
+      name: 'Feb',
+      value: 21
+    }, {
+      name: 'Mar',
+      value: 24
+    }, {
+      name: 'Apr',
+      value: 20
+    }, {
+      name: 'May',
+      value: 24
+    }, {
+      name: 'Jun',
+      value: 28
+    }],
+    name: 'Component B'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 32
+    }, {
+      name: 'Feb',
+      value: 31
+    }, {
+      name: 'Mar',
+      value: 34
+    }, {
+      name: 'Apr',
+      value: 30
+    }, {
+      name: 'May',
+      value: 34
+    }, {
+      name: 'Jun',
+      value: 38
+    }],
+    name: 'Component C'
+  }];
+
+  $('#column-grouped-example').chart({ type: 'column-grouped', dataset: dataset })
+    .on('selected', function (e, args) {
+      console.log('selected', args);
+    })
+    .on('dblclick', function (e, args) {
+      console.log('double clicked', args);
+    });
+
+});
+</script>

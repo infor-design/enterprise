@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Area Chart - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="area-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script id="area-script">
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 32
+      }, {
+        name: 'Feb',
+        value: 31
+      }, {
+        name: 'Mar',
+        value: 34
+      }, {
+        name: 'Apr',
+        value: 30
+      }, {
+        name: 'May',
+        value: 34
+      }, {
+        name: 'Jun',
+        value: 38
+      }],
+    name: 'Component A',
+    legendShortName: 'Comp A',
+    legendAbbrName: 'A'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 22
+    }, {
+      name: 'Feb',
+      value: 21
+    }, {
+      name: 'Mar',
+      value: 24
+    }, {
+      name: 'Apr',
+      value: 20
+    }, {
+      name: 'May',
+      value: 24
+    }, {
+      name: 'Jun',
+      value: 28
+    }],
+    name: 'Component B',
+    legendShortName: 'Comp B',
+    legendAbbrName: 'B'
+  }, {
+    data: [{
+      name: 'Jan',
+      value: 12
+    }, {
+      name: 'Feb',
+      value: 11
+    }, {
+      name: 'Mar',
+      value: 14
+    }, {
+      name: 'Apr',
+      value: 10
+    }, {
+      name: 'May',
+      value: 14
+    }, {
+      name: 'Jun',
+      value: 8
+    }],
+    name: 'Component C',
+    legendShortName: 'Comp C',
+    legendAbbrName: 'C'
+  }];
+
+  $('#area-example').chart({ type: 'area', dataset: dataset })
+    .on('selected', function (e, args) {
+      console.log('selected', args);
+    })
+    .on('dblclick', function (e, args) {
+      console.log('double clicked', args);
+    });
+
+});
+</script>
