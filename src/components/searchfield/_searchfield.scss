@@ -41,8 +41,7 @@
 
     &.close {
       outline: none;
-      right: 5px;
-      top: 10px;
+      right: 8px;
     }
 
     &.icon-error {
@@ -125,7 +124,8 @@
       }
 
       &.close {
-        right: 6px;
+        padding: 1px 3px;
+        right: 8px;
       }
     }
 
@@ -320,8 +320,12 @@
     }
 
     button.close {
-      right: 35px;
-      top: 4px;
+      position: absolute;
+      top: 0px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       @media (min-width: $breakpoint-phone-to-tablet) {
         right: 45px;

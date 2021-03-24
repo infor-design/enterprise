@@ -9,15 +9,16 @@
 
 .searchfield-wrapper {
   > .icon {
-    top: 12px;
-
     &.close {
-      height: 12px;
-      right: 9px;
-      top: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 1px 3px
+    }
+
+    &:not(.close) {
+      top: 12px;
     }
   }
-
   .go-button {
     height: 100%;
   }
@@ -49,10 +50,10 @@
       padding-bottom: 6px;
       padding-top: 6px;
     }
+  }
 
-    .icon.close {
-      top: 12px;
-    }
+  > .icon, > .icon:not(.close) {
+    top: 10px;
   }
 
   &:not(.is-open) {
@@ -60,16 +61,12 @@
       top: 8px;
     }
   }
-
-  &.has-text .icon.close {
-    top: 11px;
-  }
 }
 
 .toolbar-searchfield-wrapper {
   &.searchfield-wrapper {
     &.non-collapsible {
-      svg.icon {
+      svg.icon:not(.close) {
         top: 11px;
       }
     }
@@ -83,10 +80,6 @@ html.is-firefox {
 
     &.toolbar-searchfield-wrapper {
       height: 34px;
-    }
-
-    > .icon {
-      top: 10px;
     }
 
     .searchfield-category-button {
@@ -104,10 +97,6 @@ html.is-firefox {
 
       .icon:not(.close) {
         top: 12px;
-      }
-
-      .icon.close {
-        top: 11px;
       }
     }
 
