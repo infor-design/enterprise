@@ -25,6 +25,7 @@
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
+- `[Textarea]` Fixed a bug where the textarea options like autogrow, autoGrowMaxHeight doesn't work after the initialization inside of the accordion. ([#4977](https://github.com/infor-design/enterprise/issues/4977))
 - `[Toast]` Fixed a bug where the first toast in the page is not announced to screen readers. ([#4519](https://github.com/infor-design/enterprise/issues/4519))
 - `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
 

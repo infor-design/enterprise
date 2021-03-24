@@ -123,6 +123,13 @@ Accordion.prototype = {
       this.contentAreas = this.contentAreas.add(contentAreas);
     }
 
+    // Making the accordion pane to display
+    // so the scrollHeight in textarea will be calculated
+    const textAreaChild = $('.accordion-content').find('textarea');
+    if (textAreaChild) {
+      textAreaChild.parents('.accordion-pane').attr('style', 'display: block');
+    }
+
     let headersHaveIcons = false;
 
     // Accordion Headers that have an expandable pane need to have an
