@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Positive Negative Column - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="positive-negative-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+  var dataset = [{
+    data: [{
+      name: 'Jan',
+      value: 4000,
+      target: 13000
+    }, {
+      name: 'Feb',
+      value: 9000,
+      target: 11000
+    }, {
+      name: 'Mar',
+      value: 2000,
+      target: 7000
+    }, {
+      name: 'Apr',
+      value: 4000,
+      target: 8000
+    }, {
+      name: 'May',
+      value: 2000,
+      target: 14000
+    }, {
+        name: 'Jun',
+        value: 4000,
+        target: 9000,
+        attributes: [
+         { name: 'id', value: 'positive-negative-jun' },
+         { name: 'data-automation-id', value: 'automation-id-positive-negative-jun' }
+       ]
+    }, {
+      name: 'Jul',
+      value: -8000,
+      target: 12000
+    }, {
+      name: 'Aug',
+      value: -6000,
+      target: 5000
+    }, {
+      name: 'Sep',
+      value: -1000,
+      target: 7000
+    }, {
+      name: 'Oct',
+      value: -12000,
+      target: 13000
+    }, {
+      name: 'Nov',
+      value: -7000,
+      target: 6000
+    }, {
+      name: 'Dec',
+      value: -3000,
+      target: 7000
+    }],
+    legends: {
+      target: 'Revenue',
+      positive: 'Profit',
+      negative: 'Loss'
+    },
+    colors: {
+      target: 'neutral',
+      positive: 'good',
+      negative: 'error'
+    }
+  }];
+
+  $('#positive-negative-example').chart({
+    type: 'positive-negative',
+    dataset: dataset,
+    formatterString: '.2s'
+  })
+  .on('selected', function (e, args) {
+    console.log('selected', args);
+  })
+  .on('dblclick', function (e, args) {
+    console.log('double clicked', args);
+  });
+
+});
+</script>
