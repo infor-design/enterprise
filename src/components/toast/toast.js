@@ -79,8 +79,10 @@ Toast.prototype = {
     let container = $(`#toast-container${this.uniqueId}`);
     const toast = $(`
       <div class="toast">
-        <span class="toast-title">${xssUtils.stripHTML(s.title)}</span>
-        <span class="toast-message">${message}</span>
+        <span aria-relevant="additions text" aria-live="polite">
+          <span class="toast-title">${xssUtils.stripHTML(s.title)}</span>
+          <span class="toast-message">${message}</span>
+        </span>
       </div>`);
     const closeBtn = $(`
       <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
@@ -91,7 +93,7 @@ Toast.prototype = {
     const progress = $('<div class="toast-progress"></div>');
 
     if (!container.length) {
-      container = $(`<div id="toast-container${this.uniqueId}" class="toast-container" aria-relevant="additions" aria-live="polite"></div>`).appendTo('body');
+      container = $(`<div id="toast-container${this.uniqueId}" class="toast-container"></div>`).appendTo('body');
     }
 
     container
@@ -438,6 +440,7 @@ Toast.prototype = {
   remove(toast, id) {
     const removeCallback = () => {
       toast.remove();
+
       const canDestroy = !$(`#toast-container${this.uniqueId} .toast`).length;
       if (canDestroy) {
         this.destroy();
@@ -451,6 +454,7 @@ Toast.prototype = {
       return;
     }
 
+    toast.attr('aria-live', '').attr('aria-relevent', '').hide();
     toast.addClass('effect-scale-hide');
 
     const closeTimer = new RenderLoopItem({
