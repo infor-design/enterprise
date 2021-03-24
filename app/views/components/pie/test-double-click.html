@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+    data: [{
+      name: 'Item A',
+      value: 10.1,
+      id: 'item-a',
+      tooltip: 'Item A <b>{{percent}}</b>'
+    }, {
+      name: 'Item B',
+      value: 12.2,
+      id: 'item-b',
+      tooltip: 'Item B <b>{{percent}}</b>'
+    }, {
+      name: 'Item C',
+      value: 14.35,
+      id: 'item-c',
+      tooltip: 'Item C <b>{{percent}}</b>'
+    }, {
+      name: 'Item D',
+      value: 15.6,
+      id: 'item-d',
+      tooltip: 'Item D <b>{{percent}}</b>'
+    }, {
+      name: 'Item E',
+      value: 21.6,
+      id: 'item-e',
+      tooltip: 'Item E <b>{{percent}}</b>'
+    }, {
+      name: 'Item F',
+      value: 41.6,
+      id: 'item-f',
+      id: 'item-f',
+      tooltip: 'Item F <b>{{percent}}</b>'
+    }]
+  }];
+
+  $('#pie-chart-example').chart({ type: 'pie', dataset: pieData })
+    .on('selected', function (e, args) {
+      console.log('selected', args);
+    })
+    .on('dblclick', function (e, args) {
+      console.log('double clicked', args);
+    });
+
+});
+</script>

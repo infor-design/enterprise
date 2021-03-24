@@ -421,6 +421,15 @@ Pie.prototype = {
 
     self.isRTL = Locale.isRTL();
 
+    const delay = 200;
+    let prevent = false;
+    let timer = 0;
+    // Make sure the default to get prevent not bubble up.
+    self.element
+      .off(`dblclick.${self.namespace}`)
+      .on(`dblclick.${self.namespace}`, '*', (e) => {
+        e.stopImmediatePropagation();
+      });
     slice.enter()
       .insert('path')
       .style('fill', function (d, i) {
@@ -437,38 +446,27 @@ Pie.prototype = {
       })
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
-        // charts.triggerContextMenu(self.element, d3.select(this).select('path').nodes()[0], d);
       })
+
+      // Click and double click events
+      // Use very slight delay to fire off the normal click action
+      // It alow to cancel when the double click event happens
       .on(`click.${self.namespace}`, function (d, i) {
-        clearTimeout(tooltipInterval);
-        // Handle Click to select
-        const isSelected = this && d3.select(this).classed('is-selected');
-
-        // Make unselected
-        charts.setSelectedElement({
-          task: isSelected ? 'unselected' : 'selected',
-          container: self.element,
-          selector: isSelected ? '.chart-container .is-selected' : this,
-          isTrigger: self.initialSelectCall ? false : !isSelected,
-          d: d.data,
-          i,
-          type: self.settings.type,
-          dataset: self.settings.dataset,
-          svg: self.svg
-        });
-
-        if (isSelected && !self.initialSelectCall) {
-          /**
-           * Fires when arc/slice is selected.
-           * @event selected
-           * @memberof Pie
-           * @property {object} event - The jquery event object
-           * @property {object} selected arc/slice.
-           * @property {object} data of selected arc/slice.
-           * @property {number} index of selected arc/slice.
-           */
-          self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, i]);
-        }
+        const selector = this;
+        timer = setTimeout(function () {
+          if (!prevent) {
+            // Run click action
+            self.doClickAction(d, i, selector, tooltipInterval);
+          }
+          prevent = false;
+        }, delay);
+      })
+      .on(`dblclick.${self.namespace}`, function (d, i) {
+        const selector = this;
+        clearTimeout(timer);
+        prevent = true;
+        // Run double click action
+        self.doDoubleClickAction(d, i, selector, tooltipInterval);
       })
       .on(`mouseenter.${self.namespace}`, function (d, i) {
         if (!self.settings.showTooltips) {
@@ -869,6 +867,67 @@ Pie.prototype = {
       unsorted[order[i]] = values[i];
     }
     return unsorted;
+  },
+
+  /**
+   * Action to happen on click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @param {object} tooltipInterval - The tooltip-interval element
+   * @returns {void}
+   */
+  doClickAction(d, i, selector, tooltipInterval) {
+    const self = this;
+    clearTimeout(tooltipInterval);
+    // Handle Click to select
+    const isSelected = selector && d3.select(selector).classed('is-selected');
+
+    // Make unselected
+    charts.setSelectedElement({
+      task: isSelected ? 'unselected' : 'selected',
+      container: self.element,
+      selector: isSelected ? '.chart-container .is-selected' : selector,
+      isTrigger: self.initialSelectCall ? false : !isSelected,
+      d: d.data,
+      i,
+      type: self.settings.type,
+      dataset: self.settings.dataset,
+      svg: self.svg
+    });
+
+    if (isSelected && !self.initialSelectCall) {
+      /**
+       * Fires when arc/slice is selected.
+       * @event selected
+       * @memberof Pie
+       * @property {object} event - The jquery event object
+       * @property {object} selected arc/slice.
+       * @property {object} data of selected arc/slice.
+       * @property {number} index of selected arc/slice.
+       */
+      self.element.triggerHandler('selected', [d3.select(selector).nodes(), {}, i]);
+    }
+  },
+
+  /**
+   * Action to happen on double click.
+   * @private
+   * @param {object} d - The data object
+   * @param {number} i - The index
+   * @param {object} selector - The selector element
+   * @param {object} tooltipInterval - The tooltip-interval element
+   * @returns {void}
+   */
+  doDoubleClickAction(d, i, selector, tooltipInterval) {
+    clearTimeout(tooltipInterval);
+    const self = this;
+    const dataset = self.settings.dataset;
+    let thisArcData = dataset && dataset[0]?.data ? dataset[0].data[i] : (d.data || d);
+    thisArcData = thisArcData || {};
+    const args = [{ elem: d3.select(selector).nodes(), data: thisArcData, index: i }];
+    self.element.triggerHandler('dblclick', [args]);
   },
 
   /**

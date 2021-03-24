@@ -1,9 +1,17 @@
 <div class="row">
   <div class="twelve columns">
+    <button id="popup-destroy-1" class="btn-secondary" type="button">
+      <span>Destroy 1st Field</span>
+    </button>
 
-      <button id="popdown-destroy" class="btn" type="button">
-        <span>Destroy</span>
-      </button>
+    <button id="popup-destroy-2" class="btn-secondary" type="button">
+      <span>Destroy 2nd Field</span>
+    </button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
 
     <div class="field" id="field1">
       <label for="input-menu">Label</label>
@@ -59,22 +67,24 @@
 
   <script>
     // Like Angular
-    const contextMenu = $('#input-menu');
-    contextMenu.popupmenu({trigger:'rightClick', menu: "action-popupmenu" })
-    const contextMenuApi = contextMenu.data('popupmenu');
+    const input1 = $('#input-menu');
+    input1.popupmenu({trigger:'rightClick', menu: "action-popupmenu" })
+    const inputAPI1 = input1.data('popupmenu');
 
-    const contextMenu2 = $('#input-menu2')
-    contextMenu2.popupmenu({trigger:'rightClick', menu: "action-popupmenu" });
-    const contextMenuApi2 = contextMenu2.data('popupmenu');
+    const input2 = $('#input-menu2')
+    input2.popupmenu({trigger:'rightClick', menu: "action-popupmenu" });
+    const inputAPI2 = input2.data('popupmenu');
 
-    const popupMenu = $('#action-popupmenu');
-    popupMenu.popupmenu();
-    const popupMenuApi = popupMenu.data('popupmenu');
+    $('#popup-destroy-1').click(function() {
+      input1.off();
+      inputAPI1.destroy();
+      input1.parent().remove();
+    });
 
-    $('#popdown-destroy').click(function() {
-      contextMenu.off();
-      contextMenuApi.destroy();
-      contextMenu.parent().remove();
+    $('#popup-destroy-2').click(function () {
+      input2.off();
+      inputAPI2.destroy();
+      input2.parent().remove();
     });
   </script>
 
