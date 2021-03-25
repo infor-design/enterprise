@@ -76,6 +76,7 @@ function Line(element, settings) {
   this.settings = utils.mergeSettings(element, settings, LINE_DEFAULTS);
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
+  charts.destroy(element);
   this.init();
   debug.logTimeStart(COMPONENT_NAME);
 }
@@ -440,6 +441,19 @@ Line.prototype = {
       .x((d, n) => xScale(typeof s.xAxis?.parser === 'function' ? s.xAxis.parser(d, n) : (s.isBubble || s.isScatterPlot ? d.value.x : n)))
       .y(d => yScale(s.isBubble || s.isScatterPlot ? d.value.y : d.value));
 
+    const clickStatus = {
+      line: { delay: 200, prevent: false, timer: 0 },
+      dot: { delay: 200, prevent: false, timer: 0 },
+      symbol: { delay: 200, prevent: false, timer: 0 }
+    };
+
+    // Make sure the default to get prevent not bubble up.
+    self.element
+      .off(`dblclick.${self.namespace}`)
+      .on(`dblclick.${self.namespace}`, '*', (e) => {
+        e.stopImmediatePropagation();
+      });
+
     // Append the lines
     dataset.forEach(function (d, lineIdx) {
       const lineGroups = self.svg.append('g')
@@ -481,8 +495,27 @@ Line.prototype = {
             });
           });
         })
+
+        // Click and double click events
+        // Use very slight delay to fire off the normal click action
+        // It alow to cancel when the double click event happens
         .on(`click.${self.namespace}`, function () {
-          charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall);
+          const selector = this;
+          clickStatus.line.timer = setTimeout(function () {
+            if (!clickStatus.line.prevent) {
+              // Run click action
+              charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall);
+            }
+            clickStatus.line.prevent = false;
+          }, clickStatus.line.delay);
+        })
+        .on(`dblclick.${self.namespace}`, function () {
+          // const selector = this;
+          clearTimeout(clickStatus.line.timer);
+          clickStatus.line.prevent = true;
+          // Run double click action
+          const args = [{ elem: [this.parentNode], data: d }];
+          self.element.triggerHandler('dblclick', [args]);
         })
         .on(`contextmenu.${self.namespace}`, function () {
           charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
@@ -620,8 +653,27 @@ Line.prototype = {
                 return s.isBubble ? zScale(dg.value.z) : dots.radius;
               });
             })
+
+            // Click and double click events
+            // Use very slight delay to fire off the normal click action
+            // It alow to cancel when the double click event happens
             .on(`click.${self.namespace}`, function (dh) {
-              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
+              const selector = this;
+              clickStatus.dot.timer = setTimeout(function () {
+                if (!clickStatus.dot.prevent) {
+                  // Run click action
+                  charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
+                }
+                clickStatus.dot.prevent = false;
+              }, clickStatus.dot.delay);
+            })
+            .on(`dblclick.${self.namespace}`, function (dh) {
+              // const selector = this;
+              clearTimeout(clickStatus.dot.timer);
+              clickStatus.dot.prevent = true;
+              // Run double click action
+              const args = [{ elem: [this.parentNode], data: dh }];
+              self.element.triggerHandler('dblclick', [args]);
             })
             .on(`contextmenu.${self.namespace}`, function (di) {
               charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
@@ -659,8 +711,27 @@ Line.prototype = {
                 return dots.radius;
               });
             })
+
+            // Click and double click events
+            // Use very slight delay to fire off the normal click action
+            // It alow to cancel when the double click event happens
             .on(`click.${self.namespace}`, function (dh) {
-              charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
+              const selector = this;
+              clickStatus.symbol.timer = setTimeout(function () {
+                if (!clickStatus.symbol.prevent) {
+                  // Run click action
+                  charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
+                }
+                clickStatus.symbol.prevent = false;
+              }, clickStatus.symbol.delay);
+            })
+            .on(`dblclick.${self.namespace}`, function (dh) {
+              // const selector = this;
+              clearTimeout(clickStatus.symbol.timer);
+              clickStatus.symbol.prevent = true;
+              // Run double click action
+              const args = [{ elem: [this.parentNode], data: dh }];
+              self.element.triggerHandler('dblclick', [args]);
             })
             .on(`contextmenu.${self.namespace}`, function (di) {
               charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
@@ -1010,9 +1081,9 @@ Line.prototype = {
     const events = arr => `${arr.join(`.${this.namespace} `)}.${this.namespace}`;
 
     if (this.element) {
-      this.element.find('.line-group .line').off(events(['click', 'contextmenu']));
+      this.element.find('.line-group .line').off(events(['click', 'dblclick', 'contextmenu']));
       this.element.find('.line-group .symbol')
-        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+        .off(events(['mouseenter', 'mouseleave', 'click', 'dblclick', 'contextmenu']));
 
       this.element.off(events(['updated', 'resize']));
     }
@@ -1021,7 +1092,7 @@ Line.prototype = {
 
     if (this.dots && this.element) {
       this.element.find(`.line-group .${this.dots.class}`)
-        .off(events(['mouseenter', 'mouseleave', 'click', 'contextmenu']));
+        .off(events(['mouseenter', 'mouseleave', 'click', 'dblclick', 'contextmenu']));
       delete this.dots;
     }
 

@@ -193,6 +193,16 @@ Bullet.prototype = {
       const range = g.selectAll('rect.range')
         .data(ranges);
 
+      const delay = 200;
+      let prevent = false;
+      let timer = 0;
+      // Make sure the default to get prevent not bubble up.
+      self.element
+        .off(`dblclick.${self.namespace}`)
+        .on(`dblclick.${self.namespace}`, '*', (e) => {
+          e.stopImmediatePropagation();
+        });
+
       range.enter().append('rect')
         .call((d) => {
           d._groups.forEach((thisRanges) => {
@@ -212,9 +222,25 @@ Bullet.prototype = {
           return '';
         })
         .attr('height', barHeight)
+        // Click and double click events
+        // Use very slight delay to fire off the normal click action
+        // It alow to cancel when the double click event happens
         .on(`click.${self.namespace}`, function () {
           const bar = d3.select(this);
-          self.element.trigger('selected', [bar, chartData.data[bar.attr('data-idx')]]);
+          timer = setTimeout(() => {
+            if (!prevent) {
+              // Run click action
+              self.element.trigger('selected', [bar, chartData.data[bar.attr('data-idx')]]);
+            }
+            prevent = false;
+          }, delay);
+        })
+        .on(`dblclick.${self.namespace}`, function () {
+          const bar = d3.select(this);
+          clearTimeout(timer);
+          prevent = true;
+          // Run double click action
+          self.element.trigger('dblclick', [bar, chartData.data[bar.attr('data-idx')]]);
         })
         .on(`mouseenter.${self.namespace}`, function (d, mouseEnterIdx) {
           const bar = d3.select(this);

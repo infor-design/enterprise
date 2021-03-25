@@ -1,6 +1,7 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
+const axePageObjects = requireHelper('axe-page-objects');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -70,9 +71,9 @@ describe('Breadcrumb navigation alternate tests', () => {
   }
 });
 
-describe('Breadcrumb navigation tests', () => {
+describe('Disabled breadcrumb navigation tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/breadcrumb/example-navigation-breadcrumbs?theme=classic&layout=nofrills');
+    await utils.setPage('/components/breadcrumb/example-disabled?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
@@ -81,12 +82,12 @@ describe('Breadcrumb navigation tests', () => {
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const containerEl = await element(by.css('div[role=main]'));
+      const containerEl = await element(by.css('div[class=row]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkScreen('blockgrid-text')).toEqual(0);
+      expect(await browser.imageComparison.checkScreen('breadcrumb-disabled')).toEqual(0);
     });
   }
 });
@@ -103,5 +104,15 @@ describe('Breadcrumb automation tests', () => {
   it('Should create automation IDs from settings', async () => {
     expect(await element(by.id('test-breadcrumb-home')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-home');
     expect(await element(by.css('.breadcrumb-item.current a')).getAttribute('data-automation-id')).toEqual('test-breadcrumb-fourth');
+  });
+});
+
+describe('Breadcrumb should be accessible with no WCAG 2AA violations', () => {
+  it('Should be accessible with no WCAG 2AA violations', async () => {
+    if (!utils.isIE()) {
+      await utils.setPage('/components/breadcrumb/example-disabled?theme=classic&layout=nofrills');
+      const res = await axePageObjects(browser.params.theme);
+      expect(res.violations.length).toEqual(0);
+    }
   });
 });

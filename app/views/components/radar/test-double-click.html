@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Radar Chart - Double Click</h2>
+        </div>
+        <div class="widget-content">
+          <div id="radar-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script id="test-script">
+$('body').on('initialized', function () {
+
+  var radarData = [{
+    data: [
+  		{ name: 'Battery Life', value: 0.22 },
+  		{ name: 'Brand', value: 0.28 },
+  		{ name: 'Cost', value: 0.29 },
+  		{ name: 'Design', value: 0.17 },
+  		{ name: 'Connectivity', value: 0.22 },
+  		{ name: 'Screen', value: 0.02 },
+  		{ name: 'Price', value: 0.21 }
+    ],
+    name: 'iPhone X',
+    id: '1'
+  }, {
+    data: [
+      { name: 'Battery Life', value: 0.27 },
+      { name: 'Brand', value: 0.16 },
+      { name: 'Cost', value: 0.35 },
+      { name: 'Design', value: 0.13 },
+      { name: 'Connectivity', value: 0.20 },
+      { name: 'Screen', value: 0.13 },
+      { name: 'Price', value: 0.35 }
+    ],
+    name: 'Samsung',
+    id: '2'
+  }, {
+    data: [
+      { name: 'Battery Life', value: 0.26 },
+      { name: 'Brand', value: 0.10 },
+      { name: 'Cost', value: 0.30 },
+      { name: 'Design', value: 0.14 },
+      { name: 'Connectivity', value: 0.22 },
+      { name: 'Screen', value: 0.04 },
+      { name: 'Price', value: 0.41 }
+    ],
+    name: 'Nokia Smartphone',
+    id: '3'
+  }];
+
+  $('#radar-chart-example').chart({ type: 'radar', dataset: radarData })
+    .on('selected', function (e, args) {
+      console.log('selected', args);
+    })
+    .on('dblclick', function (e, args) {
+      console.log('double clicked', args);
+    });
+
+});
+</script>

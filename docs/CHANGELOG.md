@@ -8,17 +8,31 @@
 
 ### v4.39.0 Fixes
 
+- `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
 - `[Bar Chart]` Added support for double click to Bar, Bar Grouped, Bar Stacked. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
+- `[Bullet Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
+- `[Column Chart]` Added support for double click to Column, Column Grouped, Column Stacked, Column Stacked-singular and Column Positive Negative. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Datagrid]` Fixed a bug where filter dropdown menus did not close when focusing a filter input. ([#4766](https://github.com/infor-design/enterprise/issues/4766))
 - `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
+- `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[Environment]`Updated the regular expression search criteria from Edge to Edg to resolve the EDGE is not detected issue. ([#4603](https://github.com/infor-design/enterprise/issues/4603))
+- `[General]` Can run stylelint command on W10 cmd for development ([#4993](https://github.com/infor-design/enterprise/issues/4993))
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[Input]` Changed the disabled search field color for Safari to match that of other browsers. ([#4611](https://github.com/infor-design/enterprise/issues/4611))
+- `[Lookup]` Isolated the scss/css .close.icon class inside of .modal-content and removed any extra top property to fix the alignment issue.([#4933](https://github.com/infor-design/enterprise/issues/4933))
+- `[Line Chart]` Added support for double click to Area, Bubble, Line and Scatterplot. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
+- `[Pie Chart]` Added support for double click to Pie and Donut. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
+- `[Pie Chart]` Fixed bug were pie chart type does not remove old class name ([#3144](https://github.com/infor-design/enterprise/issues/3144))
+- `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
+- `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
+- `[Textarea]` Fixed a bug where the textarea options like autogrow, autoGrowMaxHeight doesn't work after the initialization inside of the accordion. ([#4977](https://github.com/infor-design/enterprise/issues/4977))
+- `[Toast]` Fixed a bug where the first toast in the page is not announced to screen readers. ([#4519](https://github.com/infor-design/enterprise/issues/4519))
 - `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
 
 ## v4.38.1
