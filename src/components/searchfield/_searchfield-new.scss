@@ -66,11 +66,14 @@
 
   .btn-icon.close {
     bottom: 0;
-    display: flex;
     height: 100%;
     max-height: 100%;
     min-height: 100%;
     top: 0;
+
+    &:not(.is-empty) {
+      display: flex;
+    }
 
     & > svg.close.icon {
       top: 50%;
