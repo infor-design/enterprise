@@ -382,15 +382,10 @@ span.required::after {
 // don't want to use generally because it conflicts.
 .is-safari {
   input,
-  textarea {
-    &[disabled] {
-      -webkit-text-fill-color: $input-disabled-color;
-    }
-  }
-
+  textarea,
   .searchfield {
     &[disabled] {
-      -webkit-text-fill-color: $ids-color-palette-slate-70;
+      -webkit-text-fill-color: $input-disabled-color;
     }
   }
 }
