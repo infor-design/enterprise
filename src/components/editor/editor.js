@@ -214,12 +214,12 @@ Editor.prototype = {
         foundOldSettings = true;
         styles.push(new FontPickerStyle(`header${hLevel}`, `Header ${hLevel}`, `h${hLevel}`));
       }
+      if (s.buttons.editor[0] === 'separator') {
+        s.buttons.editor.splice(0, 1);
+      }
       if (foundOldSettings) {
         s.buttons.editor = s.buttons.editor.filter(el => el.substr(0, 6) !== 'header');
         s.fontpickerSettings = { styles };
-      }
-      if (s.buttons.editor[0] === 'separator') {
-        s.buttons.editor.splice(0, 1);
       }
       if (foundOldSettings) {
         s.buttons.editor = ['fontPicker'].concat(s.buttons.editor);
