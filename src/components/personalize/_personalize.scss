@@ -16,24 +16,6 @@
   background-color: $header-bg-color;
 }
 
-.is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(
-    to right,
-    rgba($header-bg-color, 1),
-    rgba($header-bg-color, 0)
-  );
-}
-
-.is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(
-    to right,
-    rgba($header-bg-color, 0),
-    rgba($header-bg-color, 1)
-  );
-}
-
 .is-personalizable > .tab-list-container .tab.is-disabled a,
 .is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
   color: rgba(255, 255, 255, 0.5);

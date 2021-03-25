@@ -744,13 +744,15 @@ html[dir='rtl'] {
     left: 0;
   }
 
-  .tab-container.horizontal,
-  .tab-container.header-tabs {
+  .tab-container.horizontal {
     &::before {
       left: auto;
       right: 0;
     }
+  }
 
+  .tab-container.horizontal,
+  .tab-container.header-tabs {
     &::after {
       left: 51px;
       right: auto;
@@ -802,6 +804,20 @@ html[dir='rtl'] {
       &::before {
         left: auto;
         right: 0;
+      }
+    }
+
+    .tab-list-container {
+      .tab {
+        &.dismissible {
+          padding-left: 10px;
+          padding-right: auto;
+        }
+
+        &:not(.last-child) {
+          margin-left: 10px;
+          margin-right: auto;
+        }
       }
     }
 
