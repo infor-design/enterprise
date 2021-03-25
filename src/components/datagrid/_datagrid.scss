@@ -1892,7 +1892,7 @@ $datagrid-small-row-height: 25px;
         box-shadow: none;
       }
 
-      .icon {
+      .icon:not(.icon-rowstatus) {
         @include trigger-icon-background($datagrid-row-hover-color);
       }
     }
@@ -1901,7 +1901,7 @@ $datagrid-small-row-height: 25px;
     &.is-selected:not(.hide-selected-color) td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
-      .icon {
+      .icon:not(.icon-rowstatus) {
         @include trigger-icon-background($datagrid-row-selected-color);
       }
     }
