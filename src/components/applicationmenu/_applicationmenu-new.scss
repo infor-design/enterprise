@@ -12,6 +12,10 @@
     margin: 0 $ids-number-spacing-base;
     width: calc(100% - calc(#{$ids-number-spacing-base} * 2));
 
+    > svg.icon:not(.close) {
+      top: 13px;
+    }
+
     .searchfield {
       height: 40px;
 
@@ -42,6 +46,12 @@
 
     &:first-child {
       margin-top: 10px;
+    }
+
+    button.close {
+      height: 100%;
+      top: 2px;
+      right: 9px
     }
   }
 
