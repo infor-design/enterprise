@@ -714,7 +714,7 @@
 
 // On Safari (specifically targeting iPad/iPhone) make the anchors pass through
 // to enable easier tapping of dismissible icons (See infor-design/enterprise#4763)
-.is-safari {
+.ios {
   .tab {
     > a {
       pointer-events: none;
