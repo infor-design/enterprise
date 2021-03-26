@@ -88,6 +88,12 @@ $trigger-size: 30px;
     border-color: $error-color;
   }
 
+  &:not(.is-disabled) {
+    > .swatch {
+      cursor: pointer;
+    }
+  }
+
   &.is-disabled {
     background-color: $input-color-disabled-background;
     border-color: $input-color-disabled-border;
@@ -327,10 +333,6 @@ $trigger-size: 30px;
     position: absolute;
     top: -18px;
   }
-}
-
-.colorpicker-container:not(.is-disabled) > .swatch {
-  cursor: pointer;
 }
 
 // Short Fields
