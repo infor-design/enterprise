@@ -2,6 +2,10 @@
 
 ## v4.39.0
 
+### v4.39.0 Important Notes
+
+- `[General]` We Updated development dependencies. Most important things to note are: we now support node 14 for development and this is recommended. ([#4998](https://github.com/infor-design/enterprise/issues/4998))
+
 ### v4.39.0 Fixes
 
 - `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
@@ -12,6 +16,8 @@
 - `[Column Chart]` Added support for double click to Column, Column Grouped, Column Stacked, Column Stacked-singular and Column Positive Negative. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Datagrid]` Fixed a bug where filter dropdown menus did not close when focusing a filter input. ([#4766](https://github.com/infor-design/enterprise/issues/4766))
 - `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
+- `[Datagrid]` Only show row status when dirty indicator and row status both exist to address conflicting visual issue. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
+- `[Datagrid]` Fix issue where selecting a row added background to row-status. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[Environment]`Updated the regular expression search criteria from Edge to Edg to resolve the EDGE is not detected issue. ([#4603](https://github.com/infor-design/enterprise/issues/4603))
