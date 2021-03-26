@@ -18,6 +18,7 @@
 - `[Datagrid]` Only show row status when dirty indicator and row status both exist to address conflicting visual issue. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datagrid]` Fix issue where selecting a row added background to row-status. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
+- `[Datepicker]` Fixed a UI issue where the apply and cancel buttons were unable to see on small screens. ([#4950](https://github.com/infor-design/enterprise/issues/4950))
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[Environment]`Updated the regular expression search criteria from Edge to Edg to resolve the EDGE is not detected issue. ([#4603](https://github.com/infor-design/enterprise/issues/4603))
 - `[General]` Can run stylelint command on W10 cmd for development ([#4993](https://github.com/infor-design/enterprise/issues/4993))
