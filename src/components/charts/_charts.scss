@@ -96,11 +96,11 @@
       width: 30%;
 
       .is-two-column {
-        display: flex;
+        display: inline-flex;
         float: none;
         margin: 2px -5px;
         padding: 4px 5px 5px;
-        width: 100%;
+        width: auto;
       }
 
       .chart-legend-color {
