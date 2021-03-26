@@ -35,7 +35,6 @@ $trigger-size: 30px;
 .colorpicker-input-mm,
 .colorpicker-input-lg {
   flex-shrink: 0;
-  margin-right: $trigger-size;
 }
 
 .colorpicker-input-xs {
@@ -69,6 +68,7 @@ $trigger-size: 30px;
   overflow: hidden;
   position: relative;
   width: 150px;
+  padding-right: $trigger-size;
 
   .trigger {
     position: absolute;
