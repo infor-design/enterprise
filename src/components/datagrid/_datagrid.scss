@@ -1601,11 +1601,6 @@ $datagrid-small-row-height: 25px;
             top: -15px;
           }
 
-          &.is-dirty-cell::before {
-            border-width: 0;
-            margin: 0;
-          }
-
           .icon-rowstatus {
             left: -1px;
             top: 0;
@@ -1897,7 +1892,7 @@ $datagrid-small-row-height: 25px;
         box-shadow: none;
       }
 
-      .icon {
+      .icon:not(.icon-rowstatus) {
         @include trigger-icon-background($datagrid-row-hover-color);
       }
     }
@@ -1906,7 +1901,7 @@ $datagrid-small-row-height: 25px;
     &.is-selected:not(.hide-selected-color) td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
-      .icon {
+      .icon:not(.icon-rowstatus) {
         @include trigger-icon-background($datagrid-row-selected-color);
       }
     }
@@ -2813,7 +2808,7 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    &.is-dirty-cell {
+    &.is-dirty-cell:not(.rowstatus-cell) {
       position: relative;
 
       &::before {

@@ -1,4 +1,4 @@
 {
   "presets": ["@babel/preset-env"],
-  "plugins": ["transform-optional-chaining"]
+  "plugins": ["transform-optional-chaining", "transform-default-named-imports"]
 }
