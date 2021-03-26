@@ -808,6 +808,8 @@ html[dir='rtl'] {
     }
 
     .tab-list-container {
+      margin-right: 1px;
+
       .tab {
         &.dismissible {
           padding-left: 10px;
