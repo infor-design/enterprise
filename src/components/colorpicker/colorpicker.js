@@ -787,7 +787,7 @@ ColorPicker.prototype = {
   },
 
   /**
-  * Detach events and restore DOM to default.
+  * Attach events to DOM on init
   * @private
   * @returns {void}
   */
@@ -796,9 +796,9 @@ ColorPicker.prototype = {
     const elemParent = elem.parent();
     let originalVal;
 
-    this.icon.parent().on('click.colorpicker', () => {
-      this.toggleList();
-    });
+    this.icon.parent().on('click.colorpicker', () => this.toggleList());
+
+    this.swatch.on('click.colorpicker', () => this.toggleList());
 
     elem
       .on('focus.colorpicker', () => {
@@ -820,6 +820,7 @@ ColorPicker.prototype = {
 
     let eventStr = 'blur.colorpicker paste.colorpicker change.colorpicker';
     eventStr += this.isIe11 ? 'keypress.colorpicker' : 'keyup.colorpicker';
+
     elem.on(eventStr, () => {
       const val = this.isEditor ? elem.attr('data-value') : elem.val();
       if (this.settings.showLabel) {
@@ -839,7 +840,6 @@ ColorPicker.prototype = {
       }
     });
   }
-
 };
 
 export { ColorPicker, COMPONENT_NAME };

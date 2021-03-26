@@ -66,9 +66,9 @@ $trigger-size: 30px;
   height: $input-size-regular-height;
   max-width: 100%;
   overflow: hidden;
+  padding-right: $trigger-size;
   position: relative;
   width: 150px;
-  padding-right: $trigger-size;
 
   .trigger {
     position: absolute;
@@ -327,6 +327,10 @@ $trigger-size: 30px;
     position: absolute;
     top: -18px;
   }
+}
+
+.colorpicker-container:not(.is-disabled) > .swatch {
+  cursor: pointer;
 }
 
 // Short Fields
