@@ -2,6 +2,10 @@
 
 ## v4.39.0
 
+### v4.39.0 Important Notes
+
+- `[General]` We Updated development dependencies. Most important things to note are: we now support node 14 for development and this is recommended. ([#4998](https://github.com/infor-design/enterprise/issues/4998))
+
 ### v4.39.0 Fixes
 
 - `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
