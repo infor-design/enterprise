@@ -14,7 +14,44 @@
 
 .field-short.fieldfilter-wrapper {
   .field-filter {
-    margin-left: 1px;
+    position: relative;
+    z-index: 120;
+  }
+
+  div.dropdown {
+    &:focus {
+      position: relative;
+      z-index: 121;
+    }
+    > .listoption-icon {
+      left: 1px;
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+
+.field-short {
+  .icon,
+  span.trigger {
+    z-index: 120;
+  }
+
+  div.dropdown {
+    + .icon {
+      z-index: 121;
+    }
+
+    &:hover:not([disabled]) {
+      &:not(.is-disabled) {
+        &:not(.is-readonly) {
+          &:not(.error) {
+            position: relative;
+            z-index: 121;
+          }
+        }
+      }
+    }
   }
 }
 
