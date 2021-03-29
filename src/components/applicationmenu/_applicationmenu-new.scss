@@ -49,9 +49,12 @@
     }
 
     button.close {
-      height: 100%;
-      top: 2px;
-      right: 9px
+      height: 24px;
+      right: 9px;
+      top: 8px;
+      & > svg.close.icon {
+        top: 0px;
+      }
     }
   }
 

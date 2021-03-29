@@ -65,18 +65,13 @@
   }
 
   .btn-icon.close {
-    bottom: 0;
-    height: 100%;
-    max-height: 100%;
-    min-height: 100%;
-    top: 0;
-
+    overflow: visible;
     &:not(.is-empty) {
-      display: flex;
+      top: 6px;
     }
 
     & > svg.close.icon {
-      top: 50%;
+      top: calc( 50% - 6px );
       transform: translateY(-50%);
     }
   }
