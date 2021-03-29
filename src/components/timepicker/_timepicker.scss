@@ -94,6 +94,14 @@
 
       &:empty {
         min-width: 10px;
+
+        @media only screen
+          and (min-device-width: $breakpoint-phone)
+          and (max-device-width: $breakpoint-big-phone + 88)
+          and (-webkit-min-device-pixel-ratio: 2)
+          and (orientation: portrait) {
+          min-width: 5px;
+        }
       }
     }
   }
@@ -104,6 +112,14 @@
 
     > label {
       width: 72px;
+
+      @media only screen
+        and (min-device-width: $breakpoint-phone)
+        and (max-device-width: $breakpoint-big-phone + 88)
+        and (-webkit-min-device-pixel-ratio: 2)
+        and (orientation: portrait) {
+        width: 65px;
+      }
     }
   }
 
@@ -114,9 +130,25 @@
   .dropdown {
     width: 70px;
 
+    @media only screen
+      and (min-device-width: $breakpoint-phone)
+      and (max-device-width: $breakpoint-big-phone + 88)
+      and (-webkit-min-device-pixel-ratio: 2)
+      and (orientation: portrait) {
+      width: 60px !important;
+    }
+
     &.period {
       + .dropdown-wrapper .dropdown {
         width: 70px;
+
+        @media only screen
+          and (min-device-width: $breakpoint-phone)
+          and (max-device-width: $breakpoint-big-phone + 88)
+          and (-webkit-min-device-pixel-ratio: 2)
+          and (orientation: portrait) {
+          width: 65px !important;
+        }
       }
     }
 
