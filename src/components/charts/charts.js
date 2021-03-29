@@ -491,10 +491,15 @@ charts.handleElementClick = function (line, series, settings) {
 
   if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative', 'positive-negative'].indexOf(settings.type) !== -1) {
+    const lineElem = $(line);
+    const isPressed = lineElem.attr('aria-pressed') === 'true';
+
     charts.clickedLegend = true;
     selector.dispatch('click');
-    $(line).parent().find('[aria-pressed]').removeAttr('aria-pressed');
-    $(line).attr('aria-pressed', 'true');
+    lineElem.parent().find('[aria-pressed]').removeAttr('aria-pressed');
+    if (!isPressed) {
+      lineElem.attr('aria-pressed', 'true');
+    }
   }
 
   if (elem.selectionObj) {
