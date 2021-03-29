@@ -11,7 +11,7 @@ const COMPONENT_NAME = 'colorpicker';
  * The ColorPicker Component is a trigger field with a listing colors that can be selected.
  * @class ColorPicker
  * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
- * @param {object} [settings] The settings element.
+ * @param {object} [settings] The settings element. 
  * @param {object} [settings.themes={}] Themes available for ColorPicker
  * @param {array} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
  * that can be used to populate the color grid.
@@ -296,7 +296,7 @@ ColorPicker.prototype = {
     if (this.element[0].style && this.element[0].style.width) {
       const w = parseInt(this.element[0].style.width, 10);
       this.container.css({ width: w });
-      this.element.css({ width: ((w - 4) - this.swatch.width()) });
+      this.element.css({ width: ((w - 4) - this.swatch?.width()) });
     }
   },
 
@@ -618,7 +618,7 @@ ColorPicker.prototype = {
       if (swatch[0]) {
         swatch[0].style.backgroundColor = `#${colorValue}`;
       }
-      swatch.addClass(isBorder ? 'is-border' : '');
+      swatch?.addClass(isBorder ? 'is-border' : '');
 
       a[0].setAttribute('data-label', colorText);
       a[0].setAttribute('data-value', colorValue);
@@ -796,9 +796,9 @@ ColorPicker.prototype = {
     const elemParent = elem.parent();
     let originalVal;
 
-    this.icon.parent().on('click.colorpicker', () => this.toggleList());
+    this.icon.parent?.()?.on('click.colorpicker', () => this.toggleList());
 
-    this.swatch.on('click.colorpicker', () => this.toggleList());
+    this.swatch?.on('click.colorpicker', () => this.toggleList());
 
     elem
       .on('focus.colorpicker', () => {
