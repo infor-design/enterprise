@@ -125,13 +125,13 @@
 
     .arrow {
       border-bottom-color: $popupmenu-border-color;
-      top: -15px;
+      top: -7px;
     }
 
     .arrow::after {
       border-bottom-color: $popupmenu-bg-color;
       left: -8px;
-      top: -7px;
+      top: 1px;
     }
 
     &.left-align-arrow {
