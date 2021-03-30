@@ -1620,6 +1620,11 @@ Datagrid.prototype = {
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
+            const data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+            activeMenu = null;
             const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
 
@@ -1645,14 +1650,6 @@ Datagrid.prototype = {
               }
             }
             self.applyFilter(null, 'selected');
-          })
-          .off('close.datagrid-filter')
-          .on('close.datagrid-filter', function () {
-            const data = $(this).data('popupmenu');
-            if (data) {
-              data.destroy();
-            }
-            activeMenu = null;
           });
       }
       return false;

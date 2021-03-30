@@ -107,7 +107,7 @@ describe('Area Chart API', () => {
   it('Should show on page', () => {
     expect(document.body.querySelectorAll('.dot').length).toEqual(9);
     expect(document.body.querySelectorAll('.line-group').length).toEqual(3);
-    expect(document.body.querySelectorAll('.chart-legend')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('Component AComponent BComponent C');
+    expect(document.body.querySelectorAll('.chart-legend')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('[Highlight]Component A[Highlight]Component B[Highlight]Component C');
   });
 
   it('Should be able to format axis', () => {

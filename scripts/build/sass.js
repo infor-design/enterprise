@@ -2,7 +2,7 @@
 // Requirements
 // -------------------------------------
 const path = require('path');
-const sass = require('sass');
+const sass = require('node-sass');
 const onceImporter = require('node-sass-once-importer');
 
 const logger = require('../logger');
