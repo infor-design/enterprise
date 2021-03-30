@@ -177,7 +177,9 @@
   "browserslist": [
     "last 2 versions",
     "not ie >= 0",
-    "not op_mob >= 0"
+    "not op_mob >= 0",
+    "not op_mini all",
+    "not dead"
   ],
   "optionalDependencies": {
     "fsevents": "*"
