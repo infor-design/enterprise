@@ -2,6 +2,18 @@
 
 The IDS components are backed by both functional and end-to-end (e2e) test suites.  When contributing to the IDS enterprise project, before we can accept pull requests we expect that new tests will be provided to prove that new functionality works, and that all existing tests pass.
 
+- [Test Stack](#test-stack)
+- [Writing Tests](#writing-tests)
+- [Running functional tests](#running-functional-tests)
+- [Running e2e tests silently for continuous integration](#running-e2e-tests-silently-for-continuous-integration)
+- [Running E2E Tests Locally](#running-e2e-tests-locally)
+- [Debugging Functional Tests](#debugging-functional-tests)
+- [Working with Visual Regression Tests](#working-with-visual-regression-tests)
+- [Making Accessibility e2e Tests with Axe](#making-accessibility-e2e-tests-with-axe)
+- [Testing Resources](#testing-resources)
+
+
+
 ## Test Stack
 
 - [Karma](https://karma-runner.github.io/2.0/index.html) test runner for all tests.
@@ -60,7 +72,7 @@ To run the tests in a CI environment (Git Hub Actions), use:
 npm run functional:ci
 ```
 
-## Running e2e tests silently for continuous integration (CI)
+## Running e2e tests silently for continuous integration
 
 ```sh
 npm run build
@@ -172,8 +184,12 @@ Following the process below will safely create baseline images the CI can use du
 We created a docker image to help manage baselines. This is located in the [Infor Design System Docker Repos](https://hub.docker.com/r/infords/travis/tags).
 
 1. Download the docker image with `docker run --name travis-debug -dit infords/travis:v1`.
-1. Once downloaded, login to the VM with `docker exec -it travis-debug bash -l`.
-1. If you had a previous VM with travis-debug you may need to rename it. Do a rename and then login again to the VM:
+1. Once the image has been downloaded, you can login to the VM/Docker container by running bash through `exec` e.g. 
+```
+docker exec -it travis-debug bash -l
+```
+
+If you had a previous VM with travis-debug you may need to rename it. Do a rename and then login again to the VM:
 
   ```sh
   docker rename travis-debug travis-debug-old
@@ -193,8 +209,8 @@ In order to do this we clean the folders, update chrome and do a fresh `npm i`.
   rm -rf node_modules
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome*.deb
-  npm i
   rm google-chrome-stable_current_amd64.deb
+  npm i
   ```
 
 This is good step to follow if you see an error similar to this one when running the test suite:
@@ -269,7 +285,7 @@ We kept the old instructions in needed to make the travis VM for now. See the Us
 1. Update/Install Node.js
 
     ```sh
-    nvm install 10
+    nvm install 14
     nvm alias default {insert exact version}
     nvm use default
     ```
