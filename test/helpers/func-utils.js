@@ -48,7 +48,16 @@ function triggerContextmenu(el) {
   }
 }
 
+/**
+ * @param {Number} timeout time to wait in ms
+ * @returns {Promise} Promise which waits a specified number of ms
+ */
+function wait(timeout) {
+  return new Promise(resolve => setTimeout(() => resolve(), timeout));
+}
+
 module.exports = {
   cleanup,
-  triggerContextmenu
+  triggerContextmenu,
+  wait
 };

@@ -1,7 +1,9 @@
 import { Datagrid } from '../../../src/components/datagrid/datagrid';
 import { Formatters } from '../../../src/components/datagrid/datagrid.formatters';
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
-import { cleanup } from '../../helpers/func-utils';
+import { cleanup, wait } from '../../helpers/func-utils';
+
+const SLEEP_MS = 400;
 
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
@@ -82,68 +84,75 @@ describe('Datagrid Paging API', () => {
       cleanup();
     });
 
-    it('Should be able to track dirty cells with paging', (done) => {
-      const options = { dataset: sampleData, columns, paging: true, pagesize: 3, editable: true, showDirty: true }; // eslint-disable-line max-len
+    it('Should be able to track dirty cells with paging', async (done) => {
+      const options = {
+        dataset: sampleData,
+        columns,
+        paging: true,
+        pagesize: 3,
+        editable: true,
+        showDirty: true
+      };
       datagridObj = new Datagrid(datagridEl, options);
 
       let cell1;
       let cell2;
       let input;
 
-      setTimeout(() => {
-        cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
-        cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+      cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+      cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
 
-        expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
-        expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
 
-        cell1.click();
-        input = cell1.querySelector('input');
-        const originalVal = input.value;
-        input.value = 'Cell test value';
-        cell2.click();
+      cell1.click();
+      input = cell1.querySelector('input');
+      const originalVal = input.value;
+      input.value = 'Cell test value';
+      cell2.click();
 
-        expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
-        expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+      await wait(SLEEP_MS);
 
-        const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
-        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
-        buttonElNext.click();
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
 
-        setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenTriggered();
+      const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
+      const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+      buttonElNext.click();
 
-          cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
-          cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+      await wait(SLEEP_MS);
 
-          expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
-          expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+      expect(buttonClickSpyNext).toHaveBeenTriggered();
 
-          const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
-          const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
-          buttonElPrev.click();
+      cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+      cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
 
-          setTimeout(() => {
-            expect(buttonClickSpyPrev).toHaveBeenTriggered();
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
 
-            cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
-            cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
+      const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
+      const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
+      buttonElPrev.click();
 
-            expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
-            expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+      await wait(SLEEP_MS);
 
-            cell1.click();
-            input = cell1.querySelector('input');
-            input.value = originalVal;
-            cell2.click();
+      expect(buttonClickSpyPrev).toHaveBeenTriggered();
 
-            expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
-            expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+      cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
+      cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
 
-            done();
-          }, 1);
-        }, 1);
-      }, 1);
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+
+      cell1.click();
+      input = cell1.querySelector('input');
+      input.value = originalVal;
+      cell2.click();
+
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
+
+      await wait(SLEEP_MS);
     });
   });
 
