@@ -1,3 +1,5 @@
+/* eslint-disable compat/compat */
+
 /**
  * Cleans up and removes the nodes picked up via the provided CSS selector
  * @param {HTMLElement|SVGElement|array|string} item a valid Element, Array or a CSS selector string
