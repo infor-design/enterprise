@@ -219,6 +219,7 @@ Soho.Locale.addCulture('en-US', {
     Hide: { id: 'Hide', value: 'Hide', comment: 'On a Button for revealing text that is hidden' },
     HighContrast: { id: 'HighContrast', value: 'High Contrast', comment: 'The name of a theme variant' },
     Highest: { id: 'Highest', value: 'Highest', comment: 'Highest Four tooltip' },
+    Highlight: { id: 'Highlight', value: 'Highlight', comment: 'Used to highlight (select) a chart item' },
     Home: { id: 'Home', value: 'Home', comment: 'Home tooltip' },
     HtmlView: { id: 'HtmlView', value: 'Html View', comment: 'Html View tooltip' },
     Id: { id: 'Id', value: 'Id', comment: 'Short for of identification' },
