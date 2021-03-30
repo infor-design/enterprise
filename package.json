@@ -175,7 +175,8 @@
     "yargs": "^16.2.0"
   },
   "browserslist": [
-    "last 2 versions"
+    "last 2 versions",
+    "not ie 10"
   ],
   "optionalDependencies": {
     "fsevents": "*"
