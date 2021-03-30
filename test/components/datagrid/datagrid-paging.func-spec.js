@@ -84,7 +84,7 @@ describe('Datagrid Paging API', () => {
       cleanup();
     });
 
-    it('Should be able to track dirty cells with paging', async (done) => {
+    it('Should be able to track dirty cells with paging', async () => {
       const options = {
         dataset: sampleData,
         columns,
