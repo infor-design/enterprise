@@ -175,10 +175,7 @@
     "yargs": "^16.2.0"
   },
   "browserslist": [
-    "last 2 versions",
-    "not ie >= 0",
-    "not op_mob >= 0",
-    "not op_mini all"
+    "last 2 versions"
   ],
   "optionalDependencies": {
     "fsevents": "*"
