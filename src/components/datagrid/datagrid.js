@@ -6152,6 +6152,7 @@ Datagrid.prototype = {
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        pagingInfo.preserveSelected = true;
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       });
