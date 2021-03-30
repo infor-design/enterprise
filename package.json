@@ -161,6 +161,7 @@
     "protractor-image-comparison": "^3.9.0",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
+    "regenerator-runtime": "^0.13.7",
     "release-it": "^13.6.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.24.4",
