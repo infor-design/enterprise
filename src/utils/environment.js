@@ -1,4 +1,4 @@
-import { version as SOHO_XI_VERSION } from '../../package.json';
+import version from '../../package.json';
 import { breakpoints } from './breakpoints';
 
 // jQuery Components
@@ -34,7 +34,7 @@ const Environment = {
    * Builds run-time environment settings
    */
   set() {
-    $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
+    $('html').attr('data-sohoxi-version', version);
 
     // Set the viewport meta tag to limit scaling
     this.viewport = document.querySelector('meta[name=viewport]');
@@ -158,7 +158,7 @@ const Environment = {
     const nAppVer = navigator.appVersion;
     const nUAgent = navigator.userAgent;
     let browser = navigator.appName;
-    let version = ` ${parseFloat(navigator.appVersion)}`;
+    let appVersion = ` ${parseFloat(navigator.appVersion)}`;
     let majorVersion = parseInt(navigator.appVersion, 10);
     let nameOffset;
     let verOffset;
@@ -167,57 +167,57 @@ const Environment = {
 
     if ((verOffset = nUAgent.indexOf('Opera')) !== -1) { //eslint-disable-line
       browser = 'Opera';
-      version = nUAgent.substring(verOffset + 6);
+      appVersion = nUAgent.substring(verOffset + 6);
       if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
-        version = nUAgent.substring(verOffset + 8);
+        appVersion = nUAgent.substring(verOffset + 8);
       }
     }
     if ((verOffset = nUAgent.indexOf('OPR')) !== -1) { //eslint-disable-line
       browser = 'Opera';
-      version = nUAgent.substring(verOffset + 4);
+      appVersion = nUAgent.substring(verOffset + 4);
     } else if ((verOffset = nUAgent.indexOf('Edg')) !== -1) { //eslint-disable-line
       browser = 'Microsoft Edge';
-      version = nUAgent.substring(verOffset + 4);
+      appVersion = nUAgent.substring(verOffset + 4);
     } else if ((verOffset = nUAgent.indexOf('MSIE')) !== -1) { //eslint-disable-line
       browser = 'Microsoft Internet Explorer';
-      version = nUAgent.substring(verOffset + 5);
+      appVersion = nUAgent.substring(verOffset + 5);
     } else if ((verOffset = nUAgent.indexOf('Chrome')) !== -1) { //eslint-disable-line
       browser = 'Chrome';
-      version = nUAgent.substring(verOffset + 7);
+      appVersion = nUAgent.substring(verOffset + 7);
       if (nUAgent.indexOf('Edg') > -1) {
         browserVersionName = 'Microsoft Edge';
       }
     } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
       browser = 'Safari';
-      version = nUAgent.substring(verOffset + 7);
+      appVersion = nUAgent.substring(verOffset + 7);
       if ((verOffset = nUAgent.indexOf('Version')) !== -1) { //eslint-disable-line
-        version = nUAgent.substring(verOffset + 8);
+        appVersion = nUAgent.substring(verOffset + 8);
       }
     } else if (this.browser.isWKWebView()) { //eslint-disable-line
       browser = `WKWebView`; //eslint-disable-line
-      version = '';
+      appVersion = '';
       majorVersion = '';
     } else if ((verOffset = nUAgent.indexOf('Firefox')) !== -1) { //eslint-disable-line
       browser = 'Firefox';
-      version = nUAgent.substring(verOffset + 8);
+      appVersion = nUAgent.substring(verOffset + 8);
     } else if (nUAgent.indexOf('Trident/') !== -1) { //eslint-disable-line
       browser = 'Microsoft Internet Explorer';
-      version = nUAgent.substring(nUAgent.indexOf('rv:') + 3);
+      appVersion = nUAgent.substring(nUAgent.indexOf('rv:') + 3);
     } else if ((nameOffset = nUAgent.lastIndexOf(' ') + 1) < (verOffset = nUAgent.lastIndexOf('/'))) { //eslint-disable-line
       browser = nUAgent.substring(nameOffset, verOffset);
-      version = nUAgent.substring(verOffset + 1);
+      appVersion = nUAgent.substring(verOffset + 1);
       if (browser.toLowerCase() === browser.toUpperCase()) {
         browser = navigator.appName;
       }
     }
     // Trim the version string
-    if ((ix = version.indexOf(';')) !== -1) version = version.substring(0, ix); //eslint-disable-line
-    if ((ix = version.indexOf(' ')) !== -1) version = version.substring(0, ix); //eslint-disable-line
-    if ((ix = version.indexOf(')')) !== -1) version = version.substring(0, ix); //eslint-disable-line
+    if ((ix = appVersion.indexOf(';')) !== -1) appVersion = appVersion.substring(0, ix); //eslint-disable-line
+    if ((ix = appVersion.indexOf(' ')) !== -1) appVersion = appVersion.substring(0, ix); //eslint-disable-line
+    if ((ix = appVersion.indexOf(')')) !== -1) appVersion = appVersion.substring(0, ix); //eslint-disable-line
 
-    majorVersion = ` ${parseInt(version, 10)}`;
+    majorVersion = ` ${parseInt(appVersion, 10)}`;
     if (isNaN(majorVersion)) {
-      version = ` ${parseFloat(navigator.appVersion)}`;
+      appVersion = ` ${parseFloat(navigator.appVersion)}`;
       majorVersion = parseInt(navigator.appVersion, 10);
     }
 
@@ -278,7 +278,7 @@ const Environment = {
 
     this.devicespecs = {
       currentBrowser: browser,
-      browserVersion: version.trim(),
+      browserVersion: appVersion.trim(),
       browserMajorVersion: majorVersion,
       isMobile: mobile || Environment.browser.isIPad(),
       os,

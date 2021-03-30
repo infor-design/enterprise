@@ -22,7 +22,7 @@ const dirs = [
 
 /**
  * Compiles the result of an SCSS library and writes the resulting CSS and Map to disk
- * @param {object} [options={}] "node-sass" library options
+ * @param {object} [options={}] "sass" library options
  * @returns {array<Promise>} containing file write promises
  */
 function compileSass(options = {}) {
@@ -71,8 +71,8 @@ function compileSass(options = {}) {
 // -------------------------------------
 
 /**
- * @param {object} config object containing file paths and other "node-sass" settings.
- * @returns {Array<Promises>} resolved at the end of each "node-sass" run
+ * @param {object} config object containing file paths and other "sass" settings.
+ * @returns {Array<Promises>} resolved at the end of each "sass" run
  */
 module.exports = function buildSass(config) {
   if (!config || !config.files) {

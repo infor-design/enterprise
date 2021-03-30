@@ -68,6 +68,15 @@
       font-size: $ids-size-font-lg;
       font-weight: 400;
       padding: 4px 5px;
+
+      @media only screen
+        and (min-device-width: $breakpoint-phone)
+        and (max-device-width: $breakpoint-big-phone + 88)
+        and (-webkit-min-device-pixel-ratio: 2)
+        and (orientation: portrait) {
+        margin-left: 5px;
+        max-width: unset;
+      }
     }
 
     &.l-align-right {
@@ -101,6 +110,14 @@
   .calendar-toolbar {
     border-bottom: 1px solid $popover-separator-color;
     padding: 0 5px 0 20px;
+
+    @media only screen
+      and (min-device-width: $breakpoint-phone)
+      and (max-device-width: $breakpoint-big-phone + 88)
+      and (-webkit-min-device-pixel-ratio: 2)
+      and (orientation: portrait) {
+      padding: 0 5px;
+    }
   }
 }
 

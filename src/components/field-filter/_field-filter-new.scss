@@ -12,9 +12,46 @@
   }
 }
 
-.dropdown-list.ffdropdown {
-  > .trigger .icon {
-    left: 1px;
+.field-short.fieldfilter-wrapper {
+  .field-filter {
+    position: relative;
+    z-index: 2;
+  }
+
+  div.dropdown {
+    &:focus {
+      position: relative;
+      z-index: 3;
+    }
+    > .listoption-icon {
+      left: 1px;
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+
+.field-short {
+  .icon,
+  span.trigger {
+    z-index: 2;
+  }
+
+  div.dropdown {
+    + .icon {
+      z-index: 3;
+    }
+
+    &:hover:not([disabled]) {
+      &:not(.is-disabled) {
+        &:not(.is-readonly) {
+          &:not(.error) {
+            position: relative;
+            z-index: 3;
+          }
+        }
+      }
+    }
   }
 }
 

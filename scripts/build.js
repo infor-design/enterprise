@@ -14,7 +14,7 @@
  * 3. Render both of the following:
  *    - an `index.js` file with ES6-based import/export statements
  *    - an `index.scss` file with SASS-based import statements
- * 4. Pass these files into Rollup/Node-Sass config and run the normal builds.
+ * 4. Pass these files into Rollup/Sass config and run the normal builds.
  * 5. Add the results of these builds to the `/dist` folder as usual.
  *
  * Order of included libraries matters per group:
