@@ -25,6 +25,7 @@
 - `[Field Filter]` Fixed a UI issues where the input field has a missing border and the dropdown list does not properly align when it opened. ([#4982](https://github.com/infor-design/enterprise/issues/4982))
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[General]` Can run stylelint command on W10 cmd for development ([#4993](https://github.com/infor-design/enterprise/issues/4993))
+- `[General]` Deprecate compatibility with IE 11; will only support Edge ([#4989](https://github.com/infor-design/enterprise/issues/4989))
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
 - `[Input]` Changed the disabled search field color for Safari to match that of other browsers. ([#4611](https://github.com/infor-design/enterprise/issues/4611))
 - `[Lookup]` Isolated the scss/css .close.icon class inside of .modal-content and removed any extra top property to fix the alignment issue.([#4933](https://github.com/infor-design/enterprise/issues/4933))
