@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 const { browser, element } = require('protractor');
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
